@@ -10,6 +10,26 @@ status_definitions:
   exploratory: selected only to exercise software or formulate a hypothesis
 
 parameters:
+  model.table3.catalog:
+    value: 12 cell classes and 30 compartments
+    status: published
+    source: Main article Table 3
+  model.table3.surface_area:
+    value: pi * diameter * length
+    status: derived
+    source: Main article Methods 4.2 receptor-density expression
+  model.table3.specific_capacitance:
+    value: 1 uF/cm2 default used for total-capacitance conversion
+    status: exploratory
+    source: Standard modeling default; a numeric value is not stated in the main article Table 3
+  model.table3.total_conductance:
+    value: channel density * cylindrical lateral membrane area
+    status: derived
+    source: Main article Table 3 and Methods 4.2
+  model.table3.leak_runtime_convention:
+    value: use each cell compartment's Table 3 E_L as its leak reversal
+    status: derived
+    source: Table 3 caption; Methods 4.5 Eq. 20 has an unresolved E_leak=0 convention ambiguity
   model.classic_hh.e_na:
     value: 50 mV
     status: published
@@ -50,3 +70,7 @@ parameters:
     value: see configs/*.yaml
     status: exploratory
     source: reduced software benchmark; not a paper parameter
+  supplement.first_order_connections:
+    value: recovered; transcription into executable projection specs pending
+    status: published
+    source: Elsevier attachment 1-s2.0-S0006899308008883-mmc1.doc

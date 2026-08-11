@@ -1,5 +1,9 @@
 from __future__ import annotations
 
+from typing import Any
+
+from .table3 import get_cell_spec
+
 # Traub--Miles-style Na/K kinetics transcribed from Grossberg & Versace (2008),
 # Methods 4.5. This M0 population is a point-cell reference component; the full
 # baseline will assign the same channel family to paper-specific compartments.
@@ -51,7 +55,7 @@ def _dual_exponential_normalizer(rise_ms: float, decay_ms: float) -> float:
 
 
 def create_classic_hh_population(
-    *, name: str, size: int, params: dict[str, float], brian=None
+    *, name: str, size: int, params: dict[str, Any], brian=None
 ):
     if brian is None:
         import brian2 as brian
@@ -64,13 +68,20 @@ def create_classic_hh_population(
         method="exponential_euler",
         name=name,
     )
-    group.C_m = params.get("C_m_pF", 200.0) * brian.pfarad
-    group.g_na = params.get("g_na_nS", 2000.0) * brian.nsiemens
-    group.g_k = params.get("g_k_nS", 600.0) * brian.nsiemens
-    group.g_l = params.get("g_l_nS", 10.0) * brian.nsiemens
+    cell_spec = get_cell_spec(params["cell_class"]) if "cell_class" in params else None
+    soma = cell_spec.soma if cell_spec is not None else None
+    default_c_m = soma.capacitance_pF() if soma is not None else 200.0
+    default_g_na = soma.conductance_nS("na") if soma is not None else 2000.0
+    default_g_k = soma.conductance_nS("k") if soma is not None else 600.0
+    default_g_l = soma.conductance_nS("leak") if soma is not None else 10.0
+    default_e_l = soma.e_leak_mV if soma is not None else -65.0
+    group.C_m = params.get("C_m_pF", default_c_m) * brian.pfarad
+    group.g_na = params.get("g_na_nS", default_g_na) * brian.nsiemens
+    group.g_k = params.get("g_k_nS", default_g_k) * brian.nsiemens
+    group.g_l = params.get("g_l_nS", default_g_l) * brian.nsiemens
     group.e_na = 50.0 * brian.mV
     group.e_k = -90.0 * brian.mV
-    group.e_l = params.get("e_l_mV", -65.0) * brian.mV
+    group.e_l = params.get("e_l_mV", default_e_l) * brian.mV
     group.e_exc = 0.0 * brian.mV
     group.e_inh = -80.0 * brian.mV
     exc_rise = params.get("tau_exc_rise_ms", 0.5)
@@ -83,7 +94,7 @@ def create_classic_hh_population(
     group.tau_inh_decay = inh_decay * brian.ms
     group.norm_exc = _dual_exponential_normalizer(exc_rise, exc_decay)
     group.norm_inh = _dual_exponential_normalizer(inh_rise, inh_decay)
-    group.v = params.get("v_init_mV", -65.0) * brian.mV
+    group.v = params.get("v_init_mV", default_e_l) * brian.mV
     group.m = "alpha_m/(alpha_m+beta_m)"
     group.h = "alpha_h/(alpha_h+beta_h)"
     group.n = "alpha_n/(alpha_n+beta_n)"

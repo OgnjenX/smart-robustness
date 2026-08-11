@@ -53,8 +53,9 @@ serialized channel projections; the full two-area file contains 24 populations.
 - Ten voltage-driven input channels now follow KInNeSS Equations 4--5: their
   four serialized sensitivities shift the effective driving potential from
   red/green/blue/alpha source values in [0,255]. The eleventh external channel
-  is a direct current-injection gate governed by Equation 6 and remains to be
-  wired into the experiment protocol.
+  is a direct current-injection gate governed by Equation 6. It is compiled
+  separately from conductance inputs; all four archived sensitivities are zero,
+  so it remains inert until explicitly configured by an experiment protocol.
 - Gap-junction totals follow KInNeSS Equation 8 rather than treating XML
   `g_bar` as an already converted membrane density.
 - The dedicated Figure 8 cell is not the Table 3 relay cell. It uses soma

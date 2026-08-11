@@ -74,9 +74,16 @@ Implemented:
   postsynaptic spike gate, including each record's 20/25-ms depotentiation
   interval; modifiable projections now initialize at their serialized
   asymptotic baseline and retain the separate maximum weight;
-- CI validation split into independent Brian2 processes: 157 lightweight tests,
-  four sector-construction tests, six connectivity tests, and two long AHP
-  tests currently pass (169 total).
+- KInNeSS Equations 25/28 adaptive-weight dynamics for the serialized
+  presynaptically gated, postsynaptically gated, and dual-AND-gated rules;
+  rule-level tests verify potentiation for pre-before-post and depression for
+  post-before-pre timing;
+- the remaining direct-current external channel using KInNeSS Equation 6
+  current-density semantics; its four archived sensitivities are all zero and
+  are therefore retained as an inert protocol-controlled input;
+- CI validation split into independent Brian2 processes: 163 lightweight tests,
+  five sector-construction tests, six connectivity tests, and two long AHP
+  tests currently pass (176 total).
 
 Explicitly unresolved source anomalies:
 
@@ -100,9 +107,8 @@ Not yet implemented or validated:
   baseline instead uses the distinct, integrity-pinned ModelDB catalog while
   retaining the supplement as an independent audit);
 - exact legacy meaning of the KInNeSS `ring` flag (currently retained as a
-  center-excluding Gaussian candidate), the remaining current-injection
-  channel, full Equation 5 gated weight integration (including its unresolved
-  normalization term and executable presynaptic-gate semantics), ACh vigilance,
+  center-excluding Gaussian candidate), driven network validation of Equation
+  5/6 learning and its bounds, ACh vigilance,
   CSD/LFP geometry, and every published figure protocol;
 - quantitative reproduction of match/gamma and mismatch/beta/reset.
 

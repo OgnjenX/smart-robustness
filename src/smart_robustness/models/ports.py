@@ -41,6 +41,14 @@ class ExternalInputPortSpec:
     sensitivities_mV: tuple[float, float, float, float] = (0.0, 0.0, 0.0, 0.0)
 
 
+@dataclass(frozen=True, slots=True)
+class InjectionPortSpec:
+    name: str
+    record_id: str
+    compartment: str
+    sensitivities_pA_cm2: tuple[float, float, float, float]
+
+
 def chemical_port(record: ProjectionRecord, index: int) -> SynapticPortSpec:
     """Convert one audited chemical record into an executable receptor port."""
 
@@ -234,3 +242,24 @@ def modeldb_external_ports_for_target(
             )
         )
     return tuple(ports)
+
+
+def modeldb_injection_ports_for_target(
+    records: tuple[ModelDBExternalChannel, ...], target_population: str
+) -> tuple[InjectionPortSpec, ...]:
+    channels = tuple(
+        record
+        for record in records
+        if record.dependency == "injection" and record.target_population == target_population
+    )
+    return tuple(
+        InjectionPortSpec(
+            name=f"injection_{index:03d}",
+            record_id=record.id,
+            compartment=record.target_compartment,
+            sensitivities_pA_cm2=tuple(
+                float(record.gate.get(f"input{channel}", 0.0)) for channel in range(1, 5)
+            ),
+        )
+        for index, record in enumerate(channels)
+    )

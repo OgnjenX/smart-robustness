@@ -11,6 +11,7 @@ from .models.modeldb112923 import FirstOrderPopulationFacts, first_order_populat
 from .models.ports import (
     modeldb_external_ports_for_target,
     modeldb_gap_ports_for_target,
+    modeldb_injection_ports_for_target,
     modeldb_ports_for_target,
 )
 from .synapses import connect_modeldb_gap_junction, connect_modeldb_projection
@@ -60,6 +61,9 @@ def _population_parameters(facts: FirstOrderPopulationFacts) -> dict[str, Any]:
             MODELDB_FIRST_ORDER.projections, facts.canonical_name
         ),
         "external_input_ports": modeldb_external_ports_for_target(
+            MODELDB_FIRST_ORDER.external_channels, facts.canonical_name
+        ),
+        "injection_ports": modeldb_injection_ports_for_target(
             MODELDB_FIRST_ORDER.external_channels, facts.canonical_name
         ),
         "depletion_epsilon": facts.depletion_epsilon,

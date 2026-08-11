@@ -23,7 +23,7 @@ from .currents import (
     NaKRateConvention,
     TTypeGateConvention,
 )
-from .ports import ExternalInputPortSpec, GapJunctionPortSpec, SynapticPortSpec
+from .ports import ExternalInputPortSpec, GapJunctionPortSpec, InjectionPortSpec, SynapticPortSpec
 from .table3 import CellSpec
 
 
@@ -60,6 +60,7 @@ class CompiledCellEquations:
     synaptic_ports: tuple[SynapticPortSpec, ...]
     gap_junction_ports: tuple[GapJunctionPortSpec, ...]
     external_input_ports: tuple[ExternalInputPortSpec, ...]
+    injection_ports: tuple[InjectionPortSpec, ...]
     depletion_enabled: bool
 
 
@@ -179,6 +180,7 @@ def compile_cell_equations(
     synaptic_ports: tuple[SynapticPortSpec, ...] = (),
     gap_junction_ports: tuple[GapJunctionPortSpec, ...] = (),
     external_input_ports: tuple[ExternalInputPortSpec, ...] = (),
+    injection_ports: tuple[InjectionPortSpec, ...] = (),
     depletion_epsilon: float | None = None,
     depletion_recovery_ms: float | None = None,
 ) -> CompiledCellEquations:
@@ -217,6 +219,13 @@ def compile_cell_equations(
     ):
         raise TypeError("external_input_ports must be a tuple of ExternalInputPortSpec")
     for port in external_input_ports:
+        if port.compartment not in compartment_names:
+            raise ValueError(f"{port.record_id}: unknown target compartment {port.compartment}")
+    if not isinstance(injection_ports, tuple) or not all(
+        isinstance(port, InjectionPortSpec) for port in injection_ports
+    ):
+        raise TypeError("injection_ports must be a tuple of InjectionPortSpec")
+    for port in injection_ports:
         if port.compartment not in compartment_names:
             raise ValueError(f"{port.record_id}: unknown target compartment {port.compartment}")
     depletion_enabled = depletion_epsilon is not None or depletion_recovery_ms is not None
@@ -298,6 +307,25 @@ def compile_cell_equations(
                 f"{port.name}_input_alpha : 1",
             )
         )
+    for port in injection_ports:
+        area_cm2 = cell.compartment(port.compartment).lateral_area_cm2
+        current = "+".join(
+            f"{sensitivity * area_cm2}*pA*{port.name}_input_{channel}"
+            for sensitivity, channel in zip(
+                port.sensitivities_pA_cm2,
+                ("red", "green", "blue", "alpha"),
+                strict=True,
+            )
+        )
+        lines.extend(
+            (
+                f"i_{port.name}={current} : amp",
+                f"{port.name}_input_red : 1",
+                f"{port.name}_input_green : 1",
+                f"{port.name}_input_blue : 1",
+                f"{port.name}_input_alpha : 1",
+            )
+        )
     for compartment in cell.compartments:
         name = compartment.name
         current_terms = [f"g_l_{name}*(e_l_{name}-v_{name})"]
@@ -317,6 +345,9 @@ def compile_cell_equations(
         )
         current_terms.extend(
             f"i_{port.name}" for port in external_input_ports if port.compartment == name
+        )
+        current_terms.extend(
+            f"i_{port.name}" for port in injection_ports if port.compartment == name
         )
         current_terms.extend(axial_terms[name])
         current_terms.extend((f"i_syn_{name}", f"i_drive_{name}"))
@@ -346,5 +377,6 @@ def compile_cell_equations(
         synaptic_ports=synaptic_ports,
         gap_junction_ports=gap_junction_ports,
         external_input_ports=external_input_ports,
+        injection_ports=injection_ports,
         depletion_enabled=depletion_enabled,
     )

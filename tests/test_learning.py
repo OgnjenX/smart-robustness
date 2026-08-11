@@ -5,6 +5,7 @@ import pytest
 
 from smart_robustness.learning import (
     equilibrium_depression_scale,
+    gated_weight_derivative,
     postsynaptic_spike_gate,
 )
 
@@ -12,11 +13,11 @@ from smart_robustness.learning import (
 def test_equation6_depression_scale_uses_minimum_baseline_and_maximum() -> None:
     assert equilibrium_depression_scale(
         minimum_weight=0.0, baseline_weight=0.3, maximum_weight=6.0
-    ) == pytest.approx(0.95)
+    ) == pytest.approx(-0.05)
 
 
 def test_equation6_post_spike_gate_has_published_piecewise_boundaries() -> None:
-    d = 0.95
+    d = -0.05
     elapsed = np.array([-1.0, 0.0, 0.05, 0.1, 12.6, 25.1, 30.0])
     result = postsynaptic_spike_gate(elapsed, depression_scale=d)
     assert result == pytest.approx([0.0, d + 1, d + 0.5, d, d / 2, 0.0, 0.0])
@@ -24,5 +25,41 @@ def test_equation6_post_spike_gate_has_published_piecewise_boundaries() -> None:
 
 def test_equation6_gate_uses_serialized_depotentiation_length() -> None:
     assert postsynaptic_spike_gate(
-        20.1, depression_scale=0.8, depotentiation_ms=20.0
+        20.1, depression_scale=-0.2, depotentiation_ms=20.0
     ) == pytest.approx(0.0)
+
+
+@pytest.mark.parametrize(
+    "rule",
+    ["Presynaptically gated", "Postsynaptically gated", "Dual AND gated"],
+)
+def test_kinness_gated_learning_potentiates_pre_before_post(rule: str) -> None:
+    derivative = gated_weight_derivative(
+        weight=0.3,
+        minimum_weight=0.0,
+        baseline_weight=0.3,
+        maximum_weight=6.0,
+        pre_signal=0.8,
+        post_signal=0.95,
+        learning_rate=0.1,
+        learning_rule=rule,
+    )
+    assert derivative > 0
+
+
+@pytest.mark.parametrize(
+    "rule",
+    ["Presynaptically gated", "Postsynaptically gated", "Dual AND gated"],
+)
+def test_kinness_gated_learning_depresses_post_before_pre(rule: str) -> None:
+    derivative = gated_weight_derivative(
+        weight=0.3,
+        minimum_weight=0.0,
+        baseline_weight=0.3,
+        maximum_weight=6.0,
+        pre_signal=0.8,
+        post_signal=-0.05,
+        learning_rate=0.1,
+        learning_rule=rule,
+    )
+    assert derivative < 0

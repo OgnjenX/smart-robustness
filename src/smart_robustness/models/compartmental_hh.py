@@ -25,7 +25,7 @@ from .equation_builder import (
     VoltageCoordinate,
     compile_cell_equations,
 )
-from .ports import ExternalInputPortSpec, GapJunctionPortSpec, SynapticPortSpec
+from .ports import ExternalInputPortSpec, GapJunctionPortSpec, InjectionPortSpec, SynapticPortSpec
 from .table3 import CellSpec, get_cell_spec
 
 
@@ -66,6 +66,27 @@ class CompartmentalPopulation:
             raise ValueError("channel must be red, green, blue, or alpha")
         if not 0 <= value <= 255:
             raise ValueError("external input value must be between zero and 255")
+        getattr(self.group, f"{port.name}_input_{channel}")[indices] = value
+
+    def set_external_injection(
+        self,
+        record_id: str,
+        channel: str,
+        value: float,
+        indices: Any = slice(None),
+    ) -> None:
+        """Set one KInNeSS Equation 6 current-source channel."""
+
+        port = next(
+            (port for port in self.compiled.injection_ports if port.record_id == record_id),
+            None,
+        )
+        if port is None:
+            raise KeyError(f"no external injection port for {record_id!r}")
+        if channel not in {"red", "green", "blue", "alpha"}:
+            raise ValueError("channel must be red, green, blue, or alpha")
+        if not 0 <= value <= 255:
+            raise ValueError("external injection value must be between zero and 255")
         getattr(self.group, f"{port.name}_input_{channel}")[indices] = value
 
 
@@ -112,6 +133,11 @@ def create_compartmental_hh_population(
         isinstance(port, ExternalInputPortSpec) for port in external_input_ports
     ):
         raise TypeError("external_input_ports must be a tuple of ExternalInputPortSpec")
+    injection_ports = params.get("injection_ports", ())
+    if not isinstance(injection_ports, tuple) or not all(
+        isinstance(port, InjectionPortSpec) for port in injection_ports
+    ):
+        raise TypeError("injection_ports must be a tuple of InjectionPortSpec")
     depletion_epsilon = params.get("depletion_epsilon")
     depletion_recovery_ms = params.get("depletion_recovery_ms")
     enable_ahp_ach = params["enable_ahp_ach"]
@@ -142,6 +168,7 @@ def create_compartmental_hh_population(
         synaptic_ports=synaptic_ports,
         gap_junction_ports=gap_junction_ports,
         external_input_ports=external_input_ports,
+        injection_ports=injection_ports,
         depletion_epsilon=depletion_epsilon,
         depletion_recovery_ms=depletion_recovery_ms,
     )
@@ -194,6 +221,9 @@ def create_compartmental_hh_population(
             f"g_{port.name}",
             port.conductance_density_mS_cm2 * compartment.lateral_area_cm2 * 1e6 * brian.nsiemens,
         )
+        for channel in ("red", "green", "blue", "alpha"):
+            _set(group, f"{port.name}_input_{channel}", 0)
+    for port in injection_ports:
         for channel in ("red", "green", "blue", "alpha"):
             _set(group, f"{port.name}_input_{channel}", 0)
 

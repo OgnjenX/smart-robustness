@@ -29,6 +29,10 @@ def test_first_order_intrinsic_sector_builds_all_source_cells() -> None:
         == 10
     )
     assert (
+        sum(len(population.compiled.injection_ports) for population in sector.populations.values())
+        == 1
+    )
+    assert (
         sum(
             len(population.compiled.gap_junction_ports)
             for population in sector.populations.values()
@@ -73,3 +77,18 @@ def test_bottom_up_gate_is_explicitly_addressable_by_source_record() -> None:
     assert getattr(relay.group, f"{port.name}_input_green")[0] == pytest.approx(0.0)
     with pytest.raises(ValueError, match="between zero and 255"):
         relay.set_external_input(record_id, "green", 256)
+
+
+def test_direct_current_gate_is_explicitly_addressable_by_source_record() -> None:
+    brian.start_scope()
+    sector = build_first_order_intrinsic_sector(brian=brian)
+    relay = sector.populations["thalamic_relay"]
+    record_id = "modeldb112923.external.000"
+    relay.set_external_injection(record_id, "red", 122, indices=[40])
+    port = relay.compiled.injection_ports[0]
+    values = np.asarray(getattr(relay.group, f"{port.name}_input_red")[:])
+    assert values[40] == 122
+    assert np.count_nonzero(values) == 1
+    assert f"i_{port.name}=" in relay.compiled.equations
+    with pytest.raises(ValueError, match="between zero and 255"):
+        relay.set_external_injection(record_id, "red", -1)

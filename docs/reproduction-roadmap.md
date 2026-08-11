@@ -47,9 +47,10 @@ network reproduction.
 
 Learning checkpoint: Equation 6's biphasic post-spike gate and the serialized
 20/25-ms depotentiation intervals are tested. Adaptive records initialize at
-their asymptotic baseline rather than their maximum. The complete Equation 5
-weight derivative remains disabled until its normalization and the executable
-presynaptic-gate extension are resolved from source.
+their asymptotic baseline rather than their maximum. KInNeSS Equations 25/28
+resolve and implement the presynaptically gated, postsynaptically gated, and
+dual-AND-gated variants. Driven protocol validation and bounded long-run
+behavior remain required before plasticity is considered reproduced.
 
 Exit: equation/unit tests, numerical convergence tests, isolated-cell report,
 and explicit resolution of voltage-coordinate ambiguities.

@@ -247,16 +247,47 @@ def connect_modeldb_projection(
     update = f"{port.name}_rise_post += w{resource}"
     if port.rise_ms != port.fall_ms:
         update += f"\n{port.name}_fall_post += w{resource}"
+    model = "w_baseline : 1 (constant)\nw_maximum : 1 (constant)\nmodifiable : 1 (constant)"
+    on_post = None
+    if record.modifiable:
+        if record.learning_rate is None or record.depotentiation_ms is None:
+            raise ValueError(f"{record.id}: incomplete ModelDB learning parameters")
+        if record.learning_rule == "Presynaptically gated":
+            learning_gate = "pre_signal**2"
+        elif record.learning_rule == "Postsynaptically gated":
+            learning_gate = "post_signal**2"
+        elif record.learning_rule == "Dual AND gated":
+            learning_gate = "pre_signal*post_signal**2"
+        else:
+            raise ValueError(f"{record.id}: unsupported learning rule {record.learning_rule!r}")
+        post_window = record.depotentiation_ms
+        model += (
+            f"\ndx_learning_rise/dt=-x_learning_rise/({port.rise_ms}*ms) : 1 (clock-driven)"
+            f"\ndx_learning_fall/dt=-x_learning_fall/({port.fall_ms}*ms) : 1 (clock-driven)"
+            f"\npre_signal={port.normalization}*(x_learning_fall-x_learning_rise) : 1"
+            "\npost_elapsed=t-last_post_spike : second"
+            "\ndepression_scale=-w_baseline/w_maximum : 1"
+            "\nx_post_above=depression_scale+1 : 1"
+            "\nx_post_early=depression_scale+1-post_elapsed/(0.1*ms) : 1"
+            f"\nx_post_late=depression_scale*(1-(post_elapsed-0.1*ms)/({post_window}*ms)) : 1"
+            f"\npost_signal=int(v_soma_post >= -20*mV)*x_post_above"
+            " + int(v_soma_post < -20*mV and post_elapsed >= 0*ms and post_elapsed < 0.1*ms)*x_post_early"
+            f" + int(v_soma_post < -20*mV and post_elapsed >= 0.1*ms and post_elapsed < {post_window + 0.1}*ms)*x_post_late : 1"
+            f"\ndw/dt=({record.learning_rate}/ms)*({learning_gate})"
+            "*(pre_signal*post_signal*w_maximum+w_baseline-w) : 1 (clock-driven)"
+            "\nlast_post_spike : second"
+        )
+        update += "\nx_learning_rise += 1\nx_learning_fall += 1"
+        on_post = "last_post_spike = t"
+    else:
+        model = "w : 1\n" + model
     synapse = brian.Synapses(
         pre.group,
         post.group,
-        model=(
-            "w : 1\n"
-            "w_baseline : 1 (constant)\n"
-            "w_maximum : 1 (constant)\n"
-            "modifiable : 1 (constant)"
-        ),
+        model=model,
         on_pre=update,
+        on_post=on_post,
+        method="rk4",
         name=f"modeldb_{port.name}_{pre.group.name}_to_{post.group.name}",
     )
     source_indices, target_indices, spatial_factor = modeldb_topology_pairs(
@@ -270,6 +301,10 @@ def connect_modeldb_projection(
     synapse.w_baseline = baseline * spatial_factor
     synapse.w_maximum = maximum * spatial_factor
     synapse.modifiable = float(record.modifiable)
+    if record.modifiable:
+        synapse.x_learning_rise = 0
+        synapse.x_learning_fall = 0
+        synapse.last_post_spike = -1e9 * brian.second
     synapse.delay = float(record.delay_ms or 0.0) * brian.ms
     return synapse
 

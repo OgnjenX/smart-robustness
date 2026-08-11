@@ -56,6 +56,12 @@ dual-exponential synapse, transmitter depletion, and fourth-order Runge–Kutta
 integration used to interpret the SMART XML. The audited PDF has SHA-256
 `0f445537cc2e47a21c525f9cbd59cb5d7bd56d86bd195d0a772a4413c522024c`.
 
+The expanded BU manuscript at the same repository item spells out learning
+Equations 25--28, including the negative equilibrium scale
+`D = -w0 / w_max` when the minimum is zero and the pre-, post-, and dual-gated
+extensions. The locally audited download has SHA-256
+`15a7f9166e301c9740e7cff4258810d315bd95b196ea5dff3419c5cc2879f177`.
+
 The archived 2008 download page identifies KInNeSS 0.3.4 RC2 and SANNDRA 1.2.0
 RC3 as the contemporaneous releases. Their GPL source archives were not
 captured by the Internet Archive, but the archived SANNDRA API landing page and

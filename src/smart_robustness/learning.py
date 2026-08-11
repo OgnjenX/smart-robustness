@@ -5,6 +5,37 @@ from __future__ import annotations
 import numpy as np
 
 
+def gated_weight_derivative(
+    *,
+    weight: float,
+    minimum_weight: float,
+    baseline_weight: float,
+    maximum_weight: float,
+    pre_signal: float,
+    post_signal: float,
+    learning_rate: float,
+    learning_rule: str,
+) -> float:
+    """Evaluate KInNeSS Equations 25/28 for one SMART synapse."""
+
+    if not minimum_weight <= baseline_weight <= maximum_weight:
+        raise ValueError("learning weights must satisfy minimum <= baseline <= maximum")
+    if learning_rule == "Presynaptically gated":
+        gate = pre_signal**2
+    elif learning_rule == "Postsynaptically gated":
+        gate = post_signal**2
+    elif learning_rule == "Dual AND gated":
+        gate = pre_signal * post_signal**2
+    else:
+        raise ValueError(f"unsupported SMART learning rule {learning_rule!r}")
+    bounded_drive = (
+        pre_signal * post_signal * (maximum_weight - minimum_weight)
+        + baseline_weight
+        - weight
+    )
+    return learning_rate * gate * bounded_drive
+
+
 def equilibrium_depression_scale(
     *, minimum_weight: float, baseline_weight: float, maximum_weight: float
 ) -> float:
@@ -14,7 +45,7 @@ def equilibrium_depression_scale(
         raise ValueError("learning weights must satisfy minimum <= baseline <= maximum")
     if maximum_weight == minimum_weight:
         raise ValueError("learning weight interval must be nonzero")
-    return (maximum_weight - baseline_weight) / (maximum_weight - minimum_weight)
+    return (minimum_weight - baseline_weight) / (maximum_weight - minimum_weight)
 
 
 def postsynaptic_spike_gate(
@@ -32,8 +63,8 @@ def postsynaptic_spike_gate(
     linear fall to zero over the serialized depotentiation interval.
     """
 
-    if depression_scale < 0:
-        raise ValueError("depression_scale must be nonnegative")
+    if not -1 < depression_scale <= 0:
+        raise ValueError("depression_scale must satisfy -1 < D <= 0")
     if positive_phase_ms <= 0 or depotentiation_ms <= 0:
         raise ValueError("gate durations must be positive")
     elapsed = np.asarray(elapsed_ms, dtype=float)

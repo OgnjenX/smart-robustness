@@ -9,8 +9,13 @@ from smart_robustness.classic_sector import (
     build_first_order_chemical_sector,
     build_first_order_connected_sector,
 )
+from smart_robustness.modeldb_projections import MODELDB_FIRST_ORDER
 from smart_robustness.projections import SUPPLEMENTARY_TABLE3
-from smart_robustness.synapses import topology_pairs
+from smart_robustness.synapses import (
+    kinness_gap_total_conductance_nS,
+    modeldb_topology_pairs,
+    topology_pairs,
+)
 
 
 def test_topology_pairs_cover_one_to_one_all_to_one_and_gaussian() -> None:
@@ -35,7 +40,7 @@ def test_topology_pairs_cover_one_to_one_all_to_one_and_gaussian() -> None:
 def test_first_order_chemical_sector_builds_all_in_scope_records() -> None:
     brian.start_scope()
     sector = build_first_order_chemical_sector(brian=brian)
-    assert len(sector.projections) == 48
+    assert len(sector.projections) == 50
     assert all(len(projection) > 0 for projection in sector.projections.values())
     sector.network.run(0 * brian.ms)
 
@@ -43,7 +48,7 @@ def test_first_order_chemical_sector_builds_all_in_scope_records() -> None:
 def test_first_order_connected_sector_adds_all_gap_junction_records() -> None:
     brian.start_scope()
     sector = build_first_order_connected_sector(brian=brian)
-    assert len(sector.projections) == 52
+    assert len(sector.projections) == 53
     assert (
         sum(
             len(population.compiled.gap_junction_ports)
@@ -52,3 +57,31 @@ def test_first_order_connected_sector_adds_all_gap_junction_records() -> None:
         == 4
     )
     sector.network.run(0 * brian.ms)
+
+
+def test_modeldb_topology_applies_wrap_and_ring_metadata() -> None:
+    wrapped = next(
+        record
+        for record in MODELDB_FIRST_ORDER.projections
+        if record.id == "modeldb112923.projection.000"
+    )
+    pre, post, factor = modeldb_topology_pairs(wrapped, source_shape=(9, 9), target_shape=(9, 9))
+    center_to_left = factor[(pre == 40) & (post == 36)][0]
+    center_to_right = factor[(pre == 40) & (post == 44)][0]
+    assert center_to_left == pytest.approx(center_to_right)
+
+    ring = next(
+        record
+        for record in MODELDB_FIRST_ORDER.projections
+        if record.kernel is not None and record.kernel.ring
+    )
+    pre, post, factor = modeldb_topology_pairs(ring, source_shape=(9, 9), target_shape=(9, 9))
+    assert factor[(pre == 40) & (post == 40)][0] == 0
+
+
+def test_gap_junction_uses_kinness_equation_8_geometry() -> None:
+    result = kinness_gap_total_conductance_nS(0.03, diameter_mm=0.001, length_mm=0.005)
+    diameter_cm = 0.001 * 0.1
+    length_cm = 0.005 * 0.1
+    expected = 0.03 * diameter_cm / (4 * length_cm**2) * np.pi * diameter_cm * length_cm * 1e6
+    assert result == pytest.approx(expected)

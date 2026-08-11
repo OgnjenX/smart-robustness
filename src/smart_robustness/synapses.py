@@ -4,6 +4,7 @@ from typing import Any
 
 import numpy as np
 
+from .modeldb_projections import ModelDBProjection
 from .models.compartmental_hh import CompartmentalPopulation
 from .projections import ProjectionRecord, TopologyKind
 
@@ -173,6 +174,150 @@ def connect_gap_junction(
             ": amp (summed)"
         ),
         name=f"smart_{port.name}_{pre.group.name}_electrical",
+    )
+    synapse.connect(i=source_indices, j=target_indices)
+    synapse.g = total_nS * spatial_factor * brian.nsiemens
+    return synapse
+
+
+def modeldb_topology_pairs(
+    record: ModelDBProjection,
+    *,
+    source_shape: tuple[int, int],
+    target_shape: tuple[int, int],
+) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+    """Apply the connect method and spatial metadata serialized by KInNeSS."""
+
+    source_size = source_shape[0] * source_shape[1]
+    target_size = target_shape[0] * target_shape[1]
+    if record.method == "connectFromOne":
+        if source_size != target_size:
+            raise ValueError(f"{record.id}: connectFromOne population sizes differ")
+        indices = np.arange(source_size, dtype=int)
+        return indices, indices.copy(), np.ones(source_size)
+    pre = np.repeat(np.arange(source_size, dtype=int), target_size)
+    post = np.tile(np.arange(target_size, dtype=int), source_size)
+    if record.method == "connectFromAll":
+        return pre, post, np.ones(pre.size)
+    if record.method != "connectFromMany" or record.kernel is None:
+        raise ValueError(f"{record.id}: unsupported or incomplete KInNeSS method")
+    kernel = record.kernel
+    if kernel.sigma_x is None or kernel.sigma_y is None:
+        raise ValueError(f"{record.id}: KInNeSS Gaussian kernel lacks sigma")
+    pre_y, pre_x = np.divmod(pre, source_shape[1])
+    post_y, post_x = np.divmod(post, target_shape[1])
+    pre_x = pre_x - (source_shape[1] - 1) / 2
+    pre_y = pre_y - (source_shape[0] - 1) / 2
+    post_x = post_x - (target_shape[1] - 1) / 2
+    post_y = post_y - (target_shape[0] - 1) / 2
+    dx = np.abs(pre_x - post_x)
+    dy = np.abs(pre_y - post_y)
+    if kernel.border_effect == "wrap" and source_shape == target_shape:
+        dx = np.minimum(dx, source_shape[1] - dx)
+        dy = np.minimum(dy, source_shape[0] - dy)
+    factor = np.exp(-(dx**2 / (2 * kernel.sigma_x**2) + dy**2 / (2 * kernel.sigma_y**2))) / (
+        2 * np.pi * kernel.sigma_x * kernel.sigma_y
+    )
+    if kernel.ring:
+        # KInNeSS serializes no radius for a ring kernel. Its executable UI
+        # convention is retained here as a center-excluding Gaussian candidate
+        # until legacy source or a benchmark trace resolves the exact stencil.
+        factor[(dx == 0) & (dy == 0)] = 0
+    return pre, post, factor
+
+
+def connect_modeldb_projection(
+    record: ModelDBProjection,
+    *,
+    pre: CompartmentalPopulation,
+    post: CompartmentalPopulation,
+    source_shape: tuple[int, int],
+    target_shape: tuple[int, int],
+    brian: Any,
+) -> Any:
+    """Connect one exact ModelDB chemical record to its dedicated port."""
+
+    port = next(
+        (port for port in post.compiled.synaptic_ports if port.record_id == record.id),
+        None,
+    )
+    if port is None or record.weight is None:
+        raise ValueError(f"{record.id}: incomplete compiled ModelDB projection")
+    resource = "*transmitter_pre" if pre.compiled.depletion_enabled else ""
+    update = f"{port.name}_rise_post += w{resource}"
+    if port.rise_ms != port.fall_ms:
+        update += f"\n{port.name}_fall_post += w{resource}"
+    synapse = brian.Synapses(
+        pre.group,
+        post.group,
+        model="w : 1\nw_asymptote : 1 (constant)\nmodifiable : 1 (constant)",
+        on_pre=update,
+        name=f"modeldb_{port.name}_{pre.group.name}_to_{post.group.name}",
+    )
+    source_indices, target_indices, spatial_factor = modeldb_topology_pairs(
+        record, source_shape=source_shape, target_shape=target_shape
+    )
+    synapse.connect(i=source_indices, j=target_indices)
+    synapse.w = float(record.weight) * spatial_factor
+    asymptote = record.asymptotic_weight
+    synapse.w_asymptote = float(record.weight if asymptote is None else asymptote) * spatial_factor
+    synapse.modifiable = float(record.modifiable)
+    synapse.delay = float(record.delay_ms or 0.0) * brian.ms
+    return synapse
+
+
+def kinness_gap_total_conductance_nS(
+    axial_conductance: float, *, diameter_mm: float, length_mm: float
+) -> float:
+    """KInNeSS framework Equation 8, converted to total compartment nS."""
+
+    diameter_cm = diameter_mm * 0.1
+    length_cm = length_mm * 0.1
+    density_mS_cm2 = axial_conductance * diameter_cm / (4 * length_cm**2)
+    lateral_area_cm2 = np.pi * diameter_cm * length_cm
+    return float(density_mS_cm2 * lateral_area_cm2 * 1e6)
+
+
+def connect_modeldb_gap_junction(
+    record: ModelDBProjection,
+    *,
+    pre: CompartmentalPopulation,
+    post: CompartmentalPopulation,
+    source_shape: tuple[int, int],
+    target_shape: tuple[int, int],
+    brian: Any,
+) -> Any:
+    """Connect one ModelDB electrical projection using KInNeSS Equation 8."""
+
+    port = next(
+        (port for port in post.compiled.gap_junction_ports if port.record_id == record.id),
+        None,
+    )
+    if port is None or record.channel_conductance_mS_cm2 is None:
+        raise ValueError(f"{record.id}: incomplete ModelDB gap-junction record")
+    target = post.cell_spec.compartment(port.compartment)
+    source_compartment = record.source_compartment or port.compartment
+    source = pre.cell_spec.compartment(source_compartment)
+    total_nS = kinness_gap_total_conductance_nS(
+        record.channel_conductance_mS_cm2,
+        diameter_mm=target.diameter_mm,
+        length_mm=target.length_mm,
+    )
+    source_indices, target_indices, spatial_factor = modeldb_topology_pairs(
+        record, source_shape=source_shape, target_shape=target_shape
+    )
+    not_self = source_indices != target_indices
+    source_indices = source_indices[not_self]
+    target_indices = target_indices[not_self]
+    spatial_factor = spatial_factor[not_self]
+    synapse = brian.Synapses(
+        pre.group,
+        post.group,
+        model=(
+            "g : siemens (constant)\n"
+            f"i_{port.name}_post=g*(v_{source.name}_pre-v_{target.name}_post) : amp (summed)"
+        ),
+        name=f"modeldb_{port.name}_{pre.group.name}_electrical",
     )
     synapse.connect(i=source_indices, j=target_indices)
     synapse.g = total_nS * spatial_factor * brian.nsiemens

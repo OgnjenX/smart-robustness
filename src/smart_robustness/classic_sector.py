@@ -5,11 +5,15 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Any
 
+from .modeldb_projections import MODELDB_FIRST_ORDER
 from .models.compartmental_hh import CompartmentalPopulation, create_compartmental_hh_population
 from .models.modeldb112923 import FirstOrderPopulationFacts, first_order_population_facts
-from .models.ports import external_ports_for_target, gap_ports_for_target, ports_for_target
-from .projections import SUPPLEMENTARY_TABLE3, ConnectionKind
-from .synapses import connect_classic_projection, connect_gap_junction
+from .models.ports import (
+    modeldb_external_ports_for_target,
+    modeldb_gap_ports_for_target,
+    modeldb_ports_for_target,
+)
+from .synapses import connect_modeldb_gap_junction, connect_modeldb_projection
 
 
 @dataclass(slots=True)
@@ -49,13 +53,17 @@ def _population_parameters(facts: FirstOrderPopulationFacts) -> dict[str, Any]:
         "e_k_mV": facts.e_k_mV,
         "e_ca_mV": facts.e_ca_mV,
         "method": "rk4",
-        "synaptic_ports": ports_for_target(SUPPLEMENTARY_TABLE3.records, facts.canonical_name),
-        "gap_junction_ports": gap_ports_for_target(
-            SUPPLEMENTARY_TABLE3.records, facts.canonical_name
+        "synaptic_ports": modeldb_ports_for_target(
+            MODELDB_FIRST_ORDER.projections, facts.canonical_name
         ),
-        "external_input_ports": external_ports_for_target(
-            SUPPLEMENTARY_TABLE3.records, facts.canonical_name
+        "gap_junction_ports": modeldb_gap_ports_for_target(
+            MODELDB_FIRST_ORDER.projections, facts.canonical_name
         ),
+        "external_input_ports": modeldb_external_ports_for_target(
+            MODELDB_FIRST_ORDER.external_channels, facts.canonical_name
+        ),
+        "depletion_epsilon": facts.depletion_epsilon,
+        "depletion_recovery_ms": facts.depletion_recovery_ms,
     }
     if has_ahp:
         soma = facts.cell.soma
@@ -105,20 +113,20 @@ def build_first_order_chemical_sector(*, brian=None) -> FirstOrderSector:
     sector = build_first_order_intrinsic_sector(brian=brian)
     facts_by_name = {fact.canonical_name: fact for fact in sector.facts}
     projections: dict[str, Any] = {}
-    for record in SUPPLEMENTARY_TABLE3.records:
-        if record.kind is not ConnectionKind.CHEMICAL:
+    for record in MODELDB_FIRST_ORDER.projections:
+        if record.kind != "chemical":
             continue
-        if record.source.population not in sector.populations:
+        if record.source_population not in sector.populations:
             # The V2->V1 feedback projection belongs to the higher-order loop.
             continue
-        if record.target.population not in sector.populations:
+        if record.target_population not in sector.populations:
             continue
-        projections[record.id] = connect_classic_projection(
+        projections[record.id] = connect_modeldb_projection(
             record,
-            pre=sector.populations[record.source.population],
-            post=sector.populations[record.target.population],
-            source_shape=facts_by_name[record.source.population].shape,
-            target_shape=facts_by_name[record.target.population].shape,
+            pre=sector.populations[record.source_population],
+            post=sector.populations[record.target_population],
+            source_shape=facts_by_name[record.source_population].shape,
+            target_shape=facts_by_name[record.target_population].shape,
             brian=brian,
         )
     sector.projections = projections
@@ -135,15 +143,17 @@ def build_first_order_connected_sector(*, brian=None) -> FirstOrderSector:
     sector = build_first_order_chemical_sector(brian=brian)
     facts_by_name = {fact.canonical_name: fact for fact in sector.facts}
     electrical: dict[str, Any] = {}
-    for record in SUPPLEMENTARY_TABLE3.records:
-        if record.kind is not ConnectionKind.GAP_JUNCTION:
+    for record in MODELDB_FIRST_ORDER.projections:
+        if record.kind != "gap_junction":
             continue
-        electrical[record.id] = connect_gap_junction(
+        if record.source_population not in sector.populations:
+            continue
+        electrical[record.id] = connect_modeldb_gap_junction(
             record,
-            pre=sector.populations[record.source.population],
-            post=sector.populations[record.target.population],
-            source_shape=facts_by_name[record.source.population].shape,
-            target_shape=facts_by_name[record.target.population].shape,
+            pre=sector.populations[record.source_population],
+            post=sector.populations[record.target_population],
+            source_shape=facts_by_name[record.source_population].shape,
+            target_shape=facts_by_name[record.target_population].shape,
             brian=brian,
         )
     sector.projections.update(electrical)

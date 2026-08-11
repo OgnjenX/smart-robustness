@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
+from ..modeldb_projections import ModelDBExternalChannel, ModelDBProjection
 from ..projections import ConnectionKind, ProjectionRecord, Receptor
 from .currents import biexponential_normalization
 
@@ -37,6 +38,7 @@ class ExternalInputPortSpec:
     compartment: str
     conductance_density_mS_cm2: float
     reversal_mV: float
+    sensitivities_mV: tuple[float, float, float, float] = (0.0, 0.0, 0.0, 0.0)
 
 
 def chemical_port(record: ProjectionRecord, index: int) -> SynapticPortSpec:
@@ -132,6 +134,103 @@ def external_ports_for_target(
                 compartment=record.target.compartment,
                 conductance_density_mS_cm2=record.parsed.conductance_pS,
                 reversal_mV=record.parsed.reversal_mV,
+            )
+        )
+    return tuple(ports)
+
+
+def _modeldb_receptor(record: ModelDBProjection) -> Receptor:
+    channel = record.channel_name.upper()
+    if "GABA" in channel:
+        return Receptor.GABA
+    if "NMDA" in channel:
+        return Receptor.NMDA
+    return Receptor.AMPA
+
+
+def modeldb_chemical_port(record: ModelDBProjection, index: int) -> SynapticPortSpec:
+    if record.kind != "chemical":
+        raise ValueError(f"{record.id}: only chemical records define kinetic ports")
+    required = (
+        record.channel_conductance_mS_cm2,
+        record.reversal_mV,
+        record.rise_ms,
+        record.fall_ms,
+    )
+    if any(value is None for value in required):
+        raise ValueError(f"{record.id}: incomplete executable chemical projection")
+    rise_ms = float(record.rise_ms)
+    fall_ms = float(record.fall_ms)
+    receptor = _modeldb_receptor(record)
+    return SynapticPortSpec(
+        name=f"port_{index:03d}",
+        record_id=record.id,
+        compartment=record.target_compartment,
+        receptor=receptor,
+        reversal_mV=float(record.reversal_mV),
+        conductance_density_mS_cm2=float(record.channel_conductance_mS_cm2),
+        rise_ms=rise_ms,
+        fall_ms=fall_ms,
+        normalization=biexponential_normalization(rise_ms, fall_ms) if rise_ms != fall_ms else 1.0,
+        voltage_block=receptor is Receptor.NMDA,
+    )
+
+
+def modeldb_ports_for_target(
+    records: tuple[ModelDBProjection, ...], target_population: str
+) -> tuple[SynapticPortSpec, ...]:
+    chemical = tuple(
+        record
+        for record in records
+        if record.kind == "chemical" and record.target_population == target_population
+    )
+    return tuple(modeldb_chemical_port(record, index) for index, record in enumerate(chemical))
+
+
+def modeldb_gap_ports_for_target(
+    records: tuple[ModelDBProjection, ...], target_population: str
+) -> tuple[GapJunctionPortSpec, ...]:
+    gaps = tuple(
+        record
+        for record in records
+        if record.kind == "gap_junction" and record.target_population == target_population
+    )
+    return tuple(
+        GapJunctionPortSpec(
+            name=f"gap_{index:03d}",
+            record_id=record.id,
+            compartment=record.target_compartment,
+            conductance_density_mS_cm2=float(record.channel_conductance_mS_cm2),
+        )
+        for index, record in enumerate(gaps)
+        if record.channel_conductance_mS_cm2 is not None
+    )
+
+
+def modeldb_external_ports_for_target(
+    records: tuple[ModelDBExternalChannel, ...], target_population: str
+) -> tuple[ExternalInputPortSpec, ...]:
+    channels = tuple(
+        record
+        for record in records
+        if record.dependency == "input" and record.target_population == target_population
+    )
+    ports: list[ExternalInputPortSpec] = []
+    for index, record in enumerate(channels):
+        conductance = record.channel.get("g_bar")
+        reversal = record.channel.get("equilibriumPotential")
+        if conductance is None or reversal is None:
+            raise ValueError(f"{record.id}: incomplete ModelDB input channel")
+        ports.append(
+            ExternalInputPortSpec(
+                name=f"external_{index:03d}",
+                record_id=record.id,
+                compartment=record.target_compartment,
+                conductance_density_mS_cm2=float(conductance),
+                reversal_mV=float(reversal),
+                sensitivities_mV=tuple(
+                    float(record.gate.get(f"input{index}", 0.0)) for index in range(1, 5)
+                ),
             )
         )
     return tuple(ports)

@@ -44,6 +44,19 @@ serialized channel projections; the full two-area file contains 24 populations.
   somata omit it. The `kinness_serialized_edge` convention therefore applies
   the child connection value in both current directions, preserving the XML
   topology rather than manufacturing a root parameter.
+- The executable first-order area contains 55 projected gates after excluding
+  the self-triggered AHP gate: 51 chemical and four gap-junction records. This
+  set is not identical to the 55-row supplementary catalog; it includes
+  narrow/wide channels and different weights, asymptotes, delays, and topology
+  flags. A generated, integrity-pinned ModelDB catalog is therefore the
+  executable baseline, while the supplement remains an independent audit.
+- Ten voltage-driven input channels now follow KInNeSS Equations 4--5: their
+  four serialized sensitivities shift the effective driving potential from
+  red/green/blue/alpha source values in [0,255]. The eleventh external channel
+  is a direct current-injection gate governed by Equation 6 and remains to be
+  wired into the experiment protocol.
+- Gap-junction totals follow KInNeSS Equation 8 rather than treating XML
+  `g_bar` as an already converted membrane density.
 - The dedicated Figure 8 cell is not the Table 3 relay cell. It uses soma
   geometry 0.02×0.04 mm, 50/30 mS/cm² Na/K, and 250 mS/cm² T-current in soma
   and both dendrites. Its leak density is not serialized and remains a required
@@ -73,8 +86,8 @@ criterion (two early spikes and no late spikes) under the current candidate
 protocol. The depolarized condition still emits only one qualifying action
 potential and fails the tonic-train criterion. This is partial validation, not
 an official Figure 8 reproduction. Remaining audit targets are the legacy
-KInNeSS clamp/input semantics, membrane-capacitance default, and voltage-gate
-coordinate handling.
+clamp timing, membrane-capacitance default, and voltage-gate coordinate
+handling.
 
 ## Consequence for baseline status
 

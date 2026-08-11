@@ -55,18 +55,24 @@ Implemented:
   sizes: 812 cells and 1,950 compartments. This intrinsic-only sector uses the
   executable geometry, edge-serialized KInNeSS axial values, population-specific
   reversal potentials, and the network's 5/20-ms layer-5/layer-6II AHP profile.
-- projection-specific receptor ports for all 49 chemical records, including
+- a separate integrity-pinned derived catalog of all 55 executable ModelDB
+  projections (51 chemical and four electrical) plus 11 external channels;
+- projection-specific receptor ports for all 51 ModelDB chemical records, including
   AMPA/GABA dual-exponential kinetics, NMDA voltage block, and the equal-tau
   alpha-function case;
-- the 48 chemical projections whose source and target are both in the
-  first-order sector, with delays, depletion state, and supplementary
-  one-to-one/global/Gaussian topology; the V2-to-V1 record is reserved for the
-  higher-order loop;
-- all four first-order gap-junction records and both normalized bottom-up input
-  conductance ports;
-- CI validation split into independent Brian2 processes: 151 lightweight tests,
-  three intrinsic-sector tests, three connected-sector tests, and two long AHP
-  tests currently pass (159 total).
+- the 50 chemical projections whose source and target are both in the
+  first-order sector, with exact ModelDB delays, weights, asymptotes,
+  one/many/all methods, Gaussian sigmas, wrap/extend borders, and ring flags;
+- three in-scope gap-junction records using KInNeSS Equation 8 geometry; one
+  cross-area electrical record and two V2 chemical sources are reserved for
+  the higher-order loop;
+- all ten conductance-based KInNeSS input channels with four 0--255 source
+  dimensions and Equation 5 driving-potential semantics;
+- source-wide transmitter depletion on layer 5, layer 6II, and layer 6I using
+  the serialized recovery/depletion values;
+- CI validation split into independent Brian2 processes: 154 lightweight tests,
+  four sector-construction tests, five connectivity tests, and two long AHP
+  tests currently pass (165 total).
 
 Explicitly unresolved source anomalies:
 
@@ -86,9 +92,12 @@ Explicitly unresolved source anomalies:
 
 Not yet implemented or validated:
 
-- Brian2 instantiation of the supplementary projection catalog;
-- exact ModelDB kernel width/ring/wrap/border semantics for the connected
-  first-order sector, STDP, ACh vigilance,
+- direct Brian2 instantiation of the supplementary catalog (the executable
+  baseline instead uses the distinct, integrity-pinned ModelDB catalog while
+  retaining the supplement as an independent audit);
+- exact legacy meaning of the KInNeSS `ring` flag (currently retained as a
+  center-excluding Gaussian candidate), the remaining current-injection
+  channel, STDP, ACh vigilance,
   CSD/LFP geometry, and every published figure protocol;
 - quantitative reproduction of match/gamma and mismatch/beta/reset.
 

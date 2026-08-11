@@ -48,3 +48,6 @@ def test_first_order_source_cells_cover_all_populations_and_compartments() -> No
     layer5 = facts[2]
     assert layer5.ahp_density_mS_cm2 == 0.4
     assert (layer5.ahp_rise_ms, layer5.ahp_fall_ms) == (5, 20)
+    assert (layer5.depletion_epsilon, layer5.depletion_recovery_ms) == (0.5, 100)
+    layer6i = facts[4]
+    assert (layer6i.depletion_epsilon, layer6i.depletion_recovery_ms) == (1.0, 400)

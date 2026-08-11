@@ -62,6 +62,8 @@ class FirstOrderPopulationFacts:
     ahp_reversal_mV: float | None = None
     ahp_rise_ms: float | None = None
     ahp_fall_ms: float | None = None
+    depletion_epsilon: float | None = None
+    depletion_recovery_ms: float | None = None
 
 
 def _source_compartment(
@@ -140,6 +142,8 @@ def first_order_population_facts() -> tuple[FirstOrderPopulationFacts, ...]:
             ahp_reversal_mV=-70,
             ahp_rise_ms=5,
             ahp_fall_ms=20,
+            depletion_epsilon=0.5,
+            depletion_recovery_ms=100,
         ),
         FirstOrderPopulationFacts(
             "Layer_6_II",
@@ -155,6 +159,8 @@ def first_order_population_facts() -> tuple[FirstOrderPopulationFacts, ...]:
             ahp_reversal_mV=-70,
             ahp_rise_ms=5,
             ahp_fall_ms=20,
+            depletion_epsilon=0.5,
+            depletion_recovery_ms=100,
         ),
         FirstOrderPopulationFacts(
             "Layer_6_I",
@@ -165,6 +171,8 @@ def first_order_population_facts() -> tuple[FirstOrderPopulationFacts, ...]:
                 c("proximal_dendrite", 0.005, 0.01, 80, -70, 0.9),
             ),
             (9, 9),
+            depletion_epsilon=1.0,
+            depletion_recovery_ms=400,
         ),
         FirstOrderPopulationFacts(
             "Layer_4_INT",

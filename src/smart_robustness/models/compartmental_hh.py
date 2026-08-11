@@ -47,8 +47,14 @@ class CompartmentalPopulation:
         self.group.ach_rise[indices] += 1
         self.group.ach_fall[indices] += 1
 
-    def set_external_input(self, record_id: str, value: float, indices: Any = slice(None)) -> None:
-        """Set a normalized source-backed external conductance gate."""
+    def set_external_input(
+        self,
+        record_id: str,
+        channel: str,
+        value: float,
+        indices: Any = slice(None),
+    ) -> None:
+        """Set one KInNeSS external input channel in its documented 0--255 range."""
 
         port = next(
             (port for port in self.compiled.external_input_ports if port.record_id == record_id),
@@ -56,9 +62,11 @@ class CompartmentalPopulation:
         )
         if port is None:
             raise KeyError(f"no external input port for {record_id!r}")
-        if not 0 <= value <= 1:
-            raise ValueError("external input gate must be between zero and one")
-        getattr(self.group, port.name)[indices] = value
+        if channel not in {"red", "green", "blue", "alpha"}:
+            raise ValueError("channel must be red, green, blue, or alpha")
+        if not 0 <= value <= 255:
+            raise ValueError("external input value must be between zero and 255")
+        getattr(self.group, f"{port.name}_input_{channel}")[indices] = value
 
 
 def _set(group: Any, name: str, value: Any) -> None:
@@ -104,6 +112,8 @@ def create_compartmental_hh_population(
         isinstance(port, ExternalInputPortSpec) for port in external_input_ports
     ):
         raise TypeError("external_input_ports must be a tuple of ExternalInputPortSpec")
+    depletion_epsilon = params.get("depletion_epsilon")
+    depletion_recovery_ms = params.get("depletion_recovery_ms")
     enable_ahp_ach = params["enable_ahp_ach"]
     if not isinstance(enable_ahp_ach, bool):
         raise TypeError("enable_ahp_ach must be an explicit bool")
@@ -132,10 +142,14 @@ def create_compartmental_hh_population(
         synaptic_ports=synaptic_ports,
         gap_junction_ports=gap_junction_ports,
         external_input_ports=external_input_ports,
+        depletion_epsilon=depletion_epsilon,
+        depletion_recovery_ms=depletion_recovery_ms,
     )
     spike_reset = "armed = 0"
     if enable_ahp_ach:
         spike_reset += "; ahp_rise += 1; ahp_fall += 1"
+    if compiled.depletion_enabled:
+        spike_reset += f"; transmitter *= {1 - float(depletion_epsilon)}"
     group = brian.NeuronGroup(
         size,
         compiled.equations,
@@ -146,6 +160,8 @@ def create_compartmental_hh_population(
         name=name,
     )
     group.run_on_event("arm_spike", "armed = 1", when="after_thresholds", order=1)
+    if compiled.depletion_enabled:
+        group.transmitter = 1
     if enable_ahp_ach:
         group.g_ahp_max = float(params["ahp_max_conductance_nS"]) * brian.nsiemens
         group.ahp_event_weight = float(params["ahp_event_weight"])
@@ -178,8 +194,8 @@ def create_compartmental_hh_population(
             f"g_{port.name}",
             port.conductance_density_mS_cm2 * compartment.lateral_area_cm2 * 1e6 * brian.nsiemens,
         )
-        _set(group, f"e_{port.name}", port.reversal_mV * brian.mV)
-        _set(group, port.name, 0)
+        for channel in ("red", "green", "blue", "alpha"):
+            _set(group, f"{port.name}_input_{channel}", 0)
 
     for compartment in cell.compartments:
         compartment_name = compartment.name

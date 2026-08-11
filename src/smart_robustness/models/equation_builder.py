@@ -60,6 +60,7 @@ class CompiledCellEquations:
     synaptic_ports: tuple[SynapticPortSpec, ...]
     gap_junction_ports: tuple[GapJunctionPortSpec, ...]
     external_input_ports: tuple[ExternalInputPortSpec, ...]
+    depletion_enabled: bool
 
 
 def _enum(value, enum_type, label):
@@ -178,6 +179,8 @@ def compile_cell_equations(
     synaptic_ports: tuple[SynapticPortSpec, ...] = (),
     gap_junction_ports: tuple[GapJunctionPortSpec, ...] = (),
     external_input_ports: tuple[ExternalInputPortSpec, ...] = (),
+    depletion_epsilon: float | None = None,
+    depletion_recovery_ms: float | None = None,
 ) -> CompiledCellEquations:
     """Compile one source-specified cell; every ambiguous convention is required."""
 
@@ -216,6 +219,12 @@ def compile_cell_equations(
     for port in external_input_ports:
         if port.compartment not in compartment_names:
             raise ValueError(f"{port.record_id}: unknown target compartment {port.compartment}")
+    depletion_enabled = depletion_epsilon is not None or depletion_recovery_ms is not None
+    if depletion_enabled:
+        if depletion_epsilon is None or depletion_recovery_ms is None:
+            raise ValueError("depletion epsilon and recovery must be supplied together")
+        if not 0 <= depletion_epsilon <= 1 or depletion_recovery_ms <= 0:
+            raise ValueError("invalid source-backed transmitter depletion parameters")
     edges = build_axial_edges(cell, axial)
     axial_terms: dict[str, list[str]] = {c.name: [] for c in cell.compartments}
     axial_parameters: list[str] = []
@@ -237,6 +246,8 @@ def compile_cell_equations(
         lines.append(f"{parameter} : siemens (constant)")
     if enable_ahp_ach:
         lines.extend(_layer5_ahp_lines(ahp))
+    if depletion_enabled:
+        lines.append(f"dtransmitter/dt=(1-transmitter)/({depletion_recovery_ms}*ms) : 1")
     for port in synaptic_ports:
         block = f"1/(1+0.33*exp(-v_{port.compartment}/(16.7*mV)))" if port.voltage_block else "1"
         if port.rise_ms == port.fall_ms:
@@ -263,12 +274,28 @@ def compile_cell_equations(
     for port in gap_junction_ports:
         lines.append(f"i_{port.name} : amp")
     for port in external_input_ports:
+        effective_reversal = "+".join(
+            (
+                f"{port.reversal_mV}*mV",
+                *(
+                    f"{sensitivity}*mV*{port.name}_input_{channel}"
+                    for sensitivity, channel in zip(
+                        port.sensitivities_mV,
+                        ("red", "green", "blue", "alpha"),
+                        strict=True,
+                    )
+                ),
+            )
+        )
         lines.extend(
             (
-                f"i_{port.name}=g_{port.name}*{port.name}*(e_{port.name}-v_{port.compartment}) : amp",
+                f"e_{port.name}_effective={effective_reversal} : volt",
+                f"i_{port.name}=g_{port.name}*(e_{port.name}_effective-v_{port.compartment}) : amp",
                 f"g_{port.name} : siemens (constant)",
-                f"e_{port.name} : volt (constant)",
-                f"{port.name} : 1",
+                f"{port.name}_input_red : 1",
+                f"{port.name}_input_green : 1",
+                f"{port.name}_input_blue : 1",
+                f"{port.name}_input_alpha : 1",
             )
         )
     for compartment in cell.compartments:
@@ -319,4 +346,5 @@ def compile_cell_equations(
         synaptic_ports=synaptic_ports,
         gap_junction_ports=gap_junction_ports,
         external_input_ports=external_input_ports,
+        depletion_enabled=depletion_enabled,
     )

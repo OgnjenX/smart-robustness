@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import numpy as np
 import pytest
 
 brian = pytest.importorskip("brian2")
@@ -18,14 +19,14 @@ def test_first_order_intrinsic_sector_builds_all_source_cells() -> None:
     assert int(sector.populations["thalamic_nonspecific"].group.N) == 1
     assert (
         sum(len(population.compiled.synaptic_ports) for population in sector.populations.values())
-        == 49
+        == 51
     )
     assert (
         sum(
             len(population.compiled.external_input_ports)
             for population in sector.populations.values()
         )
-        == 2
+        == 10
     )
     assert (
         sum(
@@ -47,14 +48,28 @@ def test_network_layer5_and_layer6ii_use_serialized_fast_ahp() -> None:
         assert "dahp_fall/dt=-ahp_fall/(20.0*ms)" in population.compiled.equations
 
 
+def test_source_populations_expose_presynaptic_transmitter_depletion() -> None:
+    brian.start_scope()
+    sector = build_first_order_intrinsic_sector(brian=brian)
+    for name in (
+        "layer5_excitatory_v1",
+        "layer6ii_excitatory_v1",
+        "layer6i_excitatory_v1",
+    ):
+        population = sector.populations[name]
+        assert population.compiled.depletion_enabled
+        assert np.allclose(population.group.transmitter[:], 1.0)
+    assert not sector.populations["layer4_excitatory_v1"].compiled.depletion_enabled
+
+
 def test_bottom_up_gate_is_explicitly_addressable_by_source_record() -> None:
     brian.start_scope()
     sector = build_first_order_intrinsic_sector(brian=brian)
     relay = sector.populations["thalamic_relay"]
-    record_id = "relay.proximal_dendrite.from_input.input"
-    relay.set_external_input(record_id, 0.25, indices=[40])
+    record_id = "modeldb112923.external.002"
+    relay.set_external_input(record_id, "green", 64, indices=[40])
     port = next(port for port in relay.compiled.external_input_ports if port.record_id == record_id)
-    assert getattr(relay.group, port.name)[40] == pytest.approx(0.25)
-    assert getattr(relay.group, port.name)[0] == pytest.approx(0.0)
-    with pytest.raises(ValueError, match="between zero and one"):
-        relay.set_external_input(record_id, 1.1)
+    assert getattr(relay.group, f"{port.name}_input_green")[40] == pytest.approx(64)
+    assert getattr(relay.group, f"{port.name}_input_green")[0] == pytest.approx(0.0)
+    with pytest.raises(ValueError, match="between zero and 255"):
+        relay.set_external_input(record_id, "green", 256)

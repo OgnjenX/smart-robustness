@@ -37,11 +37,13 @@ nonblank supplement cells.
   layer-5 AHP/ACh protocols.
 
 Current checkpoint: the first-order sector builds all 812 source cells and
-1,950 compartments, 48 in-scope chemical projections, four gap-junction
-records, and two externally controllable bottom-up ports. Projection-specific
-kinetics, delays, and depletion are executable. Exact ModelDB kernel boundaries,
-plasticity, and published stimulation protocols remain required before this
-milestone is a functional network reproduction.
+1,950 compartments, 50 in-scope ModelDB chemical projections, three in-scope
+gap-junction records, and ten externally controllable voltage-driven input
+channels. Projection-specific kinetics, delays, topology metadata, KInNeSS
+input semantics, and source-wide transmitter depletion are executable. Exact
+legacy ring-kernel semantics, current injection, plasticity, and published
+stimulation protocols remain required before this milestone is a functional
+network reproduction.
 
 Exit: equation/unit tests, numerical convergence tests, isolated-cell report,
 and explicit resolution of voltage-coordinate ambiguities.

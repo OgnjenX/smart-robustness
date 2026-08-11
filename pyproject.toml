@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "smart-robustness"
+version = "0.1.0"
+description = "Reproducible robustness experiments for Synchronous Matching ART"
+readme = "README.md"
+requires-python = ">=3.11"
+license = {text = "MIT"}
+authors = [{name = "OgnjenX"}]
+dependencies = [
+  "brian2>=2.8,<3",
+  "numpy>=1.26,<2",
+  "PyYAML>=6,<7",
+  "scipy>=1.14,<2",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8,<9", "pytest-cov>=6,<7", "ruff>=0.11,<1"]
+plots = ["matplotlib>=3.9,<4"]
+
+[project.scripts]
+smart-run = "smart_robustness.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"

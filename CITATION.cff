@@ -1,0 +1,24 @@
+cff-version: 1.2.0
+title: SMART robustness
+message: Please cite this software and the primary SMART paper when using this repository.
+type: software
+authors:
+  - family-names: OgnjenX
+version: 0.1.0
+date-released: 2026-08-11
+license: MIT
+preferred-citation:
+  type: article
+  authors:
+    - family-names: Grossberg
+      given-names: Stephen
+    - family-names: Versace
+      given-names: Massimiliano
+  title: Spikes, synchrony, and attentive learning by laminar thalamocortical circuits
+  journal: Brain Research
+  volume: 1218
+  start: 278
+  end: 312
+  year: 2008
+  doi: 10.1016/j.brainres.2008.04.024
+

@@ -1,0 +1,52 @@
+reference:
+  citation: Grossberg and Versace (2008), Brain Research 1218:278-312
+  doi: 10.1016/j.brainres.2008.04.024
+  pdf: https://sites.bu.edu/steveg/files/2016/06/GroVer2008BR.pdf
+
+status_definitions:
+  published: copied from the primary paper or its supplement
+  derived: algebraically derived from published quantities
+  calibrated: fitted during an explicitly documented replication step
+  exploratory: selected only to exercise software or formulate a hypothesis
+
+parameters:
+  model.classic_hh.e_na:
+    value: 50 mV
+    status: published
+    source: Methods 4.5, equation discussion after Eq. 18
+  model.classic_hh.e_k:
+    value: -90 mV
+    status: published
+    source: Methods 4.5, equation discussion after Eq. 18
+  model.classic_hh.spike_threshold:
+    value: 30 mV after an upward crossing from below 0 mV
+    status: published
+    source: Methods 4.4, Eq. 8 discussion
+  model.classic_hh.e_leak:
+    value: cell-specific; M0 cortical reference uses -65 mV
+    status: published
+    source: Table 3; M0 corresponds to cortical excitatory cell classes
+  model.classic_hh.rate_voltage_shift:
+    value: V_rate = V_membrane + 67 mV
+    status: derived
+    source: transformation between Table 3 absolute voltages and Methods 4.5 gate equations
+  synapse.shape:
+    value: normalized dual exponential
+    status: published
+    source: Methods 4.2, Eq. 3
+  synapse.resource_target:
+    value: 1
+    status: published
+    source: Methods 4.4, Eq. 7
+  benchmark.population_sizes:
+    value: see configs/*.yaml
+    status: exploratory
+    source: reduced software benchmark; not a paper parameter
+  model.classic_hh.reference_soma_totals:
+    value: C=78.54 pF, gNa=3927 nS, gK=2356 nS, gL=3.93 nS
+    status: derived
+    source: Table 3 layer 2/3 excitatory soma dimensions and channel densities; cylindrical area pi*D*L
+  benchmark.connection_weights:
+    value: see configs/*.yaml
+    status: exploratory
+    source: reduced software benchmark; not a paper parameter

@@ -1,0 +1,50 @@
+seed: 20260811
+condition: mismatch
+duration_ms: 1000
+dt_ms: 0.05
+output_dir: results
+
+model:
+  name: classic_hh
+  parameters:
+    C_m_pF: 78.54
+    g_na_nS: 3927
+    g_k_nS: 2356
+    g_l_nS: 3.93
+    e_l_mV: -65
+    v_init_mV: -65
+    tau_exc_rise_ms: 0.5
+    tau_exc_decay_ms: 5
+    tau_inh_rise_ms: 1
+    tau_inh_decay_ms: 10
+
+network:
+  populations:
+    thalamus_core: 16
+    cortex_exc: 32
+    cortex_inh: 8
+    trn: 8
+    nonspecific: 8
+  drive_pA:
+    thalamus_core: 40
+    cortex_exc: 20
+    cortex_inh: 20
+    trn: 10
+    nonspecific: 0
+  match_bias_pA: 50
+  mismatch_bias_pA: 80
+  connections:
+    - {pre: thalamus_core, post: cortex_exc, receptor: exc, p: 0.35, weight_nS: 20, delay_ms: 2}
+    - {pre: cortex_exc, post: thalamus_core, receptor: exc, p: 0.25, weight_nS: 12, delay_ms: 3}
+    - {pre: cortex_exc, post: cortex_inh, receptor: exc, p: 0.4, weight_nS: 20, delay_ms: 1}
+    - {pre: cortex_inh, post: cortex_exc, receptor: inh, p: 0.5, weight_nS: 30, delay_ms: 1}
+    - {pre: thalamus_core, post: trn, receptor: exc, p: 0.4, weight_nS: 15, delay_ms: 2}
+    - {pre: trn, post: thalamus_core, receptor: inh, p: 0.5, weight_nS: 25, delay_ms: 2}
+    - {pre: nonspecific, post: cortex_inh, receptor: exc, p: 0.5, weight_nS: 25, delay_ms: 3, depletion: 0.2, recovery_ms: 150}
+
+analysis:
+  population: cortex_exc
+  smooth_ms: 3
+  bands:
+    beta_hz: [12, 30]
+    gamma_hz: [30, 70]

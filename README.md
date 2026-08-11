@@ -28,10 +28,12 @@ documented stimulus and analysis procedures:
 3. the relevant cell-level firing modes and the direction of the paper's
    ablation/parameter effects.
 
-This repository currently provides **Milestone 1**: equation-tested reference
-components, the complete recovered first-order connection catalog, predeclared
-validation targets, a parameterized minimal benchmark, provenance checks, and
-swap-ready interfaces. It does **not yet claim a full
+This repository has completed **Milestone 1** and is actively validating the
+**Milestone 2 multicompartment cell kernel**: equation-tested reference
+components, the complete recovered first-order connection catalog, the
+official ModelDB executable-source audit, all 12 Table 3 cell classes, named
+KInNeSS/paper alternatives, predeclared validation targets, and swap-ready
+interfaces. It does **not yet claim a full
 replication** of the paper's two 9×9 thalamocortical loops. See
 [`docs/replication-status.md`](docs/replication-status.md).
 The acceptance criteria are fixed in
@@ -53,7 +55,7 @@ measurements, and validation criteria do not depend on a particular cell model.
 ```text
 configs/                 reproducible experiment definitions
 src/smart_robustness/
-  models/                swappable neuron-model registry and Brian2 equations
+  models/                swappable neuron registry, Table 3 cells, and Brian2 equations
   projections.py         typed Supplementary Table 3 connection catalog
   data/                  packaged source-backed projection records
   synapses.py            dual-exponential conductance + transmitter depletion
@@ -67,8 +69,9 @@ docs/                    provenance ledger and replication roadmap
 The boundary for neuron-model substitution is `models.create_population(...)`.
 Circuit code refers to declared receptor ports (`exc`, `inh`, and `reset`) rather
 than embedding a neuron's equations. `classic_hh` is the reference target;
-`adex`, `gif`, and `multicompartment_hh` are explicit planned backends rather
-than silently approximated aliases.
+`multicompartment_hh` is the in-progress classic baseline kernel. `adex` and
+`gif` remain explicit planned backends rather than silently approximated
+aliases.
 
 ## Install and run
 
@@ -100,8 +103,8 @@ values must be labeled as such and must not be described as published values.
 The immediate sequence is deliberately narrow:
 
 - reproduce isolated published cell behaviors;
-- consume the transcribed Table 3 cell catalog in multicompartment dynamics;
-- encode and independently verify the recovered supplementary connection table;
+- complete isolated-cell validation of the source-audited multicompartment
+  kernel;
 - reproduce one full first-order LGN–V1–TRN–nonspecific-thalamus sector;
 - reproduce match→gamma and mismatch→beta/reset benchmarks;
 - freeze the validated baseline before adding AdEx, GIF, alternative HH, and

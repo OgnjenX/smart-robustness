@@ -25,22 +25,42 @@ transmitter-depletion annotations for the first-order thalamocortical loop.
 Source documents are used for transcription and verification but are not
 redistributed in this repository.
 
-## Original executable-model record
+## Original executable-model backup (recovered)
 
 [ModelDB accession 112922](https://modeldb.science/112922) records the SMART
-implementation as a KInNeSS/NeuroML model. Its preserved author-era page links
-to `Brain_Research_Paper_KINNESS_SMART_network.rar`, described as the network
-description and input stimuli used for the article. The surviving
-[ModelDB GitHub mirror](https://github.com/ModelDBRepository/112922) contains the
-catalog page and assets, but not that executable payload.
+implementation and points to alternate version
+[112923](https://modeldb.science/112923), labeled “backup of web link.” The
+backup remains downloadable at
+`https://modeldb.science/download/112923` and contains:
 
-The original BU/KInNeSS host is no longer reliably reachable, and an initial
-exact-URL Internet Archive query found no archived copy. The implementation
-therefore uses the paper and recovered Elsevier supplement as primary sources
-while keeping undocumented initial states, seeds, and exact connection
-realizations explicitly non-identifiable. If the bundle is later recovered, it
-will be audited against the reconstruction and inspected for a model-specific
-license before any redistribution.
+- `SMART.nml`, the two-area KInNeSS network;
+- `Ca_rebound.xml`, the dedicated thalamic rebound network used for Figure 8;
+- `Layer_5_and_Maynert_AHP_ACh.nml`, the dedicated AHP/ACh network;
+- horizontal and vertical stimulus files and the author README.
+
+Pinned SHA-256 hashes are recorded in `models/modeldb112923.py`. The archive's
+README contains a copyright notice but no explicit redistribution license, so
+the raw files are downloaded into the ignored source-audit directory and are
+not vendored. Extracted model facts and source hashes are reproducible without
+republishing the archive.
+
+## Contemporaneous simulator specification
+
+Versace, M., Ames, H., Léveillé, J., Fortenberry, B., and Gorchetchnikov, A.
+(2008). *KInNeSS: A modular framework for computational neuroscience*.
+Neuroinformatics 6, 291–309. DOI:
+[10.1007/s12021-008-9021-2](https://doi.org/10.1007/s12021-008-9021-2).
+The [Boston University manuscript](https://open.bu.edu/items/0e83be53-0aa9-4e52-90a0-d4c071205d62)
+defines the exact KInNeSS axial Equation 7, `Simple tau` function, normalized
+dual-exponential synapse, transmitter depletion, and fourth-order Runge–Kutta
+integration used to interpret the SMART XML. The audited PDF has SHA-256
+`0f445537cc2e47a21c525f9cbd59cb5d7bd56d86bd195d0a772a4413c522024c`.
+
+The archived 2008 download page identifies KInNeSS 0.3.4 RC2 and SANNDRA 1.2.0
+RC3 as the contemporaneous releases. Their GPL source archives were not
+captured by the Internet Archive, but the archived SANNDRA API landing page and
+CVS history remain useful corroborating records. No simulator source code is
+copied into this repository.
 
 ## Known source ambiguity
 
@@ -48,5 +68,8 @@ Table 3 reports a cell-specific `E_L` and identifies it as the leakage-current
 equilibrium potential. The Methods 4.5 text surrounding Equation 20 also states
 `E_leak = 0 mV` while writing the leak current as proportional to `-V`. The
 implementation currently treats the Table 3 values as physical leak reversals
-and records the voltage-coordinate reconciliation as derived, pending
-independent validation against the original KInNeSS/NeuroML implementation.
+and records the voltage-coordinate reconciliation as derived, pending full
+behavioral validation. The recovered ModelDB files and KInNeSS framework paper
+now resolve the serialized equation roles and axial formula, while the legacy
+Figure 8 leak/capacitance defaults and clamp semantics remain open; see
+`modeldb-112923-audit.md`.

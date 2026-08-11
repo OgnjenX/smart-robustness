@@ -41,6 +41,11 @@ Implemented:
   AHP conductance required as an explicit calibration parameter;
 - a predeclared Figure 8 isolated-relay protocol and qualitative tonic/burst
   scorer.
+- recovered KInNeSS 2008 equation semantics, including the `Simple tau`
+  function and exact directional axial Equation 7;
+- separate paper and executable AHP profiles, plus source-specific Figure 8
+  cell geometry and channel densities;
+- explicit specific-capacitance selection instead of a hidden default.
 
 Explicitly unresolved source anomalies:
 
@@ -48,14 +53,15 @@ Explicitly unresolved source anomalies:
   corrections: a literal `N` receptor label, a delay printed as `01`, an NMDA
   record printed with -70 mV reversal, and a plasticity tuple printed in the
   Gaussian-spread row;
-- the original KInNeSS/NeuroML archive has not been recovered, so initial states,
-  exact connection realizations, seeds, and raw output traces remain unavailable.
+- ModelDB backup 112923 has now been recovered and integrity-pinned; its raw
+  files are not vendored because the archive has no explicit redistribution license.
 - the paper's printed sodium activation coefficient differs by a factor of ten
   from the standard Traub--Miles form, and its calcium steady-state expressions
   are greater than one over physiological voltages unless interpreted as
   reciprocals;
 - the Figure 8 caption does not report the hyperpolarizing clamp voltage or
-  exact epoch durations.
+  exact epoch durations, and the legacy Figure 8 XML omits leak and membrane
+  capacitance values.
 
 Not yet implemented or validated:
 
@@ -69,6 +75,17 @@ reciprocal T gates, Table 3 calcium density, and a -80 mV pre-pulse clamp)
 produces sustained tonic trains in both conditions. It therefore fails the
 published transient-burst signature and is retained as a negative validation
 result, not as a reproduction.
+
+That candidate predates recovery of the dedicated `Ca_rebound.xml` model and
+is now classified as a useful failed paper-only reconstruction. The recovered
+file resolves the T-gate equation roles and supplies a different Figure 8 cell;
+validation of that executable-source profile is the active M2 task.
+
+The latest source-specific candidate now reproduces the transient
+hyperpolarized burst signature, but not the depolarized tonic train. This
+improvement followed correction of T-gate initialization into the absolute
+voltage coordinate. It remains a partial result and is not promoted to a
+reproduction claim.
 
 Accordingly, output from M2 is a source/audit benchmark, not evidence that
 the 2008 results have already been replicated.

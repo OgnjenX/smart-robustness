@@ -77,6 +77,8 @@ T_TYPE_CALCIUM_SOURCE = EquationSource(
     notes=(
         "Equations 24 and 27 are printed as additive expressions without reciprocals.",
         "A reciprocal interpretation is exposed separately and is not silently selected.",
+        "ModelDB backup 112923 identifies Eqs. 23/26 as m_inf and Eqs. 24/27 as tau.",
+        "The executable backup uses 19.15, rather than the paper's 19.5, for tau_h.",
     ),
 )
 
@@ -89,7 +91,11 @@ AHP_ACH_SOURCE = EquationSource(
     local_pdf=GV2008_LOCAL_PDF,
     notes=(
         "The AHP maximal conductance is not numerically specified in the Methods text.",
-        "Only the published dual-exponential time constants are fixed here.",
+        "The paper profile uses 80/100 ms AHP kinetics.",
+        (
+            "ModelDB 112923 supplies a separate executable profile with 80/150 ms kinetics, "
+            "0.1 mS/cm2 channel density, event weight 4.5, and 3 ms delay."
+        ),
     ),
 )
 
@@ -103,6 +109,7 @@ G_CA_MSIEMENS_CM2 = 250.0
 # Methods 4.7 dual-exponential time constants.
 AHP_RISE_MS = 80.0
 AHP_FALL_MS = 100.0
+AHP_MODELDB_FALL_MS = 150.0
 ACH_RISE_MS = 5.0
 ACH_FALL_MS = 6.0
 
@@ -130,6 +137,7 @@ def biexponential_normalization(rise_ms: float, fall_ms: float) -> float:
 
 
 AHP_NORMALIZATION = biexponential_normalization(AHP_RISE_MS, AHP_FALL_MS)
+AHP_MODELDB_NORMALIZATION = biexponential_normalization(AHP_RISE_MS, AHP_MODELDB_FALL_MS)
 ACH_NORMALIZATION = biexponential_normalization(ACH_RISE_MS, ACH_FALL_MS)
 
 
@@ -150,6 +158,14 @@ class TTypeGateConvention(StrEnum):
 
     PRINTED_LITERAL = "printed_literal"
     RECIPROCAL = "reciprocal"
+    MODELDB_112923 = "modeldb_112923"
+
+
+class AHPConvention(StrEnum):
+    """Paper text versus the dedicated executable AHP/ACh model."""
+
+    PAPER_TEXT = "paper_text"
+    MODELDB_112923 = "modeldb_112923"
 
 
 class NaKRateConvention(StrEnum):
@@ -277,6 +293,8 @@ def t_type_m_inf(v_mV: float, convention: TTypeGateConvention) -> float:
     """Eq. 24 under a required literal or whole-expression reciprocal convention."""
 
     selected = _require_t_type_convention(convention)
+    if selected is TTypeGateConvention.MODELDB_112923:
+        return modeldb_t_type_m_inf(v_mV)
     literal = _t_type_m_literal(v_mV)
     if selected is TTypeGateConvention.PRINTED_LITERAL:
         return literal
@@ -287,10 +305,36 @@ def t_type_h_inf(v_mV: float, convention: TTypeGateConvention) -> float:
     """Eq. 27 under a required literal or whole-expression reciprocal convention."""
 
     selected = _require_t_type_convention(convention)
+    if selected is TTypeGateConvention.MODELDB_112923:
+        return modeldb_t_type_h_inf(v_mV)
     literal = _t_type_h_literal(v_mV)
     if selected is TTypeGateConvention.PRINTED_LITERAL:
         return literal
     return 1.0 / literal
+
+
+def modeldb_t_type_m_inf(v_mV: float) -> float:
+    """Activation sigmoid encoded as ``m_inf`` in ModelDB backup 112923."""
+
+    return _inverse_one_plus_exp((-63.0 - v_mV) / 7.8)
+
+
+def modeldb_t_type_tau_m_ms(v_mV: float) -> float:
+    """Activation time constant encoded as ``Simple_Tau`` in backup 112923."""
+
+    return 2.44 + 2.506e-2 * math.exp(-9.84e-2 * v_mV)
+
+
+def modeldb_t_type_h_inf(v_mV: float) -> float:
+    """Inactivation sigmoid encoded as ``m_inf`` in ModelDB backup 112923."""
+
+    return _inverse_one_plus_exp((v_mV + 83.5) / 6.3)
+
+
+def modeldb_t_type_tau_h_ms(v_mV: float) -> float:
+    """Inactivation time constant encoded as ``Simple_Tau`` in backup 112923."""
+
+    return 19.15 + 7.171e-2 * math.exp(-10.54e-2 * v_mV)
 
 
 # Brian2-ready fragments. ``v_paper`` is intentionally an external voltage so
@@ -318,6 +362,16 @@ def t_type_calcium_equations(convention: TTypeGateConvention) -> str:
     """Return Brian2-ready Eqs. 21-27 under an explicit gate convention."""
 
     selected = _require_t_type_convention(convention)
+    if selected is TTypeGateConvention.MODELDB_112923:
+        return r"""
+i_ca = g_ca*m_ca**3*h_ca*(e_ca-v_membrane) : amp
+dm_ca/dt = (m_ca_inf-m_ca)/tau_m_ca : 1
+m_ca_inf = 1/(exp((-63*mV-v_membrane)/(7.8*mV))+1) : 1
+tau_m_ca = (2.44+2.506e-2*exp(-9.84e-2*v_membrane/mV))*ms : second
+dh_ca/dt = (h_ca_inf-h_ca)/tau_h_ca : 1
+h_ca_inf = 1/(exp((v_membrane+83.5*mV)/(6.3*mV))+1) : 1
+tau_h_ca = (19.15+7.171e-2*exp(-10.54e-2*v_membrane/mV))*ms : second
+"""
     m_literal = "2.44 + 2.506e-2*exp(-9.84e-2*v_paper/mV)"
     h_literal = "19.5 + 7.171e-2*exp(-10.54e-2*v_paper/mV)"
     if selected is TTypeGateConvention.RECIPROCAL:

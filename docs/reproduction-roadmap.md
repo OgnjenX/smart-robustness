@@ -94,12 +94,11 @@ Exit: full two-loop structural audit and higher-order validation report.
 Exit: a versioned classic baseline and a robustness experiment matrix that can
 distinguish architecture-level effects from neuron-model-dependent effects.
 
-## Original-source recovery track
+## Original-source recovery track (recovered)
 
-ModelDB accession 112922 preserves metadata and an author-era link to
-`Brain_Research_Paper_KINNESS_SMART_network.rar`, described as the model network
-and input stimuli. The public ModelDB GitHub mirror does not contain the payload,
-and no exact Internet Archive snapshot was found during the initial recovery
-attempt. Recovery remains valuable because it may resolve initial states,
-connectivity realizations, stimuli, and analysis scripts. Any recovered archive
-must be inspected for a model-specific license before redistribution.
+ModelDB alternate version 112923 preserves the complete source bundle and was
+recovered from ModelDB's download endpoint. Its `SMART.nml`, dedicated Figure 8
+calcium-rebound XML, dedicated AHP/ACh NeuroML, and stimuli are now the primary
+executable references. The archive has no explicit redistribution license, so
+only hashes and extracted facts are committed. M2–M6 must audit existing
+paper-derived code against this source before claiming reproduction.

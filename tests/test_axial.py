@@ -20,10 +20,11 @@ def _edge(cell_name: str, convention: AxialConvention, near_name: str):
     )
 
 
-def test_both_adr_conventions_are_named_and_neither_is_default() -> None:
+def test_all_axial_conventions_are_named_and_none_is_default() -> None:
     assert {convention.value for convention in AxialConvention} == {
         "paper_literal",
         "symmetric_cable",
+        "kinness_2008",
     }
     assert (
         inspect.signature(build_axial_edges).parameters["convention"].default
@@ -87,9 +88,7 @@ def test_paper_literal_trn_proximal_hand_calculation() -> None:
     expected_area_cm2 = math.pi * 0.001 * 0.005
     expected_total_nS = expected_density_mS_cm2 * expected_area_cm2 * 1e6
     assert expected_density_mS_cm2 == pytest.approx(1.0)
-    assert edge.conductance_density_into_far_mS_cm2 == pytest.approx(
-        expected_density_mS_cm2
-    )
+    assert edge.conductance_density_into_far_mS_cm2 == pytest.approx(expected_density_mS_cm2)
     assert edge.conductance_into_far_nS == pytest.approx(expected_total_nS)
     assert edge.conductance_into_far_nS == pytest.approx(15.7079632679)
 
@@ -101,19 +100,35 @@ def test_paper_literal_preserves_directional_asymmetry() -> None:
     assert edge.conductance_into_near_nS != pytest.approx(edge.conductance_into_far_nS)
 
 
+def test_kinness_2008_trn_edge_matches_framework_equation_7() -> None:
+    edge = _edge("trn", AxialConvention.KINNESS_2008, "soma")
+
+    d_soma, l_soma = 0.005, 0.005
+    d_dendrite, l_dendrite = 0.001, 0.005
+    rho = 10.0
+    expected_soma_density = (
+        (1 / rho) * (d_soma**2 / l_soma + d_dendrite**2 / l_dendrite) / (8 * d_soma * l_soma)
+    )
+    expected_dendrite_density = (
+        (1 / rho)
+        * (d_dendrite**2 / l_dendrite + d_soma**2 / l_soma)
+        / (8 * d_dendrite * l_dendrite)
+    )
+
+    assert edge.conductance_density_into_near_mS_cm2 == pytest.approx(expected_soma_density)
+    assert edge.conductance_density_into_far_mS_cm2 == pytest.approx(expected_dendrite_density)
+    assert edge.convention is AxialConvention.KINNESS_2008
+
+
 def test_symmetric_trn_edge_matches_two_half_resistances_in_series() -> None:
     edge = _edge("trn", AxialConvention.SYMMETRIC_CABLE, "soma")
 
     soma_half_resistance_kohm = 10 * (0.005 / 2) / (math.pi * (0.005 / 2) ** 2)
     proximal_half_resistance_kohm = 10 * (0.005 / 2) / (math.pi * (0.001 / 2) ** 2)
-    expected_conductance_nS = 1e6 / (
-        soma_half_resistance_kohm + proximal_half_resistance_kohm
-    )
+    expected_conductance_nS = 1e6 / (soma_half_resistance_kohm + proximal_half_resistance_kohm)
 
     assert edge.near.half_resistance_kohm == pytest.approx(soma_half_resistance_kohm)
-    assert edge.far.half_resistance_kohm == pytest.approx(
-        proximal_half_resistance_kohm
-    )
+    assert edge.far.half_resistance_kohm == pytest.approx(proximal_half_resistance_kohm)
     assert edge.conductance_into_near_nS == pytest.approx(expected_conductance_nS)
     assert edge.conductance_into_far_nS == pytest.approx(expected_conductance_nS)
     assert expected_conductance_nS == pytest.approx(30.2076216691)
@@ -121,9 +136,7 @@ def test_symmetric_trn_edge_matches_two_half_resistances_in_series() -> None:
 
 def test_symmetric_edges_conserve_current_and_convert_ns_mv_to_pa() -> None:
     for edge in build_table3_axial_edges(AxialConvention.SYMMETRIC_CABLE):
-        assert edge.conductance_into_near_nS == pytest.approx(
-            edge.conductance_into_far_nS
-        )
+        assert edge.conductance_into_near_nS == pytest.approx(edge.conductance_into_far_nS)
         current_near_pA, current_far_pA = edge.currents_pA(-70.0, -60.0)
         assert current_near_pA > 0
         assert current_far_pA < 0
@@ -136,15 +149,11 @@ def test_endpoint_conductance_densities_recover_total_conductance() -> None:
     for convention in AxialConvention:
         for edge in build_table3_axial_edges(convention):
             assert (
-                edge.conductance_density_into_near_mS_cm2
-                * edge.near.lateral_area_cm2
-                * 1e6
+                edge.conductance_density_into_near_mS_cm2 * edge.near.lateral_area_cm2 * 1e6
                 == pytest.approx(edge.conductance_into_near_nS)
             )
             assert (
-                edge.conductance_density_into_far_mS_cm2
-                * edge.far.lateral_area_cm2
-                * 1e6
+                edge.conductance_density_into_far_mS_cm2 * edge.far.lateral_area_cm2 * 1e6
                 == pytest.approx(edge.conductance_into_far_nS)
             )
 
@@ -187,7 +196,9 @@ def test_invalid_geometry_and_resistivity_fail_loudly(
 
 def test_invalid_cell_structure_and_convention_fail_loudly() -> None:
     with pytest.raises(ValueError, match="cell name must be non-empty"):
-        build_axial_edges(CellSpec("", (_valid_compartment(), _valid_compartment("d"))), "paper_literal")
+        build_axial_edges(
+            CellSpec("", (_valid_compartment(), _valid_compartment("d"))), "paper_literal"
+        )
     with pytest.raises(ValueError, match="at least two compartments"):
         build_axial_edges(CellSpec("single", (_valid_compartment(),)), "paper_literal")
     with pytest.raises(ValueError, match="compartment names must be unique"):

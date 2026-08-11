@@ -11,8 +11,11 @@ from .currents import (
     ACH_NORMALIZATION,
     ACH_RISE_MS,
     AHP_FALL_MS,
+    AHP_MODELDB_FALL_MS,
+    AHP_MODELDB_NORMALIZATION,
     AHP_NORMALIZATION,
     AHP_RISE_MS,
+    AHPConvention,
     NaKRateConvention,
     TTypeGateConvention,
 )
@@ -45,6 +48,7 @@ class CompiledCellEquations:
     nak_rate_convention: NaKRateConvention
     calcium_gate_convention: TTypeGateConvention
     calcium_density_convention: CalciumDensityConvention
+    ahp_convention: AHPConvention
     compartments: tuple[str, ...]
     axial_parameter_names: tuple[str, ...]
 
@@ -90,6 +94,18 @@ def _nak_lines(
 def _calcium_lines(
     name: str, coordinate: VoltageCoordinate, gate: TTypeGateConvention
 ) -> list[str]:
+    if gate is TTypeGateConvention.MODELDB_112923:
+        v = f"v_{name}"
+        return [
+            f"dm_ca_{name}/dt=(m_ca_inf_{name}-m_ca_{name})/tau_m_ca_{name} : 1",
+            f"dh_ca_{name}/dt=(h_ca_inf_{name}-h_ca_{name})/tau_h_ca_{name} : 1",
+            f"m_ca_inf_{name}=1/(exp((-63*mV-{v})/(7.8*mV))+1) : 1",
+            f"tau_m_ca_{name}=(2.44+2.506e-2*exp(-9.84e-2*{v}/mV))*ms : second",
+            f"h_ca_inf_{name}=1/(exp(({v}+83.5*mV)/(6.3*mV))+1) : 1",
+            f"tau_h_ca_{name}=(19.15+7.171e-2*exp(-10.54e-2*{v}/mV))*ms : second",
+            f"i_ca_{name}=g_ca_{name}*m_ca_{name}**3*h_ca_{name}*(e_ca-{v}) : amp",
+            f"g_ca_{name} : siemens (constant)",
+        ]
     vp = _paper_voltage(name, coordinate)
     m_literal = f"2.44+2.506e-2*exp(-9.84e-2*({vp})/mV)"
     h_literal = f"19.5+7.171e-2*exp(-10.54e-2*({vp})/mV)"
@@ -109,13 +125,20 @@ def _calcium_lines(
     ]
 
 
-def _layer5_ahp_lines() -> list[str]:
+def _layer5_ahp_lines(convention: AHPConvention) -> list[str]:
     """Published AHP/ACh waveform with an explicitly calibrated conductance."""
+
+    if convention is AHPConvention.MODELDB_112923:
+        fall_ms = AHP_MODELDB_FALL_MS
+        normalization = AHP_MODELDB_NORMALIZATION
+    else:
+        fall_ms = AHP_FALL_MS
+        normalization = AHP_NORMALIZATION
 
     return [
         f"dahp_rise/dt=-ahp_rise/({AHP_RISE_MS}*ms) : 1",
-        f"dahp_fall/dt=-ahp_fall/({AHP_FALL_MS}*ms) : 1",
-        f"ahp_gate={AHP_NORMALIZATION}*(ahp_fall-ahp_rise) : 1",
+        f"dahp_fall/dt=-ahp_fall/({fall_ms}*ms) : 1",
+        f"ahp_gate={normalization}*(ahp_fall-ahp_rise) : 1",
         f"dach_rise/dt=-ach_rise/({ACH_RISE_MS}*ms) : 1",
         f"dach_fall/dt=-ach_fall/({ACH_FALL_MS}*ms) : 1",
         f"ach_gate=clip({ACH_NORMALIZATION}*(ach_fall-ach_rise), 0, 1) : 1",
@@ -133,6 +156,7 @@ def compile_cell_equations(
     nak_rate_convention: NaKRateConvention,
     calcium_gate_convention: TTypeGateConvention,
     calcium_density_convention: CalciumDensityConvention,
+    ahp_convention: AHPConvention,
 ) -> CompiledCellEquations:
     """Compile one source-specified cell; every ambiguous convention is required."""
 
@@ -146,6 +170,7 @@ def compile_cell_equations(
         CalciumDensityConvention,
         "calcium_density_convention",
     )
+    ahp = _enum(ahp_convention, AHPConvention, "ahp_convention")
     edges = build_axial_edges(cell, axial)
     axial_terms: dict[str, list[str]] = {c.name: [] for c in cell.compartments}
     axial_parameters: list[str] = []
@@ -166,7 +191,7 @@ def compile_cell_equations(
     for parameter in axial_parameters:
         lines.append(f"{parameter} : siemens (constant)")
     if cell.name == "layer5_excitatory":
-        lines.extend(_layer5_ahp_lines())
+        lines.extend(_layer5_ahp_lines(ahp))
     for compartment in cell.compartments:
         name = compartment.name
         current_terms = [f"g_l_{name}*(e_l_{name}-v_{name})"]
@@ -199,6 +224,7 @@ def compile_cell_equations(
         nak_rate_convention=nak_rate,
         calcium_gate_convention=calcium_gate,
         calcium_density_convention=calcium_density,
+        ahp_convention=ahp,
         compartments=tuple(c.name for c in cell.compartments),
         axial_parameter_names=tuple(axial_parameters),
     )

@@ -11,6 +11,7 @@ from .currents import (
     E_K_MV,
     E_NA_MV,
     G_CA_MSIEMENS_CM2,
+    AHPConvention,
     NaKRateConvention,
     TTypeGateConvention,
     t_type_h_inf,
@@ -62,13 +63,21 @@ def create_compartmental_hh_population(
     if brian is None:
         import brian2 as brian
 
-    cell = get_cell_spec(params["cell_class"])
+    cell = params.get("cell_spec")
+    if cell is None:
+        cell = get_cell_spec(params["cell_class"])
+    elif not isinstance(cell, CellSpec):
+        raise TypeError("cell_spec must be an explicit CellSpec instance")
     axial = AxialConvention(params["axial_convention"])
     leak = LeakConvention(params["leak_convention"])
     voltage = VoltageCoordinate(params["voltage_coordinate"])
     nak_rate = NaKRateConvention(params["nak_rate_convention"])
     calcium_gate = TTypeGateConvention(params["calcium_gate_convention"])
     calcium_density = CalciumDensityConvention(params["calcium_density_convention"])
+    ahp_convention = AHPConvention(params["ahp_convention"])
+    specific_capacitance = float(params["specific_capacitance_uF_cm2"])
+    if specific_capacitance <= 0:
+        raise ValueError("specific_capacitance_uF_cm2 must be positive")
     if cell.name == "layer5_excitatory" and "ahp_max_conductance_nS" not in params:
         raise ValueError(
             "layer5_excitatory requires explicit ahp_max_conductance_nS; "
@@ -82,10 +91,12 @@ def create_compartmental_hh_population(
         nak_rate_convention=nak_rate,
         calcium_gate_convention=calcium_gate,
         calcium_density_convention=calcium_density,
+        ahp_convention=ahp_convention,
     )
     spike_reset = "armed = 0"
     if cell.name == "layer5_excitatory":
-        spike_reset += "; ahp_rise += 1; ahp_fall += 1"
+        event_weight = 4.5 if ahp_convention is AHPConvention.MODELDB_112923 else 1.0
+        spike_reset += f"; ahp_rise += {event_weight}; ahp_fall += {event_weight}"
     group = brian.NeuronGroup(
         size,
         compiled.equations,
@@ -109,7 +120,11 @@ def create_compartmental_hh_population(
 
     for compartment in cell.compartments:
         compartment_name = compartment.name
-        _set(group, f"C_{compartment_name}", compartment.capacitance_pF() * brian.pfarad)
+        _set(
+            group,
+            f"C_{compartment_name}",
+            compartment.capacitance_pF(specific_capacitance) * brian.pfarad,
+        )
         _set(
             group,
             f"g_l_{compartment_name}",
@@ -150,8 +165,21 @@ def create_compartmental_hh_population(
             )
             total_nS = density * compartment.lateral_area_cm2 * 1e6
             _set(group, f"g_ca_{compartment_name}", total_nS * brian.nsiemens)
-            _set(group, f"m_ca_{compartment_name}", t_type_m_inf(paper_voltage, calcium_gate))
-            _set(group, f"h_ca_{compartment_name}", t_type_h_inf(paper_voltage, calcium_gate))
+            calcium_voltage = (
+                initial_voltage
+                if calcium_gate is TTypeGateConvention.MODELDB_112923
+                else paper_voltage
+            )
+            _set(
+                group,
+                f"m_ca_{compartment_name}",
+                t_type_m_inf(calcium_voltage, calcium_gate),
+            )
+            _set(
+                group,
+                f"h_ca_{compartment_name}",
+                t_type_h_inf(calcium_voltage, calcium_gate),
+            )
 
     for edge_index, edge in enumerate(build_axial_edges(cell, axial)):
         _set(

@@ -3,7 +3,11 @@ from __future__ import annotations
 import pytest
 
 from smart_robustness.models.axial import AxialConvention
-from smart_robustness.models.currents import NaKRateConvention, TTypeGateConvention
+from smart_robustness.models.currents import (
+    AHPConvention,
+    NaKRateConvention,
+    TTypeGateConvention,
+)
 from smart_robustness.models.equation_builder import (
     CalciumDensityConvention,
     LeakConvention,
@@ -22,6 +26,7 @@ def _compile(name: str = "thalamic_relay"):
         nak_rate_convention=NaKRateConvention.PRINTED_SMART,
         calcium_gate_convention=TTypeGateConvention.RECIPROCAL,
         calcium_density_convention=CalciumDensityConvention.TABLE3,
+        ahp_convention=AHPConvention.PAPER_TEXT,
     )
 
 
@@ -51,8 +56,26 @@ def test_global_67_mv_rate_coordinate_is_explicitly_compilable() -> None:
         nak_rate_convention=NaKRateConvention.PRINTED_SMART,
         calcium_gate_convention=TTypeGateConvention.RECIPROCAL,
         calcium_density_convention=CalciumDensityConvention.TABLE3,
+        ahp_convention=AHPConvention.PAPER_TEXT,
     )
     assert "v_soma+67*mV" in compiled.equations
+
+
+def test_modeldb_calcium_equations_use_absolute_voltage_and_correct_roles() -> None:
+    compiled = compile_cell_equations(
+        get_cell_spec("thalamic_relay"),
+        axial_convention=AxialConvention.SYMMETRIC_CABLE,
+        leak_convention=LeakConvention.TABLE3_REVERSAL,
+        voltage_coordinate=VoltageCoordinate.SHIFTED_67_MV,
+        nak_rate_convention=NaKRateConvention.STANDARD_TRAUB_MILES,
+        calcium_gate_convention=TTypeGateConvention.MODELDB_112923,
+        calcium_density_convention=CalciumDensityConvention.TABLE3,
+        ahp_convention=AHPConvention.MODELDB_112923,
+    )
+    equations = compiled.equations
+    assert "m_ca_inf_proximal_dendrite=1/(exp((-63*mV-v_proximal_dendrite)" in equations
+    assert "tau_m_ca_proximal_dendrite=(2.44+" in equations
+    assert "tau_h_ca_proximal_dendrite=(19.15+" in equations
 
 
 def test_conventions_must_be_explicit_enum_members() -> None:
@@ -63,6 +86,7 @@ def test_conventions_must_be_explicit_enum_members() -> None:
         "nak_rate_convention": NaKRateConvention.PRINTED_SMART,
         "calcium_gate_convention": TTypeGateConvention.RECIPROCAL,
         "calcium_density_convention": CalciumDensityConvention.TABLE3,
+        "ahp_convention": AHPConvention.PAPER_TEXT,
     }
     for key in tuple(kwargs):
         invalid = dict(kwargs)
@@ -86,3 +110,18 @@ def test_brian2_parses_every_cell_equation_set() -> None:
         )
         group.run_on_event("arm_spike", "armed = 1")
         brian.Network(group).run(0 * brian.ms)
+
+
+def test_modeldb_ahp_profile_uses_executable_tau() -> None:
+    compiled = compile_cell_equations(
+        get_cell_spec("layer5_excitatory"),
+        axial_convention=AxialConvention.KINNESS_2008,
+        leak_convention=LeakConvention.TABLE3_REVERSAL,
+        voltage_coordinate=VoltageCoordinate.SHIFTED_67_MV,
+        nak_rate_convention=NaKRateConvention.STANDARD_TRAUB_MILES,
+        calcium_gate_convention=TTypeGateConvention.MODELDB_112923,
+        calcium_density_convention=CalciumDensityConvention.TABLE3,
+        ahp_convention=AHPConvention.MODELDB_112923,
+    )
+    assert "dahp_fall/dt=-ahp_fall/(150.0*ms)" in compiled.equations
+    assert compiled.ahp_convention is AHPConvention.MODELDB_112923

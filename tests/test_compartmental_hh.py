@@ -5,6 +5,7 @@ import pytest
 brian = pytest.importorskip("brian2")
 
 from smart_robustness.models.compartmental_hh import create_compartmental_hh_population
+from smart_robustness.models.modeldb112923 import figure8_relay_spec
 
 
 def _params(cell_class: str = "thalamic_relay") -> dict[str, str]:
@@ -16,6 +17,8 @@ def _params(cell_class: str = "thalamic_relay") -> dict[str, str]:
         "nak_rate_convention": "printed_smart",
         "calcium_gate_convention": "reciprocal",
         "calcium_density_convention": "table3",
+        "ahp_convention": "paper_text",
+        "specific_capacitance_uF_cm2": 1.0,
     }
     if cell_class == "layer5_excitatory":
         params["ahp_max_conductance_nS"] = 1.0
@@ -44,6 +47,36 @@ def test_relay_uses_table3_calcium_density_without_silent_global_override() -> N
     )
     expected = population.cell_spec.compartment("proximal_dendrite").conductance_nS("ca")
     assert population.group.g_ca_proximal_dendrite[0] / brian.nsiemens == pytest.approx(expected)
+
+
+def test_population_accepts_an_explicit_source_specific_cell_spec() -> None:
+    brian.start_scope()
+    params = _params()
+    params["cell_spec"] = figure8_relay_spec(leak_density_mS_cm2=0.1)
+    population = create_compartmental_hh_population(
+        name="figure8_source_cell", size=1, params=params, brian=brian
+    )
+    assert population.cell_spec.name == "modeldb112923_figure8_relay"
+    assert population.group.g_ca_soma[0] / brian.nsiemens > 0
+
+
+def test_modeldb_calcium_gates_initialize_in_absolute_voltage_coordinate() -> None:
+    brian.start_scope()
+    params = _params()
+    params.update(
+        {
+            "cell_spec": figure8_relay_spec(leak_density_mS_cm2=0.1),
+            "voltage_coordinate": "shifted_67_mV",
+            "nak_rate_convention": "standard_traub_miles",
+            "calcium_gate_convention": "modeldb_112923",
+            "v_init_mV": -80.0,
+        }
+    )
+    population = create_compartmental_hh_population(
+        name="figure8_gate_initialization", size=1, params=params, brian=brian
+    )
+    expected_h = 1 / (1 + brian.exp((-80.0 + 83.5) / 6.3))
+    assert population.group.h_ca_soma[0] == pytest.approx(float(expected_h))
 
 
 def test_spike_event_arms_above_30_and_emits_once_below_zero() -> None:
@@ -100,3 +133,34 @@ def test_layer5_spike_generates_ahp_and_ach_suppresses_it() -> None:
     suppressed = float(group.ahp_gate[0] * (1 - group.ach_gate[0]))
     assert group.ach_gate[0] > 0.9
     assert suppressed < unsuppressed
+
+
+def test_modeldb_layer5_spike_uses_serialized_ahp_weight() -> None:
+    brian.start_scope()
+    params = _params("layer5_excitatory")
+    params["ahp_convention"] = "modeldb_112923"
+    population = create_compartmental_hh_population(
+        name="layer5_modeldb_ahp", size=1, params=params, brian=brian
+    )
+    group = population.group
+    group.v_soma = -1 * brian.mV
+    group.armed = 1
+    brian.Network(group).run(0.1 * brian.ms)
+    assert group.ahp_rise[0] == pytest.approx(4.5)
+    assert group.ahp_fall[0] == pytest.approx(4.5)
+
+
+def test_specific_capacitance_is_required_and_positive() -> None:
+    brian.start_scope()
+    params = _params()
+    del params["specific_capacitance_uF_cm2"]
+    with pytest.raises(KeyError, match="specific_capacitance_uF_cm2"):
+        create_compartmental_hh_population(
+            name="missing_capacitance", size=1, params=params, brian=brian
+        )
+
+    params["specific_capacitance_uF_cm2"] = 0
+    with pytest.raises(ValueError, match="must be positive"):
+        create_compartmental_hh_population(
+            name="invalid_capacitance", size=1, params=params, brian=brian
+        )

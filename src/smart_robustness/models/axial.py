@@ -12,6 +12,11 @@ as axial resistance.  ADR 0001 therefore keeps two interpretations available:
     Join the axial resistances of two half-compartments in series.  The edge has
     one reciprocal conductance and therefore conserves total axial current.
 
+``kinness_2008``
+    Implement Equation 7 of the contemporaneous KInNeSS framework paper.  It
+    retains KInNeSS's directional, receiving-compartment conductance density
+    and includes the geometry of both compartments.
+
 No convention is selected by default.  The classic SMART profile must make and
 record that decision only after the validation described in ADR 0001.
 """
@@ -34,6 +39,7 @@ class AxialConvention(StrEnum):
 
     PAPER_LITERAL = "paper_literal"
     SYMMETRIC_CABLE = "symmetric_cable"
+    KINNESS_2008 = "kinness_2008"
 
 
 @dataclass(frozen=True, slots=True)
@@ -101,7 +107,9 @@ def _coerce_convention(convention: AxialConvention | str) -> AxialConvention:
         return AxialConvention(convention)
     except (TypeError, ValueError) as error:
         choices = tuple(item.value for item in AxialConvention)
-        raise ValueError(f"unknown axial convention {convention!r}; expected one of {choices}") from error
+        raise ValueError(
+            f"unknown axial convention {convention!r}; expected one of {choices}"
+        ) from error
 
 
 def _endpoint(compartment: CompartmentSpec, context: str) -> AxialEndpointSpec:
@@ -120,9 +128,7 @@ def _endpoint(compartment: CompartmentSpec, context: str) -> AxialEndpointSpec:
     lateral_area_cm2 = math.pi * diameter_cm * length_cm
     cross_section_cm2 = math.pi * (diameter_cm / 2.0) ** 2
     half_resistance_kohm = (
-        compartment.axial_resistance_kohm_cm
-        * (length_cm / 2.0)
-        / cross_section_cm2
+        compartment.axial_resistance_kohm_cm * (length_cm / 2.0) / cross_section_cm2
     )
 
     _require_positive(lateral_area_cm2, f"{context} lateral area")
@@ -165,6 +171,51 @@ def _paper_literal_edge(
         near=near,
         far=far,
         convention=AxialConvention.PAPER_LITERAL,
+        conductance_into_near_nS=_total_nS(near_density, near.lateral_area_cm2),
+        conductance_into_far_nS=_total_nS(far_density, far.lateral_area_cm2),
+        conductance_density_into_near_mS_cm2=near_density,
+        conductance_density_into_far_mS_cm2=far_density,
+    )
+
+
+def _kinness_density_mS_cm2(
+    receiving: AxialEndpointSpec,
+    neighboring: AxialEndpointSpec,
+) -> float:
+    """KInNeSS (Versace et al., 2008) Equation 7.
+
+    The paper denotes the pair-specific axial conductance by ``g_A``.  SMART
+    Table 3 instead serializes an axial resistivity for each compartment, so
+    the directional implementation uses the reciprocal resistivity of the
+    receiving endpoint.  This choice is explicit and testable.
+    """
+
+    axial_conductivity_mS_per_cm = 1.0 / receiving.axial_resistivity_kohm_cm
+    geometry = (
+        receiving.diameter_cm**2 / receiving.length_cm
+        + neighboring.diameter_cm**2 / neighboring.length_cm
+    )
+    density = (
+        axial_conductivity_mS_per_cm
+        * geometry
+        / (8.0 * receiving.diameter_cm * receiving.length_cm)
+    )
+    _require_positive(density, f"{receiving.compartment_name} KInNeSS density")
+    return density
+
+
+def _kinness_edge(
+    cell_name: str,
+    near: AxialEndpointSpec,
+    far: AxialEndpointSpec,
+) -> AxialEdgeSpec:
+    near_density = _kinness_density_mS_cm2(near, far)
+    far_density = _kinness_density_mS_cm2(far, near)
+    return AxialEdgeSpec(
+        cell_name=cell_name,
+        near=near,
+        far=far,
+        convention=AxialConvention.KINNESS_2008,
         conductance_into_near_nS=_total_nS(near_density, near.lateral_area_cm2),
         conductance_into_far_nS=_total_nS(far_density, far.lateral_area_cm2),
         conductance_density_into_near_mS_cm2=near_density,
@@ -224,8 +275,10 @@ def build_axial_edges(
     for near, far in pairwise(endpoints):
         if resolved_convention is AxialConvention.PAPER_LITERAL:
             edges.append(_paper_literal_edge(cell.name, near, far))
-        else:
+        elif resolved_convention is AxialConvention.SYMMETRIC_CABLE:
             edges.append(_symmetric_cable_edge(cell.name, near, far))
+        else:
+            edges.append(_kinness_edge(cell.name, near, far))
     return tuple(edges)
 
 

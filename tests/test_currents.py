@@ -29,6 +29,10 @@ from smart_robustness.models.currents import (
     beta_n_per_ms,
     biexponential_normalization,
     biexponential_peak_time_ms,
+    modeldb_t_type_h_inf,
+    modeldb_t_type_m_inf,
+    modeldb_t_type_tau_h_ms,
+    modeldb_t_type_tau_m_ms,
     t_type_calcium_equations,
     t_type_h_inf,
     t_type_m_inf,
@@ -150,6 +154,16 @@ def test_t_type_literal_values_preserve_printed_equations() -> None:
     assert t_type_h_inf(voltage_mV, literal) > 1.0
 
 
+def test_modeldb_t_type_interpretation_has_bounded_voltage_dependent_gates() -> None:
+    convention = TTypeGateConvention.MODELDB_112923
+    assert t_type_m_inf(-60, convention) == pytest.approx(modeldb_t_type_m_inf(-60))
+    assert t_type_h_inf(-80, convention) == pytest.approx(modeldb_t_type_h_inf(-80))
+    assert modeldb_t_type_m_inf(-60) > modeldb_t_type_m_inf(-80)
+    assert modeldb_t_type_h_inf(-80) > modeldb_t_type_h_inf(-60)
+    assert modeldb_t_type_tau_m_ms(-80) > modeldb_t_type_tau_m_ms(-60) > 0
+    assert modeldb_t_type_tau_h_ms(-80) > modeldb_t_type_tau_h_ms(-60) > 0
+
+
 @pytest.mark.parametrize("voltage_mV", range(-120, 61, 10))
 def test_t_type_reciprocal_gates_are_bounded_and_exact(voltage_mV: float) -> None:
     literal = TTypeGateConvention.PRINTED_LITERAL
@@ -188,6 +202,10 @@ def test_calcium_equation_fragments_expose_the_selected_interpretation() -> None
     assert "m_ca_inf = 1/(2.44 +" in reciprocal
     assert "h_ca_inf = 1/(19.5 +" in reciprocal
     assert literal != reciprocal
+    modeldb = t_type_calcium_equations(TTypeGateConvention.MODELDB_112923)
+    assert "m_ca_inf = 1/(exp((-63*mV-v_membrane)" in modeldb
+    assert "tau_m_ca = (2.44+" in modeldb
+    assert "tau_h_ca = (19.15+" in modeldb
 
 
 def test_brian2_fragments_parse_and_have_consistent_units() -> None:

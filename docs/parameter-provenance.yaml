@@ -19,9 +19,9 @@ parameters:
     status: derived
     source: Main article Methods 4.2 receptor-density expression
   model.table3.specific_capacitance:
-    value: 1 uF/cm2 default used for total-capacitance conversion
+    value: required positive runtime parameter; current Figure 8 candidate uses 1 uF/cm2
     status: exploratory
-    source: Standard modeling default; a numeric value is not stated in the main article Table 3
+    source: Main article and recovered XML do not state a numeric value
   model.table3.total_conductance:
     value: channel density * cylindrical lateral membrane area
     status: derived
@@ -55,9 +55,21 @@ parameters:
     status: derived
     source: Methods 4.5 Eqs. 15 and 18 compared with the standard Traub-Miles form
   model.multicompartment.t_type_gate_convention:
-    value: printed_literal or reciprocal; must be selected explicitly
+    value: modeldb_112923, printed_literal, or reciprocal; must be selected explicitly
     status: derived
-    source: Methods 4.6 Eqs. 24 and 27; printed values are not bounded gates
+    source: ModelDB 112923 resolves m_inf/tau roles; Methods 4.6 remains an audit alternative
+  model.multicompartment.axial_convention:
+    value: kinness_2008, paper_literal, or symmetric_cable; must be selected explicitly
+    status: derived
+    source: KInNeSS framework paper Equation 7; SMART Table 3 axial resistivities
+  model.multicompartment.ahp_convention:
+    value: paper_text or modeldb_112923; must be selected explicitly
+    status: derived
+    source: Methods 4.7 compared with ModelDB 112923 Layer_5_and_Maynert_AHP_ACh.nml
+  source.modeldb112923.archive:
+    value: sha256 5fc6e0042ef093665ad2f1c24c87f9cc0d796629c896ee8a4efe34827a4462c5
+    status: published
+    source: https://modeldb.science/download/112923
   model.multicompartment.ahp_max_conductance:
     value: required runtime calibration parameter for layer-5 cells
     status: calibrated
@@ -66,6 +78,10 @@ parameters:
     value: tonic pass, burst fail (29 versus 28 spikes in the 300 ms pulse)
     status: exploratory
     source: predeclared Figure 8 harness; candidate run retained as a negative result
+  validation.figure8.modeldb_candidate:
+    value: tonic fail, burst pass (1 versus 2 qualifying spikes in the 300 ms pulse)
+    status: exploratory
+    source: ModelDB source-specific cell, corrected absolute-voltage T-gate initialization, predeclared scorer
   synapse.shape:
     value: normalized dual exponential
     status: published

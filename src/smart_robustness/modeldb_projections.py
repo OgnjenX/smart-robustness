@@ -52,6 +52,20 @@ class ModelDBProjection:
     def modifiable(self) -> bool:
         return self.projection_attributes.get("modifiable") == "true"
 
+    @property
+    def learning_rule(self) -> str | None:
+        return self.projection_attributes.get("learningRule")
+
+    @property
+    def learning_rate(self) -> float | None:
+        value = self.projection_attributes.get("learningRate")
+        return None if value is None else float(value)
+
+    @property
+    def depotentiation_ms(self) -> float | None:
+        value = self.projection_attributes.get("depotentiationLength")
+        return None if value is None else float(value)
+
 
 @dataclass(frozen=True, slots=True)
 class ModelDBExternalChannel:

@@ -45,6 +45,12 @@ legacy ring-kernel semantics, current injection, plasticity, and published
 stimulation protocols remain required before this milestone is a functional
 network reproduction.
 
+Learning checkpoint: Equation 6's biphasic post-spike gate and the serialized
+20/25-ms depotentiation intervals are tested. Adaptive records initialize at
+their asymptotic baseline rather than their maximum. The complete Equation 5
+weight derivative remains disabled until its normalization and the executable
+presynaptic-gate extension are resolved from source.
+
 Exit: equation/unit tests, numerical convergence tests, isolated-cell report,
 and explicit resolution of voltage-coordinate ambiguities.
 

@@ -70,9 +70,13 @@ Implemented:
   dimensions and Equation 5 driving-potential semantics;
 - source-wide transmitter depletion on layer 5, layer 6II, and layer 6I using
   the serialized recovery/depletion values;
-- CI validation split into independent Brian2 processes: 154 lightweight tests,
-  four sector-construction tests, five connectivity tests, and two long AHP
-  tests currently pass (165 total).
+- typed ModelDB learning metadata and the exact piecewise Equation 6
+  postsynaptic spike gate, including each record's 20/25-ms depotentiation
+  interval; modifiable projections now initialize at their serialized
+  asymptotic baseline and retain the separate maximum weight;
+- CI validation split into independent Brian2 processes: 157 lightweight tests,
+  four sector-construction tests, six connectivity tests, and two long AHP
+  tests currently pass (169 total).
 
 Explicitly unresolved source anomalies:
 
@@ -97,7 +101,8 @@ Not yet implemented or validated:
   retaining the supplement as an independent audit);
 - exact legacy meaning of the KInNeSS `ring` flag (currently retained as a
   center-excluding Gaussian candidate), the remaining current-injection
-  channel, STDP, ACh vigilance,
+  channel, full Equation 5 gated weight integration (including its unresolved
+  normalization term and executable presynaptic-gate semantics), ACh vigilance,
   CSD/LFP geometry, and every published figure protocol;
 - quantitative reproduction of match/gamma and mismatch/beta/reset.
 

@@ -250,7 +250,12 @@ def connect_modeldb_projection(
     synapse = brian.Synapses(
         pre.group,
         post.group,
-        model="w : 1\nw_asymptote : 1 (constant)\nmodifiable : 1 (constant)",
+        model=(
+            "w : 1\n"
+            "w_baseline : 1 (constant)\n"
+            "w_maximum : 1 (constant)\n"
+            "modifiable : 1 (constant)"
+        ),
         on_pre=update,
         name=f"modeldb_{port.name}_{pre.group.name}_to_{post.group.name}",
     )
@@ -258,9 +263,12 @@ def connect_modeldb_projection(
         record, source_shape=source_shape, target_shape=target_shape
     )
     synapse.connect(i=source_indices, j=target_indices)
-    synapse.w = float(record.weight) * spatial_factor
     asymptote = record.asymptotic_weight
-    synapse.w_asymptote = float(record.weight if asymptote is None else asymptote) * spatial_factor
+    baseline = float(record.weight if asymptote is None else asymptote)
+    maximum = float(record.weight)
+    synapse.w = (baseline if record.modifiable else maximum) * spatial_factor
+    synapse.w_baseline = baseline * spatial_factor
+    synapse.w_maximum = maximum * spatial_factor
     synapse.modifiable = float(record.modifiable)
     synapse.delay = float(record.delay_ms or 0.0) * brian.ms
     return synapse

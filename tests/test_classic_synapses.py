@@ -45,6 +45,23 @@ def test_first_order_chemical_sector_builds_all_in_scope_records() -> None:
     sector.network.run(0 * brian.ms)
 
 
+def test_modifiable_modeldb_projection_starts_at_baseline_not_maximum() -> None:
+    brian.start_scope()
+    sector = build_first_order_chemical_sector(brian=brian)
+    record = next(
+        record
+        for record in MODELDB_FIRST_ORDER.projections
+        if record.modifiable and record.target_population in sector.populations
+        and record.source_population in sector.populations
+    )
+    projection = sector.projections[record.id]
+    factor = np.asarray(projection.w_baseline[:]) / float(record.asymptotic_weight)
+    assert np.asarray(projection.w[:]) == pytest.approx(
+        float(record.asymptotic_weight) * factor
+    )
+    assert np.asarray(projection.w_maximum[:]) == pytest.approx(float(record.weight) * factor)
+
+
 def test_first_order_connected_sector_adds_all_gap_junction_records() -> None:
     brian.start_scope()
     sector = build_first_order_connected_sector(brian=brian)

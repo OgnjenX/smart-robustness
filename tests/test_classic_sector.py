@@ -52,6 +52,19 @@ def test_network_layer5_and_layer6ii_use_serialized_fast_ahp() -> None:
         assert "dahp_fall/dt=-ahp_fall/(20.0*ms)" in population.compiled.equations
 
 
+def test_full_sector_gate_initialization_is_selectable() -> None:
+    brian.start_scope()
+    sector = build_first_order_intrinsic_sector(
+        gate_initialization_convention="zero", brian=brian
+    )
+    relay = sector.populations["thalamic_relay"].group
+    assert np.allclose(relay.m_soma[:], 0)
+    assert np.allclose(relay.h_soma[:], 0)
+    assert np.allclose(relay.n_soma[:], 0)
+    assert np.allclose(relay.m_ca_proximal_dendrite[:], 0)
+    assert np.allclose(relay.h_ca_proximal_dendrite[:], 0)
+
+
 def test_source_populations_expose_presynaptic_transmitter_depletion() -> None:
     brian.start_scope()
     sector = build_first_order_intrinsic_sector(brian=brian)

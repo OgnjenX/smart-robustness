@@ -137,6 +137,12 @@ spectra can be interpreted. It is now a required runtime choice:
 `zero` is a named source-audit alternative. Neither is designated as the
 classic baseline until it passes source or behavioral validation.
 
+The corresponding zero-gate run is retained in
+`validation-results/first-order-bar-002.yaml`. It removes the immediate TRN
+warmup burst, but active relay cells still fire at 120 Hz and the stimulus
+recruits 162 TRN spikes. Gate initialization is therefore consequential but
+not sufficient to recover the published 40 Hz relay drive.
+
 The first Figure 8 candidate (67 mV-shifted standard Traub--Miles rates,
 reciprocal T gates, Table 3 calcium density, and a -80 mV pre-pulse clamp)
 produces sustained tonic trains in both conditions. It therefore fails the

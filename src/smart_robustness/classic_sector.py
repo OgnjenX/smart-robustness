@@ -36,7 +36,11 @@ class FirstOrderSector:
         )
 
 
-def _population_parameters(facts: FirstOrderPopulationFacts) -> dict[str, Any]:
+def _population_parameters(
+    facts: FirstOrderPopulationFacts,
+    *,
+    gate_initialization_convention: str,
+) -> dict[str, Any]:
     has_ahp = facts.ahp_density_mS_cm2 is not None
     parameters: dict[str, Any] = {
         "cell_spec": facts.cell,
@@ -46,7 +50,7 @@ def _population_parameters(facts: FirstOrderPopulationFacts) -> dict[str, Any]:
         "voltage_coordinate": "shifted_67_mV",
         "nak_rate_convention": "standard_traub_miles",
         "calcium_gate_convention": "modeldb_112923",
-        "gate_initialization_convention": "steady_state_at_initial_voltage",
+        "gate_initialization_convention": gate_initialization_convention,
         "calcium_density_convention": "table3",
         "ahp_convention": "smart_network_112923" if has_ahp else "modeldb_112923",
         "specific_capacitance_uF_cm2": 1.0,
@@ -84,7 +88,11 @@ def _population_parameters(facts: FirstOrderPopulationFacts) -> dict[str, Any]:
     return parameters
 
 
-def build_first_order_intrinsic_sector(*, brian=None) -> FirstOrderSector:
+def build_first_order_intrinsic_sector(
+    *,
+    gate_initialization_convention: str = "steady_state_at_initial_voltage",
+    brian=None,
+) -> FirstOrderSector:
     """Instantiate all 812 cells and 1,950 compartments before connectivity.
 
     This milestone intentionally assembles intrinsic populations only. Chemical
@@ -102,20 +110,30 @@ def build_first_order_intrinsic_sector(*, brian=None) -> FirstOrderSector:
         populations[population_facts.canonical_name] = create_compartmental_hh_population(
             name=f"smart_v1_{population_facts.canonical_name}",
             size=width * height,
-            params=_population_parameters(population_facts),
+            params=_population_parameters(
+                population_facts,
+                gate_initialization_convention=gate_initialization_convention,
+            ),
             brian=brian,
         )
     network = brian.Network(*(population.group for population in populations.values()))
     return FirstOrderSector(network=network, populations=populations, facts=facts, projections={})
 
 
-def build_first_order_chemical_sector(*, brian=None) -> FirstOrderSector:
+def build_first_order_chemical_sector(
+    *,
+    gate_initialization_convention: str = "steady_state_at_initial_voltage",
+    brian=None,
+) -> FirstOrderSector:
     """Instantiate the first-order cells and every in-scope chemical projection."""
 
     if brian is None:
         import brian2 as brian
 
-    sector = build_first_order_intrinsic_sector(brian=brian)
+    sector = build_first_order_intrinsic_sector(
+        gate_initialization_convention=gate_initialization_convention,
+        brian=brian,
+    )
     facts_by_name = {fact.canonical_name: fact for fact in sector.facts}
     projections: dict[str, Any] = {}
     for record in MODELDB_FIRST_ORDER.projections:
@@ -139,13 +157,20 @@ def build_first_order_chemical_sector(*, brian=None) -> FirstOrderSector:
     return sector
 
 
-def build_first_order_connected_sector(*, brian=None) -> FirstOrderSector:
+def build_first_order_connected_sector(
+    *,
+    gate_initialization_convention: str = "steady_state_at_initial_voltage",
+    brian=None,
+) -> FirstOrderSector:
     """Build chemical and electrical connectivity; external inputs remain separate."""
 
     if brian is None:
         import brian2 as brian
 
-    sector = build_first_order_chemical_sector(brian=brian)
+    sector = build_first_order_chemical_sector(
+        gate_initialization_convention=gate_initialization_convention,
+        brian=brian,
+    )
     facts_by_name = {fact.canonical_name: fact for fact in sector.facts}
     electrical: dict[str, Any] = {}
     for record in MODELDB_FIRST_ORDER.projections:

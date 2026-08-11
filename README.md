@@ -93,7 +93,8 @@ values must be labeled as such and must not be described as published values.
 The immediate sequence is deliberately narrow:
 
 - reproduce isolated published cell behaviors;
-- transcribe and independently verify Tables 3 and Supplementary Table 4;
+- consume the transcribed Table 3 cell catalog in multicompartment dynamics;
+- encode and independently verify the recovered supplementary connection table;
 - reproduce one full first-order LGN–V1–TRN–nonspecific-thalamus sector;
 - reproduce match→gamma and mismatch→beta/reset benchmarks;
 - freeze the validated baseline before adding AdEx, GIF, alternative HH, and
@@ -101,4 +102,3 @@ The immediate sequence is deliberately narrow:
 
 Contributions should preserve the distinction between **published**, **derived**,
 **calibrated**, and **exploratory** parameters.
-

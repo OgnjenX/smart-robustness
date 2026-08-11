@@ -4,9 +4,11 @@ import pytest
 
 from smart_robustness.models.currents import (
     ACH_FALL_MS,
+    ACH_NORMALIZATION,
     ACH_RISE_MS,
     AHP_ACH_SOURCE,
     AHP_FALL_MS,
+    AHP_NORMALIZATION,
     AHP_RISE_MS,
     E_CA_MV,
     E_K_MV,
@@ -24,6 +26,8 @@ from smart_robustness.models.currents import (
     beta_h_per_ms,
     beta_m_per_ms,
     beta_n_per_ms,
+    biexponential_normalization,
+    biexponential_peak_time_ms,
     t_type_calcium_equations,
     t_type_h_inf,
     t_type_m_inf,
@@ -40,6 +44,30 @@ def test_published_ionic_and_modulatory_constants_are_exact() -> None:
     assert G_CA_MSIEMENS_CM2 == 250.0
     assert (AHP_RISE_MS, AHP_FALL_MS) == (80.0, 100.0)
     assert (ACH_RISE_MS, ACH_FALL_MS) == (5.0, 6.0)
+
+
+@pytest.mark.parametrize(
+    ("rise_ms", "fall_ms", "normalization"),
+    [
+        (AHP_RISE_MS, AHP_FALL_MS, AHP_NORMALIZATION),
+        (ACH_RISE_MS, ACH_FALL_MS, ACH_NORMALIZATION),
+    ],
+)
+def test_biexponential_events_are_normalized_to_unit_peak(
+    rise_ms: float, fall_ms: float, normalization: float
+) -> None:
+    peak_ms = biexponential_peak_time_ms(rise_ms, fall_ms)
+    value = normalization * (math.exp(-peak_ms / fall_ms) - math.exp(-peak_ms / rise_ms))
+    assert value == pytest.approx(1.0)
+    assert normalization == pytest.approx(biexponential_normalization(rise_ms, fall_ms))
+
+
+@pytest.mark.parametrize("rise_ms,fall_ms", [(0, 1), (2, 1), (1, 1), (-1, 2)])
+def test_biexponential_normalization_rejects_invalid_constants(
+    rise_ms: float, fall_ms: float
+) -> None:
+    with pytest.raises(ValueError, match="0 < rise_ms < fall_ms"):
+        biexponential_normalization(rise_ms, fall_ms)
 
 
 @pytest.mark.parametrize(
@@ -88,18 +116,14 @@ def test_individual_rate_helpers_are_the_printed_equations() -> None:
     assert alpha_n_per_ms(voltage_mV) == pytest.approx(
         0.032 * (15.0 - voltage_mV) / math.expm1((15.0 - voltage_mV) / 5.0)
     )
-    assert beta_n_per_ms(voltage_mV) == pytest.approx(
-        0.5 * math.exp((10.0 - voltage_mV) / 40.0)
-    )
+    assert beta_n_per_ms(voltage_mV) == pytest.approx(0.5 * math.exp((10.0 - voltage_mV) / 40.0))
     assert alpha_m_per_ms(voltage_mV) == pytest.approx(
         0.032 * (13.0 - voltage_mV) / math.expm1((13.0 - voltage_mV) / 4.0)
     )
     assert beta_m_per_ms(voltage_mV) == pytest.approx(
         -0.28 * (40.0 - voltage_mV) / math.expm1((40.0 - voltage_mV) / -5.0)
     )
-    assert alpha_h_per_ms(voltage_mV) == pytest.approx(
-        0.128 * math.exp((27.0 - voltage_mV) / 18.0)
-    )
+    assert alpha_h_per_ms(voltage_mV) == pytest.approx(0.128 * math.exp((27.0 - voltage_mV) / 18.0))
     assert beta_h_per_ms(voltage_mV) == pytest.approx(
         4.0 / (math.exp((40.0 - voltage_mV) / 5.0) + 1.0)
     )
@@ -193,11 +217,14 @@ def test_primary_source_metadata_records_equations_and_ambiguities() -> None:
     assert LEAK_SOURCE.equations == "20"
     assert T_TYPE_CALCIUM_SOURCE.equations == "21-27"
     assert AHP_ACH_SOURCE.equations == "3 (reused for AHP) and 28 (ACh complement)"
-    assert all(source.doi == "10.1016/j.brainres.2008.04.024" for source in (
-        TRAUB_MILES_SOURCE,
-        LEAK_SOURCE,
-        T_TYPE_CALCIUM_SOURCE,
-        AHP_ACH_SOURCE,
-    ))
+    assert all(
+        source.doi == "10.1016/j.brainres.2008.04.024"
+        for source in (
+            TRAUB_MILES_SOURCE,
+            LEAK_SOURCE,
+            T_TYPE_CALCIUM_SOURCE,
+            AHP_ACH_SOURCE,
+        )
+    )
     assert any("without reciprocals" in note for note in T_TYPE_CALCIUM_SOURCE.notes)
     assert any("Table 3" in note for note in LEAK_SOURCE.notes)

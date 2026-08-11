@@ -36,6 +36,14 @@ class CompartmentalPopulation:
     def compartments(self) -> tuple[str, ...]:
         return self.compiled.compartments
 
+    def trigger_ach(self, indices: Any = slice(None)) -> None:
+        """Apply one normalized ACh event to layer-5 cells."""
+
+        if self.cell_spec.name != "layer5_excitatory":
+            raise ValueError("ACh modulation is specified only for layer5_excitatory cells")
+        self.group.ach_rise[indices] += 1
+        self.group.ach_fall[indices] += 1
+
 
 def _set(group: Any, name: str, value: Any) -> None:
     setattr(group, name, value)
@@ -59,6 +67,11 @@ def create_compartmental_hh_population(
     voltage = VoltageCoordinate(params["voltage_coordinate"])
     calcium_gate = TTypeGateConvention(params["calcium_gate_convention"])
     calcium_density = CalciumDensityConvention(params["calcium_density_convention"])
+    if cell.name == "layer5_excitatory" and "ahp_max_conductance_nS" not in params:
+        raise ValueError(
+            "layer5_excitatory requires explicit ahp_max_conductance_nS; "
+            "Grossberg & Versace (2008) do not report a unique value"
+        )
     compiled = compile_cell_equations(
         cell,
         axial_convention=axial,
@@ -67,16 +80,25 @@ def create_compartmental_hh_population(
         calcium_gate_convention=calcium_gate,
         calcium_density_convention=calcium_density,
     )
+    spike_reset = "armed = 0"
+    if cell.name == "layer5_excitatory":
+        spike_reset += "; ahp_rise += 1; ahp_fall += 1"
     group = brian.NeuronGroup(
         size,
         compiled.equations,
         threshold="armed > 0.5 and v_soma < 0*mV",
-        reset="armed = 0",
+        reset=spike_reset,
         events={"arm_spike": "armed < 0.5 and v_soma > 30*mV"},
         method=params.get("method", "exponential_euler"),
         name=name,
     )
     group.run_on_event("arm_spike", "armed = 1", when="after_thresholds", order=1)
+    if cell.name == "layer5_excitatory":
+        group.g_ahp_max = float(params["ahp_max_conductance_nS"]) * brian.nsiemens
+        group.ahp_rise = 0
+        group.ahp_fall = 0
+        group.ach_rise = 0
+        group.ach_fall = 0
     group.armed = 0
     group.e_na = E_NA_MV * brian.mV
     group.e_k = E_K_MV * brian.mV

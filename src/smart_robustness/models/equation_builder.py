@@ -6,7 +6,15 @@ from dataclasses import dataclass
 from enum import StrEnum
 
 from .axial import AxialConvention, build_axial_edges
-from .currents import TTypeGateConvention
+from .currents import (
+    ACH_FALL_MS,
+    ACH_NORMALIZATION,
+    ACH_RISE_MS,
+    AHP_FALL_MS,
+    AHP_NORMALIZATION,
+    AHP_RISE_MS,
+    TTypeGateConvention,
+)
 from .table3 import CellSpec
 
 
@@ -92,6 +100,21 @@ def _calcium_lines(
     ]
 
 
+def _layer5_ahp_lines() -> list[str]:
+    """Published AHP/ACh waveform with an explicitly calibrated conductance."""
+
+    return [
+        f"dahp_rise/dt=-ahp_rise/({AHP_RISE_MS}*ms) : 1",
+        f"dahp_fall/dt=-ahp_fall/({AHP_FALL_MS}*ms) : 1",
+        f"ahp_gate={AHP_NORMALIZATION}*(ahp_fall-ahp_rise) : 1",
+        f"dach_rise/dt=-ach_rise/({ACH_RISE_MS}*ms) : 1",
+        f"dach_fall/dt=-ach_fall/({ACH_FALL_MS}*ms) : 1",
+        f"ach_gate=clip({ACH_NORMALIZATION}*(ach_fall-ach_rise), 0, 1) : 1",
+        "i_ahp=g_ahp_max*ahp_gate*(1-ach_gate)*(e_k-v_soma) : amp",
+        "g_ahp_max : siemens (constant)",
+    ]
+
+
 def compile_cell_equations(
     cell: CellSpec,
     *,
@@ -106,9 +129,7 @@ def compile_cell_equations(
     axial = _enum(axial_convention, AxialConvention, "axial_convention")
     leak = _enum(leak_convention, LeakConvention, "leak_convention")
     voltage = _enum(voltage_coordinate, VoltageCoordinate, "voltage_coordinate")
-    calcium_gate = _enum(
-        calcium_gate_convention, TTypeGateConvention, "calcium_gate_convention"
-    )
+    calcium_gate = _enum(calcium_gate_convention, TTypeGateConvention, "calcium_gate_convention")
     calcium_density = _enum(
         calcium_density_convention,
         CalciumDensityConvention,
@@ -133,6 +154,8 @@ def compile_cell_equations(
     ]
     for parameter in axial_parameters:
         lines.append(f"{parameter} : siemens (constant)")
+    if cell.name == "layer5_excitatory":
+        lines.extend(_layer5_ahp_lines())
     for compartment in cell.compartments:
         name = compartment.name
         current_terms = [f"g_l_{name}*(e_l_{name}-v_{name})"]
@@ -142,6 +165,8 @@ def compile_cell_equations(
         if compartment.g_ca_mS_cm2 is not None:
             lines.extend(_calcium_lines(name, voltage, calcium_gate))
             current_terms.append(f"i_ca_{name}")
+        if cell.name == "layer5_excitatory" and name == "soma":
+            current_terms.append("i_ahp")
         current_terms.extend(axial_terms[name])
         current_terms.extend((f"i_syn_{name}", f"i_drive_{name}"))
         lines.extend(

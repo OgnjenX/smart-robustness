@@ -105,6 +105,32 @@ ACH_RISE_MS = 5.0
 ACH_FALL_MS = 6.0
 
 
+def biexponential_peak_time_ms(rise_ms: float, fall_ms: float) -> float:
+    """Time of the peak of ``exp(-t/fall)-exp(-t/rise)``.
+
+    SMART reuses its dual-exponential synaptic waveform for AHP and ACh.
+    Keeping the normalization here makes the event amplitude independent of
+    the published time constants and gives the Brian equations an auditable
+    scalar rather than an embedded fitted value.
+    """
+
+    if rise_ms <= 0 or fall_ms <= 0 or rise_ms >= fall_ms:
+        raise ValueError("biexponential constants must satisfy 0 < rise_ms < fall_ms")
+    return rise_ms * fall_ms * math.log(fall_ms / rise_ms) / (fall_ms - rise_ms)
+
+
+def biexponential_normalization(rise_ms: float, fall_ms: float) -> float:
+    """Multiplier that gives a unit-height dual-exponential event."""
+
+    peak_ms = biexponential_peak_time_ms(rise_ms, fall_ms)
+    unscaled_peak = math.exp(-peak_ms / fall_ms) - math.exp(-peak_ms / rise_ms)
+    return 1.0 / unscaled_peak
+
+
+AHP_NORMALIZATION = biexponential_normalization(AHP_RISE_MS, AHP_FALL_MS)
+ACH_NORMALIZATION = biexponential_normalization(ACH_RISE_MS, ACH_FALL_MS)
+
+
 @dataclass(frozen=True)
 class TraubMilesRates:
     """Na/K gate rates in inverse milliseconds."""

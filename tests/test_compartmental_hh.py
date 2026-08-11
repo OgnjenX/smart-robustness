@@ -8,7 +8,7 @@ from smart_robustness.models.compartmental_hh import create_compartmental_hh_pop
 
 
 def _params(cell_class: str = "thalamic_relay") -> dict[str, str]:
-    return {
+    params = {
         "cell_class": cell_class,
         "axial_convention": "symmetric_cable",
         "leak_convention": "table3_reversal",
@@ -16,6 +16,9 @@ def _params(cell_class: str = "thalamic_relay") -> dict[str, str]:
         "calcium_gate_convention": "reciprocal",
         "calcium_density_convention": "table3",
     }
+    if cell_class == "layer5_excitatory":
+        params["ahp_max_conductance_nS"] = 1.0
+    return params
 
 
 @pytest.mark.parametrize("cell_class", ["thalamic_relay", "layer4_excitatory", "layer5_excitatory"])
@@ -64,3 +67,35 @@ def test_spike_event_arms_above_30_and_emits_once_below_zero() -> None:
     assert spike_monitor.count[0] == 1
     network.run(0.2 * brian.ms)
     assert spike_monitor.count[0] == 1
+
+
+def test_layer5_requires_source_unidentified_ahp_conductance_explicitly() -> None:
+    brian.start_scope()
+    params = _params("layer5_excitatory")
+    del params["ahp_max_conductance_nS"]
+    with pytest.raises(ValueError, match="explicit ahp_max_conductance_nS"):
+        create_compartmental_hh_population(
+            name="layer5_missing_ahp", size=1, params=params, brian=brian
+        )
+
+
+def test_layer5_spike_generates_ahp_and_ach_suppresses_it() -> None:
+    brian.start_scope()
+    brian.defaultclock.dt = 0.1 * brian.ms
+    population = create_compartmental_hh_population(
+        name="layer5_modulation", size=1, params=_params("layer5_excitatory"), brian=brian
+    )
+    group = population.group
+    group.v_soma = -1 * brian.mV
+    group.armed = 1
+    network = brian.Network(group)
+    network.run(0.1 * brian.ms)
+    assert group.ahp_rise[0] > 0
+    assert group.ahp_fall[0] > 0
+    network.run(10 * brian.ms)
+    unsuppressed = float(group.ahp_gate[0] * (1 - group.ach_gate[0]))
+    population.trigger_ach()
+    network.run(5.5 * brian.ms)
+    suppressed = float(group.ahp_gate[0] * (1 - group.ach_gate[0]))
+    assert group.ach_gate[0] > 0.9
+    assert suppressed < unsuppressed

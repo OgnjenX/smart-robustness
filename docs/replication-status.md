@@ -85,6 +85,9 @@ Implemented:
   compartments, and 53 in-scope projections remain finite at rest, while all
   three in-scope adaptive projections remain exactly at baseline and within
   their serialized bounds;
+- a driven Brian2 plasticity gate on the bottom-up relay-to-layer-4 projection:
+  the positive Equation 6 lobe potentiates its weight, the negative lobe
+  depotentiates it, and both updates remain within the serialized bounds;
 - CI validation split into independent Brian2 processes: 163 lightweight tests,
   five sector-construction tests, six connectivity tests, and two long AHP
   tests plus one whole-sector runtime test currently pass (177 total).
@@ -111,8 +114,8 @@ Not yet implemented or validated:
   baseline instead uses the distinct, integrity-pinned ModelDB catalog while
   retaining the supplement as an independent audit);
 - exact legacy meaning of the KInNeSS `ring` flag (currently retained as a
-  center-excluding Gaussian candidate), driven network validation of Equation
-  5/6 learning and its bounds, ACh vigilance,
+  center-excluding Gaussian candidate), long-run/protocol-specific learning
+  validation, ACh vigilance,
   CSD/LFP geometry, and every published figure protocol;
 - quantitative reproduction of match/gamma and mismatch/beta/reset.
 

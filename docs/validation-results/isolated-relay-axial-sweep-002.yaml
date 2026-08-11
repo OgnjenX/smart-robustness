@@ -1,0 +1,47 @@
+id: isolated-relay-axial-sweep-002
+status: failed-reproduction
+claim: Grossberg and Versace Methods 4.9 isolated relay drive at approximately 40 Hz
+protocol:
+  cell: thalamic_relay
+  target_compartment: proximal_dendrite
+  input_record: modeldb112923.external.002
+  input_channel: green
+  input_value: 120
+  effective_driving_potential_mV: -12
+  duration_ms: 100
+  dt_ms: 0.01
+fixed_conventions:
+  leak_convention: table3_reversal
+  voltage_coordinate: relative_to_table3_leak
+  nak_rate_convention: standard_traub_miles
+  calcium_gate_convention: modeldb_112923
+  calcium_density_convention: table3
+  integration_method: rk4
+  specific_capacitance_uF_cm2: 1.0
+results:
+  kinness_serialized_edge:
+    zero: {valid: true, rate_hz: 0.0, maximum_soma_mV: -56.821789}
+    steady_state_at_initial_voltage: {valid: true, rate_hz: 0.0, maximum_soma_mV: -56.788294}
+  kinness_2008:
+    zero: {valid: true, rate_hz: 0.0, maximum_soma_mV: -56.822220}
+    steady_state_at_initial_voltage: {valid: true, rate_hz: 0.0, maximum_soma_mV: -56.788677}
+  paper_literal:
+    zero: {valid: true, rate_hz: 0.0, maximum_soma_mV: 5.494510}
+    steady_state_at_initial_voltage: {valid: true, rate_hz: 10.0, maximum_soma_mV: 37.504054}
+  symmetric_cable:
+    zero: {valid: true, rate_hz: 0.0, maximum_soma_mV: -58.921967}
+    steady_state_at_initial_voltage: {valid: true, rate_hz: 0.0, maximum_soma_mV: -58.900777}
+paper_literal_capacitance_followup:
+  capacitances_uF_cm2: [0.1, 0.25, 0.5, 1.0, 2.0, 5.0, 10.0]
+  zero_rates_hz: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+  steady_rates_hz: [invalid, 10.0, 10.0, 10.0, 10.0, 0.0, 0.0]
+assessment:
+  target_rate_hz: 40.0
+  tolerance_hz: 5.0
+  passed: false
+notes:
+  - No source-defined axial interpretation recovers the published relay stream.
+  - The paper-literal convention is qualitatively distinct but generates at most one event in 100 ms.
+  - The capacitance follow-up shows a one-event regime, not a smooth approach to 40 Hz.
+  - The 0.1 uF/cm2 steady paper-literal candidate is excluded because its state becomes non-finite.
+  - These are discriminating convention tests, not fitted baseline candidates.

@@ -82,3 +82,10 @@ behavioral validation. The recovered ModelDB files and KInNeSS framework paper
 now resolve the serialized equation roles and axial formula, while the legacy
 Figure 8 leak/capacitance defaults and clamp semantics remain open; see
 `modeldb-112923-audit.md`.
+
+The Internet Archive preserves the 2008 KInNeSS KBrain CVS file-list page,
+including `kgatesparse.cpp`, `ksimparse.cpp`, and `kunit.cpp`, but its CDX index
+contains no successful capture of the linked revision-history page or source
+files. Consequently the simulator's unrecorded specific-capacitance and ionic
+gate-initialization defaults cannot currently be recovered from that archive.
+They remain named runtime conventions and may not be silently chosen or fitted.

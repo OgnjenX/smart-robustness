@@ -27,6 +27,7 @@ def _compile(name: str = "thalamic_relay"):
         calcium_gate_convention=TTypeGateConvention.RECIPROCAL,
         calcium_density_convention=CalciumDensityConvention.TABLE3,
         ahp_convention=AHPConvention.PAPER_TEXT,
+        enable_ahp_ach=name == "layer5_excitatory",
     )
 
 
@@ -57,6 +58,7 @@ def test_global_67_mv_rate_coordinate_is_explicitly_compilable() -> None:
         calcium_gate_convention=TTypeGateConvention.RECIPROCAL,
         calcium_density_convention=CalciumDensityConvention.TABLE3,
         ahp_convention=AHPConvention.PAPER_TEXT,
+        enable_ahp_ach=False,
     )
     assert "v_soma+67*mV" in compiled.equations
 
@@ -71,6 +73,7 @@ def test_modeldb_calcium_equations_use_absolute_voltage_and_correct_roles() -> N
         calcium_gate_convention=TTypeGateConvention.MODELDB_112923,
         calcium_density_convention=CalciumDensityConvention.TABLE3,
         ahp_convention=AHPConvention.MODELDB_112923,
+        enable_ahp_ach=False,
     )
     equations = compiled.equations
     assert "m_ca_inf_proximal_dendrite=1/(exp((-63*mV-v_proximal_dendrite)" in equations
@@ -87,6 +90,7 @@ def test_conventions_must_be_explicit_enum_members() -> None:
         "calcium_gate_convention": TTypeGateConvention.RECIPROCAL,
         "calcium_density_convention": CalciumDensityConvention.TABLE3,
         "ahp_convention": AHPConvention.PAPER_TEXT,
+        "enable_ahp_ach": False,
     }
     for key in tuple(kwargs):
         invalid = dict(kwargs)
@@ -122,6 +126,8 @@ def test_modeldb_ahp_profile_uses_executable_tau() -> None:
         calcium_gate_convention=TTypeGateConvention.MODELDB_112923,
         calcium_density_convention=CalciumDensityConvention.TABLE3,
         ahp_convention=AHPConvention.MODELDB_112923,
+        enable_ahp_ach=True,
     )
     assert "dahp_fall/dt=-ahp_fall/(150.0*ms)" in compiled.equations
+    assert "ahp_event_weight*ahp_gate" in compiled.equations
     assert compiled.ahp_convention is AHPConvention.MODELDB_112923

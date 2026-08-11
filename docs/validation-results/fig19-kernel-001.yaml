@@ -1,0 +1,30 @@
+target: fig12_19_ahp_ach
+scope: isolated_AHP_ACh_kernel
+status: partial
+source_cell: Layer_5_and_Maynert_AHP_ACh.nml
+declared_interpretation:
+  event_delivery: direct_normalized_events
+  reason: >-
+    Figure 19 reports 10 ms current injections but not their amplitudes; direct
+    events isolate the published AHP/ACh mechanism from spike-generation inputs.
+  soma_axial_resistance_candidate_kohm_cm: 35.0
+acceptance:
+  two_events_deeper_than_one: true
+  acetylcholine_suppresses_AHP: true
+  paper_profile_within_2mV_of_control_at_500ms: true
+  modeldb_profile_within_2mV_of_control_at_500ms: false
+profiles:
+  paper:
+    ahp_tau_rise_ms: 80.0
+    ahp_tau_fall_ms: 100.0
+    event_weight: 1.0
+    two_event_recovery_error_mV: 1.196
+  modeldb_112923:
+    ahp_tau_rise_ms: 80.0
+    ahp_tau_fall_ms: 150.0
+    event_weight: 4.5
+    two_event_recovery_error_mV: 6.527
+unresolved:
+  - exact current injections used to elicit the Figure 19 spikes
+  - KInNeSS root-compartment axial default
+  - whether the published figure used the paper or archived executable profile

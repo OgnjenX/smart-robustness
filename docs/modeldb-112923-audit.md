@@ -48,6 +48,13 @@ serialized channel projections; the full two-area file contains 24 populations.
   reversal -90 mV, AHP rise/fall 80/150 ms, connection weight 4.5, and 3 ms
   delay. These differ from the paper's 80/100 ms text and were not recoverable
   from the supplement alone.
+- Its layer-5 cell has a 0.01×0.015 mm soma and 0.001×0.01/0.02 mm
+  dendrites. Dendritic input-resistance fields are 35 and 30 kΩ·cm, but the
+  root soma field is omitted. The executable profile therefore requires an
+  explicit soma candidate instead of silently inheriting a Table 3 value.
+- The self-projection weight 4.5 scales the AHP current while each output spike
+  adds one normalized dual-exponential event. This preserves the source's
+  distinction between channel gating and projection strength under overlap.
 
 The dedicated executable AHP profile is implemented separately from the paper
 profile: 80/150 ms kinetics and event weight 4.5 versus 80/100 ms and unit

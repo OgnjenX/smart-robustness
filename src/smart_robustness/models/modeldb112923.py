@@ -99,3 +99,55 @@ def figure8_relay_spec(*, leak_density_mS_cm2: float) -> CellSpec:
             compartment("distal_dendrite", 0.003, 0.1, 1.0),
         ),
     )
+
+
+def ahp_ach_layer5_spec(*, soma_axial_resistance_kohm_cm: float) -> CellSpec:
+    """Build the dedicated layer-5 cell in ``Layer_5_and_Maynert_AHP_ACh.nml``.
+
+    The source serializes input resistance for both dendrites but not the soma.
+    Our compartment compiler requires one value per endpoint, so the unresolved
+    KInNeSS root-compartment default must be supplied explicitly.
+    """
+
+    if soma_axial_resistance_kohm_cm <= 0:
+        raise ValueError("soma_axial_resistance_kohm_cm must be a positive candidate")
+
+    return CellSpec(
+        "modeldb112923_ahp_ach_layer5",
+        (
+            CompartmentSpec(
+                name="soma",
+                diameter_mm=0.01,
+                length_mm=0.015,
+                axial_resistance_kohm_cm=soma_axial_resistance_kohm_cm,
+                e_leak_mV=-78.0,
+                g_leak_mS_cm2=0.1,
+                g_na_mS_cm2=50.0,
+                g_k_mS_cm2=30.0,
+            ),
+            CompartmentSpec(
+                name="proximal_dendrite",
+                diameter_mm=0.001,
+                length_mm=0.01,
+                axial_resistance_kohm_cm=35.0,
+                e_leak_mV=-78.0,
+                g_leak_mS_cm2=0.1,
+            ),
+            CompartmentSpec(
+                name="distal_dendrite",
+                diameter_mm=0.001,
+                length_mm=0.02,
+                axial_resistance_kohm_cm=30.0,
+                e_leak_mV=-78.0,
+                g_leak_mS_cm2=0.1,
+            ),
+        ),
+    )
+
+
+def ahp_density_to_total_nS(density_mS_cm2: float, cell: CellSpec) -> float:
+    """Convert a somatic channel density to total conductance for Brian2."""
+
+    if density_mS_cm2 <= 0:
+        raise ValueError("density_mS_cm2 must be positive")
+    return density_mS_cm2 * cell.compartment("soma").lateral_area_cm2 * 1e6

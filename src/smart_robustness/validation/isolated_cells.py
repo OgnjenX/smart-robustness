@@ -8,6 +8,7 @@ from typing import Any
 import numpy as np
 
 from ..models.compartmental_hh import create_compartmental_hh_population
+from ..models.modeldb112923 import ahp_ach_layer5_spec, ahp_density_to_total_nS
 
 
 @dataclass(frozen=True, slots=True)
@@ -47,6 +48,43 @@ class Figure8Assessment:
     @property
     def reproduced(self) -> bool:
         return self.tonic_pass and self.burst_pass
+
+
+@dataclass(frozen=True, slots=True)
+class Figure19Protocol:
+    """Source-backed AHP/ACh kernel assay derived from Figure 19 and ModelDB.
+
+    Figure 19 generated spikes with 10 ms current injections, but the exact
+    injected current and KInNeSS soma axial default are not reported. This
+    assay delivers the resulting spike events directly, isolating the
+    published AHP/ACh mechanism from those unresolved spike-generation inputs.
+    """
+
+    duration_ms: float = 500.0
+    dt_ms: float = 0.1
+    soma_axial_resistance_kohm_cm: float = 35.0
+    ahp_density_mS_cm2: float = 0.1
+    ahp_event_weight: float = 1.0
+    ahp_convention: str = "paper_text"
+
+
+@dataclass(frozen=True, slots=True)
+class Figure19Assessment:
+    frequency_dependence_pass: bool
+    ach_suppression_pass: bool
+    recovery_pass: bool
+    one_spike_minimum_mV: float
+    two_spike_minimum_mV: float
+    ach_minimum_mV: float
+    two_spike_recovery_error_mV: float
+
+    @property
+    def reproduced(self) -> bool:
+        return (
+            self.frequency_dependence_pass
+            and self.ach_suppression_pass
+            and self.recovery_pass
+        )
 
 
 def run_figure8_condition(
@@ -136,4 +174,90 @@ def assess_figure8(
         tonic_spike_count=len(tonic_spikes),
         burst_spike_count=len(burst_spikes),
         notes=tuple(notes),
+    )
+
+
+def run_figure19_kernel_condition(
+    *,
+    spike_count: int,
+    acetylcholine: bool,
+    protocol: Figure19Protocol | None = None,
+    brian=None,
+) -> IsolatedCellTrace:
+    """Run the source-specific layer-5 AHP/ACh kernel after explicit events."""
+
+    if brian is None:
+        import brian2 as brian
+
+    if spike_count < 0:
+        raise ValueError("spike_count cannot be negative")
+    protocol = protocol or Figure19Protocol()
+    brian.start_scope()
+    brian.defaultclock.dt = protocol.dt_ms * brian.ms
+    cell = ahp_ach_layer5_spec(
+        soma_axial_resistance_kohm_cm=protocol.soma_axial_resistance_kohm_cm
+    )
+    params = {
+        "cell_spec": cell,
+        "cell_class": "layer5_excitatory",
+        "axial_convention": "kinness_2008",
+        "leak_convention": "table3_reversal",
+        "voltage_coordinate": "shifted_67_mV",
+        "nak_rate_convention": "standard_traub_miles",
+        "calcium_gate_convention": "modeldb_112923",
+        "calcium_density_convention": "table3",
+        "ahp_convention": protocol.ahp_convention,
+        "specific_capacitance_uF_cm2": 1.0,
+        "enable_ahp_ach": True,
+        "ahp_max_conductance_nS": ahp_density_to_total_nS(
+            protocol.ahp_density_mS_cm2, cell
+        ),
+        "ahp_event_weight": protocol.ahp_event_weight,
+        "v_init_mV": -78.0,
+        "method": "rk4",
+    }
+    population = create_compartmental_hh_population(
+        name="figure19_layer5", size=1, params=params, brian=brian
+    )
+    group = population.group
+    group.ahp_rise = spike_count
+    group.ahp_fall = spike_count
+    if acetylcholine:
+        population.trigger_ach()
+    voltage = brian.StateMonitor(group, "v_soma", record=True)
+    network = brian.Network(group, voltage)
+    network.run(protocol.duration_ms * brian.ms)
+    return IsolatedCellTrace(
+        condition=f"{spike_count}_spike" + ("_ach" if acetylcholine else ""),
+        time_ms=np.asarray(voltage.t / brian.ms),
+        soma_voltage_mV=np.asarray(voltage.v_soma[0] / brian.mV),
+        spike_times_ms=np.asarray([], dtype=float),
+    )
+
+
+def assess_figure19_kernel(
+    control: IsolatedCellTrace,
+    one_spike: IsolatedCellTrace,
+    two_spike: IsolatedCellTrace,
+    two_spike_ach: IsolatedCellTrace,
+    *,
+    recovery_tolerance_mV: float = 2.0,
+) -> Figure19Assessment:
+    """Score AHP effects relative to a matched no-event control trace."""
+
+    one_min = float(np.min(one_spike.soma_voltage_mV))
+    two_min = float(np.min(two_spike.soma_voltage_mV))
+    ach_min = float(np.min(two_spike_ach.soma_voltage_mV))
+    one_effect = control.soma_voltage_mV - one_spike.soma_voltage_mV
+    two_effect = control.soma_voltage_mV - two_spike.soma_voltage_mV
+    ach_effect = control.soma_voltage_mV - two_spike_ach.soma_voltage_mV
+    recovery_error = abs(float(two_effect[-1]))
+    return Figure19Assessment(
+        frequency_dependence_pass=float(np.max(two_effect)) > float(np.max(one_effect)),
+        ach_suppression_pass=float(np.max(ach_effect)) < float(np.max(two_effect)),
+        recovery_pass=recovery_error <= recovery_tolerance_mV,
+        one_spike_minimum_mV=one_min,
+        two_spike_minimum_mV=two_min,
+        ach_minimum_mV=ach_min,
+        two_spike_recovery_error_mV=recovery_error,
     )

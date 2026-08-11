@@ -39,6 +39,11 @@ Implemented:
   kinetic alternatives represented as named conventions;
 - layer-5 AHP and ACh dual-exponential dynamics with the unreported maximum
   AHP conductance required as an explicit calibration parameter;
+- a source-specific Figure 19 kernel assay: both paper and ModelDB profiles
+  reproduce deeper AHP after two events and fast ACh suppression. The paper
+  80/100-ms profile is within 2 mV of its matched control at 500 ms; the
+  archived 80/150-ms, weight-4.5 profile is not and remains a documented source
+  discrepancy rather than a tuned-away result;
 - a predeclared Figure 8 isolated-relay protocol and qualitative tonic/burst
   scorer.
 - recovered KInNeSS 2008 equation semantics, including the `Simple tau`

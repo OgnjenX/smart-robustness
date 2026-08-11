@@ -5,7 +5,11 @@ import pytest
 brian = pytest.importorskip("brian2")
 
 from smart_robustness.models.compartmental_hh import create_compartmental_hh_population
-from smart_robustness.models.modeldb112923 import figure8_relay_spec
+from smart_robustness.models.modeldb112923 import (
+    ahp_ach_layer5_spec,
+    ahp_density_to_total_nS,
+    figure8_relay_spec,
+)
 
 
 def _params(cell_class: str = "thalamic_relay") -> dict[str, str]:
@@ -19,9 +23,11 @@ def _params(cell_class: str = "thalamic_relay") -> dict[str, str]:
         "calcium_density_convention": "table3",
         "ahp_convention": "paper_text",
         "specific_capacitance_uF_cm2": 1.0,
+        "enable_ahp_ach": cell_class == "layer5_excitatory",
     }
     if cell_class == "layer5_excitatory":
         params["ahp_max_conductance_nS"] = 1.0
+        params["ahp_event_weight"] = 1.0
     return params
 
 
@@ -139,6 +145,11 @@ def test_modeldb_layer5_spike_uses_serialized_ahp_weight() -> None:
     brian.start_scope()
     params = _params("layer5_excitatory")
     params["ahp_convention"] = "modeldb_112923"
+    params["cell_spec"] = ahp_ach_layer5_spec(soma_axial_resistance_kohm_cm=35.0)
+    params["ahp_max_conductance_nS"] = ahp_density_to_total_nS(
+        0.1, params["cell_spec"]
+    )
+    params["ahp_event_weight"] = 4.5
     population = create_compartmental_hh_population(
         name="layer5_modeldb_ahp", size=1, params=params, brian=brian
     )
@@ -146,8 +157,17 @@ def test_modeldb_layer5_spike_uses_serialized_ahp_weight() -> None:
     group.v_soma = -1 * brian.mV
     group.armed = 1
     brian.Network(group).run(0.1 * brian.ms)
-    assert group.ahp_rise[0] == pytest.approx(4.5)
-    assert group.ahp_fall[0] == pytest.approx(4.5)
+    assert group.ahp_rise[0] == pytest.approx(1.0)
+    assert group.ahp_fall[0] == pytest.approx(1.0)
+    assert group.ahp_event_weight[0] == pytest.approx(4.5)
+
+
+def test_source_specific_ahp_cell_geometry_and_density_conversion() -> None:
+    cell = ahp_ach_layer5_spec(soma_axial_resistance_kohm_cm=35.0)
+    assert cell.compartment("soma").e_leak_mV == -78.0
+    assert cell.compartment("proximal_dendrite").axial_resistance_kohm_cm == 35.0
+    expected = 0.1 * cell.compartment("soma").lateral_area_cm2 * 1e6
+    assert ahp_density_to_total_nS(0.1, cell) == pytest.approx(expected)
 
 
 def test_specific_capacitance_is_required_and_positive() -> None:

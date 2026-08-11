@@ -49,6 +49,7 @@ class CompiledCellEquations:
     calcium_gate_convention: TTypeGateConvention
     calcium_density_convention: CalciumDensityConvention
     ahp_convention: AHPConvention
+    ahp_ach_enabled: bool
     compartments: tuple[str, ...]
     axial_parameter_names: tuple[str, ...]
 
@@ -142,8 +143,9 @@ def _layer5_ahp_lines(convention: AHPConvention) -> list[str]:
         f"dach_rise/dt=-ach_rise/({ACH_RISE_MS}*ms) : 1",
         f"dach_fall/dt=-ach_fall/({ACH_FALL_MS}*ms) : 1",
         f"ach_gate=clip({ACH_NORMALIZATION}*(ach_fall-ach_rise), 0, 1) : 1",
-        "i_ahp=g_ahp_max*ahp_gate*(1-ach_gate)*(e_k-v_soma) : amp",
+        "i_ahp=g_ahp_max*ahp_event_weight*ahp_gate*(1-ach_gate)*(e_k-v_soma) : amp",
         "g_ahp_max : siemens (constant)",
+        "ahp_event_weight : 1 (constant)",
     ]
 
 
@@ -157,6 +159,7 @@ def compile_cell_equations(
     calcium_gate_convention: TTypeGateConvention,
     calcium_density_convention: CalciumDensityConvention,
     ahp_convention: AHPConvention,
+    enable_ahp_ach: bool,
 ) -> CompiledCellEquations:
     """Compile one source-specified cell; every ambiguous convention is required."""
 
@@ -171,6 +174,8 @@ def compile_cell_equations(
         "calcium_density_convention",
     )
     ahp = _enum(ahp_convention, AHPConvention, "ahp_convention")
+    if not isinstance(enable_ahp_ach, bool):
+        raise TypeError("enable_ahp_ach must be an explicit bool")
     edges = build_axial_edges(cell, axial)
     axial_terms: dict[str, list[str]] = {c.name: [] for c in cell.compartments}
     axial_parameters: list[str] = []
@@ -190,7 +195,7 @@ def compile_cell_equations(
     ]
     for parameter in axial_parameters:
         lines.append(f"{parameter} : siemens (constant)")
-    if cell.name == "layer5_excitatory":
+    if enable_ahp_ach:
         lines.extend(_layer5_ahp_lines(ahp))
     for compartment in cell.compartments:
         name = compartment.name
@@ -201,7 +206,7 @@ def compile_cell_equations(
         if compartment.g_ca_mS_cm2 is not None:
             lines.extend(_calcium_lines(name, voltage, calcium_gate))
             current_terms.append(f"i_ca_{name}")
-        if cell.name == "layer5_excitatory" and name == "soma":
+        if enable_ahp_ach and name == "soma":
             current_terms.append("i_ahp")
         current_terms.extend(axial_terms[name])
         current_terms.extend((f"i_syn_{name}", f"i_drive_{name}"))
@@ -225,6 +230,7 @@ def compile_cell_equations(
         calcium_gate_convention=calcium_gate,
         calcium_density_convention=calcium_density,
         ahp_convention=ahp,
+        ahp_ach_enabled=enable_ahp_ach,
         compartments=tuple(c.name for c in cell.compartments),
         axial_parameter_names=tuple(axial_parameters),
     )

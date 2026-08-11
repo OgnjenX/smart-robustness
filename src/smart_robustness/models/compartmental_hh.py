@@ -41,8 +41,8 @@ class CompartmentalPopulation:
     def trigger_ach(self, indices: Any = slice(None)) -> None:
         """Apply one normalized ACh event to layer-5 cells."""
 
-        if self.cell_spec.name != "layer5_excitatory":
-            raise ValueError("ACh modulation is specified only for layer5_excitatory cells")
+        if not self.compiled.ahp_ach_enabled:
+            raise ValueError("ACh modulation is not enabled for this population")
         self.group.ach_rise[indices] += 1
         self.group.ach_fall[indices] += 1
 
@@ -75,14 +75,19 @@ def create_compartmental_hh_population(
     calcium_gate = TTypeGateConvention(params["calcium_gate_convention"])
     calcium_density = CalciumDensityConvention(params["calcium_density_convention"])
     ahp_convention = AHPConvention(params["ahp_convention"])
+    enable_ahp_ach = params["enable_ahp_ach"]
+    if not isinstance(enable_ahp_ach, bool):
+        raise TypeError("enable_ahp_ach must be an explicit bool")
     specific_capacitance = float(params["specific_capacitance_uF_cm2"])
     if specific_capacitance <= 0:
         raise ValueError("specific_capacitance_uF_cm2 must be positive")
-    if cell.name == "layer5_excitatory" and "ahp_max_conductance_nS" not in params:
+    if enable_ahp_ach and "ahp_max_conductance_nS" not in params:
         raise ValueError(
-            "layer5_excitatory requires explicit ahp_max_conductance_nS; "
+            "AHP/ACh-enabled cells require explicit ahp_max_conductance_nS; "
             "Grossberg & Versace (2008) do not report a unique value"
         )
+    if enable_ahp_ach and "ahp_event_weight" not in params:
+        raise ValueError("AHP/ACh-enabled cells require explicit ahp_event_weight")
     compiled = compile_cell_equations(
         cell,
         axial_convention=axial,
@@ -92,11 +97,11 @@ def create_compartmental_hh_population(
         calcium_gate_convention=calcium_gate,
         calcium_density_convention=calcium_density,
         ahp_convention=ahp_convention,
+        enable_ahp_ach=enable_ahp_ach,
     )
     spike_reset = "armed = 0"
-    if cell.name == "layer5_excitatory":
-        event_weight = 4.5 if ahp_convention is AHPConvention.MODELDB_112923 else 1.0
-        spike_reset += f"; ahp_rise += {event_weight}; ahp_fall += {event_weight}"
+    if enable_ahp_ach:
+        spike_reset += "; ahp_rise += 1; ahp_fall += 1"
     group = brian.NeuronGroup(
         size,
         compiled.equations,
@@ -107,8 +112,9 @@ def create_compartmental_hh_population(
         name=name,
     )
     group.run_on_event("arm_spike", "armed = 1", when="after_thresholds", order=1)
-    if cell.name == "layer5_excitatory":
+    if enable_ahp_ach:
         group.g_ahp_max = float(params["ahp_max_conductance_nS"]) * brian.nsiemens
+        group.ahp_event_weight = float(params["ahp_event_weight"])
         group.ahp_rise = 0
         group.ahp_fall = 0
         group.ach_rise = 0

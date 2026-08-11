@@ -2,7 +2,9 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+import hashlib
+import json
+from dataclasses import asdict, dataclass
 from typing import Any
 
 from .modeldb_projections import MODELDB_FIRST_ORDER
@@ -36,29 +38,49 @@ class FirstOrderSector:
         )
 
 
-def _population_parameters(
+@dataclass(frozen=True, slots=True)
+class FirstOrderRuntimeConventions:
+    """Complete executable convention profile for one classic-sector run."""
+
+    axial_convention: str = "kinness_serialized_edge"
+    leak_convention: str = "table3_reversal"
+    voltage_coordinate: str = "relative_to_table3_leak"
+    nak_rate_convention: str = "standard_traub_miles"
+    calcium_gate_convention: str = "modeldb_112923"
+    gate_initialization_convention: str = "steady_state_at_initial_voltage"
+    calcium_density_convention: str = "table3"
+    specific_capacitance_uF_cm2: float = 1.0
+    integration_method: str = "rk4"
+
+    @property
+    def fingerprint(self) -> str:
+        payload = json.dumps(asdict(self), sort_keys=True, separators=(",", ":"))
+        return hashlib.sha256(payload.encode()).hexdigest()
+
+
+def first_order_population_parameters(
     facts: FirstOrderPopulationFacts,
     *,
-    gate_initialization_convention: str,
+    conventions: FirstOrderRuntimeConventions,
 ) -> dict[str, Any]:
     has_ahp = facts.ahp_density_mS_cm2 is not None
     parameters: dict[str, Any] = {
         "cell_spec": facts.cell,
         "cell_class": facts.canonical_name,
-        "axial_convention": "kinness_serialized_edge",
-        "leak_convention": "table3_reversal",
-        "voltage_coordinate": "relative_to_table3_leak",
-        "nak_rate_convention": "standard_traub_miles",
-        "calcium_gate_convention": "modeldb_112923",
-        "gate_initialization_convention": gate_initialization_convention,
-        "calcium_density_convention": "table3",
+        "axial_convention": conventions.axial_convention,
+        "leak_convention": conventions.leak_convention,
+        "voltage_coordinate": conventions.voltage_coordinate,
+        "nak_rate_convention": conventions.nak_rate_convention,
+        "calcium_gate_convention": conventions.calcium_gate_convention,
+        "gate_initialization_convention": conventions.gate_initialization_convention,
+        "calcium_density_convention": conventions.calcium_density_convention,
         "ahp_convention": "smart_network_112923" if has_ahp else "modeldb_112923",
-        "specific_capacitance_uF_cm2": 1.0,
+        "specific_capacitance_uF_cm2": conventions.specific_capacitance_uF_cm2,
         "enable_ahp_ach": has_ahp,
         "e_na_mV": facts.e_na_mV,
         "e_k_mV": facts.e_k_mV,
         "e_ca_mV": facts.e_ca_mV,
-        "method": "rk4",
+        "method": conventions.integration_method,
         "synaptic_ports": modeldb_ports_for_target(
             MODELDB_FIRST_ORDER.projections, facts.canonical_name
         ),
@@ -90,7 +112,8 @@ def _population_parameters(
 
 def build_first_order_intrinsic_sector(
     *,
-    gate_initialization_convention: str = "steady_state_at_initial_voltage",
+    conventions: FirstOrderRuntimeConventions | None = None,
+    gate_initialization_convention: str | None = None,
     brian=None,
 ) -> FirstOrderSector:
     """Instantiate all 812 cells and 1,950 compartments before connectivity.
@@ -103,6 +126,14 @@ def build_first_order_intrinsic_sector(
     if brian is None:
         import brian2 as brian
 
+    if conventions is not None and gate_initialization_convention is not None:
+        raise ValueError("pass conventions or gate_initialization_convention, not both")
+    conventions = conventions or FirstOrderRuntimeConventions(
+        gate_initialization_convention=(
+            gate_initialization_convention or "steady_state_at_initial_voltage"
+        )
+    )
+
     facts = first_order_population_facts()
     populations: dict[str, CompartmentalPopulation] = {}
     for population_facts in facts:
@@ -110,9 +141,9 @@ def build_first_order_intrinsic_sector(
         populations[population_facts.canonical_name] = create_compartmental_hh_population(
             name=f"smart_v1_{population_facts.canonical_name}",
             size=width * height,
-            params=_population_parameters(
+            params=first_order_population_parameters(
                 population_facts,
-                gate_initialization_convention=gate_initialization_convention,
+                conventions=conventions,
             ),
             brian=brian,
         )
@@ -122,7 +153,8 @@ def build_first_order_intrinsic_sector(
 
 def build_first_order_chemical_sector(
     *,
-    gate_initialization_convention: str = "steady_state_at_initial_voltage",
+    conventions: FirstOrderRuntimeConventions | None = None,
+    gate_initialization_convention: str | None = None,
     brian=None,
 ) -> FirstOrderSector:
     """Instantiate the first-order cells and every in-scope chemical projection."""
@@ -131,6 +163,7 @@ def build_first_order_chemical_sector(
         import brian2 as brian
 
     sector = build_first_order_intrinsic_sector(
+        conventions=conventions,
         gate_initialization_convention=gate_initialization_convention,
         brian=brian,
     )
@@ -159,7 +192,8 @@ def build_first_order_chemical_sector(
 
 def build_first_order_connected_sector(
     *,
-    gate_initialization_convention: str = "steady_state_at_initial_voltage",
+    conventions: FirstOrderRuntimeConventions | None = None,
+    gate_initialization_convention: str | None = None,
     brian=None,
 ) -> FirstOrderSector:
     """Build chemical and electrical connectivity; external inputs remain separate."""
@@ -168,6 +202,7 @@ def build_first_order_connected_sector(
         import brian2 as brian
 
     sector = build_first_order_chemical_sector(
+        conventions=conventions,
         gate_initialization_convention=gate_initialization_convention,
         brian=brian,
     )

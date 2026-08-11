@@ -61,6 +61,7 @@ src/smart_robustness/
   synapses.py            dual-exponential conductance + transmitter depletion
   circuit.py             minimal SMART benchmark assembly
   experiment.py          seeded execution and artifact writing
+  validation/first_order.py  fingerprinted relay/bar reproduction runners
   analysis/spectra.py    gamma/beta and synchrony measurements
 tests/                   equations, configuration, analysis, optional smoke test
 docs/                    provenance ledger and replication roadmap

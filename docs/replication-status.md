@@ -152,6 +152,13 @@ the earlier numerical candidates as the active source-consistent failure and
 narrows the unresolved discrepancy to legacy membrane/input defaults rather
 than network topology or synaptic units.
 
+A typed convention profile, stable configuration fingerprint, reusable
+connected-bar runner, and isolated-relay discriminator now replace ad-hoc
+runtime probes. The first coarse convention matrix is retained in
+`validation-results/isolated-relay-sweep-001.yaml`; none of its finite members
+reproduces 40 Hz, and numerically invalid members are explicitly excluded
+rather than counted as low-rate candidates.
+
 The first Figure 8 candidate (67 mV-shifted standard Traub--Miles rates,
 reciprocal T gates, Table 3 calcium density, and a -80 mV pre-pulse clamp)
 produces sustained tonic trains in both conditions. It therefore fails the

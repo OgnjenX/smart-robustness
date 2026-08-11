@@ -5,7 +5,10 @@ import pytest
 
 brian = pytest.importorskip("brian2")
 
-from smart_robustness.classic_sector import build_first_order_intrinsic_sector
+from smart_robustness.classic_sector import (
+    FirstOrderRuntimeConventions,
+    build_first_order_intrinsic_sector,
+)
 
 
 def test_first_order_intrinsic_sector_builds_all_source_cells() -> None:
@@ -49,6 +52,37 @@ def test_classic_sector_uses_kinness_rest_relative_nak_voltage() -> None:
         population.compiled.voltage_coordinate.value
         for population in sector.populations.values()
     } == {"relative_to_table3_leak"}
+
+
+def test_runtime_convention_fingerprint_is_stable_and_sensitive() -> None:
+    classic = FirstOrderRuntimeConventions()
+    assert classic.fingerprint == FirstOrderRuntimeConventions().fingerprint
+    zero = FirstOrderRuntimeConventions(gate_initialization_convention="zero")
+    assert zero.fingerprint != classic.fingerprint
+
+
+def test_full_runtime_profile_reaches_every_population() -> None:
+    brian.start_scope()
+    conventions = FirstOrderRuntimeConventions(
+        gate_initialization_convention="zero",
+        specific_capacitance_uF_cm2=2.0,
+    )
+    sector = build_first_order_intrinsic_sector(conventions=conventions, brian=brian)
+    relay = sector.populations["thalamic_relay"]
+    assert np.allclose(relay.group.m_soma[:], 0)
+    assert relay.group.C_soma[0] / brian.pfarad == pytest.approx(
+        2.0 * relay.cell_spec.soma.lateral_area_cm2 * 1e6
+    )
+
+
+def test_runtime_profile_and_legacy_gate_override_are_mutually_exclusive() -> None:
+    brian.start_scope()
+    with pytest.raises(ValueError, match="not both"):
+        build_first_order_intrinsic_sector(
+            conventions=FirstOrderRuntimeConventions(),
+            gate_initialization_convention="zero",
+            brian=brian,
+        )
 
 
 def test_network_layer5_and_layer6ii_use_serialized_fast_ahp() -> None:

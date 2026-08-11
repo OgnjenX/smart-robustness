@@ -50,7 +50,12 @@ paper's centered five-cell bars at green=120. Combined with the serialized 0.4
 relay sensitivity and -60 mV leak, this reconstructs the reported -12 mV
 driving potential. The first 100-ms connected run fails the 40-Hz target due to
 a synchronized startup TRN transient and subsequent broad relay rebound; see
-`validation-results/first-order-bar-001.yaml`.
+`validation-results/first-order-bar-001.yaml`. Subsequent source corrections
+supersede that numerical candidate; `first-order-bar-003.yaml` is the active
+source-consistent failure. Typed runtime profiles now carry stable SHA-256
+fingerprints, and `validation.first_order` provides reusable isolated-relay
+and connected-bar runners plus a predeclared 40-Hz scorer. The first coarse
+matrix is recorded in `isolated-relay-sweep-001.yaml`; no candidate passed.
 
 Learning checkpoint: Equation 6's biphasic post-spike gate and the serialized
 20/25-ms depotentiation intervals are tested. Adaptive records initialize at

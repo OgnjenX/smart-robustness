@@ -63,10 +63,13 @@ extensions. The locally audited download has SHA-256
 `15a7f9166e301c9740e7cff4258810d315bd95b196ea5dff3419c5cc2879f177`.
 
 The archived 2008 download page identifies KInNeSS 0.3.4 RC2 and SANNDRA 1.2.0
-RC3 as the contemporaneous releases. Their GPL source archives were not
-captured by the Internet Archive, but the archived SANNDRA API landing page and
-CVS history remain useful corroborating records. No simulator source code is
-copied into this repository.
+RC3 as the contemporaneous releases. The Internet Archive preserves the
+KInNeSS CVS2HTML directory index and release metadata, but not the GPL source
+archives or the linked SANNDRA API pages. A contemporaneous KInNeSS 0.3.2 paper
+also states that its voltage origin is the intracellular resting potential;
+that is relevant evidence for the voltage coordinate, but it does not specify
+how ionic gates are initialized. No simulator source code is copied into this
+repository.
 
 ## Known source ambiguity
 

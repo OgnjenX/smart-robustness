@@ -20,6 +20,7 @@ def _params(cell_class: str = "thalamic_relay") -> dict[str, str]:
         "voltage_coordinate": "relative_to_table3_leak",
         "nak_rate_convention": "printed_smart",
         "calcium_gate_convention": "reciprocal",
+        "gate_initialization_convention": "steady_state_at_initial_voltage",
         "calcium_density_convention": "table3",
         "ahp_convention": "paper_text",
         "specific_capacitance_uF_cm2": 1.0,
@@ -84,6 +85,30 @@ def test_modeldb_calcium_gates_initialize_in_absolute_voltage_coordinate() -> No
     )
     expected_h = 1 / (1 + brian.exp((-80.0 + 83.5) / 6.3))
     assert population.group.h_ca_soma[0] == pytest.approx(float(expected_h))
+
+
+def test_zero_gate_initialization_is_an_explicit_audit_alternative() -> None:
+    brian.start_scope()
+    params = _params()
+    params["gate_initialization_convention"] = "zero"
+    population = create_compartmental_hh_population(
+        name="zero_gate_initialization", size=1, params=params, brian=brian
+    )
+    assert population.group.m_soma[0] == 0
+    assert population.group.h_soma[0] == 0
+    assert population.group.n_soma[0] == 0
+    assert population.group.m_ca_proximal_dendrite[0] == 0
+    assert population.group.h_ca_proximal_dendrite[0] == 0
+
+
+def test_gate_initialization_convention_is_required() -> None:
+    brian.start_scope()
+    params = _params()
+    del params["gate_initialization_convention"]
+    with pytest.raises(KeyError, match="gate_initialization_convention"):
+        create_compartmental_hh_population(
+            name="missing_gate_initialization", size=1, params=params, brian=brian
+        )
 
 
 def test_spike_event_arms_above_30_and_emits_once_below_zero() -> None:

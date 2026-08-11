@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from enum import StrEnum
 from typing import Any
 
 from .axial import AxialConvention, build_axial_edges
@@ -27,6 +28,13 @@ from .equation_builder import (
 )
 from .ports import ExternalInputPortSpec, GapJunctionPortSpec, InjectionPortSpec, SynapticPortSpec
 from .table3 import CellSpec, get_cell_spec
+
+
+class GateInitializationConvention(StrEnum):
+    """Named alternatives for a KInNeSS default absent from the SMART archive."""
+
+    STEADY_STATE_AT_INITIAL_VOLTAGE = "steady_state_at_initial_voltage"
+    ZERO = "zero"
 
 
 @dataclass(slots=True)
@@ -67,7 +75,6 @@ class CompartmentalPopulation:
         if not 0 <= value <= 255:
             raise ValueError("external input value must be between zero and 255")
         getattr(self.group, f"{port.name}_input_{channel}")[indices] = value
-
     def set_external_injection(
         self,
         record_id: str,
@@ -116,6 +123,7 @@ def create_compartmental_hh_population(
     voltage = VoltageCoordinate(params["voltage_coordinate"])
     nak_rate = NaKRateConvention(params["nak_rate_convention"])
     calcium_gate = TTypeGateConvention(params["calcium_gate_convention"])
+    gate_initialization = GateInitializationConvention(params["gate_initialization_convention"])
     calcium_density = CalciumDensityConvention(params["calcium_density_convention"])
     ahp_convention = AHPConvention(params["ahp_convention"])
     synaptic_ports = params.get("synaptic_ports", ())
@@ -262,10 +270,27 @@ def create_compartmental_hh_population(
                 f"g_k_{compartment_name}",
                 compartment.conductance_nS("k") * brian.nsiemens,
             )
-            rates = traub_miles_rates(paper_voltage, nak_rate)
-            _set(group, f"m_{compartment_name}", rates.alpha_m / (rates.alpha_m + rates.beta_m))
-            _set(group, f"h_{compartment_name}", rates.alpha_h / (rates.alpha_h + rates.beta_h))
-            _set(group, f"n_{compartment_name}", rates.alpha_n / (rates.alpha_n + rates.beta_n))
+            if gate_initialization is GateInitializationConvention.ZERO:
+                _set(group, f"m_{compartment_name}", 0)
+                _set(group, f"h_{compartment_name}", 0)
+                _set(group, f"n_{compartment_name}", 0)
+            else:
+                rates = traub_miles_rates(paper_voltage, nak_rate)
+                _set(
+                    group,
+                    f"m_{compartment_name}",
+                    rates.alpha_m / (rates.alpha_m + rates.beta_m),
+                )
+                _set(
+                    group,
+                    f"h_{compartment_name}",
+                    rates.alpha_h / (rates.alpha_h + rates.beta_h),
+                )
+                _set(
+                    group,
+                    f"n_{compartment_name}",
+                    rates.alpha_n / (rates.alpha_n + rates.beta_n),
+                )
         if compartment.g_ca_mS_cm2 is not None:
             density = (
                 compartment.g_ca_mS_cm2
@@ -279,16 +304,20 @@ def create_compartmental_hh_population(
                 if calcium_gate is TTypeGateConvention.MODELDB_112923
                 else paper_voltage
             )
-            _set(
-                group,
-                f"m_ca_{compartment_name}",
-                t_type_m_inf(calcium_voltage, calcium_gate),
-            )
-            _set(
-                group,
-                f"h_ca_{compartment_name}",
-                t_type_h_inf(calcium_voltage, calcium_gate),
-            )
+            if gate_initialization is GateInitializationConvention.ZERO:
+                _set(group, f"m_ca_{compartment_name}", 0)
+                _set(group, f"h_ca_{compartment_name}", 0)
+            else:
+                _set(
+                    group,
+                    f"m_ca_{compartment_name}",
+                    t_type_m_inf(calcium_voltage, calcium_gate),
+                )
+                _set(
+                    group,
+                    f"h_ca_{compartment_name}",
+                    t_type_h_inf(calcium_voltage, calcium_gate),
+                )
 
     for edge_index, edge in enumerate(build_axial_edges(cell, axial)):
         _set(

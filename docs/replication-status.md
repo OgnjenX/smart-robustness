@@ -132,7 +132,10 @@ warmup, the five active relay cells fire at 190 Hz rather than 40 Hz and 76
 off-pattern relay spikes occur. The immediate cause is a synchronized intrinsic
 TRN startup spike near 0.89 ms followed by broad relay rebound. The unreported
 legacy gate-initialization convention must be resolved before oscillation
-spectra can be interpreted.
+spectra can be interpreted. It is now a required runtime choice:
+`steady_state_at_initial_voltage` preserves the prior implementation and
+`zero` is a named source-audit alternative. Neither is designated as the
+classic baseline until it passes source or behavioral validation.
 
 The first Figure 8 candidate (67 mV-shifted standard Traub--Miles rates,
 reciprocal T gates, Table 3 calcium density, and a -80 mV pre-pulse clamp)

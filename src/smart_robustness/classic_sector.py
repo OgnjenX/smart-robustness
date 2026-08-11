@@ -46,6 +46,7 @@ def _population_parameters(facts: FirstOrderPopulationFacts) -> dict[str, Any]:
         "voltage_coordinate": "shifted_67_mV",
         "nak_rate_convention": "standard_traub_miles",
         "calcium_gate_convention": "modeldb_112923",
+        "gate_initialization_convention": "steady_state_at_initial_voltage",
         "calcium_density_convention": "table3",
         "ahp_convention": "smart_network_112923" if has_ahp else "modeldb_112923",
         "specific_capacitance_uF_cm2": 1.0,

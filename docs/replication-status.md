@@ -55,6 +55,18 @@ Implemented:
   sizes: 812 cells and 1,950 compartments. This intrinsic-only sector uses the
   executable geometry, edge-serialized KInNeSS axial values, population-specific
   reversal potentials, and the network's 5/20-ms layer-5/layer-6II AHP profile.
+- projection-specific receptor ports for all 49 chemical records, including
+  AMPA/GABA dual-exponential kinetics, NMDA voltage block, and the equal-tau
+  alpha-function case;
+- the 48 chemical projections whose source and target are both in the
+  first-order sector, with delays, depletion state, and supplementary
+  one-to-one/global/Gaussian topology; the V2-to-V1 record is reserved for the
+  higher-order loop;
+- all four first-order gap-junction records and both normalized bottom-up input
+  conductance ports;
+- CI validation split into independent Brian2 processes: 151 lightweight tests,
+  three intrinsic-sector tests, three connected-sector tests, and two long AHP
+  tests currently pass (159 total).
 
 Explicitly unresolved source anomalies:
 
@@ -75,8 +87,8 @@ Explicitly unresolved source anomalies:
 Not yet implemented or validated:
 
 - Brian2 instantiation of the supplementary projection catalog;
-- chemical/gap-junction connectivity for the now-instantiated first-order 9×9
-  sector, topographic kernels, STDP, ACh vigilance,
+- exact ModelDB kernel width/ring/wrap/border semantics for the connected
+  first-order sector, STDP, ACh vigilance,
   CSD/LFP geometry, and every published figure protocol;
 - quantitative reproduction of match/gamma and mismatch/beta/reset.
 

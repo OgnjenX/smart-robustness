@@ -15,5 +15,15 @@ jobs:
           cache: pip
       - run: python -m pip install -e '.[dev]'
       - run: ruff check .
-      - run: pytest -q
-
+      - name: Unit and lightweight integration tests
+        run: >-
+          pytest -q
+          --ignore=tests/test_classic_sector.py
+          --ignore=tests/test_classic_synapses.py
+          --ignore=tests/test_figure19_validation.py
+      - name: Full first-order intrinsic sector
+        run: pytest -q tests/test_classic_sector.py
+      - name: Full first-order connected sector
+        run: pytest -q tests/test_classic_synapses.py
+      - name: AHP/ACh long-duration validation
+        run: pytest -q tests/test_figure19_validation.py

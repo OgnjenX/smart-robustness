@@ -7,6 +7,9 @@ from typing import Any
 
 from .models.compartmental_hh import CompartmentalPopulation, create_compartmental_hh_population
 from .models.modeldb112923 import FirstOrderPopulationFacts, first_order_population_facts
+from .models.ports import external_ports_for_target, gap_ports_for_target, ports_for_target
+from .projections import SUPPLEMENTARY_TABLE3, ConnectionKind
+from .synapses import connect_classic_projection, connect_gap_junction
 
 
 @dataclass(slots=True)
@@ -14,6 +17,7 @@ class FirstOrderSector:
     network: Any
     populations: dict[str, CompartmentalPopulation]
     facts: tuple[FirstOrderPopulationFacts, ...]
+    projections: dict[str, Any]
 
     @property
     def cell_count(self) -> int:
@@ -45,6 +49,13 @@ def _population_parameters(facts: FirstOrderPopulationFacts) -> dict[str, Any]:
         "e_k_mV": facts.e_k_mV,
         "e_ca_mV": facts.e_ca_mV,
         "method": "rk4",
+        "synaptic_ports": ports_for_target(SUPPLEMENTARY_TABLE3.records, facts.canonical_name),
+        "gap_junction_ports": gap_ports_for_target(
+            SUPPLEMENTARY_TABLE3.records, facts.canonical_name
+        ),
+        "external_input_ports": external_ports_for_target(
+            SUPPLEMENTARY_TABLE3.records, facts.canonical_name
+        ),
     }
     if has_ahp:
         soma = facts.cell.soma
@@ -82,4 +93,59 @@ def build_first_order_intrinsic_sector(*, brian=None) -> FirstOrderSector:
             brian=brian,
         )
     network = brian.Network(*(population.group for population in populations.values()))
-    return FirstOrderSector(network=network, populations=populations, facts=facts)
+    return FirstOrderSector(network=network, populations=populations, facts=facts, projections={})
+
+
+def build_first_order_chemical_sector(*, brian=None) -> FirstOrderSector:
+    """Instantiate the first-order cells and every in-scope chemical projection."""
+
+    if brian is None:
+        import brian2 as brian
+
+    sector = build_first_order_intrinsic_sector(brian=brian)
+    facts_by_name = {fact.canonical_name: fact for fact in sector.facts}
+    projections: dict[str, Any] = {}
+    for record in SUPPLEMENTARY_TABLE3.records:
+        if record.kind is not ConnectionKind.CHEMICAL:
+            continue
+        if record.source.population not in sector.populations:
+            # The V2->V1 feedback projection belongs to the higher-order loop.
+            continue
+        if record.target.population not in sector.populations:
+            continue
+        projections[record.id] = connect_classic_projection(
+            record,
+            pre=sector.populations[record.source.population],
+            post=sector.populations[record.target.population],
+            source_shape=facts_by_name[record.source.population].shape,
+            target_shape=facts_by_name[record.target.population].shape,
+            brian=brian,
+        )
+    sector.projections = projections
+    sector.network.add(*projections.values())
+    return sector
+
+
+def build_first_order_connected_sector(*, brian=None) -> FirstOrderSector:
+    """Build chemical and electrical connectivity; external inputs remain separate."""
+
+    if brian is None:
+        import brian2 as brian
+
+    sector = build_first_order_chemical_sector(brian=brian)
+    facts_by_name = {fact.canonical_name: fact for fact in sector.facts}
+    electrical: dict[str, Any] = {}
+    for record in SUPPLEMENTARY_TABLE3.records:
+        if record.kind is not ConnectionKind.GAP_JUNCTION:
+            continue
+        electrical[record.id] = connect_gap_junction(
+            record,
+            pre=sector.populations[record.source.population],
+            post=sector.populations[record.target.population],
+            source_shape=facts_by_name[record.source.population].shape,
+            target_shape=facts_by_name[record.target.population].shape,
+            brian=brian,
+        )
+    sector.projections.update(electrical)
+    sector.network.add(*electrical.values())
+    return sector

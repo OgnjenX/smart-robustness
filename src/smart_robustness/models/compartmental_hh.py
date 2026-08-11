@@ -25,6 +25,7 @@ from .equation_builder import (
     VoltageCoordinate,
     compile_cell_equations,
 )
+from .ports import ExternalInputPortSpec, GapJunctionPortSpec, SynapticPortSpec
 from .table3 import CellSpec, get_cell_spec
 
 
@@ -45,6 +46,19 @@ class CompartmentalPopulation:
             raise ValueError("ACh modulation is not enabled for this population")
         self.group.ach_rise[indices] += 1
         self.group.ach_fall[indices] += 1
+
+    def set_external_input(self, record_id: str, value: float, indices: Any = slice(None)) -> None:
+        """Set a normalized source-backed external conductance gate."""
+
+        port = next(
+            (port for port in self.compiled.external_input_ports if port.record_id == record_id),
+            None,
+        )
+        if port is None:
+            raise KeyError(f"no external input port for {record_id!r}")
+        if not 0 <= value <= 1:
+            raise ValueError("external input gate must be between zero and one")
+        getattr(self.group, port.name)[indices] = value
 
 
 def _set(group: Any, name: str, value: Any) -> None:
@@ -75,6 +89,21 @@ def create_compartmental_hh_population(
     calcium_gate = TTypeGateConvention(params["calcium_gate_convention"])
     calcium_density = CalciumDensityConvention(params["calcium_density_convention"])
     ahp_convention = AHPConvention(params["ahp_convention"])
+    synaptic_ports = params.get("synaptic_ports", ())
+    if not isinstance(synaptic_ports, tuple) or not all(
+        isinstance(port, SynapticPortSpec) for port in synaptic_ports
+    ):
+        raise TypeError("synaptic_ports must be a tuple of SynapticPortSpec")
+    gap_junction_ports = params.get("gap_junction_ports", ())
+    if not isinstance(gap_junction_ports, tuple) or not all(
+        isinstance(port, GapJunctionPortSpec) for port in gap_junction_ports
+    ):
+        raise TypeError("gap_junction_ports must be a tuple of GapJunctionPortSpec")
+    external_input_ports = params.get("external_input_ports", ())
+    if not isinstance(external_input_ports, tuple) or not all(
+        isinstance(port, ExternalInputPortSpec) for port in external_input_ports
+    ):
+        raise TypeError("external_input_ports must be a tuple of ExternalInputPortSpec")
     enable_ahp_ach = params["enable_ahp_ach"]
     if not isinstance(enable_ahp_ach, bool):
         raise TypeError("enable_ahp_ach must be an explicit bool")
@@ -100,6 +129,9 @@ def create_compartmental_hh_population(
         calcium_density_convention=calcium_density,
         ahp_convention=ahp_convention,
         enable_ahp_ach=enable_ahp_ach,
+        synaptic_ports=synaptic_ports,
+        gap_junction_ports=gap_junction_ports,
+        external_input_ports=external_input_ports,
     )
     spike_reset = "armed = 0"
     if enable_ahp_ach:
@@ -126,6 +158,28 @@ def create_compartmental_hh_population(
     group.e_na = float(params.get("e_na_mV", E_NA_MV)) * brian.mV
     group.e_k = float(params.get("e_k_mV", E_K_MV)) * brian.mV
     group.e_ca = float(params.get("e_ca_mV", E_CA_MV)) * brian.mV
+    compartments_by_name = {compartment.name: compartment for compartment in cell.compartments}
+    for port in synaptic_ports:
+        compartment = compartments_by_name[port.compartment]
+        _set(
+            group,
+            f"g_{port.name}",
+            port.conductance_density_mS_cm2 * compartment.lateral_area_cm2 * 1e6 * brian.nsiemens,
+        )
+        _set(group, f"e_{port.name}", port.reversal_mV * brian.mV)
+        _set(group, f"{port.name}_rise", 0)
+        _set(group, f"{port.name}_fall", 0)
+    for port in gap_junction_ports:
+        _set(group, f"i_{port.name}", 0 * brian.pA)
+    for port in external_input_ports:
+        compartment = compartments_by_name[port.compartment]
+        _set(
+            group,
+            f"g_{port.name}",
+            port.conductance_density_mS_cm2 * compartment.lateral_area_cm2 * 1e6 * brian.nsiemens,
+        )
+        _set(group, f"e_{port.name}", port.reversal_mV * brian.mV)
+        _set(group, port.name, 0)
 
     for compartment in cell.compartments:
         compartment_name = compartment.name

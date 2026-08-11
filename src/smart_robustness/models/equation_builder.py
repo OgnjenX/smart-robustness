@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import math
 from dataclasses import dataclass
 from enum import StrEnum
 
@@ -22,6 +23,7 @@ from .currents import (
     NaKRateConvention,
     TTypeGateConvention,
 )
+from .ports import ExternalInputPortSpec, GapJunctionPortSpec, SynapticPortSpec
 from .table3 import CellSpec
 
 
@@ -55,6 +57,9 @@ class CompiledCellEquations:
     ahp_ach_enabled: bool
     compartments: tuple[str, ...]
     axial_parameter_names: tuple[str, ...]
+    synaptic_ports: tuple[SynapticPortSpec, ...]
+    gap_junction_ports: tuple[GapJunctionPortSpec, ...]
+    external_input_ports: tuple[ExternalInputPortSpec, ...]
 
 
 def _enum(value, enum_type, label):
@@ -170,6 +175,9 @@ def compile_cell_equations(
     calcium_density_convention: CalciumDensityConvention,
     ahp_convention: AHPConvention,
     enable_ahp_ach: bool,
+    synaptic_ports: tuple[SynapticPortSpec, ...] = (),
+    gap_junction_ports: tuple[GapJunctionPortSpec, ...] = (),
+    external_input_ports: tuple[ExternalInputPortSpec, ...] = (),
 ) -> CompiledCellEquations:
     """Compile one source-specified cell; every ambiguous convention is required."""
 
@@ -186,6 +194,28 @@ def compile_cell_equations(
     ahp = _enum(ahp_convention, AHPConvention, "ahp_convention")
     if not isinstance(enable_ahp_ach, bool):
         raise TypeError("enable_ahp_ach must be an explicit bool")
+    if not isinstance(synaptic_ports, tuple) or not all(
+        isinstance(port, SynapticPortSpec) for port in synaptic_ports
+    ):
+        raise TypeError("synaptic_ports must be an explicit tuple of SynapticPortSpec")
+    compartment_names = {compartment.name for compartment in cell.compartments}
+    for port in synaptic_ports:
+        if port.compartment not in compartment_names:
+            raise ValueError(f"{port.record_id}: unknown target compartment {port.compartment}")
+    if not isinstance(gap_junction_ports, tuple) or not all(
+        isinstance(port, GapJunctionPortSpec) for port in gap_junction_ports
+    ):
+        raise TypeError("gap_junction_ports must be a tuple of GapJunctionPortSpec")
+    for port in gap_junction_ports:
+        if port.compartment not in compartment_names:
+            raise ValueError(f"{port.record_id}: unknown target compartment {port.compartment}")
+    if not isinstance(external_input_ports, tuple) or not all(
+        isinstance(port, ExternalInputPortSpec) for port in external_input_ports
+    ):
+        raise TypeError("external_input_ports must be a tuple of ExternalInputPortSpec")
+    for port in external_input_ports:
+        if port.compartment not in compartment_names:
+            raise ValueError(f"{port.record_id}: unknown target compartment {port.compartment}")
     edges = build_axial_edges(cell, axial)
     axial_terms: dict[str, list[str]] = {c.name: [] for c in cell.compartments}
     axial_parameters: list[str] = []
@@ -207,6 +237,40 @@ def compile_cell_equations(
         lines.append(f"{parameter} : siemens (constant)")
     if enable_ahp_ach:
         lines.extend(_layer5_ahp_lines(ahp))
+    for port in synaptic_ports:
+        block = f"1/(1+0.33*exp(-v_{port.compartment}/(16.7*mV)))" if port.voltage_block else "1"
+        if port.rise_ms == port.fall_ms:
+            kinetic_lines = (
+                f"d{port.name}_rise/dt=-{port.name}_rise/({port.rise_ms}*ms) : 1",
+                f"d{port.name}_fall/dt=({port.name}_rise-{port.name}_fall)/({port.fall_ms}*ms) : 1",
+                f"{port.name}_gate={math.e}*{port.name}_fall : 1",
+            )
+        else:
+            kinetic_lines = (
+                f"d{port.name}_rise/dt=-{port.name}_rise/({port.rise_ms}*ms) : 1",
+                f"d{port.name}_fall/dt=-{port.name}_fall/({port.fall_ms}*ms) : 1",
+                f"{port.name}_gate={port.normalization}*({port.name}_fall-{port.name}_rise) : 1",
+            )
+        lines.extend(
+            (
+                *kinetic_lines,
+                f"{port.name}_block={block} : 1",
+                f"i_{port.name}=g_{port.name}*{port.name}_gate*{port.name}_block*(e_{port.name}-v_{port.compartment}) : amp",
+                f"g_{port.name} : siemens (constant)",
+                f"e_{port.name} : volt (constant)",
+            )
+        )
+    for port in gap_junction_ports:
+        lines.append(f"i_{port.name} : amp")
+    for port in external_input_ports:
+        lines.extend(
+            (
+                f"i_{port.name}=g_{port.name}*{port.name}*(e_{port.name}-v_{port.compartment}) : amp",
+                f"g_{port.name} : siemens (constant)",
+                f"e_{port.name} : volt (constant)",
+                f"{port.name} : 1",
+            )
+        )
     for compartment in cell.compartments:
         name = compartment.name
         current_terms = [f"g_l_{name}*(e_l_{name}-v_{name})"]
@@ -218,6 +282,15 @@ def compile_cell_equations(
             current_terms.append(f"i_ca_{name}")
         if enable_ahp_ach and name == "soma":
             current_terms.append("i_ahp")
+        current_terms.extend(
+            f"i_{port.name}" for port in synaptic_ports if port.compartment == name
+        )
+        current_terms.extend(
+            f"i_{port.name}" for port in gap_junction_ports if port.compartment == name
+        )
+        current_terms.extend(
+            f"i_{port.name}" for port in external_input_ports if port.compartment == name
+        )
         current_terms.extend(axial_terms[name])
         current_terms.extend((f"i_syn_{name}", f"i_drive_{name}"))
         lines.extend(
@@ -243,4 +316,7 @@ def compile_cell_equations(
         ahp_ach_enabled=enable_ahp_ach,
         compartments=tuple(c.name for c in cell.compartments),
         axial_parameter_names=tuple(axial_parameters),
+        synaptic_ports=synaptic_ports,
+        gap_junction_ports=gap_junction_ports,
+        external_input_ports=external_input_ports,
     )

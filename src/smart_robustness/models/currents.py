@@ -110,6 +110,8 @@ G_CA_MSIEMENS_CM2 = 250.0
 AHP_RISE_MS = 80.0
 AHP_FALL_MS = 100.0
 AHP_MODELDB_FALL_MS = 150.0
+AHP_NETWORK_RISE_MS = 5.0
+AHP_NETWORK_FALL_MS = 20.0
 ACH_RISE_MS = 5.0
 ACH_FALL_MS = 6.0
 
@@ -138,6 +140,7 @@ def biexponential_normalization(rise_ms: float, fall_ms: float) -> float:
 
 AHP_NORMALIZATION = biexponential_normalization(AHP_RISE_MS, AHP_FALL_MS)
 AHP_MODELDB_NORMALIZATION = biexponential_normalization(AHP_RISE_MS, AHP_MODELDB_FALL_MS)
+AHP_NETWORK_NORMALIZATION = biexponential_normalization(AHP_NETWORK_RISE_MS, AHP_NETWORK_FALL_MS)
 ACH_NORMALIZATION = biexponential_normalization(ACH_RISE_MS, ACH_FALL_MS)
 
 
@@ -166,6 +169,7 @@ class AHPConvention(StrEnum):
 
     PAPER_TEXT = "paper_text"
     MODELDB_112923 = "modeldb_112923"
+    SMART_NETWORK_112923 = "smart_network_112923"
 
 
 class NaKRateConvention(StrEnum):

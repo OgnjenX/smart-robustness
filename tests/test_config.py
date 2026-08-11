@@ -15,4 +15,3 @@ def test_reference_configs_are_valid_and_distinct() -> None:
 def test_config_fingerprint_is_stable() -> None:
     path = Path(__file__).parents[1] / "configs/match.yaml"
     assert load_config(path).fingerprint == load_config(path).fingerprint
-

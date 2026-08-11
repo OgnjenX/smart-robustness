@@ -13,9 +13,7 @@ def power_spectrum(signal: np.ndarray, sample_rate_hz: float) -> tuple[np.ndarra
     return welch(values, fs=sample_rate_hz, nperseg=nperseg)
 
 
-def band_power(
-    signal: np.ndarray, sample_rate_hz: float, low_hz: float, high_hz: float
-) -> float:
+def band_power(signal: np.ndarray, sample_rate_hz: float, low_hz: float, high_hz: float) -> float:
     freqs, power = power_spectrum(signal, sample_rate_hz)
     mask = (freqs >= low_hz) & (freqs <= high_hz)
     return float(np.trapz(power[mask], freqs[mask])) if mask.any() else 0.0

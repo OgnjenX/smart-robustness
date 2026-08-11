@@ -80,11 +80,7 @@ class Figure19Assessment:
 
     @property
     def reproduced(self) -> bool:
-        return (
-            self.frequency_dependence_pass
-            and self.ach_suppression_pass
-            and self.recovery_pass
-        )
+        return self.frequency_dependence_pass and self.ach_suppression_pass and self.recovery_pass
 
 
 def run_figure8_condition(
@@ -194,9 +190,7 @@ def run_figure19_kernel_condition(
     protocol = protocol or Figure19Protocol()
     brian.start_scope()
     brian.defaultclock.dt = protocol.dt_ms * brian.ms
-    cell = ahp_ach_layer5_spec(
-        soma_axial_resistance_kohm_cm=protocol.soma_axial_resistance_kohm_cm
-    )
+    cell = ahp_ach_layer5_spec(soma_axial_resistance_kohm_cm=protocol.soma_axial_resistance_kohm_cm)
     params = {
         "cell_spec": cell,
         "cell_class": "layer5_excitatory",
@@ -209,10 +203,9 @@ def run_figure19_kernel_condition(
         "ahp_convention": protocol.ahp_convention,
         "specific_capacitance_uF_cm2": 1.0,
         "enable_ahp_ach": True,
-        "ahp_max_conductance_nS": ahp_density_to_total_nS(
-            protocol.ahp_density_mS_cm2, cell
-        ),
+        "ahp_max_conductance_nS": ahp_density_to_total_nS(protocol.ahp_density_mS_cm2, cell),
         "ahp_event_weight": protocol.ahp_event_weight,
+        "e_ahp_mV": -90.0,
         "v_init_mV": -78.0,
         "method": "rk4",
     }

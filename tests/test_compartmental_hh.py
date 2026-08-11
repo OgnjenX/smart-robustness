@@ -28,6 +28,7 @@ def _params(cell_class: str = "thalamic_relay") -> dict[str, str]:
     if cell_class == "layer5_excitatory":
         params["ahp_max_conductance_nS"] = 1.0
         params["ahp_event_weight"] = 1.0
+        params["e_ahp_mV"] = -90.0
     return params
 
 
@@ -146,9 +147,7 @@ def test_modeldb_layer5_spike_uses_serialized_ahp_weight() -> None:
     params = _params("layer5_excitatory")
     params["ahp_convention"] = "modeldb_112923"
     params["cell_spec"] = ahp_ach_layer5_spec(soma_axial_resistance_kohm_cm=35.0)
-    params["ahp_max_conductance_nS"] = ahp_density_to_total_nS(
-        0.1, params["cell_spec"]
-    )
+    params["ahp_max_conductance_nS"] = ahp_density_to_total_nS(0.1, params["cell_spec"])
     params["ahp_event_weight"] = 4.5
     population = create_compartmental_hh_population(
         name="layer5_modeldb_ahp", size=1, params=params, brian=brian

@@ -49,6 +49,198 @@ FIRST_ORDER_POPULATIONS: tuple[tuple[str, int, tuple[int, int]], ...] = (
 FIRST_ORDER_PROJECTION_COUNT = 56
 
 
+@dataclass(frozen=True, slots=True)
+class FirstOrderPopulationFacts:
+    source_name: str
+    canonical_name: str
+    cell: CellSpec
+    shape: tuple[int, int]
+    e_na_mV: float = 50.0
+    e_k_mV: float = -90.0
+    e_ca_mV: float = 180.0
+    ahp_density_mS_cm2: float | None = None
+    ahp_reversal_mV: float | None = None
+    ahp_rise_ms: float | None = None
+    ahp_fall_ms: float | None = None
+
+
+def _source_compartment(
+    name: str,
+    diameter: float,
+    length: float,
+    axial: float,
+    leak_reversal: float,
+    leak_density: float,
+    sodium: float | None = None,
+    potassium: float | None = None,
+    calcium: float | None = None,
+) -> CompartmentSpec:
+    return CompartmentSpec(
+        name,
+        diameter,
+        length,
+        axial,
+        leak_reversal,
+        leak_density,
+        sodium,
+        potassium,
+        calcium,
+    )
+
+
+def _source_cell(name: str, *compartments: CompartmentSpec) -> CellSpec:
+    return CellSpec(f"modeldb112923_{name}", tuple(compartments))
+
+
+def first_order_population_facts() -> tuple[FirstOrderPopulationFacts, ...]:
+    """Intrinsic facts serialized in the first area of ``SMART.nml``.
+
+    Root-soma ``inpResistance`` is omitted by KInNeSS. Its placeholder repeats
+    the first child value and is ignored by ``kinness_serialized_edge``.
+    """
+
+    c = _source_compartment
+    return (
+        FirstOrderPopulationFacts(
+            "Relay",
+            "thalamic_relay",
+            _source_cell(
+                "relay",
+                c("soma", 0.005, 0.006, 8, -60, 0.01, 100, 100, 0.1),
+                c("proximal_dendrite", 0.0005, 0.008, 8, -60, 0.01, calcium=0.1),
+                c("distal_dendrite", 0.0004, 0.008, 8.2, -60, 0.1, calcium=0.1),
+            ),
+            (9, 9),
+            e_k_mV=-100,
+        ),
+        FirstOrderPopulationFacts(
+            "Reticular",
+            "trn",
+            _source_cell(
+                "reticular",
+                c("soma", 0.005, 0.005, 10, -69, 0.1, 100, 80, 100),
+                c("proximal_dendrite", 0.001, 0.005, 10, -69, 0.1, calcium=100),
+                c("distal_dendrite", 0.001, 0.005, 10, -69, 0.1, calcium=100),
+            ),
+            (9, 9),
+            e_k_mV=-100,
+            e_ca_mV=120,
+        ),
+        FirstOrderPopulationFacts(
+            "Layer_5",
+            "layer5_excitatory_v1",
+            _source_cell(
+                "layer5",
+                c("soma", 0.01, 0.015, 6, -73, 0.1, 50, 30),
+                c("proximal_dendrite", 0.006, 0.04, 6, -73, 0.03),
+                c("distal_dendrite", 0.006, 0.05, 6, -73, 0.03, 50, 30),
+            ),
+            (9, 9),
+            ahp_density_mS_cm2=0.4,
+            ahp_reversal_mV=-70,
+            ahp_rise_ms=5,
+            ahp_fall_ms=20,
+        ),
+        FirstOrderPopulationFacts(
+            "Layer_6_II",
+            "layer6ii_excitatory_v1",
+            _source_cell(
+                "layer6ii",
+                c("soma", 0.006, 0.01, 25, -64, 0.1, 50, 30),
+                c("proximal_dendrite", 0.0008, 0.01, 25, -64, 0.1),
+                c("distal_dendrite", 0.0008, 0.02, 25, -64, 0.01),
+            ),
+            (9, 9),
+            ahp_density_mS_cm2=0.5,
+            ahp_reversal_mV=-70,
+            ahp_rise_ms=5,
+            ahp_fall_ms=20,
+        ),
+        FirstOrderPopulationFacts(
+            "Layer_6_I",
+            "layer6i_excitatory_v1",
+            _source_cell(
+                "layer6i",
+                c("soma", 0.008, 0.01, 80, -70, 0.15, 50, 30),
+                c("proximal_dendrite", 0.005, 0.01, 80, -70, 0.9),
+            ),
+            (9, 9),
+        ),
+        FirstOrderPopulationFacts(
+            "Layer_4_INT",
+            "layer4_inhibitory_v1",
+            _source_cell(
+                "layer4_inhibitory",
+                c("soma", 0.002, 0.002, 100, -50, 0.01, 50, 30),
+                c("proximal_dendrite", 0.001, 0.005, 100, -50, 0.01),
+            ),
+            (9, 9),
+        ),
+        FirstOrderPopulationFacts(
+            "Layer_2_3",
+            "layer23_excitatory_v1",
+            _source_cell(
+                "layer23_excitatory",
+                c("soma", 0.005, 0.005, 100, -65, 0.05, 50, 30),
+                c("proximal_dendrite", 0.002, 0.0225, 100, -65, 0.05),
+            ),
+            (9, 9),
+        ),
+        FirstOrderPopulationFacts(
+            "Layer_4",
+            "layer4_excitatory_v1",
+            _source_cell(
+                "layer4_excitatory",
+                c("soma", 0.005, 0.005, 40, -65, 0.01, 50, 30),
+                c("proximal_dendrite", 0.001, 0.025, 40, -65, 0.01),
+            ),
+            (9, 9),
+        ),
+        FirstOrderPopulationFacts(
+            "Layer_2_3_INT",
+            "layer23_inhibitory_v1",
+            _source_cell(
+                "layer23_inhibitory",
+                c("soma", 0.002, 0.002, 60, -49, 0.01, 50, 30),
+                c("proximal_dendrite", 0.001, 0.005, 60, -49, 0.01),
+            ),
+            (9, 9),
+        ),
+        FirstOrderPopulationFacts(
+            "Relay_INT",
+            "thalamic_interneuron",
+            _source_cell(
+                "relay_interneuron",
+                c("soma", 0.002, 0.002, 60, -49, 0.01, 50, 30),
+                c("proximal_dendrite", 0.001, 0.01, 60, -49, 0.01),
+            ),
+            (9, 9),
+        ),
+        FirstOrderPopulationFacts(
+            "INTRALAMINAR",
+            "thalamic_nonspecific",
+            _source_cell(
+                "intralaminar",
+                c("soma", 0.008, 0.008, 10, -64, 0.09, 50, 30, 0.1),
+                c("proximal_dendrite", 0.0015, 0.01, 10, -64, 0.1, calcium=250),
+                c("distal_dendrite", 0.0015, 0.01, 10, -64, 0.1, calcium=250),
+            ),
+            (1, 1),
+        ),
+        FirstOrderPopulationFacts(
+            "Thalamic_MATRIX",
+            "thalamic_matrix",
+            _source_cell(
+                "thalamic_matrix",
+                c("soma", 0.008, 0.008, 10, -64, 0.09, 50, 30, 0.1),
+                c("proximal_dendrite", 0.0015, 0.01, 10, -64, 0.1, calcium=250),
+                c("distal_dendrite", 0.0015, 0.01, 10, -64, 0.1, calcium=250),
+            ),
+            (1, 1),
+        ),
+    )
+
+
 def first_order_structural_counts() -> tuple[int, int]:
     """Return executable-source cell and compartment totals for V1."""
 

@@ -36,6 +36,11 @@ nonblank supplement cells.
 - Validate every cell class in isolation, including LGN tonic/rebound-burst and
   layer-5 AHP/ACh protocols.
 
+Current checkpoint: the intrinsic first-order sector builds all 812 source
+cells and 1,950 compartments. Projection ports, topographic connections, gap
+junctions, external inputs, plasticity, and depletion remain required before
+this milestone is a functional network reproduction.
+
 Exit: equation/unit tests, numerical convergence tests, isolated-cell report,
 and explicit resolution of voltage-coordinate ambiguities.
 

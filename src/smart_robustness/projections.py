@@ -174,9 +174,7 @@ def _parse_record(data: Mapping[str, Any]) -> ProjectionRecord:
         receptor=Receptor(_required(parsed_data, "receptor", context)),
         reversal_mV=_optional_float(parsed_data.get("reversal_mV"), context),
         conductance_pS=_optional_float(parsed_data.get("conductance_pS"), context),
-        weight_density_1e6_cm2=_optional_float(
-            parsed_data.get("weight_density_1e6_cm2"), context
-        ),
+        weight_density_1e6_cm2=_optional_float(parsed_data.get("weight_density_1e6_cm2"), context),
         topology=Topology(
             kind=TopologyKind(_required(topology_data, "kind", context)),
             sigma=_optional_float(topology_data.get("sigma"), context),
@@ -256,20 +254,23 @@ def _validate_record(record: ProjectionRecord) -> None:
         Receptor.GAP_JUNCTION,
     }:
         raise CatalogValidationError(f"{context}: chemical record has nonchemical receptor")
-    if p.receptor is Receptor.UNKNOWN and record.verification.status is not VerificationStatus.AMBIGUOUS:
+    if (
+        p.receptor is Receptor.UNKNOWN
+        and record.verification.status is not VerificationStatus.AMBIGUOUS
+    ):
         raise CatalogValidationError(f"{context}: unknown receptor must be marked ambiguous")
 
     if p.plasticity is not None:
-        if min(
-            p.plasticity.max_weight_density_1e6_cm2,
-            p.plasticity.baseline_weight_density_1e6_cm2,
-            p.plasticity.learning_rate,
-        ) < 0:
-            raise CatalogValidationError(f"{context}: plasticity values cannot be negative")
         if (
-            p.plasticity.baseline_weight_density_1e6_cm2
-            > p.plasticity.max_weight_density_1e6_cm2
+            min(
+                p.plasticity.max_weight_density_1e6_cm2,
+                p.plasticity.baseline_weight_density_1e6_cm2,
+                p.plasticity.learning_rate,
+            )
+            < 0
         ):
+            raise CatalogValidationError(f"{context}: plasticity values cannot be negative")
+        if p.plasticity.baseline_weight_density_1e6_cm2 > p.plasticity.max_weight_density_1e6_cm2:
             raise CatalogValidationError(f"{context}: baseline exceeds plastic maximum")
     if p.depletion is not None and (p.depletion.epsilon < 0 or p.depletion.tau_ms <= 0):
         raise CatalogValidationError(f"{context}: invalid depletion parameters")
@@ -313,6 +314,7 @@ def load_projection_catalog(path: str | Path | None = None) -> ProjectionCatalog
 
 def serialize_projection_catalog(catalog: ProjectionCatalog) -> str:
     """Serialize a catalog deterministically for audit snapshots and hashing."""
+
     def primitive(value: Any) -> Any:
         if isinstance(value, StrEnum):
             return value.value

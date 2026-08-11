@@ -131,3 +131,20 @@ def test_modeldb_ahp_profile_uses_executable_tau() -> None:
     assert "dahp_fall/dt=-ahp_fall/(150.0*ms)" in compiled.equations
     assert "ahp_event_weight*ahp_gate" in compiled.equations
     assert compiled.ahp_convention is AHPConvention.MODELDB_112923
+
+
+def test_full_network_ahp_profile_uses_smart_nml_kinetics() -> None:
+    compiled = compile_cell_equations(
+        get_cell_spec("layer6ii_excitatory"),
+        axial_convention=AxialConvention.KINNESS_SERIALIZED_EDGE,
+        leak_convention=LeakConvention.TABLE3_REVERSAL,
+        voltage_coordinate=VoltageCoordinate.SHIFTED_67_MV,
+        nak_rate_convention=NaKRateConvention.STANDARD_TRAUB_MILES,
+        calcium_gate_convention=TTypeGateConvention.MODELDB_112923,
+        calcium_density_convention=CalciumDensityConvention.TABLE3,
+        ahp_convention=AHPConvention.SMART_NETWORK_112923,
+        enable_ahp_ach=True,
+    )
+    assert "dahp_rise/dt=-ahp_rise/(5.0*ms)" in compiled.equations
+    assert "dahp_fall/dt=-ahp_fall/(20.0*ms)" in compiled.equations
+    assert "(e_ahp-v_soma)" in compiled.equations

@@ -41,9 +41,7 @@ def test_thalamic_calcium_is_compartment_specific() -> None:
     assert relay.soma.g_ca_mS_cm2 is None
     assert relay.compartment("proximal_dendrite").g_ca_mS_cm2 == 10
     assert relay.compartment("distal_dendrite").g_ca_mS_cm2 == 10
-    assert get_cell_spec("thalamic_nonspecific").compartment(
-        "proximal_dendrite"
-    ).g_ca_mS_cm2 == 250
+    assert get_cell_spec("thalamic_nonspecific").compartment("proximal_dendrite").g_ca_mS_cm2 == 250
 
 
 def test_layer5_distal_dendrite_has_active_na_and_k_channels() -> None:

@@ -51,6 +51,10 @@ Implemented:
 - separate paper and executable AHP profiles, plus source-specific Figure 8
   cell geometry and channel densities;
 - explicit specific-capacitance selection instead of a hidden default.
+- all 12 first-order populations from `SMART.nml` instantiated at their source
+  sizes: 812 cells and 1,950 compartments. This intrinsic-only sector uses the
+  executable geometry, edge-serialized KInNeSS axial values, population-specific
+  reversal potentials, and the network's 5/20-ms layer-5/layer-6II AHP profile.
 
 Explicitly unresolved source anomalies:
 
@@ -71,7 +75,8 @@ Explicitly unresolved source anomalies:
 Not yet implemented or validated:
 
 - Brian2 instantiation of the supplementary projection catalog;
-- the full two-loop 9×9 network, topographic kernels, STDP, ACh vigilance,
+- chemical/gap-junction connectivity for the now-instantiated first-order 9×9
+  sector, topographic kernels, STDP, ACh vigilance,
   CSD/LFP geometry, and every published figure protocol;
 - quantitative reproduction of match/gamma and mismatch/beta/reset.
 

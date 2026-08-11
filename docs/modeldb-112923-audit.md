@@ -40,6 +40,10 @@ serialized channel projections; the full two-area file contains 24 populations.
   `A + B*10^-2*exp(C*10^-2*V)`, confirming the ModelDB time-constant
   transcription. It also supplies the exact directional inter-compartment
   Equation 7, now available as the named `kinness_2008` axial convention.
+- `SMART.nml` serializes `inpResistance` on child compartments while root
+  somata omit it. The `kinness_serialized_edge` convention therefore applies
+  the child connection value in both current directions, preserving the XML
+  topology rather than manufacturing a root parameter.
 - The dedicated Figure 8 cell is not the Table 3 relay cell. It uses soma
   geometry 0.02×0.04 mm, 50/30 mS/cm² Na/K, and 250 mS/cm² T-current in soma
   and both dendrites. Its leak density is not serialized and remains a required
@@ -79,3 +83,9 @@ executable baseline must be reconstructed from the ModelDB files wherever they
 specify a value or mechanism. Paper-versus-executable differences remain named
 profiles so robustness experiments can test them rather than silently mixing
 them.
+
+The executable first-order cell library is also retained separately from the
+printed Table 3 library. Several XML geometries differ by a factor of ten, the
+relay distal dendrite has a distinct resistance and leak, relay/TRN potassium
+reversals are -100 mV, and the full-network AHP profile is 5/20 ms rather than
+the dedicated cholinergic demonstration's 80/150 ms.

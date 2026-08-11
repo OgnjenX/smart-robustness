@@ -88,6 +88,8 @@ def create_compartmental_hh_population(
         )
     if enable_ahp_ach and "ahp_event_weight" not in params:
         raise ValueError("AHP/ACh-enabled cells require explicit ahp_event_weight")
+    if enable_ahp_ach and "e_ahp_mV" not in params:
+        raise ValueError("AHP/ACh-enabled cells require explicit e_ahp_mV")
     compiled = compile_cell_equations(
         cell,
         axial_convention=axial,
@@ -115,14 +117,15 @@ def create_compartmental_hh_population(
     if enable_ahp_ach:
         group.g_ahp_max = float(params["ahp_max_conductance_nS"]) * brian.nsiemens
         group.ahp_event_weight = float(params["ahp_event_weight"])
+        group.e_ahp = float(params["e_ahp_mV"]) * brian.mV
         group.ahp_rise = 0
         group.ahp_fall = 0
         group.ach_rise = 0
         group.ach_fall = 0
     group.armed = 0
-    group.e_na = E_NA_MV * brian.mV
-    group.e_k = E_K_MV * brian.mV
-    group.e_ca = E_CA_MV * brian.mV
+    group.e_na = float(params.get("e_na_mV", E_NA_MV)) * brian.mV
+    group.e_k = float(params.get("e_k_mV", E_K_MV)) * brian.mV
+    group.e_ca = float(params.get("e_ca_mV", E_CA_MV)) * brian.mV
 
     for compartment in cell.compartments:
         compartment_name = compartment.name

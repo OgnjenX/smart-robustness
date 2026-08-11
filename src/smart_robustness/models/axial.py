@@ -40,6 +40,7 @@ class AxialConvention(StrEnum):
     PAPER_LITERAL = "paper_literal"
     SYMMETRIC_CABLE = "symmetric_cable"
     KINNESS_2008 = "kinness_2008"
+    KINNESS_SERIALIZED_EDGE = "kinness_serialized_edge"
 
 
 @dataclass(frozen=True, slots=True)
@@ -112,24 +113,29 @@ def _coerce_convention(convention: AxialConvention | str) -> AxialConvention:
         ) from error
 
 
-def _endpoint(compartment: CompartmentSpec, context: str) -> AxialEndpointSpec:
+def _endpoint(
+    compartment: CompartmentSpec,
+    context: str,
+    *,
+    axial_resistance_kohm_cm: float | None = None,
+) -> AxialEndpointSpec:
     if not isinstance(compartment.name, str) or not compartment.name.strip():
         raise ValueError(f"{context}: compartment name must be non-empty")
 
     _require_positive(compartment.diameter_mm, f"{context} diameter_mm")
     _require_positive(compartment.length_mm, f"{context} length_mm")
-    _require_positive(
-        compartment.axial_resistance_kohm_cm,
-        f"{context} axial_resistance_kohm_cm",
+    axial_resistance = (
+        compartment.axial_resistance_kohm_cm
+        if axial_resistance_kohm_cm is None
+        else axial_resistance_kohm_cm
     )
+    _require_positive(axial_resistance, f"{context} axial_resistance_kohm_cm")
 
     diameter_cm = compartment.diameter_mm * MM_TO_CM
     length_cm = compartment.length_mm * MM_TO_CM
     lateral_area_cm2 = math.pi * diameter_cm * length_cm
     cross_section_cm2 = math.pi * (diameter_cm / 2.0) ** 2
-    half_resistance_kohm = (
-        compartment.axial_resistance_kohm_cm * (length_cm / 2.0) / cross_section_cm2
-    )
+    half_resistance_kohm = axial_resistance * (length_cm / 2.0) / cross_section_cm2
 
     _require_positive(lateral_area_cm2, f"{context} lateral area")
     _require_positive(half_resistance_kohm, f"{context} half resistance")
@@ -137,7 +143,7 @@ def _endpoint(compartment: CompartmentSpec, context: str) -> AxialEndpointSpec:
         compartment_name=compartment.name,
         diameter_cm=diameter_cm,
         length_cm=length_cm,
-        axial_resistivity_kohm_cm=compartment.axial_resistance_kohm_cm,
+        axial_resistivity_kohm_cm=axial_resistance,
         lateral_area_cm2=lateral_area_cm2,
         half_resistance_kohm=half_resistance_kohm,
     )
@@ -266,6 +272,25 @@ def build_axial_edges(
     names = tuple(compartment.name for compartment in cell.compartments)
     if len(names) != len(set(names)):
         raise ValueError(f"{cell.name}: compartment names must be unique")
+    if resolved_convention is AxialConvention.KINNESS_SERIALIZED_EDGE:
+        edges: list[AxialEdgeSpec] = []
+        for near_compartment, far_compartment in pairwise(cell.compartments):
+            # KInNeSS serializes ``inpResistance`` on the child compartment,
+            # representing the parent-child connection rather than a root
+            # membrane property. Use that one value in both current directions.
+            resistance = far_compartment.axial_resistance_kohm_cm
+            near = _endpoint(
+                near_compartment,
+                f"{cell.name}.{near_compartment.name or '<unnamed>'}",
+                axial_resistance_kohm_cm=resistance,
+            )
+            far = _endpoint(
+                far_compartment,
+                f"{cell.name}.{far_compartment.name or '<unnamed>'}",
+                axial_resistance_kohm_cm=resistance,
+            )
+            edges.append(_kinness_edge(cell.name, near, far))
+        return tuple(edges)
     endpoints = tuple(
         _endpoint(compartment, f"{cell.name}.{compartment.name or '<unnamed>'}")
         for compartment in cell.compartments

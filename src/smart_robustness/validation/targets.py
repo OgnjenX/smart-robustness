@@ -42,9 +42,7 @@ class ValidationTarget:
         if not self.evidence:
             raise ValueError(f"{self.id}: at least one evidence class is required")
         object.__setattr__(self, "protocol", MappingProxyType(dict(self.protocol)))
-        object.__setattr__(
-            self, "numeric_targets", MappingProxyType(dict(self.numeric_targets))
-        )
+        object.__setattr__(self, "numeric_targets", MappingProxyType(dict(self.numeric_targets)))
 
 
 def _target(**kwargs: object) -> ValidationTarget:
@@ -60,7 +58,9 @@ CLASSIC_SMART_TARGETS: tuple[ValidationTarget, ...] = (
         source="Methods 4.3 and Figure 6",
         protocol={"relative_spike_time_min_ms": -30.0, "relative_spike_time_max_ms": 30.0},
         numeric_targets={},
-        unresolved=("Curve amplitudes and exact map values require digitization or source recovery.",),
+        unresolved=(
+            "Curve amplitudes and exact map values require digitization or source recovery.",
+        ),
     ),
     _target(
         id="fig7_match_mismatch_arousal",
@@ -126,7 +126,9 @@ CLASSIC_SMART_TARGETS: tuple[ValidationTarget, ...] = (
             "recovery_ms": 500.0,
         },
         numeric_targets={},
-        unresolved=("The exact maximal AHP conductance is not uniquely identifiable from the paper text.",),
+        unresolved=(
+            "The exact maximal AHP conductance is not uniquely identifiable from the paper text.",
+        ),
     ),
     _target(
         id="fig14_match_mismatch_spectra",
@@ -181,4 +183,6 @@ def get_validation_target(target_id: str) -> ValidationTarget:
         return _TARGETS_BY_ID[target_id]
     except KeyError as error:
         known = ", ".join(sorted(_TARGETS_BY_ID))
-        raise KeyError(f"unknown validation target {target_id!r}; known targets: {known}") from error
+        raise KeyError(
+            f"unknown validation target {target_id!r}; known targets: {known}"
+        ) from error

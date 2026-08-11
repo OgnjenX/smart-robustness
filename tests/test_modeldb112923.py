@@ -9,6 +9,7 @@ from smart_robustness.models.modeldb112923 import (
     FIRST_ORDER_PROJECTION_COUNT,
     SMART_NML_SHA256,
     figure8_relay_spec,
+    first_order_population_facts,
     first_order_structural_counts,
 )
 
@@ -33,3 +34,17 @@ def test_first_order_structural_counts_match_smart_nml_audit() -> None:
     assert len(FIRST_ORDER_POPULATIONS) == 12
     assert first_order_structural_counts() == (812, 1950)
     assert FIRST_ORDER_PROJECTION_COUNT == 56
+
+
+def test_first_order_source_cells_cover_all_populations_and_compartments() -> None:
+    facts = first_order_population_facts()
+    assert len(facts) == 12
+    assert sum(f.shape[0] * f.shape[1] for f in facts) == 812
+    assert sum(len(f.cell.compartments) * f.shape[0] * f.shape[1] for f in facts) == 1950
+    relay = facts[0]
+    assert relay.source_name == "Relay"
+    assert relay.cell.soma.diameter_mm == 0.005
+    assert relay.cell.compartment("distal_dendrite").axial_resistance_kohm_cm == 8.2
+    layer5 = facts[2]
+    assert layer5.ahp_density_mS_cm2 == 0.4
+    assert (layer5.ahp_rise_ms, layer5.ahp_fall_ms) == (5, 20)

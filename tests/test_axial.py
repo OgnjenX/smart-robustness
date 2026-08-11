@@ -25,6 +25,7 @@ def test_all_axial_conventions_are_named_and_none_is_default() -> None:
         "paper_literal",
         "symmetric_cable",
         "kinness_2008",
+        "kinness_serialized_edge",
     }
     assert (
         inspect.signature(build_axial_edges).parameters["convention"].default
@@ -219,3 +220,13 @@ def test_current_calculation_rejects_non_finite_voltage() -> None:
     edge = _edge("trn", AxialConvention.SYMMETRIC_CABLE, "soma")
     with pytest.raises(ValueError, match="near voltage must be a finite number"):
         edge.currents_pA(math.nan, -60.0)
+
+
+def test_kinness_serialized_edge_uses_child_connection_value_both_directions() -> None:
+    edge = build_axial_edges(
+        get_cell_spec("layer5_excitatory"),
+        AxialConvention.KINNESS_SERIALIZED_EDGE,
+    )[0]
+    child_value = get_cell_spec("layer5_excitatory").compartments[1].axial_resistance_kohm_cm
+    assert edge.near.axial_resistivity_kohm_cm == child_value
+    assert edge.far.axial_resistivity_kohm_cm == child_value

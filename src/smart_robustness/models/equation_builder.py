@@ -13,6 +13,9 @@ from .currents import (
     AHP_FALL_MS,
     AHP_MODELDB_FALL_MS,
     AHP_MODELDB_NORMALIZATION,
+    AHP_NETWORK_FALL_MS,
+    AHP_NETWORK_NORMALIZATION,
+    AHP_NETWORK_RISE_MS,
     AHP_NORMALIZATION,
     AHP_RISE_MS,
     AHPConvention,
@@ -130,22 +133,29 @@ def _layer5_ahp_lines(convention: AHPConvention) -> list[str]:
     """Published AHP/ACh waveform with an explicitly calibrated conductance."""
 
     if convention is AHPConvention.MODELDB_112923:
+        rise_ms = AHP_RISE_MS
         fall_ms = AHP_MODELDB_FALL_MS
         normalization = AHP_MODELDB_NORMALIZATION
+    elif convention is AHPConvention.SMART_NETWORK_112923:
+        rise_ms = AHP_NETWORK_RISE_MS
+        fall_ms = AHP_NETWORK_FALL_MS
+        normalization = AHP_NETWORK_NORMALIZATION
     else:
+        rise_ms = AHP_RISE_MS
         fall_ms = AHP_FALL_MS
         normalization = AHP_NORMALIZATION
 
     return [
-        f"dahp_rise/dt=-ahp_rise/({AHP_RISE_MS}*ms) : 1",
+        f"dahp_rise/dt=-ahp_rise/({rise_ms}*ms) : 1",
         f"dahp_fall/dt=-ahp_fall/({fall_ms}*ms) : 1",
         f"ahp_gate={normalization}*(ahp_fall-ahp_rise) : 1",
         f"dach_rise/dt=-ach_rise/({ACH_RISE_MS}*ms) : 1",
         f"dach_fall/dt=-ach_fall/({ACH_FALL_MS}*ms) : 1",
         f"ach_gate=clip({ACH_NORMALIZATION}*(ach_fall-ach_rise), 0, 1) : 1",
-        "i_ahp=g_ahp_max*ahp_event_weight*ahp_gate*(1-ach_gate)*(e_k-v_soma) : amp",
+        "i_ahp=g_ahp_max*ahp_event_weight*ahp_gate*(1-ach_gate)*(e_ahp-v_soma) : amp",
         "g_ahp_max : siemens (constant)",
         "ahp_event_weight : 1 (constant)",
+        "e_ahp : volt (constant)",
     ]
 
 

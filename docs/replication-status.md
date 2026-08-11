@@ -81,9 +81,13 @@ Implemented:
 - the remaining direct-current external channel using KInNeSS Equation 6
   current-density semantics; its four archived sensitivities are all zero and
   are therefore retained as an inert protocol-controlled input;
+- a deterministic 0.1-ms whole-sector integration gate: all 812 cells, 1,950
+  compartments, and 53 in-scope projections remain finite at rest, while all
+  three in-scope adaptive projections remain exactly at baseline and within
+  their serialized bounds;
 - CI validation split into independent Brian2 processes: 163 lightweight tests,
   five sector-construction tests, six connectivity tests, and two long AHP
-  tests currently pass (176 total).
+  tests plus one whole-sector runtime test currently pass (177 total).
 
 Explicitly unresolved source anomalies:
 

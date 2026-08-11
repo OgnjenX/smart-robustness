@@ -52,6 +52,11 @@ resolve and implement the presynaptically gated, postsynaptically gated, and
 dual-AND-gated variants. Driven protocol validation and bounded long-run
 behavior remain required before plasticity is considered reproduced.
 
+Runtime checkpoint: the complete connected first-order sector integrates for
+0.1 ms at 0.01-ms resolution with finite soma voltages and bounded finite
+weights. With no input, adaptive weights remain bit-identical to baseline.
+Longer driven and convergence runs remain part of the protocol-validation gate.
+
 Exit: equation/unit tests, numerical convergence tests, isolated-cell report,
 and explicit resolution of voltage-coordinate ambiguities.
 

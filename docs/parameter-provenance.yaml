@@ -50,6 +50,22 @@ parameters:
     value: V_rate = V_membrane + 67 mV
     status: derived
     source: transformation between Table 3 absolute voltages and Methods 4.5 gate equations
+  model.multicompartment.nak_rate_convention:
+    value: printed_smart or standard_traub_miles; must be selected explicitly
+    status: derived
+    source: Methods 4.5 Eqs. 15 and 18 compared with the standard Traub-Miles form
+  model.multicompartment.t_type_gate_convention:
+    value: printed_literal or reciprocal; must be selected explicitly
+    status: derived
+    source: Methods 4.6 Eqs. 24 and 27; printed values are not bounded gates
+  model.multicompartment.ahp_max_conductance:
+    value: required runtime calibration parameter for layer-5 cells
+    status: calibrated
+    source: Methods 4.7 reports waveform time constants but no unique maximal conductance
+  validation.figure8.first_candidate:
+    value: tonic pass, burst fail (29 versus 28 spikes in the 300 ms pulse)
+    status: exploratory
+    source: predeclared Figure 8 harness; candidate run retained as a negative result
   synapse.shape:
     value: normalized dual exponential
     status: published

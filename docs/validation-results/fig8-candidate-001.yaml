@@ -1,0 +1,26 @@
+target: fig8_relay_tonic_burst
+status: failed
+source:
+  citation: Grossberg and Versace (2008), Figure 8 and Methods 4.5-4.6
+  published_pulse_pA: 300
+interpretation:
+  precondition_ms: 100
+  pulse_ms: 300
+  depolarized_hold_mV: -60
+  hyperpolarized_hold_mV: -80
+  note: Clamp voltages and epoch lengths are calibration choices because the caption does not report them.
+model:
+  axial_convention: symmetric_cable
+  leak_convention: table3_reversal
+  voltage_coordinate: shifted_67_mV
+  nak_rate_convention: standard_traub_miles
+  calcium_gate_convention: reciprocal
+  calcium_density_convention: table3
+  dt_ms: 0.01
+observed:
+  tonic_spike_count: 29
+  burst_spike_count: 28
+  tonic_pass: true
+  burst_pass: false
+  overall_reproduced: false
+conclusion: Both conditions produced sustained tonic trains; this candidate does not reproduce Figure 8.

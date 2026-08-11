@@ -13,6 +13,7 @@ def _params(cell_class: str = "thalamic_relay") -> dict[str, str]:
         "axial_convention": "symmetric_cable",
         "leak_convention": "table3_reversal",
         "voltage_coordinate": "relative_to_table3_leak",
+        "nak_rate_convention": "printed_smart",
         "calcium_gate_convention": "reciprocal",
         "calcium_density_convention": "table3",
     }

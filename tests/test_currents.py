@@ -19,6 +19,7 @@ from smart_robustness.models.currents import (
     T_TYPE_CALCIUM_SOURCE,
     TRAUB_MILES_EQUATIONS,
     TRAUB_MILES_SOURCE,
+    NaKRateConvention,
     TTypeGateConvention,
     alpha_h_per_ms,
     alpha_m_per_ms,
@@ -94,6 +95,15 @@ def test_traub_miles_rates_match_literal_values_at_zero_millivolts() -> None:
     assert rates.beta_m == pytest.approx(11.20375844)
     assert rates.alpha_h == pytest.approx(0.57365620)
     assert rates.beta_h == pytest.approx(0.00134140)
+
+
+def test_standard_traub_miles_correction_is_explicit_and_distinct() -> None:
+    printed = traub_miles_rates(0.0, NaKRateConvention.PRINTED_SMART)
+    standard = traub_miles_rates(0.0, NaKRateConvention.STANDARD_TRAUB_MILES)
+    assert standard.alpha_m == pytest.approx(10 * printed.alpha_m)
+    assert standard.alpha_h == pytest.approx(0.128 * math.exp(17 / 18))
+    with pytest.raises(TypeError, match="explicit NaKRateConvention"):
+        traub_miles_rates(0.0, "standard_traub_miles")  # type: ignore[arg-type]
 
 
 @pytest.mark.parametrize("voltage_mV", [-200.0, -100.0, -60.0, 0.0, 50.0, 100.0])

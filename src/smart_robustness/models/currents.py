@@ -48,6 +48,8 @@ TRAUB_MILES_SOURCE = EquationSource(
     notes=(
         "Rates use the voltage coordinate V printed in the equations.",
         "No derived absolute-voltage shift is applied in this module.",
+        "Printed Eq. 15 uses 0.032, tenfold below the standard Traub-Miles alpha-m coefficient.",
+        "Printed Eq. 18 uses a 27 mV offset; the standard Traub-Miles form uses 17 mV.",
     ),
 )
 
@@ -150,6 +152,13 @@ class TTypeGateConvention(StrEnum):
     RECIPROCAL = "reciprocal"
 
 
+class NaKRateConvention(StrEnum):
+    """Printed SMART rates versus the standard Traub--Miles rate corrections."""
+
+    PRINTED_SMART = "printed_smart"
+    STANDARD_TRAUB_MILES = "standard_traub_miles"
+
+
 def _x_over_expm1(x: float) -> float:
     """Return x/(exp(x)-1), including its removable singularity at zero."""
 
@@ -214,15 +223,26 @@ def beta_h_per_ms(v_mV: float) -> float:
     return 4.0 * _inverse_one_plus_exp((40.0 - v_mV) / 5.0)
 
 
-def traub_miles_rates(v_mV: float) -> TraubMilesRates:
-    """Return all six printed Traub-Miles gate rates at ``v_mV``."""
+def traub_miles_rates(
+    v_mV: float,
+    convention: NaKRateConvention = NaKRateConvention.PRINTED_SMART,
+) -> TraubMilesRates:
+    """Return Na/K rates under a declared SMART or standard-Traub convention."""
+
+    if not isinstance(convention, NaKRateConvention):
+        raise TypeError("convention must be an explicit NaKRateConvention member")
+    alpha_m = alpha_m_per_ms(v_mV)
+    alpha_h = alpha_h_per_ms(v_mV)
+    if convention is NaKRateConvention.STANDARD_TRAUB_MILES:
+        alpha_m *= 10.0
+        alpha_h = 0.128 * math.exp((17.0 - v_mV) / 18.0)
 
     return TraubMilesRates(
         alpha_n=alpha_n_per_ms(v_mV),
         beta_n=beta_n_per_ms(v_mV),
-        alpha_m=alpha_m_per_ms(v_mV),
+        alpha_m=alpha_m,
         beta_m=beta_m_per_ms(v_mV),
-        alpha_h=alpha_h_per_ms(v_mV),
+        alpha_h=alpha_h,
         beta_h=beta_h_per_ms(v_mV),
     )
 

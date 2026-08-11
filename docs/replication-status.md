@@ -10,7 +10,7 @@ unbranched compartments and Hodgkin–Huxley-type currents needed for their role
 Synapses use normalized dual exponentials, activity-dependent transmitter
 depletion, and gated learning.
 
-## Current milestone: M1 source specification
+## Current milestone: M2 cell-kernel validation
 
 Implemented:
 
@@ -33,6 +33,14 @@ Implemented:
 - an executable validation-target registry and a source-strength classification
   for the published figure claims;
 - an accepted vectorized-multicompartment Brian2 architecture decision.
+- executable vectorized dynamics for all 12 Table 3 cell classes and all 30
+  compartments, including explicitly selected axial-current conventions;
+- source-backed Na/K and T-type calcium equations with printed and inferred
+  kinetic alternatives represented as named conventions;
+- layer-5 AHP and ACh dual-exponential dynamics with the unreported maximum
+  AHP conductance required as an explicit calibration parameter;
+- a predeclared Figure 8 isolated-relay protocol and qualitative tonic/burst
+  scorer.
 
 Explicitly unresolved source anomalies:
 
@@ -42,19 +50,27 @@ Explicitly unresolved source anomalies:
   Gaussian-spread row;
 - the original KInNeSS/NeuroML archive has not been recovered, so initial states,
   exact connection realizations, seeds, and raw output traces remain unavailable.
+- the paper's printed sodium activation coefficient differs by a factor of ten
+  from the standard Traub--Miles form, and its calcium steady-state expressions
+  are greater than one over physiological voltages unless interpreted as
+  reciprocals;
+- the Figure 8 caption does not report the hyperpolarizing clamp voltage or
+  exact epoch durations.
 
 Not yet implemented or validated:
 
-- multicompartment dynamics that consume all Table 3 compartments and axial
-  resistances (the current Brian2 population consumes paper-specific soma
-  values only when `cell_class` is supplied);
 - Brian2 instantiation of the supplementary projection catalog;
-- all paper currents (T-type Ca, AHP, cholinergic modulation, and cell-specific variants);
 - the full two-loop 9×9 network, topographic kernels, STDP, ACh vigilance,
   CSD/LFP geometry, and every published figure protocol;
 - quantitative reproduction of match/gamma and mismatch/beta/reset.
 
-Accordingly, output from M1 is a source/audit benchmark, not evidence that
+The first Figure 8 candidate (67 mV-shifted standard Traub--Miles rates,
+reciprocal T gates, Table 3 calcium density, and a -80 mV pre-pulse clamp)
+produces sustained tonic trains in both conditions. It therefore fails the
+published transient-burst signature and is retained as a negative validation
+result, not as a reproduction.
+
+Accordingly, output from M2 is a source/audit benchmark, not evidence that
 the 2008 results have already been replicated.
 
 ## Validation gates

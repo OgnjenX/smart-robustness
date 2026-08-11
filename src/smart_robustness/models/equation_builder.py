@@ -13,6 +13,7 @@ from .currents import (
     AHP_FALL_MS,
     AHP_NORMALIZATION,
     AHP_RISE_MS,
+    NaKRateConvention,
     TTypeGateConvention,
 )
 from .table3 import CellSpec
@@ -26,6 +27,7 @@ class LeakConvention(StrEnum):
 class VoltageCoordinate(StrEnum):
     ABSOLUTE = "absolute"
     RELATIVE_TO_TABLE3_LEAK = "relative_to_table3_leak"
+    SHIFTED_67_MV = "shifted_67_mV"
 
 
 class CalciumDensityConvention(StrEnum):
@@ -40,6 +42,7 @@ class CompiledCellEquations:
     axial_convention: AxialConvention
     leak_convention: LeakConvention
     voltage_coordinate: VoltageCoordinate
+    nak_rate_convention: NaKRateConvention
     calcium_gate_convention: TTypeGateConvention
     calcium_density_convention: CalciumDensityConvention
     compartments: tuple[str, ...]
@@ -55,19 +58,25 @@ def _enum(value, enum_type, label):
 def _paper_voltage(name: str, coordinate: VoltageCoordinate) -> str:
     if coordinate is VoltageCoordinate.ABSOLUTE:
         return f"v_{name}"
+    if coordinate is VoltageCoordinate.SHIFTED_67_MV:
+        return f"v_{name}+67*mV"
     return f"v_{name}-e_l_{name}"
 
 
-def _nak_lines(name: str, coordinate: VoltageCoordinate) -> list[str]:
+def _nak_lines(
+    name: str, coordinate: VoltageCoordinate, convention: NaKRateConvention
+) -> list[str]:
     v = f"v_{name}"
     vp = _paper_voltage(name, coordinate)
+    alpha_m_scale = 1.28 if convention is NaKRateConvention.STANDARD_TRAUB_MILES else 0.128
+    alpha_h_offset = 17 if convention is NaKRateConvention.STANDARD_TRAUB_MILES else 27
     return [
         f"dm_{name}/dt = alpha_m_{name}*(1-m_{name})-beta_m_{name}*m_{name} : 1",
         f"dh_{name}/dt = alpha_h_{name}*(1-h_{name})-beta_h_{name}*h_{name} : 1",
         f"dn_{name}/dt = alpha_n_{name}*(1-n_{name})-beta_n_{name}*n_{name} : 1",
-        f"alpha_m_{name}=0.128/exprel((13*mV-({vp}))/(4*mV))/ms : Hz",
+        f"alpha_m_{name}={alpha_m_scale}/exprel((13*mV-({vp}))/(4*mV))/ms : Hz",
         f"beta_m_{name}=1.4/exprel((({vp})-40*mV)/(5*mV))/ms : Hz",
-        f"alpha_h_{name}=0.128*exp((27*mV-({vp}))/(18*mV))/ms : Hz",
+        f"alpha_h_{name}=0.128*exp(({alpha_h_offset}*mV-({vp}))/(18*mV))/ms : Hz",
         f"beta_h_{name}=4/(exp((40*mV-({vp}))/(5*mV))+1)/ms : Hz",
         f"alpha_n_{name}=0.16/exprel((15*mV-({vp}))/(5*mV))/ms : Hz",
         f"beta_n_{name}=0.5*exp((10*mV-({vp}))/(40*mV))/ms : Hz",
@@ -121,6 +130,7 @@ def compile_cell_equations(
     axial_convention: AxialConvention,
     leak_convention: LeakConvention,
     voltage_coordinate: VoltageCoordinate,
+    nak_rate_convention: NaKRateConvention,
     calcium_gate_convention: TTypeGateConvention,
     calcium_density_convention: CalciumDensityConvention,
 ) -> CompiledCellEquations:
@@ -129,6 +139,7 @@ def compile_cell_equations(
     axial = _enum(axial_convention, AxialConvention, "axial_convention")
     leak = _enum(leak_convention, LeakConvention, "leak_convention")
     voltage = _enum(voltage_coordinate, VoltageCoordinate, "voltage_coordinate")
+    nak_rate = _enum(nak_rate_convention, NaKRateConvention, "nak_rate_convention")
     calcium_gate = _enum(calcium_gate_convention, TTypeGateConvention, "calcium_gate_convention")
     calcium_density = _enum(
         calcium_density_convention,
@@ -160,7 +171,7 @@ def compile_cell_equations(
         name = compartment.name
         current_terms = [f"g_l_{name}*(e_l_{name}-v_{name})"]
         if compartment.g_na_mS_cm2 is not None:
-            lines.extend(_nak_lines(name, voltage))
+            lines.extend(_nak_lines(name, voltage, nak_rate))
             current_terms.extend((f"i_na_{name}", f"i_k_{name}"))
         if compartment.g_ca_mS_cm2 is not None:
             lines.extend(_calcium_lines(name, voltage, calcium_gate))
@@ -185,6 +196,7 @@ def compile_cell_equations(
         axial_convention=axial,
         leak_convention=leak,
         voltage_coordinate=voltage,
+        nak_rate_convention=nak_rate,
         calcium_gate_convention=calcium_gate,
         calcium_density_convention=calcium_density,
         compartments=tuple(c.name for c in cell.compartments),

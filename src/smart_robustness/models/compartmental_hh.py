@@ -11,6 +11,7 @@ from .currents import (
     E_K_MV,
     E_NA_MV,
     G_CA_MSIEMENS_CM2,
+    NaKRateConvention,
     TTypeGateConvention,
     t_type_h_inf,
     t_type_m_inf,
@@ -65,6 +66,7 @@ def create_compartmental_hh_population(
     axial = AxialConvention(params["axial_convention"])
     leak = LeakConvention(params["leak_convention"])
     voltage = VoltageCoordinate(params["voltage_coordinate"])
+    nak_rate = NaKRateConvention(params["nak_rate_convention"])
     calcium_gate = TTypeGateConvention(params["calcium_gate_convention"])
     calcium_density = CalciumDensityConvention(params["calcium_density_convention"])
     if cell.name == "layer5_excitatory" and "ahp_max_conductance_nS" not in params:
@@ -77,6 +79,7 @@ def create_compartmental_hh_population(
         axial_convention=axial,
         leak_convention=leak,
         voltage_coordinate=voltage,
+        nak_rate_convention=nak_rate,
         calcium_gate_convention=calcium_gate,
         calcium_density_convention=calcium_density,
     )
@@ -118,11 +121,12 @@ def create_compartmental_hh_population(
         _set(group, f"v_{compartment_name}", initial_voltage * brian.mV)
         _set(group, f"i_syn_{compartment_name}", 0 * brian.pA)
         _set(group, f"i_drive_{compartment_name}", 0 * brian.pA)
-        paper_voltage = (
-            initial_voltage
-            if voltage is VoltageCoordinate.ABSOLUTE
-            else initial_voltage - compartment.e_leak_mV
-        )
+        if voltage is VoltageCoordinate.ABSOLUTE:
+            paper_voltage = initial_voltage
+        elif voltage is VoltageCoordinate.SHIFTED_67_MV:
+            paper_voltage = initial_voltage + 67.0
+        else:
+            paper_voltage = initial_voltage - compartment.e_leak_mV
         if compartment.g_na_mS_cm2 is not None:
             _set(
                 group,
@@ -134,7 +138,7 @@ def create_compartmental_hh_population(
                 f"g_k_{compartment_name}",
                 compartment.conductance_nS("k") * brian.nsiemens,
             )
-            rates = traub_miles_rates(paper_voltage)
+            rates = traub_miles_rates(paper_voltage, nak_rate)
             _set(group, f"m_{compartment_name}", rates.alpha_m / (rates.alpha_m + rates.beta_m))
             _set(group, f"h_{compartment_name}", rates.alpha_h / (rates.alpha_h + rates.beta_h))
             _set(group, f"n_{compartment_name}", rates.alpha_n / (rates.alpha_n + rates.beta_n))

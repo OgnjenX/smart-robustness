@@ -28,11 +28,16 @@ documented stimulus and analysis procedures:
 3. the relevant cell-level firing modes and the direction of the paper's
    ablation/parameter effects.
 
-This repository currently provides **Milestone 0**: equation-tested reference
-components, a parameterized minimal match/mismatch benchmark, spectral analysis,
-provenance checks, and swap-ready interfaces. It does **not yet claim a full
+This repository currently provides **Milestone 1**: equation-tested reference
+components, the complete recovered first-order connection catalog, predeclared
+validation targets, a parameterized minimal benchmark, provenance checks, and
+swap-ready interfaces. It does **not yet claim a full
 replication** of the paper's two 9×9 thalamocortical loops. See
 [`docs/replication-status.md`](docs/replication-status.md).
+The acceptance criteria are fixed in
+[`docs/validation-matrix.md`](docs/validation-matrix.md), and the staged path to
+the frozen baseline is in
+[`docs/reproduction-roadmap.md`](docs/reproduction-roadmap.md).
 
 ## Why Brian2?
 
@@ -49,6 +54,8 @@ measurements, and validation criteria do not depend on a particular cell model.
 configs/                 reproducible experiment definitions
 src/smart_robustness/
   models/                swappable neuron-model registry and Brian2 equations
+  projections.py         typed Supplementary Table 3 connection catalog
+  data/                  packaged source-backed projection records
   synapses.py            dual-exponential conductance + transmitter depletion
   circuit.py             minimal SMART benchmark assembly
   experiment.py          seeded execution and artifact writing

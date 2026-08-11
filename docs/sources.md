@@ -25,6 +25,23 @@ transmitter-depletion annotations for the first-order thalamocortical loop.
 Source documents are used for transcription and verification but are not
 redistributed in this repository.
 
+## Original executable-model record
+
+[ModelDB accession 112922](https://modeldb.science/112922) records the SMART
+implementation as a KInNeSS/NeuroML model. Its preserved author-era page links
+to `Brain_Research_Paper_KINNESS_SMART_network.rar`, described as the network
+description and input stimuli used for the article. The surviving
+[ModelDB GitHub mirror](https://github.com/ModelDBRepository/112922) contains the
+catalog page and assets, but not that executable payload.
+
+The original BU/KInNeSS host is no longer reliably reachable, and an initial
+exact-URL Internet Archive query found no archived copy. The implementation
+therefore uses the paper and recovered Elsevier supplement as primary sources
+while keeping undocumented initial states, seeds, and exact connection
+realizations explicitly non-identifiable. If the bundle is later recovered, it
+will be audited against the reconstruction and inspected for a model-specific
+license before any redistribution.
+
 ## Known source ambiguity
 
 Table 3 reports a cell-specific `E_L` and identifies it as the leakage-current

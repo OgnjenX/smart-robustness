@@ -1,0 +1,422 @@
+schema_version: 1
+source_title: "Grossberg & Versace (2008), Supplementary Table 3"
+source_alias: "Supplementary Table 4 in the main paper"
+expected_record_count: 55
+
+# All values under `raw` are literal normalized transcriptions (spacing and dash
+# style retained where scientifically relevant) from the recovered DOC/DOCX,
+# HTML, and text forms. Null means the source cell is blank, not zero.
+_cross_checked: &cross_checked
+  status: cross_checked
+  source_forms: [docx, html, txt]
+  notes: []
+
+records:
+  - id: l23_e.proximal_dendrite.from_l23_e.ampa
+    kind: chemical
+    source: {population: layer23_excitatory_v1, compartment: null}
+    target: {population: layer23_excitatory_v1, compartment: proximal_dendrite}
+    raw: {receptor: AMPA, reversal_mV: "0", conductance_pS: "0.09", weight_density_1e6_cm2: "0.1", topology: "1.3", delay_ms: "0.1", rise_fall_ms: "0.1 – 2"}
+    parsed: {receptor: ampa, reversal_mV: 0, conductance_pS: 0.09, weight_density_1e6_cm2: 0.1, topology: {kind: gaussian, sigma: 1.3}, delay_ms: 0.1, rise_ms: 0.1, fall_ms: 2, plasticity: null, depletion: null}
+    verification: *cross_checked
+  - id: l23_e.proximal_dendrite.from_l23_e.nmda
+    kind: chemical
+    source: {population: layer23_excitatory_v1, compartment: null}
+    target: {population: layer23_excitatory_v1, compartment: proximal_dendrite}
+    raw: {receptor: NMDA, reversal_mV: "0", conductance_pS: "0.1", weight_density_1e6_cm2: "0.01", topology: "1.3", delay_ms: "0.1", rise_fall_ms: "0.7 – 80"}
+    parsed: {receptor: nmda, reversal_mV: 0, conductance_pS: 0.1, weight_density_1e6_cm2: 0.01, topology: {kind: gaussian, sigma: 1.3}, delay_ms: 0.1, rise_ms: 0.7, fall_ms: 80, plasticity: null, depletion: null}
+    verification: *cross_checked
+  - id: l23_e.proximal_dendrite.from_l23_i.gaba
+    kind: chemical
+    source: {population: layer23_inhibitory_v1, compartment: null}
+    target: {population: layer23_excitatory_v1, compartment: proximal_dendrite}
+    raw: {receptor: GABA, reversal_mV: "-70", conductance_pS: "2.461", weight_density_1e6_cm2: "0.3", topology: "0.8", delay_ms: "0.1", rise_fall_ms: "1 – 7"}
+    parsed: {receptor: gaba, reversal_mV: -70, conductance_pS: 2.461, weight_density_1e6_cm2: 0.3, topology: {kind: gaussian, sigma: 0.8}, delay_ms: 0.1, rise_ms: 1, fall_ms: 7, plasticity: null, depletion: null}
+    verification: *cross_checked
+  - id: l23_e.proximal_dendrite.from_l4_e.ampa
+    kind: chemical
+    source: {population: layer4_excitatory_v1, compartment: null}
+    target: {population: layer23_excitatory_v1, compartment: proximal_dendrite}
+    raw: {receptor: AMPA, reversal_mV: "0", conductance_pS: "0.09", weight_density_1e6_cm2: "2", topology: "0.3", delay_ms: "1", rise_fall_ms: "2 – 2"}
+    parsed: {receptor: ampa, reversal_mV: 0, conductance_pS: 0.09, weight_density_1e6_cm2: 2, topology: {kind: gaussian, sigma: 0.3}, delay_ms: 1, rise_ms: 2, fall_ms: 2, plasticity: null, depletion: null}
+    verification: *cross_checked
+
+  - id: l23_i.proximal_dendrite.from_l23_e.ampa
+    kind: chemical
+    source: {population: layer23_excitatory_v1, compartment: null}
+    target: {population: layer23_inhibitory_v1, compartment: proximal_dendrite}
+    raw: {receptor: AMPA, reversal_mV: "0", conductance_pS: "0.09", weight_density_1e6_cm2: "0.15", topology: "1 to 1", delay_ms: "0.1", rise_fall_ms: "2 – 2"}
+    parsed: {receptor: ampa, reversal_mV: 0, conductance_pS: 0.09, weight_density_1e6_cm2: 0.15, topology: {kind: one_to_one, sigma: null}, delay_ms: 0.1, rise_ms: 2, fall_ms: 2, plasticity: null, depletion: null}
+    verification: *cross_checked
+  - id: l23_i.proximal_dendrite.from_l23_i.gaba
+    kind: chemical
+    source: {population: layer23_inhibitory_v1, compartment: null}
+    target: {population: layer23_inhibitory_v1, compartment: proximal_dendrite}
+    raw: {receptor: GABA, reversal_mV: "-70", conductance_pS: "0.1", weight_density_1e6_cm2: "1", topology: "1", delay_ms: "0.1", rise_fall_ms: "2 – 2"}
+    parsed: {receptor: gaba, reversal_mV: -70, conductance_pS: 0.1, weight_density_1e6_cm2: 1, topology: {kind: gaussian, sigma: 1}, delay_ms: 0.1, rise_ms: 2, fall_ms: 2, plasticity: null, depletion: null}
+    verification: *cross_checked
+  - id: l23_i.proximal_dendrite.from_l4_e.ampa
+    kind: chemical
+    source: {population: layer4_excitatory_v1, compartment: null}
+    target: {population: layer23_inhibitory_v1, compartment: proximal_dendrite}
+    raw: {receptor: AMPA, reversal_mV: "0", conductance_pS: "0.4", weight_density_1e6_cm2: "1", topology: "0.3", delay_ms: "0.1", rise_fall_ms: "2 – 2"}
+    parsed: {receptor: ampa, reversal_mV: 0, conductance_pS: 0.4, weight_density_1e6_cm2: 1, topology: {kind: gaussian, sigma: 0.3}, delay_ms: 0.1, rise_ms: 2, fall_ms: 2, plasticity: null, depletion: null}
+    verification: *cross_checked
+
+  - id: l4_e.proximal_dendrite.from_l4_e.ampa
+    kind: chemical
+    source: {population: layer4_excitatory_v1, compartment: null}
+    target: {population: layer4_excitatory_v1, compartment: proximal_dendrite}
+    raw: {receptor: AMPA, reversal_mV: "0", conductance_pS: "0.09", weight_density_1e6_cm2: "0.15", topology: "1 to 1", delay_ms: "0.1", rise_fall_ms: "2 – 2"}
+    parsed: {receptor: ampa, reversal_mV: 0, conductance_pS: 0.09, weight_density_1e6_cm2: 0.15, topology: {kind: one_to_one, sigma: null}, delay_ms: 0.1, rise_ms: 2, fall_ms: 2, plasticity: null, depletion: null}
+    verification: *cross_checked
+  - id: l4_e.proximal_dendrite.from_l4_i.gaba
+    kind: chemical
+    source: {population: layer4_inhibitory_v1, compartment: null}
+    target: {population: layer4_excitatory_v1, compartment: proximal_dendrite}
+    raw: {receptor: GABA, reversal_mV: "-70", conductance_pS: "2.461", weight_density_1e6_cm2: "2", topology: "1.5", delay_ms: "0.1", rise_fall_ms: "0.1 – 2"}
+    parsed: {receptor: gaba, reversal_mV: -70, conductance_pS: 2.461, weight_density_1e6_cm2: 2, topology: {kind: gaussian, sigma: 1.5}, delay_ms: 0.1, rise_ms: 0.1, fall_ms: 2, plasticity: null, depletion: null}
+    verification: *cross_checked
+  - id: l4_e.proximal_dendrite.from_l6i.ampa_depletable
+    kind: chemical
+    source: {population: layer6i_excitatory_v1, compartment: null}
+    target: {population: layer4_excitatory_v1, compartment: proximal_dendrite}
+    raw: {receptor: AMPA, reversal_mV: "0", conductance_pS: "0.09", weight_density_1e6_cm2: "(#) 0.7 (1, 400)", topology: "1 to 1", delay_ms: "1", rise_fall_ms: "2 – 2"}
+    parsed: {receptor: ampa, reversal_mV: 0, conductance_pS: 0.09, weight_density_1e6_cm2: 0.7, topology: {kind: one_to_one, sigma: null}, delay_ms: 1, rise_ms: 2, fall_ms: 2, plasticity: null, depletion: {epsilon: 1, tau_ms: 400}}
+    verification: *cross_checked
+  - id: l4_e.proximal_dendrite.from_relay.ampa_plastic
+    kind: chemical
+    source: {population: thalamic_relay, compartment: null}
+    target: {population: layer4_excitatory_v1, compartment: proximal_dendrite}
+    raw: {receptor: "AMPA (*)", reversal_mV: "0", conductance_pS: "0.247", weight_density_1e6_cm2: "6(0.3, 0.1)", topology: "0.5", delay_ms: "3", rise_fall_ms: "1 – 7"}
+    parsed: {receptor: ampa, reversal_mV: 0, conductance_pS: 0.247, weight_density_1e6_cm2: 6, topology: {kind: gaussian, sigma: 0.5}, delay_ms: 3, rise_ms: 1, fall_ms: 7, plasticity: {max_weight_density_1e6_cm2: 6, baseline_weight_density_1e6_cm2: 0.3, learning_rate: 0.1}, depletion: null}
+    verification: *cross_checked
+
+  - id: l4_i.proximal_dendrite.from_l4_e.ampa
+    kind: chemical
+    source: {population: layer4_excitatory_v1, compartment: null}
+    target: {population: layer4_inhibitory_v1, compartment: proximal_dendrite}
+    raw: {receptor: AMPA, reversal_mV: "0", conductance_pS: "0.1", weight_density_1e6_cm2: "5", topology: "0.3", delay_ms: "0.1", rise_fall_ms: "0.1 – 2"}
+    parsed: {receptor: ampa, reversal_mV: 0, conductance_pS: 0.1, weight_density_1e6_cm2: 5, topology: {kind: gaussian, sigma: 0.3}, delay_ms: 0.1, rise_ms: 0.1, fall_ms: 2, plasticity: null, depletion: null}
+    verification: *cross_checked
+  - id: l4_i.proximal_dendrite.from_l4_i.gaba
+    kind: chemical
+    source: {population: layer4_inhibitory_v1, compartment: null}
+    target: {population: layer4_inhibitory_v1, compartment: proximal_dendrite}
+    raw: {receptor: GABA, reversal_mV: "-70", conductance_pS: "2.461", weight_density_1e6_cm2: "0.11", topology: "0.2", delay_ms: "01", rise_fall_ms: "1 – 2"}
+    parsed: {receptor: gaba, reversal_mV: -70, conductance_pS: 2.461, weight_density_1e6_cm2: 0.11, topology: {kind: gaussian, sigma: 0.2}, delay_ms: 1, rise_ms: 1, fall_ms: 2, plasticity: null, depletion: null}
+    verification:
+      status: ambiguous
+      source_forms: [docx, html, txt]
+      notes: ["The source prints axonal delay as '01'; parsed as 1 ms without silently changing the raw string."]
+  - id: l4_i.proximal_dendrite.from_l4_i.gap
+    kind: gap_junction
+    source: {population: layer4_inhibitory_v1, compartment: proximal_dendrite}
+    target: {population: layer4_inhibitory_v1, compartment: proximal_dendrite}
+    raw: {receptor: GJ, reversal_mV: null, conductance_pS: "0.03", weight_density_1e6_cm2: null, topology: "0.4", delay_ms: null, rise_fall_ms: null}
+    parsed: {receptor: gap_junction, reversal_mV: null, conductance_pS: 0.03, weight_density_1e6_cm2: null, topology: {kind: gaussian, sigma: 0.4}, delay_ms: null, rise_ms: null, fall_ms: null, plasticity: null, depletion: null}
+    verification: *cross_checked
+  - id: l4_i.proximal_dendrite.from_l6i.unknown_depletable
+    kind: chemical
+    source: {population: layer6i_excitatory_v1, compartment: null}
+    target: {population: layer4_inhibitory_v1, compartment: proximal_dendrite}
+    raw: {receptor: N, reversal_mV: "0", conductance_pS: "0.2", weight_density_1e6_cm2: "(#)2 (1, 400)", topology: "0.5", delay_ms: "0.1", rise_fall_ms: "0.1 – 3"}
+    parsed: {receptor: unknown, reversal_mV: 0, conductance_pS: 0.2, weight_density_1e6_cm2: 2, topology: {kind: gaussian, sigma: 0.5}, delay_ms: 0.1, rise_ms: 0.1, fall_ms: 3, plasticity: null, depletion: {epsilon: 1, tau_ms: 400}}
+    verification:
+      status: ambiguous
+      source_forms: [docx, html, txt]
+      notes: ["The recovered source literally contains channel type 'N'; it is not expanded to NMDA without evidence."]
+  - id: l4_i.proximal_dendrite.from_relay.ampa
+    kind: chemical
+    source: {population: thalamic_relay, compartment: null}
+    target: {population: layer4_inhibitory_v1, compartment: proximal_dendrite}
+    raw: {receptor: AMPA, reversal_mV: "0", conductance_pS: "0.5", weight_density_1e6_cm2: "6.5", topology: "1", delay_ms: "3", rise_fall_ms: "0.1 – 0.2"}
+    parsed: {receptor: ampa, reversal_mV: 0, conductance_pS: 0.5, weight_density_1e6_cm2: 6.5, topology: {kind: gaussian, sigma: 1}, delay_ms: 3, rise_ms: 0.1, fall_ms: 0.2, plasticity: null, depletion: null}
+    verification: *cross_checked
+
+  - id: l5_e.distal_dendrite.from_matrix.ampa
+    kind: chemical
+    source: {population: thalamic_matrix, compartment: null}
+    target: {population: layer5_excitatory_v1, compartment: distal_dendrite}
+    raw: {receptor: AMPA, reversal_mV: "0", conductance_pS: "0.02", weight_density_1e6_cm2: "0.01", topology: "all-to-1", delay_ms: "3", rise_fall_ms: "2 – 2"}
+    parsed: {receptor: ampa, reversal_mV: 0, conductance_pS: 0.02, weight_density_1e6_cm2: 0.01, topology: {kind: all_to_one, sigma: null}, delay_ms: 3, rise_ms: 2, fall_ms: 2, plasticity: null, depletion: null}
+    verification: *cross_checked
+  - id: l5_e.distal_dendrite.from_nonspecific.ampa
+    kind: chemical
+    source: {population: thalamic_nonspecific, compartment: null}
+    target: {population: layer5_excitatory_v1, compartment: distal_dendrite}
+    raw: {receptor: AMPA, reversal_mV: "0", conductance_pS: "0.06", weight_density_1e6_cm2: "0.06", topology: "all-to-1", delay_ms: "3", rise_fall_ms: "2 – 2"}
+    parsed: {receptor: ampa, reversal_mV: 0, conductance_pS: 0.06, weight_density_1e6_cm2: 0.06, topology: {kind: all_to_one, sigma: null}, delay_ms: 3, rise_ms: 2, fall_ms: 2, plasticity: null, depletion: null}
+    verification: *cross_checked
+  - id: l5_e.distal_dendrite.from_nonspecific.nmda
+    kind: chemical
+    source: {population: thalamic_nonspecific, compartment: null}
+    target: {population: layer5_excitatory_v1, compartment: distal_dendrite}
+    raw: {receptor: NMDA, reversal_mV: "-70", conductance_pS: "0.06", weight_density_1e6_cm2: "0.01", topology: "all-to-1", delay_ms: "3", rise_fall_ms: "2 – 10"}
+    parsed: {receptor: nmda, reversal_mV: -70, conductance_pS: 0.06, weight_density_1e6_cm2: 0.01, topology: {kind: all_to_one, sigma: null}, delay_ms: 3, rise_ms: 2, fall_ms: 10, plasticity: null, depletion: null}
+    verification:
+      status: ambiguous
+      source_forms: [docx, html, txt]
+      notes: ["The source prints NMDA with a -70 mV reversal potential; retained literally although this is physiologically atypical and may be a source-table error."]
+  - id: l5_e.distal_dendrite.from_v2_l6ii.ampa_plastic
+    kind: chemical
+    source: {population: layer6ii_excitatory_v2, compartment: null}
+    target: {population: layer5_excitatory_v1, compartment: distal_dendrite}
+    raw: {receptor: "AMPA(*)", reversal_mV: "0", conductance_pS: "0.09", weight_density_1e6_cm2: "5", topology: "1(0.5, 0.1)", delay_ms: "0.1", rise_fall_ms: "2 – 2"}
+    parsed: {receptor: ampa, reversal_mV: 0, conductance_pS: 0.09, weight_density_1e6_cm2: 5, topology: {kind: gaussian, sigma: 1}, delay_ms: 0.1, rise_ms: 2, fall_ms: 2, plasticity: {max_weight_density_1e6_cm2: 1, baseline_weight_density_1e6_cm2: 0.5, learning_rate: 0.1}, depletion: null}
+    verification:
+      status: ambiguous
+      source_forms: [docx, html, txt]
+      notes: ["The plastic tuple '1(0.5, 0.1)' is printed in the Gaussian-spread row while the weight row prints '5'; parsed literally but flagged because the caption defines the tuple as a weight parameter."]
+  - id: l5_e.proximal_dendrite.from_l23_e.ampa
+    kind: chemical
+    source: {population: layer23_excitatory_v1, compartment: null}
+    target: {population: layer5_excitatory_v1, compartment: proximal_dendrite}
+    raw: {receptor: AMPA, reversal_mV: "0", conductance_pS: "0.1", weight_density_1e6_cm2: "2.5", topology: "0.35", delay_ms: "0.1", rise_fall_ms: "2 – 2"}
+    parsed: {receptor: ampa, reversal_mV: 0, conductance_pS: 0.1, weight_density_1e6_cm2: 2.5, topology: {kind: gaussian, sigma: 0.35}, delay_ms: 0.1, rise_ms: 2, fall_ms: 2, plasticity: null, depletion: null}
+    verification: *cross_checked
+
+  - id: l6i.proximal_dendrite.from_l23_e.ampa
+    kind: chemical
+    source: {population: layer23_excitatory_v1, compartment: null}
+    target: {population: layer6i_excitatory_v1, compartment: proximal_dendrite}
+    raw: {receptor: AMPA, reversal_mV: "0", conductance_pS: "0.1", weight_density_1e6_cm2: "1", topology: "1 to 1", delay_ms: "1", rise_fall_ms: "2 – 2"}
+    parsed: {receptor: ampa, reversal_mV: 0, conductance_pS: 0.1, weight_density_1e6_cm2: 1, topology: {kind: one_to_one, sigma: null}, delay_ms: 1, rise_ms: 2, fall_ms: 2, plasticity: null, depletion: null}
+    verification: *cross_checked
+  - id: l6i.proximal_dendrite.from_l4_e.ampa
+    kind: chemical
+    source: {population: layer4_excitatory_v1, compartment: null}
+    target: {population: layer6i_excitatory_v1, compartment: proximal_dendrite}
+    raw: {receptor: AMPA, reversal_mV: "0", conductance_pS: "0.1", weight_density_1e6_cm2: "3", topology: "1 to 1", delay_ms: "0.8", rise_fall_ms: "2 – 2"}
+    parsed: {receptor: ampa, reversal_mV: 0, conductance_pS: 0.1, weight_density_1e6_cm2: 3, topology: {kind: one_to_one, sigma: null}, delay_ms: 0.8, rise_ms: 2, fall_ms: 2, plasticity: null, depletion: null}
+    verification: *cross_checked
+  - id: l6i.proximal_dendrite.from_l6ii.ampa
+    kind: chemical
+    source: {population: layer6ii_excitatory_v1, compartment: null}
+    target: {population: layer6i_excitatory_v1, compartment: proximal_dendrite}
+    raw: {receptor: AMPA, reversal_mV: "0", conductance_pS: "0.1", weight_density_1e6_cm2: "3", topology: "1 to 1", delay_ms: "0.1", rise_fall_ms: "2 – 2"}
+    parsed: {receptor: ampa, reversal_mV: 0, conductance_pS: 0.1, weight_density_1e6_cm2: 3, topology: {kind: one_to_one, sigma: null}, delay_ms: 0.1, rise_ms: 2, fall_ms: 2, plasticity: null, depletion: null}
+    verification: *cross_checked
+  - id: l6i.proximal_dendrite.from_relay.ampa
+    kind: chemical
+    source: {population: thalamic_relay, compartment: null}
+    target: {population: layer6i_excitatory_v1, compartment: proximal_dendrite}
+    raw: {receptor: AMPA, reversal_mV: "0", conductance_pS: "0.9", weight_density_1e6_cm2: "3", topology: "0.35", delay_ms: "0.5", rise_fall_ms: "0.1 – 2"}
+    parsed: {receptor: ampa, reversal_mV: 0, conductance_pS: 0.9, weight_density_1e6_cm2: 3, topology: {kind: gaussian, sigma: 0.35}, delay_ms: 0.5, rise_ms: 0.1, fall_ms: 2, plasticity: null, depletion: null}
+    verification: *cross_checked
+
+  - id: l6ii.distal_dendrite.from_l23_e.ampa
+    kind: chemical
+    source: {population: layer23_excitatory_v1, compartment: null}
+    target: {population: layer6ii_excitatory_v1, compartment: distal_dendrite}
+    raw: {receptor: AMPA, reversal_mV: "0", conductance_pS: "0.1", weight_density_1e6_cm2: "2", topology: "1 to 1", delay_ms: "0.1", rise_fall_ms: "2 – 2"}
+    parsed: {receptor: ampa, reversal_mV: 0, conductance_pS: 0.1, weight_density_1e6_cm2: 2, topology: {kind: one_to_one, sigma: null}, delay_ms: 0.1, rise_ms: 2, fall_ms: 2, plasticity: null, depletion: null}
+    verification: *cross_checked
+  - id: l6ii.proximal_dendrite.from_l5_e.ampa
+    kind: chemical
+    source: {population: layer5_excitatory_v1, compartment: null}
+    target: {population: layer6ii_excitatory_v1, compartment: proximal_dendrite}
+    raw: {receptor: AMPA, reversal_mV: "0", conductance_pS: "0.1", weight_density_1e6_cm2: "2", topology: "1 to 1", delay_ms: "0.1", rise_fall_ms: "2 – 2"}
+    parsed: {receptor: ampa, reversal_mV: 0, conductance_pS: 0.1, weight_density_1e6_cm2: 2, topology: {kind: one_to_one, sigma: null}, delay_ms: 0.1, rise_ms: 2, fall_ms: 2, plasticity: null, depletion: null}
+    verification: *cross_checked
+
+  - id: matrix.distal_dendrite.from_trn.gaba
+    kind: chemical
+    source: {population: trn, compartment: null}
+    target: {population: thalamic_matrix, compartment: distal_dendrite}
+    raw: {receptor: GABA, reversal_mV: "-70", conductance_pS: "1.5", weight_density_1e6_cm2: "0.14", topology: "all to 1", delay_ms: "0.1", rise_fall_ms: "1 – 4"}
+    parsed: {receptor: gaba, reversal_mV: -70, conductance_pS: 1.5, weight_density_1e6_cm2: 0.14, topology: {kind: all_to_one, sigma: null}, delay_ms: 0.1, rise_ms: 1, fall_ms: 4, plasticity: null, depletion: null}
+    verification: *cross_checked
+  - id: matrix.proximal_dendrite.from_input.input
+    kind: external_input
+    source: {population: bottom_up_input, compartment: null}
+    target: {population: thalamic_matrix, compartment: proximal_dendrite}
+    raw: {receptor: INP., reversal_mV: "0", conductance_pS: "1.1", weight_density_1e6_cm2: null, topology: "all to 1", delay_ms: null, rise_fall_ms: null}
+    parsed: {receptor: input, reversal_mV: 0, conductance_pS: 1.1, weight_density_1e6_cm2: null, topology: {kind: all_to_one, sigma: null}, delay_ms: null, rise_ms: null, fall_ms: null, plasticity: null, depletion: null}
+    verification: *cross_checked
+  - id: matrix.proximal_dendrite.from_trn.gaba
+    kind: chemical
+    source: {population: trn, compartment: null}
+    target: {population: thalamic_matrix, compartment: proximal_dendrite}
+    raw: {receptor: GABA, reversal_mV: "-70", conductance_pS: "1.5", weight_density_1e6_cm2: "0.14", topology: "all to 1", delay_ms: "0.1", rise_fall_ms: "1 – 4"}
+    parsed: {receptor: gaba, reversal_mV: -70, conductance_pS: 1.5, weight_density_1e6_cm2: 0.14, topology: {kind: all_to_one, sigma: null}, delay_ms: 0.1, rise_ms: 1, fall_ms: 4, plasticity: null, depletion: null}
+    verification: *cross_checked
+  - id: matrix.soma.from_trn.gaba
+    kind: chemical
+    source: {population: trn, compartment: null}
+    target: {population: thalamic_matrix, compartment: soma}
+    raw: {receptor: GABA, reversal_mV: "-70", conductance_pS: "2.461", weight_density_1e6_cm2: "0.5", topology: "all to 1", delay_ms: "0.1", rise_fall_ms: "1 – 4"}
+    parsed: {receptor: gaba, reversal_mV: -70, conductance_pS: 2.461, weight_density_1e6_cm2: 0.5, topology: {kind: all_to_one, sigma: null}, delay_ms: 0.1, rise_ms: 1, fall_ms: 4, plasticity: null, depletion: null}
+    verification: *cross_checked
+
+  - id: nonspecific.distal_dendrite.from_l6ii.ampa
+    kind: chemical
+    source: {population: layer6ii_excitatory_v1, compartment: null}
+    target: {population: thalamic_nonspecific, compartment: distal_dendrite}
+    raw: {receptor: AMPA, reversal_mV: "0", conductance_pS: "0.2", weight_density_1e6_cm2: "1", topology: "all to 1", delay_ms: "6", rise_fall_ms: "2 – 2"}
+    parsed: {receptor: ampa, reversal_mV: 0, conductance_pS: 0.2, weight_density_1e6_cm2: 1, topology: {kind: all_to_one, sigma: null}, delay_ms: 6, rise_ms: 2, fall_ms: 2, plasticity: null, depletion: null}
+    verification: *cross_checked
+  - id: nonspecific.distal_dendrite.from_l6ii.nmda
+    kind: chemical
+    source: {population: layer6ii_excitatory_v1, compartment: null}
+    target: {population: thalamic_nonspecific, compartment: distal_dendrite}
+    raw: {receptor: NMDA, reversal_mV: "0", conductance_pS: "0.1", weight_density_1e6_cm2: "1", topology: "all to 1", delay_ms: "6", rise_fall_ms: "0.7 – 80"}
+    parsed: {receptor: nmda, reversal_mV: 0, conductance_pS: 0.1, weight_density_1e6_cm2: 1, topology: {kind: all_to_one, sigma: null}, delay_ms: 6, rise_ms: 0.7, fall_ms: 80, plasticity: null, depletion: null}
+    verification: *cross_checked
+  - id: nonspecific.distal_dendrite.from_trn.gaba
+    kind: chemical
+    source: {population: trn, compartment: null}
+    target: {population: thalamic_nonspecific, compartment: distal_dendrite}
+    raw: {receptor: GABA, reversal_mV: "-70", conductance_pS: "1.5", weight_density_1e6_cm2: "0.16", topology: "all to 1", delay_ms: "0.1", rise_fall_ms: "1 – 7"}
+    parsed: {receptor: gaba, reversal_mV: -70, conductance_pS: 1.5, weight_density_1e6_cm2: 0.16, topology: {kind: all_to_one, sigma: null}, delay_ms: 0.1, rise_ms: 1, fall_ms: 7, plasticity: null, depletion: null}
+    verification: *cross_checked
+  - id: nonspecific.proximal_dendrite.from_trn.gaba
+    kind: chemical
+    source: {population: trn, compartment: null}
+    target: {population: thalamic_nonspecific, compartment: proximal_dendrite}
+    raw: {receptor: GABA, reversal_mV: "-70", conductance_pS: "1.5", weight_density_1e6_cm2: "0.16", topology: "all to 1", delay_ms: "0.1", rise_fall_ms: "1 – 4"}
+    parsed: {receptor: gaba, reversal_mV: -70, conductance_pS: 1.5, weight_density_1e6_cm2: 0.16, topology: {kind: all_to_one, sigma: null}, delay_ms: 0.1, rise_ms: 1, fall_ms: 4, plasticity: null, depletion: null}
+    verification: *cross_checked
+  - id: nonspecific.soma.from_trn.gaba
+    kind: chemical
+    source: {population: trn, compartment: null}
+    target: {population: thalamic_nonspecific, compartment: soma}
+    raw: {receptor: GABA, reversal_mV: "-70", conductance_pS: "2.461", weight_density_1e6_cm2: "0.01", topology: "all to 1", delay_ms: "0.1", rise_fall_ms: "1 – 4"}
+    parsed: {receptor: gaba, reversal_mV: -70, conductance_pS: 2.461, weight_density_1e6_cm2: 0.01, topology: {kind: all_to_one, sigma: null}, delay_ms: 0.1, rise_ms: 1, fall_ms: 4, plasticity: null, depletion: null}
+    verification: *cross_checked
+
+  - id: relay.distal_dendrite.from_l6ii.ampa_plastic
+    kind: chemical
+    source: {population: layer6ii_excitatory_v1, compartment: null}
+    target: {population: thalamic_relay, compartment: distal_dendrite}
+    raw: {receptor: "AMPA (*)", reversal_mV: "0", conductance_pS: "1", weight_density_1e6_cm2: "1.5(0.05, 0.1)", topology: "1.3", delay_ms: "2", rise_fall_ms: "2 – 7"}
+    parsed: {receptor: ampa, reversal_mV: 0, conductance_pS: 1, weight_density_1e6_cm2: 1.5, topology: {kind: gaussian, sigma: 1.3}, delay_ms: 2, rise_ms: 2, fall_ms: 7, plasticity: {max_weight_density_1e6_cm2: 1.5, baseline_weight_density_1e6_cm2: 0.05, learning_rate: 0.1}, depletion: null}
+    verification: *cross_checked
+  - id: relay.distal_dendrite.from_l6ii.nmda
+    kind: chemical
+    source: {population: layer6ii_excitatory_v1, compartment: null}
+    target: {population: thalamic_relay, compartment: distal_dendrite}
+    raw: {receptor: NMDA, reversal_mV: "0", conductance_pS: "0.5", weight_density_1e6_cm2: "0.3", topology: "1.3", delay_ms: "2", rise_fall_ms: "10 – 80"}
+    parsed: {receptor: nmda, reversal_mV: 0, conductance_pS: 0.5, weight_density_1e6_cm2: 0.3, topology: {kind: gaussian, sigma: 1.3}, delay_ms: 2, rise_ms: 10, fall_ms: 80, plasticity: null, depletion: null}
+    verification: *cross_checked
+  - id: relay.distal_dendrite.from_trn.gaba
+    kind: chemical
+    source: {population: trn, compartment: null}
+    target: {population: thalamic_relay, compartment: distal_dendrite}
+    raw: {receptor: GABA, reversal_mV: "-70", conductance_pS: "2.5", weight_density_1e6_cm2: "0.19", topology: "3", delay_ms: "0.1", rise_fall_ms: "1 – 7"}
+    parsed: {receptor: gaba, reversal_mV: -70, conductance_pS: 2.5, weight_density_1e6_cm2: 0.19, topology: {kind: gaussian, sigma: 3}, delay_ms: 0.1, rise_ms: 1, fall_ms: 7, plasticity: null, depletion: null}
+    verification: *cross_checked
+  - id: relay.proximal_dendrite.from_input.input
+    kind: external_input
+    source: {population: bottom_up_input, compartment: null}
+    target: {population: thalamic_relay, compartment: proximal_dendrite}
+    raw: {receptor: INP., reversal_mV: "0", conductance_pS: "1.1", weight_density_1e6_cm2: null, topology: "1 to 1", delay_ms: null, rise_fall_ms: null}
+    parsed: {receptor: input, reversal_mV: 0, conductance_pS: 1.1, weight_density_1e6_cm2: null, topology: {kind: one_to_one, sigma: null}, delay_ms: null, rise_ms: null, fall_ms: null, plasticity: null, depletion: null}
+    verification: *cross_checked
+  - id: relay.proximal_dendrite.from_interneuron.gaba
+    kind: chemical
+    source: {population: thalamic_interneuron, compartment: null}
+    target: {population: thalamic_relay, compartment: proximal_dendrite}
+    raw: {receptor: GABA, reversal_mV: "-70", conductance_pS: "2.0", weight_density_1e6_cm2: "1.8", topology: "0.35", delay_ms: "0.1", rise_fall_ms: "1 – 2"}
+    parsed: {receptor: gaba, reversal_mV: -70, conductance_pS: 2, weight_density_1e6_cm2: 1.8, topology: {kind: gaussian, sigma: 0.35}, delay_ms: 0.1, rise_ms: 1, fall_ms: 2, plasticity: null, depletion: null}
+    verification: *cross_checked
+  - id: relay.proximal_dendrite.from_trn.gaba
+    kind: chemical
+    source: {population: trn, compartment: null}
+    target: {population: thalamic_relay, compartment: proximal_dendrite}
+    raw: {receptor: GABA, reversal_mV: "-70", conductance_pS: "2.5", weight_density_1e6_cm2: "0.18", topology: "3", delay_ms: "0.1", rise_fall_ms: "1 – 7"}
+    parsed: {receptor: gaba, reversal_mV: -70, conductance_pS: 2.5, weight_density_1e6_cm2: 0.18, topology: {kind: gaussian, sigma: 3}, delay_ms: 0.1, rise_ms: 1, fall_ms: 7, plasticity: null, depletion: null}
+    verification: *cross_checked
+  - id: relay.soma.from_trn.gaba
+    kind: chemical
+    source: {population: trn, compartment: null}
+    target: {population: thalamic_relay, compartment: soma}
+    raw: {receptor: GABA, reversal_mV: "-70", conductance_pS: "2.5", weight_density_1e6_cm2: "0.19", topology: "3.2", delay_ms: "0.1", rise_fall_ms: "1 – 7"}
+    parsed: {receptor: gaba, reversal_mV: -70, conductance_pS: 2.5, weight_density_1e6_cm2: 0.19, topology: {kind: gaussian, sigma: 3.2}, delay_ms: 0.1, rise_ms: 1, fall_ms: 7, plasticity: null, depletion: null}
+    verification: *cross_checked
+
+  - id: thalamic_interneuron.proximal_dendrite.from_interneuron.gaba
+    kind: chemical
+    source: {population: thalamic_interneuron, compartment: null}
+    target: {population: thalamic_interneuron, compartment: proximal_dendrite}
+    raw: {receptor: GABA, reversal_mV: "-70", conductance_pS: "2.461", weight_density_1e6_cm2: "0.08", topology: "0.9", delay_ms: "0.1", rise_fall_ms: "1 – 5"}
+    parsed: {receptor: gaba, reversal_mV: -70, conductance_pS: 2.461, weight_density_1e6_cm2: 0.08, topology: {kind: gaussian, sigma: 0.9}, delay_ms: 0.1, rise_ms: 1, fall_ms: 5, plasticity: null, depletion: null}
+    verification: *cross_checked
+  - id: thalamic_interneuron.proximal_dendrite.from_interneuron_proximal.gap
+    kind: gap_junction
+    source: {population: thalamic_interneuron, compartment: proximal_dendrite}
+    target: {population: thalamic_interneuron, compartment: proximal_dendrite}
+    raw: {receptor: GJ, reversal_mV: null, conductance_pS: "0.005", weight_density_1e6_cm2: null, topology: "0.3", delay_ms: null, rise_fall_ms: null}
+    parsed: {receptor: gap_junction, reversal_mV: null, conductance_pS: 0.005, weight_density_1e6_cm2: null, topology: {kind: gaussian, sigma: 0.3}, delay_ms: null, rise_ms: null, fall_ms: null, plasticity: null, depletion: null}
+    verification: *cross_checked
+  - id: thalamic_interneuron.proximal_dendrite.from_l6ii.ampa
+    kind: chemical
+    source: {population: layer6ii_excitatory_v1, compartment: null}
+    target: {population: thalamic_interneuron, compartment: proximal_dendrite}
+    raw: {receptor: AMPA, reversal_mV: "0", conductance_pS: "0.1", weight_density_1e6_cm2: "1", topology: "1.2", delay_ms: "4", rise_fall_ms: "2 – 2"}
+    parsed: {receptor: ampa, reversal_mV: 0, conductance_pS: 0.1, weight_density_1e6_cm2: 1, topology: {kind: gaussian, sigma: 1.2}, delay_ms: 4, rise_ms: 2, fall_ms: 2, plasticity: null, depletion: null}
+    verification: *cross_checked
+  - id: thalamic_interneuron.proximal_dendrite.from_trn.gaba
+    kind: chemical
+    source: {population: trn, compartment: null}
+    target: {population: thalamic_interneuron, compartment: proximal_dendrite}
+    raw: {receptor: GABA, reversal_mV: "-70", conductance_pS: "2.5", weight_density_1e6_cm2: "0.2", topology: "0.8", delay_ms: "0.1", rise_fall_ms: "1 – 6"}
+    parsed: {receptor: gaba, reversal_mV: -70, conductance_pS: 2.5, weight_density_1e6_cm2: 0.2, topology: {kind: gaussian, sigma: 0.8}, delay_ms: 0.1, rise_ms: 1, fall_ms: 6, plasticity: null, depletion: null}
+    verification: *cross_checked
+  - id: thalamic_interneuron.soma.from_trn.gaba
+    kind: chemical
+    source: {population: trn, compartment: null}
+    target: {population: thalamic_interneuron, compartment: soma}
+    raw: {receptor: GABA, reversal_mV: "-70", conductance_pS: "2.5", weight_density_1e6_cm2: "0.2", topology: "0.8", delay_ms: "0.1", rise_fall_ms: "1 – 6"}
+    parsed: {receptor: gaba, reversal_mV: -70, conductance_pS: 2.5, weight_density_1e6_cm2: 0.2, topology: {kind: gaussian, sigma: 0.8}, delay_ms: 0.1, rise_ms: 1, fall_ms: 6, plasticity: null, depletion: null}
+    verification: *cross_checked
+
+  - id: trn.distal_dendrite.from_trn_distal.gap
+    kind: gap_junction
+    source: {population: trn, compartment: distal_dendrite}
+    target: {population: trn, compartment: distal_dendrite}
+    raw: {receptor: GJ, reversal_mV: null, conductance_pS: "0.010", weight_density_1e6_cm2: null, topology: "1", delay_ms: null, rise_fall_ms: null}
+    parsed: {receptor: gap_junction, reversal_mV: null, conductance_pS: 0.01, weight_density_1e6_cm2: null, topology: {kind: gaussian, sigma: 1}, delay_ms: null, rise_ms: null, fall_ms: null, plasticity: null, depletion: null}
+    verification: *cross_checked
+  - id: trn.proximal_dendrite.from_l6ii.ampa
+    kind: chemical
+    source: {population: layer6ii_excitatory_v1, compartment: null}
+    target: {population: trn, compartment: proximal_dendrite}
+    raw: {receptor: AMPA, reversal_mV: "0", conductance_pS: "0.3", weight_density_1e6_cm2: "4", topology: "1.5", delay_ms: "4", rise_fall_ms: "4 – 5"}
+    parsed: {receptor: ampa, reversal_mV: 0, conductance_pS: 0.3, weight_density_1e6_cm2: 4, topology: {kind: gaussian, sigma: 1.5}, delay_ms: 4, rise_ms: 4, fall_ms: 5, plasticity: null, depletion: null}
+    verification: *cross_checked
+  - id: trn.proximal_dendrite.from_l6ii.nmda
+    kind: chemical
+    source: {population: layer6ii_excitatory_v1, compartment: null}
+    target: {population: trn, compartment: proximal_dendrite}
+    raw: {receptor: NMDA, reversal_mV: "0", conductance_pS: "0.2", weight_density_1e6_cm2: "0.3", topology: "1.2", delay_ms: "4", rise_fall_ms: "2 – 2"}
+    parsed: {receptor: nmda, reversal_mV: 0, conductance_pS: 0.2, weight_density_1e6_cm2: 0.3, topology: {kind: gaussian, sigma: 1.2}, delay_ms: 4, rise_ms: 2, fall_ms: 2, plasticity: null, depletion: null}
+    verification: *cross_checked
+  - id: trn.proximal_dendrite.from_relay.ampa
+    kind: chemical
+    source: {population: thalamic_relay, compartment: null}
+    target: {population: trn, compartment: proximal_dendrite}
+    raw: {receptor: AMPA, reversal_mV: "0", conductance_pS: "0.4", weight_density_1e6_cm2: "5", topology: "2.2", delay_ms: "0.1", rise_fall_ms: "2 – 2"}
+    parsed: {receptor: ampa, reversal_mV: 0, conductance_pS: 0.4, weight_density_1e6_cm2: 5, topology: {kind: gaussian, sigma: 2.2}, delay_ms: 0.1, rise_ms: 2, fall_ms: 2, plasticity: null, depletion: null}
+    verification: *cross_checked
+  - id: trn.proximal_dendrite.from_trn.gaba
+    kind: chemical
+    source: {population: trn, compartment: null}
+    target: {population: trn, compartment: proximal_dendrite}
+    raw: {receptor: GABA, reversal_mV: "-70", conductance_pS: "2.461", weight_density_1e6_cm2: "0.2", topology: "2", delay_ms: "0.1", rise_fall_ms: "1 – 4"}
+    parsed: {receptor: gaba, reversal_mV: -70, conductance_pS: 2.461, weight_density_1e6_cm2: 0.2, topology: {kind: gaussian, sigma: 2}, delay_ms: 0.1, rise_ms: 1, fall_ms: 4, plasticity: null, depletion: null}
+    verification: *cross_checked
+  - id: trn.proximal_dendrite.from_trn_proximal.gap
+    kind: gap_junction
+    source: {population: trn, compartment: proximal_dendrite}
+    target: {population: trn, compartment: proximal_dendrite}
+    raw: {receptor: GJ, reversal_mV: null, conductance_pS: "0.015", weight_density_1e6_cm2: null, topology: "1", delay_ms: null, rise_fall_ms: null}
+    parsed: {receptor: gap_junction, reversal_mV: null, conductance_pS: 0.015, weight_density_1e6_cm2: null, topology: {kind: gaussian, sigma: 1}, delay_ms: null, rise_ms: null, fall_ms: null, plasticity: null, depletion: null}
+    verification: *cross_checked
+  - id: trn.soma.from_trn.gaba
+    kind: chemical
+    source: {population: trn, compartment: null}
+    target: {population: trn, compartment: soma}
+    raw: {receptor: GABA, reversal_mV: "-70", conductance_pS: "2.461", weight_density_1e6_cm2: "0.3", topology: "2", delay_ms: "0.1", rise_fall_ms: "1 – 4"}
+    parsed: {receptor: gaba, reversal_mV: -70, conductance_pS: 2.461, weight_density_1e6_cm2: 0.3, topology: {kind: gaussian, sigma: 2}, delay_ms: 0.1, rise_ms: 1, fall_ms: 4, plasticity: null, depletion: null}
+    verification: *cross_checked

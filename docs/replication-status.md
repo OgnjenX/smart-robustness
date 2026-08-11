@@ -10,7 +10,7 @@ unbranched compartments and Hodgkin–Huxley-type currents needed for their role
 Synapses use normalized dual exponentials, activity-dependent transmitter
 depletion, and gated learning.
 
-## Current milestone: M0 scaffold
+## Current milestone: M1 source specification
 
 Implemented:
 
@@ -24,25 +24,37 @@ Implemented:
 - presynaptic resource depletion and recovery;
 - a minimal thalamus–cortex–TRN/reset benchmark;
 - rate and spectral analysis with predeclared beta/gamma bands;
-- unit tests plus an optional Brian2 smoke test.
+- unit tests plus an optional Brian2 smoke test;
+- all 55 nonblank recovered Supplementary Table 3 connection records as a
+  typed, validated catalog: 49 chemical projections, four gap junctions, and
+  two external inputs;
+- raw and parsed supplementary values, stable record IDs, deterministic
+  serialization, and per-record verification status;
+- an executable validation-target registry and a source-strength classification
+  for the published figure claims;
+- an accepted vectorized-multicompartment Brian2 architecture decision.
 
-Recovered but not yet fully encoded:
+Explicitly unresolved source anomalies:
 
-- the original Elsevier supplementary connection table (called Supplementary
-  Table 4 in the article and Supplementary Table 3 in its own caption).
+- four supplementary records retain ambiguity flags rather than guessed
+  corrections: a literal `N` receptor label, a delay printed as `01`, an NMDA
+  record printed with -70 mV reversal, and a plasticity tuple printed in the
+  Gaussian-spread row;
+- the original KInNeSS/NeuroML archive has not been recovered, so initial states,
+  exact connection realizations, seeds, and raw output traces remain unavailable.
 
 Not yet implemented or validated:
 
 - multicompartment dynamics that consume all Table 3 compartments and axial
   resistances (the current Brian2 population consumes paper-specific soma
   values only when `cell_class` is supplied);
-- the supplementary table's complete projection/conductance matrix in code;
+- Brian2 instantiation of the supplementary projection catalog;
 - all paper currents (T-type Ca, AHP, cholinergic modulation, and cell-specific variants);
 - the full two-loop 9×9 network, topographic kernels, STDP, ACh vigilance,
   CSD/LFP geometry, and every published figure protocol;
 - quantitative reproduction of match/gamma and mismatch/beta/reset.
 
-Accordingly, output from M0 is a software/analysis benchmark, not evidence that
+Accordingly, output from M1 is a source/audit benchmark, not evidence that
 the 2008 results have already been replicated.
 
 ## Validation gates

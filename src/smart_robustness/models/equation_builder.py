@@ -285,6 +285,7 @@ def compile_cell_equations(
     for port in external_input_ports:
         effective_reversal = "+".join(
             (
+                f"e_l_{port.compartment}",
                 f"{port.reversal_mV}*mV",
                 *(
                     f"{sensitivity}*mV*{port.name}_input_{channel}"

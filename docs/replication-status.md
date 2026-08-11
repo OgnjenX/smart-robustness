@@ -88,9 +88,16 @@ Implemented:
 - a driven Brian2 plasticity gate on the bottom-up relay-to-layer-4 projection:
   the positive Equation 6 lobe potentiates its weight, the negative lobe
   depotentiates it, and both updates remain within the serialized bounds;
+- recovered horizontal and vertical 9x9 stimulus grids, each containing five
+  centered green=120 pixels; the relay sensitivity of 0.4 reconstructs the
+  paper's -12 mV driving potential after applying KInNeSS's leak-relative
+  voltage coordinate;
+- peak-normalized Gaussian connectivity whose spatial factor remains in [0,1],
+  preserving each serialized `weight` as the peak/maximal receptor density;
 - CI validation split into independent Brian2 processes: 163 lightweight tests,
   five sector-construction tests, six connectivity tests, and two long AHP
-  tests plus one whole-sector runtime test currently pass (177 total).
+  tests, two protocol tests, plus one whole-sector runtime test currently pass
+  (179 total).
 
 Explicitly unresolved source anomalies:
 
@@ -118,6 +125,14 @@ Not yet implemented or validated:
   validation, ACh vigilance,
   CSD/LFP geometry, and every published figure protocol;
 - quantitative reproduction of match/gamma and mismatch/beta/reset.
+
+The first source-defined horizontal-bar run is retained as a failed
+reproduction in `validation-results/first-order-bar-001.yaml`. After a 20-ms
+warmup, the five active relay cells fire at 190 Hz rather than 40 Hz and 76
+off-pattern relay spikes occur. The immediate cause is a synchronized intrinsic
+TRN startup spike near 0.89 ms followed by broad relay rebound. The unreported
+legacy gate-initialization convention must be resolved before oscillation
+spectra can be interpreted.
 
 The first Figure 8 candidate (67 mV-shifted standard Traub--Miles rates,
 reciprocal T gates, Table 3 calcium density, and a -80 mV pre-pulse clamp)

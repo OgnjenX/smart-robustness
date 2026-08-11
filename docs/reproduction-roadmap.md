@@ -45,6 +45,13 @@ legacy ring-kernel semantics, current injection, plasticity, and published
 stimulation protocols remain required before this milestone is a functional
 network reproduction.
 
+Protocol checkpoint: the recovered horizontal/vertical PNGs contain the
+paper's centered five-cell bars at green=120. Combined with the serialized 0.4
+relay sensitivity and -60 mV leak, this reconstructs the reported -12 mV
+driving potential. The first 100-ms connected run fails the 40-Hz target due to
+a synchronized startup TRN transient and subsequent broad relay rebound; see
+`validation-results/first-order-bar-001.yaml`.
+
 Learning checkpoint: Equation 6's biphasic post-spike gate and the serialized
 20/25-ms depotentiation intervals are tested. Adaptive records initialize at
 their asymptotic baseline rather than their maximum. KInNeSS Equations 25/28

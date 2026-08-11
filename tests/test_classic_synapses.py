@@ -86,6 +86,8 @@ def test_modeldb_topology_applies_wrap_and_ring_metadata() -> None:
     center_to_left = factor[(pre == 40) & (post == 36)][0]
     center_to_right = factor[(pre == 40) & (post == 44)][0]
     assert center_to_left == pytest.approx(center_to_right)
+    assert factor.max() == pytest.approx(1.0)
+    assert np.all((factor >= 0) & (factor <= 1))
 
     ring = next(
         record

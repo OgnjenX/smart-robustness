@@ -215,9 +215,11 @@ def modeldb_topology_pairs(
     if kernel.border_effect == "wrap" and source_shape == target_shape:
         dx = np.minimum(dx, source_shape[1] - dx)
         dy = np.minimum(dy, source_shape[0] - dy)
-    factor = np.exp(-(dx**2 / (2 * kernel.sigma_x**2) + dy**2 / (2 * kernel.sigma_y**2))) / (
-        2 * np.pi * kernel.sigma_x * kernel.sigma_y
-    )
+    # KInNeSS serializes ``weight`` as the peak/maximal receptor-density
+    # weight. The Gaussian therefore scales that peak and must remain in [0, 1];
+    # it is not a probability-density kernel with a 1/(2*pi*sigma_x*sigma_y)
+    # prefactor.
+    factor = np.exp(-(dx**2 / (2 * kernel.sigma_x**2) + dy**2 / (2 * kernel.sigma_y**2)))
     if kernel.ring:
         # KInNeSS serializes no radius for a ring kernel. Its executable UI
         # convention is retained here as a center-excluding Gaussian candidate

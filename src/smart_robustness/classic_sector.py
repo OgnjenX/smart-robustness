@@ -47,7 +47,7 @@ def _population_parameters(
         "cell_class": facts.canonical_name,
         "axial_convention": "kinness_serialized_edge",
         "leak_convention": "table3_reversal",
-        "voltage_coordinate": "shifted_67_mV",
+        "voltage_coordinate": "relative_to_table3_leak",
         "nak_rate_convention": "standard_traub_miles",
         "calcium_gate_convention": "modeldb_112923",
         "gate_initialization_convention": gate_initialization_convention,

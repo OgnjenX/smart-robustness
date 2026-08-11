@@ -47,9 +47,9 @@ parameters:
     status: published
     source: Table 3; M0 corresponds to cortical excitatory cell classes
   model.classic_hh.rate_voltage_shift:
-    value: V_rate = V_membrane + 67 mV
+    value: V_rate = V_membrane - E_leak for the executable KInNeSS baseline; fixed +67 mV retained as a paper-audit alternative
     status: derived
-    source: transformation between Table 3 absolute voltages and Methods 4.5 gate equations
+    source: contemporaneous KInNeSS 0.3.2 documentation defines zero voltage as intracellular resting potential; XML Na/K offsets use this coordinate
   model.multicompartment.nak_rate_convention:
     value: printed_smart or standard_traub_miles; must be selected explicitly
     status: derived

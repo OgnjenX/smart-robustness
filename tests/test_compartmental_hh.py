@@ -188,6 +188,8 @@ def test_modeldb_layer5_spike_uses_serialized_ahp_weight() -> None:
 
 def test_source_specific_ahp_cell_geometry_and_density_conversion() -> None:
     cell = ahp_ach_layer5_spec(soma_axial_resistance_kohm_cm=35.0)
+    assert cell.compartment("soma").diameter_mm == pytest.approx(0.1)
+    assert cell.compartment("proximal_dendrite").length_mm == pytest.approx(0.1)
     assert cell.compartment("soma").e_leak_mV == -78.0
     assert cell.compartment("proximal_dendrite").axial_resistance_kohm_cm == 35.0
     expected = 0.1 * cell.compartment("soma").lateral_area_cm2 * 1e6

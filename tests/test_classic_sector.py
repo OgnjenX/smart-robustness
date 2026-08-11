@@ -42,6 +42,15 @@ def test_first_order_intrinsic_sector_builds_all_source_cells() -> None:
     sector.network.run(0 * brian.ms)
 
 
+def test_classic_sector_uses_kinness_rest_relative_nak_voltage() -> None:
+    brian.start_scope()
+    sector = build_first_order_intrinsic_sector(brian=brian)
+    assert {
+        population.compiled.voltage_coordinate.value
+        for population in sector.populations.values()
+    } == {"relative_to_table3_leak"}
+
+
 def test_network_layer5_and_layer6ii_use_serialized_fast_ahp() -> None:
     brian.start_scope()
     sector = build_first_order_intrinsic_sector(brian=brian)

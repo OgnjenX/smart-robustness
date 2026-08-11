@@ -143,6 +143,15 @@ warmup burst, but active relay cells still fire at 120 Hz and the stimulus
 recruits 162 TRN spikes. Gate initialization is therefore consequential but
 not sufficient to recover the published 40 Hz relay drive.
 
+After correcting XML centimeter geometry, ligand-channel pS conversion, and
+leak-relative Na/K voltage coordinates, the prior relay activity disappears;
+the exact run is retained as `validation-results/first-order-bar-003.yaml`.
+The archived finite-conductance gate now produces no relay spikes, while a
+literal -12 mV dendritic clamp produces only one onset spike. This supersedes
+the earlier numerical candidates as the active source-consistent failure and
+narrows the unresolved discrepancy to legacy membrane/input defaults rather
+than network topology or synaptic units.
+
 The first Figure 8 candidate (67 mV-shifted standard Traub--Miles rates,
 reciprocal T gates, Table 3 calcium density, and a -80 mV pre-pulse clamp)
 produces sustained tonic trains in both conditions. It therefore fails the

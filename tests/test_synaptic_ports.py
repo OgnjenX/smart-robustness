@@ -6,6 +6,7 @@ from smart_robustness.models.ports import (
     chemical_port,
     external_ports_for_target,
     gap_ports_for_target,
+    ligand_conductance_density_mS_cm2,
     ports_for_target,
 )
 from smart_robustness.projections import SUPPLEMENTARY_TABLE3
@@ -19,6 +20,15 @@ def test_all_chemical_records_compile_to_unique_target_ports() -> None:
     assert len(ports) == 49
     assert len({port.record_id for port in ports}) == 49
     assert all(port.rise_ms > 0 and port.fall_ms > 0 for port in ports)
+
+
+def test_ligand_channel_ps_and_million_per_cm2_weight_convert_to_density() -> None:
+    assert ligand_conductance_density_mS_cm2(1.0) == pytest.approx(0.001)
+    record = SUPPLEMENTARY_TABLE3.by_id("relay.distal_dendrite.from_l6ii.nmda")
+    port = chemical_port(record, 0)
+    assert port.conductance_density_mS_cm2 == pytest.approx(
+        ligand_conductance_density_mS_cm2(float(record.parsed.conductance_pS))
+    )
 
 
 def test_nmda_port_retains_voltage_block_and_equal_tau_is_supported() -> None:

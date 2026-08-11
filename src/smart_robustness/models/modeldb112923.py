@@ -77,10 +77,13 @@ def _source_compartment(
     potassium: float | None = None,
     calcium: float | None = None,
 ) -> CompartmentSpec:
+    # KInNeSS serializes compartment dimensions in centimetres.  Internally,
+    # CompartmentSpec uses millimetres to match Grossberg & Versace Table 3.
+    cm_to_mm = 10.0
     return CompartmentSpec(
         name,
-        diameter,
-        length,
+        diameter * cm_to_mm,
+        length * cm_to_mm,
         axial,
         leak_reversal,
         leak_density,
@@ -272,17 +275,18 @@ def figure8_relay_spec(*, leak_density_mS_cm2: float) -> CellSpec:
 
     def compartment(
         name: str,
-        diameter_mm: float,
-        length_mm: float,
+        diameter_cm: float,
+        length_cm: float,
         axial_kohm_cm: float,
         *,
         sodium: float | None = None,
         potassium: float | None = None,
     ) -> CompartmentSpec:
+        cm_to_mm = 10.0
         return CompartmentSpec(
             name=name,
-            diameter_mm=diameter_mm,
-            length_mm=length_mm,
+            diameter_mm=diameter_cm * cm_to_mm,
+            length_mm=length_cm * cm_to_mm,
             axial_resistance_kohm_cm=axial_kohm_cm,
             e_leak_mV=-62.3,
             g_leak_mS_cm2=leak_density_mS_cm2,
@@ -312,13 +316,14 @@ def ahp_ach_layer5_spec(*, soma_axial_resistance_kohm_cm: float) -> CellSpec:
     if soma_axial_resistance_kohm_cm <= 0:
         raise ValueError("soma_axial_resistance_kohm_cm must be a positive candidate")
 
+    cm_to_mm = 10.0
     return CellSpec(
         "modeldb112923_ahp_ach_layer5",
         (
             CompartmentSpec(
                 name="soma",
-                diameter_mm=0.01,
-                length_mm=0.015,
+                diameter_mm=0.01 * cm_to_mm,
+                length_mm=0.015 * cm_to_mm,
                 axial_resistance_kohm_cm=soma_axial_resistance_kohm_cm,
                 e_leak_mV=-78.0,
                 g_leak_mS_cm2=0.1,
@@ -327,16 +332,16 @@ def ahp_ach_layer5_spec(*, soma_axial_resistance_kohm_cm: float) -> CellSpec:
             ),
             CompartmentSpec(
                 name="proximal_dendrite",
-                diameter_mm=0.001,
-                length_mm=0.01,
+                diameter_mm=0.001 * cm_to_mm,
+                length_mm=0.01 * cm_to_mm,
                 axial_resistance_kohm_cm=35.0,
                 e_leak_mV=-78.0,
                 g_leak_mS_cm2=0.1,
             ),
             CompartmentSpec(
                 name="distal_dendrite",
-                diameter_mm=0.001,
-                length_mm=0.02,
+                diameter_mm=0.001 * cm_to_mm,
+                length_mm=0.02 * cm_to_mm,
                 axial_resistance_kohm_cm=30.0,
                 e_leak_mV=-78.0,
                 g_leak_mS_cm2=0.1,

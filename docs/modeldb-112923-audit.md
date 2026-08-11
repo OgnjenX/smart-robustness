@@ -30,6 +30,10 @@ serialized channel projections; the full two-area file contains 24 populations.
 
 - Sodium activation uses the standard Traub–Miles coefficient `0.32`, not the
   paper's printed `0.032`; sodium inactivation uses a 17 mV offset, not 27 mV.
+- KInNeSS defines zero on the voltage-gate axis as the compartment's resting
+  potential. The classic network therefore evaluates Na/K rates using
+  `V_membrane - E_leak`, rather than a cell-independent 67 mV shift. T-type
+  gates retain their separately serialized absolute-voltage formulas.
 - For relay T-current, the XML marks the sigmoid with `V0=-63, B=7.8` as
   `m_inf`, while `Simple_Tau(A=2.44, B=2.506, V0=-9.84)` is the activation time
   constant. Likewise, the `V0=-83.5, B=-6.3` sigmoid is `h_inf`, while the
@@ -50,6 +54,11 @@ serialized channel projections; the full two-area file contains 24 populations.
   narrow/wide channels and different weights, asymptotes, delays, and topology
   flags. A generated, integrity-pinned ModelDB catalog is therefore the
   executable baseline, while the supplement remains an independent audit.
+- Chemical-channel `g_bar` is an individual-channel conductance in pS, while
+  each serialized projection weight is receptor density in millions/cm².
+  Executable ligand conductance density therefore includes the required
+  `10^-3` conversion from `pS × 10^6/cm²` to `mS/cm²`; input gates remain
+  conductance densities and do not use this receptor-density conversion.
 - Ten voltage-driven input channels now follow KInNeSS Equations 4--5: their
   four serialized sensitivities shift the effective driving potential from
   red/green/blue/alpha source values in [0,255]. The eleventh external channel
@@ -58,15 +67,21 @@ serialized channel projections; the full two-area file contains 24 populations.
   so it remains inert until explicitly configured by an experiment protocol.
 - Gap-junction totals follow KInNeSS Equation 8 rather than treating XML
   `g_bar` as an already converted membrane density.
+- KInNeSS serializes compartment dimensions in centimeters. The executable
+  runtime converts those values to the internal millimeter representation;
+  for example, the SMART relay soma `0.005×0.006` cm is the Table 3
+  `0.05×0.06` mm soma. Treating the raw XML values as millimeters leaves total
+  membrane-current ratios unchanged but makes axial coupling 100-fold too
+  strong relative to membrane current and capacitance.
 - The dedicated Figure 8 cell is not the Table 3 relay cell. It uses soma
-  geometry 0.02×0.04 mm, 50/30 mS/cm² Na/K, and 250 mS/cm² T-current in soma
+  geometry 0.2×0.4 mm, 50/30 mS/cm² Na/K, and 250 mS/cm² T-current in soma
   and both dendrites. Its leak density is not serialized and remains a required
   KInNeSS-default/calibration input.
 - The dedicated AHP/ACh file uses an AHP channel density of 0.1 mS/cm²,
   reversal -90 mV, AHP rise/fall 80/150 ms, connection weight 4.5, and 3 ms
   delay. These differ from the paper's 80/100 ms text and were not recoverable
   from the supplement alone.
-- Its layer-5 cell has a 0.01×0.015 mm soma and 0.001×0.01/0.02 mm
+- Its layer-5 cell has a 0.1×0.15 mm soma and 0.01×0.1/0.2 mm
   dendrites. Dendritic input-resistance fields are 35 and 30 kΩ·cm, but the
   root soma field is omitted. The executable profile therefore requires an
   explicit soma candidate instead of silently inheriting a Table 3 value.
@@ -99,7 +114,8 @@ profiles so robustness experiments can test them rather than silently mixing
 them.
 
 The executable first-order cell library is also retained separately from the
-printed Table 3 library. Several XML geometries differ by a factor of ten, the
-relay distal dendrite has a distinct resistance and leak, relay/TRN potassium
+printed Table 3 library. After converting XML centimeters to Table 3
+millimeters, several geometries agree exactly; the relay distal dendrite still
+has a distinct resistance and leak, relay/TRN potassium
 reversals are -100 mV, and the full-network AHP profile is 5/20 ms rather than
 the dedicated cholinergic demonstration's 80/150 ms.

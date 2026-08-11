@@ -8,6 +8,19 @@ from ..modeldb_projections import ModelDBExternalChannel, ModelDBProjection
 from ..projections import ConnectionKind, ProjectionRecord, Receptor
 from .currents import biexponential_normalization
 
+MILLI_SIEMENS_PER_PICO_SIEMENS_MILLION_PER_CM2 = 1e-3
+
+
+def ligand_conductance_density_mS_cm2(channel_pS: float) -> float:
+    """Convert KInNeSS ligand ``g_bar`` per unit receptor-density weight.
+
+    Chemical-channel ``g_bar`` is an individual-channel conductance in pS and
+    projection weight is receptor density in millions/cm². Their product is
+    therefore converted by ``pS * 10^6/cm² = 10^-3 mS/cm²``.
+    """
+
+    return channel_pS * MILLI_SIEMENS_PER_PICO_SIEMENS_MILLION_PER_CM2
+
 
 @dataclass(frozen=True, slots=True)
 class SynapticPortSpec:
@@ -71,9 +84,9 @@ def chemical_port(record: ProjectionRecord, index: int) -> SynapticPortSpec:
         compartment=str(record.target.compartment),
         receptor=parsed.receptor,
         reversal_mV=float(parsed.reversal_mV),
-        # The recovered supplement calls this conductance, while SMART.nml
-        # serializes the same numeric value as channel g_bar in mS/cm^2.
-        conductance_density_mS_cm2=float(parsed.conductance_pS),
+        conductance_density_mS_cm2=ligand_conductance_density_mS_cm2(
+            float(parsed.conductance_pS)
+        ),
         rise_ms=float(parsed.rise_ms),
         fall_ms=float(parsed.fall_ms),
         normalization=biexponential_normalization(float(parsed.rise_ms), float(parsed.fall_ms))
@@ -176,7 +189,9 @@ def modeldb_chemical_port(record: ModelDBProjection, index: int) -> SynapticPort
         compartment=record.target_compartment,
         receptor=receptor,
         reversal_mV=float(record.reversal_mV),
-        conductance_density_mS_cm2=float(record.channel_conductance_mS_cm2),
+        conductance_density_mS_cm2=ligand_conductance_density_mS_cm2(
+            float(record.channel_conductance_mS_cm2)
+        ),
         rise_ms=rise_ms,
         fall_ms=fall_ms,
         normalization=biexponential_normalization(rise_ms, fall_ms) if rise_ms != fall_ms else 1.0,

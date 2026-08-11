@@ -1,0 +1,32 @@
+id: first-order-bar-003
+status: failed_reproduction
+protocol:
+  orientation: horizontal
+  warmup_ms: 20.0
+  stimulus_ms: 100.0
+  source_value: 120.0
+  source_channel: green
+runtime:
+  backend: brian2_numpy
+  dt_ms: 0.01
+  gate_initialization_convention: zero
+  nak_voltage_coordinate: relative_to_table3_leak
+  xml_geometry_unit: cm
+  ligand_channel_unit: pS
+results:
+  warmup_nonzero_spikes:
+    thalamic_nonspecific: 1
+    thalamic_matrix: 1
+  stimulus_nonzero_spikes:
+    trn: 243
+  active_relay_spikes_each: [0, 0, 0, 0, 0]
+  inactive_relay_spikes: 0
+comparison:
+  published_active_relay_rate_hz: 40.0
+  observed_active_relay_rate_hz: 0.0
+  outcome: fail
+interpretation:
+  - Source-level geometry, ligand-conductance, and Na/K voltage-coordinate corrections remove the earlier apparent relay response.
+  - The archived finite-conductance input depolarizes an isolated active relay soma only to approximately -57 mV and does not reproduce the Methods 4.9 spike stream.
+  - The literal -12 mV proximal-dendrite clamp produces one onset spike rather than a 40 Hz train, so clamp semantics alone do not resolve the mismatch.
+  - No oscillation spectrum should be interpreted from this candidate.

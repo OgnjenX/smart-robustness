@@ -301,6 +301,14 @@ convergence; see `figure7-stage-localization-023.yaml`. Implementing Methods
 preserving split into clamped and unclamped Brian2 populations; a masked ODE
 was tested and rejected because `0 * NaN` does not constitute an exact clamp.
 
+The exact-clamp implementation now has a lossless global-index partition
+primitive. It maps each original edge into exactly one source-partition ×
+target-partition block, preserves the original spatial factor and global
+coordinates, and reconstructs every in-scope ModelDB topology—including
+relay-related recurrent and electrical records—without missing or duplicated
+edges. This invariant is the foundation for separate clamped/free relay Brian2
+populations; no local-coordinate Gaussian recomputation is permitted.
+
 The Figure 7 protocol now keeps its Methods 4.9 somatic-current category cue
 separate from the blue category pixel in the recovered Figure 6 training PNG.
 Its predeclared scorer independently tests the approximately 40-Hz match and

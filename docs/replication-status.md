@@ -561,6 +561,15 @@ initialization, and printed ionic/synaptic reversals) is likewise silent through
 128 times observed drive. Its reciprocal-calcium soma rests above zero, making
 the nominal 0-mV excitatory reversal hyperpolarizing rather than recruiting.
 
+The expanded KInNeSS manuscript explicitly identifies the XML
+`inpResistance` value as pair-specific axial resistance (R_A), ruling out its
+reinterpretation as conductance. A causal 0.01x--10x axial scale sweep still
+produces no post-startup TRN soma event, while the known 100x raw-unit error is
+numerically stiff at 0.01 ms. High-resolution visual checks of Methods 4.5 also
+confirm that the dimensionless `exprel` implementation exactly preserves the
+printed Na/K coefficients. Neither axial scaling nor an OCR/transcription
+error explains the failure (`trn-axial-source-audit-042.yaml`).
+
 A separate coordinate audit tested whether KInNeSS integrates voltage at zero
 relative to each compartment's serialized leak and adds the leak only when
 writing physical voltage. Membrane initialization and the voltage supplied to

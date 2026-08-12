@@ -83,6 +83,138 @@ class Figure19Assessment:
         return self.frequency_dependence_pass and self.ach_suppression_pass and self.recovery_pass
 
 
+@dataclass(frozen=True, slots=True)
+class TrnRecruitmentProtocol:
+    """Isolated promotion gate for a candidate classic-SMART TRN cell.
+
+    Gate amplitudes default to the largest layer-6II AMPA and NMDA values
+    measured at the diagnostic cells in the current Figure 7 network assay.
+    They are explicit assay inputs, not fitted replacement synaptic weights.
+    """
+
+    pre_drive_ms: float = 5.0
+    drive_ms: float = 45.0
+    dt_ms: float = 0.01
+    layer6ii_ampa_gate: float = 1.66427
+    layer6ii_nmda_gate: float = 0.10913
+    drive_multiplier: float = 1.0
+    axial_conductance_scale: float = 1.0
+
+    def __post_init__(self) -> None:
+        values = (
+            self.pre_drive_ms,
+            self.drive_ms,
+            self.dt_ms,
+            self.layer6ii_ampa_gate,
+            self.layer6ii_nmda_gate,
+            self.drive_multiplier,
+            self.axial_conductance_scale,
+        )
+        if not all(np.isfinite(value) for value in values):
+            raise ValueError("TRN recruitment protocol values must be finite")
+        if self.pre_drive_ms < 0 or self.drive_ms <= 0 or self.dt_ms <= 0:
+            raise ValueError("TRN recruitment durations and dt must be positive")
+        if self.layer6ii_ampa_gate < 0 or self.layer6ii_nmda_gate < 0:
+            raise ValueError("TRN recruitment gates cannot be negative")
+        if self.drive_multiplier < 0 or self.axial_conductance_scale <= 0:
+            raise ValueError("TRN recruitment scales must be positive")
+
+
+@dataclass(frozen=True, slots=True)
+class TrnRecruitmentResult:
+    driven: bool
+    spike_times_ms: tuple[float, ...]
+    post_drive_spike_times_ms: tuple[float, ...]
+    soma_voltage_range_mV: tuple[float, float]
+    proximal_voltage_range_mV: tuple[float, float]
+    finite: bool
+    convention_fingerprint: str
+    applied_layer6ii_ampa_gate: float
+    applied_layer6ii_nmda_gate: float
+
+    @property
+    def post_drive_spike_count(self) -> int:
+        return len(self.post_drive_spike_times_ms)
+
+
+def run_trn_recruitment_condition(
+    *,
+    driven: bool,
+    conventions=None,
+    protocol: TrnRecruitmentProtocol | None = None,
+    brian=None,
+) -> TrnRecruitmentResult:
+    """Run one independent control or constant receptor-drive TRN trial."""
+
+    if brian is None:
+        import brian2 as brian
+    from ..classic_sector import figure6_runtime_conventions, first_order_population_parameters
+    from ..models.modeldb112923 import first_order_population_facts
+
+    protocol = protocol or TrnRecruitmentProtocol()
+    conventions = conventions or figure6_runtime_conventions()
+    fact = next(fact for fact in first_order_population_facts() if fact.canonical_name == "trn")
+    params = first_order_population_parameters(fact, conventions=conventions)
+    brian.start_scope()
+    brian.defaultclock.dt = protocol.dt_ms * brian.ms
+    population = create_compartmental_hh_population(
+        name="isolated_trn_recruitment", size=1, params=params, brian=brian
+    )
+    for parameter in population.compiled.axial_parameter_names:
+        setattr(
+            population.group,
+            parameter,
+            getattr(population.group, parameter) * protocol.axial_conductance_scale,
+        )
+    spikes = brian.SpikeMonitor(population.group)
+    voltage = brian.StateMonitor(
+        population.group, ("v_soma", "v_proximal_dendrite"), record=True
+    )
+    network = brian.Network(population.group, spikes, voltage)
+    if protocol.pre_drive_ms:
+        network.run(protocol.pre_drive_ms * brian.ms)
+    if driven:
+        population.group.port_004_gate = (
+            protocol.layer6ii_ampa_gate * protocol.drive_multiplier
+        )
+        population.group.port_001_gate = (
+            protocol.layer6ii_nmda_gate * protocol.drive_multiplier
+        )
+    network.run(protocol.drive_ms * brian.ms)
+
+    spike_times = np.asarray(spikes.t / brian.ms, dtype=float)
+    time_ms = np.asarray(voltage.t / brian.ms, dtype=float)
+    drive_window = time_ms >= protocol.pre_drive_ms
+    soma = np.asarray(voltage.v_soma[0] / brian.mV, dtype=float)[drive_window]
+    proximal = np.asarray(voltage.v_proximal_dendrite[0] / brian.mV, dtype=float)[
+        drive_window
+    ]
+    finite = bool(np.all(np.isfinite(soma)) and np.all(np.isfinite(proximal)))
+
+    def voltage_range(values: np.ndarray) -> tuple[float, float]:
+        if not finite:
+            return (float("nan"), float("nan"))
+        return (float(np.min(values)), float(np.max(values)))
+
+    return TrnRecruitmentResult(
+        driven=driven,
+        spike_times_ms=tuple(float(value) for value in spike_times),
+        post_drive_spike_times_ms=tuple(
+            float(value) for value in spike_times if value >= protocol.pre_drive_ms
+        ),
+        soma_voltage_range_mV=voltage_range(soma),
+        proximal_voltage_range_mV=voltage_range(proximal),
+        finite=finite,
+        convention_fingerprint=conventions.fingerprint,
+        applied_layer6ii_ampa_gate=(
+            protocol.layer6ii_ampa_gate * protocol.drive_multiplier if driven else 0.0
+        ),
+        applied_layer6ii_nmda_gate=(
+            protocol.layer6ii_nmda_gate * protocol.drive_multiplier if driven else 0.0
+        ),
+    )
+
+
 def run_figure8_condition(
     *,
     hyperpolarized: bool,

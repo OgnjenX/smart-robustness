@@ -7,13 +7,53 @@ rate result and the later qualitative reset result are deliberately separate.
 
 from __future__ import annotations
 
+from collections.abc import Mapping
 from dataclasses import dataclass
 
+import numpy as np
+
 from ..protocols import MatchCondition
+from .figure6 import TOP_DOWN_NARROW_PROJECTION_ID, TOP_DOWN_WIDE_PROJECTION_ID
 
 FIGURE7_MATCH_RATE_HZ = 40.0
 FIGURE7_MISMATCH_RATE_HZ = 70.0
 FIGURE7_RATE_TOLERANCE_HZ = 10.0
+FIGURE7_REQUIRED_LEARNED_PROJECTIONS = (
+    TOP_DOWN_WIDE_PROJECTION_ID,
+    TOP_DOWN_NARROW_PROJECTION_ID,
+)
+
+
+def apply_figure7_learned_state(
+    projections: Mapping[str, object],
+    learned_weights: Mapping[str, tuple[float, ...] | np.ndarray],
+    *,
+    freeze_learning: bool = True,
+) -> None:
+    """Install an explicit Figure 6-trained expectation for Figure 7.
+
+    Requiring a weight snapshot prevents the untrained circular Gaussian from
+    being mislabeled as the learned horizontal expectation shown in Figure 7.
+    """
+
+    missing = set(FIGURE7_REQUIRED_LEARNED_PROJECTIONS) - set(learned_weights)
+    if missing:
+        raise ValueError(f"missing learned Figure 7 projections: {sorted(missing)}")
+    for projection_id in FIGURE7_REQUIRED_LEARNED_PROJECTIONS:
+        projection = projections[projection_id]
+        values = np.asarray(learned_weights[projection_id], dtype=float)
+        if values.shape != (len(projection),):
+            raise ValueError(
+                f"{projection_id}: expected {len(projection)} weights, got {values.shape}"
+            )
+        if not np.all(np.isfinite(values)) or np.any(values < 0):
+            raise ValueError(f"{projection_id}: learned weights must be finite and nonnegative")
+        maximum = np.asarray(projection.w_maximum[:], dtype=float)
+        if np.any(values > maximum + 1e-12):
+            raise ValueError(f"{projection_id}: learned weights exceed declared maxima")
+        projection.w = values
+        if freeze_learning:
+            projection.modifiable = 0
 
 
 @dataclass(frozen=True, slots=True)

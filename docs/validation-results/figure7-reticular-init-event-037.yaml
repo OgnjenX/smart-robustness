@@ -1,0 +1,67 @@
+id: figure7-reticular-init-event-037
+status: source-corrections-retained-official-divergence-failed
+claim: coordinate-consistent reticular calcium initialization and SMART Equation 8 falling-phase events reproduce Figure 7 match/mismatch arousal
+evidence_class: [official-executable-source, exact-paper-equation, behavioral]
+source_corrections:
+  reticular_calcium_initialization:
+    differential_equation_coordinate: absolute membrane voltage
+    corrected_initialization_coordinate: absolute membrane voltage
+    former_incorrect_coordinate: voltage relative to compartment leak
+    source: ModelDB 112923 SMART.nml reticular Sigmoid gates
+  spike_event:
+    rule: arm when soma exceeds +30 mV, emit once when it subsequently falls below 0 mV
+    source: Grossberg and Versace 2008 Methods 4.4 Equation 8
+protocol:
+  duration_ms: 100
+  dt_ms: 0.01
+  network_scope: first-order 9x9 sector
+  top_down_current_pA: 600
+  learned_state: paper-constrained Figure 6c horizontal expectation
+  intrinsic_cells: modeldb_112923
+  calcium_kinetics: modeldb_112923, including reticular-specific gate family
+  all_zero_input_channels: omitted audit convention
+  convention_fingerprint: a985700d8f4174d8cad5e881d157f90f654fc7ed5714add32e4fe004eba74163
+results:
+  isolated_modeldb_trn_300_ms:
+    spikes: 1
+    spike_times_ms: [1.02]
+    spikes_after_100_ms: 0
+  match:
+    nonspecific_rate_hz: 70
+    nonspecific_spikes: 7
+    relay_spikes: 20
+    trn_spikes: 81
+    trn_unique_spiking_cells: 81
+    trn_spikes_after_startup: 0
+    layer4_spikes: 5
+    category_spikes: 3
+  mismatch:
+    nonspecific_rate_hz: 70
+    nonspecific_spikes: 7
+    relay_spikes: 20
+    trn_spikes: 81
+    trn_unique_spiking_cells: 81
+    trn_spikes_after_startup: 0
+    layer4_spikes: 5
+    category_spikes: 3
+assessment:
+  published_match_target_hz: 40
+  published_mismatch_target_hz: 70
+  match_rate_pass: false
+  mismatch_rate_pass: true
+  mismatch_disinhibition_pass: false
+  cortical_recruitment_pass: true
+  figure7_reproduced: false
+additional_discriminators:
+  framework_resting_leak:
+    match: {relay_spikes: 0, trn_spikes: 81, layer4_spikes: 0, nonspecific_rate_hz: 70}
+    result: rejected because the source-defined relay stimulus no longer induces relay output
+  paper_calcium_kinetics:
+    reciprocal_interpretation: persistent autonomous firing in TRN, nonspecific, and matrix cells
+    printed_literal: non-finite dynamics
+    result: retained as audit alternatives, not promoted
+notes:
+  - The corrected reticular gate coordinate removes sustained autonomous firing from the recovered executable TRN.
+  - The 81 TRN events are one synchronous startup volley, not ongoing match-dependent TRN recruitment.
+  - Match and mismatch relay timings differ slightly, proving both stimuli reach the network, but aggregate relay and TRN output remains identical.
+  - The next causal target is why layer-6II and relay excitation does not trigger post-startup TRN output; ring topology cannot explain complete TRN event silence by itself.

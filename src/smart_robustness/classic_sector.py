@@ -69,6 +69,13 @@ class IntrinsicCellConvention(StrEnum):
     PAPER_TABLE3 = "paper_table3"
 
 
+class CalciumKineticsConvention(StrEnum):
+    """Source selected for population-specific T-current gate equations."""
+
+    MODELDB_112923 = "modeldb_112923"
+    PAPER_2008 = "paper_2008"
+
+
 @dataclass(frozen=True, slots=True)
 class FirstOrderRuntimeConventions:
     """Complete executable convention profile for one classic-sector run."""
@@ -78,6 +85,7 @@ class FirstOrderRuntimeConventions:
     leak_convention: str = "table3_reversal"
     voltage_coordinate: str = "relative_to_table3_leak"
     nak_rate_convention: str = "standard_traub_miles"
+    calcium_kinetics_convention: str = "modeldb_112923"
     calcium_gate_convention: str = "modeldb_112923"
     gate_initialization_convention: str = "steady_state_at_initial_voltage"
     calcium_density_convention: str = "table3"
@@ -190,6 +198,13 @@ def first_order_population_parameters(
 ) -> dict[str, Any]:
     has_ahp = facts.ahp_density_mS_cm2 is not None
     intrinsic_cell = resolved_intrinsic_cell(facts, conventions=conventions)
+    calcium_kinetics = CalciumKineticsConvention(conventions.calcium_kinetics_convention)
+    calcium_gate_convention = conventions.calcium_gate_convention
+    if (
+        calcium_kinetics is CalciumKineticsConvention.MODELDB_112923
+        and facts.calcium_gate_convention is not None
+    ):
+        calcium_gate_convention = facts.calcium_gate_convention
     zero_input_convention = ZeroSensitivityInputConvention(
         conventions.zero_sensitivity_input_convention
     )
@@ -207,9 +222,7 @@ def first_order_population_parameters(
         "leak_convention": conventions.leak_convention,
         "voltage_coordinate": conventions.voltage_coordinate,
         "nak_rate_convention": conventions.nak_rate_convention,
-        "calcium_gate_convention": (
-            facts.calcium_gate_convention or conventions.calcium_gate_convention
-        ),
+        "calcium_gate_convention": calcium_gate_convention,
         "gate_initialization_convention": conventions.gate_initialization_convention,
         "calcium_density_convention": conventions.calcium_density_convention,
         "spike_event_coordinate": conventions.spike_event_coordinate,

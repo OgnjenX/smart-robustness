@@ -62,6 +62,15 @@ parameters:
     status: official-executable-source
     source: ModelDB 112923 SMART.nml and Versace et al. 2008 KInNeSS Table 2
     note: distinct from the relay/matrix/nonspecific exponent-3 Simple_Tau family
+  model.classic_hh.calcium_kinetics_source:
+    value: modeldb_112923 or paper_2008; must be selected explicitly
+    status: conflicting-official-source
+    source: ModelDB 112923 SMART.nml compared with Methods 4.6 Equations 21-27
+    note: SMART.nml gives TRN a distinct exponent-2 Reticular_Tau family, while the paper applies one exponent-3 family to matrix, relay, TRN, and nonspecific cells
+  model.classic_hh.reticular_gate_initialization_coordinate:
+    value: absolute membrane voltage
+    status: official-executable-source
+    source: ModelDB 112923 SMART.nml uses absolute-voltage Sigmoid and Reticular_Tau equations during runtime; initialization must evaluate the same equations in the same coordinate
   model.classic_hh.e_leak:
     value: cell-specific; M0 cortical reference uses -65 mV
     status: published

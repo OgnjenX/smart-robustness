@@ -9,6 +9,7 @@ from smart_robustness.models.modeldb112923 import (
     ahp_ach_layer5_spec,
     ahp_density_to_total_nS,
     figure8_relay_spec,
+    first_order_population_facts,
 )
 
 
@@ -89,6 +90,27 @@ def test_modeldb_calcium_gates_initialize_in_absolute_voltage_coordinate() -> No
     assert population.group.h_ca_soma[0] == pytest.approx(float(expected_h))
 
 
+def test_modeldb_reticular_calcium_gates_initialize_in_absolute_voltage_coordinate() -> None:
+    brian.start_scope()
+    params = _params()
+    trn = next(fact for fact in first_order_population_facts() if fact.canonical_name == "trn")
+    params.update(
+        {
+            "cell_spec": trn.cell,
+            "calcium_gate_convention": "modeldb_reticular_112923",
+            "e_k_mV": trn.e_k_mV,
+            "e_ca_mV": trn.e_ca_mV,
+        }
+    )
+    population = create_compartmental_hh_population(
+        name="reticular_gate_initialization", size=1, params=params, brian=brian
+    )
+    expected_m = 1 / (1 + brian.exp((-52.0 + 69.0) / 7.4))
+    expected_h = 1 / (1 + brian.exp((-80.0 + 69.0) / -5.0))
+    assert population.group.m_ca_soma[0] == pytest.approx(float(expected_m))
+    assert population.group.h_ca_soma[0] == pytest.approx(float(expected_h))
+
+
 def test_zero_gate_initialization_is_an_explicit_audit_alternative() -> None:
     brian.start_scope()
     params = _params()
@@ -128,31 +150,35 @@ def test_exact_voltage_clamp_is_fixed_during_integration() -> None:
     )
 
 
-def test_spike_event_emits_above_30_after_preceding_value_below_zero() -> None:
+def test_spike_event_emits_below_zero_after_preceding_value_above_30() -> None:
     brian.start_scope()
     brian.defaultclock.dt = 0.1 * brian.ms
     group = brian.NeuronGroup(
         1,
         "dv_soma/dt=0*volt/second : volt\narmed : 1",
-        threshold="armed > 0.5 and v_soma > 30*mV",
+        threshold="armed > 0.5 and v_soma < 0*mV",
         reset="armed = 0",
-        events={"arm_spike": "armed < 0.5 and v_soma < 0*mV"},
+        events={"arm_spike": "armed < 0.5 and v_soma > 30*mV"},
         method="euler",
     )
     group.run_on_event("arm_spike", "armed=1", when="after_thresholds", order=1)
-    group.armed = 1
+    group.armed = 0
     spike_monitor = brian.SpikeMonitor(group)
     network = brian.Network(group, spike_monitor)
     group.v_soma = 60 * brian.mV
     network.run(0.1 * brian.ms)
+    assert spike_monitor.count[0] == 0
+    assert group.armed[0] == 1
+    network.run(0.1 * brian.ms)
+    assert spike_monitor.count[0] == 0
+    group.v_soma = -1 * brian.mV
+    network.run(0.1 * brian.ms)
     assert spike_monitor.count[0] == 1
     assert group.armed[0] == 0
+    group.v_soma = 60 * brian.mV
     network.run(0.1 * brian.ms)
     assert spike_monitor.count[0] == 1
     group.v_soma = -1 * brian.mV
-    network.run(0.1 * brian.ms)
-    assert group.armed[0] == 1
-    group.v_soma = 60 * brian.mV
     network.run(0.1 * brian.ms)
     assert spike_monitor.count[0] == 2
 
@@ -169,13 +195,15 @@ def test_source_spike_event_coordinate_is_relative_to_soma_leak() -> None:
     spike_monitor = brian.SpikeMonitor(population.group)
     network = brian.Network(population.group, spike_monitor)
 
-    # Table 3 relay E_leak=-60 mV, so -20 mV is +40 mV in KInNeSS output.
+    # Table 3 relay E_leak=-60 mV, so -20 mV arms at +40 mV in the
+    # leak-relative coordinate; release follows after returning below -60 mV.
+    network.run(0.01 * brian.ms)
+    assert spike_monitor.count[0] == 0
+    assert population.group.armed[0] == 1
+    population.group.v_soma = -61 * brian.mV
     network.run(0.01 * brian.ms)
     assert spike_monitor.count[0] == 1
     assert population.group.armed[0] == 0
-    population.group.v_soma = -61 * brian.mV
-    network.run(0.01 * brian.ms)
-    assert population.group.armed[0] == 1
 
 
 def test_kinness_minus_20_mv_event_threshold_is_explicit() -> None:
@@ -188,7 +216,11 @@ def test_kinness_minus_20_mv_event_threshold_is_explicit() -> None:
         name="kinness_minus20_spike_threshold", size=1, params=params, brian=brian
     )
     spike_monitor = brian.SpikeMonitor(population.group)
-    brian.Network(population.group, spike_monitor).run(0.01 * brian.ms)
+    network = brian.Network(population.group, spike_monitor)
+    network.run(0.01 * brian.ms)
+    assert population.group.armed[0] == 1
+    population.group.v_soma = -1 * brian.mV
+    network.run(0.01 * brian.ms)
     assert spike_monitor.count[0] == 1
 
 
@@ -205,13 +237,17 @@ def test_layer5_requires_source_unidentified_ahp_conductance_explicitly() -> Non
 def test_layer5_spike_generates_ahp_and_ach_suppresses_it() -> None:
     brian.start_scope()
     brian.defaultclock.dt = 0.1 * brian.ms
+    params = _params("layer5_excitatory")
+    params["voltage_clamps_mV"] = {"soma": 60.0}
     population = create_compartmental_hh_population(
-        name="layer5_modulation", size=1, params=_params("layer5_excitatory"), brian=brian
+        name="layer5_modulation", size=1, params=params, brian=brian
     )
     group = population.group
     group.v_soma = 60 * brian.mV
-    group.armed = 1
+    group.armed = 0
     network = brian.Network(group)
+    network.run(0.1 * brian.ms)
+    group.v_soma = -1 * brian.mV
     network.run(0.1 * brian.ms)
     assert group.ahp_rise[0] > 0
     assert group.ahp_fall[0] > 0
@@ -231,13 +267,17 @@ def test_modeldb_layer5_spike_uses_serialized_ahp_weight() -> None:
     params["cell_spec"] = ahp_ach_layer5_spec(soma_axial_resistance_kohm_cm=35.0)
     params["ahp_max_conductance_nS"] = ahp_density_to_total_nS(0.1, params["cell_spec"])
     params["ahp_event_weight"] = 4.5
+    params["voltage_clamps_mV"] = {"soma": 60.0}
     population = create_compartmental_hh_population(
         name="layer5_modeldb_ahp", size=1, params=params, brian=brian
     )
     group = population.group
     group.v_soma = 60 * brian.mV
-    group.armed = 1
-    brian.Network(group).run(0.1 * brian.ms)
+    group.armed = 0
+    network = brian.Network(group)
+    network.run(0.1 * brian.ms)
+    group.v_soma = -1 * brian.mV
+    network.run(0.1 * brian.ms)
     assert group.ahp_rise[0] == pytest.approx(1.0)
     assert group.ahp_fall[0] == pytest.approx(1.0)
     assert group.ahp_event_weight[0] == pytest.approx(4.5)

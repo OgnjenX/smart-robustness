@@ -286,6 +286,19 @@ nonspecific cell runs at 160 Hz instead of the published approximate 40 Hz.
 The paper profile is therefore a strong source-backed discriminator, not yet a
 promoted classic baseline (`intrinsic-cell-source-036.yaml`).
 
+Two additional source corrections supersede that assay's mixed initialization.
+The recovered reticular calcium equations use absolute membrane voltage, but
+their gates were initialized using voltage relative to leak; evaluating the
+initial gates in the runtime equation's absolute coordinate reduces an isolated
+executable TRN cell from sustained depolarization to one startup event and no
+events after 1.02 ms. SMART Equation 8 was also corrected to arm above +30 mV
+and emit on the subsequent fall below 0 mV, as printed, rather than emitting on
+the upward threshold crossing. The paired Figure 7 rerun now recruits relay,
+layer 4, and category cells, but both match and mismatch still yield 70-Hz
+nonspecific output, 20 relay events, and one synchronous 81-cell startup TRN
+volley with no later TRN events. These corrections are retained, while official
+match/mismatch divergence remains failed (`figure7-reticular-init-event-037.yaml`).
+
 The official 100-ms horizontal episode now yields finite activity throughout
 all first-order populations and sculpts the winning layer-4 cell's incoming
 LGN map horizontally when Equation 25's baseline and upper bound are treated as

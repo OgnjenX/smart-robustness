@@ -151,13 +151,13 @@ def test_brian2_parses_every_cell_equation_set() -> None:
         group = brian.NeuronGroup(
             1,
             compiled.equations,
-            threshold="armed > 0.5 and v_soma > 30*mV",
+            threshold="armed > 0.5 and v_soma < 0*mV",
             reset="armed = 0",
-            events={"arm_spike": "armed < 0.5 and v_soma < 0*mV"},
+            events={"arm_spike": "armed < 0.5 and v_soma > 30*mV"},
             method="exponential_euler",
         )
         group.run_on_event("arm_spike", "armed = 1")
-        group.armed = 1
+        group.armed = 0
         brian.Network(group).run(0 * brian.ms)
 
 

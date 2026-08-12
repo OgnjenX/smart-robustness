@@ -98,10 +98,9 @@ rather than 6 kOhm*cm.
   specific thalamus use dual-AND gating. The executable baseline follows the
   figure-specific caption and NML while retaining this publication conflict as
   unresolved provenance.
-- The paper's Equation 8 defines an emitted spike on the rising phase: the
-  current sample exceeds 30 mV after the preceding sample was below 0 mV.
-  The runtime formerly armed above 30 mV and emitted only on the subsequent
-  fall below 0 mV. It now emits on the rising threshold and rearms below zero,
+- The paper's Equation 8 defines an emitted spike on the falling phase: the
+  current sample is below 0 mV after the preceding spike exceeded 30 mV. The
+  runtime arms above 30 mV and emits once on the subsequent fall below 0 mV,
   so ligand release, transmitter depletion, AHP, and STDP timestamps share the
   official causal event. Both physical and leak-relative voltage-coordinate
   interpretations remain executable audit profiles.

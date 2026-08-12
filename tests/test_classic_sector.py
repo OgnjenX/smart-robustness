@@ -6,6 +6,7 @@ import pytest
 brian = pytest.importorskip("brian2")
 
 from smart_robustness.classic_sector import (
+    CalciumKineticsConvention,
     FirstOrderRuntimeConventions,
     IntrinsicCellConvention,
     ZeroSensitivityInputConvention,
@@ -112,10 +113,33 @@ def test_intrinsic_cell_source_is_explicit_and_does_not_mix_trn_densities() -> N
     assert paper.soma.g_k_mS_cm2 == 100
 
 
+def test_calcium_kinetics_source_is_independent_from_intrinsic_cell_source() -> None:
+    trn = next(fact for fact in first_order_population_facts() if fact.canonical_name == "trn")
+    executable = first_order_population_parameters(
+        trn,
+        conventions=FirstOrderRuntimeConventions(
+            intrinsic_cell_convention="paper_table3",
+            calcium_kinetics_convention=CalciumKineticsConvention.MODELDB_112923.value,
+        ),
+    )
+    paper = first_order_population_parameters(
+        trn,
+        conventions=FirstOrderRuntimeConventions(
+            intrinsic_cell_convention="paper_table3",
+            calcium_kinetics_convention=CalciumKineticsConvention.PAPER_2008.value,
+            calcium_gate_convention="reciprocal",
+        ),
+    )
+
+    assert executable["calcium_gate_convention"] == "modeldb_reticular_112923"
+    assert paper["calcium_gate_convention"] == "reciprocal"
+
+
 def test_figure6_profile_names_the_source_constrained_runtime() -> None:
     conventions = figure6_runtime_conventions()
     assert conventions.gate_initialization_convention == "steady_state_at_initial_voltage"
     assert conventions.intrinsic_cell_convention == "modeldb_112923"
+    assert conventions.calcium_kinetics_convention == "modeldb_112923"
     assert conventions.zero_sensitivity_input_convention == "omit_all_zero"
     assert conventions.spike_event_coordinate == "absolute_physical"
     assert conventions.spike_event_threshold_mV == 30.0

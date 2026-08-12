@@ -69,9 +69,9 @@ parameters:
     status: derived
     source: ModelDB 112923 resolves m_inf/tau roles; Methods 4.6 remains an audit alternative
   model.multicompartment.gate_initialization:
-    value: steady_state_at_initial_voltage or zero; must be selected explicitly
-    status: exploratory
-    source: Methods 4.9 specifies initial compartment voltages but neither the paper nor recovered XML specifies initial ionic-gate states
+    value: steady_state_at_initial_voltage; zero retained as an audit alternative
+    status: archived-simulator-cvs executable convention
+    source: SANNDRA CVS revision history for gates.h revision 1.17 and unit.cpp revision 1.29 states that TGate.init resets to resting potential; Methods 4.9 and SMART.nml provide the compartment resting voltages
   model.multicompartment.axial_convention:
     value: kinness_2008, paper_literal, or symmetric_cable; must be selected explicitly
     status: derived

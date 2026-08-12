@@ -64,12 +64,15 @@ extensions. The locally audited download has SHA-256
 
 The archived 2008 download page identifies KInNeSS 0.3.4 RC2 and SANNDRA 1.2.0
 RC3 as the contemporaneous releases. The Internet Archive preserves the
-KInNeSS CVS2HTML directory index and release metadata, but not the GPL source
-archives or the linked SANNDRA API pages. A contemporaneous KInNeSS 0.3.2 paper
-also states that its voltage origin is the intracellular resting potential;
-that is relevant evidence for the voltage coordinate, but it does not specify
-how ionic gates are initialized. No simulator source code is copied into this
-repository.
+KInNeSS CVS2HTML directory index, release metadata, and SANNDRA revision
+history, but not the GPL source archives or linked SANNDRA API pages. The
+revision history independently records for `gates.h` revision 1.17,
+`layer.h` revision 1.9, and `unit.cpp` revision 1.29 that `TGate.init()` was
+changed to reset to resting potential. Together with the gate equations, this
+supports initializing activation and inactivation variables at their
+steady-state occupancy at each compartment's resting voltage. A literal
+all-zero gate state is retained only as an audit alternative. No simulator
+source code is copied into this repository.
 
 The 2008 KInNeSS site was actually served at `symphony.bu.edu`; `kinness.net`
 was a frame redirect. Its archived User Manual remains available and resolves
@@ -92,8 +95,7 @@ Figure 8 leak/capacitance defaults and clamp semantics remain open; see
 `modeldb-112923-audit.md`.
 
 The Internet Archive preserves the 2008 KInNeSS KBrain CVS file-list page,
-including `kgatesparse.cpp`, `ksimparse.cpp`, and `kunit.cpp`, but its CDX index
-contains no successful capture of the linked revision-history page or source
-files. Consequently the simulator's unrecorded specific-capacitance and ionic
-gate-initialization defaults cannot currently be recovered from that archive.
-They remain named runtime conventions and may not be silently chosen or fitted.
+including `kgatesparse.cpp`, `ksimparse.cpp`, and `kunit.cpp`, but no source-file
+captures have been recovered. SANNDRA's surviving revision history resolves
+ionic-gate initialization, while the simulator's unrecorded specific
+capacitance remains a named runtime convention and may not be silently fitted.

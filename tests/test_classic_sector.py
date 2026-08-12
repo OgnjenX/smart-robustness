@@ -86,7 +86,7 @@ def test_runtime_convention_fingerprint_is_stable_and_sensitive() -> None:
 
 def test_figure6_profile_names_the_source_constrained_runtime() -> None:
     conventions = figure6_runtime_conventions()
-    assert conventions.gate_initialization_convention == "zero"
+    assert conventions.gate_initialization_convention == "steady_state_at_initial_voltage"
     assert conventions.zero_sensitivity_input_convention == "omit_all_zero"
     assert conventions.spike_event_coordinate == "absolute_physical"
     assert conventions.spike_event_threshold_mV == 30.0

@@ -239,6 +239,19 @@ counts are 8 and 6, and both conditions contain 188 TRN events. The source
 correction is retained, but it does not reproduce mismatch disinhibition
 (`figure7-kinness-gaussian-032.yaml`).
 
+SANNDRA's archived CVS revision history subsequently resolved ionic-gate
+initialization. Matching 2004 entries for `gates.h`, `layer.h`, and `unit.cpp`
+state that `TGate.init()` resets voltage-gated currents to resting potential.
+The executable profile now initializes Na/K and T-type activation and
+inactivation variables at their equilibrium occupancy at each compartment's
+serialized resting voltage; zero initialization remains only as an audit
+alternative. The exact 100-ms Figure 7 rerun gives identical match and mismatch
+trajectories: 60-Hz nonspecific output, five relay spikes, 218 TRN spikes, no
+layer-4 spikes, and three category spikes in each condition. This resolves an
+implementation convention without reproducing the official arousal split and
+leaves legacy `ring` geometry as the active topology discriminator
+(`figure7-resting-gates-033.yaml`).
+
 The official 100-ms horizontal episode now yields finite activity throughout
 all first-order populations and sculpts the winning layer-4 cell's incoming
 LGN map horizontally when Equation 25's baseline and upper bound are treated as

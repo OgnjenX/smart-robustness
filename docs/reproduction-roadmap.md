@@ -68,11 +68,12 @@ channels as inactive and using the unresolved 2 uF/cm2 capacitance candidate
 recovers exactly 40 Hz in the isolated relay. In the connected sector it passes
 either active rate (20-ms warmup) or selectivity (100-ms warmup), but not both;
 see `isolated-relay-input-semantics-003.yaml` and `first-order-bar-005.yaml`.
-Using zero rather than steady-state gate initialization removes the startup TRN
-event. The 1.5 uF/cm2 candidate then passes both connected relay-rate and
-selectivity gates (`first-order-bar-006.yaml`). This advances the work to the
-published 100-ms learning episode; it does not yet establish cortical or
-match/mismatch reproduction.
+An earlier zero-gate candidate removed the startup TRN event, and at
+1.5 uF/cm2 passed both connected relay-rate and selectivity gates
+(`first-order-bar-006.yaml`). That branch is now superseded as a baseline:
+SANNDRA's recovered CVS revision history states that voltage-gated currents
+reset to their resting-potential states. Zero initialization remains a useful
+negative control, not an executable-source convention.
 
 The spike detector now exposes its voltage coordinate explicitly. Applying the
 paper's 30-to-0 mV event rule to soma voltage relative to its leak preserves the

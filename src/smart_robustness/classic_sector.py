@@ -93,15 +93,18 @@ class FirstOrderRuntimeConventions:
 def figure6_runtime_conventions() -> FirstOrderRuntimeConventions:
     """Return the source-constrained profile used by Figure 6 validation.
 
-    KInNeSS does not serialize gate initial values. Its zero-initialized
-    candidate avoids a non-physiological synchronized TRN startup spike.
+    SANNDRA's archived gate revision history states that ``TGate.init()``
+    resets voltage-gated currents to their resting-potential state.  The
+    classic profile therefore initializes every ionic gate at its equilibrium
+    occupancy at the compartment's serialized resting voltage.  A literal
+    zero-gate state remains available only as an explicit audit alternative.
     Input channels with four zero sensitivities are inert declarations, not
     permanent conductances. The remaining values are recovered source values
     or conventions independently constrained by the published Figure 6 maps.
     """
 
     return FirstOrderRuntimeConventions(
-        gate_initialization_convention="zero",
+        gate_initialization_convention="steady_state_at_initial_voltage",
         zero_sensitivity_input_convention="omit_all_zero",
         modifiable_weight_initialization="figure6_pathway_specific",
         gaussian_learning_bounds_convention="figure6_pathway_specific",

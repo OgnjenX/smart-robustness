@@ -50,6 +50,13 @@ rather than 6 kOhm*cm.
   potential. The classic network therefore evaluates Na/K rates using
   `V_membrane - E_leak`, rather than a cell-independent 67 mV shift. T-type
   gates retain their separately serialized absolute-voltage formulas.
+- SANNDRA's archived CVS revision history resolves the missing gate initial
+  state. The same 2004 change is recorded in `gates.h`, `layer.h`, and
+  `unit.cpp`: `TGate.init()` resets voltage-gated currents to resting
+  potential. The classic runtime therefore initializes each activation and
+  inactivation gate to its equilibrium occupancy at the compartment's
+  serialized resting voltage. Literal zero initialization remains an audit
+  alternative and is not the executable baseline.
 - For relay T-current, the XML marks the sigmoid with `V0=-63, B=7.8` as
   `m_inf`, while `Simple_Tau(A=2.44, B=2.506, V0=-9.84)` is the activation time
   constant. Likewise, the `V0=-83.5, B=-6.3` sigmoid is `h_inf`, while the

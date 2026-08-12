@@ -68,6 +68,11 @@ channels as inactive and using the unresolved 2 uF/cm2 capacitance candidate
 recovers exactly 40 Hz in the isolated relay. In the connected sector it passes
 either active rate (20-ms warmup) or selectivity (100-ms warmup), but not both;
 see `isolated-relay-input-semantics-003.yaml` and `first-order-bar-005.yaml`.
+Using zero rather than steady-state gate initialization removes the startup TRN
+event. The 1.5 uF/cm2 candidate then passes both connected relay-rate and
+selectivity gates (`first-order-bar-006.yaml`). This advances the work to the
+published 100-ms learning episode; it does not yet establish cortical or
+match/mismatch reproduction.
 
 Learning checkpoint: Equation 6's biphasic post-spike gate and the serialized
 20/25-ms depotentiation intervals are tested. Adaptive records initialize at

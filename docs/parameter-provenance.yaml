@@ -102,6 +102,10 @@ parameters:
     value: 1
     status: published
     source: Methods 4.4, Eq. 7
+  protocol.match_mismatch.top_down_current:
+    value: required explicit pA amplitude applied to one central layer 6II soma
+    status: not-identifiable
+    source: Methods 4.9 specifies somatic current injection but reports no amplitude; Figure 7 fixes a horizontal learned expectation for both conditions
   benchmark.population_sizes:
     value: see configs/*.yaml
     status: exploratory

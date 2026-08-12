@@ -170,6 +170,14 @@ relays plus 76 inactive rebound events, while a 100-ms warmup removes inactive
 events but yields 30 Hz. This is a strong partial candidate, not a reproduced
 baseline; see `first-order-bar-005.yaml`.
 
+The zero-gate branch removes that startup event and yields the first connected
+drive profile that passes both gates. At 1.5 uF/cm2, all five active relays fire
+at exactly 40 Hz and no inactive relay fires after a 20-ms warmup; the isolated
+40-Hz spike-count plateau spans 1.5--1.9 uF/cm2. The result is retained in
+`first-order-bar-006.yaml`. It validates the relay-drive scaffold but is not
+yet the classic baseline: the capacitance and all-zero-input semantics remain
+source-unresolved, and the untrained cortical populations are still silent.
+
 The first Figure 8 candidate (67 mV-shifted standard Traub--Miles rates,
 reciprocal T gates, Table 3 calcium density, and a -80 mV pre-pulse clamp)
 produces sustained tonic trains in both conditions. It therefore fails the

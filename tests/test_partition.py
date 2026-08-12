@@ -5,7 +5,11 @@ import pytest
 
 from smart_robustness.modeldb_projections import MODELDB_FIRST_ORDER
 from smart_robustness.models.modeldb112923 import first_order_population_facts
-from smart_robustness.partition import complementary_partitions, partition_edges
+from smart_robustness.partition import (
+    PartitionedProjection,
+    complementary_partitions,
+    partition_edges,
+)
 from smart_robustness.synapses import modeldb_topology_pairs
 
 
@@ -112,3 +116,31 @@ def test_relay_split_losslessly_partitions_every_first_order_modeldb_topology() 
             target_partitions=target_parts,
         )
         assert sum(len(block.source_local) for block in blocks) == len(source), record.id
+
+
+class _Block:
+    def __init__(self, weights: tuple[float, ...]) -> None:
+        self.w = np.asarray(weights, dtype=float)
+        self.modifiable = np.ones(len(weights))
+
+    def __len__(self) -> int:
+        return len(self.w)
+
+
+def test_partitioned_projection_reconstructs_and_updates_global_weight_view() -> None:
+    first = _Block((0.1, 0.2))
+    second = _Block((0.3,))
+    projection = PartitionedProjection(
+        blocks=(first, second),
+        source_global=(np.asarray((38, 39)), np.asarray((40,))),
+        target_global=(np.asarray((1, 2)), np.asarray((3,))),
+    )
+    assert projection.i.tolist() == [38, 39, 40]
+    assert projection.j.tolist() == [1, 2, 3]
+    assert projection.read("w") == pytest.approx((0.1, 0.2, 0.3))
+    projection.write("w", np.asarray((0.4, 0.5, 0.6)))
+    assert first.w == pytest.approx((0.4, 0.5))
+    assert second.w == pytest.approx((0.6,))
+    projection.write("modifiable", 0.0)
+    assert first.modifiable == pytest.approx(0)
+    assert second.modifiable == pytest.approx(0)

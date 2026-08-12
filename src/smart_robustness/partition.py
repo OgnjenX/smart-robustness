@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from typing import Any
 
 import numpy as np
 
@@ -41,6 +42,56 @@ class PartitionedEdges:
     spatial_factor: np.ndarray
     source_global: np.ndarray
     target_global: np.ndarray
+
+
+@dataclass(slots=True)
+class PartitionedProjection:
+    """Global-index facade over multiple Brian2 synapse partition blocks."""
+
+    blocks: tuple[Any, ...]
+    source_global: tuple[np.ndarray, ...]
+    target_global: tuple[np.ndarray, ...]
+
+    def __post_init__(self) -> None:
+        if not self.blocks:
+            raise ValueError("partitioned projection requires at least one block")
+        if not (len(self.blocks) == len(self.source_global) == len(self.target_global)):
+            raise ValueError("projection block metadata lengths must match")
+        for block, source, target in zip(
+            self.blocks, self.source_global, self.target_global, strict=True
+        ):
+            if len(block) != len(source) or len(block) != len(target):
+                raise ValueError("global edge metadata must match each block length")
+
+    def __len__(self) -> int:
+        return sum(len(block) for block in self.blocks)
+
+    @property
+    def i(self) -> np.ndarray:
+        return np.concatenate(self.source_global)
+
+    @property
+    def j(self) -> np.ndarray:
+        return np.concatenate(self.target_global)
+
+    def read(self, variable: str) -> np.ndarray:
+        return np.concatenate(
+            [np.asarray(getattr(block, variable)[:]) for block in self.blocks]
+        )
+
+    def write(self, variable: str, values: np.ndarray | float) -> None:
+        if np.isscalar(values):
+            for block in self.blocks:
+                setattr(block, variable, values)
+            return
+        array = np.asarray(values)
+        if array.shape != (len(self),):
+            raise ValueError(f"expected {len(self)} values for {variable}, got {array.shape}")
+        offset = 0
+        for block in self.blocks:
+            count = len(block)
+            setattr(block, variable, array[offset : offset + count])
+            offset += count
 
 
 def complementary_partitions(

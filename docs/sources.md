@@ -74,6 +74,12 @@ steady-state occupancy at each compartment's resting voltage. A literal
 all-zero gate state is retained only as an audit alternative. No simulator
 source code is copied into this repository.
 
+The same revision history lists `spikeevents.h` revisions 1.1--1.7 and says
+revision 1.2 (2005-03-07) “Fixed proper spike detecting”, but it does not expose
+the file body or diff. Consequently the printed `V(t-dt)` spike expression can
+be tested literally, but cannot by itself establish whether the legacy event
+handler latched a peak or imposed threshold hysteresis.
+
 The same user manual distinguishes the configured leakage equilibrium from a
 compartment's actual resting potential: voltage-gated channels can move the
 latter away from the former. Consequently `E_leak`, the initialized membrane

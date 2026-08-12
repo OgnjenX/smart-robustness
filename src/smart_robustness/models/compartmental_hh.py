@@ -47,6 +47,14 @@ class SpikeEventCoordinate(StrEnum):
     RELATIVE_TO_SOMA_LEAK = "relative_to_soma_leak"
 
 
+class SpikeEventRule(StrEnum):
+    """Alternative readings of SMART Equation 8's preceding-voltage term."""
+
+    LATCHED_PEAK_THEN_ZERO = "latched_peak_then_zero"
+    HYSTERETIC_THRESHOLD_THEN_ZERO = "hysteretic_threshold_then_zero"
+    LITERAL_PREVIOUS_SAMPLE = "literal_previous_sample"
+
+
 @dataclass(slots=True)
 class CompartmentalPopulation:
     group: Any
@@ -155,6 +163,7 @@ def create_compartmental_hh_population(
     gate_initialization = GateInitializationConvention(params["gate_initialization_convention"])
     calcium_density = CalciumDensityConvention(params["calcium_density_convention"])
     spike_coordinate = SpikeEventCoordinate(params["spike_event_coordinate"])
+    spike_event_rule = SpikeEventRule(params["spike_event_rule"])
     spike_event_threshold_mV = float(params["spike_event_threshold_mV"])
     if not np.isfinite(spike_event_threshold_mV):
         raise ValueError("spike_event_threshold_mV must be finite")
@@ -238,20 +247,52 @@ def create_compartmental_hh_population(
         if spike_coordinate is SpikeEventCoordinate.ABSOLUTE_PHYSICAL
         else "v_soma-e_l_soma"
     )
-    group = brian.NeuronGroup(
-        size,
-        compiled.equations,
-        threshold=f"armed > 0.5 and {spike_voltage} < 0*mV",
-        reset=spike_reset,
-        events={
+    group_kwargs: dict[str, Any] = {
+        "method": params.get("method", "exponential_euler"),
+        "name": name,
+    }
+    equations = compiled.equations
+    if spike_event_rule in {
+        SpikeEventRule.LATCHED_PEAK_THEN_ZERO,
+        SpikeEventRule.HYSTERETIC_THRESHOLD_THEN_ZERO,
+    }:
+        events = {
             "arm_spike": (
-                f"armed < 0.5 and {spike_voltage} > {spike_event_threshold_mV}*mV"
+                f"armed == 0 and {spike_voltage} > {spike_event_threshold_mV}*mV"
             )
-        },
-        method=params.get("method", "exponential_euler"),
-        name=name,
-    )
-    group.run_on_event("arm_spike", "armed = 1", when="after_thresholds", order=1)
+        }
+        if spike_event_rule is SpikeEventRule.HYSTERETIC_THRESHOLD_THEN_ZERO:
+            spike_reset = spike_reset.replace("armed = 0", "armed = -1", 1)
+            events["release_spike_detector"] = (
+                f"armed < -0.5 and {spike_voltage} < {spike_event_threshold_mV}*mV"
+            )
+        group_kwargs.update(
+            threshold=f"armed > 0.5 and {spike_voltage} < 0*mV",
+            events=events,
+        )
+    else:
+        equations += "\nprevious_spike_voltage : volt"
+        group_kwargs["threshold"] = (
+            f"{spike_voltage} < 0*mV and "
+            f"previous_spike_voltage > {spike_event_threshold_mV}*mV"
+        )
+    group = brian.NeuronGroup(size, equations, reset=spike_reset, **group_kwargs)
+    if spike_event_rule in {
+        SpikeEventRule.LATCHED_PEAK_THEN_ZERO,
+        SpikeEventRule.HYSTERETIC_THRESHOLD_THEN_ZERO,
+    }:
+        group.run_on_event("arm_spike", "armed = 1", when="after_thresholds", order=1)
+        if spike_event_rule is SpikeEventRule.HYSTERETIC_THRESHOLD_THEN_ZERO:
+            group.run_on_event(
+                "release_spike_detector", "armed = 0", when="after_thresholds", order=2
+            )
+    else:
+        # Equation 8 literally writes V(t-dt), not a remembered action-potential
+        # peak. Capture the current source-coordinate voltage after all events so
+        # the next threshold pass can evaluate that printed expression exactly.
+        group.run_regularly(
+            f"previous_spike_voltage = {spike_voltage}", when="end", order=1
+        )
     if compiled.depletion_enabled:
         group.transmitter = 1
     if enable_ahp_ach:
@@ -265,6 +306,13 @@ def create_compartmental_hh_population(
     # SMART Equation 8 emits on the falling phase: first remember a sample
     # above V_theta, then release one event when the soma returns below 0 mV.
     group.armed = 0
+    if spike_event_rule is SpikeEventRule.LITERAL_PREVIOUS_SAMPLE:
+        initial_soma_voltage = params.get("v_init_mV", cell.soma.e_leak_mV)
+        if spike_coordinate is SpikeEventCoordinate.RELATIVE_TO_SOMA_LEAK:
+            initial_soma_voltage -= (
+                0.0 if leak is LeakConvention.PRINTED_ZERO else cell.soma.e_leak_mV
+            )
+        group.previous_spike_voltage = initial_soma_voltage * brian.mV
     group.e_na = float(params.get("e_na_mV", E_NA_MV)) * brian.mV
     group.e_k = float(params.get("e_k_mV", E_K_MV)) * brian.mV
     group.e_ca = float(params.get("e_ca_mV", E_CA_MV)) * brian.mV

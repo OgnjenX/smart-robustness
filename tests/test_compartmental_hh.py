@@ -24,6 +24,7 @@ def _params(cell_class: str = "thalamic_relay") -> dict[str, str]:
         "gate_initialization_convention": "steady_state_at_initial_voltage",
         "spike_event_coordinate": "absolute_physical",
         "spike_event_threshold_mV": 30.0,
+        "spike_event_rule": "latched_peak_then_zero",
         "calcium_density_convention": "table3",
         "ahp_convention": "paper_text",
         "specific_capacitance_uF_cm2": 1.0,
@@ -222,6 +223,64 @@ def test_kinness_minus_20_mv_event_threshold_is_explicit() -> None:
     population.group.v_soma = -1 * brian.mV
     network.run(0.01 * brian.ms)
     assert spike_monitor.count[0] == 1
+
+
+def test_literal_previous_sample_rule_uses_only_the_immediately_preceding_voltage() -> None:
+    brian.start_scope()
+    brian.defaultclock.dt = 0.01 * brian.ms
+    params = _params()
+    params["spike_event_rule"] = "literal_previous_sample"
+    params["spike_event_threshold_mV"] = 30.0
+    params["voltage_clamps_mV"] = {"soma": 40.0}
+    population = create_compartmental_hh_population(
+        name="literal_previous_sample", size=1, params=params, brian=brian
+    )
+    spike_monitor = brian.SpikeMonitor(population.group)
+    network = brian.Network(population.group, spike_monitor)
+
+    network.run(0.01 * brian.ms)
+    assert population.group.previous_spike_voltage[0] / brian.mV == pytest.approx(40.0)
+    population.group.v_soma = -1 * brian.mV
+    network.run(0.01 * brian.ms)
+    assert spike_monitor.count[0] == 1
+    network.run(0.01 * brian.ms)
+    assert spike_monitor.count[0] == 1
+
+
+def test_spike_event_rule_is_required_and_not_an_implicit_simulator_default() -> None:
+    brian.start_scope()
+    params = _params()
+    del params["spike_event_rule"]
+    with pytest.raises(KeyError, match="spike_event_rule"):
+        create_compartmental_hh_population(
+            name="missing_spike_event_rule", size=1, params=params, brian=brian
+        )
+
+
+def test_hysteretic_rule_does_not_rearm_between_zero_and_negative_threshold() -> None:
+    brian.start_scope()
+    brian.defaultclock.dt = 0.01 * brian.ms
+    params = _params()
+    params["spike_event_rule"] = "hysteretic_threshold_then_zero"
+    params["spike_event_threshold_mV"] = -20.0
+    params["voltage_clamps_mV"] = {"soma": -10.0}
+    population = create_compartmental_hh_population(
+        name="hysteretic_spike_detector", size=1, params=params, brian=brian
+    )
+    spike_monitor = brian.SpikeMonitor(population.group)
+    network = brian.Network(population.group, spike_monitor)
+
+    network.run(0.01 * brian.ms)
+    assert population.group.armed[0] == 1
+    population.group.v_soma = -1 * brian.mV
+    network.run(0.01 * brian.ms)
+    assert spike_monitor.count[0] == 1
+    assert population.group.armed[0] == -1
+    network.run(0.02 * brian.ms)
+    assert spike_monitor.count[0] == 1
+    population.group.v_soma = -21 * brian.mV
+    network.run(0.01 * brian.ms)
+    assert population.group.armed[0] == 0
 
 
 def test_layer5_requires_source_unidentified_ahp_conductance_explicitly() -> None:

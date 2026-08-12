@@ -94,6 +94,7 @@ class FirstOrderRuntimeConventions:
     zero_sensitivity_input_convention: str = "framework_resting_leak"
     spike_event_coordinate: str = "absolute_physical"
     spike_event_threshold_mV: float = 30.0
+    spike_event_rule: str = "latched_peak_then_zero"
     modifiable_weight_initialization: str = "source_serialized_weight"
     gaussian_weight_convention: str = "source_peak"
     gaussian_learning_bounds_convention: str = "projection_level"
@@ -227,6 +228,7 @@ def first_order_population_parameters(
         "calcium_density_convention": conventions.calcium_density_convention,
         "spike_event_coordinate": conventions.spike_event_coordinate,
         "spike_event_threshold_mV": conventions.spike_event_threshold_mV,
+        "spike_event_rule": conventions.spike_event_rule,
         "ahp_convention": "smart_network_112923" if has_ahp else "modeldb_112923",
         "specific_capacitance_uF_cm2": conventions.specific_capacitance_uF_cm2,
         "enable_ahp_ach": has_ahp,

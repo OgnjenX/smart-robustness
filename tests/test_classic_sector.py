@@ -88,6 +88,8 @@ def test_runtime_convention_fingerprint_is_stable_and_sensitive() -> None:
     assert zero.fingerprint != classic.fingerprint
     paper_cells = FirstOrderRuntimeConventions(intrinsic_cell_convention="paper_table3")
     assert paper_cells.fingerprint != classic.fingerprint
+    literal_event = FirstOrderRuntimeConventions(spike_event_rule="literal_previous_sample")
+    assert literal_event.fingerprint != classic.fingerprint
 
 
 def test_intrinsic_cell_source_is_explicit_and_does_not_mix_trn_densities() -> None:
@@ -143,6 +145,7 @@ def test_figure6_profile_names_the_source_constrained_runtime() -> None:
     assert conventions.zero_sensitivity_input_convention == "omit_all_zero"
     assert conventions.spike_event_coordinate == "absolute_physical"
     assert conventions.spike_event_threshold_mV == 30.0
+    assert conventions.spike_event_rule == "latched_peak_then_zero"
     assert conventions.specific_capacitance_uF_cm2 == 1.0
     assert conventions.gaussian_weight_convention == "source_peak"
     assert conventions.modifiable_weight_initialization == "figure6_pathway_specific"

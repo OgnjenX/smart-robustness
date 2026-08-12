@@ -49,14 +49,20 @@ parameters:
     status: published
     source: Methods 4.5, equation discussion after Eq. 18
   model.classic_hh.spike_threshold:
-    value: 30 mV after an upward crossing from below 0 mV
+    value: emit below 0 mV after the soma has exceeded +30 mV
     status: published
     source: Methods 4.4, Eq. 8 discussion
+    note: the promoted candidate uses a latched peak because a literal immediately-previous-sample reading misses the recovered TRN startup spike at dt=0.01 ms; both readings remain explicit conventions
   model.classic_hh.kinness_spike_threshold:
-    value: -20 mV after an upward crossing from below 0 mV
+    value: framework alternative with V_theta=-20 mV and event release below 0 mV
     status: published-executable-framework-alternative
     source: Versace et al. 2008 KInNeSS expanded manuscript, Equation 18
-    note: Grossberg and Versace 2008 instead prints +30 mV; SMART.nml does not serialize the simulator-wide event threshold
+    note: Grossberg and Versace 2008 instead prints +30 mV; SMART.nml does not serialize the simulator-wide event threshold; literal and hysteretic implementations are rejected by isolated recovered-TRN assays
+  model.classic_hh.spike_event_rule:
+    value: latched_peak_then_zero, literal_previous_sample, or hysteretic_threshold_then_zero; must be selected explicitly
+    status: source-ambiguity
+    source: Grossberg and Versace 2008 Equation 8; Versace et al. 2008 KInNeSS Equation 18; SANNDRA spikeevents.h revision history
+    note: surviving equations print V(t-dt), but the 2008 detector source body is unavailable; SANNDRA revision 1.2 only records that proper spike detecting was fixed
   model.classic_hh.trn_t_type_calcium:
     value: activation exponent 2; m_inf V0=-52/B=7.4; h_inf V0=-80/B=-5; Reticular_Tau parameter sets (1,0.33,27,102,10,-15) and (28.3,0.33,48,407,4,-50)
     status: official-executable-source

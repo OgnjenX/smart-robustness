@@ -501,6 +501,18 @@ each driven relay and 4,617 TRN spikes. This failed discriminator is archived as
 `first-order-bar-007.yaml`; `absolute_physical` remains the drive-passing
 candidate convention rather than an asserted source fact.
 
+The spike-event temporal expression is now independently executable as three
+fingerprinted conventions: a peak latch followed by release below zero, a
+literal immediately-previous-sample test, and a threshold-hysteretic latch.
+The archived SANNDRA history confirms a dedicated `spikeevents.h` detector and
+a 2005 “proper spike detecting” fix, but its source body has not survived. On
+the recovered ModelDB TRN at 0.01 ms, literal `V_theta=-20 mV` produces 2,535
+events in 300 ms and the hysteretic implementation produces 163 autonomous
+events. Literal `V_theta=+30 mV` produces no event, because the voltage does not
+fall from above +30 mV to below zero in one step. These alternatives therefore
+do not restore source-faithful post-startup TRN recruitment; the +30-mV peak
+latch remains the active candidate, not a frozen fact.
+
 The first Figure 8 candidate (67 mV-shifted standard Traub--Miles rates,
 reciprocal T gates, Table 3 calcium density, and a -80 mV pre-pulse clamp)
 produces sustained tonic trains in both conditions. It therefore fails the

@@ -7,10 +7,13 @@ from smart_robustness.models.modeldb112923 import (
     FIGURE8_SOURCE_FACTS,
     FIRST_ORDER_POPULATIONS,
     FIRST_ORDER_PROJECTION_COUNT,
+    SECOND_ORDER_POPULATIONS,
     SMART_NML_SHA256,
     figure8_relay_spec,
     first_order_population_facts,
     first_order_structural_counts,
+    full_network_structural_counts,
+    second_order_population_facts,
 )
 
 
@@ -51,3 +54,18 @@ def test_first_order_source_cells_cover_all_populations_and_compartments() -> No
     assert (layer5.depletion_epsilon, layer5.depletion_recovery_ms) == (0.5, 100)
     layer6i = facts[4]
     assert (layer6i.depletion_epsilon, layer6i.depletion_recovery_ms) == (1.0, 400)
+
+
+def test_second_order_source_cells_cover_pulvinar_v2_and_preserve_differences() -> None:
+    facts = second_order_population_facts()
+    assert len(SECOND_ORDER_POPULATIONS) == len(facts) == 12
+    assert full_network_structural_counts() == (1624, 3900)
+    assert {fact.canonical_name for fact in facts} == {
+        "trn_v2", "thalamic_relay_v2", "layer6ii_excitatory_v2",
+        "layer5_excitatory_v2", "layer6i_excitatory_v2", "layer23_excitatory_v2",
+        "layer4_excitatory_v2", "layer23_inhibitory_v2", "thalamic_interneuron_v2",
+        "thalamic_nonspecific_v2", "thalamic_matrix_v2", "layer4_inhibitory_v2",
+    }
+    layer5 = next(fact for fact in facts if fact.canonical_name == "layer5_excitatory_v2")
+    assert layer5.cell.soma.e_leak_mV == -72
+    assert layer5.cell.compartment("proximal_dendrite").axial_resistance_kohm_cm == 5

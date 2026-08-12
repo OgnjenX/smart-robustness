@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from collections import Counter
 
-from smart_robustness.modeldb_projections import MODELDB_FIRST_ORDER
+from smart_robustness.modeldb_projections import MODELDB_FIRST_ORDER, MODELDB_FULL
 from smart_robustness.models.modeldb112923 import SMART_NML_SHA256
 
 
@@ -15,6 +15,25 @@ def test_derived_modeldb_projection_catalog_is_integrity_pinned_and_complete() -
         "chemical": 51,
         "gap_junction": 4,
     }
+
+
+def test_full_modeldb_catalog_covers_both_areas_and_cross_area_connections() -> None:
+    catalog = MODELDB_FULL
+    assert catalog.source_sha256 == SMART_NML_SHA256
+    assert len(catalog.projections) == 118
+    assert len(catalog.external_channels) == 16
+    assert Counter(record.kind for record in catalog.projections) == {
+        "chemical": 109,
+        "gap_junction": 9,
+    }
+    assert sum(
+        record.source_population.endswith("_v2")
+        != record.target_population.endswith("_v2")
+        for record in catalog.projections
+    ) == 9
+    assert catalog.projections[: len(MODELDB_FIRST_ORDER.projections)] == (
+        MODELDB_FIRST_ORDER.projections
+    )
 
 
 def test_modeldb_topology_preserves_legacy_kernel_semantics() -> None:

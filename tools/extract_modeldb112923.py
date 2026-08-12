@@ -26,6 +26,16 @@ POPULATIONS = {
     "Thalamic_MATRIX": "thalamic_matrix",
     "Layer_6_II_V2": "layer6ii_excitatory_v2",
     "Reticular_V2": "trn_v2",
+    "Relay_V2": "thalamic_relay_v2",
+    "Layer_5_V2": "layer5_excitatory_v2",
+    "Layer_6_I_V2": "layer6i_excitatory_v2",
+    "Layer_2_3_V2": "layer23_excitatory_v2",
+    "Layer_4_V2": "layer4_excitatory_v2",
+    "Layer_2_3_INT_V2": "layer23_inhibitory_v2",
+    "Relay_INT_V2": "thalamic_interneuron_v2",
+    "INTRALAMINAR_V2": "thalamic_nonspecific_v2",
+    "Thalamic_MATRIX_V2": "thalamic_matrix_v2",
+    "Layer_4_INT_V2": "layer4_inhibitory_v2",
 }
 COMPARTMENTS = {
     "Soma": "soma",
@@ -55,12 +65,14 @@ def _source_endpoint(raw: str) -> tuple[str, str | None]:
     return raw, None
 
 
-def extract(source: Path) -> dict[str, object]:
+def extract(source: Path, *, population_limit: int | None = 12) -> dict[str, object]:
     digest = hashlib.sha256(source.read_bytes()).hexdigest()
     if digest != EXPECTED_SMART_SHA256:
         raise ValueError(f"SMART.nml hash mismatch: {digest}")
     root = ET.parse(source).getroot()
-    populations = root.findall(".//population")[:12]
+    populations = root.findall(".//population")
+    if population_limit is not None:
+        populations = populations[:population_limit]
     records: list[dict[str, object]] = []
     external_channels: list[dict[str, object]] = []
     for population in populations:
@@ -132,7 +144,12 @@ def extract(source: Path) -> dict[str, object]:
                         )
     return {
         "schema_version": 1,
-        "source": "ModelDB 112923 SMART.nml first-order area",
+        "source": (
+            "ModelDB 112923 SMART.nml full two-area network"
+            if population_limit is None
+            else "ModelDB 112923 SMART.nml first-order area"
+        ),
+        "population_count": len(populations),
         "source_sha256": digest,
         "projection_count": len(records),
         "external_channel_count": len(external_channels),
@@ -145,8 +162,13 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("source", type=Path)
     parser.add_argument("output", type=Path)
+    parser.add_argument(
+        "--all-populations",
+        action="store_true",
+        help="extract the complete V1-pulvinar-V2 network instead of the first 12 populations",
+    )
     args = parser.parse_args()
-    data = extract(args.source)
+    data = extract(args.source, population_limit=None if args.all_populations else 12)
     args.output.write_text(
         yaml.safe_dump(data, sort_keys=False, allow_unicode=True), encoding="utf-8"
     )

@@ -48,6 +48,21 @@ FIRST_ORDER_POPULATIONS: tuple[tuple[str, int, tuple[int, int]], ...] = (
 )
 FIRST_ORDER_PROJECTION_COUNT = 56
 
+SECOND_ORDER_POPULATIONS: tuple[tuple[str, int, tuple[int, int]], ...] = (
+    ("Reticular_V2", 3, (9, 9)),
+    ("Relay_V2", 3, (9, 9)),
+    ("Layer_6_II_V2", 3, (9, 9)),
+    ("Layer_5_V2", 3, (9, 9)),
+    ("Layer_6_I_V2", 2, (9, 9)),
+    ("Layer_2_3_V2", 2, (9, 9)),
+    ("Layer_4_V2", 2, (9, 9)),
+    ("Layer_2_3_INT_V2", 2, (9, 9)),
+    ("Relay_INT_V2", 2, (9, 9)),
+    ("INTRALAMINAR_V2", 3, (1, 1)),
+    ("Thalamic_MATRIX_V2", 3, (1, 1)),
+    ("Layer_4_INT_V2", 2, (9, 9)),
+)
+
 
 @dataclass(frozen=True, slots=True)
 class FirstOrderPopulationFacts:
@@ -260,6 +275,69 @@ def first_order_structural_counts() -> tuple[int, int]:
         count * width * height for _, count, (width, height) in FIRST_ORDER_POPULATIONS
     )
     return cells, compartments
+
+
+def second_order_population_facts() -> tuple[FirstOrderPopulationFacts, ...]:
+    """Intrinsic facts serialized in the pulvinar/V2 half of ``SMART.nml``."""
+
+    v1 = {fact.canonical_name: fact for fact in first_order_population_facts()}
+    mapping = (
+        ("Reticular_V2", "trn_v2", "trn"),
+        ("Relay_V2", "thalamic_relay_v2", "thalamic_relay"),
+        ("Layer_6_II_V2", "layer6ii_excitatory_v2", "layer6ii_excitatory_v1"),
+        ("Layer_5_V2", "layer5_excitatory_v2", "layer5_excitatory_v1"),
+        ("Layer_6_I_V2", "layer6i_excitatory_v2", "layer6i_excitatory_v1"),
+        ("Layer_2_3_V2", "layer23_excitatory_v2", "layer23_excitatory_v1"),
+        ("Layer_4_V2", "layer4_excitatory_v2", "layer4_excitatory_v1"),
+        ("Layer_2_3_INT_V2", "layer23_inhibitory_v2", "layer23_inhibitory_v1"),
+        ("Relay_INT_V2", "thalamic_interneuron_v2", "thalamic_interneuron"),
+        ("INTRALAMINAR_V2", "thalamic_nonspecific_v2", "thalamic_nonspecific"),
+        ("Thalamic_MATRIX_V2", "thalamic_matrix_v2", "thalamic_matrix"),
+        ("Layer_4_INT_V2", "layer4_inhibitory_v2", "layer4_inhibitory_v1"),
+    )
+    results = []
+    for source_name, canonical_name, template_name in mapping:
+        template = v1[template_name]
+        cell = template.cell
+        if canonical_name == "layer5_excitatory_v2":
+            c = _source_compartment
+            cell = _source_cell(
+                "layer5_v2",
+                c("soma", 0.01, 0.015, 5, -72, 0.1, 50, 30),
+                c("proximal_dendrite", 0.006, 0.04, 5, -72, 0.03),
+                c("distal_dendrite", 0.006, 0.05, 5, -72, 0.03, 50, 30),
+            )
+        else:
+            cell = CellSpec(
+                template.cell.name.replace("modeldb112923_", "modeldb112923_v2_"),
+                template.cell.compartments,
+            )
+        results.append(
+            FirstOrderPopulationFacts(
+                source_name=source_name,
+                canonical_name=canonical_name,
+                cell=cell,
+                shape=template.shape,
+                e_na_mV=template.e_na_mV,
+                e_k_mV=template.e_k_mV,
+                e_ca_mV=template.e_ca_mV,
+                ahp_density_mS_cm2=template.ahp_density_mS_cm2,
+                ahp_reversal_mV=template.ahp_reversal_mV,
+                ahp_rise_ms=template.ahp_rise_ms,
+                ahp_fall_ms=template.ahp_fall_ms,
+                depletion_epsilon=template.depletion_epsilon,
+                depletion_recovery_ms=template.depletion_recovery_ms,
+            )
+        )
+    return tuple(results)
+
+
+def full_network_structural_counts() -> tuple[int, int]:
+    facts = first_order_population_facts() + second_order_population_facts()
+    return (
+        sum(f.shape[0] * f.shape[1] for f in facts),
+        sum(f.shape[0] * f.shape[1] * len(f.cell.compartments) for f in facts),
+    )
 
 
 def figure8_relay_spec(*, leak_density_mS_cm2: float) -> CellSpec:

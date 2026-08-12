@@ -92,6 +92,10 @@ def catalog_path() -> Path:
     return Path(files("smart_robustness").joinpath("data/modeldb112923_first_order.yaml"))
 
 
+def full_catalog_path() -> Path:
+    return Path(files("smart_robustness").joinpath("data/modeldb112923_full.yaml"))
+
+
 def _mapping(value: Mapping[str, Any] | None) -> Mapping[str, str]:
     return MappingProxyType({} if value is None else {str(k): str(v) for k, v in value.items()})
 
@@ -163,4 +167,11 @@ def load_modeldb_first_order_catalog(
     )
 
 
+def load_modeldb_full_catalog(path: str | Path | None = None) -> ModelDBFirstOrderCatalog:
+    """Load the integrity-pinned complete V1-pulvinar-V2 SMART catalog."""
+
+    return load_modeldb_first_order_catalog(path or full_catalog_path())
+
+
 MODELDB_FIRST_ORDER = load_modeldb_first_order_catalog()
+MODELDB_FULL = load_modeldb_full_catalog()

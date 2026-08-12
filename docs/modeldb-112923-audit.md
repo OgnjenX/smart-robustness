@@ -23,8 +23,21 @@ its numerical/model facts are transcribed with provenance.
 the V2 sector. In each sector, ten externally sized grids correspond to the 9×9
 model sheets and the intralaminar/nonspecific and matrix populations are fixed
 1×1 sheets. The first-order sector therefore contains 812 cells and 1,950
-compartments when the external grids are instantiated as 9×9. It contains 56
-serialized channel projections; the full two-area file contains 24 populations.
+compartments when the external grids are instantiated as 9×9. The full
+two-area assembly contains 1,624 cells, 3,900 compartments, 118 serialized
+projections (109 chemical and nine gap-junction records), 16 external channels,
+and nine projections crossing the V1/V2 boundary. The first 12 populations
+contain 56 serialized projection records, one of which is the self-triggered
+layer-5 AHP channel; the inter-population first-order catalog therefore has 55
+records.
+
+The complete 24-population topology now builds and executes a zero-duration
+Brian2 network check. This is structural validation only: it does not establish
+that the published match/gamma or mismatch/beta/reset trajectories have been
+reproduced. Except for the separately serialized V2 layer-5 geometry, the
+current V2 intrinsic transcription uses the corresponding V1 cell definitions;
+an independent raw-XML intrinsic extraction remains required before claiming
+exact cell-library parity for every V2 population.
 
 ## Resolved equation ambiguities
 

@@ -10,9 +10,13 @@ from typing import Any
 
 import numpy as np
 
-from .modeldb_projections import MODELDB_FIRST_ORDER
+from .modeldb_projections import MODELDB_FIRST_ORDER, MODELDB_FULL
 from .models.compartmental_hh import CompartmentalPopulation, create_compartmental_hh_population
-from .models.modeldb112923 import FirstOrderPopulationFacts, first_order_population_facts
+from .models.modeldb112923 import (
+    FirstOrderPopulationFacts,
+    first_order_population_facts,
+    second_order_population_facts,
+)
 from .models.ports import (
     modeldb_external_ports_for_target,
     modeldb_gap_ports_for_target,
@@ -130,13 +134,14 @@ def first_order_population_parameters(
     facts: FirstOrderPopulationFacts,
     *,
     conventions: FirstOrderRuntimeConventions,
+    catalog=MODELDB_FIRST_ORDER,
 ) -> dict[str, Any]:
     has_ahp = facts.ahp_density_mS_cm2 is not None
     zero_input_convention = ZeroSensitivityInputConvention(
         conventions.zero_sensitivity_input_convention
     )
     external_input_ports = modeldb_external_ports_for_target(
-        MODELDB_FIRST_ORDER.external_channels, facts.canonical_name
+        catalog.external_channels, facts.canonical_name
     )
     if zero_input_convention is ZeroSensitivityInputConvention.OMIT_ALL_ZERO:
         external_input_ports = tuple(
@@ -161,14 +166,14 @@ def first_order_population_parameters(
         "e_ca_mV": facts.e_ca_mV,
         "method": conventions.integration_method,
         "synaptic_ports": modeldb_ports_for_target(
-            MODELDB_FIRST_ORDER.projections, facts.canonical_name
+            catalog.projections, facts.canonical_name
         ),
         "gap_junction_ports": modeldb_gap_ports_for_target(
-            MODELDB_FIRST_ORDER.projections, facts.canonical_name
+            catalog.projections, facts.canonical_name
         ),
         "external_input_ports": external_input_ports,
         "injection_ports": modeldb_injection_ports_for_target(
-            MODELDB_FIRST_ORDER.external_channels, facts.canonical_name
+            catalog.external_channels, facts.canonical_name
         ),
         "depletion_epsilon": facts.depletion_epsilon,
         "depletion_recovery_ms": facts.depletion_recovery_ms,
@@ -185,6 +190,57 @@ def first_order_population_parameters(
             }
         )
     return parameters
+
+
+def build_full_smart_network(
+    *,
+    conventions: FirstOrderRuntimeConventions | None = None,
+    brian=None,
+) -> FirstOrderSector:
+    """Assemble all source-backed V1-pulvinar-V2 cells and projections."""
+
+    if brian is None:
+        import brian2 as brian
+    conventions = conventions or FirstOrderRuntimeConventions()
+    facts = first_order_population_facts() + second_order_population_facts()
+    facts_by_name = {fact.canonical_name: fact for fact in facts}
+    populations: dict[str, CompartmentalPopulation] = {}
+    for fact in facts:
+        width, height = fact.shape
+        populations[fact.canonical_name] = create_compartmental_hh_population(
+            name=f"smart_full_{fact.canonical_name}",
+            size=width * height,
+            params=first_order_population_parameters(
+                fact, conventions=conventions, catalog=MODELDB_FULL
+            ),
+            brian=brian,
+        )
+    network = brian.Network(*(population.group for population in populations.values()))
+    projections: dict[str, Any] = {}
+    for record in MODELDB_FULL.projections:
+        kwargs = dict(
+            record=record,
+            pre=populations[record.source_population],
+            post=populations[record.target_population],
+            source_shape=facts_by_name[record.source_population].shape,
+            target_shape=facts_by_name[record.target_population].shape,
+            brian=brian,
+        )
+        if record.kind == "chemical":
+            projection = connect_modeldb_projection(
+                **kwargs,
+                modifiable_weight_initialization=conventions.modifiable_weight_initialization,
+                gaussian_weight_convention=conventions.gaussian_weight_convention,
+                gaussian_learning_bounds_convention=(
+                    conventions.gaussian_learning_bounds_convention
+                ),
+                spike_event_coordinate=conventions.spike_event_coordinate,
+            )
+        else:
+            projection = connect_modeldb_gap_junction(**kwargs)
+        projections[record.id] = projection
+        network.add(projection)
+    return FirstOrderSector(network, populations, facts, projections)
 
 
 def build_first_order_intrinsic_sector(

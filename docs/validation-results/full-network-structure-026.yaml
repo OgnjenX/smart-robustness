@@ -1,0 +1,23 @@
+schema_version: 1
+validation_id: full-network-structure-026
+source_model: ModelDB 112923 SMART.nml
+source_sha256: 16fc196f2ed68d1c02a39395fa83bb0ffab8fcf8edffe6fd11022bb6c6e299e1
+claim: complete two-area SMART topology can be assembled in Brian2
+status: pass_structural_only
+observed:
+  populations: 24
+  cells: 1624
+  compartments: 3900
+  projections: 118
+  chemical_projections: 109
+  gap_junction_projections: 9
+  external_channels: 16
+  cross_area_projections: 9
+checks:
+  zero_duration_network_execution: pass
+  distinct_v1_v2_brian_groups: pass
+  projection_endpoint_identity: pass
+limitations:
+  - No match/gamma or mismatch/beta/reset protocol was run by this validation.
+  - V2 homologous intrinsic definitions still require independent raw-XML extraction verification.
+  - Structural parity does not imply numerical or behavioral reproduction.

@@ -66,6 +66,13 @@ serialized channel projections; the full two-area file contains 24 populations.
   specific thalamus use dual-AND gating. The executable baseline follows the
   figure-specific caption and NML while retaining this publication conflict as
   unresolved provenance.
+- The paper's Equation 8 defines an emitted spike on the rising phase: the
+  current sample exceeds 30 mV after the preceding sample was below 0 mV.
+  The runtime formerly armed above 30 mV and emitted only on the subsequent
+  fall below 0 mV. It now emits on the rising threshold and rearms below zero,
+  so ligand release, transmitter depletion, AHP, and STDP timestamps share the
+  official causal event. Both physical and leak-relative voltage-coordinate
+  interpretations remain executable audit profiles.
 - The executable first-order area contains 55 projected gates after excluding
   the self-triggered AHP gate: 51 chemical and four gap-junction records. This
   set is not identical to the 55-row supplementary catalog; it includes

@@ -53,7 +53,7 @@ def test_connected_first_order_sector_integrates_and_adapts_finitely() -> None:
     projection.w[synapse_index] = projection.w_baseline[synapse_index]
     projection.last_arrival[synapse_index] = sector.network.t
     projection.last_amplitude[synapse_index] = 1
-    target.v_soma[target_index] = -10 * brian.mV
+    target.v_soma[target_index] = 31 * brian.mV
     before_potentiation = float(projection.w[synapse_index])
     sector.network.run(0.001 * brian.ms)
     after_potentiation = float(projection.w[synapse_index])

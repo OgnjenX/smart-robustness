@@ -1,0 +1,36 @@
+id: figure6-spike-coordinate-015
+status: source-coordinate-full-run-failed
+claim: KInNeSS leak-relative spike events reproduce the complete 100-ms Figure 6 episode
+conventions:
+  spike_event_phase: rising
+  spike_event_coordinate: relative_to_soma_leak
+  gate_initialization: zero
+  zero_sensitivity_inputs: omit_all_zero
+convention_fingerprint: 38f76278eb5093f4bee8dadf48d35bc61b8ed9e2c8abd280af5f2cb5ba644f64
+protocol:
+  initialization_ms: 2.0
+  stimulus_ms: 100.0
+  horizontal_green_value: 120.0
+  archived_blue_category_input: false
+  simultaneous_layer6ii_current_pA: 80.0
+short_recruitment_result:
+  relay_spike_time_ms: 5.37
+  first_layer4_spike_time_ms: 17.15
+  selective_recruitment_pass: true
+full_episode_result:
+  active_relay_spikes: 5
+  trn_spikes: 4244
+  layer4_excitatory_spikes: 17
+  central_layer6ii_spike_times_ms: [34.43]
+  bottom_up_horizontal_contrast: 0.134814454
+  top_down_wide_horizontal_contrast: 0.0
+  top_down_narrow_horizontal_contrast: 0.0
+assessment:
+  selective_recruitment_pass: true
+  sustained_approximately_40hz_relay_drive_pass: false
+  figure6c_effect_size_pass: false
+  promoted_to_figure6_profile: false
+notes:
+  - The earlier leak-relative discriminator used the now-superseded falling-phase event and also failed sustained relay drive.
+  - The framework says reported voltage is leak-shifted, but the full network behavior contradicts promotion of that coordinate under the recovered equations.
+  - The physical-coordinate profile remains active because it preserves the sustained relay episode; the coordinate ambiguity remains explicit.

@@ -232,6 +232,7 @@ def build_first_order_chemical_sector(
             gaussian_learning_bounds_convention=(
                 resolved_conventions.gaussian_learning_bounds_convention
             ),
+            spike_event_coordinate=resolved_conventions.spike_event_coordinate,
             brian=brian,
         )
     sector.projections = projections

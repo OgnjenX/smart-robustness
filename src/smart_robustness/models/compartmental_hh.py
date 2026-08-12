@@ -238,9 +238,9 @@ def create_compartmental_hh_population(
     group = brian.NeuronGroup(
         size,
         compiled.equations,
-        threshold=f"armed > 0.5 and {spike_voltage} < 0*mV",
+        threshold=f"armed > 0.5 and {spike_voltage} > 30*mV",
         reset=spike_reset,
-        events={"arm_spike": f"armed < 0.5 and {spike_voltage} > 30*mV"},
+        events={"arm_spike": f"armed < 0.5 and {spike_voltage} < 0*mV"},
         method=params.get("method", "exponential_euler"),
         name=name,
     )
@@ -255,7 +255,9 @@ def create_compartmental_hh_population(
         group.ahp_fall = 0
         group.ach_rise = 0
         group.ach_fall = 0
-    group.armed = 0
+    # Equation 8 detects a rising spike after a preceding sample below 0 mV.
+    # Resting cells therefore begin ready to emit their first threshold event.
+    group.armed = 1
     group.e_na = float(params.get("e_na_mV", E_NA_MV)) * brian.mV
     group.e_k = float(params.get("e_k_mV", E_K_MV)) * brian.mV
     group.e_ca = float(params.get("e_ca_mV", E_CA_MV)) * brian.mV

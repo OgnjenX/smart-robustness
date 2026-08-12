@@ -266,6 +266,7 @@ def connect_modeldb_projection(
     modifiable_weight_initialization: str,
     gaussian_weight_convention: GaussianWeightConvention | str,
     gaussian_learning_bounds_convention: GaussianLearningBoundsConvention | str,
+    spike_event_coordinate: str = "absolute_physical",
     brian: Any,
 ) -> Any:
     """Connect one exact ModelDB chemical record to its dedicated port."""
@@ -329,15 +330,20 @@ def connect_modeldb_projection(
         else:
             raise ValueError(f"{record.id}: unsupported learning rule {record.learning_rule!r}")
         post_window = record.depotentiation_ms
+        post_voltage = (
+            "v_soma_post"
+            if spike_event_coordinate == "absolute_physical"
+            else "v_soma_post-e_l_soma_post"
+        )
         model += (
             "\npost_elapsed=t-last_post_spike : second"
             "\ndepression_scale=-w_baseline/w_maximum : 1"
             "\nx_post_above=depression_scale+1 : 1"
             "\nx_post_early=depression_scale+1-post_elapsed/(0.1*ms) : 1"
             f"\nx_post_late=depression_scale*(1-(post_elapsed-0.1*ms)/({post_window}*ms)) : 1"
-            f"\npost_signal=int(v_soma_post >= -20*mV)*x_post_above"
-            " + int(v_soma_post < -20*mV and post_elapsed >= 0*ms and post_elapsed < 0.1*ms)*x_post_early"
-            f" + int(v_soma_post < -20*mV and post_elapsed >= 0.1*ms and post_elapsed < {post_window + 0.1}*ms)*x_post_late : 1"
+            f"\npost_signal=int({post_voltage} >= 30*mV)*x_post_above"
+            f" + int({post_voltage} < 30*mV and post_elapsed >= 0*ms and post_elapsed < 0.1*ms)*x_post_early"
+            f" + int({post_voltage} < 30*mV and post_elapsed >= 0.1*ms and post_elapsed < {post_window + 0.1}*ms)*x_post_late : 1"
             f"\ndw/dt=({record.learning_rate}/ms)*({learning_gate})"
             "*(pre_signal*post_signal*(w_maximum-w)+(w_baseline-w)) : 1 (clock-driven)"
             "\nlast_post_spike : second"

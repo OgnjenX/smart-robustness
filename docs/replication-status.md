@@ -217,6 +217,19 @@ spikes at 18.16--18.33 ms. It is not promoted because Figure 6's before-learning
 map and XML weight semantics support peak-scaled weights. The exact legacy
 `connectFromMany`/`ring` implementation remains the active topology ambiguity.
 
+Figure 6b's before-learning scale resolves the leading Gaussian-amplitude
+ambiguity. The relay→layer-4 XML weight is 6 with X/Y spread 0.5, while the
+published map peaks near 4; a normalized bivariate Gaussian gives
+`6/(2*pi*0.5^2)=3.82`. With this fingerprinted `normalized_density` convention
+and source `CM=1 μF/cm²`, the complete 12-population first-order sector produces
+exactly five horizontal-bar-aligned layer-4 excitatory spikes at 17.87--18.04
+ms, following the relay volley at 5.75 ms, with no off-bar layer-4 excitatory
+spikes. This passes the qualitative selective-recruitment and positive-latency
+claim in Figure 6b (`figure6-recruitment-011.yaml`). It does not yet reproduce
+the 100-ms learned weight maps or prove the separate 40-Hz relay target under
+the same profile. KInNeSS's benchmark confirms finite connection kernels, but
+the exact truncation radius and `ring` stencil remain unresolved.
+
 The official input archive also resolves a missing protocol channel:
 `horizontal0.png` and `vertical0.png` contain blue=70 at the central green=120
 pixel. Source-complete routing now drives the central layer-6II category cell

@@ -7,6 +7,7 @@ from smart_robustness.validation.first_order import (
     FirstOrderBarProtocol,
     FirstOrderBarResult,
     IsolatedRelayInputResult,
+    assess_figure6_recruitment,
     assess_first_order_bar,
 )
 
@@ -32,6 +33,8 @@ def test_bar_result_document_contains_exact_profile_and_fingerprint() -> None:
     result = _result((4, 4, 4, 4, 4))
     document = result.as_document()
     assert document["convention_fingerprint"] == result.conventions.fingerprint
+    assert "population_spike_indices" in document
+    assert "population_spike_times_ms" in document
     assert document["conventions"]["voltage_coordinate"] == "relative_to_table3_leak"
     assert document["protocol"]["orientation"] == "horizontal"
 
@@ -54,6 +57,30 @@ def test_bar_assessment_rejects_rate_and_selectivity_failures() -> None:
     assert not assessment.relay_rate_pass
     assert not assessment.selectivity_pass
     assert not assessment.reproduced_drive
+
+
+def test_figure6_recruitment_assessment_requires_bar_aligned_layer4_spikes() -> None:
+    result = FirstOrderBarResult(
+        conventions=FirstOrderRuntimeConventions(),
+        protocol=FirstOrderBarProtocol(stimulus_ms=20.0),
+        warmup_spikes={},
+        stimulus_spikes={"layer4_excitatory_v1": 5},
+        active_relay_spikes=(1, 1, 1, 1, 1),
+        inactive_relay_spikes=0,
+        population_spike_indices={
+            "thalamic_relay": (38, 39, 40, 41, 42),
+            "layer4_excitatory_v1": (39, 41, 40, 38, 42),
+        },
+        population_spike_times_ms={
+            "thalamic_relay": (5.75,) * 5,
+            "layer4_excitatory_v1": (17.87, 17.87, 17.9, 18.04, 18.04),
+        },
+    )
+    assessment = assess_figure6_recruitment(result)
+    assert assessment.reproduced_selective_recruitment
+    assert assessment.active_layer4_indices == (38, 39, 40, 41, 42)
+    assert assessment.inactive_layer4_spikes == 0
+    assert assessment.latency_ms == pytest.approx(12.12)
 
 
 @pytest.mark.parametrize(

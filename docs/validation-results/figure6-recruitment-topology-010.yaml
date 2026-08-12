@@ -1,5 +1,5 @@
 id: figure6-recruitment-topology-010
-status: discriminating-unresolved-legacy-gaussian-semantics
+status: normalized-density-promoted-finite-stencil-and-ring-unresolved
 claim: a winning layer-4 cell spikes within milliseconds after LGN input while neighbors are suppressed
 fixed_protocol:
   populations: [thalamic_relay, layer4_inhibitory_v1, layer4_excitatory_v1]
@@ -16,7 +16,7 @@ source_peak_gaussian:
   first_layer4_inhibitory_spike_ms: 11.38
   layer4_inhibitory_spikes: 31
   layer4_excitatory_spikes: 0
-normalized_gaussian_falsification:
+normalized_gaussian_candidate:
   normalization: divide each Gaussian projection by 2*pi*sigma_x*sigma_y
   first_layer4_inhibitory_spike_ms: 14.18
   layer4_inhibitory_spikes: 11
@@ -24,9 +24,12 @@ normalized_gaussian_falsification:
   layer4_excitatory_spike_times_ms: [18.16, 18.16, 18.21, 18.33, 18.33]
 assessment:
   source_peak_reproduces_winner: false
-  normalized_falsification_reproduces_bar_aligned_recruitment: true
-  normalized_falsification_promoted: false
-reason_not_promoted:
-  - Figure 6 before-learning maps support weights near the serialized peak scale.
-  - KInNeSS documentation does not state that connectFromMany Gaussian kernels use probability-density normalization.
-  - The exact legacy ring and Gaussian implementation has not yet been recovered.
+  normalized_candidate_reproduces_bar_aligned_recruitment: true
+  normalized_candidate_promoted_for_chemical_projections: true
+promotion_evidence:
+  - KInNeSS describes connectFromMany weights as a Gaussian curve parameterized by X/Y variances.
+  - KInNeSS benchmark text confirms finite connection kernels rather than dense all-to-all tails.
+  - Figure 6b before-learning maximum is near 4; weight 6 divided by 2*pi*0.5^2 is 3.8197.
+remaining_uncertainty:
+  - Exact finite-stencil truncation has not been recovered.
+  - Exact ring geometry has not been recovered.

@@ -39,6 +39,8 @@ class FirstOrderBarResult:
     stimulus_spikes: dict[str, int]
     active_relay_spikes: tuple[int, ...]
     inactive_relay_spikes: int
+    population_spike_indices: dict[str, tuple[int, ...]] | None = None
+    population_spike_times_ms: dict[str, tuple[float, ...]] | None = None
 
     @property
     def convention_fingerprint(self) -> str:
@@ -64,6 +66,8 @@ class FirstOrderBarResult:
             "active_relay_spikes": list(self.active_relay_spikes),
             "active_relay_rates_hz": list(self.active_relay_rates_hz),
             "inactive_relay_spikes": self.inactive_relay_spikes,
+            "population_spike_indices": self.population_spike_indices,
+            "population_spike_times_ms": self.population_spike_times_ms,
         }
 
 
@@ -79,6 +83,48 @@ class FirstOrderBarAssessment:
     @property
     def reproduced_drive(self) -> bool:
         return self.relay_rate_pass and self.selectivity_pass
+
+
+@dataclass(frozen=True, slots=True)
+class Figure6RecruitmentAssessment:
+    active_layer4_indices: tuple[int, ...]
+    inactive_layer4_spikes: int
+    first_relay_spike_ms: float | None
+    first_layer4_spike_ms: float | None
+
+    @property
+    def latency_ms(self) -> float | None:
+        if self.first_relay_spike_ms is None or self.first_layer4_spike_ms is None:
+            return None
+        return self.first_layer4_spike_ms - self.first_relay_spike_ms
+
+    @property
+    def reproduced_selective_recruitment(self) -> bool:
+        return (
+            self.active_layer4_indices == (38, 39, 40, 41, 42)
+            and self.inactive_layer4_spikes == 0
+            and self.latency_ms is not None
+            and 0 < self.latency_ms < 20
+        )
+
+
+def assess_figure6_recruitment(result: FirstOrderBarResult) -> Figure6RecruitmentAssessment:
+    """Score Figure 6b's bar-aligned layer-4 winner and latency claim."""
+
+    indices = (result.population_spike_indices or {}).get("layer4_excitatory_v1", ())
+    times = (result.population_spike_times_ms or {}).get("layer4_excitatory_v1", ())
+    relay_times = (result.population_spike_times_ms or {}).get("thalamic_relay", ())
+    active_set = set(result.protocol.orientation is BarOrientation.HORIZONTAL and range(38, 43) or ())
+    if result.protocol.orientation is BarOrientation.VERTICAL:
+        active_set = {22, 31, 40, 49, 58}
+    observed_active = tuple(sorted(set(indices) & active_set))
+    inactive = sum(index not in active_set for index in indices)
+    return Figure6RecruitmentAssessment(
+        active_layer4_indices=observed_active,
+        inactive_layer4_spikes=inactive,
+        first_relay_spike_ms=min(relay_times) if relay_times else None,
+        first_layer4_spike_ms=min(times) if times else None,
+    )
 
 
 @dataclass(frozen=True, slots=True)
@@ -214,6 +260,16 @@ def run_first_order_bar(
     relay_counts = np.bincount(indices[stimulus_mask], minlength=81)
     active = tuple(int(relay_counts[index]) for index in stimulus.active_indices)
     inactive = int(relay_counts.sum() - sum(active))
+    population_spike_indices: dict[str, tuple[int, ...]] = {}
+    population_spike_times_ms: dict[str, tuple[float, ...]] = {}
+    for name, monitor in monitors.items():
+        monitor_times_ms = np.asarray(monitor.t / brian.ms)
+        monitor_indices = np.asarray(monitor.i)
+        mask = monitor_times_ms >= protocol.warmup_ms
+        population_spike_indices[name] = tuple(int(value) for value in monitor_indices[mask])
+        population_spike_times_ms[name] = tuple(
+            float(value - protocol.warmup_ms) for value in monitor_times_ms[mask]
+        )
     return FirstOrderBarResult(
         conventions=conventions,
         protocol=protocol,
@@ -221,4 +277,6 @@ def run_first_order_bar(
         stimulus_spikes=stimulus_counts,
         active_relay_spikes=active,
         inactive_relay_spikes=inactive,
+        population_spike_indices=population_spike_indices,
+        population_spike_times_ms=population_spike_times_ms,
     )

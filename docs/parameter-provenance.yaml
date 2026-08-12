@@ -66,6 +66,11 @@ parameters:
     value: kinness_2008, paper_literal, or symmetric_cable; must be selected explicitly
     status: derived
     source: expanded KInNeSS framework manuscript Equation 9; SMART Table 3 axial resistivities
+  model.connectivity.gaussian_weight_convention:
+    value: normalized_density
+    status: paper-supported executable convention
+    source: KInNeSS Section 4.9 Gaussian curve; Grossberg and Versace 2008 Figure 6b
+    note: relay-to-layer4 weight 6 with spread 0.5 gives center weight 3.8197, matching the published before-learning scale near 4; source_peak remains an audit alternative
   model.multicompartment.zero_sensitivity_input_convention:
     value: framework_resting_leak or omit_all_zero; must be selected explicitly
     status: exploratory

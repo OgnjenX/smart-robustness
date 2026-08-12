@@ -14,6 +14,7 @@ from smart_robustness.modeldb_projections import MODELDB_FIRST_ORDER
 from smart_robustness.models.currents import biexponential_peak_time_ms
 from smart_robustness.projections import SUPPLEMENTARY_TABLE3
 from smart_robustness.synapses import (
+    GaussianWeightConvention,
     kinness_gap_total_conductance_nS,
     modeldb_topology_pairs,
     topology_pairs,
@@ -112,6 +113,31 @@ def test_modeldb_topology_applies_wrap_and_ring_metadata() -> None:
     )
     pre, post, factor = modeldb_topology_pairs(ring, source_shape=(9, 9), target_shape=(9, 9))
     assert factor[(pre == 40) & (post == 40)][0] == 0
+
+
+def test_modeldb_normalized_gaussian_matches_figure6_initial_peak() -> None:
+    record = MODELDB_FIRST_ORDER.by_id("modeldb112923.projection.035")
+    pre, post, factor = modeldb_topology_pairs(
+        record,
+        source_shape=(9, 9),
+        target_shape=(9, 9),
+        gaussian_weight_convention=GaussianWeightConvention.NORMALIZED_DENSITY,
+    )
+    center = factor[(pre == 40) & (post == 40)][0]
+    expected = 1 / (2 * np.pi * 0.5**2)
+    assert center == pytest.approx(expected)
+    assert float(record.weight) * center == pytest.approx(3.819718634)
+
+
+def test_source_peak_gaussian_remains_an_explicit_audit_alternative() -> None:
+    record = MODELDB_FIRST_ORDER.by_id("modeldb112923.projection.035")
+    pre, post, factor = modeldb_topology_pairs(
+        record,
+        source_shape=(9, 9),
+        target_shape=(9, 9),
+        gaussian_weight_convention=GaussianWeightConvention.SOURCE_PEAK,
+    )
+    assert factor[(pre == 40) & (post == 40)][0] == pytest.approx(1.0)
 
 
 def test_gap_junction_uses_kinness_equation_8_geometry() -> None:

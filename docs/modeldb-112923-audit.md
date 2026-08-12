@@ -48,6 +48,13 @@ serialized channel projections; the full two-area file contains 24 populations.
   somata omit it. The `kinness_serialized_edge` convention therefore applies
   the child connection value in both current directions, preserving the XML
   topology rather than manufacturing a root parameter.
+- KInNeSS describes `connectFromMany` weights as a Gaussian curve parameterized
+  by X/Y variances, and its benchmark confirms finite connection kernels rather
+  than dense all-to-all tails. Figure 6b supplies a normalization check: the
+  relay-to-layer-4 XML has weight 6 and spread 0.5, while the before-learning
+  map peaks near 4; `6/(2*pi*0.5^2)=3.82`. The classic chemical path therefore
+  uses `normalized_density`; `source_peak` remains an audit alternative. Exact
+  finite-stencil truncation and `ring` geometry remain unresolved.
 - The executable first-order area contains 55 projected gates after excluding
   the self-triggered AHP gate: 51 chemical and four gap-junction records. This
   set is not identical to the 55-row supplementary catalog; it includes

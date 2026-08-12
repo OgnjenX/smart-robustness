@@ -1,0 +1,48 @@
+id: figure6-recruitment-011
+status: passing-qualitative-selective-recruitment
+claim: Figure 6b horizontal input selectively recruits bar-aligned layer-4 cells after the relay volley
+convention_fingerprint: 7d7ec6f46d4d49d3bc94dc8974373925a0c2f809477519794d54e7a4da7eefdc
+conventions:
+  axial_convention: kinness_serialized_edge
+  leak_convention: table3_reversal
+  voltage_coordinate: relative_to_table3_leak
+  nak_rate_convention: standard_traub_miles
+  calcium_gate_convention: modeldb_112923
+  gate_initialization_convention: zero
+  calcium_density_convention: table3
+  specific_capacitance_uF_cm2: 1.0
+  integration_method: rk4
+  zero_sensitivity_input_convention: omit_all_zero
+  spike_event_coordinate: absolute_physical
+  modifiable_weight_initialization: source_serialized_weight
+  gaussian_weight_convention: normalized_density
+protocol:
+  orientation: horizontal
+  warmup_ms: 2.0
+  stimulus_ms: 20.0
+  dt_ms: 0.01
+  green_value: 120
+  blue_value: 70
+result:
+  relay_indices: [38, 39, 40, 41, 42]
+  relay_spike_times_ms: [5.75, 5.75, 5.75, 5.75, 5.75]
+  layer4_excitatory_indices: [39, 41, 40, 38, 42]
+  layer4_excitatory_spike_times_ms: [17.87, 17.87, 17.90, 18.04, 18.04]
+  first_relay_to_first_layer4_latency_ms: 12.12
+  inactive_layer4_excitatory_spikes: 0
+  population_spike_counts:
+    thalamic_relay: 5
+    trn: 159
+    layer6i_excitatory_v1: 5
+    layer4_inhibitory_v1: 11
+    layer4_excitatory_v1: 5
+    thalamic_nonspecific: 1
+    thalamic_matrix: 3
+assessment:
+  selective_bar_recruitment_pass: true
+  positive_post_relay_latency_pass: true
+  published_40hz_drive_assessed: false
+  figure6_weight_map_learning_assessed: false
+notes:
+  - The 20-ms epoch contains one spike per active relay, corresponding to a quantized 50-Hz count; it is not used to validate the separate 100-ms 40-Hz target.
+  - Exact finite Gaussian stencil truncation and ring geometry remain unresolved.

@@ -17,6 +17,13 @@ class ModifiableWeightInitialization(StrEnum):
     ASYMPTOTIC_BASELINE = "asymptotic_baseline"
 
 
+class GaussianWeightConvention(StrEnum):
+    """Interpretation of KInNeSS ``connectFromMany`` Gaussian weights."""
+
+    NORMALIZED_DENSITY = "normalized_density"
+    SOURCE_PEAK = "source_peak"
+
+
 def connect_conductance(
     pre: Any,
     post: Any,
@@ -193,6 +200,9 @@ def modeldb_topology_pairs(
     *,
     source_shape: tuple[int, int],
     target_shape: tuple[int, int],
+    gaussian_weight_convention: GaussianWeightConvention | str = (
+        GaussianWeightConvention.SOURCE_PEAK
+    ),
 ) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
     """Apply the connect method and spatial metadata serialized by KInNeSS."""
 
@@ -227,7 +237,10 @@ def modeldb_topology_pairs(
     # weight. The Gaussian therefore scales that peak and must remain in [0, 1];
     # it is not a probability-density kernel with a 1/(2*pi*sigma_x*sigma_y)
     # prefactor.
+    convention = GaussianWeightConvention(gaussian_weight_convention)
     factor = np.exp(-(dx**2 / (2 * kernel.sigma_x**2) + dy**2 / (2 * kernel.sigma_y**2)))
+    if convention is GaussianWeightConvention.NORMALIZED_DENSITY:
+        factor /= 2 * np.pi * kernel.sigma_x * kernel.sigma_y
     if kernel.ring:
         # KInNeSS serializes no radius for a ring kernel. Its executable UI
         # convention is retained here as a center-excluding Gaussian candidate
@@ -244,6 +257,7 @@ def connect_modeldb_projection(
     source_shape: tuple[int, int],
     target_shape: tuple[int, int],
     modifiable_weight_initialization: str,
+    gaussian_weight_convention: GaussianWeightConvention | str,
     brian: Any,
 ) -> Any:
     """Connect one exact ModelDB chemical record to its dedicated port."""
@@ -333,7 +347,10 @@ def connect_modeldb_projection(
         name=f"modeldb_{port.name}_{pre.group.name}_to_{post.group.name}",
     )
     source_indices, target_indices, spatial_factor = modeldb_topology_pairs(
-        record, source_shape=source_shape, target_shape=target_shape
+        record,
+        source_shape=source_shape,
+        target_shape=target_shape,
+        gaussian_weight_convention=gaussian_weight_convention,
     )
     synapse.connect(i=source_indices, j=target_indices)
     initialization = ModifiableWeightInitialization(modifiable_weight_initialization)

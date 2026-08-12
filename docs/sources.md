@@ -71,6 +71,14 @@ that is relevant evidence for the voltage coordinate, but it does not specify
 how ionic gates are initialized. No simulator source code is copied into this
 repository.
 
+The 2008 KInNeSS site was actually served at `symphony.bu.edu`; `kinness.net`
+was a frame redirect. Its archived User Manual remains available and resolves
+the ordinary `connectFromMany` rule more precisely than the article: `Weight`
+is the peak of the Gaussian, and shoulders whose resulting weight is below
+0.001 are omitted. The locally audited `neteditor.html` capture has SHA-256
+`6bf71e0aee1720694ca4c0942068fc7b73258c92f3a29cf7e5a4d6757c77afcd`.
+The manual does not explain the separate `Kernel ring` XML flag.
+
 ## Known source ambiguity
 
 Table 3 reports a cell-specific `E_L` and identifies it as the leakage-current

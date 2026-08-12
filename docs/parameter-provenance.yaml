@@ -77,10 +77,10 @@ parameters:
     status: derived
     source: expanded KInNeSS framework manuscript Equation 9; SMART Table 3 axial resistivities
   model.connectivity.gaussian_weight_convention:
-    value: normalized_density
-    status: paper-supported executable convention
-    source: KInNeSS Section 4.9 Gaussian curve; Grossberg and Versace 2008 Figure 6b
-    note: relay-to-layer4 weight 6 with spread 0.5 gives center weight 3.8197, matching the published before-learning scale near 4; source_peak remains an audit alternative
+    value: source_peak with resulting-weight cutoff at 0.001
+    status: archived-simulator-manual executable convention
+    source: archived 2008 KInNeSS User Manual, Network Manipulations / Connect from many
+    note: the manual says Weight is the Gaussian peak and shoulders below 0.001 are cut; normalized_density is retained only as the superseded Figure 6b inference
   model.learning.gaussian_bounds_convention:
     value: Figure 6 pathway-specific (bottom-up projection-level baseline; corticothalamic Gaussian-scaled baseline with projection-level maximum)
     status: paper-supported executable convention

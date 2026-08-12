@@ -217,18 +217,27 @@ spikes at 18.16--18.33 ms. It is not promoted because Figure 6's before-learning
 map and XML weight semantics support peak-scaled weights. The exact legacy
 `connectFromMany`/`ring` implementation remains the active topology ambiguity.
 
-Figure 6b's before-learning scale resolves the leading Gaussian-amplitude
-ambiguity. The relay→layer-4 XML weight is 6 with X/Y spread 0.5, while the
-published map peaks near 4; a normalized bivariate Gaussian gives
-`6/(2*pi*0.5^2)=3.82`. With this fingerprinted `normalized_density` convention
-and source `CM=1 μF/cm²`, the complete 12-population first-order sector produces
+Figure 6b's before-learning scale had suggested a normalized-density Gaussian,
+but the recovered 2008 KInNeSS User Manual now directly resolves the executable
+rule: the serialized `Weight` is the Gaussian peak and resulting weights below
+0.001 are omitted. The executable baseline now uses this source-backed finite
+`source_peak` convention; the earlier `normalized_density` result is retained
+as a superseded audit. Under that earlier convention and source `CM=1 μF/cm²`,
+the complete 12-population first-order sector produced
 exactly five horizontal-bar-aligned layer-4 excitatory spikes at 17.87--18.04
 ms, following the relay volley at 5.75 ms, with no off-bar layer-4 excitatory
 spikes. This passes the qualitative selective-recruitment and positive-latency
-claim in Figure 6b (`figure6-recruitment-011.yaml`). It does not yet reproduce
-the 100-ms learned weight maps or prove the separate 40-Hz relay target under
-the same profile. KInNeSS's benchmark confirms finite connection kernels, but
-the exact truncation radius and `ring` stencil remain unresolved.
+claim only for the superseded profile (`figure6-recruitment-011.yaml`). It does
+not yet reproduce the 100-ms learned weight maps or prove the separate 40-Hz
+relay target under the corrected profile. The exact `ring` stencil remains
+unresolved.
+
+The corrected peak-scaled, 0.001-cutoff profile has now been run through the
+predeclared 100-ms Figure 7 assay. Match and mismatch both produce 20-Hz
+nonspecific output, versus the published approximately 40 and 70 Hz; relay
+counts are 8 and 6, and both conditions contain 188 TRN events. The source
+correction is retained, but it does not reproduce mismatch disinhibition
+(`figure7-kinness-gaussian-032.yaml`).
 
 The official 100-ms horizontal episode now yields finite activity throughout
 all first-order populations and sculpts the winning layer-4 cell's incoming

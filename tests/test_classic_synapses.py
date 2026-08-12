@@ -62,7 +62,8 @@ def test_modifiable_modeldb_projection_starts_at_source_serialized_weight() -> N
     )
     projection = sector.projections[record.id]
     initial = np.asarray(projection.w[:])
-    assert initial.max() < float(record.weight)
+    assert initial.max() == pytest.approx(float(record.weight))
+    assert initial.min() >= 0.001
     assert np.asarray(projection.w_maximum[:]) == pytest.approx(float(record.weight))
     assert np.asarray(projection.w_baseline[:]) == pytest.approx(
         float(record.asymptotic_weight)
@@ -79,7 +80,9 @@ def test_asymptotic_weight_initialization_remains_an_explicit_audit_alternative(
     )
     record = MODELDB_FIRST_ORDER.by_id("modeldb112923.projection.035")
     projection = sector.projections[record.id]
-    assert np.asarray(projection.w[:]).max() < float(record.asymptotic_weight)
+    assert np.asarray(projection.w[:]).max() == pytest.approx(
+        float(record.asymptotic_weight)
+    )
     assert np.asarray(projection.w_baseline[:]) == pytest.approx(
         float(record.asymptotic_weight)
     )
@@ -162,10 +165,10 @@ def test_modeldb_topology_applies_wrap_and_ring_metadata() -> None:
         if record.kernel is not None and record.kernel.ring
     )
     pre, post, factor = modeldb_topology_pairs(ring, source_shape=(9, 9), target_shape=(9, 9))
-    assert factor[(pre == 40) & (post == 40)][0] == 0
+    assert not np.any((pre == 40) & (post == 40))
 
 
-def test_modeldb_normalized_gaussian_matches_figure6_initial_peak() -> None:
+def test_normalized_gaussian_remains_a_paper_figure_audit_alternative() -> None:
     record = MODELDB_FIRST_ORDER.by_id("modeldb112923.projection.035")
     pre, post, factor = modeldb_topology_pairs(
         record,
@@ -179,7 +182,7 @@ def test_modeldb_normalized_gaussian_matches_figure6_initial_peak() -> None:
     assert float(record.weight) * center == pytest.approx(3.819718634)
 
 
-def test_source_peak_gaussian_remains_an_explicit_audit_alternative() -> None:
+def test_source_peak_gaussian_is_the_archived_kinness_convention() -> None:
     record = MODELDB_FIRST_ORDER.by_id("modeldb112923.projection.035")
     pre, post, factor = modeldb_topology_pairs(
         record,
@@ -188,6 +191,21 @@ def test_source_peak_gaussian_remains_an_explicit_audit_alternative() -> None:
         gaussian_weight_convention=GaussianWeightConvention.SOURCE_PEAK,
     )
     assert factor[(pre == 40) & (post == 40)][0] == pytest.approx(1.0)
+
+
+def test_modeldb_gaussian_cuts_resulting_weights_below_legacy_threshold() -> None:
+    record = MODELDB_FIRST_ORDER.by_id("modeldb112923.projection.035")
+    pre, post, factor = modeldb_topology_pairs(
+        record,
+        source_shape=(9, 9),
+        target_shape=(9, 9),
+        gaussian_weight_convention=GaussianWeightConvention.SOURCE_PEAK,
+    )
+    # At sigma=0.5 and peak Weight=6, a two-cell axial shoulder is 0.0020
+    # and survives, whereas the (2,1) diagonal is 0.00027 and is cut.
+    assert np.any((pre == 40) & (post == 42))
+    assert not np.any((pre == 40) & (post == 51))
+    assert np.all(float(record.weight) * factor >= 0.001)
 
 
 def test_modeldb_projection_accepts_prepartitioned_topology_override() -> None:

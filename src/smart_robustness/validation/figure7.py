@@ -97,7 +97,7 @@ def paper_constrained_figure6_expectation(
                 record,
                 source_shape=(9, 9),
                 target_shape=(9, 9),
-                gaussian_weight_convention="normalized_density",
+                gaussian_weight_convention="source_peak",
             )
             assert record.asymptotic_weight is not None and record.weight is not None
             values = float(record.asymptotic_weight) * spatial_factor

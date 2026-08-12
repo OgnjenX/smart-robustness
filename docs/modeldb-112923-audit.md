@@ -70,17 +70,17 @@ rather than 6 kOhm*cm.
   somata omit it. The `kinness_serialized_edge` convention therefore applies
   the child connection value in both current directions, preserving the XML
   topology rather than manufacturing a root parameter.
-- KInNeSS describes `connectFromMany` weights as a Gaussian curve parameterized
-  by X/Y variances, and its benchmark confirms finite connection kernels rather
-  than dense all-to-all tails. Figure 6b supplies a normalization check: the
-  relay-to-layer-4 XML has weight 6 and spread 0.5, while the before-learning
-  map peaks near 4; `6/(2*pi*0.5^2)=3.82`. The classic chemical path therefore
-  uses `normalized_density`; `source_peak` remains an audit alternative. Exact
-  finite-stencil truncation and `ring` geometry remain unresolved.
+- The archived KInNeSS User Manual resolves `connectFromMany`: the Gaussian is
+  scaled so its peak equals the projection's `Weight`, and shoulders whose
+  resulting weight is below 0.001 are cut. The executable baseline therefore
+  uses finite, peak-scaled `source_peak` kernels. The formerly promoted
+  `normalized_density` interpretation was an inference from Figure 6b's plotted
+  scale and is retained only as an audit alternative. Exact `ring` geometry
+  remains unresolved.
 - The framework defines many-to-one connectivity as a Gaussian centered at the
   selected cell and the archived adaptive layer-6II-to-LGN records explicitly
-  use wrapped, non-ring kernels. No truncation radius is serialized, so dense
-  wrapped Gaussian pairs are the source-backed interpretation for Figure 6c.
+  use wrapped, non-ring kernels. Their finite support is determined by the
+  documented 0.001 resulting-weight cutoff rather than a serialized radius.
   The separate layer-6II-to-TRN off-surround records carry `ring=true`; their
   exact legacy center/surround stencil remains unresolved.
 - Figure 6's caption and archived NML records 005/007 call corticothalamic

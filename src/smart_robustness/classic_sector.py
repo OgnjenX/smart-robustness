@@ -80,7 +80,7 @@ class FirstOrderRuntimeConventions:
     spike_event_coordinate: str = "absolute_physical"
     spike_event_threshold_mV: float = 30.0
     modifiable_weight_initialization: str = "source_serialized_weight"
-    gaussian_weight_convention: str = "normalized_density"
+    gaussian_weight_convention: str = "source_peak"
     gaussian_learning_bounds_convention: str = "projection_level"
     projection_source_convention: str = "modeldb_as_serialized"
 

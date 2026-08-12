@@ -25,6 +25,10 @@ class GaussianWeightConvention(StrEnum):
     SOURCE_PEAK = "source_peak"
 
 
+KINNESS_GAUSSIAN_WEIGHT_CUTOFF = 0.001
+"""Minimum KInNeSS Gaussian connection weight retained by the legacy editor."""
+
+
 class GaussianLearningBoundsConvention(StrEnum):
     """Whether a Gaussian scales only initial weights or also learning bounds."""
 
@@ -242,10 +246,10 @@ def modeldb_topology_pairs(
     if kernel.border_effect == "wrap" and source_shape == target_shape:
         dx = np.minimum(dx, source_shape[1] - dx)
         dy = np.minimum(dy, source_shape[0] - dy)
-    # KInNeSS serializes ``weight`` as the peak/maximal receptor-density
-    # weight. The Gaussian therefore scales that peak and must remain in [0, 1];
-    # it is not a probability-density kernel with a 1/(2*pi*sigma_x*sigma_y)
-    # prefactor.
+    # The archived KInNeSS user manual states that ``Weight`` is the Gaussian
+    # peak and that shoulders whose resulting weight is below 0.001 are cut.
+    # The normalized-density branch is retained only to reproduce the earlier
+    # paper-figure inference as an explicitly rejected audit alternative.
     convention = GaussianWeightConvention(gaussian_weight_convention)
     factor = np.exp(-(dx**2 / (2 * kernel.sigma_x**2) + dy**2 / (2 * kernel.sigma_y**2)))
     if convention is GaussianWeightConvention.NORMALIZED_DENSITY:
@@ -255,7 +259,9 @@ def modeldb_topology_pairs(
         # convention is retained here as a center-excluding Gaussian candidate
         # until legacy source or a benchmark trace resolves the exact stencil.
         factor[(dx == 0) & (dy == 0)] = 0
-    return pre, post, factor
+    peak_weight = float(record.weight) if record.weight is not None else 1.0
+    retained = peak_weight * factor >= KINNESS_GAUSSIAN_WEIGHT_CUTOFF
+    return pre[retained], post[retained], factor[retained]
 
 
 def connect_modeldb_projection(

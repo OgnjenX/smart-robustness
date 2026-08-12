@@ -46,6 +46,13 @@ class ZeroSensitivityInputConvention(StrEnum):
     OMIT_ALL_ZERO = "omit_all_zero"
 
 
+class ProjectionSourceConvention(StrEnum):
+    """Resolution of executable-source labels contradicted by the supplement."""
+
+    MODELDB_AS_SERIALIZED = "modeldb_as_serialized"
+    PAPER_SUPPLEMENT_CROSS_CHECKED = "paper_supplement_cross_checked"
+
+
 @dataclass(frozen=True, slots=True)
 class FirstOrderRuntimeConventions:
     """Complete executable convention profile for one classic-sector run."""
@@ -64,6 +71,7 @@ class FirstOrderRuntimeConventions:
     modifiable_weight_initialization: str = "source_serialized_weight"
     gaussian_weight_convention: str = "normalized_density"
     gaussian_learning_bounds_convention: str = "projection_level"
+    projection_source_convention: str = "modeldb_as_serialized"
 
     @property
     def fingerprint(self) -> str:
@@ -86,7 +94,30 @@ def figure6_runtime_conventions() -> FirstOrderRuntimeConventions:
         zero_sensitivity_input_convention="omit_all_zero",
         modifiable_weight_initialization="figure6_pathway_specific",
         gaussian_learning_bounds_convention="figure6_pathway_specific",
+        projection_source_convention="modeldb_as_serialized",
     )
+
+
+def _resolved_projection_record(record, *, conventions: FirstOrderRuntimeConventions):
+    source_convention = ProjectionSourceConvention(conventions.projection_source_convention)
+    if (
+        source_convention is ProjectionSourceConvention.PAPER_SUPPLEMENT_CROSS_CHECKED
+        and record.id == "modeldb112923.projection.022"
+    ):
+        # SMART.nml points an excitatory channel named "AMPA 2/3" at
+        # Layer_4_INT with a Gaussian rule. Supplementary Table 3 independently
+        # specifies layer-2/3 excitatory -> layer-6II distal, one-to-one, as
+        # does the paper's category pathway. Preserve the literal record under
+        # MODELDB_AS_SERIALIZED and resolve it only in the cross-checked profile.
+        from dataclasses import replace
+
+        return replace(
+            record,
+            source_population="layer23_excitatory_v1",
+            method="connectFromOne",
+            kernel=None,
+        )
+    return record
 
 
 def first_order_population_parameters(
@@ -216,6 +247,7 @@ def build_first_order_chemical_sector(
     for record in MODELDB_FIRST_ORDER.projections:
         if record.kind != "chemical":
             continue
+        record = _resolved_projection_record(record, conventions=resolved_conventions)
         if record.source_population not in sector.populations:
             # The V2->V1 feedback projection belongs to the higher-order loop.
             continue

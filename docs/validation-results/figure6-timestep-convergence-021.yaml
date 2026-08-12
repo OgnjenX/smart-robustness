@@ -1,0 +1,34 @@
+id: figure6-timestep-convergence-021
+status: numerically-converged-failure
+claim: Figure 6b/c conclusions are stable over a factor-four timestep bracket
+protocol:
+  warmup_ms: 0.0
+  stimulus_ms: 100.0
+  profile: literal ModelDB projection sources with Figure 6 pathway-specific adaptive initialization
+runs:
+  - dt_ms: 0.005
+    relay_spikes: 20
+    layer4_spikes: 39
+    layer6ii_spikes: 1
+    bottom_up_horizontal_contrast: 0.0818990242
+    top_down_combined_horizontal_contrast: 0.0048809420
+  - dt_ms: 0.01
+    relay_spikes: 20
+    layer4_spikes: 39
+    layer6ii_spikes: 1
+    bottom_up_horizontal_contrast: 0.0816761683
+    top_down_combined_horizontal_contrast: 0.0049612302
+  - dt_ms: 0.02
+    relay_spikes: 20
+    layer4_spikes: 39
+    layer6ii_spikes: 1
+    bottom_up_horizontal_contrast: 0.0809615461
+    top_down_combined_horizontal_contrast: 0.0045366756
+assessment:
+  spike_counts_stable: true
+  causal_ordering_stable: true
+  figure6b_pass_all: true
+  figure6c_pass_all: false
+  dt_0_01_ms_retained: true
+notes:
+  - The Figure 6c deficit is not a timestep-selection artifact.

@@ -14,7 +14,12 @@ from ..learning import (
     gated_weight_derivative,
 )
 from ..models.currents import biexponential_normalization
-from ..protocols import BarOrientation, ClassicBarStimulus, apply_bar_stimulus
+from ..protocols import (
+    BarOrientation,
+    ClassicBarStimulus,
+    apply_bar_stimulus,
+    clear_bar_stimulus,
+)
 
 BOTTOM_UP_PROJECTION_ID = "modeldb112923.projection.035"
 TOP_DOWN_WIDE_PROJECTION_ID = "modeldb112923.projection.005"
@@ -154,6 +159,7 @@ class Figure6LearningProtocol:
 
     warmup_ms: float = 0.0
     stimulus_ms: float = 100.0
+    post_stimulus_ms: float = 0.0
     dt_ms: float = 0.01
     source_value: float = 120.0
     category_source_value: float = 70.0
@@ -170,6 +176,8 @@ class Figure6LearningProtocol:
             raise ValueError("warmup_ms cannot be negative")
         if self.stimulus_ms <= 0 or self.dt_ms <= 0:
             raise ValueError("stimulus_ms and dt_ms must be positive")
+        if self.post_stimulus_ms < 0:
+            raise ValueError("post_stimulus_ms cannot be negative")
         if not 0 <= self.winning_layer4_index < 81:
             raise ValueError("winning_layer4_index must address the 9x9 sheet")
         if not 0 <= self.active_category_index < 81:
@@ -299,6 +307,9 @@ def run_figure6_learning(
     )
     apply_bar_stimulus(sector, stimulus)
     sector.network.run(protocol.stimulus_ms * brian.ms)
+    if protocol.post_stimulus_ms:
+        clear_bar_stimulus(sector, stimulus)
+        sector.network.run(protocol.post_stimulus_ms * brian.ms)
     spike_counts = {
         name: int(monitor.num_spikes) - warmup_counts[name]
         for name, monitor in monitors.items()

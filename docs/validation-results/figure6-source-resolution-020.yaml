@@ -1,0 +1,29 @@
+id: figure6-source-resolution-020
+status: cross-checked-alternative-not-promoted
+claim: Supplementary Table 3 layer-2/3-to-layer-6II source resolves the inconsistent SMART.nml AMPA 2/3 record
+source_conflict:
+  paper: category chain includes layer 2/3 to layer 5 to layer 6II
+  supplement: layer23_excitatory_v1 to layer6ii_excitatory_v1 distal dendrite, one-to-one
+  smart_nml: layer4_inhibitory_v1 to layer6ii_excitatory_v1 distal dendrite, Gaussian, through an excitatory channel named AMPA 2/3
+cross_checked_run:
+  stimulus_ms: 100.0
+  warmup_ms: 0.0
+  layer6ii_spike_ms: 90.24
+  teaching_arrival_ms: 92.24
+  last_preceding_relay_spike_ms: 82.26
+  following_relay_spike_ms: null
+  bottom_up_horizontal_contrast: 0.0816764923
+  top_down_combined_horizontal_contrast: -0.0001049966
+post_stimulus_discriminator:
+  settling_ms: 25.0
+  relay_spikes: 87
+  following_relay_spike_ms: 104.90
+  bottom_up_horizontal_contrast: 0.1247400611
+  top_down_combined_horizontal_contrast: 0.0006312129
+assessment:
+  supplement_topology_executable: true
+  figure6c_pass: false
+  promoted_to_classic_profile: false
+notes:
+  - The literal ModelDB profile remains the executable Figure 6 candidate while the contradiction is unresolved.
+  - Post-stimulus continuation causes a broad rebound and does not reproduce the published top-down map.

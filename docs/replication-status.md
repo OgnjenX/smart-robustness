@@ -269,6 +269,17 @@ matched relay spikes at 61.99 ms. Combined top-down contrast improves to
 source-faithful protocol correction, while Figure 6c remains a partial result;
 see `figure6-zero-warmup-019.yaml`.
 
+Numerical convergence over 0.005, 0.01, and 0.02 ms preserves all monitored
+spike counts, causal ordering, Figure 6b success, and Figure 6c failure; see
+`figure6-timestep-convergence-021.yaml`. A separate cross-source contradiction
+was made executable: the supplement specifies layer-2/3 excitatory→layer-6II
+one-to-one input, whereas SMART.nml points the excitatory channel named
+`AMPA 2/3` at layer-4 interneurons with a Gaussian rule. The supplement profile
+delays the sole category spike until 90.24 ms and does not improve Figure 6c,
+even with a post-stimulus settling interval. It remains an explicit audit
+alternative rather than replacing the literal executable profile; see
+`figure6-source-resolution-020.yaml`.
+
 The Figure 7 protocol now keeps its Methods 4.9 somatic-current category cue
 separate from the blue category pixel in the recovered Figure 6 training PNG.
 Its predeclared scorer independently tests the approximately 40-Hz match and

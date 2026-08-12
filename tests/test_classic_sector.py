@@ -8,6 +8,7 @@ brian = pytest.importorskip("brian2")
 from smart_robustness.classic_sector import (
     FirstOrderRuntimeConventions,
     ZeroSensitivityInputConvention,
+    build_first_order_chemical_sector,
     build_first_order_intrinsic_sector,
     figure6_runtime_conventions,
 )
@@ -72,6 +73,25 @@ def test_figure6_profile_names_the_source_constrained_runtime() -> None:
     assert conventions.gaussian_weight_convention == "normalized_density"
     assert conventions.modifiable_weight_initialization == "figure6_pathway_specific"
     assert conventions.gaussian_learning_bounds_convention == "figure6_pathway_specific"
+    assert conventions.projection_source_convention == "modeldb_as_serialized"
+
+
+def test_cross_checked_profile_resolves_ampa_23_source_without_mutating_catalog() -> None:
+    brian.start_scope()
+    literal = build_first_order_chemical_sector(brian=brian)
+    literal_projection = literal.projections["modeldb112923.projection.022"]
+    assert literal.populations["layer4_inhibitory_v1"].group is literal_projection.source
+
+    brian.start_scope()
+    corrected = build_first_order_chemical_sector(
+        conventions=FirstOrderRuntimeConventions(
+            projection_source_convention="paper_supplement_cross_checked"
+        ),
+        brian=brian,
+    )
+    corrected_projection = corrected.projections["modeldb112923.projection.022"]
+    assert corrected.populations["layer23_excitatory_v1"].group is corrected_projection.source
+    assert len(corrected_projection) == 81
 
 
 def test_all_zero_input_channels_have_an_explicit_legacy_convention() -> None:

@@ -16,6 +16,7 @@ def test_figure6_learning_protocol_is_the_published_horizontal_episode() -> None
     protocol = Figure6LearningProtocol()
     assert protocol.warmup_ms == 0.0
     assert protocol.stimulus_ms == 100.0
+    assert protocol.post_stimulus_ms == 0.0
     assert protocol.source_value == 120.0
     assert protocol.category_source_value == 70.0
     assert protocol.winning_layer4_index == 40

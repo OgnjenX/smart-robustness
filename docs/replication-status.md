@@ -533,6 +533,17 @@ relay or layer-4 events. The framework threshold therefore exposes the late
 autonomous TRN cycle rather than restoring match-dependent reticular
 recruitment (`spike-event-rule-038.yaml`).
 
+A source-backed axial-convention sweep now localizes the remaining reticular
+failure more tightly. In every convention, all 81 TRN somata emit one common
+startup event; subsequent proximal dendritic calcium spikes reach at least
++71.9 mV while somata remain between -49.10 and -30.29 mV after 5 ms. Match and
+mismatch have identical post-startup somatic ranges. The paper-literal axial
+form recruits five relay and ten layer-4 events but still produces no later TRN
+event. Because `SMART.nml` marks only the soma with `monitorSpikes=true`, a
+dendritic event source is not promoted. Axial interpretation alone is therefore
+rejected as the missing Figure 7 mechanism; see
+`figure7-trn-axial-propagation-040.yaml`.
+
 A separate coordinate audit tested whether KInNeSS integrates voltage at zero
 relative to each compartment's serialized leak and adds the leak only when
 writing physical voltage. Membrane initialization and the voltage supplied to

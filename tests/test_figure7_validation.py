@@ -225,3 +225,5 @@ def test_figure7_result_accepts_relay_pathway_diagnostics() -> None:
     assert result.trn_layer6ii_nmda_peak_by_index == ()
     assert result.trn_relay_ampa_peak_by_index == ()
     assert result.trn_proximal_voltage_range_mV_by_index == ()
+    assert result.trn_soma_voltage_range_mV_by_index == ()
+    assert result.trn_post_startup_soma_voltage_range_mV_by_index == ()

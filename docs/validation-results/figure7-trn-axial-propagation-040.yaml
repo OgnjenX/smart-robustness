@@ -1,0 +1,63 @@
+id: figure7-trn-axial-propagation-040
+claim: A published or contemporaneous source-backed axial convention restores post-startup TRN somatic events in the Figure 7 assay
+status: rejected
+date: 2026-08-12
+sources:
+  - Grossberg and Versace 2008, multicompartment membrane equation and Table 3
+  - Versace et al. 2008 KInNeSS Equation 9
+  - ModelDB 112923 SMART.nml Reticular population
+protocol:
+  condition: match
+  duration_ms: 30
+  dt_ms: 0.01
+  top_down_current_pA: 600
+  learned_state: paper-constrained Figure 6c reference
+  diagnostic_indices: [22, 31, 38, 39, 40, 41, 42, 49, 58]
+axial_sweep:
+  kinness_serialized_edge:
+    trn_events: 81
+    relay_events: 0
+    layer4_events: 0
+    nonspecific_events: 2
+    trn_proximal_peak_range_mV: [71.8587, 74.2819]
+    trn_soma_peak_mV: 46.9784
+  kinness_2008:
+    trn_events: 81
+    relay_events: 0
+    layer4_events: 0
+    nonspecific_events: 2
+    trn_proximal_peak_range_mV: [71.8587, 74.2819]
+    trn_soma_peak_mV: 46.9784
+  paper_literal:
+    trn_events: 81
+    relay_events: 5
+    layer4_events: 10
+    nonspecific_events: 1
+    trn_proximal_peak_range_mV: [84.6927, 89.7358]
+    trn_soma_peak_mV: 40.1994
+  symmetric_cable:
+    trn_events: 81
+    relay_events: 0
+    layer4_events: 0
+    nonspecific_events: 2
+    trn_proximal_peak_range_mV: [71.8587, 74.2819]
+    trn_soma_peak_mV: 46.9784
+paired_active_profile:
+  match:
+    trn_events: 81
+    relay_events: 0
+    layer4_events: 0
+    nonspecific_events: 2
+    post_5_ms_trn_soma_range_mV: [-49.0998, -30.2886]
+  mismatch:
+    trn_events: 81
+    relay_events: 0
+    layer4_events: 0
+    nonspecific_events: 2
+    post_5_ms_trn_soma_range_mV: [-49.0998, -30.2886]
+interpretation:
+  - Every TRN soma produces one common initialization action potential and crosses the paper's +30 mV arming threshold.
+  - Later proximal dendritic calcium spikes reach at least +71.9 mV, but the soma remains below -30.2 mV after 5 ms and emits no further event.
+  - SMART.nml marks the soma, not a dendrite, with monitorSpikes=true; changing event emission to a dendrite is therefore not source-backed.
+  - The exact paired post-startup TRN soma ranges show that this late cycle is intrinsic and condition-independent at this stage.
+  - Axial-convention selection alone cannot reproduce Figure 7 match-dependent nonspecific inhibition.

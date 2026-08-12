@@ -181,6 +181,10 @@ class Figure7ConditionResult:
     trn_layer6ii_nmda_peak_by_index: tuple[tuple[int, float], ...] = ()
     trn_relay_ampa_peak_by_index: tuple[tuple[int, float], ...] = ()
     trn_proximal_voltage_range_mV_by_index: tuple[tuple[int, float, float], ...] = ()
+    trn_soma_voltage_range_mV_by_index: tuple[tuple[int, float, float], ...] = ()
+    trn_post_startup_soma_voltage_range_mV_by_index: tuple[
+        tuple[int, float, float], ...
+    ] = ()
 
     def __post_init__(self) -> None:
         if self.duration_ms <= 0:
@@ -390,7 +394,13 @@ def run_figure7_condition(
         )
         trn_state = brian.StateMonitor(
             sector.populations["trn"].group,
-            ("port_001_gate", "port_002_gate", "port_004_gate", "v_proximal_dendrite"),
+            (
+                "port_001_gate",
+                "port_002_gate",
+                "port_004_gate",
+                "v_proximal_dendrite",
+                "v_soma",
+            ),
             record=FIGURE7_RELAY_DIAGNOSTIC_INDICES,
             name=f"figure7_{condition.value}_trn_pathway_state",
         )
@@ -458,6 +468,8 @@ def run_figure7_condition(
     trn_layer6ii_nmda_peak: tuple[tuple[int, float], ...] = ()
     trn_relay_ampa_peak: tuple[tuple[int, float], ...] = ()
     trn_voltage_range: tuple[tuple[int, float, float], ...] = ()
+    trn_soma_voltage_range: tuple[tuple[int, float, float], ...] = ()
+    trn_post_startup_soma_voltage_range: tuple[tuple[int, float, float], ...] = ()
     if relay_state is not None:
         ampa = np.asarray(relay_state.port_005_gate) + np.asarray(
             relay_state.port_007_gate
@@ -558,6 +570,24 @@ def run_figure7_condition(
                 FIGURE7_RELAY_DIAGNOSTIC_INDICES, trn_voltage_mV, strict=True
             )
         )
+        trn_soma_voltage_mV = np.asarray(trn_state.v_soma / brian.mV)[
+            :, diagnostic_window
+        ]
+        trn_soma_voltage_range = tuple(
+            (index, float(np.min(values)), float(np.max(values)))
+            for index, values in zip(
+                FIGURE7_RELAY_DIAGNOSTIC_INDICES, trn_soma_voltage_mV, strict=True
+            )
+        )
+        post_startup_window = times_ms >= 5.0
+        trn_post_startup_soma_voltage_range = tuple(
+            (index, float(np.min(values)), float(np.max(values)))
+            for index, values in zip(
+                FIGURE7_RELAY_DIAGNOSTIC_INDICES,
+                trn_soma_voltage_mV[:, post_startup_window],
+                strict=True,
+            )
+        )
     def stimulus_times(monitor) -> tuple[float, ...]:
         stimulus_start_ms = equilibration_ms + top_down_cue_lead_ms
         return tuple(
@@ -615,6 +645,10 @@ def run_figure7_condition(
         trn_layer6ii_nmda_peak_by_index=trn_layer6ii_nmda_peak,
         trn_relay_ampa_peak_by_index=trn_relay_ampa_peak,
         trn_proximal_voltage_range_mV_by_index=trn_voltage_range,
+        trn_soma_voltage_range_mV_by_index=trn_soma_voltage_range,
+        trn_post_startup_soma_voltage_range_mV_by_index=(
+            trn_post_startup_soma_voltage_range
+        ),
     )
     if cpp_standalone_directory is not None:
         brian.device.reinit()

@@ -289,6 +289,18 @@ truncated to one integration step. These results are retained in
 `figure6-ahp-spike-coordinate-022.yaml`; physical-voltage spike detection and
 the archived AHP remain active.
 
+A provenance-labeled Figure 6c graphical reference now permits downstream
+mechanism assays without pretending that the current network learned it.
+Figure 7 at explicit 600- and 1000-pA layer-6II current candidates yields
+identical match and mismatch activity: five relay cells fire four times, TRN
+fires 264 spikes, and nonspecific thalamus fires six times. Orientation remains
+visible only in which five relay cells fire. A zero-expectation control is also
+identical, localizing the failure before relay-count modulation and TRN
+convergence; see `figure7-stage-localization-023.yaml`. Implementing Methods
+4.9's exact -12-mV clamp on only five relay dendrites requires a topology-
+preserving split into clamped and unclamped Brian2 populations; a masked ODE
+was tested and rejected because `0 * NaN` does not constitute an exact clamp.
+
 The Figure 7 protocol now keeps its Methods 4.9 somatic-current category cue
 separate from the blue category pixel in the recovered Figure 6 training PNG.
 Its predeclared scorer independently tests the approximately 40-Hz match and

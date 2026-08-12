@@ -46,8 +46,8 @@ class Figure6ReferenceExpectation:
     def __post_init__(self) -> None:
         if not 0 <= self.source_index < 81:
             raise ValueError("source_index must address the 9x9 sheet")
-        if self.peak_combined_weight <= 0:
-            raise ValueError("peak_combined_weight must be positive")
+        if self.peak_combined_weight < 0:
+            raise ValueError("peak_combined_weight cannot be negative")
         if self.sigma_x_cells <= 0 or self.sigma_y_cells <= 0:
             raise ValueError("reference sigmas must be positive")
 
@@ -133,6 +133,8 @@ class Figure7ConditionResult:
     relay_spike_times_ms: tuple[float, ...] = ()
     trn_spike_indices: tuple[int, ...] = ()
     trn_spike_times_ms: tuple[float, ...] = ()
+    category_spike_indices: tuple[int, ...] = ()
+    category_spike_times_ms: tuple[float, ...] = ()
     convention_fingerprint: str | None = None
     top_down_current_pA: float | None = None
     learned_state_provenance: str = "unspecified"
@@ -202,6 +204,7 @@ def run_figure7_condition(
     top_down_current_pA: float,
     learned_weights: Mapping[str, tuple[float, ...] | np.ndarray] | None = None,
     use_paper_constrained_reference: bool = False,
+    paper_reference: Figure6ReferenceExpectation | None = None,
     conventions=None,
     duration_ms: float = 100.0,
     dt_ms: float = 0.01,
@@ -224,7 +227,9 @@ def run_figure7_condition(
     brian.defaultclock.dt = dt_ms * brian.ms
     sector = build_first_order_connected_sector(conventions=conventions, brian=brian)
     if use_paper_constrained_reference:
-        learned_weights = paper_constrained_figure6_expectation(sector.projections)
+        learned_weights = paper_constrained_figure6_expectation(
+            sector.projections, paper_reference
+        )
         provenance = "paper-constrained-figure6c-reference"
     else:
         provenance = "simulated-learned-weight-snapshot"
@@ -246,7 +251,11 @@ def run_figure7_condition(
         sector.populations["trn"].group,
         name=f"figure7_{condition.value}_trn_spikes",
     )
-    sector.network.add(nonspecific, layer4, relay, trn)
+    category = brian.SpikeMonitor(
+        sector.populations["layer6ii_excitatory_v1"].group,
+        name=f"figure7_{condition.value}_category_spikes",
+    )
+    sector.network.add(nonspecific, layer4, relay, trn, category)
     cue = ClassicMatchMismatchCue(
         condition=condition,
         top_down_current_pA=top_down_current_pA,
@@ -264,6 +273,8 @@ def run_figure7_condition(
         relay_spike_times_ms=tuple(float(value) for value in relay.t / brian.ms),
         trn_spike_indices=tuple(int(value) for value in trn.i),
         trn_spike_times_ms=tuple(float(value) for value in trn.t / brian.ms),
+        category_spike_indices=tuple(int(value) for value in category.i),
+        category_spike_times_ms=tuple(float(value) for value in category.t / brian.ms),
         convention_fingerprint=conventions.fingerprint,
         top_down_current_pA=top_down_current_pA,
         learned_state_provenance=provenance,

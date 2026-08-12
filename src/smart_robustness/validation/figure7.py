@@ -12,7 +12,12 @@ from dataclasses import dataclass
 
 import numpy as np
 
-from ..protocols import MatchCondition
+from ..protocols import (
+    ClassicMatchMismatchCue,
+    MatchCondition,
+    apply_match_mismatch_cue,
+    clear_match_mismatch_cue,
+)
 from .figure6 import TOP_DOWN_NARROW_PROJECTION_ID, TOP_DOWN_WIDE_PROJECTION_ID
 
 FIGURE7_MATCH_RATE_HZ = 40.0
@@ -22,6 +27,68 @@ FIGURE7_REQUIRED_LEARNED_PROJECTIONS = (
     TOP_DOWN_WIDE_PROJECTION_ID,
     TOP_DOWN_NARROW_PROJECTION_ID,
 )
+
+
+@dataclass(frozen=True, slots=True)
+class Figure6ReferenceExpectation:
+    """Paper-constrained horizontal expectation for downstream assays.
+
+    Figure 6c provides a combined graphical field but no raw wide/narrow
+    weights.  This calibrated state is therefore a downstream reference, not a
+    claim that the current network learned the field.
+    """
+
+    source_index: int = 40
+    peak_combined_weight: float = 2.5
+    sigma_x_cells: float = 2.0
+    sigma_y_cells: float = 0.8
+
+    def __post_init__(self) -> None:
+        if not 0 <= self.source_index < 81:
+            raise ValueError("source_index must address the 9x9 sheet")
+        if self.peak_combined_weight <= 0:
+            raise ValueError("peak_combined_weight must be positive")
+        if self.sigma_x_cells <= 0 or self.sigma_y_cells <= 0:
+            raise ValueError("reference sigmas must be positive")
+
+
+def paper_constrained_figure6_expectation(
+    projections: Mapping[str, object],
+    reference: Figure6ReferenceExpectation | None = None,
+) -> dict[str, tuple[float, ...]]:
+    """Construct a labeled Figure 6c-like state for Figure 7/10 tests.
+
+    The combined target is split equally between the archived wide and narrow
+    adaptive AMPA channels because the publication does not identify their
+    individual post-learning maps.  This underidentification is part of the
+    returned state's documented provenance.
+    """
+
+    reference = reference or Figure6ReferenceExpectation()
+    desired = np.zeros(81, dtype=float)
+    source_y, source_x = divmod(reference.source_index, 9)
+    for index in range(81):
+        y, x = divmod(index, 9)
+        dx = min(abs(x - source_x), 9 - abs(x - source_x))
+        dy = min(abs(y - source_y), 9 - abs(y - source_y))
+        desired[index] = reference.peak_combined_weight * np.exp(
+            -0.5
+            * (
+                (dx / reference.sigma_x_cells) ** 2
+                + (dy / reference.sigma_y_cells) ** 2
+            )
+        )
+    learned: dict[str, tuple[float, ...]] = {}
+    for projection_id in FIGURE7_REQUIRED_LEARNED_PROJECTIONS:
+        projection = projections[projection_id]
+        values = np.asarray(projection.w[:], dtype=float).copy()
+        source = np.asarray(projection.i[:], dtype=int)
+        target = np.asarray(projection.j[:], dtype=int)
+        selected = source == reference.source_index
+        maximum = np.asarray(projection.w_maximum[:], dtype=float)
+        values[selected] = np.minimum(desired[target[selected]] / 2.0, maximum[selected])
+        learned[projection_id] = tuple(float(value) for value in values)
+    return learned
 
 
 def apply_figure7_learned_state(
@@ -62,6 +129,13 @@ class Figure7ConditionResult:
     duration_ms: float
     nonspecific_spike_times_ms: tuple[float, ...]
     layer4_spike_times_ms: tuple[float, ...] = ()
+    relay_spike_indices: tuple[int, ...] = ()
+    relay_spike_times_ms: tuple[float, ...] = ()
+    trn_spike_indices: tuple[int, ...] = ()
+    trn_spike_times_ms: tuple[float, ...] = ()
+    convention_fingerprint: str | None = None
+    top_down_current_pA: float | None = None
+    learned_state_provenance: str = "unspecified"
 
     def __post_init__(self) -> None:
         if self.duration_ms <= 0:
@@ -119,4 +193,78 @@ def assess_figure7_arousal(
         match_rate_hz=match.nonspecific_rate_hz,
         mismatch_rate_hz=mismatch.nonspecific_rate_hz,
         tolerance_hz=tolerance_hz,
+    )
+
+
+def run_figure7_condition(
+    *,
+    condition: MatchCondition,
+    top_down_current_pA: float,
+    learned_weights: Mapping[str, tuple[float, ...] | np.ndarray] | None = None,
+    use_paper_constrained_reference: bool = False,
+    conventions=None,
+    duration_ms: float = 100.0,
+    dt_ms: float = 0.01,
+    brian=None,
+) -> Figure7ConditionResult:
+    """Run one source-labeled Figure 7 match or mismatch condition."""
+
+    if learned_weights is not None and use_paper_constrained_reference:
+        raise ValueError("pass learned_weights or request the paper-constrained reference, not both")
+    if learned_weights is None and not use_paper_constrained_reference:
+        raise ValueError("Figure 7 requires an explicit learned expectation state")
+    if duration_ms <= 0 or dt_ms <= 0:
+        raise ValueError("duration_ms and dt_ms must be positive")
+    if brian is None:
+        import brian2 as brian
+    from ..classic_sector import build_first_order_connected_sector, figure6_runtime_conventions
+
+    conventions = conventions or figure6_runtime_conventions()
+    brian.start_scope()
+    brian.defaultclock.dt = dt_ms * brian.ms
+    sector = build_first_order_connected_sector(conventions=conventions, brian=brian)
+    if use_paper_constrained_reference:
+        learned_weights = paper_constrained_figure6_expectation(sector.projections)
+        provenance = "paper-constrained-figure6c-reference"
+    else:
+        provenance = "simulated-learned-weight-snapshot"
+    assert learned_weights is not None
+    apply_figure7_learned_state(sector.projections, learned_weights)
+    nonspecific = brian.SpikeMonitor(
+        sector.populations["thalamic_nonspecific"].group,
+        name=f"figure7_{condition.value}_nonspecific_spikes",
+    )
+    layer4 = brian.SpikeMonitor(
+        sector.populations["layer4_excitatory_v1"].group,
+        name=f"figure7_{condition.value}_layer4_spikes",
+    )
+    relay = brian.SpikeMonitor(
+        sector.populations["thalamic_relay"].group,
+        name=f"figure7_{condition.value}_relay_spikes",
+    )
+    trn = brian.SpikeMonitor(
+        sector.populations["trn"].group,
+        name=f"figure7_{condition.value}_trn_spikes",
+    )
+    sector.network.add(nonspecific, layer4, relay, trn)
+    cue = ClassicMatchMismatchCue(
+        condition=condition,
+        top_down_current_pA=top_down_current_pA,
+        duration_ms=duration_ms,
+    )
+    apply_match_mismatch_cue(sector, cue, brian=brian)
+    sector.network.run(duration_ms * brian.ms)
+    clear_match_mismatch_cue(sector, cue, brian=brian)
+    return Figure7ConditionResult(
+        condition=condition,
+        duration_ms=duration_ms,
+        nonspecific_spike_times_ms=tuple(float(value) for value in nonspecific.t / brian.ms),
+        layer4_spike_times_ms=tuple(float(value) for value in layer4.t / brian.ms),
+        relay_spike_indices=tuple(int(value) for value in relay.i),
+        relay_spike_times_ms=tuple(float(value) for value in relay.t / brian.ms),
+        trn_spike_indices=tuple(int(value) for value in trn.i),
+        trn_spike_times_ms=tuple(float(value) for value in trn.t / brian.ms),
+        convention_fingerprint=conventions.fingerprint,
+        top_down_current_pA=top_down_current_pA,
+        learned_state_provenance=provenance,
     )

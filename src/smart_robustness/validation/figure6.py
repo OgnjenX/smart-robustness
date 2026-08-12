@@ -165,6 +165,7 @@ class Figure6LearningProtocol:
     category_source_value: float = 70.0
     winning_layer4_index: int = 40
     active_category_index: int = 40
+    layer6ii_ahp_scale: float = 1.0
     monitored_populations: tuple[str, ...] = (
         "thalamic_relay",
         "layer4_excitatory_v1",
@@ -182,6 +183,8 @@ class Figure6LearningProtocol:
             raise ValueError("winning_layer4_index must address the 9x9 sheet")
         if not 0 <= self.active_category_index < 81:
             raise ValueError("active_category_index must address the 9x9 sheet")
+        if self.layer6ii_ahp_scale < 0:
+            raise ValueError("layer6ii_ahp_scale cannot be negative")
 
 
 @dataclass(frozen=True, slots=True)
@@ -277,6 +280,8 @@ def run_figure6_learning(
     brian.start_scope()
     brian.defaultclock.dt = protocol.dt_ms * brian.ms
     sector = build_first_order_connected_sector(conventions=conventions, brian=brian)
+    category_group = sector.populations["layer6ii_excitatory_v1"].group
+    category_group.g_ahp_max = category_group.g_ahp_max[:] * protocol.layer6ii_ahp_scale
     monitored_ids = (
         BOTTOM_UP_PROJECTION_ID,
         TOP_DOWN_WIDE_PROJECTION_ID,

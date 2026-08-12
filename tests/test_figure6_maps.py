@@ -21,6 +21,7 @@ def test_figure6_learning_protocol_is_the_published_horizontal_episode() -> None
     assert protocol.category_source_value == 70.0
     assert protocol.winning_layer4_index == 40
     assert protocol.active_category_index == 40
+    assert protocol.layer6ii_ahp_scale == 1.0
     assert protocol.monitored_populations == (
         "thalamic_relay",
         "layer4_excitatory_v1",

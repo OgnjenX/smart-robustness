@@ -280,6 +280,15 @@ even with a post-stimulus settling interval. It remains an explicit audit
 alternative rather than replacing the literal executable profile; see
 `figure6-source-resolution-020.yaml`.
 
+Two additional falsifications leave the single category teaching event
+unchanged. Removing layer-6II's archived AHP produces bit-identical spike times
+and maps; applying the spike detector in leak-relative coordinates yields only
+five relay spikes and zero top-down contrast. Equation 6's positive branch is
+already evaluated directly from ongoing voltage above 30 mV, so it is not
+truncated to one integration step. These results are retained in
+`figure6-ahp-spike-coordinate-022.yaml`; physical-voltage spike detection and
+the archived AHP remain active.
+
 The Figure 7 protocol now keeps its Methods 4.9 somatic-current category cue
 separate from the blue category pixel in the recovered Figure 6 training PNG.
 Its predeclared scorer independently tests the approximately 40-Hz match and

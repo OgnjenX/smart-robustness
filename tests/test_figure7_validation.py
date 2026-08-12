@@ -6,9 +6,12 @@ import pytest
 from smart_robustness.protocols import MatchCondition
 from smart_robustness.validation.figure7 import (
     FIGURE7_REQUIRED_LEARNED_PROJECTIONS,
+    Figure6ReferenceExpectation,
     Figure7ConditionResult,
     apply_figure7_learned_state,
     assess_figure7_arousal,
+    paper_constrained_figure6_expectation,
+    run_figure7_condition,
 )
 
 
@@ -55,6 +58,8 @@ class _Projection:
         self.w = np.zeros(3)
         self.w_maximum = np.ones(3)
         self.modifiable = np.ones(3)
+        self.i = np.asarray((40, 40, 40))
+        self.j = np.asarray((39, 40, 41))
 
     def __len__(self) -> int:
         return 3
@@ -82,3 +87,32 @@ def test_figure7_rejects_missing_or_out_of_bounds_learned_weights() -> None:
     }
     with pytest.raises(ValueError, match="exceed declared maxima"):
         apply_figure7_learned_state(projections, invalid)
+
+
+def test_paper_constrained_reference_is_horizontal_and_split_across_channels() -> None:
+    projections = {projection_id: _Projection() for projection_id in FIGURE7_REQUIRED_LEARNED_PROJECTIONS}
+    learned = paper_constrained_figure6_expectation(
+        projections,
+        Figure6ReferenceExpectation(
+            peak_combined_weight=1.0,
+            sigma_x_cells=2.0,
+            sigma_y_cells=0.5,
+        ),
+    )
+    combined = sum(np.asarray(values) for values in learned.values())
+    assert combined == pytest.approx((np.exp(-0.5 / 4), 1.0, np.exp(-0.5 / 4)))
+
+
+def test_figure7_runner_requires_exactly_one_learned_state_source() -> None:
+    with pytest.raises(ValueError, match="requires an explicit"):
+        run_figure7_condition(
+            condition=MatchCondition.MATCH,
+            top_down_current_pA=100.0,
+        )
+    with pytest.raises(ValueError, match="not both"):
+        run_figure7_condition(
+            condition=MatchCondition.MATCH,
+            top_down_current_pA=100.0,
+            learned_weights={},
+            use_paper_constrained_reference=True,
+        )

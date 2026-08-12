@@ -243,11 +243,14 @@ Figure 6c as failing, rather than claiming the full figure.
 
 A pathway-specific Figure 6 candidate initialized the two corticothalamic
 projections at their Gaussian-scaled asymptotic baselines while retaining
-projection-level maxima. It corrected the sign of both top-down orientation
-contrasts but produced only 0.00032 and 0.00047, far below the predeclared 0.01
-effect-size gate. The exact failed discriminator is retained in
-`figure6-pathway-initialization-016.yaml` and as an inactive, tested runtime
-alternative; it is not part of the classic profile.
+projection-level maxima. Figure 6c's own approximately 0--0.3 before-learning
+scale now supports this initial state over the roughly 2.1 combined center
+weight produced by initializing both pathways at their serialized maxima. The
+paper depicts one corticothalamic field, so the scorer now sums the archived
+wide and narrow adaptive AMPA maps. This source interpretation is promoted and
+documented in `figure6-map-interpretation-017.yaml`; the prior run's combined
+horizontal contrast is still only about 0.00079, far below the predeclared 0.01
+gate, so Figure 6c learning remains unreproduced.
 
 The Figure 7 protocol now keeps its Methods 4.9 somatic-current category cue
 separate from the blue category pixel in the recovered Figure 6 training PNG.

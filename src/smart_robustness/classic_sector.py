@@ -84,6 +84,8 @@ def figure6_runtime_conventions() -> FirstOrderRuntimeConventions:
     return FirstOrderRuntimeConventions(
         gate_initialization_convention="zero",
         zero_sensitivity_input_convention="omit_all_zero",
+        modifiable_weight_initialization="figure6_pathway_specific",
+        gaussian_learning_bounds_convention="figure6_pathway_specific",
     )
 
 

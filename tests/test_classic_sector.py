@@ -70,7 +70,8 @@ def test_figure6_profile_names_the_source_constrained_runtime() -> None:
     assert conventions.spike_event_coordinate == "absolute_physical"
     assert conventions.specific_capacitance_uF_cm2 == 1.0
     assert conventions.gaussian_weight_convention == "normalized_density"
-    assert conventions.gaussian_learning_bounds_convention == "projection_level"
+    assert conventions.modifiable_weight_initialization == "figure6_pathway_specific"
+    assert conventions.gaussian_learning_bounds_convention == "figure6_pathway_specific"
 
 
 def test_all_zero_input_channels_have_an_explicit_legacy_convention() -> None:

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import numpy as np
+import pytest
 
 from smart_robustness.validation.figure6 import (
     MINIMUM_TOP_DOWN_HORIZONTAL_CONTRAST,
@@ -56,3 +57,19 @@ def test_tiny_positive_top_down_contrast_does_not_count_as_reproduction() -> Non
 
     assert weak.horizontal_orientation_contrast > 0
     assert not result.top_down_oriented
+
+
+def test_figure6c_scores_the_combined_wide_and_narrow_field() -> None:
+    before = np.zeros(81)
+    wide_after = np.zeros(81)
+    narrow_after = np.zeros(81)
+    wide_after[[38, 39, 41, 42]] = 0.006
+    narrow_after[[38, 39, 41, 42]] = 0.006
+    wide = Figure6MapSummary("wide", "map", tuple(before), tuple(wide_after))
+    narrow = Figure6MapSummary("narrow", "map", tuple(before), tuple(narrow_after))
+    result = Figure6LearningResult("fingerprint", 100.0, {}, wide, wide, narrow)
+
+    assert wide.horizontal_orientation_contrast < MINIMUM_TOP_DOWN_HORIZONTAL_CONTRAST
+    assert narrow.horizontal_orientation_contrast < MINIMUM_TOP_DOWN_HORIZONTAL_CONTRAST
+    assert result.top_down_combined.horizontal_orientation_contrast == pytest.approx(0.012)
+    assert result.top_down_oriented

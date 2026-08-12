@@ -109,15 +109,39 @@ class Figure6LearningResult:
     top_down_narrow: Figure6MapSummary
 
     @property
+    def top_down_combined(self) -> Figure6MapSummary:
+        """Combined adaptive AMPA field plotted in Figure 6c.
+
+        The archived relay has separate wide and narrow adaptive AMPA gates,
+        while the paper shows one corticothalamic weight field.  Their summed
+        before/after maps also match the figure's stated graphical scale.
+        """
+
+        return Figure6MapSummary(
+            projection_id=f"{self.top_down_wide.projection_id}+{self.top_down_narrow.projection_id}",
+            map_role="combined_outgoing_from_active_layer6ii",
+            before=tuple(
+                wide + narrow
+                for wide, narrow in zip(
+                    self.top_down_wide.before, self.top_down_narrow.before, strict=True
+                )
+            ),
+            after=tuple(
+                wide + narrow
+                for wide, narrow in zip(
+                    self.top_down_wide.after, self.top_down_narrow.after, strict=True
+                )
+            ),
+        )
+
+    @property
     def bottom_up_oriented(self) -> bool:
         return self.bottom_up.horizontal_orientation_contrast > 0
 
     @property
     def top_down_oriented(self) -> bool:
         return (
-            self.top_down_wide.horizontal_orientation_contrast
-            >= MINIMUM_TOP_DOWN_HORIZONTAL_CONTRAST
-            and self.top_down_narrow.horizontal_orientation_contrast
+            self.top_down_combined.horizontal_orientation_contrast
             >= MINIMUM_TOP_DOWN_HORIZONTAL_CONTRAST
         )
 

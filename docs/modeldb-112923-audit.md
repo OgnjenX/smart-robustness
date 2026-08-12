@@ -92,18 +92,17 @@ serialized channel projections; the full two-area file contains 24 populations.
   waveforms as `g1 + g2 - g1*g2`, rather than linearly accumulating every past
   event in one postsynaptic state. This preserves the required `[0,1]` gate
   bound before receptor-density weighting.
-- For modifiable projections, the XML `weight` is the serialized current and
-  upper-bound weight, whereas `assymptoticWeight` is Equation 25's decorrelated
-  baseline `w0`. The source profile therefore initializes at `weight`; starting
-  at the asymptote remains an explicit audit alternative. Figure 6's strong
-  Gaussian pre-learning maps independently support this distinction.
+- For modifiable projections, XML `weight` is the upper bound and
+  `assymptoticWeight` is Equation 25's decorrelated baseline `w0`. Figure 6
+  resolves pathway-specific initial states: the strong Figure 6b bottom-up map
+  starts at serialized `weight`, whereas Figure 6c's approximately 0--0.3
+  before-learning scale matches the sum of the wide and narrow Gaussian-scaled
+  0.05 asymptotes, not their roughly 2.1 combined serialized center weight.
 - Section 4.9's Gaussian calculates the initial many-to-one synaptic weights,
-  while Equation 25 defines projection-level `w0` and upper bounds. Scaling all
-  three by the Gaussian prevents the broad horizontal reshaping published in
-  Figure 6b. The classic path therefore uses projection-level learning bounds,
-  lifting a local upper bound only when a normalized narrow Gaussian starts
-  above the serialized amplitude. `spatially_scaled` bounds remain an audit
-  alternative.
+  while Equation 25 defines projection-level upper bounds. Figure 6b retains a
+  projection-level baseline; Figure 6c identifies a Gaussian-scaled local
+  baseline for the two corticothalamic adaptive fields. Fully spatially scaled
+  maxima remain an audit alternative.
 - Ten voltage-driven input channels now follow KInNeSS Equations 4--5: their
   four serialized sensitivities shift the effective driving potential from
   red/green/blue/alpha source values in [0,255]. The eleventh external channel

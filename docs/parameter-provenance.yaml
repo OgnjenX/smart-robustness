@@ -72,10 +72,10 @@ parameters:
     source: KInNeSS Section 4.9 Gaussian curve; Grossberg and Versace 2008 Figure 6b
     note: relay-to-layer4 weight 6 with spread 0.5 gives center weight 3.8197, matching the published before-learning scale near 4; source_peak remains an audit alternative
   model.learning.gaussian_bounds_convention:
-    value: projection_level
+    value: Figure 6 pathway-specific (bottom-up projection-level baseline; corticothalamic Gaussian-scaled baseline with projection-level maximum)
     status: paper-supported executable convention
     source: KInNeSS Sections 4.9 and 4.10; Grossberg and Versace 2008 Figure 6b
-    note: Gaussian scales initialized synaptic weights; Equation 25 w0 and upper bound remain projection-level, with local upper bound lifted only when a normalized initial coefficient exceeds the amplitude
+    note: Figure 6b initializes the bottom-up map at the serialized maximum, while Figure 6c's approximately 0--0.3 before-learning scale identifies Gaussian-scaled 0.05 baselines for both adaptive corticothalamic AMPA fields; their upper bounds remain projection-level
   model.multicompartment.zero_sensitivity_input_convention:
     value: framework_resting_leak or omit_all_zero; must be selected explicitly
     status: exploratory

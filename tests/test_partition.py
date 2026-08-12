@@ -6,6 +6,7 @@ import pytest
 from smart_robustness.modeldb_projections import MODELDB_FIRST_ORDER
 from smart_robustness.models.modeldb112923 import first_order_population_facts
 from smart_robustness.partition import (
+    PartitionedPopulation,
     PartitionedProjection,
     complementary_partitions,
     partition_edges,
@@ -144,3 +145,25 @@ def test_partitioned_projection_reconstructs_and_updates_global_weight_view() ->
     projection.write("modifiable", 0.0)
     assert first.modifiable == pytest.approx(0)
     assert second.modifiable == pytest.approx(0)
+
+
+class _Population:
+    def __init__(self, size: int) -> None:
+        self.group = type("Group", (), {"N": size})()
+        self.compartments = ("soma", "dendrite")
+        self.values = np.zeros(size)
+
+    def set_external_input(self, _record, _channel, value, indices=slice(None)) -> None:
+        self.values[indices] = value
+
+
+def test_partitioned_population_dispatches_global_indices() -> None:
+    selected, remainder = complementary_partitions(population_size=5, selected_indices=(1, 3))
+    selected_population = _Population(2)
+    remainder_population = _Population(3)
+    population = PartitionedPopulation(
+        ((selected, selected_population), (remainder, remainder_population))
+    )
+    population.set_external_input("input", "green", 7, indices=(0, 3, 4))
+    assert selected_population.values == pytest.approx((0, 7))
+    assert remainder_population.values == pytest.approx((7, 0, 7))

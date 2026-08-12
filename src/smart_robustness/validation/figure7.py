@@ -208,6 +208,7 @@ def run_figure7_condition(
     conventions=None,
     duration_ms: float = 100.0,
     dt_ms: float = 0.01,
+    exact_relay_voltage_clamp: bool = False,
     brian=None,
 ) -> Figure7ConditionResult:
     """Run one source-labeled Figure 7 match or mismatch condition."""
@@ -220,12 +221,29 @@ def run_figure7_condition(
         raise ValueError("duration_ms and dt_ms must be positive")
     if brian is None:
         import brian2 as brian
-    from ..classic_sector import build_first_order_connected_sector, figure6_runtime_conventions
+    from ..classic_sector import (
+        build_first_order_connected_sector,
+        build_first_order_voltage_clamp_sector,
+        figure6_runtime_conventions,
+    )
 
     conventions = conventions or figure6_runtime_conventions()
     brian.start_scope()
     brian.defaultclock.dt = dt_ms * brian.ms
-    sector = build_first_order_connected_sector(conventions=conventions, brian=brian)
+    orientation = ClassicMatchMismatchCue(
+        condition=condition,
+        top_down_current_pA=top_down_current_pA,
+        duration_ms=duration_ms,
+    ).bottom_up_stimulus
+    if exact_relay_voltage_clamp:
+        sector = build_first_order_voltage_clamp_sector(
+            clamped_relay_indices=orientation.active_indices,
+            holding_mV=orientation.expected_holding_mV,
+            conventions=conventions,
+            brian=brian,
+        )
+    else:
+        sector = build_first_order_connected_sector(conventions=conventions, brian=brian)
     if use_paper_constrained_reference:
         learned_weights = paper_constrained_figure6_expectation(
             sector.projections, paper_reference
@@ -261,7 +279,9 @@ def run_figure7_condition(
         top_down_current_pA=top_down_current_pA,
         duration_ms=duration_ms,
     )
-    apply_match_mismatch_cue(sector, cue, brian=brian)
+    apply_match_mismatch_cue(
+        sector, cue, apply_relay_input=not exact_relay_voltage_clamp, brian=brian
+    )
     sector.network.run(duration_ms * brian.ms)
     clear_match_mismatch_cue(sector, cue, brian=brian)
     return Figure7ConditionResult(

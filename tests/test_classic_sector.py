@@ -9,9 +9,29 @@ from smart_robustness.classic_sector import (
     FirstOrderRuntimeConventions,
     ZeroSensitivityInputConvention,
     build_first_order_chemical_sector,
+    build_first_order_voltage_clamp_sector,
     build_first_order_intrinsic_sector,
     figure6_runtime_conventions,
 )
+
+
+def test_protocol_voltage_clamp_preserves_sector_and_pins_selected_relay_dendrites() -> None:
+    brian.start_scope()
+    brian.prefs.codegen.target = "numpy"
+    brian.defaultclock.dt = 0.01 * brian.ms
+    selected = (38, 39, 40, 41, 42)
+    sector = build_first_order_voltage_clamp_sector(
+        clamped_relay_indices=selected,
+        conventions=figure6_runtime_conventions(),
+        brian=brian,
+    )
+    assert sector.cell_count == 812
+    assert sector.compartment_count == 1950
+    assert len(sector.projections) == 53
+    relay = sector.populations["thalamic_relay"].group
+    sector.network.run(0.02 * brian.ms)
+    assert np.asarray(relay.v_proximal_dendrite[list(selected)] / brian.mV) == pytest.approx(-12)
+    assert float(relay.v_proximal_dendrite[0] / brian.mV) != pytest.approx(-12)
 
 
 def test_first_order_intrinsic_sector_builds_all_source_cells() -> None:

@@ -8,6 +8,8 @@ from dataclasses import asdict, dataclass
 from enum import StrEnum
 from typing import Any
 
+import numpy as np
+
 from .modeldb_projections import MODELDB_FIRST_ORDER
 from .models.compartmental_hh import CompartmentalPopulation, create_compartmental_hh_population
 from .models.modeldb112923 import FirstOrderPopulationFacts, first_order_population_facts
@@ -17,24 +19,28 @@ from .models.ports import (
     modeldb_injection_ports_for_target,
     modeldb_ports_for_target,
 )
+from .partition import population_parts
 from .synapses import connect_modeldb_gap_junction, connect_modeldb_projection
 
 
 @dataclass(slots=True)
 class FirstOrderSector:
     network: Any
-    populations: dict[str, CompartmentalPopulation]
+    populations: dict[str, Any]
     facts: tuple[FirstOrderPopulationFacts, ...]
     projections: dict[str, Any]
 
     @property
     def cell_count(self) -> int:
-        return sum(int(population.group.N) for population in self.populations.values())
+        return sum(
+            sum(int(part.group.N) for _, part in population_parts(population))
+            for population in self.populations.values()
+        )
 
     @property
     def compartment_count(self) -> int:
         return sum(
-            int(population.group.N) * len(population.compartments)
+            sum(int(part.group.N) for _, part in population_parts(population)) * len(population.compartments)
             for population in self.populations.values()
         )
 
@@ -271,6 +277,46 @@ def build_first_order_chemical_sector(
         )
     sector.projections = projections
     sector.network.add(*projections.values())
+    return sector
+
+
+def build_first_order_voltage_clamp_sector(
+    *,
+    clamped_relay_indices: tuple[int, ...],
+    holding_mV: float = -12.0,
+    conventions: FirstOrderRuntimeConventions | None = None,
+    brian=None,
+) -> FirstOrderSector:
+    """Build a connected sector with a discrete exact relay voltage clamp.
+
+    Brian2 does not allow split presynaptic groups to sum into one receptor
+    state. Keeping the original group therefore preserves the archived SMART
+    topology, while start/end operators pin the selected dendrites at every
+    integration boundary without introducing a masked ``0 * NaN`` ODE.
+    """
+
+    if brian is None:
+        import brian2 as brian
+    conventions = conventions or FirstOrderRuntimeConventions()
+    if not clamped_relay_indices or len(set(clamped_relay_indices)) != len(clamped_relay_indices):
+        raise ValueError("clamped relay indices must be nonempty and unique")
+    if any(index < 0 or index >= 81 for index in clamped_relay_indices):
+        raise ValueError("clamped relay index outside 9x9 sheet")
+    sector = build_first_order_connected_sector(conventions=conventions, brian=brian)
+    relay = sector.populations["thalamic_relay"].group
+    indices = np.asarray(clamped_relay_indices, dtype=int)
+
+    def pin_relay_dendrites() -> None:
+        relay.v_proximal_dendrite[indices] = holding_mV * brian.mV
+
+    clamp_start = brian.NetworkOperation(
+        pin_relay_dendrites, when="start", name="smart_relay_voltage_clamp_start"
+    )
+    clamp_end = brian.NetworkOperation(
+        pin_relay_dendrites, when="end", name="smart_relay_voltage_clamp_end"
+    )
+    pin_relay_dendrites()
+    sector.network.add(clamp_start, clamp_end)
     return sector
 
 

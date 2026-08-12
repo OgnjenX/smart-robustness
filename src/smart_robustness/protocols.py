@@ -110,21 +110,23 @@ class ClassicMatchMismatchCue:
         )
 
 
-def apply_bar_stimulus(sector: FirstOrderSector, stimulus: ClassicBarStimulus) -> None:
+def apply_bar_stimulus(
+    sector: FirstOrderSector,
+    stimulus: ClassicBarStimulus,
+    *,
+    apply_relay_input: bool = True,
+) -> None:
     """Apply all nonzero channels of one recovered KInNeSS stimulus PNG."""
 
     relay = sector.populations["thalamic_relay"]
-    relay.set_external_input(
-        stimulus.relay_input_record_id,
-        stimulus.source_channel,
-        0.0,
-    )
-    relay.set_external_input(
-        stimulus.relay_input_record_id,
-        stimulus.source_channel,
-        stimulus.source_value,
-        indices=list(stimulus.active_indices),
-    )
+    relay.set_external_input(stimulus.relay_input_record_id, stimulus.source_channel, 0.0)
+    if apply_relay_input:
+        relay.set_external_input(
+            stimulus.relay_input_record_id,
+            stimulus.source_channel,
+            stimulus.source_value,
+            indices=list(stimulus.active_indices),
+        )
     sector.populations["layer6ii_excitatory_v1"].set_external_input(
         stimulus.category_input_record_id,
         "blue",
@@ -200,6 +202,7 @@ def apply_match_mismatch_cue(
     sector: FirstOrderSector,
     cue: ClassicMatchMismatchCue,
     *,
+    apply_relay_input: bool = True,
     brian=None,
 ) -> None:
     """Apply Figure 7 bottom-up input and the Methods 4.9 layer-6II current cue."""
@@ -207,7 +210,9 @@ def apply_match_mismatch_cue(
     if brian is None:
         import brian2 as brian
 
-    apply_bar_stimulus(sector, cue.bottom_up_stimulus)
+    apply_bar_stimulus(
+        sector, cue.bottom_up_stimulus, apply_relay_input=apply_relay_input
+    )
     layer6ii = sector.populations[cue.top_down_population].group
     layer6ii.i_drive_soma = 0 * brian.pA
     layer6ii.i_drive_soma[cue.top_down_cell_index] = cue.top_down_current_pA * brian.pA

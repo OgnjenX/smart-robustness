@@ -94,6 +94,53 @@ class PartitionedProjection:
             offset += count
 
 
+@dataclass(slots=True)
+class PartitionedPopulation:
+    """Global-index facade over disjoint physical neuron groups."""
+
+    parts: tuple[tuple[IndexPartition, Any], ...]
+
+    def __post_init__(self) -> None:
+        if not self.parts:
+            raise ValueError("partitioned population requires at least one part")
+        sizes = {partition.population_size for partition, _ in self.parts}
+        covered = [index for partition, _ in self.parts for index in partition.global_indices]
+        if len(sizes) != 1 or sorted(covered) != list(range(next(iter(sizes)))):
+            raise ValueError("population partitions must form an exact global cover")
+
+    @property
+    def population_size(self) -> int:
+        return self.parts[0][0].population_size
+
+    @property
+    def compartments(self) -> tuple[str, ...]:
+        return self.parts[0][1].compartments
+
+    def set_external_input(self, record_id: str, channel: str, value: float, indices=slice(None)) -> None:
+        selected = None if isinstance(indices, slice) else set(int(index) for index in indices)
+        for partition, population in self.parts:
+            if selected is None:
+                local = slice(None)
+            else:
+                local = [i for i, global_index in enumerate(partition.global_indices) if global_index in selected]
+                if not local:
+                    continue
+            population.set_external_input(record_id, channel, value, indices=local)
+
+    def set_convergent_external_input(self, record_id: str, channel: str, source_values, indices=slice(None)) -> None:
+        for _, population in self.parts:
+            population.set_convergent_external_input(record_id, channel, source_values, indices=indices)
+
+
+def population_parts(population: Any) -> tuple[tuple[IndexPartition, Any], ...]:
+    """Return physical groups and stable global-index maps for a population."""
+
+    if isinstance(population, PartitionedPopulation):
+        return population.parts
+    size = int(population.group.N)
+    return ((IndexPartition("all", tuple(range(size)), size), population),)
+
+
 def complementary_partitions(
     *,
     population_size: int,

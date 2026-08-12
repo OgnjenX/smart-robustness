@@ -185,10 +185,13 @@ def connect_gap_junction(
     source_indices, target_indices, spatial_factor = topology_pairs(
         record, source_shape=source_shape, target_shape=target_shape
     )
-    not_self = source_indices != target_indices
-    source_indices = source_indices[not_self]
-    target_indices = target_indices[not_self]
-    spatial_factor = spatial_factor[not_self]
+    # A topology override is already globally filtered. Local indices from two
+    # different partitions are not comparable for biological self-edge tests.
+    if topology_override is None:
+        not_self = source_indices != target_indices
+        source_indices = source_indices[not_self]
+        target_indices = target_indices[not_self]
+        spatial_factor = spatial_factor[not_self]
     synapse = brian.Synapses(
         pre.group,
         post.group,

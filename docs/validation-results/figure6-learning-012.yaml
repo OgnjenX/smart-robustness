@@ -1,0 +1,44 @@
+id: figure6-learning-012
+status: bottom-up-map-passing-top-down-map-failing
+claim: Figure 6b/c adaptive maps after one 100-ms horizontal-bar episode
+convention_fingerprint: 642787353e5d0cff46b7d5fe2175f81845aefed19a527d30fc034060b9d3001a
+protocol:
+  orientation: horizontal
+  warmup_ms: 2.0
+  stimulus_ms: 100.0
+  dt_ms: 0.01
+  specific_capacitance_uF_cm2: 1.0
+  gaussian_weight_convention: normalized_density
+  gaussian_learning_bounds_convention: projection_level
+population_spikes:
+  thalamic_relay: 20
+  trn: 243
+  layer5_excitatory_v1: 34
+  layer6ii_excitatory_v1: 1
+  layer6i_excitatory_v1: 33
+  layer4_inhibitory_v1: 52
+  layer23_excitatory_v1: 17
+  layer4_excitatory_v1: 39
+  layer23_inhibitory_v1: 39
+  thalamic_interneuron: 36
+  thalamic_nonspecific: 8
+  thalamic_matrix: 21
+bottom_up_relay_to_winning_layer4:
+  projection_id: modeldb112923.projection.035
+  horizontal_arm_mean_after: 1.063348
+  vertical_arm_mean_after: 0.896086
+  center_after: 3.421494
+  horizontal_minus_vertical_after: 0.167263
+  horizontally_oriented: true
+top_down_active_layer6ii_to_relay:
+  wide_projection_id: modeldb112923.projection.005
+  narrow_projection_id: modeldb112923.projection.007
+  horizontal_orientation_reproduced: false
+assessment:
+  figure6b_bottom_up_map_pass: true
+  figure6c_top_down_map_pass: false
+  full_figure6_learning_pass: false
+notes:
+  - The run was repeated twice with identical population spike counts and map values.
+  - The prior spatially scaled-bound implementation produced only a 0.0014 retention contrast and could not reproduce the published broadening.
+  - The top-down failure is associated with only one layer-6II category spike and requires a source-level input/category-activation discriminator.

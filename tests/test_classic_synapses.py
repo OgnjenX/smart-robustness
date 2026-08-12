@@ -58,9 +58,12 @@ def test_modifiable_modeldb_projection_starts_at_source_serialized_weight() -> N
         and record.source_population in sector.populations
     )
     projection = sector.projections[record.id]
-    factor = np.asarray(projection.w_maximum[:]) / float(record.weight)
-    assert np.asarray(projection.w[:]) == pytest.approx(float(record.weight) * factor)
-    assert np.asarray(projection.w_maximum[:]) == pytest.approx(float(record.weight) * factor)
+    initial = np.asarray(projection.w[:])
+    assert initial.max() < float(record.weight)
+    assert np.asarray(projection.w_maximum[:]) == pytest.approx(float(record.weight))
+    assert np.asarray(projection.w_baseline[:]) == pytest.approx(
+        float(record.asymptotic_weight)
+    )
 
 
 def test_asymptotic_weight_initialization_remains_an_explicit_audit_alternative() -> None:
@@ -73,9 +76,25 @@ def test_asymptotic_weight_initialization_remains_an_explicit_audit_alternative(
     )
     record = MODELDB_FIRST_ORDER.by_id("modeldb112923.projection.035")
     projection = sector.projections[record.id]
-    factor = np.asarray(projection.w_baseline[:]) / float(record.asymptotic_weight)
-    assert np.asarray(projection.w[:]) == pytest.approx(
-        float(record.asymptotic_weight) * factor
+    assert np.asarray(projection.w[:]).max() < float(record.asymptotic_weight)
+    assert np.asarray(projection.w_baseline[:]) == pytest.approx(
+        float(record.asymptotic_weight)
+    )
+
+
+def test_spatially_scaled_learning_bounds_remain_an_audit_alternative() -> None:
+    brian.start_scope()
+    sector = build_first_order_chemical_sector(
+        conventions=FirstOrderRuntimeConventions(
+            gaussian_learning_bounds_convention="spatially_scaled"
+        ),
+        brian=brian,
+    )
+    record = MODELDB_FIRST_ORDER.by_id("modeldb112923.projection.035")
+    projection = sector.projections[record.id]
+    factor = np.asarray(projection.w[:]) / float(record.weight)
+    assert np.asarray(projection.w_maximum[:]) == pytest.approx(
+        float(record.weight) * factor
     )
 
 

@@ -230,6 +230,17 @@ the 100-ms learned weight maps or prove the separate 40-Hz relay target under
 the same profile. KInNeSS's benchmark confirms finite connection kernels, but
 the exact truncation radius and `ring` stencil remain unresolved.
 
+The official 100-ms horizontal episode now yields finite activity throughout
+all first-order populations and sculpts the winning layer-4 cell's incoming
+LGN map horizontally when Equation 25's baseline and upper bound are treated as
+projection-level parameters. Horizontal-arm mean weight is 1.063 versus 0.896
+on the vertical arm, and the center remains strongest at 3.421. This passes the
+qualitative Figure 6b orientation-map claim. The same run does not reproduce
+Figure 6c: the central layer-6II category cell spikes only once and its wide and
+narrow outgoing relay maps do not acquire positive horizontal contrast. The
+artifact `figure6-learning-012.yaml` therefore records Figure 6b as passing and
+Figure 6c as failing, rather than claiming the full figure.
+
 The official input archive also resolves a missing protocol channel:
 `horizontal0.png` and `vertical0.png` contain blue=70 at the central green=120
 pixel. Source-complete routing now drives the central layer-6II category cell
@@ -242,10 +253,11 @@ Figure 6a is now independently reproduced at the qualitative level for all
 five KInNeSS gating families over -30 to +30 ms. Every curve depresses for a
 postsynaptic-before-presynaptic pair, potentiates for the reverse order, has an
 extremum within 1--3 ms, and approaches zero in the tails. The exact protocol
-and extrema are archived in `figure6-timing-001.yaml`. This validation also
-corrected the executable presynaptic gate from `Xpre**2` to the source's
-`Xpre`; Figure 6b/c network weight-map reproduction remains pending cortical
-recruitment.
+and extrema are archived in `figure6-timing-001.yaml`. The presynaptic gating
+function is the source's `Xpre`; because Equation 28 also contains the base
+`Xpre*Xpost` correlation term, the complete presynaptically gated derivative
+contains `Xpre**2*Xpost`. Figure 6b/c network weight-map reproduction remains
+pending.
 
 The KInNeSS statement that reported voltage is shifted by the leak potential
 also makes the spike detector's coordinate ambiguous in a physical-voltage

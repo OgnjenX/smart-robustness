@@ -63,6 +63,7 @@ class FirstOrderRuntimeConventions:
     spike_event_coordinate: str = "absolute_physical"
     modifiable_weight_initialization: str = "source_serialized_weight"
     gaussian_weight_convention: str = "normalized_density"
+    gaussian_learning_bounds_convention: str = "projection_level"
 
     @property
     def fingerprint(self) -> str:
@@ -212,6 +213,9 @@ def build_first_order_chemical_sector(
                 resolved_conventions.modifiable_weight_initialization
             ),
             gaussian_weight_convention=resolved_conventions.gaussian_weight_convention,
+            gaussian_learning_bounds_convention=(
+                resolved_conventions.gaussian_learning_bounds_convention
+            ),
             brian=brian,
         )
     sector.projections = projections

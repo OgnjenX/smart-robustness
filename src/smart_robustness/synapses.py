@@ -24,6 +24,13 @@ class GaussianWeightConvention(StrEnum):
     SOURCE_PEAK = "source_peak"
 
 
+class GaussianLearningBoundsConvention(StrEnum):
+    """Whether a Gaussian scales only initial weights or also learning bounds."""
+
+    PROJECTION_LEVEL = "projection_level"
+    SPATIALLY_SCALED = "spatially_scaled"
+
+
 def connect_conductance(
     pre: Any,
     post: Any,
@@ -258,6 +265,7 @@ def connect_modeldb_projection(
     target_shape: tuple[int, int],
     modifiable_weight_initialization: str,
     gaussian_weight_convention: GaussianWeightConvention | str,
+    gaussian_learning_bounds_convention: GaussianLearningBoundsConvention | str,
     brian: Any,
 ) -> Any:
     """Connect one exact ModelDB chemical record to its dedicated port."""
@@ -354,6 +362,9 @@ def connect_modeldb_projection(
     )
     synapse.connect(i=source_indices, j=target_indices)
     initialization = ModifiableWeightInitialization(modifiable_weight_initialization)
+    bounds_convention = GaussianLearningBoundsConvention(
+        gaussian_learning_bounds_convention
+    )
     asymptote = record.asymptotic_weight
     baseline = float(record.weight if asymptote is None else asymptote)
     maximum = float(record.weight)
@@ -364,8 +375,17 @@ def connect_modeldb_projection(
         else baseline
     )
     synapse.w = initial * spatial_factor
-    synapse.w_baseline = baseline * spatial_factor
-    synapse.w_maximum = maximum * spatial_factor
+    if record.modifiable and bounds_convention is GaussianLearningBoundsConvention.PROJECTION_LEVEL:
+        # Equation 25's w0 and upper bound are projection-level parameters,
+        # whereas Section 4.9's Gaussian calculates the initialized synaptic
+        # weights. A normalized narrow Gaussian can peak above its amplitude;
+        # retain that legal initial state by lifting only the affected local
+        # upper bounds.
+        synapse.w_baseline = baseline
+        synapse.w_maximum = np.maximum(maximum, initial * spatial_factor)
+    else:
+        synapse.w_baseline = baseline * spatial_factor
+        synapse.w_maximum = maximum * spatial_factor
     synapse.modifiable = float(record.modifiable)
     synapse.last_arrival = -1e9 * brian.second
     synapse.previous_arrival = -1e9 * brian.second

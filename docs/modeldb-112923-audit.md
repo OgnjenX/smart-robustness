@@ -79,6 +79,13 @@ serialized channel projections; the full two-area file contains 24 populations.
   baseline `w0`. The source profile therefore initializes at `weight`; starting
   at the asymptote remains an explicit audit alternative. Figure 6's strong
   Gaussian pre-learning maps independently support this distinction.
+- Section 4.9's Gaussian calculates the initial many-to-one synaptic weights,
+  while Equation 25 defines projection-level `w0` and upper bounds. Scaling all
+  three by the Gaussian prevents the broad horizontal reshaping published in
+  Figure 6b. The classic path therefore uses projection-level learning bounds,
+  lifting a local upper bound only when a normalized narrow Gaussian starts
+  above the serialized amplitude. `spatially_scaled` bounds remain an audit
+  alternative.
 - Ten voltage-driven input channels now follow KInNeSS Equations 4--5: their
   four serialized sensitivities shift the effective driving potential from
   red/green/blue/alpha source values in [0,255]. The eleventh external channel

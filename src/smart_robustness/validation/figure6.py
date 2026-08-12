@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from typing import Any
 
 import numpy as np
 
@@ -13,6 +14,14 @@ from ..learning import (
     gated_weight_derivative,
 )
 from ..models.currents import biexponential_normalization
+
+BOTTOM_UP_PROJECTION_ID = "modeldb112923.projection.035"
+TOP_DOWN_WIDE_PROJECTION_ID = "modeldb112923.projection.005"
+TOP_DOWN_NARROW_PROJECTION_ID = "modeldb112923.projection.007"
+HORIZONTAL_INDICES = (38, 39, 40, 41, 42)
+VERTICAL_INDICES = (22, 31, 40, 49, 58)
+HORIZONTAL_ONLY_INDICES = (38, 39, 41, 42)
+VERTICAL_ONLY_INDICES = (22, 31, 49, 58)
 
 
 @dataclass(frozen=True, slots=True)
@@ -41,6 +50,119 @@ class Figure6TimingResult:
     def trough_time_ms(self, rule: str) -> float:
         values = np.asarray(self.curves[rule])
         return self.protocol.relative_times_ms[int(np.argmin(values))]
+
+
+@dataclass(frozen=True, slots=True)
+class Figure6MapSummary:
+    projection_id: str
+    map_role: str
+    before: tuple[float, ...]
+    after: tuple[float, ...]
+
+    @property
+    def delta(self) -> tuple[float, ...]:
+        return tuple(after - before for before, after in zip(self.before, self.after, strict=True))
+
+    @property
+    def horizontal_mean(self) -> float:
+        return float(np.mean(np.asarray(self.after)[list(HORIZONTAL_INDICES)]))
+
+    @property
+    def vertical_mean(self) -> float:
+        return float(np.mean(np.asarray(self.after)[list(VERTICAL_INDICES)]))
+
+    @property
+    def horizontal_retention_advantage(self) -> float:
+        before = np.asarray(self.before)
+        after = np.asarray(self.after)
+        retention = np.divide(after, before, out=np.ones_like(after), where=before != 0)
+        # The center belongs to both bars and carries no orientation
+        # information, despite being the largest coefficient of the Gaussian.
+        horizontal = float(np.mean(retention[list(HORIZONTAL_ONLY_INDICES)]))
+        vertical = float(np.mean(retention[list(VERTICAL_ONLY_INDICES)]))
+        return horizontal - vertical
+
+
+@dataclass(frozen=True, slots=True)
+class Figure6LearningResult:
+    convention_fingerprint: str
+    duration_ms: float
+    population_spikes: dict[str, int]
+    bottom_up: Figure6MapSummary
+    top_down_wide: Figure6MapSummary
+    top_down_narrow: Figure6MapSummary
+
+    @property
+    def bottom_up_oriented(self) -> bool:
+        return self.bottom_up.horizontal_retention_advantage > 0
+
+    @property
+    def top_down_oriented(self) -> bool:
+        return (
+            self.top_down_wide.horizontal_retention_advantage > 0
+            and self.top_down_narrow.horizontal_retention_advantage > 0
+        )
+
+
+def _incoming_map(projection: Any, weights: np.ndarray, *, target_index: int) -> np.ndarray:
+    source = np.asarray(projection.i[:], dtype=int)
+    target = np.asarray(projection.j[:], dtype=int)
+    selected = target == target_index
+    result = np.zeros(81, dtype=float)
+    result[source[selected]] = weights[selected]
+    return result
+
+
+def _outgoing_map(projection: Any, weights: np.ndarray, *, source_index: int) -> np.ndarray:
+    source = np.asarray(projection.i[:], dtype=int)
+    target = np.asarray(projection.j[:], dtype=int)
+    selected = source == source_index
+    result = np.zeros(81, dtype=float)
+    result[target[selected]] = weights[selected]
+    return result
+
+
+def summarize_figure6_learning(
+    *,
+    convention_fingerprint: str,
+    duration_ms: float,
+    population_spikes: dict[str, int],
+    projections: dict[str, Any],
+    before_weights: dict[str, np.ndarray],
+    winning_layer4_index: int = 40,
+    active_category_index: int = 40,
+) -> Figure6LearningResult:
+    """Extract the Figure 6b incoming and Figure 6c outgoing 9x9 maps."""
+
+    summaries: dict[str, Figure6MapSummary] = {}
+    for projection_id, role in (
+        (BOTTOM_UP_PROJECTION_ID, "incoming_to_winning_layer4"),
+        (TOP_DOWN_WIDE_PROJECTION_ID, "outgoing_from_active_layer6ii"),
+        (TOP_DOWN_NARROW_PROJECTION_ID, "outgoing_from_active_layer6ii"),
+    ):
+        projection = projections[projection_id]
+        before = np.asarray(before_weights[projection_id], dtype=float)
+        after = np.asarray(projection.w[:], dtype=float)
+        if projection_id == BOTTOM_UP_PROJECTION_ID:
+            before_map = _incoming_map(projection, before, target_index=winning_layer4_index)
+            after_map = _incoming_map(projection, after, target_index=winning_layer4_index)
+        else:
+            before_map = _outgoing_map(projection, before, source_index=active_category_index)
+            after_map = _outgoing_map(projection, after, source_index=active_category_index)
+        summaries[projection_id] = Figure6MapSummary(
+            projection_id=projection_id,
+            map_role=role,
+            before=tuple(float(value) for value in before_map),
+            after=tuple(float(value) for value in after_map),
+        )
+    return Figure6LearningResult(
+        convention_fingerprint=convention_fingerprint,
+        duration_ms=duration_ms,
+        population_spikes=population_spikes,
+        bottom_up=summaries[BOTTOM_UP_PROJECTION_ID],
+        top_down_wide=summaries[TOP_DOWN_WIDE_PROJECTION_ID],
+        top_down_narrow=summaries[TOP_DOWN_NARROW_PROJECTION_ID],
+    )
 
 
 def _pre_signal(elapsed_ms: np.ndarray, *, rise_ms: float, fall_ms: float) -> np.ndarray:

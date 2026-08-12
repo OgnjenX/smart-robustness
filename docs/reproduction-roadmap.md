@@ -83,7 +83,8 @@ ambiguity is audited; neither setting is silently treated as canonical.
 
 Learning checkpoint: Equation 6's biphasic post-spike gate and the serialized
 20/25-ms depotentiation intervals are tested. Adaptive records initialize at
-their asymptotic baseline rather than their maximum. KInNeSS Equations 25/28
+their source-serialized `weight`; the distinct `assymptoticWeight` supplies the
+decorrelated baseline. KInNeSS Equations 25/28
 resolve and implement the presynaptically gated, postsynaptically gated, and
 dual-AND-gated variants. Driven protocol validation and bounded long-run
 behavior remain required before plasticity is considered reproduced.

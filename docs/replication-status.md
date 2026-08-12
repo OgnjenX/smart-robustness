@@ -178,6 +178,15 @@ at exactly 40 Hz and no inactive relay fires after a 20-ms warmup; the isolated
 yet the classic baseline: the capacitance and all-zero-input semantics remain
 source-unresolved, and the untrained cortical populations are still silent.
 
+Figure 6 and the executable XML resolve a prior learning-state conflation:
+modifiable projections now initialize at serialized `weight`, while
+`assymptoticWeight` is retained as Equation 25's uncorrelated baseline. The
+learning ODE was also corrected to use correlation-dependent saturation
+`Xpre*Xpost*(w_max-w)` plus baseline decay `(w0-w)`, which prevents overshoot of
+the declared upper bound. This preserves the selective 40-Hz relay result, but
+the cortical populations remain silent, so Figure 6 recruitment is not yet
+reproduced.
+
 The KInNeSS statement that reported voltage is shifted by the leak potential
 also makes the spike detector's coordinate ambiguous in a physical-voltage
 implementation. The explicit `relative_to_soma_leak` alternative preserves the

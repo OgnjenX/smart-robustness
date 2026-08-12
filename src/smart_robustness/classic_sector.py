@@ -61,6 +61,7 @@ class FirstOrderRuntimeConventions:
     integration_method: str = "rk4"
     zero_sensitivity_input_convention: str = "framework_resting_leak"
     spike_event_coordinate: str = "absolute_physical"
+    modifiable_weight_initialization: str = "source_serialized_weight"
 
     @property
     def fingerprint(self) -> str:
@@ -181,9 +182,13 @@ def build_first_order_chemical_sector(
     if brian is None:
         import brian2 as brian
 
+    resolved_conventions = conventions or FirstOrderRuntimeConventions(
+        gate_initialization_convention=(
+            gate_initialization_convention or "steady_state_at_initial_voltage"
+        )
+    )
     sector = build_first_order_intrinsic_sector(
-        conventions=conventions,
-        gate_initialization_convention=gate_initialization_convention,
+        conventions=resolved_conventions,
         brian=brian,
     )
     facts_by_name = {fact.canonical_name: fact for fact in sector.facts}
@@ -202,6 +207,9 @@ def build_first_order_chemical_sector(
             post=sector.populations[record.target_population],
             source_shape=facts_by_name[record.source_population].shape,
             target_shape=facts_by_name[record.target_population].shape,
+            modifiable_weight_initialization=(
+                resolved_conventions.modifiable_weight_initialization
+            ),
             brian=brian,
         )
     sector.projections = projections

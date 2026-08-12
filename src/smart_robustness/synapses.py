@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from enum import StrEnum
 from typing import Any
 
 import numpy as np
@@ -7,6 +8,13 @@ import numpy as np
 from .modeldb_projections import ModelDBProjection
 from .models.compartmental_hh import CompartmentalPopulation
 from .projections import ProjectionRecord, TopologyKind
+
+
+class ModifiableWeightInitialization(StrEnum):
+    """Initial value assigned to a source-serialized modifiable projection."""
+
+    SOURCE_SERIALIZED_WEIGHT = "source_serialized_weight"
+    ASYMPTOTIC_BASELINE = "asymptotic_baseline"
 
 
 def connect_conductance(
@@ -235,6 +243,7 @@ def connect_modeldb_projection(
     post: CompartmentalPopulation,
     source_shape: tuple[int, int],
     target_shape: tuple[int, int],
+    modifiable_weight_initialization: str,
     brian: Any,
 ) -> Any:
     """Connect one exact ModelDB chemical record to its dedicated port."""
@@ -276,7 +285,7 @@ def connect_modeldb_projection(
             " + int(v_soma_post < -20*mV and post_elapsed >= 0*ms and post_elapsed < 0.1*ms)*x_post_early"
             f" + int(v_soma_post < -20*mV and post_elapsed >= 0.1*ms and post_elapsed < {post_window + 0.1}*ms)*x_post_late : 1"
             f"\ndw/dt=({record.learning_rate}/ms)*({learning_gate})"
-            "*(pre_signal*post_signal*w_maximum+w_baseline-w) : 1 (clock-driven)"
+            "*(pre_signal*post_signal*(w_maximum-w)+(w_baseline-w)) : 1 (clock-driven)"
             "\nlast_post_spike : second"
         )
         update += "\nx_learning_rise += 1\nx_learning_fall += 1"
@@ -296,10 +305,17 @@ def connect_modeldb_projection(
         record, source_shape=source_shape, target_shape=target_shape
     )
     synapse.connect(i=source_indices, j=target_indices)
+    initialization = ModifiableWeightInitialization(modifiable_weight_initialization)
     asymptote = record.asymptotic_weight
     baseline = float(record.weight if asymptote is None else asymptote)
     maximum = float(record.weight)
-    synapse.w = (baseline if record.modifiable else maximum) * spatial_factor
+    initial = (
+        maximum
+        if not record.modifiable
+        or initialization is ModifiableWeightInitialization.SOURCE_SERIALIZED_WEIGHT
+        else baseline
+    )
+    synapse.w = initial * spatial_factor
     synapse.w_baseline = baseline * spatial_factor
     synapse.w_maximum = maximum * spatial_factor
     synapse.modifiable = float(record.modifiable)

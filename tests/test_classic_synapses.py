@@ -6,6 +6,7 @@ import pytest
 brian = pytest.importorskip("brian2")
 
 from smart_robustness.classic_sector import (
+    FirstOrderRuntimeConventions,
     build_first_order_chemical_sector,
     build_first_order_connected_sector,
 )
@@ -45,7 +46,7 @@ def test_first_order_chemical_sector_builds_all_in_scope_records() -> None:
     sector.network.run(0 * brian.ms)
 
 
-def test_modifiable_modeldb_projection_starts_at_baseline_not_maximum() -> None:
+def test_modifiable_modeldb_projection_starts_at_source_serialized_weight() -> None:
     brian.start_scope()
     sector = build_first_order_chemical_sector(brian=brian)
     record = next(
@@ -55,11 +56,25 @@ def test_modifiable_modeldb_projection_starts_at_baseline_not_maximum() -> None:
         and record.source_population in sector.populations
     )
     projection = sector.projections[record.id]
+    factor = np.asarray(projection.w_maximum[:]) / float(record.weight)
+    assert np.asarray(projection.w[:]) == pytest.approx(float(record.weight) * factor)
+    assert np.asarray(projection.w_maximum[:]) == pytest.approx(float(record.weight) * factor)
+
+
+def test_asymptotic_weight_initialization_remains_an_explicit_audit_alternative() -> None:
+    brian.start_scope()
+    sector = build_first_order_chemical_sector(
+        conventions=FirstOrderRuntimeConventions(
+            modifiable_weight_initialization="asymptotic_baseline"
+        ),
+        brian=brian,
+    )
+    record = MODELDB_FIRST_ORDER.by_id("modeldb112923.projection.035")
+    projection = sector.projections[record.id]
     factor = np.asarray(projection.w_baseline[:]) / float(record.asymptotic_weight)
     assert np.asarray(projection.w[:]) == pytest.approx(
         float(record.asymptotic_weight) * factor
     )
-    assert np.asarray(projection.w_maximum[:]) == pytest.approx(float(record.weight) * factor)
 
 
 def test_first_order_connected_sector_adds_all_gap_junction_records() -> None:

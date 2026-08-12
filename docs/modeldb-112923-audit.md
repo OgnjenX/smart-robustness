@@ -59,6 +59,11 @@ serialized channel projections; the full two-area file contains 24 populations.
   Executable ligand conductance density therefore includes the required
   `10^-3` conversion from `pS × 10^6/cm²` to `mS/cm²`; input gates remain
   conductance densities and do not use this receptor-density conversion.
+- For modifiable projections, the XML `weight` is the serialized current and
+  upper-bound weight, whereas `assymptoticWeight` is Equation 25's decorrelated
+  baseline `w0`. The source profile therefore initializes at `weight`; starting
+  at the asymptote remains an explicit audit alternative. Figure 6's strong
+  Gaussian pre-learning maps independently support this distinction.
 - Ten voltage-driven input channels now follow KInNeSS Equations 4--5: their
   four serialized sensitivities shift the effective driving potential from
   red/green/blue/alpha source values in [0,255]. The eleventh external channel

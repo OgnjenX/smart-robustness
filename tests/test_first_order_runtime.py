@@ -50,6 +50,7 @@ def test_connected_first_order_sector_integrates_and_adapts_finitely() -> None:
     synapse_index = 0
     target_index = int(projection.j[synapse_index])
     target = sector.populations["layer4_excitatory_v1"].group
+    projection.w[synapse_index] = projection.w_baseline[synapse_index]
     projection.x_learning_rise[synapse_index] = 0
     projection.x_learning_fall[synapse_index] = 1
     target.v_soma[target_index] = -10 * brian.mV

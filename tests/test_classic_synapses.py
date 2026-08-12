@@ -17,6 +17,7 @@ from smart_robustness.synapses import (
     GaussianLearningBoundsConvention,
     GaussianWeightConvention,
     ModifiableWeightInitialization,
+    connect_modeldb_projection,
     kinness_gap_total_conductance_nS,
     modeldb_topology_pairs,
     topology_pairs,
@@ -187,6 +188,31 @@ def test_source_peak_gaussian_remains_an_explicit_audit_alternative() -> None:
         gaussian_weight_convention=GaussianWeightConvention.SOURCE_PEAK,
     )
     assert factor[(pre == 40) & (post == 40)][0] == pytest.approx(1.0)
+
+
+def test_modeldb_projection_accepts_prepartitioned_topology_override() -> None:
+    brian.start_scope()
+    sector = build_first_order_chemical_sector(brian=brian)
+    record = MODELDB_FIRST_ORDER.by_id("modeldb112923.projection.035")
+    original = sector.projections[record.id]
+    override = connect_modeldb_projection(
+        record,
+        pre=sector.populations[record.source_population],
+        post=sector.populations[record.target_population],
+        source_shape=(9, 9),
+        target_shape=(9, 9),
+        modifiable_weight_initialization="source_serialized_weight",
+        gaussian_weight_convention="normalized_density",
+        gaussian_learning_bounds_convention="projection_level",
+        topology_override=(
+            np.asarray(original.i[:3]),
+            np.asarray(original.j[:3]),
+            np.asarray(original.w[:3]) / float(record.weight),
+        ),
+        brian=brian,
+    )
+    assert len(override) == 3
+    assert np.asarray(override.w[:]) == pytest.approx(np.asarray(original.w[:3]))
 
 
 def test_gap_junction_uses_kinness_equation_8_geometry() -> None:

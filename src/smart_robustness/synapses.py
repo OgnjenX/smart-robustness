@@ -269,6 +269,7 @@ def connect_modeldb_projection(
     gaussian_weight_convention: GaussianWeightConvention | str,
     gaussian_learning_bounds_convention: GaussianLearningBoundsConvention | str,
     spike_event_coordinate: str = "absolute_physical",
+    topology_override: tuple[np.ndarray, np.ndarray, np.ndarray] | None = None,
     brian: Any,
 ) -> Any:
     """Connect one exact ModelDB chemical record to its dedicated port."""
@@ -362,12 +363,26 @@ def connect_modeldb_projection(
         method="rk4",
         name=f"modeldb_{port.name}_{pre.group.name}_to_{post.group.name}",
     )
-    source_indices, target_indices, spatial_factor = modeldb_topology_pairs(
-        record,
-        source_shape=source_shape,
-        target_shape=target_shape,
-        gaussian_weight_convention=gaussian_weight_convention,
-    )
+    if topology_override is None:
+        source_indices, target_indices, spatial_factor = modeldb_topology_pairs(
+            record,
+            source_shape=source_shape,
+            target_shape=target_shape,
+            gaussian_weight_convention=gaussian_weight_convention,
+        )
+    else:
+        source_indices, target_indices, spatial_factor = (
+            np.asarray(values) for values in topology_override
+        )
+        source_indices = source_indices.astype(int)
+        target_indices = target_indices.astype(int)
+        spatial_factor = spatial_factor.astype(float)
+        if not (source_indices.shape == target_indices.shape == spatial_factor.shape):
+            raise ValueError("topology override arrays must have identical shapes")
+        if np.any(source_indices < 0) or np.any(source_indices >= int(pre.group.N)):
+            raise ValueError("topology override source index outside partition")
+        if np.any(target_indices < 0) or np.any(target_indices >= int(post.group.N)):
+            raise ValueError("topology override target index outside partition")
     synapse.connect(i=source_indices, j=target_indices)
     initialization = ModifiableWeightInitialization(modifiable_weight_initialization)
     bounds_convention = GaussianLearningBoundsConvention(
@@ -443,6 +458,7 @@ def connect_modeldb_gap_junction(
     post: CompartmentalPopulation,
     source_shape: tuple[int, int],
     target_shape: tuple[int, int],
+    topology_override: tuple[np.ndarray, np.ndarray, np.ndarray] | None = None,
     brian: Any,
 ) -> Any:
     """Connect one ModelDB electrical projection using KInNeSS Equation 8."""
@@ -461,9 +477,23 @@ def connect_modeldb_gap_junction(
         diameter_mm=target.diameter_mm,
         length_mm=target.length_mm,
     )
-    source_indices, target_indices, spatial_factor = modeldb_topology_pairs(
-        record, source_shape=source_shape, target_shape=target_shape
-    )
+    if topology_override is None:
+        source_indices, target_indices, spatial_factor = modeldb_topology_pairs(
+            record, source_shape=source_shape, target_shape=target_shape
+        )
+    else:
+        source_indices, target_indices, spatial_factor = (
+            np.asarray(values) for values in topology_override
+        )
+        source_indices = source_indices.astype(int)
+        target_indices = target_indices.astype(int)
+        spatial_factor = spatial_factor.astype(float)
+        if not (source_indices.shape == target_indices.shape == spatial_factor.shape):
+            raise ValueError("gap topology override arrays must have identical shapes")
+        if np.any(source_indices < 0) or np.any(source_indices >= int(pre.group.N)):
+            raise ValueError("gap topology override source index outside partition")
+        if np.any(target_indices < 0) or np.any(target_indices >= int(post.group.N)):
+            raise ValueError("gap topology override target index outside partition")
     not_self = source_indices != target_indices
     source_indices = source_indices[not_self]
     target_indices = target_indices[not_self]

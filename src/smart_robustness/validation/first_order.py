@@ -9,6 +9,7 @@ import numpy as np
 from ..classic_sector import (
     FirstOrderRuntimeConventions,
     build_first_order_connected_sector,
+    figure6_runtime_conventions,
     first_order_population_parameters,
 )
 from ..models.compartmental_hh import create_compartmental_hh_population
@@ -230,7 +231,7 @@ def run_first_order_bar(
     if brian is None:
         import brian2 as brian
 
-    conventions = conventions or FirstOrderRuntimeConventions()
+    conventions = conventions or figure6_runtime_conventions()
     protocol = protocol or FirstOrderBarProtocol()
     brian.start_scope()
     brian.defaultclock.dt = protocol.dt_ms * brian.ms

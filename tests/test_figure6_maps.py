@@ -2,7 +2,11 @@ from __future__ import annotations
 
 import numpy as np
 
-from smart_robustness.validation.figure6 import Figure6MapSummary
+from smart_robustness.validation.figure6 import (
+    MINIMUM_TOP_DOWN_HORIZONTAL_CONTRAST,
+    Figure6LearningResult,
+    Figure6MapSummary,
+)
 
 
 def test_map_retention_advantage_detects_horizontal_orientation() -> None:
@@ -23,3 +27,17 @@ def test_absolute_map_contrast_is_stable_for_tiny_gaussian_tails() -> None:
     summary = Figure6MapSummary("projection", "map", tuple(before), tuple(after))
 
     assert np.isclose(summary.horizontal_orientation_contrast, 1e-4)
+
+
+def test_tiny_positive_top_down_contrast_does_not_count_as_reproduction() -> None:
+    before = np.ones(81)
+    after = np.ones(81)
+    after[[38, 39, 41, 42]] += MINIMUM_TOP_DOWN_HORIZONTAL_CONTRAST / 2
+    weak = Figure6MapSummary("topdown", "map", tuple(before), tuple(after))
+    bottom = Figure6MapSummary(
+        "bottom", "map", tuple(before), tuple(after + np.eye(1, 81, 38).ravel())
+    )
+    result = Figure6LearningResult("fingerprint", 100.0, {}, bottom, weak, weak)
+
+    assert weak.horizontal_orientation_contrast > 0
+    assert not result.top_down_oriented

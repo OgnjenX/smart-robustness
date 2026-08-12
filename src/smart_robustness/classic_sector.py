@@ -71,6 +71,22 @@ class FirstOrderRuntimeConventions:
         return hashlib.sha256(payload.encode()).hexdigest()
 
 
+def figure6_runtime_conventions() -> FirstOrderRuntimeConventions:
+    """Return the source-constrained profile used by Figure 6 validation.
+
+    KInNeSS does not serialize gate initial values. Its zero-initialized
+    candidate avoids a non-physiological synchronized TRN startup spike.
+    Input channels with four zero sensitivities are inert declarations, not
+    permanent conductances. The remaining values are recovered source values
+    or conventions independently constrained by the published Figure 6 maps.
+    """
+
+    return FirstOrderRuntimeConventions(
+        gate_initialization_convention="zero",
+        zero_sensitivity_input_convention="omit_all_zero",
+    )
+
+
 def first_order_population_parameters(
     facts: FirstOrderPopulationFacts,
     *,

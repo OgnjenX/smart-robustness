@@ -9,6 +9,7 @@ from smart_robustness.classic_sector import (
     FirstOrderRuntimeConventions,
     ZeroSensitivityInputConvention,
     build_first_order_intrinsic_sector,
+    figure6_runtime_conventions,
 )
 
 
@@ -60,6 +61,15 @@ def test_runtime_convention_fingerprint_is_stable_and_sensitive() -> None:
     assert classic.fingerprint == FirstOrderRuntimeConventions().fingerprint
     zero = FirstOrderRuntimeConventions(gate_initialization_convention="zero")
     assert zero.fingerprint != classic.fingerprint
+
+
+def test_figure6_profile_names_the_source_constrained_runtime() -> None:
+    conventions = figure6_runtime_conventions()
+    assert conventions.gate_initialization_convention == "zero"
+    assert conventions.zero_sensitivity_input_convention == "omit_all_zero"
+    assert conventions.specific_capacitance_uF_cm2 == 1.0
+    assert conventions.gaussian_weight_convention == "normalized_density"
+    assert conventions.gaussian_learning_bounds_convention == "projection_level"
 
 
 def test_all_zero_input_channels_have_an_explicit_legacy_convention() -> None:

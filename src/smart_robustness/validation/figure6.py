@@ -18,6 +18,7 @@ from ..models.currents import biexponential_normalization
 BOTTOM_UP_PROJECTION_ID = "modeldb112923.projection.035"
 TOP_DOWN_WIDE_PROJECTION_ID = "modeldb112923.projection.005"
 TOP_DOWN_NARROW_PROJECTION_ID = "modeldb112923.projection.007"
+MINIMUM_TOP_DOWN_HORIZONTAL_CONTRAST = 0.01
 HORIZONTAL_INDICES = (38, 39, 40, 41, 42)
 VERTICAL_INDICES = (22, 31, 40, 49, 58)
 HORIZONTAL_ONLY_INDICES = (38, 39, 41, 42)
@@ -113,8 +114,10 @@ class Figure6LearningResult:
     @property
     def top_down_oriented(self) -> bool:
         return (
-            self.top_down_wide.horizontal_orientation_contrast > 0
-            and self.top_down_narrow.horizontal_orientation_contrast > 0
+            self.top_down_wide.horizontal_orientation_contrast
+            >= MINIMUM_TOP_DOWN_HORIZONTAL_CONTRAST
+            and self.top_down_narrow.horizontal_orientation_contrast
+            >= MINIMUM_TOP_DOWN_HORIZONTAL_CONTRAST
         )
 
 

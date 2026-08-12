@@ -55,6 +55,17 @@ serialized channel projections; the full two-area file contains 24 populations.
   map peaks near 4; `6/(2*pi*0.5^2)=3.82`. The classic chemical path therefore
   uses `normalized_density`; `source_peak` remains an audit alternative. Exact
   finite-stencil truncation and `ring` geometry remain unresolved.
+- The framework defines many-to-one connectivity as a Gaussian centered at the
+  selected cell and the archived adaptive layer-6II-to-LGN records explicitly
+  use wrapped, non-ring kernels. No truncation radius is serialized, so dense
+  wrapped Gaussian pairs are the source-backed interpretation for Figure 6c.
+  The separate layer-6II-to-TRN off-surround records carry `ring=true`; their
+  exact legacy center/surround stencil remains unresolved.
+- Figure 6's caption and archived NML records 005/007 call corticothalamic
+  learning presynaptically gated, but Methods 4.3 says layer-6II projections to
+  specific thalamus use dual-AND gating. The executable baseline follows the
+  figure-specific caption and NML while retaining this publication conflict as
+  unresolved provenance.
 - The executable first-order area contains 55 projected gates after excluding
   the self-triggered AHP gate: 51 chemical and four gap-junction records. This
   set is not identical to the 55-row supplementary catalog; it includes

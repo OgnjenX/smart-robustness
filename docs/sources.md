@@ -74,6 +74,12 @@ steady-state occupancy at each compartment's resting voltage. A literal
 all-zero gate state is retained only as an audit alternative. No simulator
 source code is copied into this repository.
 
+The same user manual distinguishes the configured leakage equilibrium from a
+compartment's actual resting potential: voltage-gated channels can move the
+latter away from the former. Consequently `E_leak`, the initialized membrane
+voltage, and an ionic gate's resting state are tracked as separate provenance
+concepts; a source-unreported settling phase cannot be assumed silently.
+
 The 2008 KInNeSS site was actually served at `symphony.bu.edu`; `kinness.net`
 was a frame redirect. Its archived User Manual remains available and resolves
 the ordinary `connectFromMany` rule more precisely than the article: `Weight`

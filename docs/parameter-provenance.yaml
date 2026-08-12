@@ -71,7 +71,8 @@ parameters:
   model.multicompartment.gate_initialization:
     value: steady_state_at_initial_voltage; zero retained as an audit alternative
     status: archived-simulator-cvs executable convention
-    source: SANNDRA CVS revision history for gates.h revision 1.17 and unit.cpp revision 1.29 states that TGate.init resets to resting potential; Methods 4.9 and SMART.nml provide the compartment resting voltages
+    source: SANNDRA CVS revision history for gates.h revision 1.17 and unit.cpp revision 1.29 states that TGate.init resets to resting potential; Methods 4.9 initializes membrane compartments at Table 3 values, while the KInNeSS manual warns that voltage-gated channels shift actual rest away from the configured leak equilibrium
+    note: steady-state occupancy at the initialized Table 3 voltage is the current executable interpretation of the surviving revision message; direct source for TGate.init remains unavailable and startup behavior is under audit
   model.multicompartment.axial_convention:
     value: kinness_2008, paper_literal, or symmetric_cable; must be selected explicitly
     status: derived

@@ -55,8 +55,11 @@ rather than 6 kOhm*cm.
   `unit.cpp`: `TGate.init()` resets voltage-gated currents to resting
   potential. The classic runtime therefore initializes each activation and
   inactivation gate to its equilibrium occupancy at the compartment's
-  serialized resting voltage. Literal zero initialization remains an audit
-  alternative and is not the executable baseline.
+  Table 3 initialization voltage. Literal zero initialization remains an audit
+  alternative and is not the executable baseline. The KInNeSS manual warns
+  that voltage-gated channels shift actual membrane rest away from configured
+  leakage equilibrium, so this interpretation remains explicitly auditable
+  pending recovery of the missing `TGate.init()` source.
 - For relay T-current, the XML marks the sigmoid with `V0=-63, B=7.8` as
   `m_inf`, while `Simple_Tau(A=2.44, B=2.506, V0=-9.84)` is the activation time
   constant. Likewise, the `V0=-83.5, B=-6.3` sigmoid is `h_inf`, while the

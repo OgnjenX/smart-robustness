@@ -147,6 +147,13 @@ def test_figure7_runner_rejects_invalid_projection_discriminators() -> None:
             use_paper_constrained_reference=True,
             top_down_cue_lead_ms=-1.0,
         )
+    with pytest.raises(ValueError, match="equilibration_ms"):
+        run_figure7_condition(
+            condition=MatchCondition.MATCH,
+            top_down_current_pA=100.0,
+            use_paper_constrained_reference=True,
+            equilibration_ms=-1.0,
+        )
     with pytest.raises(ValueError, match="finite and positive"):
         run_figure7_condition(
             condition=MatchCondition.MATCH,
@@ -199,6 +206,7 @@ def test_figure7_first_order_condition_runs_through_cpp_standalone(tmp_path) -> 
     assert result.condition is MatchCondition.MATCH
     assert result.network_scope == "first_order"
     assert result.top_down_cue_lead_ms == 0.01
+    assert result.equilibration_ms == 0.0
 
 
 def test_figure7_result_accepts_relay_pathway_diagnostics() -> None:
@@ -212,6 +220,7 @@ def test_figure7_result_accepts_relay_pathway_diagnostics() -> None:
     assert result.relay_trn_gaba_peak_by_index == ()
     assert result.relay_trn_gaba_integral_ms_by_index == ()
     assert result.top_down_cue_lead_ms == 0.0
+    assert result.equilibration_ms == 0.0
     assert result.trn_layer6ii_ampa_peak_by_index == ()
     assert result.trn_layer6ii_nmda_peak_by_index == ()
     assert result.trn_relay_ampa_peak_by_index == ()

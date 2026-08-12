@@ -263,6 +263,15 @@ emits 111 spikes and layer 4 emits 29. The intact and disconnected trajectories
 are identical, proving that this late broad activity is not the published
 nonspecific-thalamus→layer-5 reset chain (`figure10-reset-034.yaml`).
 
+The archived KInNeSS manual adds that a compartment's actual resting potential
+drifts away from its configured leakage equilibrium when voltage-gated channels
+are present. A new explicit Figure 7 `equilibration_ms` discriminator therefore
+tests an unstimulated 100-ms settling phase without changing model parameters.
+It is decisively rejected: both match and mismatch then contain 728 scored TRN
+spikes, no relay or layer-4 spikes, and zero nonspecific output. TRN does not
+settle to quiescence, so an undocumented warm-up cannot repair the source-backed
+profile (`figure7-rest-equilibration-035.yaml`).
+
 The official 100-ms horizontal episode now yields finite activity throughout
 all first-order populations and sculpts the winning layer-4 cell's incoming
 LGN map horizontally when Equation 25's baseline and upper bound are treated as

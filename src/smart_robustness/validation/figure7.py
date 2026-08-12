@@ -166,6 +166,7 @@ class Figure7ConditionResult:
     convention_fingerprint: str | None = None
     top_down_current_pA: float | None = None
     top_down_cue_lead_ms: float = 0.0
+    equilibration_ms: float = 0.0
     learned_state_provenance: str = "unspecified"
     network_scope: str = "first_order"
     relay_top_down_ampa_peak_by_index: tuple[tuple[int, float], ...] = ()
@@ -186,6 +187,8 @@ class Figure7ConditionResult:
             raise ValueError("duration_ms must be positive")
         if self.top_down_cue_lead_ms < 0:
             raise ValueError("top_down_cue_lead_ms cannot be negative")
+        if self.equilibration_ms < 0:
+            raise ValueError("equilibration_ms cannot be negative")
 
     @property
     def nonspecific_rate_hz(self) -> float:
@@ -258,6 +261,7 @@ def run_figure7_condition(
     record_relay_diagnostics: bool = False,
     projection_weight_scales: Mapping[str, float] | None = None,
     top_down_cue_lead_ms: float = 0.0,
+    equilibration_ms: float = 0.0,
     cpp_standalone_directory: str | Path | None = None,
     brian=None,
 ) -> Figure7ConditionResult:
@@ -271,6 +275,8 @@ def run_figure7_condition(
         raise ValueError("duration_ms and dt_ms must be positive")
     if top_down_cue_lead_ms < 0:
         raise ValueError("top_down_cue_lead_ms cannot be negative")
+    if equilibration_ms < 0:
+        raise ValueError("equilibration_ms cannot be negative")
     if brian is None:
         import brian2 as brian
     if cpp_standalone_directory is not None:
@@ -402,6 +408,12 @@ def run_figure7_condition(
         )
         monitors.extend((v2_layer4, v2_relay))
     sector.network.add(*monitors)
+    # KInNeSS documentation distinguishes the serialized leak equilibrium
+    # from the actual membrane rest when voltage-gated channels are present.
+    # A source-unreported settling interval is therefore an explicit protocol
+    # discriminator, never an implicit part of the classic trial.
+    if equilibration_ms > 0:
+        sector.network.run(equilibration_ms * brian.ms)
     cue = ClassicMatchMismatchCue(
         condition=condition,
         top_down_current_pA=top_down_current_pA,
@@ -455,8 +467,9 @@ def run_figure7_condition(
         )
         voltage_mV = np.asarray(relay_state.v_distal_dendrite / brian.mV)
         times_ms = np.asarray(relay_state.t / brian.ms)
-        diagnostic_window = times_ms >= top_down_cue_lead_ms
-        times_ms = times_ms[diagnostic_window] - top_down_cue_lead_ms
+        stimulus_start_ms = equilibration_ms + top_down_cue_lead_ms
+        diagnostic_window = times_ms >= stimulus_start_ms
+        times_ms = times_ms[diagnostic_window] - stimulus_start_ms
         ampa = ampa[:, diagnostic_window]
         nmda = nmda[:, diagnostic_window]
         voltage_mV = voltage_mV[:, diagnostic_window]
@@ -546,17 +559,19 @@ def run_figure7_condition(
             )
         )
     def stimulus_times(monitor) -> tuple[float, ...]:
+        stimulus_start_ms = equilibration_ms + top_down_cue_lead_ms
         return tuple(
-            float(value - top_down_cue_lead_ms)
+            float(value - stimulus_start_ms)
             for value in monitor.t / brian.ms
-            if float(value) >= top_down_cue_lead_ms
+            if float(value) >= stimulus_start_ms
         )
 
     def stimulus_indices(monitor) -> tuple[int, ...]:
+        stimulus_start_ms = equilibration_ms + top_down_cue_lead_ms
         return tuple(
             int(index)
             for index, value in zip(monitor.i, monitor.t / brian.ms, strict=True)
-            if float(value) >= top_down_cue_lead_ms
+            if float(value) >= stimulus_start_ms
         )
 
     result = Figure7ConditionResult(
@@ -585,6 +600,7 @@ def run_figure7_condition(
         convention_fingerprint=conventions.fingerprint,
         top_down_current_pA=top_down_current_pA,
         top_down_cue_lead_ms=top_down_cue_lead_ms,
+        equilibration_ms=equilibration_ms,
         learned_state_provenance=provenance,
         network_scope="full_two_area" if include_higher_order_loop else "first_order",
         relay_top_down_ampa_peak_by_index=ampa_peak,

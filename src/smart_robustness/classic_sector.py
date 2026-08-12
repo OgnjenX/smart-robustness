@@ -8,8 +8,6 @@ from dataclasses import asdict, dataclass
 from enum import StrEnum
 from typing import Any
 
-import numpy as np
-
 from .modeldb_projections import MODELDB_FIRST_ORDER, MODELDB_FULL
 from .models.compartmental_hh import CompartmentalPopulation, create_compartmental_hh_population
 from .models.modeldb112923 import (
@@ -95,8 +93,9 @@ def figure6_runtime_conventions() -> FirstOrderRuntimeConventions:
 
     SANNDRA's archived gate revision history states that ``TGate.init()``
     resets voltage-gated currents to their resting-potential state.  The
-    classic profile therefore initializes every ionic gate at its equilibrium
-    occupancy at the compartment's serialized resting voltage.  A literal
+    current executable interpretation therefore initializes every ionic gate
+    at its equilibrium occupancy at the compartment's Table 3 initialization
+    voltage. A literal
     zero-gate state remains available only as an explicit audit alternative.
     Input channels with four zero sensitivities are inert declarations, not
     permanent conductances. The remaining values are recovered source values
@@ -393,20 +392,21 @@ def build_first_order_voltage_clamp_sector(
         raise ValueError("clamped relay index outside 9x9 sheet")
     sector = build_first_order_connected_sector(conventions=conventions, brian=brian)
     relay = sector.populations["thalamic_relay"].group
-    indices = np.asarray(clamped_relay_indices, dtype=int)
-
-    voltage = getattr(relay, f"v_{compartment}")
-
-    def pin_relay_compartments() -> None:
-        voltage[indices] = holding_mV * brian.mV
-
-    clamp_start = brian.NetworkOperation(
-        pin_relay_compartments, when="start", name="smart_relay_voltage_clamp_start"
+    # A generated per-neuron expression works in both Brian runtime and C++
+    # standalone. Python callbacks and NumPy-index assignments cannot be
+    # serialized reliably by the standalone device before its first build.
+    mask = "+".join(f"int(i == {index})" for index in clamped_relay_indices)
+    voltage_name = f"v_{compartment}"
+    pin_code = (
+        f"{voltage_name} = {voltage_name}"
+        f" + ({mask})*({float(holding_mV)!r}*mV-{voltage_name})"
     )
-    clamp_end = brian.NetworkOperation(
-        pin_relay_compartments, when="end", name="smart_relay_voltage_clamp_end"
+    clamp_start = relay.run_regularly(
+        pin_code, when="start", name="smart_relay_voltage_clamp_start"
     )
-    pin_relay_compartments()
+    clamp_end = relay.run_regularly(
+        pin_code, when="end", name="smart_relay_voltage_clamp_end"
+    )
     sector.network.add(clamp_start, clamp_end)
     return sector
 

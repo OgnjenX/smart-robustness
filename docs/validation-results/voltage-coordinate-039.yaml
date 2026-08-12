@@ -1,0 +1,34 @@
+id: voltage-coordinate-039
+status: source-coordinate-alternatives-implemented-and-rejected
+claim: a fully rest-relative KInNeSS membrane coordinate resolves TRN recruitment and Figure 7 divergence
+evidence_class: [published-framework, official-executable-source, behavioral]
+sources:
+  - KInNeSS expanded manuscript footnote 12: reported voltage is shifted by compartment leak
+  - ModelDB 112923 SMART.nml: serialized leak, ionic reversals, and absolute-voltage T-current parameters
+alternatives:
+  wholly_internal_zero:
+    leak_convention: printed_zero
+    membrane_initialization: kinness_internal_zero
+    nak_coordinate: absolute_internal
+    calcium_coordinate: integrated_internal
+    isolated_trn_300_ms:
+      events: 0
+      late_voltage_range_mV: [0.01220450, 0.01220457]
+    figure7_100_ms:
+      match: {relay_events: 25, trn_events: 0, nonspecific_events: 0, layer4_events: 0}
+      mismatch: {relay_events: 25, trn_events: 0, nonspecific_events: 0, layer4_events: 0}
+  internal_membrane_physical_calcium_gates:
+    leak_convention: printed_zero
+    membrane_initialization: kinness_internal_zero
+    calcium_coordinate: internal_zero_plus_serialized_leak
+    figure7_30_ms:
+      match: {relay_events: 10, trn_events: 0, nonspecific_events: 7, layer4_events: 0}
+      mismatch: {relay_events: 10, trn_events: 0, nonspecific_events: 7, layer4_events: 0}
+assessment:
+  match_mismatch_divergence: false
+  cortical_recruitment: false
+  promoted: false
+notes:
+  - T-current gate voltage and calcium-current driving force are kept separate in the split convention.
+  - The footnote directly describes output voltage and does not prove that all internal reversal axes are shifted.
+  - The existing physical-membrane candidate remains active pending a stronger source discriminator.

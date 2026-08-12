@@ -24,6 +24,7 @@ from .currents import (
 )
 from .equation_builder import (
     CalciumDensityConvention,
+    CalciumVoltageCoordinate,
     CompiledCellEquations,
     LeakConvention,
     VoltageCoordinate,
@@ -38,6 +39,13 @@ class GateInitializationConvention(StrEnum):
 
     STEADY_STATE_AT_INITIAL_VOLTAGE = "steady_state_at_initial_voltage"
     ZERO = "zero"
+
+
+class MembraneInitializationConvention(StrEnum):
+    """Coordinate used for the serialized compartment resting state."""
+
+    PHYSICAL_LEAK_VOLTAGE = "physical_leak_voltage"
+    KINNESS_INTERNAL_ZERO = "kinness_internal_zero"
 
 
 class SpikeEventCoordinate(StrEnum):
@@ -161,7 +169,13 @@ def create_compartmental_hh_population(
     nak_rate = NaKRateConvention(params["nak_rate_convention"])
     calcium_gate = TTypeGateConvention(params["calcium_gate_convention"])
     gate_initialization = GateInitializationConvention(params["gate_initialization_convention"])
+    membrane_initialization = MembraneInitializationConvention(
+        params["membrane_initialization_convention"]
+    )
     calcium_density = CalciumDensityConvention(params["calcium_density_convention"])
+    calcium_voltage_coordinate = CalciumVoltageCoordinate(
+        params["calcium_voltage_coordinate"]
+    )
     spike_coordinate = SpikeEventCoordinate(params["spike_event_coordinate"])
     spike_event_rule = SpikeEventRule(params["spike_event_rule"])
     spike_event_threshold_mV = float(params["spike_event_threshold_mV"])
@@ -226,6 +240,7 @@ def create_compartmental_hh_population(
         voltage_coordinate=voltage,
         nak_rate_convention=nak_rate,
         calcium_gate_convention=calcium_gate,
+        calcium_voltage_coordinate=calcium_voltage_coordinate,
         calcium_density_convention=calcium_density,
         ahp_convention=ahp_convention,
         enable_ahp_ach=enable_ahp_ach,
@@ -307,7 +322,12 @@ def create_compartmental_hh_population(
     # above V_theta, then release one event when the soma returns below 0 mV.
     group.armed = 0
     if spike_event_rule is SpikeEventRule.LITERAL_PREVIOUS_SAMPLE:
-        initial_soma_voltage = params.get("v_init_mV", cell.soma.e_leak_mV)
+        default_soma_voltage = (
+            0.0
+            if membrane_initialization is MembraneInitializationConvention.KINNESS_INTERNAL_ZERO
+            else cell.soma.e_leak_mV
+        )
+        initial_soma_voltage = params.get("v_init_mV", default_soma_voltage)
         if spike_coordinate is SpikeEventCoordinate.RELATIVE_TO_SOMA_LEAK:
             initial_soma_voltage -= (
                 0.0 if leak is LeakConvention.PRINTED_ZERO else cell.soma.e_leak_mV
@@ -355,7 +375,12 @@ def create_compartmental_hh_population(
         )
         leak_reversal = 0.0 if leak is LeakConvention.PRINTED_ZERO else compartment.e_leak_mV
         _set(group, f"e_l_{compartment_name}", leak_reversal * brian.mV)
-        initial_voltage = params.get("v_init_mV", compartment.e_leak_mV)
+        default_initial_voltage = (
+            0.0
+            if membrane_initialization is MembraneInitializationConvention.KINNESS_INTERNAL_ZERO
+            else compartment.e_leak_mV
+        )
+        initial_voltage = params.get("v_init_mV", default_initial_voltage)
         _set(group, f"v_{compartment_name}", initial_voltage * brian.mV)
         _set(group, f"i_syn_{compartment_name}", 0 * brian.pA)
         _set(group, f"i_drive_{compartment_name}", 0 * brian.pA)
@@ -406,7 +431,12 @@ def create_compartmental_hh_population(
             total_nS = density * compartment.lateral_area_cm2 * 1e6
             _set(group, f"g_ca_{compartment_name}", total_nS * brian.nsiemens)
             calcium_voltage = (
-                initial_voltage
+                (
+                    initial_voltage + compartment.e_leak_mV
+                    if calcium_voltage_coordinate
+                    is CalciumVoltageCoordinate.INTERNAL_ZERO_PLUS_SERIALIZED_LEAK
+                    else initial_voltage
+                )
                 if calcium_gate
                 in {
                     TTypeGateConvention.MODELDB_112923,

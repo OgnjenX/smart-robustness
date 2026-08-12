@@ -513,6 +513,20 @@ fall from above +30 mV to below zero in one step. These alternatives therefore
 do not restore source-faithful post-startup TRN recruitment; the +30-mV peak
 latch remains the active candidate, not a frozen fact.
 
+A separate coordinate audit tested whether KInNeSS integrates voltage at zero
+relative to each compartment's serialized leak and adds the leak only when
+writing physical voltage. Membrane initialization and the voltage supplied to
+absolute-voltage T-current kinetics are now independent fingerprinted
+conventions. A wholly internal-zero interpretation makes isolated TRN
+quiescent, but its 100-ms Figure 7 trials are identical and silent downstream:
+25 relay events, no TRN, nonspecific, or layer-4 events in either condition. A
+split interpretation, with physical voltage supplied only to T-current gates,
+also fails at network scale: over 30 ms both conditions have 10 relay events,
+no TRN or layer-4 events, and seven nonspecific events. The active candidate
+therefore remains the physical-membrane implementation; the KInNeSS footnote
+is treated as an output transformation rather than a wholesale current-axis
+shift (`voltage-coordinate-039.yaml`).
+
 The first Figure 8 candidate (67 mV-shifted standard Traub--Miles rates,
 reciprocal T gates, Table 3 calcium density, and a -80 mV pre-pulse clamp)
 produces sustained tonic trains in both conditions. It therefore fails the

@@ -10,6 +10,7 @@ from smart_robustness.models.currents import (
 )
 from smart_robustness.models.equation_builder import (
     CalciumDensityConvention,
+    CalciumVoltageCoordinate,
     LeakConvention,
     VoltageCoordinate,
     compile_cell_equations,
@@ -25,6 +26,7 @@ def _compile(name: str = "thalamic_relay"):
         voltage_coordinate=VoltageCoordinate.RELATIVE_TO_TABLE3_LEAK,
         nak_rate_convention=NaKRateConvention.PRINTED_SMART,
         calcium_gate_convention=TTypeGateConvention.RECIPROCAL,
+        calcium_voltage_coordinate=CalciumVoltageCoordinate.INTEGRATED_VOLTAGE,
         calcium_density_convention=CalciumDensityConvention.TABLE3,
         ahp_convention=AHPConvention.PAPER_TEXT,
         enable_ahp_ach=name == "layer5_excitatory",
@@ -56,6 +58,7 @@ def test_exact_voltage_clamp_replaces_only_selected_compartment_dynamics() -> No
         voltage_coordinate=VoltageCoordinate.RELATIVE_TO_TABLE3_LEAK,
         nak_rate_convention=NaKRateConvention.STANDARD_TRAUB_MILES,
         calcium_gate_convention=TTypeGateConvention.MODELDB_112923,
+        calcium_voltage_coordinate=CalciumVoltageCoordinate.INTEGRATED_VOLTAGE,
         calcium_density_convention=CalciumDensityConvention.TABLE3,
         ahp_convention=AHPConvention.MODELDB_112923,
         enable_ahp_ach=False,
@@ -74,6 +77,7 @@ def test_global_67_mv_rate_coordinate_is_explicitly_compilable() -> None:
         voltage_coordinate=VoltageCoordinate.SHIFTED_67_MV,
         nak_rate_convention=NaKRateConvention.PRINTED_SMART,
         calcium_gate_convention=TTypeGateConvention.RECIPROCAL,
+        calcium_voltage_coordinate=CalciumVoltageCoordinate.INTEGRATED_VOLTAGE,
         calcium_density_convention=CalciumDensityConvention.TABLE3,
         ahp_convention=AHPConvention.PAPER_TEXT,
         enable_ahp_ach=False,
@@ -89,6 +93,7 @@ def test_modeldb_calcium_equations_use_absolute_voltage_and_correct_roles() -> N
         voltage_coordinate=VoltageCoordinate.SHIFTED_67_MV,
         nak_rate_convention=NaKRateConvention.STANDARD_TRAUB_MILES,
         calcium_gate_convention=TTypeGateConvention.MODELDB_112923,
+        calcium_voltage_coordinate=CalciumVoltageCoordinate.INTEGRATED_VOLTAGE,
         calcium_density_convention=CalciumDensityConvention.TABLE3,
         ahp_convention=AHPConvention.MODELDB_112923,
         enable_ahp_ach=False,
@@ -107,6 +112,7 @@ def test_modeldb_reticular_calcium_uses_serialized_destexhe_gate_family() -> Non
         voltage_coordinate=VoltageCoordinate.RELATIVE_TO_TABLE3_LEAK,
         nak_rate_convention=NaKRateConvention.STANDARD_TRAUB_MILES,
         calcium_gate_convention=TTypeGateConvention.MODELDB_RETICULAR_112923,
+        calcium_voltage_coordinate=CalciumVoltageCoordinate.INTEGRATED_VOLTAGE,
         calcium_density_convention=CalciumDensityConvention.TABLE3,
         ahp_convention=AHPConvention.MODELDB_112923,
         enable_ahp_ach=False,
@@ -125,6 +131,29 @@ def test_modeldb_reticular_calcium_uses_serialized_destexhe_gate_family() -> Non
     assert "g_ca_proximal_dendrite*m_ca_proximal_dendrite**2*h_ca_proximal_dendrite" in equations
 
 
+def test_internal_zero_calcium_coordinate_adds_serialized_physical_leak() -> None:
+    compiled = compile_cell_equations(
+        get_cell_spec("thalamic_relay"),
+        axial_convention=AxialConvention.KINNESS_SERIALIZED_EDGE,
+        leak_convention=LeakConvention.PRINTED_ZERO,
+        voltage_coordinate=VoltageCoordinate.ABSOLUTE,
+        nak_rate_convention=NaKRateConvention.STANDARD_TRAUB_MILES,
+        calcium_gate_convention=TTypeGateConvention.MODELDB_112923,
+        calcium_voltage_coordinate=(
+            CalciumVoltageCoordinate.INTERNAL_ZERO_PLUS_SERIALIZED_LEAK
+        ),
+        calcium_density_convention=CalciumDensityConvention.TABLE3,
+        ahp_convention=AHPConvention.MODELDB_112923,
+        enable_ahp_ach=False,
+    )
+    assert "(v_proximal_dendrite+(-60)*mV)" in compiled.equations
+    assert "(e_ca-v_proximal_dendrite)" in compiled.equations
+    brian = pytest.importorskip("brian2")
+    brian.start_scope()
+    group = brian.NeuronGroup(1, compiled.equations, method="rk4")
+    brian.Network(group).run(0 * brian.ms)
+
+
 def test_conventions_must_be_explicit_enum_members() -> None:
     kwargs = {
         "axial_convention": AxialConvention.SYMMETRIC_CABLE,
@@ -132,6 +161,7 @@ def test_conventions_must_be_explicit_enum_members() -> None:
         "voltage_coordinate": VoltageCoordinate.RELATIVE_TO_TABLE3_LEAK,
         "nak_rate_convention": NaKRateConvention.PRINTED_SMART,
         "calcium_gate_convention": TTypeGateConvention.RECIPROCAL,
+        "calcium_voltage_coordinate": CalciumVoltageCoordinate.INTEGRATED_VOLTAGE,
         "calcium_density_convention": CalciumDensityConvention.TABLE3,
         "ahp_convention": AHPConvention.PAPER_TEXT,
         "enable_ahp_ach": False,
@@ -169,6 +199,7 @@ def test_modeldb_ahp_profile_uses_executable_tau() -> None:
         voltage_coordinate=VoltageCoordinate.SHIFTED_67_MV,
         nak_rate_convention=NaKRateConvention.STANDARD_TRAUB_MILES,
         calcium_gate_convention=TTypeGateConvention.MODELDB_112923,
+        calcium_voltage_coordinate=CalciumVoltageCoordinate.INTEGRATED_VOLTAGE,
         calcium_density_convention=CalciumDensityConvention.TABLE3,
         ahp_convention=AHPConvention.MODELDB_112923,
         enable_ahp_ach=True,
@@ -186,6 +217,7 @@ def test_full_network_ahp_profile_uses_smart_nml_kinetics() -> None:
         voltage_coordinate=VoltageCoordinate.SHIFTED_67_MV,
         nak_rate_convention=NaKRateConvention.STANDARD_TRAUB_MILES,
         calcium_gate_convention=TTypeGateConvention.MODELDB_112923,
+        calcium_voltage_coordinate=CalciumVoltageCoordinate.INTEGRATED_VOLTAGE,
         calcium_density_convention=CalciumDensityConvention.TABLE3,
         ahp_convention=AHPConvention.SMART_NETWORK_112923,
         enable_ahp_ach=True,

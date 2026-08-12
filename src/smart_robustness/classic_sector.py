@@ -87,7 +87,9 @@ class FirstOrderRuntimeConventions:
     nak_rate_convention: str = "standard_traub_miles"
     calcium_kinetics_convention: str = "modeldb_112923"
     calcium_gate_convention: str = "modeldb_112923"
+    calcium_voltage_coordinate: str = "integrated_voltage"
     gate_initialization_convention: str = "steady_state_at_initial_voltage"
+    membrane_initialization_convention: str = "physical_leak_voltage"
     calcium_density_convention: str = "table3"
     specific_capacitance_uF_cm2: float = 1.0
     integration_method: str = "rk4"
@@ -224,7 +226,9 @@ def first_order_population_parameters(
         "voltage_coordinate": conventions.voltage_coordinate,
         "nak_rate_convention": conventions.nak_rate_convention,
         "calcium_gate_convention": calcium_gate_convention,
+        "calcium_voltage_coordinate": conventions.calcium_voltage_coordinate,
         "gate_initialization_convention": conventions.gate_initialization_convention,
+        "membrane_initialization_convention": conventions.membrane_initialization_convention,
         "calcium_density_convention": conventions.calcium_density_convention,
         "spike_event_coordinate": conventions.spike_event_coordinate,
         "spike_event_threshold_mV": conventions.spike_event_threshold_mV,

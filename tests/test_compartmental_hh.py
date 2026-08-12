@@ -21,7 +21,9 @@ def _params(cell_class: str = "thalamic_relay") -> dict[str, str]:
         "voltage_coordinate": "relative_to_table3_leak",
         "nak_rate_convention": "printed_smart",
         "calcium_gate_convention": "reciprocal",
+        "calcium_voltage_coordinate": "integrated_voltage",
         "gate_initialization_convention": "steady_state_at_initial_voltage",
+        "membrane_initialization_convention": "physical_leak_voltage",
         "spike_event_coordinate": "absolute_physical",
         "spike_event_threshold_mV": 30.0,
         "spike_event_rule": "latched_peak_then_zero",
@@ -254,6 +256,33 @@ def test_spike_event_rule_is_required_and_not_an_implicit_simulator_default() ->
     with pytest.raises(KeyError, match="spike_event_rule"):
         create_compartmental_hh_population(
             name="missing_spike_event_rule", size=1, params=params, brian=brian
+        )
+
+
+def test_membrane_initialization_coordinate_is_required_and_explicit() -> None:
+    brian.start_scope()
+    params = _params()
+    del params["membrane_initialization_convention"]
+    with pytest.raises(KeyError, match="membrane_initialization_convention"):
+        create_compartmental_hh_population(
+            name="missing_membrane_initialization", size=1, params=params, brian=brian
+        )
+
+    params = _params()
+    params["membrane_initialization_convention"] = "kinness_internal_zero"
+    population = create_compartmental_hh_population(
+        name="internal_zero_initialization", size=1, params=params, brian=brian
+    )
+    assert population.group.v_soma[0] / brian.mV == pytest.approx(0.0)
+
+
+def test_calcium_voltage_coordinate_is_required() -> None:
+    brian.start_scope()
+    params = _params()
+    del params["calcium_voltage_coordinate"]
+    with pytest.raises(KeyError, match="calcium_voltage_coordinate"):
+        create_compartmental_hh_population(
+            name="missing_calcium_voltage_coordinate", size=1, params=params, brian=brian
         )
 
 

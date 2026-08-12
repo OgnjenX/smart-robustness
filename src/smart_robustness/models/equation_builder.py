@@ -42,6 +42,13 @@ class CalciumDensityConvention(StrEnum):
     METHODS_GLOBAL_250 = "methods_global_250"
 
 
+class CalciumVoltageCoordinate(StrEnum):
+    """Voltage supplied to serialized absolute-voltage T-current kinetics."""
+
+    INTEGRATED_VOLTAGE = "integrated_voltage"
+    INTERNAL_ZERO_PLUS_SERIALIZED_LEAK = "internal_zero_plus_serialized_leak"
+
+
 @dataclass(frozen=True, slots=True)
 class CompiledCellEquations:
     cell_name: str
@@ -51,6 +58,7 @@ class CompiledCellEquations:
     voltage_coordinate: VoltageCoordinate
     nak_rate_convention: NaKRateConvention
     calcium_gate_convention: TTypeGateConvention
+    calcium_voltage_coordinate: CalciumVoltageCoordinate
     calcium_density_convention: CalciumDensityConvention
     ahp_convention: AHPConvention
     ahp_ach_enabled: bool
@@ -103,10 +111,21 @@ def _nak_lines(
 
 
 def _calcium_lines(
-    name: str, coordinate: VoltageCoordinate, gate: TTypeGateConvention
+    name: str,
+    coordinate: VoltageCoordinate,
+    gate: TTypeGateConvention,
+    calcium_voltage_coordinate: CalciumVoltageCoordinate,
+    serialized_leak_mV: float,
 ) -> list[str]:
+    membrane_voltage = f"v_{name}"
+    modeldb_voltage = (
+        f"(v_{name}+({serialized_leak_mV})*mV)"
+        if calcium_voltage_coordinate
+        is CalciumVoltageCoordinate.INTERNAL_ZERO_PLUS_SERIALIZED_LEAK
+        else f"v_{name}"
+    )
     if gate is TTypeGateConvention.MODELDB_RETICULAR_112923:
-        v = f"v_{name}"
+        v = modeldb_voltage
         return [
             f"dm_ca_{name}/dt=(m_ca_inf_{name}-m_ca_{name})/tau_m_ca_{name} : 1",
             f"dh_ca_{name}/dt=(h_ca_inf_{name}-h_ca_{name})/tau_h_ca_{name} : 1",
@@ -120,11 +139,11 @@ def _calcium_lines(
                 f"tau_h_ca_{name}=(28.3+0.33/(exp(({v}+48*mV)/(4*mV))"
                 f"+exp(({v}+407*mV)/(-50*mV))))*ms : second"
             ),
-            f"i_ca_{name}=g_ca_{name}*m_ca_{name}**2*h_ca_{name}*(e_ca-{v}) : amp",
+            f"i_ca_{name}=g_ca_{name}*m_ca_{name}**2*h_ca_{name}*(e_ca-{membrane_voltage}) : amp",
             f"g_ca_{name} : siemens (constant)",
         ]
     if gate is TTypeGateConvention.MODELDB_112923:
-        v = f"v_{name}"
+        v = modeldb_voltage
         return [
             f"dm_ca_{name}/dt=(m_ca_inf_{name}-m_ca_{name})/tau_m_ca_{name} : 1",
             f"dh_ca_{name}/dt=(h_ca_inf_{name}-h_ca_{name})/tau_h_ca_{name} : 1",
@@ -132,7 +151,7 @@ def _calcium_lines(
             f"tau_m_ca_{name}=(2.44+2.506e-2*exp(-9.84e-2*{v}/mV))*ms : second",
             f"h_ca_inf_{name}=1/(exp(({v}+83.5*mV)/(6.3*mV))+1) : 1",
             f"tau_h_ca_{name}=(19.15+7.171e-2*exp(-10.54e-2*{v}/mV))*ms : second",
-            f"i_ca_{name}=g_ca_{name}*m_ca_{name}**3*h_ca_{name}*(e_ca-{v}) : amp",
+            f"i_ca_{name}=g_ca_{name}*m_ca_{name}**3*h_ca_{name}*(e_ca-{membrane_voltage}) : amp",
             f"g_ca_{name} : siemens (constant)",
         ]
     vp = _paper_voltage(name, coordinate)
@@ -192,6 +211,7 @@ def compile_cell_equations(
     voltage_coordinate: VoltageCoordinate,
     nak_rate_convention: NaKRateConvention,
     calcium_gate_convention: TTypeGateConvention,
+    calcium_voltage_coordinate: CalciumVoltageCoordinate,
     calcium_density_convention: CalciumDensityConvention,
     ahp_convention: AHPConvention,
     enable_ahp_ach: bool,
@@ -210,6 +230,11 @@ def compile_cell_equations(
     voltage = _enum(voltage_coordinate, VoltageCoordinate, "voltage_coordinate")
     nak_rate = _enum(nak_rate_convention, NaKRateConvention, "nak_rate_convention")
     calcium_gate = _enum(calcium_gate_convention, TTypeGateConvention, "calcium_gate_convention")
+    calcium_voltage = _enum(
+        calcium_voltage_coordinate,
+        CalciumVoltageCoordinate,
+        "calcium_voltage_coordinate",
+    )
     calcium_density = _enum(
         calcium_density_convention,
         CalciumDensityConvention,
@@ -346,7 +371,15 @@ def compile_cell_equations(
             lines.extend(_nak_lines(name, voltage, nak_rate))
             current_terms.extend((f"i_na_{name}", f"i_k_{name}"))
         if compartment.g_ca_mS_cm2 is not None:
-            lines.extend(_calcium_lines(name, voltage, calcium_gate))
+            lines.extend(
+                _calcium_lines(
+                    name,
+                    voltage,
+                    calcium_gate,
+                    calcium_voltage,
+                    compartment.e_leak_mV,
+                )
+            )
             current_terms.append(f"i_ca_{name}")
         if enable_ahp_ach and name == "soma":
             current_terms.append("i_ahp")
@@ -387,6 +420,7 @@ def compile_cell_equations(
         voltage_coordinate=voltage,
         nak_rate_convention=nak_rate,
         calcium_gate_convention=calcium_gate,
+        calcium_voltage_coordinate=calcium_voltage,
         calcium_density_convention=calcium_density,
         ahp_convention=ahp,
         ahp_ach_enabled=enable_ahp_ach,

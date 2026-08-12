@@ -101,19 +101,17 @@ def test_paper_literal_preserves_directional_asymmetry() -> None:
     assert edge.conductance_into_near_nS != pytest.approx(edge.conductance_into_far_nS)
 
 
-def test_kinness_2008_trn_edge_matches_framework_equation_7() -> None:
+def test_kinness_2008_trn_edge_matches_framework_equation_9() -> None:
     edge = _edge("trn", AxialConvention.KINNESS_2008, "soma")
 
     d_soma, l_soma = 0.005, 0.005
     d_dendrite, l_dendrite = 0.001, 0.005
     rho = 10.0
-    expected_soma_density = (
-        (1 / rho) * (d_soma**2 / l_soma + d_dendrite**2 / l_dendrite) / (8 * d_soma * l_soma)
+    expected_soma_density = d_soma / (
+        2 * rho * l_soma**2 * (1 + l_dendrite * d_soma**2 / (l_soma * d_dendrite**2))
     )
-    expected_dendrite_density = (
-        (1 / rho)
-        * (d_dendrite**2 / l_dendrite + d_soma**2 / l_soma)
-        / (8 * d_dendrite * l_dendrite)
+    expected_dendrite_density = d_dendrite / (
+        2 * rho * l_dendrite**2 * (1 + l_soma * d_dendrite**2 / (l_dendrite * d_soma**2))
     )
 
     assert edge.conductance_density_into_near_mS_cm2 == pytest.approx(expected_soma_density)
@@ -230,3 +228,6 @@ def test_kinness_serialized_edge_uses_child_connection_value_both_directions() -
     child_value = get_cell_spec("layer5_excitatory").compartments[1].axial_resistance_kohm_cm
     assert edge.near.axial_resistivity_kohm_cm == child_value
     assert edge.far.axial_resistivity_kohm_cm == child_value
+    assert edge.conductance_into_near_nS == pytest.approx(edge.conductance_into_far_nS)
+    near_current, far_current = edge.currents_pA(-70.0, -60.0)
+    assert near_current == pytest.approx(-far_current)

@@ -51,7 +51,7 @@ Versace, M., Ames, H., Léveillé, J., Fortenberry, B., and Gorchetchnikov, A.
 Neuroinformatics 6, 291–309. DOI:
 [10.1007/s12021-008-9021-2](https://doi.org/10.1007/s12021-008-9021-2).
 The [Boston University manuscript](https://open.bu.edu/items/0e83be53-0aa9-4e52-90a0-d4c071205d62)
-defines the exact KInNeSS axial Equation 7, `Simple tau` function, normalized
+defines the exact KInNeSS axial Equation 9, `Simple tau` function, normalized
 dual-exponential synapse, transmitter depletion, and fourth-order Runge–Kutta
 integration used to interpret the SMART XML. The audited PDF has SHA-256
 `0f445537cc2e47a21c525f9cbd59cb5d7bd56d86bd195d0a772a4413c522024c`.

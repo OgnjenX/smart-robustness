@@ -73,6 +73,13 @@ serialized channel projections; the full two-area file contains 24 populations.
   `0.05×0.06` mm soma. Treating the raw XML values as millimeters leaves total
   membrane-current ratios unchanged but makes axial coupling 100-fold too
   strong relative to membrane current and capacitance.
+
+- Intercompartmental coupling follows Equation 9 of the expanded KInNeSS
+  manuscript. A visual equation audit corrected an earlier summed-geometry
+  transcription to the published harmonic geometry ratio. With one serialized
+  child-edge resistance used in both directions, the resulting total currents
+  are exactly equal and opposite even though their density effects differ by
+  receiving-compartment area.
 - The dedicated Figure 8 cell is not the Table 3 relay cell. It uses soma
   geometry 0.2×0.4 mm, 50/30 mS/cm² Na/K, and 250 mS/cm² T-current in soma
   and both dendrites. Its leak density is not serialized and remains a required

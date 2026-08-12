@@ -56,11 +56,13 @@ source-consistent failure. Typed runtime profiles now carry stable SHA-256
 fingerprints, and `validation.first_order` provides reusable isolated-relay
 and connected-bar runners plus a predeclared 40-Hz scorer. The first coarse
 matrix is recorded in `isolated-relay-sweep-001.yaml`; no candidate passed.
-The follow-up `isolated-relay-axial-sweep-002.yaml` tests every implemented
-source-defined axial interpretation with both explicit gate initializations.
-None produces the Methods 4.9 40-Hz relay stream. The only spiking branch,
-the paper-literal axial equation with steady-state gates, produces one event
-per 100 ms across 0.25--2 uF/cm2 rather than a tunable 40-Hz train.
+The follow-up `isolated-relay-axial-sweep-002.yaml` is retained as superseded:
+visual inspection of the primary equation exposed an incorrect axial geometry
+expression in the implementation. After correcting expanded-manuscript
+Equation 9, the baseline isolated relay remains silent, and the corresponding
+full-sector result in `first-order-bar-004.yaml` also produces zero relay
+spikes. The correction therefore removes a fidelity defect but does not by
+itself recover the Methods 4.9 40-Hz stream.
 
 Learning checkpoint: Equation 6's biphasic post-spike gate and the serialized
 20/25-ms depotentiation intervals are tested. Adaptive records initialize at

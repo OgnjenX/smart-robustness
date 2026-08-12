@@ -1,5 +1,5 @@
 id: isolated-relay-axial-sweep-002
-status: failed-reproduction
+status: superseded
 claim: Grossberg and Versace Methods 4.9 isolated relay drive at approximately 40 Hz
 protocol:
   cell: thalamic_relay
@@ -40,6 +40,7 @@ assessment:
   tolerance_hz: 5.0
   passed: false
 notes:
+  - Superseded after visual audit found that the implementation of KInNeSS Equation 9 used the wrong geometry expression; retained as an audit trail only.
   - No source-defined axial interpretation recovers the published relay stream.
   - The paper-literal convention is qualitatively distinct but generates at most one event in 100 ms.
   - The capacitance follow-up shows a one-event regime, not a smooth approach to 40 Hz.

@@ -13,7 +13,7 @@ as axial resistance.  ADR 0001 therefore keeps two interpretations available:
     one reciprocal conductance and therefore conserves total axial current.
 
 ``kinness_2008``
-    Implement Equation 7 of the contemporaneous KInNeSS framework paper.  It
+    Implement Equation 9 of the expanded KInNeSS framework manuscript.  It
     retains KInNeSS's directional, receiving-compartment conductance density
     and includes the geometry of both compartments.
 
@@ -188,7 +188,7 @@ def _kinness_density_mS_cm2(
     receiving: AxialEndpointSpec,
     neighboring: AxialEndpointSpec,
 ) -> float:
-    """KInNeSS (Versace et al., 2008) Equation 7.
+    """KInNeSS (Versace et al., 2008) expanded-manuscript Equation 9.
 
     The paper denotes the pair-specific axial conductance by ``g_A``.  SMART
     Table 3 instead serializes an axial resistivity for each compartment, so
@@ -196,15 +196,15 @@ def _kinness_density_mS_cm2(
     receiving endpoint.  This choice is explicit and testable.
     """
 
-    axial_conductivity_mS_per_cm = 1.0 / receiving.axial_resistivity_kohm_cm
-    geometry = (
-        receiving.diameter_cm**2 / receiving.length_cm
-        + neighboring.diameter_cm**2 / neighboring.length_cm
+    geometry_ratio = (
+        neighboring.length_cm * receiving.diameter_cm**2
+        / (receiving.length_cm * neighboring.diameter_cm**2)
     )
-    density = (
-        axial_conductivity_mS_per_cm
-        * geometry
-        / (8.0 * receiving.diameter_cm * receiving.length_cm)
+    density = receiving.diameter_cm / (
+        2.0
+        * receiving.axial_resistivity_kohm_cm
+        * receiving.length_cm**2
+        * (1.0 + geometry_ratio)
     )
     _require_positive(density, f"{receiving.compartment_name} KInNeSS density")
     return density

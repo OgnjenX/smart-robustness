@@ -65,7 +65,7 @@ parameters:
   model.multicompartment.axial_convention:
     value: kinness_2008, paper_literal, or symmetric_cable; must be selected explicitly
     status: derived
-    source: KInNeSS framework paper Equation 7; SMART Table 3 axial resistivities
+    source: expanded KInNeSS framework manuscript Equation 9; SMART Table 3 axial resistivities
   model.multicompartment.ahp_convention:
     value: paper_text or modeldb_112923; must be selected explicitly
     status: derived

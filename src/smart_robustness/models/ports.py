@@ -170,6 +170,14 @@ def _modeldb_receptor(record: ModelDBProjection) -> Receptor:
 
 
 def modeldb_chemical_port(record: ModelDBProjection, index: int) -> SynapticPortSpec:
+    """Compile one executable KInNeSS ligand channel.
+
+    Unlike the supplementary table's pS values, ``SMART.nml`` serializes
+    channel ``g_bar`` directly as the maximum conductance density in mS/cm2.
+    KInNeSS Equation 16 then multiplies that density by the dimensionless
+    projection weight (the receptor/connection coefficient) and ligand gate.
+    """
+
     if record.kind != "chemical":
         raise ValueError(f"{record.id}: only chemical records define kinetic ports")
     required = (
@@ -189,9 +197,7 @@ def modeldb_chemical_port(record: ModelDBProjection, index: int) -> SynapticPort
         compartment=record.target_compartment,
         receptor=receptor,
         reversal_mV=float(record.reversal_mV),
-        conductance_density_mS_cm2=ligand_conductance_density_mS_cm2(
-            float(record.channel_conductance_mS_cm2)
-        ),
+        conductance_density_mS_cm2=float(record.channel_conductance_mS_cm2),
         rise_ms=rise_ms,
         fall_ms=fall_ms,
         normalization=biexponential_normalization(rise_ms, fall_ms) if rise_ms != fall_ms else 1.0,

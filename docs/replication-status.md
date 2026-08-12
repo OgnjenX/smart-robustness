@@ -59,7 +59,8 @@ Implemented:
   projections (51 chemical and four electrical) plus 11 external channels;
 - projection-specific receptor ports for all 51 ModelDB chemical records, including
   AMPA/GABA dual-exponential kinetics, NMDA voltage block, and the equal-tau
-  alpha-function case;
+  alpha-function case; executable XML `g_bar` values are used directly as
+  mS/cm² densities as required by KInNeSS Equations 3 and 16;
 - the 50 chemical projections whose source and target are both in the
   first-order sector, with exact ModelDB delays, weights, asymptotes,
   one/many/all methods, Gaussian sigmas, wrap/extend borders, and ring flags;
@@ -194,6 +195,17 @@ dual-exponential state could exceed one (the relay-to-layer-4 diagnostic reached
 7.95) and therefore overestimated synaptic conductance. The corrected bounded
 implementation still passes the five-cell 40-Hz relay/selectivity gates, while
 the cortical populations remain silent.
+
+A subsequent unit audit found that the executable ModelDB path had incorrectly
+reused the supplementary table's `pS × millions/cm²` conversion. KInNeSS
+Equation 3 instead defines XML channel `g_bar` directly in mS/cm², and Equation
+16 multiplies it by the projection weight. Removing that extra `10^-3` factor
+raises the center layer-4 dendrite's first-volley maximum from approximately
+-64.5 mV to -1.4 mV in an isolated relay→layer-4 assay, while its soma remains
+subthreshold over the first 20 ms. A complete connected run no longer reaches
+the result-collection step in the current NumPy/Brian2 execution environment,
+so cortical recruitment and Figure 6 weight maps remain unverified pending a
+network-scale stability/resource discriminator.
 
 The official input archive also resolves a missing protocol channel:
 `horizontal0.png` and `vertical0.png` contain blue=70 at the central green=120

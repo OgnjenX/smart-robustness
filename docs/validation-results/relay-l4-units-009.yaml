@@ -1,0 +1,34 @@
+id: relay-l4-units-009
+status: source-unit-correction-pathway-finite-network-pending
+claim: executable SMART.nml ligand channels use KInNeSS conductance-density units
+source:
+  kinness_equation_3: channel maximum conductance is in mS/cm2
+  kinness_equation_16: current density multiplies channel conductance, ligand gate, transmitter, and projection weight
+  executable_channel: modeldb112923.projection.035
+  serialized_g_bar_mS_cm2: 0.247
+  serialized_peak_weight: 6.0
+protocol:
+  populations: [thalamic_relay, layer4_excitatory_v1]
+  shapes: [[9, 9], [9, 9]]
+  active_relay_indices: [38, 39, 40, 41, 42]
+  green_input: 120
+  duration_ms: 20.0
+  dt_ms: 0.01
+  runtime_fingerprint: f0e175c18ea7e42158a110b6e33eae85e36d65f3c7dbea6c648ae91884016154
+result:
+  relay_spikes: 5
+  layer4_spikes: 0
+  center_layer4_soma_max_mV: -58.360938
+  center_layer4_proximal_dendrite_max_mV: -1.386822
+comparison:
+  prior_incorrect_center_proximal_max_mV: -64.507849
+  removed_incorrect_scale_factor: 0.001
+assessment:
+  source_units_pass: true
+  isolated_pathway_finite: true
+  cortical_spike_recruitment_pass: false
+  connected_sector_validated: false
+notes:
+  - The supplementary catalog remains a separate pS-times-receptor-density transcription and still requires its 1e-3 conversion.
+  - The executable ModelDB catalog stores g_bar as a KInNeSS membrane conductance density and must not receive that conversion.
+  - The corrected dendritic response is strong but does not by itself verify the published Figure 6 winner or learned weight maps.

@@ -2,11 +2,13 @@ from __future__ import annotations
 
 import pytest
 
+from smart_robustness.modeldb_projections import MODELDB_FIRST_ORDER
 from smart_robustness.models.ports import (
     chemical_port,
     external_ports_for_target,
     gap_ports_for_target,
     ligand_conductance_density_mS_cm2,
+    modeldb_chemical_port,
     ports_for_target,
 )
 from smart_robustness.projections import SUPPLEMENTARY_TABLE3
@@ -29,6 +31,17 @@ def test_ligand_channel_ps_and_million_per_cm2_weight_convert_to_density() -> No
     assert port.conductance_density_mS_cm2 == pytest.approx(
         ligand_conductance_density_mS_cm2(float(record.parsed.conductance_pS))
     )
+
+
+def test_modeldb_ligand_gbar_is_already_a_conductance_density() -> None:
+    record = next(
+        record
+        for record in MODELDB_FIRST_ORDER.projections
+        if record.id == "modeldb112923.projection.035"
+    )
+    port = modeldb_chemical_port(record, 0)
+    assert record.channel_conductance_mS_cm2 == pytest.approx(0.247)
+    assert port.conductance_density_mS_cm2 == pytest.approx(0.247)
 
 
 def test_nmda_port_retains_voltage_block_and_equal_tau_is_supported() -> None:

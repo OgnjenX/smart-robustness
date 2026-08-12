@@ -54,11 +54,14 @@ serialized channel projections; the full two-area file contains 24 populations.
   narrow/wide channels and different weights, asymptotes, delays, and topology
   flags. A generated, integrity-pinned ModelDB catalog is therefore the
   executable baseline, while the supplement remains an independent audit.
-- Chemical-channel `g_bar` is an individual-channel conductance in pS, while
-  each serialized projection weight is receptor density in millions/cm².
-  Executable ligand conductance density therefore includes the required
-  `10^-3` conversion from `pS × 10^6/cm²` to `mS/cm²`; input gates remain
-  conductance densities and do not use this receptor-density conversion.
+- The supplementary table prints chemical-channel conductance in pS and
+  projection weight as receptor density in millions/cm², requiring a `10^-3`
+  conversion in that independent transcription. The executable `SMART.nml`
+  path is different: KInNeSS Equation 3 defines channel `g_bar` as maximum
+  conductance density in mS/cm², and Equation 16 multiplies it by the
+  dimensionless projection weight and ligand gate. ModelDB channels therefore
+  use their serialized `g_bar` directly; applying the supplementary conversion
+  to them would make all chemical synapses 1000-fold too weak.
 - Ligand kinetics now implement KInNeSS Equations 13--15 per connection. Each
   synapse tracks its last two arrivals and combines their unit-normalized
   waveforms as `g1 + g2 - g1*g2`, rather than linearly accumulating every past

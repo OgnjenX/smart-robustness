@@ -578,6 +578,15 @@ construction, preserving all other cross-area delays. This passes focused
 structural tests but does not yet establish the published inter-area
 cross-correlation result (`figure16-delay-protocol-043.yaml`).
 
+The exact Figure 16 Fourier-domain cross-correlation workflow is now available
+for all five published bands. It returns raw and energy-normalized curves,
+signed lags, band peaks, and the predeclared qualitative lower-frequency versus
+gamma comparison. Synthetic delayed and mixed-band controls pass, including a
+guard against normalizing roundoff-only spectral energy. This makes the
+analysis reproducible but does not yet claim official behavior because
+source-faithful LFP current accounting remains pending
+(`figure16-cross-correlation-analysis-044.yaml`).
+
 A separate coordinate audit tested whether KInNeSS integrates voltage at zero
 relative to each compartment's serialized leak and adds the leak only when
 writing physical voltage. Membrane initialization and the voltage supplied to

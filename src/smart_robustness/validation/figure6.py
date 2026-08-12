@@ -107,6 +107,8 @@ class Figure6LearningResult:
     bottom_up: Figure6MapSummary
     top_down_wide: Figure6MapSummary
     top_down_narrow: Figure6MapSummary
+    population_spike_indices: dict[str, tuple[int, ...]] | None = None
+    population_spike_times_ms: dict[str, tuple[float, ...]] | None = None
 
     @property
     def top_down_combined(self) -> Figure6MapSummary:
@@ -180,6 +182,74 @@ class Figure6LearningRun:
     learned_weights: dict[str, tuple[float, ...]]
 
 
+@dataclass(frozen=True, slots=True)
+class Figure6TopDownTimingAssessment:
+    category_spike_ms: float | None
+    teaching_arrival_ms: float | None
+    preceding_relay_spike_ms: float | None
+    following_relay_spike_ms: float | None
+
+    @property
+    def preceding_post_minus_arrival_ms(self) -> float | None:
+        if self.preceding_relay_spike_ms is None or self.teaching_arrival_ms is None:
+            return None
+        return self.preceding_relay_spike_ms - self.teaching_arrival_ms
+
+    @property
+    def following_post_minus_arrival_ms(self) -> float | None:
+        if self.following_relay_spike_ms is None or self.teaching_arrival_ms is None:
+            return None
+        return self.following_relay_spike_ms - self.teaching_arrival_ms
+
+    @property
+    def causal_pair_in_learning_window(self) -> bool:
+        delta = self.following_post_minus_arrival_ms
+        return delta is not None and 0 <= delta <= 20
+
+
+def assess_figure6_top_down_timing(
+    result: Figure6LearningResult,
+    *,
+    category_index: int = 40,
+    relay_index: int = 40,
+    axonal_delay_ms: float = 2.0,
+) -> Figure6TopDownTimingAssessment:
+    """Score whether layer-6II teaching arrives before a matched relay spike."""
+
+    indices = result.population_spike_indices or {}
+    times = result.population_spike_times_ms or {}
+    category_times = tuple(
+        time
+        for index, time in zip(
+            indices.get("layer6ii_excitatory_v1", ()),
+            times.get("layer6ii_excitatory_v1", ()),
+            strict=True,
+        )
+        if index == category_index
+    )
+    if not category_times:
+        return Figure6TopDownTimingAssessment(None, None, None, None)
+    category_spike = category_times[0]
+    arrival = category_spike + axonal_delay_ms
+    relay_times = tuple(
+        time
+        for index, time in zip(
+            indices.get("thalamic_relay", ()),
+            times.get("thalamic_relay", ()),
+            strict=True,
+        )
+        if index == relay_index
+    )
+    preceding = tuple(time for time in relay_times if time < arrival)
+    following = tuple(time for time in relay_times if time >= arrival)
+    return Figure6TopDownTimingAssessment(
+        category_spike_ms=category_spike,
+        teaching_arrival_ms=arrival,
+        preceding_relay_spike_ms=max(preceding) if preceding else None,
+        following_relay_spike_ms=min(following) if following else None,
+    )
+
+
 def run_figure6_learning(
     *,
     conventions=None,
@@ -233,6 +303,14 @@ def run_figure6_learning(
         name: int(monitor.num_spikes) - warmup_counts[name]
         for name, monitor in monitors.items()
     }
+    spike_indices: dict[str, tuple[int, ...]] = {}
+    spike_times_ms: dict[str, tuple[float, ...]] = {}
+    for name, monitor in monitors.items():
+        times = np.asarray(monitor.t / brian.ms)
+        indices = np.asarray(monitor.i)
+        mask = times >= protocol.warmup_ms
+        spike_indices[name] = tuple(int(value) for value in indices[mask])
+        spike_times_ms[name] = tuple(float(value - protocol.warmup_ms) for value in times[mask])
     result = summarize_figure6_learning(
         convention_fingerprint=conventions.fingerprint,
         duration_ms=protocol.stimulus_ms,
@@ -241,6 +319,16 @@ def run_figure6_learning(
         before_weights=before,
         winning_layer4_index=protocol.winning_layer4_index,
         active_category_index=protocol.active_category_index,
+    )
+    result = Figure6LearningResult(
+        convention_fingerprint=result.convention_fingerprint,
+        duration_ms=result.duration_ms,
+        population_spikes=result.population_spikes,
+        bottom_up=result.bottom_up,
+        top_down_wide=result.top_down_wide,
+        top_down_narrow=result.top_down_narrow,
+        population_spike_indices=spike_indices,
+        population_spike_times_ms=spike_times_ms,
     )
     learned = {
         projection_id: tuple(

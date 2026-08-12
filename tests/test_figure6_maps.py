@@ -8,6 +8,7 @@ from smart_robustness.validation.figure6 import (
     Figure6LearningProtocol,
     Figure6LearningResult,
     Figure6MapSummary,
+    assess_figure6_top_down_timing,
 )
 
 
@@ -73,3 +74,28 @@ def test_figure6c_scores_the_combined_wide_and_narrow_field() -> None:
     assert narrow.horizontal_orientation_contrast < MINIMUM_TOP_DOWN_HORIZONTAL_CONTRAST
     assert result.top_down_combined.horizontal_orientation_contrast == pytest.approx(0.012)
     assert result.top_down_oriented
+
+
+def test_top_down_timing_accounts_for_the_archived_axonal_delay() -> None:
+    empty = Figure6MapSummary("projection", "map", (0.0,) * 81, (0.0,) * 81)
+    result = Figure6LearningResult(
+        "fingerprint",
+        100.0,
+        {},
+        empty,
+        empty,
+        empty,
+        population_spike_indices={
+            "layer6ii_excitatory_v1": (40,),
+            "thalamic_relay": (40, 40),
+        },
+        population_spike_times_ms={
+            "layer6ii_excitatory_v1": (58.28,),
+            "thalamic_relay": (59.81, 80.0),
+        },
+    )
+    assessment = assess_figure6_top_down_timing(result)
+    assert assessment.teaching_arrival_ms == pytest.approx(60.28)
+    assert assessment.preceding_post_minus_arrival_ms == pytest.approx(-0.47)
+    assert assessment.following_post_minus_arrival_ms == pytest.approx(19.72)
+    assert assessment.causal_pair_in_learning_window

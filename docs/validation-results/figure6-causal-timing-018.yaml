@@ -1,0 +1,27 @@
+id: figure6-causal-timing-018
+status: bottom-up-pass-top-down-causal-timing-fail
+claim: the active layer-6II category provides causal pre-before-post teaching to matched LGN relays
+protocol:
+  warmup_ms: 2.0
+  stimulus_ms: 100.0
+  dt_ms: 0.01
+  orientation: horizontal
+  archived_layer6ii_to_relay_delay_ms: 2.0
+observations:
+  layer6ii_cell_40_spike_ms: 58.28
+  layer6ii_teaching_arrival_ms: 60.28
+  matched_relay_cell_40_spikes_ms: [5.47, 42.70, 59.81, 80.00]
+  nearest_preceding_relay_minus_arrival_ms: -0.47
+  next_relay_minus_arrival_ms: 19.72
+  bottom_up_horizontal_contrast: 0.0787410182
+  top_down_wide_horizontal_contrast: -0.0001082280
+  top_down_narrow_horizontal_contrast: 0.0000655278
+  top_down_combined_horizontal_contrast: -0.0000427002
+assessment:
+  figure6b_pass: true
+  immediate_gamma_pair_is_causal: false
+  figure6c_pass: false
+notes:
+  - The category spike precedes the somatic relay spike by 1.53 ms, but its archived 2-ms axonal delay makes synaptic arrival 0.47 ms late.
+  - The next causal relay spike occurs at the edge of the 20-ms depotentiation interval and does not produce the published top-down reshaping.
+  - This identifies missing gamma phase alignment as the active Figure 6c failure, independently of the corrected initial weight field.

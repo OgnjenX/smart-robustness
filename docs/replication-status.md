@@ -252,6 +252,15 @@ documented in `figure6-map-interpretation-017.yaml`; the prior run's combined
 horizontal contrast is still only about 0.00079, far below the predeclared 0.01
 gate, so Figure 6c learning remains unreproduced.
 
+The exact 100-ms runner completes successfully when retained as a persistent
+process; earlier empty yields were mistakenly interpreted as termination. Its
+source-level timing identifies the remaining Figure 6c mechanism failure:
+layer-6II cell 40 spikes at 58.28 ms, but its 2-ms axonal delay places the LGN
+teaching arrival at 60.28 ms, after the matched relay volley at 59.75--59.96
+ms. Thus the immediate gamma pair has post-before-pre timing and depresses the
+top-down field. The trace and assessment are archived in
+`figure6-causal-timing-018.yaml`.
+
 The Figure 7 protocol now keeps its Methods 4.9 somatic-current category cue
 separate from the blue category pixel in the recovered Figure 6 training PNG.
 Its predeclared scorer independently tests the approximately 40-Hz match and

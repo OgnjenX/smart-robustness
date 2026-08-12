@@ -9,15 +9,18 @@ from __future__ import annotations
 
 from collections.abc import Mapping
 from dataclasses import dataclass
+from pathlib import Path
 
 import numpy as np
 
+from ..modeldb_projections import MODELDB_FIRST_ORDER
 from ..protocols import (
     ClassicMatchMismatchCue,
     MatchCondition,
     apply_match_mismatch_cue,
     clear_match_mismatch_cue,
 )
+from ..synapses import modeldb_topology_pairs
 from .figure6 import TOP_DOWN_NARROW_PROJECTION_ID, TOP_DOWN_WIDE_PROJECTION_ID
 
 FIGURE7_MATCH_RATE_HZ = 40.0
@@ -55,6 +58,8 @@ class Figure6ReferenceExpectation:
 def paper_constrained_figure6_expectation(
     projections: Mapping[str, object],
     reference: Figure6ReferenceExpectation | None = None,
+    *,
+    derive_from_source: bool = False,
 ) -> dict[str, tuple[float, ...]]:
     """Construct a labeled Figure 6c-like state for Figure 7/10 tests.
 
@@ -81,11 +86,23 @@ def paper_constrained_figure6_expectation(
     learned: dict[str, tuple[float, ...]] = {}
     for projection_id in FIGURE7_REQUIRED_LEARNED_PROJECTIONS:
         projection = projections[projection_id]
-        values = np.asarray(projection.w[:], dtype=float).copy()
-        source = np.asarray(projection.i[:], dtype=int)
-        target = np.asarray(projection.j[:], dtype=int)
+        if derive_from_source:
+            record = MODELDB_FIRST_ORDER.by_id(projection_id)
+            source, target, spatial_factor = modeldb_topology_pairs(
+                record,
+                source_shape=(9, 9),
+                target_shape=(9, 9),
+                gaussian_weight_convention="normalized_density",
+            )
+            assert record.asymptotic_weight is not None and record.weight is not None
+            values = float(record.asymptotic_weight) * spatial_factor
+            maximum = np.maximum(float(record.weight), values)
+        else:
+            values = np.asarray(projection.w[:], dtype=float).copy()
+            source = np.asarray(projection.i[:], dtype=int)
+            target = np.asarray(projection.j[:], dtype=int)
+            maximum = np.asarray(projection.w_maximum[:], dtype=float)
         selected = source == reference.source_index
-        maximum = np.asarray(projection.w_maximum[:], dtype=float)
         values[selected] = np.minimum(desired[target[selected]] / 2.0, maximum[selected])
         learned[projection_id] = tuple(float(value) for value in values)
     return learned
@@ -96,6 +113,7 @@ def apply_figure7_learned_state(
     learned_weights: Mapping[str, tuple[float, ...] | np.ndarray],
     *,
     freeze_learning: bool = True,
+    verify_runtime_bounds: bool = True,
 ) -> None:
     """Install an explicit Figure 6-trained expectation for Figure 7.
 
@@ -115,9 +133,10 @@ def apply_figure7_learned_state(
             )
         if not np.all(np.isfinite(values)) or np.any(values < 0):
             raise ValueError(f"{projection_id}: learned weights must be finite and nonnegative")
-        maximum = np.asarray(projection.w_maximum[:], dtype=float)
-        if np.any(values > maximum + 1e-12):
-            raise ValueError(f"{projection_id}: learned weights exceed declared maxima")
+        if verify_runtime_bounds:
+            maximum = np.asarray(projection.w_maximum[:], dtype=float)
+            if np.any(values > maximum + 1e-12):
+                raise ValueError(f"{projection_id}: learned weights exceed declared maxima")
         projection.w = values
         if freeze_learning:
             projection.modifiable = 0
@@ -216,6 +235,7 @@ def run_figure7_condition(
     exact_relay_voltage_clamp: bool = False,
     relay_clamp_compartment: str = "proximal_dendrite",
     include_higher_order_loop: bool = False,
+    cpp_standalone_directory: str | Path | None = None,
     brian=None,
 ) -> Figure7ConditionResult:
     """Run one source-labeled Figure 7 match or mismatch condition."""
@@ -228,6 +248,13 @@ def run_figure7_condition(
         raise ValueError("duration_ms and dt_ms must be positive")
     if brian is None:
         import brian2 as brian
+    if cpp_standalone_directory is not None:
+        brian.device.reinit()
+        brian.set_device(
+            "cpp_standalone",
+            directory=str(Path(cpp_standalone_directory).resolve()),
+            build_on_run=False,
+        )
     from ..classic_sector import (
         build_first_order_connected_sector,
         build_first_order_voltage_clamp_sector,
@@ -259,13 +286,19 @@ def run_figure7_condition(
         sector = build_first_order_connected_sector(conventions=conventions, brian=brian)
     if use_paper_constrained_reference:
         learned_weights = paper_constrained_figure6_expectation(
-            sector.projections, paper_reference
+            sector.projections,
+            paper_reference,
+            derive_from_source=cpp_standalone_directory is not None,
         )
         provenance = "paper-constrained-figure6c-reference"
     else:
         provenance = "simulated-learned-weight-snapshot"
     assert learned_weights is not None
-    apply_figure7_learned_state(sector.projections, learned_weights)
+    apply_figure7_learned_state(
+        sector.projections,
+        learned_weights,
+        verify_runtime_bounds=cpp_standalone_directory is None,
+    )
     nonspecific = brian.SpikeMonitor(
         sector.populations["thalamic_nonspecific"].group,
         name=f"figure7_{condition.value}_nonspecific_spikes",
@@ -310,7 +343,11 @@ def run_figure7_condition(
     )
     sector.network.run(duration_ms * brian.ms)
     clear_match_mismatch_cue(sector, cue, brian=brian)
-    return Figure7ConditionResult(
+    if cpp_standalone_directory is not None:
+        from ..standalone import build_and_run_cpp_standalone
+
+        build_and_run_cpp_standalone(brian, cpp_standalone_directory)
+    result = Figure7ConditionResult(
         condition=condition,
         duration_ms=duration_ms,
         nonspecific_spike_times_ms=tuple(float(value) for value in nonspecific.t / brian.ms),
@@ -342,3 +379,7 @@ def run_figure7_condition(
         learned_state_provenance=provenance,
         network_scope="full_two_area" if include_higher_order_loop else "first_order",
     )
+    if cpp_standalone_directory is not None:
+        brian.device.reinit()
+        brian.set_device("runtime")
+    return result

@@ -324,6 +324,17 @@ V2 internal circuit remains finite and warning-free for 5 ms. This removes a
 numerical initialization defect but is not yet a behavioral validation; see
 `full-network-numeric-stability-028.yaml`.
 
+An exact dense C++ standalone backend now makes the complete two-area protocol
+tractable without changing equations, parameters, or topology. Its paired
+100-ms Figure 7 assay uses the same 600-pA category cue and paper-constrained
+Figure 6c expectation in both conditions. Match and mismatch are bit-identical
+on all monitored outputs: nonspecific thalamus fires at 60 Hz, V1 layer 4 emits
+39 spikes, V1 relay 20, V1 TRN 264, the category population 3, V2 layer 4 35,
+and V2 relay 15. Match therefore misses the approximately 40-Hz target;
+mismatch lies at the edge of the 70+/-10-Hz range but does not exceed match.
+The higher-order loop does not repair the orientation-count failure previously
+localized in the first-order assay; see `figure7-full-two-area-029.yaml`.
+
 The Figure 7 protocol now keeps its Methods 4.9 somatic-current category cue
 separate from the blue category pixel in the recovered Figure 6 training PNG.
 Its predeclared scorer independently tests the approximately 40-Hz match and

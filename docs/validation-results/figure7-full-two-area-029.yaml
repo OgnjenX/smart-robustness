@@ -1,0 +1,51 @@
+schema_version: 1
+validation_id: figure7-full-two-area-029
+source_model: ModelDB 112923 SMART.nml
+claim: the complete V1-pulvinar-V2 network reproduces Figure 7 mismatch disinhibition
+status: failed_reproduction_identical_conditions
+protocol:
+  duration_ms: 100
+  dt_ms: 0.01
+  top_down_layer6ii_cell: 40
+  top_down_current_pA: 600
+  learned_state: paper-constrained Figure 6c graphical reference
+  match_bottom_up: horizontal five-cell bar
+  mismatch_bottom_up: vertical five-cell bar
+  top_down_expectation: horizontal
+  network_scope: full_two_area
+  execution_backend: brian2_cpp_standalone_exact_dense
+  convention_fingerprint: 3ebf9c3c619e73cb1860b7345fe12db88c4a1b66c87269a5e37130de9c9eec13
+published_targets:
+  match_nonspecific_rate_hz: 40
+  mismatch_nonspecific_rate_hz: 70
+  tolerance_hz: 10
+observed:
+  match:
+    nonspecific_rate_hz: 60
+    nonspecific_spike_times_ms: [40.54, 44.7, 64.36, 69.03, 74.33, 80.88]
+    v1_layer4_spikes: 39
+    v1_relay_spikes: 20
+    v1_trn_spikes: 264
+    category_spikes: 3
+    v2_layer4_spikes: 35
+    v2_relay_spikes: 15
+  mismatch:
+    nonspecific_rate_hz: 60
+    nonspecific_spike_times_ms: [40.54, 44.7, 64.36, 69.03, 74.33, 80.88]
+    v1_layer4_spikes: 39
+    v1_relay_spikes: 20
+    v1_trn_spikes: 264
+    category_spikes: 3
+    v2_layer4_spikes: 35
+    v2_relay_spikes: 15
+assessment:
+  match_rate_pass: false
+  mismatch_rate_pass: true
+  mismatch_disinhibition_pass: false
+  reproduced_arousal: false
+  monitored_outputs_bit_identical: true
+interpretation:
+  - Adding every archived higher-order projection does not restore the missing orientation-dependent relay-count modulation.
+  - The failure remains upstream of nonspecific-thalamus disinhibition and is not repaired by pulvinar-V2 feedback.
+  - This result uses a paper-constrained learned state because Figure 6c learning is not yet reproduced.
+  - No parameter was tuned after observing either condition.

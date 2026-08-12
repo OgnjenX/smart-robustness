@@ -3,6 +3,12 @@ from __future__ import annotations
 import numpy as np
 import pytest
 
+brian = pytest.importorskip("brian2")
+
+from smart_robustness.classic_sector import (
+    build_first_order_connected_sector,
+    figure6_runtime_conventions,
+)
 from smart_robustness.protocols import MatchCondition
 from smart_robustness.validation.figure7 import (
     FIGURE7_REQUIRED_LEARNED_PROJECTIONS,
@@ -103,6 +109,20 @@ def test_paper_constrained_reference_is_horizontal_and_split_across_channels() -
     assert combined == pytest.approx((np.exp(-0.5 / 4), 1.0, np.exp(-0.5 / 4)))
 
 
+def test_source_derived_reference_matches_runtime_projection_arrays() -> None:
+    brian.start_scope()
+    brian.prefs.codegen.target = "numpy"
+    sector = build_first_order_connected_sector(
+        conventions=figure6_runtime_conventions(), brian=brian
+    )
+    runtime = paper_constrained_figure6_expectation(sector.projections)
+    source = paper_constrained_figure6_expectation(
+        sector.projections, derive_from_source=True
+    )
+    for projection_id in FIGURE7_REQUIRED_LEARNED_PROJECTIONS:
+        assert np.asarray(source[projection_id]) == pytest.approx(runtime[projection_id])
+
+
 def test_figure7_runner_requires_exactly_one_learned_state_source() -> None:
     with pytest.raises(ValueError, match="requires an explicit"):
         run_figure7_condition(
@@ -120,6 +140,19 @@ def test_exact_relay_clamp_rejects_undefined_full_network_combination() -> None:
             exact_relay_voltage_clamp=True,
             include_higher_order_loop=True,
         )
+
+
+def test_figure7_first_order_condition_runs_through_cpp_standalone(tmp_path) -> None:
+    result = run_figure7_condition(
+        condition=MatchCondition.MATCH,
+        top_down_current_pA=600,
+        use_paper_constrained_reference=True,
+        duration_ms=0.01,
+        dt_ms=0.01,
+        cpp_standalone_directory=tmp_path,
+    )
+    assert result.condition is MatchCondition.MATCH
+    assert result.network_scope == "first_order"
     with pytest.raises(ValueError, match="not both"):
         run_figure7_condition(
             condition=MatchCondition.MATCH,

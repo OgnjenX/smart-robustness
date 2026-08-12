@@ -17,7 +17,11 @@ from ..modeldb_projections import MODELDB_FIRST_ORDER
 from ..protocols import (
     ClassicMatchMismatchCue,
     MatchCondition,
+    apply_bar_stimulus,
+    apply_layer6ii_somatic_cue,
     apply_match_mismatch_cue,
+    clear_bar_stimulus,
+    clear_layer6ii_somatic_cue,
     clear_match_mismatch_cue,
 )
 from ..synapses import modeldb_topology_pairs
@@ -161,12 +165,17 @@ class Figure7ConditionResult:
     v2_relay_spike_times_ms: tuple[float, ...] = ()
     convention_fingerprint: str | None = None
     top_down_current_pA: float | None = None
+    top_down_cue_lead_ms: float = 0.0
     learned_state_provenance: str = "unspecified"
     network_scope: str = "first_order"
     relay_top_down_ampa_peak_by_index: tuple[tuple[int, float], ...] = ()
     relay_top_down_ampa_integral_ms_by_index: tuple[tuple[int, float], ...] = ()
     relay_top_down_nmda_peak_by_index: tuple[tuple[int, float], ...] = ()
     relay_distal_voltage_range_mV_by_index: tuple[tuple[int, float, float], ...] = ()
+    relay_proximal_voltage_range_mV_by_index: tuple[tuple[int, float, float], ...] = ()
+    relay_soma_voltage_range_mV_by_index: tuple[tuple[int, float, float], ...] = ()
+    relay_trn_gaba_peak_by_index: tuple[tuple[int, float], ...] = ()
+    relay_trn_gaba_integral_ms_by_index: tuple[tuple[int, float], ...] = ()
     trn_layer6ii_ampa_peak_by_index: tuple[tuple[int, float], ...] = ()
     trn_layer6ii_nmda_peak_by_index: tuple[tuple[int, float], ...] = ()
     trn_relay_ampa_peak_by_index: tuple[tuple[int, float], ...] = ()
@@ -175,6 +184,8 @@ class Figure7ConditionResult:
     def __post_init__(self) -> None:
         if self.duration_ms <= 0:
             raise ValueError("duration_ms must be positive")
+        if self.top_down_cue_lead_ms < 0:
+            raise ValueError("top_down_cue_lead_ms cannot be negative")
 
     @property
     def nonspecific_rate_hz(self) -> float:
@@ -245,6 +256,8 @@ def run_figure7_condition(
     relay_clamp_compartment: str = "proximal_dendrite",
     include_higher_order_loop: bool = False,
     record_relay_diagnostics: bool = False,
+    projection_weight_scales: Mapping[str, float] | None = None,
+    top_down_cue_lead_ms: float = 0.0,
     cpp_standalone_directory: str | Path | None = None,
     brian=None,
 ) -> Figure7ConditionResult:
@@ -256,6 +269,8 @@ def run_figure7_condition(
         raise ValueError("Figure 7 requires an explicit learned expectation state")
     if duration_ms <= 0 or dt_ms <= 0:
         raise ValueError("duration_ms and dt_ms must be positive")
+    if top_down_cue_lead_ms < 0:
+        raise ValueError("top_down_cue_lead_ms cannot be negative")
     if brian is None:
         import brian2 as brian
     if cpp_standalone_directory is not None:
@@ -282,6 +297,8 @@ def run_figure7_condition(
     ).bottom_up_stimulus
     if exact_relay_voltage_clamp and include_higher_order_loop:
         raise ValueError("the exact relay-clamp audit is only defined for the first-order assay")
+    if exact_relay_voltage_clamp and top_down_cue_lead_ms > 0:
+        raise ValueError("the relay-clamp audit cannot represent a cue-only lead interval")
     if exact_relay_voltage_clamp:
         sector = build_first_order_voltage_clamp_sector(
             clamped_relay_indices=orientation.active_indices,
@@ -309,6 +326,21 @@ def run_figure7_condition(
         learned_weights,
         verify_runtime_bounds=cpp_standalone_directory is None,
     )
+    if projection_weight_scales:
+        unknown = set(projection_weight_scales) - set(sector.projections)
+        if unknown:
+            raise ValueError(f"unknown projection scale IDs: {sorted(unknown)}")
+        for projection_id, scale in projection_weight_scales.items():
+            if not np.isfinite(scale) or scale <= 0:
+                raise ValueError("projection weight scales must be finite and positive")
+            projection = sector.projections[projection_id]
+            blocks = getattr(projection, "blocks", (projection,))
+            for block in blocks:
+                # A symbolic assignment is evaluated by Brian after the
+                # source-defined spatial weights have been initialized.  It
+                # therefore works in both runtime and C++ standalone, where
+                # reading state arrays before the build is unsupported.
+                block.w = f"w*({float(scale)!r})"
     nonspecific = brian.SpikeMonitor(
         sector.populations["thalamic_nonspecific"].group,
         name=f"figure7_{condition.value}_nonspecific_spikes",
@@ -337,10 +369,15 @@ def run_figure7_condition(
             sector.populations["thalamic_relay"].group,
             (
                 "port_003_gate",
+                "port_000_gate",
+                "port_001_gate",
+                "port_004_gate",
                 "port_005_gate",
                 "port_006_gate",
                 "port_007_gate",
                 "v_distal_dendrite",
+                "v_proximal_dendrite",
+                "v_soma",
             ),
             record=FIGURE7_RELAY_DIAGNOSTIC_INDICES,
             name=f"figure7_{condition.value}_relay_pathway_state",
@@ -370,11 +407,29 @@ def run_figure7_condition(
         top_down_current_pA=top_down_current_pA,
         duration_ms=duration_ms,
     )
-    apply_match_mismatch_cue(
-        sector, cue, apply_relay_input=not exact_relay_voltage_clamp, brian=brian
-    )
+    if top_down_cue_lead_ms > 0:
+        apply_layer6ii_somatic_cue(
+            sector,
+            current_pA=cue.top_down_current_pA,
+            cell_index=cue.top_down_cell_index,
+            brian=brian,
+        )
+        sector.network.run(top_down_cue_lead_ms * brian.ms)
+        apply_bar_stimulus(
+            sector,
+            cue.bottom_up_stimulus,
+            apply_relay_input=not exact_relay_voltage_clamp,
+        )
+    else:
+        apply_match_mismatch_cue(
+            sector, cue, apply_relay_input=not exact_relay_voltage_clamp, brian=brian
+        )
     sector.network.run(duration_ms * brian.ms)
-    clear_match_mismatch_cue(sector, cue, brian=brian)
+    if top_down_cue_lead_ms > 0:
+        clear_bar_stimulus(sector, cue.bottom_up_stimulus)
+        clear_layer6ii_somatic_cue(sector, brian=brian)
+    else:
+        clear_match_mismatch_cue(sector, cue, brian=brian)
     if cpp_standalone_directory is not None:
         from ..standalone import build_and_run_cpp_standalone
 
@@ -383,6 +438,10 @@ def run_figure7_condition(
     ampa_integral: tuple[tuple[int, float], ...] = ()
     nmda_peak: tuple[tuple[int, float], ...] = ()
     voltage_range: tuple[tuple[int, float, float], ...] = ()
+    proximal_voltage_range: tuple[tuple[int, float, float], ...] = ()
+    soma_voltage_range: tuple[tuple[int, float, float], ...] = ()
+    relay_trn_gaba_peak: tuple[tuple[int, float], ...] = ()
+    relay_trn_gaba_integral: tuple[tuple[int, float], ...] = ()
     trn_layer6ii_ampa_peak: tuple[tuple[int, float], ...] = ()
     trn_layer6ii_nmda_peak: tuple[tuple[int, float], ...] = ()
     trn_relay_ampa_peak: tuple[tuple[int, float], ...] = ()
@@ -396,6 +455,11 @@ def run_figure7_condition(
         )
         voltage_mV = np.asarray(relay_state.v_distal_dendrite / brian.mV)
         times_ms = np.asarray(relay_state.t / brian.ms)
+        diagnostic_window = times_ms >= top_down_cue_lead_ms
+        times_ms = times_ms[diagnostic_window] - top_down_cue_lead_ms
+        ampa = ampa[:, diagnostic_window]
+        nmda = nmda[:, diagnostic_window]
+        voltage_mV = voltage_mV[:, diagnostic_window]
         ampa_peak = tuple(
             (index, float(np.max(values)))
             for index, values in zip(FIGURE7_RELAY_DIAGNOSTIC_INDICES, ampa, strict=True)
@@ -414,12 +478,45 @@ def run_figure7_condition(
                 FIGURE7_RELAY_DIAGNOSTIC_INDICES, voltage_mV, strict=True
             )
         )
+        proximal_voltage_mV = np.asarray(relay_state.v_proximal_dendrite / brian.mV)[
+            :, diagnostic_window
+        ]
+        proximal_voltage_range = tuple(
+            (index, float(np.min(values)), float(np.max(values)))
+            for index, values in zip(
+                FIGURE7_RELAY_DIAGNOSTIC_INDICES, proximal_voltage_mV, strict=True
+            )
+        )
+        soma_voltage_mV = np.asarray(relay_state.v_soma / brian.mV)[:, diagnostic_window]
+        soma_voltage_range = tuple(
+            (index, float(np.min(values)), float(np.max(values)))
+            for index, values in zip(
+                FIGURE7_RELAY_DIAGNOSTIC_INDICES, soma_voltage_mV, strict=True
+            )
+        )
+        relay_trn_gaba = (
+            np.asarray(relay_state.port_000_gate)[:, diagnostic_window]
+            + np.asarray(relay_state.port_001_gate)[:, diagnostic_window]
+            + np.asarray(relay_state.port_004_gate)[:, diagnostic_window]
+        )
+        relay_trn_gaba_peak = tuple(
+            (index, float(np.max(values)))
+            for index, values in zip(
+                FIGURE7_RELAY_DIAGNOSTIC_INDICES, relay_trn_gaba, strict=True
+            )
+        )
+        relay_trn_gaba_integral = tuple(
+            (index, float(np.trapz(values, times_ms)))
+            for index, values in zip(
+                FIGURE7_RELAY_DIAGNOSTIC_INDICES, relay_trn_gaba, strict=True
+            )
+        )
     if trn_state is not None:
         trn_layer6ii_ampa_peak = tuple(
             (index, float(np.max(values)))
             for index, values in zip(
                 FIGURE7_RELAY_DIAGNOSTIC_INDICES,
-                np.asarray(trn_state.port_004_gate),
+                np.asarray(trn_state.port_004_gate)[:, diagnostic_window],
                 strict=True,
             )
         )
@@ -427,7 +524,7 @@ def run_figure7_condition(
             (index, float(np.max(values)))
             for index, values in zip(
                 FIGURE7_RELAY_DIAGNOSTIC_INDICES,
-                np.asarray(trn_state.port_001_gate),
+                np.asarray(trn_state.port_001_gate)[:, diagnostic_window],
                 strict=True,
             )
         )
@@ -435,52 +532,69 @@ def run_figure7_condition(
             (index, float(np.max(values)))
             for index, values in zip(
                 FIGURE7_RELAY_DIAGNOSTIC_INDICES,
-                np.asarray(trn_state.port_002_gate),
+                np.asarray(trn_state.port_002_gate)[:, diagnostic_window],
                 strict=True,
             )
         )
-        trn_voltage_mV = np.asarray(trn_state.v_proximal_dendrite / brian.mV)
+        trn_voltage_mV = np.asarray(trn_state.v_proximal_dendrite / brian.mV)[
+            :, diagnostic_window
+        ]
         trn_voltage_range = tuple(
             (index, float(np.min(values)), float(np.max(values)))
             for index, values in zip(
                 FIGURE7_RELAY_DIAGNOSTIC_INDICES, trn_voltage_mV, strict=True
             )
         )
+    def stimulus_times(monitor) -> tuple[float, ...]:
+        return tuple(
+            float(value - top_down_cue_lead_ms)
+            for value in monitor.t / brian.ms
+            if float(value) >= top_down_cue_lead_ms
+        )
+
+    def stimulus_indices(monitor) -> tuple[int, ...]:
+        return tuple(
+            int(index)
+            for index, value in zip(monitor.i, monitor.t / brian.ms, strict=True)
+            if float(value) >= top_down_cue_lead_ms
+        )
+
     result = Figure7ConditionResult(
         condition=condition,
         duration_ms=duration_ms,
-        nonspecific_spike_times_ms=tuple(float(value) for value in nonspecific.t / brian.ms),
-        layer4_spike_times_ms=tuple(float(value) for value in layer4.t / brian.ms),
-        relay_spike_indices=tuple(int(value) for value in relay.i),
-        relay_spike_times_ms=tuple(float(value) for value in relay.t / brian.ms),
-        trn_spike_indices=tuple(int(value) for value in trn.i),
-        trn_spike_times_ms=tuple(float(value) for value in trn.t / brian.ms),
-        category_spike_indices=tuple(int(value) for value in category.i),
-        category_spike_times_ms=tuple(float(value) for value in category.t / brian.ms),
+        nonspecific_spike_times_ms=stimulus_times(nonspecific),
+        layer4_spike_times_ms=stimulus_times(layer4),
+        relay_spike_indices=stimulus_indices(relay),
+        relay_spike_times_ms=stimulus_times(relay),
+        trn_spike_indices=stimulus_indices(trn),
+        trn_spike_times_ms=stimulus_times(trn),
+        category_spike_indices=stimulus_indices(category),
+        category_spike_times_ms=stimulus_times(category),
         v2_layer4_spike_indices=(
-            () if v2_layer4 is None else tuple(int(value) for value in v2_layer4.i)
+            () if v2_layer4 is None else stimulus_indices(v2_layer4)
         ),
         v2_layer4_spike_times_ms=(
-            ()
-            if v2_layer4 is None
-            else tuple(float(value) for value in v2_layer4.t / brian.ms)
+            () if v2_layer4 is None else stimulus_times(v2_layer4)
         ),
         v2_relay_spike_indices=(
-            () if v2_relay is None else tuple(int(value) for value in v2_relay.i)
+            () if v2_relay is None else stimulus_indices(v2_relay)
         ),
         v2_relay_spike_times_ms=(
-            ()
-            if v2_relay is None
-            else tuple(float(value) for value in v2_relay.t / brian.ms)
+            () if v2_relay is None else stimulus_times(v2_relay)
         ),
         convention_fingerprint=conventions.fingerprint,
         top_down_current_pA=top_down_current_pA,
+        top_down_cue_lead_ms=top_down_cue_lead_ms,
         learned_state_provenance=provenance,
         network_scope="full_two_area" if include_higher_order_loop else "first_order",
         relay_top_down_ampa_peak_by_index=ampa_peak,
         relay_top_down_ampa_integral_ms_by_index=ampa_integral,
         relay_top_down_nmda_peak_by_index=nmda_peak,
         relay_distal_voltage_range_mV_by_index=voltage_range,
+        relay_proximal_voltage_range_mV_by_index=proximal_voltage_range,
+        relay_soma_voltage_range_mV_by_index=soma_voltage_range,
+        relay_trn_gaba_peak_by_index=relay_trn_gaba_peak,
+        relay_trn_gaba_integral_ms_by_index=relay_trn_gaba_integral,
         trn_layer6ii_ampa_peak_by_index=trn_layer6ii_ampa_peak,
         trn_layer6ii_nmda_peak_by_index=trn_layer6ii_nmda_peak,
         trn_relay_ampa_peak_by_index=trn_relay_ampa_peak,

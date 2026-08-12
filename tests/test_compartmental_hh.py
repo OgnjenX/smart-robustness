@@ -22,6 +22,7 @@ def _params(cell_class: str = "thalamic_relay") -> dict[str, str]:
         "calcium_gate_convention": "reciprocal",
         "gate_initialization_convention": "steady_state_at_initial_voltage",
         "spike_event_coordinate": "absolute_physical",
+        "spike_event_threshold_mV": 30.0,
         "calcium_density_convention": "table3",
         "ahp_convention": "paper_text",
         "specific_capacitance_uF_cm2": 1.0,
@@ -175,6 +176,20 @@ def test_source_spike_event_coordinate_is_relative_to_soma_leak() -> None:
     population.group.v_soma = -61 * brian.mV
     network.run(0.01 * brian.ms)
     assert population.group.armed[0] == 1
+
+
+def test_kinness_minus_20_mv_event_threshold_is_explicit() -> None:
+    brian.start_scope()
+    brian.defaultclock.dt = 0.01 * brian.ms
+    params = _params()
+    params["spike_event_threshold_mV"] = -20.0
+    params["voltage_clamps_mV"] = {"soma": -10.0}
+    population = create_compartmental_hh_population(
+        name="kinness_minus20_spike_threshold", size=1, params=params, brian=brian
+    )
+    spike_monitor = brian.SpikeMonitor(population.group)
+    brian.Network(population.group, spike_monitor).run(0.01 * brian.ms)
+    assert spike_monitor.count[0] == 1
 
 
 def test_layer5_requires_source_unidentified_ahp_conductance_explicitly() -> None:

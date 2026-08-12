@@ -269,6 +269,7 @@ def connect_modeldb_projection(
     gaussian_weight_convention: GaussianWeightConvention | str,
     gaussian_learning_bounds_convention: GaussianLearningBoundsConvention | str,
     spike_event_coordinate: str = "absolute_physical",
+    spike_event_threshold_mV: float = 30.0,
     topology_override: tuple[np.ndarray, np.ndarray, np.ndarray] | None = None,
     brian: Any,
 ) -> Any:
@@ -346,9 +347,9 @@ def connect_modeldb_projection(
             "\nx_post_above=depression_scale+1 : 1"
             "\nx_post_early=depression_scale+1-post_elapsed/(0.1*ms) : 1"
             f"\nx_post_late=depression_scale*(1-(post_elapsed-0.1*ms)/({post_window}*ms)) : 1"
-            f"\npost_signal=int({post_voltage} >= 30*mV)*x_post_above"
-            f" + int({post_voltage} < 30*mV and post_elapsed >= 0*ms and post_elapsed < 0.1*ms)*x_post_early"
-            f" + int({post_voltage} < 30*mV and post_elapsed >= 0.1*ms and post_elapsed < {post_window + 0.1}*ms)*x_post_late : 1"
+            f"\npost_signal=int({post_voltage} >= {float(spike_event_threshold_mV)}*mV)*x_post_above"
+            f" + int({post_voltage} < {float(spike_event_threshold_mV)}*mV and post_elapsed >= 0*ms and post_elapsed < 0.1*ms)*x_post_early"
+            f" + int({post_voltage} < {float(spike_event_threshold_mV)}*mV and post_elapsed >= 0.1*ms and post_elapsed < {post_window + 0.1}*ms)*x_post_late : 1"
             f"\ndw/dt=({record.learning_rate}/ms)*({learning_gate})"
             "*(pre_signal*post_signal*(w_maximum-w)+(w_baseline-w)) : 1 (clock-driven)"
             "\nlast_post_spike : second"

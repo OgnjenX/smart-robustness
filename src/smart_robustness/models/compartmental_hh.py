@@ -155,6 +155,9 @@ def create_compartmental_hh_population(
     gate_initialization = GateInitializationConvention(params["gate_initialization_convention"])
     calcium_density = CalciumDensityConvention(params["calcium_density_convention"])
     spike_coordinate = SpikeEventCoordinate(params["spike_event_coordinate"])
+    spike_event_threshold_mV = float(params["spike_event_threshold_mV"])
+    if not np.isfinite(spike_event_threshold_mV):
+        raise ValueError("spike_event_threshold_mV must be finite")
     ahp_convention = AHPConvention(params["ahp_convention"])
     synaptic_ports = params.get("synaptic_ports", ())
     if not isinstance(synaptic_ports, tuple) or not all(
@@ -238,7 +241,7 @@ def create_compartmental_hh_population(
     group = brian.NeuronGroup(
         size,
         compiled.equations,
-        threshold=f"armed > 0.5 and {spike_voltage} > 30*mV",
+        threshold=f"armed > 0.5 and {spike_voltage} > {spike_event_threshold_mV}*mV",
         reset=spike_reset,
         events={"arm_spike": f"armed < 0.5 and {spike_voltage} < 0*mV"},
         method=params.get("method", "exponential_euler"),

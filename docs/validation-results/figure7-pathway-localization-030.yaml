@@ -1,7 +1,7 @@
 schema_version: 1
 validation_id: figure7-pathway-localization-030
 source_model: ModelDB 112923 SMART.nml
-claim: the learned horizontal layer-6II feedback reaches relay and TRN targets but changes Figure 7 relay recruitment
+claim: the learned horizontal layer-6II feedback reaches relay and TRN targets but does not produce the published Figure 7 recruitment difference
 status: failed_reproduction_feedback_arrives_but_is_spike_ineffective
 protocol:
   duration_ms: 100
@@ -42,6 +42,45 @@ source_discriminators:
     match_nonspecific_rate_hz: 50
     mismatch_nonspecific_rate_hz: 50
     result: stronger source-peak kernels do not create match/mismatch divergence
+  trn_to_relay_gaba_scale:
+    2x_and_4x: no spike-count change in either condition
+    100x:
+      match_relay_spikes: 15
+      mismatch_relay_spikes: 15
+      peak_combined_gaba_gate: approximately 41
+    result: inhibition is executable but uniform strengthening does not create the required balance regime
+  kinness_minus20_event_threshold:
+    match_trn_spikes: 35667
+    mismatch_trn_spikes: 35667
+    nonspecific_spikes_both_conditions: 0
+    result: rejected; repeated events occur during individual action-potential upstrokes
+  expectation_timing:
+    simultaneous_onset:
+      match_nonspecific_rate_hz: 60
+      mismatch_nonspecific_rate_hz: 60
+      result: monitored outputs are identical
+    cue_lead_10_ms:
+      match_relay_spike_counts: {38: 5, 39: 5, 40: 5, 41: 5, 42: 5}
+      mismatch_relay_spike_counts: {22: 5, 31: 5, 38: 1, 40: 5, 42: 1, 49: 5, 58: 5}
+      match_nonspecific_rate_hz: 80
+      mismatch_nonspecific_rate_hz: 80
+      trn_spikes_both_conditions: 243
+      result: timing changes relay recruitment but does not create nonspecific disinhibition
+    cue_lead_30_ms:
+      match_nonspecific_rate_hz: 70
+      mismatch_nonspecific_rate_hz: 70
+      trn_spikes_after_bottom_up_both_conditions: 0
+      result: delayed relay startup events and residual isotropic TRN inhibition dominate both conditions
+  ring_off_surround_source_peak_with_10_ms_lead:
+    scaled_projection_ids:
+      modeldb112923.projection.009: 9.047786842
+      modeldb112923.projection.012: 14.137166941
+    match_relay_spikes: 25
+    mismatch_relay_spikes: 25
+    match_trn_spikes: 247
+    mismatch_trn_spikes: 247
+    nonspecific_rate_hz_both_conditions: 70
+    result: rejected; source-peak strength on the two corticoreticular ring channels does not restore divergence
 assessment:
   learned_feedback_reaches_relay: true
   learned_feedback_is_horizontally_anisotropic: true
@@ -53,4 +92,7 @@ interpretation:
   - The failure is no longer attributable to absent or isotropic learned layer-6II-to-relay AMPA delivery.
   - Match and mismatch distal relay voltages differ, but the soma event output remains at four spikes for every bottom-up-driven relay.
   - The next discriminator is distal-to-soma coupling and spike-threshold efficacy, not downstream TRN-to-nonspecific tuning.
+  - A 10 ms active-expectation lead proves that cue timing can alter which relay cells fire, but relay/TRN totals still fail to distinguish match from mismatch.
+  - A 30 ms lead allows the initial TRN burst to finish but exposes widespread relay startup spikes; both zero and steady-state gate initialization candidates are non-quiescent at the serialized resting voltages.
   - The exact KInNeSS ring-kernel stencil remains unresolved and is not changed by this assay.
+  - The contemporaneous KInNeSS manuscript's -20 mV event threshold conflicts with SMART Methods +30 mV and is behaviorally incompatible with the printed preceding-sample-below-zero rule.

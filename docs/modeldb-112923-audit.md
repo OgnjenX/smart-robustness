@@ -89,6 +89,12 @@ rather than 6 kOhm*cm.
   so ligand release, transmitter depletion, AHP, and STDP timestamps share the
   official causal event. Both physical and leak-relative voltage-coordinate
   interpretations remain executable audit profiles.
+- The contemporaneous KInNeSS framework manuscript instead prints -20 mV as
+  the Hodgkin-Huxley event threshold while retaining the preceding-sample-below-
+  zero condition. This combination emits repeatedly during one upstroke in the
+  source-defined SMART network (35,667 TRN events in 100 ms) and abolishes the
+  nonspecific response. The threshold is now an explicit runtime convention;
+  -20 mV is a rejected audit alternative and SMART's +30 mV remains active.
 - The executable first-order area contains 55 projected gates after excluding
   the self-triggered AHP gate: 51 chemical and four gap-junction records. This
   set is not identical to the 55-row supplementary catalog; it includes

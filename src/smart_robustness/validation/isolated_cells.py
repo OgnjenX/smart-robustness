@@ -201,6 +201,7 @@ def run_figure19_kernel_condition(
         "calcium_gate_convention": "modeldb_112923",
         "gate_initialization_convention": "steady_state_at_initial_voltage",
         "spike_event_coordinate": "relative_to_soma_leak",
+        "spike_event_threshold_mV": 30.0,
         "calcium_density_convention": "table3",
         "ahp_convention": protocol.ahp_convention,
         "specific_capacitance_uF_cm2": 1.0,

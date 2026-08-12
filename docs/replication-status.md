@@ -352,6 +352,40 @@ relay soma spike-count modulation. Distal-to-soma coupling and event efficacy
 are the next source-level discriminators; see
 `figure7-pathway-localization-030.yaml`.
 
+Two additional causal controls reject simple strength and threshold fixes.
+Multiplying all three archived TRN-to-relay GABA weights by 2 or 4 leaves both
+conditions unchanged; a deliberately extreme 100-fold multiplier raises the
+combined inhibitory gate from about 0.41 to 41 and reduces every driven relay
+from four to three spikes, but still does so identically in match and mismatch.
+The contemporaneous KInNeSS framework's printed -20-mV HH event threshold was
+also tested as an explicit alternative to SMART Methods' +30 mV. Combined with
+the framework's preceding-sample-below-zero rule it emits repeatedly during a
+single upstroke, yielding 35,667 TRN events and no nonspecific spikes in either
+condition. It is therefore retained as a rejected source contradiction, not a
+classic-baseline setting.
+
+Expectation timing is now an explicit Figure 7 protocol variable rather than
+an implicit simultaneous onset. Giving the 600-pA layer-6II cue a 10-ms lead
+changes relay recruitment: match produces five spikes in each of the five
+horizontal relays, while mismatch adds one expectation-driven spike in each of
+two horizontal arms to five-spike vertical relay trains. The total remains 25
+versus 27 relay spikes, both conditions retain 243 TRN events, and the
+nonspecific cell fires at 80 Hz in both. A 30-ms lead moves the intrinsic TRN
+burst before sensory onset but exposes widespread relay startup events, again
+giving equal 70-Hz nonspecific output. Both zero and steady-state ionic-gate
+initialization candidates are non-quiescent when isolated relay and TRN cells
+start at the XML resting voltages, and KInNeSS does not serialize the missing
+gate states. Initialization is therefore still an unresolved executable
+default, not a tuning parameter.
+
+Interpreting only the two layer-6II-to-TRN `ring=true` Gaussian weights as
+source peaks (multipliers `2*pi*1.2^2` and `2*pi*1.5^2`) with the 10-ms cue lead
+also fails: match and mismatch each produce 25 relay spikes, 247 TRN spikes,
+and 70-Hz nonspecific output. The surviving KInNeSS manuscripts define the
+Gaussian spread and border modes but not the XML `ring` flag. No invented
+annulus stencil is promoted to the baseline; see
+`figure7-pathway-localization-030.yaml`.
+
 The Figure 7 protocol now keeps its Methods 4.9 somatic-current category cue
 separate from the blue category pixel in the recovered Figure 6 training PNG.
 Its predeclared scorer independently tests the approximately 40-Hz match and

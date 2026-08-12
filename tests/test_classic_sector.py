@@ -89,6 +89,7 @@ def test_figure6_profile_names_the_source_constrained_runtime() -> None:
     assert conventions.gate_initialization_convention == "zero"
     assert conventions.zero_sensitivity_input_convention == "omit_all_zero"
     assert conventions.spike_event_coordinate == "absolute_physical"
+    assert conventions.spike_event_threshold_mV == 30.0
     assert conventions.specific_capacitance_uF_cm2 == 1.0
     assert conventions.gaussian_weight_convention == "normalized_density"
     assert conventions.modifiable_weight_initialization == "figure6_pathway_specific"

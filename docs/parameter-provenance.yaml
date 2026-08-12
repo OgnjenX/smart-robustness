@@ -42,6 +42,11 @@ parameters:
     value: 30 mV after an upward crossing from below 0 mV
     status: published
     source: Methods 4.4, Eq. 8 discussion
+  model.classic_hh.kinness_spike_threshold:
+    value: -20 mV after an upward crossing from below 0 mV
+    status: published-executable-framework-alternative
+    source: Versace et al. 2008 KInNeSS expanded manuscript, Equation 18
+    note: Grossberg and Versace 2008 instead prints +30 mV; SMART.nml does not serialize the simulator-wide event threshold
   model.classic_hh.e_leak:
     value: cell-specific; M0 cortical reference uses -65 mV
     status: published

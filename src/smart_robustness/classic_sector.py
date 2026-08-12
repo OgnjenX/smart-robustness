@@ -78,6 +78,7 @@ class FirstOrderRuntimeConventions:
     integration_method: str = "rk4"
     zero_sensitivity_input_convention: str = "framework_resting_leak"
     spike_event_coordinate: str = "absolute_physical"
+    spike_event_threshold_mV: float = 30.0
     modifiable_weight_initialization: str = "source_serialized_weight"
     gaussian_weight_convention: str = "normalized_density"
     gaussian_learning_bounds_convention: str = "projection_level"
@@ -158,6 +159,7 @@ def first_order_population_parameters(
         "gate_initialization_convention": conventions.gate_initialization_convention,
         "calcium_density_convention": conventions.calcium_density_convention,
         "spike_event_coordinate": conventions.spike_event_coordinate,
+        "spike_event_threshold_mV": conventions.spike_event_threshold_mV,
         "ahp_convention": "smart_network_112923" if has_ahp else "modeldb_112923",
         "specific_capacitance_uF_cm2": conventions.specific_capacitance_uF_cm2,
         "enable_ahp_ach": has_ahp,
@@ -249,6 +251,7 @@ def build_full_smart_network(
                     conventions.gaussian_learning_bounds_convention
                 ),
                 spike_event_coordinate=conventions.spike_event_coordinate,
+                spike_event_threshold_mV=conventions.spike_event_threshold_mV,
             )
         else:
             projection = connect_modeldb_gap_junction(**kwargs)
@@ -343,6 +346,7 @@ def build_first_order_chemical_sector(
                 resolved_conventions.gaussian_learning_bounds_convention
             ),
             spike_event_coordinate=resolved_conventions.spike_event_coordinate,
+            spike_event_threshold_mV=resolved_conventions.spike_event_threshold_mV,
             brian=brian,
         )
     sector.projections = projections

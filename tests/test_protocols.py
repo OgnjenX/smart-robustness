@@ -27,6 +27,9 @@ def test_recovered_bar_patterns_are_centered_five_cell_stimuli() -> None:
     assert np.count_nonzero(vertical.source_grid()) == 5
     assert np.all(horizontal.source_grid()[4, 2:7] == 120)
     assert np.all(vertical.source_grid()[2:7, 4] == 120)
+    assert np.count_nonzero(horizontal.rgba_grid()[..., 1]) == 5
+    assert horizontal.rgba_grid()[4, 4].tolist() == [0, 120, 70, 0]
+    assert vertical.rgba_grid()[4, 4].tolist() == [0, 120, 70, 0]
 
 
 def test_bar_input_reconstructs_published_minus_12mV_drive() -> None:
@@ -45,8 +48,37 @@ def test_bar_input_reconstructs_published_minus_12mV_drive() -> None:
     assert set(np.flatnonzero(source)) == set(stimulus.active_indices)
     assert effective_mV[list(stimulus.active_indices)] == pytest.approx(-12.0)
     assert effective_mV[0] == pytest.approx(-60.0)
+
+    category = sector.populations["layer6ii_excitatory_v1"]
+    category_port = next(
+        port
+        for port in category.compiled.external_input_ports
+        if port.record_id == stimulus.category_input_record_id
+    )
+    blue = np.asarray(getattr(category.group, f"{category_port.name}_input_blue")[:])
+    assert np.flatnonzero(blue).tolist() == [stimulus.center_index]
+    assert blue[stimulus.center_index] == stimulus.category_source_value
+
+    nonspecific = sector.populations["thalamic_nonspecific"]
+    nonspecific_port = next(
+        port
+        for port in nonspecific.compiled.external_input_ports
+        if port.record_id == stimulus.nonspecific_input_record_id
+    )
+    assert getattr(nonspecific.group, f"{nonspecific_port.name}_input_green")[0] == 600
+    matrix = sector.populations["thalamic_matrix"]
+    matrix_port = next(
+        port
+        for port in matrix.compiled.external_input_ports
+        if port.record_id == stimulus.matrix_input_record_id
+    )
+    assert getattr(matrix.group, f"{matrix_port.name}_input_green")[0] == 600
+
     clear_bar_stimulus(sector, stimulus)
     assert np.count_nonzero(getattr(relay.group, f"{port.name}_input_green")[:]) == 0
+    assert np.count_nonzero(getattr(category.group, f"{category_port.name}_input_blue")[:]) == 0
+    assert getattr(nonspecific.group, f"{nonspecific_port.name}_input_green")[0] == 0
+    assert getattr(matrix.group, f"{matrix_port.name}_input_green")[0] == 0
 
 
 def test_match_and_mismatch_share_a_horizontal_top_down_category() -> None:

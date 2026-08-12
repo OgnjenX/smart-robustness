@@ -195,6 +195,14 @@ dual-exponential state could exceed one (the relay-to-layer-4 diagnostic reached
 implementation still passes the five-cell 40-Hz relay/selectivity gates, while
 the cortical populations remain silent.
 
+The official input archive also resolves a missing protocol channel:
+`horizontal0.png` and `vertical0.png` contain blue=70 at the central green=120
+pixel. Source-complete routing now drives the central layer-6II category cell
+and converges the five green pixels onto nonspecific and matrix input gates.
+The relay target still passes, but cortex remains silent; this negative result
+is retained in `first-order-bar-008.yaml` rather than attributing Figure 6 to a
+relay-only stimulus.
+
 The KInNeSS statement that reported voltage is shifted by the leak potential
 also makes the spike detector's coordinate ambiguous in a physical-voltage
 implementation. The explicit `relative_to_soma_leak` alternative preserves the

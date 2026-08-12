@@ -81,6 +81,11 @@ serialized channel projections; the full two-area file contains 24 populations.
   from 0 to 60 Hz at 1 uF/cm2 and exposes a 40-Hz candidate at 2 uF/cm2.
   This behavior is fingerprinted and remains unpromoted pending network and
   source validation.
+- The archived 9x9 stimulus PNGs contain five green=120 bar pixels plus
+  blue=70 at the central pixel. The executable protocol now routes green to
+  relay, nonspecific, and matrix input gates and blue to the central V1
+  layer-6II category cell. `connectFromAll` gates sum individually valid pixel
+  values instead of treating the sum as one out-of-range pixel.
 - Gap-junction totals follow KInNeSS Equation 8 rather than treating XML
   `g_bar` as an already converted membrane density.
 - KInNeSS serializes compartment dimensions in centimeters. The executable

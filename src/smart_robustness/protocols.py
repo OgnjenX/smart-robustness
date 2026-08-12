@@ -26,7 +26,11 @@ class ClassicBarStimulus:
     duration_ms: float = 100.0
     source_channel: str = "green"
     source_value: float = 120.0
+    category_source_value: float = 70.0
     relay_input_record_id: str = "modeldb112923.external.002"
+    category_input_record_id: str = "modeldb112923.external.004"
+    nonspecific_input_record_id: str = "modeldb112923.external.009"
+    matrix_input_record_id: str = "modeldb112923.external.010"
     expected_holding_mV: float = -12.0
     expected_relay_rate_hz: float = 40.0
 
@@ -44,6 +48,18 @@ class ClassicBarStimulus:
         grid = np.zeros((9, 9), dtype=float)
         grid.flat[list(self.active_indices)] = self.source_value
         return grid
+
+    def rgba_grid(self) -> np.ndarray:
+        """Return the exact nonzero channels in the archived 9x9 PNG stimulus."""
+
+        grid = np.zeros((9, 9, 4), dtype=float)
+        grid.reshape(-1, 4)[list(self.active_indices), 1] = self.source_value
+        grid[self.center_index // 9, self.center_index % 9, 2] = self.category_source_value
+        return grid
+
+    @property
+    def center_index(self) -> int:
+        return 40
 
 
 @dataclass(frozen=True, slots=True)
@@ -88,7 +104,7 @@ class ClassicMatchMismatchCue:
 
 
 def apply_bar_stimulus(sector: FirstOrderSector, stimulus: ClassicBarStimulus) -> None:
-    """Apply one recovered 9x9 KInNeSS bar to the relay BU input port."""
+    """Apply all nonzero channels of one recovered KInNeSS stimulus PNG."""
 
     relay = sector.populations["thalamic_relay"]
     relay.set_external_input(
@@ -102,6 +118,30 @@ def apply_bar_stimulus(sector: FirstOrderSector, stimulus: ClassicBarStimulus) -
         stimulus.source_value,
         indices=list(stimulus.active_indices),
     )
+    sector.populations["layer6ii_excitatory_v1"].set_external_input(
+        stimulus.category_input_record_id,
+        "blue",
+        0.0,
+    )
+    sector.populations["layer6ii_excitatory_v1"].set_external_input(
+        stimulus.category_input_record_id,
+        "blue",
+        stimulus.category_source_value,
+        indices=[stimulus.center_index],
+    )
+    # These KInNeSS input gates use connectFromAll onto 1x1 populations, so
+    # the five nonzero green source pixels contribute convergently.
+    green_sources = np.full(len(stimulus.active_indices), stimulus.source_value)
+    sector.populations["thalamic_nonspecific"].set_convergent_external_input(
+        stimulus.nonspecific_input_record_id,
+        "green",
+        green_sources,
+    )
+    sector.populations["thalamic_matrix"].set_convergent_external_input(
+        stimulus.matrix_input_record_id,
+        "green",
+        green_sources,
+    )
 
 
 def clear_bar_stimulus(sector: FirstOrderSector, stimulus: ClassicBarStimulus) -> None:
@@ -110,6 +150,15 @@ def clear_bar_stimulus(sector: FirstOrderSector, stimulus: ClassicBarStimulus) -
         stimulus.relay_input_record_id,
         stimulus.source_channel,
         0.0,
+    )
+    sector.populations["layer6ii_excitatory_v1"].set_external_input(
+        stimulus.category_input_record_id, "blue", 0.0
+    )
+    sector.populations["thalamic_nonspecific"].set_external_input(
+        stimulus.nonspecific_input_record_id, "green", 0.0
+    )
+    sector.populations["thalamic_matrix"].set_external_input(
+        stimulus.matrix_input_record_id, "green", 0.0
     )
 
 

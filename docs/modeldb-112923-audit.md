@@ -56,6 +56,12 @@ rather than 6 kOhm*cm.
   `A=19.15, B=7.171, V0=-10.54` expression is the inactivation time constant.
   The paper labels these roles in the opposite order and prints 19.5 rather
   than the executable's 19.15.
+- TRN does not use that relay T-current family. `SMART.nml` gives all three
+  reticular compartments a distinct Destexhe et al. channel with activation
+  exponent 2, `m_inf(V0=-52, B=7.4)`, `h_inf(V0=-80, B=-5)`, and the
+  six-parameter KInNeSS `Reticular_Tau` function. The runtime now compiles this
+  family separately for V1 and V2 TRN. Applying the relay exponent-3 and
+  `Simple_Tau` equations to TRN was an executable-source transcription error.
 - The contemporaneous KInNeSS paper defines `Simple tau` as
   `A + B*10^-2*exp(C*10^-2*V)`, confirming the ModelDB time-constant
   transcription. It also supplies the exact directional inter-compartment

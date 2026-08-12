@@ -155,7 +155,9 @@ def first_order_population_parameters(
         "leak_convention": conventions.leak_convention,
         "voltage_coordinate": conventions.voltage_coordinate,
         "nak_rate_convention": conventions.nak_rate_convention,
-        "calcium_gate_convention": conventions.calcium_gate_convention,
+        "calcium_gate_convention": (
+            facts.calcium_gate_convention or conventions.calcium_gate_convention
+        ),
         "gate_initialization_convention": conventions.gate_initialization_convention,
         "calcium_density_convention": conventions.calcium_density_convention,
         "spike_event_coordinate": conventions.spike_event_coordinate,

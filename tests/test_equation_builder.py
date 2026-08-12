@@ -99,6 +99,32 @@ def test_modeldb_calcium_equations_use_absolute_voltage_and_correct_roles() -> N
     assert "tau_h_ca_proximal_dendrite=(19.15+" in equations
 
 
+def test_modeldb_reticular_calcium_uses_serialized_destexhe_gate_family() -> None:
+    compiled = compile_cell_equations(
+        get_cell_spec("trn"),
+        axial_convention=AxialConvention.KINNESS_SERIALIZED_EDGE,
+        leak_convention=LeakConvention.TABLE3_REVERSAL,
+        voltage_coordinate=VoltageCoordinate.RELATIVE_TO_TABLE3_LEAK,
+        nak_rate_convention=NaKRateConvention.STANDARD_TRAUB_MILES,
+        calcium_gate_convention=TTypeGateConvention.MODELDB_RETICULAR_112923,
+        calcium_density_convention=CalciumDensityConvention.TABLE3,
+        ahp_convention=AHPConvention.MODELDB_112923,
+        enable_ahp_ach=False,
+    )
+    equations = compiled.equations
+    assert (
+        "m_ca_inf_proximal_dendrite=1/(exp((-52*mV-v_proximal_dendrite)/(7.4*mV))+1)"
+        in equations
+    )
+    assert "tau_m_ca_proximal_dendrite=(1+0.33/(exp((v_proximal_dendrite+27*mV)" in equations
+    assert (
+        "h_ca_inf_proximal_dendrite=1/(exp((-80*mV-v_proximal_dendrite)/(-5*mV))+1)"
+        in equations
+    )
+    assert "tau_h_ca_proximal_dendrite=(28.3+0.33/(exp((v_proximal_dendrite+48*mV)" in equations
+    assert "g_ca_proximal_dendrite*m_ca_proximal_dendrite**2*h_ca_proximal_dendrite" in equations
+
+
 def test_conventions_must_be_explicit_enum_members() -> None:
     kwargs = {
         "axial_convention": AxialConvention.SYMMETRIC_CABLE,

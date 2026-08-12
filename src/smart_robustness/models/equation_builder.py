@@ -105,6 +105,24 @@ def _nak_lines(
 def _calcium_lines(
     name: str, coordinate: VoltageCoordinate, gate: TTypeGateConvention
 ) -> list[str]:
+    if gate is TTypeGateConvention.MODELDB_RETICULAR_112923:
+        v = f"v_{name}"
+        return [
+            f"dm_ca_{name}/dt=(m_ca_inf_{name}-m_ca_{name})/tau_m_ca_{name} : 1",
+            f"dh_ca_{name}/dt=(h_ca_inf_{name}-h_ca_{name})/tau_h_ca_{name} : 1",
+            f"m_ca_inf_{name}=1/(exp((-52*mV-{v})/(7.4*mV))+1) : 1",
+            (
+                f"tau_m_ca_{name}=(1+0.33/(exp(({v}+27*mV)/(10*mV))"
+                f"+exp(({v}+102*mV)/(-15*mV))))*ms : second"
+            ),
+            f"h_ca_inf_{name}=1/(exp((-80*mV-{v})/(-5*mV))+1) : 1",
+            (
+                f"tau_h_ca_{name}=(28.3+0.33/(exp(({v}+48*mV)/(4*mV))"
+                f"+exp(({v}+407*mV)/(-50*mV))))*ms : second"
+            ),
+            f"i_ca_{name}=g_ca_{name}*m_ca_{name}**2*h_ca_{name}*(e_ca-{v}) : amp",
+            f"g_ca_{name} : siemens (constant)",
+        ]
     if gate is TTypeGateConvention.MODELDB_112923:
         v = f"v_{name}"
         return [

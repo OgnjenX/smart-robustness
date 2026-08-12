@@ -49,6 +49,8 @@ def test_first_order_source_cells_cover_all_populations_and_compartments() -> No
     assert relay.source_name == "Relay"
     assert relay.cell.soma.diameter_mm == 0.05
     assert relay.cell.compartment("distal_dendrite").axial_resistance_kohm_cm == 8.2
+    trn = facts[1]
+    assert trn.calcium_gate_convention == "modeldb_reticular_112923"
     layer5 = facts[2]
     assert layer5.ahp_density_mS_cm2 == 0.4
     assert (layer5.ahp_rise_ms, layer5.ahp_fall_ms) == (5, 20)

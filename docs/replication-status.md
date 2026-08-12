@@ -386,6 +386,19 @@ Gaussian spread and border modes but not the XML `ring` flag. No invented
 annulus stencil is promoted to the baseline; see
 `figure7-pathway-localization-030.yaml`.
 
+A later intrinsic-channel audit found that the shared calcium compiler had
+incorrectly applied the relay-cell exponent-3 `Simple_Tau` family to TRN. The
+XML instead gives V1 and V2 TRN a distinct exponent-2 Destexhe reticular
+T-current, and KInNeSS Table 2 supplies the exact `Reticular_Tau` formula.
+After correction, an isolated zero-initialized TRN cell emits two events at
+10.93 and 13.59 ms rather than three events at 20.27--25.64 ms. In the exact
+100-ms Figure 7 assay, TRN output falls from 264 to 162 events, match relay
+output is 23 spikes, mismatch relay output 25, and the nonspecific cell fires
+at 70 Hz in both. With a 10-ms expectation lead, both nonspecific outputs are
+60 Hz. Thus the source correction changes the mechanism substantially but does
+not yet reproduce mismatch disinhibition; see
+`figure7-reticular-calcium-031.yaml`.
+
 The Figure 7 protocol now keeps its Methods 4.9 somatic-current category cue
 separate from the blue category pixel in the recovered Figure 6 training PNG.
 Its predeclared scorer independently tests the approximately 40-Hz match and

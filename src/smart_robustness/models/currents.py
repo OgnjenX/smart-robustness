@@ -162,6 +162,7 @@ class TTypeGateConvention(StrEnum):
     PRINTED_LITERAL = "printed_literal"
     RECIPROCAL = "reciprocal"
     MODELDB_112923 = "modeldb_112923"
+    MODELDB_RETICULAR_112923 = "modeldb_reticular_112923"
 
 
 class AHPConvention(StrEnum):
@@ -299,6 +300,8 @@ def t_type_m_inf(v_mV: float, convention: TTypeGateConvention) -> float:
     selected = _require_t_type_convention(convention)
     if selected is TTypeGateConvention.MODELDB_112923:
         return modeldb_t_type_m_inf(v_mV)
+    if selected is TTypeGateConvention.MODELDB_RETICULAR_112923:
+        return 1.0 / (math.exp((-52.0 - v_mV) / 7.4) + 1.0)
     literal = _t_type_m_literal(v_mV)
     if selected is TTypeGateConvention.PRINTED_LITERAL:
         return literal
@@ -311,6 +314,8 @@ def t_type_h_inf(v_mV: float, convention: TTypeGateConvention) -> float:
     selected = _require_t_type_convention(convention)
     if selected is TTypeGateConvention.MODELDB_112923:
         return modeldb_t_type_h_inf(v_mV)
+    if selected is TTypeGateConvention.MODELDB_RETICULAR_112923:
+        return 1.0 / (math.exp((-80.0 - v_mV) / -5.0) + 1.0)
     literal = _t_type_h_literal(v_mV)
     if selected is TTypeGateConvention.PRINTED_LITERAL:
         return literal

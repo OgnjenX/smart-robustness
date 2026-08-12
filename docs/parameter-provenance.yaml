@@ -47,6 +47,11 @@ parameters:
     status: published-executable-framework-alternative
     source: Versace et al. 2008 KInNeSS expanded manuscript, Equation 18
     note: Grossberg and Versace 2008 instead prints +30 mV; SMART.nml does not serialize the simulator-wide event threshold
+  model.classic_hh.trn_t_type_calcium:
+    value: activation exponent 2; m_inf V0=-52/B=7.4; h_inf V0=-80/B=-5; Reticular_Tau parameter sets (1,0.33,27,102,10,-15) and (28.3,0.33,48,407,4,-50)
+    status: official-executable-source
+    source: ModelDB 112923 SMART.nml and Versace et al. 2008 KInNeSS Table 2
+    note: distinct from the relay/matrix/nonspecific exponent-3 Simple_Tau family
   model.classic_hh.e_leak:
     value: cell-specific; M0 cortical reference uses -65 mV
     status: published

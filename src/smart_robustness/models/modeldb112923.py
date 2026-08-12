@@ -73,6 +73,7 @@ class FirstOrderPopulationFacts:
     e_na_mV: float = 50.0
     e_k_mV: float = -90.0
     e_ca_mV: float = 180.0
+    calcium_gate_convention: str | None = None
     ahp_density_mS_cm2: float | None = None
     ahp_reversal_mV: float | None = None
     ahp_rise_ms: float | None = None
@@ -145,6 +146,7 @@ def first_order_population_facts() -> tuple[FirstOrderPopulationFacts, ...]:
             (9, 9),
             e_k_mV=-100,
             e_ca_mV=120,
+            calcium_gate_convention="modeldb_reticular_112923",
         ),
         FirstOrderPopulationFacts(
             "Layer_5",
@@ -321,6 +323,7 @@ def second_order_population_facts() -> tuple[FirstOrderPopulationFacts, ...]:
                 e_na_mV=template.e_na_mV,
                 e_k_mV=template.e_k_mV,
                 e_ca_mV=template.e_ca_mV,
+                calcium_gate_convention=template.calcium_gate_convention,
                 ahp_density_mS_cm2=template.ahp_density_mS_cm2,
                 ahp_reversal_mV=template.ahp_reversal_mV,
                 ahp_rise_ms=template.ahp_rise_ms,

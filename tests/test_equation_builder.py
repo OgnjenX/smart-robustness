@@ -131,6 +131,29 @@ def test_modeldb_reticular_calcium_uses_serialized_destexhe_gate_family() -> Non
     assert "g_ca_proximal_dendrite*m_ca_proximal_dendrite**2*h_ca_proximal_dendrite" in equations
 
 
+def test_compiled_cell_exposes_separate_membrane_axial_and_lfp_currents() -> None:
+    compiled = compile_cell_equations(
+        get_cell_spec("trn"),
+        axial_convention=AxialConvention.KINNESS_SERIALIZED_EDGE,
+        leak_convention=LeakConvention.TABLE3_REVERSAL,
+        voltage_coordinate=VoltageCoordinate.RELATIVE_TO_TABLE3_LEAK,
+        nak_rate_convention=NaKRateConvention.STANDARD_TRAUB_MILES,
+        calcium_gate_convention=TTypeGateConvention.MODELDB_RETICULAR_112923,
+        calcium_voltage_coordinate=CalciumVoltageCoordinate.INTEGRATED_VOLTAGE,
+        calcium_density_convention=CalciumDensityConvention.TABLE3,
+        ahp_convention=AHPConvention.MODELDB_112923,
+        enable_ahp_ach=False,
+    )
+    equations = compiled.equations
+    assert "i_membrane_inward_soma=" in equations
+    assert "i_axial_inward_soma=g_ax_0_into_soma*(v_proximal_dendrite-v_soma)" in equations
+    assert "i_transmembrane_paper_soma=i_axial_inward_soma" in equations
+    assert "i_transmembrane_outward_soma=-i_axial_inward_soma" in equations
+    assert "i_membrane_inward_soma" not in next(
+        line for line in equations.splitlines() if line.startswith("dv_soma/dt")
+    )
+
+
 def test_internal_zero_calcium_coordinate_adds_serialized_physical_leak() -> None:
     compiled = compile_cell_equations(
         get_cell_spec("thalamic_relay"),

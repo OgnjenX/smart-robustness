@@ -366,10 +366,10 @@ def compile_cell_equations(
         )
     for compartment in cell.compartments:
         name = compartment.name
-        current_terms = [f"g_l_{name}*(e_l_{name}-v_{name})"]
+        membrane_current_terms = [f"g_l_{name}*(e_l_{name}-v_{name})"]
         if compartment.g_na_mS_cm2 is not None:
             lines.extend(_nak_lines(name, voltage, nak_rate))
-            current_terms.extend((f"i_na_{name}", f"i_k_{name}"))
+            membrane_current_terms.extend((f"i_na_{name}", f"i_k_{name}"))
         if compartment.g_ca_mS_cm2 is not None:
             lines.extend(
                 _calcium_lines(
@@ -380,23 +380,25 @@ def compile_cell_equations(
                     compartment.e_leak_mV,
                 )
             )
-            current_terms.append(f"i_ca_{name}")
+            membrane_current_terms.append(f"i_ca_{name}")
         if enable_ahp_ach and name == "soma":
-            current_terms.append("i_ahp")
-        current_terms.extend(
+            membrane_current_terms.append("i_ahp")
+        membrane_current_terms.extend(
             f"i_{port.name}" for port in synaptic_ports if port.compartment == name
         )
-        current_terms.extend(
+        membrane_current_terms.extend(
             f"i_{port.name}" for port in gap_junction_ports if port.compartment == name
         )
-        current_terms.extend(
+        membrane_current_terms.extend(
             f"i_{port.name}" for port in external_input_ports if port.compartment == name
         )
-        current_terms.extend(
+        membrane_current_terms.extend(
             f"i_{port.name}" for port in injection_ports if port.compartment == name
         )
-        current_terms.extend(axial_terms[name])
-        current_terms.extend((f"i_syn_{name}", f"i_drive_{name}"))
+        membrane_current_terms.extend((f"i_syn_{name}", f"i_drive_{name}"))
+        axial_expression = " + ".join(axial_terms[name]) or "0*amp"
+        membrane_expression = " + ".join(membrane_current_terms)
+        current_terms = membrane_current_terms + axial_terms[name]
         voltage_equation = (
             f"dv_{name}/dt=0*volt/second : volt"
             if name in voltage_clamped_compartments
@@ -405,6 +407,10 @@ def compile_cell_equations(
         lines.extend(
             (
                 voltage_equation,
+                f"i_membrane_inward_{name}={membrane_expression} : amp",
+                f"i_axial_inward_{name}={axial_expression} : amp",
+                f"i_transmembrane_paper_{name}=i_axial_inward_{name} : amp",
+                f"i_transmembrane_outward_{name}=-i_axial_inward_{name} : amp",
                 f"C_{name} : farad (constant)",
                 f"g_l_{name} : siemens (constant)",
                 f"e_l_{name} : volt (constant)",

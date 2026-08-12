@@ -54,6 +54,25 @@ def test_vectorized_population_runs_and_exposes_published_compartments(cell_clas
     assert brian.numpy_.isfinite(monitor.v_soma[:]).all()
 
 
+def test_transmembrane_readout_is_negative_net_axial_current() -> None:
+    brian.start_scope()
+    brian.defaultclock.dt = 0.01 * brian.ms
+    population = create_compartmental_hh_population(
+        name="current_readout", size=1, params=_params("thalamic_relay"), brian=brian
+    )
+    population.group.v_soma = -60 * brian.mV
+    population.group.v_proximal_dendrite = -50 * brian.mV
+    network = brian.Network(population.group)
+    network.run(0 * brian.ms)
+    assert population.group.i_axial_inward_soma[0] / brian.pA > 0
+    assert population.group.i_transmembrane_paper_soma[0] / brian.pA == pytest.approx(
+        population.group.i_axial_inward_soma[0] / brian.pA
+    )
+    assert population.group.i_transmembrane_outward_soma[0] / brian.pA == pytest.approx(
+        -population.group.i_axial_inward_soma[0] / brian.pA
+    )
+
+
 def test_relay_uses_table3_calcium_density_without_silent_global_override() -> None:
     brian.start_scope()
     population = create_compartmental_hh_population(

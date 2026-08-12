@@ -587,6 +587,14 @@ analysis reproducible but does not yet claim official behavior because
 source-faithful LFP current accounting remains pending
 (`figure16-cross-correlation-analysis-044.yaml`).
 
+Each compiled compartment now exposes membrane, axial, and Equation-32
+transmembrane current observables without feeding those aliases back into its
+voltage equation. Equations 31 and 33 are implemented with explicit pA, µm,
+mS/cm, µV, and µV/µm² units and pass analytic source/sink and quadratic-CSD
+controls. A short complete-network run remains finite with these observables.
+This closes current accounting and transform arithmetic, but not the stochastic
+54-tip geometry or official LFP behavior (`lfp-current-accounting-045.yaml`).
+
 A separate coordinate audit tested whether KInNeSS integrates voltage at zero
 relative to each compartment's serialized leak and adds the leak only when
 writing physical voltage. Membrane initialization and the voltage supplied to

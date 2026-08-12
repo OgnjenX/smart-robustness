@@ -34,10 +34,13 @@ records.
 The complete 24-population topology now builds and executes a zero-duration
 Brian2 network check. This is structural validation only: it does not establish
 that the published match/gamma or mismatch/beta/reset trajectories have been
-reproduced. Except for the separately serialized V2 layer-5 geometry, the
-current V2 intrinsic transcription uses the corresponding V1 cell definitions;
-an independent raw-XML intrinsic extraction remains required before claiming
-exact cell-library parity for every V2 population.
+reproduced. A hash-pinned independent extraction now verifies all 24 runtime
+cell definitions against the raw XML for compartment geometry, leak, axial
+fields, Na/K/T-calcium densities and reversals, AHP kinetics, and transmitter
+depletion fields. Eleven V2 populations are exact intrinsic homologues of their
+V1 counterparts. V2 layer 5 is the sole exception: its leak reversal is -72
+rather than -73 mV and its two serialized child-edge axial resistances are 5
+rather than 6 kOhm*cm.
 
 ## Resolved equation ambiguities
 

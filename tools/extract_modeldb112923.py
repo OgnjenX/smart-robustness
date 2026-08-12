@@ -1,4 +1,4 @@
-"""Extract derived first-order SMART facts from the integrity-pinned ModelDB XML."""
+"""Extract derived SMART facts from the integrity-pinned ModelDB XML."""
 
 from __future__ import annotations
 
@@ -63,6 +63,61 @@ def _source_endpoint(raw: str) -> tuple[str, str | None]:
             compartment = raw[len(prefix) :]
             return POPULATIONS[source_name], COMPARTMENTS.get(compartment, compartment)
     return raw, None
+
+
+def _intrinsic_channels(compartment: ET.Element) -> list[dict[str, object]]:
+    """Return channels whose state is intrinsic to a cell, not a projection."""
+
+    result = []
+    for channel in compartment.findall("channel"):
+        dependencies = tuple(
+            gate.get("dependency", "") for gate in channel.findall("gatingVariable")
+        )
+        if not any(dependency in {"voltage", "AHP/ADP"} for dependency in dependencies):
+            continue
+        result.append(
+            {
+                "name": channel.get("name"),
+                "conductance_mS_cm2": _number(channel.get("g_bar")),
+                "reversal_mV": _number(channel.get("equilibriumPotential")),
+                "dependencies": list(dependencies),
+                "gates": [
+                    {
+                        "attributes": dict(gate.attrib),
+                        "representation": [
+                            {"kind": item.tag, "attributes": dict(item.attrib)}
+                            for item in gate.findall("./representation/*")
+                        ],
+                    }
+                    for gate in channel.findall("gatingVariable")
+                ],
+            }
+        )
+    return result
+
+
+def _intrinsic_population(population: ET.Element) -> dict[str, object]:
+    source_name = population.get("name", "")
+    compartments = []
+    for compartment in population.findall("./neuron/structure/OrientedSubstructure"):
+        compartments.append(
+            {
+                "name": COMPARTMENTS[compartment.get("name", "")],
+                "diameter_cm": _number(compartment.get("diameter")),
+                "length_cm": _number(compartment.get("length")),
+                "axial_resistance_kohm_cm": _number(compartment.get("inpResistance")),
+                "leak_reversal_mV": _number(compartment.get("E_leak")),
+                "leak_conductance_mS_cm2": _number(compartment.get("g_leak")),
+                "depletion_rate": _number(compartment.get("depletionRate")),
+                "recovery_ms": _number(compartment.get("recoveryRate")),
+                "intrinsic_channels": _intrinsic_channels(compartment),
+            }
+        )
+    return {
+        "source_name": source_name,
+        "canonical_name": POPULATIONS[source_name],
+        "compartments": compartments,
+    }
 
 
 def extract(source: Path, *, population_limit: int | None = 12) -> dict[str, object]:
@@ -153,6 +208,7 @@ def extract(source: Path, *, population_limit: int | None = 12) -> dict[str, obj
         "source_sha256": digest,
         "projection_count": len(records),
         "external_channel_count": len(external_channels),
+        "intrinsic_populations": [_intrinsic_population(population) for population in populations],
         "projections": records,
         "external_channels": external_channels,
     }

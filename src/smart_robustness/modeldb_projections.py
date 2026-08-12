@@ -83,6 +83,7 @@ class ModelDBFirstOrderCatalog:
     source_sha256: str
     projections: tuple[ModelDBProjection, ...]
     external_channels: tuple[ModelDBExternalChannel, ...]
+    intrinsic_populations: tuple[Mapping[str, Any], ...]
 
     def by_id(self, record_id: str) -> ModelDBProjection:
         return next(record for record in self.projections if record.id == record_id)
@@ -164,6 +165,9 @@ def load_modeldb_first_order_catalog(
         source_sha256=data["source_sha256"],
         projections=tuple(projections),
         external_channels=external,
+        intrinsic_populations=tuple(
+            MappingProxyType(population) for population in data["intrinsic_populations"]
+        ),
     )
 
 

@@ -4,6 +4,3603 @@ population_count: 24
 source_sha256: 16fc196f2ed68d1c02a39395fa83bb0ffab8fcf8edffe6fd11022bb6c6e299e1
 projection_count: 118
 external_channel_count: 16
+intrinsic_populations:
+- source_name: Relay
+  canonical_name: thalamic_relay
+  compartments:
+  - name: soma
+    diameter_cm: 0.005
+    length_cm: 0.006
+    axial_resistance_kohm_cm: null
+    leak_reversal_mV: -60.0
+    leak_conductance_mS_cm2: 0.01
+    depletion_rate: null
+    recovery_ms: null
+    intrinsic_channels:
+    - name: K_dr (Traub & Miles, 91)
+      conductance_mS_cm2: 100.0
+      reversal_mV: -100.0
+      dependencies:
+      - voltage
+      gates:
+      - attributes:
+          exponent: '4'
+          dependency: voltage
+          format: alpha/beta
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Linoid
+            V0: '15'
+            A: '0.032'
+            B: '5'
+        - kind: backward
+          attributes:
+            category: Exponential
+            V0: '10'
+            A: '0.5'
+            B: '40'
+    - name: Na (Traub & Miles, 91)
+      conductance_mS_cm2: 100.0
+      reversal_mV: 50.0
+      dependencies:
+      - voltage
+      - voltage
+      gates:
+      - attributes:
+          exponent: '3'
+          dependency: voltage
+          format: alpha/beta
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Linoid
+            V0: '13'
+            A: '0.32'
+            B: '4'
+        - kind: backward
+          attributes:
+            category: Linoid
+            V0: '40'
+            A: '-0.28'
+            B: '-5'
+      - attributes:
+          exponent: '1'
+          dependency: voltage
+          format: alpha/beta
+          name: m2
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Exponential
+            V0: '17'
+            A: '0.128'
+            B: '18'
+        - kind: backward
+          attributes:
+            category: Sigmoid
+            V0: '40'
+            A: '4'
+            B: '5'
+    - name: Low threshold T-type Ca++
+      conductance_mS_cm2: 0.1
+      reversal_mV: 180.0
+      dependencies:
+      - voltage
+      - voltage
+      gates:
+      - attributes:
+          exponent: '3'
+          dependency: voltage
+          format: m/tau
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: m_inf
+          attributes:
+            category: Sigmoid
+            V0: '-63'
+            A: '1'
+            B: '7.8'
+        - kind: tau
+          attributes:
+            category: Simple_Tau
+            V0: '-9.84'
+            A: '2.44'
+            B: '2.506'
+      - attributes:
+          exponent: '1'
+          dependency: voltage
+          format: m/tau
+          name: m2
+          representationForm: Parametrised
+        representation:
+        - kind: m_inf
+          attributes:
+            category: Sigmoid
+            V0: '-83.5'
+            A: '1'
+            B: '-6.3'
+        - kind: tau
+          attributes:
+            category: Simple_Tau
+            V0: '-10.54'
+            A: '19.15'
+            B: '7.171'
+  - name: proximal_dendrite
+    diameter_cm: 0.0005
+    length_cm: 0.008
+    axial_resistance_kohm_cm: 8.0
+    leak_reversal_mV: -60.0
+    leak_conductance_mS_cm2: 0.01
+    depletion_rate: null
+    recovery_ms: null
+    intrinsic_channels:
+    - name: Low threshold T-type Ca++
+      conductance_mS_cm2: 0.1
+      reversal_mV: 180.0
+      dependencies:
+      - voltage
+      - voltage
+      gates:
+      - attributes:
+          exponent: '3'
+          dependency: voltage
+          format: m/tau
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: m_inf
+          attributes:
+            category: Sigmoid
+            V0: '-63'
+            A: '1'
+            B: '7.8'
+        - kind: tau
+          attributes:
+            category: Simple_Tau
+            V0: '-9.84'
+            A: '2.44'
+            B: '2.506'
+      - attributes:
+          exponent: '1'
+          dependency: voltage
+          format: m/tau
+          name: m2
+          representationForm: Parametrised
+        representation:
+        - kind: m_inf
+          attributes:
+            category: Sigmoid
+            V0: '-83.5'
+            A: '1'
+            B: '-6.3'
+        - kind: tau
+          attributes:
+            category: Simple_Tau
+            V0: '-10.54'
+            A: '19.15'
+            B: '7.171'
+  - name: distal_dendrite
+    diameter_cm: 0.0004
+    length_cm: 0.008
+    axial_resistance_kohm_cm: 8.2
+    leak_reversal_mV: -60.0
+    leak_conductance_mS_cm2: 0.1
+    depletion_rate: null
+    recovery_ms: null
+    intrinsic_channels:
+    - name: Low threshold T-type Ca++
+      conductance_mS_cm2: 0.1
+      reversal_mV: 180.0
+      dependencies:
+      - voltage
+      - voltage
+      gates:
+      - attributes:
+          exponent: '3'
+          dependency: voltage
+          format: m/tau
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: m_inf
+          attributes:
+            category: Sigmoid
+            V0: '-63'
+            A: '1'
+            B: '7.8'
+        - kind: tau
+          attributes:
+            category: Simple_Tau
+            V0: '-9.84'
+            A: '2.44'
+            B: '2.506'
+      - attributes:
+          exponent: '1'
+          dependency: voltage
+          format: m/tau
+          name: m2
+          representationForm: Parametrised
+        representation:
+        - kind: m_inf
+          attributes:
+            category: Sigmoid
+            V0: '-83.5'
+            A: '1'
+            B: '-6.3'
+        - kind: tau
+          attributes:
+            category: Simple_Tau
+            V0: '-10.54'
+            A: '19.15'
+            B: '7.171'
+- source_name: Reticular
+  canonical_name: trn
+  compartments:
+  - name: soma
+    diameter_cm: 0.005
+    length_cm: 0.005
+    axial_resistance_kohm_cm: null
+    leak_reversal_mV: -69.0
+    leak_conductance_mS_cm2: 0.1
+    depletion_rate: null
+    recovery_ms: null
+    intrinsic_channels:
+    - name: Na (Destexhe et al, 96)
+      conductance_mS_cm2: 100.0
+      reversal_mV: 50.0
+      dependencies:
+      - voltage
+      - voltage
+      gates:
+      - attributes:
+          exponent: '3'
+          dependency: voltage
+          format: alpha/beta
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Linoid
+            V0: '13'
+            A: '0.32'
+            B: '4'
+        - kind: backward
+          attributes:
+            category: Linoid
+            V0: '40'
+            A: '-0.28'
+            B: '-5'
+      - attributes:
+          exponent: '1'
+          dependency: voltage
+          format: alpha/beta
+          name: m2
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Exponential
+            V0: '17'
+            A: '0.128'
+            B: '18'
+        - kind: backward
+          attributes:
+            category: Sigmoid
+            V0: '40'
+            A: '4'
+            B: '5'
+    - name: K_dr (Destexhe et al, 96)
+      conductance_mS_cm2: 80.0
+      reversal_mV: -100.0
+      dependencies:
+      - voltage
+      gates:
+      - attributes:
+          exponent: '4'
+          format: alpha/beta
+          dependency: voltage
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Linoid
+            V0: '15'
+            A: '0.032'
+            B: '5'
+        - kind: backward
+          attributes:
+            category: Exponential
+            V0: '10'
+            A: '0.5'
+            B: '40'
+    - name: Thalamic reticular Ca++ (Destexhe et al, 96)
+      conductance_mS_cm2: 100.0
+      reversal_mV: 120.0
+      dependencies:
+      - voltage
+      - voltage
+      gates:
+      - attributes:
+          exponent: '2'
+          dependency: voltage
+          format: m/tau
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: m_inf
+          attributes:
+            category: Sigmoid
+            V0: '-52'
+            A: '1'
+            B: '7.4'
+        - kind: tau
+          attributes:
+            D: '-15'
+            category: Reticular_Tau
+            V0: '27'
+            A: '1'
+            V1: '102'
+            B: '0.33'
+            C: '10'
+      - attributes:
+          exponent: '1'
+          dependency: voltage
+          format: m/tau
+          name: m2
+          representationForm: Parametrised
+        representation:
+        - kind: m_inf
+          attributes:
+            category: Sigmoid
+            V0: '-80'
+            A: '1'
+            B: '-5'
+        - kind: tau
+          attributes:
+            D: '-50'
+            category: Reticular_Tau
+            V0: '48'
+            A: '28.3'
+            V1: '407'
+            B: '0.33'
+            C: '4'
+  - name: proximal_dendrite
+    diameter_cm: 0.001
+    length_cm: 0.005
+    axial_resistance_kohm_cm: 10.0
+    leak_reversal_mV: -69.0
+    leak_conductance_mS_cm2: 0.1
+    depletion_rate: null
+    recovery_ms: null
+    intrinsic_channels:
+    - name: Thalamic reticular Ca++ (Destexhe et al, 96)
+      conductance_mS_cm2: 100.0
+      reversal_mV: 120.0
+      dependencies:
+      - voltage
+      - voltage
+      gates:
+      - attributes:
+          exponent: '2'
+          dependency: voltage
+          format: m/tau
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: m_inf
+          attributes:
+            category: Sigmoid
+            V0: '-52'
+            A: '1'
+            B: '7.4'
+        - kind: tau
+          attributes:
+            D: '-15'
+            category: Reticular_Tau
+            V0: '27'
+            A: '1'
+            V1: '102'
+            B: '0.33'
+            C: '10'
+      - attributes:
+          exponent: '1'
+          dependency: voltage
+          format: m/tau
+          name: m2
+          representationForm: Parametrised
+        representation:
+        - kind: m_inf
+          attributes:
+            category: Sigmoid
+            V0: '-80'
+            A: '1'
+            B: '-5'
+        - kind: tau
+          attributes:
+            D: '-50'
+            category: Reticular_Tau
+            V0: '48'
+            A: '28.3'
+            V1: '407'
+            B: '0.33'
+            C: '4'
+  - name: distal_dendrite
+    diameter_cm: 0.001
+    length_cm: 0.005
+    axial_resistance_kohm_cm: 10.0
+    leak_reversal_mV: -69.0
+    leak_conductance_mS_cm2: 0.1
+    depletion_rate: null
+    recovery_ms: null
+    intrinsic_channels:
+    - name: Thalamic reticular Ca++ (Destexhe et al, 96)
+      conductance_mS_cm2: 100.0
+      reversal_mV: 120.0
+      dependencies:
+      - voltage
+      - voltage
+      gates:
+      - attributes:
+          exponent: '2'
+          dependency: voltage
+          format: m/tau
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: m_inf
+          attributes:
+            category: Sigmoid
+            V0: '-52'
+            A: '1'
+            B: '7.4'
+        - kind: tau
+          attributes:
+            D: '-15'
+            category: Reticular_Tau
+            V0: '27'
+            A: '1'
+            V1: '102'
+            B: '0.33'
+            C: '10'
+      - attributes:
+          exponent: '1'
+          dependency: voltage
+          format: m/tau
+          name: m2
+          representationForm: Parametrised
+        representation:
+        - kind: m_inf
+          attributes:
+            category: Sigmoid
+            V0: '-80'
+            A: '1'
+            B: '-5'
+        - kind: tau
+          attributes:
+            D: '-50'
+            category: Reticular_Tau
+            V0: '48'
+            A: '28.3'
+            V1: '407'
+            B: '0.33'
+            C: '4'
+- source_name: Layer_5
+  canonical_name: layer5_excitatory_v1
+  compartments:
+  - name: soma
+    diameter_cm: 0.01
+    length_cm: 0.015
+    axial_resistance_kohm_cm: null
+    leak_reversal_mV: -73.0
+    leak_conductance_mS_cm2: 0.1
+    depletion_rate: 0.5
+    recovery_ms: 100.0
+    intrinsic_channels:
+    - name: Na (Traub & Miles, 91)
+      conductance_mS_cm2: 50.0
+      reversal_mV: 50.0
+      dependencies:
+      - voltage
+      - voltage
+      gates:
+      - attributes:
+          exponent: '3'
+          format: alpha/beta
+          dependency: voltage
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Linoid
+            V0: '13'
+            A: '0.32'
+            B: '4'
+        - kind: backward
+          attributes:
+            category: Linoid
+            V0: '40'
+            A: '-0.28'
+            B: '-5'
+      - attributes:
+          exponent: '1'
+          format: alpha/beta
+          dependency: voltage
+          name: m2
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Exponential
+            V0: '17'
+            A: '0.128'
+            B: '18'
+        - kind: backward
+          attributes:
+            category: Sigmoid
+            V0: '40'
+            A: '4'
+            B: '5'
+    - name: K_dr (Traub & Miles, 91)
+      conductance_mS_cm2: 30.0
+      reversal_mV: -90.0
+      dependencies:
+      - voltage
+      gates:
+      - attributes:
+          exponent: '4'
+          dependency: voltage
+          format: alpha/beta
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Linoid
+            V0: '15'
+            A: '0.032'
+            B: '5'
+        - kind: backward
+          attributes:
+            category: Exponential
+            V0: '10'
+            A: '0.5'
+            B: '40'
+    - name: AHP
+      conductance_mS_cm2: 0.4
+      reversal_mV: -70.0
+      dependencies:
+      - AHP/ADP
+      gates:
+      - attributes:
+          tau_r: '5'
+          dependency: AHP/ADP
+          tau_f: '20'
+          name: m1
+        representation: []
+  - name: proximal_dendrite
+    diameter_cm: 0.006
+    length_cm: 0.04
+    axial_resistance_kohm_cm: 6.0
+    leak_reversal_mV: -73.0
+    leak_conductance_mS_cm2: 0.03
+    depletion_rate: null
+    recovery_ms: null
+    intrinsic_channels: []
+  - name: distal_dendrite
+    diameter_cm: 0.006
+    length_cm: 0.05
+    axial_resistance_kohm_cm: 6.0
+    leak_reversal_mV: -73.0
+    leak_conductance_mS_cm2: 0.03
+    depletion_rate: null
+    recovery_ms: null
+    intrinsic_channels:
+    - name: Na (Traub & Miles, 91)
+      conductance_mS_cm2: 50.0
+      reversal_mV: 50.0
+      dependencies:
+      - voltage
+      - voltage
+      gates:
+      - attributes:
+          exponent: '3'
+          format: alpha/beta
+          dependency: voltage
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Linoid
+            V0: '13'
+            A: '0.32'
+            B: '4'
+        - kind: backward
+          attributes:
+            category: Linoid
+            V0: '40'
+            A: '-0.28'
+            B: '-5'
+      - attributes:
+          exponent: '1'
+          format: alpha/beta
+          dependency: voltage
+          name: m2
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Exponential
+            V0: '17'
+            A: '0.128'
+            B: '18'
+        - kind: backward
+          attributes:
+            category: Sigmoid
+            V0: '40'
+            A: '4'
+            B: '5'
+    - name: K_dr (Traub & Miles, 91)
+      conductance_mS_cm2: 30.0
+      reversal_mV: -90.0
+      dependencies:
+      - voltage
+      gates:
+      - attributes:
+          exponent: '4'
+          dependency: voltage
+          format: alpha/beta
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Linoid
+            V0: '15'
+            A: '0.032'
+            B: '5'
+        - kind: backward
+          attributes:
+            category: Exponential
+            V0: '10'
+            A: '0.5'
+            B: '40'
+- source_name: Layer_6_II
+  canonical_name: layer6ii_excitatory_v1
+  compartments:
+  - name: soma
+    diameter_cm: 0.006
+    length_cm: 0.01
+    axial_resistance_kohm_cm: null
+    leak_reversal_mV: -64.0
+    leak_conductance_mS_cm2: 0.1
+    depletion_rate: 0.5
+    recovery_ms: 100.0
+    intrinsic_channels:
+    - name: Na (Traub & Miles, 91)
+      conductance_mS_cm2: 50.0
+      reversal_mV: 50.0
+      dependencies:
+      - voltage
+      - voltage
+      gates:
+      - attributes:
+          exponent: '3'
+          format: alpha/beta
+          dependency: voltage
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Linoid
+            V0: '13'
+            A: '0.32'
+            B: '4'
+        - kind: backward
+          attributes:
+            category: Linoid
+            V0: '40'
+            A: '-0.28'
+            B: '-5'
+      - attributes:
+          exponent: '1'
+          format: alpha/beta
+          dependency: voltage
+          name: m2
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Exponential
+            V0: '17'
+            A: '0.128'
+            B: '18'
+        - kind: backward
+          attributes:
+            category: Sigmoid
+            V0: '40'
+            A: '4'
+            B: '5'
+    - name: K_dr (Traub & Miles, 91)
+      conductance_mS_cm2: 30.0
+      reversal_mV: -90.0
+      dependencies:
+      - voltage
+      gates:
+      - attributes:
+          exponent: '4'
+          dependency: voltage
+          format: alpha/beta
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Linoid
+            V0: '15'
+            A: '0.032'
+            B: '5'
+        - kind: backward
+          attributes:
+            category: Exponential
+            V0: '10'
+            A: '0.5'
+            B: '40'
+    - name: AHP
+      conductance_mS_cm2: 0.5
+      reversal_mV: -70.0
+      dependencies:
+      - AHP/ADP
+      gates:
+      - attributes:
+          tau_r: '5'
+          dependency: AHP/ADP
+          tau_f: '20'
+          name: m1
+        representation: []
+  - name: proximal_dendrite
+    diameter_cm: 0.0008
+    length_cm: 0.01
+    axial_resistance_kohm_cm: 25.0
+    leak_reversal_mV: -64.0
+    leak_conductance_mS_cm2: 0.1
+    depletion_rate: null
+    recovery_ms: null
+    intrinsic_channels: []
+  - name: distal_dendrite
+    diameter_cm: 0.0008
+    length_cm: 0.02
+    axial_resistance_kohm_cm: 25.0
+    leak_reversal_mV: -64.0
+    leak_conductance_mS_cm2: 0.01
+    depletion_rate: null
+    recovery_ms: null
+    intrinsic_channels: []
+- source_name: Layer_6_I
+  canonical_name: layer6i_excitatory_v1
+  compartments:
+  - name: soma
+    diameter_cm: 0.008
+    length_cm: 0.01
+    axial_resistance_kohm_cm: null
+    leak_reversal_mV: -70.0
+    leak_conductance_mS_cm2: 0.15
+    depletion_rate: 1.0
+    recovery_ms: 400.0
+    intrinsic_channels:
+    - name: Na (Traub & Miles, 91)
+      conductance_mS_cm2: 50.0
+      reversal_mV: 50.0
+      dependencies:
+      - voltage
+      - voltage
+      gates:
+      - attributes:
+          exponent: '3'
+          dependency: voltage
+          format: alpha/beta
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Linoid
+            V0: '13'
+            A: '0.32'
+            B: '4'
+        - kind: backward
+          attributes:
+            category: Linoid
+            V0: '40'
+            A: '-0.28'
+            B: '-5'
+      - attributes:
+          exponent: '1'
+          dependency: voltage
+          format: alpha/beta
+          name: m2
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Exponential
+            V0: '17'
+            A: '0.128'
+            B: '18'
+        - kind: backward
+          attributes:
+            category: Sigmoid
+            V0: '40'
+            A: '4'
+            B: '5'
+    - name: K_dr (Traub & Miles, 91)
+      conductance_mS_cm2: 30.0
+      reversal_mV: -90.0
+      dependencies:
+      - voltage
+      gates:
+      - attributes:
+          exponent: '4'
+          format: alpha/beta
+          dependency: voltage
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Linoid
+            V0: '15'
+            A: '0.032'
+            B: '5'
+        - kind: backward
+          attributes:
+            category: Exponential
+            V0: '10'
+            A: '0.5'
+            B: '40'
+  - name: proximal_dendrite
+    diameter_cm: 0.005
+    length_cm: 0.01
+    axial_resistance_kohm_cm: 80.0
+    leak_reversal_mV: -70.0
+    leak_conductance_mS_cm2: 0.9
+    depletion_rate: null
+    recovery_ms: null
+    intrinsic_channels: []
+- source_name: Layer_4_INT
+  canonical_name: layer4_inhibitory_v1
+  compartments:
+  - name: soma
+    diameter_cm: 0.002
+    length_cm: 0.002
+    axial_resistance_kohm_cm: null
+    leak_reversal_mV: -50.0
+    leak_conductance_mS_cm2: 0.01
+    depletion_rate: null
+    recovery_ms: null
+    intrinsic_channels:
+    - name: K_dr (Traub & Miles, 91)
+      conductance_mS_cm2: 30.0
+      reversal_mV: -90.0
+      dependencies:
+      - voltage
+      gates:
+      - attributes:
+          exponent: '4'
+          dependency: voltage
+          format: alpha/beta
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Linoid
+            V0: '15'
+            A: '0.032'
+            B: '5'
+        - kind: backward
+          attributes:
+            category: Exponential
+            V0: '10'
+            A: '0.5'
+            B: '40'
+    - name: Na (Traub & Miles, 91)
+      conductance_mS_cm2: 50.0
+      reversal_mV: 50.0
+      dependencies:
+      - voltage
+      - voltage
+      gates:
+      - attributes:
+          exponent: '3'
+          dependency: voltage
+          format: alpha/beta
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Linoid
+            V0: '13'
+            A: '0.32'
+            B: '4'
+        - kind: backward
+          attributes:
+            category: Linoid
+            V0: '40'
+            A: '-0.28'
+            B: '-5'
+      - attributes:
+          exponent: '1'
+          dependency: voltage
+          format: alpha/beta
+          name: m2
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Exponential
+            V0: '17'
+            A: '0.128'
+            B: '18'
+        - kind: backward
+          attributes:
+            category: Sigmoid
+            V0: '40'
+            A: '4'
+            B: '5'
+  - name: proximal_dendrite
+    diameter_cm: 0.001
+    length_cm: 0.005
+    axial_resistance_kohm_cm: 100.0
+    leak_reversal_mV: -50.0
+    leak_conductance_mS_cm2: 0.01
+    depletion_rate: null
+    recovery_ms: null
+    intrinsic_channels: []
+- source_name: Layer_2_3
+  canonical_name: layer23_excitatory_v1
+  compartments:
+  - name: soma
+    diameter_cm: 0.005
+    length_cm: 0.005
+    axial_resistance_kohm_cm: null
+    leak_reversal_mV: -65.0
+    leak_conductance_mS_cm2: 0.05
+    depletion_rate: null
+    recovery_ms: null
+    intrinsic_channels:
+    - name: K_dr (Traub & Miles, 91)
+      conductance_mS_cm2: 30.0
+      reversal_mV: -90.0
+      dependencies:
+      - voltage
+      gates:
+      - attributes:
+          exponent: '4'
+          dependency: voltage
+          format: alpha/beta
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Linoid
+            V0: '15'
+            A: '0.032'
+            B: '5'
+        - kind: backward
+          attributes:
+            category: Exponential
+            V0: '10'
+            A: '0.5'
+            B: '40'
+    - name: Na (Traub & Miles, 91)
+      conductance_mS_cm2: 50.0
+      reversal_mV: 50.0
+      dependencies:
+      - voltage
+      - voltage
+      gates:
+      - attributes:
+          exponent: '3'
+          dependency: voltage
+          format: alpha/beta
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Linoid
+            V0: '13'
+            A: '0.32'
+            B: '4'
+        - kind: backward
+          attributes:
+            category: Linoid
+            V0: '40'
+            A: '-0.28'
+            B: '-5'
+      - attributes:
+          exponent: '1'
+          dependency: voltage
+          format: alpha/beta
+          name: m2
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Exponential
+            V0: '17'
+            A: '0.128'
+            B: '18'
+        - kind: backward
+          attributes:
+            category: Sigmoid
+            V0: '40'
+            A: '4'
+            B: '5'
+  - name: proximal_dendrite
+    diameter_cm: 0.002
+    length_cm: 0.0225
+    axial_resistance_kohm_cm: 100.0
+    leak_reversal_mV: -65.0
+    leak_conductance_mS_cm2: 0.05
+    depletion_rate: null
+    recovery_ms: null
+    intrinsic_channels: []
+- source_name: Layer_4
+  canonical_name: layer4_excitatory_v1
+  compartments:
+  - name: soma
+    diameter_cm: 0.005
+    length_cm: 0.005
+    axial_resistance_kohm_cm: null
+    leak_reversal_mV: -65.0
+    leak_conductance_mS_cm2: 0.01
+    depletion_rate: null
+    recovery_ms: null
+    intrinsic_channels:
+    - name: Na (Traub & Miles, 91)
+      conductance_mS_cm2: 50.0
+      reversal_mV: 50.0
+      dependencies:
+      - voltage
+      - voltage
+      gates:
+      - attributes:
+          exponent: '3'
+          format: alpha/beta
+          dependency: voltage
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Linoid
+            V0: '13'
+            A: '0.32'
+            B: '4'
+        - kind: backward
+          attributes:
+            category: Linoid
+            V0: '40'
+            A: '-0.28'
+            B: '-5'
+      - attributes:
+          exponent: '1'
+          format: alpha/beta
+          dependency: voltage
+          name: m2
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Exponential
+            V0: '17'
+            A: '0.128'
+            B: '18'
+        - kind: backward
+          attributes:
+            category: Sigmoid
+            V0: '40'
+            A: '4'
+            B: '5'
+    - name: K_dr (Traub & Miles, 91)
+      conductance_mS_cm2: 30.0
+      reversal_mV: -90.0
+      dependencies:
+      - voltage
+      gates:
+      - attributes:
+          exponent: '4'
+          dependency: voltage
+          format: alpha/beta
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Linoid
+            V0: '15'
+            A: '0.032'
+            B: '5'
+        - kind: backward
+          attributes:
+            category: Exponential
+            V0: '10'
+            A: '0.5'
+            B: '40'
+  - name: proximal_dendrite
+    diameter_cm: 0.001
+    length_cm: 0.025
+    axial_resistance_kohm_cm: 40.0
+    leak_reversal_mV: -65.0
+    leak_conductance_mS_cm2: 0.01
+    depletion_rate: null
+    recovery_ms: null
+    intrinsic_channels: []
+- source_name: Layer_2_3_INT
+  canonical_name: layer23_inhibitory_v1
+  compartments:
+  - name: soma
+    diameter_cm: 0.002
+    length_cm: 0.002
+    axial_resistance_kohm_cm: null
+    leak_reversal_mV: -49.0
+    leak_conductance_mS_cm2: 0.01
+    depletion_rate: null
+    recovery_ms: null
+    intrinsic_channels:
+    - name: K_dr (Traub & Miles, 91)
+      conductance_mS_cm2: 30.0
+      reversal_mV: -90.0
+      dependencies:
+      - voltage
+      gates:
+      - attributes:
+          exponent: '4'
+          format: alpha/beta
+          dependency: voltage
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Linoid
+            V0: '15'
+            A: '0.032'
+            B: '5'
+        - kind: backward
+          attributes:
+            category: Exponential
+            V0: '10'
+            A: '0.5'
+            B: '40'
+    - name: Na (Traub & Miles, 91)
+      conductance_mS_cm2: 50.0
+      reversal_mV: 50.0
+      dependencies:
+      - voltage
+      - voltage
+      gates:
+      - attributes:
+          exponent: '3'
+          format: alpha/beta
+          dependency: voltage
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Linoid
+            V0: '13'
+            A: '0.32'
+            B: '4'
+        - kind: backward
+          attributes:
+            category: Linoid
+            V0: '40'
+            A: '-0.28'
+            B: '-5'
+      - attributes:
+          exponent: '1'
+          format: alpha/beta
+          dependency: voltage
+          name: m2
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Exponential
+            V0: '17'
+            A: '0.128'
+            B: '18'
+        - kind: backward
+          attributes:
+            category: Sigmoid
+            V0: '40'
+            A: '4'
+            B: '5'
+  - name: proximal_dendrite
+    diameter_cm: 0.001
+    length_cm: 0.005
+    axial_resistance_kohm_cm: 60.0
+    leak_reversal_mV: -49.0
+    leak_conductance_mS_cm2: 0.01
+    depletion_rate: null
+    recovery_ms: null
+    intrinsic_channels: []
+- source_name: Relay_INT
+  canonical_name: thalamic_interneuron
+  compartments:
+  - name: soma
+    diameter_cm: 0.002
+    length_cm: 0.002
+    axial_resistance_kohm_cm: null
+    leak_reversal_mV: -49.0
+    leak_conductance_mS_cm2: 0.01
+    depletion_rate: null
+    recovery_ms: null
+    intrinsic_channels:
+    - name: K_dr (Traub & Miles, 91)
+      conductance_mS_cm2: 30.0
+      reversal_mV: -90.0
+      dependencies:
+      - voltage
+      gates:
+      - attributes:
+          exponent: '4'
+          format: alpha/beta
+          dependency: voltage
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Linoid
+            V0: '15'
+            A: '0.032'
+            B: '5'
+        - kind: backward
+          attributes:
+            category: Exponential
+            V0: '10'
+            A: '0.5'
+            B: '40'
+    - name: Na (Traub & Miles, 91)
+      conductance_mS_cm2: 50.0
+      reversal_mV: 50.0
+      dependencies:
+      - voltage
+      - voltage
+      gates:
+      - attributes:
+          exponent: '3'
+          format: alpha/beta
+          dependency: voltage
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Linoid
+            V0: '13'
+            A: '0.32'
+            B: '4'
+        - kind: backward
+          attributes:
+            category: Linoid
+            V0: '40'
+            A: '-0.28'
+            B: '-5'
+      - attributes:
+          exponent: '1'
+          format: alpha/beta
+          dependency: voltage
+          name: m2
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Exponential
+            V0: '17'
+            A: '0.128'
+            B: '18'
+        - kind: backward
+          attributes:
+            category: Sigmoid
+            V0: '40'
+            A: '4'
+            B: '5'
+  - name: proximal_dendrite
+    diameter_cm: 0.001
+    length_cm: 0.01
+    axial_resistance_kohm_cm: 60.0
+    leak_reversal_mV: -49.0
+    leak_conductance_mS_cm2: 0.01
+    depletion_rate: null
+    recovery_ms: null
+    intrinsic_channels: []
+- source_name: INTRALAMINAR
+  canonical_name: thalamic_nonspecific
+  compartments:
+  - name: soma
+    diameter_cm: 0.008
+    length_cm: 0.008
+    axial_resistance_kohm_cm: null
+    leak_reversal_mV: -64.0
+    leak_conductance_mS_cm2: 0.09
+    depletion_rate: null
+    recovery_ms: null
+    intrinsic_channels:
+    - name: K_dr (Traub & Miles, 91)
+      conductance_mS_cm2: 30.0
+      reversal_mV: -90.0
+      dependencies:
+      - voltage
+      gates:
+      - attributes:
+          exponent: '4'
+          format: alpha/beta
+          dependency: voltage
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Linoid
+            V0: '15'
+            A: '0.032'
+            B: '5'
+        - kind: backward
+          attributes:
+            category: Exponential
+            V0: '10'
+            A: '0.5'
+            B: '40'
+    - name: Na (Traub & Miles, 91)
+      conductance_mS_cm2: 50.0
+      reversal_mV: 50.0
+      dependencies:
+      - voltage
+      - voltage
+      gates:
+      - attributes:
+          exponent: '3'
+          format: alpha/beta
+          dependency: voltage
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Linoid
+            V0: '13'
+            A: '0.32'
+            B: '4'
+        - kind: backward
+          attributes:
+            category: Linoid
+            V0: '40'
+            A: '-0.28'
+            B: '-5'
+      - attributes:
+          exponent: '1'
+          format: alpha/beta
+          dependency: voltage
+          name: m2
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Exponential
+            V0: '17'
+            A: '0.128'
+            B: '18'
+        - kind: backward
+          attributes:
+            category: Sigmoid
+            V0: '40'
+            A: '4'
+            B: '5'
+    - name: Low threshold T-type Ca++
+      conductance_mS_cm2: 0.1
+      reversal_mV: 180.0
+      dependencies:
+      - voltage
+      - voltage
+      gates:
+      - attributes:
+          exponent: '3'
+          format: m/tau
+          dependency: voltage
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: m_inf
+          attributes:
+            category: Sigmoid
+            V0: '-63'
+            A: '1'
+            B: '7.8'
+        - kind: tau
+          attributes:
+            category: Simple_Tau
+            V0: '-9.84'
+            A: '2.44'
+            B: '2.506'
+      - attributes:
+          exponent: '1'
+          format: m/tau
+          dependency: voltage
+          name: m2
+          representationForm: Parametrised
+        representation:
+        - kind: m_inf
+          attributes:
+            category: Sigmoid
+            V0: '-83.5'
+            A: '1'
+            B: '-6.3'
+        - kind: tau
+          attributes:
+            category: Simple_Tau
+            V0: '-10.54'
+            A: '19.15'
+            B: '7.171'
+  - name: proximal_dendrite
+    diameter_cm: 0.0015
+    length_cm: 0.01
+    axial_resistance_kohm_cm: 10.0
+    leak_reversal_mV: -64.0
+    leak_conductance_mS_cm2: 0.1
+    depletion_rate: null
+    recovery_ms: null
+    intrinsic_channels:
+    - name: Low threshold T-type Ca++
+      conductance_mS_cm2: 250.0
+      reversal_mV: 180.0
+      dependencies:
+      - voltage
+      - voltage
+      gates:
+      - attributes:
+          exponent: '3'
+          format: m/tau
+          dependency: voltage
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: m_inf
+          attributes:
+            category: Sigmoid
+            V0: '-63'
+            A: '1'
+            B: '7.8'
+        - kind: tau
+          attributes:
+            category: Simple_Tau
+            V0: '-9.84'
+            A: '2.44'
+            B: '2.506'
+      - attributes:
+          exponent: '1'
+          format: m/tau
+          dependency: voltage
+          name: m2
+          representationForm: Parametrised
+        representation:
+        - kind: m_inf
+          attributes:
+            category: Sigmoid
+            V0: '-83.5'
+            A: '1'
+            B: '-6.3'
+        - kind: tau
+          attributes:
+            category: Simple_Tau
+            V0: '-10.54'
+            A: '19.15'
+            B: '7.171'
+  - name: distal_dendrite
+    diameter_cm: 0.0015
+    length_cm: 0.01
+    axial_resistance_kohm_cm: 10.0
+    leak_reversal_mV: -64.0
+    leak_conductance_mS_cm2: 0.1
+    depletion_rate: null
+    recovery_ms: null
+    intrinsic_channels:
+    - name: Low threshold T-type Ca++
+      conductance_mS_cm2: 250.0
+      reversal_mV: 180.0
+      dependencies:
+      - voltage
+      - voltage
+      gates:
+      - attributes:
+          exponent: '3'
+          format: m/tau
+          dependency: voltage
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: m_inf
+          attributes:
+            category: Sigmoid
+            V0: '-63'
+            A: '1'
+            B: '7.8'
+        - kind: tau
+          attributes:
+            category: Simple_Tau
+            V0: '-9.84'
+            A: '2.44'
+            B: '2.506'
+      - attributes:
+          exponent: '1'
+          format: m/tau
+          dependency: voltage
+          name: m2
+          representationForm: Parametrised
+        representation:
+        - kind: m_inf
+          attributes:
+            category: Sigmoid
+            V0: '-83.5'
+            A: '1'
+            B: '-6.3'
+        - kind: tau
+          attributes:
+            category: Simple_Tau
+            V0: '-10.54'
+            A: '19.15'
+            B: '7.171'
+- source_name: Thalamic_MATRIX
+  canonical_name: thalamic_matrix
+  compartments:
+  - name: soma
+    diameter_cm: 0.008
+    length_cm: 0.008
+    axial_resistance_kohm_cm: null
+    leak_reversal_mV: -64.0
+    leak_conductance_mS_cm2: 0.09
+    depletion_rate: null
+    recovery_ms: null
+    intrinsic_channels:
+    - name: K_dr (Traub & Miles, 91)
+      conductance_mS_cm2: 30.0
+      reversal_mV: -90.0
+      dependencies:
+      - voltage
+      gates:
+      - attributes:
+          exponent: '4'
+          dependency: voltage
+          format: alpha/beta
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Linoid
+            V0: '15'
+            A: '0.032'
+            B: '5'
+        - kind: backward
+          attributes:
+            category: Exponential
+            V0: '10'
+            A: '0.5'
+            B: '40'
+    - name: Na (Traub & Miles, 91)
+      conductance_mS_cm2: 50.0
+      reversal_mV: 50.0
+      dependencies:
+      - voltage
+      - voltage
+      gates:
+      - attributes:
+          exponent: '3'
+          dependency: voltage
+          format: alpha/beta
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Linoid
+            V0: '13'
+            A: '0.32'
+            B: '4'
+        - kind: backward
+          attributes:
+            category: Linoid
+            V0: '40'
+            A: '-0.28'
+            B: '-5'
+      - attributes:
+          exponent: '1'
+          dependency: voltage
+          format: alpha/beta
+          name: m2
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Exponential
+            V0: '17'
+            A: '0.128'
+            B: '18'
+        - kind: backward
+          attributes:
+            category: Sigmoid
+            V0: '40'
+            A: '4'
+            B: '5'
+    - name: Low threshold T-type Ca++
+      conductance_mS_cm2: 0.1
+      reversal_mV: 180.0
+      dependencies:
+      - voltage
+      - voltage
+      gates:
+      - attributes:
+          exponent: '3'
+          dependency: voltage
+          format: m/tau
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: m_inf
+          attributes:
+            category: Sigmoid
+            V0: '-63'
+            A: '1'
+            B: '7.8'
+        - kind: tau
+          attributes:
+            category: Simple_Tau
+            V0: '-9.84'
+            A: '2.44'
+            B: '2.506'
+      - attributes:
+          exponent: '1'
+          dependency: voltage
+          format: m/tau
+          name: m2
+          representationForm: Parametrised
+        representation:
+        - kind: m_inf
+          attributes:
+            category: Sigmoid
+            V0: '-83.5'
+            A: '1'
+            B: '-6.3'
+        - kind: tau
+          attributes:
+            category: Simple_Tau
+            V0: '-10.54'
+            A: '19.15'
+            B: '7.171'
+  - name: proximal_dendrite
+    diameter_cm: 0.0015
+    length_cm: 0.01
+    axial_resistance_kohm_cm: 10.0
+    leak_reversal_mV: -64.0
+    leak_conductance_mS_cm2: 0.1
+    depletion_rate: null
+    recovery_ms: null
+    intrinsic_channels:
+    - name: Low threshold T-type Ca++
+      conductance_mS_cm2: 250.0
+      reversal_mV: 180.0
+      dependencies:
+      - voltage
+      - voltage
+      gates:
+      - attributes:
+          exponent: '3'
+          dependency: voltage
+          format: m/tau
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: m_inf
+          attributes:
+            category: Sigmoid
+            V0: '-63'
+            A: '1'
+            B: '7.8'
+        - kind: tau
+          attributes:
+            category: Simple_Tau
+            V0: '-9.84'
+            A: '2.44'
+            B: '2.506'
+      - attributes:
+          exponent: '1'
+          dependency: voltage
+          format: m/tau
+          name: m2
+          representationForm: Parametrised
+        representation:
+        - kind: m_inf
+          attributes:
+            category: Sigmoid
+            V0: '-83.5'
+            A: '1'
+            B: '-6.3'
+        - kind: tau
+          attributes:
+            category: Simple_Tau
+            V0: '-10.54'
+            A: '19.15'
+            B: '7.171'
+  - name: distal_dendrite
+    diameter_cm: 0.0015
+    length_cm: 0.01
+    axial_resistance_kohm_cm: 10.0
+    leak_reversal_mV: -64.0
+    leak_conductance_mS_cm2: 0.1
+    depletion_rate: null
+    recovery_ms: null
+    intrinsic_channels:
+    - name: Low threshold T-type Ca++
+      conductance_mS_cm2: 250.0
+      reversal_mV: 180.0
+      dependencies:
+      - voltage
+      - voltage
+      gates:
+      - attributes:
+          exponent: '3'
+          dependency: voltage
+          format: m/tau
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: m_inf
+          attributes:
+            category: Sigmoid
+            V0: '-63'
+            A: '1'
+            B: '7.8'
+        - kind: tau
+          attributes:
+            category: Simple_Tau
+            V0: '-9.84'
+            A: '2.44'
+            B: '2.506'
+      - attributes:
+          exponent: '1'
+          dependency: voltage
+          format: m/tau
+          name: m2
+          representationForm: Parametrised
+        representation:
+        - kind: m_inf
+          attributes:
+            category: Sigmoid
+            V0: '-83.5'
+            A: '1'
+            B: '-6.3'
+        - kind: tau
+          attributes:
+            category: Simple_Tau
+            V0: '-10.54'
+            A: '19.15'
+            B: '7.171'
+- source_name: Reticular_V2
+  canonical_name: trn_v2
+  compartments:
+  - name: soma
+    diameter_cm: 0.005
+    length_cm: 0.005
+    axial_resistance_kohm_cm: null
+    leak_reversal_mV: -69.0
+    leak_conductance_mS_cm2: 0.1
+    depletion_rate: null
+    recovery_ms: null
+    intrinsic_channels:
+    - name: Na (Destexhe et al, 96)
+      conductance_mS_cm2: 100.0
+      reversal_mV: 50.0
+      dependencies:
+      - voltage
+      - voltage
+      gates:
+      - attributes:
+          exponent: '3'
+          format: alpha/beta
+          dependency: voltage
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Linoid
+            V0: '13'
+            A: '0.32'
+            B: '4'
+        - kind: backward
+          attributes:
+            category: Linoid
+            V0: '40'
+            A: '-0.28'
+            B: '-5'
+      - attributes:
+          exponent: '1'
+          format: alpha/beta
+          dependency: voltage
+          name: m2
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Exponential
+            V0: '17'
+            A: '0.128'
+            B: '18'
+        - kind: backward
+          attributes:
+            category: Sigmoid
+            V0: '40'
+            A: '4'
+            B: '5'
+    - name: K_dr (Destexhe et al, 96)
+      conductance_mS_cm2: 80.0
+      reversal_mV: -100.0
+      dependencies:
+      - voltage
+      gates:
+      - attributes:
+          exponent: '4'
+          dependency: voltage
+          format: alpha/beta
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Linoid
+            V0: '15'
+            A: '0.032'
+            B: '5'
+        - kind: backward
+          attributes:
+            category: Exponential
+            V0: '10'
+            A: '0.5'
+            B: '40'
+    - name: Thalamic reticular Ca++ (Destexhe et al, 96)
+      conductance_mS_cm2: 100.0
+      reversal_mV: 120.0
+      dependencies:
+      - voltage
+      - voltage
+      gates:
+      - attributes:
+          exponent: '2'
+          format: m/tau
+          dependency: voltage
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: m_inf
+          attributes:
+            category: Sigmoid
+            V0: '-52'
+            A: '1'
+            B: '7.4'
+        - kind: tau
+          attributes:
+            D: '-15'
+            category: Reticular_Tau
+            V0: '27'
+            V1: '102'
+            A: '1'
+            B: '0.33'
+            C: '10'
+      - attributes:
+          exponent: '1'
+          format: m/tau
+          dependency: voltage
+          name: m2
+          representationForm: Parametrised
+        representation:
+        - kind: m_inf
+          attributes:
+            category: Sigmoid
+            V0: '-80'
+            A: '1'
+            B: '-5'
+        - kind: tau
+          attributes:
+            D: '-50'
+            category: Reticular_Tau
+            V0: '48'
+            V1: '407'
+            A: '28.3'
+            B: '0.33'
+            C: '4'
+  - name: proximal_dendrite
+    diameter_cm: 0.001
+    length_cm: 0.005
+    axial_resistance_kohm_cm: 10.0
+    leak_reversal_mV: -69.0
+    leak_conductance_mS_cm2: 0.1
+    depletion_rate: null
+    recovery_ms: null
+    intrinsic_channels:
+    - name: Thalamic reticular Ca++ (Destexhe et al, 96)
+      conductance_mS_cm2: 100.0
+      reversal_mV: 120.0
+      dependencies:
+      - voltage
+      - voltage
+      gates:
+      - attributes:
+          exponent: '2'
+          format: m/tau
+          dependency: voltage
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: m_inf
+          attributes:
+            category: Sigmoid
+            V0: '-52'
+            A: '1'
+            B: '7.4'
+        - kind: tau
+          attributes:
+            D: '-15'
+            category: Reticular_Tau
+            V0: '27'
+            V1: '102'
+            A: '1'
+            B: '0.33'
+            C: '10'
+      - attributes:
+          exponent: '1'
+          format: m/tau
+          dependency: voltage
+          name: m2
+          representationForm: Parametrised
+        representation:
+        - kind: m_inf
+          attributes:
+            category: Sigmoid
+            V0: '-80'
+            A: '1'
+            B: '-5'
+        - kind: tau
+          attributes:
+            D: '-50'
+            category: Reticular_Tau
+            V0: '48'
+            V1: '407'
+            A: '28.3'
+            B: '0.33'
+            C: '4'
+  - name: distal_dendrite
+    diameter_cm: 0.001
+    length_cm: 0.005
+    axial_resistance_kohm_cm: 10.0
+    leak_reversal_mV: -69.0
+    leak_conductance_mS_cm2: 0.1
+    depletion_rate: null
+    recovery_ms: null
+    intrinsic_channels:
+    - name: Thalamic reticular Ca++ (Destexhe et al, 96)
+      conductance_mS_cm2: 100.0
+      reversal_mV: 120.0
+      dependencies:
+      - voltage
+      - voltage
+      gates:
+      - attributes:
+          exponent: '2'
+          format: m/tau
+          dependency: voltage
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: m_inf
+          attributes:
+            category: Sigmoid
+            V0: '-52'
+            A: '1'
+            B: '7.4'
+        - kind: tau
+          attributes:
+            D: '-15'
+            category: Reticular_Tau
+            V0: '27'
+            V1: '102'
+            A: '1'
+            B: '0.33'
+            C: '10'
+      - attributes:
+          exponent: '1'
+          format: m/tau
+          dependency: voltage
+          name: m2
+          representationForm: Parametrised
+        representation:
+        - kind: m_inf
+          attributes:
+            category: Sigmoid
+            V0: '-80'
+            A: '1'
+            B: '-5'
+        - kind: tau
+          attributes:
+            D: '-50'
+            category: Reticular_Tau
+            V0: '48'
+            V1: '407'
+            A: '28.3'
+            B: '0.33'
+            C: '4'
+- source_name: Relay_V2
+  canonical_name: thalamic_relay_v2
+  compartments:
+  - name: soma
+    diameter_cm: 0.005
+    length_cm: 0.006
+    axial_resistance_kohm_cm: null
+    leak_reversal_mV: -60.0
+    leak_conductance_mS_cm2: 0.01
+    depletion_rate: null
+    recovery_ms: null
+    intrinsic_channels:
+    - name: K_dr (Traub & Miles, 91)
+      conductance_mS_cm2: 100.0
+      reversal_mV: -100.0
+      dependencies:
+      - voltage
+      gates:
+      - attributes:
+          exponent: '4'
+          dependency: voltage
+          format: alpha/beta
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Linoid
+            V0: '15'
+            A: '0.032'
+            B: '5'
+        - kind: backward
+          attributes:
+            category: Exponential
+            V0: '10'
+            A: '0.5'
+            B: '40'
+    - name: Na (Traub & Miles, 91)
+      conductance_mS_cm2: 100.0
+      reversal_mV: 50.0
+      dependencies:
+      - voltage
+      - voltage
+      gates:
+      - attributes:
+          exponent: '3'
+          dependency: voltage
+          format: alpha/beta
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Linoid
+            V0: '13'
+            A: '0.32'
+            B: '4'
+        - kind: backward
+          attributes:
+            category: Linoid
+            V0: '40'
+            A: '-0.28'
+            B: '-5'
+      - attributes:
+          exponent: '1'
+          dependency: voltage
+          format: alpha/beta
+          name: m2
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Exponential
+            V0: '17'
+            A: '0.128'
+            B: '18'
+        - kind: backward
+          attributes:
+            category: Sigmoid
+            V0: '40'
+            A: '4'
+            B: '5'
+    - name: Low threshold T-type Ca++
+      conductance_mS_cm2: 0.1
+      reversal_mV: 180.0
+      dependencies:
+      - voltage
+      - voltage
+      gates:
+      - attributes:
+          exponent: '3'
+          dependency: voltage
+          format: m/tau
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: m_inf
+          attributes:
+            category: Sigmoid
+            V0: '-63'
+            A: '1'
+            B: '7.8'
+        - kind: tau
+          attributes:
+            category: Simple_Tau
+            V0: '-9.84'
+            A: '2.44'
+            B: '2.506'
+      - attributes:
+          exponent: '1'
+          dependency: voltage
+          format: m/tau
+          name: m2
+          representationForm: Parametrised
+        representation:
+        - kind: m_inf
+          attributes:
+            category: Sigmoid
+            V0: '-83.5'
+            A: '1'
+            B: '-6.3'
+        - kind: tau
+          attributes:
+            category: Simple_Tau
+            V0: '-10.54'
+            A: '19.15'
+            B: '7.171'
+  - name: proximal_dendrite
+    diameter_cm: 0.0005
+    length_cm: 0.008
+    axial_resistance_kohm_cm: 8.0
+    leak_reversal_mV: -60.0
+    leak_conductance_mS_cm2: 0.01
+    depletion_rate: null
+    recovery_ms: null
+    intrinsic_channels:
+    - name: Low threshold T-type Ca++
+      conductance_mS_cm2: 0.1
+      reversal_mV: 180.0
+      dependencies:
+      - voltage
+      - voltage
+      gates:
+      - attributes:
+          exponent: '3'
+          dependency: voltage
+          format: m/tau
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: m_inf
+          attributes:
+            category: Sigmoid
+            V0: '-63'
+            A: '1'
+            B: '7.8'
+        - kind: tau
+          attributes:
+            category: Simple_Tau
+            V0: '-9.84'
+            A: '2.44'
+            B: '2.506'
+      - attributes:
+          exponent: '1'
+          dependency: voltage
+          format: m/tau
+          name: m2
+          representationForm: Parametrised
+        representation:
+        - kind: m_inf
+          attributes:
+            category: Sigmoid
+            V0: '-83.5'
+            A: '1'
+            B: '-6.3'
+        - kind: tau
+          attributes:
+            category: Simple_Tau
+            V0: '-10.54'
+            A: '19.15'
+            B: '7.171'
+  - name: distal_dendrite
+    diameter_cm: 0.0004
+    length_cm: 0.008
+    axial_resistance_kohm_cm: 8.2
+    leak_reversal_mV: -60.0
+    leak_conductance_mS_cm2: 0.1
+    depletion_rate: null
+    recovery_ms: null
+    intrinsic_channels:
+    - name: Low threshold T-type Ca++
+      conductance_mS_cm2: 0.1
+      reversal_mV: 180.0
+      dependencies:
+      - voltage
+      - voltage
+      gates:
+      - attributes:
+          exponent: '3'
+          dependency: voltage
+          format: m/tau
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: m_inf
+          attributes:
+            category: Sigmoid
+            V0: '-63'
+            A: '1'
+            B: '7.8'
+        - kind: tau
+          attributes:
+            category: Simple_Tau
+            V0: '-9.84'
+            A: '2.44'
+            B: '2.506'
+      - attributes:
+          exponent: '1'
+          dependency: voltage
+          format: m/tau
+          name: m2
+          representationForm: Parametrised
+        representation:
+        - kind: m_inf
+          attributes:
+            category: Sigmoid
+            V0: '-83.5'
+            A: '1'
+            B: '-6.3'
+        - kind: tau
+          attributes:
+            category: Simple_Tau
+            V0: '-10.54'
+            A: '19.15'
+            B: '7.171'
+- source_name: Layer_6_II_V2
+  canonical_name: layer6ii_excitatory_v2
+  compartments:
+  - name: soma
+    diameter_cm: 0.006
+    length_cm: 0.01
+    axial_resistance_kohm_cm: null
+    leak_reversal_mV: -64.0
+    leak_conductance_mS_cm2: 0.1
+    depletion_rate: 0.5
+    recovery_ms: 100.0
+    intrinsic_channels:
+    - name: Na (Traub & Miles, 91)
+      conductance_mS_cm2: 50.0
+      reversal_mV: 50.0
+      dependencies:
+      - voltage
+      - voltage
+      gates:
+      - attributes:
+          exponent: '3'
+          dependency: voltage
+          format: alpha/beta
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Linoid
+            V0: '13'
+            A: '0.32'
+            B: '4'
+        - kind: backward
+          attributes:
+            category: Linoid
+            V0: '40'
+            A: '-0.28'
+            B: '-5'
+      - attributes:
+          exponent: '1'
+          dependency: voltage
+          format: alpha/beta
+          name: m2
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Exponential
+            V0: '17'
+            A: '0.128'
+            B: '18'
+        - kind: backward
+          attributes:
+            category: Sigmoid
+            V0: '40'
+            A: '4'
+            B: '5'
+    - name: K_dr (Traub & Miles, 91)
+      conductance_mS_cm2: 30.0
+      reversal_mV: -90.0
+      dependencies:
+      - voltage
+      gates:
+      - attributes:
+          exponent: '4'
+          format: alpha/beta
+          dependency: voltage
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Linoid
+            V0: '15'
+            A: '0.032'
+            B: '5'
+        - kind: backward
+          attributes:
+            category: Exponential
+            V0: '10'
+            A: '0.5'
+            B: '40'
+    - name: AHP
+      conductance_mS_cm2: 0.5
+      reversal_mV: -70.0
+      dependencies:
+      - AHP/ADP
+      gates:
+      - attributes:
+          tau_r: '5'
+          dependency: AHP/ADP
+          tau_f: '20'
+          name: m1
+        representation: []
+  - name: proximal_dendrite
+    diameter_cm: 0.0008
+    length_cm: 0.01
+    axial_resistance_kohm_cm: 25.0
+    leak_reversal_mV: -64.0
+    leak_conductance_mS_cm2: 0.1
+    depletion_rate: null
+    recovery_ms: null
+    intrinsic_channels: []
+  - name: distal_dendrite
+    diameter_cm: 0.0008
+    length_cm: 0.02
+    axial_resistance_kohm_cm: 25.0
+    leak_reversal_mV: -64.0
+    leak_conductance_mS_cm2: 0.01
+    depletion_rate: null
+    recovery_ms: null
+    intrinsic_channels: []
+- source_name: Layer_5_V2
+  canonical_name: layer5_excitatory_v2
+  compartments:
+  - name: soma
+    diameter_cm: 0.01
+    length_cm: 0.015
+    axial_resistance_kohm_cm: null
+    leak_reversal_mV: -72.0
+    leak_conductance_mS_cm2: 0.1
+    depletion_rate: 0.5
+    recovery_ms: 100.0
+    intrinsic_channels:
+    - name: Na (Traub & Miles, 91)
+      conductance_mS_cm2: 50.0
+      reversal_mV: 50.0
+      dependencies:
+      - voltage
+      - voltage
+      gates:
+      - attributes:
+          exponent: '3'
+          dependency: voltage
+          format: alpha/beta
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Linoid
+            V0: '13'
+            A: '0.32'
+            B: '4'
+        - kind: backward
+          attributes:
+            category: Linoid
+            V0: '40'
+            A: '-0.28'
+            B: '-5'
+      - attributes:
+          exponent: '1'
+          dependency: voltage
+          format: alpha/beta
+          name: m2
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Exponential
+            V0: '17'
+            A: '0.128'
+            B: '18'
+        - kind: backward
+          attributes:
+            category: Sigmoid
+            V0: '40'
+            A: '4'
+            B: '5'
+    - name: K_dr (Traub & Miles, 91)
+      conductance_mS_cm2: 30.0
+      reversal_mV: -90.0
+      dependencies:
+      - voltage
+      gates:
+      - attributes:
+          exponent: '4'
+          format: alpha/beta
+          dependency: voltage
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Linoid
+            V0: '15'
+            A: '0.032'
+            B: '5'
+        - kind: backward
+          attributes:
+            category: Exponential
+            V0: '10'
+            A: '0.5'
+            B: '40'
+    - name: AHP
+      conductance_mS_cm2: 0.4
+      reversal_mV: -70.0
+      dependencies:
+      - AHP/ADP
+      gates:
+      - attributes:
+          tau_r: '5'
+          dependency: AHP/ADP
+          tau_f: '20'
+          name: m1
+        representation: []
+  - name: proximal_dendrite
+    diameter_cm: 0.006
+    length_cm: 0.04
+    axial_resistance_kohm_cm: 5.0
+    leak_reversal_mV: -72.0
+    leak_conductance_mS_cm2: 0.03
+    depletion_rate: null
+    recovery_ms: null
+    intrinsic_channels: []
+  - name: distal_dendrite
+    diameter_cm: 0.006
+    length_cm: 0.05
+    axial_resistance_kohm_cm: 5.0
+    leak_reversal_mV: -72.0
+    leak_conductance_mS_cm2: 0.03
+    depletion_rate: null
+    recovery_ms: null
+    intrinsic_channels:
+    - name: Na (Traub & Miles, 91)
+      conductance_mS_cm2: 50.0
+      reversal_mV: 50.0
+      dependencies:
+      - voltage
+      - voltage
+      gates:
+      - attributes:
+          exponent: '3'
+          dependency: voltage
+          format: alpha/beta
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Linoid
+            V0: '13'
+            A: '0.32'
+            B: '4'
+        - kind: backward
+          attributes:
+            category: Linoid
+            V0: '40'
+            A: '-0.28'
+            B: '-5'
+      - attributes:
+          exponent: '1'
+          dependency: voltage
+          format: alpha/beta
+          name: m2
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Exponential
+            V0: '17'
+            A: '0.128'
+            B: '18'
+        - kind: backward
+          attributes:
+            category: Sigmoid
+            V0: '40'
+            A: '4'
+            B: '5'
+    - name: K_dr (Traub & Miles, 91)
+      conductance_mS_cm2: 30.0
+      reversal_mV: -90.0
+      dependencies:
+      - voltage
+      gates:
+      - attributes:
+          exponent: '4'
+          format: alpha/beta
+          dependency: voltage
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Linoid
+            V0: '15'
+            A: '0.032'
+            B: '5'
+        - kind: backward
+          attributes:
+            category: Exponential
+            V0: '10'
+            A: '0.5'
+            B: '40'
+- source_name: Layer_6_I_V2
+  canonical_name: layer6i_excitatory_v2
+  compartments:
+  - name: soma
+    diameter_cm: 0.008
+    length_cm: 0.01
+    axial_resistance_kohm_cm: null
+    leak_reversal_mV: -70.0
+    leak_conductance_mS_cm2: 0.15
+    depletion_rate: 1.0
+    recovery_ms: 400.0
+    intrinsic_channels:
+    - name: Na (Traub & Miles, 91)
+      conductance_mS_cm2: 50.0
+      reversal_mV: 50.0
+      dependencies:
+      - voltage
+      - voltage
+      gates:
+      - attributes:
+          exponent: '3'
+          format: alpha/beta
+          dependency: voltage
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Linoid
+            V0: '13'
+            A: '0.32'
+            B: '4'
+        - kind: backward
+          attributes:
+            category: Linoid
+            V0: '40'
+            A: '-0.28'
+            B: '-5'
+      - attributes:
+          exponent: '1'
+          format: alpha/beta
+          dependency: voltage
+          name: m2
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Exponential
+            V0: '17'
+            A: '0.128'
+            B: '18'
+        - kind: backward
+          attributes:
+            category: Sigmoid
+            V0: '40'
+            A: '4'
+            B: '5'
+    - name: K_dr (Traub & Miles, 91)
+      conductance_mS_cm2: 30.0
+      reversal_mV: -90.0
+      dependencies:
+      - voltage
+      gates:
+      - attributes:
+          exponent: '4'
+          dependency: voltage
+          format: alpha/beta
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Linoid
+            V0: '15'
+            A: '0.032'
+            B: '5'
+        - kind: backward
+          attributes:
+            category: Exponential
+            V0: '10'
+            A: '0.5'
+            B: '40'
+  - name: proximal_dendrite
+    diameter_cm: 0.005
+    length_cm: 0.01
+    axial_resistance_kohm_cm: 80.0
+    leak_reversal_mV: -70.0
+    leak_conductance_mS_cm2: 0.9
+    depletion_rate: null
+    recovery_ms: null
+    intrinsic_channels: []
+- source_name: Layer_2_3_V2
+  canonical_name: layer23_excitatory_v2
+  compartments:
+  - name: soma
+    diameter_cm: 0.005
+    length_cm: 0.005
+    axial_resistance_kohm_cm: null
+    leak_reversal_mV: -65.0
+    leak_conductance_mS_cm2: 0.05
+    depletion_rate: null
+    recovery_ms: null
+    intrinsic_channels:
+    - name: K_dr (Traub & Miles, 91)
+      conductance_mS_cm2: 30.0
+      reversal_mV: -90.0
+      dependencies:
+      - voltage
+      gates:
+      - attributes:
+          exponent: '4'
+          dependency: voltage
+          format: alpha/beta
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Linoid
+            V0: '15'
+            A: '0.032'
+            B: '5'
+        - kind: backward
+          attributes:
+            category: Exponential
+            V0: '10'
+            A: '0.5'
+            B: '40'
+    - name: Na (Traub & Miles, 91)
+      conductance_mS_cm2: 50.0
+      reversal_mV: 50.0
+      dependencies:
+      - voltage
+      - voltage
+      gates:
+      - attributes:
+          exponent: '3'
+          dependency: voltage
+          format: alpha/beta
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Linoid
+            V0: '13'
+            A: '0.32'
+            B: '4'
+        - kind: backward
+          attributes:
+            category: Linoid
+            V0: '40'
+            A: '-0.28'
+            B: '-5'
+      - attributes:
+          exponent: '1'
+          dependency: voltage
+          format: alpha/beta
+          name: m2
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Exponential
+            V0: '17'
+            A: '0.128'
+            B: '18'
+        - kind: backward
+          attributes:
+            category: Sigmoid
+            V0: '40'
+            A: '4'
+            B: '5'
+  - name: proximal_dendrite
+    diameter_cm: 0.002
+    length_cm: 0.0225
+    axial_resistance_kohm_cm: 100.0
+    leak_reversal_mV: -65.0
+    leak_conductance_mS_cm2: 0.05
+    depletion_rate: null
+    recovery_ms: null
+    intrinsic_channels: []
+- source_name: Layer_4_V2
+  canonical_name: layer4_excitatory_v2
+  compartments:
+  - name: soma
+    diameter_cm: 0.005
+    length_cm: 0.005
+    axial_resistance_kohm_cm: null
+    leak_reversal_mV: -65.0
+    leak_conductance_mS_cm2: 0.01
+    depletion_rate: null
+    recovery_ms: null
+    intrinsic_channels:
+    - name: Na (Traub & Miles, 91)
+      conductance_mS_cm2: 50.0
+      reversal_mV: 50.0
+      dependencies:
+      - voltage
+      - voltage
+      gates:
+      - attributes:
+          exponent: '3'
+          dependency: voltage
+          format: alpha/beta
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Linoid
+            V0: '13'
+            A: '0.32'
+            B: '4'
+        - kind: backward
+          attributes:
+            category: Linoid
+            V0: '40'
+            A: '-0.28'
+            B: '-5'
+      - attributes:
+          exponent: '1'
+          dependency: voltage
+          format: alpha/beta
+          name: m2
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Exponential
+            V0: '17'
+            A: '0.128'
+            B: '18'
+        - kind: backward
+          attributes:
+            category: Sigmoid
+            V0: '40'
+            A: '4'
+            B: '5'
+    - name: K_dr (Traub & Miles, 91)
+      conductance_mS_cm2: 30.0
+      reversal_mV: -90.0
+      dependencies:
+      - voltage
+      gates:
+      - attributes:
+          exponent: '4'
+          format: alpha/beta
+          dependency: voltage
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Linoid
+            V0: '15'
+            A: '0.032'
+            B: '5'
+        - kind: backward
+          attributes:
+            category: Exponential
+            V0: '10'
+            A: '0.5'
+            B: '40'
+  - name: proximal_dendrite
+    diameter_cm: 0.001
+    length_cm: 0.025
+    axial_resistance_kohm_cm: 40.0
+    leak_reversal_mV: -65.0
+    leak_conductance_mS_cm2: 0.01
+    depletion_rate: null
+    recovery_ms: null
+    intrinsic_channels: []
+- source_name: Layer_2_3_INT_V2
+  canonical_name: layer23_inhibitory_v2
+  compartments:
+  - name: soma
+    diameter_cm: 0.002
+    length_cm: 0.002
+    axial_resistance_kohm_cm: null
+    leak_reversal_mV: -49.0
+    leak_conductance_mS_cm2: 0.01
+    depletion_rate: null
+    recovery_ms: null
+    intrinsic_channels:
+    - name: K_dr (Traub & Miles, 91)
+      conductance_mS_cm2: 30.0
+      reversal_mV: -90.0
+      dependencies:
+      - voltage
+      gates:
+      - attributes:
+          exponent: '4'
+          dependency: voltage
+          format: alpha/beta
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Linoid
+            V0: '15'
+            A: '0.032'
+            B: '5'
+        - kind: backward
+          attributes:
+            category: Exponential
+            V0: '10'
+            A: '0.5'
+            B: '40'
+    - name: Na (Traub & Miles, 91)
+      conductance_mS_cm2: 50.0
+      reversal_mV: 50.0
+      dependencies:
+      - voltage
+      - voltage
+      gates:
+      - attributes:
+          exponent: '3'
+          dependency: voltage
+          format: alpha/beta
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Linoid
+            V0: '13'
+            A: '0.32'
+            B: '4'
+        - kind: backward
+          attributes:
+            category: Linoid
+            V0: '40'
+            A: '-0.28'
+            B: '-5'
+      - attributes:
+          exponent: '1'
+          dependency: voltage
+          format: alpha/beta
+          name: m2
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Exponential
+            V0: '17'
+            A: '0.128'
+            B: '18'
+        - kind: backward
+          attributes:
+            category: Sigmoid
+            V0: '40'
+            A: '4'
+            B: '5'
+  - name: proximal_dendrite
+    diameter_cm: 0.001
+    length_cm: 0.005
+    axial_resistance_kohm_cm: 60.0
+    leak_reversal_mV: -49.0
+    leak_conductance_mS_cm2: 0.01
+    depletion_rate: null
+    recovery_ms: null
+    intrinsic_channels: []
+- source_name: Relay_INT_V2
+  canonical_name: thalamic_interneuron_v2
+  compartments:
+  - name: soma
+    diameter_cm: 0.002
+    length_cm: 0.002
+    axial_resistance_kohm_cm: null
+    leak_reversal_mV: -49.0
+    leak_conductance_mS_cm2: 0.01
+    depletion_rate: null
+    recovery_ms: null
+    intrinsic_channels:
+    - name: K_dr (Traub & Miles, 91)
+      conductance_mS_cm2: 30.0
+      reversal_mV: -90.0
+      dependencies:
+      - voltage
+      gates:
+      - attributes:
+          exponent: '4'
+          dependency: voltage
+          format: alpha/beta
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Linoid
+            V0: '15'
+            A: '0.032'
+            B: '5'
+        - kind: backward
+          attributes:
+            category: Exponential
+            V0: '10'
+            A: '0.5'
+            B: '40'
+    - name: Na (Traub & Miles, 91)
+      conductance_mS_cm2: 50.0
+      reversal_mV: 50.0
+      dependencies:
+      - voltage
+      - voltage
+      gates:
+      - attributes:
+          exponent: '3'
+          dependency: voltage
+          format: alpha/beta
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Linoid
+            V0: '13'
+            A: '0.32'
+            B: '4'
+        - kind: backward
+          attributes:
+            category: Linoid
+            V0: '40'
+            A: '-0.28'
+            B: '-5'
+      - attributes:
+          exponent: '1'
+          dependency: voltage
+          format: alpha/beta
+          name: m2
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Exponential
+            V0: '17'
+            A: '0.128'
+            B: '18'
+        - kind: backward
+          attributes:
+            category: Sigmoid
+            V0: '40'
+            A: '4'
+            B: '5'
+  - name: proximal_dendrite
+    diameter_cm: 0.001
+    length_cm: 0.01
+    axial_resistance_kohm_cm: 60.0
+    leak_reversal_mV: -49.0
+    leak_conductance_mS_cm2: 0.01
+    depletion_rate: null
+    recovery_ms: null
+    intrinsic_channels: []
+- source_name: INTRALAMINAR_V2
+  canonical_name: thalamic_nonspecific_v2
+  compartments:
+  - name: soma
+    diameter_cm: 0.008
+    length_cm: 0.008
+    axial_resistance_kohm_cm: null
+    leak_reversal_mV: -64.0
+    leak_conductance_mS_cm2: 0.09
+    depletion_rate: null
+    recovery_ms: null
+    intrinsic_channels:
+    - name: K_dr (Traub & Miles, 91)
+      conductance_mS_cm2: 30.0
+      reversal_mV: -90.0
+      dependencies:
+      - voltage
+      gates:
+      - attributes:
+          exponent: '4'
+          dependency: voltage
+          format: alpha/beta
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Linoid
+            V0: '15'
+            A: '0.032'
+            B: '5'
+        - kind: backward
+          attributes:
+            category: Exponential
+            V0: '10'
+            A: '0.5'
+            B: '40'
+    - name: Na (Traub & Miles, 91)
+      conductance_mS_cm2: 50.0
+      reversal_mV: 50.0
+      dependencies:
+      - voltage
+      - voltage
+      gates:
+      - attributes:
+          exponent: '3'
+          dependency: voltage
+          format: alpha/beta
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Linoid
+            V0: '13'
+            A: '0.32'
+            B: '4'
+        - kind: backward
+          attributes:
+            category: Linoid
+            V0: '40'
+            A: '-0.28'
+            B: '-5'
+      - attributes:
+          exponent: '1'
+          dependency: voltage
+          format: alpha/beta
+          name: m2
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Exponential
+            V0: '17'
+            A: '0.128'
+            B: '18'
+        - kind: backward
+          attributes:
+            category: Sigmoid
+            V0: '40'
+            A: '4'
+            B: '5'
+    - name: Low threshold T-type Ca++
+      conductance_mS_cm2: 0.1
+      reversal_mV: 180.0
+      dependencies:
+      - voltage
+      - voltage
+      gates:
+      - attributes:
+          exponent: '3'
+          dependency: voltage
+          format: m/tau
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: m_inf
+          attributes:
+            category: Sigmoid
+            V0: '-63'
+            A: '1'
+            B: '7.8'
+        - kind: tau
+          attributes:
+            category: Simple_Tau
+            V0: '-9.84'
+            A: '2.44'
+            B: '2.506'
+      - attributes:
+          exponent: '1'
+          dependency: voltage
+          format: m/tau
+          name: m2
+          representationForm: Parametrised
+        representation:
+        - kind: m_inf
+          attributes:
+            category: Sigmoid
+            V0: '-83.5'
+            A: '1'
+            B: '-6.3'
+        - kind: tau
+          attributes:
+            category: Simple_Tau
+            V0: '-10.54'
+            A: '19.15'
+            B: '7.171'
+  - name: proximal_dendrite
+    diameter_cm: 0.0015
+    length_cm: 0.01
+    axial_resistance_kohm_cm: 10.0
+    leak_reversal_mV: -64.0
+    leak_conductance_mS_cm2: 0.1
+    depletion_rate: null
+    recovery_ms: null
+    intrinsic_channels:
+    - name: Low threshold T-type Ca++
+      conductance_mS_cm2: 250.0
+      reversal_mV: 180.0
+      dependencies:
+      - voltage
+      - voltage
+      gates:
+      - attributes:
+          exponent: '3'
+          dependency: voltage
+          format: m/tau
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: m_inf
+          attributes:
+            category: Sigmoid
+            V0: '-63'
+            A: '1'
+            B: '7.8'
+        - kind: tau
+          attributes:
+            category: Simple_Tau
+            V0: '-9.84'
+            A: '2.44'
+            B: '2.506'
+      - attributes:
+          exponent: '1'
+          dependency: voltage
+          format: m/tau
+          name: m2
+          representationForm: Parametrised
+        representation:
+        - kind: m_inf
+          attributes:
+            category: Sigmoid
+            V0: '-83.5'
+            A: '1'
+            B: '-6.3'
+        - kind: tau
+          attributes:
+            category: Simple_Tau
+            V0: '-10.54'
+            A: '19.15'
+            B: '7.171'
+  - name: distal_dendrite
+    diameter_cm: 0.0015
+    length_cm: 0.01
+    axial_resistance_kohm_cm: 10.0
+    leak_reversal_mV: -64.0
+    leak_conductance_mS_cm2: 0.1
+    depletion_rate: null
+    recovery_ms: null
+    intrinsic_channels:
+    - name: Low threshold T-type Ca++
+      conductance_mS_cm2: 250.0
+      reversal_mV: 180.0
+      dependencies:
+      - voltage
+      - voltage
+      gates:
+      - attributes:
+          exponent: '3'
+          dependency: voltage
+          format: m/tau
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: m_inf
+          attributes:
+            category: Sigmoid
+            V0: '-63'
+            A: '1'
+            B: '7.8'
+        - kind: tau
+          attributes:
+            category: Simple_Tau
+            V0: '-9.84'
+            A: '2.44'
+            B: '2.506'
+      - attributes:
+          exponent: '1'
+          dependency: voltage
+          format: m/tau
+          name: m2
+          representationForm: Parametrised
+        representation:
+        - kind: m_inf
+          attributes:
+            category: Sigmoid
+            V0: '-83.5'
+            A: '1'
+            B: '-6.3'
+        - kind: tau
+          attributes:
+            category: Simple_Tau
+            V0: '-10.54'
+            A: '19.15'
+            B: '7.171'
+- source_name: Thalamic_MATRIX_V2
+  canonical_name: thalamic_matrix_v2
+  compartments:
+  - name: soma
+    diameter_cm: 0.008
+    length_cm: 0.008
+    axial_resistance_kohm_cm: null
+    leak_reversal_mV: -64.0
+    leak_conductance_mS_cm2: 0.09
+    depletion_rate: null
+    recovery_ms: null
+    intrinsic_channels:
+    - name: K_dr (Traub & Miles, 91)
+      conductance_mS_cm2: 30.0
+      reversal_mV: -90.0
+      dependencies:
+      - voltage
+      gates:
+      - attributes:
+          exponent: '4'
+          format: alpha/beta
+          dependency: voltage
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Linoid
+            V0: '15'
+            A: '0.032'
+            B: '5'
+        - kind: backward
+          attributes:
+            category: Exponential
+            V0: '10'
+            A: '0.5'
+            B: '40'
+    - name: Na (Traub & Miles, 91)
+      conductance_mS_cm2: 50.0
+      reversal_mV: 50.0
+      dependencies:
+      - voltage
+      - voltage
+      gates:
+      - attributes:
+          exponent: '3'
+          format: alpha/beta
+          dependency: voltage
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Linoid
+            V0: '13'
+            A: '0.32'
+            B: '4'
+        - kind: backward
+          attributes:
+            category: Linoid
+            V0: '40'
+            A: '-0.28'
+            B: '-5'
+      - attributes:
+          exponent: '1'
+          format: alpha/beta
+          dependency: voltage
+          name: m2
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Exponential
+            V0: '17'
+            A: '0.128'
+            B: '18'
+        - kind: backward
+          attributes:
+            category: Sigmoid
+            V0: '40'
+            A: '4'
+            B: '5'
+    - name: Low threshold T-type Ca++
+      conductance_mS_cm2: 0.1
+      reversal_mV: 180.0
+      dependencies:
+      - voltage
+      - voltage
+      gates:
+      - attributes:
+          exponent: '3'
+          format: m/tau
+          dependency: voltage
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: m_inf
+          attributes:
+            category: Sigmoid
+            V0: '-63'
+            A: '1'
+            B: '7.8'
+        - kind: tau
+          attributes:
+            category: Simple_Tau
+            V0: '-9.84'
+            A: '2.44'
+            B: '2.506'
+      - attributes:
+          exponent: '1'
+          format: m/tau
+          dependency: voltage
+          name: m2
+          representationForm: Parametrised
+        representation:
+        - kind: m_inf
+          attributes:
+            category: Sigmoid
+            V0: '-83.5'
+            A: '1'
+            B: '-6.3'
+        - kind: tau
+          attributes:
+            category: Simple_Tau
+            V0: '-10.54'
+            A: '19.15'
+            B: '7.171'
+  - name: proximal_dendrite
+    diameter_cm: 0.0015
+    length_cm: 0.01
+    axial_resistance_kohm_cm: 10.0
+    leak_reversal_mV: -64.0
+    leak_conductance_mS_cm2: 0.1
+    depletion_rate: null
+    recovery_ms: null
+    intrinsic_channels:
+    - name: Low threshold T-type Ca++
+      conductance_mS_cm2: 250.0
+      reversal_mV: 180.0
+      dependencies:
+      - voltage
+      - voltage
+      gates:
+      - attributes:
+          exponent: '3'
+          format: m/tau
+          dependency: voltage
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: m_inf
+          attributes:
+            category: Sigmoid
+            V0: '-63'
+            A: '1'
+            B: '7.8'
+        - kind: tau
+          attributes:
+            category: Simple_Tau
+            V0: '-9.84'
+            A: '2.44'
+            B: '2.506'
+      - attributes:
+          exponent: '1'
+          format: m/tau
+          dependency: voltage
+          name: m2
+          representationForm: Parametrised
+        representation:
+        - kind: m_inf
+          attributes:
+            category: Sigmoid
+            V0: '-83.5'
+            A: '1'
+            B: '-6.3'
+        - kind: tau
+          attributes:
+            category: Simple_Tau
+            V0: '-10.54'
+            A: '19.15'
+            B: '7.171'
+  - name: distal_dendrite
+    diameter_cm: 0.0015
+    length_cm: 0.01
+    axial_resistance_kohm_cm: 10.0
+    leak_reversal_mV: -64.0
+    leak_conductance_mS_cm2: 0.1
+    depletion_rate: null
+    recovery_ms: null
+    intrinsic_channels:
+    - name: Low threshold T-type Ca++
+      conductance_mS_cm2: 250.0
+      reversal_mV: 180.0
+      dependencies:
+      - voltage
+      - voltage
+      gates:
+      - attributes:
+          exponent: '3'
+          format: m/tau
+          dependency: voltage
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: m_inf
+          attributes:
+            category: Sigmoid
+            V0: '-63'
+            A: '1'
+            B: '7.8'
+        - kind: tau
+          attributes:
+            category: Simple_Tau
+            V0: '-9.84'
+            A: '2.44'
+            B: '2.506'
+      - attributes:
+          exponent: '1'
+          format: m/tau
+          dependency: voltage
+          name: m2
+          representationForm: Parametrised
+        representation:
+        - kind: m_inf
+          attributes:
+            category: Sigmoid
+            V0: '-83.5'
+            A: '1'
+            B: '-6.3'
+        - kind: tau
+          attributes:
+            category: Simple_Tau
+            V0: '-10.54'
+            A: '19.15'
+            B: '7.171'
+- source_name: Layer_4_INT_V2
+  canonical_name: layer4_inhibitory_v2
+  compartments:
+  - name: soma
+    diameter_cm: 0.002
+    length_cm: 0.002
+    axial_resistance_kohm_cm: null
+    leak_reversal_mV: -50.0
+    leak_conductance_mS_cm2: 0.01
+    depletion_rate: null
+    recovery_ms: null
+    intrinsic_channels:
+    - name: K_dr (Traub & Miles, 91)
+      conductance_mS_cm2: 30.0
+      reversal_mV: -90.0
+      dependencies:
+      - voltage
+      gates:
+      - attributes:
+          exponent: '4'
+          format: alpha/beta
+          dependency: voltage
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Linoid
+            V0: '15'
+            A: '0.032'
+            B: '5'
+        - kind: backward
+          attributes:
+            category: Exponential
+            V0: '10'
+            A: '0.5'
+            B: '40'
+    - name: Na (Traub & Miles, 91)
+      conductance_mS_cm2: 50.0
+      reversal_mV: 50.0
+      dependencies:
+      - voltage
+      - voltage
+      gates:
+      - attributes:
+          exponent: '3'
+          format: alpha/beta
+          dependency: voltage
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Linoid
+            V0: '13'
+            A: '0.32'
+            B: '4'
+        - kind: backward
+          attributes:
+            category: Linoid
+            V0: '40'
+            A: '-0.28'
+            B: '-5'
+      - attributes:
+          exponent: '1'
+          format: alpha/beta
+          dependency: voltage
+          name: m2
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Exponential
+            V0: '17'
+            A: '0.128'
+            B: '18'
+        - kind: backward
+          attributes:
+            category: Sigmoid
+            V0: '40'
+            A: '4'
+            B: '5'
+  - name: proximal_dendrite
+    diameter_cm: 0.001
+    length_cm: 0.005
+    axial_resistance_kohm_cm: 100.0
+    leak_reversal_mV: -50.0
+    leak_conductance_mS_cm2: 0.01
+    depletion_rate: null
+    recovery_ms: null
+    intrinsic_channels: []
 projections:
 - id: modeldb112923.projection.000
   kind: chemical

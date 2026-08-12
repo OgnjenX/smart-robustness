@@ -209,6 +209,7 @@ def run_figure7_condition(
     duration_ms: float = 100.0,
     dt_ms: float = 0.01,
     exact_relay_voltage_clamp: bool = False,
+    relay_clamp_compartment: str = "proximal_dendrite",
     brian=None,
 ) -> Figure7ConditionResult:
     """Run one source-labeled Figure 7 match or mismatch condition."""
@@ -239,6 +240,7 @@ def run_figure7_condition(
         sector = build_first_order_voltage_clamp_sector(
             clamped_relay_indices=orientation.active_indices,
             holding_mV=orientation.expected_holding_mV,
+            compartment=relay_clamp_compartment,
             conventions=conventions,
             brian=brian,
         )

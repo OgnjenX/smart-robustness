@@ -296,18 +296,21 @@ identical match and mismatch activity: five relay cells fire four times, TRN
 fires 264 spikes, and nonspecific thalamus fires six times. Orientation remains
 visible only in which five relay cells fire. A zero-expectation control is also
 identical, localizing the failure before relay-count modulation and TRN
-convergence; see `figure7-stage-localization-023.yaml`. Implementing Methods
-4.9's exact -12-mV clamp on only five relay dendrites requires a topology-
-preserving split into clamped and unclamped Brian2 populations; a masked ODE
-was tested and rejected because `0 * NaN` does not constitute an exact clamp.
+convergence; see `figure7-stage-localization-023.yaml`. A direct Methods 4.9
+clamp interpretation is now executable without changing topology: per-step
+operators pin selected relay compartments while every original projection
+remains intact. None of the three direct compartment choices reproduces the
+same sentence's 40-Hz calibration: soma gives 0 Hz, proximal dendrite 70 Hz,
+and distal dendrite 20 Hz. In contrast, the archived green=120 KInNeSS input
+gate gives exactly 40 Hz per selected relay. Direct compartment pinning is
+therefore retained as a rejected audit interpretation rather than promoted to
+the classic protocol; see `figure7-clamp-semantics-024.yaml`.
 
-The exact-clamp implementation now has a lossless global-index partition
-primitive. It maps each original edge into exactly one source-partition ×
-target-partition block, preserves the original spatial factor and global
-coordinates, and reconstructs every in-scope ModelDB topology—including
-relay-related recurrent and electrical records—without missing or duplicated
-edges. This invariant is the foundation for separate clamped/free relay Brian2
-populations; no local-coordinate Gaussian recomputation is permitted.
+The lossless global-index partition primitive remains useful for later model
+substitution. It maps every original edge into one source-partition × target-
+partition block and reconstructs all ModelDB topologies without omissions or
+duplicates. Brian2 cannot, however, let multiple presynaptic groups write to
+one summed receptor variable, so partitioning is not used by this clamp assay.
 
 The Figure 7 protocol now keeps its Methods 4.9 somatic-current category cue
 separate from the blue category pixel in the recovered Figure 6 training PNG.

@@ -109,6 +109,11 @@ serialized channel projections; the full two-area file contains 24 populations.
   is a direct current-injection gate governed by Equation 6. It is compiled
   separately from conductance inputs; all four archived sensitivities are zero,
   so it remains inert until explicitly configured by an experiment protocol.
+- Methods 4.9 does not identify which relay compartment is fixed at -12 mV.
+  Direct per-step clamps of soma, proximal dendrite, and distal dendrite produce
+  0, 70, and 20 Hz respectively, whereas recovered green=120 input through the
+  archived proximal shunting gate produces the stated 40 Hz. Direct ODE
+  replacement is retained as an audit alternative, not the executable default.
 - All-zero voltage-input mappings are now an explicit runtime convention. The
   literal framework interpretation makes them permanent resting-potential
   leaks; omitting them as inactive legacy mappings changes the isolated relay

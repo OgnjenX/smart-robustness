@@ -284,6 +284,7 @@ def build_first_order_voltage_clamp_sector(
     *,
     clamped_relay_indices: tuple[int, ...],
     holding_mV: float = -12.0,
+    compartment: str = "proximal_dendrite",
     conventions: FirstOrderRuntimeConventions | None = None,
     brian=None,
 ) -> FirstOrderSector:
@@ -298,6 +299,15 @@ def build_first_order_voltage_clamp_sector(
     if brian is None:
         import brian2 as brian
     conventions = conventions or FirstOrderRuntimeConventions()
+    relay_fact = next(
+        fact for fact in first_order_population_facts() if fact.canonical_name == "thalamic_relay"
+    )
+    relay_compartments = relay_fact.cell.compartments
+    valid_compartments = {item.name for item in relay_compartments}
+    if compartment not in valid_compartments:
+        raise ValueError(
+            f"unknown relay clamp compartment {compartment!r}; expected {sorted(valid_compartments)}"
+        )
     if not clamped_relay_indices or len(set(clamped_relay_indices)) != len(clamped_relay_indices):
         raise ValueError("clamped relay indices must be nonempty and unique")
     if any(index < 0 or index >= 81 for index in clamped_relay_indices):
@@ -306,16 +316,18 @@ def build_first_order_voltage_clamp_sector(
     relay = sector.populations["thalamic_relay"].group
     indices = np.asarray(clamped_relay_indices, dtype=int)
 
-    def pin_relay_dendrites() -> None:
-        relay.v_proximal_dendrite[indices] = holding_mV * brian.mV
+    voltage = getattr(relay, f"v_{compartment}")
+
+    def pin_relay_compartments() -> None:
+        voltage[indices] = holding_mV * brian.mV
 
     clamp_start = brian.NetworkOperation(
-        pin_relay_dendrites, when="start", name="smart_relay_voltage_clamp_start"
+        pin_relay_compartments, when="start", name="smart_relay_voltage_clamp_start"
     )
     clamp_end = brian.NetworkOperation(
-        pin_relay_dendrites, when="end", name="smart_relay_voltage_clamp_end"
+        pin_relay_compartments, when="end", name="smart_relay_voltage_clamp_end"
     )
-    pin_relay_dendrites()
+    pin_relay_compartments()
     sector.network.add(clamp_start, clamp_end)
     return sector
 

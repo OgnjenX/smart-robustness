@@ -152,7 +152,7 @@ class Figure6LearningResult:
 class Figure6LearningProtocol:
     """The Figure 6b/c simultaneous 100-ms horizontal training episode."""
 
-    warmup_ms: float = 2.0
+    warmup_ms: float = 0.0
     stimulus_ms: float = 100.0
     dt_ms: float = 0.01
     source_value: float = 120.0

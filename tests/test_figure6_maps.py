@@ -14,6 +14,7 @@ from smart_robustness.validation.figure6 import (
 
 def test_figure6_learning_protocol_is_the_published_horizontal_episode() -> None:
     protocol = Figure6LearningProtocol()
+    assert protocol.warmup_ms == 0.0
     assert protocol.stimulus_ms == 100.0
     assert protocol.source_value == 120.0
     assert protocol.category_source_value == 70.0

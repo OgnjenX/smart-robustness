@@ -261,6 +261,14 @@ ms. Thus the immediate gamma pair has post-before-pre timing and depresses the
 top-down field. The trace and assessment are archived in
 `figure6-causal-timing-018.yaml`.
 
+The archived input frame begins at time zero, and the paper specifies a 100-ms
+exposure without a warmup. Removing the previously inserted 2-ms unstimulated
+period restores causal timing: layer-6II teaching arrives at 60.50 ms and the
+matched relay spikes at 61.99 ms. Combined top-down contrast improves to
+0.00496 but remains below 0.01. Zero warmup is therefore promoted as the
+source-faithful protocol correction, while Figure 6c remains a partial result;
+see `figure6-zero-warmup-019.yaml`.
+
 The Figure 7 protocol now keeps its Methods 4.9 somatic-current category cue
 separate from the blue category pixel in the recovered Figure 6 training PNG.
 Its predeclared scorer independently tests the approximately 40-Hz match and

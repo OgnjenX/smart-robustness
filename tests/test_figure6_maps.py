@@ -4,9 +4,24 @@ import numpy as np
 
 from smart_robustness.validation.figure6 import (
     MINIMUM_TOP_DOWN_HORIZONTAL_CONTRAST,
+    Figure6LearningProtocol,
     Figure6LearningResult,
     Figure6MapSummary,
 )
+
+
+def test_figure6_learning_protocol_is_the_published_horizontal_episode() -> None:
+    protocol = Figure6LearningProtocol()
+    assert protocol.stimulus_ms == 100.0
+    assert protocol.source_value == 120.0
+    assert protocol.category_source_value == 70.0
+    assert protocol.winning_layer4_index == 40
+    assert protocol.active_category_index == 40
+    assert protocol.monitored_populations == (
+        "thalamic_relay",
+        "layer4_excitatory_v1",
+        "layer6ii_excitatory_v1",
+    )
 
 
 def test_map_retention_advantage_detects_horizontal_orientation() -> None:

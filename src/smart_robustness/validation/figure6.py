@@ -14,6 +14,7 @@ from ..learning import (
     gated_weight_derivative,
 )
 from ..models.currents import biexponential_normalization
+from ..protocols import BarOrientation, ClassicBarStimulus, apply_bar_stimulus
 
 BOTTOM_UP_PROJECTION_ID = "modeldb112923.projection.035"
 TOP_DOWN_WIDE_PROJECTION_ID = "modeldb112923.projection.005"
@@ -119,6 +120,111 @@ class Figure6LearningResult:
             and self.top_down_narrow.horizontal_orientation_contrast
             >= MINIMUM_TOP_DOWN_HORIZONTAL_CONTRAST
         )
+
+
+@dataclass(frozen=True, slots=True)
+class Figure6LearningProtocol:
+    """The Figure 6b/c simultaneous 100-ms horizontal training episode."""
+
+    warmup_ms: float = 2.0
+    stimulus_ms: float = 100.0
+    dt_ms: float = 0.01
+    source_value: float = 120.0
+    category_source_value: float = 70.0
+    winning_layer4_index: int = 40
+    active_category_index: int = 40
+    monitored_populations: tuple[str, ...] = (
+        "thalamic_relay",
+        "layer4_excitatory_v1",
+        "layer6ii_excitatory_v1",
+    )
+
+    def __post_init__(self) -> None:
+        if self.warmup_ms < 0:
+            raise ValueError("warmup_ms cannot be negative")
+        if self.stimulus_ms <= 0 or self.dt_ms <= 0:
+            raise ValueError("stimulus_ms and dt_ms must be positive")
+        if not 0 <= self.winning_layer4_index < 81:
+            raise ValueError("winning_layer4_index must address the 9x9 sheet")
+        if not 0 <= self.active_category_index < 81:
+            raise ValueError("active_category_index must address the 9x9 sheet")
+
+
+@dataclass(frozen=True, slots=True)
+class Figure6LearningRun:
+    result: Figure6LearningResult
+    learned_weights: dict[str, tuple[float, ...]]
+
+
+def run_figure6_learning(
+    *,
+    conventions=None,
+    protocol: Figure6LearningProtocol | None = None,
+    brian=None,
+) -> Figure6LearningRun:
+    """Run and summarize the official simultaneous Figure 6b/c episode."""
+
+    if brian is None:
+        import brian2 as brian
+    # Local imports avoid making lightweight analytical Figure 6 tests import
+    # the full Brian2 sector assembly path.
+    from ..classic_sector import build_first_order_connected_sector, figure6_runtime_conventions
+
+    conventions = conventions or figure6_runtime_conventions()
+    protocol = protocol or Figure6LearningProtocol()
+    brian.start_scope()
+    brian.defaultclock.dt = protocol.dt_ms * brian.ms
+    sector = build_first_order_connected_sector(conventions=conventions, brian=brian)
+    monitored_ids = (
+        BOTTOM_UP_PROJECTION_ID,
+        TOP_DOWN_WIDE_PROJECTION_ID,
+        TOP_DOWN_NARROW_PROJECTION_ID,
+    )
+    before = {
+        projection_id: np.asarray(sector.projections[projection_id].w[:], dtype=float).copy()
+        for projection_id in monitored_ids
+    }
+    monitors = {
+        name: brian.SpikeMonitor(population.group, name=f"figure6_spikes_{name}")
+        for name, population in sector.populations.items()
+        if name in protocol.monitored_populations
+    }
+    unknown_monitors = set(protocol.monitored_populations) - set(monitors)
+    if unknown_monitors:
+        raise ValueError(f"unknown monitored populations: {sorted(unknown_monitors)}")
+    sector.network.add(*monitors.values())
+    if protocol.warmup_ms:
+        sector.network.run(protocol.warmup_ms * brian.ms)
+    warmup_counts = {name: int(monitor.num_spikes) for name, monitor in monitors.items()}
+    stimulus = ClassicBarStimulus(
+        BarOrientation.HORIZONTAL,
+        duration_ms=protocol.stimulus_ms,
+        source_value=protocol.source_value,
+        category_source_value=protocol.category_source_value,
+        include_archived_category_pixel=True,
+    )
+    apply_bar_stimulus(sector, stimulus)
+    sector.network.run(protocol.stimulus_ms * brian.ms)
+    spike_counts = {
+        name: int(monitor.num_spikes) - warmup_counts[name]
+        for name, monitor in monitors.items()
+    }
+    result = summarize_figure6_learning(
+        convention_fingerprint=conventions.fingerprint,
+        duration_ms=protocol.stimulus_ms,
+        population_spikes=spike_counts,
+        projections=sector.projections,
+        before_weights=before,
+        winning_layer4_index=protocol.winning_layer4_index,
+        active_category_index=protocol.active_category_index,
+    )
+    learned = {
+        projection_id: tuple(
+            float(value) for value in np.asarray(sector.projections[projection_id].w[:])
+        )
+        for projection_id in monitored_ids
+    }
+    return Figure6LearningRun(result=result, learned_weights=learned)
 
 
 def _incoming_map(projection: Any, weights: np.ndarray, *, target_index: int) -> np.ndarray:

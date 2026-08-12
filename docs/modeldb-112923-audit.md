@@ -59,6 +59,11 @@ serialized channel projections; the full two-area file contains 24 populations.
   Executable ligand conductance density therefore includes the required
   `10^-3` conversion from `pS × 10^6/cm²` to `mS/cm²`; input gates remain
   conductance densities and do not use this receptor-density conversion.
+- Ligand kinetics now implement KInNeSS Equations 13--15 per connection. Each
+  synapse tracks its last two arrivals and combines their unit-normalized
+  waveforms as `g1 + g2 - g1*g2`, rather than linearly accumulating every past
+  event in one postsynaptic state. This preserves the required `[0,1]` gate
+  bound before receptor-density weighting.
 - For modifiable projections, the XML `weight` is the serialized current and
   upper-bound weight, whereas `assymptoticWeight` is Equation 25's decorrelated
   baseline `w0`. The source profile therefore initializes at `weight`; starting

@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import math
 from dataclasses import dataclass
 from enum import StrEnum
 
@@ -266,21 +265,9 @@ def compile_cell_equations(
         lines.append(f"dtransmitter/dt=(1-transmitter)/({depletion_recovery_ms}*ms) : 1")
     for port in synaptic_ports:
         block = f"1/(1+0.33*exp(-v_{port.compartment}/(16.7*mV)))" if port.voltage_block else "1"
-        if port.rise_ms == port.fall_ms:
-            kinetic_lines = (
-                f"d{port.name}_rise/dt=-{port.name}_rise/({port.rise_ms}*ms) : 1",
-                f"d{port.name}_fall/dt=({port.name}_rise-{port.name}_fall)/({port.fall_ms}*ms) : 1",
-                f"{port.name}_gate={math.e}*{port.name}_fall : 1",
-            )
-        else:
-            kinetic_lines = (
-                f"d{port.name}_rise/dt=-{port.name}_rise/({port.rise_ms}*ms) : 1",
-                f"d{port.name}_fall/dt=-{port.name}_fall/({port.fall_ms}*ms) : 1",
-                f"{port.name}_gate={port.normalization}*({port.name}_fall-{port.name}_rise) : 1",
-            )
         lines.extend(
             (
-                *kinetic_lines,
+                f"{port.name}_gate : 1",
                 f"{port.name}_block={block} : 1",
                 f"i_{port.name}=g_{port.name}*{port.name}_gate*{port.name}_block*(e_{port.name}-v_{port.compartment}) : amp",
                 f"g_{port.name} : siemens (constant)",

@@ -11,6 +11,7 @@ from smart_robustness.classic_sector import (
     build_first_order_connected_sector,
 )
 from smart_robustness.modeldb_projections import MODELDB_FIRST_ORDER
+from smart_robustness.models.currents import biexponential_peak_time_ms
 from smart_robustness.projections import SUPPLEMENTARY_TABLE3
 from smart_robustness.synapses import (
     kinness_gap_total_conductance_nS,
@@ -119,3 +120,18 @@ def test_gap_junction_uses_kinness_equation_8_geometry() -> None:
     length_cm = 0.005 * 0.1
     expected = 0.03 * diameter_cm / (4 * length_cm**2) * np.pi * diameter_cm * length_cm * 1e6
     assert result == pytest.approx(expected)
+
+
+def test_ligand_gate_combines_only_last_two_spikes_and_remains_bounded() -> None:
+    brian.start_scope()
+    sector = build_first_order_chemical_sector(brian=brian)
+    record = MODELDB_FIRST_ORDER.by_id("modeldb112923.projection.035")
+    projection = sector.projections[record.id]
+    peak = biexponential_peak_time_ms(float(record.rise_ms), float(record.fall_ms))
+    projection.last_arrival = -peak * brian.ms
+    projection.previous_arrival = -peak * brian.ms
+    projection.last_amplitude = 1
+    projection.previous_amplitude = 1
+    assert np.asarray(projection.last_wave[:]) == pytest.approx(1)
+    assert np.asarray(projection.previous_wave[:]) == pytest.approx(1)
+    assert np.asarray(projection.pre_signal[:]) == pytest.approx(1)

@@ -254,11 +254,46 @@ def connect_modeldb_projection(
     )
     if port is None or record.weight is None:
         raise ValueError(f"{record.id}: incomplete compiled ModelDB projection")
-    resource = "*transmitter_pre" if pre.compiled.depletion_enabled else ""
-    update = f"{port.name}_rise_post += w{resource}"
-    if port.rise_ms != port.fall_ms:
-        update += f"\n{port.name}_fall_post += w{resource}"
-    model = "w_baseline : 1 (constant)\nw_maximum : 1 (constant)\nmodifiable : 1 (constant)"
+    resource = "transmitter_pre" if pre.compiled.depletion_enabled else "1"
+    update = (
+        "previous_arrival = last_arrival\n"
+        "previous_amplitude = last_amplitude\n"
+        "last_arrival = t\n"
+        f"last_amplitude = {resource}"
+    )
+    if port.rise_ms == port.fall_ms:
+        last_wave = (
+            f"last_amplitude*exp(1)*last_elapsed/({port.rise_ms}*ms)"
+            f"*exp(-last_elapsed/({port.fall_ms}*ms))"
+        )
+        previous_wave = (
+            f"previous_amplitude*exp(1)*previous_elapsed/({port.rise_ms}*ms)"
+            f"*exp(-previous_elapsed/({port.fall_ms}*ms))"
+        )
+    else:
+        last_wave = (
+            f"last_amplitude*{port.normalization}"
+            f"*(exp(-last_elapsed/({port.fall_ms}*ms))-exp(-last_elapsed/({port.rise_ms}*ms)))"
+        )
+        previous_wave = (
+            f"previous_amplitude*{port.normalization}"
+            f"*(exp(-previous_elapsed/({port.fall_ms}*ms))-exp(-previous_elapsed/({port.rise_ms}*ms)))"
+        )
+    model = (
+        "w_baseline : 1 (constant)\n"
+        "w_maximum : 1 (constant)\n"
+        "modifiable : 1 (constant)\n"
+        "last_arrival : second\n"
+        "previous_arrival : second\n"
+        "last_amplitude : 1\n"
+        "previous_amplitude : 1\n"
+        "last_elapsed=t-last_arrival : second\n"
+        "previous_elapsed=t-previous_arrival : second\n"
+        f"last_wave={last_wave} : 1\n"
+        f"previous_wave={previous_wave} : 1\n"
+        "pre_signal=last_wave+previous_wave-last_wave*previous_wave : 1\n"
+        f"{port.name}_gate_post=w*pre_signal : 1 (summed)"
+    )
     on_post = None
     if record.modifiable:
         if record.learning_rate is None or record.depotentiation_ms is None:
@@ -273,9 +308,6 @@ def connect_modeldb_projection(
             raise ValueError(f"{record.id}: unsupported learning rule {record.learning_rule!r}")
         post_window = record.depotentiation_ms
         model += (
-            f"\ndx_learning_rise/dt=-x_learning_rise/({port.rise_ms}*ms) : 1 (clock-driven)"
-            f"\ndx_learning_fall/dt=-x_learning_fall/({port.fall_ms}*ms) : 1 (clock-driven)"
-            f"\npre_signal={port.normalization}*(x_learning_fall-x_learning_rise) : 1"
             "\npost_elapsed=t-last_post_spike : second"
             "\ndepression_scale=-w_baseline/w_maximum : 1"
             "\nx_post_above=depression_scale+1 : 1"
@@ -288,7 +320,6 @@ def connect_modeldb_projection(
             "*(pre_signal*post_signal*(w_maximum-w)+(w_baseline-w)) : 1 (clock-driven)"
             "\nlast_post_spike : second"
         )
-        update += "\nx_learning_rise += 1\nx_learning_fall += 1"
         on_post = "last_post_spike = t"
     else:
         model = "w : 1\n" + model
@@ -319,9 +350,11 @@ def connect_modeldb_projection(
     synapse.w_baseline = baseline * spatial_factor
     synapse.w_maximum = maximum * spatial_factor
     synapse.modifiable = float(record.modifiable)
+    synapse.last_arrival = -1e9 * brian.second
+    synapse.previous_arrival = -1e9 * brian.second
+    synapse.last_amplitude = 0
+    synapse.previous_amplitude = 0
     if record.modifiable:
-        synapse.x_learning_rise = 0
-        synapse.x_learning_fall = 0
         synapse.last_post_spike = -1e9 * brian.second
     synapse.delay = float(record.delay_ms or 0.0) * brian.ms
     return synapse

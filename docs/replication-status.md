@@ -187,6 +187,14 @@ the declared upper bound. This preserves the selective 40-Hz relay result, but
 the cortical populations remain silent, so Figure 6 recruitment is not yet
 reproduced.
 
+The chemical-synapse runtime now follows KInNeSS Equations 13--15 at the
+individual-connection level: only the last two presynaptic arrivals contribute,
+and their normalized gates combine as `g1 + g2 - g1*g2`. The earlier aggregate
+dual-exponential state could exceed one (the relay-to-layer-4 diagnostic reached
+7.95) and therefore overestimated synaptic conductance. The corrected bounded
+implementation still passes the five-cell 40-Hz relay/selectivity gates, while
+the cortical populations remain silent.
+
 The KInNeSS statement that reported voltage is shifted by the leak potential
 also makes the spike detector's coordinate ambiguous in a physical-voltage
 implementation. The explicit `relative_to_soma_leak` alternative preserves the

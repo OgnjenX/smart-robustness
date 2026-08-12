@@ -51,8 +51,8 @@ def test_connected_first_order_sector_integrates_and_adapts_finitely() -> None:
     target_index = int(projection.j[synapse_index])
     target = sector.populations["layer4_excitatory_v1"].group
     projection.w[synapse_index] = projection.w_baseline[synapse_index]
-    projection.x_learning_rise[synapse_index] = 0
-    projection.x_learning_fall[synapse_index] = 1
+    projection.last_arrival[synapse_index] = sector.network.t
+    projection.last_amplitude[synapse_index] = 1
     target.v_soma[target_index] = -10 * brian.mV
     before_potentiation = float(projection.w[synapse_index])
     sector.network.run(0.001 * brian.ms)
@@ -61,8 +61,8 @@ def test_connected_first_order_sector_integrates_and_adapts_finitely() -> None:
 
     target.v_soma[target_index] = -65 * brian.mV
     projection.last_post_spike[synapse_index] = sector.network.t - 0.1 * brian.ms
-    projection.x_learning_rise[synapse_index] = 0
-    projection.x_learning_fall[synapse_index] = 1
+    projection.last_arrival[synapse_index] = sector.network.t
+    projection.last_amplitude[synapse_index] = 1
     sector.network.run(0.001 * brian.ms)
     after_depotentiation = float(projection.w[synapse_index])
     assert after_depotentiation < after_potentiation

@@ -92,6 +92,9 @@ behavior remain required before plasticity is considered reproduced.
 Runtime checkpoint: the complete connected first-order sector integrates for
 0.1 ms at 0.01-ms resolution with finite soma voltages and bounded finite
 weights. With no input, adaptive weights remain bit-identical to baseline.
+KInNeSS's per-connection last-two-spike ligand history and bounded Equation 15
+combination are now implemented; the corrected full-sector run retains the
+40-Hz relay-drive result but does not yet recruit cortex.
 The actual relay-to-layer-4 Brian2 projection also potentiates and
 depotentiates under forced positive and negative Equation 6 lobes while
 remaining bounded. Longer protocol and convergence runs remain part of the

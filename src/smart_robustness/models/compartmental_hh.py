@@ -247,8 +247,7 @@ def create_compartmental_hh_population(
             port.conductance_density_mS_cm2 * compartment.lateral_area_cm2 * 1e6 * brian.nsiemens,
         )
         _set(group, f"e_{port.name}", port.reversal_mV * brian.mV)
-        _set(group, f"{port.name}_rise", 0)
-        _set(group, f"{port.name}_fall", 0)
+        _set(group, f"{port.name}_gate", 0)
     for port in gap_junction_ports:
         _set(group, f"i_{port.name}", 0 * brian.pA)
     for port in external_input_ports:

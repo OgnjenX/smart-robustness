@@ -570,6 +570,14 @@ confirm that the dimensionless `exprel` implementation exactly preserves the
 printed Na/K coefficients. Neither axial scaling nor an OCR/transcription
 error explains the failure (`trn-axial-source-audit-042.yaml`).
 
+The Figure 16 source audit corrects an earlier roadmap/target transcription:
+the caption sets the V1-layer-2/3-to-V2-layer-4 delay to 10 ms, not 1 ms. The
+recovered `SMART.nml` record independently serializes 5 ms. A named protocol
+helper now overrides only that projection after archive-faithful network
+construction, preserving all other cross-area delays. This passes focused
+structural tests but does not yet establish the published inter-area
+cross-correlation result (`figure16-delay-protocol-043.yaml`).
+
 A separate coordinate audit tested whether KInNeSS integrates voltage at zero
 relative to each compartment's serialized leak and adds the leak only when
 writing physical voltage. Membrane initialization and the voltage supplied to

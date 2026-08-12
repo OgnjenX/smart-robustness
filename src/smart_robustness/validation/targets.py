@@ -164,11 +164,15 @@ CLASSIC_SMART_TARGETS: tuple[ValidationTarget, ...] = (
         source="Figure 16 and Methods 4.10–4.11",
         protocol={
             "pre_recording_input_ms": 1000.0,
-            "inter_area_delay_ms": 1.0,
+            "inter_area_delay_ms": 10.0,
+            "inter_area_delay_pathway": "V1 layer 2/3 to V2 layer 4",
             "bands_hz": ((2.0, 4.0), (4.0, 8.0), (8.0, 12.0), (12.0, 20.0), (20.0, 100.0)),
         },
         numeric_targets={},
-        unresolved=("Published correlation amplitudes are graphical only.",),
+        unresolved=(
+            "Published correlation amplitudes are graphical only.",
+            "SMART.nml serializes 5 ms for the caption-overridden pathway.",
+        ),
     ),
 )
 

@@ -153,7 +153,8 @@ ablations, and configuration fingerprints.
 - Add V1–pulvinar–V2 populations and projections with the same cell, port,
   topology, plasticity, and provenance abstractions.
 - Validate long-range feedback, lower-frequency inter-area synchrony, and the
-  reported 1 ms inter-area delay protocol.
+  Figure 16 caption's 10 ms V1-layer-2/3-to-V2-layer-4 delay protocol (the
+  recovered executable record independently serializes 5 ms).
 - Add LFP/CSD geometry only after transmembrane-current accounting is verified.
 
 Exit: full two-loop structural audit and higher-order validation report.

@@ -1,0 +1,41 @@
+schema_version: 1
+validation_id: figure16-delay-protocol-043
+claim: The higher-order SMART implementation exposes the published Figure 16 inter-area delay without altering archived projection parameters
+status: pass_protocol_implementation
+date: 2026-08-12
+sources:
+  paper:
+    location: Grossberg and Versace 2008 Figure 16 caption
+    pathway: V1 layer 2/3 to V2 layer 4
+    delay_ms: 10
+    prestimulus_ms: 1000
+    recording_ms: 1000
+    bands_hz: [[2, 4], [4, 8], [8, 12], [12, 20], [20, 100]]
+  executable_archive:
+    source: ModelDB 112923 SMART.nml
+    projection_id: modeldb112923.projection.089
+    pathway: layer23_excitatory_v1 to layer4_excitatory_v2
+    serialized_delay_ms: 5
+implementation:
+  helper: smart_robustness.validation.higher_order.apply_figure16_inter_area_delay
+  behavior:
+    - Builds the full network from the unmodified ModelDB catalog.
+    - Changes only modeldb112923.projection.089 from 5 ms to the protocol's 10 ms.
+    - Leaves all other cross-area projection delays unchanged.
+    - Rejects a sector in which the required pathway is absent.
+verification:
+  focused_tests: 20
+  lint: pass
+  source_delay_before_override_ms: 5
+  protocol_delay_after_override_ms: 10
+  control_projection_id: modeldb112923.projection.081
+  control_delay_before_and_after_ms: 1
+assessment:
+  former_documented_delay_ms: 1
+  former_value_supported_by_figure16: false
+  corrected_target_delay_ms: 10
+  source_catalog_mutated: false
+  higher_order_behavior_reproduced: false
+limitations:
+  - This validates protocol encoding and isolation, not Figure 16 cross-correlation behavior.
+  - The complete 1-s prestimulus plus 1-s recording simulation remains gated by unresolved classic-cell behavior and LFP validation.

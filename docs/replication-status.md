@@ -595,6 +595,18 @@ controls. A short complete-network run remains finite with these observables.
 This closes current accounting and transform arithmetic, but not the stochastic
 54-tip geometry or official LFP behavior (`lfp-current-accounting-045.yaml`).
 
+Methods 4.11's stochastic electrode construction is now executable. The 54
+tips span the full compartment chain at equal intervals; compartment currents
+are located at their centres; the selected cell is sampled uniformly at
+10--200 µm lateral distance and every other cell at 10--1000 µm. Euclidean
+tip-to-compartment distances feed Equation 31. Because the publication reports
+the distributions but not its realized random coordinates, every geometry is
+seed-explicit, immutable, and SHA-256 fingerprinted. Parallel aligned cells and
+one lateral coordinate per cell are documented reconstruction assumptions, so
+this closes reproducible geometry construction without claiming recovery of
+the unpublished Figure 16 random draw
+(`figure16-electrode-geometry-046.yaml`).
+
 A separate coordinate audit tested whether KInNeSS integrates voltage at zero
 relative to each compartment's serialized leak and adds the leak only when
 writing physical voltage. Membrane initialization and the voltage supplied to

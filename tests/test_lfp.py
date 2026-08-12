@@ -6,7 +6,9 @@ import pytest
 from smart_robustness.analysis.lfp import (
     current_source_density_uV_per_um2,
     extracellular_potential_uV,
+    figure16_electrode_geometry,
 )
+from smart_robustness.models.table3 import get_cell_spec
 
 
 def test_equation31_single_source_has_expected_si_conversion() -> None:
@@ -52,3 +54,54 @@ def test_csd_rejects_too_few_tips_and_invalid_spacing() -> None:
         current_source_density_uV_per_um2(np.ones((2, 10)), 1.0)
     with pytest.raises(ValueError, match="spacing"):
         current_source_density_uV_per_um2(np.ones((3, 10)), 0.0)
+
+
+def test_figure16_geometry_reconstructs_reported_54_tip_protocol() -> None:
+    cell = get_cell_spec("layer23_excitatory")
+    geometry = figure16_electrode_geometry(
+        cell, 9, selected_cell_index=4, seed=2008
+    )
+
+    assert geometry.tip_depth_um.shape == (54,)
+    assert geometry.tip_depth_um[[0, -1]] == pytest.approx([0.0, 275.0])
+    assert np.diff(geometry.tip_depth_um) == pytest.approx(geometry.tip_spacing_um)
+    assert geometry.compartment_depth_um[:2] == pytest.approx([25.0, 162.5])
+    assert geometry.distance_um.shape == (54, 18)
+    assert geometry.compartment_labels[:3] == (
+        (0, "soma"),
+        (0, "proximal_dendrite"),
+        (1, "soma"),
+    )
+    assert 10.0 <= geometry.cell_lateral_distance_um[4] <= 200.0
+    assert np.all(geometry.cell_lateral_distance_um >= 10.0)
+    assert np.all(geometry.cell_lateral_distance_um <= 1000.0)
+    assert np.all(geometry.distance_um > 0.0)
+
+
+def test_figure16_geometry_is_seed_deterministic_and_read_only() -> None:
+    cell = get_cell_spec("layer5_excitatory")
+    first = figure16_electrode_geometry(cell, 3, selected_cell_index=1, seed=7)
+    repeated = figure16_electrode_geometry(cell, 3, selected_cell_index=1, seed=7)
+    changed = figure16_electrode_geometry(cell, 3, selected_cell_index=1, seed=8)
+
+    assert first.fingerprint == repeated.fingerprint
+    assert first.distance_um == pytest.approx(repeated.distance_um)
+    assert first.fingerprint != changed.fingerprint
+    assert not first.distance_um.flags.writeable
+
+
+@pytest.mark.parametrize(
+    "kwargs,error",
+    (
+        ({"population_size": 0, "selected_cell_index": 0, "seed": 1}, ValueError),
+        ({"population_size": 2, "selected_cell_index": 2, "seed": 1}, ValueError),
+        ({"population_size": 2, "selected_cell_index": 0, "seed": True}, TypeError),
+        (
+            {"population_size": 2, "selected_cell_index": 0, "seed": 1, "tip_count": 1},
+            ValueError,
+        ),
+    ),
+)
+def test_figure16_geometry_rejects_invalid_protocol(kwargs, error) -> None:
+    with pytest.raises(error):
+        figure16_electrode_geometry(get_cell_spec("layer4_excitatory"), **kwargs)

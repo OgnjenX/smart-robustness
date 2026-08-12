@@ -1,0 +1,39 @@
+schema_version: 1
+validation_id: figure16-electrode-geometry-046
+claim: The reported SMART Figure 16 electrode placement distributions are implemented as a reproducible seeded geometry
+status: implemented_not_behaviorally_reproduced
+primary_source:
+  citation: Grossberg and Versace 2008
+  location: Methods 4.11, Equations 31-33
+source_facts:
+  electrode_tips: 54
+  selected_cell_lateral_distance_um: [10, 200]
+  other_cell_lateral_distance_um: [10, 1000]
+  orientation: electrode perpendicular to population sheet and parallel to cells
+  depth: first and last tips span the cell ends; intermediate tips are equally spaced
+  current_location: compartment centre
+implementation:
+  function: smart_robustness.analysis.lfp.figure16_electrode_geometry
+  distance_rule: Euclidean distance from each tip to each compartment centre
+  random_generator: numpy.default_rng.uniform
+  reproducibility:
+    - caller-supplied integer seed
+    - SHA-256 fingerprint includes source parameters, cell geometry, seed, tips, and sampled lateral distances
+    - returned coordinate arrays are read-only
+reconstruction_assumptions:
+  - Cells are parallel and aligned along their proximal-to-distal compartment chains.
+  - One lateral coordinate is sampled per cell because the source does not preserve three-dimensional cell coordinates.
+  - The original random seed and realized Figure 16 coordinates are unavailable, so no exact coordinate identity is claimed.
+verification:
+  command: .venv/bin/pytest -q tests/test_lfp.py tests/test_cross_correlation.py tests/test_higher_order_validation.py
+  result: 28 passed
+  checks:
+    - exact 54-tip endpoint and equal-spacing construction
+    - Table 3 compartment-centre depth conversion from mm to um
+    - selected and nonselected lateral-distance bounds
+    - cell-major compartment labeling and matrix shape
+    - same-seed determinism and different-seed fingerprint separation
+    - immutable returned arrays and invalid-protocol rejection
+limitations:
+  - This validates the reported geometry algorithm, not the unpublished random realization.
+  - Official Figure 16 LFP and cross-correlation behavior still requires a validated higher-order simulation.

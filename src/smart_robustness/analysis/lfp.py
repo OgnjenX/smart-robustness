@@ -2,9 +2,129 @@
 
 from __future__ import annotations
 
+import hashlib
+import json
+from dataclasses import dataclass
+
 import numpy as np
 
+from smart_robustness.models.table3 import CellSpec
+
 SMART_EXTRACELLULAR_CONDUCTIVITY_MS_CM = 15.0
+
+
+@dataclass(frozen=True)
+class Figure16ElectrodeGeometry:
+    """One reproducible realization of the Methods 4.11 electrode geometry.
+
+    The paper reports placement distributions rather than the random draws used
+    for Figure 16.  Consequently, ``seed`` and ``fingerprint`` are part of the
+    result and must accompany derived LFPs.  Compartments are flattened in
+    cell-major, proximal-to-distal order.
+    """
+
+    seed: int
+    selected_cell_index: int
+    tip_depth_um: np.ndarray
+    compartment_depth_um: np.ndarray
+    cell_lateral_distance_um: np.ndarray
+    distance_um: np.ndarray
+    compartment_labels: tuple[tuple[int, str], ...]
+    fingerprint: str
+
+    @property
+    def tip_spacing_um(self) -> float:
+        return float(self.tip_depth_um[1] - self.tip_depth_um[0])
+
+
+def figure16_electrode_geometry(
+    cell: CellSpec,
+    population_size: int,
+    *,
+    selected_cell_index: int,
+    seed: int,
+    tip_count: int = 54,
+) -> Figure16ElectrodeGeometry:
+    """Construct the stochastic 54-tip geometry specified in Methods 4.11.
+
+    Cells are parallel and aligned along their compartment chain.  The first
+    and last tips lie at the two ends of the cell, with all other tips evenly
+    spaced.  One selected cell receives a uniformly sampled lateral distance
+    of 10--200 um; every other cell receives 10--1000 um.  Euclidean distance
+    to each compartment centre supplies ``r_l`` in Equation 31.
+
+    The parallel alignment and one lateral coordinate per cell are explicit
+    reconstruction assumptions: the source states the distributions and
+    orientation but does not preserve the realized three-dimensional layout.
+    """
+
+    if isinstance(population_size, bool) or not isinstance(population_size, int):
+        raise TypeError("population_size must be an integer")
+    if population_size <= 0:
+        raise ValueError("population_size must be positive")
+    if isinstance(selected_cell_index, bool) or not isinstance(selected_cell_index, int):
+        raise TypeError("selected_cell_index must be an integer")
+    if not 0 <= selected_cell_index < population_size:
+        raise ValueError("selected_cell_index must identify a population cell")
+    if isinstance(seed, bool) or not isinstance(seed, int):
+        raise TypeError("seed must be an integer")
+    if isinstance(tip_count, bool) or not isinstance(tip_count, int):
+        raise TypeError("tip_count must be an integer")
+    if tip_count < 2:
+        raise ValueError("tip_count must be at least two")
+    if not cell.compartments:
+        raise ValueError("cell must contain at least one compartment")
+
+    lengths_um = np.asarray([part.length_mm * 1000.0 for part in cell.compartments])
+    if not np.all(np.isfinite(lengths_um)) or np.any(lengths_um <= 0):
+        raise ValueError("compartment lengths must be finite and positive")
+    cell_length_um = float(np.sum(lengths_um))
+    local_centres_um = np.cumsum(lengths_um) - lengths_um / 2.0
+    tip_depth_um = np.linspace(0.0, cell_length_um, tip_count)
+
+    rng = np.random.default_rng(seed)
+    lateral_um = rng.uniform(10.0, 1000.0, size=population_size)
+    lateral_um[selected_cell_index] = rng.uniform(10.0, 200.0)
+    compartment_depth_um = np.tile(local_centres_um, population_size)
+    compartment_lateral_um = np.repeat(lateral_um, len(cell.compartments))
+    distance_um = np.hypot(
+        tip_depth_um[:, None] - compartment_depth_um[None, :],
+        compartment_lateral_um[None, :],
+    )
+    labels = tuple(
+        (cell_index, part.name)
+        for cell_index in range(population_size)
+        for part in cell.compartments
+    )
+
+    payload = {
+        "algorithm": "numpy.default_rng.uniform-v1",
+        "cell": cell.name,
+        "compartments": [
+            {"name": part.name, "length_mm": part.length_mm} for part in cell.compartments
+        ],
+        "population_size": population_size,
+        "selected_cell_index": selected_cell_index,
+        "seed": seed,
+        "tip_count": tip_count,
+        "tip_depth_um": tip_depth_um.tolist(),
+        "cell_lateral_distance_um": lateral_um.tolist(),
+    }
+    fingerprint = hashlib.sha256(
+        json.dumps(payload, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    ).hexdigest()
+    for array in (tip_depth_um, compartment_depth_um, lateral_um, distance_um):
+        array.setflags(write=False)
+    return Figure16ElectrodeGeometry(
+        seed=seed,
+        selected_cell_index=selected_cell_index,
+        tip_depth_um=tip_depth_um,
+        compartment_depth_um=compartment_depth_um,
+        cell_lateral_distance_um=lateral_um,
+        distance_um=distance_um,
+        compartment_labels=labels,
+        fingerprint=fingerprint,
+    )
 
 
 def extracellular_potential_uV(

@@ -1,5 +1,5 @@
 id: relay-l4-units-009
-status: source-unit-correction-pathway-finite-network-pending
+status: source-unit-correction-pathway-and-network-finite-topology-pending
 claim: executable SMART.nml ligand channels use KInNeSS conductance-density units
 source:
   kinness_equation_3: channel maximum conductance is in mS/cm2
@@ -27,8 +27,11 @@ assessment:
   source_units_pass: true
   isolated_pathway_finite: true
   cortical_spike_recruitment_pass: false
-  connected_sector_validated: false
+  connected_sector_finite_through_42ms: true
+  connected_sector_cortical_recruitment_pass: false
 notes:
   - The supplementary catalog remains a separate pS-times-receptor-density transcription and still requires its 1e-3 conversion.
   - The executable ModelDB catalog stores g_bar as a KInNeSS membrane conductance density and must not receive that conversion.
   - The corrected dendritic response is strong but does not by itself verify the published Figure 6 winner or learned weight maps.
+  - Instrumented connected execution remained finite through 42 ms and recruited relay, TRN, layer 6I, layer-4 inhibitory, and matrix populations.
+  - The earlier missing result payload was not evidence of numerical instability.

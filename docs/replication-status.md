@@ -202,10 +202,20 @@ Equation 3 instead defines XML channel `g_bar` directly in mS/cm², and Equation
 16 multiplies it by the projection weight. Removing that extra `10^-3` factor
 raises the center layer-4 dendrite's first-volley maximum from approximately
 -64.5 mV to -1.4 mV in an isolated relay→layer-4 assay, while its soma remains
-subthreshold over the first 20 ms. A complete connected run no longer reaches
-the result-collection step in the current NumPy/Brian2 execution environment,
-so cortical recruitment and Figure 6 weight maps remain unverified pending a
-network-scale stability/resource discriminator.
+subthreshold over the first 20 ms at the earlier 1.5 μF/cm² candidate. An
+instrumented connected run proves finite dynamics through 42 ms: relay activity
+recruits TRN, layer 6I, layer-4 interneurons, and matrix cells, but not layer-4
+excitatory cells. The prior apparent failure to collect results was execution
+cost/output handling, not evidence of numerical instability.
+
+At the KInNeSS source value `CM=1 μF/cm²`, an isolated exact relay→layer-4
+pathway produces five bar-aligned layer-4 spikes, whereas the full E/I pathway
+does not: relay spikes occur at 5.99 ms and broad layer-4 interneuron spikes
+begin at 11.38 ms, suppressing the excitatory winner. A normalized-Gaussian
+falsification delays the surround and yields exactly five bar-aligned layer-4
+spikes at 18.16--18.33 ms. It is not promoted because Figure 6's before-learning
+map and XML weight semantics support peak-scaled weights. The exact legacy
+`connectFromMany`/`ring` implementation remains the active topology ambiguity.
 
 The official input archive also resolves a missing protocol channel:
 `horizontal0.png` and `vertical0.png` contain blue=70 at the central green=120

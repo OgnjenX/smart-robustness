@@ -18,7 +18,7 @@ parameters:
     value: modeldb_112923 or paper_table3; must be selected explicitly
     status: official-source discriminator
     source: Main article Table 3 compared with ModelDB 112923 SMART.nml
-    note: the sources differ in multiple dimensions, leaks, and Na/K/Ca densities; selecting the paper profile replaces each whole cell specification rather than patching individual conductances
+    note: the sources differ in multiple dimensions, leaks, Na/K/Ca densities, and ionic reversals; selecting the paper profile replaces the whole cell specification and paper-wide E_Na=50, E_K=-90, E_Ca=180 rather than patching individual conductances
   model.table3.surface_area:
     value: pi * diameter * length
     status: derived

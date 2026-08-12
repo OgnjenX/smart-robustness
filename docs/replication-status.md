@@ -283,8 +283,21 @@ fires five autonomous spikes in 30 ms and remains strongly depolarized; the
 Table 3 TRN fires none and settles near -66 mV. In the complete match trial,
 Table 3 cells restore relay-to-layer-4 and category recruitment, although the
 nonspecific cell runs at 160 Hz instead of the published approximate 40 Hz.
-The paper profile is therefore a strong source-backed discriminator, not yet a
-promoted classic baseline (`intrinsic-cell-source-036.yaml`).
+That conclusion is superseded by the later correction of reticular calcium
+initialization into its absolute runtime coordinate. Under the current
+equations the Table 3 TRN emits 18 events in 200 ms, rather than remaining
+quiescent. The older assay also mixed Table 3 dimensions/densities with
+ModelDB ionic reversals. Whole paper-source selection now consistently uses
+the published `E_Na=50`, `E_K=-90`, and `E_Ca=180`; this correction does not by
+itself remove the autonomous regime (`intrinsic-cell-source-036.yaml`).
+
+The corrected whole-paper follow-up confirms 29 isolated TRN events in 200 ms
+when Table 3 cells and paper ionic reversals are combined with the recovered
+reticular kinetics. Combining paper cells with the paper's common thalamic
+calcium equations does not rescue the phenotype either: the reciprocal
+interpretation fires approximately every 10 ms, while the printed-literal
+interpretation becomes non-finite. Thus neither complete official-source
+profile is currently a quiescent-yet-recruitable TRN baseline.
 
 Two additional source corrections supersede that assay's mixed initialization.
 The recovered reticular calcium equations use absolute membrane voltage, but
@@ -512,6 +525,13 @@ events. Literal `V_theta=+30 mV` produces no event, because the voltage does not
 fall from above +30 mV to below zero in one step. These alternatives therefore
 do not restore source-faithful post-startup TRN recruitment; the +30-mV peak
 latch remains the active candidate, not a frozen fact.
+
+The complete 100-ms Figure 7 test of the hysteretic KInNeSS `V_theta=-20 mV`
+alternative confirms the isolated-cell rejection: match and mismatch each
+produce 648 TRN events (405 after 40 ms), 90-Hz nonspecific output, and no
+relay or layer-4 events. The framework threshold therefore exposes the late
+autonomous TRN cycle rather than restoring match-dependent reticular
+recruitment (`spike-event-rule-038.yaml`).
 
 A separate coordinate audit tested whether KInNeSS integrates voltage at zero
 relative to each compartment's serialized leak and adds the leak only when

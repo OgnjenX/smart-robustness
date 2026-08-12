@@ -105,12 +105,13 @@ def test_intrinsic_cell_source_is_explicit_and_does_not_mix_trn_densities() -> N
             intrinsic_cell_convention=IntrinsicCellConvention.MODELDB_112923.value
         ),
     )["cell_spec"]
-    paper = first_order_population_parameters(
+    paper_parameters = first_order_population_parameters(
         trn,
         conventions=FirstOrderRuntimeConventions(
             intrinsic_cell_convention=IntrinsicCellConvention.PAPER_TABLE3.value
         ),
-    )["cell_spec"]
+    )
+    paper = paper_parameters["cell_spec"]
 
     assert executable.soma.g_ca_mS_cm2 == 100
     assert executable.compartment("proximal_dendrite").g_ca_mS_cm2 == 100
@@ -118,6 +119,9 @@ def test_intrinsic_cell_source_is_explicit_and_does_not_mix_trn_densities() -> N
     assert paper.soma.g_ca_mS_cm2 is None
     assert paper.compartment("proximal_dendrite").g_ca_mS_cm2 == 10
     assert paper.soma.g_k_mS_cm2 == 100
+    assert paper_parameters["e_na_mV"] == 50
+    assert paper_parameters["e_k_mV"] == -90
+    assert paper_parameters["e_ca_mV"] == 180
 
 
 def test_calcium_kinetics_source_is_independent_from_intrinsic_cell_source() -> None:

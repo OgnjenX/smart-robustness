@@ -1,5 +1,5 @@
 id: intrinsic-cell-source-036
-status: paper-table3-restores-quiescent-trn-and-cortical-recruitment-official-rate-pending
+status: superseded-by-reticular-initialization-and-whole-source-correction
 claim: printed Table 3 intrinsic cells remove the autonomous recovered-executable TRN startup pathology and restore the first-order relay-to-cortex pathway
 evidence_class: [exact-source, causal-discriminator, behavioral]
 sources:
@@ -69,8 +69,26 @@ assessment:
   match_mismatch_divergence_pass: false
   classic_profile_promoted: false
 notes:
+  - The isolated quiescence result predates correction of reticular calcium initialization into its absolute runtime coordinate; the current paper profile is not quiescent and this artifact is retained as superseded history.
+  - The original discriminator also retained ModelDB ionic reversals while selecting Table 3 dimensions and densities; whole-source paper selection now uses E_Na=50, E_K=-90, and E_Ca=180.
   - The runtime now names its intrinsic cell source explicitly; calcium_density_convention alone never selected Table 3 cells.
   - The ModelDB and Table 3 variants retain the same reticular calcium gate equations for this discriminator, isolating dimensions and densities rather than changing kinetics simultaneously.
   - Table 3 also differs from SMART.nml for relay, layer 5, layer 6II, nonspecific thalamus, and matrix cells; the paper profile therefore selects the complete Table 3 cell library rather than patching only TRN.
   - The independent calcium-density convention retains the paper's conflicting Methods 4.6 global-250 statement as a separate discriminator; applying it makes an isolated Table 3 TRN fire 19 spikes in 100 ms instead of one and is not promoted.
   - The match result was read directly from a completed Brian2 C++ standalone result set after the original Python process was killed during parallel compilation; mismatch was rerun through the normal serial standalone helper.
+current_source_consistency_followup:
+  paper_reversals_mV: {sodium: 50, potassium: -90, calcium: 180}
+  isolated_trn_200_ms:
+    paper_cells_with_modeldb_reticular_kinetics:
+      events: 29
+      late_voltage_range_mV: [-87.10, 44.54]
+      assessment: autonomous-not-quiescent
+  isolated_trn_100_ms_whole_paper:
+    reciprocal_calcium_interpretation:
+      events: 10
+      approximate_period_ms: 10
+      assessment: autonomous-not-quiescent
+    printed_literal_calcium_interpretation:
+      finite: false
+      assessment: rejected-numerically-invalid
+  conclusion: neither internally consistent official-source profile supplies a quiescent yet recruitable isolated TRN under the current Brian2 membrane equations

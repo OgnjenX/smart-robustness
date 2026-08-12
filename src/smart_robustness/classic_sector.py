@@ -200,6 +200,7 @@ def first_order_population_parameters(
     catalog=MODELDB_FIRST_ORDER,
 ) -> dict[str, Any]:
     has_ahp = facts.ahp_density_mS_cm2 is not None
+    intrinsic_source = IntrinsicCellConvention(conventions.intrinsic_cell_convention)
     intrinsic_cell = resolved_intrinsic_cell(facts, conventions=conventions)
     calcium_kinetics = CalciumKineticsConvention(conventions.calcium_kinetics_convention)
     calcium_gate_convention = conventions.calcium_gate_convention
@@ -236,9 +237,9 @@ def first_order_population_parameters(
         "ahp_convention": "smart_network_112923" if has_ahp else "modeldb_112923",
         "specific_capacitance_uF_cm2": conventions.specific_capacitance_uF_cm2,
         "enable_ahp_ach": has_ahp,
-        "e_na_mV": facts.e_na_mV,
-        "e_k_mV": facts.e_k_mV,
-        "e_ca_mV": facts.e_ca_mV,
+        "e_na_mV": 50.0 if intrinsic_source is IntrinsicCellConvention.PAPER_TABLE3 else facts.e_na_mV,
+        "e_k_mV": -90.0 if intrinsic_source is IntrinsicCellConvention.PAPER_TABLE3 else facts.e_k_mV,
+        "e_ca_mV": 180.0 if intrinsic_source is IntrinsicCellConvention.PAPER_TABLE3 else facts.e_ca_mV,
         "method": conventions.integration_method,
         "synaptic_ports": modeldb_ports_for_target(
             catalog.projections, facts.canonical_name

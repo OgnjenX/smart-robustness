@@ -1,0 +1,54 @@
+id: first-order-bar-007
+status: failed-source-coordinate-discriminator
+claim: selective five-cell Methods 4.9 bar drive at approximately 40 Hz
+convention_fingerprint: 9f9c484310f7e1935e8dff93dca1963809141dce25fca8afb3da59b3e72c92d1
+conventions:
+  axial_convention: kinness_serialized_edge
+  leak_convention: table3_reversal
+  voltage_coordinate: relative_to_table3_leak
+  nak_rate_convention: standard_traub_miles
+  calcium_gate_convention: modeldb_112923
+  gate_initialization_convention: zero
+  calcium_density_convention: table3
+  specific_capacitance_uF_cm2: 1.5
+  integration_method: rk4
+  zero_sensitivity_input_convention: omit_all_zero
+  spike_event_coordinate: relative_to_soma_leak
+protocol:
+  orientation: horizontal
+  warmup_ms: 20.0
+  stimulus_ms: 100.0
+  dt_ms: 0.01
+  source_value: 120.0
+warmup_spikes:
+  thalamic_relay: 0
+  trn: 0
+  thalamic_nonspecific: 1
+  thalamic_matrix: 1
+stimulus_spikes:
+  thalamic_relay: 10
+  trn: 4617
+  layer5_excitatory_v1: 0
+  layer6ii_excitatory_v1: 0
+  layer6i_excitatory_v1: 0
+  layer4_inhibitory_v1: 0
+  layer23_excitatory_v1: 0
+  layer4_excitatory_v1: 0
+  layer23_inhibitory_v1: 0
+  thalamic_interneuron: 0
+  thalamic_nonspecific: 5
+  thalamic_matrix: 15
+active_relay_rates_hz: [20.0, 20.0, 20.0, 20.0, 20.0]
+inactive_relay_spikes: 0
+assessment:
+  target_rate_hz: 40.0
+  tolerance_hz: 5.0
+  relay_rate_pass: false
+  selectivity_pass: true
+  reproduced_drive: false
+  promoted_to_classic_baseline: false
+notes:
+  - KInNeSS states that reported membrane voltage is shifted by the leak potential; this profile therefore applies the 30-to-0 mV spike event rule in a soma-leak-relative coordinate.
+  - The corresponding isolated relay remains at 40 Hz, with spike times 8.67, 33.48, 57.59, and 81.14 ms.
+  - In the connected sector, recurrent TRN activity rises to 4617 spikes and suppresses each active relay to 20 Hz.
+  - The source-relative interpretation is retained as an explicit audit alternative, not promoted as the baseline convention.

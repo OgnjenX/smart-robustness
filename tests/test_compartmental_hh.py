@@ -21,6 +21,7 @@ def _params(cell_class: str = "thalamic_relay") -> dict[str, str]:
         "nak_rate_convention": "printed_smart",
         "calcium_gate_convention": "reciprocal",
         "gate_initialization_convention": "steady_state_at_initial_voltage",
+        "spike_event_coordinate": "absolute_physical",
         "calcium_density_convention": "table3",
         "ahp_convention": "paper_text",
         "specific_capacitance_uF_cm2": 1.0,
@@ -147,6 +148,26 @@ def test_spike_event_arms_above_30_and_emits_once_below_zero() -> None:
     network.run(0.1 * brian.ms)
     assert spike_monitor.count[0] == 1
     network.run(0.2 * brian.ms)
+    assert spike_monitor.count[0] == 1
+
+
+def test_source_spike_event_coordinate_is_relative_to_soma_leak() -> None:
+    brian.start_scope()
+    brian.defaultclock.dt = 0.01 * brian.ms
+    params = _params()
+    params["spike_event_coordinate"] = "relative_to_soma_leak"
+    params["voltage_clamps_mV"] = {"soma": -20.0}
+    population = create_compartmental_hh_population(
+        name="relative_spike_coordinate", size=1, params=params, brian=brian
+    )
+    spike_monitor = brian.SpikeMonitor(population.group)
+    network = brian.Network(population.group, spike_monitor)
+
+    # Table 3 relay E_leak=-60 mV, so -20 mV is +40 mV in KInNeSS output.
+    network.run(0.01 * brian.ms)
+    assert population.group.armed[0] == 1
+    population.group.v_soma = -61 * brian.mV
+    network.run(0.01 * brian.ms)
     assert spike_monitor.count[0] == 1
 
 

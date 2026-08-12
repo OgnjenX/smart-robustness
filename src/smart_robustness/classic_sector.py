@@ -60,6 +60,7 @@ class FirstOrderRuntimeConventions:
     specific_capacitance_uF_cm2: float = 1.0
     integration_method: str = "rk4"
     zero_sensitivity_input_convention: str = "framework_resting_leak"
+    spike_event_coordinate: str = "absolute_physical"
 
     @property
     def fingerprint(self) -> str:
@@ -93,6 +94,7 @@ def first_order_population_parameters(
         "calcium_gate_convention": conventions.calcium_gate_convention,
         "gate_initialization_convention": conventions.gate_initialization_convention,
         "calcium_density_convention": conventions.calcium_density_convention,
+        "spike_event_coordinate": conventions.spike_event_coordinate,
         "ahp_convention": "smart_network_112923" if has_ahp else "modeldb_112923",
         "specific_capacitance_uF_cm2": conventions.specific_capacitance_uF_cm2,
         "enable_ahp_ach": has_ahp,

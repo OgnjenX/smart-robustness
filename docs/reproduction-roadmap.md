@@ -74,6 +74,13 @@ selectivity gates (`first-order-bar-006.yaml`). This advances the work to the
 published 100-ms learning episode; it does not yet establish cortical or
 match/mismatch reproduction.
 
+The spike detector now exposes its voltage coordinate explicitly. Applying the
+paper's 30-to-0 mV event rule to soma voltage relative to its leak preserves the
+isolated 40-Hz result but fails the connected drive gate (20 Hz per active relay
+and 4,617 TRN spikes; `first-order-bar-007.yaml`). The physical-coordinate
+setting therefore remains the current passing candidate while this source
+ambiguity is audited; neither setting is silently treated as canonical.
+
 Learning checkpoint: Equation 6's biphasic post-spike gate and the serialized
 20/25-ms depotentiation intervals are tested. Adaptive records initialize at
 their asymptotic baseline rather than their maximum. KInNeSS Equations 25/28

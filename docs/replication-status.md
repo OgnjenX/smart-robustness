@@ -178,6 +178,14 @@ at exactly 40 Hz and no inactive relay fires after a 20-ms warmup; the isolated
 yet the classic baseline: the capacitance and all-zero-input semantics remain
 source-unresolved, and the untrained cortical populations are still silent.
 
+The KInNeSS statement that reported voltage is shifted by the leak potential
+also makes the spike detector's coordinate ambiguous in a physical-voltage
+implementation. The explicit `relative_to_soma_leak` alternative preserves the
+isolated relay's 40-Hz response, but in the connected sector it yields 20 Hz in
+each driven relay and 4,617 TRN spikes. This failed discriminator is archived as
+`first-order-bar-007.yaml`; `absolute_physical` remains the drive-passing
+candidate convention rather than an asserted source fact.
+
 The first Figure 8 candidate (67 mV-shifted standard Traub--Miles rates,
 reciprocal T gates, Table 3 calcium density, and a -80 mV pre-pulse clamp)
 produces sustained tonic trains in both conditions. It therefore fails the

@@ -38,6 +38,13 @@ class GateInitializationConvention(StrEnum):
     ZERO = "zero"
 
 
+class SpikeEventCoordinate(StrEnum):
+    """Voltage coordinate used by SMART's two-stage spike event rule."""
+
+    ABSOLUTE_PHYSICAL = "absolute_physical"
+    RELATIVE_TO_SOMA_LEAK = "relative_to_soma_leak"
+
+
 @dataclass(slots=True)
 class CompartmentalPopulation:
     group: Any
@@ -126,6 +133,7 @@ def create_compartmental_hh_population(
     calcium_gate = TTypeGateConvention(params["calcium_gate_convention"])
     gate_initialization = GateInitializationConvention(params["gate_initialization_convention"])
     calcium_density = CalciumDensityConvention(params["calcium_density_convention"])
+    spike_coordinate = SpikeEventCoordinate(params["spike_event_coordinate"])
     ahp_convention = AHPConvention(params["ahp_convention"])
     synaptic_ports = params.get("synaptic_ports", ())
     if not isinstance(synaptic_ports, tuple) or not all(
@@ -201,12 +209,17 @@ def create_compartmental_hh_population(
         spike_reset += "; ahp_rise += 1; ahp_fall += 1"
     if compiled.depletion_enabled:
         spike_reset += f"; transmitter *= {1 - float(depletion_epsilon)}"
+    spike_voltage = (
+        "v_soma"
+        if spike_coordinate is SpikeEventCoordinate.ABSOLUTE_PHYSICAL
+        else "v_soma-e_l_soma"
+    )
     group = brian.NeuronGroup(
         size,
         compiled.equations,
-        threshold="armed > 0.5 and v_soma < 0*mV",
+        threshold=f"armed > 0.5 and {spike_voltage} < 0*mV",
         reset=spike_reset,
-        events={"arm_spike": "armed < 0.5 and v_soma > 30*mV"},
+        events={"arm_spike": f"armed < 0.5 and {spike_voltage} > 30*mV"},
         method=params.get("method", "exponential_euler"),
         name=name,
     )

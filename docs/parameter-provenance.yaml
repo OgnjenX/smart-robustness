@@ -66,6 +66,14 @@ parameters:
     value: kinness_2008, paper_literal, or symmetric_cable; must be selected explicitly
     status: derived
     source: expanded KInNeSS framework manuscript Equation 9; SMART Table 3 axial resistivities
+  model.multicompartment.zero_sensitivity_input_convention:
+    value: framework_resting_leak or omit_all_zero; must be selected explicitly
+    status: exploratory
+    source: expanded KInNeSS Eqs. 5-7 state that an inactive input acts as extra leakage, but archived SMART contains large all-zero input channels whose executable legacy treatment is unavailable
+  model.multicompartment.exact_voltage_clamp:
+    value: optional fixed compartment voltage, separate from finite-conductance XML input
+    status: published-protocol alternative
+    source: Methods 4.9 calls the relay stimulus a fixed -12 mV voltage clamp; KInNeSS Table 1 distinguishes finite input conductance from its infinite-conductance clamp limit
   model.multicompartment.ahp_convention:
     value: paper_text or modeldb_112923; must be selected explicitly
     status: derived

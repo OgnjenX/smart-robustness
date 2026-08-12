@@ -89,6 +89,7 @@ class IsolatedRelayInputResult:
     spike_times_ms: tuple[float, ...]
     maximum_soma_voltage_mV: float
     final_soma_voltage_mV: float
+    voltage_clamp_mV: float | None = None
 
     @property
     def numerically_valid(self) -> bool:
@@ -128,6 +129,7 @@ def run_isolated_relay_input(
     duration_ms: float = 100.0,
     source_value: float = 120.0,
     dt_ms: float = 0.01,
+    voltage_clamp_mV: float | None = None,
     brian=None,
 ) -> IsolatedRelayInputResult:
     """Fast discriminator using the exact relay cell and archived input port."""
@@ -142,10 +144,13 @@ def run_isolated_relay_input(
     facts = next(
         fact for fact in first_order_population_facts() if fact.canonical_name == "thalamic_relay"
     )
+    parameters = first_order_population_parameters(facts, conventions=conventions)
+    if voltage_clamp_mV is not None:
+        parameters["voltage_clamps_mV"] = {"proximal_dendrite": voltage_clamp_mV}
     population = create_compartmental_hh_population(
         name="isolated_relay_input",
         size=1,
-        params=first_order_population_parameters(facts, conventions=conventions),
+        params=parameters,
         brian=brian,
     )
     population.set_external_input(
@@ -164,6 +169,7 @@ def run_isolated_relay_input(
         spike_times_ms=tuple(float(value) for value in np.asarray(spikes.t / brian.ms)),
         maximum_soma_voltage_mV=float(np.max(soma_mV)),
         final_soma_voltage_mV=float(soma_mV[-1]),
+        voltage_clamp_mV=voltage_clamp_mV,
     )
 
 

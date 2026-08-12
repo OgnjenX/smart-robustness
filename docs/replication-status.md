@@ -159,6 +159,17 @@ runtime probes. The first coarse convention matrix is retained in
 reproduces 40 Hz, and numerically invalid members are explicitly excluded
 rather than counted as low-rate candidates.
 
+A later input-semantics discriminator identifies the archived all-zero
+`EXTERNAL INHIBITION` channel as behaviorally decisive. Under the literal
+framework rule it acts as a large permanent resting leak. Under the explicit
+`omit_all_zero` alternative, the isolated relay fires at 40 Hz when the
+unreported specific capacitance is 2 uF/cm2 and gates start at steady state;
+see `isolated-relay-input-semantics-003.yaml`. The connected five-cell bar does
+not yet pass both rate and selectivity: a 20-ms warmup yields five 40-Hz active
+relays plus 76 inactive rebound events, while a 100-ms warmup removes inactive
+events but yields 30 Hz. This is a strong partial candidate, not a reproduced
+baseline; see `first-order-bar-005.yaml`.
+
 The first Figure 8 candidate (67 mV-shifted standard Traub--Miles rates,
 reciprocal T gates, Table 3 calcium density, and a -80 mV pre-pulse clamp)
 produces sustained tonic trains in both conditions. It therefore fails the

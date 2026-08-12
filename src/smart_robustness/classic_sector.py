@@ -5,6 +5,7 @@ from __future__ import annotations
 import hashlib
 import json
 from dataclasses import asdict, dataclass
+from enum import StrEnum
 from typing import Any
 
 from .modeldb_projections import MODELDB_FIRST_ORDER
@@ -38,6 +39,13 @@ class FirstOrderSector:
         )
 
 
+class ZeroSensitivityInputConvention(StrEnum):
+    """Legacy treatment of input gates whose four source sensitivities are zero."""
+
+    FRAMEWORK_RESTING_LEAK = "framework_resting_leak"
+    OMIT_ALL_ZERO = "omit_all_zero"
+
+
 @dataclass(frozen=True, slots=True)
 class FirstOrderRuntimeConventions:
     """Complete executable convention profile for one classic-sector run."""
@@ -51,6 +59,7 @@ class FirstOrderRuntimeConventions:
     calcium_density_convention: str = "table3"
     specific_capacitance_uF_cm2: float = 1.0
     integration_method: str = "rk4"
+    zero_sensitivity_input_convention: str = "framework_resting_leak"
 
     @property
     def fingerprint(self) -> str:
@@ -64,6 +73,16 @@ def first_order_population_parameters(
     conventions: FirstOrderRuntimeConventions,
 ) -> dict[str, Any]:
     has_ahp = facts.ahp_density_mS_cm2 is not None
+    zero_input_convention = ZeroSensitivityInputConvention(
+        conventions.zero_sensitivity_input_convention
+    )
+    external_input_ports = modeldb_external_ports_for_target(
+        MODELDB_FIRST_ORDER.external_channels, facts.canonical_name
+    )
+    if zero_input_convention is ZeroSensitivityInputConvention.OMIT_ALL_ZERO:
+        external_input_ports = tuple(
+            port for port in external_input_ports if any(port.sensitivities_mV)
+        )
     parameters: dict[str, Any] = {
         "cell_spec": facts.cell,
         "cell_class": facts.canonical_name,
@@ -87,9 +106,7 @@ def first_order_population_parameters(
         "gap_junction_ports": modeldb_gap_ports_for_target(
             MODELDB_FIRST_ORDER.projections, facts.canonical_name
         ),
-        "external_input_ports": modeldb_external_ports_for_target(
-            MODELDB_FIRST_ORDER.external_channels, facts.canonical_name
-        ),
+        "external_input_ports": external_input_ports,
         "injection_ports": modeldb_injection_ports_for_target(
             MODELDB_FIRST_ORDER.external_channels, facts.canonical_name
         ),

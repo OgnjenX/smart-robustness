@@ -48,6 +48,24 @@ def test_relay_has_active_soma_and_calcium_dendrites() -> None:
     assert "m_ca_inf_proximal_dendrite=1/(" in equations
 
 
+def test_exact_voltage_clamp_replaces_only_selected_compartment_dynamics() -> None:
+    compiled = compile_cell_equations(
+        get_cell_spec("thalamic_relay"),
+        axial_convention=AxialConvention.KINNESS_SERIALIZED_EDGE,
+        leak_convention=LeakConvention.TABLE3_REVERSAL,
+        voltage_coordinate=VoltageCoordinate.RELATIVE_TO_TABLE3_LEAK,
+        nak_rate_convention=NaKRateConvention.STANDARD_TRAUB_MILES,
+        calcium_gate_convention=TTypeGateConvention.MODELDB_112923,
+        calcium_density_convention=CalciumDensityConvention.TABLE3,
+        ahp_convention=AHPConvention.MODELDB_112923,
+        enable_ahp_ach=False,
+        voltage_clamped_compartments=frozenset({"proximal_dendrite"}),
+    )
+    assert compiled.voltage_clamped_compartments == frozenset({"proximal_dendrite"})
+    assert "dv_proximal_dendrite/dt=0*volt/second" in compiled.equations
+    assert "dv_soma/dt=(" in compiled.equations
+
+
 def test_global_67_mv_rate_coordinate_is_explicitly_compilable() -> None:
     compiled = compile_cell_equations(
         get_cell_spec("thalamic_relay"),

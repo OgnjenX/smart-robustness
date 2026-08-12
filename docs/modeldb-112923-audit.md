@@ -65,6 +65,12 @@ serialized channel projections; the full two-area file contains 24 populations.
   is a direct current-injection gate governed by Equation 6. It is compiled
   separately from conductance inputs; all four archived sensitivities are zero,
   so it remains inert until explicitly configured by an experiment protocol.
+- All-zero voltage-input mappings are now an explicit runtime convention. The
+  literal framework interpretation makes them permanent resting-potential
+  leaks; omitting them as inactive legacy mappings changes the isolated relay
+  from 0 to 60 Hz at 1 uF/cm2 and exposes a 40-Hz candidate at 2 uF/cm2.
+  This behavior is fingerprinted and remains unpromoted pending network and
+  source validation.
 - Gap-junction totals follow KInNeSS Equation 8 rather than treating XML
   `g_bar` as an already converted membrane density.
 - KInNeSS serializes compartment dimensions in centimeters. The executable

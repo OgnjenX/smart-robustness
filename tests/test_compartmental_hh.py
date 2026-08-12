@@ -111,6 +111,21 @@ def test_gate_initialization_convention_is_required() -> None:
         )
 
 
+def test_exact_voltage_clamp_is_fixed_during_integration() -> None:
+    brian.start_scope()
+    brian.defaultclock.dt = 0.01 * brian.ms
+    params = _params()
+    params["voltage_clamps_mV"] = {"proximal_dendrite": -12.0}
+    population = create_compartmental_hh_population(
+        name="exact_proximal_clamp", size=1, params=params, brian=brian
+    )
+    brian.Network(population.group).run(0.1 * brian.ms)
+    assert population.group.v_proximal_dendrite[0] / brian.mV == pytest.approx(-12.0)
+    assert population.compiled.voltage_clamped_compartments == frozenset(
+        {"proximal_dendrite"}
+    )
+
+
 def test_spike_event_arms_above_30_and_emits_once_below_zero() -> None:
     brian.start_scope()
     brian.defaultclock.dt = 0.1 * brian.ms

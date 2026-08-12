@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import math
 from dataclasses import dataclass
 from enum import StrEnum
 from typing import Any
@@ -148,6 +149,20 @@ def create_compartmental_hh_population(
         raise TypeError("injection_ports must be a tuple of InjectionPortSpec")
     depletion_epsilon = params.get("depletion_epsilon")
     depletion_recovery_ms = params.get("depletion_recovery_ms")
+    voltage_clamps_mV = params.get("voltage_clamps_mV", {})
+    if not isinstance(voltage_clamps_mV, dict):
+        raise TypeError("voltage_clamps_mV must be a dict")
+    compartment_names = {compartment.name for compartment in cell.compartments}
+    unknown_clamps = set(voltage_clamps_mV) - compartment_names
+    if unknown_clamps:
+        raise ValueError(f"unknown voltage-clamped compartments: {sorted(unknown_clamps)}")
+    if any(
+        isinstance(value, bool)
+        or not isinstance(value, (int, float))
+        or not math.isfinite(value)
+        for value in voltage_clamps_mV.values()
+    ):
+        raise ValueError("voltage clamp values must be finite numbers")
     enable_ahp_ach = params["enable_ahp_ach"]
     if not isinstance(enable_ahp_ach, bool):
         raise TypeError("enable_ahp_ach must be an explicit bool")
@@ -177,6 +192,7 @@ def create_compartmental_hh_population(
         gap_junction_ports=gap_junction_ports,
         external_input_ports=external_input_ports,
         injection_ports=injection_ports,
+        voltage_clamped_compartments=frozenset(voltage_clamps_mV),
         depletion_epsilon=depletion_epsilon,
         depletion_recovery_ms=depletion_recovery_ms,
     )
@@ -330,4 +346,6 @@ def create_compartmental_hh_population(
             f"g_ax_{edge_index}_into_{edge.far.compartment_name}",
             edge.conductance_into_far_nS * brian.nsiemens,
         )
+    for compartment_name, clamp_mV in voltage_clamps_mV.items():
+        _set(group, f"v_{compartment_name}", float(clamp_mV) * brian.mV)
     return CompartmentalPopulation(group=group, cell_spec=cell, compiled=compiled)

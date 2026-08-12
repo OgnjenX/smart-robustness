@@ -61,6 +61,7 @@ class CompiledCellEquations:
     gap_junction_ports: tuple[GapJunctionPortSpec, ...]
     external_input_ports: tuple[ExternalInputPortSpec, ...]
     injection_ports: tuple[InjectionPortSpec, ...]
+    voltage_clamped_compartments: frozenset[str]
     depletion_enabled: bool
 
 
@@ -181,6 +182,7 @@ def compile_cell_equations(
     gap_junction_ports: tuple[GapJunctionPortSpec, ...] = (),
     external_input_ports: tuple[ExternalInputPortSpec, ...] = (),
     injection_ports: tuple[InjectionPortSpec, ...] = (),
+    voltage_clamped_compartments: frozenset[str] = frozenset(),
     depletion_epsilon: float | None = None,
     depletion_recovery_ms: float | None = None,
 ) -> CompiledCellEquations:
@@ -228,6 +230,11 @@ def compile_cell_equations(
     for port in injection_ports:
         if port.compartment not in compartment_names:
             raise ValueError(f"{port.record_id}: unknown target compartment {port.compartment}")
+    if not isinstance(voltage_clamped_compartments, frozenset):
+        raise TypeError("voltage_clamped_compartments must be a frozenset")
+    unknown_clamps = voltage_clamped_compartments - compartment_names
+    if unknown_clamps:
+        raise ValueError(f"unknown voltage-clamped compartments: {sorted(unknown_clamps)}")
     depletion_enabled = depletion_epsilon is not None or depletion_recovery_ms is not None
     if depletion_enabled:
         if depletion_epsilon is None or depletion_recovery_ms is None:
@@ -352,9 +359,14 @@ def compile_cell_equations(
         )
         current_terms.extend(axial_terms[name])
         current_terms.extend((f"i_syn_{name}", f"i_drive_{name}"))
+        voltage_equation = (
+            f"dv_{name}/dt=0*volt/second : volt"
+            if name in voltage_clamped_compartments
+            else f"dv_{name}/dt=({' + '.join(current_terms)})/C_{name} : volt"
+        )
         lines.extend(
             (
-                f"dv_{name}/dt=({' + '.join(current_terms)})/C_{name} : volt",
+                voltage_equation,
                 f"C_{name} : farad (constant)",
                 f"g_l_{name} : siemens (constant)",
                 f"e_l_{name} : volt (constant)",
@@ -379,5 +391,6 @@ def compile_cell_equations(
         gap_junction_ports=gap_junction_ports,
         external_input_ports=external_input_ports,
         injection_ports=injection_ports,
+        voltage_clamped_compartments=voltage_clamped_compartments,
         depletion_enabled=depletion_enabled,
     )

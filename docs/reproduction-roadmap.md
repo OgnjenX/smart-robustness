@@ -63,6 +63,11 @@ Equation 9, the baseline isolated relay remains silent, and the corresponding
 full-sector result in `first-order-bar-004.yaml` also produces zero relay
 spikes. The correction therefore removes a fidelity defect but does not by
 itself recover the Methods 4.9 40-Hz stream.
+The next discriminator makes all-zero input mappings explicit. Omitting those
+channels as inactive and using the unresolved 2 uF/cm2 capacitance candidate
+recovers exactly 40 Hz in the isolated relay. In the connected sector it passes
+either active rate (20-ms warmup) or selectivity (100-ms warmup), but not both;
+see `isolated-relay-input-semantics-003.yaml` and `first-order-bar-005.yaml`.
 
 Learning checkpoint: Equation 6's biphasic post-spike gate and the serialized
 20/25-ms depotentiation intervals are tested. Adaptive records initialize at

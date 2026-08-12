@@ -7,6 +7,7 @@ brian = pytest.importorskip("brian2")
 
 from smart_robustness.classic_sector import (
     FirstOrderRuntimeConventions,
+    ZeroSensitivityInputConvention,
     build_first_order_intrinsic_sector,
 )
 
@@ -59,6 +60,22 @@ def test_runtime_convention_fingerprint_is_stable_and_sensitive() -> None:
     assert classic.fingerprint == FirstOrderRuntimeConventions().fingerprint
     zero = FirstOrderRuntimeConventions(gate_initialization_convention="zero")
     assert zero.fingerprint != classic.fingerprint
+
+
+def test_all_zero_input_channels_have_an_explicit_legacy_convention() -> None:
+    brian.start_scope()
+    conventions = FirstOrderRuntimeConventions(
+        zero_sensitivity_input_convention=ZeroSensitivityInputConvention.OMIT_ALL_ZERO.value
+    )
+    sector = build_first_order_intrinsic_sector(conventions=conventions, brian=brian)
+    ports = tuple(
+        port
+        for population in sector.populations.values()
+        for port in population.compiled.external_input_ports
+    )
+    assert ports
+    assert all(any(port.sensitivities_mV) for port in ports)
+    assert "modeldb112923.external.001" not in {port.record_id for port in ports}
 
 
 def test_full_runtime_profile_reaches_every_population() -> None:

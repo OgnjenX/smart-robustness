@@ -9,7 +9,28 @@ from smart_robustness.validation.figure6 import (
     Figure6LearningResult,
     Figure6MapSummary,
     assess_figure6_top_down_timing,
+    figure6_weight_reachability,
 )
+
+
+def test_figure6_reachability_bound_accepts_source_maximum_and_rejects_plot_scale() -> None:
+    at_maximum = figure6_weight_reachability(
+        initial_weight=0.05,
+        maximum_weight=1.5,
+        learning_rate_per_ms=0.1,
+        episode_ms=100.0,
+        observed_weight=1.49,
+    )
+    assert at_maximum.reachable
+    assert at_maximum.upper_bound < 1.5
+    plotted_scale = figure6_weight_reachability(
+        initial_weight=0.05,
+        maximum_weight=1.5,
+        learning_rate_per_ms=0.1,
+        episode_ms=100.0,
+        observed_weight=2.5,
+    )
+    assert not plotted_scale.reachable
 
 
 def test_figure6_learning_protocol_is_the_published_horizontal_episode() -> None:

@@ -1,0 +1,30 @@
+id: figure6-learning-reachability-025
+status: plotted-scale-not-identifiable-as-one-archive-weight
+claim: Figure 6c's plotted approximately 2.5 peak is one adaptive SMART.nml AMPA weight after 100 ms
+published_and_archived_constraints:
+  episode_ms: 100.0
+  learning_rate_per_ms: 0.1
+  supplementary_single_ampa: {baseline: 0.05, maximum: 1.5, sigma: 1.3}
+  smart_nml_adaptive_ampa_fields:
+    - {projection: modeldb112923.projection.005, baseline: 0.05, maximum: 1.5, topology: wide}
+    - {projection: modeldb112923.projection.007, baseline: 0.05, maximum: 1.5, topology: narrow}
+  figure6c_graphical_peak_approx: 2.5
+analytical_bound:
+  derivation: dw/dt <= lambda * (w_max - w), after setting all bounded learning gates to one and dropping depression
+  upper_bound_after_100ms: 1.499934
+  single_field_can_reach_2_5: false
+instrumented_literal_nml_run:
+  active_category_spikes_ms: [58.50]
+  matched_relay_40_spikes_ms: [5.74, 44.91, 61.99, 82.10]
+  wide_horizontal_arm_delta_range: [0.002028, 0.002742]
+  narrow_horizontal_arm_delta_range: [0.002267, 0.002886]
+  vertical_only_arm_delta: 0.0
+assessment:
+  spatial_selectivity_present: true
+  learning_gate_inactive: false
+  effect_size_reproduced: false
+  plotted_field_is_identified_single_archive_projection: false
+notes:
+  - Figure 6c plots one field, while SMART.nml serializes separate wide and narrow adaptive AMPA channels and the supplement lists only one.
+  - Summing the two NML fields can exceed 1.5 but is an interpretation, not a uniquely published raw weight state.
+  - The failure is therefore not evidence for multiplying the learning rate by the integration-step inverse.

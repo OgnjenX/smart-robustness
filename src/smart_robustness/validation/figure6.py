@@ -218,6 +218,55 @@ class Figure6TopDownTimingAssessment:
         return delta is not None and 0 <= delta <= 20
 
 
+@dataclass(frozen=True, slots=True)
+class Figure6LearningReachability:
+    """Source-bounded check that a reported map is reachable in one episode."""
+
+    initial_weight: float
+    maximum_weight: float
+    learning_rate_per_ms: float
+    episode_ms: float
+    observed_weight: float
+    upper_bound: float
+
+    @property
+    def reachable(self) -> bool:
+        return self.observed_weight <= self.upper_bound + 1e-12
+
+
+def figure6_weight_reachability(
+    *,
+    initial_weight: float,
+    maximum_weight: float,
+    learning_rate_per_ms: float,
+    episode_ms: float,
+    observed_weight: float,
+) -> Figure6LearningReachability:
+    """Return a generous Equation-25 upper bound independent of spike timing.
+
+    For presynaptically gated learning, both the ligand gate and its extra
+    gating factor lie in [0, 1]. Dropping all decay/depression and setting both
+    to one gives ``dw/dt <= lambda * (w_max - w)``. Its solution is therefore
+    an absolute upper bound for every possible spike train in the episode.
+    """
+
+    if not 0 <= initial_weight <= maximum_weight:
+        raise ValueError("initial weight must lie within [0, maximum]")
+    if learning_rate_per_ms < 0 or episode_ms < 0 or observed_weight < 0:
+        raise ValueError("rate, duration, and observed weight must be nonnegative")
+    upper = maximum_weight - (maximum_weight - initial_weight) * np.exp(
+        -learning_rate_per_ms * episode_ms
+    )
+    return Figure6LearningReachability(
+        initial_weight=initial_weight,
+        maximum_weight=maximum_weight,
+        learning_rate_per_ms=learning_rate_per_ms,
+        episode_ms=episode_ms,
+        observed_weight=observed_weight,
+        upper_bound=float(upper),
+    )
+
+
 def assess_figure6_top_down_timing(
     result: Figure6LearningResult,
     *,

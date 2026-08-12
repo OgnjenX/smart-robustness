@@ -30,6 +30,7 @@ FIGURE7_REQUIRED_LEARNED_PROJECTIONS = (
     TOP_DOWN_WIDE_PROJECTION_ID,
     TOP_DOWN_NARROW_PROJECTION_ID,
 )
+FIGURE7_RELAY_DIAGNOSTIC_INDICES = (22, 31, 38, 39, 40, 41, 42, 49, 58)
 
 
 @dataclass(frozen=True, slots=True)
@@ -162,6 +163,14 @@ class Figure7ConditionResult:
     top_down_current_pA: float | None = None
     learned_state_provenance: str = "unspecified"
     network_scope: str = "first_order"
+    relay_top_down_ampa_peak_by_index: tuple[tuple[int, float], ...] = ()
+    relay_top_down_ampa_integral_ms_by_index: tuple[tuple[int, float], ...] = ()
+    relay_top_down_nmda_peak_by_index: tuple[tuple[int, float], ...] = ()
+    relay_distal_voltage_range_mV_by_index: tuple[tuple[int, float, float], ...] = ()
+    trn_layer6ii_ampa_peak_by_index: tuple[tuple[int, float], ...] = ()
+    trn_layer6ii_nmda_peak_by_index: tuple[tuple[int, float], ...] = ()
+    trn_relay_ampa_peak_by_index: tuple[tuple[int, float], ...] = ()
+    trn_proximal_voltage_range_mV_by_index: tuple[tuple[int, float, float], ...] = ()
 
     def __post_init__(self) -> None:
         if self.duration_ms <= 0:
@@ -235,6 +244,7 @@ def run_figure7_condition(
     exact_relay_voltage_clamp: bool = False,
     relay_clamp_compartment: str = "proximal_dendrite",
     include_higher_order_loop: bool = False,
+    record_relay_diagnostics: bool = False,
     cpp_standalone_directory: str | Path | None = None,
     brian=None,
 ) -> Figure7ConditionResult:
@@ -320,6 +330,28 @@ def run_figure7_condition(
         name=f"figure7_{condition.value}_category_spikes",
     )
     monitors = [nonspecific, layer4, relay, trn, category]
+    relay_state = None
+    trn_state = None
+    if record_relay_diagnostics:
+        relay_state = brian.StateMonitor(
+            sector.populations["thalamic_relay"].group,
+            (
+                "port_003_gate",
+                "port_005_gate",
+                "port_006_gate",
+                "port_007_gate",
+                "v_distal_dendrite",
+            ),
+            record=FIGURE7_RELAY_DIAGNOSTIC_INDICES,
+            name=f"figure7_{condition.value}_relay_pathway_state",
+        )
+        trn_state = brian.StateMonitor(
+            sector.populations["trn"].group,
+            ("port_001_gate", "port_002_gate", "port_004_gate", "v_proximal_dendrite"),
+            record=FIGURE7_RELAY_DIAGNOSTIC_INDICES,
+            name=f"figure7_{condition.value}_trn_pathway_state",
+        )
+        monitors.extend((relay_state, trn_state))
     v2_layer4 = None
     v2_relay = None
     if include_higher_order_loop:
@@ -347,6 +379,73 @@ def run_figure7_condition(
         from ..standalone import build_and_run_cpp_standalone
 
         build_and_run_cpp_standalone(brian, cpp_standalone_directory)
+    ampa_peak: tuple[tuple[int, float], ...] = ()
+    ampa_integral: tuple[tuple[int, float], ...] = ()
+    nmda_peak: tuple[tuple[int, float], ...] = ()
+    voltage_range: tuple[tuple[int, float, float], ...] = ()
+    trn_layer6ii_ampa_peak: tuple[tuple[int, float], ...] = ()
+    trn_layer6ii_nmda_peak: tuple[tuple[int, float], ...] = ()
+    trn_relay_ampa_peak: tuple[tuple[int, float], ...] = ()
+    trn_voltage_range: tuple[tuple[int, float, float], ...] = ()
+    if relay_state is not None:
+        ampa = np.asarray(relay_state.port_005_gate) + np.asarray(
+            relay_state.port_007_gate
+        )
+        nmda = np.asarray(relay_state.port_003_gate) + np.asarray(
+            relay_state.port_006_gate
+        )
+        voltage_mV = np.asarray(relay_state.v_distal_dendrite / brian.mV)
+        times_ms = np.asarray(relay_state.t / brian.ms)
+        ampa_peak = tuple(
+            (index, float(np.max(values)))
+            for index, values in zip(FIGURE7_RELAY_DIAGNOSTIC_INDICES, ampa, strict=True)
+        )
+        ampa_integral = tuple(
+            (index, float(np.trapz(values, times_ms)))
+            for index, values in zip(FIGURE7_RELAY_DIAGNOSTIC_INDICES, ampa, strict=True)
+        )
+        nmda_peak = tuple(
+            (index, float(np.max(values)))
+            for index, values in zip(FIGURE7_RELAY_DIAGNOSTIC_INDICES, nmda, strict=True)
+        )
+        voltage_range = tuple(
+            (index, float(np.min(values)), float(np.max(values)))
+            for index, values in zip(
+                FIGURE7_RELAY_DIAGNOSTIC_INDICES, voltage_mV, strict=True
+            )
+        )
+    if trn_state is not None:
+        trn_layer6ii_ampa_peak = tuple(
+            (index, float(np.max(values)))
+            for index, values in zip(
+                FIGURE7_RELAY_DIAGNOSTIC_INDICES,
+                np.asarray(trn_state.port_004_gate),
+                strict=True,
+            )
+        )
+        trn_layer6ii_nmda_peak = tuple(
+            (index, float(np.max(values)))
+            for index, values in zip(
+                FIGURE7_RELAY_DIAGNOSTIC_INDICES,
+                np.asarray(trn_state.port_001_gate),
+                strict=True,
+            )
+        )
+        trn_relay_ampa_peak = tuple(
+            (index, float(np.max(values)))
+            for index, values in zip(
+                FIGURE7_RELAY_DIAGNOSTIC_INDICES,
+                np.asarray(trn_state.port_002_gate),
+                strict=True,
+            )
+        )
+        trn_voltage_mV = np.asarray(trn_state.v_proximal_dendrite / brian.mV)
+        trn_voltage_range = tuple(
+            (index, float(np.min(values)), float(np.max(values)))
+            for index, values in zip(
+                FIGURE7_RELAY_DIAGNOSTIC_INDICES, trn_voltage_mV, strict=True
+            )
+        )
     result = Figure7ConditionResult(
         condition=condition,
         duration_ms=duration_ms,
@@ -378,6 +477,14 @@ def run_figure7_condition(
         top_down_current_pA=top_down_current_pA,
         learned_state_provenance=provenance,
         network_scope="full_two_area" if include_higher_order_loop else "first_order",
+        relay_top_down_ampa_peak_by_index=ampa_peak,
+        relay_top_down_ampa_integral_ms_by_index=ampa_integral,
+        relay_top_down_nmda_peak_by_index=nmda_peak,
+        relay_distal_voltage_range_mV_by_index=voltage_range,
+        trn_layer6ii_ampa_peak_by_index=trn_layer6ii_ampa_peak,
+        trn_layer6ii_nmda_peak_by_index=trn_layer6ii_nmda_peak,
+        trn_relay_ampa_peak_by_index=trn_relay_ampa_peak,
+        trn_proximal_voltage_range_mV_by_index=trn_voltage_range,
     )
     if cpp_standalone_directory is not None:
         brian.device.reinit()

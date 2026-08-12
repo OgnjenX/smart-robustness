@@ -1,0 +1,56 @@
+schema_version: 1
+validation_id: figure7-pathway-localization-030
+source_model: ModelDB 112923 SMART.nml
+claim: the learned horizontal layer-6II feedback reaches relay and TRN targets but changes Figure 7 relay recruitment
+status: failed_reproduction_feedback_arrives_but_is_spike_ineffective
+protocol:
+  duration_ms: 100
+  dt_ms: 0.01
+  top_down_layer6ii_cell: 40
+  top_down_current_pA: 600
+  learned_state: paper-constrained Figure 6c combined peak 2.5
+  execution_backend: brian2_cpp_standalone_exact_dense
+  monitored_relay_indices: [22, 31, 38, 39, 40, 41, 42, 49, 58]
+observed:
+  category_spike_times_ms: [4.67, 42.14, 82.28]
+  learned_ampa_peak_gate:
+    center_40: 1.139971408
+    horizontal_outer_38_42: 0.689587440
+    vertical_outer_22_58: 0.050019199
+  learned_ampa_integral_ms:
+    center_40: 18.314230513
+    horizontal_outer_38_42: 10.909136286
+    vertical_outer_22_58: 0.796949528
+  match:
+    relay_spike_counts: {38: 4, 39: 4, 40: 4, 41: 4, 42: 4}
+    trn_spikes: 264
+    nonspecific_spike_times_ms: [40.22, 44.38, 64.02, 68.67, 73.95, 80.45]
+  mismatch:
+    relay_spike_counts: {22: 4, 31: 4, 40: 4, 49: 4, 58: 4}
+    trn_spikes: 264
+    nonspecific_spike_times_ms: [40.22, 44.38, 64.02, 68.67, 73.95, 80.45]
+  trn_background:
+    isolated_zero_initialized_cell_spikes_ms: [20.27, 23.44, 25.64]
+    network_cells_with_three_or_four_spikes: 81
+    interpretation: 243 of 264 network TRN spikes are the population-wide intrinsic rebound burst
+source_discriminators:
+  gaussian_source_peak:
+    match_relay_spikes: 10
+    mismatch_relay_spikes: 10
+    match_trn_spikes: 188
+    mismatch_trn_spikes: 188
+    match_nonspecific_rate_hz: 50
+    mismatch_nonspecific_rate_hz: 50
+    result: stronger source-peak kernels do not create match/mismatch divergence
+assessment:
+  learned_feedback_reaches_relay: true
+  learned_feedback_is_horizontally_anisotropic: true
+  relay_count_divergence: false
+  trn_count_divergence: false
+  nonspecific_disinhibition: false
+  figure7_reproduced: false
+interpretation:
+  - The failure is no longer attributable to absent or isotropic learned layer-6II-to-relay AMPA delivery.
+  - Match and mismatch distal relay voltages differ, but the soma event output remains at four spikes for every bottom-up-driven relay.
+  - The next discriminator is distal-to-soma coupling and spike-threshold efficacy, not downstream TRN-to-nonspecific tuning.
+  - The exact KInNeSS ring-kernel stencil remains unresolved and is not changed by this assay.

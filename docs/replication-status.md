@@ -335,6 +335,23 @@ mismatch lies at the edge of the 70+/-10-Hz range but does not exceed match.
 The higher-order loop does not repair the orientation-count failure previously
 localized in the first-order assay; see `figure7-full-two-area-029.yaml`.
 
+A pathway-level Figure 7 assay now records both adaptive corticothalamic AMPA
+gates, fixed corticothalamic NMDA gates, relay voltages, category spikes, and
+the layer-6II/relay inputs to TRN. The installed horizontal expectation reaches
+the relay sheet with the intended anisotropy: its combined AMPA peak gate is
+1.140 at the center, 0.690 at the outer horizontal arms, and only 0.050 at the
+outer vertical arms. Nevertheless, every bottom-up-driven relay emits four
+spikes in both conditions, and both conditions produce 264 TRN spikes and the
+same six nonspecific spikes. An isolated zero-initialized TRN cell emits three
+spikes without input, explaining 243 of the network's 264 TRN events as a
+population-wide intrinsic rebound. Repeating the assay with source-peak rather
+than normalized Gaussian kernels reduces both conditions equally to ten relay
+and 188 TRN spikes; it does not restore divergence. Thus the missing Figure 7
+effect is now localized after anisotropic distal feedback delivery but before
+relay soma spike-count modulation. Distal-to-soma coupling and event efficacy
+are the next source-level discriminators; see
+`figure7-pathway-localization-030.yaml`.
+
 The Figure 7 protocol now keeps its Methods 4.9 somatic-current category cue
 separate from the blue category pixel in the recovered Figure 6 training PNG.
 Its predeclared scorer independently tests the approximately 40-Hz match and

@@ -129,6 +129,13 @@ def test_figure7_runner_requires_exactly_one_learned_state_source() -> None:
             condition=MatchCondition.MATCH,
             top_down_current_pA=100.0,
         )
+    with pytest.raises(ValueError, match="not both"):
+        run_figure7_condition(
+            condition=MatchCondition.MATCH,
+            top_down_current_pA=100.0,
+            learned_weights={},
+            use_paper_constrained_reference=True,
+        )
 
 
 def test_exact_relay_clamp_rejects_undefined_full_network_combination() -> None:
@@ -153,10 +160,15 @@ def test_figure7_first_order_condition_runs_through_cpp_standalone(tmp_path) -> 
     )
     assert result.condition is MatchCondition.MATCH
     assert result.network_scope == "first_order"
-    with pytest.raises(ValueError, match="not both"):
-        run_figure7_condition(
-            condition=MatchCondition.MATCH,
-            top_down_current_pA=100.0,
-            learned_weights={},
-            use_paper_constrained_reference=True,
-        )
+
+
+def test_figure7_result_accepts_relay_pathway_diagnostics() -> None:
+    result = _result(MatchCondition.MATCH, 4)
+    assert result.relay_top_down_ampa_peak_by_index == ()
+    assert result.relay_top_down_ampa_integral_ms_by_index == ()
+    assert result.relay_top_down_nmda_peak_by_index == ()
+    assert result.relay_distal_voltage_range_mV_by_index == ()
+    assert result.trn_layer6ii_ampa_peak_by_index == ()
+    assert result.trn_layer6ii_nmda_peak_by_index == ()
+    assert result.trn_relay_ampa_peak_by_index == ()
+    assert result.trn_proximal_voltage_range_mV_by_index == ()

@@ -14,7 +14,9 @@ from smart_robustness.modeldb_projections import MODELDB_FIRST_ORDER
 from smart_robustness.models.currents import biexponential_peak_time_ms
 from smart_robustness.projections import SUPPLEMENTARY_TABLE3
 from smart_robustness.synapses import (
+    GaussianLearningBoundsConvention,
     GaussianWeightConvention,
+    ModifiableWeightInitialization,
     kinness_gap_total_conductance_nS,
     modeldb_topology_pairs,
     topology_pairs,
@@ -96,6 +98,34 @@ def test_spatially_scaled_learning_bounds_remain_an_audit_alternative() -> None:
     assert np.asarray(projection.w_maximum[:]) == pytest.approx(
         float(record.weight) * factor
     )
+
+
+def test_failed_figure6_pathway_candidate_remains_reproducible_but_inactive() -> None:
+    brian.start_scope()
+    sector = build_first_order_chemical_sector(
+        conventions=FirstOrderRuntimeConventions(
+            modifiable_weight_initialization=(
+                ModifiableWeightInitialization.FIGURE6_PATHWAY_SPECIFIC
+            ),
+            gaussian_learning_bounds_convention=(
+                GaussianLearningBoundsConvention.FIGURE6_PATHWAY_SPECIFIC
+            ),
+        ),
+        brian=brian,
+    )
+    bottom_record = MODELDB_FIRST_ORDER.by_id("modeldb112923.projection.035")
+    bottom = sector.projections[bottom_record.id]
+    assert np.asarray(bottom.w_baseline[:]) == pytest.approx(
+        float(bottom_record.asymptotic_weight)
+    )
+
+    top_record = MODELDB_FIRST_ORDER.by_id("modeldb112923.projection.005")
+    top = sector.projections[top_record.id]
+    spatial_factor = np.asarray(top.w[:]) / float(top_record.asymptotic_weight)
+    assert np.asarray(top.w_baseline[:]) == pytest.approx(
+        float(top_record.asymptotic_weight) * spatial_factor
+    )
+    assert np.asarray(top.w_maximum[:]) == pytest.approx(float(top_record.weight))
 
 
 def test_first_order_connected_sector_adds_all_gap_junction_records() -> None:

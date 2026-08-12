@@ -90,6 +90,8 @@ def test_match_and_mismatch_share_a_horizontal_top_down_category() -> None:
     assert mismatch.bottom_up_orientation is BarOrientation.VERTICAL
     assert match.top_down_expectation is BarOrientation.HORIZONTAL
     assert mismatch.top_down_expectation is BarOrientation.HORIZONTAL
+    assert not match.bottom_up_stimulus.include_archived_category_pixel
+    assert not mismatch.bottom_up_stimulus.include_archived_category_pixel
 
 
 def test_match_mismatch_cue_targets_one_layer6ii_cell_and_clears() -> None:
@@ -102,6 +104,13 @@ def test_match_mismatch_cue_targets_one_layer6ii_cell_and_clears() -> None:
     )
     assert np.flatnonzero(drive_pA).tolist() == [40]
     assert drive_pA[40] == pytest.approx(100.0)
+    category = sector.populations[cue.top_down_population]
+    category_port = next(
+        port
+        for port in category.compiled.external_input_ports
+        if port.record_id == cue.bottom_up_stimulus.category_input_record_id
+    )
+    assert not np.any(getattr(category.group, f"{category_port.name}_input_blue")[:])
     clear_match_mismatch_cue(sector, cue, brian=brian)
     assert not np.any(
         sector.populations[cue.top_down_population].group.i_drive_soma[:] / brian.pA

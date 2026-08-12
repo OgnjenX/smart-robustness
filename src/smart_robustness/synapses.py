@@ -15,6 +15,7 @@ class ModifiableWeightInitialization(StrEnum):
 
     SOURCE_SERIALIZED_WEIGHT = "source_serialized_weight"
     ASYMPTOTIC_BASELINE = "asymptotic_baseline"
+    FIGURE6_PATHWAY_SPECIFIC = "figure6_pathway_specific"
 
 
 class GaussianWeightConvention(StrEnum):
@@ -29,6 +30,7 @@ class GaussianLearningBoundsConvention(StrEnum):
 
     PROJECTION_LEVEL = "projection_level"
     SPATIALLY_SCALED = "spatially_scaled"
+    FIGURE6_PATHWAY_SPECIFIC = "figure6_pathway_specific"
 
 
 def connect_conductance(
@@ -374,20 +376,39 @@ def connect_modeldb_projection(
     asymptote = record.asymptotic_weight
     baseline = float(record.weight if asymptote is None else asymptote)
     maximum = float(record.weight)
-    initial = (
-        maximum
-        if not record.modifiable
-        or initialization is ModifiableWeightInitialization.SOURCE_SERIALIZED_WEIGHT
-        else baseline
-    )
+    initialize_at_baseline = initialization is ModifiableWeightInitialization.ASYMPTOTIC_BASELINE
+    if initialization is ModifiableWeightInitialization.FIGURE6_PATHWAY_SPECIFIC:
+        # Figure 6b starts the bottom-up relay->L4 filter at its serialized
+        # Gaussian weights, whereas Figure 6c depicts weak corticothalamic
+        # expectations that grow toward their serialized maxima. These are the
+        # only three adaptive records in the first-order archive.
+        initialize_at_baseline = record.id in {
+            "modeldb112923.projection.005",
+            "modeldb112923.projection.007",
+        }
+    initial = baseline if record.modifiable and initialize_at_baseline else maximum
     synapse.w = initial * spatial_factor
-    if record.modifiable and bounds_convention is GaussianLearningBoundsConvention.PROJECTION_LEVEL:
+    top_down_figure6_bounds = (
+        bounds_convention is GaussianLearningBoundsConvention.FIGURE6_PATHWAY_SPECIFIC
+        and record.id
+        in {"modeldb112923.projection.005", "modeldb112923.projection.007"}
+    )
+    projection_level_bounds = bounds_convention in {
+        GaussianLearningBoundsConvention.PROJECTION_LEVEL,
+        GaussianLearningBoundsConvention.FIGURE6_PATHWAY_SPECIFIC,
+    }
+    if record.modifiable and projection_level_bounds:
         # Equation 25's w0 and upper bound are projection-level parameters,
         # whereas Section 4.9's Gaussian calculates the initialized synaptic
         # weights. A normalized narrow Gaussian can peak above its amplitude;
         # retain that legal initial state by lifting only the affected local
         # upper bounds.
-        synapse.w_baseline = baseline
+        # Figure 6c's weak circular pre-map identifies a Gaussian-scaled local
+        # decorrelation baseline, while its learned peak approaches the
+        # projection-level maximum. A uniform 0.05 tail baseline otherwise
+        # grows inactive directions and erases orientation. Figure 6b retains
+        # the projection-level baseline independently constrained earlier.
+        synapse.w_baseline = baseline * spatial_factor if top_down_figure6_bounds else baseline
         synapse.w_maximum = np.maximum(maximum, initial * spatial_factor)
     else:
         synapse.w_baseline = baseline * spatial_factor

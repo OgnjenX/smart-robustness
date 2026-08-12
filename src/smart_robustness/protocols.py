@@ -102,6 +102,11 @@ class ClassicMatchMismatchCue:
         return ClassicBarStimulus(
             self.bottom_up_orientation,
             duration_ms=self.duration_ms,
+            # Figure 7 supplies its learned category through the explicit
+            # layer-6II somatic-current cue below.  The blue pixel belongs to
+            # the recovered Figure 6 training PNG and must not be applied as
+            # a second, undocumented category input here.
+            include_archived_category_pixel=False,
         )
 
 

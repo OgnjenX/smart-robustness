@@ -241,6 +241,21 @@ narrow outgoing relay maps do not acquire positive horizontal contrast. The
 artifact `figure6-learning-012.yaml` therefore records Figure 6b as passing and
 Figure 6c as failing, rather than claiming the full figure.
 
+A pathway-specific Figure 6 candidate initialized the two corticothalamic
+projections at their Gaussian-scaled asymptotic baselines while retaining
+projection-level maxima. It corrected the sign of both top-down orientation
+contrasts but produced only 0.00032 and 0.00047, far below the predeclared 0.01
+effect-size gate. The exact failed discriminator is retained in
+`figure6-pathway-initialization-016.yaml` and as an inactive, tested runtime
+alternative; it is not part of the classic profile.
+
+The Figure 7 protocol now keeps its Methods 4.9 somatic-current category cue
+separate from the blue category pixel in the recovered Figure 6 training PNG.
+Its predeclared scorer independently tests the approximately 40-Hz match and
+70-Hz mismatch rates of the nonspecific thalamic cell, with a ±10-Hz tolerance
+declared before simulation. Passing this arousal-rate gate will not by itself
+be labeled reproduction of the later qualitative beta/reset claim.
+
 The official input archive also resolves a missing protocol channel:
 `horizontal0.png` and `vertical0.png` contain blue=70 at the central green=120
 pixel. Source-complete routing now drives the central layer-6II category cell

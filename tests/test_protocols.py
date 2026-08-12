@@ -12,8 +12,10 @@ from smart_robustness.protocols import (
     ClassicMatchMismatchCue,
     MatchCondition,
     apply_bar_stimulus,
+    apply_layer6ii_somatic_cue,
     apply_match_mismatch_cue,
     clear_bar_stimulus,
+    clear_layer6ii_somatic_cue,
     clear_match_mismatch_cue,
 )
 
@@ -104,6 +106,30 @@ def test_match_mismatch_cue_targets_one_layer6ii_cell_and_clears() -> None:
     assert not np.any(
         sector.populations[cue.top_down_population].group.i_drive_soma[:] / brian.pA
     )
+
+
+def test_methods_layer6ii_somatic_cue_is_separate_from_archived_blue_input() -> None:
+    brian.start_scope()
+    sector = build_first_order_intrinsic_sector(brian=brian)
+    stimulus = ClassicBarStimulus(
+        BarOrientation.HORIZONTAL, include_archived_category_pixel=False
+    )
+    apply_bar_stimulus(sector, stimulus)
+    category = sector.populations["layer6ii_excitatory_v1"]
+    category_port = next(
+        port
+        for port in category.compiled.external_input_ports
+        if port.record_id == stimulus.category_input_record_id
+    )
+    assert not np.any(getattr(category.group, f"{category_port.name}_input_blue")[:])
+    assert not np.any(stimulus.rgba_grid()[..., 2])
+
+    apply_layer6ii_somatic_cue(sector, current_pA=200.0, brian=brian)
+    drive = np.asarray(category.group.i_drive_soma[:] / brian.pA)
+    assert np.flatnonzero(drive).tolist() == [40]
+    assert drive[40] == pytest.approx(200.0)
+    clear_layer6ii_somatic_cue(sector, brian=brian)
+    assert not np.any(category.group.i_drive_soma[:] / brian.pA)
 
 
 @pytest.mark.parametrize(

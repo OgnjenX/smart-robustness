@@ -33,6 +33,7 @@ class ClassicBarStimulus:
     matrix_input_record_id: str = "modeldb112923.external.010"
     expected_holding_mV: float = -12.0
     expected_relay_rate_hz: float = 40.0
+    include_archived_category_pixel: bool = True
 
     def __post_init__(self) -> None:
         if self.duration_ms <= 0:
@@ -54,7 +55,8 @@ class ClassicBarStimulus:
 
         grid = np.zeros((9, 9, 4), dtype=float)
         grid.reshape(-1, 4)[list(self.active_indices), 1] = self.source_value
-        grid[self.center_index // 9, self.center_index % 9, 2] = self.category_source_value
+        if self.include_archived_category_pixel:
+            grid[self.center_index // 9, self.center_index % 9, 2] = self.category_source_value
         return grid
 
     @property
@@ -123,12 +125,13 @@ def apply_bar_stimulus(sector: FirstOrderSector, stimulus: ClassicBarStimulus) -
         "blue",
         0.0,
     )
-    sector.populations["layer6ii_excitatory_v1"].set_external_input(
-        stimulus.category_input_record_id,
-        "blue",
-        stimulus.category_source_value,
-        indices=[stimulus.center_index],
-    )
+    if stimulus.include_archived_category_pixel:
+        sector.populations["layer6ii_excitatory_v1"].set_external_input(
+            stimulus.category_input_record_id,
+            "blue",
+            stimulus.category_source_value,
+            indices=[stimulus.center_index],
+        )
     # These KInNeSS input gates use connectFromAll onto 1x1 populations, so
     # the five nonzero green source pixels contribute convergently.
     green_sources = np.full(len(stimulus.active_indices), stimulus.source_value)
@@ -160,6 +163,32 @@ def clear_bar_stimulus(sector: FirstOrderSector, stimulus: ClassicBarStimulus) -
     sector.populations["thalamic_matrix"].set_external_input(
         stimulus.matrix_input_record_id, "green", 0.0
     )
+
+
+def apply_layer6ii_somatic_cue(
+    sector: FirstOrderSector,
+    *,
+    current_pA: float,
+    cell_index: int = 40,
+    brian=None,
+) -> None:
+    """Apply the Methods 4.9 top-down cue to one layer-6II soma."""
+
+    if brian is None:
+        import brian2 as brian
+    if current_pA <= 0:
+        raise ValueError("current_pA must be positive")
+    if not 0 <= cell_index < 81:
+        raise ValueError("cell_index must address the 9x9 layer-6II sheet")
+    group = sector.populations["layer6ii_excitatory_v1"].group
+    group.i_drive_soma = 0 * brian.pA
+    group.i_drive_soma[cell_index] = current_pA * brian.pA
+
+
+def clear_layer6ii_somatic_cue(sector: FirstOrderSector, *, brian=None) -> None:
+    if brian is None:
+        import brian2 as brian
+    sector.populations["layer6ii_excitatory_v1"].group.i_drive_soma = 0 * brian.pA
 
 
 def apply_match_mismatch_cue(

@@ -82,6 +82,20 @@ class Figure6MapSummary:
         vertical = float(np.mean(retention[list(VERTICAL_ONLY_INDICES)]))
         return horizontal - vertical
 
+    @property
+    def horizontal_orientation_contrast(self) -> float:
+        """Absolute horizontal-minus-vertical arm contrast, excluding the center.
+
+        Ratio-based retention becomes ill-conditioned in the tiny Gaussian
+        tails.  The published maps are spatial weight maps, so their direct
+        arm contrast is the robust acceptance metric.
+        """
+
+        after = np.asarray(self.after)
+        horizontal = float(np.mean(after[list(HORIZONTAL_ONLY_INDICES)]))
+        vertical = float(np.mean(after[list(VERTICAL_ONLY_INDICES)]))
+        return horizontal - vertical
+
 
 @dataclass(frozen=True, slots=True)
 class Figure6LearningResult:
@@ -94,13 +108,13 @@ class Figure6LearningResult:
 
     @property
     def bottom_up_oriented(self) -> bool:
-        return self.bottom_up.horizontal_retention_advantage > 0
+        return self.bottom_up.horizontal_orientation_contrast > 0
 
     @property
     def top_down_oriented(self) -> bool:
         return (
-            self.top_down_wide.horizontal_retention_advantage > 0
-            and self.top_down_narrow.horizontal_retention_advantage > 0
+            self.top_down_wide.horizontal_orientation_contrast > 0
+            and self.top_down_narrow.horizontal_orientation_contrast > 0
         )
 
 

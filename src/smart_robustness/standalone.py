@@ -54,7 +54,12 @@ def build_and_run_cpp_standalone(
         cwd=project,
         check=True,
     )
-    worker_count = jobs or min(8, os.cpu_count() or 1)
+    # A first-order SMART build has roughly one thousand generated translation
+    # units. Concurrent clang processes can exceed the memory available on a
+    # typical workstation even though each unit is modest, so the reproducible
+    # default is deliberately serial. Callers may opt into parallelism after
+    # measuring their host's available memory.
+    worker_count = jobs or 1
     subprocess.run(
         ["make", f"-j{worker_count}"],
         cwd=project,

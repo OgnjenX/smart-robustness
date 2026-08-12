@@ -1,0 +1,76 @@
+id: intrinsic-cell-source-036
+status: paper-table3-restores-quiescent-trn-and-cortical-recruitment-official-rate-pending
+claim: printed Table 3 intrinsic cells remove the autonomous recovered-executable TRN startup pathology and restore the first-order relay-to-cortex pathway
+evidence_class: [exact-source, causal-discriminator, behavioral]
+sources:
+  paper: Grossberg and Versace 2008, Table 3
+  executable: ModelDB 112923 SMART.nml
+source_difference:
+  trn:
+    paper:
+      soma: {g_k_mS_cm2: 100, g_ca_mS_cm2: null}
+      proximal_dendrite: {g_ca_mS_cm2: 10}
+      distal_dendrite: {g_ca_mS_cm2: 10}
+    modeldb_112923:
+      soma: {g_k_mS_cm2: 80, g_ca_mS_cm2: 100}
+      proximal_dendrite: {g_ca_mS_cm2: 100}
+      distal_dendrite: {g_ca_mS_cm2: 100}
+  paper_internal_conflict:
+    table3: compartment-specific calcium densities, including 10 mS/cm2 in relay and TRN dendrites
+    methods_4_6: 250 mS/cm2 for all neurons with calcium currents
+protocol:
+  common_runtime:
+    dt_ms: 0.01
+    gate_initialization: steady_state_at_initial_voltage
+    calcium_gate_family: modeldb_reticular_112923
+    specific_capacitance_uF_cm2: 1
+  isolated_trn:
+    duration_ms: 30
+    population_size: 1
+    synapses: none
+  match_network:
+    duration_ms: 100
+    network_scope: first-order 9x9 sector
+    top_down_current_pA: 600
+    learned_state: paper-constrained Figure 6c horizontal expectation
+results:
+  isolated_trn:
+    modeldb_112923:
+      spikes: 5
+      spike_times_ms: [1.64, 4.64, 7.37, 9.82, 12.05]
+      soma_voltage_mV: {minimum: -92.0709, maximum: 46.1314, final: -2.0014}
+    paper_table3:
+      spikes: 0
+      spike_times_ms: []
+      soma_voltage_mV: {minimum: -69, maximum: -66.4154, final: -66.4154}
+  match_network_paper_table3:
+    convention_fingerprint: 15602f24e729992877d0db49c2c25b378948579188e6140ab11cfa73cce5a62b
+    nonspecific_rate_hz: 160
+    nonspecific_spikes: 16
+    relay_spikes: 5
+    trn_spikes: 123
+    layer4_spikes: 5
+    category_spikes: 34
+  mismatch_network_paper_table3:
+    convention_fingerprint: 15602f24e729992877d0db49c2c25b378948579188e6140ab11cfa73cce5a62b
+    nonspecific_rate_hz: 160
+    nonspecific_spikes: 16
+    relay_spikes: 5
+    trn_spikes: 123
+    layer4_spikes: 5
+    category_spikes: 34
+assessment:
+  autonomous_trn_removed: true
+  relay_to_layer4_recruitment_restored: true
+  published_match_rate_target_hz: 40
+  published_match_rate_pass: false
+  published_mismatch_rate_target_hz: 70
+  published_mismatch_rate_pass: false
+  match_mismatch_divergence_pass: false
+  classic_profile_promoted: false
+notes:
+  - The runtime now names its intrinsic cell source explicitly; calcium_density_convention alone never selected Table 3 cells.
+  - The ModelDB and Table 3 variants retain the same reticular calcium gate equations for this discriminator, isolating dimensions and densities rather than changing kinetics simultaneously.
+  - Table 3 also differs from SMART.nml for relay, layer 5, layer 6II, nonspecific thalamus, and matrix cells; the paper profile therefore selects the complete Table 3 cell library rather than patching only TRN.
+  - The independent calcium-density convention retains the paper's conflicting Methods 4.6 global-250 statement as a separate discriminator; applying it makes an isolated Table 3 TRN fire 19 spikes in 100 ms instead of one and is not promoted.
+  - The match result was read directly from a completed Brian2 C++ standalone result set after the original Python process was killed during parallel compilation; mismatch was rerun through the normal serial standalone helper.

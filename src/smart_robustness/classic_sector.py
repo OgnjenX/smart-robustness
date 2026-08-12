@@ -21,6 +21,7 @@ from .models.ports import (
     modeldb_injection_ports_for_target,
     modeldb_ports_for_target,
 )
+from .models.table3 import CellSpec, get_cell_spec
 from .partition import population_parts
 from .synapses import connect_modeldb_gap_junction, connect_modeldb_projection
 
@@ -61,11 +62,19 @@ class ProjectionSourceConvention(StrEnum):
     PAPER_SUPPLEMENT_CROSS_CHECKED = "paper_supplement_cross_checked"
 
 
+class IntrinsicCellConvention(StrEnum):
+    """Source selected for dimensions and passive/intrinsic cell parameters."""
+
+    MODELDB_112923 = "modeldb_112923"
+    PAPER_TABLE3 = "paper_table3"
+
+
 @dataclass(frozen=True, slots=True)
 class FirstOrderRuntimeConventions:
     """Complete executable convention profile for one classic-sector run."""
 
     axial_convention: str = "kinness_serialized_edge"
+    intrinsic_cell_convention: str = "modeldb_112923"
     leak_convention: str = "table3_reversal"
     voltage_coordinate: str = "relative_to_table3_leak"
     nak_rate_convention: str = "standard_traub_miles"
@@ -133,6 +142,46 @@ def _resolved_projection_record(record, *, conventions: FirstOrderRuntimeConvent
     return record
 
 
+_TABLE3_CELL_BY_CANONICAL_STEM = {
+    "thalamic_relay": "thalamic_relay",
+    "trn": "trn",
+    "layer5_excitatory": "layer5_excitatory",
+    "layer6ii_excitatory": "layer6ii_excitatory",
+    "layer6i_excitatory": "layer6i_excitatory",
+    "layer4_inhibitory": "layer4_inhibitory",
+    "layer23_excitatory": "layer23_excitatory",
+    "layer4_excitatory": "layer4_excitatory",
+    "layer23_inhibitory": "layer23_inhibitory",
+    "thalamic_interneuron": "thalamic_interneuron",
+    "thalamic_nonspecific": "thalamic_nonspecific",
+    "thalamic_matrix": "thalamic_matrix",
+}
+
+
+def _table3_cell_for_population(canonical_name: str) -> CellSpec:
+    """Resolve V1/V2 executable population names to the shared Table 3 class."""
+
+    stem = canonical_name.removesuffix("_v1").removesuffix("_v2")
+    try:
+        table3_name = _TABLE3_CELL_BY_CANONICAL_STEM[stem]
+    except KeyError as exc:  # pragma: no cover - catalog tests enumerate all populations
+        raise ValueError(f"no Table 3 cell mapping for {canonical_name!r}") from exc
+    return get_cell_spec(table3_name)
+
+
+def resolved_intrinsic_cell(
+    facts: FirstOrderPopulationFacts,
+    *,
+    conventions: FirstOrderRuntimeConventions,
+) -> CellSpec:
+    """Return an unmixed paper or recovered-executable intrinsic cell spec."""
+
+    selected = IntrinsicCellConvention(conventions.intrinsic_cell_convention)
+    if selected is IntrinsicCellConvention.MODELDB_112923:
+        return facts.cell
+    return _table3_cell_for_population(facts.canonical_name)
+
+
 def first_order_population_parameters(
     facts: FirstOrderPopulationFacts,
     *,
@@ -140,6 +189,7 @@ def first_order_population_parameters(
     catalog=MODELDB_FIRST_ORDER,
 ) -> dict[str, Any]:
     has_ahp = facts.ahp_density_mS_cm2 is not None
+    intrinsic_cell = resolved_intrinsic_cell(facts, conventions=conventions)
     zero_input_convention = ZeroSensitivityInputConvention(
         conventions.zero_sensitivity_input_convention
     )
@@ -151,7 +201,7 @@ def first_order_population_parameters(
             port for port in external_input_ports if any(port.sensitivities_mV)
         )
     parameters: dict[str, Any] = {
-        "cell_spec": facts.cell,
+        "cell_spec": intrinsic_cell,
         "cell_class": facts.canonical_name,
         "axial_convention": conventions.axial_convention,
         "leak_convention": conventions.leak_convention,
@@ -185,7 +235,7 @@ def first_order_population_parameters(
         "depletion_recovery_ms": facts.depletion_recovery_ms,
     }
     if has_ahp:
-        soma = facts.cell.soma
+        soma = intrinsic_cell.soma
         parameters.update(
             {
                 "ahp_max_conductance_nS": (

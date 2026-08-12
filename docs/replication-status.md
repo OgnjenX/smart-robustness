@@ -272,6 +272,20 @@ spikes, no relay or layer-4 spikes, and zero nonspecific output. TRN does not
 settle to quiescence, so an undocumented warm-up cannot repair the source-backed
 profile (`figure7-rest-equilibration-035.yaml`).
 
+A direct visual audit of the paper's Table 3 exposed a previously hidden source
+mixture: the connected runtime used complete `SMART.nml` cell specifications,
+while its `calcium_density_convention="table3"` label only meant “use the
+density already present in that selected cell.” The runtime now has an explicit
+`intrinsic_cell_convention` selecting either every recovered executable cell or
+every printed Table 3 cell. This matters causally. With otherwise identical
+reticular channel kinetics and initialization, one isolated executable TRN cell
+fires five autonomous spikes in 30 ms and remains strongly depolarized; the
+Table 3 TRN fires none and settles near -66 mV. In the complete match trial,
+Table 3 cells restore relay-to-layer-4 and category recruitment, although the
+nonspecific cell runs at 160 Hz instead of the published approximate 40 Hz.
+The paper profile is therefore a strong source-backed discriminator, not yet a
+promoted classic baseline (`intrinsic-cell-source-036.yaml`).
+
 The official 100-ms horizontal episode now yields finite activity throughout
 all first-order populations and sculpts the winning layer-4 cell's incoming
 LGN map horizontally when Equation 25's baseline and upper bound are treated as

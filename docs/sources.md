@@ -90,6 +90,14 @@ The manual does not explain the separate `Kernel ring` XML flag.
 
 ## Known source ambiguity
 
+The article is internally inconsistent about T-type calcium density. Table 3
+prints compartment-specific values (including 10 mS/cm² in relay and TRN
+dendrites), whereas Methods 4.6 states after Equation 27 that every neuron with
+calcium current uses 250 mS/cm². Both are executable named conventions; neither
+is silently rewritten into the other. The recovered `SMART.nml` supplies a
+third set of cell-specific densities, including 100 mS/cm² in all three TRN
+compartments.
+
 Table 3 reports a cell-specific `E_L` and identifies it as the leakage-current
 equilibrium potential. The Methods 4.5 text surrounding Equation 20 also states
 `E_leak = 0 mV` while writing the leak current as proportional to `-V`. The

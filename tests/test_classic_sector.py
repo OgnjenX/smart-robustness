@@ -7,12 +7,15 @@ brian = pytest.importorskip("brian2")
 
 from smart_robustness.classic_sector import (
     FirstOrderRuntimeConventions,
+    IntrinsicCellConvention,
     ZeroSensitivityInputConvention,
     build_first_order_chemical_sector,
     build_first_order_intrinsic_sector,
     build_first_order_voltage_clamp_sector,
     figure6_runtime_conventions,
+    first_order_population_parameters,
 )
+from smart_robustness.models.modeldb112923 import first_order_population_facts
 
 
 def test_protocol_voltage_clamp_preserves_sector_and_pins_selected_relay_dendrites() -> None:
@@ -82,11 +85,37 @@ def test_runtime_convention_fingerprint_is_stable_and_sensitive() -> None:
     assert classic.fingerprint == FirstOrderRuntimeConventions().fingerprint
     zero = FirstOrderRuntimeConventions(gate_initialization_convention="zero")
     assert zero.fingerprint != classic.fingerprint
+    paper_cells = FirstOrderRuntimeConventions(intrinsic_cell_convention="paper_table3")
+    assert paper_cells.fingerprint != classic.fingerprint
+
+
+def test_intrinsic_cell_source_is_explicit_and_does_not_mix_trn_densities() -> None:
+    trn = next(fact for fact in first_order_population_facts() if fact.canonical_name == "trn")
+    executable = first_order_population_parameters(
+        trn,
+        conventions=FirstOrderRuntimeConventions(
+            intrinsic_cell_convention=IntrinsicCellConvention.MODELDB_112923.value
+        ),
+    )["cell_spec"]
+    paper = first_order_population_parameters(
+        trn,
+        conventions=FirstOrderRuntimeConventions(
+            intrinsic_cell_convention=IntrinsicCellConvention.PAPER_TABLE3.value
+        ),
+    )["cell_spec"]
+
+    assert executable.soma.g_ca_mS_cm2 == 100
+    assert executable.compartment("proximal_dendrite").g_ca_mS_cm2 == 100
+    assert executable.soma.g_k_mS_cm2 == 80
+    assert paper.soma.g_ca_mS_cm2 is None
+    assert paper.compartment("proximal_dendrite").g_ca_mS_cm2 == 10
+    assert paper.soma.g_k_mS_cm2 == 100
 
 
 def test_figure6_profile_names_the_source_constrained_runtime() -> None:
     conventions = figure6_runtime_conventions()
     assert conventions.gate_initialization_convention == "steady_state_at_initial_voltage"
+    assert conventions.intrinsic_cell_convention == "modeldb_112923"
     assert conventions.zero_sensitivity_input_convention == "omit_all_zero"
     assert conventions.spike_event_coordinate == "absolute_physical"
     assert conventions.spike_event_threshold_mV == 30.0

@@ -75,6 +75,13 @@ SANNDRA's recovered CVS revision history states that voltage-gated currents
 reset to their resting-potential states. Zero initialization remains a useful
 negative control, not an executable-source convention.
 
+The intrinsic-cell source is now independently selectable as complete
+`modeldb_112923` or `paper_table3` specifications. This avoids combining paper
+labels with executable dimensions and densities. The Table 3 profile removes
+the autonomous isolated-TRN startup burst and restores cortical recruitment in
+the first match assay, but the official Figure 7 rate split remains the
+promotion gate (`intrinsic-cell-source-036.yaml`).
+
 The spike detector now exposes its voltage coordinate explicitly. Applying the
 paper's 30-to-0 mV event rule to soma voltage relative to its leak preserves the
 isolated 40-Hz result but fails the connected drive gate (20 Hz per active relay

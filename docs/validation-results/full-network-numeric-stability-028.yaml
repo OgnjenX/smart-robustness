@@ -1,0 +1,25 @@
+schema_version: 1
+validation_id: full-network-numeric-stability-028
+source_model: ModelDB 112923 SMART.nml
+claim: inactive archived plastic synapses initialize without numeric overflow
+status: pass_after_auxiliary_state_fix
+failure_localization:
+  scope: isolated V2 and pulvinar internal circuit
+  first_affected_projection: modeldb112923.projection.085
+  mechanism: eager evaluation of exponential ligand and post-spike expressions
+  previous_initial_timestamps_seconds: -1000000000
+  membrane_states_nonfinite_at_first_warning: false
+correction:
+  inactive_arrival_times_seconds: 0
+  inactive_arrival_amplitudes: 0
+  inactive_post_spike_time: outside_each_projection_depotentiation_window
+  exponential_elapsed_clip_time_constants: [0, 100]
+  maximum_omitted_waveform_tail: 3.720075976020836e-44
+verification:
+  warning_as_error_projection_test: pass
+  isolated_v2_internal_duration_ms: 5
+  runtime_warnings: 0
+  nonfinite_population_compartment_states: 0
+limitations:
+  - This establishes numerical initialization stability, not published match/mismatch behavior.
+  - The complete 100 ms and 1000 ms two-area protocols remain to be run.

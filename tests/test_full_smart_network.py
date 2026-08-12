@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import warnings
 from collections import Counter
 
 import pytest
@@ -51,3 +52,26 @@ def test_full_smart_network_keeps_v1_and_v2_groups_distinct() -> None:
     # Mark every assembled Brian object as part of an executable network. This
     # also prevents misleading "never included in a network" teardown warnings.
     sector.network.run(0 * brian.ms)
+
+
+def test_full_network_projection_selector_is_exact_and_rejects_unknown_ids() -> None:
+    brian.start_scope()
+    selected = frozenset({"modeldb112923.projection.014", "modeldb112923.projection.016"})
+    sector = build_full_smart_network(projection_ids=selected, brian=brian)
+    assert sector.projections.keys() == selected
+    sector.network.run(0 * brian.ms)
+
+    brian.start_scope()
+    with pytest.raises(ValueError, match="unknown full-network projection IDs"):
+        build_full_smart_network(projection_ids=frozenset({"missing"}), brian=brian)
+
+
+def test_inactive_v2_plastic_projection_starts_without_numeric_overflow() -> None:
+    brian.start_scope()
+    brian.prefs.codegen.target = "numpy"
+    sector = build_full_smart_network(
+        projection_ids=frozenset({"modeldb112923.projection.085"}), brian=brian
+    )
+    with warnings.catch_warnings():
+        warnings.simplefilter("error", RuntimeWarning)
+        sector.network.run(0.01 * brian.ms)

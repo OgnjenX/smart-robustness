@@ -312,6 +312,18 @@ partition block and reconstructs all ModelDB topologies without omissions or
 duplicates. Brian2 cannot, however, let multiple presynaptic groups write to
 one summed receptor variable, so partitioning is not used by this clamp assay.
 
+The first nonzero-duration V2/pulvinar integration exposed overflow in inactive
+plastic synapses rather than in membrane dynamics. Their auxiliary timestamps
+had used -1e9-second sentinels; Brian2 eagerly evaluated exponential waveform
+and post-spike branches before multiplying them by zero-amplitude or false
+conditions. Arrival timestamps now start at zero with zero amplitude,
+post-spike timestamps start just outside each serialized learning window, and
+exponential elapsed ratios are capped at 100 time constants (an omitted tail
+below 4e-44). A warning-as-error regression passes, and the complete isolated
+V2 internal circuit remains finite and warning-free for 5 ms. This removes a
+numerical initialization defect but is not yet a behavioral validation; see
+`full-network-numeric-stability-028.yaml`.
+
 The Figure 7 protocol now keeps its Methods 4.9 somatic-current category cue
 separate from the blue category pixel in the recovered Figure 6 training PNG.
 Its predeclared scorer independently tests the approximately 40-Hz match and

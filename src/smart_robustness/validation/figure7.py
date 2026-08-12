@@ -135,9 +135,14 @@ class Figure7ConditionResult:
     trn_spike_times_ms: tuple[float, ...] = ()
     category_spike_indices: tuple[int, ...] = ()
     category_spike_times_ms: tuple[float, ...] = ()
+    v2_layer4_spike_indices: tuple[int, ...] = ()
+    v2_layer4_spike_times_ms: tuple[float, ...] = ()
+    v2_relay_spike_indices: tuple[int, ...] = ()
+    v2_relay_spike_times_ms: tuple[float, ...] = ()
     convention_fingerprint: str | None = None
     top_down_current_pA: float | None = None
     learned_state_provenance: str = "unspecified"
+    network_scope: str = "first_order"
 
     def __post_init__(self) -> None:
         if self.duration_ms <= 0:
@@ -210,6 +215,7 @@ def run_figure7_condition(
     dt_ms: float = 0.01,
     exact_relay_voltage_clamp: bool = False,
     relay_clamp_compartment: str = "proximal_dendrite",
+    include_higher_order_loop: bool = False,
     brian=None,
 ) -> Figure7ConditionResult:
     """Run one source-labeled Figure 7 match or mismatch condition."""
@@ -225,6 +231,7 @@ def run_figure7_condition(
     from ..classic_sector import (
         build_first_order_connected_sector,
         build_first_order_voltage_clamp_sector,
+        build_full_smart_network,
         figure6_runtime_conventions,
     )
 
@@ -236,6 +243,8 @@ def run_figure7_condition(
         top_down_current_pA=top_down_current_pA,
         duration_ms=duration_ms,
     ).bottom_up_stimulus
+    if exact_relay_voltage_clamp and include_higher_order_loop:
+        raise ValueError("the exact relay-clamp audit is only defined for the first-order assay")
     if exact_relay_voltage_clamp:
         sector = build_first_order_voltage_clamp_sector(
             clamped_relay_indices=orientation.active_indices,
@@ -244,6 +253,8 @@ def run_figure7_condition(
             conventions=conventions,
             brian=brian,
         )
+    elif include_higher_order_loop:
+        sector = build_full_smart_network(conventions=conventions, brian=brian)
     else:
         sector = build_first_order_connected_sector(conventions=conventions, brian=brian)
     if use_paper_constrained_reference:
@@ -275,7 +286,20 @@ def run_figure7_condition(
         sector.populations["layer6ii_excitatory_v1"].group,
         name=f"figure7_{condition.value}_category_spikes",
     )
-    sector.network.add(nonspecific, layer4, relay, trn, category)
+    monitors = [nonspecific, layer4, relay, trn, category]
+    v2_layer4 = None
+    v2_relay = None
+    if include_higher_order_loop:
+        v2_layer4 = brian.SpikeMonitor(
+            sector.populations["layer4_excitatory_v2"].group,
+            name=f"figure7_{condition.value}_v2_layer4_spikes",
+        )
+        v2_relay = brian.SpikeMonitor(
+            sector.populations["thalamic_relay_v2"].group,
+            name=f"figure7_{condition.value}_v2_relay_spikes",
+        )
+        monitors.extend((v2_layer4, v2_relay))
+    sector.network.add(*monitors)
     cue = ClassicMatchMismatchCue(
         condition=condition,
         top_down_current_pA=top_down_current_pA,
@@ -297,7 +321,24 @@ def run_figure7_condition(
         trn_spike_times_ms=tuple(float(value) for value in trn.t / brian.ms),
         category_spike_indices=tuple(int(value) for value in category.i),
         category_spike_times_ms=tuple(float(value) for value in category.t / brian.ms),
+        v2_layer4_spike_indices=(
+            () if v2_layer4 is None else tuple(int(value) for value in v2_layer4.i)
+        ),
+        v2_layer4_spike_times_ms=(
+            ()
+            if v2_layer4 is None
+            else tuple(float(value) for value in v2_layer4.t / brian.ms)
+        ),
+        v2_relay_spike_indices=(
+            () if v2_relay is None else tuple(int(value) for value in v2_relay.i)
+        ),
+        v2_relay_spike_times_ms=(
+            ()
+            if v2_relay is None
+            else tuple(float(value) for value in v2_relay.t / brian.ms)
+        ),
         convention_fingerprint=conventions.fingerprint,
         top_down_current_pA=top_down_current_pA,
         learned_state_provenance=provenance,
+        network_scope="full_two_area" if include_higher_order_loop else "first_order",
     )

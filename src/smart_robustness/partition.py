@@ -117,7 +117,7 @@ class PartitionedPopulation:
         return self.parts[0][1].compartments
 
     def set_external_input(self, record_id: str, channel: str, value: float, indices=slice(None)) -> None:
-        selected = None if isinstance(indices, slice) else set(int(index) for index in indices)
+        selected = None if isinstance(indices, slice) else {int(index) for index in indices}
         for partition, population in self.parts:
             if selected is None:
                 local = slice(None)

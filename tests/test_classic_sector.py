@@ -9,8 +9,8 @@ from smart_robustness.classic_sector import (
     FirstOrderRuntimeConventions,
     ZeroSensitivityInputConvention,
     build_first_order_chemical_sector,
-    build_first_order_voltage_clamp_sector,
     build_first_order_intrinsic_sector,
+    build_first_order_voltage_clamp_sector,
     figure6_runtime_conventions,
 )
 

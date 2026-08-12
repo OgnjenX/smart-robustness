@@ -109,6 +109,17 @@ def test_figure7_runner_requires_exactly_one_learned_state_source() -> None:
             condition=MatchCondition.MATCH,
             top_down_current_pA=100.0,
         )
+
+
+def test_exact_relay_clamp_rejects_undefined_full_network_combination() -> None:
+    with pytest.raises(ValueError, match="only defined for the first-order"):
+        run_figure7_condition(
+            condition=MatchCondition.MATCH,
+            top_down_current_pA=600,
+            use_paper_constrained_reference=True,
+            exact_relay_voltage_clamp=True,
+            include_higher_order_loop=True,
+        )
     with pytest.raises(ValueError, match="not both"):
         run_figure7_condition(
             condition=MatchCondition.MATCH,

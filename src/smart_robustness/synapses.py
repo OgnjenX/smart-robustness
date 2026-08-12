@@ -185,13 +185,10 @@ def connect_gap_junction(
     source_indices, target_indices, spatial_factor = topology_pairs(
         record, source_shape=source_shape, target_shape=target_shape
     )
-    # A topology override is already globally filtered. Local indices from two
-    # different partitions are not comparable for biological self-edge tests.
-    if topology_override is None:
-        not_self = source_indices != target_indices
-        source_indices = source_indices[not_self]
-        target_indices = target_indices[not_self]
-        spatial_factor = spatial_factor[not_self]
+    not_self = source_indices != target_indices
+    source_indices = source_indices[not_self]
+    target_indices = target_indices[not_self]
+    spatial_factor = spatial_factor[not_self]
     synapse = brian.Synapses(
         pre.group,
         post.group,
@@ -291,22 +288,24 @@ def connect_modeldb_projection(
         f"last_amplitude = {resource}"
     )
     if port.rise_ms == port.fall_ms:
+        last_ratio = f"clip(last_elapsed/({port.rise_ms}*ms), 0, 100)"
+        previous_ratio = f"clip(previous_elapsed/({port.rise_ms}*ms), 0, 100)"
         last_wave = (
-            f"last_amplitude*exp(1)*last_elapsed/({port.rise_ms}*ms)"
-            f"*exp(-last_elapsed/({port.fall_ms}*ms))"
+            f"last_amplitude*exp(1)*({last_ratio})*exp(-({last_ratio}))"
         )
         previous_wave = (
-            f"previous_amplitude*exp(1)*previous_elapsed/({port.rise_ms}*ms)"
-            f"*exp(-previous_elapsed/({port.fall_ms}*ms))"
+            f"previous_amplitude*exp(1)*({previous_ratio})*exp(-({previous_ratio}))"
         )
     else:
         last_wave = (
             f"last_amplitude*{port.normalization}"
-            f"*(exp(-last_elapsed/({port.fall_ms}*ms))-exp(-last_elapsed/({port.rise_ms}*ms)))"
+            f"*(exp(-clip(last_elapsed/({port.fall_ms}*ms), 0, 100))"
+            f"-exp(-clip(last_elapsed/({port.rise_ms}*ms), 0, 100)))"
         )
         previous_wave = (
             f"previous_amplitude*{port.normalization}"
-            f"*(exp(-previous_elapsed/({port.fall_ms}*ms))-exp(-previous_elapsed/({port.rise_ms}*ms)))"
+            f"*(exp(-clip(previous_elapsed/({port.fall_ms}*ms), 0, 100))"
+            f"-exp(-clip(previous_elapsed/({port.rise_ms}*ms), 0, 100)))"
         )
     model = (
         "w_baseline : 1 (constant)\n"
@@ -432,12 +431,16 @@ def connect_modeldb_projection(
         synapse.w_baseline = baseline * spatial_factor
         synapse.w_maximum = maximum * spatial_factor
     synapse.modifiable = float(record.modifiable)
-    synapse.last_arrival = -1e9 * brian.second
-    synapse.previous_arrival = -1e9 * brian.second
+    # Zero amplitudes make these timestamps inactive. Keeping them finite is
+    # essential because Brian evaluates algebraic branches eagerly: historical
+    # -1e9-second sentinels overflowed exponentials even when multiplied by 0.
+    synapse.last_arrival = 0 * brian.second
+    synapse.previous_arrival = 0 * brian.second
     synapse.last_amplitude = 0
     synapse.previous_amplitude = 0
     if record.modifiable:
-        synapse.last_post_spike = -1e9 * brian.second
+        # Start strictly outside the serialized post-spike learning window.
+        synapse.last_post_spike = -(float(record.depotentiation_ms) + 1.0) * brian.ms
     synapse.delay = float(record.delay_ms or 0.0) * brian.ms
     return synapse
 

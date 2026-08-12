@@ -195,13 +195,25 @@ def first_order_population_parameters(
 def build_full_smart_network(
     *,
     conventions: FirstOrderRuntimeConventions | None = None,
+    projection_ids: frozenset[str] | None = None,
     brian=None,
 ) -> FirstOrderSector:
-    """Assemble all source-backed V1-pulvinar-V2 cells and projections."""
+    """Assemble source-backed V1-pulvinar-V2 cells and selected projections.
+
+    ``projection_ids`` is a diagnostic selector: ``None`` means the complete
+    archived network, while an explicit set must contain only catalog IDs.
+    Population definitions and receptor ports remain unchanged so projection
+    blocks can be isolated without constructing a different neuron model.
+    """
 
     if brian is None:
         import brian2 as brian
     conventions = conventions or FirstOrderRuntimeConventions()
+    known_projection_ids = {record.id for record in MODELDB_FULL.projections}
+    if projection_ids is not None:
+        unknown = projection_ids - known_projection_ids
+        if unknown:
+            raise ValueError(f"unknown full-network projection IDs: {sorted(unknown)}")
     facts = first_order_population_facts() + second_order_population_facts()
     facts_by_name = {fact.canonical_name: fact for fact in facts}
     populations: dict[str, CompartmentalPopulation] = {}
@@ -218,14 +230,16 @@ def build_full_smart_network(
     network = brian.Network(*(population.group for population in populations.values()))
     projections: dict[str, Any] = {}
     for record in MODELDB_FULL.projections:
-        kwargs = dict(
-            record=record,
-            pre=populations[record.source_population],
-            post=populations[record.target_population],
-            source_shape=facts_by_name[record.source_population].shape,
-            target_shape=facts_by_name[record.target_population].shape,
-            brian=brian,
-        )
+        if projection_ids is not None and record.id not in projection_ids:
+            continue
+        kwargs = {
+            "record": record,
+            "pre": populations[record.source_population],
+            "post": populations[record.target_population],
+            "source_shape": facts_by_name[record.source_population].shape,
+            "target_shape": facts_by_name[record.target_population].shape,
+            "brian": brian,
+        }
         if record.kind == "chemical":
             projection = connect_modeldb_projection(
                 **kwargs,

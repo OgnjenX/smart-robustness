@@ -252,6 +252,17 @@ implementation convention without reproducing the official arousal split and
 leaves legacy `ring` geometry as the active topology discriminator
 (`figure7-resting-gates-033.yaml`).
 
+Figure 10 reset now has a dedicated causal validation harness instead of being
+inferred from Figure 7 rates. One persistent first-order network first receives
+a horizontal match and then a vertical-bottom-up/horizontal-top-down mismatch;
+an otherwise identical negative control disconnects only the two nonspecific-
+thalamus-to-layer-5 channels at mismatch onset. The first exact candidate fails
+all reset gates. No layer-4 winner is established during the initial match;
+during mismatch, nonspecific thalamus and layer 5 are silent while layer 6I
+emits 111 spikes and layer 4 emits 29. The intact and disconnected trajectories
+are identical, proving that this late broad activity is not the published
+nonspecific-thalamus→layer-5 reset chain (`figure10-reset-034.yaml`).
+
 The official 100-ms horizontal episode now yields finite activity throughout
 all first-order populations and sculpts the winning layer-4 cell's incoming
 LGN map horizontally when Equation 25's baseline and upper bound are treated as

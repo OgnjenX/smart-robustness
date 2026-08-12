@@ -1,0 +1,72 @@
+id: trn-source-family-recruitment-041
+claim: An internally source-labeled TRN intrinsic family is quiescent without input and recruitable by the Figure 7 layer-6II receptor drive
+status: failed
+date: 2026-08-12
+evidence_class: [exact-source, isolated-cell, causal-discriminator]
+sources:
+  - Grossberg and Versace 2008, Methods 4.5-4.6 and Table 3
+  - ModelDB 112923 SMART.nml Reticular population
+  - Versace et al. 2008 KInNeSS Table 2
+visual_source_check:
+  artifact: tmp/pdfs/kinness-pages/reticular-tau.png
+  result: implementation matches Reticular_tau = A + B / (exp((C+V)/D) + exp((E+V)/F))
+  paper_na_k_result: printed_smart implementation is algebraically identical to Methods Equations 11-19
+protocol:
+  cell: paper Table 3 TRN morphology and channel densities
+  dt_ms: 0.01
+  duration_ms: 50
+  drive_onset_ms: 5
+  observed_network_gate_peaks:
+    layer6ii_ampa: 1.66427
+    layer6ii_nmda: 0.10913
+  receptor_drive_multipliers: [0, 1, 2, 4, 8, 16, 32, 64, 128]
+source_family_matrix:
+  executable_reticular_plus_executable_na_k:
+    relative_na_k_coordinate:
+      autonomous_events: 14
+      driven_events: 15
+      first_autonomous_events_ms: [10.63, 13.56, 16.12, 18.70]
+      first_driven_events_ms: [7.59, 10.41, 12.97, 15.55]
+    absolute_na_k_coordinate:
+      autonomous_events: 5
+      driven_events: 4
+      first_autonomous_events_ms: [18.04, 22.71, 28.00, 34.29]
+      first_driven_events_ms: [14.26, 19.45, 25.51, 33.33]
+  paper_reciprocal_calcium_plus_executable_na_k:
+    relative_na_k_coordinate: {autonomous_events: 5, driven_events: 9}
+    absolute_na_k_coordinate: {autonomous_events: 0, driven_events: 0}
+  executable_reticular_plus_paper_na_k:
+    relative_na_k_coordinate: {autonomous_events: 0, driven_events_at_128x: 0}
+    absolute_na_k_coordinate: {autonomous_events: 0, driven_events_at_128x: 0}
+  paper_reciprocal_calcium_plus_paper_na_k:
+    relative_na_k_coordinate: {autonomous_events: 0, driven_events_at_128x: 0}
+    absolute_na_k_coordinate: {autonomous_events: 0, driven_events_at_128x: 0}
+  complete_methods_zero_leak_coordinate:
+    paper_reciprocal_calcium:
+      autonomous_events: 0
+      driven_events_at_128x: 0
+      final_soma_mV_at_zero_drive: 6.744
+      final_soma_mV_at_128x_drive: 0.098
+    executable_reticular_calcium:
+      autonomous_events: 0
+      driven_events_at_128x: 0
+      final_soma_mV_at_zero_drive: -0.123
+      final_soma_mV_at_128x_drive: -0.037
+recovered_modeldb_cell_followup:
+  observed_drive_multiplier_sweep: [0, 0.25, 0.5, 1, 2, 4, 8]
+  post_startup_events_at_every_multiplier: 0
+  proximal_peak_mV_at_zero_drive: 91.3125
+  soma_range_mV_at_zero_drive: [-39.5960, -34.9193]
+  interpretation: the post-startup dendritic cycle is intrinsic and observed receptor drive cannot recruit the soma
+assessment:
+  quiescent_and_recruitable_candidate_found: false
+  receptor_strength_is_primary_failure: false
+  network_topology_is_primary_failure: false
+  baseline_promoted: false
+notes:
+  - Holding gates constant is a deliberately stronger test than their decaying network waveforms.
+  - The paper-rate variants remain silent even at 128 times both observed gate peaks, excluding ordinary receptor-strength uncertainty as the cause.
+  - The executable-rate variants are intrinsically rhythmic, so advancing their first event with excitation does not establish match-dependent recruitment.
+  - The paper and executable Na/K equations differ materially: SMART.nml uses sodium activation A=0.32 and inactivation V0=17, while the paper prints 0.032 and 27 respectively.
+  - A complete Methods 4.5 zero-leak coordinate with zero membrane initialization and the printed ionic reversals is also silent through 128x drive; in the reciprocal-calcium case the 0-mV excitatory reversal pulls the positive resting soma toward zero.
+  - No unpublished conductance, capacitance, threshold, or weight was fitted or promoted.

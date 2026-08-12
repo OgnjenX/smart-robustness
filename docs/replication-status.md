@@ -544,6 +544,23 @@ dendritic event source is not promoted. Axial interpretation alone is therefore
 rejected as the missing Figure 7 mechanism; see
 `figure7-trn-axial-propagation-040.yaml`.
 
+An isolated receptor-drive matrix further excludes projection strength as the
+missing mechanism. The recovered TRN receives constant layer-6II AMPA/NMDA
+gates from zero through eight times the largest values observed in Figure 7,
+yet produces no post-startup somatic event; its proximal +91.3-mV cycle is
+present even at zero drive. With the complete Table 3 TRN, executable Na/K
+rates instead produce autonomous trains, whereas the paper's printed Na/K
+rates remain silent even under constant gates at 128 times the observed peaks.
+Visual inspection of KInNeSS Table 2 confirms the implemented Reticular-tau
+formula, and Methods 4.5 confirms the paper Na/K transcription. Thus no tested
+official-source family is both quiescent and recruitable, and receptor weights
+must not be fitted around this cellular discrepancy; see
+`trn-source-family-recruitment-041.yaml`.
+The final complete Methods-coordinate check (zero leak reversal, zero membrane
+initialization, and printed ionic/synaptic reversals) is likewise silent through
+128 times observed drive. Its reciprocal-calcium soma rests above zero, making
+the nominal 0-mV excitatory reversal hyperpolarizing rather than recruiting.
+
 A separate coordinate audit tested whether KInNeSS integrates voltage at zero
 relative to each compartment's serialized leak and adds the leak only when
 writing physical voltage. Membrane initialization and the voltage supplied to

@@ -203,6 +203,15 @@ The relay target still passes, but cortex remains silent; this negative result
 is retained in `first-order-bar-008.yaml` rather than attributing Figure 6 to a
 relay-only stimulus.
 
+Figure 6a is now independently reproduced at the qualitative level for all
+five KInNeSS gating families over -30 to +30 ms. Every curve depresses for a
+postsynaptic-before-presynaptic pair, potentiates for the reverse order, has an
+extremum within 1--3 ms, and approaches zero in the tails. The exact protocol
+and extrema are archived in `figure6-timing-001.yaml`. This validation also
+corrected the executable presynaptic gate from `Xpre**2` to the source's
+`Xpre`; Figure 6b/c network weight-map reproduction remains pending cortical
+recruitment.
+
 The KInNeSS statement that reported voltage is shifted by the leak potential
 also makes the spike detector's coordinate ambiguous in a physical-voltage
 implementation. The explicit `relative_to_soma_leak` alternative preserves the

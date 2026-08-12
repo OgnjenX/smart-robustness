@@ -299,7 +299,7 @@ def connect_modeldb_projection(
         if record.learning_rate is None or record.depotentiation_ms is None:
             raise ValueError(f"{record.id}: incomplete ModelDB learning parameters")
         if record.learning_rule == "Presynaptically gated":
-            learning_gate = "pre_signal**2"
+            learning_gate = "pre_signal"
         elif record.learning_rule == "Postsynaptically gated":
             learning_gate = "post_signal**2"
         elif record.learning_rule == "Dual AND gated":

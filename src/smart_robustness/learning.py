@@ -4,6 +4,30 @@ from __future__ import annotations
 
 import numpy as np
 
+LEARNING_RULES: tuple[str, ...] = (
+    "No gate",
+    "Presynaptically gated",
+    "Postsynaptically gated",
+    "Dual AND gated",
+    "Dual OR gated",
+)
+
+
+def learning_gate(pre_signal: float, post_signal: float, learning_rule: str) -> float:
+    """Return the five KInNeSS Table 3 gating functions."""
+
+    if learning_rule == "No gate":
+        return 1.0
+    if learning_rule == "Presynaptically gated":
+        return pre_signal
+    if learning_rule == "Postsynaptically gated":
+        return post_signal**2
+    if learning_rule == "Dual AND gated":
+        return pre_signal * post_signal**2
+    if learning_rule == "Dual OR gated":
+        return pre_signal + post_signal**2
+    raise ValueError(f"unsupported SMART learning rule {learning_rule!r}")
+
 
 def gated_weight_derivative(
     *,
@@ -20,16 +44,9 @@ def gated_weight_derivative(
 
     if not minimum_weight <= baseline_weight <= maximum_weight:
         raise ValueError("learning weights must satisfy minimum <= baseline <= maximum")
-    if learning_rule == "Presynaptically gated":
-        gate = pre_signal**2
-    elif learning_rule == "Postsynaptically gated":
-        gate = post_signal**2
-    elif learning_rule == "Dual AND gated":
-        gate = pre_signal * post_signal**2
-    else:
-        raise ValueError(f"unsupported SMART learning rule {learning_rule!r}")
+    gate = learning_gate(pre_signal, post_signal, learning_rule)
     bounded_drive = (
-        pre_signal * post_signal * (maximum_weight - minimum_weight)
+        pre_signal * post_signal * (maximum_weight - weight)
         + baseline_weight
         - weight
     )
@@ -80,6 +97,34 @@ def postsynaptic_spike_gate(
     )
     result[second] = depression_scale * (
         1.0 - (elapsed[second] - positive_phase_ms) / depotentiation_ms
+    )
+    if np.isscalar(elapsed_ms):
+        return float(result)
+    return result
+
+
+def full_postsynaptic_learning_signal(
+    elapsed_ms: float | np.ndarray,
+    *,
+    depression_scale: float,
+    spike_above_threshold_ms: float,
+    positive_phase_ms: float = 0.1,
+    depotentiation_ms: float = 25.0,
+) -> float | np.ndarray:
+    """Evaluate Equation 6 including its explicit ``V >= V_theta`` branch."""
+
+    if spike_above_threshold_ms <= 0:
+        raise ValueError("spike_above_threshold_ms must be positive")
+    elapsed = np.asarray(elapsed_ms, dtype=float)
+    result = np.zeros_like(elapsed)
+    above = (elapsed >= 0) & (elapsed < spike_above_threshold_ms)
+    result[above] = depression_scale + 1.0
+    after = elapsed >= spike_above_threshold_ms
+    result[after] = postsynaptic_spike_gate(
+        elapsed[after] - spike_above_threshold_ms,
+        depression_scale=depression_scale,
+        positive_phase_ms=positive_phase_ms,
+        depotentiation_ms=depotentiation_ms,
     )
     if np.isscalar(elapsed_ms):
         return float(result)

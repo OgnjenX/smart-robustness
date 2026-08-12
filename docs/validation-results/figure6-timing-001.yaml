@@ -1,0 +1,52 @@
+id: figure6-timing-001
+status: qualitative-reproduction
+claim: five Grossberg-Versace Figure 6a gated STDP timing curves
+protocol:
+  relative_spike_times_ms: [-30, 30]
+  spacing_ms: 1.0
+  presynaptic_rise_ms: 1.0
+  presynaptic_fall_ms: 7.0
+  postsynaptic_above_threshold_ms: 1.0
+  positive_transition_ms: 0.1
+  depotentiation_ms: 25.0
+  initial_weight: 0.3
+  baseline_weight: 0.3
+  maximum_weight: 6.0
+  learning_rate_per_ms: 0.1
+  integration_dt_ms: 0.01
+results:
+  No gate:
+    minimum_delta_weight: -0.0275829265
+    minimum_time_ms: -1.0
+    maximum_delta_weight: 0.0211401428
+    maximum_time_ms: 3.0
+  Presynaptically gated:
+    minimum_delta_weight: -0.0748515390
+    minimum_time_ms: -1.0
+    maximum_delta_weight: 0.1999802152
+    maximum_time_ms: 3.0
+  Postsynaptically gated:
+    minimum_delta_weight: -0.0002635768
+    minimum_time_ms: -2.0
+    maximum_delta_weight: 0.4549472150
+    maximum_time_ms: 2.0
+  Dual AND gated:
+    minimum_delta_weight: -0.0002272336
+    minimum_time_ms: -1.0
+    maximum_delta_weight: 0.4519550684
+    maximum_time_ms: 2.0
+  Dual OR gated:
+    minimum_delta_weight: -0.0748144856
+    minimum_time_ms: -1.0
+    maximum_delta_weight: 0.3939822709
+    maximum_time_ms: 3.0
+assessment:
+  post_before_pre_depression: true
+  pre_before_post_potentiation: true
+  near_coincidence_extrema: true
+  tails_approach_zero: true
+  exact_amplitude_claimed: false
+notes:
+  - Positive relative time denotes a postsynaptic spike after the presynaptic spike.
+  - The one-millisecond above-threshold duration is explicit because the paper provides the voltage branch but not a tabulated action-potential duration.
+  - Curve amplitudes are not asserted as exact because Figure 6a is graphical and no raw trace accompanies the archive.

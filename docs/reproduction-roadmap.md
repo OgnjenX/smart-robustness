@@ -88,6 +88,9 @@ decorrelated baseline. KInNeSS Equations 25/28
 resolve and implement the presynaptically gated, postsynaptically gated, and
 dual-AND-gated variants. Driven protocol validation and bounded long-run
 behavior remain required before plasticity is considered reproduced.
+The complete five-rule Figure 6a timing family now passes qualitative polarity,
+near-coincidence, and tail gates (`figure6-timing-001.yaml`). Network-level
+oriented weight maps remain the learning exit criterion.
 
 Runtime checkpoint: the complete connected first-order sector integrates for
 0.1 ms at 0.01-ms resolution with finite soma voltages and bounded finite

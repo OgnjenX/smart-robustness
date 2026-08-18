@@ -634,6 +634,14 @@ still produces 70-Hz nonspecific output, 20 relay events, and only the common
 therefore rejected without fitting a mismatch run
 (`figure7-topdown-calibration-051.yaml`).
 
+The source-unreported specific capacitance is also no longer an ordinary
+explanation for the missing TRN output. Independent recovered-TRN control and
+constant-drive trials spanning 0.2--50 µF/cm² produce no stable post-startup
+somatic event; the largest soma peak is 24.52 mV, below the published +30-mV
+detector arm threshold, and is not input-selective. The 0.1-µF/cm² condition is
+non-finite and is rejected rather than counted as recruitment
+(`trn-capacitance-recruitment-056.yaml`).
+
 The Figure 16 source audit corrects an earlier roadmap/target transcription:
 the caption sets the V1-layer-2/3-to-V2-layer-4 delay to 10 ms, not 1 ms. The
 recovered `SMART.nml` record independently serializes 5 ms. A named protocol

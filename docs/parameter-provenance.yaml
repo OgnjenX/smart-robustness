@@ -33,6 +33,7 @@ parameters:
     value: required positive runtime parameter; current Figure 8 candidate uses 1 uF/cm2
     status: exploratory
     source: Main article and recovered XML do not state a numeric value
+    note: an isolated recovered-TRN sweep from 0.2 through 50 uF/cm2 found no stable input-selective soma event; see trn-capacitance-recruitment-056.yaml
   model.table3.total_conductance:
     value: channel density * cylindrical lateral membrane area
     status: published-simulator-convention

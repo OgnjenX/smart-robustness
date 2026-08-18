@@ -402,6 +402,14 @@ fails both maps and over-recruits layer 6II. The remaining discrepancy is thus
 the relative execution/timing of projections 032, 039, and 031
 (`figure6-cortical-ei-070.yaml`).
 
+A direct XML ownership audit also rules out a catalog-wide endpoint reversal.
+In SMART.nml, the enclosing population/compartment owns the postsynaptic
+receptor and `refToPopulation` names its presynaptic source; representative
+relay-to-layer-4, layer-4-to-layer-2/3, and interneuron-to-layer-2/3 records all
+retain that convention in Brian2. Projection 022 is therefore a localized
+ModelDB-versus-supplement inconsistency, not evidence for reversing the whole
+network (`modeldb-projection-ownership-071.yaml`).
+
 Two additional falsifications leave the single category teaching event
 unchanged. Removing layer-6II's archived AHP produces bit-identical spike times
 and maps; applying the spike detector in leak-relative coordinates yields only

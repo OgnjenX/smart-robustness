@@ -738,6 +738,16 @@ and Methods 4.10's conflicting 8--10-Hz bands are reported. Synthetic controls
 and the generated-network monitor path pass; official match/mismatch behavior
 has not yet been promoted (`figure14-analysis-runner-060.yaml`).
 
+Both official-duration Figure 14 conditions have now completed. Match peaks at
+55 Hz with gamma power 17.23; mismatch peaks at 15 Hz and gamma falls to 12.40,
+a 28.1% reduction. A visual audit confirms that panels (a)/(b) assert spectral
+peak location while panels (c)/(d) plot band-limited time-domain components;
+an integrated-power comparison across unequal-width bands is not the published
+gate. The reconstructed candidate therefore passes Figure 14's qualitative
+spectral directions. It does not pass the mechanism: both conditions retain
+only the identical 81-event TRN startup volley and 7-Hz nonspecific output
+(`figure14-official-duration-061.yaml`).
+
 A visual source audit also corrected Equation 33: its printed denominator is
 Δx, despite prose describing a second derivative. The classic path now uses
 that paper-literal uV/µm transform. A separately named Δx² implementation is

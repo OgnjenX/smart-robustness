@@ -177,10 +177,16 @@ def assess_figure14_spectra(
         raise ValueError("Figure 14 conditions must use the same histogram bin width")
     if match.hamming_window_ms != mismatch.hamming_window_ms:
         raise ValueError("Figure 14 conditions must use the same Hamming window")
-    match_lower = max(match.low_power, match.middle_caption_power)
-    mismatch_lower = max(mismatch.low_power, mismatch.middle_caption_power)
     return Figure14Assessment(
-        match_gamma_dominant=match.gamma_power > match_lower,
-        mismatch_lower_frequency_dominant=mismatch_lower > mismatch.gamma_power,
+        match_gamma_dominant=(
+            FIGURE14_GAMMA_BAND_HZ[0]
+            <= match.dominant_frequency_hz
+            <= FIGURE14_GAMMA_BAND_HZ[1]
+        ),
+        mismatch_lower_frequency_dominant=(
+            FIGURE14_LOW_BAND_HZ[0]
+            <= mismatch.dominant_frequency_hz
+            < FIGURE14_GAMMA_BAND_HZ[0]
+        ),
         mismatch_gamma_reduced=mismatch.gamma_power < match.gamma_power,
     )

@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from dataclasses import replace
+
 import numpy as np
 import pytest
 
@@ -43,6 +45,20 @@ def test_figure14_assessment_requires_all_caption_directions() -> None:
     assert assessment.mismatch_lower_frequency_dominant
     assert assessment.mismatch_gamma_reduced
     assert assessment.reproduced
+
+
+def test_figure14_peak_gate_is_not_biased_by_unequal_bandwidth() -> None:
+    match = figure14_spectrum_from_histogram(_oscillatory_histogram(40, 5))
+    mismatch = figure14_spectrum_from_histogram(_oscillatory_histogram(15, 5))
+    # Integrated mass can favor a wider band without changing the location of
+    # the spectral peak stated by the caption.
+    mismatch = replace(
+        mismatch,
+        gamma_power=2 * mismatch.middle_caption_power,
+    )
+    assert mismatch.gamma_power > mismatch.middle_caption_power
+    assert mismatch.dominant_frequency_hz == pytest.approx(15)
+    assert assess_figure14_spectra(match, mismatch).mismatch_lower_frequency_dominant
 
 
 def test_figure14_preserves_methods_and_caption_middle_bands() -> None:

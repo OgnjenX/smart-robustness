@@ -161,6 +161,7 @@ class Figure7ConditionResult:
     condition: MatchCondition
     duration_ms: float
     nonspecific_spike_times_ms: tuple[float, ...]
+    layer4_spike_indices: tuple[int, ...] = ()
     layer4_spike_times_ms: tuple[float, ...] = ()
     relay_spike_indices: tuple[int, ...] = ()
     relay_spike_times_ms: tuple[float, ...] = ()
@@ -708,6 +709,7 @@ def run_figure7_condition(
         condition=condition,
         duration_ms=duration_ms,
         nonspecific_spike_times_ms=stimulus_times(nonspecific),
+        layer4_spike_indices=stimulus_indices(layer4),
         layer4_spike_times_ms=stimulus_times(layer4),
         relay_spike_indices=stimulus_indices(relay),
         relay_spike_times_ms=stimulus_times(relay),

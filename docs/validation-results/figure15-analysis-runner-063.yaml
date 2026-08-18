@@ -1,0 +1,43 @@
+schema_version: 1
+validation_id: figure15-analysis-runner-063
+claim: The complete first-order sector can execute and predeclaredly score Figure 15 nearby layer-4 synchrony.
+status: pass_implementation_official_behavior_pending
+date: 2026-08-18
+evidence_class:
+  - approximate-numeric
+  - declared-analysis-convention
+primary_source:
+  citation: Grossberg and Versace 2008
+  location: Figure 15 bottom panels and caption
+source_protocol:
+  cells: two nearby simulated layer-4 cells with overlapping receptive fields
+  cross_correlation_lag_ms: [-180, 180]
+  simulated_peak_hz: 44
+declared_reconstruction:
+  condition: learned horizontal match
+  duration_ms: 1000
+  layer4_pair_indices: [39, 40]
+  pair_relation: adjacent cells in the stimulated horizontal bar
+  spike_bin_ms: 1
+  target_tolerance_hz: 5
+  confidence_limits: omitted because the source does not identify its estimator or surrogate procedure
+implementation:
+  runner: smart_robustness.validation.figure15.run_figure15_condition
+  analysis: smart_robustness.analysis.figure15.figure15_layer4_synchrony
+  scorer: smart_robustness.analysis.figure15.assess_figure15_synchrony
+  sequence:
+    - bin the two spike trains
+    - subtract each mean
+    - compute the full linear cross-correlation
+    - retain lags from -180 through 180 ms
+    - apply a Hamming periodogram to the cross-correlogram
+    - require both cells to spike at least twice and the gamma peak to fall within 44 plus or minus 5 Hz
+verification:
+  command: .venv/bin/pytest -q tests/test_figure15_analysis.py tests/test_figure15_validation.py
+  synthetic_44_hz_pair_peak_hz: 44.3213
+  result: 4 passed
+  lint: pass
+assessment:
+  analysis_predeclared: true
+  complete_sector_runner_ready: true
+  official_local_synchrony_reproduced: false

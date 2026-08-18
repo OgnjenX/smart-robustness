@@ -757,6 +757,13 @@ nonspecific→layer-5-disconnected controls have identical 33-event layer-4 and
 reset, and the current Figure 10 gate remains failed
 (`figure10-current-reset-062.yaml`).
 
+Figure 15 local synchrony now has a source-bound runner and scorer. The
+predeclared pair is adjacent stimulated layer-4 cells 39 and 40; their binned
+spike trains are cross-correlated over the caption's ±180-ms range, then the
+cross-correlogram spectrum is tested against 44±5 Hz. A synthetic 44-Hz pair
+is recovered at 44.32 Hz. The unpublished pair choice and confidence-limit
+method remain explicit reconstruction gaps (`figure15-analysis-runner-063.yaml`).
+
 A visual source audit also corrected Equation 33: its printed denominator is
 Δx, despite prose describing a second derivative. The classic path now uses
 that paper-literal uV/µm transform. A separately named Δx² implementation is

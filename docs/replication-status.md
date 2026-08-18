@@ -929,6 +929,15 @@ remains the better partial reconstruction (`figure8-millimeter-runtime-075.yaml`
 Accordingly, output from M2 is a source/audit benchmark, not evidence that
 the 2008 results have already been replicated.
 
+The published Equation 2 axial profile now passes the isolated Figure 10b
+apical-to-soma propagation gate without a fitted scale: it produces two
+somatic events at source-strength sustained nonspecific drive, whereas the
+later KInNeSS Equation 9 profile produces only a distal spike. In a 30-ms
+first-order discriminator, Equation 2 also restores early layer-4 recruitment
+but does not separate match from mismatch. It therefore remains a
+source-backed candidate, not yet the frozen classic convention; see
+`figure10-axial-source-discriminator-079.yaml`.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

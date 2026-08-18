@@ -1,0 +1,57 @@
+id: figure10-axial-source-discriminator-079
+status: published-equation-candidate-passes-isolated-propagation
+claim: The axial convention does not affect the published Figure 10 apical-dendrite-to-soma propagation result
+sources:
+  paper: Grossberg and Versace 2008 Equation 2 and Figure 10b
+  engine_framework: Versace et al. 2008 KInNeSS expanded manuscript Equations 8-9
+  executable_cell: ModelDB 112923 SMART.nml Layer_5
+protocol:
+  cell: recovered ModelDB Layer_5 three-compartment cell
+  pre_drive_ms: 10
+  drive_ms: 90
+  dt_ms: 0.01
+  distal_constant_gates:
+    nonspecific_ampa: 0.06
+    nonspecific_nmda: 0.01
+  drive_basis: serialized projection 017/018 peak weights
+results:
+  kinness_serialized_edge:
+    soma_events: 0
+    soma_voltage_range_mV: [-73.038897, -66.863467]
+    proximal_voltage_range_mV: [-73.159602, -62.562939]
+    distal_voltage_range_mV: [-86.043675, 41.702298]
+  paper_literal:
+    soma_events: 2
+    soma_event_times_ms: [48.47, 97.48]
+    soma_voltage_range_mV: [-78.699684, 35.595935]
+    proximal_voltage_range_mV: [-72.967879, -59.698604]
+    distal_voltage_range_mV: [-86.041925, 41.794671]
+  symmetric_cable:
+    soma_events: 0
+    soma_voltage_range_mV: [-73.038897, -66.863467]
+network_discriminator:
+  duration_ms: 30
+  dt_ms: 0.02
+  top_down_current_pA: 1000
+  paper_literal_match:
+    nonspecific_events: 1
+    relay_events: 5
+    trn_events: 81
+    layer4_events: 10
+    category_events: 1
+  paper_literal_mismatch:
+    nonspecific_events: 1
+    relay_events: 5
+    trn_events: 81
+    layer4_events: 10
+    category_events: 1
+assessment:
+  paper_literal_isolated_propagation_pass: true
+  paper_literal_restores_early_cortical_recruitment: true
+  paper_literal_restores_match_mismatch_divergence: false
+  paper_literal_promoted_to_classic_baseline: false
+notes:
+  - Figure 10 explicitly reports a stream of somatic action potentials after nonspecific stimulation of the isolated simulated layer-5 apical dendrite.
+  - The paper-literal Equation 2 profile is the first unscaled, published-source axial profile to pass that isolated causal gate.
+  - The later KInNeSS framework equation is a stronger executable-engine provenance source, so the candidate is not promoted on one figure alone.
+  - A short network discriminator shows that paper-literal coupling also restores early layer-4 recruitment but leaves match and mismatch identical.

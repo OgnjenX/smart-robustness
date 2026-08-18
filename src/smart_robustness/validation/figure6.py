@@ -219,6 +219,26 @@ class Figure6TopDownTimingAssessment:
 
 
 @dataclass(frozen=True, slots=True)
+class Figure6CorticalRecruitmentAssessment:
+    """First events along the paper's layer-4 to category pathway."""
+
+    layer4_spike_ms: float | None
+    layer23_spike_ms: float | None
+    layer5_spike_ms: float | None
+    layer6i_spike_ms: float | None
+    layer6ii_spike_ms: float | None
+
+    @property
+    def feedforward_chain_complete(self) -> bool:
+        """Whether the required layer-4 -> 2/3 -> 5 sequence is recruited."""
+
+        sequence = (self.layer4_spike_ms, self.layer23_spike_ms, self.layer5_spike_ms)
+        return all(value is not None for value in sequence) and bool(
+            self.layer4_spike_ms < self.layer23_spike_ms < self.layer5_spike_ms
+        )
+
+
+@dataclass(frozen=True, slots=True)
 class Figure6LearningReachability:
     """Source-bounded check that a reported map is reachable in one episode."""
 
@@ -307,6 +327,31 @@ def assess_figure6_top_down_timing(
         teaching_arrival_ms=arrival,
         preceding_relay_spike_ms=max(preceding) if preceding else None,
         following_relay_spike_ms=min(following) if following else None,
+    )
+
+
+def assess_figure6_cortical_recruitment(
+    result: Figure6LearningResult,
+) -> Figure6CorticalRecruitmentAssessment:
+    """Report recruitment of the cortical chain described in Sections 2.1-2.2.
+
+    Layer-6II also receives the archived blue external prime and layer-6I
+    input, so its activity alone does not prove that layer 4 recruited the
+    layer-2/3 -> layer-5 category pathway.
+    """
+
+    times = result.population_spike_times_ms or {}
+
+    def first(population: str) -> float | None:
+        values = times.get(population, ())
+        return min(values) if values else None
+
+    return Figure6CorticalRecruitmentAssessment(
+        layer4_spike_ms=first("layer4_excitatory_v1"),
+        layer23_spike_ms=first("layer23_excitatory_v1"),
+        layer5_spike_ms=first("layer5_excitatory_v1"),
+        layer6i_spike_ms=first("layer6i_excitatory_v1"),
+        layer6ii_spike_ms=first("layer6ii_excitatory_v1"),
     )
 
 

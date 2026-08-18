@@ -377,6 +377,18 @@ entirely and is again rejected. Equations 25-28 and KInNeSS Table 3 also
 confirm that the extra presynaptic factor is intentional, not an implementation
 error. See `figure6-category-phase-068.yaml`.
 
+An expanded cortical-chain trace now shows that the active profile stops even
+earlier than the delayed teaching event: layer 4 fires five times, but layer
+2/3 and layer 5 emit no events. The central layer-2/3 cell receives a strong
+projection-032 gate (peak 2.015) and its proximal dendrite reaches -42.32 mV,
+while its soma reaches only -62.98 mV. The archived blue=70 layer-6II input is
+independently subthreshold. A paper-literal directional axial candidate
+recruits layers 2/3 and 5, but over-recruits the network and still gives
+negative Figure 6c contrast; KInNeSS Equations 8a-9 support the active symmetric
+total edge-current derivation, so that candidate is rejected. The reusable
+Figure 6 assessment now requires the ordered layer-4 -> 2/3 -> 5 chain rather
+than accepting layer-6II activity alone (`figure6-cortical-chain-069.yaml`).
+
 Two additional falsifications leave the single category teaching event
 unchanged. Removing layer-6II's archived AHP produces bit-identical spike times
 and maps; applying the spike detector in leak-relative coordinates yields only

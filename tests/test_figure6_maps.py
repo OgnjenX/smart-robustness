@@ -8,6 +8,7 @@ from smart_robustness.validation.figure6 import (
     Figure6LearningProtocol,
     Figure6LearningResult,
     Figure6MapSummary,
+    assess_figure6_cortical_recruitment,
     assess_figure6_top_down_timing,
     figure6_weight_reachability,
 )
@@ -123,3 +124,41 @@ def test_top_down_timing_accounts_for_the_archived_axonal_delay() -> None:
     assert assessment.preceding_post_minus_arrival_ms == pytest.approx(-0.47)
     assert assessment.following_post_minus_arrival_ms == pytest.approx(19.72)
     assert assessment.causal_pair_in_learning_window
+
+
+def test_cortical_recruitment_requires_ordered_layer4_layer23_layer5_events() -> None:
+    empty = Figure6MapSummary("projection", "map", (0.0,) * 81, (0.0,) * 81)
+    complete = Figure6LearningResult(
+        "fingerprint",
+        100.0,
+        {},
+        empty,
+        empty,
+        empty,
+        population_spike_times_ms={
+            "layer4_excitatory_v1": (10.0,),
+            "layer23_excitatory_v1": (12.0,),
+            "layer5_excitatory_v1": (14.0,),
+            "layer6i_excitatory_v1": (9.0,),
+            "layer6ii_excitatory_v1": (8.0,),
+        },
+    )
+    assessment = assess_figure6_cortical_recruitment(complete)
+    assert assessment.feedforward_chain_complete
+
+    missing_layer23 = Figure6LearningResult(
+        "fingerprint",
+        100.0,
+        {},
+        empty,
+        empty,
+        empty,
+        population_spike_times_ms={
+            "layer4_excitatory_v1": (10.0,),
+            "layer5_excitatory_v1": (14.0,),
+            "layer6ii_excitatory_v1": (8.0,),
+        },
+    )
+    assert not assess_figure6_cortical_recruitment(
+        missing_layer23
+    ).feedforward_chain_complete

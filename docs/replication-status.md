@@ -625,6 +625,16 @@ central cell for the reported near-electrode distribution. Structural and
 synthetic-current integration pass; the 2-s learned-stimulus run is not yet a
 behavioral reproduction (`figure16-current-monitor-pipeline-047.yaml`).
 
+An executable Figure 16 candidate runner now builds the complete archived
+V1-pulvinar-V2 network, applies only the caption's 10-ms feedforward override,
+requires an explicit learned-weight state, presents the learned horizontal bar
+for the 1-s prestimulus and 1-s recording intervals, and activates current
+monitors only for the recording epoch. A 0.01-ms + 0.01-ms full-network smoke
+run completes and yields both 54-tip fields. The official-duration run and its
+lower-frequency synchrony criterion remain unverified; the available Figure
+6c-shaped weight field is explicitly paper-constrained because the publication
+does not provide its learned arrays (`figure16-candidate-runner-048.yaml`).
+
 A visual source audit also corrected Equation 33: its printed denominator is
 Δx, despite prose describing a second derivative. The classic path now uses
 that paper-literal uV/µm transform. A separately named Δx² implementation is

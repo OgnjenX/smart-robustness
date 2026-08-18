@@ -15,6 +15,7 @@ from smart_robustness.validation.higher_order import (
     apply_figure16_inter_area_delay,
     create_figure16_current_monitors,
     figure16_cortical_field_from_monitors,
+    run_figure16_candidate,
 )
 
 
@@ -24,6 +25,7 @@ def test_figure16_protocol_encodes_caption_values() -> None:
     assert protocol.recording_ms == 1000
     assert protocol.inter_area_delay_ms == 10
     assert protocol.recording_sample_ms == 1
+    assert protocol.integration_dt_ms == 0.01
     assert protocol.frequency_bands_hz[-1] == (20, 100)
 
 
@@ -89,8 +91,20 @@ def test_figure16_delay_override_requires_feedforward_pathway() -> None:
         {"inter_area_delay_ms": 0},
         {"frequency_bands_hz": ((8.0, 4.0),)},
         {"recording_sample_ms": 5.1},
+        {"integration_dt_ms": 0},
+        {"integration_dt_ms": 2, "recording_sample_ms": 1},
     ),
 )
 def test_figure16_protocol_rejects_invalid_values(kwargs) -> None:
     with pytest.raises(ValueError):
         Figure16Protocol(**kwargs)
+
+
+def test_figure16_candidate_requires_one_explicit_learned_state() -> None:
+    with pytest.raises(ValueError, match="learned expectation"):
+        run_figure16_candidate()
+    with pytest.raises(ValueError, match="not both"):
+        run_figure16_candidate(
+            learned_weights={"projection": (1.0,)},
+            use_paper_constrained_reference=True,
+        )

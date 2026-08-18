@@ -1,0 +1,41 @@
+schema_version: 1
+validation_id: figure16-candidate-runner-048
+claim: The complete SMART Figure 16 two-epoch protocol is executable without conflating a smoke run with official behavioral reproduction
+status: full_network_smoke_pass_official_duration_pending
+primary_source:
+  citation: Grossberg and Versace 2008
+  location: Figure 16 caption
+caption_protocol:
+  learned_bottom_up_prestimulus_ms: 1000
+  recording_ms: 1000
+  v1_layer23_to_v2_layer4_delay_ms: 10
+  frequency_bands_hz: [[2, 4], [4, 8], [8, 12], [12, 20], [20, 100]]
+explicit_runtime_conventions:
+  integration_dt_ms: 0.01
+  recording_sample_ms: 1
+  note: Neither value is reported in the paper or recovered SMART.nml; both are fingerprintable runtime choices.
+implementation:
+  function: smart_robustness.validation.higher_order.run_figure16_candidate
+  network: complete recovered V1-pulvinar-V2 projection catalog
+  learned_state_gate: caller snapshot required unless explicitly opting into the paper-constrained Figure 6c approximation
+  stimulus: recovered horizontal five-cell bar held across both epochs
+  recording: all cortical transmembrane-current monitors inactive during prestimulus and active during recording
+verification:
+  focused_tests:
+    command: .venv/bin/pytest -q tests/test_higher_order_validation.py tests/test_lfp.py
+    result: 37 passed
+  full_network_smoke:
+    prestimulus_ms: 0.01
+    recording_ms: 0.01
+    integration_dt_ms: 0.01
+    recording_sample_ms: 0.01
+    result:
+      samples: 1
+      v1_field_shape: [54, 1]
+      v2_field_shape: [54, 1]
+      learned_state_provenance: paper-constrained-figure6c-reference
+limitations:
+  - The official 1000-ms plus 1000-ms candidate has not yet been completed or scored.
+  - The paper-constrained Figure 6c field is underidentified and is not a recovered official learned-weight array.
+  - Official lower-frequency inter-area dominance is not reproduced by this smoke test.
+  - Regional electrode-tip reduction remains source-unreported and must be evaluated as an explicit convention.

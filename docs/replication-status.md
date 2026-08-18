@@ -570,6 +570,27 @@ confirm that the dimensionless `exprel` implementation exactly preserves the
 printed Na/K coefficients. Neither axial scaling nor an OCR/transcription
 error explains the failure (`trn-axial-source-audit-042.yaml`).
 
+A visual audit of the same manuscript now closes the remaining membrane-area
+alternative: both Equation 2's membrane update and Equation 9's axial-density
+conversion divide by `pi*D*L`. Intrinsic conductances, capacitance, synaptic
+ports, and axial currents already use that cylindrical lateral area throughout
+the Brian2 implementation. Adding compartment end caps is therefore rejected
+as non-source-backed (`kinness-membrane-area-049.yaml`). A source-motivated
+full-cell equilibrium initialization was also tested after recovering the
+surviving `TEq_Membrane<T>::equilibrium()` symbol. The recovered TRN has a
+zero-input stationary point near -44.16/-42.13/-40.74 mV, but it is unstable:
+both control and driven cells immediately enter autonomous bursts. This rules
+out complete stationary-point initialization as the missing Figure 7
+convention (`trn-full-equilibrium-050.yaml`).
+
+Figure 7 validation now encodes the caption's causal pathway separately from
+its approximate output rates. A full reproduction must show more active relay
+cells and more TRN events during match than mismatch, in addition to the
+approximately 40-Hz versus 70-Hz nonspecific-thalamic rates. This prevents an
+accidental rate fit from being mislabeled as the published mechanism. The
+current 70/70-Hz candidate fails both pathway-order gates and remains
+unreproduced.
+
 The Figure 16 source audit corrects an earlier roadmap/target transcription:
 the caption sets the V1-layer-2/3-to-V2-layer-4 delay to 10 ms, not 1 ms. The
 recovered `SMART.nml` record independently serializes 5 ms. A named protocol

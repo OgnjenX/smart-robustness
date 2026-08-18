@@ -1,0 +1,28 @@
+id: kinness-membrane-area-049
+status: source-convention-confirmed
+claim: KInNeSS converts membrane-current densities with cylindrical lateral area pi*D*L rather than adding compartment end caps
+evidence_class: [contemporaneous-simulator-specification, visual-equation-audit]
+source:
+  document: Versace et al. 2008, expanded KInNeSS framework manuscript
+  pdf_sha256: 15a7f9166e301c9740e7cff4258810d315bd95b196ea5dff3419c5cc2879f177
+  equation_2:
+    location: manuscript page 10
+    denominator: pi*D*l
+    role: converts summed membrane currents to compartment voltage change
+  equation_9:
+    location: manuscript page 12
+    denominator: pi*D_k*l_k
+    role: converts axial current into receiving-compartment current density
+implementation_audit:
+  intrinsic_channels: lateral area pi*D*L
+  capacitance: specific capacitance times lateral area pi*D*L
+  synaptic_channels: receptor density times lateral area pi*D*L
+  axial_currents: receiving-compartment lateral area pi*D*L
+  implementation_consistent: true
+assessment:
+  end_cap_area_candidate_rejected: true
+  source_convention_closed: true
+notes:
+  - The same lateral-area expression appears independently in Grossberg and Versace Methods 4.2 for receptor-density conversion.
+  - Adding circular end caps would be a non-source-backed change and is not used as a Figure 7 fitting parameter.
+

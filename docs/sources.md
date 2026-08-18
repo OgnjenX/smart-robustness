@@ -61,6 +61,10 @@ Equations 25--28, including the negative equilibrium scale
 `D = -w0 / w_max` when the minimum is zero and the pre-, post-, and dual-gated
 extensions. The locally audited download has SHA-256
 `15a7f9166e301c9740e7cff4258810d315bd95b196ea5dff3419c5cc2879f177`.
+Visual checks of its Equations 2 and 9 independently show the compartment
+membrane area as `pi*D*L`. This confirms that KInNeSS uses cylindrical lateral
+area for capacitance and current-density conversion and excludes circular end
+caps (`validation-results/kinness-membrane-area-049.yaml`).
 
 The archived 2008 download page identifies KInNeSS 0.3.4 RC2 and SANNDRA 1.2.0
 RC3 as the contemporaneous releases. The Internet Archive preserves the

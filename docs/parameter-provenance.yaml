@@ -21,16 +21,17 @@ parameters:
     note: the sources differ in multiple dimensions, leaks, Na/K/Ca densities, and ionic reversals; selecting the paper profile replaces the whole cell specification and paper-wide E_Na=50, E_K=-90, E_Ca=180 rather than patching individual conductances
   model.table3.surface_area:
     value: pi * diameter * length
-    status: derived
-    source: Main article Methods 4.2 receptor-density expression
+    status: published-simulator-convention
+    source: Main article Methods 4.2 receptor-density expression; expanded KInNeSS manuscript Equations 2 and 9
+    note: both KInNeSS equations divide by cylindrical lateral area pi*D*L; compartment end caps are excluded
   model.table3.specific_capacitance:
     value: required positive runtime parameter; current Figure 8 candidate uses 1 uF/cm2
     status: exploratory
     source: Main article and recovered XML do not state a numeric value
   model.table3.total_conductance:
     value: channel density * cylindrical lateral membrane area
-    status: derived
-    source: Main article Table 3 and Methods 4.2
+    status: published-simulator-convention
+    source: Main article Table 3 and Methods 4.2; expanded KInNeSS manuscript Equations 2 and 9
   model.calcium_density_rule:
     value: table3 or methods_global_250; must be selected explicitly
     status: conflicting-published-source

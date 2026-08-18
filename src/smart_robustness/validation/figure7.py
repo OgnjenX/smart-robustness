@@ -228,6 +228,59 @@ class Figure7ArousalAssessment:
         )
 
 
+@dataclass(frozen=True, slots=True)
+class Figure7PathwayAssessment:
+    """Score the causal relay-to-TRN ordering stated in the Figure 7 caption.
+
+    The publication does not report numeric relay or TRN counts.  It does state
+    that a match lets more specific-thalamic cells fire, which in turn makes
+    TRN inhibition stronger than during mismatch.  These are therefore
+    directional gates, kept separate from the approximate 40/70-Hz output
+    targets.
+    """
+
+    match_active_relay_cells: int
+    mismatch_active_relay_cells: int
+    match_trn_spikes: int
+    mismatch_trn_spikes: int
+
+    @property
+    def relay_subset_pass(self) -> bool:
+        return self.match_active_relay_cells > self.mismatch_active_relay_cells
+
+    @property
+    def trn_order_pass(self) -> bool:
+        return self.match_trn_spikes > self.mismatch_trn_spikes
+
+    @property
+    def reproduced_pathway(self) -> bool:
+        return self.relay_subset_pass and self.trn_order_pass
+
+
+@dataclass(frozen=True, slots=True)
+class Figure7ReproductionAssessment:
+    """Combined behavioral and causal validation for the Figure 7 result."""
+
+    arousal: Figure7ArousalAssessment
+    pathway: Figure7PathwayAssessment
+
+    @property
+    def reproduced(self) -> bool:
+        return self.arousal.reproduced_arousal and self.pathway.reproduced_pathway
+
+
+def _validate_figure7_pair(
+    match: Figure7ConditionResult,
+    mismatch: Figure7ConditionResult,
+) -> None:
+    if match.condition is not MatchCondition.MATCH:
+        raise ValueError("match result must use the match condition")
+    if mismatch.condition is not MatchCondition.MISMATCH:
+        raise ValueError("mismatch result must use the mismatch condition")
+    if match.duration_ms != mismatch.duration_ms:
+        raise ValueError("match and mismatch results must use the same duration")
+
+
 def assess_figure7_arousal(
     match: Figure7ConditionResult,
     mismatch: Figure7ConditionResult,
@@ -236,16 +289,42 @@ def assess_figure7_arousal(
 ) -> Figure7ArousalAssessment:
     """Score only the published Figure 7 nonspecific-thalamus rate claim."""
 
-    if match.condition is not MatchCondition.MATCH:
-        raise ValueError("match result must use the match condition")
-    if mismatch.condition is not MatchCondition.MISMATCH:
-        raise ValueError("mismatch result must use the mismatch condition")
+    _validate_figure7_pair(match, mismatch)
     if tolerance_hz < 0:
         raise ValueError("tolerance_hz cannot be negative")
     return Figure7ArousalAssessment(
         match_rate_hz=match.nonspecific_rate_hz,
         mismatch_rate_hz=mismatch.nonspecific_rate_hz,
         tolerance_hz=tolerance_hz,
+    )
+
+
+def assess_figure7_pathway(
+    match: Figure7ConditionResult,
+    mismatch: Figure7ConditionResult,
+) -> Figure7PathwayAssessment:
+    """Score the caption's match-greater-than-mismatch relay/TRN mechanism."""
+
+    _validate_figure7_pair(match, mismatch)
+    return Figure7PathwayAssessment(
+        match_active_relay_cells=len(set(match.relay_spike_indices)),
+        mismatch_active_relay_cells=len(set(mismatch.relay_spike_indices)),
+        match_trn_spikes=len(match.trn_spike_times_ms),
+        mismatch_trn_spikes=len(mismatch.trn_spike_times_ms),
+    )
+
+
+def assess_figure7_reproduction(
+    match: Figure7ConditionResult,
+    mismatch: Figure7ConditionResult,
+    *,
+    tolerance_hz: float = FIGURE7_RATE_TOLERANCE_HZ,
+) -> Figure7ReproductionAssessment:
+    """Require both the published output rates and their stated mechanism."""
+
+    return Figure7ReproductionAssessment(
+        arousal=assess_figure7_arousal(match, mismatch, tolerance_hz=tolerance_hz),
+        pathway=assess_figure7_pathway(match, mismatch),
     )
 
 

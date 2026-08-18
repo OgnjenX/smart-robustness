@@ -16,6 +16,8 @@ from smart_robustness.validation.figure7 import (
     Figure7ConditionResult,
     apply_figure7_learned_state,
     assess_figure7_arousal,
+    assess_figure7_pathway,
+    assess_figure7_reproduction,
     paper_constrained_figure6_expectation,
     run_figure7_condition,
 )
@@ -51,12 +53,67 @@ def test_rate_fit_without_mismatch_disinhibition_is_not_reproduction() -> None:
     assert not assessment.reproduced_arousal
 
 
+def test_figure7_pathway_requires_more_relay_cells_and_trn_spikes_during_match() -> None:
+    match = Figure7ConditionResult(
+        condition=MatchCondition.MATCH,
+        duration_ms=100.0,
+        nonspecific_spike_times_ms=(10.0, 35.0, 60.0, 85.0),
+        relay_spike_indices=(38, 39, 40, 41, 42),
+        relay_spike_times_ms=(10.0, 10.0, 10.0, 10.0, 10.0),
+        trn_spike_indices=(38, 39, 40, 41),
+        trn_spike_times_ms=(12.0, 12.0, 12.0, 12.0),
+    )
+    mismatch = Figure7ConditionResult(
+        condition=MatchCondition.MISMATCH,
+        duration_ms=100.0,
+        nonspecific_spike_times_ms=(5.0, 20.0, 35.0, 50.0, 65.0, 80.0, 95.0),
+        relay_spike_indices=(40,),
+        relay_spike_times_ms=(10.0,),
+        trn_spike_indices=(40,),
+        trn_spike_times_ms=(12.0,),
+    )
+
+    pathway = assess_figure7_pathway(match, mismatch)
+    combined = assess_figure7_reproduction(match, mismatch)
+
+    assert pathway.match_active_relay_cells == 5
+    assert pathway.mismatch_active_relay_cells == 1
+    assert pathway.relay_subset_pass
+    assert pathway.trn_order_pass
+    assert pathway.reproduced_pathway
+    assert combined.reproduced
+
+
+def test_output_rate_fit_without_caption_pathway_is_not_full_reproduction() -> None:
+    match = _result(MatchCondition.MATCH, 4)
+    mismatch = _result(MatchCondition.MISMATCH, 7)
+
+    assessment = assess_figure7_reproduction(match, mismatch)
+
+    assert assessment.arousal.reproduced_arousal
+    assert not assessment.pathway.reproduced_pathway
+    assert not assessment.reproduced
+
+
 def test_figure7_scorer_rejects_swapped_conditions() -> None:
     with pytest.raises(ValueError, match="match result"):
         assess_figure7_arousal(
             _result(MatchCondition.MISMATCH, 4),
             _result(MatchCondition.MISMATCH, 7),
         )
+
+
+def test_figure7_scorers_reject_different_trial_durations() -> None:
+    match = _result(MatchCondition.MATCH, 4)
+    mismatch = Figure7ConditionResult(
+        condition=MatchCondition.MISMATCH,
+        duration_ms=200.0,
+        nonspecific_spike_times_ms=(10.0,) * 14,
+    )
+    with pytest.raises(ValueError, match="same duration"):
+        assess_figure7_arousal(match, mismatch)
+    with pytest.raises(ValueError, match="same duration"):
+        assess_figure7_pathway(match, mismatch)
 
 
 class _Projection:

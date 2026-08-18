@@ -1,0 +1,51 @@
+schema_version: 1
+validation_id: figure7-emission-time-delay-092
+claim: Correct emission-time transmitter sampling restores the published Figure 7 match/mismatch arousal split.
+status: failed-official-reproduction-current-source-profile
+date: 2026-08-19
+sources:
+  paper: Grossberg and Versace 2008, Figure 7 and Methods 4.9
+  executable: ModelDB 112923 SMART.nml
+protocol:
+  simulator: Brian2 2.9.0 C++ standalone
+  duration_ms: 100
+  integration_dt_ms: 0.01
+  top_down_current_pA: 1000
+  learned_state: paper-constrained Figure 6c horizontal expectation
+  axial_convention: kinness_serialized_edge
+  transmitter_semantics: emission-time resource with future arrival timestamp
+  convention_fingerprint: a054e5e36b75765124150157029662c6a5c8a639ee6079b442304607e726cb11
+results:
+  match:
+    nonspecific_events: 7
+    nonspecific_rate_hz: 70
+    relay_events: 18
+    active_relay_cells: 5
+    trn_events: 81
+    layer4_events: 5
+    category_events: 4
+    v1_cortical_events: 121
+  mismatch:
+    nonspecific_events: 7
+    nonspecific_rate_hz: 70
+    relay_events: 20
+    active_relay_cells: 7
+    trn_events: 81
+    layer4_events: 5
+    category_events: 4
+    v1_cortical_events: 121
+published_targets:
+  match_nonspecific_rate_hz: approximately 40
+  mismatch_nonspecific_rate_hz: approximately 70
+assessment:
+  match_rate_pass: false
+  mismatch_rate_pass: true
+  relay_subset_pass: false
+  trn_order_pass: false
+  mismatch_disinhibition_pass: false
+  official_figure7_reproduced: false
+interpretation:
+  - Correct transmitter timing changes the prior 60/60-Hz trajectory to 70/70 Hz but does not create arousal divergence.
+  - Mismatch recruits seven relay cells versus five during match, opposite the paper's match-greater-than-mismatch relay-subset mechanism.
+  - Both conditions retain the same 81-event TRN startup volley and no condition-dependent TRN output.
+  - The mismatch rate meets its numeric tolerance only coincidentally and cannot count as reproduction without the causal split.

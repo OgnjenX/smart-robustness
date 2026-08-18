@@ -1,0 +1,42 @@
+schema_version: 1
+validation_id: figure10-emission-time-delay-093
+claim: Correct emission-time transmitter sampling restores the persistent Figure 10 nonspecific-thalamus-to-layer-5 reset chain.
+status: failed-official-reproduction-current-source-profile
+date: 2026-08-19
+sources:
+  paper: Grossberg and Versace 2008, Figure 10
+  executable: ModelDB 112923 SMART.nml
+protocol:
+  simulator: Brian2 2.9.0 C++ standalone
+  pre_match_duration_ms: 100
+  mismatch_duration_ms: 100
+  integration_dt_ms: 0.01
+  top_down_current_pA: 1000
+  learned_state: paper-constrained Figure 6c horizontal expectation
+  transmitter_semantics: emission-time resource with future arrival timestamp
+  negative_control_disconnect: [modeldb112923.projection.017, modeldb112923.projection.018]
+  convention_fingerprint: a054e5e36b75765124150157029662c6a5c8a639ee6079b442304607e726cb11
+results:
+  intact:
+    pre_match: {layer4_events: 5, nonspecific_events: 7, layer5_events: 0, layer6i_events: 15}
+    mismatch: {layer4_events: 9, nonspecific_events: 0, layer5_events: 0, layer6i_events: 178}
+  disconnected_control:
+    pre_match: {layer4_events: 5, nonspecific_events: 7, layer5_events: 0, layer6i_events: 15}
+    mismatch: {layer4_events: 9, nonspecific_events: 0, layer5_events: 0, layer6i_events: 178}
+  pre_reset_winner_indices: [38, 39, 40, 41, 42]
+  pre_reset_winner_events: 5
+  intact_winner_post_events: 1
+  control_winner_post_events: 1
+  intact_released_alternatives: 8
+  control_released_alternatives: 8
+assessment:
+  pre_reset_winner_pass: true
+  reset_chain_pass: false
+  winner_suppression_pass: false
+  alternative_release_pass: false
+  official_figure10_reproduced: false
+interpretation:
+  - A genuine five-cell pre-mismatch layer-4 winner is established.
+  - Nonspecific thalamus is silent during mismatch and layer 5 never emits an event, so the published reset chain is absent.
+  - Intact and disconnected trajectories are identical, proving that mismatch-phase layer-4 activity is not caused by projections 017/018.
+  - Correct transmitter timing reduces broad post-mismatch layer-4 recruitment relative to artifact 082 but does not restore reset causality.

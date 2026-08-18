@@ -986,6 +986,16 @@ contrast. It therefore fails Figure 6c and remains an explicit paper-source
 discriminator rather than replacing the KInNeSS executable profile
 (`figure6-paper-axial-emission-time-091.yaml`).
 
+Official Figure 7 and Figure 10 assays have now been regenerated under the
+same emission-time transmitter semantics. Figure 7 changes from the previous
+60/60-Hz result to 70/70 Hz; mismatch activates seven relay cells versus five
+during match, while both conditions retain the identical 81-event TRN startup
+volley. Figure 10 still establishes a five-cell layer-4 winner, but mismatch
+has no nonspecific or layer-5 event and is bit-identical to the reset-pathway
+disconnection control. These remain failed official reproductions, not
+baseline passes (`figure7-emission-time-delay-092.yaml` and
+`figure10-emission-time-delay-093.yaml`).
+
 ## Validation gates
 
 A milestone may be marked complete only when:

@@ -1,0 +1,49 @@
+id: figure7-topdown-calibration-051
+status: rejected-source-independent-calibration
+claim: calibrating the Methods 4.9 layer-6II current to a 40-Hz isolated category train restores Figure 7 match inhibition
+evidence_class: [official-archive-input, source-independent-calibration, behavioral]
+source_constraints:
+  paper: Methods 4.9 specifies current injection into one layer-6II soma but gives no amplitude
+  archive:
+    stimulus_pixel: central blue value 70
+    target_channel: ModelDB 112923 layer-6II TD INPUT
+    archive_readme: horizontal and vertical files are the stimuli used in SMART
+isolated_layer6ii_100_ms:
+  dt_ms: 0.01
+  archive_blue_70:
+    spikes: 0
+    soma_voltage_range_mV: [-64.0, -57.260300]
+    proximal_voltage_range_mV: [-64.0, -46.600549]
+  somatic_current_600_pA:
+    spike_times_ms: [4.41, 42.80, 84.01]
+    rate_hz: 30
+  somatic_current_1000_pA:
+    spike_times_ms: [3.06, 28.09, 58.92, 89.57]
+    rate_hz: 40
+full_match_candidate:
+  network_scope: first-order 9x9 sector
+  duration_ms: 100
+  dt_ms: 0.01
+  top_down_current_pA: 1000
+  learned_state: paper-constrained Figure 6c horizontal expectation
+  convention_fingerprint: 977783457264370779b809e468ada7adb40d204788c45ce8ecde7b205b8c3fcf
+  results:
+    nonspecific_rate_hz: 70
+    nonspecific_spike_times_ms: [1.85, 11.40, 64.18, 68.75, 73.92, 80.08, 90.94]
+    relay_events: 20
+    active_relay_indices: [38, 39, 40, 41, 42]
+    trn_events: 81
+    trn_events_after_5_ms: 0
+    category_spike_times_ms: [3.06, 28.09, 58.91, 89.25]
+    layer4_events: 5
+assessment:
+  isolated_category_calibration_pass: true
+  published_match_target_hz: 40
+  match_rate_pass: false
+  post_startup_trn_recruitment_pass: false
+  candidate_promoted: false
+notes:
+  - The 1000-pA value is calibrated only to an isolated category-cell rate and is not reported by the paper.
+  - The stronger top-down train reaches the full network but does not change the failed TRN event stage.
+  - Because the match condition already fails both the published rate and causal pathway, a paired mismatch compile cannot rescue this candidate and was not run.
+

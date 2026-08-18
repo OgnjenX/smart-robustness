@@ -591,6 +591,16 @@ accidental rate fit from being mislabeled as the published mechanism. The
 current 70/70-Hz candidate fails both pathway-order gates and remains
 unreproduced.
 
+The unreported layer-6II current amplitude is no longer a plausible explanation
+for the missing match inhibition. In the isolated active-profile category cell,
+the archived central blue=70 TD input is subthreshold, 600 pA gives three
+events, and 1,000 pA gives four events over 100 ms. The independently calibrated
+1,000-pA cue was then run through the complete first-order match network. It
+still produces 70-Hz nonspecific output, 20 relay events, and only the common
+81-cell TRN startup volley, with no TRN event after 5 ms. The stronger cue is
+therefore rejected without fitting a mismatch run
+(`figure7-topdown-calibration-051.yaml`).
+
 The Figure 16 source audit corrects an earlier roadmap/target transcription:
 the caption sets the V1-layer-2/3-to-V2-layer-4 delay to 10 ms, not 1 ms. The
 recovered `SMART.nml` record independently serializes 5 ms. A named protocol

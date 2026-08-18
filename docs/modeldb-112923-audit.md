@@ -31,6 +31,14 @@ contain 56 serialized projection records, one of which is the self-triggered
 layer-5 AHP channel; the inter-population first-order catalog therefore has 55
 records.
 
+These executable counts also agree with the article's detailed Methods 4.1
+population-size statement and the compartment classes in Table 3. They conflict
+with Methods 4.2's separately printed totals of 732 cells and 2,106
+compartments, which cannot be obtained from the stated population sizes and
+two-/three-compartment cell classes. The archive controls construction; the
+printed totals remain a documented publication anomaly rather than a reason to
+invent a resize.
+
 The complete 24-population topology now builds and executes a zero-duration
 Brian2 network check. This is structural validation only: it does not establish
 that the published match/gamma or mismatch/beta/reset trajectories have been

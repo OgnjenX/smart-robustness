@@ -10,6 +10,11 @@ status_definitions:
   exploratory: selected only to exercise software or formulate a hypothesis
 
 parameters:
+  model.network.first_order_structural_counts:
+    value: 812 cells and 1950 compartments
+    status: official-executable-source-and-paper-internal-derivation
+    source: ModelDB 112923 SMART.nml; Methods 4.1; Table 3
+    note: Methods 4.2 separately prints incompatible totals of 732 cells and 2106 compartments; those totals are preserved as a publication anomaly and do not control construction
   model.table3.catalog:
     value: 12 cell classes and 30 compartments
     status: published

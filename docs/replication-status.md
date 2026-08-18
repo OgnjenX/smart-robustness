@@ -55,6 +55,10 @@ Implemented:
   sizes: 812 cells and 1,950 compartments. This intrinsic-only sector uses the
   executable geometry, edge-serialized KInNeSS axial values, population-specific
   reversal potentials, and the network's 5/20-ms layer-5/layer-6II AHP profile.
+- structural-count reconciliation: Methods 4.1 plus Table 3 independently imply
+  the executable sector's 812 cells and 1,950 compartments; the incompatible
+  732/2,106 totals printed in Methods 4.2 are retained as a documented
+  publication anomaly rather than used to invent a resize.
 - a separate integrity-pinned derived catalog of all 55 executable ModelDB
   projections (51 chemical and four electrical) plus 11 external channels;
 - projection-specific receptor ports for all 51 ModelDB chemical records, including

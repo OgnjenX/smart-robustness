@@ -23,7 +23,7 @@ clearly separate from published values.
 
 | Gate | Required baseline property | Primary source |
 |---|---|---|
-| Network scale | Two six-layer thalamocortical loops; 9×9 cortical and specific-thalamic sheets; 732 neurons, 2,106 compartments, and 17,415 differential equations. | Methods 4.1–4.2 |
+| Network scale | Two six-layer thalamocortical loops. Methods 4.1 and Table 3 imply ten 9×9 sheets plus two singleton nuclei, or 812 cells and 1,950 compartments per sector, matching `SMART.nml`. Methods 4.2 separately prints incompatible totals of 732 cells, 2,106 compartments, and 17,415 differential equations; construction retains the official executable dimensions and reports the anomaly. | Methods 4.1–4.2; Table 3; ModelDB 112923 |
 | Cell structure | Published two- or three-compartment cells with passive axial coupling and the Supplementary Table 3 cell classes. | Table 3; Fig. 17; Methods 4.2 |
 | First-order loop | LGN core/matrix/interneurons, TRN, nonspecific thalamus, and the complete V1 laminar loop. | Fig. 2; Table 2; supplement |
 | Higher-order loop | V1–pulvinar–V2 loop, including higher-order feedback and TRN interactions. | Fig. 3; Table 2 |
@@ -48,6 +48,11 @@ clearly separate from published values.
 
 ## Declared publication ambiguities
 
+- Methods 4.1 plus Table 3 imply 812 cells and 1,950 compartments per sector,
+  matching the official executable archive, whereas Methods 4.2 separately
+  prints 732 cells and 2,106 compartments. The archive-consistent dimensions
+  control construction; `network-structural-counts-055.yaml` records the full
+  reconciliation and preserves the printed totals as a publication anomaly.
 - The attachment calls the connection catalog “Supplementary Table 3,” while
   the main article calls it “Supplementary Table 4.” They are the same source.
 - Methods 4.10 describes 2–8, 8–10, and 20–70 Hz bands, whereas the Figure 14

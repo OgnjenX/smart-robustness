@@ -40,6 +40,7 @@ def test_figure10_assessment_requires_causal_suppression_and_release() -> None:
     control = _condition(enabled=False, post_indices=(40, 40, 41))
     assessment = assess_figure10_reset(intact, control)
     assert assessment.pre_reset_winner_index == 40
+    assert assessment.pre_reset_winner_indices == (40,)
     assert assessment.pre_reset_winner_pass
     assert assessment.reset_chain_pass
     assert assessment.winner_suppression_pass
@@ -53,6 +54,20 @@ def test_figure10_assessment_rejects_missing_pre_reset_winner() -> None:
     assessment = assess_figure10_reset(intact, control)
     assert not assessment.pre_reset_winner_pass
     assert not assessment.reproduced_reset
+
+
+def test_figure10_assessment_treats_the_pre_reset_bar_as_one_assembly() -> None:
+    pre = (38, 39, 40, 41, 42)
+    intact = _condition(enabled=True, pre_indices=pre, post_indices=(10, 11))
+    control = _condition(enabled=False, pre_indices=pre, post_indices=(38, 40, 10))
+    assessment = assess_figure10_reset(intact, control)
+    assert assessment.pre_reset_winner_indices == pre
+    assert assessment.pre_reset_winner_spikes == 5
+    assert assessment.intact_winner_post_spikes == 0
+    assert assessment.control_winner_post_spikes == 2
+    assert assessment.intact_released_alternatives == 2
+    assert assessment.control_released_alternatives == 1
+    assert assessment.reproduced_reset
 
 
 def test_figure10_assessment_rejects_nonidentical_pre_states() -> None:

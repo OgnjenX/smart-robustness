@@ -1,0 +1,73 @@
+schema_version: 1
+validation_id: figure10-current-reset-062
+claim: The current source-constrained first-order candidate reproduces the Figure 10 mismatch-reset chain and causally differs from a nonspecific-thalamus-to-layer-5 disconnection.
+status: failed-current-candidate
+date: 2026-08-18
+evidence_class:
+  - structural
+  - qualitative
+  - causal-negative-control
+primary_source:
+  citation: Grossberg and Versace 2008
+  locations: [Figure 10, Results 2.5]
+protocol:
+  simulator: Brian2 2.9.0 C++ standalone
+  pre_match:
+    duration_ms: 100
+    bottom_up: horizontal
+    top_down: horizontal
+  mismatch:
+    duration_ms: 100
+    bottom_up: vertical
+    top_down: horizontal
+  integration_dt_ms: 0.01
+  top_down_current_pA: 1000
+  top_down_current_status: independently calibrated source-unreported value
+  learned_state: paper-constrained-figure6c-reference
+  runtime_convention_fingerprint: 977783457264370779b809e468ada7adb40d204788c45ce8ecde7b205b8c3fcf
+  negative_control:
+    intervention_time_ms: 100
+    disconnected_projections:
+      - modeldb112923.projection.017
+      - modeldb112923.projection.018
+    target_pathway: nonspecific thalamus to layer-5 AMPA and NMDA
+pre_reset_assembly:
+  layer4_indices: [38, 39, 40, 41, 42]
+  total_spikes: 5
+  interpretation: horizontal five-cell bar assembly; scorer does not collapse it to one argmax cell
+results:
+  intact:
+    layer4_pre_spikes: 5
+    layer4_post_spikes: 33
+    layer4_post_active_cells: 33
+    pre_reset_assembly_post_spikes: 1
+    released_alternative_cells: 32
+    nonspecific_pre_spikes: 7
+    nonspecific_post_spikes: 0
+    layer5_pre_spikes: 0
+    layer5_post_spikes: 0
+    layer6i_pre_spikes: 15
+    layer6i_post_spikes: 179
+  disconnected_control:
+    layer4_pre_spikes: 5
+    layer4_post_spikes: 33
+    layer4_post_active_cells: 33
+    pre_reset_assembly_post_spikes: 1
+    released_alternative_cells: 32
+    nonspecific_pre_spikes: 7
+    nonspecific_post_spikes: 0
+    layer5_pre_spikes: 0
+    layer5_post_spikes: 0
+    layer6i_pre_spikes: 15
+    layer6i_post_spikes: 179
+  complete_layer4_event_identity: true
+assessment:
+  pre_reset_assembly_pass: true
+  reset_chain_pass: false
+  winner_suppression_pass: false
+  alternative_release_pass: false
+  reproduced_reset: false
+interpretation:
+  - Broad post-mismatch layer-4 and layer-6I activity is present but cannot be attributed to the published reset pathway.
+  - Nonspecific thalamus and layer 5 are silent after mismatch, and disconnecting their link changes no recorded event.
+  - This is consistent with the unresolved Figure 7 TRN/nonspecific event failure and prevents freezing the classic baseline.

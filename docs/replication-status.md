@@ -748,6 +748,15 @@ spectral directions. It does not pass the mechanism: both conditions retain
 only the identical 81-event TRN startup volley and 7-Hz nonspecific output
 (`figure14-official-duration-061.yaml`).
 
+The Figure 10 reset assay has also been rerun under the current conventions and
+1,000-pA cue. The horizontal five-cell layer-4 assembly is now scored as one
+pre-reset representation rather than collapsed to an argmax cell. During
+mismatch, nonspecific thalamus and layer 5 emit no events; intact and
+nonspecific→layer-5-disconnected controls have identical 33-event layer-4 and
+179-event layer-6I trajectories. Broad activity is therefore not a causal
+reset, and the current Figure 10 gate remains failed
+(`figure10-current-reset-062.yaml`).
+
 A visual source audit also corrected Equation 33: its printed denominator is
 Δx, despite prose describing a second derivative. The classic path now uses
 that paper-literal uV/µm transform. A separately named Δx² implementation is

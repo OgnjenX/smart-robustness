@@ -1,5 +1,5 @@
 id: figure10-reset-034
-status: failed-official-reproduction-causal-scaffold-retained
+status: superseded-by-current-runtime-figure10-current-reset-062
 source_model: ModelDB 112923 SMART.nml
 claim: mismatch-driven nonspecific-thalamus to layer-5 to layer-6I activity suppresses the current layer-4 winner and releases alternatives
 evidence_class: [structural, qualitative]
@@ -32,6 +32,7 @@ assessment:
   alternative_release_pass: false
   reproduced_reset: false
 notes:
+  - This older 600-pA candidate is superseded by figure10-current-reset-062.yaml, which uses the current source-constrained runtime and independently calibrated 1000-pA cue.
   - Figure 10 supplies no unique phase duration, category-current amplitude, reset latency, or winner probability; these candidate protocol values are labeled rather than treated as exact-source parameters.
   - The intact and disconnected trajectories are identical because nonspecific thalamus and layer 5 are silent during mismatch.
   - Late broad layer-4 activity is preceded by layer-6I activity but is not caused by the proposed nonspecific-thalamus to layer-5 reset pathway.

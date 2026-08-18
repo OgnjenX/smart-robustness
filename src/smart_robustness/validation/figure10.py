@@ -64,6 +64,7 @@ class Figure10ResetAssessment:
     """Predeclared qualitative and causal acceptance gates for Figure 10."""
 
     pre_reset_winner_index: int | None
+    pre_reset_winner_indices: tuple[int, ...]
     pre_reset_winner_spikes: int
     intact_winner_post_spikes: int
     control_winner_post_spikes: int
@@ -75,7 +76,7 @@ class Figure10ResetAssessment:
 
     @property
     def pre_reset_winner_pass(self) -> bool:
-        return self.pre_reset_winner_index is not None and self.pre_reset_winner_spikes > 0
+        return bool(self.pre_reset_winner_indices) and self.pre_reset_winner_spikes > 0
 
     @property
     def reset_chain_pass(self) -> bool:
@@ -120,23 +121,23 @@ def assess_figure10_reset(
     control_pre = disconnected_control.layer4_counts(after_mismatch=False)
     if not np.array_equal(intact_pre, control_pre):
         raise ValueError("reset-pathway control changed the pre-mismatch layer-4 state")
-    winner: int | None = None
-    winner_spikes = int(np.max(intact_pre))
-    if winner_spikes > 0:
-        winner = int(np.argmax(intact_pre))
+    winner_indices = tuple(int(value) for value in np.flatnonzero(intact_pre > 0))
+    winner = winner_indices[0] if winner_indices else None
+    winner_spikes = int(np.sum(intact_pre[list(winner_indices)])) if winner_indices else 0
     intact_post = intact.layer4_counts(after_mismatch=True)
     control_post = disconnected_control.layer4_counts(after_mismatch=True)
-    if winner is None:
+    if not winner_indices:
         intact_winner = control_winner = 0
         intact_alternatives = control_alternatives = 0
     else:
-        intact_winner = int(intact_post[winner])
-        control_winner = int(control_post[winner])
-        alternative_mask = np.arange(81) != winner
+        intact_winner = int(np.sum(intact_post[list(winner_indices)]))
+        control_winner = int(np.sum(control_post[list(winner_indices)]))
+        alternative_mask = ~np.isin(np.arange(81), winner_indices)
         intact_alternatives = int(np.count_nonzero(intact_post[alternative_mask]))
         control_alternatives = int(np.count_nonzero(control_post[alternative_mask]))
     return Figure10ResetAssessment(
         pre_reset_winner_index=winner,
+        pre_reset_winner_indices=winner_indices,
         pre_reset_winner_spikes=winner_spikes,
         intact_winner_post_spikes=intact_winner,
         control_winner_post_spikes=control_winner,

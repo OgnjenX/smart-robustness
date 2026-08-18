@@ -180,6 +180,129 @@ class TrnRecruitmentResult:
         return len(self.post_drive_spike_times_ms)
 
 
+@dataclass(frozen=True, slots=True)
+class Layer5PropagationProtocol:
+    """Isolated Figure 10 apical-dendrite-to-soma propagation assay."""
+
+    pre_drive_ms: float = 10.0
+    drive_ms: float = 90.0
+    dt_ms: float = 0.02
+    nonspecific_ampa_gate: float = 0.06
+    nonspecific_nmda_gate: float = 0.01
+    drive_multiplier: float = 1.0
+    axial_conductance_scale: float = 1.0
+
+    def __post_init__(self) -> None:
+        values = (
+            self.pre_drive_ms,
+            self.drive_ms,
+            self.dt_ms,
+            self.nonspecific_ampa_gate,
+            self.nonspecific_nmda_gate,
+            self.drive_multiplier,
+            self.axial_conductance_scale,
+        )
+        if not all(np.isfinite(value) for value in values):
+            raise ValueError("layer-5 propagation protocol values must be finite")
+        if self.pre_drive_ms < 0 or self.drive_ms <= 0 or self.dt_ms <= 0:
+            raise ValueError("layer-5 propagation durations and dt must be positive")
+        if self.nonspecific_ampa_gate < 0 or self.nonspecific_nmda_gate < 0:
+            raise ValueError("layer-5 propagation gates cannot be negative")
+        if self.drive_multiplier < 0 or self.axial_conductance_scale <= 0:
+            raise ValueError("layer-5 propagation scales must be positive")
+
+
+@dataclass(frozen=True, slots=True)
+class Layer5PropagationResult:
+    spike_times_ms: tuple[float, ...]
+    post_drive_spike_times_ms: tuple[float, ...]
+    soma_voltage_range_mV: tuple[float, float]
+    proximal_voltage_range_mV: tuple[float, float]
+    distal_voltage_range_mV: tuple[float, float]
+    finite: bool
+    convention_fingerprint: str
+    axial_conductance_scale: float
+    drive_multiplier: float
+
+
+def run_layer5_propagation_condition(
+    *,
+    conventions=None,
+    protocol: Layer5PropagationProtocol | None = None,
+    brian=None,
+) -> Layer5PropagationResult:
+    """Apply recovered nonspecific AMPA/NMDA gates to one SMART layer-5 cell."""
+
+    if brian is None:
+        import brian2 as brian
+    from ..classic_sector import figure6_runtime_conventions, first_order_population_parameters
+    from ..models.modeldb112923 import first_order_population_facts
+
+    protocol = protocol or Layer5PropagationProtocol()
+    conventions = conventions or figure6_runtime_conventions()
+    fact = next(
+        fact
+        for fact in first_order_population_facts()
+        if fact.canonical_name == "layer5_excitatory_v1"
+    )
+    params = first_order_population_parameters(fact, conventions=conventions)
+    brian.start_scope()
+    brian.defaultclock.dt = protocol.dt_ms * brian.ms
+    population = create_compartmental_hh_population(
+        name="isolated_layer5_propagation", size=1, params=params, brian=brian
+    )
+    for parameter in population.compiled.axial_parameter_names:
+        setattr(
+            population.group,
+            parameter,
+            getattr(population.group, parameter) * protocol.axial_conductance_scale,
+        )
+    spikes = brian.SpikeMonitor(population.group)
+    voltage = brian.StateMonitor(
+        population.group,
+        ("v_soma", "v_proximal_dendrite", "v_distal_dendrite"),
+        record=True,
+    )
+    network = brian.Network(population.group, spikes, voltage)
+    if protocol.pre_drive_ms:
+        network.run(protocol.pre_drive_ms * brian.ms)
+    population.group.port_002_gate = (
+        protocol.nonspecific_ampa_gate * protocol.drive_multiplier
+    )
+    population.group.port_003_gate = (
+        protocol.nonspecific_nmda_gate * protocol.drive_multiplier
+    )
+    network.run(protocol.drive_ms * brian.ms)
+
+    spike_times = np.asarray(spikes.t / brian.ms, dtype=float)
+    times = np.asarray(voltage.t / brian.ms, dtype=float)
+    selected = times >= protocol.pre_drive_ms
+    traces = tuple(
+        np.asarray(getattr(voltage, name)[0] / brian.mV, dtype=float)[selected]
+        for name in ("v_soma", "v_proximal_dendrite", "v_distal_dendrite")
+    )
+    finite = all(np.all(np.isfinite(trace)) for trace in traces)
+
+    def voltage_range(trace: np.ndarray) -> tuple[float, float]:
+        if not finite:
+            return (float("nan"), float("nan"))
+        return (float(np.min(trace)), float(np.max(trace)))
+
+    return Layer5PropagationResult(
+        spike_times_ms=tuple(float(value) for value in spike_times),
+        post_drive_spike_times_ms=tuple(
+            float(value) for value in spike_times if value >= protocol.pre_drive_ms
+        ),
+        soma_voltage_range_mV=voltage_range(traces[0]),
+        proximal_voltage_range_mV=voltage_range(traces[1]),
+        distal_voltage_range_mV=voltage_range(traces[2]),
+        finite=finite,
+        convention_fingerprint=conventions.fingerprint,
+        axial_conductance_scale=protocol.axial_conductance_scale,
+        drive_multiplier=protocol.drive_multiplier,
+    )
+
+
 def run_trn_recruitment_condition(
     *,
     driven: bool,

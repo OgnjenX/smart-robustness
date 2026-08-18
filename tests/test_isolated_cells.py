@@ -4,9 +4,11 @@ import pytest
 from smart_robustness.validation.isolated_cells import (
     Figure8Protocol,
     IsolatedCellTrace,
+    Layer5PropagationProtocol,
     TrnRecruitmentProtocol,
     assess_figure8,
     figure8_source_parameters,
+    run_layer5_propagation_condition,
     run_trn_recruitment_condition,
 )
 
@@ -71,6 +73,33 @@ def test_trn_recruitment_protocol_rejects_invalid_values() -> None:
         TrnRecruitmentProtocol(layer6ii_ampa_gate=-1)
     with pytest.raises(ValueError, match="scales"):
         TrnRecruitmentProtocol(axial_conductance_scale=0)
+
+
+def test_layer5_propagation_protocol_rejects_invalid_values() -> None:
+    with pytest.raises(ValueError, match="durations"):
+        Layer5PropagationProtocol(drive_ms=0)
+    with pytest.raises(ValueError, match="gates"):
+        Layer5PropagationProtocol(nonspecific_ampa_gate=-1)
+    with pytest.raises(ValueError, match="scales"):
+        Layer5PropagationProtocol(axial_conductance_scale=0)
+
+
+def test_layer5_propagation_runner_reports_source_cell_voltage_ranges() -> None:
+    brian = pytest.importorskip("brian2")
+    brian.prefs.codegen.target = "numpy"
+    result = run_layer5_propagation_condition(
+        protocol=Layer5PropagationProtocol(
+            pre_drive_ms=0.01,
+            drive_ms=0.01,
+            dt_ms=0.01,
+            drive_multiplier=0,
+        ),
+        brian=brian,
+    )
+    assert result.finite
+    assert result.convention_fingerprint
+    assert result.axial_conductance_scale == pytest.approx(1)
+    assert result.drive_multiplier == pytest.approx(0)
 
 
 def test_trn_recruitment_runner_reports_independent_control_trial() -> None:

@@ -764,6 +764,15 @@ nonspecific→layer-5-disconnected controls have identical 33-event layer-4 and
 reset, and the current Figure 10 gate remains failed
 (`figure10-current-reset-062.yaml`).
 
+An isolated source-cell assay now localizes a second Figure 10 failure. Holding
+the recovered nonspecific AMPA/NMDA peak gates on the layer-5 distal apical
+compartment generates a local +41.57-mV action potential but no somatic event;
+the soma reaches only -66.86 mV. Sixteen times the archived drive is needed for
+one output event. A 2x axial diagnostic also yields one soma event, but it is
+source-unreported, non-monotonic at larger factors, and cannot repair the full
+trial's independently silent mismatch nonspecific thalamus. Neither change is
+promoted (`figure10-layer5-propagation-067.yaml`).
+
 Figure 15 local synchrony now has a source-bound runner and scorer. The
 predeclared pair is adjacent stimulated layer-4 cells 39 and 40; their binned
 spike trains are linearly cross-correlated, the caption's ±180-ms range is

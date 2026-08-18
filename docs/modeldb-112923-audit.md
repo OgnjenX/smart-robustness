@@ -185,10 +185,13 @@ rather than 6 kOhm*cm.
   child-edge resistance used in both directions, the resulting total currents
   are exactly equal and opposite even though their density effects differ by
   receiving-compartment area.
-- The dedicated Figure 8 cell is not the Table 3 relay cell. It uses soma
+- The dedicated Figure 8 relay cell is not the Table 3 relay cell. It is
+  embedded in a four-population legacy file containing Reticular, PBN, Relay,
+  and Layer VI populations (PBN has no serialized connection). It uses soma
   geometry 0.2×0.4 mm, 50/30 mS/cm² Na/K, and 250 mS/cm² T-current in soma
   and both dendrites. Its leak density is not serialized and remains a required
-  KInNeSS-default/calibration input.
+  KInNeSS-default/calibration input. The file serializes neither the 0.3 nA
+  pulse nor the hyperpolarizing clamp described by the Figure 8 caption.
 - The dedicated AHP/ACh file uses an AHP channel density of 0.1 mS/cm²,
   reversal -90 mV, AHP rise/fall 80/150 ms, connection weight 4.5, and 3 ms
   delay. These differ from the paper's 80/100 ms text and were not recoverable
@@ -213,9 +216,12 @@ voltage, the source-specific cell passes the predeclared hyperpolarized burst
 criterion (two early spikes and no late spikes) under the current candidate
 protocol. The depolarized condition still emits only one qualifying action
 potential and fails the tonic-train criterion. This is partial validation, not
-an official Figure 8 reproduction. Remaining audit targets are the legacy
-clamp timing, membrane-capacitance default, and voltage-gate coordinate
-handling.
+an official Figure 8 reproduction. A fresh hash-pinned archive audit confirms
+that clamp voltage/timing, pulse duration, membrane capacitance, and leak
+density are absent rather than overlooked. A coherent internal-zero voltage
+profile, near-zero leak, and a labeled legacy calcium-unit candidate also fail
+the joint tonic/burst gate; see
+`validation-results/figure8-archive-protocol-audit-078.yaml`.
 
 A subsequent equation-by-equation audit confirms that both archived thalamic
 T-current families are transcribed faithfully in Brian2, including their

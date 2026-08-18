@@ -43,6 +43,8 @@ backup remains downloadable at
 
 - `SMART.nml`, the two-area KInNeSS network;
 - `Ca_rebound.xml`, the dedicated thalamic rebound network used for Figure 8;
+  it contains Reticular, PBN, Relay, and Layer VI populations but no serialized
+  current-pulse or voltage-clamp experiment schedule;
 - `Layer_5_and_Maynert_AHP_ACh.nml`, the dedicated AHP/ACh network;
 - horizontal and vertical stimulus files and the author README.
 

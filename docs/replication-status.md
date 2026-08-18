@@ -996,6 +996,13 @@ disconnection control. These remain failed official reproductions, not
 baseline passes (`figure7-emission-time-delay-092.yaml` and
 `figure10-emission-time-delay-093.yaml`).
 
+The published-duration Figure 14 rerun also reverses the earlier provisional
+spectral pass. Under emission-time transmitter sampling, both conditions peak
+at 15 Hz; mismatch gamma power (12.6895) exceeds match gamma power (10.5785).
+The match-gamma and mismatch-gamma-reduction gates therefore both fail.
+Artifact 083 is superseded for baseline assessment by
+`figure14-emission-time-delay-094.yaml`.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

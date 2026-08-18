@@ -278,6 +278,28 @@ def test_delayed_depleting_projection_uses_emission_time_resource() -> None:
     assert float(projection.delay[0] / brian.ms) == 0.0
 
 
+def test_depleting_projection_latches_resource_before_source_reset() -> None:
+    brian.prefs.codegen.target = "numpy"
+    brian.start_scope()
+    brian.defaultclock.dt = 0.01 * brian.ms
+    sector = build_first_order_chemical_sector(brian=brian)
+    source = sector.populations["layer6ii_excitatory_v1"].group
+    projection = sector.projections["modeldb112923.projection.005"]
+    source_index = 40
+    outgoing = np.flatnonzero(np.asarray(projection.i[:]) == source_index)
+    assert outgoing.size
+
+    # Put the source directly into Equation 8's armed falling-phase state.
+    source.armed[source_index] = 1
+    source.v_soma[source_index] = -1 * brian.mV
+    sector.network.run(brian.defaultclock.dt)
+
+    assert float(source.transmitter[source_index]) == pytest.approx(0.5)
+    assert np.asarray(projection.last_amplitude[:])[outgoing] == pytest.approx(1.0)
+    assert np.asarray(projection.last_arrival[:] / brian.ms)[outgoing] == pytest.approx(2.0)
+    assert np.asarray(projection.pre_signal[:])[outgoing] == pytest.approx(0.0)
+
+
 def test_distinct_presynaptic_ligand_currents_sum_per_kinness_equation_16() -> None:
     brian.prefs.codegen.target = "numpy"
     brian.start_scope()

@@ -977,6 +977,15 @@ follows the final 81.78-ms relay volley. Figure 6b retains positive horizontal
 contrast (0.07390), while Figure 6c remains negative (-0.00609), with no
 layer-2/3 or layer-5 events (`figure6-emission-time-depletion-090.yaml`).
 
+Re-running the paper-literal Equation 2 axial profile after that correction
+creates a causal category-to-relay learning pair: the first category event at
+4.52 ms arrives at 6.52 ms and is followed by a relay event at 26.13 ms.
+However, the profile broadly over-recruits layer 6II (36 events), still emits
+no layer-2/3 or layer-5 events, and produces only 0.00088 top-down horizontal
+contrast. It therefore fails Figure 6c and remains an explicit paper-source
+discriminator rather than replacing the KInNeSS executable profile
+(`figure6-paper-axial-emission-time-091.yaml`).
+
 ## Validation gates
 
 A milestone may be marked complete only when:

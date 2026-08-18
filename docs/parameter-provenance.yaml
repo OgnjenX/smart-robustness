@@ -33,7 +33,7 @@ parameters:
     value: required positive runtime parameter; current Figure 8 candidate uses 1 uF/cm2
     status: exploratory
     source: Main article and recovered XML do not state a numeric value
-    note: an isolated recovered-TRN sweep from 0.2 through 50 uF/cm2 found no stable input-selective soma event; see trn-capacitance-recruitment-056.yaml
+    note: an isolated recovered-TRN sweep from 0.2 through 50 uF/cm2 found no stable input-selective soma event; exact isolated projection-032 drive recruits layer 2/3 at 0.1 through 2 uF/cm2, ruling capacitance out as the cause of full-network cortical silence; see trn-capacitance-recruitment-056.yaml and figure6-cortical-ei-070.yaml
   model.table3.total_conductance:
     value: channel density * cylindrical lateral membrane area
     status: published-simulator-convention

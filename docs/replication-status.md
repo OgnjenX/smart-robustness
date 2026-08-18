@@ -389,6 +389,19 @@ total edge-current derivation, so that candidate is rejected. The reusable
 Figure 6 assessment now requires the ordered layer-4 -> 2/3 -> 5 chain rather
 than accepting layer-6II activity alone (`figure6-cortical-chain-069.yaml`).
 
+An exact isolated projection-032 sweep recruits the layer-2/3 soma for every
+finite 0.1--2 uF/cm2 capacitance candidate, including the active 1 uF/cm2, so
+capacitance does not explain the full-network silence. In the intact network,
+five layer-2/3 interneurons fire at 77.28--77.58 ms and projection-031 GABA
+peaks at 0.601 after projection-032 AMPA peaks at 2.015. A causal projection-031
+knockout restores five layer-2/3 and ten layer-5 events, proving that the
+published feedforward inhibitory path vetoes the category chain under current
+execution. The knockout is not promotable because projection 031 agrees across
+the supplement and archive. A coherent Table 3 intrinsic-cell candidate also
+fails both maps and over-recruits layer 6II. The remaining discrepancy is thus
+the relative execution/timing of projections 032, 039, and 031
+(`figure6-cortical-ei-070.yaml`).
+
 Two additional falsifications leave the single category teaching event
 unchanged. Removing layer-6II's archived AHP produces bit-identical spike times
 and maps; applying the spike detector in leak-relative coordinates yields only

@@ -54,6 +54,11 @@ parameters:
     status: published
     source: Methods 4.4, Eq. 8 discussion
     note: the promoted candidate uses a latched peak because a literal immediately-previous-sample reading misses the recovered TRN startup spike at dt=0.01 ms; both readings remain explicit conventions
+  model.classic_hh.spike_event_coordinate:
+    value: absolute_physical; relative_to_soma_leak and shifted_67_mV retained as rejected audit alternatives
+    status: unresolved-source-coordinate
+    source: Grossberg and Versace 2008 Equation 8; archived KInNeSS manual voltage-output convention and Soma editor
+    note: shifted_67_mV maps the printed +30/0 thresholds to physical -37/-67 mV but emits no recovered TRN event under measured Figure 7 receptor drive; the manual independently fixes the source compartment to soma
   model.classic_hh.kinness_spike_threshold:
     value: framework alternative with V_theta=-20 mV and event release below 0 mV
     status: published-executable-framework-alternative

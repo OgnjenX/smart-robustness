@@ -526,6 +526,24 @@ fall from above +30 mV to below zero in one step. These alternatives therefore
 do not restore source-faithful post-startup TRN recruitment; the +30-mV peak
 latch remains the active candidate, not a frozen fact.
 
+The archived KInNeSS Soma editor now resolves a separate ambiguity: chemical
+synapses receive a binary signal converted from somatic potential in an
+automatically present axon. `monitorSpikes` controls spike-file output, while
+the older XML's explicit `axon=true` became unnecessary. The large recovered
+TRN dendritic calcium spikes therefore cannot be promoted as projection events;
+the Brian2 soma source is source-confirmed (`kinness-axon-source-052.yaml`).
+The manual and surviving SANNDRA Doxygen index still do not expose the detector
+body, so peak-latch versus literal previous-sample timing remains unresolved.
+
+A third voltage-coordinate candidate now implements the paper-wide fixed
+`V_internal=V_physical+67 mV` shift consistently in both neuron events and the
+plasticity postsynaptic gate. In the isolated recovered TRN it arms above
+-37 mV but never releases below -67 mV: control and measured receptor-driven
+conditions both emit zero events despite proximal dendritic peaks above +91 mV.
+It is therefore rejected before a full Figure 7 compile and remains only a
+fingerprinted audit alternative (`spike-event-shifted67-053.yaml`). The active
+absolute-physical candidate is unchanged and is not yet a frozen source fact.
+
 The complete 100-ms Figure 7 test of the hysteretic KInNeSS `V_theta=-20 mV`
 alternative confirms the isolated-cell rejection: match and mismatch each
 produce 648 TRN events (405 after 40 ms), 90-Hz nonspecific output, and no

@@ -52,6 +52,7 @@ class SpikeEventCoordinate(StrEnum):
     """Voltage coordinate used by SMART's two-stage spike event rule."""
 
     ABSOLUTE_PHYSICAL = "absolute_physical"
+    SHIFTED_67_MV = "shifted_67_mV"
     RELATIVE_TO_SOMA_LEAK = "relative_to_soma_leak"
 
 
@@ -257,11 +258,12 @@ def create_compartmental_hh_population(
         spike_reset += "; ahp_rise += 1; ahp_fall += 1"
     if compiled.depletion_enabled:
         spike_reset += f"; transmitter *= {1 - float(depletion_epsilon)}"
-    spike_voltage = (
-        "v_soma"
-        if spike_coordinate is SpikeEventCoordinate.ABSOLUTE_PHYSICAL
-        else "v_soma-e_l_soma"
-    )
+    if spike_coordinate is SpikeEventCoordinate.ABSOLUTE_PHYSICAL:
+        spike_voltage = "v_soma"
+    elif spike_coordinate is SpikeEventCoordinate.SHIFTED_67_MV:
+        spike_voltage = "v_soma+67*mV"
+    else:
+        spike_voltage = "v_soma-e_l_soma"
     group_kwargs: dict[str, Any] = {
         "method": params.get("method", "exponential_euler"),
         "name": name,
@@ -328,7 +330,9 @@ def create_compartmental_hh_population(
             else cell.soma.e_leak_mV
         )
         initial_soma_voltage = params.get("v_init_mV", default_soma_voltage)
-        if spike_coordinate is SpikeEventCoordinate.RELATIVE_TO_SOMA_LEAK:
+        if spike_coordinate is SpikeEventCoordinate.SHIFTED_67_MV:
+            initial_soma_voltage += 67.0
+        elif spike_coordinate is SpikeEventCoordinate.RELATIVE_TO_SOMA_LEAK:
             initial_soma_voltage -= (
                 0.0 if leak is LeakConvention.PRINTED_ZERO else cell.soma.e_leak_mV
             )

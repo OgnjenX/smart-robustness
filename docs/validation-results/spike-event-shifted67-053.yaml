@@ -1,0 +1,45 @@
+id: spike-event-shifted67-053
+status: rejected-source-coordinate-candidate
+claim: SMART Equation 8 thresholds use the fixed V_internal=V_physical+67 mV coordinate
+evidence_class: [published-equation, archived-simulator-coordinate, behavioral]
+candidate:
+  spike_event_coordinate: shifted_67_mV
+  peak_latch_threshold_internal_mV: 30
+  peak_latch_threshold_physical_mV: -37
+  release_threshold_internal_mV: 0
+  release_threshold_physical_mV: -67
+  spike_event_rule: latched_peak_then_zero
+  baseline_changed: false
+protocol:
+  assay: isolated recovered ModelDB TRN receptor-drive discriminator
+  dt_ms: 0.01
+  pre_drive_ms: 5
+  drive_ms: 45
+  drive_gates:
+    layer6ii_ampa: 1.66427
+    layer6ii_nmda: 0.10913
+  convention_fingerprint: 2b7ff23040b93b3ef967440b52d392f3804609a6531b75746d9168d8a839e26a
+results:
+  control:
+    spike_times_ms: []
+    post_drive_spike_times_ms: []
+    soma_voltage_range_mV: [-65.612668, -9.085270]
+    proximal_voltage_range_mV: [37.185090, 91.312465]
+  driven:
+    spike_times_ms: []
+    post_drive_spike_times_ms: []
+    soma_voltage_range_mV: [-65.473168, -8.050703]
+    proximal_voltage_range_mV: [33.744051, 91.312378]
+assessment:
+  finite: true
+  driven_post_startup_event: false
+  figure7_mechanism_candidate_pass: false
+  full_network_compile_required: false
+  candidate_promoted: false
+reason:
+  - The soma exceeds the physical -37-mV arming level but never falls below the physical -67-mV release level.
+  - The source-confirmed soma event path therefore emits no event despite large proximal dendritic calcium spikes.
+  - A full Figure 7 compile cannot recover match-dependent TRN inhibition when its isolated causal cell emits no projection event under measured receptor drive.
+notes:
+  - The convention remains executable and fingerprinted as a rejected audit alternative.
+  - The active Figure 7 candidate remains absolute_physical; it is not thereby proven source-correct.

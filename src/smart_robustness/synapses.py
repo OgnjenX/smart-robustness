@@ -6,7 +6,7 @@ from typing import Any
 import numpy as np
 
 from .modeldb_projections import ModelDBProjection
-from .models.compartmental_hh import CompartmentalPopulation
+from .models.compartmental_hh import CompartmentalPopulation, SpikeEventCoordinate
 from .projections import ProjectionRecord, TopologyKind
 
 
@@ -342,11 +342,13 @@ def connect_modeldb_projection(
         else:
             raise ValueError(f"{record.id}: unsupported learning rule {record.learning_rule!r}")
         post_window = record.depotentiation_ms
-        post_voltage = (
-            "v_soma_post"
-            if spike_event_coordinate == "absolute_physical"
-            else "v_soma_post-e_l_soma_post"
-        )
+        event_coordinate = SpikeEventCoordinate(spike_event_coordinate)
+        if event_coordinate is SpikeEventCoordinate.ABSOLUTE_PHYSICAL:
+            post_voltage = "v_soma_post"
+        elif event_coordinate is SpikeEventCoordinate.SHIFTED_67_MV:
+            post_voltage = "v_soma_post+67*mV"
+        else:
+            post_voltage = "v_soma_post-e_l_soma_post"
         model += (
             "\npost_elapsed=t-last_post_spike : second"
             "\ndepression_scale=-w_baseline/w_maximum : 1"

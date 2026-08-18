@@ -90,6 +90,16 @@ latter away from the former. Consequently `E_leak`, the initialized membrane
 voltage, and an ionic gate's resting state are tracked as separate provenance
 concepts; a source-unreported settling phase cannot be assumed silently.
 
+The archived manual's Soma editor section also resolves the source compartment
+for chemical projections. KInNeSS converts somatic potential to the binary
+spike signal consumed by chemical synapses; that conversion and delayed release
+occur in an automatically present axon. The `Output Spikes To File` option only
+records axon activity. This explains the newer `SMART.nml` combination of
+`monitorSpikes=true` on each soma and no explicit `axon` attribute, while the
+older `Ca_rebound.xml` still writes `axon=true`. Dendritic thresholding is
+therefore not a source-faithful way to rescue TRN recruitment
+(`validation-results/kinness-axon-source-052.yaml`).
+
 The 2008 KInNeSS site was actually served at `symphony.bu.edu`; `kinness.net`
 was a frame redirect. Its archived User Manual remains available and resolves
 the ordinary `connectFromMany` rule more precisely than the article: `Weight`
@@ -123,3 +133,8 @@ including `kgatesparse.cpp`, `ksimparse.cpp`, and `kunit.cpp`, but no source-fil
 captures have been recovered. SANNDRA's surviving revision history resolves
 ionic-gate initialization, while the simulator's unrecorded specific
 capacitance remains a named runtime convention and may not be silently fitted.
+The archive also preserves the SANNDRA 1.2.0 Doxygen main page, but none of its
+linked class or source pages. An exact Software Heritage origin search likewise
+found no relevant SANNDRA/KInNeSS source tree, so the `spikeevents.h` temporal
+algorithm remains unavailable even though the manual now fixes its input to
+somatic voltage.

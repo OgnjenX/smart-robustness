@@ -228,6 +228,29 @@ def test_source_spike_event_coordinate_is_relative_to_soma_leak() -> None:
     assert population.group.armed[0] == 0
 
 
+def test_source_spike_event_coordinate_accepts_fixed_67_mv_shift() -> None:
+    brian.start_scope()
+    brian.defaultclock.dt = 0.01 * brian.ms
+    params = _params()
+    params["spike_event_coordinate"] = "shifted_67_mV"
+    params["voltage_clamps_mV"] = {"soma": -30.0}
+    population = create_compartmental_hh_population(
+        name="shifted_67_spike_coordinate", size=1, params=params, brian=brian
+    )
+    spike_monitor = brian.SpikeMonitor(population.group)
+    network = brian.Network(population.group, spike_monitor)
+
+    # SMART's fixed +67 mV coordinate maps physical -30 mV to +37 mV,
+    # then emits when the physical soma falls below -67 mV.
+    network.run(0.01 * brian.ms)
+    assert spike_monitor.count[0] == 0
+    assert population.group.armed[0] == 1
+    population.group.v_soma = -68 * brian.mV
+    network.run(0.01 * brian.ms)
+    assert spike_monitor.count[0] == 1
+    assert population.group.armed[0] == 0
+
+
 def test_kinness_minus_20_mv_event_threshold_is_explicit() -> None:
     brian.start_scope()
     brian.defaultclock.dt = 0.01 * brian.ms
@@ -266,6 +289,18 @@ def test_literal_previous_sample_rule_uses_only_the_immediately_preceding_voltag
     assert spike_monitor.count[0] == 1
     network.run(0.01 * brian.ms)
     assert spike_monitor.count[0] == 1
+
+
+def test_literal_previous_sample_initializes_fixed_shift_coordinate() -> None:
+    brian.start_scope()
+    params = _params()
+    params["spike_event_rule"] = "literal_previous_sample"
+    params["spike_event_coordinate"] = "shifted_67_mV"
+    params["v_init_mV"] = -60.0
+    population = create_compartmental_hh_population(
+        name="literal_previous_sample_shifted_67", size=1, params=params, brian=brian
+    )
+    assert population.group.previous_spike_voltage[0] / brian.mV == pytest.approx(7.0)
 
 
 def test_spike_event_rule_is_required_and_not_an_implicit_simulator_default() -> None:

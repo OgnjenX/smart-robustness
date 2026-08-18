@@ -104,6 +104,18 @@ def test_spatially_scaled_learning_bounds_remain_an_audit_alternative() -> None:
     )
 
 
+def test_fixed_67_mv_spike_coordinate_is_shared_by_plasticity_gate() -> None:
+    brian.start_scope()
+    sector = build_first_order_chemical_sector(
+        conventions=FirstOrderRuntimeConventions(
+            spike_event_coordinate="shifted_67_mV"
+        ),
+        brian=brian,
+    )
+    projection = sector.projections["modeldb112923.projection.035"]
+    assert "v_soma_post+67*mV" in str(projection.equations)
+
+
 def test_failed_figure6_pathway_candidate_remains_reproducible_but_inactive() -> None:
     brian.start_scope()
     sector = build_first_order_chemical_sector(

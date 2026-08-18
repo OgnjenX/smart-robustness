@@ -1,0 +1,38 @@
+id: kinness-axon-source-052
+status: source-resolved
+claim: KInNeSS chemical projections receive binary events converted from somatic voltage in an automatically present axon
+evidence_class: [archived-simulator-manual, official-model-archive, source-recovery]
+sources:
+  kinness_manual:
+    capture_timestamp: 2008-08-21T04:35:29Z
+    original_url: http://symphony.bu.edu/Docs/KInNeSS/manual/neteditor.html
+    relevant_section: Soma editor
+    findings:
+      - only somatic activity can be visualized during simulation
+      - chemical synapses consume binary spike timing converted from somatic potential in the axon
+      - axons are required for projection-source cells and the interface option to omit them was removed
+      - Output Spikes To File records population axon activity and initiation timing at the axon hillock
+  smart_modeldb_112923:
+    version: 1.2(KInNeSS)
+    finding: every SMART population marks its soma monitorSpikes=true and omits the obsolete explicit axon attribute
+  ca_rebound_modeldb_112923:
+    version: 1
+    finding: the older schema explicitly marks projecting somata axon=true
+source_body_recovery:
+  sanndra_doxygen_index:
+    capture_timestamp: 2008-08-28T05:53:05Z
+    version: 1.2.0
+    result: index recovered; linked class and file pages were not archived
+  software_heritage_origin_search:
+    result: no relevant SANNDRA or KInNeSS source origin found
+  surviving_compile_diagnostic:
+    result: confirms equations.h and gates.h symbols and line numbers but exposes no spikeevents.h body
+assessment:
+  projection_event_compartment: soma
+  axon_role: binary conversion and projection-specific delayed release
+  monitorSpikes_role: output recording flag
+  dendritic_event_source_rejected: true
+  spike_detector_temporal_rule_resolved: false
+notes:
+  - This resolves the event-source compartment without claiming recovery of the unavailable spikeevents.h algorithm.
+  - Brian2 projections must continue to consume events generated from v_soma; dendritic calcium spikes are not valid substitute source events.

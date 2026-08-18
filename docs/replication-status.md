@@ -410,6 +410,15 @@ retain that convention in Brian2. Projection 022 is therefore a localized
 ModelDB-versus-supplement inconsistency, not evidence for reversing the whole
 network (`modeldb-projection-ownership-071.yaml`).
 
+A projection-031 delay discriminator now excludes Brian2 event scheduling as
+the source of that veto. Adding 4 ms—400 integration steps—to the archived
+0.1-ms inhibitory delay leaves layer 2/3 and layer 5 silent. Adding 12 ms moves
+inhibition beyond the latent layer-2/3 event and restores the ordered sequence:
+layer 4 at 73.16 ms, layer 2/3 at 86.81 ms, and layer 5 at 90.57 ms. The altered
+delay is not source-supported and is not promoted; it localizes the remaining
+failure to inhibitory efficacy versus excitatory somatodendritic recruitment,
+not same-step scheduling (`figure6-inhibitory-delay-072.yaml`).
+
 Two additional falsifications leave the single category teaching event
 unchanged. Removing layer-6II's archived AHP produces bit-identical spike times
 and maps; applying the spike detector in leak-relative coordinates yields only

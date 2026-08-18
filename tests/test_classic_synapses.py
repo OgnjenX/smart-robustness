@@ -266,3 +266,23 @@ def test_ligand_gate_combines_only_last_two_spikes_and_remains_bounded() -> None
     assert np.asarray(projection.last_wave[:]) == pytest.approx(1)
     assert np.asarray(projection.previous_wave[:]) == pytest.approx(1)
     assert np.asarray(projection.pre_signal[:]) == pytest.approx(1)
+
+
+def test_distinct_presynaptic_ligand_currents_sum_per_kinness_equation_16() -> None:
+    brian.prefs.codegen.target = "numpy"
+    brian.start_scope()
+    brian.defaultclock.dt = 0.01 * brian.ms
+    sector = build_first_order_chemical_sector(brian=brian)
+    projection = sector.projections["modeldb112923.projection.031"]
+    target = sector.populations["layer23_excitatory_v1"].group
+    projection.last_amplitude = 0
+    projection.previous_amplitude = 0
+    target_index = 40
+    selected = np.flatnonzero(np.asarray(projection.j[:]) == target_index)[:2]
+    assert len(np.unique(np.asarray(projection.i[:])[selected])) == 2
+    peak_ms = biexponential_peak_time_ms(1.0, 7.0)
+    projection.last_arrival[selected] = -peak_ms * brian.ms
+    projection.last_amplitude[selected] = 1
+    sector.network.run(brian.defaultclock.dt)
+    expected = float(np.asarray(projection.w[:])[selected].sum())
+    assert float(target.port_000_gate[target_index]) == pytest.approx(expected, rel=1e-4)

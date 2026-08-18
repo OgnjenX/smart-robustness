@@ -419,6 +419,14 @@ delay is not source-supported and is not promoted; it localizes the remaining
 failure to inhibitory efficacy versus excitatory somatodendritic recruitment,
 not same-step scheduling (`figure6-inhibitory-delay-072.yaml`).
 
+The expanded KInNeSS manuscript further rules out globally saturating the five
+interneuron contributions. Equation 15 combines only the last two spikes from
+the same presynaptic cell; Equation 16 defines a separate weighted current for
+each source. A new executable regression activates two projection-031 sources
+and verifies that the postsynaptic gate equals their sum. Distinct-source
+summation is therefore retained and cannot be weakened to manufacture Figure 6
+recruitment (`kinness-ligand-summation-073.yaml`).
+
 Two additional falsifications leave the single category teaching event
 unchanged. Removing layer-6II's archived AHP produces bit-identical spike times
 and maps; applying the spike detector in leak-relative coordinates yields only

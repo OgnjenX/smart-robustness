@@ -1,0 +1,20 @@
+id: kinness-ligand-summation-073
+claim: Distinct presynaptic ligand currents add and must not be globally saturated at one postsynaptic receptor gate
+authoritative_source:
+  document: Versace et al. 2008 expanded KInNeSS framework manuscript
+  section: 4.4 Ligand-gated channels
+  equations: 13-16
+  sha256: 15a7f9166e301c9740e7cff4258810d315bd95b196ea5dff3419c5cc2879f177
+source_semantics:
+  equation_15: combines only the last two spikes of exactly the same presynaptic cell and bounds that one synapse's ligand waveform
+  equation_16: defines J_ij separately for source j with source-specific receptor weight N_ij and transmitter z_j
+  total_compartment_current: sum of the distinct J_ij contributions
+executable_regression:
+  projection: modeldb112923.projection.031
+  target_cell: layer23_excitatory_v1 index 40
+  active_sources: 2
+  assertion: postsynaptic gate equals the sum of both source-specific peak weighted gates
+consequence_for_figure6:
+  - The measured projection-031 gate is not erroneously large because separate interneuron inputs were linearly combined.
+  - Applying Equation 15's bounded union across different interneurons would contradict Equation 16 and is rejected.
+  - The remaining inhibitory veto must be explained without changing this summation law.

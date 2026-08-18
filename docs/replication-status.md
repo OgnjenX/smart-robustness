@@ -715,6 +715,13 @@ candidate scorer passes anatomical-selection, synthetic-band, and malformed
 time-axis controls, but the official-duration behavioral run remains pending
 (`figure16-region-reduction-057.yaml`).
 
+The same complete candidate now executes through Brian2 C++ standalone. A
+full-network smoke build compiled 1,199 generated translation units, reloaded
+one sample for both 54-tip fields, and found all potentials finite. This proves
+the practical execution path needed for the 200,000-step official protocol; it
+does not substitute the smoke duration for that behavioral run
+(`figure16-cpp-standalone-058.yaml`).
+
 A visual source audit also corrected Equation 33: its printed denominator is
 Δx, despite prose describing a second derivative. The classic path now uses
 that paper-literal uV/µm transform. A separately named Δx² implementation is

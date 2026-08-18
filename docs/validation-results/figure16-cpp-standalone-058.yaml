@@ -1,0 +1,29 @@
+schema_version: 1
+validation_id: figure16-cpp-standalone-058
+claim: The complete two-area Figure 16 candidate can execute and reload all cortical-current monitors through Brian2 C++ standalone.
+status: full-network-smoke-pass
+date: 2026-08-18
+implementation:
+  function: smart_robustness.validation.higher_order.run_figure16_candidate
+  backend: Brian2 2.9.0 cpp_standalone
+  build_helper: smart_robustness.standalone.build_and_run_cpp_standalone
+  learned_state_handling: derives the paper-constrained reference from the source catalog before standalone build
+smoke_protocol:
+  prestimulus_ms: 0.01
+  recording_ms: 0.01
+  integration_dt_ms: 0.01
+  recording_sample_ms: 0.01
+  geometry_seeds: {v1: 16, v2: 17}
+  learned_state_provenance: paper-constrained-figure6c-reference
+result:
+  generated_cpp_translation_units: 1199
+  samples: 1
+  v1_field_shape: [54, 1]
+  v2_field_shape: [54, 1]
+  v1_all_finite: true
+  v2_all_finite: true
+assessment:
+  full_network_compile_pass: true
+  result_reload_pass: true
+  official_duration_run_completed: false
+  official_figure16_behavior_reproduced: false

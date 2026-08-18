@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from collections.abc import Mapping
 from dataclasses import dataclass
+from pathlib import Path
 
 import numpy as np
 
@@ -236,6 +237,7 @@ def run_figure16_candidate(
     protocol: Figure16Protocol | None = None,
     geometry_seed: int = 16,
     conventions=None,
+    cpp_standalone_directory: str | Path | None = None,
     brian=None,
 ) -> Figure16CandidateResult:
     """Run the caption's learned-stimulus prestimulus and recording epochs.
@@ -255,6 +257,13 @@ def run_figure16_candidate(
         raise TypeError("geometry_seed must be an integer")
     if brian is None:
         import brian2 as brian
+    if cpp_standalone_directory is not None:
+        brian.device.reinit()
+        brian.set_device(
+            "cpp_standalone",
+            directory=str(Path(cpp_standalone_directory).resolve()),
+            build_on_run=False,
+        )
     from smart_robustness.classic_sector import (
         build_full_smart_network,
         figure6_runtime_conventions,
@@ -271,12 +280,19 @@ def run_figure16_candidate(
     sector = build_full_smart_network(conventions=conventions, brian=brian)
     apply_figure16_inter_area_delay(sector, protocol=protocol, brian=brian)
     if use_paper_constrained_reference:
-        learned_weights = paper_constrained_figure6_expectation(sector.projections)
+        learned_weights = paper_constrained_figure6_expectation(
+            sector.projections,
+            derive_from_source=cpp_standalone_directory is not None,
+        )
         provenance = "paper-constrained-figure6c-reference"
     else:
         provenance = "simulated-learned-weight-snapshot"
     assert learned_weights is not None
-    apply_figure7_learned_state(sector.projections, learned_weights)
+    apply_figure7_learned_state(
+        sector.projections,
+        learned_weights,
+        verify_runtime_bounds=cpp_standalone_directory is None,
+    )
 
     stimulus = ClassicBarStimulus(
         BarOrientation.HORIZONTAL,
@@ -293,6 +309,10 @@ def run_figure16_candidate(
         monitor.active = True
     sector.network.run(protocol.recording_ms * brian.ms)
     clear_bar_stimulus(sector, stimulus)
+    if cpp_standalone_directory is not None:
+        from smart_robustness.standalone import build_and_run_cpp_standalone
+
+        build_and_run_cpp_standalone(brian, cpp_standalone_directory)
 
     first_monitor = monitors[min(monitors)]
     sample_times_ms = tuple(float(value) for value in np.asarray(first_monitor.t / brian.ms))

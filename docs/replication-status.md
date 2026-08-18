@@ -730,6 +730,14 @@ coupling exceeds 20--100 Hz. This passes the published qualitative ordering.
 It is labeled a reconstructed pass because the learned Figure 6c weights and
 original electrode realization are unpublished (`figure16-official-duration-059.yaml`).
 
+The Figure 14 first-order analysis is now executable without reusing the
+generic point-model spectrum helper. It records cumulative spikes from all
+seven V1 cortical classes for the published 1-s epoch, subtracts the mean, and
+uses predeclared contiguous 200-ms Hamming windows. Both the caption's 8--20-Hz
+and Methods 4.10's conflicting 8--10-Hz bands are reported. Synthetic controls
+and the generated-network monitor path pass; official match/mismatch behavior
+has not yet been promoted (`figure14-analysis-runner-060.yaml`).
+
 A visual source audit also corrected Equation 33: its printed denominator is
 Δx, despite prose describing a second derivative. The classic path now uses
 that paper-literal uV/µm transform. A separately named Δx² implementation is

@@ -35,6 +35,15 @@ FIGURE7_REQUIRED_LEARNED_PROJECTIONS = (
     TOP_DOWN_NARROW_PROJECTION_ID,
 )
 FIGURE7_RELAY_DIAGNOSTIC_INDICES = (22, 31, 38, 39, 40, 41, 42, 49, 58)
+FIGURE14_V1_CORTICAL_POPULATIONS = (
+    "layer23_excitatory_v1",
+    "layer23_inhibitory_v1",
+    "layer4_excitatory_v1",
+    "layer4_inhibitory_v1",
+    "layer5_excitatory_v1",
+    "layer6i_excitatory_v1",
+    "layer6ii_excitatory_v1",
+)
 
 
 @dataclass(frozen=True, slots=True)
@@ -159,6 +168,7 @@ class Figure7ConditionResult:
     trn_spike_times_ms: tuple[float, ...] = ()
     category_spike_indices: tuple[int, ...] = ()
     category_spike_times_ms: tuple[float, ...] = ()
+    v1_cortical_spike_times_ms: tuple[float, ...] = ()
     v2_layer4_spike_indices: tuple[int, ...] = ()
     v2_layer4_spike_times_ms: tuple[float, ...] = ()
     v2_relay_spike_indices: tuple[int, ...] = ()
@@ -342,6 +352,7 @@ def run_figure7_condition(
     relay_clamp_compartment: str = "proximal_dendrite",
     include_higher_order_loop: bool = False,
     record_relay_diagnostics: bool = False,
+    record_v1_cortical_spikes: bool = False,
     projection_weight_scales: Mapping[str, float] | None = None,
     top_down_cue_lead_ms: float = 0.0,
     equilibration_ms: float = 0.0,
@@ -451,6 +462,16 @@ def run_figure7_condition(
         name=f"figure7_{condition.value}_category_spikes",
     )
     monitors = [nonspecific, layer4, relay, trn, category]
+    cortical_spike_monitors: dict[str, object] = {}
+    if record_v1_cortical_spikes:
+        cortical_spike_monitors = {
+            population_name: brian.SpikeMonitor(
+                sector.populations[population_name].group,
+                name=f"figure14_{condition.value}_{population_name}_spikes",
+            )
+            for population_name in FIGURE14_V1_CORTICAL_POPULATIONS
+        }
+        monitors.extend(cortical_spike_monitors.values())
     relay_state = None
     trn_state = None
     if record_relay_diagnostics:
@@ -694,6 +715,13 @@ def run_figure7_condition(
         trn_spike_times_ms=stimulus_times(trn),
         category_spike_indices=stimulus_indices(category),
         category_spike_times_ms=stimulus_times(category),
+        v1_cortical_spike_times_ms=tuple(
+            sorted(
+                spike_time
+                for monitor in cortical_spike_monitors.values()
+                for spike_time in stimulus_times(monitor)
+            )
+        ),
         v2_layer4_spike_indices=(
             () if v2_layer4 is None else stimulus_indices(v2_layer4)
         ),

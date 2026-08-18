@@ -1,0 +1,56 @@
+schema_version: 1
+validation_id: figure14-analysis-runner-060
+claim: The complete first-order sector can produce and predeclaredly score Figure 14 cumulative cortical spike spectra.
+status: pass_implementation_official_behavior_pending
+date: 2026-08-18
+evidence_class:
+  - exact-source-protocol
+  - declared-analysis-convention
+primary_source:
+  citation: Grossberg and Versace 2008
+  locations: [Figure 14 caption, Methods 4.9, Methods 4.10]
+source_protocol:
+  duration_ms: 1000
+  stimulated_relay_cells: 5
+  statistic: cumulative spike histogram of the laminar primary sensory cortical area
+  mean_subtraction: true
+  hamming_window_ms: 200
+  caption_bands_hz: [[2, 8], [8, 20], [20, 70]]
+  methods_bands_hz: [[2, 8], [8, 10], [20, 70]]
+declared_reconstruction:
+  histogram_bin_ms: 1
+  hamming_overlap_ms: 0
+  cortical_populations:
+    - layer23_excitatory_v1
+    - layer23_inhibitory_v1
+    - layer4_excitatory_v1
+    - layer4_inhibitory_v1
+    - layer5_excitatory_v1
+    - layer6i_excitatory_v1
+    - layer6ii_excitatory_v1
+  notes:
+    - Histogram bin width and Hamming overlap are not reported and therefore remain explicit conventions.
+    - Both conflicting published middle bands are always reported; the caption's 8-20-Hz band controls the Figure 14 qualitative gate.
+implementation:
+  runner: smart_robustness.validation.figure14.run_figure14_condition
+  histogram: smart_robustness.analysis.figure14.cumulative_spike_histogram
+  spectrum: smart_robustness.analysis.figure14.figure14_spectrum_from_spikes
+  scorer: smart_robustness.analysis.figure14.assess_figure14_spectra
+  qualitative_gates:
+    - match gamma exceeds both caption lower bands
+    - mismatch lower-frequency power exceeds mismatch gamma
+    - mismatch gamma is below match gamma
+verification:
+  command: .venv/bin/pytest -q tests/test_figure14_analysis.py tests/test_figure14_validation.py tests/test_figure7_validation.py
+  result: 24 passed
+  lint: pass
+  synthetic_controls:
+    - 40-Hz histogram is gamma-dominant
+    - 5-Hz histogram is low-band dominant
+    - all three caption directions are jointly required
+    - Methods and caption middle bands remain distinct
+  generated_network_control: first-order C++ standalone smoke still passes with the optional monitor path
+assessment:
+  analysis_predeclared: true
+  complete_sector_runner_ready: true
+  official_match_mismatch_spectra_reproduced: false

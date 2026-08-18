@@ -284,3 +284,4 @@ def test_figure7_result_accepts_relay_pathway_diagnostics() -> None:
     assert result.trn_proximal_voltage_range_mV_by_index == ()
     assert result.trn_soma_voltage_range_mV_by_index == ()
     assert result.trn_post_startup_soma_voltage_range_mV_by_index == ()
+    assert result.v1_cortical_spike_times_ms == ()

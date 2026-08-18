@@ -1,7 +1,7 @@
 schema_version: 1
 validation_id: figure16-candidate-runner-048
 claim: The complete SMART Figure 16 two-epoch protocol is executable without conflating a smoke run with official behavioral reproduction
-status: full_network_smoke_pass_official_duration_pending
+status: official_duration_qualitative_candidate_pass
 primary_source:
   citation: Grossberg and Versace 2008
   location: Figure 16 caption
@@ -40,7 +40,7 @@ verification:
     artifact: figure16-cpp-standalone-058.yaml
     result: pass
 limitations:
-  - The official 1000-ms plus 1000-ms candidate has not yet been completed or scored.
+  - The official 1000-ms plus 1000-ms candidate is completed and scored in figure16-official-duration-059.yaml.
   - The paper-constrained Figure 6c field is underidentified and is not a recovered official learned-weight array.
-  - Official lower-frequency inter-area dominance is not reproduced by this smoke test.
+  - The smoke test does not establish behavior; the separately recorded full-duration candidate passes qualitative lower-frequency dominance.
   - Regional electrode tips use the explicit mean convention documented in figure16-region-reduction-057.yaml; the original reduction remains source-unreported.

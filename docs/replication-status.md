@@ -722,6 +722,14 @@ the practical execution path needed for the 200,000-step official protocol; it
 does not substitute the smoke duration for that behavioral run
 (`figure16-cpp-standalone-058.yaml`).
 
+The full Figure 16 candidate has now completed the caption's 1-s prestimulus
+and 1-s recording epochs. Both 54×1000 fields are finite. The predeclared
+regional analysis finds normalized peaks of 0.914, 0.818, 0.678, 0.283, and
+0.267 across the five ascending bands; 2--4 Hz is strongest and lower-frequency
+coupling exceeds 20--100 Hz. This passes the published qualitative ordering.
+It is labeled a reconstructed pass because the learned Figure 6c weights and
+original electrode realization are unpublished (`figure16-official-duration-059.yaml`).
+
 A visual source audit also corrected Equation 33: its printed denominator is
 Δx, despite prose describing a second derivative. The classic path now uses
 that paper-literal uV/µm transform. A separately named Δx² implementation is

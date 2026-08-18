@@ -36,5 +36,5 @@ assessment:
   official_lfp_behavior_reproduced: false
 limitations:
   - Circular FFT correlation follows the caption but does not by itself resolve edge-padding choices that were not reported.
-  - SMART LFP generation requires validated transmembrane-current accounting and electrode geometry before official Figure 16 behavior can be scored.
+  - Regional tip reduction is now an explicit mean convention in figure16-region-reduction-057.yaml; it does not recover an unpublished original reduction.
   - Published cross-correlation amplitudes are graphical only, so no numeric amplitude tolerance is asserted.

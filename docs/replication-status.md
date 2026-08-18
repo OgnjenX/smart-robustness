@@ -707,6 +707,14 @@ lower-frequency synchrony criterion remain unverified; the available Figure
 6c-shaped weight field is explicitly paper-constrained because the publication
 does not provide its learned arrays (`figure16-candidate-runner-048.yaml`).
 
+Figure 16 analysis now binds the caption's exact inter-area regions before any
+behavioral run: inferior 0.3 mm of higher-order V2 versus superior 0.3 mm of
+lower-order V1. Regional tips are reduced by a declared arithmetic mean; a sum
+would produce the same energy-normalized cross-correlation. The integrated
+candidate scorer passes anatomical-selection, synthetic-band, and malformed
+time-axis controls, but the official-duration behavioral run remains pending
+(`figure16-region-reduction-057.yaml`).
+
 A visual source audit also corrected Equation 33: its printed denominator is
 Δx, despite prose describing a second derivative. The classic path now uses
 that paper-literal uV/µm transform. A separately named Δx² implementation is

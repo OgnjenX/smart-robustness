@@ -7,6 +7,12 @@ from dataclasses import dataclass
 
 import numpy as np
 
+from smart_robustness.analysis.cross_correlation import (
+    BandLimitedCrossCorrelation,
+    Figure16CrossCorrelationAssessment,
+    assess_figure16_cross_correlations,
+    figure16_cross_correlations,
+)
 from smart_robustness.analysis.lfp import Figure16CorticalField, figure16_cortical_field
 from smart_robustness.protocols import (
     BarOrientation,
@@ -69,6 +75,68 @@ class Figure16CandidateResult:
     sample_times_ms: tuple[float, ...]
     v1_field: Figure16CorticalField
     v2_field: Figure16CorticalField
+
+
+@dataclass(frozen=True, slots=True)
+class Figure16CandidateAssessment:
+    """Caption-bound inter-area signals and their frequency-band assessment."""
+
+    higher_area_lower_region_uV: np.ndarray
+    lower_area_upper_region_uV: np.ndarray
+    cross_correlations: tuple[BandLimitedCrossCorrelation, ...]
+    frequency_assessment: Figure16CrossCorrelationAssessment
+
+
+def figure16_inter_area_region_signals(
+    candidate: Figure16CandidateResult,
+) -> tuple[np.ndarray, np.ndarray]:
+    """Reduce exactly the two cortical regions named by the Figure 16 caption.
+
+    V2 is the higher-order area and V1 is the lower-order area. The source does
+    not state how the electrode tips within each 0.3-mm region were reduced, so
+    the arithmetic mean is an explicit convention. For energy-normalized
+    cross-correlation, summing instead would multiply each signal by a positive
+    constant and therefore leave the normalized curves unchanged.
+    """
+
+    higher_lower = np.asarray(candidate.v2_field.inferior_300um_potential_uV, dtype=float)
+    lower_upper = np.asarray(candidate.v1_field.superior_300um_potential_uV, dtype=float)
+    if higher_lower.ndim != 2 or lower_upper.ndim != 2:
+        raise ValueError("Figure 16 regional fields must have (tip, time) shape")
+    if higher_lower.shape[0] == 0 or lower_upper.shape[0] == 0:
+        raise ValueError("Figure 16 regional fields must contain electrode tips")
+    if higher_lower.shape[1] != lower_upper.shape[1]:
+        raise ValueError("Figure 16 regional fields must share a time axis")
+    if higher_lower.shape[1] != len(candidate.sample_times_ms):
+        raise ValueError("Figure 16 regional fields do not match the candidate time axis")
+    if not np.all(np.isfinite(higher_lower)) or not np.all(np.isfinite(lower_upper)):
+        raise ValueError("Figure 16 regional fields must be finite")
+    higher_signal = np.mean(higher_lower, axis=0)
+    lower_signal = np.mean(lower_upper, axis=0)
+    higher_signal.setflags(write=False)
+    lower_signal.setflags(write=False)
+    return higher_signal, lower_signal
+
+
+def assess_figure16_candidate(
+    candidate: Figure16CandidateResult,
+) -> Figure16CandidateAssessment:
+    """Apply the caption's band-limited analysis to one complete candidate."""
+
+    higher_signal, lower_signal = figure16_inter_area_region_signals(candidate)
+    sample_rate_hz = 1000.0 / candidate.protocol.recording_sample_ms
+    correlations = figure16_cross_correlations(
+        higher_signal,
+        lower_signal,
+        sample_rate_hz,
+        bands_hz=candidate.protocol.frequency_bands_hz,
+    )
+    return Figure16CandidateAssessment(
+        higher_area_lower_region_uV=higher_signal,
+        lower_area_upper_region_uV=lower_signal,
+        cross_correlations=correlations,
+        frequency_assessment=assess_figure16_cross_correlations(correlations),
+    )
 
 
 def apply_figure16_inter_area_delay(

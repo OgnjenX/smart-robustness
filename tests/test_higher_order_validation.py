@@ -13,10 +13,23 @@ from smart_robustness.validation.higher_order import (
     FIGURE16_FEEDFORWARD_PROJECTION_ID,
     Figure16Protocol,
     apply_figure16_inter_area_delay,
+    assess_figure16_candidate,
     create_figure16_current_monitors,
     figure16_cortical_field_from_monitors,
+    figure16_inter_area_region_signals,
     run_figure16_candidate,
 )
+
+
+def _regional_candidate(higher_lower: np.ndarray, lower_upper: np.ndarray):
+    sample_count = higher_lower.shape[1]
+    protocol = Figure16Protocol(recording_ms=float(sample_count))
+    return SimpleNamespace(
+        protocol=protocol,
+        sample_times_ms=tuple(float(index) for index in range(sample_count)),
+        v1_field=SimpleNamespace(superior_300um_potential_uV=lower_upper),
+        v2_field=SimpleNamespace(inferior_300um_potential_uV=higher_lower),
+    )
 
 
 def test_figure16_protocol_encodes_caption_values() -> None:
@@ -108,3 +121,26 @@ def test_figure16_candidate_requires_one_explicit_learned_state() -> None:
             learned_weights={"projection": (1.0,)},
             use_paper_constrained_reference=True,
         )
+
+
+def test_figure16_region_reduction_uses_lower_v2_and_upper_v1() -> None:
+    time = np.arange(1000) / 1000.0
+    higher_lower = np.vstack((np.sin(2 * np.pi * 10 * time), np.sin(2 * np.pi * 10 * time)))
+    lower_upper = np.vstack((np.sin(2 * np.pi * 10 * time), np.sin(2 * np.pi * 10 * time)))
+    candidate = _regional_candidate(higher_lower, lower_upper)
+
+    higher_signal, lower_signal = figure16_inter_area_region_signals(candidate)
+    assessment = assess_figure16_candidate(candidate)
+
+    assert higher_signal == pytest.approx(higher_lower.mean(axis=0))
+    assert lower_signal == pytest.approx(lower_upper.mean(axis=0))
+    assert not higher_signal.flags.writeable
+    assert not lower_signal.flags.writeable
+    assert assessment.frequency_assessment.strongest_band_hz == (8.0, 12.0)
+    assert assessment.frequency_assessment.lower_frequency_stronger_than_gamma
+
+
+def test_figure16_region_reduction_rejects_time_axis_mismatch() -> None:
+    candidate = _regional_candidate(np.zeros((2, 1000)), np.zeros((2, 999)))
+    with pytest.raises(ValueError, match="share a time axis"):
+        figure16_inter_area_region_signals(candidate)

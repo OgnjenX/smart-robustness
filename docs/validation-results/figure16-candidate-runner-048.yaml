@@ -16,6 +16,7 @@ explicit_runtime_conventions:
   note: Neither value is reported in the paper or recovered SMART.nml; both are fingerprintable runtime choices.
 implementation:
   function: smart_robustness.validation.higher_order.run_figure16_candidate
+  scorer: smart_robustness.validation.higher_order.assess_figure16_candidate
   network: complete recovered V1-pulvinar-V2 projection catalog
   learned_state_gate: caller snapshot required unless explicitly opting into the paper-constrained Figure 6c approximation
   stimulus: recovered horizontal five-cell bar held across both epochs
@@ -38,4 +39,4 @@ limitations:
   - The official 1000-ms plus 1000-ms candidate has not yet been completed or scored.
   - The paper-constrained Figure 6c field is underidentified and is not a recovered official learned-weight array.
   - Official lower-frequency inter-area dominance is not reproduced by this smoke test.
-  - Regional electrode-tip reduction remains source-unreported and must be evaluated as an explicit convention.
+  - Regional electrode tips use the explicit mean convention documented in figure16-region-reduction-057.yaml; the original reduction remains source-unreported.

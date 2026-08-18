@@ -160,7 +160,7 @@ def apply_figure16_inter_area_delay(
         projection = sector.projections[FIGURE16_FEEDFORWARD_PROJECTION_ID]
     except KeyError as error:
         raise ValueError("Figure 16 feedforward projection is absent from the sector") from error
-    projection.delay = protocol.inter_area_delay_ms * brian.ms
+    projection.axonal_delay = protocol.inter_area_delay_ms * brian.ms
 
 
 def create_figure16_current_monitors(

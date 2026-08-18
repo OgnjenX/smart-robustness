@@ -967,6 +967,16 @@ excluded as a sufficient explanation; the unresolved Figure 6c learning and
 condition-dependent relay/TRN recruitment remain upstream gates
 (`figure7-same-network-figure6-state-089.yaml`).
 
+The executable depletion path now latches transmitter availability at the
+source spike and carries that amplitude through the axonal delay. Previously,
+the delayed Brian pathway resampled the continuously recovering transmitter
+on arrival, incorrectly coupling delay length to release strength. The
+source-corrected Figure 6 run remains a partial result: layer 4 fires at 74.09
+ms, the category cell at 82.57 ms, and its 2-ms-delayed teaching event still
+follows the final 81.78-ms relay volley. Figure 6b retains positive horizontal
+contrast (0.07390), while Figure 6c remains negative (-0.00609), with no
+layer-2/3 or layer-5 events (`figure6-emission-time-depletion-090.yaml`).
+
 ## Validation gates
 
 A milestone may be marked complete only when:

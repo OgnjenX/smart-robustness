@@ -268,6 +268,16 @@ def test_ligand_gate_combines_only_last_two_spikes_and_remains_bounded() -> None
     assert np.asarray(projection.pre_signal[:]) == pytest.approx(1)
 
 
+def test_delayed_depleting_projection_uses_emission_time_resource() -> None:
+    brian.start_scope()
+    sector = build_first_order_chemical_sector(brian=brian)
+    projection = sector.projections["modeldb112923.projection.005"]
+    assert "last_amplitude = transmitter_pre" in projection.pre.code
+    assert "last_arrival = t + axonal_delay" in projection.pre.code
+    assert float(projection.axonal_delay[0] / brian.ms) == pytest.approx(2.0)
+    assert float(projection.delay[0] / brian.ms) == 0.0
+
+
 def test_distinct_presynaptic_ligand_currents_sum_per_kinness_equation_16() -> None:
     brian.prefs.codegen.target = "numpy"
     brian.start_scope()

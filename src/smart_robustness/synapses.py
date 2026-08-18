@@ -291,7 +291,10 @@ def connect_modeldb_projection(
     update = (
         "previous_arrival = last_arrival\n"
         "previous_amplitude = last_amplitude\n"
-        "last_arrival = t\n"
+        # Execute this pathway at emission so transmitter is sampled before
+        # the neuron reset depletes it. Store the future arrival timestamp to
+        # implement the axonal delay without resampling source state later.
+        "last_arrival = t + axonal_delay\n"
         f"last_amplitude = {resource}"
     )
     if port.rise_ms == port.fall_ms:
@@ -318,6 +321,7 @@ def connect_modeldb_projection(
         "w_baseline : 1 (constant)\n"
         "w_maximum : 1 (constant)\n"
         "modifiable : 1 (constant)\n"
+        "axonal_delay : second (constant)\n"
         "last_arrival : second\n"
         "previous_arrival : second\n"
         "last_amplitude : 1\n"
@@ -450,7 +454,8 @@ def connect_modeldb_projection(
     if record.modifiable:
         # Start strictly outside the serialized post-spike learning window.
         synapse.last_post_spike = -(float(record.depotentiation_ms) + 1.0) * brian.ms
-    synapse.delay = float(record.delay_ms or 0.0) * brian.ms
+    synapse.axonal_delay = float(record.delay_ms or 0.0) * brian.ms
+    synapse.delay = 0 * brian.ms
     return synapse
 
 

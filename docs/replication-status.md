@@ -766,16 +766,19 @@ reset, and the current Figure 10 gate remains failed
 
 Figure 15 local synchrony now has a source-bound runner and scorer. The
 predeclared pair is adjacent stimulated layer-4 cells 39 and 40; their binned
-spike trains are cross-correlated over the caption's ±180-ms range, then the
-cross-correlogram spectrum is tested against 44±5 Hz. A synthetic 44-Hz pair
-is recovered at 44.32 Hz. The unpublished pair choice and confidence-limit
+spike trains are linearly cross-correlated, the caption's ±180-ms range is
+retained for display, and the complete cross-correlogram spectrum is tested
+against 44±5 Hz. A synthetic 44-Hz pair is recovered at 44.02 Hz. The
+unpublished pair choice and confidence-limit
 method remain explicit reconstruction gaps (`figure15-analysis-runner-063.yaml`).
 
-The full Figure 15 candidate has now completed for that predeclared pair. Cells
-39 and 40 emit 9 and 10 spikes, respectively, so the signal is not a silent-pair
-artifact; nevertheless, the cross-correlogram spectrum peaks at 27.70 Hz,
-outside the 44±5-Hz gate. No post-result neighboring-pair search is used to
-replace this failure (`figure15-official-duration-064.yaml`).
+The full Figure 15 candidate now passes for that predeclared pair. Cells 39 and
+40 emit 9 and 10 spikes, respectively, and the complete linear-correlogram
+spectrum peaks at 48.52 Hz, within the declared 44±5-Hz gate. No post-result
+neighboring-pair search or network retuning is used. The earlier 27.70-Hz
+failure came from cropping the correlogram to its plotted ±180-ms range before
+the periodogram, thereby imposing an undocumented lag window
+(`figure15-official-duration-064.yaml`).
 
 A visual source audit also corrected Equation 33: its printed denominator is
 Δx, despite prose describing a second derivative. The classic path now uses

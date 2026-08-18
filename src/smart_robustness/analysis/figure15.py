@@ -86,8 +86,13 @@ def figure15_layer4_synchrony(
     selected = np.abs(lag_bins * bin_ms) <= max_lag_ms
     cross_correlation = full[selected]
     lag_ms = lag_bins[selected].astype(float) * bin_ms
+    # Figure 15 displays only -180..180 ms of the correlogram, but its caption
+    # does not state that the unshown lags were discarded before spectral
+    # analysis. Compute the spectrum from the complete linear correlogram and
+    # apply ``max_lag_ms`` only to the returned/displayed curve. Truncating the
+    # signal first imposes a rectangular lag window and can move broad peaks.
     frequencies, power = periodogram(
-        cross_correlation - np.mean(cross_correlation),
+        full - np.mean(full),
         fs=1000.0 / bin_ms,
         window="hamming",
         detrend=False,

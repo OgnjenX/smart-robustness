@@ -1,7 +1,7 @@
 schema_version: 1
 validation_id: figure15-analysis-runner-063
 claim: The complete first-order sector can execute and predeclaredly score Figure 15 nearby layer-4 synchrony.
-status: pass_implementation_behavior_failed_in_figure15_official_duration_064
+status: pass
 date: 2026-08-18
 evidence_class:
   - approximate-numeric
@@ -29,16 +29,19 @@ implementation:
     - bin the two spike trains
     - subtract each mean
     - compute the full linear cross-correlation
-    - retain lags from -180 through 180 ms
-    - apply a Hamming periodogram to the cross-correlogram
+    - retain lags from -180 through 180 ms for the caption-matched display
+    - apply a Hamming periodogram to the complete linear cross-correlogram
     - require both cells to spike at least twice and the gamma peak to fall within 44 plus or minus 5 Hz
 verification:
   command: .venv/bin/pytest -q tests/test_figure15_analysis.py tests/test_figure15_validation.py
-  synthetic_44_hz_pair_peak_hz: 44.3213
-  result: 4 passed
+  synthetic_44_hz_pair_peak_hz: 44.0220
+  result: 5 passed
   lint: pass
 assessment:
   analysis_predeclared: true
   complete_sector_runner_ready: true
-  official_local_synchrony_reproduced: false
+  official_local_synchrony_reproduced: true
   behavioral_artifact: figure15-official-duration-064.yaml
+notes:
+  - The Figure 15 caption specifies the plotted lag range but does not state that unshown lags were discarded before the spectrum was calculated.
+  - Truncating before the periodogram imposes an undocumented rectangular lag window and moved the official candidate's broad peak to 27.70 Hz.

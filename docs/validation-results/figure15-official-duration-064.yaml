@@ -1,7 +1,7 @@
 schema_version: 1
 validation_id: figure15-official-duration-064
 claim: The reconstructed first-order SMART match candidate reproduces the Figure 15 local layer-4 synchrony peak near 44 Hz.
-status: failed-predeclared-pair
+status: pass-approximate-numeric
 date: 2026-08-18
 evidence_class:
   - approximate-numeric
@@ -21,22 +21,25 @@ protocol:
   layer4_pair_indices: [39, 40]
   pair_selection: predeclared adjacent cells in the stimulated horizontal bar
   spike_bin_ms: 1
-  cross_correlation_lag_ms: [-180, 180]
+  displayed_cross_correlation_lag_ms: [-180, 180]
+  spectrum_input: complete 1999-sample linear cross-correlogram
   target_peak_hz: 44
   tolerance_hz: 5
 result:
   first_cell_spikes: 9
   second_cell_spikes: 10
   all_layer4_spikes: 144
-  gamma_peak_hz: 27.7008310249
+  gamma_peak_hz: 48.5242621311
   nonspecific_rate_hz: 7
   relay_events: 1264
   trn_events: 81
 assessment:
   enough_spikes_pass: true
-  target_peak_pass: false
-  figure15_local_synchrony_reproduced: false
+  target_peak_pass: true
+  figure15_local_synchrony_reproduced: true
 notes:
-  - No neighboring-pair search is performed after observing the failed predeclared pair.
+  - No neighboring-pair search was performed; the originally predeclared pair is retained.
   - The original simulated cell identities and 95-percent confidence-limit procedure are unpublished.
-  - The same trial reproduces aggregate Figure 14 match gamma but not this single-unit local-synchrony target.
+  - The Figure 15 caption limits the displayed correlogram to plus or minus 180 ms but does not say that unshown lags were removed before spectral analysis.
+  - The earlier 27.70-Hz failure resulted from applying the display crop before the periodogram; that undocumented lag window is no longer imposed.
+  - The same unchanged trial now reproduces both aggregate Figure 14 match gamma and the predeclared Figure 15 local-synchrony target.

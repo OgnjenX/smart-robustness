@@ -1,0 +1,34 @@
+schema_version: 1
+validation_id: figure7-paper-axial-corrected-input-086
+claim: Grossberg and Versace Equation 2 axial coupling restores the published Figure 7 match/mismatch arousal split after correcting convergent external inputs.
+status: failed-source-discriminator
+date: 2026-08-18
+sources:
+  paper: Grossberg and Versace 2008, Equations 2 and 8 and Figure 7
+  comparison: Versace et al. 2008 KInNeSS Equation 9
+protocol:
+  simulator: Brian2 2.9.0 C++ standalone
+  duration_ms: 100
+  integration_dt_ms: 0.01
+  top_down_current_pA: 1000
+  learned_state: paper-constrained-figure6c-reference
+  axial_convention: paper_literal
+  convergent_external_input_convention: sum_independent_currents
+  runtime_convention_fingerprint: 38db868173ee59a9ffce43ce5d0c07becedebbbf4695f1a1436700d9360c1adc
+results:
+  match: {nonspecific_rate_hz: 10, relay_events: 30, trn_events: 81, layer4_events: 37, category_events: 30, v1_cortical_events: 404}
+  mismatch: {nonspecific_rate_hz: 10, relay_events: 32, trn_events: 81, layer4_events: 40, category_events: 34, v1_cortical_events: 415}
+published_targets:
+  match_nonspecific_rate_hz: approximately 40
+  mismatch_nonspecific_rate_hz: approximately 70
+assessment:
+  match_rate_pass: false
+  mismatch_rate_pass: false
+  mismatch_disinhibition_pass: false
+  pathway_divergence_pass: false
+  paper_axial_restores_figure7: false
+  paper_axial_promoted_to_classic_baseline: false
+interpretation:
+  - Paper-literal coupling changes relay, category, layer-4, and total cortical recruitment, proving that the convention is dynamically consequential.
+  - It does not create a post-startup TRN event or condition-dependent nonspecific-thalamic firing.
+  - The isolated Figure 10 propagation pass and the upstream Figure 7 failure must therefore remain separate validation facts.

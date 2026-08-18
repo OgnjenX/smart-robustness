@@ -1,0 +1,46 @@
+schema_version: 1
+validation_id: figure14-corrected-input-official-083
+claim: The corrected-input SMART candidate reproduces Figure 14's match-gamma and mismatch-lower-frequency spectral directions at the published duration.
+status: qualitative-spectral-reproduction-pass-mechanism-still-failed
+date: 2026-08-18
+primary_source:
+  citation: Grossberg and Versace 2008
+  locations: [Figure 14 panels a-d and caption, Methods 4.9-4.10]
+protocol:
+  simulator: Brian2 2.9.0 C++ standalone
+  duration_ms: 1000
+  integration_dt_ms: 0.01
+  histogram_bin_ms: 1
+  hamming_window_ms: 200
+  hamming_overlap_ms: 0
+  top_down_current_pA: 1000
+  learned_state: paper-constrained-figure6c-reference
+  convergent_external_input_convention: sum_independent_currents
+  runtime_convention_fingerprint: a054e5e36b75765124150157029662c6a5c8a639ee6079b442304607e726cb11
+match:
+  cortical_spikes: 5626
+  nonspecific_rate_hz: 6
+  relay_events: 1264
+  trn_events: 81
+  layer4_events: 144
+  dominant_frequency_hz: 55
+  band_power: {2_8_hz: 0.5253343800, 8_20_hz: 3.3061518885, 8_10_hz: 0.8636663877, 20_70_hz: 17.2290790538}
+mismatch:
+  cortical_spikes: 5252
+  nonspecific_rate_hz: 6
+  relay_events: 1284
+  trn_events: 81
+  layer4_events: 99
+  dominant_frequency_hz: 15
+  band_power: {2_8_hz: 0.4246416620, 8_20_hz: 5.4238681496, 8_10_hz: 1.6388050192, 20_70_hz: 12.3955234371}
+assessment:
+  match_peak_in_gamma: true
+  mismatch_peak_below_gamma: true
+  mismatch_gamma_reduced: true
+  figure14_qualitative_spectrum_reproduced: true
+  figure7_match_mismatch_arousal_reproduced: false
+  complete_classic_baseline_ready_to_freeze: false
+limitations:
+  - Both conditions retain exactly 81 TRN events, the common startup volley, so the published mismatch-reset mechanism remains absent.
+  - The corrected one-second nonspecific rate is 6 Hz in both conditions, not the Figure 7 approximately 40/70-Hz split.
+  - Learned arrays and category-current amplitude remain source-unreported reconstruction choices.

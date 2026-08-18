@@ -1,0 +1,51 @@
+schema_version: 1
+validation_id: figure16-corrected-input-official-085
+claim: The corrected-input two-area SMART candidate reproduces Figure 16's qualitative lower-frequency inter-area dominance at the caption's full duration.
+status: qualitative-reproduction-pass-under-underidentified-learning
+date: 2026-08-18
+primary_source:
+  citation: Grossberg and Versace 2008
+  location: Figure 16 caption
+protocol:
+  simulator: Brian2 2.9.0 C++ standalone
+  prestimulus_ms: 1000
+  recording_ms: 1000
+  integration_dt_ms: 0.01
+  recording_sample_ms: 1
+  samples: 1000
+  sample_time_ms: [1000, 1999]
+  inter_area_delay_ms: 10
+  frequency_bands_hz: [[2, 4], [4, 8], [8, 12], [12, 20], [20, 100]]
+  stimulus: recovered horizontal five-cell bar
+  learned_state: paper-constrained-figure6c-reference
+  convergent_external_input_convention: sum_independent_currents
+  runtime_convention_fingerprint: a054e5e36b75765124150157029662c6a5c8a639ee6079b442304607e726cb11
+  geometry_seeds: {v1: 16, v2: 17}
+  region_pair: inferior 0.3 mm of V2 versus superior 0.3 mm of V1
+  region_reduction: arithmetic mean across tips
+result:
+  v1_field_shape: [54, 1000]
+  v2_field_shape: [54, 1000]
+  v1_all_finite: true
+  v2_all_finite: true
+  v1_geometry_fingerprint: 2f2653edacd703f11f7467a9ce96ee28a644d7ad9bc609fbb60b2a6cd1f8fe80
+  v2_geometry_fingerprint: bda88ee9846adffa4427c97f29072fc5067a4f211751df27b51d76002d4da024
+  normalized_peak_by_band:
+    2_4_hz: {peak: 0.9558247617, lag_ms: 221}
+    4_8_hz: {peak: 0.8024121912, lag_ms: -353}
+    8_12_hz: {peak: 0.8183980736, lag_ms: 190}
+    12_20_hz: {peak: 0.4409634923, lag_ms: -22}
+    20_100_hz: {peak: 0.1942786260, lag_ms: -163}
+  strongest_band_hz: [2, 4]
+  lower_frequency_stronger_than_gamma: true
+assessment:
+  official_duration_completed: true
+  exact_caption_timing_pass: true
+  finite_field_pass: true
+  qualitative_lower_frequency_dominance_pass: true
+  exact_original_run_recovered: false
+  complete_classic_baseline_ready_to_freeze: false
+limitations:
+  - The publication does not preserve trained synaptic arrays, random electrode coordinates, or the regional tip-reduction rule.
+  - The result is a predeclared qualitative band-ordering test, not an exact numerical reproduction claim.
+  - Figure 7 arousal and Figure 10 reset remain failed and prevent freezing the baseline.

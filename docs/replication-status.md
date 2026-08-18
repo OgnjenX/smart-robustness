@@ -606,6 +606,9 @@ one lateral coordinate per cell are documented reconstruction assumptions, so
 this closes reproducible geometry construction without claiming recovery of
 the unpublished Figure 16 random draw
 (`figure16-electrode-geometry-046.yaml`).
+The population-field pipeline also enforces the cell-major current ordering
+used by the geometry, preventing Brian's per-compartment monitor arrays from
+being silently paired with the wrong Equation 31 distances.
 
 A separate coordinate audit tested whether KInNeSS integrates voltage at zero
 relative to each compartment's serialized leak and adds the leak only when

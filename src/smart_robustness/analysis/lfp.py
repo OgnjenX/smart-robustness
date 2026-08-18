@@ -37,6 +37,16 @@ class Figure16ElectrodeGeometry:
         return float(self.tip_depth_um[1] - self.tip_depth_um[0])
 
 
+@dataclass(frozen=True)
+class Figure16PopulationField:
+    """LFP/CSD output paired with the exact geometry that generated it."""
+
+    geometry: Figure16ElectrodeGeometry
+    transmembrane_current_pA: np.ndarray
+    potential_uV: np.ndarray
+    current_source_density_uV_per_um2: np.ndarray
+
+
 def figure16_electrode_geometry(
     cell: CellSpec,
     population_size: int,
@@ -125,6 +135,51 @@ def figure16_electrode_geometry(
         compartment_labels=labels,
         fingerprint=fingerprint,
     )
+
+
+def figure16_population_field(
+    cell: CellSpec,
+    compartment_currents_pA: dict[str, np.ndarray],
+    *,
+    selected_cell_index: int,
+    seed: int,
+    conductivity_mS_cm: float = SMART_EXTRACELLULAR_CONDUCTIVITY_MS_CM,
+) -> Figure16PopulationField:
+    """Convert monitored compartment currents into Methods 4.11 LFP and CSD.
+
+    Each mapping value must have shape ``(cell, time)``. The function performs
+    the otherwise error-prone conversion to the cell-major compartment order
+    used by :func:`figure16_electrode_geometry`.
+    """
+
+    expected = tuple(part.name for part in cell.compartments)
+    if set(compartment_currents_pA) != set(expected):
+        missing = sorted(set(expected) - set(compartment_currents_pA))
+        extra = sorted(set(compartment_currents_pA) - set(expected))
+        raise ValueError(f"compartment currents do not match cell: missing={missing}, extra={extra}")
+    arrays = [np.asarray(compartment_currents_pA[name], dtype=float) for name in expected]
+    shape = arrays[0].shape
+    if len(shape) != 2 or shape[0] <= 0 or shape[1] <= 0:
+        raise ValueError("each compartment current must have nonempty (cell, time) shape")
+    if any(array.shape != shape for array in arrays):
+        raise ValueError("all compartment-current arrays must have identical shape")
+    if any(not np.all(np.isfinite(array)) for array in arrays):
+        raise ValueError("compartment currents must be finite")
+    # (compartment, cell, time) -> (cell, compartment, time) -> (source, time)
+    currents = np.stack(arrays, axis=0).transpose(1, 0, 2).reshape(-1, shape[1])
+    geometry = figure16_electrode_geometry(
+        cell,
+        shape[0],
+        selected_cell_index=selected_cell_index,
+        seed=seed,
+    )
+    potential = extracellular_potential_uV(
+        currents, geometry.distance_um, conductivity_mS_cm=conductivity_mS_cm
+    )
+    csd = current_source_density_uV_per_um2(potential, geometry.tip_spacing_um)
+    for array in (currents, potential, csd):
+        array.setflags(write=False)
+    return Figure16PopulationField(geometry, currents, potential, csd)
 
 
 def extracellular_potential_uV(

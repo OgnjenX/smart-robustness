@@ -14,6 +14,7 @@ source_facts:
   current_location: compartment centre
 implementation:
   function: smart_robustness.analysis.lfp.figure16_electrode_geometry
+  end_to_end_function: smart_robustness.analysis.lfp.figure16_population_field
   distance_rule: Euclidean distance from each tip to each compartment centre
   random_generator: numpy.default_rng.uniform
   reproducibility:
@@ -34,6 +35,8 @@ verification:
     - cell-major compartment labeling and matrix shape
     - same-seed determinism and different-seed fingerprint separation
     - immutable returned arrays and invalid-protocol rejection
+    - cell-major flattening of Brian-style per-compartment current arrays
+    - integrated Equation 31 potential and Equation 33 CSD output shapes
 limitations:
   - This validates the reported geometry algorithm, not the unpublished random realization.
   - Official Figure 16 LFP and cross-correlation behavior still requires a validated higher-order simulation.

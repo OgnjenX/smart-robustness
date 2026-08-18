@@ -7,6 +7,7 @@ from smart_robustness.analysis.lfp import (
     current_source_density_uV_per_um2,
     extracellular_potential_uV,
     figure16_electrode_geometry,
+    figure16_population_field,
 )
 from smart_robustness.models.table3 import get_cell_spec
 
@@ -105,3 +106,44 @@ def test_figure16_geometry_is_seed_deterministic_and_read_only() -> None:
 def test_figure16_geometry_rejects_invalid_protocol(kwargs, error) -> None:
     with pytest.raises(error):
         figure16_electrode_geometry(get_cell_spec("layer4_excitatory"), **kwargs)
+
+
+def test_population_field_preserves_cell_major_compartment_order() -> None:
+    cell = get_cell_spec("layer23_excitatory")
+    field = figure16_population_field(
+        cell,
+        {
+            "soma": np.asarray([[1.0, 2.0], [3.0, 4.0]]),
+            "proximal_dendrite": np.asarray([[10.0, 20.0], [30.0, 40.0]]),
+        },
+        selected_cell_index=0,
+        seed=16,
+    )
+
+    assert field.transmembrane_current_pA == pytest.approx(
+        np.asarray([[1.0, 2.0], [10.0, 20.0], [3.0, 4.0], [30.0, 40.0]])
+    )
+    assert field.geometry.compartment_labels == (
+        (0, "soma"),
+        (0, "proximal_dendrite"),
+        (1, "soma"),
+        (1, "proximal_dendrite"),
+    )
+    assert field.potential_uV.shape == (54, 2)
+    assert field.current_source_density_uV_per_um2.shape == (52, 2)
+    assert not field.potential_uV.flags.writeable
+
+
+def test_population_field_rejects_missing_or_misaligned_currents() -> None:
+    cell = get_cell_spec("layer23_excitatory")
+    with pytest.raises(ValueError, match="missing"):
+        figure16_population_field(
+            cell, {"soma": np.ones((2, 3))}, selected_cell_index=0, seed=1
+        )
+    with pytest.raises(ValueError, match="identical"):
+        figure16_population_field(
+            cell,
+            {"soma": np.ones((2, 3)), "proximal_dendrite": np.ones((1, 3))},
+            selected_cell_index=0,
+            seed=1,
+        )

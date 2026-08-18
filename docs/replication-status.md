@@ -366,6 +366,17 @@ even with a post-stimulus settling interval. It remains an explicit audit
 alternative rather than replacing the literal executable profile; see
 `figure6-source-resolution-020.yaml`.
 
+Revalidation after the later intrinsic-cell and propagation corrections moves
+the active profile's three synchronized relay volleys to 49.53, 65.70, and
+81.78 ms. The category cell now spikes at 83.66 ms, so its 2-ms-delayed
+teaching signal arrives after the final relay volley and no causal top-down
+STDP pair exists. Bottom-up horizontal contrast remains positive (0.08745),
+whereas combined top-down contrast is negative (-0.00166). Re-running the
+supplement-corrected projection-022 candidate suppresses the category spike
+entirely and is again rejected. Equations 25-28 and KInNeSS Table 3 also
+confirm that the extra presynaptic factor is intentional, not an implementation
+error. See `figure6-category-phase-068.yaml`.
+
 Two additional falsifications leave the single category teaching event
 unchanged. Removing layer-6II's archived AHP produces bit-identical spike times
 and maps; applying the spike detector in leak-relative coordinates yields only

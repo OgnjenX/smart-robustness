@@ -320,25 +320,26 @@ def compile_cell_equations(
     for port in gap_junction_ports:
         lines.append(f"i_{port.name} : amp")
     for port in external_input_ports:
-        effective_reversal = "+".join(
-            (
-                f"e_l_{port.compartment}",
-                f"{port.reversal_mV}*mV",
-                *(
-                    f"{sensitivity}*mV*{port.name}_input_{channel}"
-                    for sensitivity, channel in zip(
-                        port.sensitivities_mV,
-                        ("red", "green", "blue", "alpha"),
-                        strict=True,
-                    )
-                ),
+        input_shift = "+".join(
+            f"{sensitivity}*mV*{port.name}_input_{channel}"
+            for sensitivity, channel in zip(
+                port.sensitivities_mV,
+                ("red", "green", "blue", "alpha"),
+                strict=True,
             )
         )
         lines.extend(
             (
-                f"e_{port.name}_effective={effective_reversal} : volt",
-                f"i_{port.name}=g_{port.name}*(e_{port.name}_effective-v_{port.compartment}) : amp",
+                (
+                    f"e_{port.name}_effective=e_l_{port.compartment}"
+                    f"+{port.reversal_mV}*mV+({input_shift})/{port.name}_input_source_count : volt"
+                ),
+                (
+                    f"i_{port.name}=g_{port.name}*{port.name}_input_source_count"
+                    f"*(e_{port.name}_effective-v_{port.compartment}) : amp"
+                ),
                 f"g_{port.name} : siemens (constant)",
+                f"{port.name}_input_source_count : 1",
                 f"{port.name}_input_red : 1",
                 f"{port.name}_input_green : 1",
                 f"{port.name}_input_blue : 1",

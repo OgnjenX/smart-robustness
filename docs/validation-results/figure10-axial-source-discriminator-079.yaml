@@ -1,5 +1,5 @@
 id: figure10-axial-source-discriminator-079
-status: published-equation-candidate-passes-isolated-propagation
+status: isolated-result-valid-network-discriminator-superseded
 claim: The axial convention does not affect the published Figure 10 apical-dendrite-to-soma propagation result
 sources:
   paper: Grossberg and Versace 2008 Equation 2 and Figure 10b
@@ -30,6 +30,7 @@ results:
     soma_events: 0
     soma_voltage_range_mV: [-73.038897, -66.863467]
 network_discriminator:
+  status: superseded-by-connectfromall-current-correction-080
   duration_ms: 30
   dt_ms: 0.02
   top_down_current_pA: 1000
@@ -54,4 +55,4 @@ notes:
   - Figure 10 explicitly reports a stream of somatic action potentials after nonspecific stimulation of the isolated simulated layer-5 apical dendrite.
   - The paper-literal Equation 2 profile is the first unscaled, published-source axial profile to pass that isolated causal gate.
   - The later KInNeSS framework equation is a stronger executable-engine provenance source, so the candidate is not promoted on one figure alone.
-  - A short network discriminator shows that paper-literal coupling also restores early layer-4 recruitment but leaves match and mismatch identical.
+  - The short network discriminator used the superseded scalar-sum external-input translation. Its network counts are retained only as provenance and cannot support promotion.

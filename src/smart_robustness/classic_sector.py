@@ -101,6 +101,7 @@ class FirstOrderRuntimeConventions:
     gaussian_weight_convention: str = "source_peak"
     gaussian_learning_bounds_convention: str = "projection_level"
     projection_source_convention: str = "modeldb_as_serialized"
+    convergent_external_input_convention: str = "sum_independent_currents"
 
     @property
     def fingerprint(self) -> str:

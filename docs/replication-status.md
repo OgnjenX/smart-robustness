@@ -929,6 +929,14 @@ remains the better partial reconstruction (`figure8-millimeter-runtime-075.yaml`
 Accordingly, output from M2 is a source/audit benchmark, not evidence that
 the 2008 results have already been replicated.
 
+The `connectFromAll` external-input translation has been corrected to sum
+independent conductance currents rather than treating five green=120 pixels as
+one out-of-domain value of 600. This fixes a direct conflict with KInNeSS
+Equations 5-6 and changes bar-driven network trajectories. Earlier dynamic
+Figure 7/10/14/15/16 results that used the scalar-sum translation are therefore
+superseded and must be rerun; structural and unrelated isolated validations
+remain valid. See `connectfromall-external-current-080.yaml`.
+
 The published Equation 2 axial profile now passes the isolated Figure 10b
 apical-to-soma propagation gate without a fitted scale: it produces two
 somatic events at source-strength sustained nonspecific drive, whereas the

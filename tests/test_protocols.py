@@ -68,6 +68,12 @@ def test_bar_input_reconstructs_published_minus_12mV_drive() -> None:
         if port.record_id == stimulus.nonspecific_input_record_id
     )
     assert getattr(nonspecific.group, f"{nonspecific_port.name}_input_green")[0] == 600
+    assert getattr(
+        nonspecific.group, f"{nonspecific_port.name}_input_source_count"
+    )[0] == pytest.approx(5)
+    assert getattr(
+        nonspecific.group, f"e_{nonspecific_port.name}_effective"
+    )[0] / brian.mV == pytest.approx(-40.0)
     matrix = sector.populations["thalamic_matrix"]
     matrix_port = next(
         port
@@ -75,11 +81,13 @@ def test_bar_input_reconstructs_published_minus_12mV_drive() -> None:
         if port.record_id == stimulus.matrix_input_record_id
     )
     assert getattr(matrix.group, f"{matrix_port.name}_input_green")[0] == 600
+    assert getattr(matrix.group, f"{matrix_port.name}_input_source_count")[0] == pytest.approx(5)
 
     clear_bar_stimulus(sector, stimulus)
     assert np.count_nonzero(getattr(relay.group, f"{port.name}_input_green")[:]) == 0
     assert np.count_nonzero(getattr(category.group, f"{category_port.name}_input_blue")[:]) == 0
     assert getattr(nonspecific.group, f"{nonspecific_port.name}_input_green")[0] == 0
+    assert getattr(nonspecific.group, f"{nonspecific_port.name}_input_source_count")[0] == 1
     assert getattr(matrix.group, f"{matrix_port.name}_input_green")[0] == 0
 
 

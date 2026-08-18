@@ -166,10 +166,12 @@ rather than 6 kOhm*cm.
   This behavior is fingerprinted and remains unpromoted pending network and
   source validation.
 - The archived 9x9 stimulus PNGs contain five green=120 bar pixels plus
-  blue=70 at the central pixel. The executable protocol now routes green to
-  relay, nonspecific, and matrix input gates and blue to the central V1
-  layer-6II category cell. `connectFromAll` gates sum individually valid pixel
-  values instead of treating the sum as one out-of-range pixel.
+  blue=70 at the central pixel. The executable protocol routes green to relay,
+  nonspecific, and matrix input gates and blue to the central V1 layer-6II
+  category cell. Each `connectFromAll` source contributes an independent
+  Equation 5 conductance current. The earlier implementation incorrectly used
+  the scalar sum 600 as one driving-potential value, violating KInNeSS's
+  [0,255] source bound and producing an impossible effective reversal.
 - Gap-junction totals follow KInNeSS Equation 8 rather than treating XML
   `g_bar` as an already converted membrane density.
 - KInNeSS serializes compartment dimensions in centimeters. The executable

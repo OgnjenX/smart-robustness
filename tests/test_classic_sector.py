@@ -268,6 +268,7 @@ def test_bottom_up_gate_is_explicitly_addressable_by_source_record() -> None:
     port = next(port for port in relay.compiled.external_input_ports if port.record_id == record_id)
     assert getattr(relay.group, f"{port.name}_input_green")[40] == pytest.approx(64)
     assert getattr(relay.group, f"{port.name}_input_green")[0] == pytest.approx(0.0)
+    assert np.allclose(getattr(relay.group, f"{port.name}_input_source_count")[:], 1)
     with pytest.raises(ValueError, match="between zero and 255"):
         relay.set_external_input(record_id, "green", 256)
 

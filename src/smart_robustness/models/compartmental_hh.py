@@ -102,6 +102,7 @@ class CompartmentalPopulation:
         if not 0 <= value <= 255:
             raise ValueError("external input value must be between zero and 255")
         getattr(self.group, f"{port.name}_input_{channel}")[indices] = value
+        getattr(self.group, f"{port.name}_input_source_count")[indices] = 1
 
     def set_convergent_external_input(
         self,
@@ -115,11 +116,13 @@ class CompartmentalPopulation:
         values = np.asarray(source_values, dtype=float)
         if values.size == 0 or np.any(~np.isfinite(values)) or np.any((values < 0) | (values > 255)):
             raise ValueError("each external input source must be between zero and 255")
-        self.set_external_input(record_id, channel, 0.0, indices=indices)
         port = next(
             port for port in self.compiled.external_input_ports if port.record_id == record_id
         )
+        for source_channel in ("red", "green", "blue", "alpha"):
+            getattr(self.group, f"{port.name}_input_{source_channel}")[indices] = 0.0
         getattr(self.group, f"{port.name}_input_{channel}")[indices] = float(values.sum())
+        getattr(self.group, f"{port.name}_input_source_count")[indices] = values.size
 
     def set_external_injection(
         self,
@@ -361,6 +364,7 @@ def create_compartmental_hh_population(
         )
         for channel in ("red", "green", "blue", "alpha"):
             _set(group, f"{port.name}_input_{channel}", 0)
+        _set(group, f"{port.name}_input_source_count", 1)
     for port in injection_ports:
         for channel in ("red", "green", "blue", "alpha"):
             _set(group, f"{port.name}_input_{channel}", 0)

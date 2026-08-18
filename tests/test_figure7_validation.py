@@ -181,7 +181,7 @@ def test_source_derived_reference_matches_runtime_projection_arrays() -> None:
 
 
 def test_figure7_runner_requires_exactly_one_learned_state_source() -> None:
-    with pytest.raises(ValueError, match="requires an explicit"):
+    with pytest.raises(ValueError, match="requires exactly one"):
         run_figure7_condition(
             condition=MatchCondition.MATCH,
             top_down_current_pA=100.0,
@@ -219,12 +219,20 @@ def test_figure7_runner_rejects_invalid_projection_discriminators() -> None:
             duration_ms=0.01,
             projection_weight_scales={"modeldb112923.projection.000": 0.0},
         )
-    with pytest.raises(ValueError, match="not both"):
+    with pytest.raises(ValueError, match="requires exactly one"):
         run_figure7_condition(
             condition=MatchCondition.MATCH,
             top_down_current_pA=100.0,
             learned_weights={},
             use_paper_constrained_reference=True,
+        )
+
+    with pytest.raises(ValueError, match="requires exactly one"):
+        run_figure7_condition(
+            condition=MatchCondition.MATCH,
+            top_down_current_pA=1000,
+            use_paper_constrained_reference=True,
+            pretrain_with_figure6_episode=True,
         )
 
 

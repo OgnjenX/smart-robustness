@@ -956,6 +956,17 @@ but does not separate match from mismatch. It therefore remains a
 source-backed candidate, not yet the frozen classic convention; see
 `figure10-axial-source-discriminator-079.yaml`.
 
+A same-network Figure 6-to-Figure 7 protocol now preserves the complete
+training trajectory instead of copying learned weights into a cold network.
+It retains membrane voltages, intrinsic gates, receptor and transmitter state,
+AHP state, and adaptive weights, then disables further plasticity for the
+recognition trial. Both match and mismatch nevertheless produce zero
+nonspecific and TRN events, all 81 relay cells active, and three category
+events. Loss of transient state at the learning/recognition boundary is thus
+excluded as a sufficient explanation; the unresolved Figure 6c learning and
+condition-dependent relay/TRN recruitment remain upstream gates
+(`figure7-same-network-figure6-state-089.yaml`).
+
 ## Validation gates
 
 A milestone may be marked complete only when:

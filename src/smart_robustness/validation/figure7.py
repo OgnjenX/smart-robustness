@@ -15,6 +15,8 @@ import numpy as np
 
 from ..modeldb_projections import MODELDB_FIRST_ORDER
 from ..protocols import (
+    BarOrientation,
+    ClassicBarStimulus,
     ClassicMatchMismatchCue,
     MatchCondition,
     apply_bar_stimulus,
@@ -345,6 +347,7 @@ def run_figure7_condition(
     top_down_current_pA: float,
     learned_weights: Mapping[str, tuple[float, ...] | np.ndarray] | None = None,
     use_paper_constrained_reference: bool = False,
+    pretrain_with_figure6_episode: bool = False,
     paper_reference: Figure6ReferenceExpectation | None = None,
     conventions=None,
     duration_ms: float = 100.0,
@@ -362,10 +365,18 @@ def run_figure7_condition(
 ) -> Figure7ConditionResult:
     """Run one source-labeled Figure 7 match or mismatch condition."""
 
-    if learned_weights is not None and use_paper_constrained_reference:
-        raise ValueError("pass learned_weights or request the paper-constrained reference, not both")
-    if learned_weights is None and not use_paper_constrained_reference:
-        raise ValueError("Figure 7 requires an explicit learned expectation state")
+    learning_sources = sum(
+        (
+            learned_weights is not None,
+            use_paper_constrained_reference,
+            pretrain_with_figure6_episode,
+        )
+    )
+    if learning_sources != 1:
+        raise ValueError(
+            "Figure 7 requires exactly one learned-weight snapshot, paper-constrained "
+            "reference, or same-network Figure 6 episode"
+        )
     if duration_ms <= 0 or dt_ms <= 0:
         raise ValueError("duration_ms and dt_ms must be positive")
     if top_down_cue_lead_ms < 0:
@@ -398,6 +409,8 @@ def run_figure7_condition(
     ).bottom_up_stimulus
     if exact_relay_voltage_clamp and include_higher_order_loop:
         raise ValueError("the exact relay-clamp audit is only defined for the first-order assay")
+    if exact_relay_voltage_clamp and pretrain_with_figure6_episode:
+        raise ValueError("same-network Figure 6 pretraining requires an unclamped relay")
     if exact_relay_voltage_clamp and top_down_cue_lead_ms > 0:
         raise ValueError("the relay-clamp audit cannot represent a cue-only lead interval")
     if exact_relay_voltage_clamp:
@@ -412,7 +425,39 @@ def run_figure7_condition(
         sector = build_full_smart_network(conventions=conventions, brian=brian)
     else:
         sector = build_first_order_connected_sector(conventions=conventions, brian=brian)
-    if use_paper_constrained_reference:
+    pretraining_elapsed_ms = 0.0
+    if pretrain_with_figure6_episode:
+        from .figure6 import Figure6LearningProtocol
+
+        training = Figure6LearningProtocol()
+        category_group = sector.populations["layer6ii_excitatory_v1"].group
+        if training.layer6ii_ahp_scale != 1.0:
+            # Keep this assignment symbolic: C++ standalone cannot read a
+            # state array before the deferred build has executed.
+            category_group.g_ahp_max = (
+                f"g_ahp_max*({float(training.layer6ii_ahp_scale)!r})"
+            )
+        if training.warmup_ms:
+            sector.network.run(training.warmup_ms * brian.ms)
+        training_stimulus = ClassicBarStimulus(
+            BarOrientation.HORIZONTAL,
+            duration_ms=training.stimulus_ms,
+            source_value=training.source_value,
+            category_source_value=training.category_source_value,
+            include_archived_category_pixel=True,
+        )
+        apply_bar_stimulus(sector, training_stimulus)
+        sector.network.run(training.stimulus_ms * brian.ms)
+        clear_bar_stimulus(sector, training_stimulus)
+        if training.post_stimulus_ms:
+            sector.network.run(training.post_stimulus_ms * brian.ms)
+        pretraining_elapsed_ms = (
+            training.warmup_ms + training.stimulus_ms + training.post_stimulus_ms
+        )
+        for projection_id in FIGURE7_REQUIRED_LEARNED_PROJECTIONS:
+            sector.projections[projection_id].modifiable = 0
+        provenance = "same-network-figure6-episode"
+    elif use_paper_constrained_reference:
         learned_weights = paper_constrained_figure6_expectation(
             sector.projections,
             paper_reference,
@@ -421,12 +466,13 @@ def run_figure7_condition(
         provenance = "paper-constrained-figure6c-reference"
     else:
         provenance = "simulated-learned-weight-snapshot"
-    assert learned_weights is not None
-    apply_figure7_learned_state(
-        sector.projections,
-        learned_weights,
-        verify_runtime_bounds=cpp_standalone_directory is None,
-    )
+    if not pretrain_with_figure6_episode:
+        assert learned_weights is not None
+        apply_figure7_learned_state(
+            sector.projections,
+            learned_weights,
+            verify_runtime_bounds=cpp_standalone_directory is None,
+        )
     if projection_weight_scales:
         unknown = set(projection_weight_scales) - set(sector.projections)
         if unknown:
@@ -580,7 +626,9 @@ def run_figure7_condition(
         )
         voltage_mV = np.asarray(relay_state.v_distal_dendrite / brian.mV)
         times_ms = np.asarray(relay_state.t / brian.ms)
-        stimulus_start_ms = equilibration_ms + top_down_cue_lead_ms
+        stimulus_start_ms = (
+            pretraining_elapsed_ms + equilibration_ms + top_down_cue_lead_ms
+        )
         diagnostic_window = times_ms >= stimulus_start_ms
         times_ms = times_ms[diagnostic_window] - stimulus_start_ms
         ampa = ampa[:, diagnostic_window]
@@ -690,7 +738,9 @@ def run_figure7_condition(
             )
         )
     def stimulus_times(monitor) -> tuple[float, ...]:
-        stimulus_start_ms = equilibration_ms + top_down_cue_lead_ms
+        stimulus_start_ms = (
+            pretraining_elapsed_ms + equilibration_ms + top_down_cue_lead_ms
+        )
         return tuple(
             float(value - stimulus_start_ms)
             for value in monitor.t / brian.ms
@@ -698,7 +748,9 @@ def run_figure7_condition(
         )
 
     def stimulus_indices(monitor) -> tuple[int, ...]:
-        stimulus_start_ms = equilibration_ms + top_down_cue_lead_ms
+        stimulus_start_ms = (
+            pretraining_elapsed_ms + equilibration_ms + top_down_cue_lead_ms
+        )
         return tuple(
             int(index)
             for index, value in zip(monitor.i, monitor.t / brian.ms, strict=True)

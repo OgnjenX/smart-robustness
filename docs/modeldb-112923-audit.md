@@ -217,6 +217,15 @@ an official Figure 8 reproduction. Remaining audit targets are the legacy
 clamp timing, membrane-capacitance default, and voltage-gate coordinate
 handling.
 
+A subsequent equation-by-equation audit confirms that both archived thalamic
+T-current families are transcribed faithfully in Brian2, including their
+different activation exponents, steady-state functions, time constants, and
+absolute-voltage steady-state initialization. This rules out a shared T-gate
+coding error as the explanation for the remaining Figure 7/8/10 failures; it
+does not resolve the missing version-1 `libkinmaze` defaults used by the
+dedicated Figure 8 experiment. See
+`validation-results/thalamic-t-gate-source-parity-077.yaml`.
+
 ## Consequence for baseline status
 
 The paper transcription remains valuable as an audit target, but the classic

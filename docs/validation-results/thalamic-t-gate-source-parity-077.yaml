@@ -1,0 +1,37 @@
+id: thalamic-t-gate-source-parity-077
+status: source-parity-confirmed-no-correction
+claim: The shared Figure 7/8/10 failure is caused by a Brian2 transcription error in the T-type calcium gates
+sources:
+  relay: ModelDB 112923 SMART.nml and Ca_rebound.xml
+  reticular: ModelDB 112923 SMART.nml
+  initialization: archived SANNDRA revision history cited in docs/modeldb-112923-audit.md
+relay_runtime:
+  activation:
+    steady_state: 1/(exp((-63-V)/7.8)+1)
+    time_constant_ms: 2.44 + 0.02506*exp(-0.0984*V)
+    exponent: 3
+  inactivation:
+    steady_state: 1/(exp((V+83.5)/6.3)+1)
+    time_constant_ms: 19.15 + 0.07171*exp(-0.1054*V)
+    exponent: 1
+reticular_runtime:
+  activation:
+    steady_state: 1/(exp((-52-V)/7.4)+1)
+    exponent: 2
+  inactivation:
+    steady_state: 1/(exp((-80-V)/-5)+1)
+    exponent: 1
+  time_constants: source-specific Reticular_Tau expressions
+initialization:
+  convention: steady_state_at_initial_voltage
+  calcium_voltage_coordinate: absolute integrated membrane voltage
+assessment:
+  equation_parity: true
+  initialization_parity: true
+  source_correction_required: false
+  official_results_reproduced: false
+notes:
+  - Relay and reticular cells intentionally use different T-current channel families.
+  - The paper reverses the relay steady-state/time-constant labels, while the archived executable XML resolves their roles; the Brian2 baseline follows the XML.
+  - This audit rules out a direct T-gate transcription or initialization defect. It does not validate the unresolved legacy Figure 8 passive defaults or version-1 libkinmaze unit semantics.
+  - No parameter was changed merely to improve agreement with a target trace.

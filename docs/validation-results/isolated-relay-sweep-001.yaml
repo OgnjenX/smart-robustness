@@ -36,5 +36,5 @@ results_summary:
 interpretation:
   - No finite candidate produced the published 40 Hz relay stream.
   - The fixed-shift profile undergoes a sharp spiking transition rather than a smooth capacitance scaling to 40 Hz.
-  - Low-capacitance and high-calcium candidates can become numerically invalid at the published 0.01 ms step.
+  - Low-capacitance and high-calcium candidates can become numerically invalid at the project's 0.01 ms default step; the paper does not report its integration timestep.
   - No matrix member is promoted to the classic baseline from this isolated assay.

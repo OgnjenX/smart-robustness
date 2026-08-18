@@ -25,7 +25,7 @@ causal_scale_sweep:
     100: {finite_at_dt: false}
 interpretation:
   - Weakening or strengthening axial conductance over three orders of magnitude does not create a later somatic event.
-  - The 100x case corresponds to the known erroneous raw-centimeters-as-millimeters interpretation and is numerically stiff at the published 0.01-ms step.
+  - The 100x case corresponds to the known erroneous raw-centimeters-as-millimeters interpretation and is numerically stiff at the project's 0.01-ms default step; that timestep is not reported by the paper.
   - Treating inpResistance as a conductance is contradicted by the KInNeSS manuscript and is not an admissible classic-SMART convention.
 paper_ionic_visual_check:
   rendered_pages:

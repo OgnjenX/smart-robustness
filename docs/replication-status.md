@@ -544,6 +544,17 @@ It is therefore rejected before a full Figure 7 compile and remains only a
 fingerprinted audit alternative (`spike-event-shifted67-053.yaml`). The active
 absolute-physical candidate is unchanged and is not yet a frozen source fact.
 
+The primary-paper PDF audit also corrects an earlier provenance overstatement:
+Methods 4.4 prints the immediately preceding-sample detector and Methods 4.9
+reports 100/1000-ms epochs, but no section specifies the integration timestep.
+KInNeSS exposes it as a user preference that is absent from `SMART.nml`. A
+literal +30-mV detector sweep from 0.005 through 0.05 ms remains finite and
+emits zero control or driven TRN events. At 0.1 ms it records one crossing only
+after the cell becomes non-finite; 0.2 ms is also non-finite. Coarsening the
+step is therefore rejected as a numerical artifact, and 0.01 ms remains an
+explicit converged project default rather than an official parameter
+(`spike-event-timestep-054.yaml`).
+
 The complete 100-ms Figure 7 test of the hysteretic KInNeSS `V_theta=-20 mV`
 alternative confirms the isolated-cell rejection: match and mismatch each
 produce 648 TRN events (405 after 40 ms), 90-Hz nonspecific output, and no

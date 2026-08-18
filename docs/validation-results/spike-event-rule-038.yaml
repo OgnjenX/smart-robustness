@@ -29,7 +29,7 @@ results:
       assessment: rejected-identical-autonomous-network-regime
   literal_previous_sample_plus30:
     events: 0
-    assessment: rejected-misses-startup-action-potential-at-source-timestep
+    assessment: rejected-misses-startup-action-potential-at-project-default-timestep
   latched_peak_then_zero_plus30:
     events: 1
     assessment: retained-active-candidate

@@ -7,6 +7,14 @@ by laminar thalamocortical circuits*. Brain Research 1218, 278-312.
 DOI: [10.1016/j.brainres.2008.04.024](https://doi.org/10.1016/j.brainres.2008.04.024).
 [Author-hosted manuscript](https://sites.bu.edu/steveg/files/2016/06/GroVer2008BR.pdf).
 
+Visual inspection of Methods 4.4, 4.9, and 4.12 confirms that the article
+defines the preceding-sample spike expression and 100/1000-ms protocol epochs,
+but does not report the numerical integration timestep. The KInNeSS manual
+stores timestep as a user preference, and the recovered NeuroML does not carry
+that preference. The repository's 0.01-ms default is therefore a converged,
+explicit reconstruction parameter rather than a published SMART value
+(`validation-results/spike-event-timestep-054.yaml`).
+
 ## Original supplementary parameter table
 
 Elsevier attachment:

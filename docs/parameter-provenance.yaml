@@ -69,6 +69,11 @@ parameters:
     status: source-ambiguity
     source: Grossberg and Versace 2008 Equation 8; Versace et al. 2008 KInNeSS Equation 18; SANNDRA spikeevents.h revision history
     note: surviving equations print V(t-dt), but the 2008 detector source body is unavailable; SANNDRA revision 1.2 only records that proper spike detecting was fixed
+  model.classic_hh.integration_timestep:
+    value: 0.01 ms project default; must remain protocol-explicit
+    status: source-unreported-numerically-audited
+    source: Grossberg and Versace 2008 Methods 4.4, 4.9, and 4.12; archived KInNeSS Computational Preferences manual
+    note: the paper reports epoch lengths but no integration step, and KInNeSS stores it as a user preference rather than in SMART.nml; literal +30-mV detection yields no event at every finite tested step from 0.005 through 0.05 ms
   model.classic_hh.trn_t_type_calcium:
     value: activation exponent 2; m_inf V0=-52/B=7.4; h_inf V0=-80/B=-5; Reticular_Tau parameter sets (1,0.33,27,102,10,-15) and (28.3,0.33,48,407,4,-50)
     status: official-executable-source

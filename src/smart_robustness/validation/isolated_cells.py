@@ -8,7 +8,11 @@ from typing import Any
 import numpy as np
 
 from ..models.compartmental_hh import create_compartmental_hh_population
-from ..models.modeldb112923 import ahp_ach_layer5_spec, ahp_density_to_total_nS
+from ..models.modeldb112923 import (
+    ahp_ach_layer5_spec,
+    ahp_density_to_total_nS,
+    figure8_relay_spec,
+)
 
 
 @dataclass(frozen=True, slots=True)
@@ -48,6 +52,15 @@ class Figure8Assessment:
     @property
     def reproduced(self) -> bool:
         return self.tonic_pass and self.burst_pass
+
+
+@dataclass(frozen=True, slots=True)
+class Figure8SourceCandidate:
+    leak_density_mS_cm2: float
+    specific_capacitance_uF_cm2: float
+    tonic: IsolatedCellTrace
+    burst: IsolatedCellTrace
+    assessment: Figure8Assessment
 
 
 @dataclass(frozen=True, slots=True)
@@ -269,6 +282,75 @@ def run_figure8_condition(
         time_ms=times_ms[pulse_mask] - pulse_start_ms,
         soma_voltage_mV=np.asarray(voltage.v_soma[0] / brian.mV)[pulse_mask],
         spike_times_ms=spike_times_ms,
+    )
+
+
+def figure8_source_parameters(
+    *,
+    leak_density_mS_cm2: float,
+    specific_capacitance_uF_cm2: float,
+) -> dict[str, Any]:
+    """Build the dedicated Ca_rebound.xml cell with two explicit missing defaults."""
+
+    if leak_density_mS_cm2 <= 0 or specific_capacitance_uF_cm2 <= 0:
+        raise ValueError("Figure 8 leak and capacitance candidates must be positive")
+    return {
+        "cell_spec": figure8_relay_spec(leak_density_mS_cm2=leak_density_mS_cm2),
+        "cell_class": "thalamic_relay",
+        "axial_convention": "kinness_serialized_edge",
+        "leak_convention": "table3_reversal",
+        "voltage_coordinate": "relative_to_table3_leak",
+        "nak_rate_convention": "standard_traub_miles",
+        "calcium_gate_convention": "modeldb_112923",
+        "calcium_voltage_coordinate": "integrated_voltage",
+        "gate_initialization_convention": "steady_state_at_initial_voltage",
+        "membrane_initialization_convention": "physical_leak_voltage",
+        "spike_event_coordinate": "absolute_physical",
+        "spike_event_threshold_mV": 30.0,
+        "spike_event_rule": "latched_peak_then_zero",
+        "calcium_density_convention": "table3",
+        "ahp_convention": "modeldb_112923",
+        "specific_capacitance_uF_cm2": float(specific_capacitance_uF_cm2),
+        "enable_ahp_ach": False,
+        "method": "rk4",
+        "e_na_mV": 50.0,
+        "e_k_mV": -90.0,
+        "e_ca_mV": 180.0,
+    }
+
+
+def run_figure8_source_candidate(
+    *,
+    leak_density_mS_cm2: float,
+    specific_capacitance_uF_cm2: float,
+    protocol: Figure8Protocol | None = None,
+    brian=None,
+) -> Figure8SourceCandidate:
+    """Run both Figure 8 conditions for one labeled missing-default candidate."""
+
+    protocol = protocol or Figure8Protocol(depolarized_hold_mV=-62.3)
+    params = figure8_source_parameters(
+        leak_density_mS_cm2=leak_density_mS_cm2,
+        specific_capacitance_uF_cm2=specific_capacitance_uF_cm2,
+    )
+    tonic = run_figure8_condition(
+        hyperpolarized=False,
+        model_params=params,
+        protocol=protocol,
+        brian=brian,
+    )
+    burst = run_figure8_condition(
+        hyperpolarized=True,
+        model_params=params,
+        protocol=protocol,
+        brian=brian,
+    )
+    return Figure8SourceCandidate(
+        leak_density_mS_cm2=float(leak_density_mS_cm2),
+        specific_capacitance_uF_cm2=float(specific_capacitance_uF_cm2),
+        tonic=tonic,
+        burst=burst,
+        assessment=assess_figure8(tonic, burst, pulse_ms=protocol.pulse_ms),
     )
 
 

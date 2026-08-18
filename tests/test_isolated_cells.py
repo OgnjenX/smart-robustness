@@ -5,6 +5,7 @@ from smart_robustness.validation.isolated_cells import (
     IsolatedCellTrace,
     TrnRecruitmentProtocol,
     assess_figure8,
+    figure8_source_parameters,
     run_trn_recruitment_condition,
 )
 
@@ -35,6 +36,21 @@ def test_figure8_assessment_rejects_two_sustained_tonic_trains() -> None:
     assert assessment.tonic_pass
     assert not assessment.burst_pass
     assert assessment.notes
+
+
+def test_figure8_source_parameters_require_explicit_missing_defaults() -> None:
+    with pytest.raises(ValueError, match="positive"):
+        figure8_source_parameters(
+            leak_density_mS_cm2=0,
+            specific_capacitance_uF_cm2=1,
+        )
+    params = figure8_source_parameters(
+        leak_density_mS_cm2=0.1,
+        specific_capacitance_uF_cm2=1.5,
+    )
+    assert params["cell_spec"].name == "modeldb112923_figure8_relay"
+    assert params["specific_capacitance_uF_cm2"] == pytest.approx(1.5)
+    assert params["e_ca_mV"] == pytest.approx(180)
 
 
 def test_trn_recruitment_protocol_rejects_invalid_values() -> None:

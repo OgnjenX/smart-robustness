@@ -1,0 +1,58 @@
+id: figure8-source-defaults-065
+status: failed-source-candidate
+claim: Grossberg and Versace Figure 8 tonic-versus-burst relay-cell response
+source:
+  model: ModelDB 112923 Ca_rebound.xml Relay population
+  paper_protocol: 0.3 nA depolarizing pulse with and without hyperpolarization
+fixed_conventions:
+  axial_convention: kinness_serialized_edge
+  leak_convention: table3_reversal
+  voltage_coordinate: relative_to_table3_leak
+  nak_rate_convention: standard_traub_miles
+  calcium_gate_convention: modeldb_112923
+  calcium_voltage_coordinate: integrated_voltage
+  gate_initialization_convention: steady_state_at_initial_voltage
+  membrane_initialization_convention: physical_leak_voltage
+  calcium_density_convention: table3
+  integration_method: rk4
+protocol_candidate:
+  precondition_ms: 100
+  pulse_ms: 300
+  pulse_pA: 300
+  depolarized_hold_mV: -62.3
+  hyperpolarized_hold_mV: -80
+  clamp_interpretation: released_at_pulse_start
+  dt_ms: 0.01
+missing_default_matrix:
+  leak_density_mS_cm2: [0.01, 0.03, 0.05, 0.1, 0.2]
+  specific_capacitance_uF_cm2: [0.5, 1.0, 1.5, 2.0]
+  result:
+    depolarized_spike_count_all_candidates: 1
+    hyperpolarized_spike_count_by_capacitance: [2, 2, 1, 1]
+    tonic_pass_all_candidates: false
+    burst_pass_by_capacitance: [true, true, false, false]
+reference_candidate:
+  leak_density_mS_cm2: 0.1
+  specific_capacitance_uF_cm2: 1.0
+  depolarized_spike_times_ms: [0.66]
+  hyperpolarized_spike_times_ms: [1.92, 42.14]
+  tonic_pass: false
+  burst_pass: true
+discriminators:
+  remove_t_current_at_source_geometry:
+    interpretation: diagnostic_only
+    result: no spikes and approximately 1 mV sustained depolarization
+  legacy_raw_geometry_as_millimeters:
+    interpretation: rejected_as_sufficient_explanation
+    result: one depolarized event with the archived T-current
+  legacy_raw_geometry_without_t_current:
+    interpretation: diagnostic_only
+    result: sustained high-rate tonic firing
+assessment:
+  figure8_reproduced: false
+  promoted_to_classic_baseline: false
+notes:
+  - The archived Figure 8 XML omits both leak density and specific capacitance.
+  - Ordinary leak/capacitance candidates preserve the hyperpolarized transient burst but do not restore the published depolarized tonic train.
+  - The source geometry conversion is supported for KInNeSS 1.2; Ca_rebound.xml uses the older version-1 libkinmaze schema, but interpreting its raw dimensions as millimeters is not sufficient to reproduce Figure 8.
+  - The paper caption describes the lower simulation as having a hyperpolarizing voltage clamp during the pulse. The exact legacy clamp implementation remains unrecovered and is the next protocol discriminator.

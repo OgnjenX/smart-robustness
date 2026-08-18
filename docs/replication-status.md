@@ -806,6 +806,16 @@ improvement followed correction of T-gate initialization into the absolute
 voltage coordinate. It remains a partial result and is not promoted to a
 reproduction claim.
 
+A predeclared 20-member matrix over the two values absent from the archived
+Figure 8 XML (five leak densities by four specific capacitances) confirms that
+this is not resolved by ordinary passive defaults. Every depolarized condition
+emits one onset event; 0.5 and 1 uF/cm2 retain the two-event transient burst,
+whereas 1.5 and 2 uF/cm2 lose it. A legacy-version geometry discriminator also
+fails with the archived T-current. Removing that current restores tonic firing
+only as a causal diagnostic, not as a source-faithful candidate. The remaining
+high-value discriminator is the caption's simultaneous hyperpolarizing-clamp
+semantics (`figure8-source-defaults-065.yaml`).
+
 Accordingly, output from M2 is a source/audit benchmark, not evidence that
 the 2008 results have already been replicated.
 

@@ -2,6 +2,7 @@ schema_version: 1
 validation_id: figure6-paper-axial-emission-time-091
 claim: Grossberg and Versace Equation 2 axial coupling restores Figure 6c after correcting emission-time transmitter sampling.
 status: failed-source-profile-discriminator
+superseded_by: transmitter-continuous-gating-097
 date: 2026-08-19
 sources:
   paper: Grossberg and Versace 2008, Equations 2 and 8 and Figure 6

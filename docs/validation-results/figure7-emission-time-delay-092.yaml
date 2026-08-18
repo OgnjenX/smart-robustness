@@ -2,6 +2,7 @@ schema_version: 1
 validation_id: figure7-emission-time-delay-092
 claim: Correct emission-time transmitter sampling restores the published Figure 7 match/mismatch arousal split.
 status: failed-official-reproduction-current-source-profile
+superseded_by: transmitter-continuous-gating-097
 date: 2026-08-19
 sources:
   paper: Grossberg and Versace 2008, Figure 7 and Methods 4.9

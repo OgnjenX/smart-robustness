@@ -2,6 +2,7 @@ schema_version: 1
 validation_id: figure10-emission-time-delay-093
 claim: Correct emission-time transmitter sampling restores the persistent Figure 10 nonspecific-thalamus-to-layer-5 reset chain.
 status: failed-official-reproduction-current-source-profile
+superseded_by: transmitter-continuous-gating-097
 date: 2026-08-19
 sources:
   paper: Grossberg and Versace 2008, Figure 10

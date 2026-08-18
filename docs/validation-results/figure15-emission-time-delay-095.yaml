@@ -1,0 +1,40 @@
+schema_version: 1
+validation_id: figure15-emission-time-delay-095
+claim: Correct emission-time transmitter sampling preserves Figure 15's local layer-4 synchrony peak near 44 Hz.
+status: failed-approximate-numeric-current-source-profile
+superseded_by: transmitter-continuous-gating-097
+date: 2026-08-19
+sources:
+  paper: Grossberg and Versace 2008, Figure 15 bottom panels and caption
+  executable: ModelDB 112923 SMART.nml
+protocol:
+  simulator: Brian2 2.9.0 C++ standalone
+  condition: learned horizontal match
+  duration_ms: 1000
+  integration_dt_ms: 0.01
+  top_down_current_pA: 1000
+  learned_state: paper-constrained Figure 6c horizontal expectation
+  layer4_pair_indices: [39, 40]
+  spike_bin_ms: 1
+  target_peak_hz: 44
+  tolerance_hz: 5
+  transmitter_semantics: emission-time resource with future arrival timestamp
+  convention_fingerprint: a054e5e36b75765124150157029662c6a5c8a639ee6079b442304607e726cb11
+results:
+  first_cell_events: 13
+  second_cell_events: 13
+  all_layer4_events: 171
+  gamma_range_peak_hz: 27.013506753376685
+  nonspecific_rate_hz: 7
+  relay_events: 1273
+  trn_events: 81
+assessment:
+  enough_spikes_pass: true
+  target_peak_pass: false
+  figure15_local_synchrony_reproduced: false
+interpretation:
+  - The predeclared adjacent pair has enough events for analysis but peaks approximately 17 Hz below the reported 44-Hz target.
+  - This source-corrected result supersedes artifact 084's approximate numeric pass.
+  - No neighboring-pair search or post-hoc frequency selection was performed.
+execution_note:
+  - The simulation completed successfully; the committed analysis was rerun directly from its layer-4 spike-monitor arrays after the reporting command referenced an obsolete convenience attribute.

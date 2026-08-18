@@ -287,15 +287,12 @@ def connect_modeldb_projection(
     )
     if port is None or record.weight is None:
         raise ValueError(f"{record.id}: incomplete compiled ModelDB projection")
-    resource = "transmitter_pre" if pre.compiled.depletion_enabled else "1"
+    transmitter_scale = "transmitter_pre" if pre.compiled.depletion_enabled else "1"
     update = (
         "previous_arrival = last_arrival\n"
         "previous_amplitude = last_amplitude\n"
-        # Execute this pathway at emission so transmitter is sampled before
-        # the neuron reset depletes it. Store the future arrival timestamp to
-        # implement the axonal delay without resampling source state later.
-        "last_arrival = t + axonal_delay\n"
-        f"last_amplitude = {resource}"
+        "last_arrival = t\n"
+        "last_amplitude = 1"
     )
     if port.rise_ms == port.fall_ms:
         last_ratio = f"clip(last_elapsed/({port.rise_ms}*ms), 0, 100)"
@@ -321,7 +318,6 @@ def connect_modeldb_projection(
         "w_baseline : 1 (constant)\n"
         "w_maximum : 1 (constant)\n"
         "modifiable : 1 (constant)\n"
-        "axonal_delay : second (constant)\n"
         "last_arrival : second\n"
         "previous_arrival : second\n"
         "last_amplitude : 1\n"
@@ -331,7 +327,10 @@ def connect_modeldb_projection(
         f"last_wave={last_wave} : 1\n"
         f"previous_wave={previous_wave} : 1\n"
         "pre_signal=last_wave+previous_wave-last_wave*previous_wave : 1\n"
-        f"{port.name}_gate_post=w*pre_signal : 1 (summed)"
+        # KInNeSS Equation 16 multiplies the ongoing ligand gate g_ij(t) by
+        # neurotransmitter availability z_j(t). It does not snapshot z into
+        # the event amplitude at emission or arrival.
+        f"{port.name}_gate_post=w*pre_signal*{transmitter_scale} : 1 (summed)"
     )
     on_post = None
     if record.modifiable:
@@ -454,8 +453,7 @@ def connect_modeldb_projection(
     if record.modifiable:
         # Start strictly outside the serialized post-spike learning window.
         synapse.last_post_spike = -(float(record.depotentiation_ms) + 1.0) * brian.ms
-    synapse.axonal_delay = float(record.delay_ms or 0.0) * brian.ms
-    synapse.delay = 0 * brian.ms
+    synapse.delay = float(record.delay_ms or 0.0) * brian.ms
     return synapse
 
 

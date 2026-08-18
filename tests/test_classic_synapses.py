@@ -268,17 +268,17 @@ def test_ligand_gate_combines_only_last_two_spikes_and_remains_bounded() -> None
     assert np.asarray(projection.pre_signal[:]) == pytest.approx(1)
 
 
-def test_delayed_depleting_projection_uses_emission_time_resource() -> None:
+def test_depleting_projection_scales_ongoing_gate_by_current_resource() -> None:
     brian.start_scope()
     sector = build_first_order_chemical_sector(brian=brian)
     projection = sector.projections["modeldb112923.projection.005"]
-    assert "last_amplitude = transmitter_pre" in projection.pre.code
-    assert "last_arrival = t + axonal_delay" in projection.pre.code
-    assert float(projection.axonal_delay[0] / brian.ms) == pytest.approx(2.0)
-    assert float(projection.delay[0] / brian.ms) == 0.0
+    assert "last_amplitude = 1" in projection.pre.code
+    updater = projection.summed_updaters["port_005_gate_post"]
+    assert "w*pre_signal*transmitter_pre" in updater.abstract_code
+    assert float(projection.delay[0] / brian.ms) == pytest.approx(2.0)
 
 
-def test_depleting_projection_latches_resource_before_source_reset() -> None:
+def test_depleting_projection_uses_resource_after_delayed_arrival() -> None:
     brian.prefs.codegen.target = "numpy"
     brian.start_scope()
     brian.defaultclock.dt = 0.01 * brian.ms
@@ -295,9 +295,33 @@ def test_depleting_projection_latches_resource_before_source_reset() -> None:
     sector.network.run(brian.defaultclock.dt)
 
     assert float(source.transmitter[source_index]) == pytest.approx(0.5)
+    assert np.asarray(projection.last_amplitude[:])[outgoing] == pytest.approx(0.0)
+    assert np.asarray(projection.pre_signal[:])[outgoing] == pytest.approx(0.0)
+    sector.network.run(2 * brian.ms)
     assert np.asarray(projection.last_amplitude[:])[outgoing] == pytest.approx(1.0)
     assert np.asarray(projection.last_arrival[:] / brian.ms)[outgoing] == pytest.approx(2.0)
-    assert np.asarray(projection.pre_signal[:])[outgoing] == pytest.approx(0.0)
+
+
+def test_depleted_resource_continuously_scales_active_ligand_gate() -> None:
+    brian.prefs.codegen.target = "numpy"
+    brian.start_scope()
+    brian.defaultclock.dt = 0.01 * brian.ms
+    sector = build_first_order_chemical_sector(brian=brian)
+    source = sector.populations["layer6ii_excitatory_v1"].group
+    target = sector.populations["thalamic_relay"].group
+    projection = sector.projections["modeldb112923.projection.005"]
+    projection.last_amplitude = 0
+    projection.previous_amplitude = 0
+    selected = 0
+    source_index = int(projection.i[selected])
+    target_index = int(projection.j[selected])
+    source.transmitter[source_index] = 0.25
+    peak_ms = biexponential_peak_time_ms(2.0, 7.0)
+    projection.last_arrival[selected] = -peak_ms * brian.ms
+    projection.last_amplitude[selected] = 1
+    expected = float(projection.w[selected] * 0.25)
+    sector.network.run(brian.defaultclock.dt)
+    assert float(target.port_005_gate[target_index]) == pytest.approx(expected, rel=1e-4)
 
 
 def test_distinct_presynaptic_ligand_currents_sum_per_kinness_equation_16() -> None:

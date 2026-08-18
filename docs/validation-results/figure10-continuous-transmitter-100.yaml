@@ -1,0 +1,42 @@
+schema_version: 1
+validation_id: figure10-continuous-transmitter-100
+claim: Continuous KInNeSS transmitter gating reproduces the persistent Figure 10 mismatch-reset chain.
+status: failed-official-reproduction-current-source-profile
+date: 2026-08-19
+sources:
+  paper: Grossberg and Versace 2008, Figure 10
+  framework: Versace et al. 2008 expanded KInNeSS manuscript, Equations 13-18
+  executable: ModelDB 112923 SMART.nml
+protocol:
+  simulator: Brian2 2.9.0 C++ standalone
+  pre_match_duration_ms: 100
+  mismatch_duration_ms: 100
+  integration_dt_ms: 0.01
+  top_down_current_pA: 1000
+  learned_state: paper-constrained Figure 6c horizontal expectation
+  transmitter_semantics: current source resource continuously multiplies each active delayed ligand gate
+  negative_control_disconnect: [modeldb112923.projection.017, modeldb112923.projection.018]
+  convention_fingerprint: a054e5e36b75765124150157029662c6a5c8a639ee6079b442304607e726cb11
+results:
+  intact:
+    pre_match: {layer4_events: 5, nonspecific_events: 6, layer5_events: 0, layer6i_events: 15}
+    mismatch: {layer4_events: 33, nonspecific_events: 0, layer5_events: 0, layer6i_events: 179}
+  disconnected_control:
+    pre_match: {layer4_events: 5, nonspecific_events: 6, layer5_events: 0, layer6i_events: 15}
+    mismatch: {layer4_events: 33, nonspecific_events: 0, layer5_events: 0, layer6i_events: 179}
+  pre_reset_winner_indices: [38, 39, 40, 41, 42]
+  pre_reset_winner_events: 5
+  intact_winner_post_events: 1
+  control_winner_post_events: 1
+  intact_released_alternatives: 32
+  control_released_alternatives: 32
+assessment:
+  pre_reset_winner_pass: true
+  reset_chain_pass: false
+  winner_suppression_pass: false
+  alternative_release_pass: false
+  official_figure10_reproduced: false
+interpretation:
+  - A five-cell pre-mismatch layer-4 winner is established in both conditions.
+  - Nonspecific thalamus is silent during mismatch and layer 5 never emits an event, so the published reset chain is absent.
+  - Intact and disconnected trajectories are identical, proving that projections 017/018 do not cause the mismatch-phase layer-4 recruitment in this reconstruction.

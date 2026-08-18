@@ -1003,6 +1003,53 @@ The match-gamma and mismatch-gamma-reduction gates therefore both fail.
 Artifact 083 is superseded for baseline assessment by
 `figure14-emission-time-delay-094.yaml`.
 
+Figure 15 is likewise superseded: the same predeclared adjacent layer-4 pair
+now has 13 events per cell but a 27.01-Hz gamma-range peak, outside the
+44+/-5-Hz acceptance interval. Artifact 084's approximate pass is replaced by
+the failed source-corrected result in
+`figure15-emission-time-delay-095.yaml`.
+
+The full two-area Figure 16 rerun remains a qualitative pass. Its 1,000-ms
+prestimulus and 1,000-ms recording epochs complete with finite 54-by-1,000
+fields in each area; the strongest normalized inter-area correlation is in
+the 2--4-Hz band (0.9617), above the 20--100-Hz band (0.2399). This result is
+still underidentified by unavailable learned arrays and electrode placements,
+and cannot offset the failed first-order learning, arousal, reset, and gamma
+gates (`figure16-emission-time-delay-096.yaml`).
+
+Those emission-time results are retained as an audit branch but are no longer
+the current baseline evidence. A direct rereading of KInNeSS Equation 16 shows
+that transmitter availability multiplies the ongoing ligand gate at each
+time, rather than being sampled into an event amplitude at emission or
+arrival. The runtime now implements `w * g_ij(t) * z_j(t)` while Equation 17
+evolves source-wide `z_j`. Dynamic tests verify delayed unit-amplitude arrivals
+and continuous 0.25 resource scaling. Artifacts 090--096 are explicitly
+superseded by `transmitter-continuous-gating-097.yaml`; all affected official
+protocols require one further rerun before baseline assessment.
+
+The corrected Figure 6 rerun is now current (`figure6-continuous-transmitter-098.yaml`).
+The KInNeSS axial profile retains a positive bottom-up horizontal contrast
+(0.08745), but has no relay event after the 85.65-ms category teaching arrival,
+no layer-2/3 or layer-5 event, and a negative combined top-down contrast
+(-0.00479). The paper-literal axial discriminator also lacks the cortical chain
+and now has no causal corticothalamic pair. Figure 6b therefore remains a
+qualitative pass, while Figure 6c and the complete Figure 6 gate remain failed.
+
+The corrected official Figure 7 standalone rerun is also current
+(`figure7-continuous-transmitter-099.yaml`). Match and mismatch are identical:
+both produce 60-Hz nonspecific output, 18 relay events across five cells, 81
+TRN events, five layer-4 events, four category events, and 118 aggregate V1
+cortical events. The published match/mismatch arousal and pathway divergence
+therefore remains unreproduced.
+
+The corrected Figure 10 intact/control pair remains a failed causal reproduction
+(`figure10-continuous-transmitter-100.yaml`). Both conditions establish the same
+five-cell pre-mismatch layer-4 winner, then produce identical mismatch
+trajectories: 33 layer-4 events, no nonspecific-thalamic events, no layer-5
+events, and 179 layer-6I events. Disconnecting the two published
+nonspecific-thalamus-to-layer-5 reset inputs changes nothing, so the reset
+chain, winner suppression, and alternative-release gates all fail.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

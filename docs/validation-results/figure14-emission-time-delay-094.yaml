@@ -2,6 +2,7 @@ schema_version: 1
 validation_id: figure14-emission-time-delay-094
 claim: Correct emission-time transmitter sampling preserves the published Figure 14 match-gamma versus mismatch-slower spectral directions.
 status: failed-official-spectral-reproduction-current-source-profile
+superseded_by: transmitter-continuous-gating-097
 date: 2026-08-19
 sources:
   paper: Grossberg and Versace 2008, Figure 14 and Methods 4.9-4.10

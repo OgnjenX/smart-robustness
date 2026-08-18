@@ -52,15 +52,15 @@ def test_figure16_delay_override_changes_only_named_feedforward_pathway() -> Non
     )
     feedforward = sector.projections[FIGURE16_FEEDFORWARD_PROJECTION_ID]
     control = sector.projections["modeldb112923.projection.081"]
-    assert float(feedforward.axonal_delay[0] / brian.ms) == pytest.approx(5.0)
-    assert float(control.axonal_delay[0] / brian.ms) == pytest.approx(1.0)
+    assert float(feedforward.delay[0] / brian.ms) == pytest.approx(5.0)
+    assert float(control.delay[0] / brian.ms) == pytest.approx(1.0)
 
     apply_figure16_inter_area_delay(sector, brian=brian)
     monitors = create_figure16_current_monitors(sector, brian=brian)
     sector.network.add(*monitors.values())
 
-    assert float(feedforward.axonal_delay[0] / brian.ms) == pytest.approx(10.0)
-    assert float(control.axonal_delay[0] / brian.ms) == pytest.approx(1.0)
+    assert float(feedforward.delay[0] / brian.ms) == pytest.approx(10.0)
+    assert float(control.delay[0] / brian.ms) == pytest.approx(1.0)
     assert set(monitors) == {
         f"{cortical_class}_{area}"
         for cortical_class in FIGURE16_CORTICAL_CLASSES

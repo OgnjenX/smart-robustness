@@ -2,6 +2,7 @@ schema_version: 1
 validation_id: figure6-emission-time-depletion-090
 claim: Sampling depleted transmitter at spike emission rather than delayed arrival restores the published Figure 6c corticothalamic map.
 status: corrected-semantics-reproduction-failed
+superseded_by: transmitter-continuous-gating-097
 date: 2026-08-19
 sources:
   paper: Grossberg and Versace 2008, Figure 6 and Equation 8

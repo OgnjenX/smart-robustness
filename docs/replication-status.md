@@ -834,6 +834,14 @@ source-unreported, non-monotonic at larger factors, and cannot repair the full
 trial's independently silent mismatch nonspecific thalamus. Neither change is
 promoted (`figure10-layer5-propagation-067.yaml`).
 
+An isolated nonspecific-thalamic recovery assay also rules out the Figure 10
+runner's zero-gap phase switch as a sufficient explanation. Both a 120-valued
+green source and the exact five-source convergent value of 600 produce an
+initial event train but no second event after 0, 20, or 100 ms without drive.
+An unreported recovery gap is therefore not promoted; the silent mismatch
+response remains an intrinsic thalamic-runtime discrepancy shared with Figures
+7 and 8 (`figure10-nonspecific-recovery-076.yaml`).
+
 Figure 15 local synchrony now has a source-bound runner and scorer. The
 predeclared pair is adjacent stimulated layer-4 cells 39 and 40; their binned
 spike trains are linearly cross-correlated, the caption's ±180-ms range is
@@ -911,6 +919,12 @@ and no tonic train. The version-1 `Ca_rebound.xml` geometry ambiguity is also
 now a first-class executable convention rather than an ad-hoc calculation;
 both centimetre-schema and millimetre-schema interpretations can be selected
 and reported by the Figure 8 runner (`figure8-depolarized-hold-074.yaml`).
+
+Executing the newly explicit millimetre-schema candidate through the public
+runner reproduces its negative discriminator: one 0.68-ms onset event in the
+depolarized condition and one delayed 44.6-ms event in the hyperpolarized
+condition. It fails both tonic and burst gates, so the centimetre candidate
+remains the better partial reconstruction (`figure8-millimeter-runtime-075.yaml`).
 
 Accordingly, output from M2 is a source/audit benchmark, not evidence that
 the 2008 results have already been replicated.

@@ -1,0 +1,27 @@
+id: figure10-nonspecific-recovery-076
+claim: An unreported inter-phase recovery gap does not restore a mismatch-onset nonspecific-thalamic response
+model:
+  population: thalamic_nonspecific
+  source: ModelDB 112923 SMART.nml
+  conventions: source-constrained Figure 6 runtime
+protocol:
+  first_drive_ms: 100
+  gaps_ms: [0, 20, 100]
+  second_drive_ms: 100
+  green_input_candidates:
+    single_pixel_equivalent: 120
+    exact_five_source_convergence: 600
+results:
+  source_120:
+    first_onset_spikes: 5
+    second_onset_spikes_by_gap: [0, 0, 0]
+  source_600:
+    first_onset_spikes: 6
+    second_onset_spikes_by_gap: [0, 0, 0]
+assessment:
+  recovery_gap_restores_mismatch_response: false
+  promote_gap: false
+interpretation:
+  - The zero-gap Figure 10 runner is not failing merely because the orientation switch occurs in one timestep.
+  - Even 100 ms without external drive does not recover a second nonspecific response.
+  - The failure is intrinsic to the current nonspecific-thalamic executable state and aligns with the unresolved thalamic behavior in Figures 7 and 8.

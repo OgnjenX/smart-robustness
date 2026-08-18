@@ -1,0 +1,22 @@
+id: figure8-millimeter-runtime-075
+claim: The explicit version-1 millimeter geometry interpretation reproduces the previously reported negative Figure 8 discriminator
+runner: run_figure8_source_candidate
+parameters:
+  geometry_convention: millimeters
+  leak_density_mS_cm2: 0.1
+  specific_capacitance_uF_cm2: 1.0
+  pulse_pA: 300
+results:
+  depolarized:
+    spike_times_ms: [0.68]
+    voltage_range_mV: [-59.1642, 52.0141]
+    tonic_pass: false
+  hyperpolarized:
+    spike_times_ms: [44.6]
+    voltage_range_mV: [-79.7256, 86.853]
+    burst_pass: false
+  reproduced: false
+interpretation:
+  - The public runner now reproduces the legacy raw-dimension discriminator without private parameter mutation.
+  - Millimeter geometry fails both official signatures and is not promoted.
+  - Centimeter geometry remains the stronger partial candidate because its hyperpolarized condition passes the transient-burst gate.

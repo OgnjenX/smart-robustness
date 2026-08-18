@@ -9,6 +9,7 @@ import numpy as np
 
 from ..models.compartmental_hh import create_compartmental_hh_population
 from ..models.modeldb112923 import (
+    Figure8GeometryConvention,
     ahp_ach_layer5_spec,
     ahp_density_to_total_nS,
     figure8_relay_spec,
@@ -86,6 +87,7 @@ class Figure8Assessment:
 
 @dataclass(frozen=True, slots=True)
 class Figure8SourceCandidate:
+    geometry_convention: str
     leak_density_mS_cm2: float
     specific_capacitance_uF_cm2: float
     tonic: IsolatedCellTrace
@@ -459,13 +461,17 @@ def figure8_source_parameters(
     *,
     leak_density_mS_cm2: float,
     specific_capacitance_uF_cm2: float,
+    geometry_convention: Figure8GeometryConvention | str = Figure8GeometryConvention.CENTIMETERS,
 ) -> dict[str, Any]:
     """Build the dedicated Ca_rebound.xml cell with two explicit missing defaults."""
 
     if leak_density_mS_cm2 <= 0 or specific_capacitance_uF_cm2 <= 0:
         raise ValueError("Figure 8 leak and capacitance candidates must be positive")
     return {
-        "cell_spec": figure8_relay_spec(leak_density_mS_cm2=leak_density_mS_cm2),
+        "cell_spec": figure8_relay_spec(
+            leak_density_mS_cm2=leak_density_mS_cm2,
+            geometry_convention=geometry_convention,
+        ),
         "cell_class": "thalamic_relay",
         "axial_convention": "kinness_serialized_edge",
         "leak_convention": "table3_reversal",
@@ -493,6 +499,7 @@ def run_figure8_source_candidate(
     *,
     leak_density_mS_cm2: float,
     specific_capacitance_uF_cm2: float,
+    geometry_convention: Figure8GeometryConvention | str = Figure8GeometryConvention.CENTIMETERS,
     protocol: Figure8Protocol | None = None,
     brian=None,
 ) -> Figure8SourceCandidate:
@@ -502,6 +509,7 @@ def run_figure8_source_candidate(
     params = figure8_source_parameters(
         leak_density_mS_cm2=leak_density_mS_cm2,
         specific_capacitance_uF_cm2=specific_capacitance_uF_cm2,
+        geometry_convention=geometry_convention,
     )
     tonic = run_figure8_condition(
         hyperpolarized=False,
@@ -516,6 +524,7 @@ def run_figure8_source_candidate(
         brian=brian,
     )
     return Figure8SourceCandidate(
+        geometry_convention=Figure8GeometryConvention(geometry_convention).value,
         leak_density_mS_cm2=float(leak_density_mS_cm2),
         specific_capacitance_uF_cm2=float(specific_capacitance_uF_cm2),
         tonic=tonic,

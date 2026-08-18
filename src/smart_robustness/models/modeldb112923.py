@@ -8,6 +8,7 @@ the original files remain downloadable from ModelDB.
 from __future__ import annotations
 
 from dataclasses import dataclass
+from enum import StrEnum
 
 from .table3 import CellSpec, CompartmentSpec
 
@@ -29,6 +30,13 @@ class Figure8SourceFacts:
 
 
 FIGURE8_SOURCE_FACTS = Figure8SourceFacts()
+
+
+class Figure8GeometryConvention(StrEnum):
+    """Unit interpretation for the legacy version-1 Ca_rebound.xml geometry."""
+
+    CENTIMETERS = "centimeters"
+    MILLIMETERS = "millimeters"
 
 # ``SMART.nml`` population order and compartment counts. The first ten sheets
 # are externally sized (9x9 in the paper protocol); the final two are fixed 1x1.
@@ -343,7 +351,11 @@ def full_network_structural_counts() -> tuple[int, int]:
     )
 
 
-def figure8_relay_spec(*, leak_density_mS_cm2: float) -> CellSpec:
+def figure8_relay_spec(
+    *,
+    leak_density_mS_cm2: float,
+    geometry_convention: Figure8GeometryConvention | str = Figure8GeometryConvention.CENTIMETERS,
+) -> CellSpec:
     """Build the dedicated ``Ca_rebound.xml`` relay cell.
 
     ``Ca_rebound.xml`` does not serialize a leak density for this cell. The
@@ -354,20 +366,22 @@ def figure8_relay_spec(*, leak_density_mS_cm2: float) -> CellSpec:
     if leak_density_mS_cm2 <= 0:
         raise ValueError("leak_density_mS_cm2 must be an explicit positive candidate")
 
+    geometry = Figure8GeometryConvention(geometry_convention)
+
     def compartment(
         name: str,
-        diameter_cm: float,
-        length_cm: float,
+        source_diameter: float,
+        source_length: float,
         axial_kohm_cm: float,
         *,
         sodium: float | None = None,
         potassium: float | None = None,
     ) -> CompartmentSpec:
-        cm_to_mm = 10.0
+        source_to_mm = 10.0 if geometry is Figure8GeometryConvention.CENTIMETERS else 1.0
         return CompartmentSpec(
             name=name,
-            diameter_mm=diameter_cm * cm_to_mm,
-            length_mm=length_cm * cm_to_mm,
+            diameter_mm=source_diameter * source_to_mm,
+            length_mm=source_length * source_to_mm,
             axial_resistance_kohm_cm=axial_kohm_cm,
             e_leak_mV=-62.3,
             g_leak_mS_cm2=leak_density_mS_cm2,

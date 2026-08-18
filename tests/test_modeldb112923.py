@@ -10,6 +10,7 @@ from smart_robustness.models.modeldb112923 import (
     FIRST_ORDER_PROJECTION_COUNT,
     SECOND_ORDER_POPULATIONS,
     SMART_NML_SHA256,
+    Figure8GeometryConvention,
     figure8_relay_spec,
     first_order_population_facts,
     first_order_structural_counts,
@@ -32,6 +33,12 @@ def test_figure8_relay_requires_unserialized_leak_candidate() -> None:
     assert relay.soma.g_na_mS_cm2 == pytest.approx(50)
     assert all(c.g_ca_mS_cm2 == 250 for c in relay.compartments)
     assert FIGURE8_SOURCE_FACTS.missing_leak_density
+    legacy = figure8_relay_spec(
+        leak_density_mS_cm2=0.1,
+        geometry_convention=Figure8GeometryConvention.MILLIMETERS,
+    )
+    assert legacy.soma.diameter_mm == pytest.approx(0.02)
+    assert legacy.soma.length_mm == pytest.approx(0.04)
 
 
 def test_first_order_structural_counts_match_smart_nml_audit() -> None:

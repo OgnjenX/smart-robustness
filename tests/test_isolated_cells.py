@@ -60,10 +60,12 @@ def test_figure8_source_parameters_require_explicit_missing_defaults() -> None:
     params = figure8_source_parameters(
         leak_density_mS_cm2=0.1,
         specific_capacitance_uF_cm2=1.5,
+        geometry_convention="millimeters",
     )
     assert params["cell_spec"].name == "modeldb112923_figure8_relay"
     assert params["specific_capacitance_uF_cm2"] == pytest.approx(1.5)
     assert params["e_ca_mV"] == pytest.approx(180)
+    assert params["cell_spec"].soma.diameter_mm == pytest.approx(0.02)
 
 
 def test_trn_recruitment_protocol_rejects_invalid_values() -> None:

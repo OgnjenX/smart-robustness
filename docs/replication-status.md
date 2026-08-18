@@ -905,6 +905,13 @@ therefore ruled out as a sufficient explanation. The unresolved Figure 8 gap
 is now localized to a missing version-1 `libkinmaze` membrane, current-unit, or
 gate default rather than the better documented KInNeSS 1.2 network semantics.
 
+The missing depolarized holding potential is now independently excluded over
+-62.3 through -45 mV: every source-cell trial produces exactly one onset event
+and no tonic train. The version-1 `Ca_rebound.xml` geometry ambiguity is also
+now a first-class executable convention rather than an ad-hoc calculation;
+both centimetre-schema and millimetre-schema interpretations can be selected
+and reported by the Figure 8 runner (`figure8-depolarized-hold-074.yaml`).
+
 Accordingly, output from M2 is a source/audit benchmark, not evidence that
 the 2008 results have already been replicated.
 

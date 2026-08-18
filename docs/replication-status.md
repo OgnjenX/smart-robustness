@@ -596,8 +596,9 @@ This closes current accounting and transform arithmetic, but not the stochastic
 54-tip geometry or official LFP behavior (`lfp-current-accounting-045.yaml`).
 
 Methods 4.11's stochastic electrode construction is now executable. The 54
-tips span the full compartment chain at equal intervals; compartment currents
-are located at their centres; the selected cell is sampled uniformly at
+tips span Figure 18's full 1.2-mm cortical sheet at equal intervals; all seven
+cortical population classes use their illustrated absolute compartment-centre
+depths; the selected cell is sampled uniformly at
 10--200 µm lateral distance and every other cell at 10--1000 µm. Euclidean
 tip-to-compartment distances feed Equation 31. Because the publication reports
 the distributions but not its realized random coordinates, every geometry is
@@ -609,6 +610,16 @@ the unpublished Figure 16 random draw
 The population-field pipeline also enforces the cell-major current ordering
 used by the geometry, preventing Brian's per-compartment monitor arrays from
 being silently paired with the wrong Equation 31 distances.
+Whole-cortex fields now sum every cortical population on that shared tip axis
+and retain the caption's inferior and superior 0.3-mm tip matrices. The source
+does not state how those regional tips were reduced to a single Figure 16
+curve, so reduction remains an explicit validation convention rather than a
+hidden implementation guess.
+
+A visual source audit also corrected Equation 33: its printed denominator is
+Δx, despite prose describing a second derivative. The classic path now uses
+that paper-literal uV/µm transform. A separately named Δx² implementation is
+available only as an alternate robustness convention.
 
 A separate coordinate audit tested whether KInNeSS integrates voltage at zero
 relative to each compartment's serialized leak and adds the leak only when

@@ -11,6 +11,27 @@ import numpy as np
 from smart_robustness.models.table3 import CellSpec
 
 SMART_EXTRACELLULAR_CONDUCTIVITY_MS_CM = 15.0
+SMART_CORTICAL_DEPTH_UM = 1200.0
+
+# Absolute compartment-centre depths measured from the inferior cortical
+# border in Supplementary Figure 18. Names match Table 3's cell library.
+FIGURE18_COMPARTMENT_DEPTH_UM: dict[str, dict[str, float]] = {
+    "layer23_inhibitory": {"soma": 1125.0, "proximal_dendrite": 1175.0},
+    "layer23_excitatory": {"soma": 850.0, "proximal_dendrite": 1087.5},
+    "layer4_excitatory": {"soma": 575.0, "proximal_dendrite": 702.5},
+    "layer4_inhibitory": {"soma": 475.0, "proximal_dendrite": 525.0},
+    "layer5_excitatory": {
+        "soma": 150.0,
+        "proximal_dendrite": 425.0,
+        "distal_dendrite": 850.0,
+    },
+    "layer6ii_excitatory": {
+        "soma": 50.0,
+        "proximal_dendrite": 150.0,
+        "distal_dendrite": 300.0,
+    },
+    "layer6i_excitatory": {"soma": 50.0, "proximal_dendrite": 150.0},
+}
 
 
 @dataclass(frozen=True)
@@ -20,7 +41,7 @@ class Figure16ElectrodeGeometry:
     The paper reports placement distributions rather than the random draws used
     for Figure 16.  Consequently, ``seed`` and ``fingerprint`` are part of the
     result and must accompany derived LFPs.  Compartments are flattened in
-    cell-major, proximal-to-distal order.
+    cell-major Table 3 order.
     """
 
     seed: int
@@ -44,7 +65,22 @@ class Figure16PopulationField:
     geometry: Figure16ElectrodeGeometry
     transmembrane_current_pA: np.ndarray
     potential_uV: np.ndarray
-    current_source_density_uV_per_um2: np.ndarray
+    current_source_density_uV_per_um: np.ndarray
+
+
+@dataclass(frozen=True)
+class Figure16CorticalField:
+    """Whole-cortex LFP/CSD and the two Figure 16 depth regions."""
+
+    seed: int
+    population_fields: tuple[tuple[str, Figure16PopulationField], ...]
+    potential_uV: np.ndarray
+    current_source_density_uV_per_um: np.ndarray
+    inferior_300um_tip_depth_um: np.ndarray
+    inferior_300um_potential_uV: np.ndarray
+    superior_300um_tip_depth_um: np.ndarray
+    superior_300um_potential_uV: np.ndarray
+    fingerprint: str
 
 
 def figure16_electrode_geometry(
@@ -57,15 +93,16 @@ def figure16_electrode_geometry(
 ) -> Figure16ElectrodeGeometry:
     """Construct the stochastic 54-tip geometry specified in Methods 4.11.
 
-    Cells are parallel and aligned along their compartment chain.  The first
-    and last tips lie at the two ends of the cell, with all other tips evenly
-    spaced.  One selected cell receives a uniformly sampled lateral distance
+    The first and last tips lie at the inferior and superior boundaries of the
+    1.2-mm cortical sheet, with all other tips evenly spaced. Figure 18 fixes
+    each cortical compartment's absolute centre depth. One selected cell
+    receives a uniformly sampled lateral distance
     of 10--200 um; every other cell receives 10--1000 um.  Euclidean distance
     to each compartment centre supplies ``r_l`` in Equation 31.
 
-    The parallel alignment and one lateral coordinate per cell are explicit
-    reconstruction assumptions: the source states the distributions and
-    orientation but does not preserve the realized three-dimensional layout.
+    One lateral coordinate per cell is an explicit reconstruction assumption:
+    the source states the distributions and orientation but does not preserve
+    the realized three-dimensional layout.
     """
 
     if isinstance(population_size, bool) or not isinstance(population_size, int):
@@ -85,12 +122,15 @@ def figure16_electrode_geometry(
     if not cell.compartments:
         raise ValueError("cell must contain at least one compartment")
 
-    lengths_um = np.asarray([part.length_mm * 1000.0 for part in cell.compartments])
-    if not np.all(np.isfinite(lengths_um)) or np.any(lengths_um <= 0):
-        raise ValueError("compartment lengths must be finite and positive")
-    cell_length_um = float(np.sum(lengths_um))
-    local_centres_um = np.cumsum(lengths_um) - lengths_um / 2.0
-    tip_depth_um = np.linspace(0.0, cell_length_um, tip_count)
+    try:
+        source_depths = FIGURE18_COMPARTMENT_DEPTH_UM[cell.name]
+    except KeyError as error:
+        raise ValueError(f"Figure 18 has no cortical geometry for cell {cell.name!r}") from error
+    expected_names = {part.name for part in cell.compartments}
+    if set(source_depths) != expected_names:
+        raise ValueError("Figure 18 depths do not match the cell's compartments")
+    local_centres_um = np.asarray([source_depths[part.name] for part in cell.compartments])
+    tip_depth_um = np.linspace(0.0, SMART_CORTICAL_DEPTH_UM, tip_count)
 
     rng = np.random.default_rng(seed)
     lateral_um = rng.uniform(10.0, 1000.0, size=population_size)
@@ -110,9 +150,8 @@ def figure16_electrode_geometry(
     payload = {
         "algorithm": "numpy.default_rng.uniform-v1",
         "cell": cell.name,
-        "compartments": [
-            {"name": part.name, "length_mm": part.length_mm} for part in cell.compartments
-        ],
+        "compartment_depth_um": dict(source_depths),
+        "cortical_depth_um": SMART_CORTICAL_DEPTH_UM,
         "population_size": population_size,
         "selected_cell_index": selected_cell_index,
         "seed": seed,
@@ -176,10 +215,94 @@ def figure16_population_field(
     potential = extracellular_potential_uV(
         currents, geometry.distance_um, conductivity_mS_cm=conductivity_mS_cm
     )
-    csd = current_source_density_uV_per_um2(potential, geometry.tip_spacing_um)
+    csd = current_source_density_uV_per_um(potential, geometry.tip_spacing_um)
     for array in (currents, potential, csd):
         array.setflags(write=False)
     return Figure16PopulationField(geometry, currents, potential, csd)
+
+
+def figure16_cortical_field(
+    populations: dict[str, tuple[CellSpec, dict[str, np.ndarray], int]],
+    *,
+    seed: int,
+    conductivity_mS_cm: float = SMART_EXTRACELLULAR_CONDUCTIVITY_MS_CM,
+) -> Figure16CorticalField:
+    """Sum all cortical population fields and retain Figure 16 depth regions.
+
+    Each population value is ``(cell_spec, compartment_currents, selected_cell_index)``.
+    A master seed deterministically allocates independent geometry seeds in
+    sorted population-name order. The caption identifies the lower and upper
+    0.3 mm regions but does not specify a tip-reduction rule, so all regional
+    tip traces are retained for a separately declared analysis convention.
+    """
+
+    if isinstance(seed, bool) or not isinstance(seed, int):
+        raise TypeError("seed must be an integer")
+    if not populations:
+        raise ValueError("at least one cortical population is required")
+    rng = np.random.default_rng(seed)
+    fields: list[tuple[str, Figure16PopulationField]] = []
+    time_count: int | None = None
+    for name in sorted(populations):
+        try:
+            cell, currents, selected_index = populations[name]
+        except (TypeError, ValueError) as error:
+            raise ValueError(
+                "each population must contain cell, currents, and selected index"
+            ) from error
+        sub_seed = int(rng.integers(0, np.iinfo(np.int64).max))
+        field = figure16_population_field(
+            cell,
+            currents,
+            selected_cell_index=selected_index,
+            seed=sub_seed,
+            conductivity_mS_cm=conductivity_mS_cm,
+        )
+        if time_count is None:
+            time_count = field.potential_uV.shape[1]
+        elif field.potential_uV.shape[1] != time_count:
+            raise ValueError("all cortical populations must have the same time axis")
+        fields.append((name, field))
+
+    potential = np.sum([field.potential_uV for _, field in fields], axis=0)
+    tip_depth_um = fields[0][1].geometry.tip_depth_um
+    inferior = tip_depth_um <= 300.0
+    superior = tip_depth_um >= SMART_CORTICAL_DEPTH_UM - 300.0
+    csd = current_source_density_uV_per_um(
+        potential, fields[0][1].geometry.tip_spacing_um
+    )
+    payload = {
+        "seed": seed,
+        "populations": [
+            {"name": name, "geometry_fingerprint": field.geometry.fingerprint}
+            for name, field in fields
+        ],
+        "region_um": 300.0,
+    }
+    fingerprint = hashlib.sha256(
+        json.dumps(payload, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    ).hexdigest()
+    arrays = (
+        potential,
+        csd,
+        tip_depth_um[inferior],
+        potential[inferior],
+        tip_depth_um[superior],
+        potential[superior],
+    )
+    for array in arrays:
+        array.setflags(write=False)
+    return Figure16CorticalField(
+        seed=seed,
+        population_fields=tuple(fields),
+        potential_uV=potential,
+        current_source_density_uV_per_um=csd,
+        inferior_300um_tip_depth_um=arrays[2],
+        inferior_300um_potential_uV=arrays[3],
+        superior_300um_tip_depth_um=arrays[4],
+        superior_300um_potential_uV=arrays[5],
+        fingerprint=fingerprint,
+    )
 
 
 def extracellular_potential_uV(
@@ -214,13 +337,16 @@ def extracellular_potential_uV(
     return (1.0 / (4.0 * np.pi * conductivity_s_m)) * (1.0 / distances) @ currents
 
 
-def current_source_density_uV_per_um2(
+def current_source_density_uV_per_um(
     electrode_potential_uV: np.ndarray, tip_spacing_um: float
 ) -> np.ndarray:
-    """Apply the centered second-difference approximation in Equation 33.
+    """Apply paper-literal Equation 33, whose denominator is ``Delta x``.
 
     End tips do not have two neighbors and are therefore omitted. Input shape
-    is ``(tip, time)`` and output shape is ``(tip - 2, time)``.
+    is ``(tip, time)`` and output shape is ``(tip - 2, time)`` in uV/um.
+    Although the surrounding prose calls this a second derivative, the printed
+    equation has no square on its denominator; classic SMART preserves that
+    source fact rather than silently correcting it.
     """
 
     potential = np.asarray(electrode_potential_uV, dtype=float)
@@ -230,4 +356,17 @@ def current_source_density_uV_per_um2(
         raise ValueError("electrode potential must be finite")
     if not np.isfinite(tip_spacing_um) or tip_spacing_um <= 0:
         raise ValueError("tip spacing must be finite and positive")
-    return (potential[:-2] - 2.0 * potential[1:-1] + potential[2:]) / tip_spacing_um**2
+    return (potential[:-2] - 2.0 * potential[1:-1] + potential[2:]) / tip_spacing_um
+
+
+def standard_current_source_density_uV_per_um2(
+    electrode_potential_uV: np.ndarray, tip_spacing_um: float
+) -> np.ndarray:
+    """Return the conventional centered second derivative using ``Delta x`` squared.
+
+    This alternate is useful for robustness comparisons but is not the printed
+    Grossberg--Versace Equation 33.
+    """
+
+    literal = current_source_density_uV_per_um(electrode_potential_uV, tip_spacing_um)
+    return literal / tip_spacing_um

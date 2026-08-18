@@ -937,6 +937,16 @@ Figure 7/10/14/15/16 results that used the scalar-sum translation are therefore
 superseded and must be rerun; structural and unrelated isolated validations
 remain valid. See `connectfromall-external-current-080.yaml`.
 
+Official-duration reruns under the corrected fingerprint now establish the
+current failure precisely. Figure 7 gives 60 Hz nonspecific firing in both
+match and mismatch, with identical reported population counts, rather than the
+published approximately 40/70 Hz split
+(`figure7-corrected-input-official-081.yaml`). The persistent Figure 10 assay
+now forms a five-cell pre-mismatch layer-4 winner, but nonspecific thalamus and
+layer 5 are silent during mismatch; disconnecting projections 017/018 changes
+nothing (`figure10-corrected-input-reset-082.yaml`). These are failed official
+reproductions, not baseline validation passes.
+
 The published Equation 2 axial profile now passes the isolated Figure 10b
 apical-to-soma propagation gate without a fitted scale: it produces two
 somatic events at source-strength sustained nonspecific drive, whereas the

@@ -1,0 +1,39 @@
+id: figure10-corrected-input-reset-082
+status: failed-official-reproduction-current-source-profile
+claim: The corrected persistent SMART network reproduces the Figure 10 nonspecific-thalamus-to-layer-5 reset chain
+runtime:
+  simulator: Brian2 cpp_standalone
+  pre_match_duration_ms: 100
+  mismatch_duration_ms: 100
+  dt_ms: 0.01
+  top_down_current_pA: 1000
+  learned_state: paper-constrained Figure 6c horizontal expectation
+  axial_convention: kinness_serialized_edge
+  convergent_external_input_convention: sum_independent_currents
+  convention_fingerprint: a054e5e36b75765124150157029662c6a5c8a639ee6079b442304607e726cb11
+negative_control:
+  mismatch_onset_disconnection: [modeldb112923.projection.017, modeldb112923.projection.018]
+results:
+  intact:
+    pre_match: {layer4_events: 5, nonspecific_events: 6, layer5_events: 0, layer6i_events: 15}
+    mismatch: {layer4_events: 33, nonspecific_events: 0, layer5_events: 0, layer6i_events: 179}
+  disconnected_control:
+    pre_match: {layer4_events: 5, nonspecific_events: 6, layer5_events: 0, layer6i_events: 15}
+    mismatch: {layer4_events: 33, nonspecific_events: 0, layer5_events: 0, layer6i_events: 179}
+  pre_reset_winner_indices: [38, 39, 40, 41, 42]
+  pre_reset_winner_events: 5
+  intact_winner_post_events: 1
+  control_winner_post_events: 1
+  intact_released_alternatives: 32
+  control_released_alternatives: 32
+assessment:
+  pre_reset_winner_pass: true
+  reset_chain_pass: false
+  winner_suppression_pass: false
+  alternative_release_pass: false
+  official_figure10_reset_reproduced: false
+notes:
+  - The corrected input semantics establish a genuine pre-mismatch layer-4 winner, unlike older candidates.
+  - Nonspecific thalamus emits no mismatch-phase event and layer 5 never emits a somatic event.
+  - Intact and disconnected trajectories are identical, proving that the observed broad post-mismatch layer-4 activity is not caused by projections 017/018.
+  - This result supersedes the old scalar-sum external-input Figure 10 trajectory.

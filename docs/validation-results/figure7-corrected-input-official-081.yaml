@@ -1,0 +1,43 @@
+id: figure7-corrected-input-official-081
+status: failed-official-reproduction-current-source-profile
+claim: Figure 7 match and mismatch reproduce the published nonspecific-thalamus rate split after correcting convergent external-input currents
+runtime:
+  simulator: Brian2 cpp_standalone
+  duration_ms: 100
+  dt_ms: 0.01
+  top_down_current_pA: 1000
+  learned_state: paper-constrained Figure 6c horizontal expectation
+  axial_convention: kinness_serialized_edge
+  convergent_external_input_convention: sum_independent_currents
+  convention_fingerprint: a054e5e36b75765124150157029662c6a5c8a639ee6079b442304607e726cb11
+published_targets:
+  match_nonspecific_rate_hz: approximately 40
+  mismatch_nonspecific_rate_hz: approximately 70
+results:
+  match:
+    nonspecific_events: 6
+    nonspecific_rate_hz: 60
+    relay_events: 20
+    trn_events: 81
+    layer4_events: 5
+    category_events: 4
+    v1_cortical_events: 118
+  mismatch:
+    nonspecific_events: 6
+    nonspecific_rate_hz: 60
+    relay_events: 20
+    trn_events: 81
+    layer4_events: 5
+    category_events: 4
+    v1_cortical_events: 118
+assessment:
+  match_rate_pass: false
+  mismatch_rate_pass: true
+  mismatch_disinhibition_pass: false
+  pathway_divergence_pass: false
+  official_figure7_reproduced: false
+notes:
+  - This is the first official-duration Figure 7 rerun after connectFromAll external inputs were corrected to sum independent currents.
+  - Match and mismatch trajectories are identical in every reported population count.
+  - The mismatch rate lies within the predeclared tolerance around 70 Hz by coincidence; there is no mismatch-dependent increase.
+  - TRN events are the shared initialization volley, not match-selective sustained feedback.

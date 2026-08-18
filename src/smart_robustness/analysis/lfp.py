@@ -87,6 +87,7 @@ def figure16_electrode_geometry(
     cell: CellSpec,
     population_size: int,
     *,
+    cortical_class: str | None = None,
     selected_cell_index: int,
     seed: int,
     tip_count: int = 54,
@@ -122,10 +123,13 @@ def figure16_electrode_geometry(
     if not cell.compartments:
         raise ValueError("cell must contain at least one compartment")
 
+    resolved_class = cortical_class or cell.name
     try:
-        source_depths = FIGURE18_COMPARTMENT_DEPTH_UM[cell.name]
+        source_depths = FIGURE18_COMPARTMENT_DEPTH_UM[resolved_class]
     except KeyError as error:
-        raise ValueError(f"Figure 18 has no cortical geometry for cell {cell.name!r}") from error
+        raise ValueError(
+            f"Figure 18 has no cortical geometry for class {resolved_class!r}"
+        ) from error
     expected_names = {part.name for part in cell.compartments}
     if set(source_depths) != expected_names:
         raise ValueError("Figure 18 depths do not match the cell's compartments")
@@ -150,6 +154,7 @@ def figure16_electrode_geometry(
     payload = {
         "algorithm": "numpy.default_rng.uniform-v1",
         "cell": cell.name,
+        "cortical_class": resolved_class,
         "compartment_depth_um": dict(source_depths),
         "cortical_depth_um": SMART_CORTICAL_DEPTH_UM,
         "population_size": population_size,
@@ -180,6 +185,7 @@ def figure16_population_field(
     cell: CellSpec,
     compartment_currents_pA: dict[str, np.ndarray],
     *,
+    cortical_class: str | None = None,
     selected_cell_index: int,
     seed: int,
     conductivity_mS_cm: float = SMART_EXTRACELLULAR_CONDUCTIVITY_MS_CM,
@@ -209,6 +215,7 @@ def figure16_population_field(
     geometry = figure16_electrode_geometry(
         cell,
         shape[0],
+        cortical_class=cortical_class,
         selected_cell_index=selected_cell_index,
         seed=seed,
     )
@@ -251,9 +258,11 @@ def figure16_cortical_field(
                 "each population must contain cell, currents, and selected index"
             ) from error
         sub_seed = int(rng.integers(0, np.iinfo(np.int64).max))
+        cortical_class = name.removesuffix("_v1").removesuffix("_v2")
         field = figure16_population_field(
             cell,
             currents,
+            cortical_class=cortical_class,
             selected_cell_index=selected_index,
             seed=sub_seed,
             conductivity_mS_cm=conductivity_mS_cm,

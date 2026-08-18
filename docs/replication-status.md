@@ -616,6 +616,15 @@ does not state how those regional tips were reduced to a single Figure 16
 curve, so reduction remains an explicit validation convention rather than a
 hidden implementation guess.
 
+The two-area network can now attach 1-ms Equation-32 current monitors to all
+seven cortical population classes in each area and convert each recovered
+NeuroML population into a complete cortical field. This sampling resolves the
+caption's 100-Hz upper bound, uses canonical population names to bind the
+source-specific cell records to Figure 18 depths, and selects each 9x9 sheet's
+central cell for the reported near-electrode distribution. Structural and
+synthetic-current integration pass; the 2-s learned-stimulus run is not yet a
+behavioral reproduction (`figure16-current-monitor-pipeline-047.yaml`).
+
 A visual source audit also corrected Equation 33: its printed denominator is
 Δx, despite prose describing a second derivative. The classic path now uses
 that paper-literal uV/µm transform. A separately named Δx² implementation is

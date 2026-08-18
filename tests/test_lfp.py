@@ -195,12 +195,16 @@ def test_cortical_field_sums_populations_and_exposes_caption_regions() -> None:
     }
     combined = figure16_cortical_field(
         {
-            "layer23": (get_cell_spec("layer23_excitatory"), zeros_23, 0),
-            "layer4": (get_cell_spec("layer4_excitatory"), driven_4, 0),
+            "layer23_excitatory_v1": (
+                get_cell_spec("layer23_excitatory"),
+                zeros_23,
+                0,
+            ),
+            "layer4_excitatory_v1": (get_cell_spec("layer4_excitatory"), driven_4, 0),
         },
         seed=16,
     )
-    layer4 = dict(combined.population_fields)["layer4"]
+    layer4 = dict(combined.population_fields)["layer4_excitatory_v1"]
 
     assert combined.potential_uV == pytest.approx(layer4.potential_uV)
     assert combined.potential_uV.shape == (54, 4)
@@ -217,8 +221,29 @@ def test_cortical_field_rejects_misaligned_time_axes() -> None:
     with pytest.raises(ValueError, match="same time axis"):
         figure16_cortical_field(
             {
-                "first": (cell, {name: np.ones((1, 2)) for name in ("soma", "proximal_dendrite")}, 0),
-                "second": (cell, {name: np.ones((1, 3)) for name in ("soma", "proximal_dendrite")}, 0),
+                "layer4_excitatory_v1": (
+                    cell,
+                    {name: np.ones((1, 2)) for name in ("soma", "proximal_dendrite")},
+                    0,
+                ),
+                "layer4_excitatory_v2": (
+                    cell,
+                    {name: np.ones((1, 3)) for name in ("soma", "proximal_dendrite")},
+                    0,
+                ),
             },
             seed=1,
         )
+
+
+def test_source_specific_cell_uses_explicit_cortical_class() -> None:
+    source_cell = get_cell_spec("layer4_excitatory")
+    source_cell = type(source_cell)("recovered_source_specific_name", source_cell.compartments)
+    geometry = figure16_electrode_geometry(
+        source_cell,
+        1,
+        cortical_class="layer4_excitatory",
+        selected_cell_index=0,
+        seed=18,
+    )
+    assert geometry.compartment_depth_um == pytest.approx([575.0, 702.5])

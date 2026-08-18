@@ -1,0 +1,34 @@
+schema_version: 1
+validation_id: figure16-current-monitor-pipeline-047
+claim: The complete V1-V2 network can record and transform every cortical transmembrane current required for Figure 16
+status: structural_and_synthetic_integration_pass
+primary_source:
+  citation: Grossberg and Versace 2008
+  locations:
+    - Figure 16 caption
+    - Supplementary Figure 18
+    - Methods 4.11
+source_facts:
+  cortical_population_classes_per_area: 7
+  areas: [v1, v2]
+  electrode_tips: 54
+  maximum_analysis_frequency_hz: 100
+implementation:
+  monitor_factory: smart_robustness.validation.higher_order.create_figure16_current_monitors
+  monitor_variable_pattern: i_transmembrane_paper_<compartment>
+  sample_interval_ms: 1
+  converter: smart_robustness.validation.higher_order.figure16_cortical_field_from_monitors
+  selected_cell_rule: central cell of each 9x9 population
+  population_binding: canonical V1/V2 name stripped to the Figure 18 cortical class
+verification:
+  command: .venv/bin/pytest -q tests/test_higher_order_validation.py tests/test_lfp.py
+  result: 34 passed
+  checks:
+    - all 14 cortical population monitors are constructed against compiled Brian variables
+    - recovered source-specific cell records bind to Figure 18 depth classes
+    - Brian-quantity current arrays convert to a 54-tip whole-area field
+    - all seven population fields contribute to each area
+limitations:
+  - Synthetic zero-current arrays validate wiring and dimensional consistency, not official dynamics.
+  - The 1000-ms prestimulus plus 1000-ms Figure 16 recording has not yet passed behavioral validation.
+  - The source does not preserve the regional-tip reduction convention used for the plotted curve.

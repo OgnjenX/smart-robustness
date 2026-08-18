@@ -30,7 +30,37 @@ class Figure8Protocol:
     depolarized_hold_mV: float = -60.0
     hyperpolarized_hold_mV: float = -80.0
     hyperpolarizing_bias_pA: float = 0.0
+    clamp_interpretation: str = "released_exact_preclamp"
+    hyperpolarizing_clamp_conductance_nS: float = 0.0
     dt_ms: float = 0.01
+
+    def __post_init__(self) -> None:
+        if self.clamp_interpretation not in {
+            "released_exact_preclamp",
+            "caption_finite_conductance",
+        }:
+            raise ValueError("unknown Figure 8 clamp interpretation")
+        values = (
+            self.pulse_pA,
+            self.precondition_ms,
+            self.pulse_ms,
+            self.depolarized_hold_mV,
+            self.hyperpolarized_hold_mV,
+            self.hyperpolarizing_bias_pA,
+            self.hyperpolarizing_clamp_conductance_nS,
+            self.dt_ms,
+        )
+        if not all(np.isfinite(value) for value in values):
+            raise ValueError("Figure 8 protocol values must be finite")
+        if self.precondition_ms < 0 or self.pulse_ms <= 0 or self.dt_ms <= 0:
+            raise ValueError("Figure 8 durations and dt must be positive")
+        if self.hyperpolarizing_clamp_conductance_nS < 0:
+            raise ValueError("Figure 8 clamp conductance cannot be negative")
+        if (
+            self.clamp_interpretation == "caption_finite_conductance"
+            and self.hyperpolarizing_clamp_conductance_nS <= 0
+        ):
+            raise ValueError("caption finite-conductance protocol requires a positive clamp")
 
 
 @dataclass(frozen=True, slots=True)
@@ -235,10 +265,13 @@ def run_figure8_condition(
     protocol: Figure8Protocol | None = None,
     brian=None,
 ) -> IsolatedCellTrace:
-    """Run one Figure 8 condition with a pre-pulse voltage clamp.
+    """Run one Figure 8 condition under a declared caption interpretation.
 
-    The clamp is released when the published 0.3 nA pulse begins. This is a
-    declared interpretation of the caption, not a recovered KInNeSS detail.
+    The original reconstruction exactly preclamps either condition and releases
+    the clamp at pulse onset. The caption-literal alternative freely equilibrates
+    the top condition and keeps a finite KInNeSS-style hyperpolarizing voltage
+    conductance active in the bottom condition. The missing legacy experiment
+    file prevents either interpretation from being silently designated official.
     """
 
     if brian is None:
@@ -250,7 +283,8 @@ def run_figure8_condition(
     hold_mV = protocol.hyperpolarized_hold_mV if hyperpolarized else protocol.depolarized_hold_mV
     params = dict(model_params)
     params["cell_class"] = "thalamic_relay"
-    params["v_init_mV"] = hold_mV
+    if protocol.clamp_interpretation == "released_exact_preclamp":
+        params["v_init_mV"] = hold_mV
     population = create_compartmental_hh_population(
         name="figure8_relay", size=1, params=params, brian=brian
     )
@@ -260,13 +294,26 @@ def run_figure8_condition(
         for compartment in population.compartments:
             setattr(group, f"v_{compartment}", hold_mV * brian.mV)
 
-    clamp = brian.NetworkOperation(apply_voltage_clamp, when="start")
+    exact_preclamp = protocol.clamp_interpretation == "released_exact_preclamp"
+
+    def apply_finite_voltage_input() -> None:
+        if not hyperpolarized:
+            return
+        group.i_syn_soma = protocol.hyperpolarizing_clamp_conductance_nS * brian.nsiemens * (
+            protocol.hyperpolarized_hold_mV * brian.mV - group.v_soma
+        )
+
+    clamp_operation = brian.NetworkOperation(
+        apply_voltage_clamp if exact_preclamp else apply_finite_voltage_input,
+        when="start",
+    )
     voltage = brian.StateMonitor(group, "v_soma", record=True)
     spikes = brian.SpikeMonitor(group)
-    network = brian.Network(group, clamp, voltage, spikes)
+    network = brian.Network(group, clamp_operation, voltage, spikes)
     network.run(protocol.precondition_ms * brian.ms)
     pulse_start_ms = float(network.t / brian.ms)
-    clamp.active = False
+    if exact_preclamp:
+        clamp_operation.active = False
     pulse_pA = protocol.pulse_pA
     if hyperpolarized:
         pulse_pA += protocol.hyperpolarizing_bias_pA

@@ -577,6 +577,13 @@ dendritic event source is not promoted. Axial interpretation alone is therefore
 rejected as the missing Figure 7 mechanism; see
 `figure7-trn-axial-propagation-040.yaml`.
 
+An additional multiplicative axial audit tests 1x, 2x, 4x, 8x, 16x, and 32x
+coupling in independent control and measured-drive TRN cells. Every trace is
+finite, but none emits a post-startup soma event. Stronger coupling progressively
+reduces the proximal calcium peak, while the control soma peak remains at least
+as large as the driven peak at every factor. This closes a simple missing-factor
+explanation without fitting a non-source parameter (`trn-axial-scale-066.yaml`).
+
 An isolated receptor-drive matrix further excludes projection strength as the
 missing mechanism. The recovered TRN receives constant layer-6II AMPA/NMDA
 gates from zero through eight times the largest values observed in Figure 7,
@@ -815,6 +822,15 @@ fails with the archived T-current. Removing that current restores tonic firing
 only as a causal diagnostic, not as a source-faithful candidate. The remaining
 high-value discriminator is the caption's simultaneous hyperpolarizing-clamp
 semantics (`figure8-source-defaults-065.yaml`).
+
+That discriminator now has a named executable implementation matching the
+contemporaneous KInNeSS voltage-input definition. The top condition freely
+equilibrates without a clamp; the bottom condition retains a finite
+hyperpolarizing conductance throughout the pulse. Conductances from 1 through
+300 nS produce no pulse-evoked events in either condition. Clamp timing is
+therefore ruled out as a sufficient explanation. The unresolved Figure 8 gap
+is now localized to a missing version-1 `libkinmaze` membrane, current-unit, or
+gate default rather than the better documented KInNeSS 1.2 network semantics.
 
 Accordingly, output from M2 is a source/audit benchmark, not evidence that
 the 2008 results have already been replicated.

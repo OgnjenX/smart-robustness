@@ -1,0 +1,43 @@
+id: trn-axial-scale-066
+status: rejected-source-unreported-discriminator
+claim: A small multiplicative error in reconstructed TRN axial conductance explains the missing Figure 7 somatic events
+source:
+  cell: ModelDB 112923 Reticular population
+  axial_equation: KInNeSS expanded manuscript Equation 9
+  active_convention: kinness_serialized_edge
+protocol:
+  simulator: Brian2 2.9.0 numpy runtime
+  dt_ms: 0.02
+  pre_drive_ms: 5
+  drive_ms: 75
+  measured_layer6ii_gates: {ampa: 1.66427, nmda: 0.10913}
+  independent_conditions: [control, driven]
+  axial_conductance_scales: [1, 2, 4, 8, 16, 32]
+results:
+  1:
+    control: {events: 0, soma_peak_mV: 5.4776, proximal_peak_mV: 91.3124}
+    driven: {events: 0, soma_peak_mV: 5.2226, proximal_peak_mV: 91.3124}
+  2:
+    control: {events: 0, soma_peak_mV: 4.5636, proximal_peak_mV: 75.1523}
+    driven: {events: 0, soma_peak_mV: 4.0927, proximal_peak_mV: 75.1523}
+  4:
+    control: {events: 0, soma_peak_mV: 4.2794, proximal_peak_mV: 55.2282}
+    driven: {events: 0, soma_peak_mV: 3.3136, proximal_peak_mV: 55.2282}
+  8:
+    control: {events: 0, soma_peak_mV: 4.8429, proximal_peak_mV: 33.8383}
+    driven: {events: 0, soma_peak_mV: 3.6708, proximal_peak_mV: 33.8383}
+  16:
+    control: {events: 0, soma_peak_mV: 5.0283, proximal_peak_mV: 13.4884}
+    driven: {events: 0, soma_peak_mV: 4.0684, proximal_peak_mV: 13.4881}
+  32:
+    control: {events: 0, soma_peak_mV: 3.5492, proximal_peak_mV: 2.7649}
+    driven: {events: 0, soma_peak_mV: 2.6888, proximal_peak_mV: 2.0463}
+assessment:
+  finite_all_candidates: true
+  post_startup_event_found: false
+  input_selective_recruitment_found: false
+  promote_axial_scale: false
+notes:
+  - Stronger axial coupling reduces the proximal calcium-spike peak but never raises the soma to the published +30-mV event threshold.
+  - Control peaks are as large as or larger than driven peaks at every scale, so no factor is a causal Figure 7 candidate.
+  - The source-backed 1x convention remains active; this sweep does not validate it, but closes a simple missing-factor explanation.

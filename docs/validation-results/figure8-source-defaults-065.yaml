@@ -39,6 +39,15 @@ reference_candidate:
   tonic_pass: false
   burst_pass: true
 discriminators:
+  caption_literal_finite_voltage_input:
+    protocol:
+      top: freely equilibrated without a voltage input
+      bottom: finite hyperpolarizing voltage input maintained through the pulse
+      conductance_nS: [1, 3, 10, 30, 100, 300]
+      dt_ms: 0.05
+    depolarized_pulse_event_count: 0
+    hyperpolarized_pulse_event_count_all_candidates: 0
+    result: failed
   remove_t_current_at_source_geometry:
     interpretation: diagnostic_only
     result: no spikes and approximately 1 mV sustained depolarization
@@ -55,4 +64,5 @@ notes:
   - The archived Figure 8 XML omits both leak density and specific capacitance.
   - Ordinary leak/capacitance candidates preserve the hyperpolarized transient burst but do not restore the published depolarized tonic train.
   - The source geometry conversion is supported for KInNeSS 1.2; Ca_rebound.xml uses the older version-1 libkinmaze schema, but interpreting its raw dimensions as millimeters is not sufficient to reproduce Figure 8.
-  - The paper caption describes the lower simulation as having a hyperpolarizing voltage clamp during the pulse. The exact legacy clamp implementation remains unrecovered and is the next protocol discriminator.
+  - A caption-literal KInNeSS voltage-input interpretation was also tested: no clamp in the top condition and a finite hyperpolarizing conductance maintained in the bottom condition. It produces no pulse-evoked events over 1-300 nS and rules out clamp release timing as a sufficient explanation.
+  - The remaining discrepancy requires an unrecovered version-1 libkinmaze membrane, current-unit, or gate behavior; no candidate is promoted without source or independent behavioral support.

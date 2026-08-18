@@ -2,6 +2,7 @@ import numpy as np
 import pytest
 
 from smart_robustness.validation.isolated_cells import (
+    Figure8Protocol,
     IsolatedCellTrace,
     TrnRecruitmentProtocol,
     assess_figure8,
@@ -36,6 +37,16 @@ def test_figure8_assessment_rejects_two_sustained_tonic_trains() -> None:
     assert assessment.tonic_pass
     assert not assessment.burst_pass
     assert assessment.notes
+
+
+def test_figure8_caption_protocol_requires_finite_hyperpolarizing_conductance() -> None:
+    with pytest.raises(ValueError, match="positive clamp"):
+        Figure8Protocol(clamp_interpretation="caption_finite_conductance")
+    protocol = Figure8Protocol(
+        clamp_interpretation="caption_finite_conductance",
+        hyperpolarizing_clamp_conductance_nS=10,
+    )
+    assert protocol.hyperpolarizing_clamp_conductance_nS == pytest.approx(10)
 
 
 def test_figure8_source_parameters_require_explicit_missing_defaults() -> None:

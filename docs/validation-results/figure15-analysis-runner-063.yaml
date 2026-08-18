@@ -1,7 +1,7 @@
 schema_version: 1
 validation_id: figure15-analysis-runner-063
 claim: The complete first-order sector can execute and predeclaredly score Figure 15 nearby layer-4 synchrony.
-status: pass_implementation_official_behavior_pending
+status: pass_implementation_behavior_failed_in_figure15_official_duration_064
 date: 2026-08-18
 evidence_class:
   - approximate-numeric
@@ -41,3 +41,4 @@ assessment:
   analysis_predeclared: true
   complete_sector_runner_ready: true
   official_local_synchrony_reproduced: false
+  behavioral_artifact: figure15-official-duration-064.yaml

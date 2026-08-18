@@ -764,6 +764,12 @@ cross-correlogram spectrum is tested against 44±5 Hz. A synthetic 44-Hz pair
 is recovered at 44.32 Hz. The unpublished pair choice and confidence-limit
 method remain explicit reconstruction gaps (`figure15-analysis-runner-063.yaml`).
 
+The full Figure 15 candidate has now completed for that predeclared pair. Cells
+39 and 40 emit 9 and 10 spikes, respectively, so the signal is not a silent-pair
+artifact; nevertheless, the cross-correlogram spectrum peaks at 27.70 Hz,
+outside the 44±5-Hz gate. No post-result neighboring-pair search is used to
+replace this failure (`figure15-official-duration-064.yaml`).
+
 A visual source audit also corrected Equation 33: its printed denominator is
 Δx, despite prose describing a second derivative. The classic path now uses
 that paper-literal uV/µm transform. A separately named Δx² implementation is

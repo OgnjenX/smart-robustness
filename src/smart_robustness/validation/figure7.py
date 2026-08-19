@@ -198,6 +198,17 @@ class Figure7ConditionResult:
     trn_post_startup_soma_voltage_range_mV_by_index: tuple[
         tuple[int, float, float], ...
     ] = ()
+    nonspecific_trn_gaba_peak: float | None = None
+    nonspecific_trn_gaba_integral_ms: float | None = None
+    nonspecific_post_startup_trn_gaba_peak: float | None = None
+    nonspecific_layer6ii_ampa_peak: float | None = None
+    nonspecific_layer6ii_nmda_peak: float | None = None
+    nonspecific_direct_input_current_range_pA: tuple[float, float] | None = None
+    nonspecific_trn_current_range_pA: tuple[float, float] | None = None
+    nonspecific_layer6ii_current_range_pA: tuple[float, float] | None = None
+    nonspecific_voltage_range_mV_by_compartment: tuple[
+        tuple[str, float, float], ...
+    ] = ()
 
     def __post_init__(self) -> None:
         if self.duration_ms <= 0:
@@ -383,6 +394,8 @@ def run_figure7_condition(
         raise ValueError("top_down_cue_lead_ms cannot be negative")
     if equilibration_ms < 0:
         raise ValueError("equilibration_ms cannot be negative")
+    if record_relay_diagnostics and duration_ms <= 5.0:
+        raise ValueError("Figure 7 pathway diagnostics require duration_ms > 5")
     if brian is None:
         import brian2 as brian
     if cpp_standalone_directory is not None:
@@ -521,6 +534,7 @@ def run_figure7_condition(
         monitors.extend(cortical_spike_monitors.values())
     relay_state = None
     trn_state = None
+    nonspecific_state = None
     if record_relay_diagnostics:
         relay_state = brian.StateMonitor(
             sector.populations["thalamic_relay"].group,
@@ -551,7 +565,28 @@ def run_figure7_condition(
             record=FIGURE7_RELAY_DIAGNOSTIC_INDICES,
             name=f"figure7_{condition.value}_trn_pathway_state",
         )
-        monitors.extend((relay_state, trn_state))
+        nonspecific_state = brian.StateMonitor(
+            sector.populations["thalamic_nonspecific"].group,
+            (
+                "port_000_gate",
+                "port_001_gate",
+                "port_002_gate",
+                "port_003_gate",
+                "port_004_gate",
+                "i_port_000",
+                "i_port_001",
+                "i_port_002",
+                "i_port_003",
+                "i_port_004",
+                "i_external_001",
+                "v_distal_dendrite",
+                "v_proximal_dendrite",
+                "v_soma",
+            ),
+            record=True,
+            name=f"figure7_{condition.value}_nonspecific_pathway_state",
+        )
+        monitors.extend((relay_state, trn_state, nonspecific_state))
     v2_layer4 = None
     v2_relay = None
     if include_higher_order_loop:
@@ -617,6 +652,17 @@ def run_figure7_condition(
     trn_voltage_range: tuple[tuple[int, float, float], ...] = ()
     trn_soma_voltage_range: tuple[tuple[int, float, float], ...] = ()
     trn_post_startup_soma_voltage_range: tuple[tuple[int, float, float], ...] = ()
+    nonspecific_trn_gaba_peak = None
+    nonspecific_trn_gaba_integral_ms = None
+    nonspecific_post_startup_trn_gaba_peak = None
+    nonspecific_layer6ii_ampa_peak = None
+    nonspecific_layer6ii_nmda_peak = None
+    nonspecific_direct_input_current_range_pA = None
+    nonspecific_trn_current_range_pA = None
+    nonspecific_layer6ii_current_range_pA = None
+    nonspecific_voltage_range_mV_by_compartment: tuple[
+        tuple[str, float, float], ...
+    ] = ()
     if relay_state is not None:
         ampa = np.asarray(relay_state.port_005_gate) + np.asarray(
             relay_state.port_007_gate
@@ -737,6 +783,74 @@ def run_figure7_condition(
                 strict=True,
             )
         )
+    if nonspecific_state is not None:
+        nonspecific_trn_gaba = sum(
+            np.asarray(getattr(nonspecific_state, f"port_{index:03d}_gate"))[0]
+            for index in range(3)
+        )[diagnostic_window]
+        nonspecific_layer6ii_ampa = np.asarray(nonspecific_state.port_003_gate)[0][
+            diagnostic_window
+        ]
+        nonspecific_layer6ii_nmda = np.asarray(nonspecific_state.port_004_gate)[0][
+            diagnostic_window
+        ]
+        nonspecific_trn_current_pA = sum(
+            np.asarray(getattr(nonspecific_state, f"i_port_{index:03d}") / brian.pA)[0]
+            for index in range(3)
+        )[diagnostic_window]
+        nonspecific_layer6ii_current_pA = sum(
+            np.asarray(getattr(nonspecific_state, f"i_port_{index:03d}") / brian.pA)[0]
+            for index in (3, 4)
+        )[diagnostic_window]
+        nonspecific_direct_input_pA = np.asarray(
+            nonspecific_state.i_external_001 / brian.pA
+        )[0][diagnostic_window]
+        nonspecific_trn_gaba_peak = float(np.max(nonspecific_trn_gaba))
+        nonspecific_trn_gaba_integral_ms = float(
+            np.trapz(nonspecific_trn_gaba, times_ms)
+        )
+        nonspecific_post_startup_trn_gaba_peak = float(
+            np.max(nonspecific_trn_gaba[post_startup_window])
+        )
+        nonspecific_layer6ii_ampa_peak = float(np.max(nonspecific_layer6ii_ampa))
+        nonspecific_layer6ii_nmda_peak = float(np.max(nonspecific_layer6ii_nmda))
+        nonspecific_direct_input_current_range_pA = (
+            float(np.min(nonspecific_direct_input_pA)),
+            float(np.max(nonspecific_direct_input_pA)),
+        )
+        nonspecific_trn_current_range_pA = (
+            float(np.min(nonspecific_trn_current_pA)),
+            float(np.max(nonspecific_trn_current_pA)),
+        )
+        nonspecific_layer6ii_current_range_pA = (
+            float(np.min(nonspecific_layer6ii_current_pA)),
+            float(np.max(nonspecific_layer6ii_current_pA)),
+        )
+        nonspecific_voltage_range_mV_by_compartment = tuple(
+            (
+                compartment,
+                float(np.min(values)),
+                float(np.max(values)),
+            )
+            for compartment, values in (
+                (
+                    "distal_dendrite",
+                    np.asarray(nonspecific_state.v_distal_dendrite / brian.mV)[0][
+                        diagnostic_window
+                    ],
+                ),
+                (
+                    "proximal_dendrite",
+                    np.asarray(nonspecific_state.v_proximal_dendrite / brian.mV)[0][
+                        diagnostic_window
+                    ],
+                ),
+                (
+                    "soma",
+                    np.asarray(nonspecific_state.v_soma / brian.mV)[0][diagnostic_window],
+                ),
+            )
+        )
     def stimulus_times(monitor) -> tuple[float, ...]:
         stimulus_start_ms = (
             pretraining_elapsed_ms + equilibration_ms + top_down_cue_lead_ms
@@ -809,6 +923,23 @@ def run_figure7_condition(
         trn_soma_voltage_range_mV_by_index=trn_soma_voltage_range,
         trn_post_startup_soma_voltage_range_mV_by_index=(
             trn_post_startup_soma_voltage_range
+        ),
+        nonspecific_trn_gaba_peak=nonspecific_trn_gaba_peak,
+        nonspecific_trn_gaba_integral_ms=nonspecific_trn_gaba_integral_ms,
+        nonspecific_post_startup_trn_gaba_peak=(
+            nonspecific_post_startup_trn_gaba_peak
+        ),
+        nonspecific_layer6ii_ampa_peak=nonspecific_layer6ii_ampa_peak,
+        nonspecific_layer6ii_nmda_peak=nonspecific_layer6ii_nmda_peak,
+        nonspecific_direct_input_current_range_pA=(
+            nonspecific_direct_input_current_range_pA
+        ),
+        nonspecific_trn_current_range_pA=nonspecific_trn_current_range_pA,
+        nonspecific_layer6ii_current_range_pA=(
+            nonspecific_layer6ii_current_range_pA
+        ),
+        nonspecific_voltage_range_mV_by_compartment=(
+            nonspecific_voltage_range_mV_by_compartment
         ),
     )
     if cpp_standalone_directory is not None:

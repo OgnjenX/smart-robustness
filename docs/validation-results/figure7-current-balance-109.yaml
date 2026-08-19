@@ -1,0 +1,58 @@
+schema_version: 1
+validation_id: figure7-current-balance-109
+claim: The complete Figure 7 relay-to-TRN-to-nonspecific current chain distinguishes match from mismatch under the current source profile.
+status: failed-official-reproduction-condition_invariant_downstream_current
+date: 2026-08-19
+sources:
+  paper: Grossberg and Versace 2008, Figure 7 and Methods 4.9
+  framework: Versace et al. 2008 expanded KInNeSS manuscript, Equations 3, 5-6, and 13-18
+  executable: ModelDB 112923 SMART.nml
+protocol:
+  simulator: Brian2 2.9.0 numpy target
+  duration_ms: 100
+  integration_dt_ms: 0.01
+  top_down_current_pA: 1000
+  learned_state: paper-constrained Figure 6c horizontal expectation
+  axial_convention: kinness_serialized_edge
+  transmitter_semantics: current source resource continuously multiplies each active delayed ligand gate
+  convention_fingerprint: a054e5e36b75765124150157029662c6a5c8a639ee6079b442304607e726cb11
+results:
+  shared:
+    nonspecific_spike_times_ms: [1.94, 11.59, 56.78, 61.71, 67.53, 76.94]
+    nonspecific_rate_hz: 60
+    relay_events: 18
+    active_relay_cells: 5
+    trn_events: 81
+    trn_event_times_ms: [1.34]
+    category_event_times_ms: [3.06, 28.09, 58.91, 89.25]
+    nonspecific_trn_gaba_peak: 26.729991372
+    nonspecific_trn_gaba_integral_ms: 169.724566879
+    nonspecific_post_5ms_residual_trn_gaba_peak: 21.665897358
+    nonspecific_layer6ii_ampa_peak: 0.538474147
+    nonspecific_layer6ii_nmda_peak: 0.545993875
+    nonspecific_direct_input_current_range_pA: [-4392.191048, 678.584013]
+    nonspecific_trn_current_range_pA: [-108816.544537, 0]
+    nonspecific_layer6ii_current_range_pA: [-729.427683, 30.525367]
+    nonspecific_soma_voltage_range_mV: [-76.422349, 37.958763]
+  match:
+    active_relay_indices: [38, 39, 40, 41, 42]
+    relay_event_times_ms: [49.15, 49.24, 49.42, 65.19, 65.35, 65.56, 81.37, 81.59, 98.89, 99.19]
+  mismatch:
+    active_relay_indices: [22, 31, 40, 49, 58]
+    relay_event_times_ms: [49.15, 49.35, 49.51, 65.19, 65.48, 65.67, 81.54, 81.59, 81.73, 98.89, 99.36]
+assessment:
+  bottom_up_orientation_is_spatially_distinct: true
+  relay_count_divergence: false
+  post_startup_trn_events_present: false
+  trn_to_nonspecific_current_divergence: false
+  layer6ii_to_nonspecific_current_divergence: false
+  nonspecific_voltage_divergence: false
+  mismatch_disinhibition_reproduced: false
+  official_figure7_reproduced: false
+interpretation:
+  - Match and mismatch select horizontal versus vertical relay locations, but both recruit five cells and 18 relay events.
+  - Every TRN cell emits once at 1.34 ms, before the first category event and long before the first stimulus-driven relay event at 49.15 ms; there are no later TRN events.
+  - The nonzero post-5-ms GABA gate is the decaying residue of the population-wide startup volley, not condition-dependent relay-driven TRN output.
+  - Consequently all three TRN-to-nonspecific GABA channels, both layer-6II-to-nonspecific excitatory channels, direct image input, nonspecific voltages, and nonspecific spikes are numerically identical across conditions.
+  - This directly excludes the nonspecific-cell current balance as the earliest Figure 7 discrepancy. The missing causal operation remains upstream: matched relay recruitment must create more post-startup TRN output than mismatch.
+  - No parameter correction is promoted because the published paper and recovered executable records do not identify an alternative resting-state initialization or somatodendritic transfer rule that resolves this failure.

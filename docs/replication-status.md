@@ -1113,6 +1113,18 @@ unserialized specific capacitance still produces no layer-2/3 event, while
 0.1 uF/cm2 makes the full network non-finite and also fails recruitment. No
 capacitance or synaptic correction is promoted.
 
+The Figure 7 diagnostic now follows the causal pathway through the nonspecific
+cell itself (`figure7-current-balance-109.yaml`). Match and mismatch activate
+horizontal versus vertical relay positions, respectively, but each has 18
+events in five relay cells. All 81 TRN cells emit only once, together at 1.34
+ms—before the first category event at 3.06 ms and the first driven relay event
+at 49.15 ms—and never respond afterward. The resulting TRN GABA gate, its
+169.7246 gate-ms integral, layer-6II AMPA/NMDA drive, direct image current,
+nonspecific voltages, and six output events are numerically identical between
+conditions. This rules out the nonspecific-cell current balance as the first
+discrepancy: the missing source-level operation is still matched-relay
+recruitment of post-startup TRN output. No unsupported correction is promoted.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

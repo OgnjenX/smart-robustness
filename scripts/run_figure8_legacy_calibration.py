@@ -10,12 +10,26 @@ from pathlib import Path
 import yaml
 
 from smart_robustness.validation.calibration import load_calibration_contract
-from smart_robustness.validation.isolated_cells import Figure8Protocol, run_figure8_source_candidate
+from smart_robustness.validation.isolated_cells import (
+    Figure8Protocol,
+    figure8_voltage_peak_times_ms,
+    run_figure8_source_candidate,
+)
 
 # Endpoints are the archived literal mS/cm2 interpretation and the legacy
 # microSiemens-to-mS interpretation. Interior values are fixed in advance on a
 # sparse logarithmic grid because the version-1 unit conversion is unrecovered.
 CALCIUM_DENSITY_GRID_MSIEMENS_CM2 = (
+    0.00025,
+    0.001,
+    0.005,
+    0.025,
+    0.1,
+    0.125,
+    0.15,
+    0.175,
+    0.2,
+    0.225,
     0.25,
     0.5,
     1.0,
@@ -60,6 +74,14 @@ def main() -> None:
                 "burst_spike_times_ms": [
                     float(value) for value in candidate.burst.spike_times_ms
                 ],
+                "tonic_voltage_peak_times_ms": [
+                    float(value)
+                    for value in figure8_voltage_peak_times_ms(candidate.tonic)
+                ],
+                "burst_voltage_peak_times_ms": [
+                    float(value)
+                    for value in figure8_voltage_peak_times_ms(candidate.burst)
+                ],
                 "assessment": asdict(candidate.assessment),
                 "reproduced": candidate.assessment.reproduced,
             }
@@ -86,6 +108,7 @@ def main() -> None:
             "serialized_g_bar": 250,
             "literal_interpretation_mS_cm2": 250.0,
             "legacy_microSiemens_interpretation_mS_cm2": 0.25,
+            "legacy_nanoSiemens_interpretation_mS_cm2": 0.00025,
             "unit_mapping": "not recovered from version-1 libkinmaze",
         },
         "fixed_protocol": asdict(protocol),

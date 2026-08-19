@@ -18,6 +18,9 @@ NETWORK_CALIBRATION_PATH = (
 GAUSSIAN_VARIANCE_PROFILE_PATH = (
     ROOT / "configs/calibration/trn_stage_a_survivor_gaussian_variance_v1.yaml"
 )
+FIGURE8_VOLTAGE_AUDIT_PATH = (
+    ROOT / "docs/validation-results/figure8-voltage-observable-audit-124.yaml"
+)
 
 
 def test_classic_calibration_contract_separates_training_and_holdout() -> None:
@@ -157,6 +160,24 @@ def test_gaussian_variance_discriminator_is_a_registered_complete_candidate() ->
     assert profile["runtime_fingerprint"] == runtime_conventions_for_candidate(
         candidate
     ).fingerprint
+
+
+def test_figure8_voltage_audit_rejects_release_events_as_the_observable() -> None:
+    artifact = yaml.safe_load(FIGURE8_VOLTAGE_AUDIT_PATH.read_text())
+    assert artifact["observable_correction"]["old"] == (
+        "SMART Equation-8 axonal release events"
+    )
+    assert artifact["literal_250_result"]["tonic_voltage_peaks"] > artifact[
+        "literal_250_result"
+    ]["tonic_release_events"]
+    assert artifact["calcium_unit_grid_mS_cm2"]["best_tonic_peak_times_ms"] == [
+        48.13,
+        112.96,
+        195.31,
+        288.55,
+    ]
+    assert artifact["assessment"]["calcium_unit_rescue"] is False
+    assert artifact["assessment"]["holdouts_consulted"] is False
 
 
 def test_contract_rejects_holdout_leakage(tmp_path: Path) -> None:

@@ -9,6 +9,7 @@ from smart_robustness.validation.isolated_cells import (
     TrnRecruitmentProtocol,
     assess_figure8,
     figure8_source_parameters,
+    figure8_voltage_peak_times_ms,
     run_layer5_propagation_condition,
     run_layer23_transfer_condition,
     run_trn_recruitment_condition,
@@ -16,10 +17,13 @@ from smart_robustness.validation.isolated_cells import (
 
 
 def _trace(condition: str, spikes: list[float]) -> IsolatedCellTrace:
+    voltage = np.full(301, -60.0)
+    for spike in spikes:
+        voltage[int(spike)] = 20.0
     return IsolatedCellTrace(
         condition=condition,
         time_ms=np.arange(301, dtype=float),
-        soma_voltage_mV=np.full(301, -60.0),
+        soma_voltage_mV=voltage,
         spike_times_ms=np.asarray(spikes, dtype=float),
     )
 
@@ -31,6 +35,8 @@ def test_figure8_assessment_accepts_tonic_and_transient_burst_signatures() -> No
     assert assessment.reproduced
     assert assessment.tonic_spike_count == 6
     assert assessment.burst_spike_count == 4
+    assert assessment.tonic_release_event_count == 6
+    assert assessment.burst_release_event_count == 4
 
 
 def test_figure8_assessment_rejects_two_sustained_tonic_trains() -> None:
@@ -41,6 +47,20 @@ def test_figure8_assessment_rejects_two_sustained_tonic_trains() -> None:
     assert assessment.tonic_pass
     assert not assessment.burst_pass
     assert assessment.notes
+
+
+def test_figure8_voltage_peak_detector_uses_trace_not_release_events() -> None:
+    trace = _trace("depolarized", [20, 70, 120])
+    trace = IsolatedCellTrace(
+        condition=trace.condition,
+        time_ms=trace.time_ms,
+        soma_voltage_mV=trace.soma_voltage_mV,
+        spike_times_ms=np.asarray([20.0]),
+    )
+    assert figure8_voltage_peak_times_ms(trace).tolist() == [20.0, 70.0, 120.0]
+    assessment = assess_figure8(trace, _trace("hyperpolarized", [20, 24, 29]))
+    assert assessment.tonic_spike_count == 3
+    assert assessment.tonic_release_event_count == 1
 
 
 def test_figure8_caption_protocol_requires_finite_hyperpolarizing_conductance() -> None:

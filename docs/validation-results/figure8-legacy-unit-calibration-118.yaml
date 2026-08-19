@@ -1,7 +1,12 @@
 id: figure8-legacy-unit-calibration-118
 date: '2026-08-19'
-status: failed-no-survivor
+status: superseded-wrong-observable
+superseded_by: figure8-voltage-observable-audit-124.yaml
 claim: An unresolved version-1 calcium unit reproduces Figure 8 tonic and burst
+supersession_reason: >-
+  This artifact scored SMART Equation-8 axonal release events, whereas Figure 8
+  reports a somatic membrane-voltage trace. Its raw traces remain reproducible,
+  but its tonic/burst assessment is not baseline evidence.
 contract: configs/calibration/classic_uncertainty_space.yaml
 contract_fingerprint: 921face98040a8f54072eb6d354acd348420768ac6389d2426c5eb29e84557d2
 training_target: figure8_relay_modes

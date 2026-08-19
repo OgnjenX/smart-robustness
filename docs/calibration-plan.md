@@ -112,6 +112,18 @@ onset event. Interior points either sustain both conditions or collapse both to
 onset events. A scalar calcium-unit conversion is therefore rejected as a
 sufficient Figure 8 explanation.
 
+Figure 8 scoring has now been corrected to match the published observable:
+somatic membrane-voltage peaks rather than Equation-8 axonal release events
+(`figure8-voltage-observable-audit-124.yaml`). Under literal calcium density,
+the previously reported one/two release events conceal 137/109 voltage peaks
+in the two conditions, so the earlier transient-burst pass was spurious. A
+source-unit grid from 0.00025 through 0.25 mS/cm² finds a clean four-peak tonic
+trace at 0.2 mS/cm², but the hyperpolarized condition has 15 prolonged peaks.
+Pulse-unit and sub-nS finite-clamp grids also have no survivor. The active
+Figure 8 discrepancy is therefore the legacy version-1 membrane/default
+implementation, not merely its event detector, current unit, calcium unit, or
+clamp strength.
+
 The archived and printed Na-rate families also differ in two independent
 sodium constants: activation scale and inactivation offset. The two possible
 source hybrids were therefore exposed separately and screened across the full

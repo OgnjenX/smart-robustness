@@ -78,6 +78,8 @@ class Figure8Assessment:
     burst_pass: bool
     tonic_spike_count: int
     burst_spike_count: int
+    tonic_release_event_count: int
+    burst_release_event_count: int
     notes: tuple[str, ...]
 
     @property
@@ -688,10 +690,15 @@ def assess_figure8(
     *,
     pulse_ms: float = 300.0,
 ) -> Figure8Assessment:
-    """Score the qualitative Figure 8 signatures without fitting the traces."""
+    """Score the plotted Figure 8 voltage signatures without fitting them.
 
-    tonic_spikes = tonic.spike_times_ms
-    burst_spikes = burst.spike_times_ms
+    Figure 8 reports somatic membrane-voltage traces, not Equation-8 axonal
+    release events.  The latter remain diagnostic metadata but cannot stand in
+    for voltage peaks when the legacy cell stays depolarized between peaks.
+    """
+
+    tonic_spikes = figure8_voltage_peak_times_ms(tonic)
+    burst_spikes = figure8_voltage_peak_times_ms(burst)
     tonic_sustained = len(tonic_spikes) >= 3 and tonic_spikes[-1] >= 0.6 * pulse_ms
     if len(tonic_spikes) >= 4:
         intervals = np.diff(tonic_spikes)
@@ -711,8 +718,40 @@ def assess_figure8(
         burst_pass=burst_transient,
         tonic_spike_count=len(tonic_spikes),
         burst_spike_count=len(burst_spikes),
+        tonic_release_event_count=len(tonic.spike_times_ms),
+        burst_release_event_count=len(burst.spike_times_ms),
         notes=tuple(notes),
     )
+
+
+def figure8_voltage_peak_times_ms(
+    trace: IsolatedCellTrace,
+    *,
+    soma_leak_mV: float = -62.3,
+    relative_threshold_mV: float = 30.0,
+    minimum_separation_ms: float = 1.0,
+) -> np.ndarray:
+    """Return local voltage maxima corresponding to the plotted spike peaks."""
+
+    if relative_threshold_mV <= 0 or minimum_separation_ms <= 0:
+        raise ValueError("Figure 8 peak thresholds and separation must be positive")
+    time = np.asarray(trace.time_ms, dtype=float)
+    voltage = np.asarray(trace.soma_voltage_mV, dtype=float)
+    if time.ndim != 1 or voltage.ndim != 1 or time.shape != voltage.shape:
+        raise ValueError("Figure 8 voltage trace arrays must be aligned vectors")
+    if time.size < 3:
+        return np.asarray([], dtype=float)
+    threshold = soma_leak_mV + relative_threshold_mV
+    candidates = np.flatnonzero(
+        (voltage[1:-1] > voltage[:-2])
+        & (voltage[1:-1] >= voltage[2:])
+        & (voltage[1:-1] > threshold)
+    ) + 1
+    retained: list[int] = []
+    for index in candidates:
+        if not retained or time[index] - time[retained[-1]] >= minimum_separation_ms:
+            retained.append(int(index))
+    return time[np.asarray(retained, dtype=int)]
 
 
 def run_figure19_kernel_condition(

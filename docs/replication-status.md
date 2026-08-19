@@ -929,6 +929,17 @@ remains the better partial reconstruction (`figure8-millimeter-runtime-075.yaml`
 Accordingly, output from M2 is a source/audit benchmark, not evidence that
 the 2008 results have already been replicated.
 
+The Figure 8 readout itself has now been corrected. Figure 8 plots somatic
+membrane voltage, whereas the earlier scorer counted Equation-8 axonal release
+events. The literal source cell's apparent one-event tonic/two-event burst
+actually contains 137 and 109 leak-relative voltage peaks, respectively, and
+therefore reproduces neither plotted mode. The corrected source-unit sweep
+finds that 0.2 mS/cm² calcium yields a plausible four-peak tonic trace at
+48.13, 112.96, 195.31, and 288.55 ms, but its hyperpolarized trial has 15
+prolonged peaks. Current-unit and sub-nS finite-clamp grids also produce no
+complete survivor (`figure8-voltage-observable-audit-124.yaml`). Artifact 118
+is retained as raw evidence but marked superseded for its wrong observable.
+
 The `connectFromAll` external-input translation has been corrected to sum
 independent conductance currents rather than treating five green=120 pixels as
 one out-of-domain value of 600. This fixes a direct conflict with KInNeSS

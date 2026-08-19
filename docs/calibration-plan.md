@@ -120,3 +120,29 @@ control/driven pairs were finite, 314 controls were quiescent, and none was
 recruitable. Archived activation preserves autonomous spiking; printed
 activation preserves quiescence but not recruitment. Changing the inactivation
 offset does not break that tradeoff, so neither hybrid is promoted.
+
+The first TRN matrices were subsequently found to omit projection 010, the
+relay→TRN AMPA port, despite describing the assay as relay/layer-6II drive.
+They are retained but marked `superseded-incomplete-drive`. A fresh Figure 7
+diagnostic measured peak gates of 20.60478 relay AMPA, 1.73256 layer-6II AMPA,
+and 0.11284 layer-6II NMDA. The corrected complete 768-candidate matrix
+(`calibration-stage-a-trn-complete-drive-120.yaml`) contains six survivors.
+The lexicographically first is frozen in `trn_stage_a_survivor_v1.yaml`; its
+control peaks at +24.27 mV with zero events, while complete drive reaches
++31.21 mV and emits four events. This repairs the TRN isolated gate without
+fitting a receptor strength. The same candidate still fails isolated layer-5
+apical-to-soma propagation, and the dedicated Figure 8 gate remains unresolved,
+so it cannot yet advance as a complete Stage A survivor.
+
+The selected TRN survivor has now been run through the complete official
+Figure 6 training episode (`calibration-network-trn-survivor-121.yaml`). It is
+finite, but layer 2/3 and layer 5 emit no events, the cortical feedforward chain
+is incomplete, and neither bottom-up nor top-down learned map passes its
+predeclared orientation gate. A measured-gate isolated discriminator
+(`figure6-layer23-transfer-discriminator-122.yaml`) shows that excitation alone
+can reach the soma under every axial convention. With the observed 2.30-ms
+inhibitory-current delay, only paper-literal Equation 2 emits an event; the
+KInNeSS profiles remain suppressed. Since the full Equation-2 network also
+failed Figure 6 and Equation 2 is not a TRN survivor, no global profile is
+promoted. The next training-only discriminator is the source-defined transient
+excitation/inhibition waveform at layer 2/3.

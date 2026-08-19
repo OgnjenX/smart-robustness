@@ -1235,6 +1235,43 @@ drive, while printed activation remains silent regardless of inactivation
 offset. The missing TRN mechanism is therefore not either Na-rate constant in
 isolation.
 
+A protocol audit then found that every preceding isolated-TRN matrix omitted
+projection 010, the relay→TRN AMPA port, while applying only the two layer-6II
+ports. This contradicted the assay's stated relay/layer-6II drive and the
+connected Figure 7 current-balance evidence. A new network diagnostic measured
+the missing relay gate at 20.60478, compared with 1.73256 layer-6II AMPA and
+0.11284 layer-6II NMDA. Under all three measured gates, the complete current
+768-candidate matrix produces six quiescent-yet-recruitable survivors
+(`calibration-stage-a-trn-complete-drive-120.yaml`). The lexicographically
+first candidate uses Table 3 intrinsic cells, ModelDB calcium kinetics,
+Methods-global 250 mS/cm² calcium density, archived Na/K rates, serialized
+KInNeSS axial coupling, physical initialization, and the latched event rule.
+Its control has zero events and peaks at +24.27 mV; drive reaches +31.21 mV and
+produces four events. This profile is frozen as
+`configs/calibration/trn_stage_a_survivor_v1.yaml`. The prior 114–116 and 119
+matrices are superseded as incomplete-drive assays, not evidence against this
+candidate. The selected profile does not yet pass the layer-5 propagation or
+dedicated Figure 8 gates, so full Stage A remains incomplete.
+
+The selected TRN survivor does not reproduce the official Figure 6 training
+target (`calibration-network-trn-survivor-121.yaml`). The network is finite and
+recruits relay, layer 4, layer-2/3 interneurons, layers 6I/6II, TRN, and
+nonspecific thalamus, but layer-2/3 pyramidal and layer-5 populations remain
+silent. The learned bottom-up and top-down maps both fail their predeclared
+orientation gates. At layer-2/3 cell 40, proximal AMPA reaches +1.369 nA while
+the delayed GABA trough reaches -4.423 nA; only +58.1 pA reaches the soma and
+its peak remains -63.2 mV.
+
+The measured-gate isolated discriminator in
+`figure6-layer23-transfer-discriminator-122.yaml` further localizes this result.
+Excitation alone causes somatic output under every admissible axial convention.
+When inhibition is introduced after the observed 2.30-ms current-peak delay,
+the three KInNeSS/cable profiles remain silent and paper-literal Equation 2
+emits one event. However, the real transient full Equation-2 network previously
+also failed to recruit layer 2/3. Therefore neither an axial convention switch
+nor a peak-gate substitution is justified; the source-defined transient
+excitation/inhibition waveform is the earliest unresolved Figure 6 gate.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

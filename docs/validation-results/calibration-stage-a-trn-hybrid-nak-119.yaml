@@ -1,6 +1,6 @@
 id: calibration-stage-a-trn-hybrid-nak-119
 date: '2026-08-19'
-status: failed-no-survivor
+status: superseded-incomplete-drive
 claim: Whether declared classic-SMART candidates pass isolated TRN quiescence and
   recruitment
 contract: configs/calibration/classic_uncertainty_space.yaml
@@ -31,7 +31,6 @@ gate:
   quiescent_control: finite and zero events after pre-drive
   driven_recruitment: finite and at least one event after drive onset
 candidate_count: 384
-candidate_offset: 0
 promoted_count: 0
 promoted_candidate_fingerprints: []
 outcomes:
@@ -391,7 +390,7 @@ outcomes:
     control_post_drive_spikes: 0
     driven_post_drive_spikes: 0
     control_soma_range_mV:
-    - -36.247360781388124
+    - -30.07840924987009
     - -29.81815971478124
     driven_soma_range_mV:
     - -36.54741042058361
@@ -10787,16 +10786,3 @@ outcomes:
   quiescent_control_pass: true
   driven_recruitment_pass: false
   promoted: false
-shards:
-- id: calibration-stage-a-trn-hybrid-nak-119-part1
-  candidate_offset: 0
-  candidate_count: 96
-- id: calibration-stage-a-trn-hybrid-nak-119-part2
-  candidate_offset: 96
-  candidate_count: 96
-- id: calibration-stage-a-trn-hybrid-nak-119-part3
-  candidate_offset: 192
-  candidate_count: 96
-- id: calibration-stage-a-trn-hybrid-nak-119-part4
-  candidate_offset: 288
-  candidate_count: 96

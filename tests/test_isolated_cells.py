@@ -5,10 +5,12 @@ from smart_robustness.validation.isolated_cells import (
     Figure8Protocol,
     IsolatedCellTrace,
     Layer5PropagationProtocol,
+    Layer23TransferProtocol,
     TrnRecruitmentProtocol,
     assess_figure8,
     figure8_source_parameters,
     run_layer5_propagation_condition,
+    run_layer23_transfer_condition,
     run_trn_recruitment_condition,
 )
 
@@ -86,6 +88,33 @@ def test_layer5_propagation_protocol_rejects_invalid_values() -> None:
         Layer5PropagationProtocol(axial_conductance_scale=0)
 
 
+def test_layer23_transfer_protocol_rejects_invalid_values() -> None:
+    with pytest.raises(ValueError, match="durations"):
+        Layer23TransferProtocol(drive_ms=0)
+    with pytest.raises(ValueError, match="gates"):
+        Layer23TransferProtocol(excitation_gate=-1)
+    with pytest.raises(ValueError, match="inhibition delay"):
+        Layer23TransferProtocol(drive_ms=1, inhibition_delay_ms=2)
+
+
+def test_layer23_transfer_runner_applies_declared_gates() -> None:
+    brian = pytest.importorskip("brian2")
+    brian.prefs.codegen.target = "numpy"
+    protocol = Layer23TransferProtocol(
+        pre_drive_ms=0.01,
+        drive_ms=0.01,
+        excitation_gate=0.5,
+        inhibition_gate=0.25,
+        include_inhibition=True,
+        inhibition_delay_ms=0.0,
+    )
+    result = run_layer23_transfer_condition(protocol=protocol, brian=brian)
+    assert result.finite
+    assert result.excitation_port != result.inhibition_port
+    assert result.applied_excitation_gate == pytest.approx(0.5)
+    assert result.applied_inhibition_gate == pytest.approx(0.25)
+
+
 def test_layer5_propagation_runner_reports_source_cell_voltage_ranges() -> None:
     brian = pytest.importorskip("brian2")
     brian.prefs.codegen.target = "numpy"
@@ -120,6 +149,7 @@ def test_trn_recruitment_runner_reports_independent_control_trial() -> None:
     assert len(result.convention_fingerprint) == 64
     assert result.applied_layer6ii_ampa_gate == 0
     assert result.applied_layer6ii_nmda_gate == 0
+    assert result.applied_relay_ampa_gate == 0
 
 
 def test_trn_recruitment_runner_applies_declared_driven_gates() -> None:
@@ -130,12 +160,14 @@ def test_trn_recruitment_runner_applies_declared_driven_gates() -> None:
         drive_ms=0.01,
         layer6ii_ampa_gate=0.5,
         layer6ii_nmda_gate=0.25,
+        relay_ampa_gate=2.0,
         drive_multiplier=3,
     )
     result = run_trn_recruitment_condition(driven=True, protocol=protocol, brian=brian)
     assert result.driven
     assert result.applied_layer6ii_ampa_gate == pytest.approx(1.5)
     assert result.applied_layer6ii_nmda_gate == pytest.approx(0.75)
+    assert result.applied_relay_ampa_gate == pytest.approx(6.0)
 
 
 def test_figure8_source_parameters_expose_legacy_calcium_unit_candidate() -> None:

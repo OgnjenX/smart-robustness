@@ -1,0 +1,46 @@
+schema_version: 1
+validation_id: figure6-layer23-transfer-discriminator-122
+date: '2026-08-19'
+status: source-discriminator-no-global-promotion
+claim: >-
+  The Figure 6 layer-2/3 failure can be localized by applying the measured
+  excitation and delayed inhibition gates to one source-defined pyramidal cell.
+sources:
+  paper: Grossberg and Versace 2008, Equation 2 and Figure 6
+  executable: ModelDB 112923 projections 031 and 032
+  measured_network_artifact: calibration-network-trn-survivor-121.yaml
+profile:
+  candidate_fingerprint: ffd0179dbb9ca4da91370733b1f0d06241047d7032b871107ec1aa444b7bd2aa
+  intrinsic_cell_convention: paper_table3
+protocol:
+  integration_dt_ms: 0.01
+  pre_drive_ms: 5.0
+  drive_ms: 20.0
+  excitation_gate: 2.030922447415483
+  inhibition_gate: 1.201900273607489
+  inhibition_delay_ms: 2.30
+  note: >-
+    Constant gates are a permissive discriminator, not a substitute for the
+    transient source-defined network waveform.
+results:
+  excitation_only:
+    kinness_serialized_edge: {events: 1, soma_peak_mV: 42.893365283207295}
+    kinness_2008: {events: 1, soma_peak_mV: 42.893365283207295}
+    paper_literal: {events: 4, soma_peak_mV: 42.295837621894705}
+    symmetric_cable: {events: 1, soma_peak_mV: 42.893365283207295}
+  excitation_plus_delayed_inhibition:
+    kinness_serialized_edge: {events: 0, soma_peak_mV: -63.910522862534414}
+    kinness_2008: {events: 0, soma_peak_mV: -63.910522862534414}
+    paper_literal: {events: 1, soma_peak_mV: 40.768594426462506}
+    symmetric_cable: {events: 0, soma_peak_mV: -63.910522862534414}
+assessment:
+  excitation_can_reach_soma_under_every_axial_convention: true
+  measured_delayed_inhibition_suppresses_kinness_profiles: true
+  paper_literal_delayed_constant_gate_pass: true
+  paper_literal_full_network_pass: false
+  interpretation: >-
+    Peak amplitude and onset delay are insufficient to explain the remaining
+    full-network failure. The transient excitation/inhibition waveform is now
+    the earliest unresolved Figure 6 discriminator. Equation 2 cannot be
+    globally promoted because it is not a TRN Stage-A survivor and previously
+    failed the complete Figure 6 network.

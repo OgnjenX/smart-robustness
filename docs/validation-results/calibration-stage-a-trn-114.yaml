@@ -1,6 +1,6 @@
 id: calibration-stage-a-trn-114
 date: '2026-08-19'
-status: failed-no-survivor
+status: superseded-incomplete-drive
 claim: Whether the initial declared classic-SMART candidates pass isolated TRN quiescence and recruitment
 contract: configs/calibration/classic_uncertainty_space.yaml
 contract_fingerprint: e90effe4fe256cb6e61b9582b0e72586d1453fbb2d9fe405c9eecd55b0ca3a11

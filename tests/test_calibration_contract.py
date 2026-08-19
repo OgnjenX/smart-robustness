@@ -11,6 +11,10 @@ from smart_robustness.validation.calibration import (
 
 ROOT = Path(__file__).parents[1]
 CONTRACT_PATH = ROOT / "configs/calibration/classic_uncertainty_space.yaml"
+TRN_SURVIVOR_PATH = ROOT / "configs/calibration/trn_stage_a_survivor_v1.yaml"
+NETWORK_CALIBRATION_PATH = (
+    ROOT / "docs/validation-results/calibration-network-trn-survivor-121.yaml"
+)
 
 
 def test_classic_calibration_contract_separates_training_and_holdout() -> None:
@@ -113,6 +117,31 @@ def test_trn_stage_a_requires_quiescence_and_recruitment() -> None:
     assert not TrnStageAResult(**dict(base, control_post_drive_spikes=1)).promoted
     assert not TrnStageAResult(**dict(base, driven_post_drive_spikes=0)).promoted
     assert not TrnStageAResult(**dict(base, driven_finite=False)).promoted
+
+
+def test_frozen_trn_survivor_matches_current_contract_and_runtime() -> None:
+    contract = load_calibration_contract(CONTRACT_PATH)
+    survivor = yaml.safe_load(TRN_SURVIVOR_PATH.read_text())
+    candidate = survivor["candidate"]
+    assert survivor["contract_fingerprint"] == contract.fingerprint
+    assert survivor["candidate_fingerprint"] == contract.candidate_fingerprint(candidate)
+    assert survivor["runtime_fingerprint"] == runtime_conventions_for_candidate(
+        candidate
+    ).fingerprint
+    assert survivor["result"]["control_post_drive_spikes"] == 0
+    assert survivor["result"]["driven_post_drive_spikes"] > 0
+
+
+def test_network_calibration_artifact_is_bound_to_frozen_trn_survivor() -> None:
+    survivor = yaml.safe_load(TRN_SURVIVOR_PATH.read_text())
+    artifact = yaml.safe_load(NETWORK_CALIBRATION_PATH.read_text())
+    assert artifact["candidate_fingerprint"] == survivor["candidate_fingerprint"]
+    assert artifact["runtime_fingerprint"] == survivor["runtime_fingerprint"]
+    assert artifact["holdouts_consulted"] is False
+    assert artifact["status"] == "failed-figure6-training-target"
+    assert artifact["figure6"]["feedforward_chain_complete"] is False
+    assert artifact["assessment"]["figure6_reproduced"] is False
+    assert artifact["assessment"]["figure7_eligible"] is False
 
 
 def test_contract_rejects_holdout_leakage(tmp_path: Path) -> None:

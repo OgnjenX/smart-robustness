@@ -1,0 +1,30 @@
+schema_version: 1
+name: trn-stage-a-survivor-v1
+source_artifact: docs/validation-results/calibration-stage-a-trn-complete-drive-120.yaml
+contract_fingerprint: 44f41f9f9b70d8a6c2cb4b8011ad7cccb10a52738102dca6b920934379cbc5ff
+candidate_fingerprint: ffd0179dbb9ca4da91370733b1f0d06241047d7032b871107ec1aa444b7bd2aa
+runtime_fingerprint: 65de2bfde632a1b6dfc5d77ba7c2e6850351f212936d15227cb793b54c76a82f
+selection_rule: lexicographically_first_promoted_candidate
+candidate:
+  intrinsic_cell_convention: paper_table3
+  calcium_kinetics_convention: modeldb_112923
+  calcium_density_convention: methods_global_250
+  nak_rate_convention: standard_traub_miles
+  axial_convention: kinness_serialized_edge
+  membrane_initialization_convention: physical_leak_voltage
+  spike_event_rule: latched_peak_then_zero
+  gaussian_spread_convention: standard_deviation
+  relay_input_interpretation: archived_finite_conductance
+  top_down_current_pA: 600.0
+protocol:
+  relay_ampa_gate: 20.604778882464927
+  layer6ii_ampa_gate: 1.732561948424132
+  layer6ii_nmda_gate: 0.11284232198140748
+  pre_drive_ms: 5.0
+  drive_ms: 45.0
+  dt_ms: 0.01
+result:
+  control_post_drive_spikes: 0
+  driven_post_drive_spikes: 4
+  control_soma_peak_mV: 24.267076314689525
+  driven_soma_peak_mV: 31.21394795271487

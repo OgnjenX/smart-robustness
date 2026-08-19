@@ -132,16 +132,17 @@ class Figure19Assessment:
 class TrnRecruitmentProtocol:
     """Isolated promotion gate for a candidate classic-SMART TRN cell.
 
-    Gate amplitudes default to the largest layer-6II AMPA and NMDA values
-    measured at the diagnostic cells in the current Figure 7 network assay.
-    They are explicit assay inputs, not fitted replacement synaptic weights.
+    Gate amplitudes default to the largest relay AMPA and layer-6II AMPA/NMDA
+    values measured at the diagnostic cells in the current Figure 7 network
+    assay. They are explicit assay inputs, not fitted replacement weights.
     """
 
     pre_drive_ms: float = 5.0
     drive_ms: float = 45.0
     dt_ms: float = 0.01
-    layer6ii_ampa_gate: float = 1.66427
-    layer6ii_nmda_gate: float = 0.10913
+    relay_ampa_gate: float = 20.604778882464927
+    layer6ii_ampa_gate: float = 1.732561948424132
+    layer6ii_nmda_gate: float = 0.11284232198140748
     drive_multiplier: float = 1.0
     axial_conductance_scale: float = 1.0
 
@@ -150,6 +151,7 @@ class TrnRecruitmentProtocol:
             self.pre_drive_ms,
             self.drive_ms,
             self.dt_ms,
+            self.relay_ampa_gate,
             self.layer6ii_ampa_gate,
             self.layer6ii_nmda_gate,
             self.drive_multiplier,
@@ -159,7 +161,11 @@ class TrnRecruitmentProtocol:
             raise ValueError("TRN recruitment protocol values must be finite")
         if self.pre_drive_ms < 0 or self.drive_ms <= 0 or self.dt_ms <= 0:
             raise ValueError("TRN recruitment durations and dt must be positive")
-        if self.layer6ii_ampa_gate < 0 or self.layer6ii_nmda_gate < 0:
+        if (
+            self.relay_ampa_gate < 0
+            or self.layer6ii_ampa_gate < 0
+            or self.layer6ii_nmda_gate < 0
+        ):
             raise ValueError("TRN recruitment gates cannot be negative")
         if self.drive_multiplier < 0 or self.axial_conductance_scale <= 0:
             raise ValueError("TRN recruitment scales must be positive")
@@ -176,6 +182,7 @@ class TrnRecruitmentResult:
     convention_fingerprint: str
     applied_layer6ii_ampa_gate: float
     applied_layer6ii_nmda_gate: float
+    applied_relay_ampa_gate: float
 
     @property
     def post_drive_spike_count(self) -> int:
@@ -225,6 +232,140 @@ class Layer5PropagationResult:
     convention_fingerprint: str
     axial_conductance_scale: float
     drive_multiplier: float
+
+
+@dataclass(frozen=True, slots=True)
+class Layer23TransferProtocol:
+    """Measured Figure 6 proximal-dendrite-to-soma transfer discriminator.
+
+    The default gates are the maxima observed at cell 40 in the complete
+    Figure 6 run of the selected TRN survivor.  Holding either gate constant
+    is deliberately more permissive than the transient network waveform: a
+    failure under this drive rules out insufficient ligand duration.
+    """
+
+    pre_drive_ms: float = 5.0
+    drive_ms: float = 20.0
+    dt_ms: float = 0.01
+    excitation_gate: float = 2.030922447415483
+    inhibition_gate: float = 1.201900273607489
+    include_inhibition: bool = False
+    inhibition_delay_ms: float = 2.30
+
+    def __post_init__(self) -> None:
+        values = (
+            self.pre_drive_ms,
+            self.drive_ms,
+            self.dt_ms,
+            self.excitation_gate,
+            self.inhibition_gate,
+            self.inhibition_delay_ms,
+        )
+        if not all(np.isfinite(value) for value in values):
+            raise ValueError("layer-2/3 transfer protocol values must be finite")
+        if self.pre_drive_ms < 0 or self.drive_ms <= 0 or self.dt_ms <= 0:
+            raise ValueError("layer-2/3 transfer durations and dt must be positive")
+        if self.excitation_gate < 0 or self.inhibition_gate < 0:
+            raise ValueError("layer-2/3 transfer gates cannot be negative")
+        if not 0 <= self.inhibition_delay_ms <= self.drive_ms:
+            raise ValueError("layer-2/3 inhibition delay must lie within the drive epoch")
+
+
+@dataclass(frozen=True, slots=True)
+class Layer23TransferResult:
+    spike_times_ms: tuple[float, ...]
+    post_drive_spike_times_ms: tuple[float, ...]
+    soma_voltage_range_mV: tuple[float, float]
+    proximal_voltage_range_mV: tuple[float, float]
+    finite: bool
+    convention_fingerprint: str
+    excitation_port: str
+    inhibition_port: str
+    applied_excitation_gate: float
+    applied_inhibition_gate: float
+
+
+def run_layer23_transfer_condition(
+    *,
+    conventions=None,
+    protocol: Layer23TransferProtocol | None = None,
+    brian=None,
+) -> Layer23TransferResult:
+    """Apply measured Figure 6 receptor gates to one layer-2/3 pyramidal cell."""
+
+    if brian is None:
+        import brian2 as brian
+    from ..classic_sector import figure6_runtime_conventions, first_order_population_parameters
+    from ..models.modeldb112923 import first_order_population_facts
+    from .figure6 import L23_FEEDFORWARD_EXCITATION_ID, L23_FEEDFORWARD_INHIBITION_ID
+
+    protocol = protocol or Layer23TransferProtocol()
+    conventions = conventions or figure6_runtime_conventions()
+    fact = next(
+        fact
+        for fact in first_order_population_facts()
+        if fact.canonical_name == "layer23_excitatory_v1"
+    )
+    params = first_order_population_parameters(fact, conventions=conventions)
+    brian.start_scope()
+    brian.defaultclock.dt = protocol.dt_ms * brian.ms
+    population = create_compartmental_hh_population(
+        name="isolated_layer23_transfer", size=1, params=params, brian=brian
+    )
+
+    def port_name(record_id: str) -> str:
+        return next(
+            port.name for port in population.compiled.synaptic_ports if port.record_id == record_id
+        )
+
+    excitation_port = port_name(L23_FEEDFORWARD_EXCITATION_ID)
+    inhibition_port = port_name(L23_FEEDFORWARD_INHIBITION_ID)
+    spikes = brian.SpikeMonitor(population.group)
+    voltage = brian.StateMonitor(
+        population.group, ("v_soma", "v_proximal_dendrite"), record=True
+    )
+    network = brian.Network(population.group, spikes, voltage)
+    if protocol.pre_drive_ms:
+        network.run(protocol.pre_drive_ms * brian.ms)
+    setattr(population.group, excitation_port + "_gate", protocol.excitation_gate)
+    applied_inhibition = protocol.inhibition_gate if protocol.include_inhibition else 0.0
+    if protocol.include_inhibition and protocol.inhibition_delay_ms:
+        network.run(protocol.inhibition_delay_ms * brian.ms)
+    setattr(population.group, inhibition_port + "_gate", applied_inhibition)
+    remaining_ms = (
+        protocol.drive_ms - protocol.inhibition_delay_ms
+        if protocol.include_inhibition
+        else protocol.drive_ms
+    )
+    if remaining_ms:
+        network.run(remaining_ms * brian.ms)
+
+    spike_times = np.asarray(spikes.t / brian.ms, dtype=float)
+    time_ms = np.asarray(voltage.t / brian.ms, dtype=float)
+    selected = time_ms >= protocol.pre_drive_ms
+    soma = np.asarray(voltage.v_soma[0] / brian.mV, dtype=float)[selected]
+    proximal = np.asarray(voltage.v_proximal_dendrite[0] / brian.mV, dtype=float)[selected]
+    finite = bool(np.all(np.isfinite(soma)) and np.all(np.isfinite(proximal)))
+
+    def voltage_range(values: np.ndarray) -> tuple[float, float]:
+        if not finite:
+            return (float("nan"), float("nan"))
+        return (float(np.min(values)), float(np.max(values)))
+
+    return Layer23TransferResult(
+        spike_times_ms=tuple(float(value) for value in spike_times),
+        post_drive_spike_times_ms=tuple(
+            float(value) for value in spike_times if value >= protocol.pre_drive_ms
+        ),
+        soma_voltage_range_mV=voltage_range(soma),
+        proximal_voltage_range_mV=voltage_range(proximal),
+        finite=finite,
+        convention_fingerprint=conventions.fingerprint,
+        excitation_port=excitation_port,
+        inhibition_port=inhibition_port,
+        applied_excitation_gate=protocol.excitation_gate,
+        applied_inhibition_gate=applied_inhibition,
+    )
 
 
 def run_layer5_propagation_condition(
@@ -342,6 +483,7 @@ def run_trn_recruitment_condition(
     if protocol.pre_drive_ms:
         network.run(protocol.pre_drive_ms * brian.ms)
     if driven:
+        population.group.port_002_gate = protocol.relay_ampa_gate * protocol.drive_multiplier
         population.group.port_004_gate = (
             protocol.layer6ii_ampa_gate * protocol.drive_multiplier
         )
@@ -379,6 +521,9 @@ def run_trn_recruitment_condition(
         ),
         applied_layer6ii_nmda_gate=(
             protocol.layer6ii_nmda_gate * protocol.drive_multiplier if driven else 0.0
+        ),
+        applied_relay_ampa_gate=(
+            protocol.relay_ampa_gate * protocol.drive_multiplier if driven else 0.0
         ),
     )
 

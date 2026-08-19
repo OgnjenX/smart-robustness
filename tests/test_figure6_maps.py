@@ -139,6 +139,16 @@ def test_figure6c_rejects_correct_shape_at_subpublished_amplitude() -> None:
     assert not result.top_down_oriented
 
 
+def test_figure6c_requires_the_published_peak_not_colorbar_minimum() -> None:
+    before = np.zeros(81)
+    after = np.zeros(81)
+    after[[38, 39, 41, 42]] = 0.6
+    shaped = Figure6MapSummary("topdown", "map", tuple(before), tuple(after))
+    result = Figure6LearningResult("fingerprint", 100.0, {}, shaped, shaped, shaped)
+    assert max(result.top_down_combined.after) == pytest.approx(1.2)
+    assert not result.top_down_oriented
+
+
 def test_top_down_timing_accounts_for_the_archived_axonal_delay() -> None:
     empty = Figure6MapSummary("projection", "map", (0.0,) * 81, (0.0,) * 81)
     result = Figure6LearningResult(

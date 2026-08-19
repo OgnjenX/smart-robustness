@@ -1,0 +1,46 @@
+schema_version: 1
+id: figure6-learning-threshold-coordinate-assessment-145
+date: '2026-08-19'
+registered_gates:
+  minimum_combined_peak: 2.0
+  minimum_horizontal_contrast: 0.01
+  relay_horizontal_cells:
+  - 38
+  - 39
+  - 40
+  - 41
+  - 42
+  events_per_relay_in_100_ms: 4
+candidates:
+- artifact: docs/validation-results/figure6-population-axial-amplitude-audit-140.yaml
+  profile: configs/calibration/figure6_population_resolved_axial_v1.yaml
+  combined_peak: 0.11853143175013042
+  combined_horizontal_contrast: 0.030445373405415647
+  relay_spikes: 20
+  relay_recruitment_confined: true
+  figure6_reproduced: false
+- artifact: docs/validation-results/figure6-learning-threshold-zero-142.yaml
+  profile: configs/calibration/figure6_learning_threshold_zero_v1.yaml
+  combined_peak: 0.15231867542096894
+  combined_horizontal_contrast: 0.05617572815075872
+  relay_spikes: 20
+  relay_recruitment_confined: true
+  figure6_reproduced: false
+- artifact: docs/validation-results/figure6-learning-threshold-kinness-143.yaml
+  profile: configs/calibration/figure6_learning_threshold_kinness_v1.yaml
+  combined_peak: 0.16854405973235023
+  combined_horizontal_contrast: 0.0700441945981089
+  relay_spikes: 20
+  relay_recruitment_confined: true
+  figure6_reproduced: false
+- artifact: docs/validation-results/figure6-learning-coordinate-leak-relative-144.yaml
+  profile: configs/calibration/figure6_learning_coordinate_leak_relative_v1.yaml
+  combined_peak: 0.5274131460190938
+  combined_horizontal_contrast: 0.06007429418556065
+  relay_spikes: 58
+  relay_recruitment_confined: false
+  figure6_reproduced: false
+assessment:
+  threshold_value_explanation_sufficient: false
+  learning_coordinate_explanation_sufficient: false
+  promoted_profile: null

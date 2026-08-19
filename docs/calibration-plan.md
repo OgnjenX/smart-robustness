@@ -279,3 +279,10 @@ At representative horizontal target 39, wide and narrow weights grow by only
 overlap across four relay spikes. The next Figure 6 discriminator is therefore
 the source interpretation of Equation 6's postsynaptic threshold/duration,
 kept separate from the +30-mV/falling-zero output event detector in Equation 8.
+
+Artifacts 142--145 exhaust the source-bounded Equation 6 threshold/coordinate
+alternatives. Absolute `0` and `-20 mV` thresholds peak at only `0.15232` and
+`0.16854`; leak-relative `0 mV` reaches `0.52741` but recruits 58 relay events.
+The corrected gate requires a `2.0` combined peak (tolerance around the
+published approximately `2.5` maximum) and confines relay activity to four
+events in each of the five horizontal cells. No threshold profile passes.

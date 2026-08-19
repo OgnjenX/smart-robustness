@@ -1463,6 +1463,16 @@ separate the published +30-mV output-event detector from the Equation 6
 postsynaptic learning-threshold interpretation, while leaving spike emission
 unchanged.
 
+That discriminator is complete in artifacts 142--145. Absolute learning
+thresholds of `0 mV` and the archived KInNeSS `-20 mV` alternative preserve
+the five-cell, four-spike relay pattern but raise the combined map only to
+`0.15232` and `0.16854`. Evaluating Equation 6 in the paper's leak-relative
+coordinate raises the map to `0.52741`, but recruits 58 relay events and still
+falls far below Figure 6c's approximately `2.5` peak. The acceptance contract
+now requires a conservative `2.0` peak plus exactly four events in each of the
+five horizontal relay cells and no off-bar relay events. Threshold value and
+coordinate are rejected as sufficient explanations; no profile is promoted.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

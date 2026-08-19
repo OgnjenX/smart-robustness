@@ -100,6 +100,8 @@ class FirstOrderRuntimeConventions:
     zero_sensitivity_input_convention: str = "framework_resting_leak"
     spike_event_coordinate: str = "absolute_physical"
     spike_event_threshold_mV: float = 30.0
+    postsynaptic_learning_coordinate: str = "absolute_physical"
+    postsynaptic_learning_threshold_mV: float = 30.0
     spike_event_rule: str = "latched_peak_then_zero"
     modifiable_weight_initialization: str = "source_serialized_weight"
     gaussian_weight_convention: str = "source_peak"
@@ -117,6 +119,12 @@ class FirstOrderRuntimeConventions:
             # discriminator is serialized only when it differs from the
             # pre-existing executable behavior.
             values.pop("postsynaptic_depression_scale_convention")
+        if values["postsynaptic_learning_threshold_mV"] == values["spike_event_threshold_mV"]:
+            # Historical profiles used one value for both roles. Preserve their
+            # fingerprints while allowing Equation 6 to be audited separately.
+            values.pop("postsynaptic_learning_threshold_mV")
+        if values["postsynaptic_learning_coordinate"] == values["spike_event_coordinate"]:
+            values.pop("postsynaptic_learning_coordinate")
         payload = json.dumps(values, sort_keys=True, separators=(",", ":"))
         return hashlib.sha256(payload.encode()).hexdigest()
 
@@ -387,6 +395,12 @@ def build_full_smart_network(
                 ),
                 spike_event_coordinate=conventions.spike_event_coordinate,
                 spike_event_threshold_mV=conventions.spike_event_threshold_mV,
+                postsynaptic_learning_threshold_mV=(
+                    conventions.postsynaptic_learning_threshold_mV
+                ),
+                postsynaptic_learning_coordinate=(
+                    conventions.postsynaptic_learning_coordinate
+                ),
                 postsynaptic_depression_scale_convention=(
                     conventions.postsynaptic_depression_scale_convention
                 ),
@@ -491,6 +505,12 @@ def build_first_order_chemical_sector(
             ),
             spike_event_coordinate=resolved_conventions.spike_event_coordinate,
             spike_event_threshold_mV=resolved_conventions.spike_event_threshold_mV,
+            postsynaptic_learning_threshold_mV=(
+                resolved_conventions.postsynaptic_learning_threshold_mV
+            ),
+            postsynaptic_learning_coordinate=(
+                resolved_conventions.postsynaptic_learning_coordinate
+            ),
             postsynaptic_depression_scale_convention=(
                 resolved_conventions.postsynaptic_depression_scale_convention
             ),

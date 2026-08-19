@@ -30,7 +30,10 @@ L23_FEEDFORWARD_INHIBITION_ID = "modeldb112923.projection.031"
 L23_FEEDFORWARD_EXCITATION_ID = "modeldb112923.projection.032"
 L23_INTERNEURON_DRIVE_ID = "modeldb112923.projection.039"
 MINIMUM_TOP_DOWN_HORIZONTAL_CONTRAST = 0.01
-MINIMUM_TOP_DOWN_COMBINED_PEAK = 0.5
+# Figure 6c's after-learning contour reaches the top of its approximately
+# 0.5--2.5 color scale. A map that merely touches the scale minimum is not a
+# reproduction; allow graphical-reading tolerance around the ~2.5 peak.
+MINIMUM_TOP_DOWN_COMBINED_PEAK = 2.0
 HORIZONTAL_INDICES = (38, 39, 40, 41, 42)
 VERTICAL_INDICES = (22, 31, 40, 49, 58)
 HORIZONTAL_ONLY_INDICES = (38, 39, 41, 42)
@@ -983,14 +986,15 @@ def run_figure6_top_down_learning_phase(
             )
             post_elapsed_ms = time_ms[keep] - last_post_spike_ms
             post_voltage = relay_voltage_by_target[target_index][keep]
-            if conventions.spike_event_coordinate == "shifted_67_mV":
+            if conventions.postsynaptic_learning_coordinate == "shifted_67_mV":
                 post_voltage = post_voltage + 67.0
-            elif conventions.spike_event_coordinate == "relative_to_table3_leak":
+            elif conventions.postsynaptic_learning_coordinate == "relative_to_soma_leak":
                 relay = sector.populations["thalamic_relay"].group
                 post_voltage = post_voltage - float(relay.e_l_soma[target_index] / brian.mV)
-            elif conventions.spike_event_coordinate != "absolute_physical":
+            elif conventions.postsynaptic_learning_coordinate != "absolute_physical":
                 raise ValueError(
-                    f"unsupported spike event coordinate {conventions.spike_event_coordinate!r}"
+                    "unsupported postsynaptic learning coordinate "
+                    f"{conventions.postsynaptic_learning_coordinate!r}"
                 )
             if (
                 conventions.postsynaptic_depression_scale_convention
@@ -1001,7 +1005,7 @@ def run_figure6_top_down_learning_phase(
                 depression_scale = -np.asarray(
                     projection.w_baseline[synapse_index]
                 ) / np.asarray(projection.w_maximum[synapse_index])
-            above = post_voltage >= conventions.spike_event_threshold_mV
+            above = post_voltage >= conventions.postsynaptic_learning_threshold_mV
             post = np.zeros_like(post_elapsed_ms)
             post[above] = depression_scale + 1.0
             early = (~above) & (post_elapsed_ms >= 0) & (post_elapsed_ms < 0.1)

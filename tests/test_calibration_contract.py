@@ -80,6 +80,9 @@ FIGURE6_POPULATION_AXIAL_AMPLITUDE_AUDIT_PATH = (
 FIGURE6_POPULATION_AXIAL_LEARNING_PHASE_PATH = (
     ROOT / "docs/validation-results/figure6-population-axial-learning-phase-141.yaml"
 )
+FIGURE6_LEARNING_THRESHOLD_ASSESSMENT_PATH = (
+    ROOT / "docs/validation-results/figure6-learning-threshold-coordinate-assessment-145.yaml"
+)
 FIGURE7_POPULATION_AXIAL_RESULT_PATH = (
     ROOT / "docs/validation-results/calibration-figure6-figure7-population-axial-137.yaml"
 )
@@ -534,6 +537,19 @@ def test_population_axial_learning_phase_exactly_closes_amplitude_deficit() -> N
     assert narrow["measured_delta"] == pytest.approx(0.026395, abs=1e-6)
     assert wide["postsynaptic_positive_overlap_ms"] < 0.5
     assert narrow["postsynaptic_positive_overlap_ms"] < 0.5
+
+
+def test_learning_threshold_and_coordinate_candidates_are_all_rejected() -> None:
+    artifact = yaml.safe_load(FIGURE6_LEARNING_THRESHOLD_ASSESSMENT_PATH.read_text())
+    assert artifact["registered_gates"]["minimum_combined_peak"] == 2.0
+    assert artifact["registered_gates"]["events_per_relay_in_100_ms"] == 4
+    assert len(artifact["candidates"]) == 4
+    assert not any(candidate["figure6_reproduced"] for candidate in artifact["candidates"])
+    leak_relative = artifact["candidates"][-1]
+    assert leak_relative["combined_peak"] == pytest.approx(0.527413146)
+    assert leak_relative["relay_spikes"] == 58
+    assert not leak_relative["relay_recruitment_confined"]
+    assert artifact["assessment"]["promoted_profile"] is None
 
 
 @pytest.mark.parametrize(

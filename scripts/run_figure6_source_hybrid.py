@@ -79,8 +79,15 @@ def main() -> None:
             )
             if source_index == index
         ]
+    relay_indices = tuple(spike_indices.get("thalamic_relay", ()))
+    relay_recruitment_confined = bool(
+        len(relay_indices) == 20
+        and set(relay_indices) == {38, 39, 40, 41, 42}
+        and all(relay_indices.count(index) == 4 for index in (38, 39, 40, 41, 42))
+    )
     figure6_reproduced = bool(
-        recruitment.feedforward_chain_complete
+        relay_recruitment_confined
+        and recruitment.feedforward_chain_complete
         and timing.causal_pair_in_learning_window
         and run.result.bottom_up_oriented
         and run.result.top_down_oriented
@@ -100,6 +107,10 @@ def main() -> None:
         ),
         "protocol": asdict(protocol),
         "population_spikes": run.result.population_spikes,
+        "relay_recruitment": {
+            "active_indices": sorted(set(relay_indices)),
+            "confined_to_horizontal_bar_at_40_hz": relay_recruitment_confined,
+        },
         "active_cell_times_ms": {
             "relay_horizontal": {
                 str(index): indexed_times("thalamic_relay", index)

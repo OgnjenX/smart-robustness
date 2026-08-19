@@ -193,6 +193,8 @@ def test_figure6_profile_names_the_source_constrained_runtime() -> None:
     assert conventions.zero_sensitivity_input_convention == "omit_all_zero"
     assert conventions.spike_event_coordinate == "absolute_physical"
     assert conventions.spike_event_threshold_mV == 30.0
+    assert conventions.postsynaptic_learning_coordinate == "absolute_physical"
+    assert conventions.postsynaptic_learning_threshold_mV == 30.0
     assert conventions.spike_event_rule == "latched_peak_then_zero"
     assert conventions.membrane_initialization_convention == "physical_leak_voltage"
     assert conventions.calcium_voltage_coordinate == "integrated_voltage"

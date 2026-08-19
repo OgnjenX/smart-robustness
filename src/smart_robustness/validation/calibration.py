@@ -222,6 +222,22 @@ def runtime_conventions_for_candidate(
                 ).postsynaptic_depression_scale_convention,
             )
         ),
+        postsynaptic_learning_threshold_mV=float(
+            values.get(
+                "postsynaptic_learning_threshold_mV",
+                (
+                    figure6_runtime_conventions() if base is None else base
+                ).postsynaptic_learning_threshold_mV,
+            )
+        ),
+        postsynaptic_learning_coordinate=str(
+            values.get(
+                "postsynaptic_learning_coordinate",
+                (
+                    figure6_runtime_conventions() if base is None else base
+                ).postsynaptic_learning_coordinate,
+            )
+        ),
     )
 
 

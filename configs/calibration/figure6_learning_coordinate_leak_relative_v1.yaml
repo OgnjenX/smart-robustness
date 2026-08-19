@@ -1,0 +1,34 @@
+schema_version: 1
+name: figure6-learning-coordinate-leak-relative-v1
+status: rejected-amplitude-and-spatial-recruitment
+derivation: >-
+  Keep Equation 8 spike emission in the published absolute +30 mV/falling-zero
+  coordinate, but evaluate Equation 6's postsynaptic learning gate in the
+  paper's leak-relative membrane coordinate, where the leakage equilibrium is
+  printed as 0 mV. This changes learning state only; it does not change emitted
+  neural events.
+base_profile: configs/calibration/figure6_population_resolved_axial_v1.yaml
+base_candidate_fingerprint: 6f3d3fadb9891b4743d263ddf7bfa2ead493c999a2e520ee6709c3bb8c443b0a
+candidate_fingerprint: 263e6c2a7981d7fbd82d107c3046b5833c613bd06ab67daf1508843a84032d48
+runtime_fingerprint: 09ca75ba3d8817228dad8c62544c17421748b98b0511d2092d783caadc4e503e
+candidate:
+  intrinsic_cell_convention: modeldb_relay_paper_table3_others
+  calcium_kinetics_convention: modeldb_112923
+  calcium_density_convention: cell_specific
+  nak_rate_convention: standard_traub_miles
+  axial_convention: modeldb_relay_kinness_paper_others
+  membrane_initialization_convention: physical_leak_voltage
+  spike_event_rule: latched_peak_then_zero
+  gaussian_spread_convention: standard_deviation
+  relay_input_interpretation: archived_finite_conductance
+  top_down_current_pA: 600.0
+  postsynaptic_learning_coordinate: relative_to_soma_leak
+  postsynaptic_learning_threshold_mV: 0.0
+promotion_gate: >-
+  Retain only if all Figure 6 rate, cortical-chain, causal-timing, bottom-up,
+  top-down orientation, and top-down amplitude gates pass without changing
+  Equation 8's emitted-spike convention.
+rejection_evidence: >-
+  Artifact 144 reaches only 0.52741 combined peak versus the registered 2.0
+  minimum and recruits 58 relay events rather than four events in each of the
+  five horizontal-bar cells only.

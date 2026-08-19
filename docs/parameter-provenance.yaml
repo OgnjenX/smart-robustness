@@ -65,6 +65,11 @@ parameters:
     status: unresolved-source-coordinate
     source: Grossberg and Versace 2008 Equation 8; archived KInNeSS manual voltage-output convention and Soma editor
     note: shifted_67_mV maps the printed +30/0 thresholds to physical -37/-67 mV but emits no recovered TRN event under measured Figure 7 receptor drive; the manual independently fixes the source compartment to soma
+  model.learning.postsynaptic_voltage_coordinate:
+    value: absolute_physical +30 mV, absolute_physical 0/-20 mV, and leak-relative 0 mV retained as explicit alternatives
+    status: unresolved-source-coordinate-rejected-as-figure6-explanation
+    source: Grossberg and Versace 2008 Equations 1, 6, and 8; Versace et al. 2008 KInNeSS Equation 18
+    note: artifacts 142--145 separate Equation 6's learning threshold from Equation 8's output event; absolute 0/-20 mV peaks at 0.15232/0.16854, while leak-relative 0 mV peaks at 0.52741 but causes 58 relay events, so none reproduces Figure 6c's approximately 2.5 peak with confined 40-Hz bar recruitment
   model.classic_hh.kinness_spike_threshold:
     value: framework alternative with V_theta=-20 mV and event release below 0 mV
     status: published-executable-framework-alternative

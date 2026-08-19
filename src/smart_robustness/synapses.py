@@ -307,6 +307,8 @@ def connect_modeldb_projection(
     gaussian_learning_bounds_convention: GaussianLearningBoundsConvention | str,
     spike_event_coordinate: str = "absolute_physical",
     spike_event_threshold_mV: float = 30.0,
+    postsynaptic_learning_coordinate: str | None = None,
+    postsynaptic_learning_threshold_mV: float | None = None,
     postsynaptic_depression_scale_convention: str = "local_learning_bounds",
     instrument_learning_terms: bool = False,
     topology_override: tuple[np.ndarray, np.ndarray, np.ndarray] | None = None,
@@ -378,7 +380,11 @@ def connect_modeldb_projection(
         else:
             raise ValueError(f"{record.id}: unsupported learning rule {record.learning_rule!r}")
         post_window = record.depotentiation_ms
-        event_coordinate = SpikeEventCoordinate(spike_event_coordinate)
+        event_coordinate = SpikeEventCoordinate(
+            spike_event_coordinate
+            if postsynaptic_learning_coordinate is None
+            else postsynaptic_learning_coordinate
+        )
         if event_coordinate is SpikeEventCoordinate.ABSOLUTE_PHYSICAL:
             post_voltage = "v_soma_post"
         elif event_coordinate is SpikeEventCoordinate.SHIFTED_67_MV:
@@ -410,15 +416,20 @@ def connect_modeldb_projection(
                 else record.asymptotic_weight
             )
             depression_scale = f"{-serialized_baseline / float(record.weight)!r}"
+        learning_threshold_mV = (
+            float(spike_event_threshold_mV)
+            if postsynaptic_learning_threshold_mV is None
+            else float(postsynaptic_learning_threshold_mV)
+        )
         model += (
             "\npost_elapsed=t-last_post_spike : second"
             f"\ndepression_scale={depression_scale} : 1"
             "\nx_post_above=depression_scale+1 : 1"
             "\nx_post_early=depression_scale+1-post_elapsed/(0.1*ms) : 1"
             f"\nx_post_late=depression_scale*(1-(post_elapsed-0.1*ms)/({post_window}*ms)) : 1"
-            f"\npost_signal=int({post_voltage} >= {float(spike_event_threshold_mV)}*mV)*x_post_above"
-            f" + int({post_voltage} < {float(spike_event_threshold_mV)}*mV and post_elapsed >= 0*ms and post_elapsed < 0.1*ms)*x_post_early"
-            f" + int({post_voltage} < {float(spike_event_threshold_mV)}*mV and post_elapsed >= 0.1*ms and post_elapsed < {post_window + 0.1}*ms)*x_post_late : 1"
+            f"\npost_signal=int({post_voltage} >= {learning_threshold_mV}*mV)*x_post_above"
+            f" + int({post_voltage} < {learning_threshold_mV}*mV and post_elapsed >= 0*ms and post_elapsed < 0.1*ms)*x_post_early"
+            f" + int({post_voltage} < {learning_threshold_mV}*mV and post_elapsed >= 0.1*ms and post_elapsed < {post_window + 0.1}*ms)*x_post_late : 1"
             "\ncorrelation_drive=pre_signal*post_signal*(w_maximum-w) : 1"
             "\nbaseline_drive=w_baseline-w : 1"
             f"\ndw/dt=({record.learning_rate}/ms)*({learning_gate})"

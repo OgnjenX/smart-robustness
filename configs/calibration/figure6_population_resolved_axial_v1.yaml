@@ -28,5 +28,5 @@ promotion_gate: >-
   gate all pass.
 retraction_reason: >-
   Artifact 136 passed the shape-only contrast gate but its learned combined
-  field remains below the registered Figure 6c after-learning range of
-  approximately 0.5 to 2.5. Artifact 140 applies the corrected amplitude gate.
+  field peaks at 0.11853, far below Figure 6c's approximately 2.5 peak.
+  Artifacts 140 and 145 apply the corrected peak-amplitude gate.

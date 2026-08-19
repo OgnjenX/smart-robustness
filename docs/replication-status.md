@@ -1189,6 +1189,16 @@ their event count. No synaptic weight, conductance, threshold, or holdout
 result was exposed to rescue the gate. Network calibration therefore remains
 causally gated on resolving this cellular source discrepancy.
 
+The next contract revision exposed the article's separate calcium-density
+conflict rather than fitting a new value: cell-specific densities from Table 3
+and ModelDB versus the Methods 4.6 global 250 mS/cm² statement. The 192 newly
+exposed global-density candidates were retained as an incremental matrix
+(`calibration-stage-a-trn-116.yaml`). All trials were finite; 174 candidates
+were quiescent but also unrecruitable, while the other 18 were autonomous and
+remained active with drive. Zero were promoted. Together with the preceding
+cell-specific matrix, all 384 registered Stage A TRN combinations fail the
+same causal gate.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

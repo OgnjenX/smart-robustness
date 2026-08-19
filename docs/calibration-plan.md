@@ -77,3 +77,11 @@ revised to include the already documented official-source conflict between the
 paper's printed Na/K rates and the archived ModelDB/Traub–Miles rates. This
 revision follows the predeclared no-survivor rule above; it does not expose a
 published conductance or consult any holdout result.
+
+The revised 192-candidate matrix also produced no survivor. A second explicit
+revision then exposed the paper's internal calcium-density conflict: Table 3
+cell-specific densities versus Methods 4.6's global 250 mS/cm² statement. The
+new global-density half was evaluated separately in
+`calibration-stage-a-trn-116.yaml`, preserving the prior cell-specific result.
+It likewise produced no survivor, so all 384 registered cellular combinations
+are rejected at the TRN viability gate before network calibration.

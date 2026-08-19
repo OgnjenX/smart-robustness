@@ -26,6 +26,7 @@ ALLOWED_STATUSES = {
 TRN_STAGE_A_DIMENSIONS = (
     "intrinsic_cell_convention",
     "calcium_kinetics_convention",
+    "calcium_density_convention",
     "nak_rate_convention",
     "axial_convention",
     "membrane_initialization_convention",
@@ -173,6 +174,7 @@ def runtime_conventions_for_candidate(
     required = {
         "intrinsic_cell_convention",
         "calcium_kinetics_convention",
+        "calcium_density_convention",
         "nak_rate_convention",
         "axial_convention",
         "membrane_initialization_convention",
@@ -186,11 +188,17 @@ def runtime_conventions_for_candidate(
         raise ValueError(f"candidate is missing runtime dimensions: {missing}")
     calcium_kinetics = str(values["calcium_kinetics_convention"])
     calcium_gate = "reciprocal" if calcium_kinetics == "paper_2008" else "modeldb_112923"
+    calcium_density = (
+        "table3"
+        if values["calcium_density_convention"] == "cell_specific"
+        else "methods_global_250"
+    )
     return replace(
         figure6_runtime_conventions() if base is None else base,
         intrinsic_cell_convention=str(values["intrinsic_cell_convention"]),
         calcium_kinetics_convention=calcium_kinetics,
         calcium_gate_convention=calcium_gate,
+        calcium_density_convention=calcium_density,
         nak_rate_convention=str(values["nak_rate_convention"]),
         axial_convention=str(values["axial_convention"]),
         membrane_initialization_convention=str(

@@ -17,7 +17,7 @@ def test_classic_calibration_contract_separates_training_and_holdout() -> None:
     contract = load_calibration_contract(CONTRACT_PATH)
     assert contract.base_tag == "classic-smart-source-constrained-v0.1.0"
     assert set(contract.training_targets).isdisjoint(contract.holdout_targets)
-    assert len(contract.dimensions) == 9
+    assert len(contract.dimensions) == 10
     assert contract.fingerprint == load_calibration_contract(CONTRACT_PATH).fingerprint
 
 
@@ -40,20 +40,21 @@ def test_candidate_fingerprint_requires_complete_admissible_values() -> None:
 def test_contract_enumerates_complete_and_projected_spaces_deterministically() -> None:
     contract = load_calibration_contract(CONTRACT_PATH)
     complete = list(contract.iter_candidates())
-    assert len(complete) == 2304
+    assert len(complete) == 4608
     assert complete == list(contract.iter_candidates())
-    assert len({contract.candidate_fingerprint(item) for item in complete}) == 2304
+    assert len({contract.candidate_fingerprint(item) for item in complete}) == 4608
 
     stage_a_dimensions = (
         "intrinsic_cell_convention",
         "calcium_kinetics_convention",
+        "calcium_density_convention",
         "nak_rate_convention",
         "axial_convention",
         "membrane_initialization_convention",
         "spike_event_rule",
     )
     projected = list(contract.iter_candidates(stage_a_dimensions))
-    assert len(projected) == 192
+    assert len(projected) == 384
     assert {item["gaussian_spread_convention"] for item in projected} == {
         "standard_deviation"
     }
@@ -69,6 +70,7 @@ def test_candidate_maps_source_coupled_calcium_conventions() -> None:
     modeldb_runtime = runtime_conventions_for_candidate(modeldb)
     assert modeldb_runtime.calcium_kinetics_convention == "modeldb_112923"
     assert modeldb_runtime.calcium_gate_convention == "modeldb_112923"
+    assert modeldb_runtime.calcium_density_convention == "table3"
     assert modeldb_runtime.nak_rate_convention == "standard_traub_miles"
 
     paper = dict(modeldb, calcium_kinetics_convention="paper_2008")
@@ -81,6 +83,11 @@ def test_candidate_maps_source_coupled_calcium_conventions() -> None:
     printed_nak_runtime = runtime_conventions_for_candidate(printed_nak)
     assert printed_nak_runtime.nak_rate_convention == "printed_smart"
     assert printed_nak_runtime.fingerprint != modeldb_runtime.fingerprint
+
+    global_calcium = dict(modeldb, calcium_density_convention="methods_global_250")
+    global_calcium_runtime = runtime_conventions_for_candidate(global_calcium)
+    assert global_calcium_runtime.calcium_density_convention == "methods_global_250"
+    assert global_calcium_runtime.fingerprint != modeldb_runtime.fingerprint
 
 
 def test_projected_enumeration_rejects_unknown_or_duplicate_dimensions() -> None:

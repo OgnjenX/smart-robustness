@@ -23,6 +23,11 @@ dimensions:
     values: [modeldb_112923, paper_2008]
     status: conflicting_official_source
     source: Grossberg and Versace Methods 4.6 versus ModelDB 112923 SMART.nml
+  calcium_density_convention:
+    kind: categorical
+    values: [cell_specific, methods_global_250]
+    status: conflicting_official_source
+    source: Grossberg and Versace Table 3 versus Methods 4.6 global 250 mS/cm2 statement
   nak_rate_convention:
     kind: categorical
     values: [standard_traub_miles, printed_smart]

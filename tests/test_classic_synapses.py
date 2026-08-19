@@ -148,6 +148,51 @@ def test_population_resolved_axial_source_keeps_relay_with_its_archive() -> None
     )["axial_convention"] == "paper_literal"
 
 
+def test_thalamocortical_axial_source_split_keeps_trn_with_kinness() -> None:
+    conventions = FirstOrderRuntimeConventions(
+        axial_convention="kinness_thalamus_paper_cortex"
+    )
+    facts = first_order_population_facts()
+    trn = next(fact for fact in facts if fact.canonical_name == "trn")
+    nonspecific = next(
+        fact for fact in facts if fact.canonical_name == "thalamic_nonspecific"
+    )
+    layer5 = next(
+        fact for fact in facts if fact.canonical_name == "layer5_excitatory_v1"
+    )
+    assert first_order_population_parameters(
+        trn, conventions=conventions
+    )["axial_convention"] == "kinness_serialized_edge"
+    assert first_order_population_parameters(
+        nonspecific, conventions=conventions
+    )["axial_convention"] == "kinness_serialized_edge"
+    assert first_order_population_parameters(
+        layer5, conventions=conventions
+    )["axial_convention"] == "paper_literal"
+
+
+def test_trn_survivor_package_can_be_population_resolved() -> None:
+    conventions = FirstOrderRuntimeConventions(
+        axial_convention="modeldb_relay_trn_kinness_paper_others",
+        calcium_density_convention="trn_methods_global_250_others_table3",
+    )
+    facts = first_order_population_facts()
+    relay = next(fact for fact in facts if fact.canonical_name == "thalamic_relay")
+    trn = next(fact for fact in facts if fact.canonical_name == "trn")
+    layer5 = next(
+        fact for fact in facts if fact.canonical_name == "layer5_excitatory_v1"
+    )
+    relay_parameters = first_order_population_parameters(relay, conventions=conventions)
+    trn_parameters = first_order_population_parameters(trn, conventions=conventions)
+    layer5_parameters = first_order_population_parameters(layer5, conventions=conventions)
+    assert relay_parameters["axial_convention"] == "kinness_serialized_edge"
+    assert relay_parameters["calcium_density_convention"] == "table3"
+    assert trn_parameters["axial_convention"] == "kinness_serialized_edge"
+    assert trn_parameters["calcium_density_convention"] == "methods_global_250"
+    assert layer5_parameters["axial_convention"] == "paper_literal"
+    assert layer5_parameters["calcium_density_convention"] == "table3"
+
+
 def test_failed_figure6_pathway_candidate_remains_reproducible_but_inactive() -> None:
     brian.start_scope()
     sector = build_first_order_chemical_sector(

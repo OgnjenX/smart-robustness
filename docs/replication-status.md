@@ -1425,6 +1425,28 @@ The profile is promoted as the Figure 6-calibrated source baseline. This does
 not yet freeze classic SMART: Figure 7, reset, oscillatory, and higher-order
 gates remain.
 
+The first direct Figure 7 holdout using the genuinely learned Figure 6 weights
+has now been completed
+(`calibration-figure6-figure7-population-axial-137.yaml`). Figure 6 passes for
+a third deterministic run, but match and mismatch each produce only one
+nonspecific-thalamus event at 0.74 ms, or 10 Hz, rather than approximately
+40/70 Hz. Both conditions recruit five relay cells in the bottom-up input
+shape, all 81 TRN cells emit the same synchronized event at 5.53 ms, and TRN
+does not express the required match-greater-than-mismatch ordering. The
+artifact is correctly labeled `holdouts_consulted: true`; Figure 7 is not
+reproduced.
+
+Two source-driven post-holdout TRN candidates were rejected at the mandatory
+Figure 6 prerequisite. Applying KInNeSS axial edges to all thalamic populations
+while retaining paper Equation 2 in cortex yields 319 TRN events, only the five
+relay onset events, and no Figure 6c learning
+(`figure6-thalamocortical-axial-138.yaml`). Applying the complete isolated TRN
+survivor package--KInNeSS axial plus Methods-global calcium density only in
+TRN--causes 810 TRN events, zero relay events, and collapses the whole cortical
+chain (`figure6-population-resolved-trn-139.yaml`). Isolated
+quiescent/recruited TRN viability therefore does not predict full-network
+spatial recruitment. Neither candidate is promoted.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

@@ -1,0 +1,176 @@
+schema_version: 1
+id: figure6-thalamocortical-axial-138
+date: '2026-08-19'
+profile: configs/calibration/figure7_thalamocortical_axial_v1.yaml
+candidate_fingerprint: 9064ca206345f7a951efd4c87c2d70025611a440a37463b634480367bdac6cb6
+runtime_fingerprint: e2a3b6dc5fbc7b0fd819d189d4aacc83b6ce9af9af0f8b3c9fab45f2d8a476af
+holdouts_consulted: false
+status: partial-figure6b-pass-figure6c-fail
+protocol:
+  warmup_ms: 0.0
+  stimulus_ms: 100.0
+  post_stimulus_ms: 0.0
+  dt_ms: 0.01
+  source_value: 120.0
+  category_source_value: 70.0
+  winning_layer4_index: 40
+  active_category_index: 40
+  layer6ii_ahp_scale: 1.0
+  monitored_populations:
+  - thalamic_relay
+  - layer4_excitatory_v1
+  - layer23_inhibitory_v1
+  - layer23_excitatory_v1
+  - layer5_excitatory_v1
+  - layer6i_excitatory_v1
+  - layer6ii_excitatory_v1
+  - trn
+  - thalamic_nonspecific
+population_spikes:
+  thalamic_relay: 5
+  trn: 319
+  layer5_excitatory_v1: 86
+  layer6ii_excitatory_v1: 40
+  layer6i_excitatory_v1: 12
+  layer23_excitatory_v1: 7
+  layer4_excitatory_v1: 15
+  layer23_inhibitory_v1: 10
+  thalamic_nonspecific: 10
+active_cell_times_ms:
+  relay_horizontal:
+    '38':
+    - 5.280000000000001
+    '39':
+    - 5.280000000000001
+    '40':
+    - 5.280000000000001
+    '41':
+    - 5.280000000000001
+    '42':
+    - 5.280000000000001
+  category_40:
+  - 8.100000000000001
+  - 17.93
+  - 46.150000000000006
+  - 93.18
+recruitment:
+  layer4_spike_ms: 9.930000000000001
+  layer23_spike_ms: 28.87
+  layer5_spike_ms: 31.470000000000006
+  layer6i_spike_ms: 8.110000000000001
+  layer6ii_spike_ms: 8.100000000000001
+  feedforward_chain_complete: true
+top_down_timing:
+  category_spike_ms: 8.100000000000001
+  teaching_arrival_ms: 10.100000000000001
+  preceding_relay_spike_ms: 5.280000000000001
+  following_relay_spike_ms: null
+  causal_pair_in_learning_window: false
+maps:
+  bottom_up_horizontal_orientation_contrast: 0.10314321533439313
+  top_down_horizontal_orientation_contrast: -0.00044937146716310383
+  bottom_up_oriented: true
+  top_down_oriented: false
+  bottom_up:
+    minimum_delta: -0.32012318782741733
+    maximum_delta: 0.12732034228866806
+    horizontal_orientation_contrast: 0.10314321533439313
+    horizontal_retention_advantage: 27.512128760188297
+    horizontal_arm_after:
+    - 0.12933311805608314
+    - 0.8789069750584969
+    - 0.8789069750584969
+    - 0.12933311805608314
+    vertical_arm_after:
+    - 0.018819021781406462
+    - 0.7831346406643874
+    - 0.7831346406643874
+    - 0.018819021781406462
+    horizontal_arm_delta:
+    - 0.12732034228866806
+    - 0.0668952756388207
+    - 0.0668952756388207
+    - 0.12732034228866806
+    vertical_arm_delta:
+    - 0.016806246013991392
+    - -0.028877058755288787
+    - -0.028877058755288787
+    - 0.016806246013991392
+  top_down_wide:
+    minimum_delta: -0.0008328073914354722
+    maximum_delta: 0.0
+    horizontal_orientation_contrast: -0.0004421426578597662
+    horizontal_retention_advantage: -0.016885588015081443
+    horizontal_arm_after:
+    - 0.015051143467613909
+    - 0.036570523326451006
+    - 0.036570523326451006
+    - 0.015051143467613909
+    vertical_arm_after:
+    - 0.015311299002902122
+    - 0.037194653106882324
+    - 0.037194653106882324
+    - 0.015311299002902122
+    horizontal_arm_delta:
+    - -0.0002601555352882128
+    - -0.0006241297804313178
+    - -0.0006241297804313178
+    - -0.0002601555352882128
+    vertical_arm_delta:
+    - 0.0
+    - 0.0
+    - 0.0
+    - 0.0
+  top_down_narrow:
+    minimum_delta: -0.0008328073914354722
+    maximum_delta: 0.0
+    horizontal_orientation_contrast: -7.228809303337473e-06
+    horizontal_retention_advantage: -0.008564998716363403
+    horizontal_arm_after:
+    - 0.0
+    - 0.0008295365888328198
+    - 0.0008295365888328198
+    - 0.0
+    vertical_arm_after:
+    - 0.0
+    - 0.0008439942074394948
+    - 0.0008439942074394948
+    - 0.0
+    horizontal_arm_delta:
+    - 0.0
+    - -1.4457618606674946e-05
+    - -1.4457618606674946e-05
+    - 0.0
+    vertical_arm_delta:
+    - 0.0
+    - 0.0
+    - 0.0
+    - 0.0
+  top_down_combined:
+    minimum_delta: -0.0016656147828709444
+    maximum_delta: 0.0
+    horizontal_orientation_contrast: -0.00044937146716310383
+    horizontal_retention_advantage: -0.01688946980870143
+    horizontal_arm_after:
+    - 0.015051143467613909
+    - 0.03740005991528383
+    - 0.03740005991528383
+    - 0.015051143467613909
+    vertical_arm_after:
+    - 0.015311299002902122
+    - 0.03803864731432182
+    - 0.03803864731432182
+    - 0.015311299002902122
+    horizontal_arm_delta:
+    - -0.0002601555352882128
+    - -0.0006385873990379931
+    - -0.0006385873990379931
+    - -0.0002601555352882128
+    vertical_arm_delta:
+    - 0.0
+    - 0.0
+    - 0.0
+    - 0.0
+assessment:
+  figure6_reproduced: false
+  promoted: false

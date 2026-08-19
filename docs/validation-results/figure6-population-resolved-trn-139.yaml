@@ -1,0 +1,170 @@
+schema_version: 1
+id: figure6-population-resolved-trn-139
+date: '2026-08-19'
+profile: configs/calibration/figure7_population_resolved_trn_v1.yaml
+candidate_fingerprint: 5360b4da3117c3f6b140e6996c8aef85726f3ae25f3070abcdc559fa7718a341
+runtime_fingerprint: 93fb0470ba830920bf69af481495efd92872a6b5d37e5c765bdc13a3d1cf884a
+holdouts_consulted: false
+status: partial-figure6b-pass-figure6c-fail
+protocol:
+  warmup_ms: 0.0
+  stimulus_ms: 100.0
+  post_stimulus_ms: 0.0
+  dt_ms: 0.01
+  source_value: 120.0
+  category_source_value: 70.0
+  winning_layer4_index: 40
+  active_category_index: 40
+  layer6ii_ahp_scale: 1.0
+  monitored_populations:
+  - thalamic_relay
+  - layer4_excitatory_v1
+  - layer23_inhibitory_v1
+  - layer23_excitatory_v1
+  - layer5_excitatory_v1
+  - layer6i_excitatory_v1
+  - layer6ii_excitatory_v1
+  - trn
+  - thalamic_nonspecific
+population_spikes:
+  thalamic_relay: 0
+  trn: 810
+  layer5_excitatory_v1: 0
+  layer6ii_excitatory_v1: 3
+  layer6i_excitatory_v1: 0
+  layer23_excitatory_v1: 0
+  layer4_excitatory_v1: 0
+  layer23_inhibitory_v1: 0
+  thalamic_nonspecific: 6
+active_cell_times_ms:
+  relay_horizontal:
+    '38': []
+    '39': []
+    '40': []
+    '41': []
+    '42': []
+  category_40:
+  - 8.100000000000001
+  - 48.89
+  - 92.18
+recruitment:
+  layer4_spike_ms: null
+  layer23_spike_ms: null
+  layer5_spike_ms: null
+  layer6i_spike_ms: null
+  layer6ii_spike_ms: 8.100000000000001
+  feedforward_chain_complete: false
+top_down_timing:
+  category_spike_ms: 8.100000000000001
+  teaching_arrival_ms: 10.100000000000001
+  preceding_relay_spike_ms: null
+  following_relay_spike_ms: null
+  causal_pair_in_learning_window: false
+maps:
+  bottom_up_horizontal_orientation_contrast: 0.0
+  top_down_horizontal_orientation_contrast: 0.0
+  bottom_up_oriented: false
+  top_down_oriented: false
+  bottom_up:
+    minimum_delta: 0.0
+    maximum_delta: 0.0
+    horizontal_orientation_contrast: 0.0
+    horizontal_retention_advantage: 0.0
+    horizontal_arm_after:
+    - 0.0020127757674150712
+    - 0.8120116994196762
+    - 0.8120116994196762
+    - 0.0020127757674150712
+    vertical_arm_after:
+    - 0.0020127757674150712
+    - 0.8120116994196762
+    - 0.8120116994196762
+    - 0.0020127757674150712
+    horizontal_arm_delta:
+    - 0.0
+    - 0.0
+    - 0.0
+    - 0.0
+    vertical_arm_delta:
+    - 0.0
+    - 0.0
+    - 0.0
+    - 0.0
+  top_down_wide:
+    minimum_delta: 0.0
+    maximum_delta: 0.0
+    horizontal_orientation_contrast: 0.0
+    horizontal_retention_advantage: 0.0
+    horizontal_arm_after:
+    - 0.015311299002902122
+    - 0.037194653106882324
+    - 0.037194653106882324
+    - 0.015311299002902122
+    vertical_arm_after:
+    - 0.015311299002902122
+    - 0.037194653106882324
+    - 0.037194653106882324
+    - 0.015311299002902122
+    horizontal_arm_delta:
+    - 0.0
+    - 0.0
+    - 0.0
+    - 0.0
+    vertical_arm_delta:
+    - 0.0
+    - 0.0
+    - 0.0
+    - 0.0
+  top_down_narrow:
+    minimum_delta: 0.0
+    maximum_delta: 0.0
+    horizontal_orientation_contrast: 0.0
+    horizontal_retention_advantage: 0.0
+    horizontal_arm_after:
+    - 0.0
+    - 0.0008439942074394948
+    - 0.0008439942074394948
+    - 0.0
+    vertical_arm_after:
+    - 0.0
+    - 0.0008439942074394948
+    - 0.0008439942074394948
+    - 0.0
+    horizontal_arm_delta:
+    - 0.0
+    - 0.0
+    - 0.0
+    - 0.0
+    vertical_arm_delta:
+    - 0.0
+    - 0.0
+    - 0.0
+    - 0.0
+  top_down_combined:
+    minimum_delta: 0.0
+    maximum_delta: 0.0
+    horizontal_orientation_contrast: 0.0
+    horizontal_retention_advantage: 0.0
+    horizontal_arm_after:
+    - 0.015311299002902122
+    - 0.03803864731432182
+    - 0.03803864731432182
+    - 0.015311299002902122
+    vertical_arm_after:
+    - 0.015311299002902122
+    - 0.03803864731432182
+    - 0.03803864731432182
+    - 0.015311299002902122
+    horizontal_arm_delta:
+    - 0.0
+    - 0.0
+    - 0.0
+    - 0.0
+    vertical_arm_delta:
+    - 0.0
+    - 0.0
+    - 0.0
+    - 0.0
+assessment:
+  figure6_reproduced: false
+  promoted: false

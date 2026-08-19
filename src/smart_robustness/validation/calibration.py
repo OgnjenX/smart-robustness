@@ -188,11 +188,13 @@ def runtime_conventions_for_candidate(
         raise ValueError(f"candidate is missing runtime dimensions: {missing}")
     calcium_kinetics = str(values["calcium_kinetics_convention"])
     calcium_gate = "reciprocal" if calcium_kinetics == "paper_2008" else "modeldb_112923"
-    calcium_density = (
-        "table3"
-        if values["calcium_density_convention"] == "cell_specific"
-        else "methods_global_250"
-    )
+    calcium_density_source = str(values["calcium_density_convention"])
+    if calcium_density_source == "cell_specific":
+        calcium_density = "table3"
+    elif calcium_density_source == "trn_methods_global_250_others_table3":
+        calcium_density = calcium_density_source
+    else:
+        calcium_density = "methods_global_250"
     return replace(
         figure6_runtime_conventions() if base is None else base,
         intrinsic_cell_convention=str(values["intrinsic_cell_convention"]),

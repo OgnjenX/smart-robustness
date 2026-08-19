@@ -565,6 +565,7 @@ def run_figure7_condition(
         monitors.extend(cortical_spike_monitors.values())
     relay_state = None
     trn_state = None
+    trn_calcium_variables: tuple[str, ...] = ()
     nonspecific_state = None
     if record_relay_diagnostics:
         relay_state = brian.StateMonitor(
@@ -598,8 +599,12 @@ def run_figure7_condition(
             record=FIGURE7_RELAY_DIAGNOSTIC_INDICES,
             name=f"figure7_{condition.value}_relay_pathway_state",
         )
+        trn_group = sector.populations["trn"].group
+        trn_calcium_variables = tuple(
+            sorted(name for name in trn_group.variables if name.startswith("i_ca_"))
+        )
         trn_state = brian.StateMonitor(
-            sector.populations["trn"].group,
+            trn_group,
             (
                 "port_001_gate",
                 "port_002_gate",
@@ -609,13 +614,12 @@ def run_figure7_condition(
                 "i_port_002",
                 "i_port_003",
                 "i_port_004",
-                "i_ca_proximal_dendrite",
                 "i_axial_inward_soma",
-                "i_ca_soma",
                 "i_na_soma",
                 "i_k_soma",
                 "v_proximal_dendrite",
                 "v_soma",
+                *trn_calcium_variables,
             ),
             record=FIGURE7_RELAY_DIAGNOSTIC_INDICES,
             name=f"figure7_{condition.value}_trn_pathway_state",
@@ -898,13 +902,7 @@ def run_figure7_condition(
                 np.asarray(trn_state.i_port_000 / brian.pA)[:, diagnostic_window]
                 + np.asarray(trn_state.i_port_003 / brian.pA)[:, diagnostic_window]
             ),
-            "proximal_calcium": np.asarray(
-                trn_state.i_ca_proximal_dendrite / brian.pA
-            )[:, diagnostic_window],
             "soma_axial": np.asarray(trn_state.i_axial_inward_soma / brian.pA)[
-                :, diagnostic_window
-            ],
-            "soma_calcium": np.asarray(trn_state.i_ca_soma / brian.pA)[
                 :, diagnostic_window
             ],
             "soma_sodium": np.asarray(trn_state.i_na_soma / brian.pA)[
@@ -914,6 +912,11 @@ def run_figure7_condition(
                 :, diagnostic_window
             ],
         }
+        for variable in trn_calcium_variables:
+            compartment = variable.removeprefix("i_ca_").removesuffix("_dendrite")
+            current_sources_pA[f"{compartment}_calcium"] = np.asarray(
+                getattr(trn_state, variable) / brian.pA
+            )[:, diagnostic_window]
         trn_driven_current_range = tuple(
             (index, source, float(np.min(values)), float(np.max(values)))
             for source, traces in current_sources_pA.items()

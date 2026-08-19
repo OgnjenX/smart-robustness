@@ -257,3 +257,14 @@ all category spikes instead of incorrectly testing only the onset category
 spike. Promote `figure6_population_resolved_axial_v1.yaml` to the next stage.
 Freeze all Figure 6 conventions and proceed to Figure 7 match/mismatch rate and
 TRN-order gates; do not retune Figure 6 while evaluating those holdouts.
+
+The first learned-state Figure 7 holdout is recorded in artifact 137 and fails:
+match and mismatch are both 10 Hz, all 81 TRN cells share one startup event,
+and neither relay-subset nor TRN-order gates pass. This is now consulted
+calibration evidence, not an untouched holdout. Artifacts 138 and 139 reject
+the two immediate source-coherent TRN packages because they fail the frozen
+Figure 6 prerequisite through 319- or 810-event TRN over-recruitment. Keep the
+Figure 6 survivor frozen. The next Figure 7 discriminator must localize why the
+full spatial TRN sheet recruits globally despite the isolated survivor, using
+the recorded per-pathway currents and negative controls before exposing any
+new parameter.

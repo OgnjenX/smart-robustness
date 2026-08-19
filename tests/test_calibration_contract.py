@@ -74,6 +74,21 @@ FIGURE6_POPULATION_AXIAL_PROFILE_PATH = (
 FIGURE6_POPULATION_AXIAL_RESULT_PATH = (
     ROOT / "docs/validation-results/figure6-population-resolved-axial-136.yaml"
 )
+FIGURE7_POPULATION_AXIAL_RESULT_PATH = (
+    ROOT / "docs/validation-results/calibration-figure6-figure7-population-axial-137.yaml"
+)
+FIGURE7_THALAMOCORTICAL_AXIAL_PROFILE_PATH = (
+    ROOT / "configs/calibration/figure7_thalamocortical_axial_v1.yaml"
+)
+FIGURE6_THALAMOCORTICAL_AXIAL_RESULT_PATH = (
+    ROOT / "docs/validation-results/figure6-thalamocortical-axial-138.yaml"
+)
+FIGURE7_POPULATION_TRN_PROFILE_PATH = (
+    ROOT / "configs/calibration/figure7_population_resolved_trn_v1.yaml"
+)
+FIGURE6_POPULATION_TRN_RESULT_PATH = (
+    ROOT / "docs/validation-results/figure6-population-resolved-trn-139.yaml"
+)
 
 
 def test_classic_calibration_contract_separates_training_and_holdout() -> None:
@@ -465,6 +480,60 @@ def test_population_resolved_axial_profile_reproduces_complete_figure6() -> None
     assert artifact["maps"]["top_down_horizontal_orientation_contrast"] >= 0.01
     assert artifact["assessment"]["figure6_reproduced"]
     assert artifact["assessment"]["promoted"]
+
+
+def test_promoted_figure6_profile_fails_first_genuine_figure7_holdout() -> None:
+    artifact = yaml.safe_load(FIGURE7_POPULATION_AXIAL_RESULT_PATH.read_text())
+    assert artifact["holdouts_consulted"] is True
+    assert artifact["status"] == "passing-figure6-failed-figure7-holdout"
+    assert artifact["assessment"]["figure6_reproduced"]
+    assert artifact["figure7"]["conditions"]["match"][
+        "nonspecific_spike_times_ms"
+    ] == [pytest.approx(0.74)]
+    assert artifact["figure7"]["conditions"]["mismatch"][
+        "nonspecific_spike_times_ms"
+    ] == [pytest.approx(0.74)]
+    assessment = artifact["figure7"]["assessment"]
+    assert assessment["arousal"]["match_rate_hz"] == 10.0
+    assert assessment["arousal"]["mismatch_rate_hz"] == 10.0
+    assert assessment["pathway"]["match_trn_spikes"] == 81
+    assert assessment["pathway"]["mismatch_trn_spikes"] == 81
+    assert not artifact["figure7"]["reproduced"]
+
+
+@pytest.mark.parametrize(
+    ("profile_path", "result_path", "relay_spikes", "trn_spikes"),
+    (
+        (
+            FIGURE7_THALAMOCORTICAL_AXIAL_PROFILE_PATH,
+            FIGURE6_THALAMOCORTICAL_AXIAL_RESULT_PATH,
+            5,
+            319,
+        ),
+        (
+            FIGURE7_POPULATION_TRN_PROFILE_PATH,
+            FIGURE6_POPULATION_TRN_RESULT_PATH,
+            0,
+            810,
+        ),
+    ),
+)
+def test_post_holdout_trn_source_candidates_fail_figure6_prerequisite(
+    profile_path: Path,
+    result_path: Path,
+    relay_spikes: int,
+    trn_spikes: int,
+) -> None:
+    profile = yaml.safe_load(profile_path.read_text())
+    candidate = profile["candidate"]
+    artifact = yaml.safe_load(result_path.read_text())
+    assert profile["runtime_fingerprint"] == runtime_conventions_for_candidate(
+        candidate
+    ).fingerprint
+    assert artifact["population_spikes"]["thalamic_relay"] == relay_spikes
+    assert artifact["population_spikes"]["trn"] == trn_spikes
+    assert not artifact["assessment"]["figure6_reproduced"]
+    assert not artifact["assessment"]["promoted"]
 
 
 def test_contract_rejects_holdout_leakage(tmp_path: Path) -> None:

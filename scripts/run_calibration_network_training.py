@@ -146,6 +146,7 @@ def main() -> None:
     )
 
     if args.run_figure7:
+        artifact["holdouts_consulted"] = True
         top_down_current = float(profile["candidate"]["top_down_current_pA"])
         conditions = {
             condition.value: run_figure7_condition(
@@ -167,6 +168,11 @@ def main() -> None:
             "assessment": assessment,
             "reproduced": assessment.reproduced,
         }
+        artifact["status"] = (
+            "passing-figure6-and-figure7"
+            if assessment.reproduced
+            else "passing-figure6-failed-figure7-holdout"
+        )
         output.write_text(yaml.safe_dump(_plain(artifact), sort_keys=False))
         print(
             "Figure 7: "

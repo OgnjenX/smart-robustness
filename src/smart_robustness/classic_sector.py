@@ -245,6 +245,18 @@ def first_order_population_parameters(
             if facts.canonical_name == "thalamic_relay"
             else "paper_literal"
         )
+    elif axial_convention == "modeldb_relay_trn_kinness_paper_others":
+        axial_convention = (
+            "kinness_serialized_edge"
+            if facts.canonical_name in {"thalamic_relay", "trn"}
+            else "paper_literal"
+        )
+    elif axial_convention == "kinness_thalamus_paper_cortex":
+        axial_convention = (
+            "paper_literal"
+            if facts.canonical_name.startswith("layer")
+            else "kinness_serialized_edge"
+        )
     calcium_kinetics = CalciumKineticsConvention(conventions.calcium_kinetics_convention)
     calcium_gate_convention = conventions.calcium_gate_convention
     if (
@@ -262,6 +274,11 @@ def first_order_population_parameters(
         external_input_ports = tuple(
             port for port in external_input_ports if any(port.sensitivities_mV)
         )
+    calcium_density_convention = conventions.calcium_density_convention
+    if calcium_density_convention == "trn_methods_global_250_others_table3":
+        calcium_density_convention = (
+            "methods_global_250" if facts.canonical_name == "trn" else "table3"
+        )
     parameters: dict[str, Any] = {
         "cell_spec": intrinsic_cell,
         "cell_class": facts.canonical_name,
@@ -273,7 +290,7 @@ def first_order_population_parameters(
         "calcium_voltage_coordinate": conventions.calcium_voltage_coordinate,
         "gate_initialization_convention": conventions.gate_initialization_convention,
         "membrane_initialization_convention": conventions.membrane_initialization_convention,
-        "calcium_density_convention": conventions.calcium_density_convention,
+        "calcium_density_convention": calcium_density_convention,
         "spike_event_coordinate": conventions.spike_event_coordinate,
         "spike_event_threshold_mV": conventions.spike_event_threshold_mV,
         "spike_event_rule": conventions.spike_event_rule,

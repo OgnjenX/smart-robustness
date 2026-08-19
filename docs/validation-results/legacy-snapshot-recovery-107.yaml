@@ -1,0 +1,33 @@
+schema_version: 1
+validation_id: legacy-snapshot-recovery-107
+claim: The contemporaneous KInNeSS and SANNDRA release filenames can be recovered, but the linked source bodies remain unavailable.
+status: source-location-recovered-bodies-missing
+date: 2026-08-19
+sources:
+  archived_download_page:
+    url: https://web.archive.org/web/20080724182610id_/http://symphony.bu.edu/downloads.html
+    sha256: 8259bd902929cb8b4bcdbfd3411907f01dec6631e089da28299b6c03b77d6225
+  internet_archive_cdx: queried exact snapshot URLs and the symphony.bu.edu/Snapshots wildcard
+  common_crawl: queried the exact SANNDRA snapshot URL in CC-MAIN-2008-2009
+release_records:
+  kinness:
+    filename: KInNeSS-0.3.4-RC2.tar.gz
+    date: 2008-06-10
+    cvs_tag: KINNESS_0_3_4_RC2
+  sanndra:
+    filename: SANNDRA-1.2.0-RC3.tar.gz
+    date_as_printed: 2006-06-10
+    cvs_tag: SANNDRA_1_2_0_RC3
+archive_results:
+  internet_archive_snapshot_capture: false
+  common_crawl_sanndra_capture: false
+  github_code_search_spikeevents_h: false
+assessment:
+  exact_release_identity_pass: true
+  source_body_recovered: false
+  spike_detector_resolved: false
+  runtime_change_justified: false
+interpretation:
+  - The download page proves the exact release names used by the 2008 site and narrows future source recovery to hashable artifacts.
+  - The paper's Equation 8 still supports falling-phase release after a +30-mV peak, which the active latched detector implements.
+  - No event-detector change is promoted without the missing SANNDRA body or a discriminating official trace.

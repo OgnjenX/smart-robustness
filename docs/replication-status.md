@@ -1092,6 +1092,15 @@ fully depletes transmitter; the alternative impulse solution
 regression test now protects this invariant. Because the runtime was already
 correct, no figure result changed and artifacts 098--105 remain current.
 
+The original 2008 download page has now been recovered directly and hash-pinned
+(`legacy-snapshot-recovery-107.yaml`). It identifies the exact source artifacts
+as `KInNeSS-0.3.4-RC2.tar.gz` / `KINNESS_0_3_4_RC2` and
+`SANNDRA-1.2.0-RC3.tar.gz` / `SANNDRA_1_2_0_RC3`. Exact-URL checks against the
+Internet Archive, the contemporaneous Common Crawl index, and GitHub code
+search still recover no tarball or `spikeevents.h` body. This narrows the
+remaining source gap but does not justify changing the active falling-phase
+Equation 8 detector or any Figure 6 trajectory.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

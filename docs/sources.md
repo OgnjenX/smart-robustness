@@ -77,7 +77,11 @@ area for capacitance and current-density conversion and excludes circular end
 caps (`validation-results/kinness-membrane-area-049.yaml`).
 
 The archived 2008 download page identifies KInNeSS 0.3.4 RC2 and SANNDRA 1.2.0
-RC3 as the contemporaneous releases. The Internet Archive preserves the
+RC3 as the contemporaneous releases. A newly recovered raw capture gives the
+exact linked filenames `KInNeSS-0.3.4-RC2.tar.gz` (CVS tag
+`KINNESS_0_3_4_RC2`) and `SANNDRA-1.2.0-RC3.tar.gz` (CVS tag
+`SANNDRA_1_2_0_RC3`); the page hash and archive queries are recorded in
+`validation-results/legacy-snapshot-recovery-107.yaml`. The Internet Archive preserves the
 KInNeSS CVS2HTML directory index, release metadata, and SANNDRA revision
 history, but not the GPL source archives or linked SANNDRA API pages. The
 revision history independently records for `gates.h` revision 1.17,

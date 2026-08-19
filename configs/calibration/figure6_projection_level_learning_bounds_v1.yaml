@@ -1,0 +1,27 @@
+schema_version: 1
+name: figure6-projection-level-learning-bounds-v1
+status: source-discriminator-not-promoted
+derivation: >-
+  Keep the leading archived-relay/paper-axial candidate and its Figure 6 weak
+  Gaussian initial map, but apply the serialized asymptoticWeight and weight as
+  projection-level Equation 25 bounds. This is the literal KInNeSS separation
+  between Section 4.9 Gaussian initialization and Equation 25 learning bounds.
+base_profile: configs/calibration/figure6_relay_axial_source_hybrid_v1.yaml
+base_candidate_fingerprint: e3c7230ac9ab13d05888e14adeeebe8450cc627fa7ea363591979304b064fd0a
+candidate_fingerprint: dd6acc331d8eaee49cbebf7cb8860ec2bd380c46e2a61ea43bceaeddf7562933
+runtime_fingerprint: 7fa1f71e4d390baf675f9c5dcc0b2da136365ed427d729d8107b017100beb119
+candidate:
+  intrinsic_cell_convention: modeldb_relay_paper_table3_others
+  calcium_kinetics_convention: modeldb_112923
+  calcium_density_convention: cell_specific
+  nak_rate_convention: standard_traub_miles
+  axial_convention: paper_literal
+  membrane_initialization_convention: physical_leak_voltage
+  spike_event_rule: latched_peak_then_zero
+  gaussian_spread_convention: standard_deviation
+  relay_input_interpretation: archived_finite_conductance
+  top_down_current_pA: 600.0
+  gaussian_learning_bounds_convention: projection_level
+promotion_gate: >-
+  Promote only if every fixed Figure 6 gate passes without weakening the
+  leading candidate's cortical recruitment or causal-pair gates.

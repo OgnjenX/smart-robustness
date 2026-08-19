@@ -227,3 +227,13 @@ inactive vertical targets do not change. The next discriminator must therefore
 address a source-supported cause of the wide-field postsynaptic phase or its
 Equation 6 depression scale. Do not tune the fixed `0.01` map gate, delete TRN
 feedback, or alter the already verified presynaptic category waveform.
+
+The projection-level Equation 25 bounds interpretation has now been tested
+without changing the weak Gaussian pre-map
+(`figure6-projection-level-learning-bounds-133.yaml`). It fails with combined
+top-down contrast `-0.01374`: inactive vertical weights grow toward the uniform
+`w0=0.05`. Therefore the local spatial decorrelation baseline remains required
+by Figure 6c, and projection-level `D` cannot be obtained merely by switching
+the complete learning bounds. The next source discriminator must isolate the
+Equation 6 postsynaptic scale from Equation 25's local decorrelation baseline,
+or correct the relay spike phase through another documented mechanism.

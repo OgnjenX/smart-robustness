@@ -53,6 +53,12 @@ FIGURE6_LEADING_ALTERNATIVES_PATH = (
 FIGURE6_LEARNING_PHASE_PATH = (
     ROOT / "docs/validation-results/figure6-top-down-learning-phase-132.yaml"
 )
+FIGURE6_PROJECTION_BOUNDS_PROFILE_PATH = (
+    ROOT / "configs/calibration/figure6_projection_level_learning_bounds_v1.yaml"
+)
+FIGURE6_PROJECTION_BOUNDS_RESULT_PATH = (
+    ROOT / "docs/validation-results/figure6-projection-level-learning-bounds-133.yaml"
+)
 
 
 def test_classic_calibration_contract_separates_training_and_holdout() -> None:
@@ -352,6 +358,30 @@ def test_figure6_learning_phase_exactly_localizes_wide_field_depression() -> Non
     ]
     assert narrow_near["measured_delta"] > 0
     assert artifact["result"]["relay_event_times_ms"][31] == []
+
+
+def test_projection_level_learning_bounds_are_source_literal_but_fail_figure6c() -> None:
+    profile = yaml.safe_load(FIGURE6_PROJECTION_BOUNDS_PROFILE_PATH.read_text())
+    candidate = profile["candidate"]
+    fingerprint = hashlib.sha256(
+        json.dumps(candidate, sort_keys=True, separators=(",", ":")).encode()
+    ).hexdigest()
+    conventions = runtime_conventions_for_candidate(candidate)
+    artifact = yaml.safe_load(FIGURE6_PROJECTION_BOUNDS_RESULT_PATH.read_text())
+    assert profile["candidate_fingerprint"] == fingerprint
+    assert profile["runtime_fingerprint"] == conventions.fingerprint
+    assert conventions.gaussian_learning_bounds_convention == "projection_level"
+    assert artifact["candidate_fingerprint"] == fingerprint
+    assert artifact["recruitment"]["feedforward_chain_complete"]
+    assert artifact["top_down_timing"]["causal_pair_in_learning_window"]
+    assert artifact["maps"]["bottom_up_oriented"]
+    assert artifact["maps"]["top_down_horizontal_orientation_contrast"] < 0
+    assert any(
+        delta > 0
+        for delta in artifact["maps"]["top_down_wide"]["vertical_arm_delta"]
+    )
+    assert not artifact["assessment"]["figure6_reproduced"]
+    assert not artifact["assessment"]["promoted"]
 
 
 def test_contract_rejects_holdout_leakage(tmp_path: Path) -> None:

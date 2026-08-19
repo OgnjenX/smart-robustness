@@ -1374,6 +1374,18 @@ post-spike depression, not numerical integration, inactive-tail growth, or a
 missing presynaptic category gate. The passive audit accumulators do not feed
 back into SMART state. The leading candidate remains unpromoted.
 
+The resulting source-literal bounds discriminator has also been executed
+(`figure6-projection-level-learning-bounds-133.yaml`). It preserves the
+complete cortical chain, causal teaching pair, and positive Figure 6b contrast
+(`0.32355`), but fails Figure 6c with combined contrast `-0.01374`. Because
+Equation 25's uniform projection-level `w0=0.05` acts during the presynaptic
+category gate even when a relay target does not spike, inactive vertical-arm
+weights grow toward `w0`; both wide and narrow fields become vertically
+biased. This independently reproduces the previously inferred inactive-tail
+problem and rejects projection-level bounds as the complete Figure 6 runtime
+interpretation. It is retained as a source-literal negative control, not
+promoted.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

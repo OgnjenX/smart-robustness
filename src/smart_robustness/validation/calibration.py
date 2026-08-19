@@ -206,6 +206,12 @@ def runtime_conventions_for_candidate(
         ),
         spike_event_rule=str(values["spike_event_rule"]),
         gaussian_spread_convention=str(values["gaussian_spread_convention"]),
+        gaussian_learning_bounds_convention=str(
+            values.get(
+                "gaussian_learning_bounds_convention",
+                (figure6_runtime_conventions() if base is None else base).gaussian_learning_bounds_convention,
+            )
+        ),
     )
 
 

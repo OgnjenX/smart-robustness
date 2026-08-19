@@ -79,9 +79,34 @@ def test_figure7_pathway_requires_more_relay_cells_and_trn_spikes_during_match()
     assert pathway.match_active_relay_cells == 5
     assert pathway.mismatch_active_relay_cells == 1
     assert pathway.relay_subset_pass
+    assert pathway.relay_spatial_match_pass
+    assert pathway.relay_mismatch_overlap_pass
     assert pathway.trn_order_pass
     assert pathway.reproduced_pathway
     assert combined.reproduced
+
+
+def test_figure7_pathway_rejects_count_difference_with_wrong_spatial_mechanism() -> None:
+    match = Figure7ConditionResult(
+        condition=MatchCondition.MATCH,
+        duration_ms=100.0,
+        nonspecific_spike_times_ms=(10.0,) * 4,
+        relay_spike_indices=(22, 31, 40, 49, 58),
+        trn_spike_times_ms=(12.0,) * 4,
+    )
+    mismatch = Figure7ConditionResult(
+        condition=MatchCondition.MISMATCH,
+        duration_ms=100.0,
+        nonspecific_spike_times_ms=(10.0,) * 7,
+        relay_spike_indices=(22,),
+        trn_spike_times_ms=(12.0,),
+    )
+
+    pathway = assess_figure7_pathway(match, mismatch)
+    assert pathway.relay_subset_pass
+    assert not pathway.relay_spatial_match_pass
+    assert not pathway.relay_mismatch_overlap_pass
+    assert not pathway.reproduced_pathway
 
 
 def test_output_rate_fit_without_caption_pathway_is_not_full_reproduction() -> None:

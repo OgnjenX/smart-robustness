@@ -37,6 +37,9 @@ FIGURE7_REQUIRED_LEARNED_PROJECTIONS = (
     TOP_DOWN_NARROW_PROJECTION_ID,
 )
 FIGURE7_RELAY_DIAGNOSTIC_INDICES = (22, 31, 38, 39, 40, 41, 42, 49, 58)
+FIGURE7_MATCH_RELAY_INDICES = frozenset((38, 39, 40, 41, 42))
+FIGURE7_MISMATCH_INPUT_INDICES = frozenset((22, 31, 40, 49, 58))
+FIGURE7_RELAY_OVERLAP_INDICES = FIGURE7_MATCH_RELAY_INDICES & FIGURE7_MISMATCH_INPUT_INDICES
 FIGURE14_V1_CORTICAL_POPULATIONS = (
     "layer23_excitatory_v1",
     "layer23_inhibitory_v1",
@@ -273,10 +276,23 @@ class Figure7PathwayAssessment:
     mismatch_active_relay_cells: int
     match_trn_spikes: int
     mismatch_trn_spikes: int
+    match_active_relay_indices: frozenset[int]
+    mismatch_active_relay_indices: frozenset[int]
 
     @property
     def relay_subset_pass(self) -> bool:
         return self.match_active_relay_cells > self.mismatch_active_relay_cells
+
+    @property
+    def relay_spatial_match_pass(self) -> bool:
+        return self.match_active_relay_indices == FIGURE7_MATCH_RELAY_INDICES
+
+    @property
+    def relay_mismatch_overlap_pass(self) -> bool:
+        return (
+            bool(self.mismatch_active_relay_indices)
+            and self.mismatch_active_relay_indices <= FIGURE7_RELAY_OVERLAP_INDICES
+        )
 
     @property
     def trn_order_pass(self) -> bool:
@@ -284,7 +300,12 @@ class Figure7PathwayAssessment:
 
     @property
     def reproduced_pathway(self) -> bool:
-        return self.relay_subset_pass and self.trn_order_pass
+        return (
+            self.relay_subset_pass
+            and self.relay_spatial_match_pass
+            and self.relay_mismatch_overlap_pass
+            and self.trn_order_pass
+        )
 
 
 @dataclass(frozen=True, slots=True)
@@ -336,11 +357,15 @@ def assess_figure7_pathway(
     """Score the caption's match-greater-than-mismatch relay/TRN mechanism."""
 
     _validate_figure7_pair(match, mismatch)
+    match_indices = frozenset(match.relay_spike_indices)
+    mismatch_indices = frozenset(mismatch.relay_spike_indices)
     return Figure7PathwayAssessment(
-        match_active_relay_cells=len(set(match.relay_spike_indices)),
-        mismatch_active_relay_cells=len(set(mismatch.relay_spike_indices)),
+        match_active_relay_cells=len(match_indices),
+        mismatch_active_relay_cells=len(mismatch_indices),
         match_trn_spikes=len(match.trn_spike_times_ms),
         mismatch_trn_spikes=len(mismatch.trn_spike_times_ms),
+        match_active_relay_indices=match_indices,
+        mismatch_active_relay_indices=mismatch_indices,
     )
 
 

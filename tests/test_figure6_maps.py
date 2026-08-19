@@ -11,6 +11,7 @@ from smart_robustness.validation.figure6 import (
     assess_figure6_cortical_recruitment,
     assess_figure6_top_down_timing,
     figure6_weight_reachability,
+    run_figure6_l23_current_balance,
 )
 
 
@@ -49,6 +50,11 @@ def test_figure6_learning_protocol_is_the_published_horizontal_episode() -> None
         "layer4_excitatory_v1",
         "layer6ii_excitatory_v1",
     )
+
+
+def test_l23_current_balance_rejects_an_out_of_sheet_target_before_running() -> None:
+    with pytest.raises(ValueError, match="target_index must address"):
+        run_figure6_l23_current_balance(target_index=81)
 
 
 def test_map_retention_advantage_detects_horizontal_orientation() -> None:

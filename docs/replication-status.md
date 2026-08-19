@@ -1101,6 +1101,18 @@ search still recover no tarball or `spikeevents.h` body. This narrows the
 remaining source gap but does not justify changing the active falling-phase
 Equation 8 detector or any Figure 6 trajectory.
 
+A reusable full-sector current-balance diagnostic now records the exact first
+layer-2/3 bottleneck (`figure6-l23-current-balance-108.yaml`). Projection 032's
+gate peaks at 76.19 ms, within 0.03 ms of its source-event/delay/kinetics
+prediction; projection 031 peaks at 79.69 ms, within 0.04 ms of its independent
+prediction. Brian2 scheduling and dual-exponential execution are therefore not
+the discrepancy. The excitatory current reaches +1.36 nA in the proximal
+dendrite, but axial current into the soma peaks at only +57 pA; the later GABA
+current reaches -2.96 nA and the soma remains below -62.97 mV. Halving the
+unserialized specific capacitance still produces no layer-2/3 event, while
+0.1 uF/cm2 makes the full network non-finite and also fails recruitment. No
+capacitance or synaptic correction is promoted.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

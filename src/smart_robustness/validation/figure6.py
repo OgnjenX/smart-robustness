@@ -24,6 +24,9 @@ from ..protocols import (
 BOTTOM_UP_PROJECTION_ID = "modeldb112923.projection.035"
 TOP_DOWN_WIDE_PROJECTION_ID = "modeldb112923.projection.005"
 TOP_DOWN_NARROW_PROJECTION_ID = "modeldb112923.projection.007"
+L23_FEEDFORWARD_INHIBITION_ID = "modeldb112923.projection.031"
+L23_FEEDFORWARD_EXCITATION_ID = "modeldb112923.projection.032"
+L23_INTERNEURON_DRIVE_ID = "modeldb112923.projection.039"
 MINIMUM_TOP_DOWN_HORIZONTAL_CONTRAST = 0.01
 HORIZONTAL_INDICES = (38, 39, 40, 41, 42)
 VERTICAL_INDICES = (22, 31, 40, 49, 58)
@@ -185,6 +188,32 @@ class Figure6LearningProtocol:
             raise ValueError("active_category_index must address the 9x9 sheet")
         if self.layer6ii_ahp_scale < 0:
             raise ValueError("layer6ii_ahp_scale cannot be negative")
+
+
+@dataclass(frozen=True, slots=True)
+class Figure6L23CurrentBalance:
+    """Current and voltage landmarks at the first Figure 6 cortical bottleneck."""
+
+    convention_fingerprint: str
+    target_index: int
+    network_finite: bool
+    first_layer4_spike_ms: float | None
+    first_layer23_interneuron_spike_ms: float | None
+    first_layer23_excitatory_spike_ms: float | None
+    excitation_gate_peak: float
+    excitation_gate_peak_ms: float
+    inhibition_gate_peak: float
+    inhibition_gate_peak_ms: float
+    excitation_current_peak_pA: float
+    excitation_current_peak_ms: float
+    inhibition_current_trough_pA: float
+    inhibition_current_trough_ms: float
+    proximal_voltage_peak_mV: float
+    proximal_voltage_peak_ms: float
+    soma_voltage_peak_mV: float
+    soma_voltage_peak_ms: float
+    soma_axial_current_peak_pA: float
+    soma_axial_current_peak_ms: float
 
 
 @dataclass(frozen=True, slots=True)
@@ -447,6 +476,141 @@ def run_figure6_learning(
         for projection_id in monitored_ids
     }
     return Figure6LearningRun(result=result, learned_weights=learned)
+
+
+def run_figure6_l23_current_balance(
+    *,
+    conventions=None,
+    protocol: Figure6LearningProtocol | None = None,
+    target_index: int = 40,
+    brian=None,
+) -> Figure6L23CurrentBalance:
+    """Trace the exact L4 excitation/feedforward-inhibition contest in layer 2/3.
+
+    This diagnostic runs the published Figure 6 episode without modifying any
+    projection. It records the two source-serialized currents on one layer-2/3
+    pyramidal cell together with dendrite-to-soma axial transfer.
+    """
+
+    if brian is None:
+        import brian2 as brian
+    from ..classic_sector import build_first_order_connected_sector, figure6_runtime_conventions
+
+    conventions = conventions or figure6_runtime_conventions()
+    protocol = protocol or Figure6LearningProtocol()
+    if not 0 <= target_index < 81:
+        raise ValueError("target_index must address the 9x9 layer-2/3 sheet")
+    brian.start_scope()
+    brian.defaultclock.dt = protocol.dt_ms * brian.ms
+    sector = build_first_order_connected_sector(conventions=conventions, brian=brian)
+    target = sector.populations["layer23_excitatory_v1"]
+
+    def port_name(record_id: str) -> str:
+        return next(
+            port.name for port in target.compiled.synaptic_ports if port.record_id == record_id
+        )
+
+    excitation_port = port_name(L23_FEEDFORWARD_EXCITATION_ID)
+    inhibition_port = port_name(L23_FEEDFORWARD_INHIBITION_ID)
+    variables = (
+        "v_soma",
+        "v_proximal_dendrite",
+        "i_axial_inward_soma",
+        f"{excitation_port}_gate",
+        f"i_{excitation_port}",
+        f"{inhibition_port}_gate",
+        f"i_{inhibition_port}",
+    )
+    state = brian.StateMonitor(
+        target.group,
+        variables,
+        record=[target_index],
+        name="figure6_l23_current_balance_state",
+    )
+    spike_populations = (
+        "layer4_excitatory_v1",
+        "layer23_inhibitory_v1",
+        "layer23_excitatory_v1",
+    )
+    spikes = {
+        name: brian.SpikeMonitor(
+            sector.populations[name].group,
+            name=f"figure6_l23_current_balance_spikes_{name}",
+        )
+        for name in spike_populations
+    }
+    sector.network.add(state, *spikes.values())
+    if protocol.warmup_ms:
+        sector.network.run(protocol.warmup_ms * brian.ms)
+    apply_bar_stimulus(
+        sector,
+        ClassicBarStimulus(
+            BarOrientation.HORIZONTAL,
+            duration_ms=protocol.stimulus_ms,
+            source_value=protocol.source_value,
+            category_source_value=protocol.category_source_value,
+            include_archived_category_pixel=True,
+        ),
+    )
+    sector.network.run(protocol.stimulus_ms * brian.ms)
+    time_ms = np.asarray(state.t / brian.ms) - protocol.warmup_ms
+    keep = time_ms >= 0
+    time_ms = time_ms[keep]
+
+    def trace(variable: str, unit) -> np.ndarray:
+        return np.asarray(getattr(state, variable)[0][keep] / unit, dtype=float)
+
+    def peak(values: np.ndarray, *, minimum: bool = False) -> tuple[float, float]:
+        index = int(np.argmin(values) if minimum else np.argmax(values))
+        return float(values[index]), float(time_ms[index])
+
+    def first_spike(name: str) -> float | None:
+        values = np.asarray(spikes[name].t / brian.ms) - protocol.warmup_ms
+        values = values[values >= 0]
+        return float(values[0]) if values.size else None
+
+    excitation_gate_peak, excitation_gate_peak_ms = peak(trace(excitation_port + "_gate", 1))
+    inhibition_gate_peak, inhibition_gate_peak_ms = peak(trace(inhibition_port + "_gate", 1))
+    excitation_current_peak_pA, excitation_current_peak_ms = peak(
+        trace("i_" + excitation_port, brian.pA)
+    )
+    inhibition_current_trough_pA, inhibition_current_trough_ms = peak(
+        trace("i_" + inhibition_port, brian.pA), minimum=True
+    )
+    proximal_voltage_peak_mV, proximal_voltage_peak_ms = peak(
+        trace("v_proximal_dendrite", brian.mV)
+    )
+    soma_voltage_peak_mV, soma_voltage_peak_ms = peak(trace("v_soma", brian.mV))
+    soma_axial_current_peak_pA, soma_axial_current_peak_ms = peak(
+        trace("i_axial_inward_soma", brian.pA)
+    )
+    network_finite = all(
+        np.isfinite(np.asarray(getattr(population.group, f"v_{compartment}")[:] / brian.mV)).all()
+        for population in sector.populations.values()
+        for compartment in population.compartments
+    )
+    return Figure6L23CurrentBalance(
+        convention_fingerprint=conventions.fingerprint,
+        target_index=target_index,
+        network_finite=bool(network_finite),
+        first_layer4_spike_ms=first_spike("layer4_excitatory_v1"),
+        first_layer23_interneuron_spike_ms=first_spike("layer23_inhibitory_v1"),
+        first_layer23_excitatory_spike_ms=first_spike("layer23_excitatory_v1"),
+        excitation_gate_peak=excitation_gate_peak,
+        excitation_gate_peak_ms=excitation_gate_peak_ms,
+        inhibition_gate_peak=inhibition_gate_peak,
+        inhibition_gate_peak_ms=inhibition_gate_peak_ms,
+        excitation_current_peak_pA=excitation_current_peak_pA,
+        excitation_current_peak_ms=excitation_current_peak_ms,
+        inhibition_current_trough_pA=inhibition_current_trough_pA,
+        inhibition_current_trough_ms=inhibition_current_trough_ms,
+        proximal_voltage_peak_mV=proximal_voltage_peak_mV,
+        proximal_voltage_peak_ms=proximal_voltage_peak_ms,
+        soma_voltage_peak_mV=soma_voltage_peak_mV,
+        soma_voltage_peak_ms=soma_voltage_peak_ms,
+        soma_axial_current_peak_pA=soma_axial_current_peak_pA,
+        soma_axial_current_peak_ms=soma_axial_current_peak_ms,
+    )
 
 
 def _incoming_map(projection: Any, weights: np.ndarray, *, target_index: int) -> np.ndarray:

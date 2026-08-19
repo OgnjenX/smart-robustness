@@ -1139,17 +1139,17 @@ paper-profile discriminators still fail, so no hybrid conductance edit is
 promoted.
 
 The earliest Figure 7 failure is now quantified directly at the relay
-(`figure7-relay-current-balance-111.yaml`). Expectation-only cells receive at
-most tens of picoamps of top-down current and remain below about -54.5 mV,
-whereas directly driven image cells receive approximately 0.65 nA and spike.
-TRN/interneuron inhibition is comparable to the weak expectation current, but
-learned-weight underidentification is not sufficient to explain the result:
-setting every adaptive projection-005 and projection-007 synapse to its
-serialized 1.5 maximum still activates exactly five relay cells in match and
-mismatch. Each condition then has 20 relay events, 81 startup-only TRN events,
-and 60-Hz nonspecific output. The missing Figure 7 operation is therefore not
-recoverable by any admissible learned-weight amplitude; no unsupported weight
-or inhibition tuning is promoted.
+(`figure7-relay-current-balance-111.yaml`). As the caption requires,
+expectation-only cells remain inhibited. The failure is instead that all five
+bottom-up cells keep firing during mismatch, rather than only the single
+bottom-up/top-down overlap cell. Directly driven cells receive approximately
+0.65 nA, while expectation-only cells receive at most tens of picoamps and
+remain below about -54.5 mV. Scaling the horizontal learned field by all of its
+shape-preserving 1.2-fold headroom, until its center reaches the serialized 1.5
+maximum in both adaptive projections, still leaves five active relay cells in
+each condition (20 match versus 18 mismatch events), 81 startup-only TRN
+events, and 60-Hz nonspecific output. No unsupported weight or inhibition
+tuning is promoted.
 
 ## Validation gates
 

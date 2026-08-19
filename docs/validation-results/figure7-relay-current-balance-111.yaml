@@ -1,7 +1,7 @@
 schema_version: 1
 validation_id: figure7-relay-current-balance-111
-claim: The learned top-down expectation recruits relay cells outside the five directly driven image locations and creates the Figure 7 match-dependent relay-count difference.
-status: failed-official-reproduction_expectation_subthreshold_at_official_maximum
+claim: The learned top-down expectation allows all five matched relay cells to fire but suppresses the four nonoverlap cells during mismatch, as required by the Figure 7 caption.
+status: failed-official-reproduction_mismatch_not_suppressed_at_shape_preserving_bound
 date: 2026-08-19
 sources:
   paper: Grossberg and Versace 2008, Figures 6c and 7 and Methods 4.9
@@ -39,7 +39,8 @@ representative_current_ranges_pA:
     soma_axial: [-587.213905, 437.033374]
     soma_voltage_mV: [-96.264110, 45.896824]
 official_weight_upper_bound_discriminator:
-  learned_state: every projection 005 and 007 synapse set to its serialized 1.5 maximum
+  learned_state: paper-constrained horizontal field scaled shape-preservingly until its center reaches the serialized 1.5 maximum in both projections
+  scale_over_reference: 1.2
   match:
     active_relay_indices: [38, 39, 40, 41, 42]
     relay_events: 20
@@ -47,20 +48,20 @@ official_weight_upper_bound_discriminator:
     nonspecific_rate_hz: 60
   mismatch:
     active_relay_indices: [22, 31, 40, 49, 58]
-    relay_events: 20
+    relay_events: 18
     trn_events: 81
     nonspecific_rate_hz: 60
 assessment:
   top_down_current_reaches_expectation_only_cells: true
   expectation_only_soma_reaches_spike_threshold: false
-  inhibition_is_comparable_to_expectation_current: true
-  bottom_up_input_is_order_of_magnitude_larger: true
-  official_maximum_weights_recruit_extra_relay_cells: false
+  all_five_match_cells_fire: true
+  mismatch_nonoverlap_cells_are_suppressed: false
+  official_shape_preserving_maximum_creates_relay_count_divergence: false
   relay_subset_divergence_reproduced: false
   official_figure7_reproduced: false
 interpretation:
-  - The learned expectation is executable and spatially selective, but expectation-only cells receive at most tens of picoamps of top-down current and remain below approximately -54.5 mV at the soma.
-  - Directly driven image cells receive approximately 0.65 nA from the external input and generate full somatic action potentials. Thus the current implementation behaves as a five-location bottom-up selector in both conditions, not as the match-expanding relay field described by Figure 7.
-  - TRN and interneuron inhibition are comparable to or larger than top-down current in expectation-only cells, but eliminating uncertainty in learned amplitude cannot solve the failure: placing both adaptive projections at every serialized maximum still recruits exactly the five bottom-up cells in each condition.
-  - The official maximum-weight test raises each condition from 18 to 20 relay events but leaves TRN and nonspecific outputs identical. Missing Figure 6 learning amplitude is therefore excluded as the primary Figure 7 discrepancy.
+  - The caption says expectation-only cells should remain inhibited and a mismatch should leave only the single bottom-up/top-down overlap cell firing. The expectation-only cells are indeed subthreshold, but all five directly driven cells continue to fire in both conditions.
+  - Directly driven image cells receive approximately 0.65 nA from the external input and generate full somatic action potentials. In mismatch, the four nonoverlap cells are therefore not suppressed by the top-down-driven inhibitory off-surround as required.
+  - Eliminating the available learned-amplitude uncertainty does not restore that operation. Scaling the horizontal reference field by its complete 1.2-fold headroom, until both center weights reach 1.5, preserves five active cells in each condition; match has 20 relay events and mismatch 18.
+  - TRN remains at its 81-event startup volley and nonspecific output remains 60 Hz in both conditions. Missing Figure 6 learning amplitude within the declared shape and official bounds is therefore excluded as the primary Figure 7 discrepancy.
   - No weight, inhibition, or spike threshold is tuned. Exact relay-clamp and source-profile alternatives are retained in earlier artifacts and also fail condition-dependent recruitment.

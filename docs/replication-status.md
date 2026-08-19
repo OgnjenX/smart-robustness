@@ -1512,6 +1512,14 @@ tail sooner and increases its overlap with presynaptic activity. Thus reusing
 the later falling-phase event was not the source of insufficient potentiation;
 the upward alternative is retained as rejected provenance, not promoted.
 
+The remaining paper-coordinate combination is tested in
+`figure6-learning-coordinate-leak-plus30-152.yaml`: Equation 6 uses
+leak-relative voltage with its printed `+30 mV` threshold while Equation 8
+emission remains absolute. This preserves exactly four events in each of the
+five horizontal relay cells, but its combined map peaks at only `0.18606`.
+Unlike leak-relative zero, it does not potentiate the surround. The registered
+threshold/coordinate family is now exhausted without a Figure 6c survivor.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

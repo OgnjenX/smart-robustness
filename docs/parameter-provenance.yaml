@@ -69,7 +69,7 @@ parameters:
     value: absolute_physical +30 mV, absolute_physical 0/-20 mV, and leak-relative 0 mV retained as explicit alternatives
     status: unresolved-source-coordinate-rejected-as-figure6-explanation
     source: Grossberg and Versace 2008 Equations 1, 6, and 8; Versace et al. 2008 KInNeSS Equation 18
-    note: artifacts 142--145 separate Equation 6's learning threshold from Equation 8's output event; absolute 0/-20 mV peaks at 0.15232/0.16854, while leak-relative 0 mV peaks at 0.52741 but causes 58 relay events, so none reproduces Figure 6c's approximately 2.5 peak with confined 40-Hz bar recruitment
+    note: artifacts 142--145 and 152 separate Equation 6's learning threshold from Equation 8's output event; absolute 0/-20 mV peaks at 0.15232/0.16854, leak-relative 0 mV peaks at 0.52741 but causes 58 relay events, and leak-relative +30 mV preserves confinement but peaks at only 0.18606; none reproduces Figure 6c's approximately 2.5 peak with confined 40-Hz bar recruitment
   model.learning.corticothalamic_gating_rule:
     value: serialized presynaptic gating; Methods 4.3 dual-AND retained as a rejected official-source alternative
     status: conflicting-official-source-tested

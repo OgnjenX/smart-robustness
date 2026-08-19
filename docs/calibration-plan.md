@@ -310,3 +310,8 @@ Artifact 151 then separates Equation 6's spike timestamp from Equation 8
 release. The upward +30-mV timestamp preserves all spike counts but lowers the
 combined map peak to `0.10750`; its earlier depression tail is less favorable
 than the existing falling-phase timestamp. This timing route is closed.
+
+Artifact 152 tests the last source-coordinate combination: leak-relative
+`+30 mV`. It preserves confined 40-Hz bar recruitment but peaks at only
+`0.18606`. All registered Equation 6 threshold/coordinate alternatives are now
+closed; do not lower the threshold into the diffuse subthreshold regime.

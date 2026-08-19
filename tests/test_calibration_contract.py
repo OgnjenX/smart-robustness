@@ -95,6 +95,9 @@ FIGURE6_RELAY_WAVEFORM_PATH = (
 FIGURE6_UPWARD_TIMESTAMP_PATH = (
     ROOT / "docs/validation-results/figure6-learning-timestamp-upward-151.yaml"
 )
+FIGURE6_LEAK_PLUS30_PATH = (
+    ROOT / "docs/validation-results/figure6-learning-coordinate-leak-plus30-152.yaml"
+)
 FIGURE7_POPULATION_AXIAL_RESULT_PATH = (
     ROOT / "docs/validation-results/calibration-figure6-figure7-population-axial-137.yaml"
 )
@@ -620,6 +623,16 @@ def test_upward_learning_timestamp_preserves_spikes_but_reduces_peak() -> None:
     )
     assert not artifact["assessment"]["figure6_reproduced"]
     assert not artifact["assessment"]["promoted"]
+
+
+def test_leak_relative_plus30_preserves_confinement_but_misses_peak() -> None:
+    artifact = yaml.safe_load(FIGURE6_LEAK_PLUS30_PATH.read_text())
+    assert artifact["population_spikes"]["thalamic_relay"] == 20
+    assert artifact["relay_recruitment"]["confined_to_horizontal_bar_at_40_hz"]
+    combined = artifact["maps"]["top_down_combined"]
+    assert combined["maximum_after"] == pytest.approx(0.1860603038)
+    assert combined["horizontal_orientation_contrast"] > 0.01
+    assert not artifact["assessment"]["figure6_reproduced"]
 
 
 @pytest.mark.parametrize(

@@ -1,0 +1,204 @@
+schema_version: 1
+id: figure6-learning-coordinate-leak-plus30-152
+date: '2026-08-19'
+profile: configs/calibration/figure6_learning_coordinate_leak_plus30_v1.yaml
+candidate_fingerprint: 6520ce0daa2fb986d0018298b9aef498eec76b8872c4b1b9d762f88170c81479
+runtime_fingerprint: 531d05528b4748056caf63ffd5189954eb74b924b619ec54fd050ac510305584
+holdouts_consulted: false
+status: partial-figure6b-pass-figure6c-fail
+protocol:
+  warmup_ms: 0.0
+  stimulus_ms: 100.0
+  post_stimulus_ms: 0.0
+  dt_ms: 0.01
+  source_value: 120.0
+  category_source_value: 70.0
+  winning_layer4_index: 40
+  active_category_index: 40
+  layer6ii_ahp_scale: 1.0
+  monitored_populations:
+  - thalamic_relay
+  - layer4_excitatory_v1
+  - layer23_inhibitory_v1
+  - layer23_excitatory_v1
+  - layer5_excitatory_v1
+  - layer6i_excitatory_v1
+  - layer6ii_excitatory_v1
+  - trn
+  - thalamic_nonspecific
+population_spikes:
+  thalamic_relay: 20
+  trn: 81
+  layer5_excitatory_v1: 13
+  layer6ii_excitatory_v1: 77
+  layer6i_excitatory_v1: 37
+  layer23_excitatory_v1: 19
+  layer4_excitatory_v1: 32
+  layer23_inhibitory_v1: 20
+  thalamic_nonspecific: 1
+relay_recruitment:
+  active_indices:
+  - 38
+  - 39
+  - 40
+  - 41
+  - 42
+  confined_to_horizontal_bar_at_40_hz: true
+active_cell_times_ms:
+  relay_horizontal:
+    '38':
+    - 5.280000000000001
+    - 57.31
+    - 77.35
+    - 95.30000000000001
+    '39':
+    - 5.280000000000001
+    - 57.370000000000005
+    - 77.39
+    - 95.4
+    '40':
+    - 5.280000000000001
+    - 57.410000000000004
+    - 77.43
+    - 95.42999999999999
+    '41':
+    - 5.280000000000001
+    - 57.370000000000005
+    - 77.39
+    - 95.4
+    '42':
+    - 5.280000000000001
+    - 57.31
+    - 77.35
+    - 95.30000000000001
+  category_40:
+  - 8.100000000000001
+  - 17.93
+  - 45.86000000000001
+  - 68.92
+  - 87.9
+recruitment:
+  layer4_spike_ms: 9.930000000000001
+  layer23_spike_ms: 28.810000000000002
+  layer5_spike_ms: 31.52
+  layer6i_spike_ms: 8.110000000000001
+  layer6ii_spike_ms: 8.100000000000001
+  feedforward_chain_complete: true
+top_down_timing:
+  category_spike_ms: 87.9
+  teaching_arrival_ms: 89.9
+  preceding_relay_spike_ms: 77.43
+  following_relay_spike_ms: 95.42999999999999
+  causal_pair_in_learning_window: true
+maps:
+  bottom_up_horizontal_orientation_contrast: 0.8057240189726983
+  top_down_horizontal_orientation_contrast: 0.08160701848705063
+  bottom_up_oriented: true
+  top_down_oriented: false
+  bottom_up:
+    minimum_delta: -2.2431620236706293
+    maximum_delta: 0.9782852235034141
+    maximum_after: 3.7568379763293707
+    horizontal_orientation_contrast: 0.8057240189726983
+    horizontal_retention_advantage: 211.62262247079082
+    horizontal_arm_after:
+    - 0.9802979992708292
+    - 1.3530431784609265
+    - 1.3530431784609265
+    - 0.9802979992708292
+    vertical_arm_after:
+    - 0.13028764188684488
+    - 0.591605497899514
+    - 0.591605497899514
+    - 0.13028764188684488
+    horizontal_arm_delta:
+    - 0.9782852235034141
+    - 0.5410314790412503
+    - 0.5410314790412503
+    - 0.9782852235034141
+    vertical_arm_delta:
+    - 0.12827486611942981
+    - -0.22040620152016221
+    - -0.22040620152016221
+    - 0.12827486611942981
+  top_down_wide:
+    minimum_delta: 0.0
+    maximum_delta: 0.05530985985213424
+    maximum_after: 0.09303015188679438
+    horizontal_orientation_contrast: 0.051166971706304146
+    horizontal_retention_advantage: 2.4383128960221105
+    horizontal_arm_after:
+    - 0.07062115885503636
+    - 0.08421873666735638
+    - 0.08421873666735638
+    - 0.07062115885503636
+    vertical_arm_after:
+    - 0.015311299002902122
+    - 0.037194653106882324
+    - 0.037194653106882324
+    - 0.015311299002902122
+    horizontal_arm_delta:
+    - 0.05530985985213424
+    - 0.04702408356047406
+    - 0.04702408356047406
+    - 0.05530985985213424
+    vertical_arm_delta:
+    - 0.0
+    - 0.0
+    - 0.0
+    - 0.0
+  top_down_narrow:
+    minimum_delta: 0.0
+    maximum_delta: 0.06088009356149294
+    maximum_after: 0.09303015188679438
+    horizontal_orientation_contrast: 0.03044004678074647
+    horizontal_retention_advantage: 36.066653671824746
+    horizontal_arm_after:
+    - 0.0
+    - 0.061724087768932435
+    - 0.061724087768932435
+    - 0.0
+    vertical_arm_after:
+    - 0.0
+    - 0.0008439942074394948
+    - 0.0008439942074394948
+    - 0.0
+    horizontal_arm_delta:
+    - 0.0
+    - 0.06088009356149294
+    - 0.06088009356149294
+    - 0.0
+    vertical_arm_delta:
+    - 0.0
+    - 0.0
+    - 0.0
+    - 0.0
+  top_down_combined:
+    minimum_delta: 0.0
+    maximum_delta: 0.10790417712196698
+    maximum_after: 0.18606030377358876
+    horizontal_orientation_contrast: 0.08160701848705063
+    horizontal_retention_advantage: 3.2245271969996336
+    horizontal_arm_after:
+    - 0.07062115885503636
+    - 0.1459428244362888
+    - 0.1459428244362888
+    - 0.07062115885503636
+    vertical_arm_after:
+    - 0.015311299002902122
+    - 0.03803864731432182
+    - 0.03803864731432182
+    - 0.015311299002902122
+    horizontal_arm_delta:
+    - 0.05530985985213424
+    - 0.10790417712196698
+    - 0.10790417712196698
+    - 0.05530985985213424
+    vertical_arm_delta:
+    - 0.0
+    - 0.0
+    - 0.0
+    - 0.0
+assessment:
+  figure6_reproduced: false
+  promoted: false

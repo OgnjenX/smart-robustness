@@ -39,6 +39,7 @@ def _map_details(summary) -> dict[str, object]:
     return {
         "minimum_delta": float(np.min(delta)),
         "maximum_delta": float(np.max(delta)),
+        "maximum_after": float(np.max(after)),
         "horizontal_orientation_contrast": summary.horizontal_orientation_contrast,
         "horizontal_retention_advantage": summary.horizontal_retention_advantage,
         "horizontal_arm_after": [float(after[index]) for index in HORIZONTAL_ONLY_INDICES],

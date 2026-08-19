@@ -1409,8 +1409,8 @@ does not authorize suppressing this onset window. The Results text instead
 states that the oriented top-down weights are learned during gamma
 oscillations.
 
-A source-coherent population-resolved axial profile now reproduces the full
-registered Figure 6 target
+A source-coherent population-resolved axial profile initially passed the
+shape-only registered Figure 6 target
 (`figure6-population-resolved-axial-136.yaml`). The archived SMART.nml relay
 cell uses its archived KInNeSS serialized axial edges, while cells selected
 from paper Table 3 use paper-literal Equation 2 coupling. Each of the five
@@ -1421,20 +1421,25 @@ The ordered layer-4 -> layer-2/3 -> layer-5 chain occurs at 9.93, 28.87, and
 horizontal contrast is `0.23252`, and combined top-down contrast is `0.03045`,
 above the fixed `0.01` gate; inactive vertical arms remain unchanged. The
 complete run is deterministic across the initial and confirmation executions.
-The profile is promoted as the Figure 6-calibrated source baseline. This does
-not yet freeze classic SMART: Figure 7, reset, oscillatory, and higher-order
-gates remain.
+That promotion is superseded by the amplitude audit in
+`figure6-population-axial-amplitude-audit-140.yaml`. The combined top-down map
+peaks at only `0.11853`, below the primary Figure 6c after-learning range of
+approximately `0.5--2.5`, despite its positive `0.03045` orientation contrast.
+The profile is retained as the leading rate/timing/shape candidate but
+retracted as a complete Figure 6 reproduction. Classic SMART remains unfrozen.
 
 The first direct Figure 7 holdout using the genuinely learned Figure 6 weights
 has now been completed
-(`calibration-figure6-figure7-population-axial-137.yaml`). Figure 6 passes for
-a third deterministic run, but match and mismatch each produce only one
+(`calibration-figure6-figure7-population-axial-137.yaml`). Under the historical
+shape-only contract, Figure 6 passed for a third deterministic run, but match
+and mismatch each produce only one
 nonspecific-thalamus event at 0.74 ms, or 10 Hz, rather than approximately
 40/70 Hz. Both conditions recruit five relay cells in the bottom-up input
 shape, all 81 TRN cells emit the same synchronized event at 5.53 ms, and TRN
 does not express the required match-greater-than-mismatch ordering. The
 artifact is correctly labeled `holdouts_consulted: true`; Figure 7 is not
-reproduced.
+reproduced. Its Figure 6 pass field is historical evidence under that older
+contract, not evidence against the later amplitude-audit retraction.
 
 Two source-driven post-holdout TRN candidates were rejected at the mandatory
 Figure 6 prerequisite. Applying KInNeSS axial edges to all thalamic populations

@@ -247,24 +247,28 @@ profile; first attribute depression to individual teaching volleys, then test
 only source-supported event, delay, or intrinsic mechanisms that move that
 phase.
 
-That route has produced the first complete Figure 6 survivor
+That route produced the first Figure 6 rate/timing/shape survivor
 (`figure6-population-resolved-axial-136.yaml`). Pairing the archived relay with
 archived axial edges and the paper Table 3 cells with paper Equation 2 restores
 the declared 40-Hz relay rate, the cortical chain, later causal gamma-phase
 pairs, Figure 6b contrast `0.23252`, and Figure 6c contrast `0.03045`. The
 full-episode causal assessor now selects the closest teaching/relay pair across
 all category spikes instead of incorrectly testing only the onset category
-spike. Promote `figure6_population_resolved_axial_v1.yaml` to the next stage.
-Freeze all Figure 6 conventions and proceed to Figure 7 match/mismatch rate and
-TRN-order gates; do not retune Figure 6 while evaluating those holdouts.
+spike. Artifact 140 subsequently retracts that promotion: the combined learned
+map peaks at `0.11853`, below the official approximately `0.5--2.5`
+after-learning range. Keep `figure6_population_resolved_axial_v1.yaml` as the
+leading mechanistic candidate, but restore Figure 6c learned-map magnitude as
+the active calibration gate before freezing Figure 6 conventions.
 
 The first learned-state Figure 7 holdout is recorded in artifact 137 and fails:
 match and mismatch are both 10 Hz, all 81 TRN cells share one startup event,
 and neither relay-subset nor TRN-order gates pass. This is now consulted
 calibration evidence, not an untouched holdout. Artifacts 138 and 139 reject
 the two immediate source-coherent TRN packages because they fail the frozen
-Figure 6 prerequisite through 319- or 810-event TRN over-recruitment. Keep the
-Figure 6 survivor frozen. The next Figure 7 discriminator must localize why the
+Figure 6 prerequisite through 319- or 810-event TRN over-recruitment. Treat the
+holdout as diagnostic evidence that the weak learned state is insufficient;
+do not calibrate Figure 7 ahead of the restored Figure 6 amplitude gate. After
+that gate passes, the next Figure 7 discriminator must localize why the
 full spatial TRN sheet recruits globally despite the isolated survivor, using
 the recorded per-pathway currents and negative controls before exposing any
 new parameter.

@@ -4,6 +4,7 @@ import numpy as np
 import pytest
 
 from smart_robustness.validation.figure6 import (
+    MINIMUM_TOP_DOWN_COMBINED_PEAK,
     MINIMUM_TOP_DOWN_HORIZONTAL_CONTRAST,
     Figure6LearningProtocol,
     Figure6LearningResult,
@@ -113,10 +114,10 @@ def test_tiny_positive_top_down_contrast_does_not_count_as_reproduction() -> Non
 
 def test_figure6c_scores_the_combined_wide_and_narrow_field() -> None:
     before = np.zeros(81)
-    wide_after = np.zeros(81)
-    narrow_after = np.zeros(81)
-    wide_after[[38, 39, 41, 42]] = 0.006
-    narrow_after[[38, 39, 41, 42]] = 0.006
+    wide_after = np.full(81, MINIMUM_TOP_DOWN_COMBINED_PEAK / 2)
+    narrow_after = np.full(81, MINIMUM_TOP_DOWN_COMBINED_PEAK / 2)
+    wide_after[[38, 39, 41, 42]] += 0.006
+    narrow_after[[38, 39, 41, 42]] += 0.006
     wide = Figure6MapSummary("wide", "map", tuple(before), tuple(wide_after))
     narrow = Figure6MapSummary("narrow", "map", tuple(before), tuple(narrow_after))
     result = Figure6LearningResult("fingerprint", 100.0, {}, wide, wide, narrow)
@@ -125,6 +126,17 @@ def test_figure6c_scores_the_combined_wide_and_narrow_field() -> None:
     assert narrow.horizontal_orientation_contrast < MINIMUM_TOP_DOWN_HORIZONTAL_CONTRAST
     assert result.top_down_combined.horizontal_orientation_contrast == pytest.approx(0.012)
     assert result.top_down_oriented
+
+
+def test_figure6c_rejects_correct_shape_at_subpublished_amplitude() -> None:
+    before = np.zeros(81)
+    after = np.zeros(81)
+    after[[38, 39, 41, 42]] = 0.1
+    shaped = Figure6MapSummary("topdown", "map", tuple(before), tuple(after))
+    result = Figure6LearningResult("fingerprint", 100.0, {}, shaped, shaped, shaped)
+    assert result.top_down_combined.horizontal_orientation_contrast > 0.01
+    assert max(result.top_down_combined.after) < MINIMUM_TOP_DOWN_COMBINED_PEAK
+    assert not result.top_down_oriented
 
 
 def test_top_down_timing_accounts_for_the_archived_axonal_delay() -> None:

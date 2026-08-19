@@ -74,6 +74,9 @@ FIGURE6_POPULATION_AXIAL_PROFILE_PATH = (
 FIGURE6_POPULATION_AXIAL_RESULT_PATH = (
     ROOT / "docs/validation-results/figure6-population-resolved-axial-136.yaml"
 )
+FIGURE6_POPULATION_AXIAL_AMPLITUDE_AUDIT_PATH = (
+    ROOT / "docs/validation-results/figure6-population-axial-amplitude-audit-140.yaml"
+)
 FIGURE7_POPULATION_AXIAL_RESULT_PATH = (
     ROOT / "docs/validation-results/calibration-figure6-figure7-population-axial-137.yaml"
 )
@@ -455,19 +458,22 @@ def test_figure6_teaching_volley_decomposition_closes_each_connection() -> None:
     assert onset_window["negative_correlation_delta"] < 0
 
 
-def test_population_resolved_axial_profile_reproduces_complete_figure6() -> None:
+def test_population_resolved_axial_profile_is_retracted_by_amplitude_audit() -> None:
     profile = yaml.safe_load(FIGURE6_POPULATION_AXIAL_PROFILE_PATH.read_text())
     candidate = profile["candidate"]
     fingerprint = hashlib.sha256(
         json.dumps(candidate, sort_keys=True, separators=(",", ":")).encode()
     ).hexdigest()
     conventions = runtime_conventions_for_candidate(candidate)
-    artifact = yaml.safe_load(FIGURE6_POPULATION_AXIAL_RESULT_PATH.read_text())
+    historical = yaml.safe_load(FIGURE6_POPULATION_AXIAL_RESULT_PATH.read_text())
+    artifact = yaml.safe_load(
+        FIGURE6_POPULATION_AXIAL_AMPLITUDE_AUDIT_PATH.read_text()
+    )
     assert profile["candidate_fingerprint"] == fingerprint
     assert profile["runtime_fingerprint"] == conventions.fingerprint
-    assert profile["status"] == "promoted-complete-figure6-source-profile"
+    assert profile["status"] == "retracted-shape-pass-amplitude-fail"
     assert artifact["candidate_fingerprint"] == fingerprint
-    assert artifact["status"] == "complete-figure6-pass"
+    assert artifact["status"] == "partial-figure6b-pass-figure6c-fail"
     assert artifact["population_spikes"]["thalamic_relay"] == 20
     assert all(
         len(times) == 4
@@ -476,17 +482,23 @@ def test_population_resolved_axial_profile_reproduces_complete_figure6() -> None
     assert artifact["recruitment"]["feedforward_chain_complete"]
     assert artifact["top_down_timing"]["causal_pair_in_learning_window"]
     assert artifact["maps"]["bottom_up_oriented"]
-    assert artifact["maps"]["top_down_oriented"]
     assert artifact["maps"]["top_down_horizontal_orientation_contrast"] >= 0.01
-    assert artifact["assessment"]["figure6_reproduced"]
-    assert artifact["assessment"]["promoted"]
+    assert artifact["maps"]["top_down_combined"]["maximum_after"] < 0.5
+    assert not artifact["maps"]["top_down_oriented"]
+    assert not artifact["assessment"]["figure6_reproduced"]
+    assert not artifact["assessment"]["promoted"]
+    # Artifact 136 remains the immutable record of the superseded shape-only gate.
+    assert historical["status"] == "complete-figure6-pass"
+    assert historical["maps"]["top_down_oriented"]
 
 
-def test_promoted_figure6_profile_fails_first_genuine_figure7_holdout() -> None:
+def test_shape_only_figure6_profile_fails_first_genuine_figure7_holdout() -> None:
     artifact = yaml.safe_load(FIGURE7_POPULATION_AXIAL_RESULT_PATH.read_text())
     assert artifact["holdouts_consulted"] is True
     assert artifact["status"] == "passing-figure6-failed-figure7-holdout"
     assert artifact["assessment"]["figure6_reproduced"]
+    profile = yaml.safe_load(FIGURE6_POPULATION_AXIAL_PROFILE_PATH.read_text())
+    assert profile["status"] == "retracted-shape-pass-amplitude-fail"
     assert artifact["figure7"]["conditions"]["match"][
         "nonspecific_spike_times_ms"
     ] == [pytest.approx(0.74)]

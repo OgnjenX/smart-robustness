@@ -30,6 +30,7 @@ L23_FEEDFORWARD_INHIBITION_ID = "modeldb112923.projection.031"
 L23_FEEDFORWARD_EXCITATION_ID = "modeldb112923.projection.032"
 L23_INTERNEURON_DRIVE_ID = "modeldb112923.projection.039"
 MINIMUM_TOP_DOWN_HORIZONTAL_CONTRAST = 0.01
+MINIMUM_TOP_DOWN_COMBINED_PEAK = 0.5
 HORIZONTAL_INDICES = (38, 39, 40, 41, 42)
 VERTICAL_INDICES = (22, 31, 40, 49, 58)
 HORIZONTAL_ONLY_INDICES = (38, 39, 41, 42)
@@ -155,6 +156,7 @@ class Figure6LearningResult:
         return (
             self.top_down_combined.horizontal_orientation_contrast
             >= MINIMUM_TOP_DOWN_HORIZONTAL_CONTRAST
+            and max(self.top_down_combined.after) >= MINIMUM_TOP_DOWN_COMBINED_PEAK
         )
 
 

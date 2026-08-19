@@ -1,6 +1,6 @@
 schema_version: 1
 name: figure6-population-resolved-axial-v1
-status: promoted-complete-figure6-source-profile
+status: retracted-shape-pass-amplitude-fail
 derivation: >-
   Pair the archived SMART.nml relay cell with its archived KInNeSS serialized
   axial edges, while pairing the paper Table 3 cortical and other cells with
@@ -26,4 +26,7 @@ promotion_gate: >-
   Promote only if the relay rate approaches the published 40 Hz target while
   the complete cortical chain, causal pair, Figure 6b, and fixed Figure 6c map
   gate all pass.
-promotion_evidence: docs/validation-results/figure6-population-resolved-axial-136.yaml
+retraction_reason: >-
+  Artifact 136 passed the shape-only contrast gate but its learned combined
+  field remains below the registered Figure 6c after-learning range of
+  approximately 0.5 to 2.5. Artifact 140 applies the corrected amplitude gate.

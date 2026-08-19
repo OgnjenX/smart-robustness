@@ -1,0 +1,42 @@
+schema_version: 1
+validation_id: figure7-gaussian-variance-113
+claim: The source-supported Gaussian-variance interpretation broadens the corticoreticular off-surround enough to suppress mismatch nonoverlap relay cells.
+status: failed-source-ambiguity-discriminator
+date: 2026-08-19
+sources:
+  framework: Versace et al. 2008 expanded KInNeSS manuscript, Section 4.9 calls Spread X/Y Gaussian variances.
+  executable: ModelDB 112923 SMART.nml names the corresponding fields sigma_x and sigma_y.
+protocol:
+  simulator: Brian2 2.9.0 numpy target
+  duration_ms: 100
+  integration_dt_ms: 0.01
+  top_down_current_pA: 1000
+  learned_state: paper-constrained Figure 6c horizontal expectation
+  gaussian_spread_convention: serialized values used directly as variances for every projection
+  gaussian_weight_convention: source peak with 0.001 cutoff
+  ring_interpretation: center-excluding wrapped Gaussian
+  convention_fingerprint: 9a5b604a14609c13ac73eb8f12e300f9f703a7f76ca151615c4d2ad05d874a32
+results:
+  match:
+    active_relay_indices: [38, 39, 40, 41, 42]
+    relay_events: 20
+    trn_events: 81
+    nonspecific_rate_hz: 60
+  mismatch:
+    active_relay_indices: [22, 31, 40, 49, 58]
+    relay_events: 20
+    trn_events: 81
+    nonspecific_rate_hz: 60
+assessment:
+  match_spatial_set_pass: true
+  mismatch_overlap_only_pass: false
+  relay_count_divergence_pass: false
+  trn_order_pass: false
+  mismatch_disinhibition_pass: false
+  official_figure7_reproduced: false
+  variance_interpretation_promoted: false
+interpretation:
+  - Applying the variance interpretation globally, rather than selectively strengthening the two off-surround projections, preserves all five bottom-up relay cells in both conditions.
+  - Both conditions retain the same 81-cell TRN startup volley and 60-Hz nonspecific output. The broader source-supported Gaussian interpretation therefore does not recover the two-against-one mismatch operation.
+  - Together with the measured topology/delivery pass in artifact 112 and the constant-drive TRN failures, this closes the remaining documented Gaussian-spread ambiguity as an explanation for Figure 7.
+  - The standard-deviation profile remains active because the XML explicitly names sigma and the variance profile also failed the complete Figure 6 gate in artifact 104.

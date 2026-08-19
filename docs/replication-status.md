@@ -1164,6 +1164,14 @@ missing connectivity, accidental center inclusion, and failed ligand delivery
 are excluded; exact legacy ring geometry remains unverified but cannot explain
 the already demonstrated failure under constant measured drive through 128x.
 
+The last documented Gaussian-spread ambiguity has also been carried through a
+complete Figure 7 pair (`figure7-gaussian-variance-113.yaml`). Interpreting all
+serialized Spread X/Y values as variances broadens the whole network, including
+the corticoreticular rings, but match and mismatch still activate all five of
+their bottom-up relay cells, each with 20 events. Both retain 81 startup-only
+TRN events and 60-Hz nonspecific output. This source-supported alternative does
+not restore the caption's overlap-only mismatch response and is not promoted.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

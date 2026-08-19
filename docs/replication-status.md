@@ -1050,6 +1050,25 @@ events, and 179 layer-6I events. Disconnecting the two published
 nonspecific-thalamus-to-layer-5 reset inputs changes nothing, so the reset
 chain, winner suppression, and alternative-release gates all fail.
 
+The corrected one-second Figure 14 spectra provide a partial result
+(`figure14-continuous-transmitter-101.yaml`). Match now has a gamma-dominant
+55-Hz peak, but mismatch has the same 55-Hz peak and slightly greater gamma
+power (20.1054 versus 19.2410). Thus the match-gamma gate passes while the
+mismatch-lower-frequency and mismatch-gamma-reduction gates fail.
+
+The corrected Figure 15 predeclared adjacent layer-4 pair has 10 and 11 events,
+but its correlogram spectrum peaks at 59.03 Hz rather than the reported
+approximately 44 Hz (`figure15-continuous-transmitter-102.yaml`). The
+sufficient-spike gate passes and the numeric target gate fails; no pair search
+or post-hoc frequency selection was used.
+
+The corrected full-duration Figure 16 two-area run completes with finite
+54-by-1000 fields in V1 and V2 (`figure16-continuous-transmitter-103.yaml`). Its
+strongest normalized inter-area correlation is in 4--8 Hz (0.6438), above the
+20--100-Hz band (0.3014), so the qualitative lower-frequency-dominance gate
+passes. Missing original learned arrays, electrode locations, and regional
+reduction details still prevent an exact numeric-reproduction claim.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

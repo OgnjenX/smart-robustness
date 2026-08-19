@@ -1,0 +1,47 @@
+schema_version: 1
+validation_id: figure16-continuous-transmitter-103
+claim: Continuous KInNeSS transmitter gating preserves Figure 16's qualitative lower-frequency inter-area dominance at the caption's full duration.
+status: qualitative-reproduction-pass-under-underidentified-learning
+date: 2026-08-19
+sources:
+  paper: Grossberg and Versace 2008, Figure 16 caption and Methods 4.11
+  framework: Versace et al. 2008 expanded KInNeSS manuscript, Equations 13-18
+  executable: ModelDB 112923 SMART.nml
+protocol:
+  simulator: Brian2 2.9.0 C++ standalone
+  prestimulus_ms: 1000
+  recording_ms: 1000
+  integration_dt_ms: 0.01
+  recording_sample_ms: 1
+  samples: 1000
+  sample_time_ms: [1000, 1999]
+  inter_area_delay_ms: 10
+  frequency_bands_hz: [[2, 4], [4, 8], [8, 12], [12, 20], [20, 100]]
+  stimulus: recovered horizontal five-cell bar
+  learned_state: paper-constrained Figure 6c horizontal expectation
+  transmitter_semantics: current source resource continuously multiplies each active delayed ligand gate
+  geometry_seeds: {v1: 16, v2: 17}
+  convention_fingerprint: a054e5e36b75765124150157029662c6a5c8a639ee6079b442304607e726cb11
+results:
+  v1_field_shape: [54, 1000]
+  v2_field_shape: [54, 1000]
+  v1_all_finite: true
+  v2_all_finite: true
+  normalized_peak_by_band:
+    2_4_hz: {peak: 0.618963163650459, lag_ms: 69}
+    4_8_hz: {peak: 0.6437709882676423, lag_ms: -100}
+    8_12_hz: {peak: 0.34701919320556335, lag_ms: -25}
+    12_20_hz: {peak: 0.191673419547674, lag_ms: 372}
+    20_100_hz: {peak: 0.3013983269874392, lag_ms: -424}
+  strongest_band_hz: [4, 8]
+assessment:
+  official_duration_completed: true
+  exact_caption_timing_pass: true
+  finite_field_pass: true
+  qualitative_lower_frequency_dominance_pass: true
+  exact_original_run_recovered: false
+  complete_classic_baseline_ready_to_freeze: false
+interpretation:
+  - The strongest normalized inter-area correlation is in the 4-8-Hz band and exceeds the 20-100-Hz band.
+  - The publication does not preserve learned arrays, electrode coordinates, or regional reduction details, so this remains a predeclared qualitative reconstruction rather than an exact numeric reproduction.
+  - Passing this higher-order gate does not offset the failed first-order Figure 6c, Figure 7, Figure 10, Figure 14 mismatch, and Figure 15 gates.

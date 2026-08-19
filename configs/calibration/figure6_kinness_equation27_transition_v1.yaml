@@ -1,0 +1,28 @@
+schema_version: 1
+name: figure6-kinness-equation27-transition-v1
+status: source-semantics-candidate
+derivation: >-
+  Retain the population-resolved axial Figure 6 candidate, but interpret each
+  serialized depotentiationLength as KInNeSS Equation 27's interface
+  Transition Time. KInNeSS therefore uses A=-1/T for the initial D+1 to D
+  transition and C=-0.04D for a separate 25-ms depressive tail.
+base_profile: configs/calibration/figure6_population_resolved_axial_v1.yaml
+base_candidate_fingerprint: 6f3d3fadb9891b4743d263ddf7bfa2ead493c999a2e520ee6709c3bb8c443b0a
+candidate_fingerprint: 12e0245e9a3044073200e90443582885a5410cf39b8b18d50d22a04a2fc48604
+runtime_fingerprint: a63cc758069acac04360c4ef0d576b4e758d607ac4eb879a7f0d255a83fe4531
+candidate:
+  intrinsic_cell_convention: modeldb_relay_paper_table3_others
+  calcium_kinetics_convention: modeldb_112923
+  calcium_density_convention: cell_specific
+  nak_rate_convention: standard_traub_miles
+  axial_convention: modeldb_relay_kinness_paper_others
+  membrane_initialization_convention: physical_leak_voltage
+  spike_event_rule: latched_peak_then_zero
+  gaussian_spread_convention: standard_deviation
+  relay_input_interpretation: archived_finite_conductance
+  top_down_current_pA: 600.0
+  postsynaptic_signal_convention: kinness_equation27_transition_time
+promotion_gate: >-
+  Promote only if exact Figure 6 relay confinement, cortical recruitment,
+  causal timing, orientation, and the minimum 2.0 combined learned-map peak
+  all pass without tuning published learning rates or bounds.

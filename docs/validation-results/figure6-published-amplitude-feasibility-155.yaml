@@ -1,0 +1,50 @@
+schema_version: 1
+id: figure6-published-amplitude-feasibility-155
+date: '2026-08-19'
+status: official-source-contradiction
+sources:
+  paper_equation: Grossberg and Versace 2008 Methods Equation 5
+  paper_figure: Grossberg and Versace 2008 Figure 6c
+  supplement: Supplementary Table 3, thalamic relay distal dendrite
+  archive: ModelDB 112923 SMART.nml projections 005 and 007
+published_parameters:
+  adaptive_component_maximum: 1.5
+  adaptive_component_baseline: 0.05
+  learning_rate: 0.1
+  episode_ms: 100.0
+derivation:
+  signal_bounds:
+    presynaptic_minimum: 0.0
+    presynaptic_maximum: 1.0
+    postsynaptic_maximum: less_than_or_equal_to_1.0
+  equation5_presynaptically_gated_form: >-
+    dw/dt=lambda*g_pre*(g_pre*f_post*(w_max-w)+(w0-w))
+  invariant_upper_bound_per_adaptive_component: 0.775
+  proof: >-
+    At w >= (w_max+w0)/2, the derivative is non-positive for every
+    non-negative f_post <= 1 and g_pre <= 1; a negative postsynaptic signal
+    only decreases it further. A trajectory initialized below this midpoint
+    therefore cannot cross it under the printed law.
+  two_adaptive_components_bound: 1.55
+  plus_archived_fixed_nmda_weight_bound: 1.85
+figure6c_visual_axis:
+  colorbar_upper_label: approximately 2.5
+  caveat: >-
+    A colorbar limit is not itself proof that the plotted field reaches the
+    limit. The paper does not publish the underlying numeric matrix, so exact
+    amplitude cannot be recovered from the raster figure alone.
+corrected_kinness_candidate:
+  profile: configs/calibration/figure6_kinness_equation27_transition_v1.yaml
+  training_artifact: docs/validation-results/figure6-kinness-equation27-transition-153.yaml
+  term_artifact: docs/validation-results/figure6-kinness-equation27-learning-phase-154.yaml
+  combined_adaptive_final_peak_approximate: 0.893
+  maximum_delta_reconstruction_error: 4.773959005888173e-15
+  result: not_promoted
+assessment:
+  official_absolute_amplitude_verifiable: false
+  normalized_shape_verifiable: true
+  source_faithful_candidate_reproduced: false
+  next_action: >-
+    Preserve the contradiction explicitly and calibrate only against a
+    defensible digitization or recovered numeric output; do not tune learning
+    rates or bounds to the colorbar endpoint.

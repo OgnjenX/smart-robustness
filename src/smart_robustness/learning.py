@@ -103,6 +103,27 @@ def postsynaptic_spike_gate(
     return result
 
 
+def kinness_postsynaptic_spike_gate(
+    elapsed_ms: float | np.ndarray,
+    *,
+    depression_scale: float,
+    transition_ms: float,
+) -> float | np.ndarray:
+    """Evaluate KInNeSS Equation 27 after the threshold branch.
+
+    KInNeSS defines ``A=-1/TransitionTime`` and ``C=-0.04*D``.  Thus the
+    signal falls from ``D+1`` to ``D`` during the serialized transition, then
+    returns from ``D`` to zero during a separate 25-ms depressive tail.
+    """
+
+    return postsynaptic_spike_gate(
+        elapsed_ms,
+        depression_scale=depression_scale,
+        positive_phase_ms=transition_ms,
+        depotentiation_ms=25.0,
+    )
+
+
 def full_postsynaptic_learning_signal(
     elapsed_ms: float | np.ndarray,
     *,

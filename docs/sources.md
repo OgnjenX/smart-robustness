@@ -152,3 +152,13 @@ linked class or source pages. An exact Software Heritage origin search likewise
 found no relevant SANNDRA/KInNeSS source tree, so the `spikeevents.h` temporal
 algorithm remains unavailable even though the manual now fixes its input to
 somatic voltage.
+
+KInNeSS Equation 27 introduces a further executable ambiguity for the archived
+adaptive projections. The framework article defines the interface Transition
+Time through `A=-1/T` and independently fixes `C=-0.04D` (a 25-ms depressive
+tail), while `SMART.nml` serializes a field named `depotentiationLength` with
+values 20/25 and the SMART paper prints a literal 0.1-ms transition followed by
+a 25-ms tail. Both interpretations remain named runtime conventions. Artifact
+155 also proves that the Figure 6c colorbar endpoint cannot be interpreted as
+an attainable single-synapse value under the printed Equation 5 and
+Supplementary Table 3 bounds; the numeric Figure 6 matrix was not published.

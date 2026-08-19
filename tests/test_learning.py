@@ -8,6 +8,7 @@ from smart_robustness.learning import (
     equilibrium_depression_scale,
     full_postsynaptic_learning_signal,
     gated_weight_derivative,
+    kinness_postsynaptic_spike_gate,
     learning_gate,
     postsynaptic_spike_gate,
 )
@@ -31,6 +32,14 @@ def test_equation6_gate_uses_serialized_depotentiation_length() -> None:
     assert postsynaptic_spike_gate(
         20.1, depression_scale=-0.2, depotentiation_ms=20.0
     ) == pytest.approx(0.0)
+
+
+def test_kinness_equation27_uses_transition_time_and_fixed_depressive_tail() -> None:
+    d = -0.2
+    elapsed = np.array([0.0, 10.0, 20.0, 32.5, 45.0])
+    assert kinness_postsynaptic_spike_gate(
+        elapsed, depression_scale=d, transition_ms=20.0
+    ) == pytest.approx([d + 1.0, d + 0.5, d, d / 2.0, 0.0])
 
 
 def test_full_equation6_signal_includes_above_threshold_spike_branch() -> None:

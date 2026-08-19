@@ -311,6 +311,7 @@ def connect_modeldb_projection(
     postsynaptic_learning_threshold_mV: float | None = None,
     postsynaptic_learning_timestamp: str = "emitted_event",
     postsynaptic_depression_scale_convention: str = "local_learning_bounds",
+    postsynaptic_signal_convention: str = "paper_equation6_literal",
     instrument_learning_terms: bool = False,
     topology_override: tuple[np.ndarray, np.ndarray, np.ndarray] | None = None,
     brian: Any,
@@ -380,7 +381,17 @@ def connect_modeldb_projection(
             learning_gate = "pre_signal*post_signal**2"
         else:
             raise ValueError(f"{record.id}: unsupported learning rule {record.learning_rule!r}")
-        post_window = record.depotentiation_ms
+        if postsynaptic_signal_convention == "paper_equation6_literal":
+            positive_window = 0.1
+            negative_window = float(record.depotentiation_ms)
+        elif postsynaptic_signal_convention == "kinness_equation27_transition_time":
+            positive_window = float(record.depotentiation_ms)
+            negative_window = 25.0
+        else:
+            raise ValueError(
+                "unsupported postsynaptic signal convention "
+                f"{postsynaptic_signal_convention!r}"
+            )
         event_coordinate = SpikeEventCoordinate(
             spike_event_coordinate
             if postsynaptic_learning_coordinate is None
@@ -439,11 +450,11 @@ def connect_modeldb_projection(
             f"\npost_elapsed={post_elapsed} : second"
             f"\ndepression_scale={depression_scale} : 1"
             "\nx_post_above=depression_scale+1 : 1"
-            "\nx_post_early=depression_scale+1-post_elapsed/(0.1*ms) : 1"
-            f"\nx_post_late=depression_scale*(1-(post_elapsed-0.1*ms)/({post_window}*ms)) : 1"
+            f"\nx_post_early=depression_scale+1-post_elapsed/({positive_window}*ms) : 1"
+            f"\nx_post_late=depression_scale*(1-(post_elapsed-{positive_window}*ms)/({negative_window}*ms)) : 1"
             f"\npost_signal=int({post_voltage} >= {learning_threshold_mV}*mV)*x_post_above"
-            f" + int({post_voltage} < {learning_threshold_mV}*mV and post_elapsed >= 0*ms and post_elapsed < 0.1*ms)*x_post_early"
-            f" + int({post_voltage} < {learning_threshold_mV}*mV and post_elapsed >= 0.1*ms and post_elapsed < {post_window + 0.1}*ms)*x_post_late : 1"
+            f" + int({post_voltage} < {learning_threshold_mV}*mV and post_elapsed >= 0*ms and post_elapsed < {positive_window}*ms)*x_post_early"
+            f" + int({post_voltage} < {learning_threshold_mV}*mV and post_elapsed >= {positive_window}*ms and post_elapsed < {positive_window + negative_window}*ms)*x_post_late : 1"
             "\ncorrelation_drive=pre_signal*post_signal*(w_maximum-w) : 1"
             "\nbaseline_drive=w_baseline-w : 1"
             f"\ndw/dt=({record.learning_rate}/ms)*({learning_gate})"
@@ -538,7 +549,12 @@ def connect_modeldb_projection(
     synapse.previous_amplitude = 0
     if record.modifiable and postsynaptic_learning_timestamp == "emitted_event":
         # Start strictly outside the serialized post-spike learning window.
-        synapse.last_post_spike = -(float(record.depotentiation_ms) + 1.0) * brian.ms
+        inactive_window = (
+            float(record.depotentiation_ms) + 25.0
+            if postsynaptic_signal_convention == "kinness_equation27_transition_time"
+            else float(record.depotentiation_ms) + 0.1
+        )
+        synapse.last_post_spike = -(inactive_window + 1.0) * brian.ms
     synapse.delay = float(record.delay_ms or 0.0) * brian.ms
     return synapse
 

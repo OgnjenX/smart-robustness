@@ -254,6 +254,14 @@ def runtime_conventions_for_candidate(
                 ).postsynaptic_learning_timestamp,
             )
         ),
+        postsynaptic_signal_convention=str(
+            values.get(
+                "postsynaptic_signal_convention",
+                (
+                    figure6_runtime_conventions() if base is None else base
+                ).postsynaptic_signal_convention,
+            )
+        ),
     )
 
 

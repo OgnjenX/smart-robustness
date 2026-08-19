@@ -1,0 +1,71 @@
+# Classic SMART constrained calibration
+
+Calibration starts from `classic-smart-source-constrained-v0.1.0` and never
+modifies that tag. Its purpose is to infer a small family of plausible missing
+legacy conventions—not to optimize arbitrary synaptic weights until plots look
+similar.
+
+## Scientific contract
+
+1. Search dimensions must be unresolved, conflicting, or not identifiable in
+   the surviving sources.
+2. Each dimension must list provenance, admissible values or bounds, and why it
+   is allowed to vary.
+3. Published weights and conductances remain fixed unless the publication
+   itself leaves them unidentified.
+4. Candidates pass mechanistic gates in order; later output-rate agreement
+   cannot compensate for an incorrect causal pathway.
+5. Figures 10 and 14–16 are holdouts. Their results may reject a candidate but
+   cannot be used to select or tune one.
+6. Every evaluated candidate receives a deterministic fingerprint and retains
+   failed as well as successful metrics.
+
+## Stages
+
+### A — isolated cellular viability
+
+- relay tonic/burst direction from Figure 8;
+- TRN quiescent before drive and recruitable by measured layer-6II/relay gates;
+- layer-5 AHP/ACh direction and apical-to-soma propagation.
+
+Candidates failing an isolated causal gate do not enter network calibration.
+
+### B — first-order learning chain
+
+- relay-to-layer-4 recruitment;
+- layer-4-to-layer-2/3-to-layer-5-to-layer-6II causal sequence;
+- Figure 6 bottom-up and top-down orientation;
+- no autonomous population-wide startup regime.
+
+### C — match/mismatch mechanism
+
+- all five horizontal relay cells active during match;
+- mismatch relay output confined to the horizontal/vertical overlap;
+- more post-startup TRN output in match;
+- nonspecific thalamus approximately 40 Hz match and 70 Hz mismatch.
+
+### D — locked holdout evaluation
+
+Without changing the candidate, evaluate:
+
+- Figure 10 causal reset and disconnection control;
+- Figure 14 gamma versus slower mismatch activity;
+- Figure 15 local frequency target;
+- Figure 16 lower-frequency long-range dominance.
+
+## Selection rule
+
+Selection is lexicographic, not a single unconstrained loss:
+
+1. all isolated causal gates;
+2. all Figure 6 causal/spatial gates;
+3. Figure 7 spatial and TRN-order gates;
+4. Figure 7 rate errors within predeclared tolerances;
+5. complexity preference for fewer inferred deviations from the frozen profile.
+
+If no candidate passes a stage, report that result and revise the uncertainty
+model explicitly. Do not silently widen bounds or expose holdout metrics to the
+optimizer.
+
+The initial executable contract is
+`configs/calibration/classic_uncertainty_space.yaml`.

@@ -1,0 +1,62 @@
+schema_version: 1
+name: classic-smart-calibration-v0
+base_tag: classic-smart-source-constrained-v0.1.0
+selection: lexicographic
+training_targets:
+  - figure6_learning_chain
+  - figure7_match_mismatch
+  - figure8_relay_modes
+  - figure19_ahp_ach
+holdout_targets:
+  - figure10_reset
+  - figure14_spectra
+  - figure15_local_synchrony
+  - figure16_long_range_synchrony
+dimensions:
+  intrinsic_cell_convention:
+    kind: categorical
+    values: [modeldb_112923, paper_table3]
+    status: conflicting_official_source
+    source: Grossberg and Versace Table 3 versus ModelDB 112923 SMART.nml
+  calcium_kinetics_convention:
+    kind: categorical
+    values: [modeldb_112923, paper_2008]
+    status: conflicting_official_source
+    source: Grossberg and Versace Methods 4.6 versus ModelDB 112923 SMART.nml
+  axial_convention:
+    kind: categorical
+    values: [kinness_serialized_edge, kinness_2008, paper_literal, symmetric_cable]
+    status: derived_source_ambiguity
+    source: Grossberg and Versace Equation 2 versus KInNeSS Equation 9
+  membrane_initialization_convention:
+    kind: categorical
+    values: [physical_leak_voltage, kinness_internal_zero]
+    status: source_ambiguity
+    source: Methods 4.9 versus KInNeSS internal voltage-coordinate documentation
+  spike_event_rule:
+    kind: categorical
+    values: [latched_peak_then_zero, literal_previous_sample, hysteretic_threshold_then_zero]
+    status: source_ambiguity
+    source: Grossberg and Versace Equation 8, KInNeSS Equation 18, and SANNDRA revision metadata
+  gaussian_spread_convention:
+    kind: categorical
+    values: [standard_deviation, variance]
+    status: source_ambiguity
+    source: SMART.nml sigma fields versus KInNeSS variance wording
+  relay_input_interpretation:
+    kind: categorical
+    values: [archived_finite_conductance, exact_proximal_clamp]
+    status: conflicting_protocol_source
+    source: SMART.nml external input versus Methods 4.9 fixed -12 mV clamp
+  top_down_current_pA:
+    kind: numeric
+    bounds: [600.0, 1000.0]
+    grid: [600.0, 800.0, 1000.0]
+    status: not_identifiable
+    source: Methods 4.9 reports somatic injection but no amplitude; isolated 30-40 Hz bracket
+forbidden_free_parameters:
+  - arbitrary_projection_weights
+  - per_figure_conductance_scaling
+  - per_condition_initial_states
+  - post_hoc_analysis_windows
+  - holdout_target_feedback

@@ -1,0 +1,40 @@
+schema_version: 1
+validation_id: figure6-gaussian-variance-104
+claim: Interpreting KInNeSS Spread X/Y values as printed Gaussian variances restores Figure 6c.
+status: failed-source-ambiguity-discriminator
+date: 2026-08-19
+sources:
+  framework: Versace et al. 2008 expanded KInNeSS manuscript, Section 4.9
+  executable: ModelDB 112923 SMART.nml sigma_x and sigma_y attributes
+source_ambiguity:
+  article_wording: Spread X and Spread Y set Gaussian variances
+  xml_field_names: sigma_x and sigma_y
+protocol:
+  simulator: Brian2 2.9.0 NumPy runtime
+  integration_dt_ms: 0.01
+  duration_ms: 100
+  stimulus: archived horizontal0.png channels
+  gaussian_peak_and_cutoff: archived manual rule retained
+  gaussian_spread_convention: serialized values used directly as variances
+  transmitter_semantics: current source resource continuously multiplies each active delayed ligand gate
+  convention_fingerprint: 9a5b604a14609c13ac73eb8f12e300f9f703a7f76ca151615c4d2ad05d874a32
+results:
+  population_events: {thalamic_relay: 20, layer4_excitatory_v1: 17, layer6ii_excitatory_v1: 1}
+  first_events_ms: {layer4_excitatory_v1: 63.89, layer23_excitatory_v1: null, layer5_excitatory_v1: null, layer6ii_excitatory_v1: 76.24}
+  category_teaching_arrival_ms: 78.24
+  preceding_relay_event_ms: 59.88
+  following_relay_event_ms: 81.43
+  bottom_up_horizontal_contrast: 0.06575425170074922
+  combined_top_down_horizontal_contrast: 0.005717969499653759
+assessment:
+  figure6b_pass: true
+  causal_top_down_pair_pass: true
+  cortical_chain_pass: false
+  figure6c_contrast_pass: false
+  full_figure6_pass: false
+  variance_interpretation_promoted: false
+interpretation:
+  - The broader kernels advance cortical recruitment and create a causal corticothalamic pre/post pair.
+  - Layer 2/3 and layer 5 remain silent, so the published cortical category chain is still absent.
+  - The positive top-down contrast remains below the predeclared 0.01 qualitative gate.
+  - The XML sigma field names and failed complete gate prevent replacing the standard-deviation baseline.

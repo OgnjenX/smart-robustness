@@ -1069,6 +1069,13 @@ strongest normalized inter-area correlation is in 4--8 Hz (0.6438), above the
 passes. Missing original learned arrays, electrode locations, and regional
 reduction details still prevent an exact numeric-reproduction claim.
 
+Section 4.9's description of Spread X/Y as Gaussian variances conflicts with
+the archive's `sigma_x`/`sigma_y` names. A new fingerprinted variance
+interpretation broadens the kernels and creates a causal category-to-relay pair,
+but layer 2/3 and layer 5 remain silent and Figure 6c contrast is only 0.0057,
+below the 0.01 gate (`figure6-gaussian-variance-104.yaml`). It is retained as an
+audit alternative and is not promoted over the archived sigma interpretation.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

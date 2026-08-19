@@ -25,6 +25,13 @@ class GaussianWeightConvention(StrEnum):
     SOURCE_PEAK = "source_peak"
 
 
+class GaussianSpreadConvention(StrEnum):
+    """Interpretation of archived ``sigma_x``/``sigma_y`` kernel fields."""
+
+    STANDARD_DEVIATION = "standard_deviation"
+    VARIANCE = "variance"
+
+
 KINNESS_GAUSSIAN_WEIGHT_CUTOFF = 0.001
 """Minimum KInNeSS Gaussian connection weight retained by the legacy editor."""
 
@@ -216,6 +223,9 @@ def modeldb_topology_pairs(
     gaussian_weight_convention: GaussianWeightConvention | str = (
         GaussianWeightConvention.SOURCE_PEAK
     ),
+    gaussian_spread_convention: GaussianSpreadConvention | str = (
+        GaussianSpreadConvention.STANDARD_DEVIATION
+    ),
 ) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
     """Apply the connect method and spatial metadata serialized by KInNeSS."""
 
@@ -251,9 +261,20 @@ def modeldb_topology_pairs(
     # The normalized-density branch is retained only to reproduce the earlier
     # paper-figure inference as an explicitly rejected audit alternative.
     convention = GaussianWeightConvention(gaussian_weight_convention)
-    factor = np.exp(-(dx**2 / (2 * kernel.sigma_x**2) + dy**2 / (2 * kernel.sigma_y**2)))
+    spread_convention = GaussianSpreadConvention(gaussian_spread_convention)
+    variance_x = (
+        kernel.sigma_x**2
+        if spread_convention is GaussianSpreadConvention.STANDARD_DEVIATION
+        else kernel.sigma_x
+    )
+    variance_y = (
+        kernel.sigma_y**2
+        if spread_convention is GaussianSpreadConvention.STANDARD_DEVIATION
+        else kernel.sigma_y
+    )
+    factor = np.exp(-(dx**2 / (2 * variance_x) + dy**2 / (2 * variance_y)))
     if convention is GaussianWeightConvention.NORMALIZED_DENSITY:
-        factor /= 2 * np.pi * kernel.sigma_x * kernel.sigma_y
+        factor /= 2 * np.pi * np.sqrt(variance_x * variance_y)
     if kernel.ring:
         # KInNeSS serializes no radius for a ring kernel. Its executable UI
         # convention is retained here as a center-excluding Gaussian candidate
@@ -273,6 +294,9 @@ def connect_modeldb_projection(
     target_shape: tuple[int, int],
     modifiable_weight_initialization: str,
     gaussian_weight_convention: GaussianWeightConvention | str,
+    gaussian_spread_convention: GaussianSpreadConvention | str = (
+        GaussianSpreadConvention.STANDARD_DEVIATION
+    ),
     gaussian_learning_bounds_convention: GaussianLearningBoundsConvention | str,
     spike_event_coordinate: str = "absolute_physical",
     spike_event_threshold_mV: float = 30.0,
@@ -383,6 +407,7 @@ def connect_modeldb_projection(
             source_shape=source_shape,
             target_shape=target_shape,
             gaussian_weight_convention=gaussian_weight_convention,
+            gaussian_spread_convention=gaussian_spread_convention,
         )
     else:
         source_indices, target_indices, spatial_factor = (
@@ -476,6 +501,12 @@ def connect_modeldb_gap_junction(
     post: CompartmentalPopulation,
     source_shape: tuple[int, int],
     target_shape: tuple[int, int],
+    gaussian_weight_convention: GaussianWeightConvention | str = (
+        GaussianWeightConvention.SOURCE_PEAK
+    ),
+    gaussian_spread_convention: GaussianSpreadConvention | str = (
+        GaussianSpreadConvention.STANDARD_DEVIATION
+    ),
     topology_override: tuple[np.ndarray, np.ndarray, np.ndarray] | None = None,
     brian: Any,
 ) -> Any:
@@ -497,7 +528,11 @@ def connect_modeldb_gap_junction(
     )
     if topology_override is None:
         source_indices, target_indices, spatial_factor = modeldb_topology_pairs(
-            record, source_shape=source_shape, target_shape=target_shape
+            record,
+            source_shape=source_shape,
+            target_shape=target_shape,
+            gaussian_weight_convention=gaussian_weight_convention,
+            gaussian_spread_convention=gaussian_spread_convention,
         )
     else:
         source_indices, target_indices, spatial_factor = (

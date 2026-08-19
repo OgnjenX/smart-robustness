@@ -15,6 +15,7 @@ from smart_robustness.models.currents import biexponential_peak_time_ms
 from smart_robustness.projections import SUPPLEMENTARY_TABLE3
 from smart_robustness.synapses import (
     GaussianLearningBoundsConvention,
+    GaussianSpreadConvention,
     GaussianWeightConvention,
     ModifiableWeightInitialization,
     connect_modeldb_projection,
@@ -203,6 +204,27 @@ def test_source_peak_gaussian_is_the_archived_kinness_convention() -> None:
         gaussian_weight_convention=GaussianWeightConvention.SOURCE_PEAK,
     )
     assert factor[(pre == 40) & (post == 40)][0] == pytest.approx(1.0)
+
+
+def test_gaussian_spread_can_be_interpreted_as_printed_variance() -> None:
+    record = MODELDB_FIRST_ORDER.by_id("modeldb112923.projection.032")
+    std_pre, std_post, std_factor = modeldb_topology_pairs(
+        record,
+        source_shape=(9, 9),
+        target_shape=(9, 9),
+        gaussian_spread_convention=GaussianSpreadConvention.STANDARD_DEVIATION,
+    )
+    var_pre, var_post, var_factor = modeldb_topology_pairs(
+        record,
+        source_shape=(9, 9),
+        target_shape=(9, 9),
+        gaussian_spread_convention=GaussianSpreadConvention.VARIANCE,
+    )
+    std_shoulder = std_factor[(std_pre == 40) & (std_post == 41)][0]
+    var_shoulder = var_factor[(var_pre == 40) & (var_post == 41)][0]
+    assert std_shoulder == pytest.approx(np.exp(-1 / (2 * 0.3**2)))
+    assert var_shoulder == pytest.approx(np.exp(-1 / (2 * 0.3)))
+    assert var_shoulder > std_shoulder
 
 
 def test_modeldb_gaussian_cuts_resulting_weights_below_legacy_threshold() -> None:

@@ -99,6 +99,7 @@ class FirstOrderRuntimeConventions:
     spike_event_rule: str = "latched_peak_then_zero"
     modifiable_weight_initialization: str = "source_serialized_weight"
     gaussian_weight_convention: str = "source_peak"
+    gaussian_spread_convention: str = "standard_deviation"
     gaussian_learning_bounds_convention: str = "projection_level"
     projection_source_convention: str = "modeldb_as_serialized"
     convergent_external_input_convention: str = "sum_independent_currents"
@@ -322,6 +323,7 @@ def build_full_smart_network(
                 **kwargs,
                 modifiable_weight_initialization=conventions.modifiable_weight_initialization,
                 gaussian_weight_convention=conventions.gaussian_weight_convention,
+                gaussian_spread_convention=conventions.gaussian_spread_convention,
                 gaussian_learning_bounds_convention=(
                     conventions.gaussian_learning_bounds_convention
                 ),
@@ -329,7 +331,11 @@ def build_full_smart_network(
                 spike_event_threshold_mV=conventions.spike_event_threshold_mV,
             )
         else:
-            projection = connect_modeldb_gap_junction(**kwargs)
+            projection = connect_modeldb_gap_junction(
+                **kwargs,
+                gaussian_weight_convention=conventions.gaussian_weight_convention,
+                gaussian_spread_convention=conventions.gaussian_spread_convention,
+            )
         projections[record.id] = projection
         network.add(projection)
     return FirstOrderSector(network, populations, facts, projections)
@@ -417,6 +423,7 @@ def build_first_order_chemical_sector(
                 resolved_conventions.modifiable_weight_initialization
             ),
             gaussian_weight_convention=resolved_conventions.gaussian_weight_convention,
+            gaussian_spread_convention=resolved_conventions.gaussian_spread_convention,
             gaussian_learning_bounds_convention=(
                 resolved_conventions.gaussian_learning_bounds_convention
             ),
@@ -493,9 +500,15 @@ def build_first_order_connected_sector(
     if brian is None:
         import brian2 as brian
 
+    if conventions is not None and gate_initialization_convention is not None:
+        raise ValueError("pass conventions or gate_initialization_convention, not both")
+    resolved_conventions = conventions or FirstOrderRuntimeConventions(
+        gate_initialization_convention=(
+            gate_initialization_convention or "steady_state_at_initial_voltage"
+        )
+    )
     sector = build_first_order_chemical_sector(
-        conventions=conventions,
-        gate_initialization_convention=gate_initialization_convention,
+        conventions=resolved_conventions,
         brian=brian,
     )
     facts_by_name = {fact.canonical_name: fact for fact in sector.facts}
@@ -511,6 +524,8 @@ def build_first_order_connected_sector(
             post=sector.populations[record.target_population],
             source_shape=facts_by_name[record.source_population].shape,
             target_shape=facts_by_name[record.target_population].shape,
+            gaussian_weight_convention=resolved_conventions.gaussian_weight_convention,
+            gaussian_spread_convention=resolved_conventions.gaussian_spread_convention,
             brian=brian,
         )
     sector.projections.update(electrical)

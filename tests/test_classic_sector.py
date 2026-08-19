@@ -159,6 +159,7 @@ def test_figure6_profile_names_the_source_constrained_runtime() -> None:
     assert conventions.calcium_voltage_coordinate == "integrated_voltage"
     assert conventions.specific_capacitance_uF_cm2 == 1.0
     assert conventions.gaussian_weight_convention == "source_peak"
+    assert conventions.gaussian_spread_convention == "standard_deviation"
     assert conventions.modifiable_weight_initialization == "figure6_pathway_specific"
     assert conventions.gaussian_learning_bounds_convention == "figure6_pathway_specific"
     assert conventions.projection_source_convention == "modeldb_as_serialized"

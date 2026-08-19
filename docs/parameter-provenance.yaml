@@ -134,6 +134,11 @@ parameters:
     status: archived-simulator-manual executable convention
     source: archived 2008 KInNeSS User Manual, Network Manipulations / Connect from many
     note: the manual says Weight is the Gaussian peak and shoulders below 0.001 are cut; normalized_density is retained only as the superseded Figure 6b inference
+  model.connectivity.gaussian_spread_convention:
+    value: standard_deviation or variance; must be selected explicitly
+    status: source-ambiguity
+    source: SMART.nml sigma_x/sigma_y field names versus KInNeSS Section 4.9 variance wording
+    note: the variance alternative creates a causal Figure 6 pair but fails the cortical-chain and Figure 6c contrast gates; standard_deviation remains active
   model.learning.gaussian_bounds_convention:
     value: Figure 6 pathway-specific (bottom-up projection-level baseline; corticothalamic Gaussian-scaled baseline with projection-level maximum)
     status: paper-supported executable convention

@@ -1473,6 +1473,15 @@ now requires a conservative `2.0` peak plus exactly four events in each of the
 five horizontal relay cells and no off-bar relay events. Threshold value and
 coordinate are rejected as sufficient explanations; no profile is promoted.
 
+The paper-Methods learning-rule contradiction is now tested in artifacts 146
+and 147. Methods 4.3 dual-AND gating with the absolute learning coordinate
+preserves confined 40-Hz relay recruitment but peaks at only `0.19319`.
+Crossing dual-AND with leak-relative voltage increases the peak to `0.96876`,
+but spreads 58 relay events across 43 cells. Both fail the `2.0` amplitude and
+spatial-confinement contract. The Figure 6 caption/serialized presynaptic rule
+and Methods dual-AND rule remain provenance-labeled alternatives, but neither
+currently reproduces Figure 6c.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

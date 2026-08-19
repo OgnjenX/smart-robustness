@@ -1,0 +1,30 @@
+schema_version: 1
+name: figure6-methods-dual-and-v1
+status: rejected-subpublished-amplitude
+derivation: >-
+  Resolve the contradiction between Figure 6c/the serialized records and
+  Methods 4.3 in favor of the Methods statement that layer-6II projections to
+  specific thalamus use dual-AND gating. Keep the population-resolved axial
+  profile and absolute +30 mV learning coordinate otherwise fixed.
+base_profile: configs/calibration/figure6_population_resolved_axial_v1.yaml
+base_candidate_fingerprint: 6f3d3fadb9891b4743d263ddf7bfa2ead493c999a2e520ee6709c3bb8c443b0a
+candidate_fingerprint: 9c1b185d04c4e68c2b8718c814b51fc20f08d49ff822185ae72630aa792993b5
+runtime_fingerprint: d5e2c4ab749c87d6d9e24f799eba46d3813266d4baa8f93ef15a798c40047eeb
+candidate:
+  intrinsic_cell_convention: modeldb_relay_paper_table3_others
+  calcium_kinetics_convention: modeldb_112923
+  calcium_density_convention: cell_specific
+  nak_rate_convention: standard_traub_miles
+  axial_convention: modeldb_relay_kinness_paper_others
+  membrane_initialization_convention: physical_leak_voltage
+  spike_event_rule: latched_peak_then_zero
+  gaussian_spread_convention: standard_deviation
+  relay_input_interpretation: archived_finite_conductance
+  top_down_current_pA: 600.0
+  top_down_learning_rule_convention: paper_methods_dual_and
+promotion_gate: >-
+  Require the 2.0 combined peak, positive orientation contrast, exact
+  five-cell 40-Hz relay recruitment, cortical chain, and causal timing.
+rejection_evidence: >-
+  Artifact 146 preserves confined 40-Hz recruitment but reaches only 0.19319
+  combined peak versus the registered 2.0 minimum.

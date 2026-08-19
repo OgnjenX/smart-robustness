@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import hashlib
 import json
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, replace
 from enum import StrEnum
 from typing import Any
 
@@ -102,6 +102,7 @@ class FirstOrderRuntimeConventions:
     spike_event_threshold_mV: float = 30.0
     postsynaptic_learning_coordinate: str = "absolute_physical"
     postsynaptic_learning_threshold_mV: float = 30.0
+    top_down_learning_rule_convention: str = "serialized_presynaptic"
     spike_event_rule: str = "latched_peak_then_zero"
     modifiable_weight_initialization: str = "source_serialized_weight"
     gaussian_weight_convention: str = "source_peak"
@@ -125,6 +126,8 @@ class FirstOrderRuntimeConventions:
             values.pop("postsynaptic_learning_threshold_mV")
         if values["postsynaptic_learning_coordinate"] == values["spike_event_coordinate"]:
             values.pop("postsynaptic_learning_coordinate")
+        if values["top_down_learning_rule_convention"] == "serialized_presynaptic":
+            values.pop("top_down_learning_rule_convention")
         payload = json.dumps(values, sort_keys=True, separators=(",", ":"))
         return hashlib.sha256(payload.encode()).hexdigest()
 
@@ -163,13 +166,21 @@ def _resolved_projection_record(record, *, conventions: FirstOrderRuntimeConvent
         # specifies layer-2/3 excitatory -> layer-6II distal, one-to-one, as
         # does the paper's category pathway. Preserve the literal record under
         # MODELDB_AS_SERIALIZED and resolve it only in the cross-checked profile.
-        from dataclasses import replace
-
-        return replace(
+        record = replace(
             record,
             source_population="layer23_excitatory_v1",
             method="connectFromOne",
             kernel=None,
+        )
+    if conventions.top_down_learning_rule_convention == "paper_methods_dual_and":
+        if record.id in {"modeldb112923.projection.005", "modeldb112923.projection.007"}:
+            attributes = dict(record.projection_attributes)
+            attributes["learningRule"] = "Dual AND gated"
+            record = replace(record, projection_attributes=attributes)
+    elif conventions.top_down_learning_rule_convention != "serialized_presynaptic":
+        raise ValueError(
+            "unsupported top-down learning-rule convention "
+            f"{conventions.top_down_learning_rule_convention!r}"
         )
     return record
 

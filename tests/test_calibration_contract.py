@@ -83,6 +83,9 @@ FIGURE6_POPULATION_AXIAL_LEARNING_PHASE_PATH = (
 FIGURE6_LEARNING_THRESHOLD_ASSESSMENT_PATH = (
     ROOT / "docs/validation-results/figure6-learning-threshold-coordinate-assessment-145.yaml"
 )
+FIGURE6_LEARNING_RULE_ASSESSMENT_PATH = (
+    ROOT / "docs/validation-results/figure6-learning-rule-coordinate-assessment-148.yaml"
+)
 FIGURE7_POPULATION_AXIAL_RESULT_PATH = (
     ROOT / "docs/validation-results/calibration-figure6-figure7-population-axial-137.yaml"
 )
@@ -549,6 +552,20 @@ def test_learning_threshold_and_coordinate_candidates_are_all_rejected() -> None
     assert leak_relative["combined_peak"] == pytest.approx(0.527413146)
     assert leak_relative["relay_spikes"] == 58
     assert not leak_relative["relay_recruitment_confined"]
+    assert artifact["assessment"]["promoted_profile"] is None
+
+
+def test_methods_dual_and_candidates_fail_amplitude_or_spatial_gate() -> None:
+    artifact = yaml.safe_load(FIGURE6_LEARNING_RULE_ASSESSMENT_PATH.read_text())
+    assert len(artifact["candidates"]) == 6
+    absolute = artifact["candidates"][-2]
+    interaction = artifact["candidates"][-1]
+    assert absolute["combined_peak"] == pytest.approx(0.193188217)
+    assert absolute["relay_recruitment_confined"]
+    assert interaction["combined_peak"] == pytest.approx(0.968761508)
+    assert interaction["relay_spikes"] == 58
+    assert not interaction["relay_recruitment_confined"]
+    assert not artifact["assessment"]["learning_rule_explanation_sufficient"]
     assert artifact["assessment"]["promoted_profile"] is None
 
 

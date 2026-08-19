@@ -286,3 +286,9 @@ alternatives. Absolute `0` and `-20 mV` thresholds peak at only `0.15232` and
 The corrected gate requires a `2.0` combined peak (tolerance around the
 published approximately `2.5` maximum) and confines relay activity to four
 events in each of the five horizontal cells. No threshold profile passes.
+
+Artifacts 146 and 147 resolve the next official-source contradiction. Methods
+4.3 dual-AND gating reaches only `0.19319` under absolute voltage. Its
+interaction with leak-relative voltage reaches `0.96876` but recruits 58 events
+across 43 relay cells. Neither passes, so learning-rule choice is not a
+sufficient Figure 6 explanation.

@@ -10,13 +10,28 @@ from smart_robustness.classic_sector import (
     FirstOrderRuntimeConventions,
     IntrinsicCellConvention,
     ZeroSensitivityInputConvention,
+    _resolved_projection_record,
     build_first_order_chemical_sector,
     build_first_order_intrinsic_sector,
     build_first_order_voltage_clamp_sector,
     figure6_runtime_conventions,
     first_order_population_parameters,
 )
+from smart_robustness.modeldb_projections import MODELDB_FIRST_ORDER
 from smart_robustness.models.modeldb112923 import first_order_population_facts
+
+
+def test_methods_dual_and_override_is_scoped_to_adaptive_corticothalamic_records() -> None:
+    conventions = FirstOrderRuntimeConventions(
+        top_down_learning_rule_convention="paper_methods_dual_and"
+    )
+    resolved = {
+        record.id: _resolved_projection_record(record, conventions=conventions)
+        for record in MODELDB_FIRST_ORDER.projections
+    }
+    assert resolved["modeldb112923.projection.005"].learning_rule == "Dual AND gated"
+    assert resolved["modeldb112923.projection.007"].learning_rule == "Dual AND gated"
+    assert resolved["modeldb112923.projection.035"].learning_rule == "Postsynaptically gated"
 
 
 def test_protocol_voltage_clamp_preserves_sector_and_pins_selected_relay_dendrites() -> None:

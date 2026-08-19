@@ -238,6 +238,14 @@ def runtime_conventions_for_candidate(
                 ).postsynaptic_learning_coordinate,
             )
         ),
+        top_down_learning_rule_convention=str(
+            values.get(
+                "top_down_learning_rule_convention",
+                (
+                    figure6_runtime_conventions() if base is None else base
+                ).top_down_learning_rule_convention,
+            )
+        ),
     )
 
 

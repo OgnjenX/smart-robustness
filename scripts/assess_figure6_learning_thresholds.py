@@ -66,6 +66,7 @@ def main() -> None:
         "assessment": {
             "threshold_value_explanation_sufficient": False,
             "learning_coordinate_explanation_sufficient": False,
+            "learning_rule_explanation_sufficient": False,
             "promoted_profile": None,
         },
     }

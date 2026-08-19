@@ -309,6 +309,7 @@ def connect_modeldb_projection(
     spike_event_threshold_mV: float = 30.0,
     postsynaptic_learning_coordinate: str | None = None,
     postsynaptic_learning_threshold_mV: float | None = None,
+    postsynaptic_learning_timestamp: str = "emitted_event",
     postsynaptic_depression_scale_convention: str = "local_learning_bounds",
     instrument_learning_terms: bool = False,
     topology_override: tuple[np.ndarray, np.ndarray, np.ndarray] | None = None,
@@ -421,8 +422,21 @@ def connect_modeldb_projection(
             if postsynaptic_learning_threshold_mV is None
             else float(postsynaptic_learning_threshold_mV)
         )
+        if postsynaptic_learning_timestamp == "upward_threshold":
+            post_elapsed = "t-last_spike_onset_post"
+            timestamp_state = ""
+            on_post = None
+        elif postsynaptic_learning_timestamp == "emitted_event":
+            post_elapsed = "t-last_post_spike"
+            timestamp_state = "\nlast_post_spike : second"
+            on_post = "last_post_spike = t"
+        else:
+            raise ValueError(
+                "unsupported postsynaptic learning timestamp "
+                f"{postsynaptic_learning_timestamp!r}"
+            )
         model += (
-            "\npost_elapsed=t-last_post_spike : second"
+            f"\npost_elapsed={post_elapsed} : second"
             f"\ndepression_scale={depression_scale} : 1"
             "\nx_post_above=depression_scale+1 : 1"
             "\nx_post_early=depression_scale+1-post_elapsed/(0.1*ms) : 1"
@@ -435,9 +449,8 @@ def connect_modeldb_projection(
             f"\ndw/dt=({record.learning_rate}/ms)*({learning_gate})"
             "*(correlation_drive+baseline_drive) : 1 (clock-driven)"
             f"{learning_term_instrumentation}"
-            "\nlast_post_spike : second"
+            f"{timestamp_state}"
         )
-        on_post = "last_post_spike = t"
     else:
         model = "w : 1\n" + model
     synapse = brian.Synapses(
@@ -523,7 +536,7 @@ def connect_modeldb_projection(
     synapse.previous_arrival = 0 * brian.second
     synapse.last_amplitude = 0
     synapse.previous_amplitude = 0
-    if record.modifiable:
+    if record.modifiable and postsynaptic_learning_timestamp == "emitted_event":
         # Start strictly outside the serialized post-spike learning window.
         synapse.last_post_spike = -(float(record.depotentiation_ms) + 1.0) * brian.ms
     synapse.delay = float(record.delay_ms or 0.0) * brian.ms

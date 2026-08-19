@@ -1503,6 +1503,15 @@ event and have nearly identical widths: `0.18/0.17 ms` above +30 mV and
 choice therefore cannot supply the missing positive Equation 6 duration; no
 waveform candidate is promoted.
 
+Equation 6's spike timestamp has also been separated from Equation 8 emission
+(`figure6-learning-timestamp-upward-151.yaml`). Timestamping the postsynaptic
+spike at the upward +30-mV crossing leaves every population spike count and
+the confined five-cell relay pattern unchanged, but lowers the combined map
+peak from `0.11853` to `0.10750`. The earlier timestamp starts the depressive
+tail sooner and increases its overlap with presynaptic activity. Thus reusing
+the later falling-phase event was not the source of insufficient potentiation;
+the upward alternative is retained as rejected provenance, not promoted.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

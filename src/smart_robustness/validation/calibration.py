@@ -246,6 +246,14 @@ def runtime_conventions_for_candidate(
                 ).top_down_learning_rule_convention,
             )
         ),
+        postsynaptic_learning_timestamp=str(
+            values.get(
+                "postsynaptic_learning_timestamp",
+                (
+                    figure6_runtime_conventions() if base is None else base
+                ).postsynaptic_learning_timestamp,
+            )
+        ),
     )
 
 

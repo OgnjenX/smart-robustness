@@ -75,6 +75,11 @@ parameters:
     status: conflicting-official-source-tested
     source: Figure 6c caption and SMART.nml projections 005/007 versus Grossberg and Versace 2008 Methods 4.3
     note: artifact 146 shows dual-AND with absolute voltage peaks at 0.19319; artifact 147 crosses dual-AND with leak-relative voltage and peaks at 0.96876 but recruits 58 events across 43 relay cells; neither reaches the 2.0 gate with spatial confinement
+  model.learning.postsynaptic_spike_timestamp:
+    value: Equation 8 falling-phase emitted event; upward +30-mV crossing retained as a rejected Equation 6 alternative
+    status: source-timing-ambiguity-tested
+    source: Grossberg and Versace 2008 Equations 6 and 8
+    note: artifact 151 timestamps Equation 6 at upward threshold while retaining falling-phase axonal emission; all population counts remain unchanged, but the combined peak falls from 0.11853 to 0.10750 because the depression tail starts earlier
   model.classic_hh.kinness_spike_threshold:
     value: framework alternative with V_theta=-20 mV and event release below 0 mV
     status: published-executable-framework-alternative

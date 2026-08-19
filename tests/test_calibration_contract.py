@@ -92,6 +92,9 @@ FIGURE6_DUAL_AND_LEAK_PHASE_PATH = (
 FIGURE6_RELAY_WAVEFORM_PATH = (
     ROOT / "docs/validation-results/figure6-relay-waveform-nak-audit-150.yaml"
 )
+FIGURE6_UPWARD_TIMESTAMP_PATH = (
+    ROOT / "docs/validation-results/figure6-learning-timestamp-upward-151.yaml"
+)
 FIGURE7_POPULATION_AXIAL_RESULT_PATH = (
     ROOT / "docs/validation-results/calibration-figure6-figure7-population-axial-137.yaml"
 )
@@ -606,6 +609,17 @@ def test_registered_nak_families_do_not_extend_relay_positive_phase() -> None:
         assert results[family]["soma_voltage_peak_mV"] < 0
     assert not artifact["assessment"]["nak_family_explanation_sufficient"]
     assert artifact["assessment"]["waveform_survivor"] is None
+
+
+def test_upward_learning_timestamp_preserves_spikes_but_reduces_peak() -> None:
+    artifact = yaml.safe_load(FIGURE6_UPWARD_TIMESTAMP_PATH.read_text())
+    assert artifact["population_spikes"]["thalamic_relay"] == 20
+    assert artifact["relay_recruitment"]["confined_to_horizontal_bar_at_40_hz"]
+    assert artifact["maps"]["top_down_combined"]["maximum_after"] == pytest.approx(
+        0.1074981615
+    )
+    assert not artifact["assessment"]["figure6_reproduced"]
+    assert not artifact["assessment"]["promoted"]
 
 
 @pytest.mark.parametrize(

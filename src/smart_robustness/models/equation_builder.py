@@ -315,6 +315,7 @@ def compile_cell_equations(
         "e_k : volt (constant)",
         "e_ca : volt (constant)",
         "armed : 1",
+        "last_spike_onset : second",
     ]
     for parameter in axial_parameters:
         lines.append(f"{parameter} : siemens (constant)")

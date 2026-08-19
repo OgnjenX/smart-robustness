@@ -103,6 +103,7 @@ class FirstOrderRuntimeConventions:
     postsynaptic_learning_coordinate: str = "absolute_physical"
     postsynaptic_learning_threshold_mV: float = 30.0
     top_down_learning_rule_convention: str = "serialized_presynaptic"
+    postsynaptic_learning_timestamp: str = "emitted_event"
     spike_event_rule: str = "latched_peak_then_zero"
     modifiable_weight_initialization: str = "source_serialized_weight"
     gaussian_weight_convention: str = "source_peak"
@@ -128,6 +129,8 @@ class FirstOrderRuntimeConventions:
             values.pop("postsynaptic_learning_coordinate")
         if values["top_down_learning_rule_convention"] == "serialized_presynaptic":
             values.pop("top_down_learning_rule_convention")
+        if values["postsynaptic_learning_timestamp"] == "emitted_event":
+            values.pop("postsynaptic_learning_timestamp")
         payload = json.dumps(values, sort_keys=True, separators=(",", ":"))
         return hashlib.sha256(payload.encode()).hexdigest()
 
@@ -412,6 +415,9 @@ def build_full_smart_network(
                 postsynaptic_learning_coordinate=(
                     conventions.postsynaptic_learning_coordinate
                 ),
+                postsynaptic_learning_timestamp=(
+                    conventions.postsynaptic_learning_timestamp
+                ),
                 postsynaptic_depression_scale_convention=(
                     conventions.postsynaptic_depression_scale_convention
                 ),
@@ -521,6 +527,9 @@ def build_first_order_chemical_sector(
             ),
             postsynaptic_learning_coordinate=(
                 resolved_conventions.postsynaptic_learning_coordinate
+            ),
+            postsynaptic_learning_timestamp=(
+                resolved_conventions.postsynaptic_learning_timestamp
             ),
             postsynaptic_depression_scale_convention=(
                 resolved_conventions.postsynaptic_depression_scale_convention

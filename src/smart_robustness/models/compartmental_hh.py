@@ -301,7 +301,12 @@ def create_compartmental_hh_population(
         SpikeEventRule.LATCHED_PEAK_THEN_ZERO,
         SpikeEventRule.HYSTERETIC_THRESHOLD_THEN_ZERO,
     }:
-        group.run_on_event("arm_spike", "armed = 1", when="after_thresholds", order=1)
+        group.run_on_event(
+            "arm_spike",
+            "armed = 1; last_spike_onset = t",
+            when="after_thresholds",
+            order=1,
+        )
         if spike_event_rule is SpikeEventRule.HYSTERETIC_THRESHOLD_THEN_ZERO:
             group.run_on_event(
                 "release_spike_detector", "armed = 0", when="after_thresholds", order=2
@@ -326,6 +331,7 @@ def create_compartmental_hh_population(
     # SMART Equation 8 emits on the falling phase: first remember a sample
     # above V_theta, then release one event when the soma returns below 0 mV.
     group.armed = 0
+    group.last_spike_onset = -1 * brian.second
     if spike_event_rule is SpikeEventRule.LITERAL_PREVIOUS_SAMPLE:
         default_soma_voltage = (
             0.0

@@ -261,6 +261,7 @@ def test_source_spike_event_coordinate_accepts_fixed_67_mv_shift() -> None:
     network.run(0.01 * brian.ms)
     assert spike_monitor.count[0] == 0
     assert population.group.armed[0] == 1
+    assert population.group.last_spike_onset[0] / brian.ms == pytest.approx(0.0)
     population.group.v_soma = -68 * brian.mV
     network.run(0.01 * brian.ms)
     assert spike_monitor.count[0] == 1

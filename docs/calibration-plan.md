@@ -305,3 +305,8 @@ Artifact 150 completes that waveform screen. The only two spiking Na/K
 families remain above +30 mV for `0.17--0.18 ms`; the two printed-activation
 families never spike. No registered Na/K family materially extends the
 positive learning phase, so this discriminator is closed without promotion.
+
+Artifact 151 then separates Equation 6's spike timestamp from Equation 8
+release. The upward +30-mV timestamp preserves all spike counts but lowers the
+combined map peak to `0.10750`; its earlier depression tail is less favorable
+than the existing falling-phase timestamp. This timing route is closed.

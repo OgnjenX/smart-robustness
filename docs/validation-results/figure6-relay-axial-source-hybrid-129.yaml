@@ -1,0 +1,52 @@
+schema_version: 1
+id: figure6-relay-axial-source-hybrid-129
+date: '2026-08-19'
+profile: configs/calibration/figure6_relay_axial_source_hybrid_v1.yaml
+candidate_fingerprint: e3c7230ac9ab13d05888e14adeeebe8450cc627fa7ea363591979304b064fd0a
+runtime_fingerprint: f59050766cd930da09a873a1944f958e89aa62bd50e9d617d4f3f1d4f7fac877
+holdouts_consulted: false
+status: leading-partial-figure6-only-top-down-contrast-fails
+protocol:
+  warmup_ms: 0.0
+  stimulus_ms: 100.0
+  dt_ms: 0.01
+  source_value: 120.0
+  category_source_value: 70.0
+population_spikes:
+  thalamic_relay: 35
+  trn: 81
+  layer5_excitatory_v1: 14
+  layer6ii_excitatory_v1: 107
+  layer6i_excitatory_v1: 53
+  layer23_excitatory_v1: 26
+  layer4_excitatory_v1: 38
+  layer23_inhibitory_v1: 25
+  thalamic_nonspecific: 1
+recruitment:
+  layer4_spike_ms: 5.790000000000001
+  layer23_spike_ms: 24.73
+  layer5_spike_ms: 27.44
+  layer6i_spike_ms: 3.97
+  layer6ii_spike_ms: 7.88
+  feedforward_chain_complete: true
+top_down_timing:
+  category_spike_ms: 7.88
+  teaching_arrival_ms: 9.879999999999999
+  preceding_relay_spike_ms: 1.1400000000000001
+  following_relay_spike_ms: 28.470000000000002
+  following_post_minus_arrival_ms: 18.590000000000003
+  causal_pair_in_learning_window: true
+maps:
+  bottom_up_horizontal_orientation_contrast: 0.3401644237195719
+  top_down_horizontal_orientation_contrast: 0.007370441388364724
+  minimum_top_down_horizontal_contrast: 0.01
+  bottom_up_oriented: true
+  top_down_oriented: false
+assessment:
+  feedforward_chain_pass: true
+  causal_top_down_pair_pass: true
+  figure6b_bottom_up_map_pass: true
+  figure6c_top_down_map_pass: false
+  only_failed_gate: top_down_horizontal_orientation_contrast
+  figure6_reproduced: false
+  promoted: false

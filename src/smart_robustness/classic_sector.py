@@ -67,6 +67,10 @@ class IntrinsicCellConvention(StrEnum):
 
     MODELDB_112923 = "modeldb_112923"
     PAPER_TABLE3 = "paper_table3"
+    MODELDB_RELAY_PAPER_TABLE3_OTHERS = "modeldb_relay_paper_table3_others"
+    MODELDB_RELAY_LAYER6II_PAPER_TABLE3_OTHERS = (
+        "modeldb_relay_layer6ii_paper_table3_others"
+    )
 
 
 class CalciumKineticsConvention(StrEnum):
@@ -189,10 +193,33 @@ def resolved_intrinsic_cell(
 ) -> CellSpec:
     """Return an unmixed paper or recovered-executable intrinsic cell spec."""
 
-    selected = IntrinsicCellConvention(conventions.intrinsic_cell_convention)
+    selected = _resolved_intrinsic_source(facts, conventions=conventions)
     if selected is IntrinsicCellConvention.MODELDB_112923:
         return facts.cell
     return _table3_cell_for_population(facts.canonical_name)
+
+
+def _resolved_intrinsic_source(
+    facts: FirstOrderPopulationFacts,
+    *,
+    conventions: FirstOrderRuntimeConventions,
+) -> IntrinsicCellConvention:
+    """Resolve a declared source profile to one population's intrinsic source."""
+
+    selected = IntrinsicCellConvention(conventions.intrinsic_cell_convention)
+    if selected in {
+        IntrinsicCellConvention.MODELDB_RELAY_PAPER_TABLE3_OTHERS,
+        IntrinsicCellConvention.MODELDB_RELAY_LAYER6II_PAPER_TABLE3_OTHERS,
+    }:
+        archived_populations = {"thalamic_relay"}
+        if selected is IntrinsicCellConvention.MODELDB_RELAY_LAYER6II_PAPER_TABLE3_OTHERS:
+            archived_populations.add("layer6ii_excitatory_v1")
+        return (
+            IntrinsicCellConvention.MODELDB_112923
+            if facts.canonical_name in archived_populations
+            else IntrinsicCellConvention.PAPER_TABLE3
+        )
+    return selected
 
 
 def first_order_population_parameters(
@@ -202,7 +229,7 @@ def first_order_population_parameters(
     catalog=MODELDB_FIRST_ORDER,
 ) -> dict[str, Any]:
     has_ahp = facts.ahp_density_mS_cm2 is not None
-    intrinsic_source = IntrinsicCellConvention(conventions.intrinsic_cell_convention)
+    intrinsic_source = _resolved_intrinsic_source(facts, conventions=conventions)
     intrinsic_cell = resolved_intrinsic_cell(facts, conventions=conventions)
     calcium_kinetics = CalciumKineticsConvention(conventions.calcium_kinetics_convention)
     calcium_gate_convention = conventions.calcium_gate_convention

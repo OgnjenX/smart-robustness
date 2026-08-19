@@ -1,0 +1,25 @@
+schema_version: 1
+name: figure6-relay-axial-source-hybrid-v1
+status: leading-partial-source-profile-not-promoted
+derivation: >-
+  Combine the archived SMART.nml relay cell, Table 3 cells for other
+  populations, and the paper-literal Equation 2 axial interpretation. Each is
+  an independently declared official-source alternative.
+base_profile: configs/calibration/figure6_relay_source_hybrid_v1.yaml
+base_candidate_fingerprint: 0336daf292a77d89d564da1d9621bc1f1b8dbf44f36b61ec3be45fc47eaa2776
+candidate_fingerprint: e3c7230ac9ab13d05888e14adeeebe8450cc627fa7ea363591979304b064fd0a
+runtime_fingerprint: f59050766cd930da09a873a1944f958e89aa62bd50e9d617d4f3f1d4f7fac877
+candidate:
+  intrinsic_cell_convention: modeldb_relay_paper_table3_others
+  calcium_kinetics_convention: modeldb_112923
+  calcium_density_convention: cell_specific
+  nak_rate_convention: standard_traub_miles
+  axial_convention: paper_literal
+  membrane_initialization_convention: physical_leak_voltage
+  spike_event_rule: latched_peak_then_zero
+  gaussian_spread_convention: standard_deviation
+  relay_input_interpretation: archived_finite_conductance
+  top_down_current_pA: 600.0
+promotion_gate: >-
+  Do not promote until the combined top-down horizontal orientation contrast
+  reaches the predeclared 0.01 threshold without weakening any acceptance gate.

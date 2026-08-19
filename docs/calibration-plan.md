@@ -188,3 +188,31 @@ The isolated-TRN screen's registered 5-ms pre-drive has also been tested as a
 connected-network equilibration (`figure6-relay-equilibration-127.yaml`). It
 reduces center-relay output from one event to zero and is rejected. Do not add
 an undocumented warmup to hide the intact thalamic suppression discrepancy.
+
+The archived relay cell has now been separable from the global intrinsic-cell
+choice as the explicit source profile
+`modeldb_relay_paper_table3_others`. Its complete Figure 6 run
+(`figure6-relay-source-hybrid-128.yaml`) removes the inactive full-sheet relay
+volley, restricts relay and layer-4 output to the five bar pixels, and restores
+the qualitative Figure 6b bottom-up orientation. It does not recruit layer 2/3
+or layer 5 and fails Figure 6c, so it remains unpromoted. This moves the next
+training discriminator back to the measured layer-4 excitation/feedforward
+inhibition waveform under the corrected five-cell relay input.
+
+The paper-literal Equation 2 axial profile has now been crossed with the
+archived-relay source profile (`figure6-relay-axial-source-hybrid-129.yaml`).
+This interaction restores the complete ordered cortical chain, a causal
+teaching-before-relay pair, and strong Figure 6b orientation. Its only failed
+gate is combined Figure 6c top-down contrast: 0.007370 versus the registered
+0.01 minimum. Keep the acceptance threshold fixed. The next discriminator is
+the wide/narrow corticothalamic learning decomposition and category-cell
+spatial activity under this exact fingerprint.
+
+That decomposition is now recorded in
+`figure6-relay-axial-map-decomposition-130.yaml`: inactive vertical arms remain
+unchanged, the narrow field contributes most positive contrast, and mixed
+potentiation/depression in the wide horizontal arm causes the remaining gap.
+Artifact `figure6-leading-source-alternatives-131.yaml` exhausts registered
+event-rule, initialization, calcium-kinetics, Na/K-rate, archived-category, and
+serialized-weight alternatives. Keep the leading fingerprint fixed while
+auditing the exact presynaptically gated learning phase and its source timing.

@@ -124,6 +124,45 @@ def test_intrinsic_cell_source_is_explicit_and_does_not_mix_trn_densities() -> N
     assert paper_parameters["e_ca_mV"] == 180
 
 
+def test_source_hybrid_uses_archived_relay_and_table3_for_other_cells() -> None:
+    facts = {fact.canonical_name: fact for fact in first_order_population_facts()}
+    conventions = FirstOrderRuntimeConventions(
+        intrinsic_cell_convention=(
+            IntrinsicCellConvention.MODELDB_RELAY_PAPER_TABLE3_OTHERS.value
+        )
+    )
+    relay = first_order_population_parameters(
+        facts["thalamic_relay"], conventions=conventions
+    )
+    trn = first_order_population_parameters(facts["trn"], conventions=conventions)
+
+    assert relay["cell_spec"].name == "modeldb112923_relay"
+    assert relay["cell_spec"].compartment("proximal_dendrite").g_ca_mS_cm2 == 0.1
+    assert trn["cell_spec"].name == "trn"
+    assert trn["cell_spec"].compartment("proximal_dendrite").g_ca_mS_cm2 == 10
+    assert relay["e_k_mV"] == facts["thalamic_relay"].e_k_mV
+    assert trn["e_k_mV"] == -90
+
+
+def test_category_source_hybrid_also_uses_archived_layer6ii() -> None:
+    facts = {fact.canonical_name: fact for fact in first_order_population_facts()}
+    conventions = FirstOrderRuntimeConventions(
+        intrinsic_cell_convention=(
+            IntrinsicCellConvention.MODELDB_RELAY_LAYER6II_PAPER_TABLE3_OTHERS.value
+        )
+    )
+    layer6ii = first_order_population_parameters(
+        facts["layer6ii_excitatory_v1"], conventions=conventions
+    )["cell_spec"]
+    layer23 = first_order_population_parameters(
+        facts["layer23_excitatory_v1"], conventions=conventions
+    )["cell_spec"]
+
+    assert layer6ii.name == "modeldb112923_layer6ii"
+    assert layer6ii.compartment("proximal_dendrite").diameter_mm == 0.008
+    assert layer23.name == "layer23_excitatory"
+
+
 def test_calcium_kinetics_source_is_independent_from_intrinsic_cell_source() -> None:
     trn = next(fact for fact in first_order_population_facts() if fact.canonical_name == "trn")
     executable = first_order_population_parameters(

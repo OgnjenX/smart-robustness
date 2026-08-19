@@ -1,0 +1,81 @@
+schema_version: 1
+id: figure6-leading-source-alternatives-131
+date: '2026-08-19'
+base_profile: configs/calibration/figure6_relay_axial_source_hybrid_v1.yaml
+base_candidate_fingerprint: e3c7230ac9ab13d05888e14adeeebe8450cc627fa7ea363591979304b064fd0a
+holdouts_consulted: false
+status: registered-intrinsic-alternatives-exhausted
+base_result:
+  runtime_fingerprint: f59050766cd930da09a873a1944f958e89aa62bd50e9d617d4f3f1d4f7fac877
+  feedforward_chain_pass: true
+  causal_pair_pass: true
+  bottom_up_contrast: 0.3401644237195719
+  top_down_contrast: 0.007370441388364724
+  top_down_pass: false
+full_episode_controls:
+  hysteretic_threshold_then_zero:
+    runtime_fingerprint: 02c558c306172bfe40db2f30e1560442375e58e86913d417f0b4848001cd6a60
+    bit_identical_to_base: true
+    bottom_up_contrast: 0.3401644237195719
+    top_down_contrast: 0.007370441388364724
+  paper_2008_calcium_kinetics:
+    runtime_fingerprint: d5884c1495371a172506b45c653345989ac0770c7be15a72e3bdc57fb3536e7e
+    population_spikes:
+      thalamic_relay: 28
+      trn: 187
+      layer23_excitatory_v1: 20
+      layer5_excitatory_v1: 16
+    following_post_minus_arrival_ms: 38.54
+    causal_pair_pass: false
+    bottom_up_contrast: 0.23612276849475794
+    top_down_contrast: 0.005781548837163367
+  archived_activation_printed_inactivation:
+    runtime_fingerprint: 7c39a560dd34e593f4087688293ca173fa6b18a9c371bb26a5054187bbcd07c5
+    population_spikes:
+      thalamic_relay: 37
+      layer23_excitatory_v1: 34
+      layer5_excitatory_v1: 19
+    feedforward_chain_pass: true
+    causal_pair_pass: true
+    bottom_up_contrast: 0.4254620499309936
+    top_down_contrast: 0.004514802329906972
+  archived_relay_and_layer6ii:
+    runtime_fingerprint: abfe6249e1adc9ced6a264a3f074a4783de791786e0b3dc43019d4f090f2051e
+    category_spikes: 36
+    following_post_minus_arrival_ms: 24.85
+    causal_pair_pass: false
+    bottom_up_contrast: 0.29668693048543904
+    top_down_contrast: -0.006426685264625802
+  source_serialized_top_down_initialization:
+    runtime_fingerprint: f2e47203888e5e8018574e7f79321e5a749968bd3d257b473db91e65aea6d9fd
+    top_down_combined_center_before: 3.0
+    thalamic_relay_spikes: 162
+    bottom_up_contrast: 0.30737774721346667
+    top_down_contrast: -0.020788635110515374
+    before_map_scale_compatible: false
+short_gate_rejections:
+  literal_previous_sample:
+    runtime_fingerprint: 5fb80ce105473e89a0eef6b485294779840f44c3da6eb24f65daf48303682bc8
+    relay_events: 0
+    layer4_events: 0
+  kinness_internal_zero:
+    runtime_fingerprint: 4e34410d70b54997822cf3b0eb6559604e6876e32a1619cff1bf7eaf66d45079
+    relay_events: 0
+    layer4_events: 0
+  printed_smart_nak:
+    runtime_fingerprint: e7a9d05cae62a5e15d893830fe702fcbb44c30e967a24f940ed76231fa070a2d
+    relay_events: 0
+    layer4_events: 0
+  printed_activation_archived_inactivation:
+    runtime_fingerprint: 67543968767cfee8abc35dcc3a6aadaaefda2f755738917ca7ad260e26d07a95
+    relay_events: 0
+    layer4_events: 0
+assessment:
+  event_rule_rescue: false
+  initialization_rescue: false
+  calcium_kinetics_rescue: false
+  nak_rate_rescue: false
+  archived_category_cell_rescue: false
+  serialized_weight_initialization_rescue: false
+  base_profile_remains_leading: true
+  figure6_reproduced: false

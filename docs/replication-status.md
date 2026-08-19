@@ -1319,6 +1319,46 @@ network result (`figure6-relay-equilibration-127.yaml`). During the following
 mV. Equilibration therefore lets the connected network enter the suppressive
 state before stimulus onset and is rejected as a Figure 6 rescue.
 
+A population-resolved official-source hybrid now uses the archived SMART.nml
+relay cell and retains the calibrated Table 3 cells for every other population
+(`figure6-relay-source-hybrid-128.yaml`). The archived relay's inactive
+condition is quiescent while a green-120 drive emits at 5.28 ms. In the full
+100-ms episode, exactly the five stimulated relay cells and five layer-4 cells
+emit, rather than the prior full-sheet 81/81 initialization volley. The
+bottom-up map has positive horizontal contrast 0.006593 and passes Figure 6b.
+TRN output falls from 810 to 320 events. Layer 2/3 pyramidal and layer 5 remain
+silent, no relay event follows teaching arrival, and top-down contrast is
+-0.0003045. The profile is therefore retained as a partial source-derived
+candidate but is not promoted as Figure 6 or classic SMART reproduction.
+
+Combining that population-resolved relay source with the paper-literal
+Equation 2 axial profile produces the leading Figure 6 candidate
+(`figure6-relay-axial-source-hybrid-129.yaml`). The ordered layer-4 -> 2/3 -> 5
+chain now occurs at 5.79, 24.73, and 27.44 ms. Teaching arrives at 9.88 ms and
+is followed by relay output at 28.47 ms, a causal 18.59-ms pair. Bottom-up
+horizontal contrast is 0.34016. Combined top-down contrast is also positive at
+0.007370, but remains below the predeclared 0.01 gate. Thus only the Figure 6c
+contrast gate fails, and the candidate remains explicitly unpromoted.
+
+The leading candidate's map decomposition is deterministic
+(`figure6-relay-axial-map-decomposition-130.yaml`). Category cell 40 emits at
+7.88, 14.93, 39.27, 62.02, and 82.92 ms, while each horizontal relay follows a
+closely related seven-event rhythm. The narrow field supplies 0.006526 of the
+combined contrast. The wide field supplies only 0.000845 because its nearest
+horizontal targets depress while farther horizontal targets potentiate;
+inactive vertical-arm weights do not change. This localizes the shortfall to
+causal/anti-causal phase balance rather than isotropic tail growth.
+
+All remaining registered intrinsic alternatives have been screened around
+that exact profile (`figure6-leading-source-alternatives-131.yaml`). The
+hysteretic event rule is bit-identical; the literal rule, internal-zero
+initialization, and two printed-activation Na/K families fail upstream. Printed
+paper calcium kinetics, the surviving Na/K hybrid, and an archived layer-6II
+cell all worsen the top-down or causal-pair gates. Restoring source-serialized
+top-down initial weights starts the combined center at 3.0, drives 162 relay
+events, and produces negative top-down contrast, contradicting the weak
+Figure 6c before-map. None is promoted.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

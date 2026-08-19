@@ -1,3 +1,5 @@
+import hashlib
+import json
 from pathlib import Path
 
 import pytest
@@ -29,6 +31,24 @@ FIGURE6_RELAY_SCREEN_PATH = (
 )
 FIGURE6_RELAY_EQUILIBRATION_PATH = (
     ROOT / "docs/validation-results/figure6-relay-equilibration-127.yaml"
+)
+FIGURE6_SOURCE_HYBRID_PROFILE_PATH = (
+    ROOT / "configs/calibration/figure6_relay_source_hybrid_v1.yaml"
+)
+FIGURE6_SOURCE_HYBRID_RESULT_PATH = (
+    ROOT / "docs/validation-results/figure6-relay-source-hybrid-128.yaml"
+)
+FIGURE6_RELAY_AXIAL_HYBRID_PROFILE_PATH = (
+    ROOT / "configs/calibration/figure6_relay_axial_source_hybrid_v1.yaml"
+)
+FIGURE6_RELAY_AXIAL_HYBRID_RESULT_PATH = (
+    ROOT / "docs/validation-results/figure6-relay-axial-source-hybrid-129.yaml"
+)
+FIGURE6_RELAY_AXIAL_DECOMPOSITION_PATH = (
+    ROOT / "docs/validation-results/figure6-relay-axial-map-decomposition-130.yaml"
+)
+FIGURE6_LEADING_ALTERNATIVES_PATH = (
+    ROOT / "docs/validation-results/figure6-leading-source-alternatives-131.yaml"
 )
 
 
@@ -225,6 +245,86 @@ def test_registered_trn_predrive_does_not_rescue_figure6_relay() -> None:
     assert artifact["protocol"]["warmup_ms"] == 5.0
     assert artifact["result"]["relay_event_times_ms"] == []
     assert artifact["assessment"]["equilibration_rejected"]
+
+
+def test_figure6_source_hybrid_is_reproducible_but_not_promoted() -> None:
+    profile = yaml.safe_load(FIGURE6_SOURCE_HYBRID_PROFILE_PATH.read_text())
+    candidate = profile["candidate"]
+    fingerprint = hashlib.sha256(
+        json.dumps(candidate, sort_keys=True, separators=(",", ":")).encode()
+    ).hexdigest()
+    artifact = yaml.safe_load(FIGURE6_SOURCE_HYBRID_RESULT_PATH.read_text())
+
+    assert profile["candidate_fingerprint"] == fingerprint
+    assert profile["runtime_fingerprint"] == runtime_conventions_for_candidate(
+        candidate
+    ).fingerprint
+    assert artifact["candidate_fingerprint"] == fingerprint
+    assert artifact["population_spikes"]["thalamic_relay"] == 5
+    assert artifact["population_spikes"]["layer4_excitatory_v1"] == 5
+    assert artifact["maps"]["bottom_up_oriented"]
+    assert not artifact["maps"]["top_down_oriented"]
+    assert not artifact["assessment"]["figure6_reproduced"]
+    assert not artifact["assessment"]["promoted"]
+
+
+def test_leading_figure6_hybrid_keeps_the_top_down_gate_fixed() -> None:
+    profile = yaml.safe_load(FIGURE6_RELAY_AXIAL_HYBRID_PROFILE_PATH.read_text())
+    candidate = profile["candidate"]
+    fingerprint = hashlib.sha256(
+        json.dumps(candidate, sort_keys=True, separators=(",", ":")).encode()
+    ).hexdigest()
+    artifact = yaml.safe_load(FIGURE6_RELAY_AXIAL_HYBRID_RESULT_PATH.read_text())
+
+    assert profile["candidate_fingerprint"] == fingerprint
+    assert profile["runtime_fingerprint"] == runtime_conventions_for_candidate(
+        candidate
+    ).fingerprint
+    assert artifact["recruitment"]["feedforward_chain_complete"]
+    assert artifact["top_down_timing"]["causal_pair_in_learning_window"]
+    assert artifact["maps"]["bottom_up_oriented"]
+    assert artifact["maps"]["minimum_top_down_horizontal_contrast"] == 0.01
+    assert artifact["maps"]["top_down_horizontal_orientation_contrast"] < 0.01
+    assert artifact["assessment"]["only_failed_gate"] == (
+        "top_down_horizontal_orientation_contrast"
+    )
+    assert not artifact["assessment"]["promoted"]
+
+
+def test_leading_figure6_map_shortfall_is_wide_field_phase_specific() -> None:
+    artifact = yaml.safe_load(FIGURE6_RELAY_AXIAL_DECOMPOSITION_PATH.read_text())
+    maps = artifact["maps"]
+    assert maps["top_down_narrow"]["horizontal_orientation_contrast"] > maps[
+        "top_down_wide"
+    ]["horizontal_orientation_contrast"]
+    assert maps["top_down_wide"]["horizontal_arm_delta"][1] < 0
+    assert maps["top_down_wide"]["horizontal_arm_delta"][0] > 0
+    assert maps["top_down_wide"]["vertical_arm_delta"] == [0.0] * 4
+    assert artifact["active_cell_times_ms"]["category_40"] == [
+        7.88,
+        14.93,
+        39.27,
+        62.02,
+        82.92,
+    ]
+
+
+def test_registered_intrinsic_alternatives_do_not_clear_figure6c() -> None:
+    artifact = yaml.safe_load(FIGURE6_LEADING_ALTERNATIVES_PATH.read_text())
+    assert artifact["holdouts_consulted"] is False
+    assert artifact["assessment"]["base_profile_remains_leading"]
+    assert all(
+        artifact["assessment"][name] is False
+        for name in (
+            "event_rule_rescue",
+            "initialization_rescue",
+            "calcium_kinetics_rescue",
+            "nak_rate_rescue",
+            "archived_category_cell_rescue",
+            "serialized_weight_initialization_rescue",
+        )
+    )
+    assert not artifact["assessment"]["figure6_reproduced"]
 
 
 def test_contract_rejects_holdout_leakage(tmp_path: Path) -> None:

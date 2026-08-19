@@ -1,0 +1,563 @@
+schema_version: 1
+id: figure6-dual-and-leak-learning-phase-149
+date: '2026-08-19'
+profile: configs/calibration/figure6_methods_dual_and_leak_relative_v1.yaml
+candidate_fingerprint: cea1c59d041ea594a0acf165e32698ac41c007d0246559d738186cb2b6e3b595
+runtime_fingerprint: b8d493b90e699ec18a1c1634f15d7ed61e64dc5e43d2a98eb11adab7969b2910
+holdouts_consulted: false
+status: top-down-learning-phase-measured
+result:
+  convention_fingerprint: b8d493b90e699ec18a1c1634f15d7ed61e64dc5e43d2a98eb11adab7969b2910
+  dt_ms: 0.01
+  duration_ms: 100.0
+  category_event_times_ms:
+  - 8.100000000000001
+  - 17.92
+  - 59.24000000000001
+  - 75.34
+  - 96.95
+  relay_event_times_ms:
+    38:
+    - 5.280000000000001
+    - 53.4
+    - 69.26
+    - 87.36
+    39:
+    - 5.280000000000001
+    - 53.38
+    - 69.33
+    - 87.23
+    41:
+    - 5.280000000000001
+    - 53.38
+    - 69.33
+    - 87.23
+    42:
+    - 5.280000000000001
+    - 53.4
+    - 69.26
+    - 87.36
+    22: []
+    31: []
+    49: []
+    58: []
+  connections:
+  - projection_id: modeldb112923.projection.005
+    target_index: 22
+    initial_weight: 0.015311299002902122
+    final_weight: 0.18306043018856297
+    measured_delta: 0.16774913118566084
+    positive_correlation_delta: 0.21070958363069103
+    negative_correlation_delta: 0.0
+    baseline_delta: -0.04296045244502964
+    reconstructed_delta: 0.1677491311856614
+    presynaptic_gate_integral_ms: 42.22287535584459
+    postsynaptic_positive_overlap_ms: 1.5461961136370355
+    postsynaptic_negative_overlap_ms: 0.0
+    windows:
+    - start_ms: 10.100000000000001
+      end_ms: 19.92
+      measured_delta: 0.0
+      positive_correlation_delta: 0.0
+      negative_correlation_delta: 0.0
+      baseline_delta: 0.0
+    - start_ms: 19.92
+      end_ms: 61.24000000000001
+      measured_delta: 0.0
+      positive_correlation_delta: 0.0
+      negative_correlation_delta: 0.0
+      baseline_delta: 0.0
+    - start_ms: 61.24000000000001
+      end_ms: 77.34
+      measured_delta: 0.0
+      positive_correlation_delta: 0.0
+      negative_correlation_delta: 0.0
+      baseline_delta: 0.0
+    - start_ms: 77.34
+      end_ms: 98.95
+      measured_delta: 0.14794967539912332
+      positive_correlation_delta: 0.1842965593294765
+      negative_correlation_delta: 0.0
+      baseline_delta: -0.03634688393035262
+    - start_ms: 98.95
+      end_ms: 100.0
+      measured_delta: 0.019799455786537523
+      positive_correlation_delta: 0.026413024301214533
+      negative_correlation_delta: 0.0
+      baseline_delta: -0.0066135685146770234
+  - projection_id: modeldb112923.projection.005
+    target_index: 31
+    initial_weight: 0.037194653106882324
+    final_weight: 0.24912991997070294
+    measured_delta: 0.2119352668638206
+    positive_correlation_delta: 0.28319998098051896
+    negative_correlation_delta: 0.0
+    baseline_delta: -0.07126471411669837
+    reconstructed_delta: 0.21193526686382058
+    presynaptic_gate_integral_ms: 42.22287535584459
+    postsynaptic_positive_overlap_ms: 2.225501890240571
+    postsynaptic_negative_overlap_ms: 0.0
+    windows:
+    - start_ms: 10.100000000000001
+      end_ms: 19.92
+      measured_delta: 0.0
+      positive_correlation_delta: 0.0
+      negative_correlation_delta: 0.0
+      baseline_delta: 0.0
+    - start_ms: 19.92
+      end_ms: 61.24000000000001
+      measured_delta: 0.0
+      positive_correlation_delta: 0.0
+      negative_correlation_delta: 0.0
+      baseline_delta: 0.0
+    - start_ms: 61.24000000000001
+      end_ms: 77.34
+      measured_delta: 0.0
+      positive_correlation_delta: 0.0
+      negative_correlation_delta: 0.0
+      baseline_delta: 0.0
+    - start_ms: 77.34
+      end_ms: 98.95
+      measured_delta: 0.19630103509599206
+      positive_correlation_delta: 0.25923175414969946
+      negative_correlation_delta: 0.0
+      baseline_delta: -0.06293071905370778
+    - start_ms: 98.95
+      end_ms: 100.0
+      measured_delta: 0.01563423176782855
+      positive_correlation_delta: 0.023968226830819506
+      negative_correlation_delta: 0.0
+      baseline_delta: -0.008333995062990582
+  - projection_id: modeldb112923.projection.005
+    target_index: 38
+    initial_weight: 0.015311299002902122
+    final_weight: 0.4824710681955342
+    measured_delta: 0.4671597691926321
+    positive_correlation_delta: 0.6892935083292494
+    negative_correlation_delta: -4.4997006070033315e-07
+    baseline_delta: -0.22213328916655659
+    reconstructed_delta: 0.46715976919263213
+    presynaptic_gate_integral_ms: 42.22287535584459
+    postsynaptic_positive_overlap_ms: 5.902568981582382
+    postsynaptic_negative_overlap_ms: -0.09311789313111415
+    windows:
+    - start_ms: 10.100000000000001
+      end_ms: 19.92
+      measured_delta: -1.646184440567966e-07
+      positive_correlation_delta: 0.0
+      negative_correlation_delta: -1.6462040168510015e-07
+      baseline_delta: 1.9576224716755948e-12
+    - start_ms: 19.92
+      end_ms: 61.24000000000001
+      measured_delta: 0.002064571439663593
+      positive_correlation_delta: 0.0021023854876913947
+      negative_correlation_delta: -2.869485287445511e-09
+      baseline_delta: -3.781117854246646e-05
+    - start_ms: 61.24000000000001
+      end_ms: 77.34
+      measured_delta: 0.3566797622664362
+      positive_correlation_delta: 0.44334301631110506
+      negative_correlation_delta: -1.6241100147513703e-07
+      baseline_delta: -0.08666309163366673
+    - start_ms: 77.34
+      end_ms: 98.95
+      measured_delta: 0.10841592832267999
+      positive_correlation_delta: 0.24384810653045297
+      negative_correlation_delta: -1.1875350054990646e-07
+      baseline_delta: -0.13543205945427295
+    - start_ms: 98.95
+      end_ms: 100.0
+      measured_delta: -3.2821770368229863e-07
+      positive_correlation_delta: 0.0
+      negative_correlation_delta: -1.3156717027439893e-09
+      baseline_delta: -3.269020320550986e-07
+  - projection_id: modeldb112923.projection.005
+    target_index: 39
+    initial_weight: 0.037194653106882324
+    final_weight: 0.4870884385796165
+    measured_delta: 0.4498937854727342
+    positive_correlation_delta: 0.6556679684678063
+    negative_correlation_delta: -6.418293541519588e-06
+    baseline_delta: -0.20576776470153085
+    reconstructed_delta: 0.4498937854727339
+    presynaptic_gate_integral_ms: 42.22287535584459
+    postsynaptic_positive_overlap_ms: 5.826798527807276
+    postsynaptic_negative_overlap_ms: -0.2266953292901793
+    windows:
+    - start_ms: 10.100000000000001
+      end_ms: 19.92
+      measured_delta: -2.3249309686473874e-06
+      positive_correlation_delta: 0.0
+      negative_correlation_delta: -2.3250941261917814e-06
+      baseline_delta: 1.6315751535957255e-10
+    - start_ms: 19.92
+      end_ms: 61.24000000000001
+      measured_delta: 0.0019514112433636557
+      positive_correlation_delta: 0.001986097406280371
+      negative_correlation_delta: -4.05437237811886e-08
+      baseline_delta: -3.464561919316959e-05
+    - start_ms: 61.24000000000001
+      end_ms: 77.34
+      measured_delta: 0.33735324675679973
+      positive_correlation_delta: 0.4162426405696974
+      negative_correlation_delta: -2.2919057349545713e-06
+      baseline_delta: -0.07888710190716267
+    - start_ms: 77.34
+      end_ms: 98.95
+      measured_delta: 0.11059326725699481
+      positive_correlation_delta: 0.23743923049182852
+      negative_correlation_delta: -1.742897761441624e-06
+      baseline_delta: -0.12684422033707193
+    - start_ms: 98.95
+      end_ms: 100.0
+      measured_delta: -1.814853455406329e-06
+      positive_correlation_delta: 0.0
+      negative_correlation_delta: -1.785219515042266e-08
+      baseline_delta: -1.7970012606005614e-06
+  - projection_id: modeldb112923.projection.005
+    target_index: 41
+    initial_weight: 0.037194653106882324
+    final_weight: 0.4870884385796165
+    measured_delta: 0.4498937854727342
+    positive_correlation_delta: 0.6556679684678063
+    negative_correlation_delta: -6.418293541519588e-06
+    baseline_delta: -0.20576776470153085
+    reconstructed_delta: 0.4498937854727339
+    presynaptic_gate_integral_ms: 42.22287535584459
+    postsynaptic_positive_overlap_ms: 5.826798527807276
+    postsynaptic_negative_overlap_ms: -0.2266953292901793
+    windows:
+    - start_ms: 10.100000000000001
+      end_ms: 19.92
+      measured_delta: -2.3249309686473874e-06
+      positive_correlation_delta: 0.0
+      negative_correlation_delta: -2.3250941261917814e-06
+      baseline_delta: 1.6315751535957255e-10
+    - start_ms: 19.92
+      end_ms: 61.24000000000001
+      measured_delta: 0.0019514112433636557
+      positive_correlation_delta: 0.001986097406280371
+      negative_correlation_delta: -4.05437237811886e-08
+      baseline_delta: -3.464561919316959e-05
+    - start_ms: 61.24000000000001
+      end_ms: 77.34
+      measured_delta: 0.33735324675679973
+      positive_correlation_delta: 0.4162426405696974
+      negative_correlation_delta: -2.2919057349545713e-06
+      baseline_delta: -0.07888710190716267
+    - start_ms: 77.34
+      end_ms: 98.95
+      measured_delta: 0.11059326725699481
+      positive_correlation_delta: 0.23743923049182852
+      negative_correlation_delta: -1.742897761441624e-06
+      baseline_delta: -0.12684422033707193
+    - start_ms: 98.95
+      end_ms: 100.0
+      measured_delta: -1.814853455406329e-06
+      positive_correlation_delta: 0.0
+      negative_correlation_delta: -1.785219515042266e-08
+      baseline_delta: -1.7970012606005614e-06
+  - projection_id: modeldb112923.projection.005
+    target_index: 42
+    initial_weight: 0.015311299002902122
+    final_weight: 0.4824710681955342
+    measured_delta: 0.4671597691926321
+    positive_correlation_delta: 0.6892935083292494
+    negative_correlation_delta: -4.4997006070033315e-07
+    baseline_delta: -0.22213328916655659
+    reconstructed_delta: 0.46715976919263213
+    presynaptic_gate_integral_ms: 42.22287535584459
+    postsynaptic_positive_overlap_ms: 5.902568981582382
+    postsynaptic_negative_overlap_ms: -0.09311789313111415
+    windows:
+    - start_ms: 10.100000000000001
+      end_ms: 19.92
+      measured_delta: -1.646184440567966e-07
+      positive_correlation_delta: 0.0
+      negative_correlation_delta: -1.6462040168510015e-07
+      baseline_delta: 1.9576224716755948e-12
+    - start_ms: 19.92
+      end_ms: 61.24000000000001
+      measured_delta: 0.002064571439663593
+      positive_correlation_delta: 0.0021023854876913947
+      negative_correlation_delta: -2.869485287445511e-09
+      baseline_delta: -3.781117854246646e-05
+    - start_ms: 61.24000000000001
+      end_ms: 77.34
+      measured_delta: 0.3566797622664362
+      positive_correlation_delta: 0.44334301631110506
+      negative_correlation_delta: -1.6241100147513703e-07
+      baseline_delta: -0.08666309163366673
+    - start_ms: 77.34
+      end_ms: 98.95
+      measured_delta: 0.10841592832267999
+      positive_correlation_delta: 0.24384810653045297
+      negative_correlation_delta: -1.1875350054990646e-07
+      baseline_delta: -0.13543205945427295
+    - start_ms: 98.95
+      end_ms: 100.0
+      measured_delta: -3.2821770368229863e-07
+      positive_correlation_delta: 0.0
+      negative_correlation_delta: -1.3156717027439893e-09
+      baseline_delta: -3.269020320550986e-07
+  - projection_id: modeldb112923.projection.005
+    target_index: 49
+    initial_weight: 0.037194653106882324
+    final_weight: 0.24912991997070294
+    measured_delta: 0.2119352668638206
+    positive_correlation_delta: 0.28319998098051896
+    negative_correlation_delta: 0.0
+    baseline_delta: -0.07126471411669837
+    reconstructed_delta: 0.21193526686382058
+    presynaptic_gate_integral_ms: 42.22287535584459
+    postsynaptic_positive_overlap_ms: 2.225501890240571
+    postsynaptic_negative_overlap_ms: 0.0
+    windows:
+    - start_ms: 10.100000000000001
+      end_ms: 19.92
+      measured_delta: 0.0
+      positive_correlation_delta: 0.0
+      negative_correlation_delta: 0.0
+      baseline_delta: 0.0
+    - start_ms: 19.92
+      end_ms: 61.24000000000001
+      measured_delta: 0.0
+      positive_correlation_delta: 0.0
+      negative_correlation_delta: 0.0
+      baseline_delta: 0.0
+    - start_ms: 61.24000000000001
+      end_ms: 77.34
+      measured_delta: 0.0
+      positive_correlation_delta: 0.0
+      negative_correlation_delta: 0.0
+      baseline_delta: 0.0
+    - start_ms: 77.34
+      end_ms: 98.95
+      measured_delta: 0.19630103509599206
+      positive_correlation_delta: 0.25923175414969946
+      negative_correlation_delta: 0.0
+      baseline_delta: -0.06293071905370778
+    - start_ms: 98.95
+      end_ms: 100.0
+      measured_delta: 0.01563423176782855
+      positive_correlation_delta: 0.023968226830819506
+      negative_correlation_delta: 0.0
+      baseline_delta: -0.008333995062990582
+  - projection_id: modeldb112923.projection.005
+    target_index: 58
+    initial_weight: 0.015311299002902122
+    final_weight: 0.18306043018856297
+    measured_delta: 0.16774913118566084
+    positive_correlation_delta: 0.21070958363069103
+    negative_correlation_delta: 0.0
+    baseline_delta: -0.04296045244502964
+    reconstructed_delta: 0.1677491311856614
+    presynaptic_gate_integral_ms: 42.22287535584459
+    postsynaptic_positive_overlap_ms: 1.5461961136370355
+    postsynaptic_negative_overlap_ms: 0.0
+    windows:
+    - start_ms: 10.100000000000001
+      end_ms: 19.92
+      measured_delta: 0.0
+      positive_correlation_delta: 0.0
+      negative_correlation_delta: 0.0
+      baseline_delta: 0.0
+    - start_ms: 19.92
+      end_ms: 61.24000000000001
+      measured_delta: 0.0
+      positive_correlation_delta: 0.0
+      negative_correlation_delta: 0.0
+      baseline_delta: 0.0
+    - start_ms: 61.24000000000001
+      end_ms: 77.34
+      measured_delta: 0.0
+      positive_correlation_delta: 0.0
+      negative_correlation_delta: 0.0
+      baseline_delta: 0.0
+    - start_ms: 77.34
+      end_ms: 98.95
+      measured_delta: 0.14794967539912332
+      positive_correlation_delta: 0.1842965593294765
+      negative_correlation_delta: 0.0
+      baseline_delta: -0.03634688393035262
+    - start_ms: 98.95
+      end_ms: 100.0
+      measured_delta: 0.019799455786537523
+      positive_correlation_delta: 0.026413024301214533
+      negative_correlation_delta: 0.0
+      baseline_delta: -0.0066135685146770234
+  - projection_id: modeldb112923.projection.007
+    target_index: 31
+    initial_weight: 0.0008439942074394948
+    final_weight: 0.22993468223533955
+    measured_delta: 0.22909068802790006
+    positive_correlation_delta: 0.31056755004799047
+    negative_correlation_delta: 0.0
+    baseline_delta: -0.08147686202008984
+    reconstructed_delta: 0.2290906880279006
+    presynaptic_gate_integral_ms: 42.22287535584459
+    postsynaptic_positive_overlap_ms: 2.2808055301021715
+    postsynaptic_negative_overlap_ms: 0.0
+    windows:
+    - start_ms: 10.100000000000001
+      end_ms: 19.92
+      measured_delta: 0.0
+      positive_correlation_delta: 0.0
+      negative_correlation_delta: 0.0
+      baseline_delta: 0.0
+    - start_ms: 19.92
+      end_ms: 61.24000000000001
+      measured_delta: 0.0
+      positive_correlation_delta: 0.0
+      negative_correlation_delta: 0.0
+      baseline_delta: 0.0
+    - start_ms: 61.24000000000001
+      end_ms: 77.34
+      measured_delta: 0.0
+      positive_correlation_delta: 0.0
+      negative_correlation_delta: 0.0
+      baseline_delta: 0.0
+    - start_ms: 77.34
+      end_ms: 98.95
+      measured_delta: 0.21234903704130628
+      positive_correlation_delta: 0.2843614534786351
+      negative_correlation_delta: 0.0
+      baseline_delta: -0.072012416437328
+    - start_ms: 98.95
+      end_ms: 100.0
+      measured_delta: 0.016741650986593776
+      positive_correlation_delta: 0.026206096569355353
+      negative_correlation_delta: 0.0
+      baseline_delta: -0.00946444558276184
+  - projection_id: modeldb112923.projection.007
+    target_index: 39
+    initial_weight: 0.0008439942074394948
+    final_weight: 0.4816730690206014
+    measured_delta: 0.48082907481316195
+    positive_correlation_delta: 0.7140449837051195
+    negative_correlation_delta: -7.613714127286621e-11
+    baseline_delta: -0.23321590881582097
+    reconstructed_delta: 0.4808290748131614
+    presynaptic_gate_integral_ms: 42.22287535584459
+    postsynaptic_positive_overlap_ms: 5.971594256240974
+    postsynaptic_negative_overlap_ms: -0.005144006699691398
+    windows:
+    - start_ms: 10.100000000000001
+      end_ms: 19.92
+      measured_delta: -2.7840520362178156e-11
+      positive_correlation_delta: 0.0
+      negative_correlation_delta: -2.7840520059809088e-11
+      baseline_delta: 1.0059599162016812e-18
+    - start_ms: 19.92
+      end_ms: 61.24000000000001
+      measured_delta: 0.002150690419873886
+      positive_correlation_delta: 0.002190881245427364
+      negative_correlation_delta: -4.854643644383571e-13
+      baseline_delta: -4.0190825068021465e-05
+    - start_ms: 61.24000000000001
+      end_ms: 77.34
+      measured_delta: 0.3646998509247227
+      positive_correlation_delta: 0.45481588709395837
+      negative_correlation_delta: -2.7109114317904027e-11
+      baseline_delta: -0.09011603614212724
+    - start_ms: 77.34
+      end_ms: 98.95
+      measured_delta: 0.11397853448550133
+      positive_correlation_delta: 0.25703821536573374
+      negative_correlation_delta: -2.0492349249155212e-11
+      baseline_delta: -0.14305968085974008
+    - start_ms: 98.95
+      end_ms: 100.0
+      measured_delta: -9.890954721925027e-10
+      positive_correlation_delta: 0.0
+      negative_correlation_delta: -2.0969328155952606e-13
+      baseline_delta: -9.888856400408486e-10
+  - projection_id: modeldb112923.projection.007
+    target_index: 41
+    initial_weight: 0.0008439942074394948
+    final_weight: 0.4816730690206014
+    measured_delta: 0.48082907481316195
+    positive_correlation_delta: 0.7140449837051195
+    negative_correlation_delta: -7.613714127286621e-11
+    baseline_delta: -0.23321590881582097
+    reconstructed_delta: 0.4808290748131614
+    presynaptic_gate_integral_ms: 42.22287535584459
+    postsynaptic_positive_overlap_ms: 5.971594256240974
+    postsynaptic_negative_overlap_ms: -0.005144006699691398
+    windows:
+    - start_ms: 10.100000000000001
+      end_ms: 19.92
+      measured_delta: -2.7840520362178156e-11
+      positive_correlation_delta: 0.0
+      negative_correlation_delta: -2.7840520059809088e-11
+      baseline_delta: 1.0059599162016812e-18
+    - start_ms: 19.92
+      end_ms: 61.24000000000001
+      measured_delta: 0.002150690419873886
+      positive_correlation_delta: 0.002190881245427364
+      negative_correlation_delta: -4.854643644383571e-13
+      baseline_delta: -4.0190825068021465e-05
+    - start_ms: 61.24000000000001
+      end_ms: 77.34
+      measured_delta: 0.3646998509247227
+      positive_correlation_delta: 0.45481588709395837
+      negative_correlation_delta: -2.7109114317904027e-11
+      baseline_delta: -0.09011603614212724
+    - start_ms: 77.34
+      end_ms: 98.95
+      measured_delta: 0.11397853448550133
+      positive_correlation_delta: 0.25703821536573374
+      negative_correlation_delta: -2.0492349249155212e-11
+      baseline_delta: -0.14305968085974008
+    - start_ms: 98.95
+      end_ms: 100.0
+      measured_delta: -9.890954721925027e-10
+      positive_correlation_delta: 0.0
+      negative_correlation_delta: -2.0969328155952606e-13
+      baseline_delta: -9.888856400408486e-10
+  - projection_id: modeldb112923.projection.007
+    target_index: 49
+    initial_weight: 0.0008439942074394948
+    final_weight: 0.22993468223533955
+    measured_delta: 0.22909068802790006
+    positive_correlation_delta: 0.31056755004799047
+    negative_correlation_delta: 0.0
+    baseline_delta: -0.08147686202008984
+    reconstructed_delta: 0.2290906880279006
+    presynaptic_gate_integral_ms: 42.22287535584459
+    postsynaptic_positive_overlap_ms: 2.2808055301021715
+    postsynaptic_negative_overlap_ms: 0.0
+    windows:
+    - start_ms: 10.100000000000001
+      end_ms: 19.92
+      measured_delta: 0.0
+      positive_correlation_delta: 0.0
+      negative_correlation_delta: 0.0
+      baseline_delta: 0.0
+    - start_ms: 19.92
+      end_ms: 61.24000000000001
+      measured_delta: 0.0
+      positive_correlation_delta: 0.0
+      negative_correlation_delta: 0.0
+      baseline_delta: 0.0
+    - start_ms: 61.24000000000001
+      end_ms: 77.34
+      measured_delta: 0.0
+      positive_correlation_delta: 0.0
+      negative_correlation_delta: 0.0
+      baseline_delta: 0.0
+    - start_ms: 77.34
+      end_ms: 98.95
+      measured_delta: 0.21234903704130628
+      positive_correlation_delta: 0.2843614534786351
+      negative_correlation_delta: 0.0
+      baseline_delta: -0.072012416437328
+    - start_ms: 98.95
+      end_ms: 100.0
+      measured_delta: 0.016741650986593776
+      positive_correlation_delta: 0.026206096569355353
+      negative_correlation_delta: 0.0
+      baseline_delta: -0.00946444558276184
+assessment:
+  maximum_delta_reconstruction_error: 5.551115123125783e-16
+  integration_consistent: true

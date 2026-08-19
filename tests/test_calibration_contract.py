@@ -86,6 +86,9 @@ FIGURE6_LEARNING_THRESHOLD_ASSESSMENT_PATH = (
 FIGURE6_LEARNING_RULE_ASSESSMENT_PATH = (
     ROOT / "docs/validation-results/figure6-learning-rule-coordinate-assessment-148.yaml"
 )
+FIGURE6_DUAL_AND_LEAK_PHASE_PATH = (
+    ROOT / "docs/validation-results/figure6-dual-and-leak-learning-phase-149.yaml"
+)
 FIGURE7_POPULATION_AXIAL_RESULT_PATH = (
     ROOT / "docs/validation-results/calibration-figure6-figure7-population-axial-137.yaml"
 )
@@ -567,6 +570,22 @@ def test_methods_dual_and_candidates_fail_amplitude_or_spatial_gate() -> None:
     assert not interaction["relay_recruitment_confined"]
     assert not artifact["assessment"]["learning_rule_explanation_sufficient"]
     assert artifact["assessment"]["promoted_profile"] is None
+
+
+def test_dual_and_leak_phase_exposes_subthreshold_surround_potentiation() -> None:
+    artifact = yaml.safe_load(FIGURE6_DUAL_AND_LEAK_PHASE_PATH.read_text())
+    assert artifact["assessment"]["integration_consistent"]
+    assert artifact["assessment"]["maximum_delta_reconstruction_error"] < 1e-12
+    selected = {
+        (connection["projection_id"], connection["target_index"]): connection
+        for connection in artifact["result"]["connections"]
+    }
+    horizontal = selected[("modeldb112923.projection.005", 39)]
+    vertical = selected[("modeldb112923.projection.005", 31)]
+    assert horizontal["postsynaptic_positive_overlap_ms"] > 5.0
+    assert vertical["postsynaptic_positive_overlap_ms"] > 2.0
+    assert artifact["result"]["relay_event_times_ms"][31] == []
+    assert vertical["final_weight"] > 0.2
 
 
 @pytest.mark.parametrize(

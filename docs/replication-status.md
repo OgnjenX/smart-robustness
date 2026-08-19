@@ -1482,6 +1482,17 @@ spatial-confinement contract. The Figure 6 caption/serialized presynaptic rule
 and Methods dual-AND rule remain provenance-labeled alternatives, but neither
 currently reproduces Figure 6c.
 
+Artifact `figure6-dual-and-leak-learning-phase-149.yaml` decomposes the
+strongest rejected interaction to maximum residual `5.55e-16`. Horizontal
+targets receive `5.83--5.97 ms` positive overlap and grow to approximately
+`0.48`, but vertical targets that emit no relay spikes still receive
+`2.23--2.28 ms` positive overlap and grow to approximately `0.23--0.25`.
+Leak-relative Equation 6 gating therefore treats subthreshold surround
+depolarization as a positive postsynaptic signal, mechanistically explaining
+the loss of spatial confinement. The next discriminator returns upstream to
+the unresolved action-potential waveform/legacy membrane implementation; it
+must not weaken spatial gates to retain this candidate.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

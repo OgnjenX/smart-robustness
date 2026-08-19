@@ -292,3 +292,11 @@ Artifacts 146 and 147 resolve the next official-source contradiction. Methods
 interaction with leak-relative voltage reaches `0.96876` but recruits 58 events
 across 43 relay cells. Neither passes, so learning-rule choice is not a
 sufficient Figure 6 explanation.
+
+Artifact 149 closes the strongest rejected candidate's learning terms to
+`5.55e-16`. It shows that leak-relative dual-AND gating potentiates vertical
+nonspiking targets (`~0.23--0.25`) as well as horizontal targets (`~0.48`),
+because subthreshold surround depolarization remains above the leak-relative
+threshold. This route is mechanistically closed. Next audit action-potential
+waveform duration against the unresolved legacy membrane/Na-K implementation,
+without changing the established output-event or spatial gates.

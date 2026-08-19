@@ -1125,6 +1125,19 @@ conditions. This rules out the nonspecific-cell current balance as the first
 discrepancy: the missing source-level operation is still matched-relay
 recruitment of post-startup TRN output. No unsupported correction is promoted.
 
+A second reusable decomposition resolves the TRN driven-window current balance
+itself (`figure7-trn-current-balance-110.yaml`). Relay AMPA is present and soma
+axial inward current reaches 3.282 nA, while recurrent GABA is only about 3.13
+pA; recurrent inhibition and absent dendrite-to-soma transfer are therefore
+excluded as primary explanations. Instead, the executable-source intrinsic
+currents dominate: somatic calcium, sodium, and potassium reach approximately
++20.08, +47.49, and -74.58 nA. Both conditions peak near +7.10 mV and never arm
+the +30-mV event detector. This also makes the official source conflict
+material: SMART.nml includes 100 mS/cm2 somatic reticular calcium, while Table 3
+omits it and specifies 10 mS/cm2 only in each dendrite. Prior complete
+paper-profile discriminators still fail, so no hybrid conductance edit is
+promoted.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

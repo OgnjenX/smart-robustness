@@ -1,0 +1,54 @@
+schema_version: 1
+validation_id: figure7-trn-current-balance-110
+claim: Post-startup recurrent inhibition or failed dendrite-to-soma delivery explains the absence of relay-driven TRN events in Figure 7.
+status: failed-official-reproduction_intrinsic_soma_balance_dominates
+date: 2026-08-19
+sources:
+  paper: Grossberg and Versace 2008, Figure 7, Methods 4.5-4.6, and Table 3
+  framework: Versace et al. 2008 expanded KInNeSS manuscript, Equations 8b-9 and 13-18
+  executable: ModelDB 112923 SMART.nml Reticular population and projections 008-012
+protocol:
+  simulator: Brian2 2.9.0 numpy target
+  duration_ms: 100
+  driven_current_window_ms: [45, 100]
+  integration_dt_ms: 0.01
+  top_down_current_pA: 1000
+  learned_state: paper-constrained Figure 6c horizontal expectation
+  monitored_trn_indices: [22, 31, 38, 39, 40, 41, 42, 49, 58]
+  convention_fingerprint: a054e5e36b75765124150157029662c6a5c8a639ee6079b442304607e726cb11
+current_ranges_across_monitored_cells_pA:
+  match:
+    relay_ampa: [-2428.801110, 806.002728]
+    layer6ii_excitation: [-157.660483, 92.992090]
+    recurrent_gaba: [-3.133023, -0.000000270]
+    proximal_calcium: [545.205329, 2855.582521]
+    soma_axial: [-411.398094, 3281.995980]
+    soma_calcium: [7153.426210, 20075.190371]
+    soma_sodium: [0.782508, 47492.520000]
+    soma_potassium: [-74579.741259, -7828.922924]
+    soma_voltage_mV: [-73.226120, 7.104457]
+  mismatch:
+    relay_ampa: [-2432.535880, 767.344623]
+    layer6ii_excitation: [-157.660483, 92.942409]
+    recurrent_gaba: [-3.133023, -0.000000264]
+    proximal_calcium: [546.981087, 2848.292632]
+    soma_axial: [-412.720640, 3281.995980]
+    soma_calcium: [7155.832363, 20075.190371]
+    soma_sodium: [0.783622, 47457.069644]
+    soma_potassium: [-74556.155508, -7830.017992]
+    soma_voltage_mV: [-73.226633, 7.095773]
+assessment:
+  relay_excitation_reaches_trn_dendrite: true
+  axial_inward_current_reaches_soma: true
+  recurrent_gaba_is_material_blocker: false
+  soma_reaches_event_arming_threshold: false
+  match_mismatch_soma_separation: false
+  post_startup_trn_event_reproduced: false
+  official_figure7_reproduced: false
+interpretation:
+  - Relay AMPA reaches the TRN proximal dendrite and axial inward current into the soma peaks near 3.282 nA, so the failure is not absent connectivity or complete electrical isolation of the soma.
+  - Recurrent GABA is at most approximately 3.13 pA in the driven window, three orders of magnitude below relay and axial currents; it cannot account for the missing events.
+  - The executable-source somatic intrinsic currents dominate the balance: calcium reaches 20.08 nA, sodium 47.49 nA, and outward potassium 74.58 nA. The soma peaks near +7.10 mV in both conditions and never arms the paper's +30 mV falling-phase event detector.
+  - Match and mismatch rearrange relay AMPA spatially, but the intrinsic oscillation envelope and somatic voltage remain effectively coincident. This is consistent with five active relay cells in both conditions.
+  - SMART.nml places 100 mS/cm2 reticular calcium in the soma and dendrites, whereas printed Table 3 omits somatic calcium and gives 10 mS/cm2 in each dendrite. That official-source conflict is now directly relevant to the dominant current balance, but prior whole-paper-profile tests were autonomous or failed Figure 7 and therefore do not justify selecting a hybrid cell.
+  - No conductance or threshold is tuned. The next admissible discriminator must preserve one complete official intrinsic-cell source profile and address relay-count divergence before downstream TRN tuning.

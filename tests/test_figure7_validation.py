@@ -237,12 +237,12 @@ def test_figure7_runner_rejects_invalid_projection_discriminators() -> None:
 
 
 def test_figure7_pathway_diagnostics_require_a_post_startup_window() -> None:
-    with pytest.raises(ValueError, match="diagnostics require duration_ms > 5"):
+    with pytest.raises(ValueError, match="diagnostics require duration_ms > 45"):
         run_figure7_condition(
             condition=MatchCondition.MATCH,
             top_down_current_pA=600,
             use_paper_constrained_reference=True,
-            duration_ms=5,
+            duration_ms=45,
             record_relay_diagnostics=True,
         )
 
@@ -304,6 +304,7 @@ def test_figure7_result_accepts_relay_pathway_diagnostics() -> None:
     assert result.trn_proximal_voltage_range_mV_by_index == ()
     assert result.trn_soma_voltage_range_mV_by_index == ()
     assert result.trn_post_startup_soma_voltage_range_mV_by_index == ()
+    assert result.trn_driven_current_range_pA_by_index_and_source == ()
     assert result.nonspecific_trn_gaba_peak is None
     assert result.nonspecific_trn_gaba_integral_ms is None
     assert result.nonspecific_post_startup_trn_gaba_peak is None

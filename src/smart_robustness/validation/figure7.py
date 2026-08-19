@@ -198,6 +198,9 @@ class Figure7ConditionResult:
     trn_post_startup_soma_voltage_range_mV_by_index: tuple[
         tuple[int, float, float], ...
     ] = ()
+    trn_driven_current_range_pA_by_index_and_source: tuple[
+        tuple[int, str, float, float], ...
+    ] = ()
     nonspecific_trn_gaba_peak: float | None = None
     nonspecific_trn_gaba_integral_ms: float | None = None
     nonspecific_post_startup_trn_gaba_peak: float | None = None
@@ -394,8 +397,8 @@ def run_figure7_condition(
         raise ValueError("top_down_cue_lead_ms cannot be negative")
     if equilibration_ms < 0:
         raise ValueError("equilibration_ms cannot be negative")
-    if record_relay_diagnostics and duration_ms <= 5.0:
-        raise ValueError("Figure 7 pathway diagnostics require duration_ms > 5")
+    if record_relay_diagnostics and duration_ms <= 45.0:
+        raise ValueError("Figure 7 pathway diagnostics require duration_ms > 45")
     if brian is None:
         import brian2 as brian
     if cpp_standalone_directory is not None:
@@ -559,6 +562,16 @@ def run_figure7_condition(
                 "port_001_gate",
                 "port_002_gate",
                 "port_004_gate",
+                "i_port_000",
+                "i_port_001",
+                "i_port_002",
+                "i_port_003",
+                "i_port_004",
+                "i_ca_proximal_dendrite",
+                "i_axial_inward_soma",
+                "i_ca_soma",
+                "i_na_soma",
+                "i_k_soma",
                 "v_proximal_dendrite",
                 "v_soma",
             ),
@@ -652,6 +665,7 @@ def run_figure7_condition(
     trn_voltage_range: tuple[tuple[int, float, float], ...] = ()
     trn_soma_voltage_range: tuple[tuple[int, float, float], ...] = ()
     trn_post_startup_soma_voltage_range: tuple[tuple[int, float, float], ...] = ()
+    trn_driven_current_range: tuple[tuple[int, str, float, float], ...] = ()
     nonspecific_trn_gaba_peak = None
     nonspecific_trn_gaba_integral_ms = None
     nonspecific_post_startup_trn_gaba_peak = None
@@ -780,6 +794,44 @@ def run_figure7_condition(
             for index, values in zip(
                 FIGURE7_RELAY_DIAGNOSTIC_INDICES,
                 trn_soma_voltage_mV[:, post_startup_window],
+                strict=True,
+            )
+        )
+        driven_window = times_ms >= 45.0
+        current_sources_pA = {
+            "relay_ampa": np.asarray(trn_state.i_port_002 / brian.pA)[
+                :, diagnostic_window
+            ],
+            "layer6ii_excitation": (
+                np.asarray(trn_state.i_port_001 / brian.pA)[:, diagnostic_window]
+                + np.asarray(trn_state.i_port_004 / brian.pA)[:, diagnostic_window]
+            ),
+            "recurrent_gaba": (
+                np.asarray(trn_state.i_port_000 / brian.pA)[:, diagnostic_window]
+                + np.asarray(trn_state.i_port_003 / brian.pA)[:, diagnostic_window]
+            ),
+            "proximal_calcium": np.asarray(
+                trn_state.i_ca_proximal_dendrite / brian.pA
+            )[:, diagnostic_window],
+            "soma_axial": np.asarray(trn_state.i_axial_inward_soma / brian.pA)[
+                :, diagnostic_window
+            ],
+            "soma_calcium": np.asarray(trn_state.i_ca_soma / brian.pA)[
+                :, diagnostic_window
+            ],
+            "soma_sodium": np.asarray(trn_state.i_na_soma / brian.pA)[
+                :, diagnostic_window
+            ],
+            "soma_potassium": np.asarray(trn_state.i_k_soma / brian.pA)[
+                :, diagnostic_window
+            ],
+        }
+        trn_driven_current_range = tuple(
+            (index, source, float(np.min(values)), float(np.max(values)))
+            for source, traces in current_sources_pA.items()
+            for index, values in zip(
+                FIGURE7_RELAY_DIAGNOSTIC_INDICES,
+                traces[:, driven_window],
                 strict=True,
             )
         )
@@ -924,6 +976,7 @@ def run_figure7_condition(
         trn_post_startup_soma_voltage_range_mV_by_index=(
             trn_post_startup_soma_voltage_range
         ),
+        trn_driven_current_range_pA_by_index_and_source=trn_driven_current_range,
         nonspecific_trn_gaba_peak=nonspecific_trn_gaba_peak,
         nonspecific_trn_gaba_integral_ms=nonspecific_trn_gaba_integral_ms,
         nonspecific_post_startup_trn_gaba_peak=(

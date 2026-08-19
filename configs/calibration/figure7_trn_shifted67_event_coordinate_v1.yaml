@@ -1,0 +1,33 @@
+schema_version: 1
+name: figure7-trn-shifted67-event-coordinate-v1
+status: rejected-autonomous-trn-events
+derivation: >-
+  Preserve the Figure 6 KInNeSS Equation 27 candidate and its absolute relay
+  event coordinate. Apply the separately documented KInNeSS +67 mV output
+  shift only to the TRN detector, as an alternative to the rejected
+  cell-leak-relative detector.
+base_profile: configs/calibration/figure6_kinness_equation27_transition_v1.yaml
+base_candidate_fingerprint: 12e0245e9a3044073200e90443582885a5410cf39b8b18d50d22a04a2fc48604
+candidate_fingerprint: 9e8ef072eff3e4fe66d4d642b761eba114d263659f58a71fc0c453650c21486b
+runtime_fingerprint: 456a5a7a0e969220ea455d15e9ccc756dcc9f618a6fa6fb3603d8e82420ca4bc
+candidate:
+  intrinsic_cell_convention: modeldb_relay_paper_table3_others
+  calcium_kinetics_convention: modeldb_112923
+  calcium_density_convention: cell_specific
+  nak_rate_convention: standard_traub_miles
+  axial_convention: modeldb_relay_kinness_paper_others
+  membrane_initialization_convention: physical_leak_voltage
+  spike_event_rule: latched_peak_then_zero
+  gaussian_spread_convention: standard_deviation
+  relay_input_interpretation: archived_finite_conductance
+  top_down_current_pA: 600.0
+  postsynaptic_signal_convention: kinness_equation27_transition_time
+  trn_spike_event_coordinate: shifted_67_mV
+  trn_spike_event_threshold_mV: 30.0
+promotion_gate: >-
+  Require post-equilibration TRN quiescence without a category event, then
+  preserve Figure 6 and reproduce the official Figure 7 directional pathway.
+rejection_reason: >-
+  Artifact 162 finds the same 81-cell post-equilibration TRN volley at 300 pA
+  despite no category or relay event. The fixed-shift detector therefore fails
+  the causal quiescence gate before Figure 6/7 network promotion.

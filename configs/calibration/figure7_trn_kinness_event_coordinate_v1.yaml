@@ -1,0 +1,34 @@
+schema_version: 1
+name: figure7-trn-kinness-event-coordinate-v1
+status: rejected-autonomous-trn-events
+derivation: >-
+  Preserve the Figure 6 KInNeSS Equation 27 candidate and its absolute relay
+  event coordinate. Apply KInNeSS's documented leak-relative voltage output
+  only to the TRN event detector, so the printed +30/0 thresholds are measured
+  from the TRN leak instead of as absolute physical voltages.
+base_profile: configs/calibration/figure6_kinness_equation27_transition_v1.yaml
+base_candidate_fingerprint: 12e0245e9a3044073200e90443582885a5410cf39b8b18d50d22a04a2fc48604
+candidate_fingerprint: 40f1a58137054e79dd8f28f0f1e66a2fbe2eded6139d19d3d31f95853cca8844
+runtime_fingerprint: c876cd59ad0fa22f2e796019a27a3995893610c289fe21cc77759c87f86e9827
+candidate:
+  intrinsic_cell_convention: modeldb_relay_paper_table3_others
+  calcium_kinetics_convention: modeldb_112923
+  calcium_density_convention: cell_specific
+  nak_rate_convention: standard_traub_miles
+  axial_convention: modeldb_relay_kinness_paper_others
+  membrane_initialization_convention: physical_leak_voltage
+  spike_event_rule: latched_peak_then_zero
+  gaussian_spread_convention: standard_deviation
+  relay_input_interpretation: archived_finite_conductance
+  top_down_current_pA: 600.0
+  postsynaptic_signal_convention: kinness_equation27_transition_time
+  trn_spike_event_coordinate: relative_to_soma_leak
+  trn_spike_event_threshold_mV: 30.0
+promotion_gate: >-
+  First preserve the complete Figure 6 relay confinement, cortical chain, and
+  learned-map shape. Then require the official Figure 7 directional relay,
+  TRN, and nonspecific-thalamus effects without fitting absolute output rates.
+rejection_reason: >-
+  Artifact 161 finds a population-wide 81-cell TRN volley after 20 ms
+  equilibration at 300 pA despite no category or relay event. Artifacts 159-160
+  also show condition-invariant TRN output and no Figure 7 directional effect.

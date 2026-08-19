@@ -1535,6 +1535,21 @@ output during match, and higher nonspecific output during mismatch. Artifact
 156 still fails the corrected contract because both conditions produce five
 active relay cells, 81 TRN events, and 10-Hz nonspecific output.
 
+Population-specific TRN event-coordinate discriminators are now executable.
+The leak-relative detector preserves the Figure 6 relay/cortical trajectory
+and changes the first TRN volley, but Figure 7 remains condition-invariant at
+10/10 Hz without a cue lead (`figure7-trn-kinness-event-coordinate-pair-159.yaml`).
+With a 10-ms lead it produces 441 identical TRN events, suppresses every relay,
+and yields 40/40 Hz (`figure7-trn-kinness-event-coordinate-lead10-160.yaml`).
+The causal cue screen then isolates the failure: after 20-ms equilibration,
+300 pA causes no category or relay event but all 81 TRN cells emit at
+cue-relative 4.43 ms (`figure7-cue-current-screen-161.yaml`). The separate
+fixed +67-mV KInNeSS output coordinate produces the same autonomous volley
+(`figure7-shifted67-cue-screen-162.yaml`). Both shifted detectors are rejected;
+the absolute physical event coordinate remains active pending a source-backed
+resolution of why published-source TRN waveforms peak near +7 mV rather than
+crossing the printed +30-mV arm threshold.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

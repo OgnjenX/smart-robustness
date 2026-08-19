@@ -1,0 +1,88 @@
+schema_version: 1
+id: figure7-trn-kinness-event-coordinate-158
+date: '2026-08-19'
+profile: configs/calibration/figure7_trn_kinness_event_coordinate_v1.yaml
+candidate_fingerprint: 40f1a58137054e79dd8f28f0f1e66a2fbe2eded6139d19d3d31f95853cca8844
+runtime_fingerprint: c876cd59ad0fa22f2e796019a27a3995893610c289fe21cc77759c87f86e9827
+holdouts_consulted: false
+status: failed-figure6-training-target
+figure6:
+  protocol:
+    warmup_ms: 0.0
+    stimulus_ms: 100.0
+    post_stimulus_ms: 0.0
+    dt_ms: 0.01
+    source_value: 120.0
+    category_source_value: 70.0
+    winning_layer4_index: 40
+    active_category_index: 40
+    layer6ii_ahp_scale: 1.0
+    monitored_populations:
+    - thalamic_relay
+    - layer4_excitatory_v1
+    - layer23_inhibitory_v1
+    - layer23_excitatory_v1
+    - layer5_excitatory_v1
+    - layer6i_excitatory_v1
+    - layer6ii_excitatory_v1
+    - trn
+    - thalamic_nonspecific
+  population_spikes:
+    thalamic_relay: 20
+    trn: 72
+    layer5_excitatory_v1: 12
+    layer6ii_excitatory_v1: 79
+    layer6i_excitatory_v1: 37
+    layer23_excitatory_v1: 17
+    layer4_excitatory_v1: 28
+    layer23_inhibitory_v1: 20
+    thalamic_nonspecific: 1
+  first_spike_ms:
+    thalamic_relay: 5.280000000000001
+    trn: 5.930000000000001
+    layer5_excitatory_v1: 35.660000000000004
+    layer6ii_excitatory_v1: 8.100000000000001
+    layer6i_excitatory_v1: 8.110000000000001
+    layer23_excitatory_v1: 32.940000000000005
+    layer4_excitatory_v1: 9.930000000000001
+    layer23_inhibitory_v1: 12.690000000000001
+    thalamic_nonspecific: 0.7400000000000001
+  recruitment:
+    layer4_spike_ms: 9.930000000000001
+    layer23_spike_ms: 32.940000000000005
+    layer5_spike_ms: 35.660000000000004
+    layer6i_spike_ms: 8.110000000000001
+    layer6ii_spike_ms: 8.100000000000001
+  feedforward_chain_complete: true
+  top_down_timing:
+    category_spike_ms: 84.38000000000001
+    teaching_arrival_ms: 86.38000000000001
+    preceding_relay_spike_ms: 73.63
+    following_relay_spike_ms: 90.89000000000001
+  causal_pair_in_learning_window: true
+  bottom_up:
+    projection_id: modeldb112923.projection.035
+    map_role: incoming_to_winning_layer4
+    minimum_delta: -4.416310359160384
+    maximum_delta: 1.6041242518236107
+    horizontal_orientation_contrast: 1.3048507584924973
+    horizontal_retention_advantage: 326.77836501456375
+  top_down_wide:
+    projection_id: modeldb112923.projection.005
+    map_role: outgoing_from_active_layer6ii
+    minimum_delta: 0.0
+    maximum_delta: 0.4462409718833849
+    horizontal_orientation_contrast: 0.4411710986734459
+    horizontal_retention_advantage: 20.434694953396722
+  top_down_narrow:
+    projection_id: modeldb112923.projection.007
+    map_role: outgoing_from_active_layer6ii
+    minimum_delta: 0.0
+    maximum_delta: 0.4591971418522581
+    horizontal_orientation_contrast: 0.22959857092612904
+    horizontal_retention_advantage: 272.0380885346168
+  bottom_up_oriented: true
+  top_down_oriented: false
+assessment:
+  figure6_reproduced: false
+  figure7_eligible: false

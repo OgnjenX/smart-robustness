@@ -171,6 +171,12 @@ class Figure7ConditionResult:
     trn_spike_times_ms: tuple[float, ...] = ()
     category_spike_indices: tuple[int, ...] = ()
     category_spike_times_ms: tuple[float, ...] = ()
+    cue_lead_category_spike_indices: tuple[int, ...] = ()
+    cue_lead_category_spike_times_ms: tuple[float, ...] = ()
+    cue_lead_trn_spike_indices: tuple[int, ...] = ()
+    cue_lead_trn_spike_times_ms: tuple[float, ...] = ()
+    cue_lead_relay_spike_indices: tuple[int, ...] = ()
+    cue_lead_relay_spike_times_ms: tuple[float, ...] = ()
     v1_cortical_spike_times_ms: tuple[float, ...] = ()
     v2_layer4_spike_indices: tuple[int, ...] = ()
     v2_layer4_spike_times_ms: tuple[float, ...] = ()
@@ -988,6 +994,24 @@ def run_figure7_condition(
             if float(value) >= stimulus_start_ms
         )
 
+    def cue_lead_times(monitor) -> tuple[float, ...]:
+        cue_start_ms = pretraining_elapsed_ms + equilibration_ms
+        cue_end_ms = cue_start_ms + top_down_cue_lead_ms
+        return tuple(
+            float(value - cue_start_ms)
+            for value in monitor.t / brian.ms
+            if cue_start_ms <= float(value) < cue_end_ms
+        )
+
+    def cue_lead_indices(monitor) -> tuple[int, ...]:
+        cue_start_ms = pretraining_elapsed_ms + equilibration_ms
+        cue_end_ms = cue_start_ms + top_down_cue_lead_ms
+        return tuple(
+            int(index)
+            for index, value in zip(monitor.i, monitor.t / brian.ms, strict=True)
+            if cue_start_ms <= float(value) < cue_end_ms
+        )
+
     result = Figure7ConditionResult(
         condition=condition,
         duration_ms=duration_ms,
@@ -1000,6 +1024,12 @@ def run_figure7_condition(
         trn_spike_times_ms=stimulus_times(trn),
         category_spike_indices=stimulus_indices(category),
         category_spike_times_ms=stimulus_times(category),
+        cue_lead_category_spike_indices=cue_lead_indices(category),
+        cue_lead_category_spike_times_ms=cue_lead_times(category),
+        cue_lead_trn_spike_indices=cue_lead_indices(trn),
+        cue_lead_trn_spike_times_ms=cue_lead_times(trn),
+        cue_lead_relay_spike_indices=cue_lead_indices(relay),
+        cue_lead_relay_spike_times_ms=cue_lead_times(relay),
         v1_cortical_spike_times_ms=tuple(
             sorted(
                 spike_time

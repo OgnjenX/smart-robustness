@@ -110,6 +110,27 @@ def test_runtime_convention_fingerprint_is_stable_and_sensitive() -> None:
         calcium_voltage_coordinate="internal_zero_plus_serialized_leak",
     )
     assert internal_voltage.fingerprint != classic.fingerprint
+    trn_internal_event = FirstOrderRuntimeConventions(
+        trn_spike_event_coordinate="relative_to_soma_leak"
+    )
+    assert trn_internal_event.fingerprint != classic.fingerprint
+
+
+def test_trn_event_coordinate_can_follow_kinness_without_changing_relay() -> None:
+    conventions = FirstOrderRuntimeConventions(
+        trn_spike_event_coordinate="relative_to_soma_leak",
+        trn_spike_event_threshold_mV=30.0,
+    )
+    facts = {fact.canonical_name: fact for fact in first_order_population_facts()}
+    relay = first_order_population_parameters(
+        facts["thalamic_relay"], conventions=conventions
+    )
+    trn = first_order_population_parameters(facts["trn"], conventions=conventions)
+
+    assert relay["spike_event_coordinate"] == "absolute_physical"
+    assert relay["spike_event_threshold_mV"] == 30.0
+    assert trn["spike_event_coordinate"] == "relative_to_soma_leak"
+    assert trn["spike_event_threshold_mV"] == 30.0
 
 
 def test_intrinsic_cell_source_is_explicit_and_does_not_mix_trn_densities() -> None:

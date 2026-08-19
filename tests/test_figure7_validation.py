@@ -310,6 +310,9 @@ def test_figure7_first_order_condition_runs_through_cpp_standalone(tmp_path) -> 
 def test_figure7_result_accepts_relay_pathway_diagnostics() -> None:
     result = _result(MatchCondition.MATCH, 4)
     assert result.relay_top_down_ampa_peak_by_index == ()
+    assert result.cue_lead_category_spike_times_ms == ()
+    assert result.cue_lead_trn_spike_times_ms == ()
+    assert result.cue_lead_relay_spike_times_ms == ()
     assert result.layer4_spike_indices == ()
     assert result.relay_top_down_ampa_integral_ms_by_index == ()
     assert result.relay_top_down_nmda_peak_by_index == ()

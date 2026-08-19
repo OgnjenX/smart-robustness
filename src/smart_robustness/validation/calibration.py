@@ -207,6 +207,16 @@ def runtime_conventions_for_candidate(
             values["membrane_initialization_convention"]
         ),
         spike_event_rule=str(values["spike_event_rule"]),
+        trn_spike_event_coordinate=(
+            None
+            if values.get("trn_spike_event_coordinate") is None
+            else str(values["trn_spike_event_coordinate"])
+        ),
+        trn_spike_event_threshold_mV=(
+            None
+            if values.get("trn_spike_event_threshold_mV") is None
+            else float(values["trn_spike_event_threshold_mV"])
+        ),
         gaussian_spread_convention=str(values["gaussian_spread_convention"]),
         gaussian_learning_bounds_convention=str(
             values.get(

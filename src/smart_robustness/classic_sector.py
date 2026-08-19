@@ -100,6 +100,8 @@ class FirstOrderRuntimeConventions:
     zero_sensitivity_input_convention: str = "framework_resting_leak"
     spike_event_coordinate: str = "absolute_physical"
     spike_event_threshold_mV: float = 30.0
+    trn_spike_event_coordinate: str | None = None
+    trn_spike_event_threshold_mV: float | None = None
     postsynaptic_learning_coordinate: str = "absolute_physical"
     postsynaptic_learning_threshold_mV: float = 30.0
     top_down_learning_rule_convention: str = "serialized_presynaptic"
@@ -122,6 +124,10 @@ class FirstOrderRuntimeConventions:
             # discriminator is serialized only when it differs from the
             # pre-existing executable behavior.
             values.pop("postsynaptic_depression_scale_convention")
+        if values["trn_spike_event_coordinate"] is None:
+            values.pop("trn_spike_event_coordinate")
+        if values["trn_spike_event_threshold_mV"] is None:
+            values.pop("trn_spike_event_threshold_mV")
         if values["postsynaptic_learning_threshold_mV"] == values["spike_event_threshold_mV"]:
             # Historical profiles used one value for both roles. Preserve their
             # fingerprints while allowing Equation 6 to be audited separately.
@@ -304,6 +310,13 @@ def first_order_population_parameters(
         calcium_density_convention = (
             "methods_global_250" if facts.canonical_name == "trn" else "table3"
         )
+    spike_event_coordinate = conventions.spike_event_coordinate
+    spike_event_threshold_mV = conventions.spike_event_threshold_mV
+    if facts.canonical_name == "trn":
+        if conventions.trn_spike_event_coordinate is not None:
+            spike_event_coordinate = conventions.trn_spike_event_coordinate
+        if conventions.trn_spike_event_threshold_mV is not None:
+            spike_event_threshold_mV = conventions.trn_spike_event_threshold_mV
     parameters: dict[str, Any] = {
         "cell_spec": intrinsic_cell,
         "cell_class": facts.canonical_name,
@@ -316,8 +329,8 @@ def first_order_population_parameters(
         "gate_initialization_convention": conventions.gate_initialization_convention,
         "membrane_initialization_convention": conventions.membrane_initialization_convention,
         "calcium_density_convention": calcium_density_convention,
-        "spike_event_coordinate": conventions.spike_event_coordinate,
-        "spike_event_threshold_mV": conventions.spike_event_threshold_mV,
+        "spike_event_coordinate": spike_event_coordinate,
+        "spike_event_threshold_mV": spike_event_threshold_mV,
         "spike_event_rule": conventions.spike_event_rule,
         "ahp_convention": "smart_network_112923" if has_ahp else "modeldb_112923",
         "specific_capacitance_uF_cm2": conventions.specific_capacitance_uF_cm2,

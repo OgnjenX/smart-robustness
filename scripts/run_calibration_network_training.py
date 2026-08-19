@@ -79,6 +79,12 @@ def main() -> None:
         action="store_true",
         help="Run Figure 7 even if the Figure 6 learned-state gates fail.",
     )
+    parser.add_argument(
+        "--top-down-cue-lead-ms",
+        type=float,
+        default=0.0,
+        help="Establish the Figure 7 top-down expectation before bottom-up onset.",
+    )
     args = parser.parse_args()
 
     import brian2 as brian
@@ -154,6 +160,7 @@ def main() -> None:
                 top_down_current_pA=top_down_current,
                 learned_weights=learning.learned_weights,
                 conventions=conventions,
+                top_down_cue_lead_ms=args.top_down_cue_lead_ms,
                 record_relay_diagnostics=True,
                 brian=brian,
             )

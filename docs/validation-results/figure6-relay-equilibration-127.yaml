@@ -1,0 +1,50 @@
+schema_version: 1
+id: figure6-relay-equilibration-127
+date: '2026-08-19'
+profile: configs/calibration/trn_stage_a_survivor_v1.yaml
+candidate_fingerprint: ffd0179dbb9ca4da91370733b1f0d06241047d7032b871107ec1aa444b7bd2aa
+holdouts_consulted: false
+status: equilibration-rejected-as-relay-repetition-rescue
+protocol:
+  warmup_ms: 5.0
+  stimulus_ms: 20.0
+  post_stimulus_ms: 0.0
+  dt_ms: 0.01
+  source_value: 120.0
+  category_source_value: 70.0
+  winning_layer4_index: 40
+  active_category_index: 40
+  layer6ii_ahp_scale: 1.0
+  monitored_populations:
+  - thalamic_relay
+  - layer4_excitatory_v1
+  - layer6ii_excitatory_v1
+result:
+  convention_fingerprint: 65de2bfde632a1b6dfc5d77ba7c2e6850351f212936d15227cb793b54c76a82f
+  network_mode: connected
+  disabled_projection_ids: []
+  target_index: 40
+  network_finite: true
+  external_port_record_id: modeldb112923.external.002
+  external_effective_reversal_mV: -11.999999999999996
+  external_current_peak_pA: 67.85766980617167
+  external_current_peak_ms: 18.610000000000003
+  calcium_current_peak_pA: 1497.393451215541
+  calcium_current_peak_ms: 0.0
+  calcium_current_final_pA: 929.2342002855928
+  soma_voltage_peak_mV: -68.95135805198248
+  soma_voltage_peak_ms: 5.92
+  soma_voltage_post_event_minimum_mV: -69.75016522388273
+  soma_voltage_post_event_minimum_ms: 17.8
+  soma_voltage_final_mV: -69.70670952087752
+  external_current_final_pA: 67.6808700072428
+  relay_event_times_ms: []
+  target_layer4_event_times_ms:
+  - 18.32
+assessment:
+  relay_repetition_rescued: false
+  equilibration_rejected: true
+  interpretation: >-
+    The registered TRN pre-drive duration lets the connected network enter the
+    suppressive thalamic state before bar onset; it cannot explain the missing
+    Figure 6 relay repetition.

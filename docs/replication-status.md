@@ -1313,6 +1313,12 @@ axial coupling, and event-rule hysteresis are excluded as sufficient rescues.
 The next source-level audit is the TRN recruitment/transmitter/GABA pathway,
 while retaining all three official TRN-to-relay projections.
 
+Adding the 5-ms pre-drive used by the isolated TRN screen does not resolve this
+network result (`figure6-relay-equilibration-127.yaml`). During the following
+20-ms bar drive, center relay cell 40 emits no event and remains below -68.95
+mV. Equilibration therefore lets the connected network enter the suppressive
+state before stimulus onset and is rejected as a Figure 6 rescue.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

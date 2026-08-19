@@ -27,6 +27,9 @@ FIGURE6_RELAY_BALANCE_PATH = (
 FIGURE6_RELAY_SCREEN_PATH = (
     ROOT / "docs/validation-results/figure6-relay-survivor-screen-126.yaml"
 )
+FIGURE6_RELAY_EQUILIBRATION_PATH = (
+    ROOT / "docs/validation-results/figure6-relay-equilibration-127.yaml"
+)
 
 
 def test_classic_calibration_contract_separates_training_and_holdout() -> None:
@@ -214,6 +217,14 @@ def test_all_registered_trn_survivors_fail_intact_relay_repetition() -> None:
     assert {item["result"]["relay_event_times_ms"][0] for item in artifact["outcomes"]} == {
         1.8900000000000001
     }
+
+
+def test_registered_trn_predrive_does_not_rescue_figure6_relay() -> None:
+    artifact = yaml.safe_load(FIGURE6_RELAY_EQUILIBRATION_PATH.read_text())
+    assert artifact["holdouts_consulted"] is False
+    assert artifact["protocol"]["warmup_ms"] == 5.0
+    assert artifact["result"]["relay_event_times_ms"] == []
+    assert artifact["assessment"]["equilibration_rejected"]
 
 
 def test_contract_rejects_holdout_leakage(tmp_path: Path) -> None:

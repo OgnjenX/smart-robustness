@@ -183,3 +183,8 @@ intact network for the first 20 ms of the same Figure 6 episode
 at 1.89 ms. The three registered axial conventions and both Equation-8 event
 rules are therefore exhausted at this gate; subsequent work should not switch
 among them to manufacture relay repetition.
+
+The isolated-TRN screen's registered 5-ms pre-drive has also been tested as a
+connected-network equilibration (`figure6-relay-equilibration-127.yaml`). It
+reduces center-relay output from one event to zero and is rejected. Do not add
+an undocumented warmup to hide the intact thalamic suppression discrepancy.

@@ -1,0 +1,449 @@
+id: calibration-stage-a-remaining-117
+date: '2026-08-19'
+status: failed-no-complete-cellular-survivor
+contract: configs/calibration/classic_uncertainty_space.yaml
+contract_fingerprint: 921face98040a8f54072eb6d354acd348420768ac6389d2426c5eb29e84557d2
+holdouts_consulted: false
+figure8:
+  source: Grossberg and Versace Figure 8 and ModelDB Ca_rebound.xml
+  protocol:
+    pulse_pA: 300.0
+    precondition_ms: 100.0
+    pulse_ms: 300.0
+    depolarized_hold_mV: -62.3
+    hyperpolarized_hold_mV: -80.0
+    hyperpolarizing_bias_pA: 0.0
+    clamp_interpretation: released_exact_preclamp
+    hyperpolarizing_clamp_conductance_nS: 0.0
+    dt_ms: 0.01
+  candidate_count: 20
+  survivor_count: 0
+  outcomes:
+  - leak_density_mS_cm2: 0.01
+    specific_capacitance_uF_cm2: 0.5
+    tonic_spike_times_ms:
+    - 0.5600000000000023
+    burst_spike_times_ms:
+    - 1.3000000000000114
+    - 41.72
+    assessment:
+      tonic_pass: false
+      burst_pass: true
+      tonic_spike_count: 1
+      burst_spike_count: 2
+      notes:
+      - depolarized condition is not a sustained regular tonic train
+    reproduced: false
+  - leak_density_mS_cm2: 0.01
+    specific_capacitance_uF_cm2: 1.0
+    tonic_spike_times_ms:
+    - 0.6600000000000108
+    burst_spike_times_ms:
+    - 1.9399999999999977
+    - 42.22
+    assessment:
+      tonic_pass: false
+      burst_pass: true
+      tonic_spike_count: 1
+      burst_spike_count: 2
+      notes:
+      - depolarized condition is not a sustained regular tonic train
+    reproduced: false
+  - leak_density_mS_cm2: 0.01
+    specific_capacitance_uF_cm2: 1.5
+    tonic_spike_times_ms:
+    - 0.75
+    burst_spike_times_ms:
+    - 42.640000000000015
+    assessment:
+      tonic_pass: false
+      burst_pass: false
+      tonic_spike_count: 1
+      burst_spike_count: 1
+      notes:
+      - depolarized condition is not a sustained regular tonic train
+      - hyperpolarized condition is not an early burst followed by silence
+    reproduced: false
+  - leak_density_mS_cm2: 0.01
+    specific_capacitance_uF_cm2: 2.0
+    tonic_spike_times_ms:
+    - 0.8299999999999983
+    burst_spike_times_ms:
+    - 43.02000000000001
+    assessment:
+      tonic_pass: false
+      burst_pass: false
+      tonic_spike_count: 1
+      burst_spike_count: 1
+      notes:
+      - depolarized condition is not a sustained regular tonic train
+      - hyperpolarized condition is not an early burst followed by silence
+    reproduced: false
+  - leak_density_mS_cm2: 0.03
+    specific_capacitance_uF_cm2: 0.5
+    tonic_spike_times_ms:
+    - 0.5600000000000023
+    burst_spike_times_ms:
+    - 1.2900000000000063
+    - 41.71000000000001
+    assessment:
+      tonic_pass: false
+      burst_pass: true
+      tonic_spike_count: 1
+      burst_spike_count: 2
+      notes:
+      - depolarized condition is not a sustained regular tonic train
+    reproduced: false
+  - leak_density_mS_cm2: 0.03
+    specific_capacitance_uF_cm2: 1.0
+    tonic_spike_times_ms:
+    - 0.6600000000000108
+    burst_spike_times_ms:
+    - 1.9399999999999977
+    - 42.20000000000002
+    assessment:
+      tonic_pass: false
+      burst_pass: true
+      tonic_spike_count: 1
+      burst_spike_count: 2
+      notes:
+      - depolarized condition is not a sustained regular tonic train
+    reproduced: false
+  - leak_density_mS_cm2: 0.03
+    specific_capacitance_uF_cm2: 1.5
+    tonic_spike_times_ms:
+    - 0.75
+    burst_spike_times_ms:
+    - 42.62000000000003
+    assessment:
+      tonic_pass: false
+      burst_pass: false
+      tonic_spike_count: 1
+      burst_spike_count: 1
+      notes:
+      - depolarized condition is not a sustained regular tonic train
+      - hyperpolarized condition is not an early burst followed by silence
+    reproduced: false
+  - leak_density_mS_cm2: 0.03
+    specific_capacitance_uF_cm2: 2.0
+    tonic_spike_times_ms:
+    - 0.8299999999999983
+    burst_spike_times_ms:
+    - 43.0
+    assessment:
+      tonic_pass: false
+      burst_pass: false
+      tonic_spike_count: 1
+      burst_spike_count: 1
+      notes:
+      - depolarized condition is not a sustained regular tonic train
+      - hyperpolarized condition is not an early burst followed by silence
+    reproduced: false
+  - leak_density_mS_cm2: 0.05
+    specific_capacitance_uF_cm2: 0.5
+    tonic_spike_times_ms:
+    - 0.5600000000000023
+    burst_spike_times_ms:
+    - 1.2900000000000063
+    - 41.69
+    assessment:
+      tonic_pass: false
+      burst_pass: true
+      tonic_spike_count: 1
+      burst_spike_count: 2
+      notes:
+      - depolarized condition is not a sustained regular tonic train
+    reproduced: false
+  - leak_density_mS_cm2: 0.05
+    specific_capacitance_uF_cm2: 1.0
+    tonic_spike_times_ms:
+    - 0.6600000000000108
+    burst_spike_times_ms:
+    - 1.9300000000000068
+    - 42.18000000000001
+    assessment:
+      tonic_pass: false
+      burst_pass: true
+      tonic_spike_count: 1
+      burst_spike_count: 2
+      notes:
+      - depolarized condition is not a sustained regular tonic train
+    reproduced: false
+  - leak_density_mS_cm2: 0.05
+    specific_capacitance_uF_cm2: 1.5
+    tonic_spike_times_ms:
+    - 0.75
+    burst_spike_times_ms:
+    - 42.599999999999994
+    assessment:
+      tonic_pass: false
+      burst_pass: false
+      tonic_spike_count: 1
+      burst_spike_count: 1
+      notes:
+      - depolarized condition is not a sustained regular tonic train
+      - hyperpolarized condition is not an early burst followed by silence
+    reproduced: false
+  - leak_density_mS_cm2: 0.05
+    specific_capacitance_uF_cm2: 2.0
+    tonic_spike_times_ms:
+    - 0.8299999999999983
+    burst_spike_times_ms:
+    - 42.97
+    assessment:
+      tonic_pass: false
+      burst_pass: false
+      tonic_spike_count: 1
+      burst_spike_count: 1
+      notes:
+      - depolarized condition is not a sustained regular tonic train
+      - hyperpolarized condition is not an early burst followed by silence
+    reproduced: false
+  - leak_density_mS_cm2: 0.1
+    specific_capacitance_uF_cm2: 0.5
+    tonic_spike_times_ms:
+    - 0.5600000000000023
+    burst_spike_times_ms:
+    - 1.2900000000000063
+    - 41.650000000000006
+    assessment:
+      tonic_pass: false
+      burst_pass: true
+      tonic_spike_count: 1
+      burst_spike_count: 2
+      notes:
+      - depolarized condition is not a sustained regular tonic train
+    reproduced: false
+  - leak_density_mS_cm2: 0.1
+    specific_capacitance_uF_cm2: 1.0
+    tonic_spike_times_ms:
+    - 0.6600000000000108
+    burst_spike_times_ms:
+    - 1.9200000000000017
+    - 42.140000000000015
+    assessment:
+      tonic_pass: false
+      burst_pass: true
+      tonic_spike_count: 1
+      burst_spike_count: 2
+      notes:
+      - depolarized condition is not a sustained regular tonic train
+    reproduced: false
+  - leak_density_mS_cm2: 0.1
+    specific_capacitance_uF_cm2: 1.5
+    tonic_spike_times_ms:
+    - 0.75
+    burst_spike_times_ms:
+    - 42.55000000000001
+    assessment:
+      tonic_pass: false
+      burst_pass: false
+      tonic_spike_count: 1
+      burst_spike_count: 1
+      notes:
+      - depolarized condition is not a sustained regular tonic train
+      - hyperpolarized condition is not an early burst followed by silence
+    reproduced: false
+  - leak_density_mS_cm2: 0.1
+    specific_capacitance_uF_cm2: 2.0
+    tonic_spike_times_ms:
+    - 0.8299999999999983
+    burst_spike_times_ms:
+    - 42.920000000000016
+    assessment:
+      tonic_pass: false
+      burst_pass: false
+      tonic_spike_count: 1
+      burst_spike_count: 1
+      notes:
+      - depolarized condition is not a sustained regular tonic train
+      - hyperpolarized condition is not an early burst followed by silence
+    reproduced: false
+  - leak_density_mS_cm2: 0.2
+    specific_capacitance_uF_cm2: 0.5
+    tonic_spike_times_ms:
+    - 0.5600000000000023
+    burst_spike_times_ms:
+    - 1.2800000000000011
+    - 41.56
+    assessment:
+      tonic_pass: false
+      burst_pass: true
+      tonic_spike_count: 1
+      burst_spike_count: 2
+      notes:
+      - depolarized condition is not a sustained regular tonic train
+    reproduced: false
+  - leak_density_mS_cm2: 0.2
+    specific_capacitance_uF_cm2: 1.0
+    tonic_spike_times_ms:
+    - 0.6600000000000108
+    burst_spike_times_ms:
+    - 1.9100000000000108
+    - 42.05000000000001
+    assessment:
+      tonic_pass: false
+      burst_pass: true
+      tonic_spike_count: 1
+      burst_spike_count: 2
+      notes:
+      - depolarized condition is not a sustained regular tonic train
+    reproduced: false
+  - leak_density_mS_cm2: 0.2
+    specific_capacitance_uF_cm2: 1.5
+    tonic_spike_times_ms:
+    - 0.75
+    burst_spike_times_ms:
+    - 42.45000000000002
+    assessment:
+      tonic_pass: false
+      burst_pass: false
+      tonic_spike_count: 1
+      burst_spike_count: 1
+      notes:
+      - depolarized condition is not a sustained regular tonic train
+      - hyperpolarized condition is not an early burst followed by silence
+    reproduced: false
+  - leak_density_mS_cm2: 0.2
+    specific_capacitance_uF_cm2: 2.0
+    tonic_spike_times_ms:
+    - 0.8299999999999983
+    burst_spike_times_ms:
+    - 42.81000000000003
+    assessment:
+      tonic_pass: false
+      burst_pass: false
+      tonic_spike_count: 1
+      burst_spike_count: 1
+      notes:
+      - depolarized condition is not a sustained regular tonic train
+      - hyperpolarized condition is not an early burst followed by silence
+    reproduced: false
+figure19:
+  source: Grossberg and Versace Figure 19 and Layer_5_and_Maynert_AHP_ACh.nml
+  profiles:
+  - name: paper
+    protocol:
+      duration_ms: 500.0
+      dt_ms: 0.1
+      soma_axial_resistance_kohm_cm: 35.0
+      ahp_density_mS_cm2: 0.1
+      ahp_event_weight: 1.0
+      ahp_convention: paper_text
+    assessment:
+      frequency_dependence_pass: true
+      ach_suppression_pass: true
+      recovery_pass: true
+      one_spike_minimum_mV: -83.8588612281608
+      two_spike_minimum_mV: -85.87620861888892
+      ach_minimum_mV: -85.87618776923355
+      two_spike_recovery_error_mV: 1.301573065329194
+    reproduced: true
+  - name: modeldb_112923
+    protocol:
+      duration_ms: 500.0
+      dt_ms: 0.1
+      soma_axial_resistance_kohm_cm: 35.0
+      ahp_density_mS_cm2: 0.1
+      ahp_event_weight: 4.5
+      ahp_convention: modeldb_112923
+    assessment:
+      frequency_dependence_pass: true
+      ach_suppression_pass: true
+      recovery_pass: false
+      one_spike_minimum_mV: -87.73587867650534
+      two_spike_minimum_mV: -88.75013853924597
+      ach_minimum_mV: -88.75013820467603
+      two_spike_recovery_error_mV: 6.807434900619754
+    reproduced: false
+layer5_propagation:
+  source: Grossberg and Versace Figure 10b and Equation 2
+  protocol:
+    pre_drive_ms: 10.0
+    drive_ms: 90.0
+    dt_ms: 0.01
+    nonspecific_ampa_gate: 0.06
+    nonspecific_nmda_gate: 0.01
+    drive_multiplier: 1.0
+    axial_conductance_scale: 1.0
+  survivor_count: 1
+  outcomes:
+  - axial_convention: kinness_serialized_edge
+    result:
+      spike_times_ms: []
+      post_drive_spike_times_ms: []
+      soma_voltage_range_mV:
+      - -73.03889743927748
+      - -66.86346740816609
+      proximal_voltage_range_mV:
+      - -73.15960185534912
+      - -62.56293942813075
+      distal_voltage_range_mV:
+      - -86.04367488148793
+      - 41.702297540427246
+      finite: true
+      convention_fingerprint: d6b7702be4c9707778d0926f4412a870cefc851fffcbcbbd61c6494feb39d638
+      axial_conductance_scale: 1.0
+      drive_multiplier: 1.0
+    propagation_pass: false
+  - axial_convention: kinness_2008
+    result:
+      spike_times_ms: []
+      post_drive_spike_times_ms: []
+      soma_voltage_range_mV:
+      - -73.03889743927748
+      - -66.86346740816609
+      proximal_voltage_range_mV:
+      - -73.15960185534912
+      - -62.56293942813075
+      distal_voltage_range_mV:
+      - -86.04367488148793
+      - 41.702297540427246
+      finite: true
+      convention_fingerprint: 8791ba5cbb117a064c91cf2797b30f494ff104192e6a5313ef3f7cb23b2b90ea
+      axial_conductance_scale: 1.0
+      drive_multiplier: 1.0
+    propagation_pass: false
+  - axial_convention: paper_literal
+    result:
+      spike_times_ms:
+      - 48.470000000000006
+      - 97.48
+      post_drive_spike_times_ms:
+      - 48.470000000000006
+      - 97.48
+      soma_voltage_range_mV:
+      - -78.69968381777865
+      - 35.59593476727332
+      proximal_voltage_range_mV:
+      - -72.9678787492275
+      - -59.698603521684404
+      distal_voltage_range_mV:
+      - -86.04192521693464
+      - 41.79467083850308
+      finite: true
+      convention_fingerprint: 4e1f0047dd55bc0c7de5993e16923ef06f62c31f89ba7d8635ef0e5b34d3877a
+      axial_conductance_scale: 1.0
+      drive_multiplier: 1.0
+    propagation_pass: true
+  - axial_convention: symmetric_cable
+    result:
+      spike_times_ms: []
+      post_drive_spike_times_ms: []
+      soma_voltage_range_mV:
+      - -73.03889743927748
+      - -66.86346740816609
+      proximal_voltage_range_mV:
+      - -73.15960185534912
+      - -62.56293942813075
+      distal_voltage_range_mV:
+      - -86.04367488148793
+      - 41.702297540427246
+      finite: true
+      convention_fingerprint: a6dc2659f4df5d41c4c4c14d7c3ab0f54c18531dc1d992db734a9c4467364ea1
+      axial_conductance_scale: 1.0
+      drive_multiplier: 1.0
+    propagation_pass: false
+promotion:
+  allowed: false
+  reason: the independently required TRN Stage A gate has no survivor

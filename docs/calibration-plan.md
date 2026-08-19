@@ -85,3 +85,13 @@ new global-density half was evaluated separately in
 `calibration-stage-a-trn-116.yaml`, preserving the prior cell-specific result.
 It likewise produced no survivor, so all 384 registered cellular combinations
 are rejected at the TRN viability gate before network calibration.
+
+The other isolated gates were then rerun independently under the same contract
+fingerprint (`calibration-stage-a-remaining-117.yaml`). None of the 20
+predeclared Figure 8 leak/capacitance candidates reproduced both tonic and
+burst responses. The paper Figure 19 AHP/ACh profile passed all three kernel
+gates, while the archived ModelDB profile passed frequency dependence and ACh
+suppression but not 500-ms recovery. Of four axial conventions, only the
+paper-literal Equation 2 profile propagated sustained distal layer-5 input into
+somatic events. These partial passes cannot bypass the failed relay and TRN
+gates.

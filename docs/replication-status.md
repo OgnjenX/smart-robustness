@@ -1199,6 +1199,19 @@ remained active with drive. Zero were promoted. Together with the preceding
 cell-specific matrix, all 384 registered Stage A TRN combinations fail the
 same causal gate.
 
+The remaining isolated gates have now been regenerated together under the
+current calibration fingerprint (`calibration-stage-a-remaining-117.yaml`).
+The complete 5×4 Figure 8 passive-default matrix again yields zero full
+tonic/burst survivors: every depolarized trace has one onset event rather than
+a sustained tonic train, while only the 0.5 and 1.0 µF/cm² candidates retain
+the two-event transient burst. The paper Figure 19 profile passes frequency
+dependence, ACh suppression, and 500-ms recovery (1.302 mV error); the ModelDB
+profile passes the first two but fails recovery (6.807 mV error). For isolated
+layer-5 propagation, only paper-literal Equation 2 produces somatic output (two
+events); both KInNeSS axial forms and the symmetric cable candidate produce
+none. These results preserve genuine partial reproductions but provide no
+complete Stage A candidate because the Figure 8 and TRN gates still fail.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

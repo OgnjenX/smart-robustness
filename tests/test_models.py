@@ -11,4 +11,3 @@ def test_classic_baseline_is_registered() -> None:
 def test_planned_models_are_not_silent_aliases(name: str) -> None:
     with pytest.raises(NotImplementedError):
         create_population(name)
-

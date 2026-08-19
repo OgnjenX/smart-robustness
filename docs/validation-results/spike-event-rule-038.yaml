@@ -1,0 +1,39 @@
+id: spike-event-rule-038
+status: source-alternatives-implemented-negative-discriminator
+claim: the printed immediately-previous-sample or framework-threshold rule resolves recovered SMART TRN output
+evidence_class: [published-equation, archived-revision-history, behavioral]
+sources:
+  paper: Grossberg and Versace 2008 Methods 4.4 Equation 8
+  framework: Versace et al. 2008 KInNeSS Equation 18
+  implementation_history: SANNDRA spikeevents.h revisions 1.1-1.7; revision 1.2 says proper spike detecting was fixed
+protocol:
+  cell: recovered ModelDB 112923 TRN
+  duration_ms: 300
+  dt_ms: 0.01
+  intrinsic_cell_source: modeldb_112923
+  calcium_kinetics: modeldb_112923
+  calcium_initialization_coordinate: absolute_physical
+results:
+  literal_previous_sample_minus20:
+    events: 2535
+    first_event_ms: 0.98
+    assessment: rejected-event-storm
+  hysteretic_threshold_then_zero_minus20:
+    events: 163
+    first_event_ms: 0.98
+    assessment: rejected-autonomous-firing
+    figure7_100_ms:
+      match: {nonspecific_rate_hz: 90, relay_events: 0, trn_events: 648, trn_events_after_40_ms: 405, layer4_events: 0}
+      mismatch: {nonspecific_rate_hz: 90, relay_events: 0, trn_events: 648, trn_events_after_40_ms: 405, layer4_events: 0}
+      convention_fingerprint: 24c239ec2c9ea3c2163cb92cec9b893c472aba33a211fdfc5c6e6ed5b08af130
+      assessment: rejected-identical-autonomous-network-regime
+  literal_previous_sample_plus30:
+    events: 0
+    assessment: rejected-misses-startup-action-potential-at-project-default-timestep
+  latched_peak_then_zero_plus30:
+    events: 1
+    assessment: retained-active-candidate
+conclusion:
+  - Neither literal reading repairs post-startup TRN recruitment.
+  - The surviving revision log proves that extra detector logic existed but does not identify it.
+  - No alternative is promoted solely because it changes event counts.

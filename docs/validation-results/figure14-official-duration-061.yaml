@@ -1,0 +1,68 @@
+schema_version: 1
+validation_id: figure14-official-duration-061
+claim: The reconstructed first-order SMART candidate reproduces Figure 14's match-gamma and mismatch-lower-frequency spectral directions at the published duration.
+status: qualitative-spectral-reproduction-pass-mechanism-still-failed
+date: 2026-08-18
+evidence_class:
+  - exact-source-duration
+  - qualitative
+  - source-unreported-reconstruction
+primary_source:
+  citation: Grossberg and Versace 2008
+  locations: [Figure 14 panels a-d and caption, Methods 4.9-4.10]
+  visual_audit: tmp/pdfs/figure14-audit/page-30.png
+protocol:
+  simulator: Brian2 2.9.0 C++ standalone
+  duration_ms: 1000
+  integration_dt_ms: 0.01
+  histogram_bin_ms: 1
+  hamming_window_ms: 200
+  hamming_overlap_ms: 0
+  top_down_current_pA: 1000
+  top_down_current_status: independently calibrated source-unreported value
+  learned_state: paper-constrained-figure6c-reference
+  learned_state_status: underidentified reconstruction
+  runtime_convention_fingerprint: 977783457264370779b809e468ada7adb40d204788c45ce8ecde7b205b8c3fcf
+match:
+  cortical_spikes: 5626
+  nonspecific_rate_hz: 7
+  relay_events: 1264
+  trn_events: 81
+  dominant_frequency_hz: 55
+  band_power:
+    2_8_hz: 0.5253343800
+    8_20_hz: 3.3061518885
+    8_10_hz: 0.8636663877
+    20_70_hz: 17.2290790538
+mismatch:
+  cortical_spikes: 5252
+  nonspecific_rate_hz: 7
+  relay_events: 1284
+  trn_events: 81
+  dominant_frequency_hz: 15
+  band_power:
+    2_8_hz: 0.4246416620
+    8_20_hz: 5.4238681496
+    8_10_hz: 1.6388050192
+    20_70_hz: 12.3955234371
+comparison:
+  match_peak_in_gamma: true
+  mismatch_peak_below_gamma: true
+  mismatch_gamma_reduced: true
+  mismatch_gamma_fraction_of_match: 0.7194536283
+  mismatch_gamma_reduction_percent: 28.05463717
+  figure14_qualitative_gate_pass: true
+  mismatch_integrated_gamma_below_integrated_8_20: false
+source_interpretation:
+  - Panels a and b state and display peak-frequency shifts; they do not compare integrated PSD mass across unequal-width bands.
+  - Panels c and d display band-limited time-domain firing-rate components, not scalar integrated band powers.
+  - An earlier scalar gate requiring integrated 8-20-Hz mass to exceed integrated 20-70-Hz mass was rejected as bandwidth-biased and not source-stated.
+assessment:
+  figure14_qualitative_spectrum_reproduced: true
+  figure7_match_mismatch_arousal_reproduced: false
+  trn_match_greater_than_mismatch: false
+  complete_classic_baseline_ready_to_freeze: false
+limitations:
+  - Both conditions retain exactly 81 TRN events, the common startup volley, so the published mismatch-reset mechanism remains absent.
+  - The 7-Hz one-second nonspecific average is not the Figure 7 approximately 40/70-Hz result.
+  - The source-unreported learned arrays, category-current amplitude, histogram bin, and Hamming overlap remain explicitly labeled reconstruction choices.

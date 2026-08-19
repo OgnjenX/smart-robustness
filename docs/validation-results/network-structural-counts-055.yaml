@@ -1,0 +1,49 @@
+id: network-structural-counts-055
+status: official-source-discrepancy-resolved-for-construction
+claim: The Methods 4.2 printed totals should define the executable SMART sector size.
+evidence_class:
+  - primary-paper-visual-audit
+  - primary-paper-internal-consistency
+  - official-model-archive
+  - structural
+paper:
+  methods_4_1:
+    topology: all cortical and subcortical layers are 9x9 except nonspecific and matrix thalamic populations
+    named_first_order_populations: 12
+    implied_grid_populations: 10
+    implied_singleton_populations: 2
+    implied_cells: 812
+  methods_4_2:
+    printed_cells_per_loop: 732
+    printed_compartments_per_loop: 2106
+    printed_differential_equations_per_loop: 17415
+  table_3_under_methods_4_1_sizes:
+    three_compartment_grids: 4
+    two_compartment_grids: 6
+    three_compartment_singletons: 2
+    implied_compartments: 1950
+archive_modeldb_112923:
+  file: SMART.nml
+  populations_per_sector: 12
+  externally_sized_grid_populations: 10
+  fixed_1x1_populations:
+    - thalamic_nonspecific
+    - thalamic_matrix
+  cells_at_9x9_external_size: 812
+  compartments_at_9x9_external_size: 1950
+  full_two_area_cells: 1624
+  full_two_area_compartments: 3900
+consistency_checks:
+  paper_topology_matches_archive_population_sizes: true
+  paper_table3_matches_archive_compartment_count: true
+  printed_732_matches_paper_topology: false
+  printed_2106_matches_table3_and_topology: false
+assessment:
+  construction_source: official ModelDB 112923 SMART.nml
+  first_order_baseline_cells: 812
+  first_order_baseline_compartments: 1950
+  resize_to_printed_totals_rejected: true
+notes:
+  - 732 equals 9*81+3, but the paper identifies two singleton exceptions and ten grid populations in the first-order loop.
+  - 2106 equals 26*81 and cannot be obtained from the published two- and three-compartment classes under the stated population sizes.
+  - The printed counts remain reported as a publication anomaly; they are not silently corrected or used to invent a population resize.

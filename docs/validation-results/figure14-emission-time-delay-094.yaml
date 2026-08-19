@@ -1,0 +1,60 @@
+schema_version: 1
+validation_id: figure14-emission-time-delay-094
+claim: Correct emission-time transmitter sampling preserves the published Figure 14 match-gamma versus mismatch-slower spectral directions.
+status: failed-official-spectral-reproduction-current-source-profile
+superseded_by: transmitter-continuous-gating-097
+date: 2026-08-19
+sources:
+  paper: Grossberg and Versace 2008, Figure 14 and Methods 4.9-4.10
+  executable: ModelDB 112923 SMART.nml
+protocol:
+  simulator: Brian2 2.9.0 C++ standalone
+  duration_ms: 1000
+  integration_dt_ms: 0.01
+  histogram_bin_ms: 1
+  hamming_window_ms: 200
+  hamming_overlap_ms: 0
+  top_down_current_pA: 1000
+  learned_state: paper-constrained Figure 6c horizontal expectation
+  transmitter_semantics: emission-time resource with future arrival timestamp
+  convention_fingerprint: a054e5e36b75765124150157029662c6a5c8a639ee6079b442304607e726cb11
+results:
+  match:
+    cortical_events: 5562
+    nonspecific_rate_hz: 7
+    relay_events: 1273
+    trn_events: 81
+    layer4_events: 171
+    dominant_frequency_hz: 15
+    band_power:
+      2_8_hz: 0.36045228643173527
+      8_20_hz: 13.448618950885072
+      8_10_hz: 3.83171526736575
+      20_70_hz: 10.578519404960428
+  mismatch:
+    cortical_events: 5644
+    nonspecific_rate_hz: 7
+    relay_events: 1268
+    trn_events: 81
+    layer4_events: 149
+    dominant_frequency_hz: 15
+    band_power:
+      2_8_hz: 0.3469211187091017
+      8_20_hz: 5.166646954021706
+      8_10_hz: 1.5956535573728294
+      20_70_hz: 12.689470052952922
+assessment:
+  match_peak_in_gamma: false
+  mismatch_peak_below_gamma: true
+  mismatch_gamma_reduced: false
+  figure14_qualitative_spectrum_reproduced: false
+  figure7_match_mismatch_arousal_reproduced: false
+  complete_classic_baseline_ready_to_freeze: false
+interpretation:
+  - Both conditions peak at 15 Hz, so match no longer exhibits the required gamma-dominant resonance.
+  - Mismatch gamma power exceeds match gamma power, opposite the published direction.
+  - Both conditions retain only the common 81-event TRN startup volley and nearly identical 7-Hz nonspecific output.
+  - This source-corrected result supersedes artifact 083's qualitative spectral pass.
+execution_note:
+  - The match simulation completed successfully; its result arrays were read directly after the reporting command referenced a nonexistent convenience property.
+  - The spectrum was reconstructed from the six recorded V1 cortical spike-monitor arrays using the same committed analysis function and declared parameters.

@@ -1,0 +1,38 @@
+schema_version: 1
+validation_id: figure16-region-reduction-057
+claim: The Figure 16 scorer binds the caption's lower higher-order region to the upper lower-order region before inspecting simulated behavior.
+status: pass_analysis_implementation
+date: 2026-08-18
+evidence_class:
+  - exact-source-anatomical-selection
+  - declared-analysis-convention
+primary_source:
+  citation: Grossberg and Versace 2008
+  location: Figure 16 caption
+  region_pair:
+    first: lower 0.3 mm of the higher cortical area
+    second: upper 0.3 mm of the lower cortical area
+implementation:
+  higher_cortical_area: V2
+  higher_area_region: inferior 300 um
+  lower_cortical_area: V1
+  lower_area_region: superior 300 um
+  within_region_reduction: arithmetic mean across retained electrode tips
+  reduction_status: source-unreported-explicit-convention
+  normalized_invariance: summing rather than averaging multiplies each trace by a positive constant and leaves energy-normalized cross-correlation unchanged
+  functions:
+    - smart_robustness.validation.higher_order.figure16_inter_area_region_signals
+    - smart_robustness.validation.higher_order.assess_figure16_candidate
+verification:
+  command: .venv/bin/pytest -q tests/test_higher_order_validation.py tests/test_cross_correlation.py tests/test_lfp.py
+  result: 47 passed
+  lint: pass
+  checks:
+    - inferior V2 and superior V1 are selected in caption order
+    - regional tip means are exact and read-only
+    - regional/time-axis mismatches are rejected
+    - a synthetic 10-Hz pair is scored in the 8-12-Hz band and exceeds gamma
+assessment:
+  source_region_binding_pass: true
+  candidate_scorer_ready: true
+  official_lfp_behavior_reproduced: false

@@ -1,0 +1,30 @@
+id: figure6-ahp-spike-coordinate-022
+status: negative-discriminators-not-promoted
+claim: layer-6II AHP or spike-coordinate convention explains the single category teaching event
+protocol:
+  warmup_ms: 0.0
+  stimulus_ms: 100.0
+  dt_ms: 0.01
+discriminators:
+  - name: disable_layer6ii_ahp
+    ahp_scale: 0.0
+    category_spikes_ms: [58.50]
+    relay_spikes: 20
+    layer4_spikes: 39
+    bottom_up_horizontal_contrast: 0.0816761683
+    top_down_combined_horizontal_contrast: 0.0049612302
+    changed_from_classic_candidate: false
+  - name: leak_relative_spike_detector
+    spike_event_coordinate: relative_to_soma_leak
+    category_spikes_ms: [58.27]
+    relay_spikes: 5
+    layer4_spikes: 17
+    bottom_up_horizontal_contrast: 0.1342461599
+    top_down_combined_horizontal_contrast: 0.0
+assessment:
+  ahp_explains_single_category_event: false
+  leak_relative_detector_reproduces_figure6c: false
+  physical_detector_retained: true
+notes:
+  - AHP event accumulation matches the archived AHP/ADP dependency: each emitted cell spike adds one normalized 5/20-ms waveform.
+  - Equation 6's positive postsynaptic branch is evaluated continuously from membrane voltage above 30 mV; last_post_spike controls only the subsequent piecewise tail.

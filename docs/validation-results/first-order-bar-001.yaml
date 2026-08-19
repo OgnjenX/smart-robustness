@@ -1,0 +1,39 @@
+id: first-order-bar-001
+status: failed_reproduction
+source_target:
+  paper_section: Methods 4.9 and Figure 14
+  active_relay_cells: 5
+  expected_relay_rate_hz: 40
+  learning_epoch_ms: 100
+  synchrony_epoch_ms: 1000
+source_artifacts:
+  horizontal_png_sha256: 0d411326c2b1da6a4f4275d6943afada0b9a81cee80a379a7a73621dbb27667b
+  vertical_png_sha256: 14939e3336a106cf6be3407933283eda24ba9b1ef890546e6e965239fa0c5779
+  active_pixel_channel: green
+  active_pixel_value: 120
+  input_sensitivity_mV_per_unit: 0.4
+  resting_potential_mV: -60
+  reconstructed_driving_potential_mV: -12
+simulation:
+  backend: brian2_numpy
+  dt_ms: 0.01
+  warmup_ms: 20
+  stimulus_ms: 100
+  orientation: horizontal
+  gaussian_kernel: peak_normalized
+observed:
+  active_relay_spike_counts: [19, 19, 19, 19, 19]
+  active_relay_rates_hz: [190, 190, 190, 190, 190]
+  inactive_relay_spikes: 76
+  stimulus_population_spikes:
+    thalamic_relay: 171
+    trn: 0
+    thalamic_interneuron: 0
+    thalamic_nonspecific: 0
+    layer4_excitatory_v1: 0
+    layer5_excitatory_v1: 0
+diagnosis:
+  - At rest, all 81 TRN cells emit a synchronized intrinsic spike near 0.89 ms.
+  - The resulting inhibition produces later broad relay rebound activity.
+  - The archived gate-initialization convention is not serialized in SMART.nml.
+  - Match/mismatch spectra are not meaningful until the startup transient is resolved.

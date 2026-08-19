@@ -1,0 +1,67 @@
+schema_version: 1
+validation_id: figure7-relay-current-balance-111
+claim: The learned top-down expectation allows all five matched relay cells to fire but suppresses the four nonoverlap cells during mismatch, as required by the Figure 7 caption.
+status: failed-official-reproduction_mismatch_not_suppressed_at_shape_preserving_bound
+date: 2026-08-19
+sources:
+  paper: Grossberg and Versace 2008, Figures 6c and 7 and Methods 4.9
+  framework: Versace et al. 2008 expanded KInNeSS manuscript, Equations 3, 5-6, 8b-9, and 13-18
+  executable: ModelDB 112923 SMART.nml relay cell, external input, and projections 000-007
+protocol:
+  simulator: Brian2 2.9.0 numpy target
+  duration_ms: 100
+  driven_current_window_ms: [40, 100]
+  integration_dt_ms: 0.01
+  top_down_current_pA: 1000
+  learned_state: paper-constrained Figure 6c horizontal expectation
+  monitored_relay_indices: [22, 31, 38, 39, 40, 41, 42, 49, 58]
+  convention_fingerprint: a054e5e36b75765124150157029662c6a5c8a639ee6079b442304607e726cb11
+representative_current_ranges_pA:
+  match_expectation_only_index_31:
+    direct_image_input: [-23.777251, 33.844597]
+    top_down_excitation: [0.711279, 25.966666]
+    trn_gaba: [-56.283256, -0.044353]
+    interneuron_gaba: [-7.801845, 0]
+    soma_axial: [-18.288393, 33.278993]
+    soma_voltage_mV: [-69.988501, -55.276980]
+  mismatch_expectation_only_index_39:
+    direct_image_input: [-27.508775, 26.941821]
+    top_down_excitation: [0.863268, 42.245126]
+    trn_gaba: [-64.805027, -0.046502]
+    interneuron_gaba: [-7.914339, 0]
+    soma_axial: [-21.095230, 35.626264]
+    soma_voltage_mV: [-69.988501, -54.546156]
+  match_bottom_up_and_expected_index_39:
+    direct_image_input: [35.577409, 645.592770]
+    top_down_excitation: [1.039139, 33.527579]
+    trn_gaba: [-459.191588, 56.256260]
+    interneuron_gaba: [-962.149726, 0]
+    soma_axial: [-587.213905, 437.033374]
+    soma_voltage_mV: [-96.264110, 45.896824]
+official_weight_upper_bound_discriminator:
+  learned_state: paper-constrained horizontal field scaled shape-preservingly until its center reaches the serialized 1.5 maximum in both projections
+  scale_over_reference: 1.2
+  match:
+    active_relay_indices: [38, 39, 40, 41, 42]
+    relay_events: 20
+    trn_events: 81
+    nonspecific_rate_hz: 60
+  mismatch:
+    active_relay_indices: [22, 31, 40, 49, 58]
+    relay_events: 18
+    trn_events: 81
+    nonspecific_rate_hz: 60
+assessment:
+  top_down_current_reaches_expectation_only_cells: true
+  expectation_only_soma_reaches_spike_threshold: false
+  all_five_match_cells_fire: true
+  mismatch_nonoverlap_cells_are_suppressed: false
+  official_shape_preserving_maximum_creates_relay_count_divergence: false
+  relay_subset_divergence_reproduced: false
+  official_figure7_reproduced: false
+interpretation:
+  - The caption says expectation-only cells should remain inhibited and a mismatch should leave only the single bottom-up/top-down overlap cell firing. The expectation-only cells are indeed subthreshold, but all five directly driven cells continue to fire in both conditions.
+  - Directly driven image cells receive approximately 0.65 nA from the external input and generate full somatic action potentials. In mismatch, the four nonoverlap cells are therefore not suppressed by the top-down-driven inhibitory off-surround as required.
+  - Eliminating the available learned-amplitude uncertainty does not restore that operation. Scaling the horizontal reference field by its complete 1.2-fold headroom, until both center weights reach 1.5, preserves five active cells in each condition; match has 20 relay events and mismatch 18.
+  - TRN remains at its 81-event startup volley and nonspecific output remains 60 Hz in both conditions. Missing Figure 6 learning amplitude within the declared shape and official bounds is therefore excluded as the primary Figure 7 discrepancy.
+  - No weight, inhibition, or spike threshold is tuned. Exact relay-clamp and source-profile alternatives are retained in earlier artifacts and also fail condition-dependent recruitment.

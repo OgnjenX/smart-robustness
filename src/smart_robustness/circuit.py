@@ -61,4 +61,3 @@ def build_minimal_benchmark(config: dict[str, Any], brian: Any) -> BuiltCircuit:
     }
     objects = [*pops.values(), *synapses, *spikes.values(), *rates.values()]
     return BuiltCircuit(brian.Network(objects), spikes, rates)
-

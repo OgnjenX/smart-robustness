@@ -1,0 +1,66 @@
+schema_version: 1
+validation_id: figure7-off-surround-topology-112
+claim: The serialized layer-6II-to-TRN projections deliver a center-excluding excitatory off-surround to mismatch nonoverlap locations.
+status: topology_and_delivery_pass_downstream_event_failure
+date: 2026-08-19
+sources:
+  paper: Grossberg and Versace 2008, Figure 7 caption and accompanying two-against-one explanation
+  executable: ModelDB 112923 SMART.nml projections 009 and 012
+  manual_gap: The archived KInNeSS manual explains Gaussian peak and cutoff semantics but not the separate ring flag.
+active_candidate:
+  ring_interpretation: center-excluding wrapped Gaussian
+  gaussian_weight: serialized Weight is peak
+  cutoff: omit weighted factors below 0.001
+  spread: serialized sigma fields interpreted as standard deviations
+topology_from_layer6ii_center_40:
+  projection_009_nmda:
+    sigma: 1.2
+    weight: 0.3
+    retained_targets: 48
+    center_40_present: false
+    near_cardinal_targets_31_39_41_49:
+      factor: 0.706648278
+      weighted_factor: 0.211994483
+    far_cardinal_targets_22_38_42_58:
+      factor: 0.249352209
+      weighted_factor: 0.074805663
+  projection_012_ampa:
+    sigma: 1.5
+    weight: 4.0
+    retained_targets: 80
+    center_40_present: false
+    near_cardinal_targets_31_39_41_49:
+      factor: 0.800737403
+      weighted_factor: 3.202949612
+    far_cardinal_targets_22_38_42_58:
+      factor: 0.411112291
+      weighted_factor: 1.644449162
+measured_figure7_delivery:
+  center_overlap_40:
+    layer6ii_ampa_gate_peak: 0
+    layer6ii_nmda_gate_peak: 0
+    layer6ii_current_pA: [0, 0]
+  near_nonoverlap_31_39_41_49:
+    layer6ii_ampa_gate_peak: 1.732561948
+    layer6ii_nmda_gate_peak: 0.112842322
+    layer6ii_current_range_pA: [-157.660483, 92.992090]
+  far_nonoverlap_22_38_42_58:
+    layer6ii_ampa_gate_peak: 0.889526964
+    layer6ii_nmda_gate_peak: 0.039818228
+    layer6ii_current_range_pA: [-82.459557, 49.244479]
+  trn_events:
+    startup: 81
+    post_startup: 0
+assessment:
+  center_excluded: true
+  nonoverlap_targets_connected: true
+  distance_ordering_preserved: true
+  ligand_delivery_executable: true
+  post_startup_trn_recruitment: false
+  mismatch_relay_suppression: false
+  official_figure7_reproduced: false
+interpretation:
+  - Under the only executable ring candidate recoverable without inventing a radius, the horizontal category cell sends no off-surround excitation to the overlap relay/TRN location 40 and maximal excitation to nearby nonoverlap TRN cells.
+  - The measured AMPA/NMDA gates and receptor currents preserve this topology exactly. The missing mismatch suppression is therefore not caused by absent projection 009/012 connectivity, an accidentally included center, or failed ligand delivery.
+  - Exact legacy ring geometry remains unverified because neither the manual nor recovered source indexes expose its stencil. This uncertainty cannot explain complete TRN event silence: earlier isolated tests apply the largest measured layer-6II gates continuously through 128 times strength without finding a quiescent, selectively recruitable official-source TRN profile.
+  - No ring radius, weight, or conductance is fitted or promoted.

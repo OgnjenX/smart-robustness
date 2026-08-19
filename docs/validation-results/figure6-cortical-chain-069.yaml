@@ -1,0 +1,52 @@
+id: figure6-cortical-chain-069
+status: localized-multicompartment-failure
+claim: the active Figure 6 profile does not recruit the published layer-4 to layer-2/3 to layer-5 category pathway
+sources:
+  - Grossberg and Versace 2008, Sections 2.1 and 2.2
+  - Versace et al. 2008 KInNeSS, Equations 8a-9
+  - ModelDB 112923 projections 015, 020, 021, 032
+active_profile:
+  axial_convention: kinness_serialized_edge
+  population_spike_counts:
+    thalamic_relay: 15
+    layer4_excitatory_v1: 5
+    layer23_excitatory_v1: 0
+    layer5_excitatory_v1: 0
+    layer6i_excitatory_v1: 15
+    layer6ii_excitatory_v1: 1
+  first_spike_ms:
+    thalamic_relay: 49.53
+    layer6i_excitatory_v1: 53.36
+    layer4_excitatory_v1: 73.16
+    layer23_excitatory_v1: null
+    layer5_excitatory_v1: null
+    layer6ii_excitatory_v1: 83.66
+  layer23_cell40_trace:
+    projection_032_gate_peak: 2.015462912509145
+    projection_032_gate_peak_ms: 76.19
+    proximal_voltage_range_mV: [-68.98432206382816, -42.32077531326983]
+    soma_voltage_range_mV: [-65.64196940808756, -62.97628290818199]
+    events: 0
+  isolated_layer6ii_blue70:
+    soma_voltage_range_mV: [-64.0, -57.26029993637333]
+    proximal_voltage_range_mV: [-64.0, -46.600548561805404]
+    distal_voltage_range_mV: [-64.0, -52.0038032225414]
+    events: 0
+paper_literal_axial_candidate:
+  source_status: printed-SMART-equation alternative but not recovered KInNeSS executable Equation 9
+  population_spike_counts:
+    thalamic_relay: 31
+    layer4_excitatory_v1: 36
+    layer23_excitatory_v1: 24
+    layer5_excitatory_v1: 12
+    layer6i_excitatory_v1: 47
+    layer6ii_excitatory_v1: 32
+  bottom_up_horizontal_contrast: 0.31015151156941984
+  combined_top_down_horizontal_contrast: -0.0010828719692424806
+  promoted: false
+conclusions:
+  - The archived blue=70 input is a subthreshold category prime, not an independent category spike generator.
+  - Projection 032 delivers strong proximal dendritic excitation, but the active KInNeSS axial interpretation transfers too little voltage to the layer-2/3 soma to recruit it.
+  - The paper-literal directional axial equation recruits the cortical chain but still fails Figure 6c and over-recruits off-bar layer-6II cells.
+  - KInNeSS Equations 8a-9 explicitly support symmetric total edge current with compartment-size-dependent voltage effects, so the paper-literal candidate is not promoted merely for increasing recruitment.
+

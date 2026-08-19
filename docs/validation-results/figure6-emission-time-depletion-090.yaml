@@ -1,0 +1,45 @@
+schema_version: 1
+validation_id: figure6-emission-time-depletion-090
+claim: Sampling depleted transmitter at spike emission rather than delayed arrival restores the published Figure 6c corticothalamic map.
+status: corrected-semantics-reproduction-failed
+superseded_by: transmitter-continuous-gating-097
+date: 2026-08-19
+sources:
+  paper: Grossberg and Versace 2008, Figure 6 and Equation 8
+  framework: Versace et al. 2008 KInNeSS, ligand/transmitter current Equation 16
+  executable: ModelDB 112923 SMART.nml depletion and axonal-delay records
+protocol:
+  simulator: Brian2 2.9.0 runtime
+  integration_dt_ms: 0.01
+  duration_ms: 100
+  stimulus: archived horizontal0.png channels
+  warmup_ms: 0
+  transmitter_semantics: latch resource at source spike before depletion, deliver latched amplitude after axonal delay
+  convention_fingerprint: a054e5e36b75765124150157029662c6a5c8a639ee6079b442304607e726cb11
+results:
+  population_events:
+    thalamic_relay: 15
+    layer4_excitatory_v1: 5
+    layer6ii_excitatory_v1: 1
+  first_events_ms:
+    layer4_excitatory_v1: 74.09
+    layer23_excitatory_v1: null
+    layer5_excitatory_v1: null
+    layer6ii_excitatory_v1: 82.57
+  category_teaching_arrival_ms: 84.57
+  preceding_relay_event_ms: 81.78
+  following_relay_event_ms: null
+  bottom_up_horizontal_contrast: 0.073900855874173
+  combined_top_down_horizontal_contrast: -0.006086912773224051
+assessment:
+  emission_time_semantics_promoted: true
+  figure6b_pass: true
+  causal_top_down_pair_pass: false
+  cortical_chain_pass: false
+  figure6c_pass: false
+  full_figure6_pass: false
+interpretation:
+  - A delayed synaptic event must carry the transmitter resource available when its source spike was emitted; resampling a recovering resource at arrival conflates axonal delay with recovery.
+  - Correcting this implementation detail advances the category spike from 83.66 to 82.57 ms but does not create a relay event after its 84.57-ms teaching arrival.
+  - The correction is retained on source/causal grounds despite making the failed top-down contrast more negative.
+  - Figure 6c remains blocked upstream by the absent layer-2/3 and layer-5 cortical chain and the lack of a causal corticothalamic STDP pair.

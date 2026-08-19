@@ -23,7 +23,7 @@ clearly separate from published values.
 
 | Gate | Required baseline property | Primary source |
 |---|---|---|
-| Network scale | Two six-layer thalamocortical loops; 9×9 cortical and specific-thalamic sheets; 732 neurons, 2,106 compartments, and 17,415 differential equations. | Methods 4.1–4.2 |
+| Network scale | Two six-layer thalamocortical loops. Methods 4.1 and Table 3 imply ten 9×9 sheets plus two singleton nuclei, or 812 cells and 1,950 compartments per sector, matching `SMART.nml`. Methods 4.2 separately prints incompatible totals of 732 cells, 2,106 compartments, and 17,415 differential equations; construction retains the official executable dimensions and reports the anomaly. | Methods 4.1–4.2; Table 3; ModelDB 112923 |
 | Cell structure | Published two- or three-compartment cells with passive axial coupling and the Supplementary Table 3 cell classes. | Table 3; Fig. 17; Methods 4.2 |
 | First-order loop | LGN core/matrix/interneurons, TRN, nonspecific thalamus, and the complete V1 laminar loop. | Fig. 2; Table 2; supplement |
 | Higher-order loop | V1–pulvinar–V2 loop, including higher-order feedback and TRN interactions. | Fig. 3; Table 2 |
@@ -40,14 +40,19 @@ clearly separate from published values.
 | Depletion (Fig. 11) | 150 ms traces; firing regimes 2/3 Hz and 7/12 Hz; `(epsilon, tau)` of `(0.5, 50 ms)`, `(1, 50 ms)`, and `(1, 10 ms)`. | Greater use or epsilon causes greater depletion; faster recovery reduces depletion. | `exact-source` protocol, `qualitative` trace. |
 | AHP/ACh (Figs. 12 and 19) | Isolated layer-5 cell; about 80 Hz current-driven firing; 100 ms ACh event; AHP rise/fall 80/100 ms; ACh rise/fall 5/6 ms. | AHP adapts and hyperpolarizes the cell; ACh suppresses AHP and increases excitability; recovery is near complete by about 500 ms. | Mixed `exact-source`, `qualitative`, and digitized `approximate-numeric`. |
 | Match/mismatch arousal (Fig. 7) | Horizontal bottom-up plus horizontal top-down match versus vertical bottom-up plus horizontal top-down mismatch. | Nonspecific thalamus is approximately 40 Hz during match and approximately 70 Hz during mismatch. | `approximate-numeric`; default rate tolerance must be declared before tuning. |
-| Reset (Fig. 10) | Mismatch-driven nonspecific burst to layer 1 and layer-5 apical dendrites. | The current layer-4 winner is suppressed and previously inhibited alternatives are released. | `structural` and `qualitative`; latency is `not-identifiable`. |
+| Reset (Fig. 10) | A persistent network establishes a horizontal layer-4 winner, then receives vertical bottom-up plus horizontal top-down mismatch; compare intact nonspecific-thalamus→layer-5 input with a disconnected negative control. | The nonspecific→layer-5→layer-6I chain is recruited; the current layer-4 winner is suppressed more than in the control and more previously inhibited alternatives are released. | `structural` and `qualitative`; latency is `not-identifiable`. |
 | Match/mismatch spectra (Fig. 14) | Five-cell bar; 1,000 ms trials; subtract mean; 200 ms Hamming window before Fourier analysis. | Match is gamma-dominant (20–70 Hz); mismatch increases slower activity and reduces gamma. | `qualitative` plus digitized `approximate-numeric`. |
 | Local synchrony (Fig. 15) | Nearby V1 layer-4 cells with overlapping receptive fields. | Simulated correlation peak near 44 Hz; comparison experiment near 50 Hz; local range 300 micrometres. | `approximate-numeric`. |
-| Long-range synchrony (Fig. 16) | Two thalamocortical areas; 1 ms inter-area delay; 1 s input before recording. | Long-range coupling is stronger in lower bands than local gamma; bands are 2–4, 4–8, 8–12, 12–20, and 20–100 Hz. | `qualitative` and `exact-source` protocol; amplitudes are `not-identifiable`. |
+| Long-range synchrony (Fig. 16) | Two thalamocortical areas; 10 ms V1-layer-2/3-to-V2-layer-4 delay; 1 s input before recording. | Long-range coupling is stronger in lower bands than local gamma; bands are 2–4, 4–8, 8–12, 12–20, and 20–100 Hz. | `qualitative` and `exact-source` protocol; amplitudes are `not-identifiable`. The recovered executable record independently serializes 5 ms. |
 | Learning (Fig. 6) | Relative spike timing from -30 to +30 ms and horizontal-bar training. | Gating-family timing curves and oriented bottom-up/top-down weight maps have the published direction and selectivity. | `qualitative`; amplitudes require digitization or original source. |
 
 ## Declared publication ambiguities
 
+- Methods 4.1 plus Table 3 imply 812 cells and 1,950 compartments per sector,
+  matching the official executable archive, whereas Methods 4.2 separately
+  prints 732 cells and 2,106 compartments. The archive-consistent dimensions
+  control construction; `network-structural-counts-055.yaml` records the full
+  reconciliation and preserves the printed totals as a publication anomaly.
 - The attachment calls the connection catalog “Supplementary Table 3,” while
   the main article calls it “Supplementary Table 4.” They are the same source.
 - Methods 4.10 describes 2–8, 8–10, and 20–70 Hz bands, whereas the Figure 14

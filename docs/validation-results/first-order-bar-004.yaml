@@ -1,0 +1,51 @@
+id: first-order-bar-004
+status: failed-reproduction
+claim: Grossberg and Versace Methods 4.9 five-cell bar relay drive at approximately 40 Hz
+supersedes: first-order-bar-003
+convention_fingerprint: d037d6f79ba4409137ba280ec796291233bb9611973221fd616906a1bc069f48
+conventions:
+  axial_convention: kinness_serialized_edge
+  leak_convention: table3_reversal
+  voltage_coordinate: relative_to_table3_leak
+  nak_rate_convention: standard_traub_miles
+  calcium_gate_convention: modeldb_112923
+  gate_initialization_convention: steady_state_at_initial_voltage
+  calcium_density_convention: table3
+  specific_capacitance_uF_cm2: 1.0
+  integration_method: rk4
+protocol:
+  orientation: horizontal
+  warmup_ms: 20.0
+  stimulus_ms: 100.0
+  dt_ms: 0.01
+  source_value: 120.0
+warmup_spikes:
+  thalamic_relay: 0
+  trn: 81
+  thalamic_nonspecific: 1
+  thalamic_matrix: 1
+stimulus_spikes:
+  thalamic_relay: 0
+  trn: 0
+  layer5_excitatory_v1: 0
+  layer6ii_excitatory_v1: 0
+  layer6i_excitatory_v1: 0
+  layer4_inhibitory_v1: 0
+  layer23_excitatory_v1: 0
+  layer4_excitatory_v1: 0
+  layer23_inhibitory_v1: 0
+  thalamic_interneuron: 0
+  thalamic_nonspecific: 4
+  thalamic_matrix: 18
+active_relay_rates_hz: [0.0, 0.0, 0.0, 0.0, 0.0]
+inactive_relay_spikes: 0
+assessment:
+  target_rate_hz: 40.0
+  tolerance_hz: 5.0
+  relay_rate_pass: false
+  selectivity_pass: true
+  reproduced_drive: false
+notes:
+  - This is the first full-sector result after correcting KInNeSS expanded-manuscript Equation 9.
+  - Correct axial coupling is conservative and substantially stronger than the superseded implementation.
+  - Recurrent first-order circuitry does not rescue the silent relay response under the archived finite-conductance input.

@@ -1,0 +1,50 @@
+schema_version: 1
+validation_id: figure7-same-network-figure6-state-089
+claim: Preserving the complete Figure 6 training trajectory into Figure 7 restores the published match/mismatch arousal split.
+status: failed-protocol-discriminator
+date: 2026-08-18
+sources:
+  paper: Grossberg and Versace 2008, Figures 6 and 7
+  executable: ModelDB 112923 SMART.nml
+protocol:
+  simulator: Brian2 2.9.0 C++ standalone
+  integration_dt_ms: 0.01
+  training:
+    warmup_ms: 0
+    horizontal_bar_ms: 100
+    bottom_up_green_value: 120
+    category_blue_value: 70
+    preserve_full_dynamic_state: true
+  recognition:
+    duration_ms: 100
+    top_down_current_pA: 1000
+    learned_projections_frozen_after_training: true
+    conditions: [match, mismatch]
+results:
+  match:
+    nonspecific_events: 0
+    nonspecific_rate_hz: 0
+    active_relay_cells: 81
+    trn_events: 0
+    category_events: 3
+  mismatch:
+    nonspecific_events: 0
+    nonspecific_rate_hz: 0
+    active_relay_cells: 81
+    trn_events: 0
+    category_events: 3
+published_targets:
+  match_nonspecific_rate_hz: approximately 40
+  mismatch_nonspecific_rate_hz: approximately 70
+  mechanism: match recruits more relay and TRN activity than mismatch
+assessment:
+  match_rate_pass: false
+  mismatch_rate_pass: false
+  relay_subset_pass: false
+  trn_order_pass: false
+  reproduced: false
+interpretation:
+  - Installing a learned-weight snapshot into a cold network is not the cause of the current Figure 7 failure.
+  - The same-network protocol preserves membrane, channel-gate, receptor, transmitter, AHP, and learned-weight state across the Figure 6 to Figure 7 boundary.
+  - Because the official Figure 6c top-down map is itself not reproduced, this result does not validate the learned expectation; it excludes loss of transient network state as a sufficient repair.
+  - The remaining upstream failure is condition-dependent relay and TRN recruitment, consistent with the isolated nonspecific-cell pass in artifact 088.

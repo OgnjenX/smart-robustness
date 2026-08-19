@@ -1,0 +1,68 @@
+id: figure6-topdown-current-014
+status: weak-positive-not-reproduced
+claim: simultaneous 100-pA layer-6II somatic current reproduces Figure 6c
+convention_fingerprint: 642787353e5d0cff46b7d5fe2175f81845aefed19a527d30fc034060b9d3001a
+protocol:
+  initialization_ms: 2.0
+  stimulus_ms: 100.0
+  dt_ms: 0.01
+  horizontal_green_value: 120.0
+  archived_blue_category_input: false
+  layer6ii_cell_index: 40
+  simultaneous_somatic_current_pA: 100.0
+observations:
+  central_layer6ii_spike_times_ms: [25.91]
+  active_relay_spikes: 21
+  bottom_up_horizontal_contrast: 0.216705147
+  top_down_wide_horizontal_contrast: 0.000803383
+  top_down_narrow_horizontal_contrast: 0.000823448
+  top_down_wide_center_after: 0.101676
+  top_down_narrow_center_after: 1.104099
+  population_spikes:
+    thalamic_relay: 21
+    trn: 243
+    layer5_excitatory_v1: 34
+    layer6ii_excitatory_v1: 1
+    layer6i_excitatory_v1: 33
+    layer4_inhibitory_v1: 52
+    layer23_excitatory_v1: 17
+    layer4_excitatory_v1: 39
+    layer23_inhibitory_v1: 39
+    thalamic_interneuron: 36
+    thalamic_nonspecific: 8
+    thalamic_matrix: 21
+assessment:
+  figure6b_bottom_up_map_pass: true
+  top_down_direction_positive: true
+  figure6c_effect_size_pass: false
+  full_figure6_learning_pass: false
+notes:
+  - The official Figure 6c shows strong visible horizontal reshaping; sign alone is insufficient evidence of reproduction.
+  - A minimum absolute horizontal arm contrast of 0.01 was declared before further current-amplitude calibration.
+  - The paper specifies somatic current injection but does not report its amplitude.
+calibration_discriminators:
+  - current_pA: 75.0
+    central_layer6ii_spike_times_ms: [38.83]
+    wide_horizontal_contrast: 0.004184656
+    narrow_horizontal_contrast: 0.004361419
+    effect_size_pass: false
+  - current_pA: 80.0
+    central_layer6ii_spike_times_ms: [35.19]
+    wide_horizontal_contrast: 0.006278272
+    narrow_horizontal_contrast: 0.006483732
+    effect_size_pass: false
+  - current_pA: 100.0
+    central_layer6ii_spike_times_ms: [25.91]
+    wide_horizontal_contrast: 0.000803383
+    narrow_horizontal_contrast: 0.000823448
+    effect_size_pass: false
+  - current_pA: 150.0
+    central_layer6ii_spike_times_ms: [15.79, 97.60]
+    wide_horizontal_contrast: -0.000778615
+    narrow_horizontal_contrast: -0.000806972
+    effect_size_pass: false
+source_conflict:
+  figure6_caption: presynaptic gating
+  smart_nml_projection_005_and_007: Presynaptically gated
+  methods_4_3: states dual-AND gating for layer-6II projections terminating in specific thalamus
+  resolution: unresolved; executable baseline currently follows the figure caption and archived NML

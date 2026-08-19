@@ -1,0 +1,38 @@
+schema_version: 1
+validation_id: figure15-corrected-input-official-084
+claim: The corrected-input SMART match candidate reproduces the Figure 15 local layer-4 synchrony peak near 44 Hz.
+status: pass-approximate-numeric
+date: 2026-08-18
+primary_source:
+  citation: Grossberg and Versace 2008
+  location: Figure 15 bottom panels and caption
+protocol:
+  simulator: Brian2 2.9.0 C++ standalone
+  condition: learned horizontal match
+  duration_ms: 1000
+  integration_dt_ms: 0.01
+  top_down_current_pA: 1000
+  learned_state: paper-constrained-figure6c-reference
+  convergent_external_input_convention: sum_independent_currents
+  runtime_convention_fingerprint: a054e5e36b75765124150157029662c6a5c8a639ee6079b442304607e726cb11
+  layer4_pair_indices: [39, 40]
+  pair_selection: predeclared adjacent cells in the stimulated horizontal bar
+  spike_bin_ms: 1
+  target_peak_hz: 44
+  tolerance_hz: 5
+result:
+  first_cell_spikes: 9
+  second_cell_spikes: 10
+  all_layer4_spikes: 144
+  gamma_peak_hz: 48.5242621311
+  nonspecific_rate_hz: 6
+  relay_events: 1264
+  trn_events: 81
+assessment:
+  enough_spikes_pass: true
+  target_peak_pass: true
+  figure15_local_synchrony_reproduced: true
+notes:
+  - No neighboring-pair search was performed; the predeclared pair is retained.
+  - The original simulated cell identities and confidence-limit procedure are unpublished.
+  - This spectral pass does not establish the missing Figure 7/10 reset mechanism.

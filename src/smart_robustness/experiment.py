@@ -25,7 +25,10 @@ def run_experiment(config: ExperimentConfig) -> tuple[Path, Path]:
 
     analysis_cfg = config.raw["analysis"]
     rate_monitor = built.rates[analysis_cfg["population"]]
-    rate_hz = np.asarray(rate_monitor.smooth_rate(window="gaussian", width=analysis_cfg["smooth_ms"] * brian.ms) / brian.Hz)
+    rate_hz = np.asarray(
+        rate_monitor.smooth_rate(window="gaussian", width=analysis_cfg["smooth_ms"] * brian.ms)
+        / brian.Hz
+    )
     if not np.all(np.isfinite(rate_hz)):
         raise RuntimeError("Simulation produced non-finite rates; no result artifacts were written")
     time_s = np.asarray(rate_monitor.t / brian.second)

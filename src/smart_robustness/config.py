@@ -46,4 +46,3 @@ def load_config(path: str | Path) -> ExperimentConfig:
     if float(data["duration_ms"]) <= 0 or float(data["dt_ms"]) <= 0:
         raise ValueError("duration_ms and dt_ms must be positive")
     return ExperimentConfig(data)
-

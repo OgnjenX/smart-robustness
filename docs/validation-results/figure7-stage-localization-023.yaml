@@ -1,0 +1,46 @@
+id: figure7-stage-localization-023
+status: orientation-count-failure-localized-before-trn
+claim: paper-constrained horizontal expectation produces match-dependent relay, TRN, and nonspecific activity
+protocol:
+  duration_ms: 100.0
+  dt_ms: 0.01
+  learned_state: paper-constrained Figure 6c reference
+  top_down_current_pA: 1000.0
+  bottom_up_drive: archived finite-conductance input
+match:
+  category_spikes_ms: [3.29, 27.70, 58.12, 87.82]
+  relay_active_indices_and_counts: {38: 4, 39: 4, 40: 4, 41: 4, 42: 4}
+  relay_spikes: 20
+  trn_spikes: 264
+  nonspecific_spikes_ms: [40.20, 44.36, 63.96, 68.60, 73.85, 80.28]
+  nonspecific_rate_hz: 60.0
+mismatch:
+  category_spikes_ms: [3.29, 27.70, 58.12, 87.82]
+  relay_active_indices_and_counts: {22: 4, 31: 4, 40: 4, 49: 4, 58: 4}
+  relay_spikes: 20
+  trn_spikes: 264
+  nonspecific_spikes_ms: [40.20, 44.36, 63.96, 68.60, 73.85, 80.28]
+  nonspecific_rate_hz: 60.0
+controls:
+  zero_expectation_match:
+    category_spikes: 4
+    relay_spikes: 20
+    trn_spikes: 264
+    nonspecific_spikes_ms: [40.20, 44.36, 63.96, 68.60, 73.85, 80.28]
+  current_600_pA:
+    match_and_mismatch_identical: true
+    category_spikes: 3
+    relay_spikes: 20
+    trn_spikes: 264
+    nonspecific_rate_hz: 60.0
+assessment:
+  category_cue_active: true
+  expectation_has_observable_effect: false
+  relay_orientation_position_preserved: true
+  relay_match_mismatch_count_difference: false
+  trn_match_mismatch_difference: false
+  nonspecific_disinhibition_reproduced: false
+notes:
+  - Orientation is preserved spatially in relay indices but not in the number or rate of active relay cells.
+  - Figure 7's relay-count difference is absent before TRN convergence, so tuning TRN-to-nonspecific inhibition cannot repair the upstream failure.
+  - Methods 4.9 specifies an exact -12 mV clamp; the finite-conductance archive input remains a protocol discrepancy.

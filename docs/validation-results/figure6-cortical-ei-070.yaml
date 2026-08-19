@@ -1,0 +1,61 @@
+id: figure6-cortical-ei-070
+status: localized-feedforward-inhibition-failure
+claim: published layer-2/3 feedforward inhibition vetoes the Figure 6 cortical category chain in the active reconstruction
+sources:
+  - Grossberg and Versace 2008, Sections 2.1-2.2 and Table 3
+  - Supplementary Table 3, layer-2/3 and layer-2/3-interneuron records
+  - ModelDB 112923 projections 031, 032, 039
+capacitance_discriminator:
+  source_status: numerical value absent from paper, supplement, SMART.nml, and recovered KInNeSS manual
+  isolated_exact_projection_032:
+    protocol: five simultaneous layer-4 source events through the archived Gaussian projection onto one exact layer-2/3 cell
+    results:
+      0.05: {finite: false, first_event_ms: 7.11}
+      0.1: {finite: true, event_times_ms: [8.05, 11.64, 16.17], soma_peak_mV: 48.8431}
+      0.2: {finite: true, event_times_ms: [9.14, 14.67], soma_peak_mV: 48.7004}
+      0.5: {finite: true, event_times_ms: [12.31], soma_peak_mV: 46.7853}
+      1.0: {finite: true, event_times_ms: [18.83], soma_peak_mV: 42.7153}
+      2.0: {finite: true, event_times_ms: [45.58], soma_peak_mV: 34.5456}
+  conclusion: the active 1-uF/cm2 value permits recruitment in isolation and does not explain full-network silence
+intact_network_trace:
+  layer4_excitatory_events: 5
+  layer4_inhibitory_events: 85
+  layer23_inhibitory_events:
+    count: 5
+    times_ms: [77.28, 77.28, 77.30, 77.58, 77.58]
+  layer23_excitatory_events: 0
+  central_layer23:
+    projection_032_ampa_gate_peak: 2.015462912509145
+    projection_032_peak_ms: 76.19
+    projection_031_gaba_gate_peak: 0.600890255461463
+    projection_031_peak_ms: 79.69
+    proximal_peak_mV: -42.32077531326983
+    soma_peak_mV: -62.97628290818199
+paper_table3_whole_cell_candidate:
+  convention_fingerprint: 58e73b9302c297dec26fc4af71203c32e73f4503230e202883b1624c497ce74b
+  population_spikes:
+    thalamic_relay: 5
+    layer4_excitatory_v1: 5
+    layer23_excitatory_v1: 0
+    layer5_excitatory_v1: 0
+    layer6i_excitatory_v1: 5
+    layer6ii_excitatory_v1: 36
+  bottom_up_horizontal_contrast: 0.006659245338001607
+  combined_top_down_horizontal_contrast: -0.0011315647026996119
+  promoted: false
+projection_031_causal_knockout:
+  purpose: mechanism localization only
+  promotable: false
+  population_spikes:
+    thalamic_relay: 15
+    layer4_excitatory_v1: 5
+    layer23_excitatory_v1: 5
+    layer5_excitatory_v1: 10
+    layer6i_excitatory_v1: 15
+    layer6ii_excitatory_v1: 1
+  layer23_excitatory_times_ms: [86.81, 86.81, 86.83, 87.13, 87.13]
+  layer5_excitatory_times_ms: [90.57, 90.57, 90.58, 90.89, 90.89, 95.33, 95.33, 95.34, 95.71, 95.71]
+conclusions:
+  - Projection 031 is causal for layer-2/3 and layer-5 silence under the active reconstruction.
+  - Its GABA conductance, weight, topology, kinetics, reversal, and delay agree between the supplement and ModelDB archive, so deleting or weakening it is not source faithful.
+  - The remaining audit target is the relative event timing and ligand/receptor execution of projections 032, 039, and 031, not membrane capacitance or wholesale Table 3 substitution.

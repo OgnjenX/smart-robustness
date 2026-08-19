@@ -1,0 +1,3804 @@
+schema_version: 1
+source: ModelDB 112923 SMART.nml first-order area
+population_count: 12
+source_sha256: 16fc196f2ed68d1c02a39395fa83bb0ffab8fcf8edffe6fd11022bb6c6e299e1
+projection_count: 55
+external_channel_count: 11
+intrinsic_populations:
+- source_name: Relay
+  canonical_name: thalamic_relay
+  compartments:
+  - name: soma
+    diameter_cm: 0.005
+    length_cm: 0.006
+    axial_resistance_kohm_cm: null
+    leak_reversal_mV: -60.0
+    leak_conductance_mS_cm2: 0.01
+    depletion_rate: null
+    recovery_ms: null
+    intrinsic_channels:
+    - name: K_dr (Traub & Miles, 91)
+      conductance_mS_cm2: 100.0
+      reversal_mV: -100.0
+      dependencies:
+      - voltage
+      gates:
+      - attributes:
+          exponent: '4'
+          dependency: voltage
+          format: alpha/beta
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Linoid
+            V0: '15'
+            A: '0.032'
+            B: '5'
+        - kind: backward
+          attributes:
+            category: Exponential
+            V0: '10'
+            A: '0.5'
+            B: '40'
+    - name: Na (Traub & Miles, 91)
+      conductance_mS_cm2: 100.0
+      reversal_mV: 50.0
+      dependencies:
+      - voltage
+      - voltage
+      gates:
+      - attributes:
+          exponent: '3'
+          dependency: voltage
+          format: alpha/beta
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Linoid
+            V0: '13'
+            A: '0.32'
+            B: '4'
+        - kind: backward
+          attributes:
+            category: Linoid
+            V0: '40'
+            A: '-0.28'
+            B: '-5'
+      - attributes:
+          exponent: '1'
+          dependency: voltage
+          format: alpha/beta
+          name: m2
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Exponential
+            V0: '17'
+            A: '0.128'
+            B: '18'
+        - kind: backward
+          attributes:
+            category: Sigmoid
+            V0: '40'
+            A: '4'
+            B: '5'
+    - name: Low threshold T-type Ca++
+      conductance_mS_cm2: 0.1
+      reversal_mV: 180.0
+      dependencies:
+      - voltage
+      - voltage
+      gates:
+      - attributes:
+          exponent: '3'
+          dependency: voltage
+          format: m/tau
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: m_inf
+          attributes:
+            category: Sigmoid
+            V0: '-63'
+            A: '1'
+            B: '7.8'
+        - kind: tau
+          attributes:
+            category: Simple_Tau
+            V0: '-9.84'
+            A: '2.44'
+            B: '2.506'
+      - attributes:
+          exponent: '1'
+          dependency: voltage
+          format: m/tau
+          name: m2
+          representationForm: Parametrised
+        representation:
+        - kind: m_inf
+          attributes:
+            category: Sigmoid
+            V0: '-83.5'
+            A: '1'
+            B: '-6.3'
+        - kind: tau
+          attributes:
+            category: Simple_Tau
+            V0: '-10.54'
+            A: '19.15'
+            B: '7.171'
+  - name: proximal_dendrite
+    diameter_cm: 0.0005
+    length_cm: 0.008
+    axial_resistance_kohm_cm: 8.0
+    leak_reversal_mV: -60.0
+    leak_conductance_mS_cm2: 0.01
+    depletion_rate: null
+    recovery_ms: null
+    intrinsic_channels:
+    - name: Low threshold T-type Ca++
+      conductance_mS_cm2: 0.1
+      reversal_mV: 180.0
+      dependencies:
+      - voltage
+      - voltage
+      gates:
+      - attributes:
+          exponent: '3'
+          dependency: voltage
+          format: m/tau
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: m_inf
+          attributes:
+            category: Sigmoid
+            V0: '-63'
+            A: '1'
+            B: '7.8'
+        - kind: tau
+          attributes:
+            category: Simple_Tau
+            V0: '-9.84'
+            A: '2.44'
+            B: '2.506'
+      - attributes:
+          exponent: '1'
+          dependency: voltage
+          format: m/tau
+          name: m2
+          representationForm: Parametrised
+        representation:
+        - kind: m_inf
+          attributes:
+            category: Sigmoid
+            V0: '-83.5'
+            A: '1'
+            B: '-6.3'
+        - kind: tau
+          attributes:
+            category: Simple_Tau
+            V0: '-10.54'
+            A: '19.15'
+            B: '7.171'
+  - name: distal_dendrite
+    diameter_cm: 0.0004
+    length_cm: 0.008
+    axial_resistance_kohm_cm: 8.2
+    leak_reversal_mV: -60.0
+    leak_conductance_mS_cm2: 0.1
+    depletion_rate: null
+    recovery_ms: null
+    intrinsic_channels:
+    - name: Low threshold T-type Ca++
+      conductance_mS_cm2: 0.1
+      reversal_mV: 180.0
+      dependencies:
+      - voltage
+      - voltage
+      gates:
+      - attributes:
+          exponent: '3'
+          dependency: voltage
+          format: m/tau
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: m_inf
+          attributes:
+            category: Sigmoid
+            V0: '-63'
+            A: '1'
+            B: '7.8'
+        - kind: tau
+          attributes:
+            category: Simple_Tau
+            V0: '-9.84'
+            A: '2.44'
+            B: '2.506'
+      - attributes:
+          exponent: '1'
+          dependency: voltage
+          format: m/tau
+          name: m2
+          representationForm: Parametrised
+        representation:
+        - kind: m_inf
+          attributes:
+            category: Sigmoid
+            V0: '-83.5'
+            A: '1'
+            B: '-6.3'
+        - kind: tau
+          attributes:
+            category: Simple_Tau
+            V0: '-10.54'
+            A: '19.15'
+            B: '7.171'
+- source_name: Reticular
+  canonical_name: trn
+  compartments:
+  - name: soma
+    diameter_cm: 0.005
+    length_cm: 0.005
+    axial_resistance_kohm_cm: null
+    leak_reversal_mV: -69.0
+    leak_conductance_mS_cm2: 0.1
+    depletion_rate: null
+    recovery_ms: null
+    intrinsic_channels:
+    - name: Na (Destexhe et al, 96)
+      conductance_mS_cm2: 100.0
+      reversal_mV: 50.0
+      dependencies:
+      - voltage
+      - voltage
+      gates:
+      - attributes:
+          exponent: '3'
+          dependency: voltage
+          format: alpha/beta
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Linoid
+            V0: '13'
+            A: '0.32'
+            B: '4'
+        - kind: backward
+          attributes:
+            category: Linoid
+            V0: '40'
+            A: '-0.28'
+            B: '-5'
+      - attributes:
+          exponent: '1'
+          dependency: voltage
+          format: alpha/beta
+          name: m2
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Exponential
+            V0: '17'
+            A: '0.128'
+            B: '18'
+        - kind: backward
+          attributes:
+            category: Sigmoid
+            V0: '40'
+            A: '4'
+            B: '5'
+    - name: K_dr (Destexhe et al, 96)
+      conductance_mS_cm2: 80.0
+      reversal_mV: -100.0
+      dependencies:
+      - voltage
+      gates:
+      - attributes:
+          exponent: '4'
+          format: alpha/beta
+          dependency: voltage
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Linoid
+            V0: '15'
+            A: '0.032'
+            B: '5'
+        - kind: backward
+          attributes:
+            category: Exponential
+            V0: '10'
+            A: '0.5'
+            B: '40'
+    - name: Thalamic reticular Ca++ (Destexhe et al, 96)
+      conductance_mS_cm2: 100.0
+      reversal_mV: 120.0
+      dependencies:
+      - voltage
+      - voltage
+      gates:
+      - attributes:
+          exponent: '2'
+          dependency: voltage
+          format: m/tau
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: m_inf
+          attributes:
+            category: Sigmoid
+            V0: '-52'
+            A: '1'
+            B: '7.4'
+        - kind: tau
+          attributes:
+            D: '-15'
+            category: Reticular_Tau
+            V0: '27'
+            A: '1'
+            V1: '102'
+            B: '0.33'
+            C: '10'
+      - attributes:
+          exponent: '1'
+          dependency: voltage
+          format: m/tau
+          name: m2
+          representationForm: Parametrised
+        representation:
+        - kind: m_inf
+          attributes:
+            category: Sigmoid
+            V0: '-80'
+            A: '1'
+            B: '-5'
+        - kind: tau
+          attributes:
+            D: '-50'
+            category: Reticular_Tau
+            V0: '48'
+            A: '28.3'
+            V1: '407'
+            B: '0.33'
+            C: '4'
+  - name: proximal_dendrite
+    diameter_cm: 0.001
+    length_cm: 0.005
+    axial_resistance_kohm_cm: 10.0
+    leak_reversal_mV: -69.0
+    leak_conductance_mS_cm2: 0.1
+    depletion_rate: null
+    recovery_ms: null
+    intrinsic_channels:
+    - name: Thalamic reticular Ca++ (Destexhe et al, 96)
+      conductance_mS_cm2: 100.0
+      reversal_mV: 120.0
+      dependencies:
+      - voltage
+      - voltage
+      gates:
+      - attributes:
+          exponent: '2'
+          dependency: voltage
+          format: m/tau
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: m_inf
+          attributes:
+            category: Sigmoid
+            V0: '-52'
+            A: '1'
+            B: '7.4'
+        - kind: tau
+          attributes:
+            D: '-15'
+            category: Reticular_Tau
+            V0: '27'
+            A: '1'
+            V1: '102'
+            B: '0.33'
+            C: '10'
+      - attributes:
+          exponent: '1'
+          dependency: voltage
+          format: m/tau
+          name: m2
+          representationForm: Parametrised
+        representation:
+        - kind: m_inf
+          attributes:
+            category: Sigmoid
+            V0: '-80'
+            A: '1'
+            B: '-5'
+        - kind: tau
+          attributes:
+            D: '-50'
+            category: Reticular_Tau
+            V0: '48'
+            A: '28.3'
+            V1: '407'
+            B: '0.33'
+            C: '4'
+  - name: distal_dendrite
+    diameter_cm: 0.001
+    length_cm: 0.005
+    axial_resistance_kohm_cm: 10.0
+    leak_reversal_mV: -69.0
+    leak_conductance_mS_cm2: 0.1
+    depletion_rate: null
+    recovery_ms: null
+    intrinsic_channels:
+    - name: Thalamic reticular Ca++ (Destexhe et al, 96)
+      conductance_mS_cm2: 100.0
+      reversal_mV: 120.0
+      dependencies:
+      - voltage
+      - voltage
+      gates:
+      - attributes:
+          exponent: '2'
+          dependency: voltage
+          format: m/tau
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: m_inf
+          attributes:
+            category: Sigmoid
+            V0: '-52'
+            A: '1'
+            B: '7.4'
+        - kind: tau
+          attributes:
+            D: '-15'
+            category: Reticular_Tau
+            V0: '27'
+            A: '1'
+            V1: '102'
+            B: '0.33'
+            C: '10'
+      - attributes:
+          exponent: '1'
+          dependency: voltage
+          format: m/tau
+          name: m2
+          representationForm: Parametrised
+        representation:
+        - kind: m_inf
+          attributes:
+            category: Sigmoid
+            V0: '-80'
+            A: '1'
+            B: '-5'
+        - kind: tau
+          attributes:
+            D: '-50'
+            category: Reticular_Tau
+            V0: '48'
+            A: '28.3'
+            V1: '407'
+            B: '0.33'
+            C: '4'
+- source_name: Layer_5
+  canonical_name: layer5_excitatory_v1
+  compartments:
+  - name: soma
+    diameter_cm: 0.01
+    length_cm: 0.015
+    axial_resistance_kohm_cm: null
+    leak_reversal_mV: -73.0
+    leak_conductance_mS_cm2: 0.1
+    depletion_rate: 0.5
+    recovery_ms: 100.0
+    intrinsic_channels:
+    - name: Na (Traub & Miles, 91)
+      conductance_mS_cm2: 50.0
+      reversal_mV: 50.0
+      dependencies:
+      - voltage
+      - voltage
+      gates:
+      - attributes:
+          exponent: '3'
+          format: alpha/beta
+          dependency: voltage
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Linoid
+            V0: '13'
+            A: '0.32'
+            B: '4'
+        - kind: backward
+          attributes:
+            category: Linoid
+            V0: '40'
+            A: '-0.28'
+            B: '-5'
+      - attributes:
+          exponent: '1'
+          format: alpha/beta
+          dependency: voltage
+          name: m2
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Exponential
+            V0: '17'
+            A: '0.128'
+            B: '18'
+        - kind: backward
+          attributes:
+            category: Sigmoid
+            V0: '40'
+            A: '4'
+            B: '5'
+    - name: K_dr (Traub & Miles, 91)
+      conductance_mS_cm2: 30.0
+      reversal_mV: -90.0
+      dependencies:
+      - voltage
+      gates:
+      - attributes:
+          exponent: '4'
+          dependency: voltage
+          format: alpha/beta
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Linoid
+            V0: '15'
+            A: '0.032'
+            B: '5'
+        - kind: backward
+          attributes:
+            category: Exponential
+            V0: '10'
+            A: '0.5'
+            B: '40'
+    - name: AHP
+      conductance_mS_cm2: 0.4
+      reversal_mV: -70.0
+      dependencies:
+      - AHP/ADP
+      gates:
+      - attributes:
+          tau_r: '5'
+          dependency: AHP/ADP
+          tau_f: '20'
+          name: m1
+        representation: []
+  - name: proximal_dendrite
+    diameter_cm: 0.006
+    length_cm: 0.04
+    axial_resistance_kohm_cm: 6.0
+    leak_reversal_mV: -73.0
+    leak_conductance_mS_cm2: 0.03
+    depletion_rate: null
+    recovery_ms: null
+    intrinsic_channels: []
+  - name: distal_dendrite
+    diameter_cm: 0.006
+    length_cm: 0.05
+    axial_resistance_kohm_cm: 6.0
+    leak_reversal_mV: -73.0
+    leak_conductance_mS_cm2: 0.03
+    depletion_rate: null
+    recovery_ms: null
+    intrinsic_channels:
+    - name: Na (Traub & Miles, 91)
+      conductance_mS_cm2: 50.0
+      reversal_mV: 50.0
+      dependencies:
+      - voltage
+      - voltage
+      gates:
+      - attributes:
+          exponent: '3'
+          format: alpha/beta
+          dependency: voltage
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Linoid
+            V0: '13'
+            A: '0.32'
+            B: '4'
+        - kind: backward
+          attributes:
+            category: Linoid
+            V0: '40'
+            A: '-0.28'
+            B: '-5'
+      - attributes:
+          exponent: '1'
+          format: alpha/beta
+          dependency: voltage
+          name: m2
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Exponential
+            V0: '17'
+            A: '0.128'
+            B: '18'
+        - kind: backward
+          attributes:
+            category: Sigmoid
+            V0: '40'
+            A: '4'
+            B: '5'
+    - name: K_dr (Traub & Miles, 91)
+      conductance_mS_cm2: 30.0
+      reversal_mV: -90.0
+      dependencies:
+      - voltage
+      gates:
+      - attributes:
+          exponent: '4'
+          dependency: voltage
+          format: alpha/beta
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Linoid
+            V0: '15'
+            A: '0.032'
+            B: '5'
+        - kind: backward
+          attributes:
+            category: Exponential
+            V0: '10'
+            A: '0.5'
+            B: '40'
+- source_name: Layer_6_II
+  canonical_name: layer6ii_excitatory_v1
+  compartments:
+  - name: soma
+    diameter_cm: 0.006
+    length_cm: 0.01
+    axial_resistance_kohm_cm: null
+    leak_reversal_mV: -64.0
+    leak_conductance_mS_cm2: 0.1
+    depletion_rate: 0.5
+    recovery_ms: 100.0
+    intrinsic_channels:
+    - name: Na (Traub & Miles, 91)
+      conductance_mS_cm2: 50.0
+      reversal_mV: 50.0
+      dependencies:
+      - voltage
+      - voltage
+      gates:
+      - attributes:
+          exponent: '3'
+          format: alpha/beta
+          dependency: voltage
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Linoid
+            V0: '13'
+            A: '0.32'
+            B: '4'
+        - kind: backward
+          attributes:
+            category: Linoid
+            V0: '40'
+            A: '-0.28'
+            B: '-5'
+      - attributes:
+          exponent: '1'
+          format: alpha/beta
+          dependency: voltage
+          name: m2
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Exponential
+            V0: '17'
+            A: '0.128'
+            B: '18'
+        - kind: backward
+          attributes:
+            category: Sigmoid
+            V0: '40'
+            A: '4'
+            B: '5'
+    - name: K_dr (Traub & Miles, 91)
+      conductance_mS_cm2: 30.0
+      reversal_mV: -90.0
+      dependencies:
+      - voltage
+      gates:
+      - attributes:
+          exponent: '4'
+          dependency: voltage
+          format: alpha/beta
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Linoid
+            V0: '15'
+            A: '0.032'
+            B: '5'
+        - kind: backward
+          attributes:
+            category: Exponential
+            V0: '10'
+            A: '0.5'
+            B: '40'
+    - name: AHP
+      conductance_mS_cm2: 0.5
+      reversal_mV: -70.0
+      dependencies:
+      - AHP/ADP
+      gates:
+      - attributes:
+          tau_r: '5'
+          dependency: AHP/ADP
+          tau_f: '20'
+          name: m1
+        representation: []
+  - name: proximal_dendrite
+    diameter_cm: 0.0008
+    length_cm: 0.01
+    axial_resistance_kohm_cm: 25.0
+    leak_reversal_mV: -64.0
+    leak_conductance_mS_cm2: 0.1
+    depletion_rate: null
+    recovery_ms: null
+    intrinsic_channels: []
+  - name: distal_dendrite
+    diameter_cm: 0.0008
+    length_cm: 0.02
+    axial_resistance_kohm_cm: 25.0
+    leak_reversal_mV: -64.0
+    leak_conductance_mS_cm2: 0.01
+    depletion_rate: null
+    recovery_ms: null
+    intrinsic_channels: []
+- source_name: Layer_6_I
+  canonical_name: layer6i_excitatory_v1
+  compartments:
+  - name: soma
+    diameter_cm: 0.008
+    length_cm: 0.01
+    axial_resistance_kohm_cm: null
+    leak_reversal_mV: -70.0
+    leak_conductance_mS_cm2: 0.15
+    depletion_rate: 1.0
+    recovery_ms: 400.0
+    intrinsic_channels:
+    - name: Na (Traub & Miles, 91)
+      conductance_mS_cm2: 50.0
+      reversal_mV: 50.0
+      dependencies:
+      - voltage
+      - voltage
+      gates:
+      - attributes:
+          exponent: '3'
+          dependency: voltage
+          format: alpha/beta
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Linoid
+            V0: '13'
+            A: '0.32'
+            B: '4'
+        - kind: backward
+          attributes:
+            category: Linoid
+            V0: '40'
+            A: '-0.28'
+            B: '-5'
+      - attributes:
+          exponent: '1'
+          dependency: voltage
+          format: alpha/beta
+          name: m2
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Exponential
+            V0: '17'
+            A: '0.128'
+            B: '18'
+        - kind: backward
+          attributes:
+            category: Sigmoid
+            V0: '40'
+            A: '4'
+            B: '5'
+    - name: K_dr (Traub & Miles, 91)
+      conductance_mS_cm2: 30.0
+      reversal_mV: -90.0
+      dependencies:
+      - voltage
+      gates:
+      - attributes:
+          exponent: '4'
+          format: alpha/beta
+          dependency: voltage
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Linoid
+            V0: '15'
+            A: '0.032'
+            B: '5'
+        - kind: backward
+          attributes:
+            category: Exponential
+            V0: '10'
+            A: '0.5'
+            B: '40'
+  - name: proximal_dendrite
+    diameter_cm: 0.005
+    length_cm: 0.01
+    axial_resistance_kohm_cm: 80.0
+    leak_reversal_mV: -70.0
+    leak_conductance_mS_cm2: 0.9
+    depletion_rate: null
+    recovery_ms: null
+    intrinsic_channels: []
+- source_name: Layer_4_INT
+  canonical_name: layer4_inhibitory_v1
+  compartments:
+  - name: soma
+    diameter_cm: 0.002
+    length_cm: 0.002
+    axial_resistance_kohm_cm: null
+    leak_reversal_mV: -50.0
+    leak_conductance_mS_cm2: 0.01
+    depletion_rate: null
+    recovery_ms: null
+    intrinsic_channels:
+    - name: K_dr (Traub & Miles, 91)
+      conductance_mS_cm2: 30.0
+      reversal_mV: -90.0
+      dependencies:
+      - voltage
+      gates:
+      - attributes:
+          exponent: '4'
+          dependency: voltage
+          format: alpha/beta
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Linoid
+            V0: '15'
+            A: '0.032'
+            B: '5'
+        - kind: backward
+          attributes:
+            category: Exponential
+            V0: '10'
+            A: '0.5'
+            B: '40'
+    - name: Na (Traub & Miles, 91)
+      conductance_mS_cm2: 50.0
+      reversal_mV: 50.0
+      dependencies:
+      - voltage
+      - voltage
+      gates:
+      - attributes:
+          exponent: '3'
+          dependency: voltage
+          format: alpha/beta
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Linoid
+            V0: '13'
+            A: '0.32'
+            B: '4'
+        - kind: backward
+          attributes:
+            category: Linoid
+            V0: '40'
+            A: '-0.28'
+            B: '-5'
+      - attributes:
+          exponent: '1'
+          dependency: voltage
+          format: alpha/beta
+          name: m2
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Exponential
+            V0: '17'
+            A: '0.128'
+            B: '18'
+        - kind: backward
+          attributes:
+            category: Sigmoid
+            V0: '40'
+            A: '4'
+            B: '5'
+  - name: proximal_dendrite
+    diameter_cm: 0.001
+    length_cm: 0.005
+    axial_resistance_kohm_cm: 100.0
+    leak_reversal_mV: -50.0
+    leak_conductance_mS_cm2: 0.01
+    depletion_rate: null
+    recovery_ms: null
+    intrinsic_channels: []
+- source_name: Layer_2_3
+  canonical_name: layer23_excitatory_v1
+  compartments:
+  - name: soma
+    diameter_cm: 0.005
+    length_cm: 0.005
+    axial_resistance_kohm_cm: null
+    leak_reversal_mV: -65.0
+    leak_conductance_mS_cm2: 0.05
+    depletion_rate: null
+    recovery_ms: null
+    intrinsic_channels:
+    - name: K_dr (Traub & Miles, 91)
+      conductance_mS_cm2: 30.0
+      reversal_mV: -90.0
+      dependencies:
+      - voltage
+      gates:
+      - attributes:
+          exponent: '4'
+          dependency: voltage
+          format: alpha/beta
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Linoid
+            V0: '15'
+            A: '0.032'
+            B: '5'
+        - kind: backward
+          attributes:
+            category: Exponential
+            V0: '10'
+            A: '0.5'
+            B: '40'
+    - name: Na (Traub & Miles, 91)
+      conductance_mS_cm2: 50.0
+      reversal_mV: 50.0
+      dependencies:
+      - voltage
+      - voltage
+      gates:
+      - attributes:
+          exponent: '3'
+          dependency: voltage
+          format: alpha/beta
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Linoid
+            V0: '13'
+            A: '0.32'
+            B: '4'
+        - kind: backward
+          attributes:
+            category: Linoid
+            V0: '40'
+            A: '-0.28'
+            B: '-5'
+      - attributes:
+          exponent: '1'
+          dependency: voltage
+          format: alpha/beta
+          name: m2
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Exponential
+            V0: '17'
+            A: '0.128'
+            B: '18'
+        - kind: backward
+          attributes:
+            category: Sigmoid
+            V0: '40'
+            A: '4'
+            B: '5'
+  - name: proximal_dendrite
+    diameter_cm: 0.002
+    length_cm: 0.0225
+    axial_resistance_kohm_cm: 100.0
+    leak_reversal_mV: -65.0
+    leak_conductance_mS_cm2: 0.05
+    depletion_rate: null
+    recovery_ms: null
+    intrinsic_channels: []
+- source_name: Layer_4
+  canonical_name: layer4_excitatory_v1
+  compartments:
+  - name: soma
+    diameter_cm: 0.005
+    length_cm: 0.005
+    axial_resistance_kohm_cm: null
+    leak_reversal_mV: -65.0
+    leak_conductance_mS_cm2: 0.01
+    depletion_rate: null
+    recovery_ms: null
+    intrinsic_channels:
+    - name: Na (Traub & Miles, 91)
+      conductance_mS_cm2: 50.0
+      reversal_mV: 50.0
+      dependencies:
+      - voltage
+      - voltage
+      gates:
+      - attributes:
+          exponent: '3'
+          format: alpha/beta
+          dependency: voltage
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Linoid
+            V0: '13'
+            A: '0.32'
+            B: '4'
+        - kind: backward
+          attributes:
+            category: Linoid
+            V0: '40'
+            A: '-0.28'
+            B: '-5'
+      - attributes:
+          exponent: '1'
+          format: alpha/beta
+          dependency: voltage
+          name: m2
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Exponential
+            V0: '17'
+            A: '0.128'
+            B: '18'
+        - kind: backward
+          attributes:
+            category: Sigmoid
+            V0: '40'
+            A: '4'
+            B: '5'
+    - name: K_dr (Traub & Miles, 91)
+      conductance_mS_cm2: 30.0
+      reversal_mV: -90.0
+      dependencies:
+      - voltage
+      gates:
+      - attributes:
+          exponent: '4'
+          dependency: voltage
+          format: alpha/beta
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Linoid
+            V0: '15'
+            A: '0.032'
+            B: '5'
+        - kind: backward
+          attributes:
+            category: Exponential
+            V0: '10'
+            A: '0.5'
+            B: '40'
+  - name: proximal_dendrite
+    diameter_cm: 0.001
+    length_cm: 0.025
+    axial_resistance_kohm_cm: 40.0
+    leak_reversal_mV: -65.0
+    leak_conductance_mS_cm2: 0.01
+    depletion_rate: null
+    recovery_ms: null
+    intrinsic_channels: []
+- source_name: Layer_2_3_INT
+  canonical_name: layer23_inhibitory_v1
+  compartments:
+  - name: soma
+    diameter_cm: 0.002
+    length_cm: 0.002
+    axial_resistance_kohm_cm: null
+    leak_reversal_mV: -49.0
+    leak_conductance_mS_cm2: 0.01
+    depletion_rate: null
+    recovery_ms: null
+    intrinsic_channels:
+    - name: K_dr (Traub & Miles, 91)
+      conductance_mS_cm2: 30.0
+      reversal_mV: -90.0
+      dependencies:
+      - voltage
+      gates:
+      - attributes:
+          exponent: '4'
+          format: alpha/beta
+          dependency: voltage
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Linoid
+            V0: '15'
+            A: '0.032'
+            B: '5'
+        - kind: backward
+          attributes:
+            category: Exponential
+            V0: '10'
+            A: '0.5'
+            B: '40'
+    - name: Na (Traub & Miles, 91)
+      conductance_mS_cm2: 50.0
+      reversal_mV: 50.0
+      dependencies:
+      - voltage
+      - voltage
+      gates:
+      - attributes:
+          exponent: '3'
+          format: alpha/beta
+          dependency: voltage
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Linoid
+            V0: '13'
+            A: '0.32'
+            B: '4'
+        - kind: backward
+          attributes:
+            category: Linoid
+            V0: '40'
+            A: '-0.28'
+            B: '-5'
+      - attributes:
+          exponent: '1'
+          format: alpha/beta
+          dependency: voltage
+          name: m2
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Exponential
+            V0: '17'
+            A: '0.128'
+            B: '18'
+        - kind: backward
+          attributes:
+            category: Sigmoid
+            V0: '40'
+            A: '4'
+            B: '5'
+  - name: proximal_dendrite
+    diameter_cm: 0.001
+    length_cm: 0.005
+    axial_resistance_kohm_cm: 60.0
+    leak_reversal_mV: -49.0
+    leak_conductance_mS_cm2: 0.01
+    depletion_rate: null
+    recovery_ms: null
+    intrinsic_channels: []
+- source_name: Relay_INT
+  canonical_name: thalamic_interneuron
+  compartments:
+  - name: soma
+    diameter_cm: 0.002
+    length_cm: 0.002
+    axial_resistance_kohm_cm: null
+    leak_reversal_mV: -49.0
+    leak_conductance_mS_cm2: 0.01
+    depletion_rate: null
+    recovery_ms: null
+    intrinsic_channels:
+    - name: K_dr (Traub & Miles, 91)
+      conductance_mS_cm2: 30.0
+      reversal_mV: -90.0
+      dependencies:
+      - voltage
+      gates:
+      - attributes:
+          exponent: '4'
+          format: alpha/beta
+          dependency: voltage
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Linoid
+            V0: '15'
+            A: '0.032'
+            B: '5'
+        - kind: backward
+          attributes:
+            category: Exponential
+            V0: '10'
+            A: '0.5'
+            B: '40'
+    - name: Na (Traub & Miles, 91)
+      conductance_mS_cm2: 50.0
+      reversal_mV: 50.0
+      dependencies:
+      - voltage
+      - voltage
+      gates:
+      - attributes:
+          exponent: '3'
+          format: alpha/beta
+          dependency: voltage
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Linoid
+            V0: '13'
+            A: '0.32'
+            B: '4'
+        - kind: backward
+          attributes:
+            category: Linoid
+            V0: '40'
+            A: '-0.28'
+            B: '-5'
+      - attributes:
+          exponent: '1'
+          format: alpha/beta
+          dependency: voltage
+          name: m2
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Exponential
+            V0: '17'
+            A: '0.128'
+            B: '18'
+        - kind: backward
+          attributes:
+            category: Sigmoid
+            V0: '40'
+            A: '4'
+            B: '5'
+  - name: proximal_dendrite
+    diameter_cm: 0.001
+    length_cm: 0.01
+    axial_resistance_kohm_cm: 60.0
+    leak_reversal_mV: -49.0
+    leak_conductance_mS_cm2: 0.01
+    depletion_rate: null
+    recovery_ms: null
+    intrinsic_channels: []
+- source_name: INTRALAMINAR
+  canonical_name: thalamic_nonspecific
+  compartments:
+  - name: soma
+    diameter_cm: 0.008
+    length_cm: 0.008
+    axial_resistance_kohm_cm: null
+    leak_reversal_mV: -64.0
+    leak_conductance_mS_cm2: 0.09
+    depletion_rate: null
+    recovery_ms: null
+    intrinsic_channels:
+    - name: K_dr (Traub & Miles, 91)
+      conductance_mS_cm2: 30.0
+      reversal_mV: -90.0
+      dependencies:
+      - voltage
+      gates:
+      - attributes:
+          exponent: '4'
+          format: alpha/beta
+          dependency: voltage
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Linoid
+            V0: '15'
+            A: '0.032'
+            B: '5'
+        - kind: backward
+          attributes:
+            category: Exponential
+            V0: '10'
+            A: '0.5'
+            B: '40'
+    - name: Na (Traub & Miles, 91)
+      conductance_mS_cm2: 50.0
+      reversal_mV: 50.0
+      dependencies:
+      - voltage
+      - voltage
+      gates:
+      - attributes:
+          exponent: '3'
+          format: alpha/beta
+          dependency: voltage
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Linoid
+            V0: '13'
+            A: '0.32'
+            B: '4'
+        - kind: backward
+          attributes:
+            category: Linoid
+            V0: '40'
+            A: '-0.28'
+            B: '-5'
+      - attributes:
+          exponent: '1'
+          format: alpha/beta
+          dependency: voltage
+          name: m2
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Exponential
+            V0: '17'
+            A: '0.128'
+            B: '18'
+        - kind: backward
+          attributes:
+            category: Sigmoid
+            V0: '40'
+            A: '4'
+            B: '5'
+    - name: Low threshold T-type Ca++
+      conductance_mS_cm2: 0.1
+      reversal_mV: 180.0
+      dependencies:
+      - voltage
+      - voltage
+      gates:
+      - attributes:
+          exponent: '3'
+          format: m/tau
+          dependency: voltage
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: m_inf
+          attributes:
+            category: Sigmoid
+            V0: '-63'
+            A: '1'
+            B: '7.8'
+        - kind: tau
+          attributes:
+            category: Simple_Tau
+            V0: '-9.84'
+            A: '2.44'
+            B: '2.506'
+      - attributes:
+          exponent: '1'
+          format: m/tau
+          dependency: voltage
+          name: m2
+          representationForm: Parametrised
+        representation:
+        - kind: m_inf
+          attributes:
+            category: Sigmoid
+            V0: '-83.5'
+            A: '1'
+            B: '-6.3'
+        - kind: tau
+          attributes:
+            category: Simple_Tau
+            V0: '-10.54'
+            A: '19.15'
+            B: '7.171'
+  - name: proximal_dendrite
+    diameter_cm: 0.0015
+    length_cm: 0.01
+    axial_resistance_kohm_cm: 10.0
+    leak_reversal_mV: -64.0
+    leak_conductance_mS_cm2: 0.1
+    depletion_rate: null
+    recovery_ms: null
+    intrinsic_channels:
+    - name: Low threshold T-type Ca++
+      conductance_mS_cm2: 250.0
+      reversal_mV: 180.0
+      dependencies:
+      - voltage
+      - voltage
+      gates:
+      - attributes:
+          exponent: '3'
+          format: m/tau
+          dependency: voltage
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: m_inf
+          attributes:
+            category: Sigmoid
+            V0: '-63'
+            A: '1'
+            B: '7.8'
+        - kind: tau
+          attributes:
+            category: Simple_Tau
+            V0: '-9.84'
+            A: '2.44'
+            B: '2.506'
+      - attributes:
+          exponent: '1'
+          format: m/tau
+          dependency: voltage
+          name: m2
+          representationForm: Parametrised
+        representation:
+        - kind: m_inf
+          attributes:
+            category: Sigmoid
+            V0: '-83.5'
+            A: '1'
+            B: '-6.3'
+        - kind: tau
+          attributes:
+            category: Simple_Tau
+            V0: '-10.54'
+            A: '19.15'
+            B: '7.171'
+  - name: distal_dendrite
+    diameter_cm: 0.0015
+    length_cm: 0.01
+    axial_resistance_kohm_cm: 10.0
+    leak_reversal_mV: -64.0
+    leak_conductance_mS_cm2: 0.1
+    depletion_rate: null
+    recovery_ms: null
+    intrinsic_channels:
+    - name: Low threshold T-type Ca++
+      conductance_mS_cm2: 250.0
+      reversal_mV: 180.0
+      dependencies:
+      - voltage
+      - voltage
+      gates:
+      - attributes:
+          exponent: '3'
+          format: m/tau
+          dependency: voltage
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: m_inf
+          attributes:
+            category: Sigmoid
+            V0: '-63'
+            A: '1'
+            B: '7.8'
+        - kind: tau
+          attributes:
+            category: Simple_Tau
+            V0: '-9.84'
+            A: '2.44'
+            B: '2.506'
+      - attributes:
+          exponent: '1'
+          format: m/tau
+          dependency: voltage
+          name: m2
+          representationForm: Parametrised
+        representation:
+        - kind: m_inf
+          attributes:
+            category: Sigmoid
+            V0: '-83.5'
+            A: '1'
+            B: '-6.3'
+        - kind: tau
+          attributes:
+            category: Simple_Tau
+            V0: '-10.54'
+            A: '19.15'
+            B: '7.171'
+- source_name: Thalamic_MATRIX
+  canonical_name: thalamic_matrix
+  compartments:
+  - name: soma
+    diameter_cm: 0.008
+    length_cm: 0.008
+    axial_resistance_kohm_cm: null
+    leak_reversal_mV: -64.0
+    leak_conductance_mS_cm2: 0.09
+    depletion_rate: null
+    recovery_ms: null
+    intrinsic_channels:
+    - name: K_dr (Traub & Miles, 91)
+      conductance_mS_cm2: 30.0
+      reversal_mV: -90.0
+      dependencies:
+      - voltage
+      gates:
+      - attributes:
+          exponent: '4'
+          dependency: voltage
+          format: alpha/beta
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Linoid
+            V0: '15'
+            A: '0.032'
+            B: '5'
+        - kind: backward
+          attributes:
+            category: Exponential
+            V0: '10'
+            A: '0.5'
+            B: '40'
+    - name: Na (Traub & Miles, 91)
+      conductance_mS_cm2: 50.0
+      reversal_mV: 50.0
+      dependencies:
+      - voltage
+      - voltage
+      gates:
+      - attributes:
+          exponent: '3'
+          dependency: voltage
+          format: alpha/beta
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Linoid
+            V0: '13'
+            A: '0.32'
+            B: '4'
+        - kind: backward
+          attributes:
+            category: Linoid
+            V0: '40'
+            A: '-0.28'
+            B: '-5'
+      - attributes:
+          exponent: '1'
+          dependency: voltage
+          format: alpha/beta
+          name: m2
+          representationForm: Parametrised
+        representation:
+        - kind: forward
+          attributes:
+            category: Exponential
+            V0: '17'
+            A: '0.128'
+            B: '18'
+        - kind: backward
+          attributes:
+            category: Sigmoid
+            V0: '40'
+            A: '4'
+            B: '5'
+    - name: Low threshold T-type Ca++
+      conductance_mS_cm2: 0.1
+      reversal_mV: 180.0
+      dependencies:
+      - voltage
+      - voltage
+      gates:
+      - attributes:
+          exponent: '3'
+          dependency: voltage
+          format: m/tau
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: m_inf
+          attributes:
+            category: Sigmoid
+            V0: '-63'
+            A: '1'
+            B: '7.8'
+        - kind: tau
+          attributes:
+            category: Simple_Tau
+            V0: '-9.84'
+            A: '2.44'
+            B: '2.506'
+      - attributes:
+          exponent: '1'
+          dependency: voltage
+          format: m/tau
+          name: m2
+          representationForm: Parametrised
+        representation:
+        - kind: m_inf
+          attributes:
+            category: Sigmoid
+            V0: '-83.5'
+            A: '1'
+            B: '-6.3'
+        - kind: tau
+          attributes:
+            category: Simple_Tau
+            V0: '-10.54'
+            A: '19.15'
+            B: '7.171'
+  - name: proximal_dendrite
+    diameter_cm: 0.0015
+    length_cm: 0.01
+    axial_resistance_kohm_cm: 10.0
+    leak_reversal_mV: -64.0
+    leak_conductance_mS_cm2: 0.1
+    depletion_rate: null
+    recovery_ms: null
+    intrinsic_channels:
+    - name: Low threshold T-type Ca++
+      conductance_mS_cm2: 250.0
+      reversal_mV: 180.0
+      dependencies:
+      - voltage
+      - voltage
+      gates:
+      - attributes:
+          exponent: '3'
+          dependency: voltage
+          format: m/tau
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: m_inf
+          attributes:
+            category: Sigmoid
+            V0: '-63'
+            A: '1'
+            B: '7.8'
+        - kind: tau
+          attributes:
+            category: Simple_Tau
+            V0: '-9.84'
+            A: '2.44'
+            B: '2.506'
+      - attributes:
+          exponent: '1'
+          dependency: voltage
+          format: m/tau
+          name: m2
+          representationForm: Parametrised
+        representation:
+        - kind: m_inf
+          attributes:
+            category: Sigmoid
+            V0: '-83.5'
+            A: '1'
+            B: '-6.3'
+        - kind: tau
+          attributes:
+            category: Simple_Tau
+            V0: '-10.54'
+            A: '19.15'
+            B: '7.171'
+  - name: distal_dendrite
+    diameter_cm: 0.0015
+    length_cm: 0.01
+    axial_resistance_kohm_cm: 10.0
+    leak_reversal_mV: -64.0
+    leak_conductance_mS_cm2: 0.1
+    depletion_rate: null
+    recovery_ms: null
+    intrinsic_channels:
+    - name: Low threshold T-type Ca++
+      conductance_mS_cm2: 250.0
+      reversal_mV: 180.0
+      dependencies:
+      - voltage
+      - voltage
+      gates:
+      - attributes:
+          exponent: '3'
+          dependency: voltage
+          format: m/tau
+          name: m1
+          representationForm: Parametrised
+        representation:
+        - kind: m_inf
+          attributes:
+            category: Sigmoid
+            V0: '-63'
+            A: '1'
+            B: '7.8'
+        - kind: tau
+          attributes:
+            category: Simple_Tau
+            V0: '-9.84'
+            A: '2.44'
+            B: '2.506'
+      - attributes:
+          exponent: '1'
+          dependency: voltage
+          format: m/tau
+          name: m2
+          representationForm: Parametrised
+        representation:
+        - kind: m_inf
+          attributes:
+            category: Sigmoid
+            V0: '-83.5'
+            A: '1'
+            B: '-6.3'
+        - kind: tau
+          attributes:
+            category: Simple_Tau
+            V0: '-10.54'
+            A: '19.15'
+            B: '7.171'
+projections:
+- id: modeldb112923.projection.000
+  kind: chemical
+  source_population: trn
+  source_compartment: null
+  target_population: thalamic_relay
+  target_compartment: soma
+  channel_name: RETICULAR GABA_A Fast
+  dependency: ligand
+  channel_conductance_mS_cm2: 2.5
+  reversal_mV: -70.0
+  rise_ms: 1.0
+  fall_ms: 7.0
+  delay_ms: 0.1
+  method: connectFromMany
+  weight: 0.19
+  asymptotic_weight: 0.19
+  kernel:
+    sigma_x: 3.2
+    sigma_y: 3.2
+    width: null
+    height: null
+    ring: false
+    wrap: null
+    border_effect: wrap
+  projection_attributes:
+    modifiable: 'false'
+  method_attributes:
+    target: connectFromMany
+    assymptoticWeight: '0.19'
+    weight: '0.19'
+  gate_attributes:
+    tau_r: '1'
+    dependency: ligand
+    tau_f: '7'
+    name: m1
+- id: modeldb112923.projection.001
+  kind: chemical
+  source_population: trn
+  source_compartment: null
+  target_population: thalamic_relay
+  target_compartment: proximal_dendrite
+  channel_name: RETICULAR GABA_A Fast
+  dependency: ligand
+  channel_conductance_mS_cm2: 2.5
+  reversal_mV: -70.0
+  rise_ms: 1.0
+  fall_ms: 7.0
+  delay_ms: 0.1
+  method: connectFromMany
+  weight: 0.18
+  asymptotic_weight: 0.18
+  kernel:
+    sigma_x: 3.0
+    sigma_y: 3.0
+    width: null
+    height: null
+    ring: false
+    wrap: null
+    border_effect: wrap
+  projection_attributes:
+    modifiable: 'false'
+  method_attributes:
+    target: connectFromMany
+    assymptoticWeight: '0.18'
+    weight: '0.18'
+  gate_attributes:
+    tau_r: '1'
+    dependency: ligand
+    tau_f: '7'
+    name: m1
+- id: modeldb112923.projection.002
+  kind: chemical
+  source_population: thalamic_interneuron
+  source_compartment: null
+  target_population: thalamic_relay
+  target_compartment: proximal_dendrite
+  channel_name: GABA_A Fast_RELAY_INT
+  dependency: ligand
+  channel_conductance_mS_cm2: 2.0
+  reversal_mV: -70.0
+  rise_ms: 1.0
+  fall_ms: 2.0
+  delay_ms: 0.1
+  method: connectFromMany
+  weight: 1.8
+  asymptotic_weight: 1.8
+  kernel:
+    sigma_x: 0.35
+    sigma_y: 0.35
+    width: null
+    height: null
+    ring: false
+    wrap: null
+    border_effect: wrap
+  projection_attributes:
+    modifiable: 'false'
+  method_attributes:
+    target: connectFromMany
+    assymptoticWeight: '1.8'
+    weight: '1.8'
+  gate_attributes:
+    tau_r: '1'
+    dependency: ligand
+    tau_f: '2'
+    name: m1
+- id: modeldb112923.projection.003
+  kind: chemical
+  source_population: layer6ii_excitatory_v1
+  source_compartment: null
+  target_population: thalamic_relay
+  target_compartment: distal_dendrite
+  channel_name: Layer 6II NMDA WIDE (Zador et al, 1990)
+  dependency: ligand
+  channel_conductance_mS_cm2: 0.15
+  reversal_mV: 0.0
+  rise_ms: 10.0
+  fall_ms: 80.0
+  delay_ms: 2.0
+  method: connectFromMany
+  weight: 0.3
+  asymptotic_weight: 0.3
+  kernel:
+    sigma_x: 1.3
+    sigma_y: 1.3
+    width: null
+    height: null
+    ring: false
+    wrap: null
+    border_effect: wrap
+  projection_attributes:
+    modifiable: 'false'
+  method_attributes:
+    target: connectFromMany
+    assymptoticWeight: '0.3'
+    weight: '0.3'
+  gate_attributes:
+    tau_r: '10'
+    dependency: ligand
+    tau_f: '80'
+    name: m1
+- id: modeldb112923.projection.004
+  kind: chemical
+  source_population: trn
+  source_compartment: null
+  target_population: thalamic_relay
+  target_compartment: distal_dendrite
+  channel_name: RETICULAR GABA_A Fast
+  dependency: ligand
+  channel_conductance_mS_cm2: 2.5
+  reversal_mV: -70.0
+  rise_ms: 1.0
+  fall_ms: 7.0
+  delay_ms: 0.1
+  method: connectFromMany
+  weight: 0.19
+  asymptotic_weight: 0.19
+  kernel:
+    sigma_x: 3.0
+    sigma_y: 3.0
+    width: null
+    height: null
+    ring: false
+    wrap: null
+    border_effect: wrap
+  projection_attributes:
+    modifiable: 'false'
+  method_attributes:
+    target: connectFromMany
+    assymptoticWeight: '0.19'
+    weight: '0.19'
+  gate_attributes:
+    tau_r: '1'
+    dependency: ligand
+    tau_f: '7'
+    name: m1
+- id: modeldb112923.projection.005
+  kind: chemical
+  source_population: layer6ii_excitatory_v1
+  source_compartment: null
+  target_population: thalamic_relay
+  target_compartment: distal_dendrite
+  channel_name: Layer 6II AMPA WIDE (Fransen et al, 2002)
+  dependency: ligand
+  channel_conductance_mS_cm2: 1.0
+  reversal_mV: 0.0
+  rise_ms: 2.0
+  fall_ms: 7.0
+  delay_ms: 2.0
+  method: connectFromMany
+  weight: 1.5
+  asymptotic_weight: 0.05
+  kernel:
+    sigma_x: 1.3
+    sigma_y: 1.3
+    width: null
+    height: null
+    ring: false
+    wrap: null
+    border_effect: wrap
+  projection_attributes:
+    modulator: '0'
+    modifiable: 'true'
+    learningRate: '0.1'
+    learningRule: Presynaptically gated
+    depotentiationLength: '20'
+  method_attributes:
+    target: connectFromMany
+    assymptoticWeight: '0.05'
+    weight: '1.5'
+  gate_attributes:
+    tau_r: '2'
+    dependency: ligand
+    tau_f: '7'
+    name: m1
+- id: modeldb112923.projection.006
+  kind: chemical
+  source_population: layer6ii_excitatory_v1
+  source_compartment: null
+  target_population: thalamic_relay
+  target_compartment: distal_dendrite
+  channel_name: Layer 6II NMDA NARROW (Zador et al, 1990)
+  dependency: ligand
+  channel_conductance_mS_cm2: 0.5
+  reversal_mV: 0.0
+  rise_ms: 0.7
+  fall_ms: 80.0
+  delay_ms: 2.0
+  method: connectFromMany
+  weight: 0.3
+  asymptotic_weight: 0.3
+  kernel:
+    sigma_x: 0.3
+    sigma_y: 0.3
+    width: null
+    height: null
+    ring: false
+    wrap: null
+    border_effect: wrap
+  projection_attributes:
+    modifiable: 'false'
+  method_attributes:
+    target: connectFromMany
+    assymptoticWeight: '0.3'
+    weight: '0.3'
+  gate_attributes:
+    tau_r: '0.7'
+    dependency: ligand
+    tau_f: '80'
+    name: m1
+- id: modeldb112923.projection.007
+  kind: chemical
+  source_population: layer6ii_excitatory_v1
+  source_compartment: null
+  target_population: thalamic_relay
+  target_compartment: distal_dendrite
+  channel_name: Layer 6II AMPA NARROW (Gented and Ulrigh, 2004)
+  dependency: ligand
+  channel_conductance_mS_cm2: 1.0
+  reversal_mV: 0.0
+  rise_ms: 2.0
+  fall_ms: 7.0
+  delay_ms: 2.0
+  method: connectFromMany
+  weight: 1.5
+  asymptotic_weight: 0.05
+  kernel:
+    sigma_x: 0.35
+    sigma_y: 0.35
+    width: null
+    height: null
+    ring: false
+    wrap: null
+    border_effect: wrap
+  projection_attributes:
+    modulator: '0'
+    learningRate: '0.1'
+    modifiable: 'true'
+    learningRule: Presynaptically gated
+    depotentiationLength: '20'
+  method_attributes:
+    target: connectFromMany
+    assymptoticWeight: '0.05'
+    weight: '1.5'
+  gate_attributes:
+    tau_r: '2'
+    dependency: ligand
+    tau_f: '7'
+    name: m1
+- id: modeldb112923.projection.008
+  kind: chemical
+  source_population: trn
+  source_compartment: null
+  target_population: trn
+  target_compartment: soma
+  channel_name: GABA_A Fast (Fransen et al, 2002)
+  dependency: ligand
+  channel_conductance_mS_cm2: 2.461
+  reversal_mV: -70.0
+  rise_ms: 1.0
+  fall_ms: 4.0
+  delay_ms: 0.1
+  method: connectFromMany
+  weight: 0.3
+  asymptotic_weight: 0.3
+  kernel:
+    sigma_x: 2.0
+    sigma_y: 2.0
+    width: null
+    height: null
+    ring: true
+    wrap: null
+    border_effect: wrap
+  projection_attributes:
+    modifiable: 'false'
+  method_attributes:
+    target: connectFromMany
+    assymptoticWeight: '0.3'
+    weight: '0.3'
+  gate_attributes:
+    tau_r: '1'
+    dependency: ligand
+    tau_f: '4'
+    name: m1
+- id: modeldb112923.projection.009
+  kind: chemical
+  source_population: layer6ii_excitatory_v1
+  source_compartment: null
+  target_population: trn
+  target_compartment: proximal_dendrite
+  channel_name: Layer 6II - NMDA (Zador et al, 1990)
+  dependency: ligand
+  channel_conductance_mS_cm2: 0.2
+  reversal_mV: 0.0
+  rise_ms: 0.7
+  fall_ms: 80.0
+  delay_ms: 3.0
+  method: connectFromMany
+  weight: 0.3
+  asymptotic_weight: 0.3
+  kernel:
+    sigma_x: 1.2
+    sigma_y: 1.2
+    width: null
+    height: null
+    ring: true
+    wrap: null
+    border_effect: wrap
+  projection_attributes:
+    modifiable: 'false'
+  method_attributes:
+    target: connectFromMany
+    assymptoticWeight: '0.3'
+    weight: '0.3'
+  gate_attributes:
+    tau_r: '0.7'
+    dependency: ligand
+    tau_f: '80'
+    name: m1
+- id: modeldb112923.projection.010
+  kind: chemical
+  source_population: thalamic_relay
+  source_compartment: null
+  target_population: trn
+  target_compartment: proximal_dendrite
+  channel_name: Relay
+  dependency: ligand
+  channel_conductance_mS_cm2: 0.4
+  reversal_mV: 0.0
+  rise_ms: 2.0
+  fall_ms: 2.0
+  delay_ms: 0.1
+  method: connectFromMany
+  weight: 5.0
+  asymptotic_weight: 5.0
+  kernel:
+    sigma_x: 2.2
+    sigma_y: 2.2
+    width: null
+    height: null
+    ring: false
+    wrap: null
+    border_effect: wrap
+  projection_attributes:
+    modifiable: 'false'
+  method_attributes:
+    target: connectFromMany
+    assymptoticWeight: '5'
+    weight: '5'
+  gate_attributes:
+    tau_r: '2'
+    dependency: ligand
+    tau_f: '2'
+    name: m1
+- id: modeldb112923.projection.011
+  kind: chemical
+  source_population: trn
+  source_compartment: null
+  target_population: trn
+  target_compartment: proximal_dendrite
+  channel_name: GABA_A Fast (Fransen et al, 2002)
+  dependency: ligand
+  channel_conductance_mS_cm2: 2.461
+  reversal_mV: -70.0
+  rise_ms: 1.0
+  fall_ms: 4.0
+  delay_ms: 0.1
+  method: connectFromMany
+  weight: 0.2
+  asymptotic_weight: 0.2
+  kernel:
+    sigma_x: 2.0
+    sigma_y: 2.0
+    width: null
+    height: null
+    ring: true
+    wrap: null
+    border_effect: wrap
+  projection_attributes:
+    modifiable: 'false'
+  method_attributes:
+    target: connectFromMany
+    assymptoticWeight: '0.2'
+    weight: '0.2'
+  gate_attributes:
+    tau_r: '1'
+    dependency: ligand
+    tau_f: '4'
+    name: m1
+- id: modeldb112923.projection.012
+  kind: chemical
+  source_population: layer6ii_excitatory_v1
+  source_compartment: null
+  target_population: trn
+  target_compartment: proximal_dendrite
+  channel_name: Layer 6II - AMPA (Fransen et al, 2002)
+  dependency: ligand
+  channel_conductance_mS_cm2: 0.3
+  reversal_mV: 0.0
+  rise_ms: 4.0
+  fall_ms: 5.0
+  delay_ms: 4.0
+  method: connectFromMany
+  weight: 4.0
+  asymptotic_weight: 4.0
+  kernel:
+    sigma_x: 1.5
+    sigma_y: 1.5
+    width: null
+    height: null
+    ring: true
+    wrap: null
+    border_effect: wrap
+  projection_attributes:
+    modifiable: 'false'
+  method_attributes:
+    target: connectFromMany
+    assymptoticWeight: '4'
+    weight: '4'
+  gate_attributes:
+    tau_r: '4'
+    dependency: ligand
+    tau_f: '5'
+    name: m1
+- id: modeldb112923.projection.013
+  kind: gap_junction
+  source_population: trn
+  source_compartment: distal_dendrite
+  target_population: trn
+  target_compartment: distal_dendrite
+  channel_name: GJ reticular
+  dependency: gap junction
+  channel_conductance_mS_cm2: 0.015
+  reversal_mV: 0.0
+  rise_ms: null
+  fall_ms: null
+  delay_ms: null
+  method: connectFromMany
+  weight: null
+  asymptotic_weight: null
+  kernel:
+    sigma_x: 1.0
+    sigma_y: 1.0
+    width: null
+    height: null
+    ring: false
+    wrap: null
+    border_effect: extend
+  projection_attributes: {}
+  method_attributes:
+    target: connectFromMany
+  gate_attributes:
+    dependency: gap junction
+    name: m1
+- id: modeldb112923.projection.014
+  kind: gap_junction
+  source_population: trn_v2
+  source_compartment: distal_dendrite
+  target_population: trn
+  target_compartment: distal_dendrite
+  channel_name: GJ reticular 2
+  dependency: gap junction
+  channel_conductance_mS_cm2: 0.01
+  reversal_mV: 0.0
+  rise_ms: null
+  fall_ms: null
+  delay_ms: null
+  method: connectFromMany
+  weight: null
+  asymptotic_weight: null
+  kernel:
+    sigma_x: 1.0
+    sigma_y: 1.0
+    width: null
+    height: null
+    ring: false
+    wrap: null
+    border_effect: extend
+  projection_attributes: {}
+  method_attributes:
+    target: connectFromMany
+  gate_attributes:
+    dependency: gap junction
+    name: m1
+- id: modeldb112923.projection.015
+  kind: chemical
+  source_population: layer23_excitatory_v1
+  source_compartment: null
+  target_population: layer5_excitatory_v1
+  target_compartment: proximal_dendrite
+  channel_name: 2/3 AMPA
+  dependency: ligand
+  channel_conductance_mS_cm2: 0.1
+  reversal_mV: 0.0
+  rise_ms: 2.0
+  fall_ms: 2.0
+  delay_ms: 0.1
+  method: connectFromMany
+  weight: 2.5
+  asymptotic_weight: 2.5
+  kernel:
+    sigma_x: 0.35
+    sigma_y: 0.35
+    width: null
+    height: null
+    ring: false
+    wrap: null
+    border_effect: extend
+  projection_attributes:
+    modifiable: 'false'
+  method_attributes:
+    target: connectFromMany
+    assymptoticWeight: '2.5'
+    weight: '2.5'
+  gate_attributes:
+    tau_r: '2'
+    dependency: ligand
+    tau_f: '2'
+    name: m1
+- id: modeldb112923.projection.016
+  kind: chemical
+  source_population: layer6ii_excitatory_v2
+  source_compartment: null
+  target_population: layer5_excitatory_v1
+  target_compartment: distal_dendrite
+  channel_name: TD V2 Layer 6II
+  dependency: ligand
+  channel_conductance_mS_cm2: 0.09
+  reversal_mV: 0.0
+  rise_ms: 2.0
+  fall_ms: 2.0
+  delay_ms: 0.1
+  method: connectFromMany
+  weight: 1.0
+  asymptotic_weight: 0.5
+  kernel:
+    sigma_x: 0.5
+    sigma_y: 0.5
+    width: null
+    height: null
+    ring: false
+    wrap: null
+    border_effect: wrap
+  projection_attributes:
+    modulator: '0'
+    learningRate: '0.1'
+    modifiable: 'true'
+    learningRule: Dual AND gated
+    depotentiationLength: '25'
+  method_attributes:
+    target: connectFromMany
+    assymptoticWeight: '0.5'
+    weight: '1'
+  gate_attributes:
+    tau_r: '2'
+    dependency: ligand
+    tau_f: '2'
+    name: m1
+- id: modeldb112923.projection.017
+  kind: chemical
+  source_population: thalamic_nonspecific
+  source_compartment: null
+  target_population: layer5_excitatory_v1
+  target_compartment: distal_dendrite
+  channel_name: INTRA_AMPA
+  dependency: ligand
+  channel_conductance_mS_cm2: 0.06
+  reversal_mV: 0.0
+  rise_ms: 2.0
+  fall_ms: 2.0
+  delay_ms: 3.0
+  method: connectFromAll
+  weight: 0.06
+  asymptotic_weight: 0.06
+  kernel: null
+  projection_attributes:
+    modifiable: 'false'
+  method_attributes:
+    target: connectFromAll
+    assymptoticWeight: '0.06'
+    weight: '0.06'
+  gate_attributes:
+    tau_r: '2'
+    dependency: ligand
+    tau_f: '2'
+    name: m1
+- id: modeldb112923.projection.018
+  kind: chemical
+  source_population: thalamic_nonspecific
+  source_compartment: null
+  target_population: layer5_excitatory_v1
+  target_compartment: distal_dendrite
+  channel_name: INTRA NMDA (Zador et al, 1990)
+  dependency: ligand
+  channel_conductance_mS_cm2: 0.06
+  reversal_mV: 0.0
+  rise_ms: 2.0
+  fall_ms: 10.0
+  delay_ms: 3.0
+  method: connectFromAll
+  weight: 0.01
+  asymptotic_weight: 0.01
+  kernel: null
+  projection_attributes:
+    modifiable: 'false'
+  method_attributes:
+    target: connectFromAll
+    assymptoticWeight: '0.01'
+    weight: '0.01'
+  gate_attributes:
+    tau_r: '2'
+    dependency: ligand
+    tau_f: '10'
+    name: m1
+- id: modeldb112923.projection.019
+  kind: chemical
+  source_population: thalamic_matrix
+  source_compartment: null
+  target_population: layer5_excitatory_v1
+  target_compartment: distal_dendrite
+  channel_name: Matrix
+  dependency: ligand
+  channel_conductance_mS_cm2: 0.02
+  reversal_mV: 0.0
+  rise_ms: 2.0
+  fall_ms: 2.0
+  delay_ms: 3.0
+  method: connectFromAll
+  weight: 0.01
+  asymptotic_weight: 0.01
+  kernel: null
+  projection_attributes:
+    modifiable: 'false'
+  method_attributes:
+    target: connectFromAll
+    assymptoticWeight: '0.01'
+    weight: '0.01'
+  gate_attributes:
+    tau_r: '2'
+    dependency: ligand
+    tau_f: '2'
+    name: m1
+- id: modeldb112923.projection.020
+  kind: chemical
+  source_population: layer5_excitatory_v1
+  source_compartment: null
+  target_population: layer6ii_excitatory_v1
+  target_compartment: proximal_dendrite
+  channel_name: Layer 5
+  dependency: ligand
+  channel_conductance_mS_cm2: 0.1
+  reversal_mV: 0.0
+  rise_ms: 2.0
+  fall_ms: 2.0
+  delay_ms: 0.1
+  method: connectFromOne
+  weight: 2.0
+  asymptotic_weight: 2.0
+  kernel: null
+  projection_attributes:
+    modifiable: 'false'
+  method_attributes:
+    target: connectFromOne
+    assymptoticWeight: '2'
+    weight: '2'
+  gate_attributes:
+    tau_r: '2'
+    dependency: ligand
+    tau_f: '2'
+    name: m1
+- id: modeldb112923.projection.021
+  kind: chemical
+  source_population: layer6i_excitatory_v1
+  source_compartment: null
+  target_population: layer6ii_excitatory_v1
+  target_compartment: proximal_dendrite
+  channel_name: '6I '
+  dependency: ligand
+  channel_conductance_mS_cm2: 0.09
+  reversal_mV: 0.0
+  rise_ms: 2.0
+  fall_ms: 2.0
+  delay_ms: 0.1
+  method: connectFromOne
+  weight: 0.1
+  asymptotic_weight: 0.1
+  kernel: null
+  projection_attributes:
+    modifiable: 'false'
+  method_attributes:
+    target: connectFromOne
+    assymptoticWeight: '0.1'
+    weight: '0.1'
+  gate_attributes:
+    tau_r: '2'
+    dependency: ligand
+    tau_f: '2'
+    name: m1
+- id: modeldb112923.projection.022
+  kind: chemical
+  source_population: layer4_inhibitory_v1
+  source_compartment: null
+  target_population: layer6ii_excitatory_v1
+  target_compartment: distal_dendrite
+  channel_name: AMPA 2/3
+  dependency: ligand
+  channel_conductance_mS_cm2: 0.1
+  reversal_mV: 0.0
+  rise_ms: 2.0
+  fall_ms: 2.0
+  delay_ms: 0.1
+  method: connectFromMany
+  weight: 2.0
+  asymptotic_weight: 2.0
+  kernel:
+    sigma_x: 0.4
+    sigma_y: 0.4
+    width: null
+    height: null
+    ring: false
+    wrap: null
+    border_effect: wrap
+  projection_attributes:
+    modifiable: 'false'
+  method_attributes:
+    target: connectFromMany
+    assymptoticWeight: '2'
+    weight: '2'
+  gate_attributes:
+    tau_r: '2'
+    dependency: ligand
+    tau_f: '2'
+    name: m1
+- id: modeldb112923.projection.023
+  kind: chemical
+  source_population: thalamic_relay
+  source_compartment: null
+  target_population: layer6i_excitatory_v1
+  target_compartment: proximal_dendrite
+  channel_name: Relay AMPA (Fransen et al, 2002)
+  dependency: ligand
+  channel_conductance_mS_cm2: 0.9
+  reversal_mV: 0.0
+  rise_ms: 0.1
+  fall_ms: 2.0
+  delay_ms: 0.5
+  method: connectFromMany
+  weight: 3.0
+  asymptotic_weight: 3.0
+  kernel:
+    sigma_x: 0.35
+    sigma_y: 0.35
+    width: null
+    height: null
+    ring: false
+    wrap: null
+    border_effect: wrap
+  projection_attributes:
+    modifiable: 'false'
+  method_attributes:
+    target: connectFromMany
+    assymptoticWeight: '3'
+    weight: '3'
+  gate_attributes:
+    tau_r: '0.1'
+    dependency: ligand
+    tau_f: '2'
+    name: m1
+- id: modeldb112923.projection.024
+  kind: chemical
+  source_population: layer23_excitatory_v1
+  source_compartment: null
+  target_population: layer6i_excitatory_v1
+  target_compartment: proximal_dendrite
+  channel_name: 2/3
+  dependency: ligand
+  channel_conductance_mS_cm2: 0.1
+  reversal_mV: 0.0
+  rise_ms: 2.0
+  fall_ms: 2.0
+  delay_ms: 1.0
+  method: connectFromOne
+  weight: 4.0
+  asymptotic_weight: 2.0
+  kernel: null
+  projection_attributes:
+    modifiable: 'false'
+  method_attributes:
+    target: connectFromOne
+    assymptoticWeight: '2'
+    weight: '4'
+  gate_attributes:
+    tau_r: '2'
+    dependency: ligand
+    tau_f: '2'
+    name: m1
+- id: modeldb112923.projection.025
+  kind: chemical
+  source_population: layer5_excitatory_v1
+  source_compartment: null
+  target_population: layer6i_excitatory_v1
+  target_compartment: proximal_dendrite
+  channel_name: Layer 5
+  dependency: ligand
+  channel_conductance_mS_cm2: 0.1
+  reversal_mV: 0.0
+  rise_ms: 2.0
+  fall_ms: 2.0
+  delay_ms: 0.1
+  method: connectFromMany
+  weight: 1.0
+  asymptotic_weight: 1.0
+  kernel:
+    sigma_x: 0.2
+    sigma_y: 0.2
+    width: null
+    height: null
+    ring: false
+    wrap: null
+    border_effect: wrap
+  projection_attributes:
+    modifiable: 'false'
+  method_attributes:
+    target: connectFromMany
+    assymptoticWeight: '1'
+    weight: '1'
+  gate_attributes:
+    tau_r: '2'
+    dependency: ligand
+    tau_f: '2'
+    name: m1
+- id: modeldb112923.projection.026
+  kind: chemical
+  source_population: layer6i_excitatory_v1
+  source_compartment: null
+  target_population: layer4_inhibitory_v1
+  target_compartment: proximal_dendrite
+  channel_name: Layer 6_I
+  dependency: ligand
+  channel_conductance_mS_cm2: 0.2
+  reversal_mV: 0.0
+  rise_ms: 0.1
+  fall_ms: 3.0
+  delay_ms: 1.0
+  method: connectFromMany
+  weight: 2.0
+  asymptotic_weight: 2.0
+  kernel:
+    sigma_x: 0.5
+    sigma_y: 0.5
+    width: null
+    height: null
+    ring: false
+    wrap: null
+    border_effect: wrap
+  projection_attributes:
+    modifiable: 'false'
+  method_attributes:
+    target: connectFromMany
+    assymptoticWeight: '2'
+    weight: '2'
+  gate_attributes:
+    tau_r: '0.1'
+    dependency: ligand
+    tau_f: '3'
+    name: m1
+- id: modeldb112923.projection.027
+  kind: chemical
+  source_population: thalamic_relay
+  source_compartment: null
+  target_population: layer4_inhibitory_v1
+  target_compartment: proximal_dendrite
+  channel_name: BU AMPA (Fransen et al, 2002)
+  dependency: ligand
+  channel_conductance_mS_cm2: 0.5
+  reversal_mV: 0.0
+  rise_ms: 0.1
+  fall_ms: 0.2
+  delay_ms: 3.0
+  method: connectFromMany
+  weight: 6.5
+  asymptotic_weight: 6.5
+  kernel:
+    sigma_x: 1.0
+    sigma_y: 1.0
+    width: null
+    height: null
+    ring: false
+    wrap: null
+    border_effect: wrap
+  projection_attributes:
+    modifiable: 'false'
+  method_attributes:
+    target: connectFromMany
+    assymptoticWeight: '6.5'
+    weight: '6.5'
+  gate_attributes:
+    tau_r: '0.1'
+    dependency: ligand
+    tau_f: '0.2'
+    name: m1
+- id: modeldb112923.projection.028
+  kind: chemical
+  source_population: layer4_inhibitory_v1
+  source_compartment: null
+  target_population: layer4_inhibitory_v1
+  target_compartment: proximal_dendrite
+  channel_name: GABA_A Fast (Fransen et al, 2002)
+  dependency: ligand
+  channel_conductance_mS_cm2: 2.461
+  reversal_mV: -70.0
+  rise_ms: 1.0
+  fall_ms: 2.0
+  delay_ms: 0.1
+  method: connectFromMany
+  weight: 0.11
+  asymptotic_weight: 0.11
+  kernel:
+    sigma_x: 0.2
+    sigma_y: 0.2
+    width: null
+    height: null
+    ring: false
+    wrap: null
+    border_effect: wrap
+  projection_attributes:
+    modifiable: 'false'
+  method_attributes:
+    target: connectFromMany
+    assymptoticWeight: '0.11'
+    weight: '0.11'
+  gate_attributes:
+    tau_r: '1'
+    dependency: ligand
+    tau_f: '2'
+    name: m1
+- id: modeldb112923.projection.029
+  kind: gap_junction
+  source_population: layer4_inhibitory_v1
+  source_compartment: proximal_dendrite
+  target_population: layer4_inhibitory_v1
+  target_compartment: proximal_dendrite
+  channel_name: GJ
+  dependency: gap junction
+  channel_conductance_mS_cm2: 0.03
+  reversal_mV: 0.0
+  rise_ms: null
+  fall_ms: null
+  delay_ms: null
+  method: connectFromMany
+  weight: null
+  asymptotic_weight: null
+  kernel:
+    sigma_x: 0.4
+    sigma_y: 0.4
+    width: null
+    height: null
+    ring: true
+    wrap: null
+    border_effect: extend
+  projection_attributes: {}
+  method_attributes:
+    target: connectFromMany
+  gate_attributes:
+    dependency: gap junction
+    name: m1
+- id: modeldb112923.projection.030
+  kind: chemical
+  source_population: layer4_excitatory_v1
+  source_compartment: null
+  target_population: layer4_inhibitory_v1
+  target_compartment: proximal_dendrite
+  channel_name: Layer 4-  AMPA (Fransen et al, 2002)
+  dependency: ligand
+  channel_conductance_mS_cm2: 0.1
+  reversal_mV: 0.0
+  rise_ms: 0.1
+  fall_ms: 2.0
+  delay_ms: 0.1
+  method: connectFromMany
+  weight: 5.0
+  asymptotic_weight: 5.0
+  kernel:
+    sigma_x: 0.3
+    sigma_y: 0.3
+    width: null
+    height: null
+    ring: false
+    wrap: null
+    border_effect: wrap
+  projection_attributes:
+    modifiable: 'false'
+  method_attributes:
+    target: connectFromMany
+    assymptoticWeight: '5'
+    weight: '5'
+  gate_attributes:
+    tau_r: '0.1'
+    dependency: ligand
+    tau_f: '2'
+    name: m1
+- id: modeldb112923.projection.031
+  kind: chemical
+  source_population: layer23_inhibitory_v1
+  source_compartment: null
+  target_population: layer23_excitatory_v1
+  target_compartment: proximal_dendrite
+  channel_name: GABA_A Fast (Fransen et al, 2002)
+  dependency: ligand
+  channel_conductance_mS_cm2: 2.461
+  reversal_mV: -70.0
+  rise_ms: 1.0
+  fall_ms: 7.0
+  delay_ms: 0.1
+  method: connectFromMany
+  weight: 0.3
+  asymptotic_weight: 0.3
+  kernel:
+    sigma_x: 0.8
+    sigma_y: 0.8
+    width: null
+    height: null
+    ring: false
+    wrap: null
+    border_effect: wrap
+  projection_attributes:
+    modifiable: 'false'
+  method_attributes:
+    target: connectFromMany
+    assymptoticWeight: '0.3'
+    weight: '0.3'
+  gate_attributes:
+    tau_r: '1'
+    dependency: ligand
+    tau_f: '7'
+    name: m1
+- id: modeldb112923.projection.032
+  kind: chemical
+  source_population: layer4_excitatory_v1
+  source_compartment: null
+  target_population: layer23_excitatory_v1
+  target_compartment: proximal_dendrite
+  channel_name: Layer 4 AMPA (Fransen et al, 2002)
+  dependency: ligand
+  channel_conductance_mS_cm2: 0.09
+  reversal_mV: 0.0
+  rise_ms: 2.0
+  fall_ms: 2.0
+  delay_ms: 1.0
+  method: connectFromMany
+  weight: 2.0
+  asymptotic_weight: 2.0
+  kernel:
+    sigma_x: 0.3
+    sigma_y: 0.3
+    width: null
+    height: null
+    ring: false
+    wrap: null
+    border_effect: wrap
+  projection_attributes:
+    modifiable: 'false'
+  method_attributes:
+    target: connectFromMany
+    assymptoticWeight: '2'
+    weight: '2'
+  gate_attributes:
+    tau_r: '2'
+    dependency: ligand
+    tau_f: '2'
+    name: m1
+- id: modeldb112923.projection.033
+  kind: chemical
+  source_population: layer23_excitatory_v1
+  source_compartment: null
+  target_population: layer23_excitatory_v1
+  target_compartment: proximal_dendrite
+  channel_name: Recurrent AMPA
+  dependency: ligand
+  channel_conductance_mS_cm2: 0.09
+  reversal_mV: 0.0
+  rise_ms: 0.1
+  fall_ms: 2.0
+  delay_ms: 0.1
+  method: connectFromMany
+  weight: 0.1
+  asymptotic_weight: 0.1
+  kernel:
+    sigma_x: 1.3
+    sigma_y: 1.3
+    width: null
+    height: null
+    ring: false
+    wrap: null
+    border_effect: wrap
+  projection_attributes:
+    modifiable: 'false'
+  method_attributes:
+    target: connectFromMany
+    assymptoticWeight: '0.1'
+    weight: '0.1'
+  gate_attributes:
+    tau_r: '0.1'
+    dependency: ligand
+    tau_f: '2'
+    name: m1
+- id: modeldb112923.projection.034
+  kind: chemical
+  source_population: layer23_excitatory_v1
+  source_compartment: null
+  target_population: layer23_excitatory_v1
+  target_compartment: proximal_dendrite
+  channel_name: Recurrent NMDA (Zador et al, 1990)
+  dependency: ligand
+  channel_conductance_mS_cm2: 0.1
+  reversal_mV: 0.0
+  rise_ms: 0.7
+  fall_ms: 80.0
+  delay_ms: 0.1
+  method: connectFromMany
+  weight: 0.01
+  asymptotic_weight: 0.01
+  kernel:
+    sigma_x: 1.3
+    sigma_y: 1.3
+    width: null
+    height: null
+    ring: false
+    wrap: null
+    border_effect: wrap
+  projection_attributes:
+    modifiable: 'false'
+  method_attributes:
+    target: connectFromMany
+    assymptoticWeight: '0.01'
+    weight: '0.01'
+  gate_attributes:
+    tau_r: '0.7'
+    dependency: ligand
+    tau_f: '80'
+    name: m1
+- id: modeldb112923.projection.035
+  kind: chemical
+  source_population: thalamic_relay
+  source_compartment: null
+  target_population: layer4_excitatory_v1
+  target_compartment: proximal_dendrite
+  channel_name: Relay - AMPA (Fransen et al, 2002)
+  dependency: ligand
+  channel_conductance_mS_cm2: 0.247
+  reversal_mV: 0.0
+  rise_ms: 1.0
+  fall_ms: 7.0
+  delay_ms: 3.0
+  method: connectFromMany
+  weight: 6.0
+  asymptotic_weight: 0.3
+  kernel:
+    sigma_x: 0.5
+    sigma_y: 0.5
+    width: null
+    height: null
+    ring: false
+    wrap: null
+    border_effect: wrap
+  projection_attributes:
+    modulator: '0'
+    learningRate: '0.1'
+    modifiable: 'true'
+    learningRule: Postsynaptically gated
+    depotentiationLength: '25'
+  method_attributes:
+    target: connectFromMany
+    assymptoticWeight: '0.3'
+    weight: '6'
+  gate_attributes:
+    tau_r: '1'
+    dependency: ligand
+    tau_f: '7'
+    name: m1
+- id: modeldb112923.projection.036
+  kind: chemical
+  source_population: layer4_inhibitory_v1
+  source_compartment: null
+  target_population: layer4_excitatory_v1
+  target_compartment: proximal_dendrite
+  channel_name: GABA_A Fast (Fransen et al, 2002)
+  dependency: ligand
+  channel_conductance_mS_cm2: 2.461
+  reversal_mV: -70.0
+  rise_ms: 0.1
+  fall_ms: 2.0
+  delay_ms: 0.1
+  method: connectFromMany
+  weight: 2.0
+  asymptotic_weight: 2.0
+  kernel:
+    sigma_x: 1.5
+    sigma_y: 1.5
+    width: null
+    height: null
+    ring: true
+    wrap: null
+    border_effect: wrap
+  projection_attributes:
+    modifiable: 'false'
+  method_attributes:
+    target: connectFromMany
+    assymptoticWeight: '2'
+    weight: '2'
+  gate_attributes:
+    tau_r: '0.1'
+    dependency: ligand
+    tau_f: '2'
+    name: m1
+- id: modeldb112923.projection.037
+  kind: chemical
+  source_population: layer4_excitatory_v1
+  source_compartment: null
+  target_population: layer4_excitatory_v1
+  target_compartment: proximal_dendrite
+  channel_name: Recurrent AMPA
+  dependency: ligand
+  channel_conductance_mS_cm2: 0.09
+  reversal_mV: 0.0
+  rise_ms: 2.0
+  fall_ms: 2.0
+  delay_ms: 0.1
+  method: connectFromOne
+  weight: 0.15
+  asymptotic_weight: 0.15
+  kernel: null
+  projection_attributes:
+    modifiable: 'false'
+  method_attributes:
+    target: connectFromOne
+    assymptoticWeight: '0.15'
+    weight: '0.15'
+  gate_attributes:
+    tau_r: '2'
+    dependency: ligand
+    tau_f: '2'
+    name: m1
+- id: modeldb112923.projection.038
+  kind: chemical
+  source_population: layer6i_excitatory_v1
+  source_compartment: null
+  target_population: layer4_excitatory_v1
+  target_compartment: proximal_dendrite
+  channel_name: Layer 6I AMPA
+  dependency: ligand
+  channel_conductance_mS_cm2: 0.09
+  reversal_mV: 0.0
+  rise_ms: 2.0
+  fall_ms: 2.0
+  delay_ms: 1.0
+  method: connectFromOne
+  weight: 0.7
+  asymptotic_weight: 0.7
+  kernel: null
+  projection_attributes:
+    modifiable: 'false'
+  method_attributes:
+    target: connectFromOne
+    assymptoticWeight: '0.7'
+    weight: '0.7'
+  gate_attributes:
+    tau_r: '2'
+    dependency: ligand
+    tau_f: '2'
+    name: m1
+- id: modeldb112923.projection.039
+  kind: chemical
+  source_population: layer4_excitatory_v1
+  source_compartment: null
+  target_population: layer23_inhibitory_v1
+  target_compartment: proximal_dendrite
+  channel_name: Layer 4 AMPA (Fransen et al, 2002)
+  dependency: ligand
+  channel_conductance_mS_cm2: 0.4
+  reversal_mV: 0.0
+  rise_ms: 2.0
+  fall_ms: 2.0
+  delay_ms: 0.1
+  method: connectFromMany
+  weight: 1.0
+  asymptotic_weight: 1.0
+  kernel:
+    sigma_x: 0.3
+    sigma_y: 0.3
+    width: null
+    height: null
+    ring: false
+    wrap: null
+    border_effect: wrap
+  projection_attributes:
+    modifiable: 'false'
+  method_attributes:
+    target: connectFromMany
+    assymptoticWeight: '1'
+    weight: '1'
+  gate_attributes:
+    tau_r: '2'
+    dependency: ligand
+    tau_f: '2'
+    name: m1
+- id: modeldb112923.projection.040
+  kind: chemical
+  source_population: layer23_inhibitory_v1
+  source_compartment: null
+  target_population: layer23_inhibitory_v1
+  target_compartment: proximal_dendrite
+  channel_name: GABA_A Fast (Fransen et al, 2002)
+  dependency: ligand
+  channel_conductance_mS_cm2: 2.461
+  reversal_mV: -70.0
+  rise_ms: 1.0
+  fall_ms: 7.0
+  delay_ms: 0.1
+  method: connectFromMany
+  weight: 0.5
+  asymptotic_weight: 0.5
+  kernel:
+    sigma_x: 0.8
+    sigma_y: 0.8
+    width: null
+    height: null
+    ring: false
+    wrap: null
+    border_effect: wrap
+  projection_attributes:
+    modifiable: 'false'
+  method_attributes:
+    target: connectFromMany
+    assymptoticWeight: '0.5'
+    weight: '0.5'
+  gate_attributes:
+    tau_r: '1'
+    dependency: ligand
+    tau_f: '7'
+    name: m1
+- id: modeldb112923.projection.041
+  kind: chemical
+  source_population: layer23_excitatory_v1
+  source_compartment: null
+  target_population: layer23_inhibitory_v1
+  target_compartment: proximal_dendrite
+  channel_name: Layer 2_3  AMPA (Fransen et al, 2002)
+  dependency: ligand
+  channel_conductance_mS_cm2: 0.1
+  reversal_mV: 0.0
+  rise_ms: 2.0
+  fall_ms: 2.0
+  delay_ms: 0.1
+  method: connectFromMany
+  weight: 1.01
+  asymptotic_weight: 1.0
+  kernel:
+    sigma_x: 1.0
+    sigma_y: 1.0
+    width: null
+    height: null
+    ring: false
+    wrap: null
+    border_effect: wrap
+  projection_attributes:
+    modifiable: 'false'
+  method_attributes:
+    target: connectFromMany
+    assymptoticWeight: '1'
+    weight: '1.01'
+  gate_attributes:
+    tau_r: '2'
+    dependency: ligand
+    tau_f: '2'
+    name: m1
+- id: modeldb112923.projection.042
+  kind: chemical
+  source_population: layer4_excitatory_v1
+  source_compartment: null
+  target_population: thalamic_interneuron
+  target_compartment: proximal_dendrite
+  channel_name: Input
+  dependency: input
+  channel_conductance_mS_cm2: 0.21
+  reversal_mV: 0.0
+  rise_ms: 2.0
+  fall_ms: 2.0
+  delay_ms: null
+  method: connectFromMany
+  weight: 1.0
+  asymptotic_weight: 1.0
+  kernel:
+    sigma_x: 0.3
+    sigma_y: 0.3
+    width: null
+    height: null
+    ring: false
+    wrap: null
+    border_effect: wrap
+  projection_attributes:
+    modifiable: 'false'
+  method_attributes:
+    target: connectFromMany
+    assymptoticWeight: '1'
+    weight: '1'
+  gate_attributes:
+    tau_r: '2'
+    dependency: input
+    tau_f: '2'
+    input1: '0'
+    input2: '0.37'
+    input3: '0'
+    name: m1
+    input4: '0'
+- id: modeldb112923.projection.043
+  kind: chemical
+  source_population: thalamic_interneuron
+  source_compartment: null
+  target_population: thalamic_interneuron
+  target_compartment: proximal_dendrite
+  channel_name: GABA_A Fast (Fransen et al, 2002)
+  dependency: ligand
+  channel_conductance_mS_cm2: 2.461
+  reversal_mV: -70.0
+  rise_ms: 1.0
+  fall_ms: 5.0
+  delay_ms: 0.1
+  method: connectFromMany
+  weight: 0.08
+  asymptotic_weight: 0.08
+  kernel:
+    sigma_x: 0.9
+    sigma_y: 0.9
+    width: null
+    height: null
+    ring: false
+    wrap: null
+    border_effect: wrap
+  projection_attributes:
+    modifiable: 'false'
+  method_attributes:
+    target: connectFromMany
+    assymptoticWeight: '0.08'
+    weight: '0.08'
+  gate_attributes:
+    tau_r: '1'
+    dependency: ligand
+    tau_f: '5'
+    name: m1
+- id: modeldb112923.projection.044
+  kind: gap_junction
+  source_population: thalamic_interneuron
+  source_compartment: proximal_dendrite
+  target_population: thalamic_interneuron
+  target_compartment: proximal_dendrite
+  channel_name: GJ
+  dependency: gap junction
+  channel_conductance_mS_cm2: 0.005
+  reversal_mV: 0.0
+  rise_ms: null
+  fall_ms: null
+  delay_ms: null
+  method: connectFromMany
+  weight: null
+  asymptotic_weight: null
+  kernel:
+    sigma_x: 0.3
+    sigma_y: 0.3
+    width: null
+    height: null
+    ring: true
+    wrap: null
+    border_effect: extend
+  projection_attributes: {}
+  method_attributes:
+    target: connectFromMany
+  gate_attributes:
+    dependency: gap junction
+    name: m1
+- id: modeldb112923.projection.045
+  kind: chemical
+  source_population: trn
+  source_compartment: null
+  target_population: thalamic_interneuron
+  target_compartment: proximal_dendrite
+  channel_name: RETICULAR
+  dependency: ligand
+  channel_conductance_mS_cm2: 2.5
+  reversal_mV: -70.0
+  rise_ms: 1.0
+  fall_ms: 6.0
+  delay_ms: 0.1
+  method: connectFromMany
+  weight: 0.2
+  asymptotic_weight: 0.2
+  kernel:
+    sigma_x: 0.8
+    sigma_y: 0.8
+    width: null
+    height: null
+    ring: true
+    wrap: null
+    border_effect: wrap
+  projection_attributes:
+    modifiable: 'false'
+  method_attributes:
+    target: connectFromMany
+    assymptoticWeight: '0.2'
+    weight: '0.2'
+  gate_attributes:
+    tau_r: '1'
+    dependency: ligand
+    tau_f: '6'
+    name: m1
+- id: modeldb112923.projection.046
+  kind: chemical
+  source_population: layer6ii_excitatory_v1
+  source_compartment: null
+  target_population: thalamic_interneuron
+  target_compartment: proximal_dendrite
+  channel_name: Layer_6II
+  dependency: ligand
+  channel_conductance_mS_cm2: 0.1
+  reversal_mV: 0.0
+  rise_ms: 2.0
+  fall_ms: 2.0
+  delay_ms: 4.0
+  method: connectFromMany
+  weight: 1.0
+  asymptotic_weight: 1.0
+  kernel:
+    sigma_x: 1.2
+    sigma_y: 1.2
+    width: null
+    height: null
+    ring: false
+    wrap: null
+    border_effect: wrap
+  projection_attributes:
+    modifiable: 'false'
+  method_attributes:
+    target: connectFromMany
+    assymptoticWeight: '1'
+    weight: '1'
+  gate_attributes:
+    tau_r: '2'
+    dependency: ligand
+    tau_f: '2'
+    name: m1
+- id: modeldb112923.projection.047
+  kind: chemical
+  source_population: trn
+  source_compartment: null
+  target_population: thalamic_nonspecific
+  target_compartment: soma
+  channel_name: GABA_A Fast (Fransen et al, 2002)
+  dependency: ligand
+  channel_conductance_mS_cm2: 2.461
+  reversal_mV: -70.0
+  rise_ms: 1.0
+  fall_ms: 4.0
+  delay_ms: 0.1
+  method: connectFromAll
+  weight: 0.01
+  asymptotic_weight: 0.01
+  kernel: null
+  projection_attributes:
+    modifiable: 'false'
+  method_attributes:
+    target: connectFromAll
+    assymptoticWeight: '0.01'
+    weight: '0.01'
+  gate_attributes:
+    tau_r: '1'
+    dependency: ligand
+    tau_f: '4'
+    name: m1
+- id: modeldb112923.projection.048
+  kind: chemical
+  source_population: trn
+  source_compartment: null
+  target_population: thalamic_nonspecific
+  target_compartment: proximal_dendrite
+  channel_name: GABA_A Fast
+  dependency: ligand
+  channel_conductance_mS_cm2: 1.5
+  reversal_mV: -70.0
+  rise_ms: 1.0
+  fall_ms: 4.0
+  delay_ms: 0.1
+  method: connectFromAll
+  weight: 0.16
+  asymptotic_weight: 0.16
+  kernel: null
+  projection_attributes:
+    modifiable: 'false'
+  method_attributes:
+    target: connectFromAll
+    assymptoticWeight: '0.16'
+    weight: '0.16'
+  gate_attributes:
+    tau_r: '1'
+    dependency: ligand
+    tau_f: '4'
+    name: m1
+- id: modeldb112923.projection.049
+  kind: chemical
+  source_population: trn
+  source_compartment: null
+  target_population: thalamic_nonspecific
+  target_compartment: distal_dendrite
+  channel_name: GABA_A Fast (Fransen et al, 2002)
+  dependency: ligand
+  channel_conductance_mS_cm2: 1.461
+  reversal_mV: -70.0
+  rise_ms: 1.0
+  fall_ms: 4.0
+  delay_ms: 0.1
+  method: connectFromAll
+  weight: 0.16
+  asymptotic_weight: 0.16
+  kernel: null
+  projection_attributes:
+    modifiable: 'false'
+  method_attributes:
+    target: connectFromAll
+    assymptoticWeight: '0.16'
+    weight: '0.16'
+  gate_attributes:
+    tau_r: '1'
+    dependency: ligand
+    tau_f: '4'
+    name: m1
+- id: modeldb112923.projection.050
+  kind: chemical
+  source_population: layer6ii_excitatory_v1
+  source_compartment: null
+  target_population: thalamic_nonspecific
+  target_compartment: distal_dendrite
+  channel_name: 6_II_AMPA
+  dependency: ligand
+  channel_conductance_mS_cm2: 0.2
+  reversal_mV: 0.0
+  rise_ms: 2.0
+  fall_ms: 2.0
+  delay_ms: 6.0
+  method: connectFromMany
+  weight: 1.0
+  asymptotic_weight: 1.0
+  kernel:
+    sigma_x: 1.2
+    sigma_y: 1.2
+    width: null
+    height: null
+    ring: false
+    wrap: null
+    border_effect: wrap
+  projection_attributes:
+    modifiable: 'false'
+  method_attributes:
+    offset_y: '4'
+    target: connectFromMany
+    assymptoticWeight: '1'
+    weight: '1'
+    offset_x: '4'
+  gate_attributes:
+    tau_r: '2'
+    dependency: ligand
+    tau_f: '2'
+    name: m1
+- id: modeldb112923.projection.051
+  kind: chemical
+  source_population: layer6ii_excitatory_v1
+  source_compartment: null
+  target_population: thalamic_nonspecific
+  target_compartment: distal_dendrite
+  channel_name: NMDA (Zador et al, 1990)
+  dependency: ligand
+  channel_conductance_mS_cm2: 0.1
+  reversal_mV: 0.0
+  rise_ms: 0.7
+  fall_ms: 80.0
+  delay_ms: 6.0
+  method: connectFromAll
+  weight: 1.0
+  asymptotic_weight: 1.0
+  kernel: null
+  projection_attributes:
+    modifiable: 'false'
+  method_attributes:
+    target: connectFromAll
+    assymptoticWeight: '1'
+    weight: '1'
+  gate_attributes:
+    tau_r: '0.7'
+    dependency: ligand
+    tau_f: '80'
+    name: m1
+- id: modeldb112923.projection.052
+  kind: chemical
+  source_population: trn
+  source_compartment: null
+  target_population: thalamic_matrix
+  target_compartment: soma
+  channel_name: GABA_A Fast (Fransen et al, 2002)
+  dependency: ligand
+  channel_conductance_mS_cm2: 2.461
+  reversal_mV: -70.0
+  rise_ms: 1.0
+  fall_ms: 4.0
+  delay_ms: 0.1
+  method: connectFromAll
+  weight: 0.0
+  asymptotic_weight: 0.5
+  kernel: null
+  projection_attributes:
+    modifiable: 'false'
+  method_attributes:
+    target: connectFromAll
+    assymptoticWeight: '0.5'
+    weight: '0'
+  gate_attributes:
+    tau_r: '1'
+    dependency: ligand
+    tau_f: '4'
+    name: m1
+- id: modeldb112923.projection.053
+  kind: chemical
+  source_population: trn
+  source_compartment: null
+  target_population: thalamic_matrix
+  target_compartment: proximal_dendrite
+  channel_name: GABA_A Fast
+  dependency: ligand
+  channel_conductance_mS_cm2: 1.5
+  reversal_mV: -70.0
+  rise_ms: 1.0
+  fall_ms: 4.0
+  delay_ms: 0.1
+  method: connectFromAll
+  weight: 0.14
+  asymptotic_weight: 0.14
+  kernel: null
+  projection_attributes:
+    modifiable: 'false'
+  method_attributes:
+    target: connectFromAll
+    assymptoticWeight: '0.14'
+    weight: '0.14'
+  gate_attributes:
+    tau_r: '1'
+    dependency: ligand
+    tau_f: '4'
+    name: m1
+- id: modeldb112923.projection.054
+  kind: chemical
+  source_population: trn
+  source_compartment: null
+  target_population: thalamic_matrix
+  target_compartment: distal_dendrite
+  channel_name: GABA_A Fast (Fransen et al, 2002)
+  dependency: ligand
+  channel_conductance_mS_cm2: 1.461
+  reversal_mV: -70.0
+  rise_ms: 1.0
+  fall_ms: 4.0
+  delay_ms: 0.1
+  method: connectFromAll
+  weight: 0.14
+  asymptotic_weight: 0.14
+  kernel: null
+  projection_attributes:
+    modifiable: 'false'
+  method_attributes:
+    target: connectFromAll
+    assymptoticWeight: '0.14'
+    weight: '0.14'
+  gate_attributes:
+    tau_r: '1'
+    dependency: ligand
+    tau_f: '4'
+    name: m1
+external_channels:
+- id: modeldb112923.external.000
+  target_population: thalamic_relay
+  target_compartment: soma
+  channel_name: BU_input
+  dependency: injection
+  channel:
+    name: BU_input
+  gate:
+    dependency: injection
+    input1: '0'
+    input2: '0'
+    name: m1
+    input3: '0'
+    input4: '0'
+- id: modeldb112923.external.001
+  target_population: thalamic_relay
+  target_compartment: soma
+  channel_name: EXTERNAL INHIBITION
+  dependency: input
+  channel:
+    g_bar: '2'
+    equilibriumPotential: '0'
+    name: EXTERNAL INHIBITION
+  gate:
+    dependency: input
+    input1: '0'
+    input2: '0'
+    input3: '0'
+    name: m1
+    input4: '0'
+- id: modeldb112923.external.002
+  target_population: thalamic_relay
+  target_compartment: proximal_dendrite
+  channel_name: BU_input
+  dependency: input
+  channel:
+    g_bar: '1.1'
+    equilibriumPotential: '0'
+    name: BU_input
+  gate:
+    dependency: input
+    input1: '0'
+    input2: '0.4'
+    input3: '0'
+    name: m1
+    input4: '0'
+- id: modeldb112923.external.003
+  target_population: trn
+  target_compartment: proximal_dendrite
+  channel_name: Input to RETICULAR
+  dependency: input
+  channel:
+    g_bar: '1'
+    equilibriumPotential: '0'
+    name: Input to RETICULAR
+  gate:
+    dependency: input
+    input1: '0'
+    input2: '0'
+    name: m1
+    input3: '0'
+    input4: '0'
+- id: modeldb112923.external.004
+  target_population: layer6ii_excitatory_v1
+  target_compartment: proximal_dendrite
+  channel_name: TD INPUT
+  dependency: input
+  channel:
+    g_bar: '0.354'
+    equilibriumPotential: '0'
+    name: TD INPUT
+  gate:
+    dependency: input
+    input1: '0'
+    input2: '0'
+    input3: '0.4'
+    name: m1
+    input4: '0'
+- id: modeldb112923.external.005
+  target_population: layer6ii_excitatory_v1
+  target_compartment: proximal_dendrite
+  channel_name: EXTERNAL_INPUT
+  dependency: input
+  channel:
+    g_bar: '0.17'
+    equilibriumPotential: '0'
+    name: EXTERNAL_INPUT
+  gate:
+    dependency: input
+    input1: '0'
+    input2: '0'
+    input3: '0'
+    name: m1
+    input4: '0'
+- id: modeldb112923.external.006
+  target_population: layer23_excitatory_v1
+  target_compartment: proximal_dendrite
+  channel_name: INPUT FROM ELECTRODE
+  dependency: input
+  channel:
+    g_bar: '0.001'
+    equilibriumPotential: '0'
+    name: INPUT FROM ELECTRODE
+  gate:
+    dependency: input
+    input1: '0'
+    input2: '0'
+    input3: '0'
+    name: m1
+    input4: '0'
+- id: modeldb112923.external.007
+  target_population: layer4_excitatory_v1
+  target_compartment: proximal_dendrite
+  channel_name: INPUT to cortex
+  dependency: input
+  channel:
+    g_bar: '1'
+    equilibriumPotential: '0'
+    name: INPUT to cortex
+  gate:
+    dependency: input
+    input1: '0'
+    input2: '0'
+    input3: '0'
+    name: m1
+    input4: '0'
+- id: modeldb112923.external.008
+  target_population: thalamic_nonspecific
+  target_compartment: soma
+  channel_name: EXTERNAL INHIBITION
+  dependency: input
+  channel:
+    g_bar: '1'
+    equilibriumPotential: '0'
+    name: EXTERNAL INHIBITION
+  gate:
+    dependency: input
+    input1: '-0.4'
+    input2: '0'
+    name: m1
+    input3: '0'
+    input4: '0'
+- id: modeldb112923.external.009
+  target_population: thalamic_nonspecific
+  target_compartment: proximal_dendrite
+  channel_name: EXTERNAL INPUT
+  dependency: input
+  channel:
+    g_bar: '0.12'
+    equilibriumPotential: '0'
+    name: EXTERNAL INPUT
+  gate:
+    dependency: input
+    input1: '0'
+    input2: '0.2'
+    name: m1
+    input3: '0'
+    input4: '0.4'
+- id: modeldb112923.external.010
+  target_population: thalamic_matrix
+  target_compartment: proximal_dendrite
+  channel_name: BU INPUT
+  dependency: input
+  channel:
+    g_bar: '0.1'
+    equilibriumPotential: '0'
+    name: BU INPUT
+    lastEdited: '1: My Channel'
+  gate:
+    dependency: input
+    input1: '0'
+    input2: '0.4'
+    name: m1
+    input3: '0'
+    input4: '0'

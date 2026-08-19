@@ -1,0 +1,25 @@
+id: figure6-map-interpretation-017
+status: source-interpretation-promoted-learning-still-failing
+claim: Figure 6c plots the combined wide and narrow adaptive corticothalamic AMPA field
+primary_source:
+  figure: Grossberg and Versace 2008 Figure 6c
+  before_learning_graphical_range: approximately 0.0 to 0.3
+  after_learning_graphical_range: approximately 0.5 to 2.5
+executable_source:
+  wide_projection: modeldb112923.projection.005
+  narrow_projection: modeldb112923.projection.007
+  each_asymptotic_weight: 0.05
+  each_maximum_weight: 1.5
+interpretation:
+  initial_state: both top-down projections start at Gaussian-scaled asymptotic weights
+  plotted_field: sum of wide and narrow adaptive AMPA weights
+  rationale: the combined asymptotic field is compatible with the published before-learning range, whereas the combined serialized maxima peak near 2.1 before any learning
+assessment:
+  initial_state_promoted_to_figure6_profile: true
+  combined_field_scorer_promoted: true
+  prior_candidate_combined_horizontal_contrast: 0.000785
+  minimum_predeclared_contrast: 0.01
+  figure6c_learning_pass: false
+notes:
+  - Promotion concerns source interpretation only; it does not claim reproduction of the after-learning map.
+  - The exact 100-ms runner remains required to generate a validated learned-weight snapshot for Figure 7.

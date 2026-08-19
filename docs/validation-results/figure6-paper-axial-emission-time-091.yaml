@@ -1,0 +1,45 @@
+schema_version: 1
+validation_id: figure6-paper-axial-emission-time-091
+claim: Grossberg and Versace Equation 2 axial coupling restores Figure 6c after correcting emission-time transmitter sampling.
+status: failed-source-profile-discriminator
+superseded_by: transmitter-continuous-gating-097
+date: 2026-08-19
+sources:
+  paper: Grossberg and Versace 2008, Equations 2 and 8 and Figure 6
+  comparison: Versace et al. 2008 KInNeSS Equation 9 and ModelDB 112923 serialized compartment edges
+protocol:
+  simulator: Brian2 2.9.0 runtime
+  integration_dt_ms: 0.01
+  duration_ms: 100
+  stimulus: archived horizontal0.png channels
+  warmup_ms: 0
+  axial_convention: paper_literal
+  transmitter_semantics: emission-time resource with future arrival timestamp
+  convention_fingerprint: 38db868173ee59a9ffce43ce5d0c07becedebbbf4695f1a1436700d9360c1adc
+results:
+  population_events:
+    thalamic_relay: 37
+    layer4_excitatory_v1: 40
+    layer6ii_excitatory_v1: 36
+  first_events_ms:
+    layer6ii_excitatory_v1: 4.52
+    layer4_excitatory_v1: 5.79
+    layer23_excitatory_v1: null
+    layer5_excitatory_v1: null
+  category_teaching_arrival_ms: 6.52
+  preceding_relay_event_ms: 1.14
+  following_relay_event_ms: 26.13
+  bottom_up_horizontal_contrast: 0.3434661241114797
+  combined_top_down_horizontal_contrast: 0.0008822477678573949
+assessment:
+  figure6b_pass: true
+  causal_top_down_pair_pass: true
+  cortical_chain_pass: false
+  figure6c_contrast_pass: false
+  full_figure6_pass: false
+  paper_axial_promoted: false
+interpretation:
+  - Paper-literal axial coupling creates a causal category-to-relay pair and substantially increases recruitment.
+  - It does not recruit the required layer-2/3 to layer-5 cortical chain, and its top-down map contrast remains below the predeclared 0.01 qualitative gate.
+  - Thirty-six category events during one 100-ms exposure indicate broad over-recruitment rather than the selective teaching event depicted by Figure 6.
+  - The result remains a source-backed discriminator; it does not justify replacing the executable KInNeSS axial profile in the classic baseline.

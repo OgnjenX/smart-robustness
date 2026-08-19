@@ -1,0 +1,30 @@
+id: figure6-pathway-initialization-016
+status: failed-discriminator-not-promoted
+claim: pathway-specific weak top-down initialization and spatial baseline reproduce Figure 6c
+protocol:
+  episode_ms: 100.0
+  layer6ii_somatic_current_pA: 1000.0
+  isolated_layer6ii_rate_hz: 40.0
+  category_spike_times_ms: [2.95, 27.36, 57.78, 87.54]
+  top_down_initialization: asymptotic_baseline_times_gaussian
+  top_down_baseline: asymptotic_baseline_times_gaussian
+  top_down_maximum: projection_level
+observations:
+  bottom_up_horizontal_contrast: 0.080458312
+  top_down_wide:
+    center_before: 0.004709
+    center_after: 0.004814
+    horizontal_contrast: 0.000317783
+  top_down_narrow:
+    center_before: 0.064961
+    center_after: 0.060627
+    horizontal_contrast: 0.000467049
+assessment:
+  figure6b_pass: true
+  top_down_direction_positive: true
+  figure6c_effect_size_pass: false
+  promoted_to_classic_profile: false
+notes:
+  - High-resolution inspection suggests different plotted scales for Figure 6b and 6c, but does not uniquely identify per-projection initialization.
+  - Spatially scaling the top-down baseline prevents isotropic tail growth but does not reproduce the published magnitude.
+  - The source-conservative serialized-weight and projection-level-bound profile remains active.

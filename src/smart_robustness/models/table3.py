@@ -178,4 +178,6 @@ def get_cell_spec(name: str) -> CellSpec:
     try:
         return TABLE3_CELLS[name]
     except KeyError as exc:
-        raise ValueError(f"unknown SMART Table 3 cell {name!r}; expected {tuple(TABLE3_CELLS)}") from exc
+        raise ValueError(
+            f"unknown SMART Table 3 cell {name!r}; expected {tuple(TABLE3_CELLS)}"
+        ) from exc

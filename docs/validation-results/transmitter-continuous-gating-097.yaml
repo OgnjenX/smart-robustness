@@ -1,0 +1,35 @@
+schema_version: 1
+validation_id: transmitter-continuous-gating-097
+claim: KInNeSS transmitter depletion scales the ongoing ligand gate rather than a spike amplitude sampled at emission or arrival.
+status: source-equation-correction-promoted
+date: 2026-08-19
+sources:
+  framework: Versace et al. 2008 expanded KInNeSS manuscript, Equations 13-18
+  executable: ModelDB 112923 population depletionRate and recoveryRate records
+source_interpretation:
+  ligand_gate: Equation 15 combines the last two arrivals from one presynaptic cell as g_ij(t).
+  current: Equation 16 multiplies g_ij(t) by receptor weight N_ij and neurotransmitter availability z_j at the current time.
+  resource: Equation 17 continuously recovers z_j toward one and depletes it multiplicatively at each source spike.
+implementation:
+  event_amplitude: one for every ligand arrival
+  axonal_delay: Brian2 delayed presynaptic pathway using each serialized delay
+  postsynaptic_gate: w * pre_signal * transmitter_pre for depleted source populations
+  nondepleted_gate: w * pre_signal
+verification:
+  - A forced source event remains absent until its declared 2-ms arrival.
+  - The event amplitude is one and is not a transmitter snapshot.
+  - An active ligand gate with source transmitter set to 0.25 contributes exactly one quarter of its undepleted weighted gate.
+supersedes:
+  - arrival-time transmitter snapshots used before commit bbfeec7
+  - emission-time transmitter snapshots introduced in commit bbfeec7
+  - behavioral validation artifacts 090 through 096 for current baseline assessment
+assessment:
+  equation_16_factorization_pass: true
+  equation_17_resource_dynamics_pass: true
+  delayed_arrival_pass: true
+  promoted_to_classic_candidate: true
+  official_network_results_current: false
+interpretation:
+  - Emission-time latching fixed a real delay/resource conflation but still placed z_j in the wrong mathematical factor.
+  - The continuous multiplicative implementation is the direct transcription of Equation 16 and is retained regardless of whether it improves published network behavior.
+  - Figures 6, 7, 10, and 14-16 must be regenerated again before freeze assessment.

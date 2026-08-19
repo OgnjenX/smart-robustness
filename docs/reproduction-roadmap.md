@@ -36,6 +36,81 @@ nonblank supplement cells.
 - Validate every cell class in isolation, including LGN tonic/rebound-burst and
   layer-5 AHP/ACh protocols.
 
+Current checkpoint: the first-order sector builds all 812 source cells and
+1,950 compartments, 50 in-scope ModelDB chemical projections, three in-scope
+gap-junction records, and ten externally controllable voltage-driven input
+channels. Projection-specific kinetics, delays, topology metadata, KInNeSS
+input semantics, and source-wide transmitter depletion are executable. Exact
+legacy ring-kernel semantics, current injection, plasticity, and published
+stimulation protocols remain required before this milestone is a functional
+network reproduction.
+
+Protocol checkpoint: the recovered horizontal/vertical PNGs contain the
+paper's centered five-cell bars at green=120. Combined with the serialized 0.4
+relay sensitivity and -60 mV leak, this reconstructs the reported -12 mV
+driving potential. The first 100-ms connected run fails the 40-Hz target due to
+a synchronized startup TRN transient and subsequent broad relay rebound; see
+`validation-results/first-order-bar-001.yaml`. Subsequent source corrections
+supersede that numerical candidate; `first-order-bar-003.yaml` is the active
+source-consistent failure. Typed runtime profiles now carry stable SHA-256
+fingerprints, and `validation.first_order` provides reusable isolated-relay
+and connected-bar runners plus a predeclared 40-Hz scorer. The first coarse
+matrix is recorded in `isolated-relay-sweep-001.yaml`; no candidate passed.
+The follow-up `isolated-relay-axial-sweep-002.yaml` is retained as superseded:
+visual inspection of the primary equation exposed an incorrect axial geometry
+expression in the implementation. After correcting expanded-manuscript
+Equation 9, the baseline isolated relay remains silent, and the corresponding
+full-sector result in `first-order-bar-004.yaml` also produces zero relay
+spikes. The correction therefore removes a fidelity defect but does not by
+itself recover the Methods 4.9 40-Hz stream.
+The next discriminator makes all-zero input mappings explicit. Omitting those
+channels as inactive and using the unresolved 2 uF/cm2 capacitance candidate
+recovers exactly 40 Hz in the isolated relay. In the connected sector it passes
+either active rate (20-ms warmup) or selectivity (100-ms warmup), but not both;
+see `isolated-relay-input-semantics-003.yaml` and `first-order-bar-005.yaml`.
+An earlier zero-gate candidate removed the startup TRN event, and at
+1.5 uF/cm2 passed both connected relay-rate and selectivity gates
+(`first-order-bar-006.yaml`). That branch is now superseded as a baseline:
+SANNDRA's recovered CVS revision history states that voltage-gated currents
+reset to their resting-potential states. Zero initialization remains a useful
+negative control, not an executable-source convention.
+
+The intrinsic-cell source is now independently selectable as complete
+`modeldb_112923` or `paper_table3` specifications. This avoids combining paper
+labels with executable dimensions and densities. The Table 3 profile removes
+the autonomous isolated-TRN startup burst and restores cortical recruitment in
+the first match assay, but the official Figure 7 rate split remains the
+promotion gate (`intrinsic-cell-source-036.yaml`).
+
+The spike detector now exposes its voltage coordinate explicitly. Applying the
+paper's 30-to-0 mV event rule to soma voltage relative to its leak preserves the
+isolated 40-Hz result but fails the connected drive gate (20 Hz per active relay
+and 4,617 TRN spikes; `first-order-bar-007.yaml`). The physical-coordinate
+setting therefore remains the current passing candidate while this source
+ambiguity is audited; neither setting is silently treated as canonical.
+
+Learning checkpoint: Equation 6's biphasic post-spike gate and the serialized
+20/25-ms depotentiation intervals are tested. Adaptive records initialize at
+their source-serialized `weight`; the distinct `assymptoticWeight` supplies the
+decorrelated baseline. KInNeSS Equations 25/28
+resolve and implement the presynaptically gated, postsynaptically gated, and
+dual-AND-gated variants. Driven protocol validation and bounded long-run
+behavior remain required before plasticity is considered reproduced.
+The complete five-rule Figure 6a timing family now passes qualitative polarity,
+near-coincidence, and tail gates (`figure6-timing-001.yaml`). Network-level
+oriented weight maps remain the learning exit criterion.
+
+Runtime checkpoint: the complete connected first-order sector integrates for
+0.1 ms at 0.01-ms resolution with finite soma voltages and bounded finite
+weights. With no input, adaptive weights remain bit-identical to baseline.
+KInNeSS's per-connection last-two-spike ligand history and bounded Equation 15
+combination are now implemented; the corrected full-sector run retains the
+40-Hz relay-drive result but does not yet recruit cortex.
+The actual relay-to-layer-4 Brian2 projection also potentiates and
+depotentiates under forced positive and negative Equation 6 lobes while
+remaining bounded. Longer protocol and convergence runs remain part of the
+published learning-validation gate.
+
 Exit: equation/unit tests, numerical convergence tests, isolated-cell report,
 and explicit resolution of voltage-coordinate ambiguities.
 
@@ -78,7 +153,8 @@ ablations, and configuration fingerprints.
 - Add V1–pulvinar–V2 populations and projections with the same cell, port,
   topology, plasticity, and provenance abstractions.
 - Validate long-range feedback, lower-frequency inter-area synchrony, and the
-  reported 1 ms inter-area delay protocol.
+  Figure 16 caption's 10 ms V1-layer-2/3-to-V2-layer-4 delay protocol (the
+  recovered executable record independently serializes 5 ms).
 - Add LFP/CSD geometry only after transmembrane-current accounting is verified.
 
 Exit: full two-loop structural audit and higher-order validation report.
@@ -94,12 +170,11 @@ Exit: full two-loop structural audit and higher-order validation report.
 Exit: a versioned classic baseline and a robustness experiment matrix that can
 distinguish architecture-level effects from neuron-model-dependent effects.
 
-## Original-source recovery track
+## Original-source recovery track (recovered)
 
-ModelDB accession 112922 preserves metadata and an author-era link to
-`Brain_Research_Paper_KINNESS_SMART_network.rar`, described as the model network
-and input stimuli. The public ModelDB GitHub mirror does not contain the payload,
-and no exact Internet Archive snapshot was found during the initial recovery
-attempt. Recovery remains valuable because it may resolve initial states,
-connectivity realizations, stimuli, and analysis scripts. Any recovered archive
-must be inspected for a model-specific license before redistribution.
+ModelDB alternate version 112923 preserves the complete source bundle and was
+recovered from ModelDB's download endpoint. Its `SMART.nml`, dedicated Figure 8
+calcium-rebound XML, dedicated AHP/ACh NeuroML, and stimuli are now the primary
+executable references. The archive has no explicit redistribution license, so
+only hashes and extracted facts are committed. M2–M6 must audit existing
+paper-derived code against this source before claiming reproduction.

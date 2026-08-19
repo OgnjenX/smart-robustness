@@ -1,0 +1,46 @@
+id: connectfromall-external-current-080
+status: source-correction-implemented-prior-dynamic-results-superseded
+claim: Multiple KInNeSS external-input sources may be represented by summing their color values into one effective driving potential
+source:
+  framework: Versace et al. 2008 expanded KInNeSS Equations 5-6
+  source_bound: each color value must be within [0,255]
+  stimulus: ModelDB 112923 horizontal and vertical images
+stimulus_facts:
+  active_green_sources: 5
+  value_per_source: 120
+  previous_scalar_sum: 600
+previous_translation:
+  current: g*(E_rest + sensitivity*600 - V)
+  defect: 600 is outside the source domain and subtracts membrane voltage only once
+corrected_translation:
+  current: sum_j g*(E_rest + sensitivity*V_j - V)
+  equivalent: n*g*(E_rest + sensitivity*mean(V_j) - V)
+  source_count: 5
+  summed_source_value: 600
+  nonspecific_effective_reversal_mV: -40
+isolated_nonspecific_100ms:
+  axial_convention: kinness_serialized_edge
+  one_source_120:
+    events: 5
+    event_times_ms: [1.88, 61.10, 65.62, 70.76, 77.14]
+  five_independent_sources_120:
+    events: 5
+    event_times_ms: [1.96, 57.34, 62.32, 68.26, 78.46]
+corrected_network_discriminator:
+  duration_ms: 30
+  dt_ms: 0.02
+  top_down_current_pA: 1000
+  axial_convention: kinness_serialized_edge
+  match: {nonspecific_events: 2, relay_events: 0, trn_events: 81, layer4_events: 0, category_events: 2}
+  mismatch: {nonspecific_events: 2, relay_events: 0, trn_events: 81, layer4_events: 0, category_events: 2}
+assessment:
+  source_equation_corrected: true
+  isolated_match_rate_plausible: true
+  network_match_mismatch_divergence: false
+  official_figure7_reproduced: false
+  prior_bar-driven_dynamic_results_valid: false
+notes:
+  - Population state retains the summed source value plus source multiplicity; the membrane equation applies multiplicity to conductance, not to voltage.
+  - One-to-one inputs retain source_count=1 and are numerically unchanged.
+  - Structural audits and isolated assays without convergent external input remain valid.
+  - Figure 7, Figure 10, Figure 14, Figure 15, and Figure 16 trajectories that used the old convergent-input translation must be rerun before freeze.

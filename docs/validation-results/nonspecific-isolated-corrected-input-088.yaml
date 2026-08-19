@@ -1,0 +1,37 @@
+schema_version: 1
+validation_id: nonspecific-isolated-corrected-input-088
+claim: The corrected five-source Figure 7 voltage input can generate the target-order firing rate in the isolated nonspecific thalamic cell.
+status: isolated-upstream-stage-pass
+date: 2026-08-18
+sources:
+  framework: Versace et al. 2008 KInNeSS, Equations 3 and 5-6
+  executable: ModelDB 112923 SMART.nml INTRALAMINAR EXTERNAL INPUT
+protocol:
+  simulator: Brian2 2.9.0 numpy target
+  cell: ModelDB 112923 thalamic_nonspecific
+  network_connections: none
+  duration_ms: 100
+  integration_dt_ms: 0.01
+  external_record: modeldb112923.external.009
+  input: five independent green sources at 120 each
+  source_sensitivity_mV_per_unit: 0.2
+  source_count: 5
+  effective_reversal_mV_per_source: -40
+results:
+  event_count: 6
+  rate_hz: 60
+  event_times_ms: [1.96, 52.9, 57.35, 62.33, 68.27, 78.46]
+  soma_voltage_range_mV: [-76.511069, 40.767548]
+  proximal_voltage_range_mV: [-64, 147.082193]
+  distal_voltage_range_mV: [-64, 174.907631]
+  summed_input_current_range_pA: [-5289.624387, 678.584013]
+assessment:
+  finite_pass: true
+  target_order_rate_pass: true
+  isolated_input_stage_is_primary_failure: false
+  figure7_reproduced: false
+interpretation:
+  - The input equation is the special KInNeSS voltage-drive current g*(V_eq-V), not an ordinary ligand gate.
+  - The isolated cell's 60-Hz response lies between Figure 7's approximately 40-Hz match and 70-Hz mismatch values.
+  - The intact network also produces 60 Hz under the corrected KInNeSS axial profile, but match and mismatch are identical because TRN supplies no post-startup condition-dependent inhibition.
+  - The remaining Figure 7 causal failure is localized to relay/layer-6II recruitment of post-startup TRN output, rather than the nonspecific cell or its direct image input alone.

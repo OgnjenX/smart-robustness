@@ -1,0 +1,39 @@
+id: figure10-reset-034
+status: superseded-by-current-runtime-figure10-current-reset-062
+source_model: ModelDB 112923 SMART.nml
+claim: mismatch-driven nonspecific-thalamus to layer-5 to layer-6I activity suppresses the current layer-4 winner and releases alternatives
+evidence_class: [structural, qualitative]
+protocol:
+  network_scope: persistent first-order 9x9 sector
+  dt_ms: 0.01
+  pre_match: {duration_ms: 100, bottom_up: horizontal, top_down: horizontal}
+  mismatch: {duration_ms: 100, bottom_up: vertical, top_down: horizontal}
+  top_down_current_pA: 600
+  learned_state: paper-constrained Figure 6c horizontal expectation
+  negative_control:
+    intervention_time_ms: 100
+    disconnected_projections:
+      - modeldb112923.projection.017
+      - modeldb112923.projection.018
+    interpretation: nonspecific-thalamus to layer-5 AMPA and NMDA weights set to zero only at mismatch onset
+  convention_fingerprint: 2ebec460acb9e4f04c40917ff3d05a44d07e802ceee9974af9e8b2ef419cdb59
+results:
+  intact:
+    pre_match: {layer4_spikes: 0, nonspecific_spikes: 6, layer5_spikes: 0, layer6i_spikes: 0}
+    mismatch: {layer4_spikes: 29, nonspecific_spikes: 0, layer5_spikes: 0, layer6i_spikes: 111}
+  disconnected_control:
+    pre_match: {layer4_spikes: 0, nonspecific_spikes: 6, layer5_spikes: 0, layer6i_spikes: 0}
+    mismatch: {layer4_spikes: 29, nonspecific_spikes: 0, layer5_spikes: 0, layer6i_spikes: 111}
+  intact_and_control_layer4_spikes_identical: true
+assessment:
+  pre_reset_winner_pass: false
+  reset_chain_pass: false
+  winner_suppression_pass: false
+  alternative_release_pass: false
+  reproduced_reset: false
+notes:
+  - This older 600-pA candidate is superseded by figure10-current-reset-062.yaml, which uses the current source-constrained runtime and independently calibrated 1000-pA cue.
+  - Figure 10 supplies no unique phase duration, category-current amplitude, reset latency, or winner probability; these candidate protocol values are labeled rather than treated as exact-source parameters.
+  - The intact and disconnected trajectories are identical because nonspecific thalamus and layer 5 are silent during mismatch.
+  - Late broad layer-4 activity is preceded by layer-6I activity but is not caused by the proposed nonspecific-thalamus to layer-5 reset pathway.
+  - This result must not be interpreted as a winner switch because no layer-4 winner exists before mismatch.

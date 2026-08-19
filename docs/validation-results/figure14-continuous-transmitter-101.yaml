@@ -1,0 +1,48 @@
+schema_version: 1
+validation_id: figure14-continuous-transmitter-101
+claim: Continuous KInNeSS transmitter gating reproduces the published Figure 14 match-gamma versus mismatch-slower spectral directions.
+status: partial-official-spectral-reproduction-current-source-profile
+date: 2026-08-19
+sources:
+  paper: Grossberg and Versace 2008, Figure 14 and Methods 4.9-4.10
+  framework: Versace et al. 2008 expanded KInNeSS manuscript, Equations 13-18
+  executable: ModelDB 112923 SMART.nml
+protocol:
+  simulator: Brian2 2.9.0 C++ standalone
+  duration_ms: 1000
+  integration_dt_ms: 0.01
+  histogram_bin_ms: 1
+  hamming_window_ms: 200
+  hamming_overlap_ms: 0
+  top_down_current_pA: 1000
+  learned_state: paper-constrained Figure 6c horizontal expectation
+  transmitter_semantics: current source resource continuously multiplies each active delayed ligand gate
+  convention_fingerprint: a054e5e36b75765124150157029662c6a5c8a639ee6079b442304607e726cb11
+results:
+  match:
+    cortical_events: 5509
+    nonspecific_rate_hz: 6
+    relay_events: 1259
+    trn_events: 81
+    layer4_events: 171
+    dominant_frequency_hz: 55
+    band_power: {2_8_hz: 0.4758892090063963, 8_20_hz: 4.116128665630596, 8_10_hz: 1.3100744535871187, 20_70_hz: 19.24095959236646}
+  mismatch:
+    cortical_events: 5421
+    nonspecific_rate_hz: 6
+    relay_events: 1259
+    trn_events: 81
+    layer4_events: 150
+    dominant_frequency_hz: 55
+    band_power: {2_8_hz: 0.4046645527950813, 8_20_hz: 4.819841518952085, 8_10_hz: 1.312430816813241, 20_70_hz: 20.10536267329378}
+assessment:
+  match_peak_in_gamma: true
+  mismatch_peak_below_gamma: false
+  mismatch_gamma_reduced: false
+  figure14_qualitative_spectrum_reproduced: false
+  figure7_match_mismatch_arousal_reproduced: false
+  complete_classic_baseline_ready_to_freeze: false
+interpretation:
+  - Continuous transmitter scaling restores a 55-Hz gamma-dominant match spectrum.
+  - Mismatch also peaks at 55 Hz and has slightly greater gamma power than match, so neither published mismatch direction passes.
+  - Both conditions retain only the common 81-event TRN startup volley and identical 6-Hz nonspecific output, consistent with the unresolved Figure 7 pathway failure.

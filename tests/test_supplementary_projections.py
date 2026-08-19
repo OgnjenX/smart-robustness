@@ -91,9 +91,7 @@ def test_known_relay_plastic_synapse_spot_check() -> None:
 
 
 def test_known_depletion_and_gap_junction_spot_checks() -> None:
-    depleted = SUPPLEMENTARY_TABLE3.by_id(
-        "l4_e.proximal_dendrite.from_l6i.ampa_depletable"
-    )
+    depleted = SUPPLEMENTARY_TABLE3.by_id("l4_e.proximal_dendrite.from_l6i.ampa_depletable")
     assert depleted.raw.weight_density_1e6_cm2 == "(#) 0.7 (1, 400)"
     assert depleted.parsed.weight_density_1e6_cm2 == pytest.approx(0.7)
     assert depleted.parsed.depletion is not None
@@ -126,9 +124,7 @@ def test_source_anomalies_are_not_silently_corrected() -> None:
     assert anomalous_receptor.parsed.receptor is Receptor.UNKNOWN
     assert anomalous_receptor.verification.status is VerificationStatus.AMBIGUOUS
 
-    anomalous_reversal = SUPPLEMENTARY_TABLE3.by_id(
-        "l5_e.distal_dendrite.from_nonspecific.nmda"
-    )
+    anomalous_reversal = SUPPLEMENTARY_TABLE3.by_id("l5_e.distal_dendrite.from_nonspecific.nmda")
     assert anomalous_reversal.raw.reversal_mV == "-70"
     assert anomalous_reversal.parsed.reversal_mV == pytest.approx(-70)
     assert anomalous_reversal.verification.status is VerificationStatus.AMBIGUOUS
@@ -139,10 +135,13 @@ def test_every_record_has_a_verification_audit_trail() -> None:
         assert set(record.verification.source_forms) == {"docx", "html", "txt"}
         if record.verification.status is VerificationStatus.AMBIGUOUS:
             assert record.verification.notes
-    assert sum(
-        record.verification.status is VerificationStatus.AMBIGUOUS
-        for record in SUPPLEMENTARY_TABLE3.records
-    ) == 4
+    assert (
+        sum(
+            record.verification.status is VerificationStatus.AMBIGUOUS
+            for record in SUPPLEMENTARY_TABLE3.records
+        )
+        == 4
+    )
 
 
 def test_serialization_is_deterministic_and_round_trips(tmp_path) -> None:
@@ -160,9 +159,7 @@ def test_serialization_is_deterministic_and_round_trips(tmp_path) -> None:
 
 
 def test_validator_rejects_unknown_receptor_without_ambiguity_note() -> None:
-    source = SUPPLEMENTARY_TABLE3.by_id(
-        "l4_i.proximal_dendrite.from_l6i.unknown_depletable"
-    )
+    source = SUPPLEMENTARY_TABLE3.by_id("l4_i.proximal_dendrite.from_l6i.unknown_depletable")
     invalid = replace(
         source,
         verification=replace(

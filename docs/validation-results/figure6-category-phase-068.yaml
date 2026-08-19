@@ -1,0 +1,47 @@
+id: figure6-category-phase-068
+status: localized-failure
+claim: Figure 6c fails because the active layer-6II teaching spike follows the final relay volley
+sources:
+  primary:
+    - Grossberg and Versace 2008, Figure 6 caption and Section 2.2
+    - KInNeSS framework, Equations 25-28 and Table 3
+  archive:
+    - modeldb112923 external channel 004
+    - modeldb112923 projections 005, 007, and 022
+protocol:
+  duration_ms: 100.0
+  timestep_ms: 0.01
+  stimulus: archived 9x9 horizontal-bar image values
+  bottom_up_green_value: 120.0
+  category_blue_value: 70.0
+  warmup_ms: 0.0
+active_profile:
+  projection_source_convention: modeldb_as_serialized
+  relay_spike_times_ms: [49.53, 65.70, 81.78]
+  relay_cells_per_volley: [38, 39, 40, 41, 42]
+  layer4_spike_times_ms: [73.16, 73.18, 73.45]
+  category_cell_40_spike_ms: 83.66
+  corticothalamic_delay_ms: 2.0
+  teaching_arrival_ms: 85.66
+  following_relay_spike_ms: null
+  bottom_up_horizontal_contrast: 0.0874516447210743
+  combined_top_down_horizontal_contrast: -0.0016643608836904196
+  figure6b_pass: true
+  figure6c_pass: false
+source_cross_checked_candidate:
+  projection_source_convention: paper_supplement_cross_checked
+  rationale: >-
+    Supplementary Table 3 and the paper identify projection 022 as layer-2/3 to
+    layer-6II, whereas the serialized endpoint conflicts with its receptor name.
+  relay_spike_count: 15
+  layer4_spike_count: 5
+  layer6ii_spike_count: 0
+  combined_top_down_horizontal_contrast: 0.0
+  promoted: false
+conclusions:
+  - Equation 28 intentionally multiplies the Equation 25 Xpre*Xpost term by the Table 3 gate; the presynaptically gated rule therefore contains Xpre squared.
+  - The paper explicitly describes one 100-ms presentation, so repeating the episode is not a source-faithful repair.
+  - Archived learning rate, asymptotic weight, maximum weight, delay, and depotentiation window are already represented literally.
+  - The immediate failure is temporal reachability: no relay spike follows the delayed category spike, so the intended causal corticothalamic STDP pairing cannot occur.
+  - Correcting the projection-022 endpoint alone does not restore the category spike and is rejected as a Figure 6 fix.
+

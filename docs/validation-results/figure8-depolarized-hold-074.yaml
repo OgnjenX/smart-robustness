@@ -1,0 +1,24 @@
+id: figure8-depolarized-hold-074
+claim: The unspecified depolarized holding potential does not explain the missing Figure 8 tonic train
+model:
+  source: ModelDB 112923 Ca_rebound.xml Relay population
+  geometry_convention: centimeters
+  leak_density_mS_cm2: 0.1
+  specific_capacitance_uF_cm2: 1.0
+protocol:
+  precondition_ms: 100
+  pulse_ms: 300
+  pulse_pA: 300
+  exact_preclamp_released_at_pulse: true
+  depolarized_holds_mV: [-62.3, -60, -57.5, -55, -52.5, -50, -45]
+results:
+  spike_count_by_hold: [1, 1, 1, 1, 1, 1, 1]
+  first_spike_ms: [0.66, 0.64, 0.62, 0.61, 0.59, 0.57, 0.5]
+  tonic_pass_all: false
+interpretation:
+  - More depolarized pre-pulse holding potentials progressively advance the onset event but never produce a sustained train.
+  - The unknown top-trace holding potential is not sufficient to recover the official tonic response.
+  - The remaining discrepancy is confined to legacy version-1 geometry/current/T-gate execution or an unrecovered experiment setting.
+implementation_followup:
+  - Ca_rebound.xml version-1 dimensions now support explicit centimeters and millimeters geometry conventions.
+  - Neither convention is silently designated official; the centimeters default preserves the later KInNeSS schema interpretation.

@@ -1,0 +1,40 @@
+schema_version: 1
+validation_id: figure16-cross-correlation-analysis-044
+claim: The repository implements and validates the Fourier-domain band-limited cross-correlation procedure stated in Figure 16
+status: pass_analysis_implementation
+date: 2026-08-12
+source:
+  location: Grossberg and Versace 2008 Figure 16 caption
+  procedure:
+    - Fourier transform the two LFP traces.
+    - Multiply one transform by the complex conjugate of the other.
+    - Select bins for each declared frequency band.
+    - Inverse transform to obtain one cross-correlation curve per band.
+  bands_hz: [[2, 4], [4, 8], [8, 12], [12, 20], [20, 100]]
+implementation:
+  module: smart_robustness.analysis.cross_correlation
+  outputs:
+    - raw inverse-transform curve
+    - energy-normalized curve
+    - signed lag axis in milliseconds
+    - absolute normalized peak and its lag
+    - qualitative lower-frequency-versus-gamma assessment
+  conventions:
+    - Positive lag means the second signal leads the first.
+    - Adjacent bands are half-open to prevent duplicated endpoint bins.
+    - FFT-roundoff-only band energy is treated as zero before normalization.
+verification:
+  synthetic_known_delay_ms: 20
+  recovered_peak_lag_ms: -20
+  zero_energy_band_peak: 0
+  lower_frequency_dominance_control: pass
+  invalid_input_checks: 5
+  focused_tests: 10
+  lint: pass
+assessment:
+  figure16_analysis_ready: true
+  official_lfp_behavior_reproduced: false
+limitations:
+  - Circular FFT correlation follows the caption but does not by itself resolve edge-padding choices that were not reported.
+  - Regional tip reduction is now an explicit mean convention in figure16-region-reduction-057.yaml; it does not recover an unpublished original reduction.
+  - Published cross-correlation amplitudes are graphical only, so no numeric amplitude tolerance is asserted.

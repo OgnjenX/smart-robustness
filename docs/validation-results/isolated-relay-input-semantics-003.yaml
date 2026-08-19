@@ -1,0 +1,48 @@
+id: isolated-relay-input-semantics-003
+status: partial-candidate
+claim: Grossberg and Versace Methods 4.9 relay drive at approximately 40 Hz
+protocol:
+  cell: modeldb112923_relay
+  input_record: modeldb112923.external.002
+  target_compartment: proximal_dendrite
+  source_channel: green
+  source_value: 120
+  duration_ms: 100
+  dt_ms: 0.01
+fixed_conventions:
+  axial_convention: kinness_serialized_edge
+  leak_convention: table3_reversal
+  voltage_coordinate: relative_to_table3_leak
+  nak_rate_convention: standard_traub_miles
+  calcium_gate_convention: modeldb_112923
+  calcium_density_convention: table3
+  integration_method: rk4
+discriminator:
+  framework_resting_leak_at_1_uF_cm2:
+    zero_rate_hz: 0.0
+    steady_rate_hz: 0.0
+  omit_all_zero_at_1_uF_cm2:
+    zero_rate_hz: 60.0
+    steady_rate_hz: 60.0
+  exact_minus_12_mV_clamp_with_framework_resting_leaks:
+    zero_rate_hz: 0.0
+    steady_rate_hz: 0.0
+omit_all_zero_capacitance_sweep:
+  capacitances_uF_cm2: [0.01, 0.02, 0.05, 0.1, 0.2, 0.5, 1.0, 2.0, 5.0, 10.0]
+  zero_rates_hz: [invalid, invalid, invalid, invalid, 220.0, 110.0, 60.0, 30.0, 0.0, 0.0]
+  steady_rates_hz: [invalid, invalid, invalid, invalid, 230.0, 110.0, 60.0, 40.0, 0.0, 0.0]
+candidate:
+  convention_fingerprint: 48550ab15450c1de9069d88b406121371cd054844205175d46258e518b2be0d2
+  specific_capacitance_uF_cm2: 2.0
+  gate_initialization_convention: steady_state_at_initial_voltage
+  zero_sensitivity_input_convention: omit_all_zero
+  spike_times_ms: [9.99, 39.97, 69.48, 98.67]
+  rate_hz: 40.0
+assessment:
+  isolated_relay_target_pass: true
+  promoted_to_classic_baseline: false
+notes:
+  - The archived all-zero EXTERNAL INHIBITION input becomes a large permanent resting leak under the literal framework equation and suppresses relay firing.
+  - Treating all-zero source mappings as inactive is behaviorally decisive but the unavailable KInNeSS source prevents direct confirmation of this legacy branch.
+  - The 2 uF/cm2 value is an unresolved simulator default candidate, not a fitted or published SMART parameter.
+  - Exact paper-style proximal voltage clamp does not overcome the permanent all-zero resting leak.

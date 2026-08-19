@@ -1,0 +1,27 @@
+id: figure7-clamp-semantics-024
+status: direct-compartment-clamp-rejected
+claim: Methods 4.9 fixed -12 mV clamp is reproduced by directly pinning one relay compartment
+protocol:
+  duration_ms: 100.0
+  dt_ms: 0.01
+  holding_mV: -12.0
+  cells: five horizontal relay cells
+  target_rate_hz_per_cell: 40.0
+  gate_initialization: zero
+  axial_convention: kinness_serialized_edge
+results:
+  direct_soma_clamp_hz: [0, 0, 0, 0, 0]
+  direct_proximal_dendrite_clamp_hz: [70, 70, 70, 70, 70]
+  direct_distal_dendrite_clamp_hz: [20, 20, 20, 20, 20]
+  archived_green_120_input_hz: [40, 40, 40, 40, 40]
+  exact_proximal_match: {nonspecific_rate_hz: 70.0, relay_spikes: 35, trn_spikes: 266, layer4_spikes: 39, category_spikes: 4}
+  exact_proximal_mismatch: {nonspecific_rate_hz: 70.0, relay_spikes: 35, trn_spikes: 266, layer4_spikes: 39, category_spikes: 4}
+assessment:
+  any_direct_compartment_matches_40_hz: false
+  archived_input_matches_40_hz: true
+  figure7_match_mismatch_reproduced: false
+notes:
+  - Methods 4.9 names relay neurons but does not identify a clamped compartment.
+  - Directly replacing one compartment ODE is retained as an executable audit alternative, not promoted to the classic baseline.
+  - The archived KInNeSS input gate terminates on the proximal dendrite and maps green=120 to the published 40 Hz relay train.
+  - A legitimate Figure 7 assay still requires a Figure 6-learned expectation; the graphical Figure 6c field does not identify separate receptor weights.

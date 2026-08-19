@@ -1,0 +1,58 @@
+id: figure8-archive-protocol-audit-078
+status: source-audit-complete-protocol-not-serialized
+claim: The official ModelDB Figure 8 archive contains a complete executable experiment schedule for the published tonic/burst trace
+archive:
+  url: https://modeldb.science/download/112923
+  sha256: 5fc6e0042ef093665ad2f1c24c87f9cc0d796629c896ee8a4efe34827a4462c5
+  file: versaceGrossberg2008/Ca_rebound.xml
+  file_sha256: 2fc9615bf119e7602e75c00b5cd29e74dfaf89ba96d8eb6b0f17e36932f1ad0d
+archive_contents:
+  populations: [Reticular, PBN, Relay, Layer_VI]
+  connected_model_populations: [Reticular, Relay, Layer_VI]
+  pbn_connected: false
+  relay_structure:
+    soma_rest_mV: -62.3
+    soma_diameter_serialized: 0.02
+    soma_length_serialized: 0.04
+    sodium_density_mS_cm2: 50
+    potassium_density_mS_cm2: 30
+    calcium_g_bar_serialized: 250
+  serialized_experiment_schedule: false
+  serialized_current_pulse: false
+  serialized_hyperpolarizing_clamp: false
+  serialized_specific_capacitance: false
+  serialized_leak_density: false
+paper_caption:
+  current_pulse_nA: 0.3
+  top_condition: no hyperpolarizing voltage clamp
+  bottom_condition: hyperpolarizing voltage clamp present
+  clamp_voltage: not_reported
+  clamp_timing: not_reported
+  pulse_duration: not_reported
+diagnostics:
+  coherent_internal_zero_coordinate:
+    top_events: 1
+    bottom_events: 1
+    reproduced: false
+  near_zero_leak_density_mS_cm2: [0.000001, 0.00001, 0.0001, 0.001, 0.005, 0.01]
+  near_zero_leak_result:
+    top_events_each: 1
+    bottom_events_each: 2
+    reproduced: false
+  legacy_calcium_unit_candidate:
+    interpretation: g_bar 250 as 0.25 mS/cm2
+    maintained_clamp_nS: [1, 3, 10, 30, 100, 300]
+    top_events_each: 6
+    bottom_events: [6, 6, 4, 0, 0, 0]
+    reproduced: false
+    promoted: false
+assessment:
+  archive_proves_cell_and_network_structure: true
+  archive_proves_protocol: false
+  official_figure8_reproduced: false
+  source_candidate_promoted: false
+notes:
+  - The README calls Ca_rebound.xml the network used for the calcium-mediated rebound simulation; the XML is not an isolated-cell-only file.
+  - Figure 8 nevertheless scores the relay soma under direct current injection, as stated by the paper caption.
+  - The legacy 1000-fold calcium-unit candidate restores top-condition tonic firing but does not produce the required transient bottom-condition burst under a maintained clamp.
+  - Missing source metadata remains explicit; no fitted interpretation is promoted to the classic baseline.

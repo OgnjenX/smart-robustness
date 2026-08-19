@@ -1,0 +1,39 @@
+id: first-order-bar-002
+status: failed_reproduction
+protocol:
+  orientation: horizontal
+  warmup_ms: 20.0
+  stimulus_ms: 100.0
+  source_value: 120.0
+  source_channel: green
+  active_relay_indices: [38, 39, 40, 41, 42]
+runtime:
+  backend: brian2_numpy
+  dt_ms: 0.01
+  gate_initialization_convention: zero
+results:
+  warmup_spikes:
+    thalamic_relay: 0
+    trn: 0
+    thalamic_nonspecific: 1
+    layer4_excitatory_v1: 0
+  stimulus_spikes:
+    thalamic_relay: 66
+    trn: 162
+    thalamic_nonspecific: 0
+    layer4_excitatory_v1: 0
+  active_relay_spikes_each: [12, 12, 12, 12, 12]
+  inactive_relay_spikes: 6
+  active_relay_rate_hz_each: 120.0
+  first_spike_ms:
+    thalamic_relay: 21.55
+    trn: 22.69
+    thalamic_nonspecific: 17.15
+    layer4_excitatory_v1: null
+comparison:
+  published_active_relay_rate_hz: 40.0
+  outcome: fail
+interpretation:
+  - Zero gate initialization removes the synchronized TRN warmup burst seen with steady-state initialization.
+  - It does not reproduce the published relay rate and instead recruits strong stimulus-locked TRN activity.
+  - Gate initialization is behaviorally consequential but is not sufficient to reconcile the implementation with SMART.

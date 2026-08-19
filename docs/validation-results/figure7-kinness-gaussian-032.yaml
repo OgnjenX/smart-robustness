@@ -1,0 +1,41 @@
+id: figure7-kinness-gaussian-032
+status: failed-official-reproduction-source-correction-retained
+source_model: ModelDB 112923 SMART.nml
+claim: archived KInNeSS peak-scaled finite Gaussian kernels restore Figure 7 match/mismatch arousal divergence
+protocol:
+  duration_ms: 100
+  dt_ms: 0.01
+  top_down_current_pA: 600
+  top_down_cue_lead_ms: 0
+  learned_state: paper-constrained Figure 6c horizontal expectation
+  network_scope: first-order 9x9 sector
+  gaussian:
+    amplitude: serialized Weight is the peak
+    cutoff: omit pairs whose resulting weight is below 0.001
+    source: archived 2008 KInNeSS User Manual
+  ring: provisional center-exclusion interpretation
+results:
+  match:
+    nonspecific_rate_hz: 20
+    relay_spikes: 8
+    trn_spikes: 188
+    layer4_spikes: 5
+    category_spikes: 3
+  mismatch:
+    nonspecific_rate_hz: 20
+    relay_spikes: 6
+    trn_spikes: 188
+    layer4_spikes: 5
+    category_spikes: 3
+assessment:
+  published_match_target_hz: 40
+  published_mismatch_target_hz: 70
+  match_rate_pass: false
+  mismatch_rate_pass: false
+  mismatch_disinhibition_pass: false
+  reproduced_arousal: false
+notes:
+  - This supersedes normalized-density Gaussian profiles as the executable-source baseline.
+  - Correcting the Gaussian rule alone does not recover the official Figure 7 response.
+  - Exact legacy ring geometry remained unresolved at this checkpoint.
+  - Ionic-gate initialization was subsequently resolved by archived SANNDRA revision history and this zero-gate result is superseded by the resting-state rerun.

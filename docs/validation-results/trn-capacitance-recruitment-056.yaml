@@ -1,0 +1,67 @@
+id: trn-capacitance-recruitment-056
+status: rejected-source-unreported-discriminator
+claim: The unreported KInNeSS specific-capacitance default explains the missing post-startup TRN soma event.
+evidence_class:
+  - isolated-cell
+  - causal-discriminator
+  - source-unreported-parameter
+sources:
+  cell: ModelDB 112923 SMART.nml Reticular population
+  capacitance_status: Grossberg and Versace 2008 and SMART.nml do not state the numerical specific capacitance
+protocol:
+  simulator: Brian2 2.9.0 numpy runtime
+  integration_method: rk4
+  dt_ms: 0.01
+  seed: none-deterministic-isolated-cell
+  drive_onset_ms: 5
+  measured_layer6ii_gates:
+    ampa: 1.66427
+    nmda: 0.10913
+  event_rule: absolute soma above +30 mV followed by return below 0 mV
+  event_tolerance: exact event count; voltage peaks reported to 0.0001 mV
+  independent_conditions: [control, driven]
+configuration_fingerprints:
+  0.1: bccc390cbcdb17d8fb9506065bd36b334f794f2d2e697678269b597ad3c9dd1c
+  0.2: 7cf7a32738dffcd44fa3042694b0d562131f1f1f8a8accb8b0078843b6ef9157
+  0.5: 0760430199e918280798b2aebeedb86a17ebb1aab1972648fe5ac70e68f57104
+  1.0: 977783457264370779b809e468ada7adb40d204788c45ce8ecde7b205b8c3fcf
+  1.5: 1e2e73822690cf665a4dde58f601503888a8a2ccf315b2a629c8185b623f3e65
+  2.0: 8e60dce3beef8906715b7b3e38124542335579b1b3cab27bdf5d3dd6c3638707
+  5.0: e52f4d1211e092031e3c47ad5e42b40d0f0a498c4551e44b979a44f7aa39ed25
+  5.5: fc2ef9e478b6a614ab2d18bc4410c53b36cda3a80899312653393fd272dc52f5
+  6.0: 7232ce53f0fe6c97af7b17002e88ad666a765ca031b1ceab39884b2418725fea
+  6.5: 6df9ba2610961a18b7b61df2369bcb3f54bb63c5da6d34e961cbcbc32f1a7370
+  7.0: 0645125a56a4deea818cc89a6999f36a10ffac5c8553473f3c35ee8662b091c7
+  7.5: fe59c13ff39ce1347b9017986ec9d80204d76cca37d2e79d91de913c37e5c85f
+  10.0: 7f501e4bf4ed3e32124bf9b4c1ada5f165cd9afadbfcaa5807a4d98ef2becbf0
+  15.0: 3d22096cdfb0f84cec164bc70e1b9bf7a66ddede3722fe3302e90311771c21ed
+  20.0: 2d66e25b279c03976281f2def90ba3d13f288bfd449b7cbaf7896cfdb548f502
+  30.0: b462729c178c6fd532ab9dba6cf2304a4a63d37678c062caea7594c7748b2440
+  50.0: 5bcda940cb31e5f9ca9fd5839fd89181cc1d5b30a026e48dcf7c61a46697f713
+short_sweep_50_ms:
+  capacitances_uF_cm2: [0.1, 0.2, 0.5, 1.0, 1.5, 2.0, 5.0, 10.0]
+  results:
+    0.1: {finite: false, control_events: 0, driven_events: 0}
+    0.2: {finite: true, control_events: 0, driven_events: 0, control_soma_peak_mV: -11.1306, driven_soma_peak_mV: -10.3385}
+    0.5: {finite: true, control_events: 0, driven_events: 0, control_soma_peak_mV: -10.0455, driven_soma_peak_mV: -9.2550}
+    1.0: {finite: true, control_events: 0, driven_events: 0, control_soma_peak_mV: -9.0853, driven_soma_peak_mV: -8.0507}
+    1.5: {finite: true, control_events: 0, driven_events: 0, control_soma_peak_mV: -8.7736, driven_soma_peak_mV: -8.4396}
+    2.0: {finite: true, control_events: 0, driven_events: 0, control_soma_peak_mV: -9.2522, driven_soma_peak_mV: -9.1088}
+    5.0: {finite: true, control_events: 0, driven_events: 0, control_soma_peak_mV: -13.9288, driven_soma_peak_mV: -13.7128}
+    10.0: {finite: true, control_events: 0, driven_events: 0, control_soma_peak_mV: 18.4746, driven_soma_peak_mV: 18.5005}
+long_sweep_100_ms:
+  capacitances_uF_cm2: [5.0, 5.5, 6.0, 6.5, 7.0, 7.5, 10.0, 15.0, 20.0, 30.0, 50.0]
+  post_startup_events_control: 0
+  post_startup_events_driven: 0
+  largest_soma_peak_mV: 24.5174
+  largest_peak_capacitance_uF_cm2: 7.5
+  input_selective_peak: false
+assessment:
+  stable_capacitance_candidate_found: false
+  threshold_reached_by_stable_trace: false
+  input_selective_recruitment_found: false
+  promote_capacitance_change: false
+notes:
+  - The 0.1-uF/cm2 crossings are excluded because the state becomes non-finite at the declared timestep.
+  - Longer high-capacitance traces can show delayed intrinsic excursions, but control and driven trials remain effectively coincident and below the published +30-mV detector threshold.
+  - This sweep closes capacitance as an ordinary explanation for the Figure 7 TRN failure; it does not identify the missing simulator convention.

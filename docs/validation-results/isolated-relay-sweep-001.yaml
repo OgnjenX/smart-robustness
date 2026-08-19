@@ -1,0 +1,40 @@
+id: isolated-relay-sweep-001
+status: no_candidate_reproduced
+purpose: predeclared discriminator for unresolved KInNeSS runtime conventions
+protocol:
+  duration_ms: 100.0
+  dt_ms: 0.01
+  archived_input_source_value: 120.0
+  target_rate_hz: 40.0
+fixed_conventions:
+  axial_convention: kinness_serialized_edge
+  leak_convention: table3_reversal
+  nak_rate_convention: standard_traub_miles
+  calcium_gate_convention: modeldb_112923
+  integration_method: rk4
+candidate_axes:
+  voltage_coordinate: [relative_to_table3_leak, shifted_67_mV]
+  gate_initialization: [zero, steady_state_at_initial_voltage]
+  specific_capacitance_uF_cm2: [0.1, 1.0, 2.0, 5.0, 10.0]
+  calcium_density: [table3, methods_global_250]
+coverage:
+  table3_calcium_capacitances: [0.1, 1.0, 2.0, 5.0, 10.0]
+  methods_global_250_capacitances: [0.1, 1.0]
+results_summary:
+  relative_table3_calcium:
+    zero_rates_hz_by_capacitance: {0.1: 0.0, 1.0: 0.0, 2.0: 0.0, 5.0: 0.0, 10.0: 0.0}
+    steady_rates_hz_by_capacitance: {0.1: 0.0, 1.0: 0.0, 2.0: 0.0, 5.0: 0.0, 10.0: 0.0}
+  relative_global_250_calcium:
+    zero_rates_hz: {0.1: invalid, 1.0: 20.0}
+    steady_rates_hz: {0.1: invalid, 1.0: 10.0}
+  shifted_table3_calcium:
+    zero_rates_hz_by_capacitance: {0.1: invalid, 1.0: 200.0, 2.0: 140.0, 5.0: 0.0, 10.0: 0.0}
+    steady_rates_hz_by_capacitance: {0.1: invalid, 1.0: 220.0, 2.0: 160.0, 5.0: 0.0, 10.0: 0.0}
+  shifted_global_250_calcium:
+    zero_rates_hz: {0.1: invalid, 1.0: 10.0}
+    steady_rates_hz: {0.1: invalid, 1.0: 10.0}
+interpretation:
+  - No finite candidate produced the published 40 Hz relay stream.
+  - The fixed-shift profile undergoes a sharp spiking transition rather than a smooth capacitance scaling to 40 Hz.
+  - Low-capacitance and high-calcium candidates can become numerically invalid at the project's 0.01 ms default step; the paper does not report its integration timestep.
+  - No matrix member is promoted to the classic baseline from this isolated assay.

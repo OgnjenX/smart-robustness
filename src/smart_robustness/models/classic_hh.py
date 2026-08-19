@@ -54,9 +54,7 @@ def _dual_exponential_normalizer(rise_ms: float, decay_ms: float) -> float:
     return 1.0 / (math.exp(-peak_ms / decay_ms) - math.exp(-peak_ms / rise_ms))
 
 
-def create_classic_hh_population(
-    *, name: str, size: int, params: dict[str, Any], brian=None
-):
+def create_classic_hh_population(*, name: str, size: int, params: dict[str, Any], brian=None):
     if brian is None:
         import brian2 as brian
 

@@ -1,0 +1,28 @@
+id: figure6-zero-warmup-019
+status: protocol-correction-promoted-partial-figure6c
+claim: the archived Figure 6 stimulus begins at simulation time zero without an unstimulated warmup
+source:
+  archived_horizontal_protocol_frame_ms: 0
+  paper_exposure_ms: 100
+  paper_warmup_ms: not specified
+protocol:
+  warmup_ms: 0.0
+  stimulus_ms: 100.0
+  dt_ms: 0.01
+observations:
+  layer6ii_cell_40_spike_ms: 58.50
+  teaching_arrival_ms: 60.50
+  preceding_relay_cell_40_spike_ms: 44.91
+  following_relay_cell_40_spike_ms: 61.99
+  causal_post_minus_pre_ms: 1.49
+  bottom_up_horizontal_contrast: 0.0816761683
+  top_down_combined_horizontal_contrast: 0.0049612302
+assessment:
+  causal_pair_in_learning_window: true
+  figure6b_pass: true
+  figure6c_effect_size_pass: false
+  zero_warmup_promoted_to_classic_protocol: true
+notes:
+  - The former 2-ms warmup was an implementation convenience with no primary-source support.
+  - Removing it changes the gamma phase relation from post-before-pre to causal pre-before-post and materially improves the top-down map.
+  - The remaining effect-size deficit requires an equation/source audit, not an undocumented timing shift.

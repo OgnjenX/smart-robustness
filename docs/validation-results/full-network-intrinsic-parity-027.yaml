@@ -1,0 +1,30 @@
+schema_version: 1
+validation_id: full-network-intrinsic-parity-027
+source_model: ModelDB 112923 SMART.nml
+source_sha256: 16fc196f2ed68d1c02a39395fa83bb0ffab8fcf8edffe6fd11022bb6c6e299e1
+claim: all 24 runtime population cell definitions match the archived intrinsic XML fields
+status: pass
+coverage:
+  populations: 24
+  compartments: 48
+  fields:
+    - geometry
+    - leak_reversal_and_conductance
+    - serialized_child_edge_axial_resistance
+    - sodium_conductance_and_reversal
+    - potassium_conductance_and_reversal
+    - t_type_calcium_conductance_and_reversal
+    - ahp_conductance_reversal_and_kinetics
+    - transmitter_depletion_and_recovery
+v2_homology:
+  exact_homologues: 11
+  exceptions:
+    layer5_excitatory_v2:
+      leak_reversal_mV: -72
+      v1_leak_reversal_mV: -73
+      child_edge_axial_resistance_kohm_cm: 5
+      v1_child_edge_axial_resistance_kohm_cm: 6
+limitations:
+  - This validates serialized intrinsic fields, not match/gamma or mismatch/beta/reset behavior.
+  - Root-soma axial resistance is absent from SMART.nml and remains governed by the documented child-edge convention.
+  - KInNeSS runtime defaults that are not serialized cannot be established by XML parity alone.

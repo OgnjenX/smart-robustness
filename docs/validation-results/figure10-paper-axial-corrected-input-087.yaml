@@ -1,0 +1,38 @@
+schema_version: 1
+validation_id: figure10-paper-axial-corrected-input-087
+claim: Grossberg and Versace Equation 2 axial coupling restores the Figure 10 mismatch-reset chain in the corrected persistent network.
+status: failed-causal-network-reproduction
+date: 2026-08-18
+sources:
+  paper: Grossberg and Versace 2008, Equation 2 and Figure 10
+  isolated_precursor: figure10-axial-source-discriminator-079
+protocol:
+  simulator: Brian2 2.9.0 C++ standalone
+  pre_match_duration_ms: 100
+  mismatch_duration_ms: 100
+  integration_dt_ms: 0.01
+  top_down_current_pA: 1000
+  learned_state: paper-constrained-figure6c-reference
+  axial_convention: paper_literal
+  convergent_external_input_convention: sum_independent_currents
+  runtime_convention_fingerprint: 38db868173ee59a9ffce43ce5d0c07becedebbbf4695f1a1436700d9360c1adc
+  negative_control:
+    mismatch_onset_disconnection: [modeldb112923.projection.017, modeldb112923.projection.018]
+results:
+  intact:
+    pre_match: {layer4_events: 37, nonspecific_events: 1, layer5_events: 15, layer6i_events: 46}
+    mismatch: {layer4_events: 31, nonspecific_events: 0, layer5_events: 18, layer6i_events: 50}
+  disconnected_control:
+    pre_match: {layer4_events: 37, nonspecific_events: 1, layer5_events: 15, layer6i_events: 46}
+    mismatch: {layer4_events: 31, nonspecific_events: 0, layer5_events: 18, layer6i_events: 50}
+assessment:
+  reset_chain_pass: false
+  winner_suppression_pass: false
+  alternative_release_pass: false
+  official_figure10_reset_reproduced: false
+  paper_axial_promoted_to_classic_baseline: false
+interpretation:
+  - Paper-literal coupling permits layer-5 somatic events in the network, consistent with the isolated propagation discriminator.
+  - Nonspecific thalamus emits no mismatch-phase event, so projections 017/018 receive no reset-triggering event.
+  - Intact and disconnected trajectories are identical; the layer-5 events are not caused by the published nonspecific reset pathway.
+  - The remaining primary failure is upstream Figure 7 mismatch disinhibition, not layer-5 axial propagation alone.

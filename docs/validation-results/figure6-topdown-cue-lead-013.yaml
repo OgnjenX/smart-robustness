@@ -1,0 +1,26 @@
+id: figure6-topdown-cue-lead-013
+status: falsified-discriminator
+claim: advancing a sustained layer-6II somatic cue can restore Figure 6c top-down learning
+convention_fingerprint: 642787353e5d0cff46b7d5fe2175f81845aefed19a527d30fc034060b9d3001a
+protocol:
+  dt_ms: 0.01
+  layer6ii_cell_index: 40
+  somatic_current_pA: 200.0
+  cue_lead_ms: 10.0
+  bar_orientation: horizontal
+  bar_duration_ms: 100.0
+  archived_blue_category_input: false
+observations:
+  central_layer6ii_spike_times_ms: [11.38, 84.30]
+  active_relay_spikes: 0
+  trn_spikes: 81
+  bottom_up_horizontal_contrast: 0.0
+  top_down_wide_horizontal_contrast: 0.0
+  top_down_narrow_horizontal_contrast: 0.0
+assessment:
+  cue_timing_hypothesis_pass: false
+  figure6c_top_down_map_pass: false
+notes:
+  - The first category spike occurs before sensory onset, but it recruits the complete TRN sheet and suppresses all relay spikes.
+  - Methods 4.9 specifies somatic current injection but does not identify its amplitude or onset timing.
+  - This negative result is not a candidate classic convention; the simultaneous-onset protocol and exact connectFromMany stencil remain under audit.

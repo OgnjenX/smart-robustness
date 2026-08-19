@@ -1,0 +1,43 @@
+id: spike-event-timestep-054
+status: rejected-timestep-rescue
+claim: a source-unreported coarser integration step makes the literal SMART Equation 8 detector recruit recovered TRN without numerical failure
+evidence_class: [primary-paper-visual-audit, archived-simulator-manual, numerical-convergence, behavioral]
+source_audit:
+  paper:
+    pages_visually_checked: [40, 44, 45]
+    equation_8: compares current soma voltage below 0 mV with preceding soma voltage above 30 mV
+    methods_4_9: reports 100-ms and 1000-ms epochs but no integration timestep
+    methods_4_12: identifies KInNeSS and hardware but no integration timestep
+  kinness_manual:
+    section: Computational Preferences
+    finding: timestep is a user preference
+  modeldb_112923:
+    finding: recovered NeuroML and README do not serialize the simulator timestep
+candidate:
+  cell: recovered ModelDB 112923 TRN
+  spike_event_rule: literal_previous_sample
+  spike_event_coordinate: absolute_physical
+  spike_event_threshold_mV: 30
+  convention_fingerprint: a1bcae716006f3599e6d6f3d032f21143e0e7e16f9e0f330337a907e0ddeb2b1
+protocol:
+  pre_drive_ms: 5
+  drive_ms: 45
+  drive_gates:
+    layer6ii_ampa: 1.66427
+    layer6ii_nmda: 0.10913
+results:
+  - {dt_ms: 0.005, control_events: 0, driven_events: 0, driven_post_drive_events: 0, finite: true}
+  - {dt_ms: 0.01, control_events: 0, driven_events: 0, driven_post_drive_events: 0, finite: true}
+  - {dt_ms: 0.02, control_events: 0, driven_events: 0, driven_post_drive_events: 0, finite: true}
+  - {dt_ms: 0.05, control_events: 0, driven_events: 0, driven_post_drive_events: 0, finite: true}
+  - {dt_ms: 0.1, control_events: 1, driven_events: 1, driven_post_drive_events: 0, finite: false}
+  - {dt_ms: 0.2, control_events: 0, driven_events: 0, driven_post_drive_events: 0, finite: false}
+assessment:
+  literal_detector_event_in_finite_trial: false
+  driven_post_startup_event_in_finite_trial: false
+  numerical_artifact_rejected: true
+  candidate_promoted: false
+notes:
+  - The only recorded literal +30-mV crossing occurs at 0.1 ms after the RK4 cell has become non-finite and is not biological evidence.
+  - The active 0.01-ms project default is numerically converged for prior Figure 6 conclusions but is not a published SMART parameter.
+  - Timestep cannot be tuned to rescue the detector without an independently recovered simulator preference or a finite convergence result.

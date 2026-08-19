@@ -1,0 +1,50 @@
+id: figure6-inhibitory-delay-072
+claim: Brian2 event scheduling does not explain the missing Figure 6 cortical chain
+protocol:
+  model: source-constrained 9x9 Figure 6 runtime
+  stimulus: archived horizontal0 PNG values for 100 ms from t=0
+  timestep_ms: 0.01
+  diagnostic_parameter: extra delay added only to projection 031, layer23 inhibitory to layer23 excitatory GABA
+source_projection_031:
+  delay_ms: 0.1
+  conductance_mS_cm2: 2.461
+  weight: 0.3
+results:
+  source_delay:
+    extra_delay_ms: 0.0
+    spike_counts:
+      layer4_excitatory_v1: 5
+      layer23_inhibitory_v1: 5
+      layer23_excitatory_v1: 0
+      layer5_excitatory_v1: 0
+    first_spike_ms:
+      layer4_excitatory_v1: 73.16
+      layer23_inhibitory_v1: 77.28
+  four_ms_displacement:
+    extra_delay_ms: 4.0
+    spike_counts:
+      layer4_excitatory_v1: 5
+      layer23_inhibitory_v1: 5
+      layer23_excitatory_v1: 0
+      layer5_excitatory_v1: 0
+    first_spike_ms:
+      layer4_excitatory_v1: 73.16
+      layer23_inhibitory_v1: 77.28
+  twelve_ms_displacement:
+    extra_delay_ms: 12.0
+    spike_counts:
+      layer4_excitatory_v1: 5
+      layer23_inhibitory_v1: 5
+      layer23_excitatory_v1: 5
+      layer5_excitatory_v1: 10
+    first_spike_ms:
+      layer4_excitatory_v1: 73.16
+      layer23_inhibitory_v1: 77.28
+      layer23_excitatory_v1: 86.81
+      layer5_excitatory_v1: 90.57
+interpretation:
+  - A 4-ms displacement is 400 integration steps and still gives the source-delay result, excluding a Brian2 one-step scheduling explanation.
+  - Moving inhibition beyond the latent 86.81-ms layer23 event restores the ordered layer4 to layer23 to layer5 chain.
+  - The 12-ms value is a causal diagnostic and is not source-supported or promotable as the classic baseline.
+  - The remaining audit must explain why the archived KInNeSS model tolerates projection 031 while the current reconstruction does not.
+promote_delay_change: false

@@ -1,0 +1,51 @@
+schema_version: 1
+validation_id: figure7-reticular-calcium-031
+source_model: ModelDB 112923 SMART.nml
+claim: the serialized TRN-specific Destexhe calcium family changes Figure 7 pathway activity and may restore match/mismatch disinhibition
+status: source_fidelity_correction_validated_but_figure7_not_reproduced
+source_equations:
+  activation_exponent: 2
+  activation_inf: sigmoid V0=-52 A=1 B=7.4
+  activation_tau: Reticular_Tau A=1 B=0.33 V0=27 V1=102 C=10 D=-15
+  inactivation_inf: sigmoid V0=-80 A=1 B=-5
+  inactivation_tau: Reticular_Tau A=28.3 B=0.33 V0=48 V1=407 C=4 D=-50
+  provenance:
+    - SMART.nml Reticular and Reticular_V2 intrinsic channels
+    - Versace et al. 2008 KInNeSS expanded manuscript Table 2
+protocol:
+  duration_ms: 100
+  dt_ms: 0.01
+  top_down_layer6ii_cell: 40
+  top_down_current_pA: 600
+  learned_state: paper-constrained Figure 6c combined peak 2.5
+  execution_backend: brian2_cpp_standalone_exact_dense
+observed:
+  isolated_zero_initialized_trn:
+    prior_relay_family_spikes_ms: [20.27, 23.44, 25.64]
+    corrected_reticular_family_spikes_ms: [10.93, 13.59]
+  simultaneous_onset:
+    match:
+      relay_spikes: 23
+      trn_spikes: 162
+      nonspecific_rate_hz: 70
+    mismatch:
+      relay_spikes: 25
+      trn_spikes: 162
+      nonspecific_rate_hz: 70
+  cue_lead_10_ms:
+    match:
+      trn_spikes: 162
+      nonspecific_rate_hz: 60
+    mismatch:
+      trn_spikes: 162
+      nonspecific_rate_hz: 60
+assessment:
+  xml_specific_trn_family_compiled: true
+  v1_v2_trn_family_parity: true
+  pathway_activity_changed: true
+  mismatch_disinhibition: false
+  figure7_reproduced: false
+notes:
+  - Every TRN cell still emits exactly two events in both conditions, so convergent inhibition remains insensitive to match quality.
+  - Relay, matrix, and nonspecific thalamic populations retain the separately serialized low-threshold Simple_Tau family.
+  - No network weight, ring stencil, or undocumented initial state was fitted in this correction.

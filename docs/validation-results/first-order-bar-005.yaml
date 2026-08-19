@@ -1,0 +1,38 @@
+id: first-order-bar-005
+status: partial-candidate
+claim: selective five-cell Methods 4.9 bar drive at approximately 40 Hz
+convention_fingerprint: 48550ab15450c1de9069d88b406121371cd054844205175d46258e518b2be0d2
+conventions:
+  axial_convention: kinness_serialized_edge
+  leak_convention: table3_reversal
+  voltage_coordinate: relative_to_table3_leak
+  nak_rate_convention: standard_traub_miles
+  calcium_gate_convention: modeldb_112923
+  gate_initialization_convention: steady_state_at_initial_voltage
+  calcium_density_convention: table3
+  specific_capacitance_uF_cm2: 2.0
+  integration_method: rk4
+  zero_sensitivity_input_convention: omit_all_zero
+short_warmup_result:
+  warmup_ms: 20.0
+  active_relay_rates_hz: [40.0, 40.0, 40.0, 40.0, 40.0]
+  inactive_relay_spikes: 76
+  relay_rate_pass: true
+  selectivity_pass: false
+  warmup_trn_spikes: 81
+  warmup_relay_spikes: 0
+long_warmup_result:
+  warmup_ms: 100.0
+  active_relay_rates_hz: [30.0, 30.0, 30.0, 30.0, 30.0]
+  inactive_relay_spikes: 0
+  relay_rate_pass: false
+  selectivity_pass: true
+  warmup_trn_spikes: 81
+  warmup_relay_spikes: 81
+assessment:
+  reproduced_drive: false
+  promoted_to_classic_baseline: false
+notes:
+  - The short-warmup failure is a broad one-spike relay rebound after the synchronized startup TRN event.
+  - A 100 ms equilibration removes off-pattern stimulus spikes but reduces the active drive to 30 Hz.
+  - No tested equilibration protocol simultaneously passes rate and selectivity, so the isolated 40 Hz result is not sufficient for baseline promotion.

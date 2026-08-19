@@ -1,0 +1,54 @@
+schema_version: 1
+validation_id: figure16-official-duration-059
+claim: The reconstructed classic SMART two-area candidate reproduces Figure 16's qualitative lower-frequency inter-area dominance at the caption's full duration.
+status: qualitative-reproduction-pass-under-underidentified-learning
+date: 2026-08-18
+evidence_class:
+  - exact-source-protocol
+  - qualitative
+  - source-unreported-reconstruction
+primary_source:
+  citation: Grossberg and Versace 2008
+  location: Figure 16 caption
+protocol:
+  simulator: Brian2 2.9.0 C++ standalone
+  prestimulus_ms: 1000
+  recording_ms: 1000
+  integration_dt_ms: 0.01
+  recording_sample_ms: 1
+  samples: 1000
+  inter_area_delay_ms: 10
+  frequency_bands_hz: [[2, 4], [4, 8], [8, 12], [12, 20], [20, 100]]
+  stimulus: recovered horizontal five-cell bar
+  learned_state: paper-constrained-figure6c-reference
+  learned_state_status: underidentified reconstruction; original post-learning arrays are unpublished
+  runtime_convention_fingerprint: 977783457264370779b809e468ada7adb40d204788c45ce8ecde7b205b8c3fcf
+  geometry_seeds: {v1: 16, v2: 17}
+  region_pair: inferior 0.3 mm of V2 versus superior 0.3 mm of V1
+  region_reduction: arithmetic mean across tips
+  seed_tolerance: deterministic run; qualitative gate requires maximum lower-band peak to exceed gamma
+result:
+  v1_field_shape: [54, 1000]
+  v2_field_shape: [54, 1000]
+  v1_all_finite: true
+  v2_all_finite: true
+  v1_geometry_fingerprint: 42d43a841c4b60145536abb3a24fdd3a0868e4e2b63cd9acf5355bb0e57355df
+  v2_geometry_fingerprint: 67f97ba474906f4466e99f409752eea71397dcb90604d428c276b956e705c1a8
+  normalized_peak_by_band:
+    2_4_hz: {peak: 0.9138875061, lag_ms: 143}
+    4_8_hz: {peak: 0.8181333262, lag_ms: 19}
+    8_12_hz: {peak: 0.6781237548, lag_ms: -28}
+    12_20_hz: {peak: 0.2832039918, lag_ms: -17}
+    20_100_hz: {peak: 0.2668677121, lag_ms: -364}
+  strongest_band_hz: [2, 4]
+  lower_frequency_stronger_than_gamma: true
+assessment:
+  official_duration_completed: true
+  exact_caption_timing_pass: true
+  finite_field_pass: true
+  qualitative_lower_frequency_dominance_pass: true
+  exact_original_run_recovered: false
+limitations:
+  - The publication does not preserve its trained synaptic arrays, random electrode coordinates, or regional tip-reduction rule.
+  - Peak amplitudes are therefore evidence for the predeclared qualitative band ordering, not an exact numerical reproduction claim.
+  - The unresolved first-order Figure 7 TRN event discrepancy remains independent and prevents freezing the complete classic baseline.

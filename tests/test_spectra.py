@@ -20,4 +20,3 @@ def test_band_power_separates_beta_and_gamma() -> None:
 
 
 import pytest
-

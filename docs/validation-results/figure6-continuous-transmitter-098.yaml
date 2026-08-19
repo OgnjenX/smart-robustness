@@ -1,0 +1,50 @@
+schema_version: 1
+validation_id: figure6-continuous-transmitter-098
+claim: Continuous KInNeSS transmitter gating reproduces the published Figure 6b/c learning maps.
+status: failed-official-reproduction-current-source-profile
+date: 2026-08-19
+sources:
+  paper: Grossberg and Versace 2008, Figure 6 and Equations 2 and 8
+  framework: Versace et al. 2008 expanded KInNeSS manuscript, Equations 13-18
+  executable: ModelDB 112923 SMART.nml
+protocol:
+  simulator: Brian2 2.9.0 NumPy runtime
+  integration_dt_ms: 0.01
+  duration_ms: 100
+  stimulus: archived horizontal0.png channels
+  warmup_ms: 0
+  transmitter_semantics: current source resource continuously multiplies each active delayed ligand gate
+results:
+  kinness_serialized_edge:
+    convention_fingerprint: a054e5e36b75765124150157029662c6a5c8a639ee6079b442304607e726cb11
+    population_events: {thalamic_relay: 15, layer4_excitatory_v1: 5, layer6ii_excitatory_v1: 1}
+    first_events_ms: {layer4_excitatory_v1: 73.16, layer23_excitatory_v1: null, layer5_excitatory_v1: null, layer6ii_excitatory_v1: 83.65}
+    category_teaching_arrival_ms: 85.65
+    preceding_relay_event_ms: 81.78
+    following_relay_event_ms: null
+    bottom_up_horizontal_contrast: 0.0874516447210743
+    combined_top_down_horizontal_contrast: -0.004787794585117158
+  paper_literal_axial:
+    convention_fingerprint: 38db868173ee59a9ffce43ce5d0c07becedebbbf4695f1a1436700d9360c1adc
+    population_events: {thalamic_relay: 32, layer4_excitatory_v1: 39, layer6ii_excitatory_v1: 34}
+    first_events_ms: {layer4_excitatory_v1: 5.79, layer23_excitatory_v1: null, layer5_excitatory_v1: null, layer6ii_excitatory_v1: 4.52}
+    category_teaching_arrival_ms: 6.52
+    preceding_relay_event_ms: 1.14
+    following_relay_event_ms: 30.97
+    bottom_up_horizontal_contrast: 0.24119745880687893
+    combined_top_down_horizontal_contrast: -0.006750853724180567
+assessment:
+  kinness_figure6b_pass: true
+  kinness_causal_top_down_pair_pass: false
+  kinness_cortical_chain_pass: false
+  kinness_figure6c_pass: false
+  paper_axial_figure6b_pass: true
+  paper_axial_causal_top_down_pair_pass: false
+  paper_axial_cortical_chain_pass: false
+  paper_axial_figure6c_pass: false
+  full_figure6_pass: false
+interpretation:
+  - The source-correct Equation 16 factorization preserves the qualitative bottom-up orientation map.
+  - The KInNeSS profile has no relay event after the 85.65-ms teaching arrival and therefore no causal corticothalamic STDP pair.
+  - Neither source-backed axial interpretation recruits the published layer-4 to layer-2/3 to layer-5 cortical chain.
+  - The paper-literal axial discriminator no longer produces a causal pair under continuous transmitter gating and is not promoted.

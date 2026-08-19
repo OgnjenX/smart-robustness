@@ -1,0 +1,49 @@
+schema_version: 1
+validation_id: lfp-current-accounting-045
+claim: SMART compartment currents and the published LFP/CSD transforms are available without altering membrane dynamics
+status: pass_current_and_transform_implementation
+date: 2026-08-12
+sources:
+  paper:
+    location: Grossberg and Versace 2008 Methods 4.11, Equations 31-33
+    conductivity_mS_cm: 15
+    electrode_tips: 54
+    selected_cell_distance_um: [10, 200]
+    other_cell_distance_um: [10, 1000]
+  framework:
+    location: expanded KInNeSS manuscript, Equations 29-30
+implementation:
+  compartment_observables:
+    - i_membrane_inward_<compartment>
+    - i_axial_inward_<compartment>
+    - i_transmembrane_paper_<compartment>
+    - i_transmembrane_outward_<compartment>
+  sign_convention:
+    i_transmembrane_paper: Equation 32 axial current entering the compartment
+    i_transmembrane_outward: explicit negative diagnostic
+  lfp:
+    function: smart_robustness.analysis.lfp.extracellular_potential_uV
+    input_units: {current: pA, distance: um, conductivity: mS/cm}
+    output_unit: uV
+  csd:
+    function: smart_robustness.analysis.lfp.current_source_density_uV_per_um
+    denominator: delta_x (paper-literal Equation 33)
+    units: uV/um
+    explicit_alternate: smart_robustness.analysis.lfp.standard_current_source_density_uV_per_um2
+    method: centered second difference with endpoint omission
+verification:
+  equation31_single_source_si_conversion: pass
+  signed_source_sink_sum: pass
+  equation33_quadratic_control: pass
+  current_sign_identity: pass
+  full_network_short_integration: pass
+  focused_tests: 57
+  lint: pass
+assessment:
+  transmembrane_current_accounting_ready: true
+  lfp_csd_transform_ready: true
+  official_lfp_reproduced: false
+limitations:
+  - The deterministic source-labeled 54-tip placement is validated separately in figure16-electrode-geometry-046.yaml.
+  - The paper reports distance distributions but not a random seed or exact realized geometry.
+  - Official Figure 14/16 LFP traces remain gated by unresolved classic-cell behavior.

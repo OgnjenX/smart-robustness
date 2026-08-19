@@ -1,0 +1,46 @@
+schema_version: 1
+validation_id: figure10-layer5-propagation-067
+status: failed-source-cell
+claim: The recovered SMART layer-5 cell propagates a nonspecific-thalamus-driven apical dendritic spike to a somatic output event as depicted in Figure 10b.
+evidence_class:
+  - official-executable-source
+  - isolated-cell
+  - causal-discriminator
+primary_source:
+  paper: Grossberg and Versace 2008 Figure 10b and Results 2.6
+  executable: ModelDB 112923 SMART.nml Layer_5 population and projections 017/018
+protocol:
+  simulator: Brian2 2.9.0 numpy runtime
+  integration_method: rk4
+  dt_ms: 0.02
+  pre_drive_ms: 10
+  drive_ms: 90
+  constant_distal_gates:
+    ampa: 0.06
+    nmda: 0.01
+  gate_basis: recovered projection peak weights, held constant as a stronger propagation discriminator than one transient event
+  runtime_convention_fingerprint: 977783457264370779b809e468ada7adb40d204788c45ce8ecde7b205b8c3fcf
+source_strength_result:
+  somatic_events: 0
+  soma_voltage_range_mV: [-73.04, -66.86]
+  proximal_voltage_range_mV: [-73.16, -62.56]
+  distal_voltage_range_mV: [-86.04, 41.57]
+  distal_spike_pass: true
+  apical_to_soma_propagation_pass: false
+drive_multiplier_sweep:
+  multipliers: [0, 1, 2, 4, 8, 16, 32, 64, 128]
+  somatic_event_counts: [0, 0, 0, 0, 0, 1, 2, 3, 4]
+axial_scale_sweep_at_source_strength:
+  scales: [0.25, 0.5, 1, 2, 4, 8, 16, 32]
+  somatic_event_counts: [0, 0, 0, 1, 1, 1, 0, 0]
+  soma_peak_mV: [-71.82, -70.21, -66.86, 39.33, 37.61, 35.03, -62.83, -65.31]
+assessment:
+  source_cell_propagation_reproduced: false
+  promote_drive_multiplier: false
+  promote_axial_scale: false
+  figure10_reset_reproduced: false
+notes:
+  - The recovered distal compartment contains Na/K channels and generates a full local action potential at source-strength sustained drive.
+  - The source-backed axial convention attenuates that event before the soma, contradicting the qualitative simulated propagation shown in Figure 10b.
+  - A 2x axial diagnostic produces one somatic event, but no surviving source supports that multiplier and the response is not monotonic at large factors.
+  - The full mismatch trial independently has zero post-mismatch nonspecific-thalamus events, so changing layer-5 coupling alone cannot restore the complete reset chain.

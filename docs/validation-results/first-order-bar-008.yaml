@@ -1,0 +1,45 @@
+id: first-order-bar-008
+status: passing-drive-source-complete-stimulus-cortex-silent
+claim: archived horizontal RGBA stimulus routed through the first-order sector
+convention_fingerprint: f0e175c18ea7e42158a110b6e33eae85e36d65f3c7dbea6c648ae91884016154
+stimulus:
+  archive_files: [horizontal.xml, horizontal0.png]
+  dimensions: [9, 9]
+  horizontal_green_pixels: [38, 39, 40, 41, 42]
+  green_value: 120
+  central_blue_pixel: 40
+  blue_value: 70
+  routing:
+    green_relay: modeldb112923.external.002
+    blue_layer6ii_category: modeldb112923.external.004
+    green_nonspecific_convergent: modeldb112923.external.009
+    green_matrix_convergent: modeldb112923.external.010
+protocol:
+  warmup_ms: 20.0
+  stimulus_ms: 100.0
+  dt_ms: 0.01
+active_relay_rates_hz: [40.0, 40.0, 40.0, 40.0, 40.0]
+inactive_relay_spikes: 0
+stimulus_spikes:
+  thalamic_relay: 20
+  trn: 243
+  layer5_excitatory_v1: 0
+  layer6ii_excitatory_v1: 0
+  layer6i_excitatory_v1: 0
+  layer4_inhibitory_v1: 0
+  layer23_excitatory_v1: 0
+  layer4_excitatory_v1: 0
+  layer23_inhibitory_v1: 0
+  thalamic_interneuron: 0
+  thalamic_nonspecific: 1
+  thalamic_matrix: 16
+assessment:
+  relay_rate_pass: true
+  selectivity_pass: true
+  cortical_recruitment_pass: false
+  promoted_to_classic_baseline: false
+notes:
+  - The official PNG contains a blue value of 70 at its central green pixel; earlier relay-only validation omitted this channel.
+  - Green source pixels also converge through connectFromAll input gates onto the nonspecific and matrix populations.
+  - Exact source routing does not resolve cortical silence under the current runtime profile.
+  - A contemporaneous KInNeSS model states CM=1 uF/cm2; 0.5 uF/cm2 can make the isolated category cell spike but is not adopted as the baseline.

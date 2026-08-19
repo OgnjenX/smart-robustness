@@ -1,0 +1,35 @@
+id: modeldb-projection-ownership-071
+claim: The remaining Figure 6 failure is not caused by a global reversal of SMART.nml projection endpoints
+authoritative_source:
+  file: ModelDB 112923 SMART.nml
+  sha256: 16fc196f2ed68d1c02a39395fa83bb0ffab8fcf8edffe6fd11022bb6c6e299e1
+  xml_semantics:
+    postsynaptic_endpoint: enclosing population, compartment, channel, and gatingVariable
+    presynaptic_endpoint: projection/refToPopulation target
+executable_mapping:
+  extractor: tools/extract_modeldb112923.py
+  target_population: enclosing population
+  target_compartment: enclosing OrientedSubstructure
+  source_population: refToPopulation target
+spot_checks:
+  - record: modeldb112923.projection.032
+    xml_receptor_owner: Layer_2_3/Dendrite 0/Layer 4 AMPA
+    xml_refToPopulation: Layer_4
+    executable: layer4_excitatory_v1 to layer23_excitatory_v1 proximal_dendrite
+  - record: modeldb112923.projection.031
+    xml_receptor_owner: Layer_2_3/Dendrite 0/GABA_A Fast
+    xml_refToPopulation: Layer_2_3_INT
+    executable: layer23_inhibitory_v1 to layer23_excitatory_v1 proximal_dendrite
+  - record: modeldb112923.projection.035
+    xml_receptor_owner: Layer_4/Dendrite 0/Relay AMPA
+    xml_refToPopulation: Relay
+    executable: thalamic_relay to layer4_excitatory_v1 proximal_dendrite
+anomaly:
+  record: modeldb112923.projection.022
+  xml: layer4_inhibitory_v1 to layer6ii_excitatory_v1 distal_dendrite through an excitatory channel named AMPA 2/3
+  supplement: layer23_excitatory_v1 to layer6ii_excitatory_v1 distal_dendrite one-to-one
+  interpretation: source inconsistency confined to this record; both named alternatives remain executable
+negative_discriminators:
+  - Reversing all endpoints would contradict receptor ownership throughout SMART.nml.
+  - Applying the supplement endpoint for projection 022 alone was already tested and did not restore Figure 6c.
+conclusion: Keep the archived endpoint convention; investigate compartment transfer and legacy runtime scheduling without fitting unsupported parameters.

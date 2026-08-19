@@ -1,0 +1,41 @@
+id: trn-axial-source-audit-042
+claim: A source-supported reinterpretation or scaling of SMART axial coupling restores post-startup TRN recruitment
+status: rejected
+date: 2026-08-12
+sources:
+  - Versace et al. 2008 expanded KInNeSS manuscript, Equations 8b and 9
+  - ModelDB 112923 SMART.nml inpResistance fields
+  - Grossberg and Versace 2008, Methods 4.2 and 4.5
+source_resolution:
+  inpResistance_meaning: specific axial resistance R_A, not conductance
+  equation_9_behavior: reciprocal resistance with directional receiving-compartment geometry
+  xml_geometry_units: centimeters
+  implementation_assessment: kinness_serialized_edge preserves the child-edge R_A and correct centimeter-to-millimeter conversion
+causal_scale_sweep:
+  cell: recovered ModelDB TRN
+  dt_ms: 0.01
+  duration_ms: 50
+  drive_onset_ms: 5
+  observed_constant_layer6ii_gate_drive: {ampa: 1.66427, nmda: 0.10913}
+  results:
+    0.01: {post_startup_events_unforced: 0, post_startup_events_driven: 0, soma_peak_mV: -3.00}
+    0.1: {post_startup_events_unforced: 0, post_startup_events_driven: 0, soma_peak_mV: -3.98}
+    1: {post_startup_events_unforced: 0, post_startup_events_driven: 0, soma_peak_mV: -9.09}
+    10: {post_startup_events_unforced: 0, post_startup_events_driven: 0, soma_peak_mV: -26.28}
+    100: {finite_at_dt: false}
+interpretation:
+  - Weakening or strengthening axial conductance over three orders of magnitude does not create a later somatic event.
+  - The 100x case corresponds to the known erroneous raw-centimeters-as-millimeters interpretation and is numerically stiff at the project's 0.01-ms default step; that timestep is not reported by the paper.
+  - Treating inpResistance as a conductance is contradicted by the KInNeSS manuscript and is not an admissible classic-SMART convention.
+paper_ionic_visual_check:
+  rendered_pages:
+    - tmp/pdfs/rendered/grover-ionic-methods.png
+    - tmp/pdfs/rendered/grover-ionic-methods-next.png
+  result: equations_11_to_19_match_printed_smart_after_dimensionless_substitution
+  example: .032*(13-V)/(exp((13-V)/4)-1) equals .128*x/expm1(x) for x=(13-V)/4
+legacy_source_search:
+  searched: [KInNeSS_0.3.4, SANNDRA, kunit.cpp, kgatesparse.cpp, spikeevents.h]
+  result: manuscript and revision/file indexes found; source-file bodies not recovered
+assessment:
+  axial_scaling_explains_failure: false
+  baseline_promoted: false

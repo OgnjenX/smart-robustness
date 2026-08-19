@@ -1,0 +1,39 @@
+id: trn-full-equilibrium-050
+status: rejected-source-motivated-initialization-alternative
+claim: initializing the recovered TRN at a complete zero-input membrane-and-gate stationary point removes its startup discrepancy
+evidence_class: [numerical-stationary-solution, causal-discriminator]
+rationale:
+  source_clue: surviving SANNDRA symbols include TEq_Membrane<T>::equilibrium()
+  question: whether equilibrium meant the complete voltage-gated cell rather than the serialized leak voltage
+model:
+  cell: ModelDB 112923 Reticular
+  runtime_conventions: active source-constrained Figure 6 profile
+  synapses: none for stationary solve; measured Figure 7 receptor gates for driven trial
+stationary_solution:
+  method: scipy root and least-squares cross-check
+  voltages_mV:
+    soma: -44.160387
+    proximal_dendrite: -42.127191
+    distal_dendrite: -40.741571
+  na_k_and_t_gates: steady-state occupancy at the stationary compartment voltages
+  maximum_current_residual_pA: 3.08e-11
+  all_compartments_at_minus_69_mV_inward_current_pA: [1238.134761, 247.107384, 247.107384]
+behavioral_discriminator:
+  duration_ms: 50
+  dt_ms: 0.01
+  control:
+    spike_times_ms: [4.49, 7.57, 10.15, 12.43]
+    soma_voltage_range_mV: [-90.005, 42.134]
+    proximal_voltage_range_mV: [-64.407, -15.253]
+  driven:
+    spike_times_ms: [4.49, 7.34, 9.81, 12.03]
+    proximal_voltage_peak_mV: -10.692
+assessment:
+  stationary_point_stable: false
+  quiescent_control_pass: false
+  source_candidate_promoted: false
+notes:
+  - A numerical stationary point is not sufficient evidence of the unpublished KInNeSS initialization algorithm.
+  - The stationary point is dynamically unstable under the recovered equations and immediately enters an autonomous burst in both trials.
+  - Full-cell equilibrium initialization therefore cannot explain the official Figure 7 match/mismatch behavior.
+

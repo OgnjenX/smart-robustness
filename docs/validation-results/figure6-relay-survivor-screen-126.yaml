@@ -1,0 +1,239 @@
+schema_version: 1
+id: figure6-relay-survivor-screen-126
+date: '2026-08-19'
+source: docs/validation-results/calibration-stage-a-trn-complete-drive-120.yaml
+holdouts_consulted: false
+protocol:
+  warmup_ms: 0.0
+  stimulus_ms: 20.0
+  post_stimulus_ms: 0.0
+  dt_ms: 0.01
+  source_value: 120.0
+  category_source_value: 70.0
+  winning_layer4_index: 40
+  active_category_index: 40
+  layer6ii_ahp_scale: 1.0
+  monitored_populations:
+  - thalamic_relay
+  - layer4_excitatory_v1
+  - layer6ii_excitatory_v1
+candidate_count: 6
+relay_repetition_survivor_count: 0
+status: relay-repetition-screen-complete
+outcomes:
+- ordinal: 481
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: modeldb_112923
+    calcium_density_convention: methods_global_250
+    nak_rate_convention: standard_traub_miles
+    axial_convention: kinness_serialized_edge
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: latched_peak_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  candidate_fingerprint: ffd0179dbb9ca4da91370733b1f0d06241047d7032b871107ec1aa444b7bd2aa
+  result:
+    convention_fingerprint: 65de2bfde632a1b6dfc5d77ba7c2e6850351f212936d15227cb793b54c76a82f
+    network_mode: connected
+    disabled_projection_ids: []
+    target_index: 40
+    network_finite: true
+    external_port_record_id: modeldb112923.external.002
+    external_effective_reversal_mV: -11.999999999999996
+    external_current_peak_pA: 66.35043684381645
+    external_current_peak_ms: 0.0
+    calcium_current_peak_pA: 1561.1652135175996
+    calcium_current_peak_ms: 2.4000000000000004
+    calcium_current_final_pA: 1092.92712475188
+    soma_voltage_peak_mV: 46.72387706316878
+    soma_voltage_peak_ms: 1.67
+    soma_voltage_post_event_minimum_mV: -77.00004464710716
+    soma_voltage_post_event_minimum_ms: 2.2800000000000002
+    soma_voltage_final_mV: -69.31847405083572
+    external_current_final_pA: 62.12005260204344
+    relay_event_times_ms:
+    - 1.8900000000000001
+    target_layer4_event_times_ms: []
+  relay_repetition_pass: false
+- ordinal: 483
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: modeldb_112923
+    calcium_density_convention: methods_global_250
+    nak_rate_convention: standard_traub_miles
+    axial_convention: kinness_serialized_edge
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: hysteretic_threshold_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  candidate_fingerprint: 3d6c30fedb49c820a01b888b74a3b85e78926ca82f51bc4c3810d5ef14467254
+  result:
+    convention_fingerprint: cb8b273289b9b15bd108351dac810e31c8bca08c325738ae885b90fdbbb3656c
+    network_mode: connected
+    disabled_projection_ids: []
+    target_index: 40
+    network_finite: true
+    external_port_record_id: modeldb112923.external.002
+    external_effective_reversal_mV: -11.999999999999996
+    external_current_peak_pA: 66.35043684381645
+    external_current_peak_ms: 0.0
+    calcium_current_peak_pA: 1561.1652135175996
+    calcium_current_peak_ms: 2.4000000000000004
+    calcium_current_final_pA: 1092.92712475188
+    soma_voltage_peak_mV: 46.72387706316878
+    soma_voltage_peak_ms: 1.67
+    soma_voltage_post_event_minimum_mV: -77.00004464710716
+    soma_voltage_post_event_minimum_ms: 2.2800000000000002
+    soma_voltage_final_mV: -69.31847405083572
+    external_current_final_pA: 62.12005260204344
+    relay_event_times_ms:
+    - 1.8900000000000001
+    target_layer4_event_times_ms: []
+  relay_repetition_pass: false
+- ordinal: 487
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: modeldb_112923
+    calcium_density_convention: methods_global_250
+    nak_rate_convention: standard_traub_miles
+    axial_convention: kinness_2008
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: latched_peak_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  candidate_fingerprint: 77560c4062f87b3d2152df06cfebc3fd126a575a80324f919f15f078c73d1325
+  result:
+    convention_fingerprint: 833d06f0cd6dbc31fa9f7248dc93c99d478974370ee84d4d1901411224be842d
+    network_mode: connected
+    disabled_projection_ids: []
+    target_index: 40
+    network_finite: true
+    external_port_record_id: modeldb112923.external.002
+    external_effective_reversal_mV: -11.999999999999996
+    external_current_peak_pA: 66.35043684381645
+    external_current_peak_ms: 0.0
+    calcium_current_peak_pA: 1561.1652135175996
+    calcium_current_peak_ms: 2.4000000000000004
+    calcium_current_final_pA: 1092.92712475188
+    soma_voltage_peak_mV: 46.72387706316878
+    soma_voltage_peak_ms: 1.67
+    soma_voltage_post_event_minimum_mV: -77.00004464710716
+    soma_voltage_post_event_minimum_ms: 2.2800000000000002
+    soma_voltage_final_mV: -69.31847405083572
+    external_current_final_pA: 62.12005260204344
+    relay_event_times_ms:
+    - 1.8900000000000001
+    target_layer4_event_times_ms: []
+  relay_repetition_pass: false
+- ordinal: 489
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: modeldb_112923
+    calcium_density_convention: methods_global_250
+    nak_rate_convention: standard_traub_miles
+    axial_convention: kinness_2008
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: hysteretic_threshold_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  candidate_fingerprint: d3d5d92d075c7572b0bdc695d8ff06e340add1fbf792871820d0d69d267639da
+  result:
+    convention_fingerprint: 50484ffdfd392ae0271d0d9d7288e2485895a27f2064bb800d93bd9842b81680
+    network_mode: connected
+    disabled_projection_ids: []
+    target_index: 40
+    network_finite: true
+    external_port_record_id: modeldb112923.external.002
+    external_effective_reversal_mV: -11.999999999999996
+    external_current_peak_pA: 66.35043684381645
+    external_current_peak_ms: 0.0
+    calcium_current_peak_pA: 1561.1652135175996
+    calcium_current_peak_ms: 2.4000000000000004
+    calcium_current_final_pA: 1092.92712475188
+    soma_voltage_peak_mV: 46.72387706316878
+    soma_voltage_peak_ms: 1.67
+    soma_voltage_post_event_minimum_mV: -77.00004464710716
+    soma_voltage_post_event_minimum_ms: 2.2800000000000002
+    soma_voltage_final_mV: -69.31847405083572
+    external_current_final_pA: 62.12005260204344
+    relay_event_times_ms:
+    - 1.8900000000000001
+    target_layer4_event_times_ms: []
+  relay_repetition_pass: false
+- ordinal: 499
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: modeldb_112923
+    calcium_density_convention: methods_global_250
+    nak_rate_convention: standard_traub_miles
+    axial_convention: symmetric_cable
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: latched_peak_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  candidate_fingerprint: f8a32a91e9ca849d5cb5191d812e376e6f82253d34b0aa169030946cae0510df
+  result:
+    convention_fingerprint: 88fc8307e292a634fadd8f2210f7b0b03fefa9509ec6ec53c9fb38d020e541c1
+    network_mode: connected
+    disabled_projection_ids: []
+    target_index: 40
+    network_finite: true
+    external_port_record_id: modeldb112923.external.002
+    external_effective_reversal_mV: -11.999999999999996
+    external_current_peak_pA: 66.35043684381645
+    external_current_peak_ms: 0.0
+    calcium_current_peak_pA: 1561.1652135175996
+    calcium_current_peak_ms: 2.4000000000000004
+    calcium_current_final_pA: 1092.92712475188
+    soma_voltage_peak_mV: 46.72387706316878
+    soma_voltage_peak_ms: 1.67
+    soma_voltage_post_event_minimum_mV: -77.00004464710716
+    soma_voltage_post_event_minimum_ms: 2.2800000000000002
+    soma_voltage_final_mV: -69.31847405083572
+    external_current_final_pA: 62.12005260204342
+    relay_event_times_ms:
+    - 1.8900000000000001
+    target_layer4_event_times_ms: []
+  relay_repetition_pass: false
+- ordinal: 501
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: modeldb_112923
+    calcium_density_convention: methods_global_250
+    nak_rate_convention: standard_traub_miles
+    axial_convention: symmetric_cable
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: hysteretic_threshold_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  candidate_fingerprint: 942a6330912412b11e6af0c25ad30cdbd377f2c1490ce6953c9dbe2945ef0267
+  result:
+    convention_fingerprint: 35816583ec9adb2f4ee8e0001f0223415555d9572cc1e442b4612098c1acbe7f
+    network_mode: connected
+    disabled_projection_ids: []
+    target_index: 40
+    network_finite: true
+    external_port_record_id: modeldb112923.external.002
+    external_effective_reversal_mV: -11.999999999999996
+    external_current_peak_pA: 66.35043684381645
+    external_current_peak_ms: 0.0
+    calcium_current_peak_pA: 1561.1652135175996
+    calcium_current_peak_ms: 2.4000000000000004
+    calcium_current_final_pA: 1092.92712475188
+    soma_voltage_peak_mV: 46.72387706316878
+    soma_voltage_peak_ms: 1.67
+    soma_voltage_post_event_minimum_mV: -77.00004464710716
+    soma_voltage_post_event_minimum_ms: 2.2800000000000002
+    soma_voltage_final_mV: -69.31847405083572
+    external_current_final_pA: 62.12005260204342
+    relay_event_times_ms:
+    - 1.8900000000000001
+    target_layer4_event_times_ms: []
+  relay_repetition_pass: false

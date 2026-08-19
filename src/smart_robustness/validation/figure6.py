@@ -217,6 +217,40 @@ class Figure6L23CurrentBalance:
 
 
 @dataclass(frozen=True, slots=True)
+class Figure6RelayCurrentBalance:
+    """Drive and intrinsic landmarks at the Figure 6 relay bottleneck."""
+
+    convention_fingerprint: str
+    network_mode: str
+    disabled_projection_ids: tuple[str, ...]
+    target_index: int
+    network_finite: bool
+    external_port_record_id: str
+    external_effective_reversal_mV: float
+    external_current_peak_pA: float
+    external_current_peak_ms: float
+    calcium_current_peak_pA: float
+    calcium_current_peak_ms: float
+    calcium_current_final_pA: float
+    soma_voltage_peak_mV: float
+    soma_voltage_peak_ms: float
+    soma_voltage_post_event_minimum_mV: float
+    soma_voltage_post_event_minimum_ms: float
+    soma_voltage_final_mV: float
+    external_current_final_pA: float
+    relay_event_times_ms: tuple[float, ...]
+    target_layer4_event_times_ms: tuple[float, ...]
+
+    @property
+    def relay_repeats_during_stimulus(self) -> bool:
+        return len(self.relay_event_times_ms) >= 2
+
+    @property
+    def relay_recruits_target_layer4(self) -> bool:
+        return bool(self.target_layer4_event_times_ms)
+
+
+@dataclass(frozen=True, slots=True)
 class Figure6LearningRun:
     result: Figure6LearningResult
     learned_weights: dict[str, tuple[float, ...]]
@@ -610,6 +644,157 @@ def run_figure6_l23_current_balance(
         soma_voltage_peak_ms=soma_voltage_peak_ms,
         soma_axial_current_peak_pA=soma_axial_current_peak_pA,
         soma_axial_current_peak_ms=soma_axial_current_peak_ms,
+    )
+
+
+def run_figure6_relay_current_balance(
+    *,
+    conventions=None,
+    protocol: Figure6LearningProtocol | None = None,
+    target_index: int = 40,
+    connected: bool = True,
+    disabled_projection_ids: tuple[str, ...] = (),
+    brian=None,
+) -> Figure6RelayCurrentBalance:
+    """Trace the source-defined bar drive and response of one relay cell.
+
+    The assay leaves the complete first-order network connected and applies the
+    same horizontal episode as :func:`run_figure6_learning`. It therefore
+    localizes whether failure precedes or follows relay spike/release events
+    without replacing the SMART circuit by an isolated-cell surrogate.
+    """
+
+    if brian is None:
+        import brian2 as brian
+    from ..classic_sector import (
+        build_first_order_connected_sector,
+        build_first_order_intrinsic_sector,
+        figure6_runtime_conventions,
+    )
+
+    conventions = conventions or figure6_runtime_conventions()
+    protocol = protocol or Figure6LearningProtocol()
+    if not 0 <= target_index < 81:
+        raise ValueError("target_index must address the 9x9 relay sheet")
+    brian.start_scope()
+    brian.defaultclock.dt = protocol.dt_ms * brian.ms
+    if disabled_projection_ids and not connected:
+        raise ValueError("projection controls require a connected Figure 6 sector")
+    builder = build_first_order_connected_sector if connected else build_first_order_intrinsic_sector
+    sector = builder(conventions=conventions, brian=brian)
+    unknown_disabled = set(disabled_projection_ids) - set(sector.projections)
+    if unknown_disabled:
+        raise ValueError(f"unknown disabled projection IDs: {sorted(unknown_disabled)}")
+    for projection_id in disabled_projection_ids:
+        sector.network.remove(sector.projections[projection_id])
+    relay = sector.populations["thalamic_relay"]
+    if len(relay.compiled.external_input_ports) != 1:
+        raise ValueError("Figure 6 relay must expose exactly one archived external-input port")
+    external_port = relay.compiled.external_input_ports[0]
+    calcium_variables = tuple(
+        f"i_ca_{compartment.name}"
+        for compartment in relay.cell_spec.compartments
+        if compartment.g_ca_mS_cm2 is not None
+    )
+    if not calcium_variables:
+        raise ValueError("Figure 6 relay must contain a T-type calcium compartment")
+    variables = (
+        "v_soma",
+        f"e_{external_port.name}_effective",
+        f"i_{external_port.name}",
+        *calcium_variables,
+    )
+    state = brian.StateMonitor(
+        relay.group,
+        variables,
+        record=[target_index],
+        name="figure6_relay_current_balance_state",
+    )
+    relay_spikes = brian.SpikeMonitor(
+        relay.group, name="figure6_relay_current_balance_relay_spikes"
+    )
+    layer4_spikes = brian.SpikeMonitor(
+        sector.populations["layer4_excitatory_v1"].group,
+        name="figure6_relay_current_balance_layer4_spikes",
+    )
+    sector.network.add(state, relay_spikes, layer4_spikes)
+    if protocol.warmup_ms:
+        sector.network.run(protocol.warmup_ms * brian.ms)
+    apply_bar_stimulus(
+        sector,
+        ClassicBarStimulus(
+            BarOrientation.HORIZONTAL,
+            duration_ms=protocol.stimulus_ms,
+            source_value=protocol.source_value,
+            category_source_value=protocol.category_source_value,
+            include_archived_category_pixel=True,
+        ),
+    )
+    sector.network.run(protocol.stimulus_ms * brian.ms)
+    time_ms = np.asarray(state.t / brian.ms) - protocol.warmup_ms
+    keep = time_ms >= 0
+    time_ms = time_ms[keep]
+
+    def trace(variable: str, unit) -> np.ndarray:
+        return np.asarray(getattr(state, variable)[0][keep] / unit, dtype=float)
+
+    def maximum(variable: str, unit) -> tuple[float, float]:
+        values = trace(variable, unit)
+        index = int(np.argmax(values))
+        return float(values[index]), float(time_ms[index])
+
+    def target_events(monitor) -> tuple[float, ...]:
+        indices = np.asarray(monitor.i, dtype=int)
+        times = np.asarray(monitor.t / brian.ms) - protocol.warmup_ms
+        selected = (indices == target_index) & (times >= 0)
+        return tuple(float(value) for value in times[selected])
+
+    external_current_peak_pA, external_current_peak_ms = maximum(
+        f"i_{external_port.name}", brian.pA
+    )
+    calcium_current = sum(trace(variable, brian.pA) for variable in calcium_variables)
+    calcium_peak_index = int(np.argmax(calcium_current))
+    calcium_current_peak_pA = float(calcium_current[calcium_peak_index])
+    calcium_current_peak_ms = float(time_ms[calcium_peak_index])
+    soma_voltage_peak_mV, soma_voltage_peak_ms = maximum("v_soma", brian.mV)
+    soma_voltage = trace("v_soma", brian.mV)
+    post_event = time_ms > soma_voltage_peak_ms
+    post_event_indices = np.flatnonzero(post_event)
+    post_event_minimum_index = int(
+        post_event_indices[np.argmin(soma_voltage[post_event_indices])]
+    )
+    external_current = trace(f"i_{external_port.name}", brian.pA)
+    effective_reversal = trace(f"e_{external_port.name}_effective", brian.mV)
+    network_finite = all(
+        np.isfinite(np.asarray(getattr(population.group, f"v_{compartment}")[:] / brian.mV)).all()
+        for population in sector.populations.values()
+        for compartment in population.compartments
+    )
+    return Figure6RelayCurrentBalance(
+        convention_fingerprint=conventions.fingerprint,
+        network_mode=(
+            "connected_projection_control"
+            if disabled_projection_ids
+            else "connected" if connected else "intrinsic_only"
+        ),
+        disabled_projection_ids=disabled_projection_ids,
+        target_index=target_index,
+        network_finite=bool(network_finite),
+        external_port_record_id=external_port.record_id,
+        external_effective_reversal_mV=float(effective_reversal[0]),
+        external_current_peak_pA=external_current_peak_pA,
+        external_current_peak_ms=external_current_peak_ms,
+        calcium_current_peak_pA=calcium_current_peak_pA,
+        calcium_current_peak_ms=calcium_current_peak_ms,
+        calcium_current_final_pA=float(calcium_current[-1]),
+        soma_voltage_peak_mV=soma_voltage_peak_mV,
+        soma_voltage_peak_ms=soma_voltage_peak_ms,
+        soma_voltage_post_event_minimum_mV=float(soma_voltage[post_event_minimum_index]),
+        soma_voltage_post_event_minimum_ms=float(time_ms[post_event_minimum_index]),
+        soma_voltage_final_mV=float(soma_voltage[-1]),
+        external_current_final_pA=float(external_current[-1]),
+        relay_event_times_ms=target_events(relay_spikes),
+        target_layer4_event_times_ms=target_events(layer4_spikes),
     )
 
 

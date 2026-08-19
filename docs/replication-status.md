@@ -1291,6 +1291,28 @@ interneuron events, 1053 TRN events, and 245 category events while layer 2/3 and
 layer 5 remain silent. Bottom-up and top-down orientation gates still fail.
 This rules out the registered Gaussian interpretation as a Figure 6 rescue.
 
+The relay-level intact/control assay now moves the earliest Figure 6
+discriminator upstream (`figure6-relay-current-balance-125.yaml`). Cell 40
+receives the archived external input at an effective -12 mV reversal, peaks at
++46.72 mV, emits once at 1.89 ms, and recruits layer 4 at 23.26 ms. With all
+network projections absent, the unchanged relay emits 19 events during the
+same 100-ms drive. Removing only the three serialized TRN-to-relay GABA_A
+projections (records 000, 001, and 004) likewise restores 19 relay events.
+Therefore the immediate relay-repetition failure is caused by the intact TRN
+feedback pathway, not the external-input conversion, relay intrinsic
+HH/T-current implementation, or local thalamic-interneuron inhibition. The
+TRN projection-removal control still produces only one layer-4 event, so it is
+a causal localization control rather than a candidate SMART reproduction.
+
+The same 20-ms intact-network relay gate has been run for all six candidates
+that passed the independently registered TRN control/recruitment screen
+(`figure6-relay-survivor-screen-126.yaml`). Every combination of the three
+admissible axial conventions and two admissible Equation-8 event rules emits
+exactly one center-relay event at 1.89 ms; none repeats. Thus survivor selection,
+axial coupling, and event-rule hysteresis are excluded as sufficient rescues.
+The next source-level audit is the TRN recruitment/transmitter/GABA pathway,
+while retaining all three official TRN-to-relay projections.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

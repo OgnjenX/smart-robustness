@@ -166,3 +166,20 @@ doubles layer-4 and interneuron events, increases TRN/category over-recruitment,
 and still produces no layer-2/3 or layer-5 events. All Figure 6 learning gates
 remain failed, so the variance interpretation is retained as a negative
 source-discriminator rather than promoted.
+
+An intact-versus-projection-free Figure 6 relay assay now identifies an earlier
+network bottleneck (`figure6-relay-current-balance-125.yaml`). The source drive
+is correctly reconstructed and the relay can fire repetitively in isolation,
+but the intact TRN feedback leaves it with one event. Removing only the three
+serialized TRN-to-relay GABA_A projections restores 19 events. This is not a
+license to delete TRN inhibition: the next calibration discriminator must test
+source-supported TRN recruitment, transmitter, spatial-weight, and GABA gate
+semantics while retaining the official projections. The control also leaves
+layer 4 with one event, so thalamocortical transfer remains a subsequent gate.
+
+All six independently admissible TRN survivors have also been screened in the
+intact network for the first 20 ms of the same Figure 6 episode
+(`figure6-relay-survivor-screen-126.yaml`). All six emit exactly one relay event
+at 1.89 ms. The three registered axial conventions and both Equation-8 event
+rules are therefore exhausted at this gate; subsequent work should not switch
+among them to manufacture relay repetition.

@@ -21,6 +21,12 @@ GAUSSIAN_VARIANCE_PROFILE_PATH = (
 FIGURE8_VOLTAGE_AUDIT_PATH = (
     ROOT / "docs/validation-results/figure8-voltage-observable-audit-124.yaml"
 )
+FIGURE6_RELAY_BALANCE_PATH = (
+    ROOT / "docs/validation-results/figure6-relay-current-balance-125.yaml"
+)
+FIGURE6_RELAY_SCREEN_PATH = (
+    ROOT / "docs/validation-results/figure6-relay-survivor-screen-126.yaml"
+)
 
 
 def test_classic_calibration_contract_separates_training_and_holdout() -> None:
@@ -178,6 +184,36 @@ def test_figure8_voltage_audit_rejects_release_events_as_the_observable() -> Non
     ]
     assert artifact["assessment"]["calcium_unit_rescue"] is False
     assert artifact["assessment"]["holdouts_consulted"] is False
+
+
+def test_figure6_relay_balance_causally_localizes_trn_feedback() -> None:
+    survivor = yaml.safe_load(TRN_SURVIVOR_PATH.read_text())
+    artifact = yaml.safe_load(FIGURE6_RELAY_BALANCE_PATH.read_text())
+    assert artifact["candidate_fingerprint"] == survivor["candidate_fingerprint"]
+    assert artifact["holdouts_consulted"] is False
+    assert len(artifact["connected_result"]["relay_event_times_ms"]) == 1
+    assert len(artifact["intrinsic_only_result"]["relay_event_times_ms"]) == 19
+    trn_control = artifact["without_trn_to_relay_result"]
+    assert trn_control["disabled_projection_ids"] == [
+        "modeldb112923.projection.000",
+        "modeldb112923.projection.001",
+        "modeldb112923.projection.004",
+    ]
+    assert len(trn_control["relay_event_times_ms"]) == 19
+    assert artifact["assessment"]["trn_inhibition_explains_repetition_failure"]
+
+
+def test_all_registered_trn_survivors_fail_intact_relay_repetition() -> None:
+    artifact = yaml.safe_load(FIGURE6_RELAY_SCREEN_PATH.read_text())
+    assert artifact["holdouts_consulted"] is False
+    assert artifact["candidate_count"] == 6
+    assert artifact["relay_repetition_survivor_count"] == 0
+    assert {len(item["result"]["relay_event_times_ms"]) for item in artifact["outcomes"]} == {
+        1
+    }
+    assert {item["result"]["relay_event_times_ms"][0] for item in artifact["outcomes"]} == {
+        1.8900000000000001
+    }
 
 
 def test_contract_rejects_holdout_leakage(tmp_path: Path) -> None:

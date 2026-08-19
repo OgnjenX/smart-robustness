@@ -1,0 +1,122 @@
+schema_version: 1
+id: figure6-relay-current-balance-125
+date: '2026-08-19'
+profile: configs/calibration/trn_stage_a_survivor_v1.yaml
+candidate_fingerprint: ffd0179dbb9ca4da91370733b1f0d06241047d7032b871107ec1aa444b7bd2aa
+holdouts_consulted: false
+status: localized-relay-repetition-failure
+connected_result:
+  convention_fingerprint: 65de2bfde632a1b6dfc5d77ba7c2e6850351f212936d15227cb793b54c76a82f
+  network_mode: connected
+  disabled_projection_ids: []
+  target_index: 40
+  network_finite: true
+  external_port_record_id: modeldb112923.external.002
+  external_effective_reversal_mV: -11.999999999999996
+  external_current_peak_pA: 72.92731009691336
+  external_current_peak_ms: 62.96
+  calcium_current_peak_pA: 1561.1652135175996
+  calcium_current_peak_ms: 2.4000000000000004
+  calcium_current_final_pA: 695.8369164437647
+  soma_voltage_peak_mV: 46.72387706316878
+  soma_voltage_peak_ms: 1.67
+  soma_voltage_post_event_minimum_mV: -77.00004464710716
+  soma_voltage_post_event_minimum_ms: 2.2800000000000002
+  soma_voltage_final_mV: -69.79520095772367
+  external_current_final_pA: 70.94502646235404
+  relay_event_times_ms:
+  - 1.8900000000000001
+  target_layer4_event_times_ms:
+  - 23.26
+intrinsic_only_result:
+  convention_fingerprint: 65de2bfde632a1b6dfc5d77ba7c2e6850351f212936d15227cb793b54c76a82f
+  network_mode: intrinsic_only
+  disabled_projection_ids: []
+  target_index: 40
+  network_finite: true
+  external_port_record_id: modeldb112923.external.002
+  external_effective_reversal_mV: -11.999999999999996
+  external_current_peak_pA: 81.38820622359444
+  external_current_peak_ms: 55.45
+  calcium_current_peak_pA: 1925.858958178229
+  calcium_current_peak_ms: 6.25
+  calcium_current_final_pA: 754.5332136114944
+  soma_voltage_peak_mV: 46.72387706316878
+  soma_voltage_peak_ms: 1.67
+  soma_voltage_post_event_minimum_mV: -86.32356498365088
+  soma_voltage_post_event_minimum_ms: 55.39
+  soma_voltage_final_mV: -76.32678736650163
+  external_current_final_pA: 69.4036376642158
+  relay_event_times_ms:
+  - 1.9200000000000002
+  - 5.65
+  - 9.13
+  - 12.730000000000002
+  - 16.61
+  - 20.87
+  - 25.6
+  - 30.820000000000004
+  - 36.47
+  - 42.43
+  - 48.550000000000004
+  - 54.730000000000004
+  - 60.940000000000005
+  - 67.14
+  - 73.33
+  - 79.5
+  - 85.67
+  - 91.83000000000001
+  - 97.98
+  target_layer4_event_times_ms: []
+without_trn_to_relay_result:
+  convention_fingerprint: 65de2bfde632a1b6dfc5d77ba7c2e6850351f212936d15227cb793b54c76a82f
+  network_mode: connected_projection_control
+  disabled_projection_ids:
+  - modeldb112923.projection.000
+  - modeldb112923.projection.001
+  - modeldb112923.projection.004
+  target_index: 40
+  network_finite: true
+  external_port_record_id: modeldb112923.external.002
+  external_effective_reversal_mV: -11.999999999999996
+  external_current_peak_pA: 81.6650050302067
+  external_current_peak_ms: 67.41000000000001
+  calcium_current_peak_pA: 1925.858958178229
+  calcium_current_peak_ms: 6.25
+  calcium_current_final_pA: 706.4375645335058
+  soma_voltage_peak_mV: 46.72387706316878
+  soma_voltage_peak_ms: 1.67
+  soma_voltage_post_event_minimum_mV: -86.34481009780593
+  soma_voltage_post_event_minimum_ms: 67.35000000000001
+  soma_voltage_final_mV: -71.76316882123083
+  external_current_final_pA: 64.18984449977212
+  relay_event_times_ms:
+  - 1.9200000000000002
+  - 5.65
+  - 9.13
+  - 12.730000000000002
+  - 16.61
+  - 20.85
+  - 25.460000000000004
+  - 30.580000000000002
+  - 36.18
+  - 42.14
+  - 48.14
+  - 54.21
+  - 60.43000000000001
+  - 66.69
+  - 72.94
+  - 79.07
+  - 85.08
+  - 91.22000000000001
+  - 97.42
+  target_layer4_event_times_ms:
+  - 39.16
+assessment:
+  source_drive_resolved: true
+  connected_relay_repeats: false
+  intrinsic_relay_repeats: true
+  relay_recruits_target_layer4: true
+  network_inhibition_explains_repetition_failure: true
+  trn_inhibition_explains_repetition_failure: true
+  earliest_failed_gate: relay_repetition

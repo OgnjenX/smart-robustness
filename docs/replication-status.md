@@ -1172,6 +1172,23 @@ their bottom-up relay cells, each with 20 events. Both retain 81 startup-only
 TRN events and 60-Hz nonspecific output. This source-supported alternative does
 not restore the caption's overlap-only mismatch response and is not promoted.
 
+The constrained calibration branch now executes the cellular ambiguity space
+as deterministic, fingerprinted candidates. The initial Stage A TRN matrix
+evaluated 96 combinations of cell source, calcium source, axial equation,
+membrane initialization, and event rule. It produced no candidate that was
+both quiescent without drive and recruitable by the largest measured
+layer-6II AMPA/NMDA gates (`calibration-stage-a-trn-114.yaml`). Following the
+predeclared no-survivor rule, the contract was revised to include the material
+official-source conflict between the paper's printed Na/K equations and the
+archived ModelDB/Traub–Miles rates. The complete revised 192-candidate matrix
+also produced zero survivors (`calibration-stage-a-trn-115.yaml`). All 192
+control and driven trials were finite; 158 candidates had a quiescent control,
+but every such candidate remained unrecruitable. The remaining candidates
+produced autonomous control events and were rejected even when drive increased
+their event count. No synaptic weight, conductance, threshold, or holdout
+result was exposed to rescue the gate. Network calibration therefore remains
+causally gated on resolving this cellular source discrepancy.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

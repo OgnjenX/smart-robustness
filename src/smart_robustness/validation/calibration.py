@@ -4,11 +4,16 @@ from __future__ import annotations
 
 import hashlib
 import json
-from dataclasses import dataclass
+from collections.abc import Iterator
+from dataclasses import dataclass, replace
+from itertools import product
 from pathlib import Path
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 import yaml
+
+if TYPE_CHECKING:
+    from smart_robustness.classic_sector import FirstOrderRuntimeConventions
 
 ALLOWED_STATUSES = {
     "conflicting_official_source",
@@ -17,6 +22,15 @@ ALLOWED_STATUSES = {
     "conflicting_protocol_source",
     "not_identifiable",
 }
+
+TRN_STAGE_A_DIMENSIONS = (
+    "intrinsic_cell_convention",
+    "calcium_kinetics_convention",
+    "nak_rate_convention",
+    "axial_convention",
+    "membrane_initialization_convention",
+    "spike_event_rule",
+)
 
 
 @dataclass(frozen=True, slots=True)
@@ -29,6 +43,12 @@ class CalibrationDimension:
     bounds: tuple[float, float] | None = None
     grid: tuple[float, ...] = ()
 
+    @property
+    def admissible_values(self) -> tuple[str | float, ...]:
+        """Return the finite, predeclared values considered by calibration."""
+
+        return self.values if self.kind == "categorical" else self.grid
+
 
 @dataclass(frozen=True, slots=True)
 class CalibrationContract:
@@ -38,6 +58,33 @@ class CalibrationContract:
     holdout_targets: tuple[str, ...]
     dimensions: tuple[CalibrationDimension, ...]
     forbidden_free_parameters: tuple[str, ...]
+
+    def iter_candidates(
+        self, active_dimensions: tuple[str, ...] | None = None
+    ) -> Iterator[dict[str, str | float]]:
+        """Enumerate deterministic complete candidates over selected dimensions.
+
+        Dimensions outside ``active_dimensions`` are fixed to the first declared
+        value. This permits causal stage screening without creating partial
+        candidates or changing their fingerprint format.
+        """
+
+        known = tuple(dimension.name for dimension in self.dimensions)
+        active = known if active_dimensions is None else active_dimensions
+        if len(set(active)) != len(active):
+            raise ValueError("active dimensions must be unique")
+        unknown = sorted(set(active) - set(known))
+        if unknown:
+            raise ValueError(f"unknown active dimensions: {unknown}")
+        active_set = set(active)
+        value_axes = [
+            dimension.admissible_values
+            if dimension.name in active_set
+            else dimension.admissible_values[:1]
+            for dimension in self.dimensions
+        ]
+        for values in product(*value_axes):
+            yield dict(zip(known, values, strict=True))
 
     @property
     def fingerprint(self) -> str:
@@ -81,6 +128,110 @@ class CalibrationContract:
                     raise ValueError(f"{dimension.name}: value outside declared bounds")
         encoded = json.dumps(values, sort_keys=True, separators=(",", ":"))
         return hashlib.sha256(f"{self.fingerprint}:{encoded}".encode()).hexdigest()
+
+
+@dataclass(frozen=True, slots=True)
+class TrnStageAResult:
+    """Causal promotion result for one isolated-TRN calibration candidate."""
+
+    candidate_fingerprint: str
+    runtime_fingerprint: str
+    control_finite: bool
+    driven_finite: bool
+    control_post_drive_spikes: int
+    driven_post_drive_spikes: int
+    control_soma_range_mV: tuple[float, float]
+    driven_soma_range_mV: tuple[float, float]
+
+    @property
+    def quiescent_control_pass(self) -> bool:
+        return self.control_finite and self.control_post_drive_spikes == 0
+
+    @property
+    def driven_recruitment_pass(self) -> bool:
+        return self.driven_finite and self.driven_post_drive_spikes >= 1
+
+    @property
+    def promoted(self) -> bool:
+        return self.quiescent_control_pass and self.driven_recruitment_pass
+
+
+def runtime_conventions_for_candidate(
+    values: dict[str, Any],
+    *,
+    base: FirstOrderRuntimeConventions | None = None,
+) -> FirstOrderRuntimeConventions:
+    """Map calibration dimensions onto an executable classic-SMART profile.
+
+    Protocol-only dimensions (relay input and top-down current) intentionally
+    remain outside the runtime convention object and are consumed by their
+    corresponding validation protocols.
+    """
+
+    from smart_robustness.classic_sector import figure6_runtime_conventions
+
+    required = {
+        "intrinsic_cell_convention",
+        "calcium_kinetics_convention",
+        "nak_rate_convention",
+        "axial_convention",
+        "membrane_initialization_convention",
+        "spike_event_rule",
+        "gaussian_spread_convention",
+        "relay_input_interpretation",
+        "top_down_current_pA",
+    }
+    missing = sorted(required - set(values))
+    if missing:
+        raise ValueError(f"candidate is missing runtime dimensions: {missing}")
+    calcium_kinetics = str(values["calcium_kinetics_convention"])
+    calcium_gate = "reciprocal" if calcium_kinetics == "paper_2008" else "modeldb_112923"
+    return replace(
+        figure6_runtime_conventions() if base is None else base,
+        intrinsic_cell_convention=str(values["intrinsic_cell_convention"]),
+        calcium_kinetics_convention=calcium_kinetics,
+        calcium_gate_convention=calcium_gate,
+        nak_rate_convention=str(values["nak_rate_convention"]),
+        axial_convention=str(values["axial_convention"]),
+        membrane_initialization_convention=str(
+            values["membrane_initialization_convention"]
+        ),
+        spike_event_rule=str(values["spike_event_rule"]),
+        gaussian_spread_convention=str(values["gaussian_spread_convention"]),
+    )
+
+
+def run_trn_stage_a_candidate(
+    contract: CalibrationContract,
+    values: dict[str, Any],
+    *,
+    protocol=None,
+    brian=None,
+) -> TrnStageAResult:
+    """Run independent control and driven TRN trials for one candidate."""
+
+    from smart_robustness.validation.isolated_cells import run_trn_recruitment_condition
+
+    candidate_fingerprint = contract.candidate_fingerprint(values)
+    conventions = runtime_conventions_for_candidate(values)
+    control = run_trn_recruitment_condition(
+        driven=False, conventions=conventions, protocol=protocol, brian=brian
+    )
+    driven = run_trn_recruitment_condition(
+        driven=True, conventions=conventions, protocol=protocol, brian=brian
+    )
+    if control.convention_fingerprint != driven.convention_fingerprint:
+        raise RuntimeError("control and driven trials used different runtime conventions")
+    return TrnStageAResult(
+        candidate_fingerprint=candidate_fingerprint,
+        runtime_fingerprint=control.convention_fingerprint,
+        control_finite=control.finite,
+        driven_finite=driven.finite,
+        control_post_drive_spikes=control.post_drive_spike_count,
+        driven_post_drive_spikes=driven.post_drive_spike_count,
+        control_soma_range_mV=control.soma_voltage_range_mV,
+        driven_soma_range_mV=driven.soma_voltage_range_mV,
+    )
 
 
 def load_calibration_contract(path: str | Path) -> CalibrationContract:

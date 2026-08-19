@@ -69,3 +69,11 @@ optimizer.
 
 The initial executable contract is
 `configs/calibration/classic_uncertainty_space.yaml`.
+
+The first Stage A matrix (`calibration-stage-a-trn-114.yaml`) evaluated 96
+combinations of the initial contract and produced no quiescent-yet-recruitable
+TRN candidate. Before any network calibration, the contract was therefore
+revised to include the already documented official-source conflict between the
+paper's printed Na/K rates and the archived ModelDB/Traub–Miles rates. This
+revision follows the predeclared no-survivor rule above; it does not expose a
+published conductance or consult any holdout result.

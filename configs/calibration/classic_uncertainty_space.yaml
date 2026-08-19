@@ -23,6 +23,11 @@ dimensions:
     values: [modeldb_112923, paper_2008]
     status: conflicting_official_source
     source: Grossberg and Versace Methods 4.6 versus ModelDB 112923 SMART.nml
+  nak_rate_convention:
+    kind: categorical
+    values: [standard_traub_miles, printed_smart]
+    status: conflicting_official_source
+    source: Grossberg and Versace Methods Equations 11-19 versus ModelDB 112923 SMART.nml
   axial_convention:
     kind: categorical
     values: [kinness_serialized_edge, kinness_2008, paper_literal, symmetric_cable]

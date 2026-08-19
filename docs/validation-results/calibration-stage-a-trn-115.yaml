@@ -1,0 +1,5214 @@
+id: calibration-stage-a-trn-115
+date: '2026-08-19'
+status: failed-no-survivor
+claim: Whether declared classic-SMART candidates pass isolated TRN quiescence and
+  recruitment
+contract: configs/calibration/classic_uncertainty_space.yaml
+contract_fingerprint: 5c356cb15ce4f48418fed398bd685d6db15fec1e5f69e8fb901abe65a28f5037
+base_tag: classic-smart-source-constrained-v0.1.0
+active_dimensions:
+- intrinsic_cell_convention
+- calcium_kinetics_convention
+- nak_rate_convention
+- axial_convention
+- membrane_initialization_convention
+- spike_event_rule
+protocol:
+  pre_drive_ms: 5.0
+  drive_ms: 45.0
+  dt_ms: 0.01
+  layer6ii_ampa_gate: 1.66427
+  layer6ii_nmda_gate: 0.10913
+  drive_multiplier: 1.0
+  axial_conductance_scale: 1.0
+gate:
+  quiescent_control: finite and zero events after pre-drive
+  driven_recruitment: finite and at least one event after drive onset
+candidate_count: 192
+promoted_count: 0
+promoted_candidate_fingerprints: []
+outcomes:
+- ordinal: 1
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: standard_traub_miles
+    axial_convention: kinness_serialized_edge
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: latched_peak_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 37b13898535e97e7d57487c2abd71a4f68b69d8c0a95e1548d876ade0dcb9bb0
+    runtime_fingerprint: d6b7702be4c9707778d0926f4412a870cefc851fffcbcbbd61c6494feb39d638
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -65.61266825114879
+    - -9.085269662592308
+    driven_soma_range_mV:
+    - -65.47316845496854
+    - -8.050702848849811
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 2
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: standard_traub_miles
+    axial_convention: kinness_serialized_edge
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: literal_previous_sample
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: ef76d20fd291369a9906b8fe244671feea58ba5311cda2ff77f82d6021a7c65e
+    runtime_fingerprint: 9e64d6b2453adf71c22ff8c271c83d054021e46cce1614c14aef3f513b1224a4
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -65.61266825114879
+    - -9.085269662592308
+    driven_soma_range_mV:
+    - -65.47316845496854
+    - -8.050702848849811
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 3
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: standard_traub_miles
+    axial_convention: kinness_serialized_edge
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: hysteretic_threshold_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 91faa02c07b02667fc1f45b14288a9bfd38aa97b0ee68fd0e331e98e13676f0f
+    runtime_fingerprint: 51fe286512f2607df2e940aba0efd8d7da3c01dafbdebec4e417d2f9af632425
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -65.61266825114879
+    - -9.085269662592308
+    driven_soma_range_mV:
+    - -65.47316845496854
+    - -8.050702848849811
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 4
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: standard_traub_miles
+    axial_convention: kinness_serialized_edge
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: latched_peak_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: bdd2c59a56cbe85553d6b20abde5276cd0d1b165a595aad4c7750ae4ab37912c
+    runtime_fingerprint: 7ad5db94d0d9a3259d75e3e8ab0dfbd3fcd9bb9b267fc8a51cdf2e3e669df158
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 3
+    driven_post_drive_spikes: 3
+    control_soma_range_mV:
+    - -87.1713081943403
+    - 39.83791872426353
+    driven_soma_range_mV:
+    - -86.98373602851719
+    - 39.92112672601322
+  quiescent_control_pass: false
+  driven_recruitment_pass: true
+  promoted: false
+- ordinal: 5
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: standard_traub_miles
+    axial_convention: kinness_serialized_edge
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: literal_previous_sample
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 0c7c539a80384161ba0947278b714b8ae14befd50f6ce0953f2366c40dba672a
+    runtime_fingerprint: 82a77b648bdd4378194462ce4ef038f98245845b736dfdcb89b44d878833a564
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -87.1713081943403
+    - 39.83791872426353
+    driven_soma_range_mV:
+    - -86.98373602851719
+    - 39.92112672601322
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 6
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: standard_traub_miles
+    axial_convention: kinness_serialized_edge
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: hysteretic_threshold_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 4319d29416491084b0f3cfbe1fbde736b6578123c0d0bdd359658075fc9b8c13
+    runtime_fingerprint: 2d2d7fd477ef99b558280f4922ed6be80adf3dc83855a3ee8ea5e8352dfe1d39
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 3
+    driven_post_drive_spikes: 3
+    control_soma_range_mV:
+    - -87.1713081943403
+    - 39.83791872426353
+    driven_soma_range_mV:
+    - -86.98373602851719
+    - 39.92112672601322
+  quiescent_control_pass: false
+  driven_recruitment_pass: true
+  promoted: false
+- ordinal: 7
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: standard_traub_miles
+    axial_convention: kinness_2008
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: latched_peak_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 52d1c7f56dd60146a6505a6bae8e9dd34551028d4ee3a6b3935c34ecf76660ee
+    runtime_fingerprint: 8791ba5cbb117a064c91cf2797b30f494ff104192e6a5313ef3f7cb23b2b90ea
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -65.61266825114879
+    - -9.085269662592308
+    driven_soma_range_mV:
+    - -65.47316845496854
+    - -8.050702848849811
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 8
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: standard_traub_miles
+    axial_convention: kinness_2008
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: literal_previous_sample
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 832751141d7ebc6bdfd5541af16be1c59c00db1708c66ccabbdde8286a5a0927
+    runtime_fingerprint: bfd1b3724942a53a43e3740b33605e63ebad761f23ffd8f804bb9b19fbdccc74
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -65.61266825114879
+    - -9.085269662592308
+    driven_soma_range_mV:
+    - -65.47316845496854
+    - -8.050702848849811
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 9
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: standard_traub_miles
+    axial_convention: kinness_2008
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: hysteretic_threshold_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 0f687a3fa138df86973bcb50781fc259da87f350c4f915b73815203ed72ef36f
+    runtime_fingerprint: 62de7bbd2515a4c3ae6933e6fe9425e477ece9a04e08c8f664e6995b9634c597
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -65.61266825114879
+    - -9.085269662592308
+    driven_soma_range_mV:
+    - -65.47316845496854
+    - -8.050702848849811
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 10
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: standard_traub_miles
+    axial_convention: kinness_2008
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: latched_peak_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 397e22d5bd5d4e435c7317b1e1a682f08c9638937c8a4b5d6a44b32bf62defb7
+    runtime_fingerprint: 0c211c8829a2a59d3d67fd5763a3bac9d0360fc6ba48414f77c9a57dc7cfdb51
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 3
+    driven_post_drive_spikes: 3
+    control_soma_range_mV:
+    - -87.1713081943403
+    - 39.83791872426353
+    driven_soma_range_mV:
+    - -86.98373602851719
+    - 39.92112672601322
+  quiescent_control_pass: false
+  driven_recruitment_pass: true
+  promoted: false
+- ordinal: 11
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: standard_traub_miles
+    axial_convention: kinness_2008
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: literal_previous_sample
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 68400a8ffb1222dfe5b8288fa565fc666071fe520d6866fb828005b8cafdd08f
+    runtime_fingerprint: 883339f761fcc1e0e67c14db1ca74c6aa92b7a0cebfba227031818ba98e78e20
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -87.1713081943403
+    - 39.83791872426353
+    driven_soma_range_mV:
+    - -86.98373602851719
+    - 39.92112672601322
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 12
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: standard_traub_miles
+    axial_convention: kinness_2008
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: hysteretic_threshold_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 13451be50a83d438486da68b694d96ba7de98aa80292c3ca45f501da648f8ec7
+    runtime_fingerprint: 1cdbf73893f310edf8b735ec5c8d3d62e939ec80c5b709280073be4998846409
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 3
+    driven_post_drive_spikes: 3
+    control_soma_range_mV:
+    - -87.1713081943403
+    - 39.83791872426353
+    driven_soma_range_mV:
+    - -86.98373602851719
+    - 39.92112672601322
+  quiescent_control_pass: false
+  driven_recruitment_pass: true
+  promoted: false
+- ordinal: 13
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: standard_traub_miles
+    axial_convention: paper_literal
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: latched_peak_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 5257116b351073c4ca6a569a82367f91f53eb1d44f01a53d97c8881d4a833d72
+    runtime_fingerprint: 4e1f0047dd55bc0c7de5993e16923ef06f62c31f89ba7d8635ef0e5b34d3877a
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -37.210812983660986
+    - -30.28884075098147
+    driven_soma_range_mV:
+    - -37.54680853711444
+    - -30.28884075098147
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 14
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: standard_traub_miles
+    axial_convention: paper_literal
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: literal_previous_sample
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 15973a75c620998b9143d099c8dc4ef9be2e340da2b6b2a6fded712ee16ea484
+    runtime_fingerprint: 7b6b157c72a243c1b36ea6cb7dce4cb5a0beacca2a5a512a3fe1c8242bb9c3c8
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -37.210812983660986
+    - -30.28884075098147
+    driven_soma_range_mV:
+    - -37.54680853711444
+    - -30.28884075098147
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 15
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: standard_traub_miles
+    axial_convention: paper_literal
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: hysteretic_threshold_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 4778be08df76b7e4ad52e9ded65321ecc6f4ba0a9d0b1596838ff7d459bdc08a
+    runtime_fingerprint: f1c827db4e1fb8f7149185cd7a39d0a4c61534665bc2167b62d7b72f9f6c2b88
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -37.210812983660986
+    - -30.28884075098147
+    driven_soma_range_mV:
+    - -37.54680853711444
+    - -30.28884075098147
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 16
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: standard_traub_miles
+    axial_convention: paper_literal
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: latched_peak_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 8d405ae93cd939a05ed8058bca4a279dea4c767a2f47d2e07ffdc741bbd26fe0
+    runtime_fingerprint: 9ab7d31285d1db3532bb7794116d9f1699077a12d5022f2efb191445581fc7fc
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -74.19233961798219
+    - 14.72913821706928
+    driven_soma_range_mV:
+    - -73.93613049858567
+    - 5.706719186406575
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 17
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: standard_traub_miles
+    axial_convention: paper_literal
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: literal_previous_sample
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: f02f0f6e0baae0f074dd19f91d4b08efe0860ce2d036795bfed591be64279dde
+    runtime_fingerprint: e52005b2c88adbb39c93ab30d35bbfdb890e85f15fc886e5953e05c93b78f4a6
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -74.19233961798219
+    - 14.72913821706928
+    driven_soma_range_mV:
+    - -73.93613049858567
+    - 5.706719186406575
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 18
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: standard_traub_miles
+    axial_convention: paper_literal
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: hysteretic_threshold_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: af57b30b6fb8f4cadaecf0497899c1741524d2442e42b3f24a42377bafd4f9b2
+    runtime_fingerprint: bf10b49d168a5639daf57cc573603376bcbc81641f8fc226fe11ea88e5f0bf49
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -74.19233961798219
+    - 14.72913821706928
+    driven_soma_range_mV:
+    - -73.93613049858567
+    - 5.706719186406575
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 19
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: standard_traub_miles
+    axial_convention: symmetric_cable
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: latched_peak_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 26a9abb482b15ca998acab725fd5399138d303fd5a9613fb05084fa0dbda45d1
+    runtime_fingerprint: a6dc2659f4df5d41c4c4c14d7c3ab0f54c18531dc1d992db734a9c4467364ea1
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -65.59962791674465
+    - -9.103988235564715
+    driven_soma_range_mV:
+    - -65.82615705042878
+    - -8.740182186871447
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 20
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: standard_traub_miles
+    axial_convention: symmetric_cable
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: literal_previous_sample
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: c5f643fab046de1c6d03a3093cc1e4629e17515b742b0e6ee112f6cdc5378382
+    runtime_fingerprint: 90114c7cde80c97dca1800f8474e2b6c5f3475208221b84986c68f1a73eeb33f
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -65.59962791674465
+    - -9.103988235564715
+    driven_soma_range_mV:
+    - -65.82615705042878
+    - -8.740182186871447
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 21
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: standard_traub_miles
+    axial_convention: symmetric_cable
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: hysteretic_threshold_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 458288860aa5dbc9bb7b3cf94378b4ac49ff5b0f991aa4adb4827dd2b50c1acf
+    runtime_fingerprint: 05ebb4a8a6dd0ca8588ab4da83dbcbc65843872b7d19f3d543fd5857c4b15169
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -65.59962791674465
+    - -9.103988235564715
+    driven_soma_range_mV:
+    - -65.82615705042878
+    - -8.740182186871447
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 22
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: standard_traub_miles
+    axial_convention: symmetric_cable
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: latched_peak_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 066483e6bd07988eb8b2261b23c9fe423b0d4fec73e3231d3ddbd98452fee8cb
+    runtime_fingerprint: 5fd3a6e87be1fa14f1580ad8be928a24f6b96e5d8f578d63be6c93457b3c3870
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 3
+    driven_post_drive_spikes: 3
+    control_soma_range_mV:
+    - -87.17130819434036
+    - 39.83791872426345
+    driven_soma_range_mV:
+    - -86.98373602851721
+    - 39.92112672601324
+  quiescent_control_pass: false
+  driven_recruitment_pass: true
+  promoted: false
+- ordinal: 23
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: standard_traub_miles
+    axial_convention: symmetric_cable
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: literal_previous_sample
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 2ab19395999dfa6c2e8cbfe9602a360d43c6f04e409d268e6bc07a29019eb013
+    runtime_fingerprint: 3bc85e32ba3a9741cd89ca89ab3d8c7a1e291491ec93e7c722997926e0ddc20e
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -87.17130819434036
+    - 39.83791872426345
+    driven_soma_range_mV:
+    - -86.98373602851721
+    - 39.92112672601324
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 24
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: standard_traub_miles
+    axial_convention: symmetric_cable
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: hysteretic_threshold_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 46af03b1d7fc19ca1f253e28a96b7f91745c019683447d0cbed4ac5db3011657
+    runtime_fingerprint: ce65a36ba7cbfbeb6e941a4f22da9545bee65c87acd397ea4828b7499d573a31
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 3
+    driven_post_drive_spikes: 3
+    control_soma_range_mV:
+    - -87.17130819434036
+    - 39.83791872426345
+    driven_soma_range_mV:
+    - -86.98373602851721
+    - 39.92112672601324
+  quiescent_control_pass: false
+  driven_recruitment_pass: true
+  promoted: false
+- ordinal: 25
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: printed_smart
+    axial_convention: kinness_serialized_edge
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: latched_peak_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: af4d64f615f873dcceea4a978e4fbfb8e463db1c3b964bb6b7da1755e29f8da2
+    runtime_fingerprint: 01d903d5f1fe4d5285b34095dcca0ee979b9b53768f382fae1cbef8cd72c4e6f
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -47.13736723106746
+    - -36.71606146084119
+    driven_soma_range_mV:
+    - -47.191900734693085
+    - -36.719284728238144
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 26
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: printed_smart
+    axial_convention: kinness_serialized_edge
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: literal_previous_sample
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 22bb27a25dd33e0a3fd139c16684201c92dc188c92764d3311a55ed2f98060ff
+    runtime_fingerprint: 61a044931b9369ba1d2d46542fe30cff0f593bd6db569cbfcae6ef129c1e9cd2
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -47.13736723106746
+    - -36.71606146084119
+    driven_soma_range_mV:
+    - -47.191900734693085
+    - -36.719284728238144
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 27
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: printed_smart
+    axial_convention: kinness_serialized_edge
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: hysteretic_threshold_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 608ccdbcdf79dfeb833f4f51fa9ded710464a5539e12a69700d135d68b083b17
+    runtime_fingerprint: a0ea3f7b2f10c66866cf0c91931475856e17d67baf92061b9a6c0b2cf1b6150d
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -47.13736723106746
+    - -36.71606146084119
+    driven_soma_range_mV:
+    - -47.191900734693085
+    - -36.719284728238144
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 28
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: printed_smart
+    axial_convention: kinness_serialized_edge
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: latched_peak_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 8f0fd64057cda6247bb1028204d01b5d9aebe90b438df0da6fadc7dc0308d2c9
+    runtime_fingerprint: faaa1bbe03560ed48c1f230eff4eceabc59731ab74d73d32a5c87ada9a270b82
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -55.62547416117115
+    - -53.262509047755614
+    driven_soma_range_mV:
+    - -55.62547416117115
+    - -52.25515718848365
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 29
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: printed_smart
+    axial_convention: kinness_serialized_edge
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: literal_previous_sample
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: a49432806d917f6a96f40cde9ee1e61c22a2e3cdc356a66f9c1b0ff8b960bed7
+    runtime_fingerprint: a5d1126914cf2d3e5a40fa38cd9b2f234e305a69386c62ae0a080b642706fada
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -55.62547416117115
+    - -53.262509047755614
+    driven_soma_range_mV:
+    - -55.62547416117115
+    - -52.25515718848365
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 30
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: printed_smart
+    axial_convention: kinness_serialized_edge
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: hysteretic_threshold_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 559dfb427fec0871b183eb4c4d87a989ecd0a12da945720e018a94e300dc5df8
+    runtime_fingerprint: c4b7bfd8fded992623a04aad5fe758dd34e7232354950b9e55628db28f823ba2
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -55.62547416117115
+    - -53.262509047755614
+    driven_soma_range_mV:
+    - -55.62547416117115
+    - -52.25515718848365
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 31
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: printed_smart
+    axial_convention: kinness_2008
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: latched_peak_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 5ba12a6bb04ccd3b411f8568ca56f15b8a9bfa4238383c47ea5e42087a9c8a1a
+    runtime_fingerprint: fecf8f3196c63cafa29da89f8d1215dcf11c778bdd27f9293985fe3a6aae0ea5
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -47.13736723106746
+    - -36.71606146084119
+    driven_soma_range_mV:
+    - -47.191900734693085
+    - -36.719284728238144
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 32
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: printed_smart
+    axial_convention: kinness_2008
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: literal_previous_sample
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 934300c0162f67de45cdeb066d654d825e1123eeeb235c6add94f3859312a973
+    runtime_fingerprint: 5e51be2bb6b7051b6bbb3628c0b265ca8268813c7d040c33507c00a5889dfca3
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -47.13736723106746
+    - -36.71606146084119
+    driven_soma_range_mV:
+    - -47.191900734693085
+    - -36.719284728238144
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 33
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: printed_smart
+    axial_convention: kinness_2008
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: hysteretic_threshold_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 102339aabb7a150e0a234265e229b69be7ad915e6e46235d529f8f28d96332fe
+    runtime_fingerprint: 7f99f6d794627c390ff39b3cc0f207abb2c10a785ca748b95a16a322c686bea1
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -47.13736723106746
+    - -36.71606146084119
+    driven_soma_range_mV:
+    - -47.191900734693085
+    - -36.719284728238144
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 34
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: printed_smart
+    axial_convention: kinness_2008
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: latched_peak_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: b70388ea0ca66464a455dff977743f5fe05420c33b7ea69dd6ef80c6b6184bc8
+    runtime_fingerprint: 18f52d4550ea565192400e1c902fb876085f3364d7189b421ae01c4b5c8bc8ec
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -55.62547416117115
+    - -53.262509047755614
+    driven_soma_range_mV:
+    - -55.62547416117115
+    - -52.25515718848365
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 35
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: printed_smart
+    axial_convention: kinness_2008
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: literal_previous_sample
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 8ebe3175113a8206647147c7707c88a32a2e573bbe5182c29f8b55d1978ad4a9
+    runtime_fingerprint: 2397432ef921e468c7aeb80d15d0ab0858c1e80bcd179184e289ac5cdf55d672
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -55.62547416117115
+    - -53.262509047755614
+    driven_soma_range_mV:
+    - -55.62547416117115
+    - -52.25515718848365
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 36
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: printed_smart
+    axial_convention: kinness_2008
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: hysteretic_threshold_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 03bcceabc6ece75246e24c5061fc5ab2e185cd754d1242212873e19213d8df8c
+    runtime_fingerprint: 70ce7a0407e2375cf38c95a0fb26b3c5b2be8d07fe853baefc6554cba9b556e7
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -55.62547416117115
+    - -53.262509047755614
+    driven_soma_range_mV:
+    - -55.62547416117115
+    - -52.25515718848365
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 37
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: printed_smart
+    axial_convention: paper_literal
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: latched_peak_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: ac21a05d1a0a1c7423bd35cda5a4d7fc9cfe9342c6817a1aeb039d0bcae05b38
+    runtime_fingerprint: a9cc38723e7fc8f7b80efa0dfb3405b53e60226732e53b57e247f8a481dd2732
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -39.199869040237594
+    - -30.94903943179064
+    driven_soma_range_mV:
+    - -39.65425216560961
+    - -30.94903943179064
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 38
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: printed_smart
+    axial_convention: paper_literal
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: literal_previous_sample
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: dacdc4344b1995eda4295e2fd8d8cd8e10c4cc6c604602a077ab90acb3458a06
+    runtime_fingerprint: 7a2f903ee7221cd0d5e83c1792bc2163bb9bf1eebc06249427a687d9b4962a47
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -39.199869040237594
+    - -30.94903943179064
+    driven_soma_range_mV:
+    - -39.65425216560961
+    - -30.94903943179064
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 39
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: printed_smart
+    axial_convention: paper_literal
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: hysteretic_threshold_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 7d0c1eb42b85c43d6ff52e37f23ba08bfd623716a9f0f4b47736d3961d74e047
+    runtime_fingerprint: 8466c31f140f44df351627211ff62c0bf3eaebf2f6c2b262264158aa40a90a73
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -39.199869040237594
+    - -30.94903943179064
+    driven_soma_range_mV:
+    - -39.65425216560961
+    - -30.94903943179064
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 40
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: printed_smart
+    axial_convention: paper_literal
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: latched_peak_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 721dd2f1eb243ed16f6df9526a54ac5572933f752fc446d1a2e60187a351650d
+    runtime_fingerprint: 7c73eef9781c801ff2be755b38bef745583cb0373ebb0562159312ff77c9758d
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -54.37271764527391
+    - -50.36782625371549
+    driven_soma_range_mV:
+    - -54.364767379040664
+    - -47.34517496928636
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 41
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: printed_smart
+    axial_convention: paper_literal
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: literal_previous_sample
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 2d3b259bc76c004ea7a101326a8a1edc992de62efa0141d9289e7829c01303fa
+    runtime_fingerprint: 9ad7c7e5b99893597b691ab385092c8c773bbe17736fc8f5ff8093ec1f2a53ce
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -54.37271764527391
+    - -50.36782625371549
+    driven_soma_range_mV:
+    - -54.364767379040664
+    - -47.34517496928636
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 42
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: printed_smart
+    axial_convention: paper_literal
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: hysteretic_threshold_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 72e8bb7b7a5ef77a037f7c49f15dbf3376de8c08a504d80f79f1b2f73ad19cc2
+    runtime_fingerprint: c71e7b3f7343ea5042e944dfab99a126c7681cb8544cbc4ef1f291802b4272b7
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -54.37271764527391
+    - -50.36782625371549
+    driven_soma_range_mV:
+    - -54.364767379040664
+    - -47.34517496928636
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 43
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: printed_smart
+    axial_convention: symmetric_cable
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: latched_peak_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 1f3a45c80089cf92b75f3c68e8e906b2e59b664f3f627cdadb9e8e7ebc4ad3ab
+    runtime_fingerprint: fc63c8eaef722e85a2f51b1b3fc779be87d2e3643a63babc5f4a2a3e6debf3fc
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -47.13736723106746
+    - -36.71606146084119
+    driven_soma_range_mV:
+    - -47.191900734693085
+    - -36.719284728238144
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 44
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: printed_smart
+    axial_convention: symmetric_cable
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: literal_previous_sample
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 8576a9a55f7baaa729096b12ce9c984b2d68b717ce1d3d29c82905280acddeee
+    runtime_fingerprint: ac58e34f2e6c39adea792a24f3ead0abfdda87f46dd4c757b06b690f6c371d70
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -47.13736723106746
+    - -36.71606146084119
+    driven_soma_range_mV:
+    - -47.191900734693085
+    - -36.719284728238144
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 45
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: printed_smart
+    axial_convention: symmetric_cable
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: hysteretic_threshold_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: accc5ee9616206233271a9a85bf843d487c690f533cfc413e51aafb2f18d3e8d
+    runtime_fingerprint: 89a655bc7c9e0d1f163fb71515fbe936d3898c0074949423c34e41cdfd7a7dc0
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -47.13736723106746
+    - -36.71606146084119
+    driven_soma_range_mV:
+    - -47.191900734693085
+    - -36.719284728238144
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 46
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: printed_smart
+    axial_convention: symmetric_cable
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: latched_peak_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: d70aeeae0e47d387d1498345da487409d690622737e1f41842b2ac062c21b904
+    runtime_fingerprint: 9e2bd318025a18690b787e4bd7464046c3ac8fd04d90051d8cd30aca9ff4965c
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -55.62547416117115
+    - -53.262509047755614
+    driven_soma_range_mV:
+    - -55.62547416117115
+    - -52.25515718848365
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 47
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: printed_smart
+    axial_convention: symmetric_cable
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: literal_previous_sample
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: ba242b326ca6f34b3c27d598e8c69c54409eda1b49fed2fbb4213acbeeeac919
+    runtime_fingerprint: 0662d6332edefe4754178389002292581e6bc4cac68015c48a5555a58c1fa0a6
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -55.62547416117115
+    - -53.262509047755614
+    driven_soma_range_mV:
+    - -55.62547416117115
+    - -52.25515718848365
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 48
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: printed_smart
+    axial_convention: symmetric_cable
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: hysteretic_threshold_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: c5e4654b74ade2550ee44fc1e3cbef58e622565b6f1101c7063a5d58dfccc014
+    runtime_fingerprint: fb79e62dbcf0f9ae4874684a767dd714ef992de51fc05f215a4fbb86c61b2e2d
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -55.62547416117115
+    - -53.262509047755614
+    driven_soma_range_mV:
+    - -55.62547416117115
+    - -52.25515718848365
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 49
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: standard_traub_miles
+    axial_convention: kinness_serialized_edge
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: latched_peak_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 38605f2c6323c9e278b6696c4fdc68c18d28bac7b0d9ae44333042f8ce1aaaa0
+    runtime_fingerprint: 0cb1f4d4b74384e6aceb3d601355cfac980c25591c104cf32dbda266f967db3b
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -84.37753644940881
+    - 27.147572189804464
+    driven_soma_range_mV:
+    - -84.37129962096708
+    - 26.947789196358283
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 50
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: standard_traub_miles
+    axial_convention: kinness_serialized_edge
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: literal_previous_sample
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 16f385605bbceeefdb3be8cefaf7f6ef6a0619c39228495a9391860c60b0e38c
+    runtime_fingerprint: 24672885e74b2322fda060537a056a754f0fc834cdfd15e211cdddadc25e9bd3
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -84.37753644940881
+    - 27.147572189804464
+    driven_soma_range_mV:
+    - -84.37129962096708
+    - 26.947789196358283
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 51
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: standard_traub_miles
+    axial_convention: kinness_serialized_edge
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: hysteretic_threshold_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 736fb4bd6e6bb34243ce76bd9fdf61c76e70b3e241d259c4de30f2d115313b6d
+    runtime_fingerprint: e6132af2762299213ce9b90f64f1b33b47e0182490272da03e56d88de566d91b
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -84.37753644940881
+    - 27.147572189804464
+    driven_soma_range_mV:
+    - -84.37129962096708
+    - 26.947789196358283
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 52
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: standard_traub_miles
+    axial_convention: kinness_serialized_edge
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: latched_peak_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 8e7c3b2cfff43dbbd047f49c513cad09ed476229abd4e6fb177e9420433d3d73
+    runtime_fingerprint: 539659216ad9e0f1d07d7723bd1505c3fa450d25685b5718b0b1c00fc46b7765
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -84.33169801961407
+    - 27.483366182382444
+    driven_soma_range_mV:
+    - -84.3131264409527
+    - 27.51606834063203
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 53
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: standard_traub_miles
+    axial_convention: kinness_serialized_edge
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: literal_previous_sample
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 55eb5a160c7655d2a50ed717614c83e407ae624717340feda748a0a8dbba8e07
+    runtime_fingerprint: 0a22e178247ca2b36fd2bc9ae14cc481adb10ff44d5b8287b4d185b93efc0cb4
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -84.33169801961407
+    - 27.483366182382444
+    driven_soma_range_mV:
+    - -84.3131264409527
+    - 27.51606834063203
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 54
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: standard_traub_miles
+    axial_convention: kinness_serialized_edge
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: hysteretic_threshold_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: ad44345cff103e4b056f2748de1fc52bb510310ce993f7bbeff7c70e3d38ac14
+    runtime_fingerprint: 3c159b1fd25d2df0e4ef671a9bf871697c1c1db3da3a56f261e11680220a1065
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -84.33169801961407
+    - 27.483366182382444
+    driven_soma_range_mV:
+    - -84.3131264409527
+    - 27.51606834063203
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 55
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: standard_traub_miles
+    axial_convention: kinness_2008
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: latched_peak_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 1c35d3857acedee421fe6808439e3702b60d74713f76e27772ea4294595097a1
+    runtime_fingerprint: 5f0ed73e2bed3666c7590c8ab75e38f0bcf1ffad78a8a12bfe2db9571bb33c45
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -84.37753644940881
+    - 27.147572189804464
+    driven_soma_range_mV:
+    - -84.37129962096708
+    - 26.947789196358283
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 56
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: standard_traub_miles
+    axial_convention: kinness_2008
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: literal_previous_sample
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 6bfa0a639f5e9f32b3d0c9e56cb4a8dbebeb8e2177390989b720aab8f469f069
+    runtime_fingerprint: 03f53482f4d9abbcedc9139d716c78ce3c2518a95295ebe91694d9f20d2a1621
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -84.37753644940881
+    - 27.147572189804464
+    driven_soma_range_mV:
+    - -84.37129962096708
+    - 26.947789196358283
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 57
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: standard_traub_miles
+    axial_convention: kinness_2008
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: hysteretic_threshold_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: af7936272226a608212c78166a058ccdd0c5acaac81b58e849eca860fcdcd1f9
+    runtime_fingerprint: f02d7d94163ee79419b76932f97543a40655fb7ff69f829f278015e9567b5c29
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -84.37753644940881
+    - 27.147572189804464
+    driven_soma_range_mV:
+    - -84.37129962096708
+    - 26.947789196358283
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 58
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: standard_traub_miles
+    axial_convention: kinness_2008
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: latched_peak_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: fdb6fb37d22e66857f77b84c37ba03b7f175ec4c32353a6a2207c8e5059a42c7
+    runtime_fingerprint: dcdcb8e10499f244a23f319e5c6cb9554e8d83cf48a3ebc119261bdd2d392d7a
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -84.33169801961407
+    - 27.483366182382444
+    driven_soma_range_mV:
+    - -84.3131264409527
+    - 27.51606834063203
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 59
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: standard_traub_miles
+    axial_convention: kinness_2008
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: literal_previous_sample
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 50c3cbc23ce0db05408952ab6ea70dce68360c40e90088a0f2ad90d51c19da8e
+    runtime_fingerprint: d381a70a3578291237d55de6afe12bf8b3cf1aae59769bf66c2be6b6426b55a3
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -84.33169801961407
+    - 27.483366182382444
+    driven_soma_range_mV:
+    - -84.3131264409527
+    - 27.51606834063203
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 60
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: standard_traub_miles
+    axial_convention: kinness_2008
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: hysteretic_threshold_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: f185b5134019e7db3906c79ae89b1c6f8f655fef4e7952ed43c36992443dffb4
+    runtime_fingerprint: 2f4876c7502fa87526a0b4f7ac6819f79887b30f40ed69ba1740b560ec7b1373
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -84.33169801961407
+    - 27.483366182382444
+    driven_soma_range_mV:
+    - -84.3131264409527
+    - 27.51606834063203
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 61
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: standard_traub_miles
+    axial_convention: paper_literal
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: latched_peak_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: b1f93e354d930c237c51d3e3c305f299c43e5fb95c584b57765582342c0cf5c2
+    runtime_fingerprint: 76fc8645bb3ad1af333557983e660ae00897e02f9610c74ed5f514aebe85ece1
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -54.203124507876915
+    - -25.021059781331445
+    driven_soma_range_mV:
+    - -54.63324078231688
+    - -24.536254722899056
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 62
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: standard_traub_miles
+    axial_convention: paper_literal
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: literal_previous_sample
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 0cfdacf0cc9b82f2db93a30dabd23fedf74b31e8170896d3537be96dd8cb64ee
+    runtime_fingerprint: 895f16f554063361813b910001712f255916e9148efc3096354bb1f014c120a6
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -54.203124507876915
+    - -25.021059781331445
+    driven_soma_range_mV:
+    - -54.63324078231688
+    - -24.536254722899056
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 63
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: standard_traub_miles
+    axial_convention: paper_literal
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: hysteretic_threshold_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 5d0d5aaf97ecf396fddb9206178e960a48ebde8ad52c5dbb92e84188a745268e
+    runtime_fingerprint: 96b4b0efedc29606adfb40dce7f8f08c4647b4b1fd60dc11c3ebd5430b5bd995
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -54.203124507876915
+    - -25.021059781331445
+    driven_soma_range_mV:
+    - -54.63324078231688
+    - -24.536254722899056
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 64
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: standard_traub_miles
+    axial_convention: paper_literal
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: latched_peak_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 076c51fc858ac1b3e89e924357d8cfcad1202fbc32e2c3d30e43fea4f0cdae74
+    runtime_fingerprint: 88930534f5276943671231c9e5ac3456e5cdd35318964372f95663b48117c282
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -54.06616104996864
+    - -24.880032895144733
+    driven_soma_range_mV:
+    - -54.6638154439175
+    - -24.505991135491804
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 65
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: standard_traub_miles
+    axial_convention: paper_literal
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: literal_previous_sample
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 8ebcdd74ee6bc5273d2ca84dd3c5304b6ac3437cbed28720165871baaccfe537
+    runtime_fingerprint: aa0eab05d257ec859aca68e3165f5ef3125f28026f5d3c175386c8c7b310e25e
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -54.06616104996864
+    - -24.880032895144733
+    driven_soma_range_mV:
+    - -54.6638154439175
+    - -24.505991135491804
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 66
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: standard_traub_miles
+    axial_convention: paper_literal
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: hysteretic_threshold_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 7bb6565a4324f809c573146377686fd504b4e0e9a70d979ae673f29b1d8cd568
+    runtime_fingerprint: c894011e4926d7f6607641f0b1d1491b745ca35d055743f70889e01925439f83
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -54.06616104996864
+    - -24.880032895144733
+    driven_soma_range_mV:
+    - -54.6638154439175
+    - -24.505991135491804
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 67
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: standard_traub_miles
+    axial_convention: symmetric_cable
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: latched_peak_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 56b6e31d37eebd85b2542c565cb229ad05d2b19aa775bd4ea4a007d8e1ee4aa2
+    runtime_fingerprint: 9db6e6992b2e00d575b5b9ff196506e7617a613f6805e2fb6f295adb527487b9
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -84.37753644940881
+    - 27.147572189804464
+    driven_soma_range_mV:
+    - -84.37129962096708
+    - 26.947789196358283
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 68
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: standard_traub_miles
+    axial_convention: symmetric_cable
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: literal_previous_sample
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: a1254619a0f6e4a92392f1a1539ba2c94ffdd860da4e2e8ca16cdecf277a6c81
+    runtime_fingerprint: 26961b34c1d38f37cc079c94a7b925e7e7f2aceb1e6b84995471d52efc2ccccc
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -84.37753644940881
+    - 27.147572189804464
+    driven_soma_range_mV:
+    - -84.37129962096708
+    - 26.947789196358283
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 69
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: standard_traub_miles
+    axial_convention: symmetric_cable
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: hysteretic_threshold_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: b77b3aa69c802db964e333fdd5746f44a20601846f8488e537b24cf251a5ced5
+    runtime_fingerprint: 17c4f526baafb850355f7ff411e0b59bf8b67a7d4052b34cadd8a4152876c8e0
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -84.37753644940881
+    - 27.147572189804464
+    driven_soma_range_mV:
+    - -84.37129962096708
+    - 26.947789196358283
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 70
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: standard_traub_miles
+    axial_convention: symmetric_cable
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: latched_peak_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 846902784aa76acd3dff6c746cc406bc9f7dec9187ec7c00103ecf3faa989554
+    runtime_fingerprint: 2ef265a81fa6d8a9ec7dcbe7c75b86a4efd4b02a861a8e5e822388f1c90c0b3d
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -84.33169801961407
+    - 27.483366182382444
+    driven_soma_range_mV:
+    - -84.3131264409527
+    - 27.51606834063203
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 71
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: standard_traub_miles
+    axial_convention: symmetric_cable
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: literal_previous_sample
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: af5e4d6f4e2454f610acad72994c510d8591ff4e280e0132f7ec3e376ab7f512
+    runtime_fingerprint: 6a605d0ee7866f5277e27a1a2074b2230e190cf79ae845254315a1800ec76bdb
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -84.33169801961407
+    - 27.483366182382444
+    driven_soma_range_mV:
+    - -84.3131264409527
+    - 27.51606834063203
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 72
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: standard_traub_miles
+    axial_convention: symmetric_cable
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: hysteretic_threshold_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 493704eb0ca83de0d424a6d0fc1e7ed2a08140f03c4d0db2ab8825f1e4548c62
+    runtime_fingerprint: f1ecfacd6e18fec6c6df9b410965c2c52eed3d4cbc519050be668bca90685bbd
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -84.33169801961407
+    - 27.483366182382444
+    driven_soma_range_mV:
+    - -84.3131264409527
+    - 27.51606834063203
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 73
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: printed_smart
+    axial_convention: kinness_serialized_edge
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: latched_peak_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 07a0b0ba40bebe033829db2a78e731f8bf4813f0a094125c4b3130d173b1ff50
+    runtime_fingerprint: cb26e7fe34cbfc3a883a012282bd5cb4a044a8daeb57c27138f1b436fe81f362
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -50.1449469256178
+    - -49.944071821042094
+    driven_soma_range_mV:
+    - -50.05388141479565
+    - -49.944071821042094
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 74
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: printed_smart
+    axial_convention: kinness_serialized_edge
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: literal_previous_sample
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: d723489c5bbc542876fb0cdfa5cf9994a0e31929672e2fbf1fe25ee05a8fce46
+    runtime_fingerprint: 69ddff4a48126a07b4cd16b8492465fdf37ebb23b4add4d2f0a284186a3bd20e
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -50.1449469256178
+    - -49.944071821042094
+    driven_soma_range_mV:
+    - -50.05388141479565
+    - -49.944071821042094
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 75
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: printed_smart
+    axial_convention: kinness_serialized_edge
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: hysteretic_threshold_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 96903e55eca478d91e4e7ac2ce656a456aa59434b29266383b70bbc9da75f896
+    runtime_fingerprint: a36e23a035abfacf5485de5806701071029a3ffcdd579c49d5956d2ea808ff7b
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -50.1449469256178
+    - -49.944071821042094
+    driven_soma_range_mV:
+    - -50.05388141479565
+    - -49.944071821042094
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 76
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: printed_smart
+    axial_convention: kinness_serialized_edge
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: latched_peak_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 465df46c59c85163877746404cb114fc7cae22df28bb81bcc4a3ac5448a1e1f9
+    runtime_fingerprint: 1cd1a01211ca0b067040881d4af89a80716fcd2017db47310b0c5c86441d75d2
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -50.159791776065155
+    - -49.96864566779651
+    driven_soma_range_mV:
+    - -50.159791776065155
+    - -49.859773371177276
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 77
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: printed_smart
+    axial_convention: kinness_serialized_edge
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: literal_previous_sample
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 3457871eee7610a5d08a40a15ecf431ac140d263500d80651260f1e9e15c6f8f
+    runtime_fingerprint: b4beaa51b636b39c2c8358c60f9a5334ecab9a60b317d7cc5dee2f717b663145
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -50.159791776065155
+    - -49.96864566779651
+    driven_soma_range_mV:
+    - -50.159791776065155
+    - -49.859773371177276
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 78
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: printed_smart
+    axial_convention: kinness_serialized_edge
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: hysteretic_threshold_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 63ac2fd979d644d857c59cc60eb40536a19b1560582128342c6f00a756a00e68
+    runtime_fingerprint: 25d0f0b077c95e30ff62ed10f09baa4e4a77c1f62076a14094b647b9e98c6f79
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -50.159791776065155
+    - -49.96864566779651
+    driven_soma_range_mV:
+    - -50.159791776065155
+    - -49.859773371177276
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 79
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: printed_smart
+    axial_convention: kinness_2008
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: latched_peak_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: da76f8940fb5755e1318ad9b749f316d19267661850d5617c0f6cd9dffe3041f
+    runtime_fingerprint: 8f69214977525c1333f0ae80c627f9b6dfe0d5cb8bf77903de07476fd921bd8f
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -50.1449469256178
+    - -49.944071821042094
+    driven_soma_range_mV:
+    - -50.05388141479565
+    - -49.944071821042094
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 80
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: printed_smart
+    axial_convention: kinness_2008
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: literal_previous_sample
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: a1c5a79858d85b1e16526919d0a2555796431fb7a808670ed9ce8b9e98c79280
+    runtime_fingerprint: 860bc5a24f90e871d8736e6c62c71f03aaa2ff3a9caf05c7d9b713988ac56d3b
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -50.1449469256178
+    - -49.944071821042094
+    driven_soma_range_mV:
+    - -50.05388141479565
+    - -49.944071821042094
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 81
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: printed_smart
+    axial_convention: kinness_2008
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: hysteretic_threshold_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 1c455241b79892b02e4f1fcd5d2aac6c2e15a352d47bab1695d7f9f0f69970e6
+    runtime_fingerprint: 48054959da7f4776158961b30a7730f100f616130d733c88e33cb9cbb7b448eb
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -50.1449469256178
+    - -49.944071821042094
+    driven_soma_range_mV:
+    - -50.05388141479565
+    - -49.944071821042094
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 82
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: printed_smart
+    axial_convention: kinness_2008
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: latched_peak_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 773f2ce53bc896069de9f41a1a4b2639720f1ecb82eb3a0c7e2342090d47a56a
+    runtime_fingerprint: 9ba58bd9032a7309a337d813752ffc00af3ce866a82d853e5739a99cecfa53e6
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -50.159791776065155
+    - -49.96864566779651
+    driven_soma_range_mV:
+    - -50.159791776065155
+    - -49.859773371177276
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 83
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: printed_smart
+    axial_convention: kinness_2008
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: literal_previous_sample
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: d3b12ffc26c86843d54aeda3caf6356b5ececdf56f01c5b8021caa101066ffbb
+    runtime_fingerprint: 0483e726ab6b235b4371f092cd8ccfc290bf59e98d52fa60eee04f188ca92987
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -50.159791776065155
+    - -49.96864566779651
+    driven_soma_range_mV:
+    - -50.159791776065155
+    - -49.859773371177276
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 84
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: printed_smart
+    axial_convention: kinness_2008
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: hysteretic_threshold_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: a2b098bd86c56a9854e6fdf91a4af24de453aed98d6ceee086efa2a105227a20
+    runtime_fingerprint: d44a22d011b42d00ee48892c627b6e68bf9be4fe693df4f83081ec9a4ca8ecec
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -50.159791776065155
+    - -49.96864566779651
+    driven_soma_range_mV:
+    - -50.159791776065155
+    - -49.859773371177276
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 85
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: printed_smart
+    axial_convention: paper_literal
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: latched_peak_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 24d0c8b4356b6f26bd8f30259812d116b27ed20c1227786da00b086617d63f8d
+    runtime_fingerprint: 4aff853b46fa245fb2c2533d944667c0f45ed1ff2dd679d69963a658c501b341
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -44.019979351111104
+    - -44.00744249206804
+    driven_soma_range_mV:
+    - -44.28457658132126
+    - -44.00744249206804
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 86
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: printed_smart
+    axial_convention: paper_literal
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: literal_previous_sample
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 4cf955620b089c890a0068b279a1f0f9d449f804b33183947b06f28961861ad7
+    runtime_fingerprint: 25bb878b09afef6adb237df25067832d09f8f7ccd4db33ecad57c85989b7d258
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -44.019979351111104
+    - -44.00744249206804
+    driven_soma_range_mV:
+    - -44.28457658132126
+    - -44.00744249206804
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 87
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: printed_smart
+    axial_convention: paper_literal
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: hysteretic_threshold_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 05682d7393736c684b0d6af5ea45c90581966173a99731492e38691e3f9d89c7
+    runtime_fingerprint: ed621b527cde0629cc7783c819dda61b86a13bad02281d7516a93f291f859eb8
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -44.019979351111104
+    - -44.00744249206804
+    driven_soma_range_mV:
+    - -44.28457658132126
+    - -44.00744249206804
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 88
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: printed_smart
+    axial_convention: paper_literal
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: latched_peak_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: d9b19053d7b73ccb10b57775d6bfef2dd01322c6df57ec9bd8f6c9fa2aaa0cad
+    runtime_fingerprint: bed53cd13f2c3dc2a20c369888d2da845508ac85148d5998798b67fb477b8113
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -44.01956978979551
+    - -44.011926206595874
+    driven_soma_range_mV:
+    - -44.30280350127646
+    - -44.011926206595874
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 89
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: printed_smart
+    axial_convention: paper_literal
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: literal_previous_sample
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: b1efdee5bb95c28b41f301c3b6ab8e96771d6a8454fc9698f1e0a76366ae1ffc
+    runtime_fingerprint: 5df792819d6d87de558c822af0628f4e1ff3bc5d8b845b6bf161297819e9cf6b
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -44.01956978979551
+    - -44.011926206595874
+    driven_soma_range_mV:
+    - -44.30280350127646
+    - -44.011926206595874
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 90
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: printed_smart
+    axial_convention: paper_literal
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: hysteretic_threshold_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 1bf07056d4256b6a0bab45f34e4f2c3bafc8da04e9193505a2e50be741b42894
+    runtime_fingerprint: d6d9a66aee1b440bd223ae4a0df8e00a26714131c5946b44b693eb0f81fc8b6e
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -44.01956978979551
+    - -44.011926206595874
+    driven_soma_range_mV:
+    - -44.30280350127646
+    - -44.011926206595874
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 91
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: printed_smart
+    axial_convention: symmetric_cable
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: latched_peak_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 32d91ed48d5d04f5bcca051f1c05080c7ab9f4e28cdcf4c1292f191a80157e58
+    runtime_fingerprint: b8a020f77847fa5a0cb9adf142c9b8baa72616ff2f1ca2d886a9fe306954757c
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -50.1449469256178
+    - -49.944071821042094
+    driven_soma_range_mV:
+    - -50.05388141479565
+    - -49.944071821042094
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 92
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: printed_smart
+    axial_convention: symmetric_cable
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: literal_previous_sample
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: f583acf4d508fe665b724b4486367a1fef58b14f7542a3d4becce04ea472bb71
+    runtime_fingerprint: 1296d83e096218a04bc1c3e383ff30a5f54d3bb8d54224ff8593427b9dc26b52
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -50.1449469256178
+    - -49.944071821042094
+    driven_soma_range_mV:
+    - -50.05388141479565
+    - -49.944071821042094
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 93
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: printed_smart
+    axial_convention: symmetric_cable
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: hysteretic_threshold_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 8e2358add27dc52d65a0b83d3bdfaa6a4e32b9678a6bf7a1be56dbdb94211002
+    runtime_fingerprint: 6c6b37f612367a8a7a19f0be4cd4eac8848f21a4eeed1fea85512d1ef428d735
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -50.1449469256178
+    - -49.944071821042094
+    driven_soma_range_mV:
+    - -50.05388141479565
+    - -49.944071821042094
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 94
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: printed_smart
+    axial_convention: symmetric_cable
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: latched_peak_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 67ebcc8a2c989937fd755fe6d52c4c351f7019fc34e17b4563a96d143823e43e
+    runtime_fingerprint: 73da73fa6d77e96527372db083e3d8f33bdc72627c9493b7d41c7b27a74f3be2
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -50.159791776065155
+    - -49.96864566779651
+    driven_soma_range_mV:
+    - -50.159791776065155
+    - -49.859773371177276
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 95
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: printed_smart
+    axial_convention: symmetric_cable
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: literal_previous_sample
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 7a5384c92a47619fa8baba23d46146a0ab0c596b5cd5dca08e522ef283cf1d62
+    runtime_fingerprint: 3096edb1c39568d46f969c611956ccf8625d7ed954274166b9e3d183612b9b59
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -50.159791776065155
+    - -49.96864566779651
+    driven_soma_range_mV:
+    - -50.159791776065155
+    - -49.859773371177276
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 96
+  candidate:
+    intrinsic_cell_convention: modeldb_112923
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: printed_smart
+    axial_convention: symmetric_cable
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: hysteretic_threshold_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: d32cb6ca55a23b3e9cb2cb88b187cee39101d43f30726270b9bcd1e7902df92f
+    runtime_fingerprint: 6ef3edc35edc27c9f80df71b6e90fc0d75e8aad8f7b1bbc1d3628406199d8f0c
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -50.159791776065155
+    - -49.96864566779651
+    driven_soma_range_mV:
+    - -50.159791776065155
+    - -49.859773371177276
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 97
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: standard_traub_miles
+    axial_convention: kinness_serialized_edge
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: latched_peak_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 65268c6556cdba47a46aa4e6000ada79695b20370873df57d35141a8da3ea39f
+    runtime_fingerprint: e08be6bb8a116e8f783edb8b66d62f669ac1319ddf812851d28b451ee0aa5a95
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 14
+    driven_post_drive_spikes: 15
+    control_soma_range_mV:
+    - -86.29573962325964
+    - 44.86166972179618
+    driven_soma_range_mV:
+    - -86.02209911515612
+    - 45.35373059422233
+  quiescent_control_pass: false
+  driven_recruitment_pass: true
+  promoted: false
+- ordinal: 98
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: standard_traub_miles
+    axial_convention: kinness_serialized_edge
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: literal_previous_sample
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 3a8c26d774036be8b2f8a1fd856901d566a92520c6ddb346b59643c2992c0190
+    runtime_fingerprint: 7ba360957137335687a728b4bc31cadbf50af17e41584d181dc53c9d4b8c2570
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -86.29573962325964
+    - 44.86166972179618
+    driven_soma_range_mV:
+    - -86.02209911515612
+    - 45.35373059422233
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 99
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: standard_traub_miles
+    axial_convention: kinness_serialized_edge
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: hysteretic_threshold_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 0567234a6fb9ec345ba400fd288331d4b5aee56558a9f7e9e224775eca4ae1eb
+    runtime_fingerprint: 1b7e0c501694d0e3dee9b87f4ec38093f20dc2722d857fa1cd5841981771e0bd
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 14
+    driven_post_drive_spikes: 15
+    control_soma_range_mV:
+    - -86.29573962325964
+    - 44.86166972179618
+    driven_soma_range_mV:
+    - -86.02209911515612
+    - 45.35373059422233
+  quiescent_control_pass: false
+  driven_recruitment_pass: true
+  promoted: false
+- ordinal: 100
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: standard_traub_miles
+    axial_convention: kinness_serialized_edge
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: latched_peak_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: c6ce08091010a966b3609f3f9803f33e3392266411e8ba8a7437960ed7db409a
+    runtime_fingerprint: 6f31b228c3f13427b5e179dca142886061a527b5e97b1e7edad6fd9828664a6c
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 1
+    driven_post_drive_spikes: 7
+    control_soma_range_mV:
+    - -73.5469705819201
+    - 44.484323174536364
+    driven_soma_range_mV:
+    - -86.87624152487918
+    - 45.2400819463824
+  quiescent_control_pass: false
+  driven_recruitment_pass: true
+  promoted: false
+- ordinal: 101
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: standard_traub_miles
+    axial_convention: kinness_serialized_edge
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: literal_previous_sample
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 41049ca80ccc361d364c22a3daf7f60c5706bbed7810ad2b12c799c4a7ee6b67
+    runtime_fingerprint: 0b1040df62e951ca1da79943752ac9c53df464c326c486b2d67e40390fb7ce76
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -73.5469705819201
+    - 44.484323174536364
+    driven_soma_range_mV:
+    - -86.87624152487918
+    - 45.2400819463824
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 102
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: standard_traub_miles
+    axial_convention: kinness_serialized_edge
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: hysteretic_threshold_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 354581e86e090c989c1a91f424f5b35a937f4aee30f1d87e54d2e57d67a994ad
+    runtime_fingerprint: ab3a28306c18d0f88ad5556aace7c007ae826cee34cf8412e2fc35b628d1e513
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 1
+    driven_post_drive_spikes: 7
+    control_soma_range_mV:
+    - -73.5469705819201
+    - 44.484323174536364
+    driven_soma_range_mV:
+    - -86.87624152487918
+    - 45.2400819463824
+  quiescent_control_pass: false
+  driven_recruitment_pass: true
+  promoted: false
+- ordinal: 103
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: standard_traub_miles
+    axial_convention: kinness_2008
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: latched_peak_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 7a92348efb925cfe7657bbe918142e093e3abf570fed32d918c58f116c362980
+    runtime_fingerprint: eae2edd7ebd0acd50a226fa956b182d3db716a3d21bc3bfa78af04a69900652d
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 14
+    driven_post_drive_spikes: 15
+    control_soma_range_mV:
+    - -86.29573962325964
+    - 44.86166972179618
+    driven_soma_range_mV:
+    - -86.02209911515612
+    - 45.35373059422233
+  quiescent_control_pass: false
+  driven_recruitment_pass: true
+  promoted: false
+- ordinal: 104
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: standard_traub_miles
+    axial_convention: kinness_2008
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: literal_previous_sample
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: e118a5ad2bcd2e524ce6f5c9a7971006b371694dcf65173f5136e1777e478fc2
+    runtime_fingerprint: f28357037697e21db014f55e647d02ac4edbd5ee1824ff1cb2bffa32020c8c53
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -86.29573962325964
+    - 44.86166972179618
+    driven_soma_range_mV:
+    - -86.02209911515612
+    - 45.35373059422233
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 105
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: standard_traub_miles
+    axial_convention: kinness_2008
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: hysteretic_threshold_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: e081b573ac108631b7a2a6987c3a80dd5609cc0f438b142309d1cba2339e7ede
+    runtime_fingerprint: 82b553cb69607053be34c9c4f8db23216bc05c3c373c149feafa20a229b7ec18
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 14
+    driven_post_drive_spikes: 15
+    control_soma_range_mV:
+    - -86.29573962325964
+    - 44.86166972179618
+    driven_soma_range_mV:
+    - -86.02209911515612
+    - 45.35373059422233
+  quiescent_control_pass: false
+  driven_recruitment_pass: true
+  promoted: false
+- ordinal: 106
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: standard_traub_miles
+    axial_convention: kinness_2008
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: latched_peak_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: f822badbf1e3da05c3656b79d4c91f52a20e33a4b15ed6aa4e4bccad231a959c
+    runtime_fingerprint: a1f3b9a035ad822b367428c7a3d1139c9f643fbbe99f10de72edede25a62847c
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 1
+    driven_post_drive_spikes: 7
+    control_soma_range_mV:
+    - -73.5469705819201
+    - 44.484323174536364
+    driven_soma_range_mV:
+    - -86.87624152487918
+    - 45.2400819463824
+  quiescent_control_pass: false
+  driven_recruitment_pass: true
+  promoted: false
+- ordinal: 107
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: standard_traub_miles
+    axial_convention: kinness_2008
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: literal_previous_sample
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 9b2e9f233269fcd7e62c9e117676c04131b3e68bc85d9c4fc803049dc5f28cfe
+    runtime_fingerprint: 2ce2c7e36d76143ecfb0ad3d2b9a5803d55e69b1c5d0e88d0d6c70eb07964e51
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -73.5469705819201
+    - 44.484323174536364
+    driven_soma_range_mV:
+    - -86.87624152487918
+    - 45.2400819463824
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 108
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: standard_traub_miles
+    axial_convention: kinness_2008
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: hysteretic_threshold_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 0971e26bae60397dbd342df9f197afbe97ab84d6f27c0389359ce17376699acc
+    runtime_fingerprint: 4b52dab7095fd9d0a289a53301a6927bb49e806bd44be7f1d9b6e87ebde02cbc
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 1
+    driven_post_drive_spikes: 7
+    control_soma_range_mV:
+    - -73.5469705819201
+    - 44.484323174536364
+    driven_soma_range_mV:
+    - -86.87624152487918
+    - 45.2400819463824
+  quiescent_control_pass: false
+  driven_recruitment_pass: true
+  promoted: false
+- ordinal: 109
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: standard_traub_miles
+    axial_convention: paper_literal
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: latched_peak_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 79d5abe44d8ff93050521d38025b049a85788774b42277aac915bbe32c60d0ba
+    runtime_fingerprint: 3fc359385575294dc5ea709d3509a0bef1626d09449cb72025be8fe31a3b4343
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 1
+    driven_post_drive_spikes: 1
+    control_soma_range_mV:
+    - -73.15615537857141
+    - 37.42000194667555
+    driven_soma_range_mV:
+    - -70.83580491968127
+    - 37.943965245288304
+  quiescent_control_pass: false
+  driven_recruitment_pass: true
+  promoted: false
+- ordinal: 110
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: standard_traub_miles
+    axial_convention: paper_literal
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: literal_previous_sample
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: facc41863e79f5947e254d276d49d81cc95150a345d8176cb7e8d0e4d96de2d7
+    runtime_fingerprint: 912675314463fde9af3b9d18472b1079f484d27f00ce4a0624f099987196d7ce
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -73.15615537857141
+    - 37.42000194667555
+    driven_soma_range_mV:
+    - -70.83580491968127
+    - 37.943965245288304
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 111
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: standard_traub_miles
+    axial_convention: paper_literal
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: hysteretic_threshold_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 37b617bb934db509b9c4dc531a466394992891b2d9db7de36c003cb854be5be9
+    runtime_fingerprint: c7b0f7806ba64344a3db1111d11443584fd34ef139b90e99c45f3a4cf423cde5
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 1
+    driven_post_drive_spikes: 1
+    control_soma_range_mV:
+    - -73.15615537857141
+    - 37.42000194667555
+    driven_soma_range_mV:
+    - -70.83580491968127
+    - 37.943965245288304
+  quiescent_control_pass: false
+  driven_recruitment_pass: true
+  promoted: false
+- ordinal: 112
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: standard_traub_miles
+    axial_convention: paper_literal
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: latched_peak_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 369ea08647d367ab41f928d79909dd250e818c78d59c235ee37cb0f94a3af79a
+    runtime_fingerprint: 6322cb1b80b5ef8d540c3ecafc3971f4607c1088e3144a3ca118c405407cd13d
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 1
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -75.36388541356847
+    - 30.7079798251706
+    driven_soma_range_mV:
+    - -71.11570160397591
+    - 21.806258414906974
+  quiescent_control_pass: false
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 113
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: standard_traub_miles
+    axial_convention: paper_literal
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: literal_previous_sample
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: dda5afb0120243eeda822366397a06cece080bb24e73f5c5e29537d33533ca38
+    runtime_fingerprint: abc89c4001eb178c736bb613b296a4d94848f720e361e4ec72724e06eb1e0d65
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -75.36388541356847
+    - 30.7079798251706
+    driven_soma_range_mV:
+    - -71.11570160397591
+    - 21.806258414906974
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 114
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: standard_traub_miles
+    axial_convention: paper_literal
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: hysteretic_threshold_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 8ee0c07ddd94c874158fa32e78ed70125bb44106b09ffc064fd6c754fbdd3eee
+    runtime_fingerprint: 75961d1f9c85e3bb8cc6fc9674cafcf61df24cb882ad9e4b91fff9a138eb473b
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 1
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -75.36388541356847
+    - 30.7079798251706
+    driven_soma_range_mV:
+    - -71.11570160397591
+    - 21.806258414906974
+  quiescent_control_pass: false
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 115
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: standard_traub_miles
+    axial_convention: symmetric_cable
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: latched_peak_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: bb33d521ee8ba1f06c71a0ce16ca0af33b9cecf9c18dd06c127b15c1fbc999da
+    runtime_fingerprint: 35c928a7924e772cdfbe0dc4635d9a0a1ff99ae0b666c5b794f98f55606c1b85
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 14
+    driven_post_drive_spikes: 15
+    control_soma_range_mV:
+    - -86.29573962325964
+    - 44.86166972179624
+    driven_soma_range_mV:
+    - -86.02209911515614
+    - 45.35373059422234
+  quiescent_control_pass: false
+  driven_recruitment_pass: true
+  promoted: false
+- ordinal: 116
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: standard_traub_miles
+    axial_convention: symmetric_cable
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: literal_previous_sample
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 34e4c67cab4cb03dd8a4876dd77256690e573d6d426ad527225f47a1d9c56cd0
+    runtime_fingerprint: 7e48fc71692b058c5c1721cba24b0cd3221a63085e5f9ab153ae21bdbc752c4a
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -86.29573962325964
+    - 44.86166972179624
+    driven_soma_range_mV:
+    - -86.02209911515614
+    - 45.35373059422234
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 117
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: standard_traub_miles
+    axial_convention: symmetric_cable
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: hysteretic_threshold_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: dc2deb695ce3ca457c3f2432d4908fd7a5532f4958a0b2884b841e8a7f90c870
+    runtime_fingerprint: 930c77a1455da788ba429485f8539147e5317fa22e0279c49e5070d0568e4557
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 14
+    driven_post_drive_spikes: 15
+    control_soma_range_mV:
+    - -86.29573962325964
+    - 44.86166972179624
+    driven_soma_range_mV:
+    - -86.02209911515614
+    - 45.35373059422234
+  quiescent_control_pass: false
+  driven_recruitment_pass: true
+  promoted: false
+- ordinal: 118
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: standard_traub_miles
+    axial_convention: symmetric_cable
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: latched_peak_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: ab6f7c4f997ba81c901b7f15de606f13a938bd63617c4b5488c5c2850eed3d85
+    runtime_fingerprint: 00c73c8b5a6729274785e80aa5e6cf8fef863cd864e1739a87caf8ac8c77ec8c
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 1
+    driven_post_drive_spikes: 7
+    control_soma_range_mV:
+    - -73.5469705819201
+    - 44.484323174536364
+    driven_soma_range_mV:
+    - -86.87624152487918
+    - 45.2400819463824
+  quiescent_control_pass: false
+  driven_recruitment_pass: true
+  promoted: false
+- ordinal: 119
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: standard_traub_miles
+    axial_convention: symmetric_cable
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: literal_previous_sample
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: a14679f4f38e4da2c3007ed6867ef9f89097c1a14c4454d755f39c6612cc7b81
+    runtime_fingerprint: b84793439f91e71f0a3d503a2dd6a33f2444ce8458c32ebf437015cef9ae2ecd
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -73.5469705819201
+    - 44.484323174536364
+    driven_soma_range_mV:
+    - -86.87624152487918
+    - 45.2400819463824
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 120
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: standard_traub_miles
+    axial_convention: symmetric_cable
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: hysteretic_threshold_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: f9473e9f9960f03a9eba1619a7ad1179706b40649903f91a098f61a322e29706
+    runtime_fingerprint: fe801d1f85cd45e40d29a4e5bb5b98a545c54abb8de9c7622a314f79f1a81926
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 1
+    driven_post_drive_spikes: 7
+    control_soma_range_mV:
+    - -73.5469705819201
+    - 44.484323174536364
+    driven_soma_range_mV:
+    - -86.87624152487918
+    - 45.2400819463824
+  quiescent_control_pass: false
+  driven_recruitment_pass: true
+  promoted: false
+- ordinal: 121
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: printed_smart
+    axial_convention: kinness_serialized_edge
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: latched_peak_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 18191917b792e1c95ed95ff09533f4a3e77e69d5b5a3369eccf40981af0e197c
+    runtime_fingerprint: bebab250eaf01729bb8f1783bdbd49924ecf3012211fccd4ca83cef3d7d312ab
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -66.88127347691513
+    - -47.311524941057314
+    driven_soma_range_mV:
+    - -66.88127347691513
+    - -47.84708576023957
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 122
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: printed_smart
+    axial_convention: kinness_serialized_edge
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: literal_previous_sample
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 190bbcd56a6ef8da1cf15430e6f6bafdf9ab3f3278b0fd358e45d73749eaa54e
+    runtime_fingerprint: 47641861abaa961cd078431380d66ac59adbbe7b865cee86a05f00260c0dd26b
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -66.88127347691513
+    - -47.311524941057314
+    driven_soma_range_mV:
+    - -66.88127347691513
+    - -47.84708576023957
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 123
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: printed_smart
+    axial_convention: kinness_serialized_edge
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: hysteretic_threshold_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: cd6b223a4ac389de22ab326b301d75d21f2a007e1516cd952ebad9f3c16aea7d
+    runtime_fingerprint: 7e201faa96612e60b450d4f5953ad1689df3b01a37041c2db4200ad2e16e3ebb
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -66.88127347691513
+    - -47.311524941057314
+    driven_soma_range_mV:
+    - -66.88127347691513
+    - -47.84708576023957
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 124
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: printed_smart
+    axial_convention: kinness_serialized_edge
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: latched_peak_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: fc6dc1f1c10aa2ddf9b36b77f986b8d1fb9dbc8b1e250ae508f7f39e07bdcc0f
+    runtime_fingerprint: 605b9e00d063442db3d2a25b9f1a5a6aec27d8b558ef8b2e5925591e889856b3
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -73.55271363420977
+    - -65.50619542102491
+    driven_soma_range_mV:
+    - -73.55271363420977
+    - -55.90842872959928
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 125
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: printed_smart
+    axial_convention: kinness_serialized_edge
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: literal_previous_sample
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: a415c196097c441992a91f999466cdbcea7100925ce94190d9a5642a2b7fd652
+    runtime_fingerprint: c81245326e6689369c96829cd1935544f151b076d205dfd74bf3192dbd3dda89
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -73.55271363420977
+    - -65.50619542102491
+    driven_soma_range_mV:
+    - -73.55271363420977
+    - -55.90842872959928
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 126
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: printed_smart
+    axial_convention: kinness_serialized_edge
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: hysteretic_threshold_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: b07cf75638b76229b3cdc246736b8a99ac18b416a24457bed3a7d4c0af4e057a
+    runtime_fingerprint: ed2d0b27eebd8a4a070154e9763ed63e11ad578fc76131629c94b72ec972479f
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -73.55271363420977
+    - -65.50619542102491
+    driven_soma_range_mV:
+    - -73.55271363420977
+    - -55.90842872959928
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 127
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: printed_smart
+    axial_convention: kinness_2008
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: latched_peak_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: b5d79c668f9a63d91739bf859408641357062eb515390b07cce4dd5de3f157b1
+    runtime_fingerprint: 76f7baedb81e4b8fb7ee48d5a3f77be89c505b5765e0c35441a66d6f53d20793
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -66.88127347691513
+    - -47.311524941057314
+    driven_soma_range_mV:
+    - -66.88127347691513
+    - -47.84708576023957
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 128
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: printed_smart
+    axial_convention: kinness_2008
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: literal_previous_sample
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 97eab2a8789503a4a16840488e54f6226cf2b011fb55eaca1d4fad4080e6cf8f
+    runtime_fingerprint: b943d96674d990ace53b2733fc7fe0cb53cd824681a89e8ad1e2eb2e7c868630
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -66.88127347691513
+    - -47.311524941057314
+    driven_soma_range_mV:
+    - -66.88127347691513
+    - -47.84708576023957
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 129
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: printed_smart
+    axial_convention: kinness_2008
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: hysteretic_threshold_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: daa742a81ad3e7218cd854b978f2073ff82145fa0397768d6edc7c2c6feb66e5
+    runtime_fingerprint: 042321bdc2bf9162b8c792b898d75e52d6edaebbeb145558c9292144dc86a232
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -66.88127347691513
+    - -47.311524941057314
+    driven_soma_range_mV:
+    - -66.88127347691513
+    - -47.84708576023957
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 130
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: printed_smart
+    axial_convention: kinness_2008
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: latched_peak_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: affe5f7b17b924b937b0cfd58ef345b1a7c1368a4899a448fa3cb665b9f1258d
+    runtime_fingerprint: 403247e991fe6375417cf647f8f97c56fc88ee5fe23ac9be0394c9be89507d45
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -73.55271363420977
+    - -65.50619542102491
+    driven_soma_range_mV:
+    - -73.55271363420977
+    - -55.90842872959928
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 131
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: printed_smart
+    axial_convention: kinness_2008
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: literal_previous_sample
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 2e92498c3f4a9a3b0e164845ec5e656617b46b13e67e31ddde9c1c62833013f7
+    runtime_fingerprint: 3e7b7fd2e3b7b26d6a623a1f71c3baebc7a630a9888ffeaf34cc9fa0b8c7c67d
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -73.55271363420977
+    - -65.50619542102491
+    driven_soma_range_mV:
+    - -73.55271363420977
+    - -55.90842872959928
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 132
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: printed_smart
+    axial_convention: kinness_2008
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: hysteretic_threshold_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: f40786ebdb89a6e65c086a6ddfd3d10ae6b91538103366527ceac51abbc6b6e4
+    runtime_fingerprint: 9d1d0aca6bd18f14ada62e12e62f787ed8b7a2bd064bf2636cda6a0b97901beb
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -73.55271363420977
+    - -65.50619542102491
+    driven_soma_range_mV:
+    - -73.55271363420977
+    - -55.90842872959928
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 133
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: printed_smart
+    axial_convention: paper_literal
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: latched_peak_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 0f3b1dc2d4fcc71550fa419936850ab518ef7f041b566e65f5e37f7c4e3170e9
+    runtime_fingerprint: ea88f00d56b302499574b6e467aa6f7075d0d0bf0dc3ea09ca68806104622322
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -58.4103616003645
+    - -39.260136351937504
+    driven_soma_range_mV:
+    - -58.4103616003645
+    - -38.2027765582387
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 134
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: printed_smart
+    axial_convention: paper_literal
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: literal_previous_sample
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 43bdb1b5d868a84f7cc0c8faecd3d8bfb888c9a54d0f4ad8dc3fd39da64887ff
+    runtime_fingerprint: 6d0b52df75a8065b9e2ef4a4daafae34458adcd51f71cbdd085791d60cd681ff
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -58.4103616003645
+    - -39.260136351937504
+    driven_soma_range_mV:
+    - -58.4103616003645
+    - -38.2027765582387
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 135
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: printed_smart
+    axial_convention: paper_literal
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: hysteretic_threshold_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: fce46ff7cc58da6c50d6e011d4eed0f49a28a5ef4c7425a978f2c169502e0dfa
+    runtime_fingerprint: 4bd75b8079910dfb5a1bb837a287316b2938e880194a0f1a6279107d1174b1e7
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -58.4103616003645
+    - -39.260136351937504
+    driven_soma_range_mV:
+    - -58.4103616003645
+    - -38.2027765582387
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 136
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: printed_smart
+    axial_convention: paper_literal
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: latched_peak_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 43d1eebde091b52810599d593d43b9b18a06d1e59b32324a6db84f7ac035559b
+    runtime_fingerprint: 9336eaed7335eb83568a8f370dff8e5181c4195f460a86f883ffc98e8fa9e8d7
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -60.80173381533907
+    - -53.17565933494422
+    driven_soma_range_mV:
+    - -57.034572644707886
+    - -48.21242722983854
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 137
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: printed_smart
+    axial_convention: paper_literal
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: literal_previous_sample
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: b0abddd3ce0a23ddb3b5561838fd91c1f82b2a34e4803a553a1489677fee1fe9
+    runtime_fingerprint: 75152efae1715d71c42c94100d55f5575bb3421c51bc85a1ab9f67ce4852923b
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -60.80173381533907
+    - -53.17565933494422
+    driven_soma_range_mV:
+    - -57.034572644707886
+    - -48.21242722983854
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 138
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: printed_smart
+    axial_convention: paper_literal
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: hysteretic_threshold_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 2d03509c78429fc56e66f1cf9b901fb86571795c18f2906541c8e6b2a1d3c68f
+    runtime_fingerprint: f0730d1a0bc2e9e031b9181919428d9c7233f50fc17aad98202b65aca813b026
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -60.80173381533907
+    - -53.17565933494422
+    driven_soma_range_mV:
+    - -57.034572644707886
+    - -48.21242722983854
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 139
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: printed_smart
+    axial_convention: symmetric_cable
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: latched_peak_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 46011e3130b17868abc7310506e025ed86b99288ebf9bf8e3cb11c4b2cc782ac
+    runtime_fingerprint: 55446059ebaa3b4194fa61404fef02ba03b25d6973a5beaf54418287759811d7
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -66.88127347691513
+    - -47.31152494105731
+    driven_soma_range_mV:
+    - -66.88127347691513
+    - -47.84708576023957
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 140
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: printed_smart
+    axial_convention: symmetric_cable
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: literal_previous_sample
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 469767eaf6b183a2659f912f8ae9cfc2c4edf6c919cf31d7e5c5c4676b8bc95b
+    runtime_fingerprint: 26682a3a72340a138fb0ff1da5805252406c5aa594fe00953b0e56845bc7c3ba
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -66.88127347691513
+    - -47.31152494105731
+    driven_soma_range_mV:
+    - -66.88127347691513
+    - -47.84708576023957
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 141
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: printed_smart
+    axial_convention: symmetric_cable
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: hysteretic_threshold_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: ec1d0b48a50f53d4e2807226aad410cb2be807b421ce0545023fb5ada5d58ed2
+    runtime_fingerprint: d327f5414d8f0d2c365d7e46781cf17fe6aefa70a4c9b0c718da656521025a37
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -66.88127347691513
+    - -47.31152494105731
+    driven_soma_range_mV:
+    - -66.88127347691513
+    - -47.84708576023957
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 142
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: printed_smart
+    axial_convention: symmetric_cable
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: latched_peak_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 358c94f6a9aa3c86bbd94366180b772ee2d18752fad6368a98a2af18838eb57f
+    runtime_fingerprint: 859a899294f80d5cc04f80444b55b8324b41e017e57e863b977786f730420543
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -73.55271363420977
+    - -65.50619542102491
+    driven_soma_range_mV:
+    - -73.55271363420977
+    - -55.90842872959928
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 143
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: printed_smart
+    axial_convention: symmetric_cable
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: literal_previous_sample
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 49b2ff1f3e5c0ef6542a1beff6788d353a63a49efff9b0815d7e8e41cbc8c72b
+    runtime_fingerprint: c1043c705b5c37512c7c11d4b5f643b5c75103f72e2fc364d9680fba8496ccd5
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -73.55271363420977
+    - -65.50619542102491
+    driven_soma_range_mV:
+    - -73.55271363420977
+    - -55.90842872959928
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 144
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: modeldb_112923
+    nak_rate_convention: printed_smart
+    axial_convention: symmetric_cable
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: hysteretic_threshold_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 08b090e3ad6af6f65574230b9e8fdb84d2cfc8883637dc3db4fe0e83690f7177
+    runtime_fingerprint: c5e69e6befc7e33ef81b941425c28625b96e4d2eafe0e24bc35d4a3bf6fed890
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -73.55271363420977
+    - -65.50619542102491
+    driven_soma_range_mV:
+    - -73.55271363420977
+    - -55.90842872959928
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 145
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: standard_traub_miles
+    axial_convention: kinness_serialized_edge
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: latched_peak_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 6825782f50ea91372a9d68f440971e38bc80aa4c97a150a1043b6da8700d7ec1
+    runtime_fingerprint: f9c1ba6f899562b0f218e68393f160038c3ccd6ed461b7bc2d4440c92273cfcc
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 5
+    driven_post_drive_spikes: 9
+    control_soma_range_mV:
+    - -87.0749986726345
+    - 44.936212167995485
+    driven_soma_range_mV:
+    - -86.8331483397404
+    - 44.99025071170167
+  quiescent_control_pass: false
+  driven_recruitment_pass: true
+  promoted: false
+- ordinal: 146
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: standard_traub_miles
+    axial_convention: kinness_serialized_edge
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: literal_previous_sample
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 3d82f698c9f02615a3910d2d2ea88caa90ecc022d6b255798b6cb0188d865b4d
+    runtime_fingerprint: 5b35b59f13e2fe12c2cb0ca2535823492871475ee16b56d78ea59cad5a4c4073
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -87.0749986726345
+    - 44.936212167995485
+    driven_soma_range_mV:
+    - -86.8331483397404
+    - 44.99025071170167
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 147
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: standard_traub_miles
+    axial_convention: kinness_serialized_edge
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: hysteretic_threshold_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: d0f1a9b8a16da38e1937739f94d39dc09d80ef82fd042d977bb77bc5b964ef02
+    runtime_fingerprint: ea21436eeaa50035e3209cb1f22be157501310d3a4c562dc140ac79bf3cdfb36
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 5
+    driven_post_drive_spikes: 9
+    control_soma_range_mV:
+    - -87.0749986726345
+    - 44.936212167995485
+    driven_soma_range_mV:
+    - -86.8331483397404
+    - 44.99025071170167
+  quiescent_control_pass: false
+  driven_recruitment_pass: true
+  promoted: false
+- ordinal: 148
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: standard_traub_miles
+    axial_convention: kinness_serialized_edge
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: latched_peak_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: c946c2b64f7de4557ca823e39cc57db290de3a829507bf63a9d357515f91973d
+    runtime_fingerprint: d259c13ab22ce9cb71fcdec5bc5ba33c8dc4e041a5963fccb663e8a0274d88d2
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 5
+    driven_post_drive_spikes: 8
+    control_soma_range_mV:
+    - -87.04379340513623
+    - 44.80044580770484
+    driven_soma_range_mV:
+    - -86.70709803966656
+    - 45.11857169090701
+  quiescent_control_pass: false
+  driven_recruitment_pass: true
+  promoted: false
+- ordinal: 149
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: standard_traub_miles
+    axial_convention: kinness_serialized_edge
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: literal_previous_sample
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 883202c1f2b953848bd326d18db4a45f506d14247866733ad8650a15c15d772e
+    runtime_fingerprint: 61647e95f715ce844eabf35e0e7599eaf1bb3bfb1a194dbc481a843623f29420
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -87.04379340513623
+    - 44.80044580770484
+    driven_soma_range_mV:
+    - -86.70709803966656
+    - 45.11857169090701
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 150
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: standard_traub_miles
+    axial_convention: kinness_serialized_edge
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: hysteretic_threshold_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 7f0fad3ae1950857439c1482fa247b5afac3791237ec19c9ba487f74bf4b2f27
+    runtime_fingerprint: 8771e427b571f324f577fa801bad2b976568145f18bee68d0db8bde958ea0a6b
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 5
+    driven_post_drive_spikes: 8
+    control_soma_range_mV:
+    - -87.04379340513623
+    - 44.80044580770484
+    driven_soma_range_mV:
+    - -86.70709803966656
+    - 45.11857169090701
+  quiescent_control_pass: false
+  driven_recruitment_pass: true
+  promoted: false
+- ordinal: 151
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: standard_traub_miles
+    axial_convention: kinness_2008
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: latched_peak_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 542fc72d950a7df8346c54a4b2b06a85f8529119773ecb9096695350e84a632d
+    runtime_fingerprint: e8939cc8b235c8bcd6f1a67fef6127bf72cbae3fecbf803c16bccba5767e36c3
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 5
+    driven_post_drive_spikes: 9
+    control_soma_range_mV:
+    - -87.0749986726345
+    - 44.936212167995485
+    driven_soma_range_mV:
+    - -86.8331483397404
+    - 44.99025071170167
+  quiescent_control_pass: false
+  driven_recruitment_pass: true
+  promoted: false
+- ordinal: 152
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: standard_traub_miles
+    axial_convention: kinness_2008
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: literal_previous_sample
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: ff830da52649024d111907663a9f96a9ba03ab9b662dc202accfbedb1a1421ae
+    runtime_fingerprint: 57aee0485a2ff571fe937c6ef5ea18623e14377a57f87c9dfdbb1fa49b0db676
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -87.0749986726345
+    - 44.936212167995485
+    driven_soma_range_mV:
+    - -86.8331483397404
+    - 44.99025071170167
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 153
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: standard_traub_miles
+    axial_convention: kinness_2008
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: hysteretic_threshold_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: eea625d6cc542092dac3671a4f6011bd4b7f634135b82b850b7b6dd692ffb5f2
+    runtime_fingerprint: e777c01ff79d97fdaf6e359b0b3ef1e9c5ea93705120fef9524f2e817dc2a288
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 5
+    driven_post_drive_spikes: 9
+    control_soma_range_mV:
+    - -87.0749986726345
+    - 44.936212167995485
+    driven_soma_range_mV:
+    - -86.8331483397404
+    - 44.99025071170167
+  quiescent_control_pass: false
+  driven_recruitment_pass: true
+  promoted: false
+- ordinal: 154
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: standard_traub_miles
+    axial_convention: kinness_2008
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: latched_peak_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: d92564e66c9f355eea5ff8b5e8d928790d059f9bd4fb87a71c7881a88df70ffa
+    runtime_fingerprint: 88fcd4e3d7b5b3282aed957f30b6f0a1bbdd1a412da50cd3a66c61b465b7cc0c
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 5
+    driven_post_drive_spikes: 8
+    control_soma_range_mV:
+    - -87.04379340513623
+    - 44.80044580770484
+    driven_soma_range_mV:
+    - -86.70709803966656
+    - 45.11857169090701
+  quiescent_control_pass: false
+  driven_recruitment_pass: true
+  promoted: false
+- ordinal: 155
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: standard_traub_miles
+    axial_convention: kinness_2008
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: literal_previous_sample
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 99cc1ecfab70aaee1421d83bd563384e6e858c89128791d0dc7f4e2a99181f20
+    runtime_fingerprint: 43eece95b2aa6af3ecddee396ae06bf4f1163fbc882655642a31a513dc2181d2
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -87.04379340513623
+    - 44.80044580770484
+    driven_soma_range_mV:
+    - -86.70709803966656
+    - 45.11857169090701
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 156
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: standard_traub_miles
+    axial_convention: kinness_2008
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: hysteretic_threshold_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 46092e0d8f86eb5eb036c9bcaee9f6dc36a599ecf63e6c01921040d6250d5342
+    runtime_fingerprint: 89b7b6d5e72a50b3d1d005ca6a8fd1dd6e4c0f84500fa4d68cb422034b87d92c
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 5
+    driven_post_drive_spikes: 8
+    control_soma_range_mV:
+    - -87.04379340513623
+    - 44.80044580770484
+    driven_soma_range_mV:
+    - -86.70709803966656
+    - 45.11857169090701
+  quiescent_control_pass: false
+  driven_recruitment_pass: true
+  promoted: false
+- ordinal: 157
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: standard_traub_miles
+    axial_convention: paper_literal
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: latched_peak_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: daf844edcb3f0596794b3c8096964b8c03d9edb6cdcb0820ccb0262a5fbbcc73
+    runtime_fingerprint: f7c80ae5562741187d26f1f6101016bd2b2aa8a222de3bc6b7405b55f9e44dc0
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -71.13034509855196
+    - 8.71908984634548
+    driven_soma_range_mV:
+    - -69.7342069151402
+    - 0.413261460613538
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 158
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: standard_traub_miles
+    axial_convention: paper_literal
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: literal_previous_sample
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: f4580a1a50b39a3627f3200bd0b9fa53930ebd4cd9e6a76262c3b75e30097380
+    runtime_fingerprint: f14bf9f2fc958269c38285d7772dd78197833baf98a073c5b463db1a56def128
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -71.13034509855196
+    - 8.71908984634548
+    driven_soma_range_mV:
+    - -69.7342069151402
+    - 0.413261460613538
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 159
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: standard_traub_miles
+    axial_convention: paper_literal
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: hysteretic_threshold_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: b00e4a678dea5940dc7941e2e4b35586f5aeb8fae6f2ce29c4469f993ffa6777
+    runtime_fingerprint: 83286e04de29b184f93aaf105fb831b91e75bd7d54f345e7a91389bb9ed09607
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -71.13034509855196
+    - 8.71908984634548
+    driven_soma_range_mV:
+    - -69.7342069151402
+    - 0.413261460613538
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 160
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: standard_traub_miles
+    axial_convention: paper_literal
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: latched_peak_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 9039d7312667354995d157e9b6425f0ae5d52d39fa66c33743c0602520263e1e
+    runtime_fingerprint: 9db02416628f220194daa0c44dc9c375704d3da31453928fd977ec9f2cbccf91
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -69.65607898902782
+    - 6.1840295396528235
+    driven_soma_range_mV:
+    - -66.77726928012612
+    - 0.6203947807111275
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 161
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: standard_traub_miles
+    axial_convention: paper_literal
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: literal_previous_sample
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 09edd868f24610157bfa5ed0ee77070f418cfe1aa0ac60923e3b337c3bb31c21
+    runtime_fingerprint: 75db89f933f5b6e3eddcb2b5e839c2af947180e06ecdacdce777d5f19a644376
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -69.65607898902782
+    - 6.1840295396528235
+    driven_soma_range_mV:
+    - -66.77726928012612
+    - 0.6203947807111275
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 162
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: standard_traub_miles
+    axial_convention: paper_literal
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: hysteretic_threshold_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: a28045f719f54b57688e1817fe8bd33e08b827ff263ca396430a6584fc61abfd
+    runtime_fingerprint: 478b0d2f13be4e612f4be4e5e70ff3738b257f336f2222ed48611798be40b0ef
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -69.65607898902782
+    - 6.1840295396528235
+    driven_soma_range_mV:
+    - -66.77726928012612
+    - 0.6203947807111275
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 163
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: standard_traub_miles
+    axial_convention: symmetric_cable
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: latched_peak_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 317b887080d963c1c6e4bb1b3c6b272f08c585a6fb4d19de3791c1b846383971
+    runtime_fingerprint: 8b0f3e31672434cf88290c919e875c57c9e2ea3e34d0c6825a9596549c3e4ba4
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 5
+    driven_post_drive_spikes: 9
+    control_soma_range_mV:
+    - -87.0749986726345
+    - 44.936212167995485
+    driven_soma_range_mV:
+    - -86.8331483397404
+    - 44.99025071170167
+  quiescent_control_pass: false
+  driven_recruitment_pass: true
+  promoted: false
+- ordinal: 164
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: standard_traub_miles
+    axial_convention: symmetric_cable
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: literal_previous_sample
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 7409df7ce5dbed2211722270495063ddbc4ad099cae3b6f2e1f9445900a48a5a
+    runtime_fingerprint: fcfd621c859b3e875207925da9ebf8a7253639080e2d5d928d014a366db56913
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -87.0749986726345
+    - 44.936212167995485
+    driven_soma_range_mV:
+    - -86.8331483397404
+    - 44.99025071170167
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 165
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: standard_traub_miles
+    axial_convention: symmetric_cable
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: hysteretic_threshold_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 82b689d63bbd46a3fd0576bf1917522e23c9c98f396af078690760a5837e598d
+    runtime_fingerprint: 56758ffcfb61fc07280d18733fab2790462f5b94f63f76537af1044f1c19c832
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 5
+    driven_post_drive_spikes: 9
+    control_soma_range_mV:
+    - -87.0749986726345
+    - 44.936212167995485
+    driven_soma_range_mV:
+    - -86.8331483397404
+    - 44.99025071170167
+  quiescent_control_pass: false
+  driven_recruitment_pass: true
+  promoted: false
+- ordinal: 166
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: standard_traub_miles
+    axial_convention: symmetric_cable
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: latched_peak_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 807037ee8d460279522d7faf1f05038b51fe2ca2d3e411b11481dccee27ada8c
+    runtime_fingerprint: 5b4caf369eee39d07d1c91b989db5439647ab1a48af8056a66fb83dedc943f1c
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 5
+    driven_post_drive_spikes: 8
+    control_soma_range_mV:
+    - -87.04379340513626
+    - 44.80044580770474
+    driven_soma_range_mV:
+    - -86.70709803966656
+    - 45.11857169090701
+  quiescent_control_pass: false
+  driven_recruitment_pass: true
+  promoted: false
+- ordinal: 167
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: standard_traub_miles
+    axial_convention: symmetric_cable
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: literal_previous_sample
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 76800d24436665731e8e1bfa9fb9685d5b18adc188c7a0303387d181ea70dbfd
+    runtime_fingerprint: d828420c3bd8ff14e2186ca12f38f5033f642a1cd7d0ec38ce05ea45cba1d81c
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -87.04379340513626
+    - 44.80044580770474
+    driven_soma_range_mV:
+    - -86.70709803966656
+    - 45.11857169090701
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 168
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: standard_traub_miles
+    axial_convention: symmetric_cable
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: hysteretic_threshold_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 05ff15918b488d69f66082c1d220623f8c82cd42b318d8aacf585424d4251d5d
+    runtime_fingerprint: 937691363cedf284072b7775b0cc092f892c4ce14d8c399519e32ea981d63c98
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 5
+    driven_post_drive_spikes: 8
+    control_soma_range_mV:
+    - -87.04379340513626
+    - 44.80044580770474
+    driven_soma_range_mV:
+    - -86.70709803966656
+    - 45.11857169090701
+  quiescent_control_pass: false
+  driven_recruitment_pass: true
+  promoted: false
+- ordinal: 169
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: printed_smart
+    axial_convention: kinness_serialized_edge
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: latched_peak_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: bbe3699a13475ae55c12f307c1f97a1251970b1d55bf19bdb028f4cdb7c32668
+    runtime_fingerprint: cc2bd4871950822616d37dd9a55fe2af3b83bc1d2089442f8c50a1ff72ff85fc
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -62.05351438548629
+    - -58.988853308907586
+    driven_soma_range_mV:
+    - -62.05351438548629
+    - -54.78600226183499
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 170
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: printed_smart
+    axial_convention: kinness_serialized_edge
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: literal_previous_sample
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: de6e42e2a16b75da0eb133edf01492a91a3bbc57d75e8565ab7c6bbc4299f379
+    runtime_fingerprint: 431f56661f3c3ab012e2ecf40625b9515bc50e85753be264cdbd829e53c37b94
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -62.05351438548629
+    - -58.988853308907586
+    driven_soma_range_mV:
+    - -62.05351438548629
+    - -54.78600226183499
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 171
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: printed_smart
+    axial_convention: kinness_serialized_edge
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: hysteretic_threshold_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 8a8c432156b3bc762f180d0677fa98ca8f3a860e653b0d390deca512e34da615
+    runtime_fingerprint: 5a00bd2f57a65d984bd756b8ab3c386a540e8965b36c3750c8f1fea22b3965b4
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -62.05351438548629
+    - -58.988853308907586
+    driven_soma_range_mV:
+    - -62.05351438548629
+    - -54.78600226183499
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 172
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: printed_smart
+    axial_convention: kinness_serialized_edge
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: latched_peak_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 78e98aca4630e0c9840294a2c2bca5d9f2291cd1493f2df2feecc114502eaecf
+    runtime_fingerprint: bdcfdada8e1321cd9ce11737f84fc984b130f9c1de89d6f4b6f7631dd9a937ce
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -67.968895073062
+    - -58.97458968070059
+    driven_soma_range_mV:
+    - -67.968895073062
+    - -54.33067524903658
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 173
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: printed_smart
+    axial_convention: kinness_serialized_edge
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: literal_previous_sample
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: d77b3f5f23e7921709f9d09c8bad7ff45aedfc318013f8c695cf4ff1dd5fdae1
+    runtime_fingerprint: 9266590a36314edecb974b32843ee6f537569a2318240fd95a6e4e57f6adfaef
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -67.968895073062
+    - -58.97458968070059
+    driven_soma_range_mV:
+    - -67.968895073062
+    - -54.33067524903658
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 174
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: printed_smart
+    axial_convention: kinness_serialized_edge
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: hysteretic_threshold_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 30d873c16f052d538f342fe3ac2753adc40f9648dc2d3cc326e568afe968a5fc
+    runtime_fingerprint: cbfc91c261f1b49f996883d54dee5e33ebb63a2e4e411fbf6520bf6f76dcab5a
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -67.968895073062
+    - -58.97458968070059
+    driven_soma_range_mV:
+    - -67.968895073062
+    - -54.33067524903658
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 175
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: printed_smart
+    axial_convention: kinness_2008
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: latched_peak_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: de129247df56de90edba786d4bea10345ce0fec14483481b5f9552c322252fb8
+    runtime_fingerprint: 0f23ea7901fcb6a254af45ccd4557e5d7540c5a4b5f3bddcf20d4ce7a854b62e
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -62.05351438548629
+    - -58.988853308907586
+    driven_soma_range_mV:
+    - -62.05351438548629
+    - -54.78600226183499
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 176
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: printed_smart
+    axial_convention: kinness_2008
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: literal_previous_sample
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: cec49ba056711e5398a54502c13cd385c5cd74114c9eb39562987b5cedaacc6c
+    runtime_fingerprint: 2cbf074481db29341af35ebef8f8f493246ddc519975befe7f28a26256c5bbdd
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -62.05351438548629
+    - -58.988853308907586
+    driven_soma_range_mV:
+    - -62.05351438548629
+    - -54.78600226183499
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 177
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: printed_smart
+    axial_convention: kinness_2008
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: hysteretic_threshold_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 708736b8a9d5e369b0eea54bd567b752d68f51029c0334d6ad02d6d0eada8b1c
+    runtime_fingerprint: f76248ccd22ea97615083b443873fc10bca8c3f0f719fa60086a1b8f9cf8135f
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -62.05351438548629
+    - -58.988853308907586
+    driven_soma_range_mV:
+    - -62.05351438548629
+    - -54.78600226183499
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 178
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: printed_smart
+    axial_convention: kinness_2008
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: latched_peak_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: e50a631b0e96c128f5d6437ad4334ccfc3c2e60a588880bf659689ff4cbbb74f
+    runtime_fingerprint: 340784129da64f4220779646d11797dee5b90252f1d88baf329c95f935338d3c
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -67.968895073062
+    - -58.97458968070059
+    driven_soma_range_mV:
+    - -67.968895073062
+    - -54.33067524903658
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 179
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: printed_smart
+    axial_convention: kinness_2008
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: literal_previous_sample
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: e04946aa1223ad89c886dc5787a209a4a601d6e92a8bd81f7b2ff038923d1cb8
+    runtime_fingerprint: 8f37cb74c7905ab41a542dfd03a7cf89f3ad1f039a95773e9173ce1aaf0daed5
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -67.968895073062
+    - -58.97458968070059
+    driven_soma_range_mV:
+    - -67.968895073062
+    - -54.33067524903658
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 180
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: printed_smart
+    axial_convention: kinness_2008
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: hysteretic_threshold_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 3f7ef724550a4b44049260b76381fdfcef3765ae68cca5005bab93a3ebbd34e5
+    runtime_fingerprint: d1b85d9c698aca9a099f714f75853c59ead49b8805df5bcf817cc56f47eacfc2
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -67.968895073062
+    - -58.97458968070059
+    driven_soma_range_mV:
+    - -67.968895073062
+    - -54.33067524903658
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 181
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: printed_smart
+    axial_convention: paper_literal
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: latched_peak_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: c4881b33302838209de2eeb74c5390c490ea3c0c279f45c47bbb13aa55a4d114
+    runtime_fingerprint: b0509f8dd8138b507fa5017756a025b8517d4e353d729795f6f2af1ec8c615d1
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -51.493765678281115
+    - -50.90805053224111
+    driven_soma_range_mV:
+    - -50.914143711132354
+    - -47.03530373428469
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 182
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: printed_smart
+    axial_convention: paper_literal
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: literal_previous_sample
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 8d94087fe803298db64e18bac0b0a8782dbfa81c996be0b53219c779415b01ab
+    runtime_fingerprint: a9dea067648684dbfe2a4a18c4eccfdff3a8abb374d46396ec8b559d6e72b489
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -51.493765678281115
+    - -50.90805053224111
+    driven_soma_range_mV:
+    - -50.914143711132354
+    - -47.03530373428469
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 183
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: printed_smart
+    axial_convention: paper_literal
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: hysteretic_threshold_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 24dde3ddf3c0d277eb34493987ef371814bf4972c11f923086b7310c008d546e
+    runtime_fingerprint: 76ebb41ab59c2ca796bafbe4ade9c49aa6b5abfea669ee4968d938ab02b57f95
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -51.493765678281115
+    - -50.90805053224111
+    driven_soma_range_mV:
+    - -50.914143711132354
+    - -47.03530373428469
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 184
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: printed_smart
+    axial_convention: paper_literal
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: latched_peak_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 94847d2dd6bf4ca579edcd7cc4e2f965b5f82e3bd89a9007087f9520685f41d2
+    runtime_fingerprint: 07800eb0973d2c78875a6cff23fae5f2492484450ad262044f8ad2e908c0943f
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -51.414263881197044
+    - -51.29857504217487
+    driven_soma_range_mV:
+    - -51.29857504217487
+    - -47.65320076641076
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 185
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: printed_smart
+    axial_convention: paper_literal
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: literal_previous_sample
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 8636b8cdda0853255803f1cc4de7876eb227930af81c5f91281257a7f31bfcd2
+    runtime_fingerprint: 90421cf982d2821308efeca561d62406df5d5cbdc62c3a85858d1bb28a4cd85c
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -51.414263881197044
+    - -51.29857504217487
+    driven_soma_range_mV:
+    - -51.29857504217487
+    - -47.65320076641076
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 186
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: printed_smart
+    axial_convention: paper_literal
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: hysteretic_threshold_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 5e2f3d9180a6ad38c9281dd639f6b9f9ae9b58bcd51477ae7559b0e6dc71bd2e
+    runtime_fingerprint: c7ced2420cfda268ff70a84229c8c411e59c38829fef7f18634ebf0b9d64b512
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -51.414263881197044
+    - -51.29857504217487
+    driven_soma_range_mV:
+    - -51.29857504217487
+    - -47.65320076641076
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 187
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: printed_smart
+    axial_convention: symmetric_cable
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: latched_peak_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: f37691b881e21b3abe3b182ea1750234a25f154388c4c4d7d613ee69e67e8b00
+    runtime_fingerprint: f9a858803299bec98054c6fd9f9747a4bff7bf100851b4a739baa5390bfd45f2
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -62.05351438548629
+    - -58.988853308907586
+    driven_soma_range_mV:
+    - -62.05351438548629
+    - -54.78600226183499
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 188
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: printed_smart
+    axial_convention: symmetric_cable
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: literal_previous_sample
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 32ef36ba270181b4bbe4079fd5cfe803a23c4ba77ae654f13519246695f3097e
+    runtime_fingerprint: 4f702ed184756aa2042977d4acdd214ce0cabdb4c50642f578769ef5d263d9fe
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -62.05351438548629
+    - -58.988853308907586
+    driven_soma_range_mV:
+    - -62.05351438548629
+    - -54.78600226183499
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 189
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: printed_smart
+    axial_convention: symmetric_cable
+    membrane_initialization_convention: physical_leak_voltage
+    spike_event_rule: hysteretic_threshold_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: e3e68fa0cb84d1cdb3dc531c18c08a6e818e336d729d1eacdcec1ef073e59c5f
+    runtime_fingerprint: 4c5702c56b7cd98737de3b94c244d66e4f9bef31bd05711219f6e9b57dd1e544
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -62.05351438548629
+    - -58.988853308907586
+    driven_soma_range_mV:
+    - -62.05351438548629
+    - -54.78600226183499
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 190
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: printed_smart
+    axial_convention: symmetric_cable
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: latched_peak_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 0f4849783380bb829fb55098221e4e008c03a82801d7f051e95e6d1a955e8d18
+    runtime_fingerprint: 3fce1c96ff7b3858ff6d646d090df930ed072ec3099c1774c5a6585c9c45d8a7
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -67.968895073062
+    - -58.97458968070059
+    driven_soma_range_mV:
+    - -67.968895073062
+    - -54.33067524903658
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 191
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: printed_smart
+    axial_convention: symmetric_cable
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: literal_previous_sample
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: f761d041986212c0aa4e92ebb4a9a1ae5b6209362baf2b075fd3fca95f45d008
+    runtime_fingerprint: 53dacd902eb87fe52b48251c20536922e8e832e607889fffef3681e599a6dab6
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -67.968895073062
+    - -58.97458968070059
+    driven_soma_range_mV:
+    - -67.968895073062
+    - -54.33067524903658
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false
+- ordinal: 192
+  candidate:
+    intrinsic_cell_convention: paper_table3
+    calcium_kinetics_convention: paper_2008
+    nak_rate_convention: printed_smart
+    axial_convention: symmetric_cable
+    membrane_initialization_convention: kinness_internal_zero
+    spike_event_rule: hysteretic_threshold_then_zero
+    gaussian_spread_convention: standard_deviation
+    relay_input_interpretation: archived_finite_conductance
+    top_down_current_pA: 600.0
+  result:
+    candidate_fingerprint: 9ab762af0171ab8631c94502735613f897a9b649d6f28f6f48e522398c6f8ce3
+    runtime_fingerprint: 585e5bd1f616d93740a49abd3050ba1d1538b6eaa226c003a533c585f5b7b561
+    control_finite: true
+    driven_finite: true
+    control_post_drive_spikes: 0
+    driven_post_drive_spikes: 0
+    control_soma_range_mV:
+    - -67.968895073062
+    - -58.97458968070059
+    driven_soma_range_mV:
+    - -67.968895073062
+    - -54.33067524903658
+  quiescent_control_pass: true
+  driven_recruitment_pass: false
+  promoted: false

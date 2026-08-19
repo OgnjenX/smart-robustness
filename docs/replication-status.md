@@ -1076,6 +1076,13 @@ but layer 2/3 and layer 5 remain silent and Figure 6c contrast is only 0.0057,
 below the 0.01 gate (`figure6-gaussian-variance-104.yaml`). It is retained as an
 audit alternative and is not promoted over the archived sigma interpretation.
 
+A contemporaneous SANNDRA report identifies 0.05 ms as an acceptable CPU HH
+timestep, although SMART itself reports none. Repeating Figure 6 at 0.05 ms
+under the current equations leaves the same 15/5/1 relay/layer-4/category event
+regime, no layer-2/3 or layer-5 events, no causal teaching pair, and negative
+Figure 6c contrast (`figure6-continuous-timestep-105.yaml`). The high-precision
+0.01-ms baseline is retained.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

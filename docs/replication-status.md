@@ -1138,6 +1138,19 @@ omits it and specifies 10 mS/cm2 only in each dendrite. Prior complete
 paper-profile discriminators still fail, so no hybrid conductance edit is
 promoted.
 
+The earliest Figure 7 failure is now quantified directly at the relay
+(`figure7-relay-current-balance-111.yaml`). Expectation-only cells receive at
+most tens of picoamps of top-down current and remain below about -54.5 mV,
+whereas directly driven image cells receive approximately 0.65 nA and spike.
+TRN/interneuron inhibition is comparable to the weak expectation current, but
+learned-weight underidentification is not sufficient to explain the result:
+setting every adaptive projection-005 and projection-007 synapse to its
+serialized 1.5 maximum still activates exactly five relay cells in match and
+mismatch. Each condition then has 20 relay events, 81 startup-only TRN events,
+and 60-Hz nonspecific output. The missing Figure 7 operation is therefore not
+recoverable by any admissible learned-weight amplitude; no unsupported weight
+or inhibition tuning is promoted.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

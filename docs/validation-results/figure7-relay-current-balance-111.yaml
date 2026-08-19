@@ -1,0 +1,66 @@
+schema_version: 1
+validation_id: figure7-relay-current-balance-111
+claim: The learned top-down expectation recruits relay cells outside the five directly driven image locations and creates the Figure 7 match-dependent relay-count difference.
+status: failed-official-reproduction_expectation_subthreshold_at_official_maximum
+date: 2026-08-19
+sources:
+  paper: Grossberg and Versace 2008, Figures 6c and 7 and Methods 4.9
+  framework: Versace et al. 2008 expanded KInNeSS manuscript, Equations 3, 5-6, 8b-9, and 13-18
+  executable: ModelDB 112923 SMART.nml relay cell, external input, and projections 000-007
+protocol:
+  simulator: Brian2 2.9.0 numpy target
+  duration_ms: 100
+  driven_current_window_ms: [40, 100]
+  integration_dt_ms: 0.01
+  top_down_current_pA: 1000
+  learned_state: paper-constrained Figure 6c horizontal expectation
+  monitored_relay_indices: [22, 31, 38, 39, 40, 41, 42, 49, 58]
+  convention_fingerprint: a054e5e36b75765124150157029662c6a5c8a639ee6079b442304607e726cb11
+representative_current_ranges_pA:
+  match_expectation_only_index_31:
+    direct_image_input: [-23.777251, 33.844597]
+    top_down_excitation: [0.711279, 25.966666]
+    trn_gaba: [-56.283256, -0.044353]
+    interneuron_gaba: [-7.801845, 0]
+    soma_axial: [-18.288393, 33.278993]
+    soma_voltage_mV: [-69.988501, -55.276980]
+  mismatch_expectation_only_index_39:
+    direct_image_input: [-27.508775, 26.941821]
+    top_down_excitation: [0.863268, 42.245126]
+    trn_gaba: [-64.805027, -0.046502]
+    interneuron_gaba: [-7.914339, 0]
+    soma_axial: [-21.095230, 35.626264]
+    soma_voltage_mV: [-69.988501, -54.546156]
+  match_bottom_up_and_expected_index_39:
+    direct_image_input: [35.577409, 645.592770]
+    top_down_excitation: [1.039139, 33.527579]
+    trn_gaba: [-459.191588, 56.256260]
+    interneuron_gaba: [-962.149726, 0]
+    soma_axial: [-587.213905, 437.033374]
+    soma_voltage_mV: [-96.264110, 45.896824]
+official_weight_upper_bound_discriminator:
+  learned_state: every projection 005 and 007 synapse set to its serialized 1.5 maximum
+  match:
+    active_relay_indices: [38, 39, 40, 41, 42]
+    relay_events: 20
+    trn_events: 81
+    nonspecific_rate_hz: 60
+  mismatch:
+    active_relay_indices: [22, 31, 40, 49, 58]
+    relay_events: 20
+    trn_events: 81
+    nonspecific_rate_hz: 60
+assessment:
+  top_down_current_reaches_expectation_only_cells: true
+  expectation_only_soma_reaches_spike_threshold: false
+  inhibition_is_comparable_to_expectation_current: true
+  bottom_up_input_is_order_of_magnitude_larger: true
+  official_maximum_weights_recruit_extra_relay_cells: false
+  relay_subset_divergence_reproduced: false
+  official_figure7_reproduced: false
+interpretation:
+  - The learned expectation is executable and spatially selective, but expectation-only cells receive at most tens of picoamps of top-down current and remain below approximately -54.5 mV at the soma.
+  - Directly driven image cells receive approximately 0.65 nA from the external input and generate full somatic action potentials. Thus the current implementation behaves as a five-location bottom-up selector in both conditions, not as the match-expanding relay field described by Figure 7.
+  - TRN and interneuron inhibition are comparable to or larger than top-down current in expectation-only cells, but eliminating uncertainty in learned amplitude cannot solve the failure: placing both adaptive projections at every serialized maximum still recruits exactly the five bottom-up cells in each condition.
+  - The official maximum-weight test raises each condition from 18 to 20 relay events but leaves TRN and nonspecific outputs identical. Missing Figure 6 learning amplitude is therefore excluded as the primary Figure 7 discrepancy.
+  - No weight, inhibition, or spike threshold is tuned. Exact relay-clamp and source-profile alternatives are retained in earlier artifacts and also fail condition-dependent recruitment.

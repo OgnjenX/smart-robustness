@@ -190,6 +190,9 @@ class Figure7ConditionResult:
     relay_soma_voltage_range_mV_by_index: tuple[tuple[int, float, float], ...] = ()
     relay_trn_gaba_peak_by_index: tuple[tuple[int, float], ...] = ()
     relay_trn_gaba_integral_ms_by_index: tuple[tuple[int, float], ...] = ()
+    relay_driven_current_range_pA_by_index_and_source: tuple[
+        tuple[int, str, float, float], ...
+    ] = ()
     trn_layer6ii_ampa_peak_by_index: tuple[tuple[int, float], ...] = ()
     trn_layer6ii_nmda_peak_by_index: tuple[tuple[int, float], ...] = ()
     trn_relay_ampa_peak_by_index: tuple[tuple[int, float], ...] = ()
@@ -549,6 +552,20 @@ def run_figure7_condition(
                 "port_005_gate",
                 "port_006_gate",
                 "port_007_gate",
+                "i_port_000",
+                "i_port_001",
+                "i_port_002",
+                "i_port_003",
+                "i_port_004",
+                "i_port_005",
+                "i_port_006",
+                "i_port_007",
+                "i_external_001",
+                "i_ca_distal_dendrite",
+                "i_ca_proximal_dendrite",
+                "i_axial_inward_soma",
+                "i_na_soma",
+                "i_k_soma",
                 "v_distal_dendrite",
                 "v_proximal_dendrite",
                 "v_soma",
@@ -659,6 +676,7 @@ def run_figure7_condition(
     soma_voltage_range: tuple[tuple[int, float, float], ...] = ()
     relay_trn_gaba_peak: tuple[tuple[int, float], ...] = ()
     relay_trn_gaba_integral: tuple[tuple[int, float], ...] = ()
+    relay_driven_current_range: tuple[tuple[int, str, float, float], ...] = ()
     trn_layer6ii_ampa_peak: tuple[tuple[int, float], ...] = ()
     trn_layer6ii_nmda_peak: tuple[tuple[int, float], ...] = ()
     trn_relay_ampa_peak: tuple[tuple[int, float], ...] = ()
@@ -743,6 +761,51 @@ def run_figure7_condition(
             (index, float(np.trapz(values, times_ms)))
             for index, values in zip(
                 FIGURE7_RELAY_DIAGNOSTIC_INDICES, relay_trn_gaba, strict=True
+            )
+        )
+        relay_driven_window = times_ms >= 40.0
+        relay_current_sources_pA = {
+            "direct_image_input": np.asarray(relay_state.i_external_001 / brian.pA)[
+                :, diagnostic_window
+            ],
+            "top_down_excitation": sum(
+                np.asarray(getattr(relay_state, f"i_port_{index:03d}") / brian.pA)[
+                    :, diagnostic_window
+                ]
+                for index in (3, 5, 6, 7)
+            ),
+            "trn_gaba": sum(
+                np.asarray(getattr(relay_state, f"i_port_{index:03d}") / brian.pA)[
+                    :, diagnostic_window
+                ]
+                for index in (0, 1, 4)
+            ),
+            "interneuron_gaba": np.asarray(relay_state.i_port_002 / brian.pA)[
+                :, diagnostic_window
+            ],
+            "distal_calcium": np.asarray(relay_state.i_ca_distal_dendrite / brian.pA)[
+                :, diagnostic_window
+            ],
+            "proximal_calcium": np.asarray(
+                relay_state.i_ca_proximal_dendrite / brian.pA
+            )[:, diagnostic_window],
+            "soma_axial": np.asarray(relay_state.i_axial_inward_soma / brian.pA)[
+                :, diagnostic_window
+            ],
+            "soma_sodium": np.asarray(relay_state.i_na_soma / brian.pA)[
+                :, diagnostic_window
+            ],
+            "soma_potassium": np.asarray(relay_state.i_k_soma / brian.pA)[
+                :, diagnostic_window
+            ],
+        }
+        relay_driven_current_range = tuple(
+            (index, source, float(np.min(values)), float(np.max(values)))
+            for source, traces in relay_current_sources_pA.items()
+            for index, values in zip(
+                FIGURE7_RELAY_DIAGNOSTIC_INDICES,
+                traces[:, relay_driven_window],
+                strict=True,
             )
         )
     if trn_state is not None:
@@ -968,6 +1031,9 @@ def run_figure7_condition(
         relay_soma_voltage_range_mV_by_index=soma_voltage_range,
         relay_trn_gaba_peak_by_index=relay_trn_gaba_peak,
         relay_trn_gaba_integral_ms_by_index=relay_trn_gaba_integral,
+        relay_driven_current_range_pA_by_index_and_source=(
+            relay_driven_current_range
+        ),
         trn_layer6ii_ampa_peak_by_index=trn_layer6ii_ampa_peak,
         trn_layer6ii_nmda_peak_by_index=trn_layer6ii_nmda_peak,
         trn_relay_ampa_peak_by_index=trn_relay_ampa_peak,

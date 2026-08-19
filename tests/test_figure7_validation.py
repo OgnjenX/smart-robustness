@@ -296,6 +296,7 @@ def test_figure7_result_accepts_relay_pathway_diagnostics() -> None:
     assert result.relay_soma_voltage_range_mV_by_index == ()
     assert result.relay_trn_gaba_peak_by_index == ()
     assert result.relay_trn_gaba_integral_ms_by_index == ()
+    assert result.relay_driven_current_range_pA_by_index_and_source == ()
     assert result.top_down_cue_lead_ms == 0.0
     assert result.equilibration_ms == 0.0
     assert result.trn_layer6ii_ampa_peak_by_index == ()

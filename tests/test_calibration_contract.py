@@ -89,6 +89,9 @@ FIGURE6_LEARNING_RULE_ASSESSMENT_PATH = (
 FIGURE6_DUAL_AND_LEAK_PHASE_PATH = (
     ROOT / "docs/validation-results/figure6-dual-and-leak-learning-phase-149.yaml"
 )
+FIGURE6_RELAY_WAVEFORM_PATH = (
+    ROOT / "docs/validation-results/figure6-relay-waveform-nak-audit-150.yaml"
+)
 FIGURE7_POPULATION_AXIAL_RESULT_PATH = (
     ROOT / "docs/validation-results/calibration-figure6-figure7-population-axial-137.yaml"
 )
@@ -586,6 +589,23 @@ def test_dual_and_leak_phase_exposes_subthreshold_surround_potentiation() -> Non
     assert vertical["postsynaptic_positive_overlap_ms"] > 2.0
     assert artifact["result"]["relay_event_times_ms"][31] == []
     assert vertical["final_weight"] > 0.2
+
+
+def test_registered_nak_families_do_not_extend_relay_positive_phase() -> None:
+    artifact = yaml.safe_load(FIGURE6_RELAY_WAVEFORM_PATH.read_text())
+    results = {item["nak_rate_convention"]: item["result"] for item in artifact["results"]}
+    standard = results["standard_traub_miles"]
+    hybrid = results["archived_activation_printed_inactivation"]
+    assert len(standard["relay_event_times_ms"]) == 1
+    assert len(hybrid["relay_event_times_ms"]) == 1
+    assert standard["soma_time_above_30_mV"] == pytest.approx(0.18)
+    assert hybrid["soma_time_above_30_mV"] == pytest.approx(0.17)
+    for family in ("printed_activation_archived_inactivation", "printed_smart"):
+        assert results[family]["relay_event_times_ms"] == []
+        assert results[family]["target_layer4_event_times_ms"] == []
+        assert results[family]["soma_voltage_peak_mV"] < 0
+    assert not artifact["assessment"]["nak_family_explanation_sufficient"]
+    assert artifact["assessment"]["waveform_survivor"] is None
 
 
 @pytest.mark.parametrize(

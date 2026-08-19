@@ -1,0 +1,137 @@
+schema_version: 1
+id: figure6-relay-waveform-nak-audit-150
+date: '2026-08-19'
+profile: configs/calibration/figure6_population_resolved_axial_v1.yaml
+protocol:
+  warmup_ms: 0.0
+  stimulus_ms: 20.0
+  post_stimulus_ms: 0.0
+  dt_ms: 0.01
+  source_value: 120.0
+  category_source_value: 70.0
+  winning_layer4_index: 40
+  active_category_index: 40
+  layer6ii_ahp_scale: 1.0
+  monitored_populations:
+  - thalamic_relay
+  - layer4_excitatory_v1
+  - layer6ii_excitatory_v1
+results:
+- nak_rate_convention: standard_traub_miles
+  runtime_fingerprint: e46e80d8715302406b7a31fe1b01e60e4d398585478c2686c69d0da8484eb626
+  result:
+    convention_fingerprint: e46e80d8715302406b7a31fe1b01e60e4d398585478c2686c69d0da8484eb626
+    network_mode: connected
+    disabled_projection_ids: []
+    target_index: 40
+    network_finite: true
+    external_port_record_id: modeldb112923.external.002
+    external_effective_reversal_mV: -11.999999999999996
+    external_current_peak_pA: 759.3646498249334
+    external_current_peak_ms: 7.96
+    calcium_current_peak_pA: 28.13362160114898
+    calcium_current_peak_ms: 5.790000000000001
+    calcium_current_final_pA: 15.579866830458894
+    soma_voltage_peak_mV: 45.783120277814035
+    soma_voltage_peak_ms: 5.050000000000001
+    soma_voltage_post_event_minimum_mV: -91.69741354492858
+    soma_voltage_post_event_minimum_ms: 5.710000000000001
+    soma_voltage_final_mV: -69.80261589581481
+    soma_time_above_minus20_mV: 0.44
+    soma_time_above_0_mV: 0.33
+    soma_time_above_30_mV: 0.18
+    soma_time_above_leak_mV: 5.51
+    external_current_final_pA: 648.9007534911444
+    relay_event_times_ms:
+    - 5.280000000000001
+    target_layer4_event_times_ms:
+    - 9.930000000000001
+- nak_rate_convention: archived_activation_printed_inactivation
+  runtime_fingerprint: 19e9ea35174e7bee781a19bd2c944c4b054c3b18082b5d3fa1ea7b5a283efae6
+  result:
+    convention_fingerprint: 19e9ea35174e7bee781a19bd2c944c4b054c3b18082b5d3fa1ea7b5a283efae6
+    network_mode: connected
+    disabled_projection_ids: []
+    target_index: 40
+    network_finite: true
+    external_port_record_id: modeldb112923.external.002
+    external_effective_reversal_mV: -11.999999999999996
+    external_current_peak_pA: 759.3646510335074
+    external_current_peak_ms: 7.96
+    calcium_current_peak_pA: 28.147297086493893
+    calcium_current_peak_ms: 5.790000000000001
+    calcium_current_final_pA: 15.587272616369049
+    soma_voltage_peak_mV: 45.80640404744438
+    soma_voltage_peak_ms: 5.04
+    soma_voltage_post_event_minimum_mV: -91.61025589984729
+    soma_voltage_post_event_minimum_ms: 5.710000000000001
+    soma_voltage_final_mV: -69.80256895495094
+    soma_time_above_minus20_mV: 0.44
+    soma_time_above_0_mV: 0.32
+    soma_time_above_30_mV: 0.17
+    soma_time_above_leak_mV: 5.5200000000000005
+    external_current_final_pA: 648.8641467362575
+    relay_event_times_ms:
+    - 5.2700000000000005
+    target_layer4_event_times_ms:
+    - 9.92
+    - 19.26
+- nak_rate_convention: printed_activation_archived_inactivation
+  runtime_fingerprint: 8656a94d56f83f15d5350cd221c5181632a7e440cfe872eeea3e9a21e9c41e9a
+  result:
+    convention_fingerprint: 8656a94d56f83f15d5350cd221c5181632a7e440cfe872eeea3e9a21e9c41e9a
+    network_mode: connected
+    disabled_projection_ids: []
+    target_index: 40
+    network_finite: true
+    external_port_record_id: modeldb112923.external.002
+    external_effective_reversal_mV: -11.999999999999996
+    external_current_peak_pA: 663.5043684381645
+    external_current_peak_ms: 0.0
+    calcium_current_peak_pA: 25.272315730481477
+    calcium_current_peak_ms: 12.15
+    calcium_current_final_pA: 23.36052411880627
+    soma_voltage_peak_mV: -50.050841991537105
+    soma_voltage_peak_ms: 7.59
+    soma_voltage_post_event_minimum_mV: -51.25477744223324
+    soma_voltage_post_event_minimum_ms: 11.98
+    soma_voltage_final_mV: -51.0475866688702
+    soma_time_above_minus20_mV: 0.0
+    soma_time_above_0_mV: 0.0
+    soma_time_above_30_mV: 0.0
+    soma_time_above_leak_mV: 20.0
+    external_current_final_pA: 182.37034241841994
+    relay_event_times_ms: []
+    target_layer4_event_times_ms: []
+- nak_rate_convention: printed_smart
+  runtime_fingerprint: 7433907c14b64bf2dfa279474a03bcb2b9bff9cc4e4b99ed8888758b1ccba403
+  result:
+    convention_fingerprint: 7433907c14b64bf2dfa279474a03bcb2b9bff9cc4e4b99ed8888758b1ccba403
+    network_mode: connected
+    disabled_projection_ids: []
+    target_index: 40
+    network_finite: true
+    external_port_record_id: modeldb112923.external.002
+    external_effective_reversal_mV: -11.999999999999996
+    external_current_peak_pA: 663.5043684381645
+    external_current_peak_ms: 0.0
+    calcium_current_peak_pA: 25.272366253359795
+    calcium_current_peak_ms: 12.15
+    calcium_current_final_pA: 23.36058248957939
+    soma_voltage_peak_mV: -50.050778519880225
+    soma_voltage_peak_ms: 7.59
+    soma_voltage_post_event_minimum_mV: -51.25471895674132
+    soma_voltage_post_event_minimum_ms: 11.98
+    soma_voltage_final_mV: -51.04749314478992
+    soma_time_above_minus20_mV: 0.0
+    soma_time_above_0_mV: 0.0
+    soma_time_above_30_mV: 0.0
+    soma_time_above_leak_mV: 20.0
+    external_current_final_pA: 182.36996115195782
+    relay_event_times_ms: []
+    target_layer4_event_times_ms: []
+assessment:
+  waveform_survivor: null
+  selection_rule: A survivor must emit the Figure 6 relay event and materially extend
+    the positive Equation 6 phase without introducing autonomous or off-protocol activity.
+  nak_family_explanation_sufficient: false

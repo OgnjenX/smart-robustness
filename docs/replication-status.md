@@ -1493,6 +1493,16 @@ the loss of spatial confinement. The next discriminator returns upstream to
 the unresolved action-potential waveform/legacy membrane implementation; it
 must not weaken spatial gates to retain this candidate.
 
+The connected relay waveform audit
+(`figure6-relay-waveform-nak-audit-150.yaml`) measures all four registered
+Na/K source families during the first 20 ms of the official episode. Standard
+Traub-Miles and archived-activation/printed-inactivation both emit one relay
+event and have nearly identical widths: `0.18/0.17 ms` above +30 mV and
+`0.33/0.32 ms` above 0 mV. The two printed-activation families peak near
+`-50.05 mV`, emit no relay event, and recruit no layer-4 cell. Na/K family
+choice therefore cannot supply the missing positive Equation 6 duration; no
+waveform candidate is promoted.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

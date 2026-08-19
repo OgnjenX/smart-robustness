@@ -300,3 +300,8 @@ because subthreshold surround depolarization remains above the leak-relative
 threshold. This route is mechanistically closed. Next audit action-potential
 waveform duration against the unresolved legacy membrane/Na-K implementation,
 without changing the established output-event or spatial gates.
+
+Artifact 150 completes that waveform screen. The only two spiking Na/K
+families remain above +30 mV for `0.17--0.18 ms`; the two printed-activation
+families never spike. No registered Na/K family materially extends the
+positive learning phase, so this discriminator is closed without promotion.

@@ -244,6 +244,10 @@ class Figure6RelayCurrentBalance:
     soma_voltage_post_event_minimum_mV: float
     soma_voltage_post_event_minimum_ms: float
     soma_voltage_final_mV: float
+    soma_time_above_minus20_mV: float
+    soma_time_above_0_mV: float
+    soma_time_above_30_mV: float
+    soma_time_above_leak_mV: float
     external_current_final_pA: float
     relay_event_times_ms: tuple[float, ...]
     target_layer4_event_times_ms: tuple[float, ...]
@@ -818,6 +822,12 @@ def run_figure6_relay_current_balance(
     calcium_current_peak_ms = float(time_ms[calcium_peak_index])
     soma_voltage_peak_mV, soma_voltage_peak_ms = maximum("v_soma", brian.mV)
     soma_voltage = trace("v_soma", brian.mV)
+    relay_leak_mV = float(relay.group.e_l_soma[target_index] / brian.mV)
+    sample_ms = protocol.dt_ms
+
+    def time_above(threshold_mV: float) -> float:
+        return float(np.count_nonzero(soma_voltage >= threshold_mV) * sample_ms)
+
     post_event = time_ms > soma_voltage_peak_ms
     post_event_indices = np.flatnonzero(post_event)
     post_event_minimum_index = int(
@@ -852,6 +862,10 @@ def run_figure6_relay_current_balance(
         soma_voltage_post_event_minimum_mV=float(soma_voltage[post_event_minimum_index]),
         soma_voltage_post_event_minimum_ms=float(time_ms[post_event_minimum_index]),
         soma_voltage_final_mV=float(soma_voltage[-1]),
+        soma_time_above_minus20_mV=time_above(-20.0),
+        soma_time_above_0_mV=time_above(0.0),
+        soma_time_above_30_mV=time_above(30.0),
+        soma_time_above_leak_mV=time_above(relay_leak_mV),
         external_current_final_pA=float(external_current[-1]),
         relay_event_times_ms=target_events(relay_spikes),
         target_layer4_event_times_ms=target_events(layer4_spikes),

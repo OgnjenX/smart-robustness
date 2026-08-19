@@ -1452,6 +1452,17 @@ chain (`figure6-population-resolved-trn-139.yaml`). Isolated
 quiescent/recruited TRN viability therefore does not predict full-network
 spatial recruitment. Neither candidate is promoted.
 
+The exact learning-term audit under the retracted population-axial profile is
+archived in `figure6-population-axial-learning-phase-141.yaml`. Five category
+volleys and four spikes per active relay produce only `0.01366` wide-field and
+`0.02640` narrow-field growth at representative target 39. All Equation 6
+terms close with maximum residual `1.22e-16`; the positive postsynaptic overlap
+is only `0.411--0.423 ms` across the entire 100-ms episode. The amplitude gap
+is therefore not a numerical integration error. The next discriminator must
+separate the published +30-mV output-event detector from the Equation 6
+postsynaptic learning-threshold interpretation, while leaving spike emission
+unchanged.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

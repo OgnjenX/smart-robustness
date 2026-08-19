@@ -272,3 +272,10 @@ that gate passes, the next Figure 7 discriminator must localize why the
 full spatial TRN sheet recruits globally despite the isolated survivor, using
 the recorded per-pathway currents and negative controls before exposing any
 new parameter.
+
+Artifact 141 closes the leading profile's exact learning terms to `1.22e-16`.
+At representative horizontal target 39, wide and narrow weights grow by only
+`0.01366` and `0.02640`, with less than `0.5 ms` of positive postsynaptic
+overlap across four relay spikes. The next Figure 6 discriminator is therefore
+the source interpretation of Equation 6's postsynaptic threshold/duration,
+kept separate from the +30-mV/falling-zero output event detector in Equation 8.

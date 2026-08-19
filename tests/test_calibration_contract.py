@@ -77,6 +77,9 @@ FIGURE6_POPULATION_AXIAL_RESULT_PATH = (
 FIGURE6_POPULATION_AXIAL_AMPLITUDE_AUDIT_PATH = (
     ROOT / "docs/validation-results/figure6-population-axial-amplitude-audit-140.yaml"
 )
+FIGURE6_POPULATION_AXIAL_LEARNING_PHASE_PATH = (
+    ROOT / "docs/validation-results/figure6-population-axial-learning-phase-141.yaml"
+)
 FIGURE7_POPULATION_AXIAL_RESULT_PATH = (
     ROOT / "docs/validation-results/calibration-figure6-figure7-population-axial-137.yaml"
 )
@@ -511,6 +514,26 @@ def test_shape_only_figure6_profile_fails_first_genuine_figure7_holdout() -> Non
     assert assessment["pathway"]["match_trn_spikes"] == 81
     assert assessment["pathway"]["mismatch_trn_spikes"] == 81
     assert not artifact["figure7"]["reproduced"]
+
+
+def test_population_axial_learning_phase_exactly_closes_amplitude_deficit() -> None:
+    artifact = yaml.safe_load(FIGURE6_POPULATION_AXIAL_LEARNING_PHASE_PATH.read_text())
+    assert artifact["assessment"]["integration_consistent"]
+    assert artifact["assessment"]["maximum_delta_reconstruction_error"] < 1e-12
+    result = artifact["result"]
+    assert len(result["category_event_times_ms"]) == 5
+    active_relays = {38, 39, 41, 42}
+    assert all(len(result["relay_event_times_ms"][index]) == 4 for index in active_relays)
+    selected = {
+        (connection["projection_id"], connection["target_index"]): connection
+        for connection in result["connections"]
+    }
+    wide = selected[("modeldb112923.projection.005", 39)]
+    narrow = selected[("modeldb112923.projection.007", 39)]
+    assert wide["measured_delta"] == pytest.approx(0.013663, abs=1e-6)
+    assert narrow["measured_delta"] == pytest.approx(0.026395, abs=1e-6)
+    assert wide["postsynaptic_positive_overlap_ms"] < 0.5
+    assert narrow["postsynaptic_positive_overlap_ms"] < 0.5
 
 
 @pytest.mark.parametrize(

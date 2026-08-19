@@ -13,6 +13,7 @@ from smart_robustness.validation.figure6 import (
     figure6_weight_reachability,
     run_figure6_l23_current_balance,
     run_figure6_relay_current_balance,
+    run_figure6_top_down_learning_phase,
 )
 
 
@@ -69,6 +70,11 @@ def test_intrinsic_relay_control_rejects_projection_removals_before_building() -
             connected=False,
             disabled_projection_ids=("modeldb112923.projection.000",),
         )
+
+
+def test_learning_phase_rejects_duplicate_targets_before_building() -> None:
+    with pytest.raises(ValueError, match="nonempty and unique"):
+        run_figure6_top_down_learning_phase(target_indices=(39, 39))
 
 
 def test_map_retention_advantage_detects_horizontal_orientation() -> None:

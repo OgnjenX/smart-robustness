@@ -216,3 +216,14 @@ Artifact `figure6-leading-source-alternatives-131.yaml` exhausts registered
 event-rule, initialization, calcium-kinetics, Na/K-rate, archived-category, and
 serialized-weight alternatives. Keep the leading fingerprint fixed while
 auditing the exact presynaptically gated learning phase and its source timing.
+
+That audit is complete in `figure6-top-down-learning-phase-132.yaml`. The
+three integrated Equation 25/28 components reconstruct every measured weight
+change with maximum error `1.52e-16`. Projection 005's nearest horizontal
+targets are depressed because their `-0.068561` anti-causal term exceeds the
+`+0.057777` causal term; its farther targets see only `-0.028240` depression
+and potentiate. Projection 007's nearest targets potentiate normally, and
+inactive vertical targets do not change. The next discriminator must therefore
+address a source-supported cause of the wide-field postsynaptic phase or its
+Equation 6 depression scale. Do not tune the fixed `0.01` map gate, delete TRN
+feedback, or alter the already verified presynaptic category waveform.

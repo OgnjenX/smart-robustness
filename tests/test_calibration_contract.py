@@ -50,6 +50,9 @@ FIGURE6_RELAY_AXIAL_DECOMPOSITION_PATH = (
 FIGURE6_LEADING_ALTERNATIVES_PATH = (
     ROOT / "docs/validation-results/figure6-leading-source-alternatives-131.yaml"
 )
+FIGURE6_LEARNING_PHASE_PATH = (
+    ROOT / "docs/validation-results/figure6-top-down-learning-phase-132.yaml"
+)
 
 
 def test_classic_calibration_contract_separates_training_and_holdout() -> None:
@@ -325,6 +328,30 @@ def test_registered_intrinsic_alternatives_do_not_clear_figure6c() -> None:
         )
     )
     assert not artifact["assessment"]["figure6_reproduced"]
+
+
+def test_figure6_learning_phase_exactly_localizes_wide_field_depression() -> None:
+    profile = yaml.safe_load(FIGURE6_RELAY_AXIAL_HYBRID_PROFILE_PATH.read_text())
+    artifact = yaml.safe_load(FIGURE6_LEARNING_PHASE_PATH.read_text())
+    assert artifact["candidate_fingerprint"] == profile["candidate_fingerprint"]
+    assert artifact["runtime_fingerprint"] == profile["runtime_fingerprint"]
+    assert artifact["holdouts_consulted"] is False
+    assert artifact["assessment"]["integration_consistent"]
+    assert artifact["assessment"]["maximum_delta_reconstruction_error"] < 1e-12
+
+    by_projection_target = {
+        (connection["projection_id"], connection["target_index"]): connection
+        for connection in artifact["result"]["connections"]
+    }
+    wide_near = by_projection_target[("modeldb112923.projection.005", 39)]
+    wide_far = by_projection_target[("modeldb112923.projection.005", 38)]
+    narrow_near = by_projection_target[("modeldb112923.projection.007", 39)]
+    assert wide_near["measured_delta"] < 0 < wide_far["measured_delta"]
+    assert wide_near["negative_correlation_delta"] < -wide_near[
+        "positive_correlation_delta"
+    ]
+    assert narrow_near["measured_delta"] > 0
+    assert artifact["result"]["relay_event_times_ms"][31] == []
 
 
 def test_contract_rejects_holdout_leakage(tmp_path: Path) -> None:

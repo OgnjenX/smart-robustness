@@ -413,6 +413,7 @@ def build_first_order_chemical_sector(
     *,
     conventions: FirstOrderRuntimeConventions | None = None,
     gate_initialization_convention: str | None = None,
+    instrument_learning_terms: bool = False,
     brian=None,
 ) -> FirstOrderSector:
     """Instantiate the first-order cells and every in-scope chemical projection."""
@@ -456,6 +457,7 @@ def build_first_order_chemical_sector(
             ),
             spike_event_coordinate=resolved_conventions.spike_event_coordinate,
             spike_event_threshold_mV=resolved_conventions.spike_event_threshold_mV,
+            instrument_learning_terms=instrument_learning_terms,
             brian=brian,
         )
     sector.projections = projections
@@ -520,6 +522,7 @@ def build_first_order_connected_sector(
     *,
     conventions: FirstOrderRuntimeConventions | None = None,
     gate_initialization_convention: str | None = None,
+    instrument_learning_terms: bool = False,
     brian=None,
 ) -> FirstOrderSector:
     """Build chemical and electrical connectivity; external inputs remain separate."""
@@ -536,6 +539,7 @@ def build_first_order_connected_sector(
     )
     sector = build_first_order_chemical_sector(
         conventions=resolved_conventions,
+        instrument_learning_terms=instrument_learning_terms,
         brian=brian,
     )
     facts_by_name = {fact.canonical_name: fact for fact in sector.facts}

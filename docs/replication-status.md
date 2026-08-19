@@ -1359,6 +1359,21 @@ top-down initial weights starts the combined center at 3.0, drives 162 relay
 events, and produces negative top-down contrast, contradicting the weak
 Figure 6c before-map. None is promoted.
 
+An exact Equation 25/28 term audit now closes the remaining Figure 6c
+weight changes to floating-point precision
+(`figure6-top-down-learning-phase-132.yaml`, maximum additive residual
+`1.52e-16`). For wide projection 005, the nearest horizontal targets change by
+`-0.003763`: their positive correlation contribution (`+0.057777`) is exceeded
+by the anti-causal contribution (`-0.068561`), despite a small positive
+baseline term (`+0.007021`). The farther horizontal targets instead change by
+`+0.005452` because their anti-causal contribution is only `-0.028240`.
+Narrow projection 007 correctly potentiates the nearest horizontal targets by
+`+0.013052`. Vertical targets emit no relay events and remain unchanged. This
+proves that the last Figure 6c failure is the wide pathway's spatially unequal
+post-spike depression, not numerical integration, inactive-tail growth, or a
+missing presynaptic category gate. The passive audit accumulators do not feed
+back into SMART state. The leading candidate remains unpromoted.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

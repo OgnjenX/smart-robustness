@@ -13,6 +13,7 @@ from ..learning import (
     full_postsynaptic_learning_signal,
     gated_weight_derivative,
 )
+from ..modeldb_projections import MODELDB_FULL
 from ..models.currents import biexponential_normalization
 from ..protocols import (
     BarOrientation,
@@ -248,6 +249,36 @@ class Figure6RelayCurrentBalance:
     @property
     def relay_recruits_target_layer4(self) -> bool:
         return bool(self.target_layer4_event_times_ms)
+
+
+@dataclass(frozen=True, slots=True)
+class Figure6LearningPhaseConnection:
+    """Integrated Equation 25/28 terms for one corticothalamic connection."""
+
+    projection_id: str
+    target_index: int
+    initial_weight: float
+    final_weight: float
+    measured_delta: float
+    positive_correlation_delta: float
+    negative_correlation_delta: float
+    baseline_delta: float
+    reconstructed_delta: float
+    presynaptic_gate_integral_ms: float
+    postsynaptic_positive_overlap_ms: float
+    postsynaptic_negative_overlap_ms: float
+
+
+@dataclass(frozen=True, slots=True)
+class Figure6LearningPhaseResult:
+    """Connection-resolved top-down learning phase in the official episode."""
+
+    convention_fingerprint: str
+    dt_ms: float
+    duration_ms: float
+    category_event_times_ms: tuple[float, ...]
+    relay_event_times_ms: dict[int, tuple[float, ...]]
+    connections: tuple[Figure6LearningPhaseConnection, ...]
 
 
 @dataclass(frozen=True, slots=True)
@@ -795,6 +826,193 @@ def run_figure6_relay_current_balance(
         external_current_final_pA=float(external_current[-1]),
         relay_event_times_ms=target_events(relay_spikes),
         target_layer4_event_times_ms=target_events(layer4_spikes),
+    )
+
+
+def run_figure6_top_down_learning_phase(
+    *,
+    conventions=None,
+    protocol: Figure6LearningProtocol | None = None,
+    source_index: int = 40,
+    target_indices: tuple[int, ...] = HORIZONTAL_ONLY_INDICES + VERTICAL_ONLY_INDICES,
+    brian=None,
+) -> Figure6LearningPhaseResult:
+    """Integrate the exact learning terms for selected Figure 6c synapses."""
+
+    if brian is None:
+        import brian2 as brian
+    from ..classic_sector import build_first_order_connected_sector, figure6_runtime_conventions
+
+    conventions = conventions or figure6_runtime_conventions()
+    protocol = protocol or Figure6LearningProtocol()
+    if not 0 <= source_index < 81:
+        raise ValueError("source_index must address the 9x9 category sheet")
+    if not target_indices or len(set(target_indices)) != len(target_indices):
+        raise ValueError("target_indices must be nonempty and unique")
+    if any(index < 0 or index >= 81 for index in target_indices):
+        raise ValueError("target_indices must address the 9x9 relay sheet")
+    brian.start_scope()
+    brian.defaultclock.dt = protocol.dt_ms * brian.ms
+    sector = build_first_order_connected_sector(
+        conventions=conventions,
+        instrument_learning_terms=True,
+        brian=brian,
+    )
+    monitors: dict[str, tuple[Any, np.ndarray, Any]] = {}
+    for projection_id in (TOP_DOWN_WIDE_PROJECTION_ID, TOP_DOWN_NARROW_PROJECTION_ID):
+        projection = sector.projections[projection_id]
+        source = np.asarray(projection.i[:], dtype=int)
+        target = np.asarray(projection.j[:], dtype=int)
+        selected = np.flatnonzero(
+            (source == source_index) & np.isin(target, np.asarray(target_indices))
+        )
+        monitor = brian.StateMonitor(
+            projection,
+            (
+                "w",
+                "pre_signal",
+                "last_post_spike",
+                "learning_positive",
+                "learning_negative",
+                "learning_baseline",
+            ),
+            record=selected,
+            name=f"figure6_learning_phase_{projection_id.rsplit('.', maxsplit=1)[-1]}",
+        )
+        monitors[projection_id] = (projection, selected, monitor)
+    relay_targets = tuple(sorted(set(target_indices)))
+    relay_state = brian.StateMonitor(
+        sector.populations["thalamic_relay"].group,
+        "v_soma",
+        record=relay_targets,
+        name="figure6_learning_phase_relay_state",
+    )
+    category_spikes = brian.SpikeMonitor(
+        sector.populations["layer6ii_excitatory_v1"].group,
+        name="figure6_learning_phase_category_spikes",
+    )
+    relay_spikes = brian.SpikeMonitor(
+        sector.populations["thalamic_relay"].group,
+        name="figure6_learning_phase_relay_spikes",
+    )
+    sector.network.add(
+        *(monitor for _, _, monitor in monitors.values()),
+        relay_state,
+        category_spikes,
+        relay_spikes,
+    )
+    if protocol.warmup_ms:
+        sector.network.run(protocol.warmup_ms * brian.ms)
+    apply_bar_stimulus(
+        sector,
+        ClassicBarStimulus(
+            BarOrientation.HORIZONTAL,
+            duration_ms=protocol.stimulus_ms,
+            source_value=protocol.source_value,
+            category_source_value=protocol.category_source_value,
+            include_archived_category_pixel=True,
+        ),
+    )
+    sector.network.run(protocol.stimulus_ms * brian.ms)
+
+    relay_voltage_by_target = {
+        target: np.asarray(relay_state.v_soma[row] / brian.mV, dtype=float)
+        for row, target in enumerate(relay_targets)
+    }
+    record_by_id = {record.id: record for record in MODELDB_FULL.projections}
+    connections: list[Figure6LearningPhaseConnection] = []
+    for projection_id, (projection, selected, monitor) in monitors.items():
+        record = record_by_id[projection_id]
+        if record.learning_rate is None or record.depotentiation_ms is None:
+            raise ValueError(f"{projection_id} has incomplete learning parameters")
+        time_ms = np.asarray(monitor.t / brian.ms, dtype=float) - protocol.warmup_ms
+        keep = time_ms >= 0
+        if np.count_nonzero(keep) < 2:
+            raise ValueError("learning phase monitor did not record the stimulus epoch")
+        step_ms = float(np.median(np.diff(time_ms[keep])))
+        for row, synapse_index in enumerate(selected):
+            weight = np.asarray(monitor.w[row][keep], dtype=float)
+            pre = np.asarray(monitor.pre_signal[row][keep], dtype=float)
+            target_index = int(np.asarray(projection.j[:], dtype=int)[synapse_index])
+            last_post_spike_ms = (
+                np.asarray(monitor.last_post_spike[row][keep] / brian.ms, dtype=float)
+                - protocol.warmup_ms
+            )
+            post_elapsed_ms = time_ms[keep] - last_post_spike_ms
+            post_voltage = relay_voltage_by_target[target_index][keep]
+            if conventions.spike_event_coordinate == "shifted_67_mV":
+                post_voltage = post_voltage + 67.0
+            elif conventions.spike_event_coordinate == "relative_to_table3_leak":
+                relay = sector.populations["thalamic_relay"].group
+                post_voltage = post_voltage - float(relay.e_l_soma[target_index] / brian.mV)
+            elif conventions.spike_event_coordinate != "absolute_physical":
+                raise ValueError(
+                    f"unsupported spike event coordinate {conventions.spike_event_coordinate!r}"
+                )
+            depression_scale = -np.asarray(projection.w_baseline[synapse_index]) / np.asarray(
+                projection.w_maximum[synapse_index]
+            )
+            above = post_voltage >= conventions.spike_event_threshold_mV
+            post = np.zeros_like(post_elapsed_ms)
+            post[above] = depression_scale + 1.0
+            early = (~above) & (post_elapsed_ms >= 0) & (post_elapsed_ms < 0.1)
+            post[early] = depression_scale + 1.0 - post_elapsed_ms[early] / 0.1
+            late = (
+                (~above)
+                & (post_elapsed_ms >= 0.1)
+                & (post_elapsed_ms < record.depotentiation_ms + 0.1)
+            )
+            post[late] = depression_scale * (
+                1.0 - (post_elapsed_ms[late] - 0.1) / record.depotentiation_ms
+            )
+            positive_trace = np.asarray(monitor.learning_positive[row][keep], dtype=float)
+            negative_trace = np.asarray(monitor.learning_negative[row][keep], dtype=float)
+            baseline_trace = np.asarray(monitor.learning_baseline[row][keep], dtype=float)
+            positive_delta = float(
+                projection.learning_positive[synapse_index] - positive_trace[0]
+            )
+            negative_delta = float(
+                projection.learning_negative[synapse_index] - negative_trace[0]
+            )
+            baseline_delta = float(
+                projection.learning_baseline[synapse_index] - baseline_trace[0]
+            )
+            connections.append(
+                Figure6LearningPhaseConnection(
+                    projection_id=projection_id,
+                    target_index=target_index,
+                    initial_weight=float(weight[0]),
+                    final_weight=float(projection.w[synapse_index]),
+                    measured_delta=float(projection.w[synapse_index] - weight[0]),
+                    positive_correlation_delta=positive_delta,
+                    negative_correlation_delta=negative_delta,
+                    baseline_delta=baseline_delta,
+                    reconstructed_delta=positive_delta + negative_delta + baseline_delta,
+                    presynaptic_gate_integral_ms=float(np.sum(pre) * step_ms),
+                    postsynaptic_positive_overlap_ms=float(
+                        np.sum(pre**2 * np.maximum(post, 0)) * step_ms
+                    ),
+                    postsynaptic_negative_overlap_ms=float(
+                        np.sum(pre**2 * np.minimum(post, 0)) * step_ms
+                    ),
+                )
+            )
+
+    def indexed_events(monitor, index: int) -> tuple[float, ...]:
+        indices = np.asarray(monitor.i, dtype=int)
+        times = np.asarray(monitor.t / brian.ms, dtype=float) - protocol.warmup_ms
+        selected = (indices == index) & (times >= 0)
+        return tuple(float(value) for value in times[selected])
+
+    return Figure6LearningPhaseResult(
+        convention_fingerprint=conventions.fingerprint,
+        dt_ms=protocol.dt_ms,
+        duration_ms=protocol.stimulus_ms,
+        category_event_times_ms=indexed_events(category_spikes, source_index),
+        relay_event_times_ms={
+            index: indexed_events(relay_spikes, index) for index in target_indices
+        },
+        connections=tuple(connections),
     )
 
 

@@ -300,6 +300,7 @@ def connect_modeldb_projection(
     gaussian_learning_bounds_convention: GaussianLearningBoundsConvention | str,
     spike_event_coordinate: str = "absolute_physical",
     spike_event_threshold_mV: float = 30.0,
+    instrument_learning_terms: bool = False,
     topology_override: tuple[np.ndarray, np.ndarray, np.ndarray] | None = None,
     brian: Any,
 ) -> Any:
@@ -376,6 +377,16 @@ def connect_modeldb_projection(
             post_voltage = "v_soma_post+67*mV"
         else:
             post_voltage = "v_soma_post-e_l_soma_post"
+        learning_term_instrumentation = ""
+        if instrument_learning_terms:
+            learning_term_instrumentation = (
+                f"\ndlearning_positive/dt=({record.learning_rate}/ms)*({learning_gate})"
+                "*clip(correlation_drive, 0, 1e9) : 1 (clock-driven)"
+                f"\ndlearning_negative/dt=({record.learning_rate}/ms)*({learning_gate})"
+                "*clip(correlation_drive, -1e9, 0) : 1 (clock-driven)"
+                f"\ndlearning_baseline/dt=({record.learning_rate}/ms)*({learning_gate})"
+                "*baseline_drive : 1 (clock-driven)"
+            )
         model += (
             "\npost_elapsed=t-last_post_spike : second"
             "\ndepression_scale=-w_baseline/w_maximum : 1"
@@ -385,8 +396,11 @@ def connect_modeldb_projection(
             f"\npost_signal=int({post_voltage} >= {float(spike_event_threshold_mV)}*mV)*x_post_above"
             f" + int({post_voltage} < {float(spike_event_threshold_mV)}*mV and post_elapsed >= 0*ms and post_elapsed < 0.1*ms)*x_post_early"
             f" + int({post_voltage} < {float(spike_event_threshold_mV)}*mV and post_elapsed >= 0.1*ms and post_elapsed < {post_window + 0.1}*ms)*x_post_late : 1"
+            "\ncorrelation_drive=pre_signal*post_signal*(w_maximum-w) : 1"
+            "\nbaseline_drive=w_baseline-w : 1"
             f"\ndw/dt=({record.learning_rate}/ms)*({learning_gate})"
-            "*(pre_signal*post_signal*(w_maximum-w)+(w_baseline-w)) : 1 (clock-driven)"
+            "*(correlation_drive+baseline_drive) : 1 (clock-driven)"
+            f"{learning_term_instrumentation}"
             "\nlast_post_spike : second"
         )
         on_post = "last_post_spike = t"

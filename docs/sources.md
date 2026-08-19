@@ -162,3 +162,9 @@ a 25-ms tail. Both interpretations remain named runtime conventions. Artifact
 155 also proves that the Figure 6c colorbar endpoint cannot be interpreted as
 an attainable single-synapse value under the printed Equation 5 and
 Supplementary Table 3 bounds; the numeric Figure 6 matrix was not published.
+
+A direct Figure 7 audit also retracts the earlier 40/70-Hz nonspecific-thalamus
+target. The caption and Results Sections 2.2-2.3 publish only directional
+relay, TRN, and nonspecific-thalamus effects. The paper's 40-Hz value calibrates
+the Methods 4.9 relay input, while 70-Hz values belong to unrelated protocols.
+Artifact 157 records the corrected structural/qualitative contract.

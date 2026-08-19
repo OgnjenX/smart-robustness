@@ -134,8 +134,9 @@ seeds, and one short stable sector simulation.
 - Encode the five-cell-bar stimulus, learned horizontal expectation, orthogonal
   mismatch, nonspecific arousal, and layer-4 reset protocols.
 
-Exit: Figure 6 qualitative learning gates and maps; Figure 7 approximate 40/70
-Hz nonspecific response; Figure 10 causal reset sequence and negative controls.
+Exit: Figure 6 qualitative learning gates and maps; Figure 7 match-greater-than-
+mismatch relay/TRN recruitment and mismatch-greater-than-match nonspecific
+response; Figure 10 causal reset sequence and negative controls.
 
 ## M5 — first-order oscillation validation
 

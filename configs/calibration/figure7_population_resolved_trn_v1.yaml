@@ -27,5 +27,5 @@ candidate:
   top_down_current_pA: 600.0
 promotion_gate: >-
   Retain every complete Figure 6 gate, then require Figure 7 directional
-  relay/TRN ordering and approximately 40/70-Hz nonspecific rates. Preserve
+  relay/TRN ordering and mismatch-greater-than-match nonspecific output. Preserve
   oscillatory and higher-order targets as untouched later validation stages.

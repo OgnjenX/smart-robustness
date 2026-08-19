@@ -1,8 +1,8 @@
-"""Predeclared Figure 7 match/mismatch arousal metrics.
+"""Source-constrained Figure 7 match/mismatch arousal metrics.
 
-Figure 7 reports approximate firing rates for the single nonspecific thalamic
-cell.  It does not provide a complete trace or a numeric reset latency, so the
-rate result and the later qualitative reset result are deliberately separate.
+Figure 7 reports a directional effect: mismatch disinhibits the nonspecific
+thalamus relative to match. It does not publish numeric firing-rate targets or
+a complete trace, so absolute rates are reported but are not fitted.
 """
 
 from __future__ import annotations
@@ -29,9 +29,6 @@ from ..protocols import (
 from ..synapses import modeldb_topology_pairs
 from .figure6 import TOP_DOWN_NARROW_PROJECTION_ID, TOP_DOWN_WIDE_PROJECTION_ID
 
-FIGURE7_MATCH_RATE_HZ = 40.0
-FIGURE7_MISMATCH_RATE_HZ = 70.0
-FIGURE7_RATE_TOLERANCE_HZ = 10.0
 FIGURE7_REQUIRED_LEARNED_PROJECTIONS = (
     TOP_DOWN_WIDE_PROJECTION_ID,
     TOP_DOWN_NARROW_PROJECTION_ID,
@@ -236,17 +233,6 @@ class Figure7ConditionResult:
 class Figure7ArousalAssessment:
     match_rate_hz: float
     mismatch_rate_hz: float
-    match_target_hz: float = FIGURE7_MATCH_RATE_HZ
-    mismatch_target_hz: float = FIGURE7_MISMATCH_RATE_HZ
-    tolerance_hz: float = FIGURE7_RATE_TOLERANCE_HZ
-
-    @property
-    def match_rate_pass(self) -> bool:
-        return abs(self.match_rate_hz - self.match_target_hz) <= self.tolerance_hz
-
-    @property
-    def mismatch_rate_pass(self) -> bool:
-        return abs(self.mismatch_rate_hz - self.mismatch_target_hz) <= self.tolerance_hz
 
     @property
     def mismatch_disinhibition_pass(self) -> bool:
@@ -254,11 +240,7 @@ class Figure7ArousalAssessment:
 
     @property
     def reproduced_arousal(self) -> bool:
-        return (
-            self.match_rate_pass
-            and self.mismatch_rate_pass
-            and self.mismatch_disinhibition_pass
-        )
+        return self.mismatch_disinhibition_pass
 
 
 @dataclass(frozen=True, slots=True)
@@ -268,8 +250,7 @@ class Figure7PathwayAssessment:
     The publication does not report numeric relay or TRN counts.  It does state
     that a match lets more specific-thalamic cells fire, which in turn makes
     TRN inhibition stronger than during mismatch.  These are therefore
-    directional gates, kept separate from the approximate 40/70-Hz output
-    targets.
+    directional gates, with absolute output rates retained only as diagnostics.
     """
 
     match_active_relay_cells: int
@@ -335,18 +316,13 @@ def _validate_figure7_pair(
 def assess_figure7_arousal(
     match: Figure7ConditionResult,
     mismatch: Figure7ConditionResult,
-    *,
-    tolerance_hz: float = FIGURE7_RATE_TOLERANCE_HZ,
 ) -> Figure7ArousalAssessment:
-    """Score only the published Figure 7 nonspecific-thalamus rate claim."""
+    """Score the published mismatch-greater-than-match arousal claim."""
 
     _validate_figure7_pair(match, mismatch)
-    if tolerance_hz < 0:
-        raise ValueError("tolerance_hz cannot be negative")
     return Figure7ArousalAssessment(
         match_rate_hz=match.nonspecific_rate_hz,
         mismatch_rate_hz=mismatch.nonspecific_rate_hz,
-        tolerance_hz=tolerance_hz,
     )
 
 
@@ -372,13 +348,11 @@ def assess_figure7_pathway(
 def assess_figure7_reproduction(
     match: Figure7ConditionResult,
     mismatch: Figure7ConditionResult,
-    *,
-    tolerance_hz: float = FIGURE7_RATE_TOLERANCE_HZ,
 ) -> Figure7ReproductionAssessment:
-    """Require both the published output rates and their stated mechanism."""
+    """Require both directional arousal and the stated relay/TRN mechanism."""
 
     return Figure7ReproductionAssessment(
-        arousal=assess_figure7_arousal(match, mismatch, tolerance_hz=tolerance_hz),
+        arousal=assess_figure7_arousal(match, mismatch),
         pathway=assess_figure7_pathway(match, mismatch),
     )
 

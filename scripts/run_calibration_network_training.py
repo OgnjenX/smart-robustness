@@ -168,11 +168,12 @@ def main() -> None:
             "assessment": assessment,
             "reproduced": assessment.reproduced,
         }
-        artifact["status"] = (
-            "passing-figure6-and-figure7"
-            if assessment.reproduced
-            else "passing-figure6-failed-figure7-holdout"
-        )
+        if not figure6_reproduced:
+            artifact["status"] = "failed-figure6-and-figure7-diagnostic"
+        elif assessment.reproduced:
+            artifact["status"] = "passing-figure6-and-figure7"
+        else:
+            artifact["status"] = "passing-figure6-failed-figure7-holdout"
         output.write_text(yaml.safe_dump(_plain(artifact), sort_keys=False))
         print(
             "Figure 7: "

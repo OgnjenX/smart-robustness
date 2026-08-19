@@ -1,0 +1,40 @@
+schema_version: 1
+id: figure7-target-provenance-correction-157
+date: '2026-08-19'
+status: validation-contract-corrected
+claim_audited: Figure 7 publishes approximately 40-Hz match and 70-Hz mismatch nonspecific-thalamus rates.
+official_source_review:
+  figure7_caption: >-
+    Specifies horizontal/horizontal match, vertical/horizontal mismatch, more
+    specific-thalamic firing during match, stronger TRN inhibition during
+    match, and greater nonspecific-thalamus firing during mismatch.
+  results_sections: Grossberg and Versace 2008 Sections 2.2-2.3
+  numeric_nonspecific_rates_present: false
+  complete_nonspecific_trace_present: false
+misattributed_values:
+  40_hz: Methods 4.9 calibration of the five stimulated relay cells
+  70_hz: unrelated firing/transmitter protocols, including Figure 11
+active_contract:
+  match_relay_indices: [38, 39, 40, 41, 42]
+  mismatch_relay_indices_must_be_subset_of: [40]
+  relay_count_order: match_greater_than_mismatch
+  trn_output_order: match_greater_than_mismatch
+  nonspecific_output_order: mismatch_greater_than_match
+  absolute_rate_target: null
+  evidence_class: structural-and-qualitative
+latest_diagnostic:
+  artifact: docs/validation-results/figure6-kinness-equation27-figure7-diagnostic-156.yaml
+  match_active_relay_cells: 5
+  mismatch_active_relay_cells: 5
+  match_trn_spikes: 81
+  mismatch_trn_spikes: 81
+  match_nonspecific_rate_hz: 10.0
+  mismatch_nonspecific_rate_hz: 10.0
+  corrected_contract_pass: false
+assessment:
+  historical_numeric_artifacts: retained-for-provenance
+  source_faithful_contract_changed: true
+  reproduction_claim_changed: false
+  note: >-
+    Correcting the unsupported absolute targets does not make the current model
+    pass: it still lacks every published directional match/mismatch effect.

@@ -40,7 +40,7 @@ behavioral freeze and not proof of bitwise equivalence to KInNeSS 0.3.4 RC2.
 |---|---|
 | Figure 6 bottom-up orientation | qualitative pass |
 | Figure 6 cortical chain/top-down map | fail |
-| Figure 7 40/70 Hz split and overlap-only mismatch | fail |
+| Figure 7 directional arousal split and overlap-only mismatch | fail |
 | Figure 10 causal reset chain | fail |
 | Figure 14 match gamma | partial pass |
 | Figure 14 mismatch slowing/gamma reduction | fail |

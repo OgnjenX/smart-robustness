@@ -31,7 +31,7 @@ def _result(condition: MatchCondition, spike_count: int) -> Figure7ConditionResu
     )
 
 
-def test_figure7_arousal_accepts_published_approximate_rates() -> None:
+def test_figure7_arousal_accepts_directional_mismatch_disinhibition() -> None:
     assessment = assess_figure7_arousal(
         _result(MatchCondition.MATCH, 4),
         _result(MatchCondition.MISMATCH, 7),
@@ -41,14 +41,11 @@ def test_figure7_arousal_accepts_published_approximate_rates() -> None:
     assert assessment.reproduced_arousal
 
 
-def test_rate_fit_without_mismatch_disinhibition_is_not_reproduction() -> None:
+def test_higher_match_rate_is_not_mismatch_disinhibition() -> None:
     assessment = assess_figure7_arousal(
         _result(MatchCondition.MATCH, 7),
         _result(MatchCondition.MISMATCH, 4),
-        tolerance_hz=30.0,
     )
-    assert assessment.match_rate_pass
-    assert assessment.mismatch_rate_pass
     assert not assessment.mismatch_disinhibition_pass
     assert not assessment.reproduced_arousal
 

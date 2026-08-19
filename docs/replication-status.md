@@ -1520,6 +1520,21 @@ five horizontal relay cells, but its combined map peaks at only `0.18606`.
 Unlike leak-relative zero, it does not potentiate the surround. The registered
 threshold/coordinate family is now exhausted without a Figure 6c survivor.
 
+### Figure 7 numeric-target correction
+
+A direct audit of the official Figure 7 caption and Results Sections 2.2-2.3
+retracts the repository's earlier 40/70-Hz nonspecific-thalamus acceptance
+pair. The paper states only a directional mechanism: a match recruits more
+specific-thalamic cells and therefore more TRN inhibition, while mismatch
+disinhibits the nonspecific thalamus and increases its firing. The paper's
+40-Hz value belongs to Methods 4.9 relay-input calibration, and its 70-Hz
+values occur in unrelated transmitter/firing protocols. Historical artifacts
+retain their predeclared numeric scorer for provenance, but the active Figure
+7 contract now requires the published spatial relay subset, stronger TRN
+output during match, and higher nonspecific output during mismatch. Artifact
+156 still fails the corrected contract because both conditions produce five
+active relay cells, 81 TRN events, and 10-Hz nonspecific output.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

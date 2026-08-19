@@ -205,11 +205,11 @@ parameters:
     value: required explicit pA amplitude applied to one central layer 6II soma
     status: not-identifiable
     source: Methods 4.9 specifies somatic current injection but reports no amplitude; Figure 7 fixes a horizontal learned expectation for both conditions
-    note: the archived blue=70 TD INPUT is subthreshold in the isolated source-profile cell; 600 pA gives 30 Hz and 1000 pA gives 40 Hz, but the 1000-pA full match trial still yields 70-Hz nonspecific output and no post-startup TRN event
+    note: the archived blue=70 TD INPUT is subthreshold in the isolated source-profile cell; 600 pA gives 30 Hz and 1000 pA gives 40 Hz, but neither value is an official Figure 7 nonspecific-thalamus target
   validation.figure7.rate_tolerance:
-    value: plus or minus 10 Hz around the approximately 40 Hz match and 70 Hz mismatch rates
-    status: exploratory-predeclared
-    source: Figure 7 reports approximate rates but no uncertainty interval; declared before running the Figure 7 network protocol
+    value: retracted; Figure 7 publishes directional disinhibition but no numeric rate pair
+    status: retracted-unsupported
+    source: Direct audit of Figure 7 caption and Results Sections 2.2-2.3; no numeric nonspecific-thalamus rate is stated
   benchmark.population_sizes:
     value: see configs/*.yaml
     status: exploratory

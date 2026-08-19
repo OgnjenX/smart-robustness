@@ -42,7 +42,8 @@ Candidates failing an isolated causal gate do not enter network calibration.
 - all five horizontal relay cells active during match;
 - mismatch relay output confined to the horizontal/vertical overlap;
 - more post-startup TRN output in match;
-- nonspecific thalamus approximately 40 Hz match and 70 Hz mismatch.
+- nonspecific thalamus fires more during mismatch than match; absolute rates
+  are diagnostic only because Figure 7 publishes no numeric pair.
 
 ### D — locked holdout evaluation
 

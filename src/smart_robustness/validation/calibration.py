@@ -212,6 +212,14 @@ def runtime_conventions_for_candidate(
                 (figure6_runtime_conventions() if base is None else base).gaussian_learning_bounds_convention,
             )
         ),
+        postsynaptic_depression_scale_convention=str(
+            values.get(
+                "postsynaptic_depression_scale_convention",
+                (
+                    figure6_runtime_conventions() if base is None else base
+                ).postsynaptic_depression_scale_convention,
+            )
+        ),
     )
 
 

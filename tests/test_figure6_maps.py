@@ -152,6 +152,32 @@ def test_top_down_timing_accounts_for_the_archived_axonal_delay() -> None:
     assert assessment.causal_pair_in_learning_window
 
 
+def test_top_down_timing_selects_the_closest_causal_pair_in_the_episode() -> None:
+    empty = Figure6MapSummary("projection", "map", (0.0,) * 81, (0.0,) * 81)
+    result = Figure6LearningResult(
+        "fingerprint",
+        100.0,
+        {},
+        empty,
+        empty,
+        empty,
+        population_spike_indices={
+            "layer6ii_excitatory_v1": (40, 40, 40),
+            "thalamic_relay": (40, 40),
+        },
+        population_spike_times_ms={
+            "layer6ii_excitatory_v1": (8.1, 46.13, 69.01),
+            "thalamic_relay": (5.28, 77.57),
+        },
+    )
+    assessment = assess_figure6_top_down_timing(result)
+    assert assessment.category_spike_ms == pytest.approx(69.01)
+    assert assessment.teaching_arrival_ms == pytest.approx(71.01)
+    assert assessment.following_relay_spike_ms == pytest.approx(77.57)
+    assert assessment.following_post_minus_arrival_ms == pytest.approx(6.56)
+    assert assessment.causal_pair_in_learning_window
+
+
 def test_cortical_recruitment_requires_ordered_layer4_layer23_layer5_events() -> None:
     empty = Figure6MapSummary("projection", "map", (0.0,) * 81, (0.0,) * 81)
     complete = Figure6LearningResult(

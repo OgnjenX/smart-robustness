@@ -126,9 +126,10 @@ parameters:
     source: ModelDB 112923 absolute-voltage T-current parameters compared with KInNeSS output-voltage footnote 12
     note: separates the voltage used by T-current kinetics from the membrane-coordinate driving force; the split-coordinate alternative fails the Figure 7 network discriminator
   model.multicompartment.axial_convention:
-    value: kinness_2008, paper_literal, or symmetric_cable; must be selected explicitly
-    status: derived
-    source: expanded KInNeSS framework manuscript Equation 9; SMART Table 3 axial resistivities
+    value: population-resolved source pairing (archived relay uses kinness_serialized_edge; paper Table 3 populations use paper_literal Equation 2)
+    status: paper/archive composite executable convention
+    source: SMART.nml relay compartment edges; Grossberg and Versace 2008 Equation 2 and Table 3
+    note: the pairing reproduces four events per active relay, the complete cortical chain, and both Figure 6 maps; applying paper_literal globally overdrives relay cells to seven events each, while applying KInNeSS globally prevents the cortical chain
   model.connectivity.gaussian_weight_convention:
     value: source_peak with resulting-weight cutoff at 0.001
     status: archived-simulator-manual executable convention

@@ -9,9 +9,11 @@ from smart_robustness.classic_sector import (
     FirstOrderRuntimeConventions,
     build_first_order_chemical_sector,
     build_first_order_connected_sector,
+    first_order_population_parameters,
 )
 from smart_robustness.modeldb_projections import MODELDB_FIRST_ORDER
 from smart_robustness.models.currents import biexponential_peak_time_ms
+from smart_robustness.models.modeldb112923 import first_order_population_facts
 from smart_robustness.projections import SUPPLEMENTARY_TABLE3
 from smart_robustness.synapses import (
     GaussianLearningBoundsConvention,
@@ -115,6 +117,35 @@ def test_fixed_67_mv_spike_coordinate_is_shared_by_plasticity_gate() -> None:
     )
     projection = sector.projections["modeldb112923.projection.035"]
     assert "v_soma_post+67*mV" in str(projection.equations)
+
+
+def test_serialized_projection_depression_scale_is_an_explicit_audit_alternative() -> None:
+    brian.start_scope()
+    sector = build_first_order_chemical_sector(
+        conventions=FirstOrderRuntimeConventions(
+            postsynaptic_depression_scale_convention="serialized_projection_bounds"
+        ),
+        brian=brian,
+    )
+    projection = sector.projections["modeldb112923.projection.005"]
+    assert "depression_scale = -0.03333333333333333" in str(projection.equations)
+
+
+def test_population_resolved_axial_source_keeps_relay_with_its_archive() -> None:
+    conventions = FirstOrderRuntimeConventions(
+        axial_convention="modeldb_relay_kinness_paper_others"
+    )
+    facts = first_order_population_facts()
+    relay = next(fact for fact in facts if fact.canonical_name == "thalamic_relay")
+    layer23 = next(
+        fact for fact in facts if fact.canonical_name == "layer23_excitatory_v1"
+    )
+    assert first_order_population_parameters(
+        relay, conventions=conventions
+    )["axial_convention"] == "kinness_serialized_edge"
+    assert first_order_population_parameters(
+        layer23, conventions=conventions
+    )["axial_convention"] == "paper_literal"
 
 
 def test_failed_figure6_pathway_candidate_remains_reproducible_but_inactive() -> None:

@@ -105,12 +105,19 @@ class FirstOrderRuntimeConventions:
     gaussian_weight_convention: str = "source_peak"
     gaussian_spread_convention: str = "standard_deviation"
     gaussian_learning_bounds_convention: str = "projection_level"
+    postsynaptic_depression_scale_convention: str = "local_learning_bounds"
     projection_source_convention: str = "modeldb_as_serialized"
     convergent_external_input_convention: str = "sum_independent_currents"
 
     @property
     def fingerprint(self) -> str:
-        payload = json.dumps(asdict(self), sort_keys=True, separators=(",", ":"))
+        values = asdict(self)
+        if values["postsynaptic_depression_scale_convention"] == "local_learning_bounds":
+            # Preserve the identity of every historical profile. This optional
+            # discriminator is serialized only when it differs from the
+            # pre-existing executable behavior.
+            values.pop("postsynaptic_depression_scale_convention")
+        payload = json.dumps(values, sort_keys=True, separators=(",", ":"))
         return hashlib.sha256(payload.encode()).hexdigest()
 
 
@@ -231,6 +238,13 @@ def first_order_population_parameters(
     has_ahp = facts.ahp_density_mS_cm2 is not None
     intrinsic_source = _resolved_intrinsic_source(facts, conventions=conventions)
     intrinsic_cell = resolved_intrinsic_cell(facts, conventions=conventions)
+    axial_convention = conventions.axial_convention
+    if axial_convention == "modeldb_relay_kinness_paper_others":
+        axial_convention = (
+            "kinness_serialized_edge"
+            if facts.canonical_name == "thalamic_relay"
+            else "paper_literal"
+        )
     calcium_kinetics = CalciumKineticsConvention(conventions.calcium_kinetics_convention)
     calcium_gate_convention = conventions.calcium_gate_convention
     if (
@@ -251,7 +265,7 @@ def first_order_population_parameters(
     parameters: dict[str, Any] = {
         "cell_spec": intrinsic_cell,
         "cell_class": facts.canonical_name,
-        "axial_convention": conventions.axial_convention,
+        "axial_convention": axial_convention,
         "leak_convention": conventions.leak_convention,
         "voltage_coordinate": conventions.voltage_coordinate,
         "nak_rate_convention": conventions.nak_rate_convention,
@@ -356,6 +370,9 @@ def build_full_smart_network(
                 ),
                 spike_event_coordinate=conventions.spike_event_coordinate,
                 spike_event_threshold_mV=conventions.spike_event_threshold_mV,
+                postsynaptic_depression_scale_convention=(
+                    conventions.postsynaptic_depression_scale_convention
+                ),
             )
         else:
             projection = connect_modeldb_gap_junction(
@@ -457,6 +474,9 @@ def build_first_order_chemical_sector(
             ),
             spike_event_coordinate=resolved_conventions.spike_event_coordinate,
             spike_event_threshold_mV=resolved_conventions.spike_event_threshold_mV,
+            postsynaptic_depression_scale_convention=(
+                resolved_conventions.postsynaptic_depression_scale_convention
+            ),
             instrument_learning_terms=instrument_learning_terms,
             brian=brian,
         )

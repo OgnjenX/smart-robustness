@@ -237,3 +237,23 @@ by Figure 6c, and projection-level `D` cannot be obtained merely by switching
 the complete learning bounds. The next source discriminator must isolate the
 Equation 6 postsynaptic scale from Equation 25's local decorrelation baseline,
 or correct the relay spike phase through another documented mechanism.
+
+The isolated projection-level `D` hybrid is now rejected as well
+(`figure6-projection-depression-scale-134.yaml`): top-down contrast is
+`-0.01531`, and narrow active weights become negative. Do not tune `D`
+independently of Equation 25 bounds. The remaining mechanistic route is the
+documented category-arrival/relay-spike phase under the local bounded learning
+profile; first attribute depression to individual teaching volleys, then test
+only source-supported event, delay, or intrinsic mechanisms that move that
+phase.
+
+That route has produced the first complete Figure 6 survivor
+(`figure6-population-resolved-axial-136.yaml`). Pairing the archived relay with
+archived axial edges and the paper Table 3 cells with paper Equation 2 restores
+the declared 40-Hz relay rate, the cortical chain, later causal gamma-phase
+pairs, Figure 6b contrast `0.23252`, and Figure 6c contrast `0.03045`. The
+full-episode causal assessor now selects the closest teaching/relay pair across
+all category spikes instead of incorrectly testing only the onset category
+spike. Promote `figure6_population_resolved_axial_v1.yaml` to the next stage.
+Freeze all Figure 6 conventions and proceed to Figure 7 match/mismatch rate and
+TRN-order gates; do not retune Figure 6 while evaluating those holdouts.

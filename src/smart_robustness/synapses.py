@@ -44,6 +44,13 @@ class GaussianLearningBoundsConvention(StrEnum):
     FIGURE6_PATHWAY_SPECIFIC = "figure6_pathway_specific"
 
 
+class PostsynapticDepressionScaleConvention(StrEnum):
+    """Source selected for Equation 6's negative postsynaptic scale ``D``."""
+
+    LOCAL_LEARNING_BOUNDS = "local_learning_bounds"
+    SERIALIZED_PROJECTION_BOUNDS = "serialized_projection_bounds"
+
+
 def connect_conductance(
     pre: Any,
     post: Any,
@@ -300,6 +307,7 @@ def connect_modeldb_projection(
     gaussian_learning_bounds_convention: GaussianLearningBoundsConvention | str,
     spike_event_coordinate: str = "absolute_physical",
     spike_event_threshold_mV: float = 30.0,
+    postsynaptic_depression_scale_convention: str = "local_learning_bounds",
     instrument_learning_terms: bool = False,
     topology_override: tuple[np.ndarray, np.ndarray, np.ndarray] | None = None,
     brian: Any,
@@ -387,9 +395,24 @@ def connect_modeldb_projection(
                 f"\ndlearning_baseline/dt=({record.learning_rate}/ms)*({learning_gate})"
                 "*baseline_drive : 1 (clock-driven)"
             )
+        depression_convention = PostsynapticDepressionScaleConvention(
+            postsynaptic_depression_scale_convention
+        )
+        if (
+            depression_convention
+            is PostsynapticDepressionScaleConvention.LOCAL_LEARNING_BOUNDS
+        ):
+            depression_scale = "-w_baseline/w_maximum"
+        else:
+            serialized_baseline = float(
+                record.weight
+                if record.asymptotic_weight is None
+                else record.asymptotic_weight
+            )
+            depression_scale = f"{-serialized_baseline / float(record.weight)!r}"
         model += (
             "\npost_elapsed=t-last_post_spike : second"
-            "\ndepression_scale=-w_baseline/w_maximum : 1"
+            f"\ndepression_scale={depression_scale} : 1"
             "\nx_post_above=depression_scale+1 : 1"
             "\nx_post_early=depression_scale+1-post_elapsed/(0.1*ms) : 1"
             f"\nx_post_late=depression_scale*(1-(post_elapsed-0.1*ms)/({post_window}*ms)) : 1"

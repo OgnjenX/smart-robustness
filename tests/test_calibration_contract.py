@@ -59,6 +59,21 @@ FIGURE6_PROJECTION_BOUNDS_PROFILE_PATH = (
 FIGURE6_PROJECTION_BOUNDS_RESULT_PATH = (
     ROOT / "docs/validation-results/figure6-projection-level-learning-bounds-133.yaml"
 )
+FIGURE6_PROJECTION_D_PROFILE_PATH = (
+    ROOT / "configs/calibration/figure6_projection_depression_scale_v1.yaml"
+)
+FIGURE6_PROJECTION_D_RESULT_PATH = (
+    ROOT / "docs/validation-results/figure6-projection-depression-scale-134.yaml"
+)
+FIGURE6_VOLLEY_DECOMPOSITION_PATH = (
+    ROOT / "docs/validation-results/figure6-teaching-volley-decomposition-135.yaml"
+)
+FIGURE6_POPULATION_AXIAL_PROFILE_PATH = (
+    ROOT / "configs/calibration/figure6_population_resolved_axial_v1.yaml"
+)
+FIGURE6_POPULATION_AXIAL_RESULT_PATH = (
+    ROOT / "docs/validation-results/figure6-population-resolved-axial-136.yaml"
+)
 
 
 def test_classic_calibration_contract_separates_training_and_holdout() -> None:
@@ -382,6 +397,74 @@ def test_projection_level_learning_bounds_are_source_literal_but_fail_figure6c()
     )
     assert not artifact["assessment"]["figure6_reproduced"]
     assert not artifact["assessment"]["promoted"]
+
+
+def test_projection_level_depression_scale_is_incompatible_with_local_baseline() -> None:
+    profile = yaml.safe_load(FIGURE6_PROJECTION_D_PROFILE_PATH.read_text())
+    candidate = profile["candidate"]
+    fingerprint = hashlib.sha256(
+        json.dumps(candidate, sort_keys=True, separators=(",", ":")).encode()
+    ).hexdigest()
+    conventions = runtime_conventions_for_candidate(candidate)
+    artifact = yaml.safe_load(FIGURE6_PROJECTION_D_RESULT_PATH.read_text())
+    assert profile["candidate_fingerprint"] == fingerprint
+    assert profile["runtime_fingerprint"] == conventions.fingerprint
+    assert conventions.postsynaptic_depression_scale_convention == (
+        "serialized_projection_bounds"
+    )
+    assert artifact["recruitment"]["feedforward_chain_complete"]
+    assert artifact["top_down_timing"]["causal_pair_in_learning_window"]
+    assert artifact["maps"]["bottom_up_oriented"]
+    assert artifact["maps"]["top_down_horizontal_orientation_contrast"] < 0
+    assert min(artifact["maps"]["top_down_narrow"]["horizontal_arm_after"]) < 0
+    assert not artifact["assessment"]["figure6_reproduced"]
+    assert not artifact["assessment"]["promoted"]
+
+
+def test_figure6_teaching_volley_decomposition_closes_each_connection() -> None:
+    artifact = yaml.safe_load(FIGURE6_VOLLEY_DECOMPOSITION_PATH.read_text())
+    assert artifact["assessment"]["integration_consistent"]
+    assert artifact["assessment"]["maximum_delta_reconstruction_error"] < 1e-12
+    by_projection_target = {
+        (connection["projection_id"], connection["target_index"]): connection
+        for connection in artifact["result"]["connections"]
+    }
+    wide_near = by_projection_target[("modeldb112923.projection.005", 39)]
+    assert sum(window["measured_delta"] for window in wide_near["windows"]) == (
+        pytest.approx(wide_near["measured_delta"])
+    )
+    onset_window = wide_near["windows"][0]
+    assert onset_window["start_ms"] == pytest.approx(9.88)
+    assert onset_window["end_ms"] == pytest.approx(16.93)
+    assert onset_window["positive_correlation_delta"] == 0
+    assert onset_window["negative_correlation_delta"] < 0
+
+
+def test_population_resolved_axial_profile_reproduces_complete_figure6() -> None:
+    profile = yaml.safe_load(FIGURE6_POPULATION_AXIAL_PROFILE_PATH.read_text())
+    candidate = profile["candidate"]
+    fingerprint = hashlib.sha256(
+        json.dumps(candidate, sort_keys=True, separators=(",", ":")).encode()
+    ).hexdigest()
+    conventions = runtime_conventions_for_candidate(candidate)
+    artifact = yaml.safe_load(FIGURE6_POPULATION_AXIAL_RESULT_PATH.read_text())
+    assert profile["candidate_fingerprint"] == fingerprint
+    assert profile["runtime_fingerprint"] == conventions.fingerprint
+    assert profile["status"] == "promoted-complete-figure6-source-profile"
+    assert artifact["candidate_fingerprint"] == fingerprint
+    assert artifact["status"] == "complete-figure6-pass"
+    assert artifact["population_spikes"]["thalamic_relay"] == 20
+    assert all(
+        len(times) == 4
+        for times in artifact["active_cell_times_ms"]["relay_horizontal"].values()
+    )
+    assert artifact["recruitment"]["feedforward_chain_complete"]
+    assert artifact["top_down_timing"]["causal_pair_in_learning_window"]
+    assert artifact["maps"]["bottom_up_oriented"]
+    assert artifact["maps"]["top_down_oriented"]
+    assert artifact["maps"]["top_down_horizontal_orientation_contrast"] >= 0.01
+    assert artifact["assessment"]["figure6_reproduced"]
+    assert artifact["assessment"]["promoted"]
 
 
 def test_contract_rejects_holdout_leakage(tmp_path: Path) -> None:

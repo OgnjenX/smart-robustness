@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from itertools import pairwise
 from typing import Any
 
 import numpy as np
@@ -252,6 +253,18 @@ class Figure6RelayCurrentBalance:
 
 
 @dataclass(frozen=True, slots=True)
+class Figure6LearningPhaseWindow:
+    """Exact learning decomposition between two presynaptic arrivals."""
+
+    start_ms: float
+    end_ms: float
+    measured_delta: float
+    positive_correlation_delta: float
+    negative_correlation_delta: float
+    baseline_delta: float
+
+
+@dataclass(frozen=True, slots=True)
 class Figure6LearningPhaseConnection:
     """Integrated Equation 25/28 terms for one corticothalamic connection."""
 
@@ -267,6 +280,7 @@ class Figure6LearningPhaseConnection:
     presynaptic_gate_integral_ms: float
     postsynaptic_positive_overlap_ms: float
     postsynaptic_negative_overlap_ms: float
+    windows: tuple[Figure6LearningPhaseWindow, ...]
 
 
 @dataclass(frozen=True, slots=True)
@@ -403,8 +417,6 @@ def assess_figure6_top_down_timing(
     )
     if not category_times:
         return Figure6TopDownTimingAssessment(None, None, None, None)
-    category_spike = category_times[0]
-    arrival = category_spike + axonal_delay_ms
     relay_times = tuple(
         time
         for index, time in zip(
@@ -414,13 +426,24 @@ def assess_figure6_top_down_timing(
         )
         if index == relay_index
     )
+    causal_pairs = tuple(
+        (relay_time - (category_time + axonal_delay_ms), category_time, relay_time)
+        for category_time in category_times
+        for relay_time in relay_times
+        if relay_time >= category_time + axonal_delay_ms
+    )
+    if causal_pairs:
+        _, category_spike, following_relay = min(causal_pairs)
+    else:
+        category_spike = category_times[0]
+        following_relay = None
+    arrival = category_spike + axonal_delay_ms
     preceding = tuple(time for time in relay_times if time < arrival)
-    following = tuple(time for time in relay_times if time >= arrival)
     return Figure6TopDownTimingAssessment(
         category_spike_ms=category_spike,
         teaching_arrival_ms=arrival,
         preceding_relay_spike_ms=max(preceding) if preceding else None,
-        following_relay_spike_ms=min(following) if following else None,
+        following_relay_spike_ms=following_relay,
     )
 
 
@@ -500,6 +523,7 @@ def run_figure6_learning(
     )
     apply_bar_stimulus(sector, stimulus)
     sector.network.run(protocol.stimulus_ms * brian.ms)
+
     if protocol.post_stimulus_ms:
         clear_bar_stimulus(sector, stimulus)
         sector.network.run(protocol.post_stimulus_ms * brian.ms)
@@ -915,6 +939,23 @@ def run_figure6_top_down_learning_phase(
     )
     sector.network.run(protocol.stimulus_ms * brian.ms)
 
+    def indexed_events(monitor, index: int) -> tuple[float, ...]:
+        indices = np.asarray(monitor.i, dtype=int)
+        times = np.asarray(monitor.t / brian.ms, dtype=float) - protocol.warmup_ms
+        selected = (indices == index) & (times >= 0)
+        return tuple(float(value) for value in times[selected])
+
+    category_event_times = indexed_events(category_spikes, source_index)
+
+    def interval_delta(
+        trace: np.ndarray,
+        final: float,
+        start_sample: int,
+        end_sample: int,
+    ) -> float:
+        end_value = final if end_sample >= len(trace) else float(trace[end_sample])
+        return end_value - float(trace[start_sample])
+
     relay_voltage_by_target = {
         target: np.asarray(relay_state.v_soma[row] / brian.mV, dtype=float)
         for row, target in enumerate(relay_targets)
@@ -949,9 +990,15 @@ def run_figure6_top_down_learning_phase(
                 raise ValueError(
                     f"unsupported spike event coordinate {conventions.spike_event_coordinate!r}"
                 )
-            depression_scale = -np.asarray(projection.w_baseline[synapse_index]) / np.asarray(
-                projection.w_maximum[synapse_index]
-            )
+            if (
+                conventions.postsynaptic_depression_scale_convention
+                == "serialized_projection_bounds"
+            ):
+                depression_scale = -float(record.asymptotic_weight) / float(record.weight)
+            else:
+                depression_scale = -np.asarray(
+                    projection.w_baseline[synapse_index]
+                ) / np.asarray(projection.w_maximum[synapse_index])
             above = post_voltage >= conventions.spike_event_threshold_mV
             post = np.zeros_like(post_elapsed_ms)
             post[above] = depression_scale + 1.0
@@ -977,6 +1024,48 @@ def run_figure6_top_down_learning_phase(
             baseline_delta = float(
                 projection.learning_baseline[synapse_index] - baseline_trace[0]
             )
+            delay_ms = float(projection.delay[synapse_index] / brian.ms)
+            arrival_times = tuple(
+                event_time + delay_ms
+                for event_time in category_event_times
+                if event_time + delay_ms < protocol.stimulus_ms
+            )
+            window_bounds = arrival_times + (protocol.stimulus_ms,)
+            windows: list[Figure6LearningPhaseWindow] = []
+            for start_ms, end_ms in pairwise(window_bounds):
+                start_sample = int(np.searchsorted(time_ms[keep], start_ms, side="left"))
+                end_sample = int(np.searchsorted(time_ms[keep], end_ms, side="left"))
+
+                windows.append(
+                    Figure6LearningPhaseWindow(
+                        start_ms=start_ms,
+                        end_ms=end_ms,
+                        measured_delta=interval_delta(
+                            weight,
+                            float(projection.w[synapse_index]),
+                            start_sample,
+                            end_sample,
+                        ),
+                        positive_correlation_delta=interval_delta(
+                            positive_trace,
+                            float(projection.learning_positive[synapse_index]),
+                            start_sample,
+                            end_sample,
+                        ),
+                        negative_correlation_delta=interval_delta(
+                            negative_trace,
+                            float(projection.learning_negative[synapse_index]),
+                            start_sample,
+                            end_sample,
+                        ),
+                        baseline_delta=interval_delta(
+                            baseline_trace,
+                            float(projection.learning_baseline[synapse_index]),
+                            start_sample,
+                            end_sample,
+                        ),
+                    )
+                )
             connections.append(
                 Figure6LearningPhaseConnection(
                     projection_id=projection_id,
@@ -995,20 +1084,15 @@ def run_figure6_top_down_learning_phase(
                     postsynaptic_negative_overlap_ms=float(
                         np.sum(pre**2 * np.minimum(post, 0)) * step_ms
                     ),
+                    windows=tuple(windows),
                 )
             )
-
-    def indexed_events(monitor, index: int) -> tuple[float, ...]:
-        indices = np.asarray(monitor.i, dtype=int)
-        times = np.asarray(monitor.t / brian.ms, dtype=float) - protocol.warmup_ms
-        selected = (indices == index) & (times >= 0)
-        return tuple(float(value) for value in times[selected])
 
     return Figure6LearningPhaseResult(
         convention_fingerprint=conventions.fingerprint,
         dt_ms=protocol.dt_ms,
         duration_ms=protocol.stimulus_ms,
-        category_event_times_ms=indexed_events(category_spikes, source_index),
+        category_event_times_ms=category_event_times,
         relay_event_times_ms={
             index: indexed_events(relay_spikes, index) for index in target_indices
         },

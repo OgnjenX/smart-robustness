@@ -1386,6 +1386,45 @@ problem and rejects projection-level bounds as the complete Figure 6 runtime
 interpretation. It is retained as a source-literal negative control, not
 promoted.
 
+Decoupling only Equation 6's `D` from the local Equation 25 baseline is also
+rejected (`figure6-projection-depression-scale-134.yaml`). The candidate uses
+the serialized projection ratio `D=-0.05/1.5` while leaving inactive spatial
+baselines local. It retains the cortical chain, causal pair, and Figure 6b,
+but combined Figure 6c contrast falls to `-0.01531`; every active horizontal
+wide weight depresses, and active narrow weights cross below zero. This is not
+a bounded KInNeSS learning system and cannot be promoted. Together with
+artifact 133, it shows that projection-level `D` cannot be separated from its
+projection-level Equation 25 bounds to rescue the graphical local-baseline
+interpretation.
+
+The exact teaching-volley decomposition
+(`figure6-teaching-volley-decomposition-135.yaml`) partitions every integrated
+weight term with no residual. In the prior global-paper-axial leader, the
+onset relay spike at 1.14 ms leaves a negative Equation 6 tail that overlaps
+the first category arrivals at 9.88 and 16.93 ms. For wide target 39 this first
+window contributes `-0.005070`, exceeding the connection's final
+`-0.003763` change. Direct visual and textual review of the primary Figure 6
+caption confirms that learning is active during the same 100-ms episode; it
+does not authorize suppressing this onset window. The Results text instead
+states that the oriented top-down weights are learned during gamma
+oscillations.
+
+A source-coherent population-resolved axial profile now reproduces the full
+registered Figure 6 target
+(`figure6-population-resolved-axial-136.yaml`). The archived SMART.nml relay
+cell uses its archived KInNeSS serialized axial edges, while cells selected
+from paper Table 3 use paper-literal Equation 2 coupling. Each of the five
+stimulated relays emits exactly four events in 100 ms (40 Hz), rather than the
+seven events caused by applying paper axial coupling to the archived relay.
+The ordered layer-4 -> layer-2/3 -> layer-5 chain occurs at 9.93, 28.87, and
+31.59 ms. Later resonant teaching pairs include 90.00 -> 95.70 ms. Bottom-up
+horizontal contrast is `0.23252`, and combined top-down contrast is `0.03045`,
+above the fixed `0.01` gate; inactive vertical arms remain unchanged. The
+complete run is deterministic across the initial and confirmation executions.
+The profile is promoted as the Figure 6-calibrated source baseline. This does
+not yet freeze classic SMART: Figure 7, reset, oscillatory, and higher-order
+gates remain.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

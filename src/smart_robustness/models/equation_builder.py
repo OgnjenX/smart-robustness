@@ -91,8 +91,24 @@ def _nak_lines(
 ) -> list[str]:
     v = f"v_{name}"
     vp = _paper_voltage(name, coordinate)
-    alpha_m_scale = 1.28 if convention is NaKRateConvention.STANDARD_TRAUB_MILES else 0.128
-    alpha_h_offset = 17 if convention is NaKRateConvention.STANDARD_TRAUB_MILES else 27
+    alpha_m_scale = (
+        1.28
+        if convention
+        in {
+            NaKRateConvention.STANDARD_TRAUB_MILES,
+            NaKRateConvention.ARCHIVED_ACTIVATION_PRINTED_INACTIVATION,
+        }
+        else 0.128
+    )
+    alpha_h_offset = (
+        17
+        if convention
+        in {
+            NaKRateConvention.STANDARD_TRAUB_MILES,
+            NaKRateConvention.PRINTED_ACTIVATION_ARCHIVED_INACTIVATION,
+        }
+        else 27
+    )
     return [
         f"dm_{name}/dt = alpha_m_{name}*(1-m_{name})-beta_m_{name}*m_{name} : 1",
         f"dh_{name}/dt = alpha_h_{name}*(1-h_{name})-beta_h_{name}*h_{name} : 1",

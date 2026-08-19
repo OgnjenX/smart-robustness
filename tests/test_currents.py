@@ -110,6 +110,21 @@ def test_standard_traub_miles_correction_is_explicit_and_distinct() -> None:
         traub_miles_rates(0.0, "standard_traub_miles")  # type: ignore[arg-type]
 
 
+def test_na_rate_source_conflicts_can_be_decomposed_independently() -> None:
+    printed = traub_miles_rates(0.0, NaKRateConvention.PRINTED_SMART)
+    archived = traub_miles_rates(0.0, NaKRateConvention.STANDARD_TRAUB_MILES)
+    activation_only = traub_miles_rates(
+        0.0, NaKRateConvention.ARCHIVED_ACTIVATION_PRINTED_INACTIVATION
+    )
+    inactivation_only = traub_miles_rates(
+        0.0, NaKRateConvention.PRINTED_ACTIVATION_ARCHIVED_INACTIVATION
+    )
+    assert activation_only.alpha_m == archived.alpha_m
+    assert activation_only.alpha_h == printed.alpha_h
+    assert inactivation_only.alpha_m == printed.alpha_m
+    assert inactivation_only.alpha_h == archived.alpha_h
+
+
 @pytest.mark.parametrize("voltage_mV", [-200.0, -100.0, -60.0, 0.0, 50.0, 100.0])
 def test_all_traub_miles_rates_are_finite_and_nonnegative(voltage_mV: float) -> None:
     rates = traub_miles_rates(voltage_mV)

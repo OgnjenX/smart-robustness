@@ -111,3 +111,12 @@ the tonic train but makes the hyperpolarized response sustained; the literal
 onset event. Interior points either sustain both conditions or collapse both to
 onset events. A scalar calcium-unit conversion is therefore rejected as a
 sufficient Figure 8 explanation.
+
+The archived and printed Na-rate families also differ in two independent
+sodium constants: activation scale and inactivation offset. The two possible
+source hybrids were therefore exposed separately and screened across the full
+remaining TRN space (`calibration-stage-a-trn-hybrid-nak-119.yaml`). All 384
+control/driven pairs were finite, 314 controls were quiescent, and none was
+recruitable. Archived activation preserves autonomous spiking; printed
+activation preserves quiescence but not recruitment. Changing the inactivation
+offset does not break that tradeoff, so neither hybrid is promoted.

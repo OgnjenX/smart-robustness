@@ -1223,6 +1223,18 @@ the top condition has only one onset event. Intermediate values never pass
 both gates. Thus a single version-1 calcium-unit scale is insufficient, and no
 calibrated value is promoted.
 
+The paper/archive Na-rate discrepancy has now been decomposed rather than
+treated as one all-or-nothing profile. SMART Methods and ModelDB differ in both
+the sodium activation scale (0.128 versus 1.28) and inactivation offset (27
+versus 17 mV), so the two cross-source hybrids are legitimate discrete
+discriminators. Their complete 384-candidate TRN matrix is finite throughout
+but has zero survivors (`calibration-stage-a-trn-hybrid-nak-119.yaml`). Of 384
+controls, 314 are quiescent; every one remains unrecruitable. Candidates using
+archived activation instead support autonomous events, sometimes modulated by
+drive, while printed activation remains silent regardless of inactivation
+offset. The missing TRN mechanism is therefore not either Na-rate constant in
+isolation.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

@@ -30,7 +30,11 @@ dimensions:
     source: Grossberg and Versace Table 3 versus Methods 4.6 global 250 mS/cm2 statement
   nak_rate_convention:
     kind: categorical
-    values: [standard_traub_miles, printed_smart]
+    values:
+      - standard_traub_miles
+      - printed_smart
+      - archived_activation_printed_inactivation
+      - printed_activation_archived_inactivation
     status: conflicting_official_source
     source: Grossberg and Versace Methods Equations 11-19 versus ModelDB 112923 SMART.nml
   axial_convention:

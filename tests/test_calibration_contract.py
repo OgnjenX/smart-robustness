@@ -40,9 +40,9 @@ def test_candidate_fingerprint_requires_complete_admissible_values() -> None:
 def test_contract_enumerates_complete_and_projected_spaces_deterministically() -> None:
     contract = load_calibration_contract(CONTRACT_PATH)
     complete = list(contract.iter_candidates())
-    assert len(complete) == 4608
+    assert len(complete) == 9216
     assert complete == list(contract.iter_candidates())
-    assert len({contract.candidate_fingerprint(item) for item in complete}) == 4608
+    assert len({contract.candidate_fingerprint(item) for item in complete}) == 9216
 
     stage_a_dimensions = (
         "intrinsic_cell_convention",
@@ -54,7 +54,7 @@ def test_contract_enumerates_complete_and_projected_spaces_deterministically() -
         "spike_event_rule",
     )
     projected = list(contract.iter_candidates(stage_a_dimensions))
-    assert len(projected) == 384
+    assert len(projected) == 768
     assert {item["gaussian_spread_convention"] for item in projected} == {
         "standard_deviation"
     }

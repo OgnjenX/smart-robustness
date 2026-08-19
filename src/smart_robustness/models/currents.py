@@ -178,6 +178,8 @@ class NaKRateConvention(StrEnum):
 
     PRINTED_SMART = "printed_smart"
     STANDARD_TRAUB_MILES = "standard_traub_miles"
+    ARCHIVED_ACTIVATION_PRINTED_INACTIVATION = "archived_activation_printed_inactivation"
+    PRINTED_ACTIVATION_ARCHIVED_INACTIVATION = "printed_activation_archived_inactivation"
 
 
 def _x_over_expm1(x: float) -> float:
@@ -254,8 +256,15 @@ def traub_miles_rates(
         raise TypeError("convention must be an explicit NaKRateConvention member")
     alpha_m = alpha_m_per_ms(v_mV)
     alpha_h = alpha_h_per_ms(v_mV)
-    if convention is NaKRateConvention.STANDARD_TRAUB_MILES:
+    if convention in {
+        NaKRateConvention.STANDARD_TRAUB_MILES,
+        NaKRateConvention.ARCHIVED_ACTIVATION_PRINTED_INACTIVATION,
+    }:
         alpha_m *= 10.0
+    if convention in {
+        NaKRateConvention.STANDARD_TRAUB_MILES,
+        NaKRateConvention.PRINTED_ACTIVATION_ARCHIVED_INACTIVATION,
+    }:
         alpha_h = 0.128 * math.exp((17.0 - v_mV) / 18.0)
 
     return TraubMilesRates(

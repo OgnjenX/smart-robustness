@@ -24,12 +24,20 @@ def main() -> None:
     )
     parser.add_argument("--output", required=True)
     parser.add_argument("--limit", type=int)
+    parser.add_argument("--offset", type=int, default=0)
     parser.add_argument(
         "--where",
         action="append",
         default=[],
         metavar="DIMENSION=VALUE",
         help="retain only candidates with the declared categorical value",
+    )
+    parser.add_argument(
+        "--where-in",
+        action="append",
+        default=[],
+        metavar="DIMENSION=VALUE,VALUE",
+        help="retain candidates whose declared categorical value is in the list",
     )
     args = parser.parse_args()
 
@@ -47,15 +55,36 @@ def main() -> None:
         if name in filters:
             raise ValueError(f"duplicate --where dimension: {name}")
         filters[name] = value
-    if filters:
-        unknown = sorted(set(filters) - {item.name for item in contract.dimensions})
+    filters_in = {}
+    for expression in args.where_in:
+        try:
+            name, raw_values = expression.split("=", 1)
+        except ValueError as exc:
+            raise ValueError("--where-in requires DIMENSION=VALUE,VALUE") from exc
+        values = tuple(value for value in raw_values.split(",") if value)
+        if not values:
+            raise ValueError("--where-in requires at least one value")
+        if name in filters_in or name in filters:
+            raise ValueError(f"duplicate filter dimension: {name}")
+        filters_in[name] = values
+    if filters or filters_in:
+        unknown = sorted(
+            (set(filters) | set(filters_in))
+            - {item.name for item in contract.dimensions}
+        )
         if unknown:
             raise ValueError(f"unknown --where dimensions: {unknown}")
         candidates = [
             candidate
             for candidate in candidates
             if all(str(candidate[name]) == value for name, value in filters.items())
+            and all(
+                str(candidate[name]) in values for name, values in filters_in.items()
+            )
         ]
+    if args.offset < 0:
+        raise ValueError("--offset cannot be negative")
+    candidates = candidates[args.offset :]
     if args.limit is not None:
         candidates = candidates[: args.limit]
     protocol = TrnRecruitmentProtocol()
@@ -93,12 +122,14 @@ def main() -> None:
         "base_tag": contract.base_tag,
         "active_dimensions": list(TRN_STAGE_A_DIMENSIONS),
         "filters": filters,
+        "filters_in": filters_in,
         "protocol": asdict(protocol),
         "gate": {
             "quiescent_control": "finite and zero events after pre-drive",
             "driven_recruitment": "finite and at least one event after drive onset",
         },
         "candidate_count": len(outcomes),
+        "candidate_offset": args.offset,
         "promoted_count": len(promoted),
         "promoted_candidate_fingerprints": [
             item["result"]["candidate_fingerprint"] for item in promoted

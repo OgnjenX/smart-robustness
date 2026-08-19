@@ -136,3 +136,16 @@ def test_trn_recruitment_runner_applies_declared_driven_gates() -> None:
     assert result.driven
     assert result.applied_layer6ii_ampa_gate == pytest.approx(1.5)
     assert result.applied_layer6ii_nmda_gate == pytest.approx(0.75)
+
+
+def test_figure8_source_parameters_expose_legacy_calcium_unit_candidate() -> None:
+    from smart_robustness.validation.isolated_cells import figure8_source_parameters
+
+    params = figure8_source_parameters(
+        leak_density_mS_cm2=0.1,
+        specific_capacitance_uF_cm2=1.0,
+        calcium_density_mS_cm2=0.25,
+    )
+    assert {compartment.g_ca_mS_cm2 for compartment in params["cell_spec"].compartments} == {
+        0.25
+    }

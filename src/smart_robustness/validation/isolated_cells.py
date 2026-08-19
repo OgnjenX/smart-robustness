@@ -461,6 +461,7 @@ def figure8_source_parameters(
     *,
     leak_density_mS_cm2: float,
     specific_capacitance_uF_cm2: float,
+    calcium_density_mS_cm2: float = 250.0,
     geometry_convention: Figure8GeometryConvention | str = Figure8GeometryConvention.CENTIMETERS,
 ) -> dict[str, Any]:
     """Build the dedicated Ca_rebound.xml cell with two explicit missing defaults."""
@@ -470,6 +471,7 @@ def figure8_source_parameters(
     return {
         "cell_spec": figure8_relay_spec(
             leak_density_mS_cm2=leak_density_mS_cm2,
+            calcium_density_mS_cm2=calcium_density_mS_cm2,
             geometry_convention=geometry_convention,
         ),
         "cell_class": "thalamic_relay",
@@ -499,6 +501,7 @@ def run_figure8_source_candidate(
     *,
     leak_density_mS_cm2: float,
     specific_capacitance_uF_cm2: float,
+    calcium_density_mS_cm2: float = 250.0,
     geometry_convention: Figure8GeometryConvention | str = Figure8GeometryConvention.CENTIMETERS,
     protocol: Figure8Protocol | None = None,
     brian=None,
@@ -509,6 +512,7 @@ def run_figure8_source_candidate(
     params = figure8_source_parameters(
         leak_density_mS_cm2=leak_density_mS_cm2,
         specific_capacitance_uF_cm2=specific_capacitance_uF_cm2,
+        calcium_density_mS_cm2=calcium_density_mS_cm2,
         geometry_convention=geometry_convention,
     )
     tonic = run_figure8_condition(

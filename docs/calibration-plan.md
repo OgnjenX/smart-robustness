@@ -95,3 +95,19 @@ suppression but not 500-ms recovery. Of four axial conventions, only the
 paper-literal Equation 2 profile propagated sustained distal layer-5 input into
 somatic events. These partial passes cannot bypass the failed relay and TRN
 gates.
+
+The Figure 8 archive serializes calcium `g_bar=250` under an unrecovered
+version-1 unit system. Its two documented endpoint interpretations—250
+mS/cm² literal and 0.25 mS/cm² after a µS-to-mS conversion—separately recover
+the burst and tonic halves but not both. Because Figure 8 is a registered
+training target, a sparse logarithmic conductance grid between those endpoints
+is predeclared in `run_figure8_legacy_calibration.py`. This grid may select a
+version-1 unit mapping but may not consult network or holdout outputs.
+
+That ten-point grid produced no survivor
+(`figure8-legacy-unit-calibration-118.yaml`). The 0.25 mS/cm² endpoint restores
+the tonic train but makes the hyperpolarized response sustained; the literal
+250 mS/cm² endpoint preserves the transient burst but yields only one tonic
+onset event. Interior points either sustain both conditions or collapse both to
+onset events. A scalar calcium-unit conversion is therefore rejected as a
+sufficient Figure 8 explanation.

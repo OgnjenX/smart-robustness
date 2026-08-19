@@ -354,6 +354,7 @@ def full_network_structural_counts() -> tuple[int, int]:
 def figure8_relay_spec(
     *,
     leak_density_mS_cm2: float,
+    calcium_density_mS_cm2: float = 250.0,
     geometry_convention: Figure8GeometryConvention | str = Figure8GeometryConvention.CENTIMETERS,
 ) -> CellSpec:
     """Build the dedicated ``Ca_rebound.xml`` relay cell.
@@ -365,6 +366,8 @@ def figure8_relay_spec(
 
     if leak_density_mS_cm2 <= 0:
         raise ValueError("leak_density_mS_cm2 must be an explicit positive candidate")
+    if calcium_density_mS_cm2 <= 0:
+        raise ValueError("calcium_density_mS_cm2 must be an explicit positive candidate")
 
     geometry = Figure8GeometryConvention(geometry_convention)
 
@@ -387,7 +390,7 @@ def figure8_relay_spec(
             g_leak_mS_cm2=leak_density_mS_cm2,
             g_na_mS_cm2=sodium,
             g_k_mS_cm2=potassium,
-            g_ca_mS_cm2=250.0,
+            g_ca_mS_cm2=calcium_density_mS_cm2,
         )
 
     return CellSpec(

@@ -1212,6 +1212,17 @@ events); both KInNeSS axial forms and the symmetric cable candidate produce
 none. These results preserve genuine partial reproductions but provide no
 complete Stage A candidate because the Figure 8 and TRN gates still fail.
 
+The unrecovered version-1 calcium conductance unit has now been calibrated as
+a registered Figure 8 training variable rather than guessed from a successful
+plot (`figure8-legacy-unit-calibration-118.yaml`). A ten-point logarithmic grid
+between the two documented interpretations of serialized `g_bar=250` produced
+zero full survivors. At 0.25 mS/cm², the top condition is a sustained six-event
+tonic train but the bottom condition is an eighteen-event sustained train. At
+250 mS/cm², the bottom condition is the desired two-event transient burst but
+the top condition has only one onset event. Intermediate values never pass
+both gates. Thus a single version-1 calcium-unit scale is insufficient, and no
+calibrated value is promoted.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

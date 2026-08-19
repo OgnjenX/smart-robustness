@@ -1151,6 +1151,19 @@ each condition (20 match versus 18 mismatch events), 81 startup-only TRN
 events, and 60-Hz nonspecific output. No unsupported weight or inhibition
 tuning is promoted.
 
+The layer-6II-to-TRN off-surround is now protected by projection-specific
+topology tests and a measured-delivery audit
+(`figure7-off-surround-topology-112.yaml`). With the provisional
+center-excluding interpretation required by the otherwise parameter-free
+`ring=true` records, projections 009/012 omit overlap cell 40 and deliver their
+largest NMDA/AMPA factors to nearby nonoverlap TRN cells. Runtime gates and
+currents preserve that ordering: center current is zero, near nonoverlap cells
+receive up to about 158 pA, and farther cells up to about 82 pA. Nevertheless,
+all TRN output remains the 81-cell startup volley with no later event. Thus
+missing connectivity, accidental center inclusion, and failed ligand delivery
+are excluded; exact legacy ring geometry remains unverified but cannot explain
+the already demonstrated failure under constant measured drive through 128x.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

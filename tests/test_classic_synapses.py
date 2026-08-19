@@ -181,6 +181,30 @@ def test_modeldb_topology_applies_wrap_and_ring_metadata() -> None:
     assert not np.any((pre == 40) & (post == 40))
 
 
+@pytest.mark.parametrize(
+    ("projection_id", "expected_pairs", "near_factor", "far_factor"),
+    (
+        ("modeldb112923.projection.009", 48, 0.7066482778577162, 0.24935220877729622),
+        ("modeldb112923.projection.012", 80, 0.8007374029168081, 0.41111229050718745),
+    ),
+)
+def test_layer6ii_trn_ring_is_center_excluding_off_surround(
+    projection_id: str,
+    expected_pairs: int,
+    near_factor: float,
+    far_factor: float,
+) -> None:
+    record = MODELDB_FIRST_ORDER.by_id(projection_id)
+    pre, post, factor = modeldb_topology_pairs(
+        record, source_shape=(9, 9), target_shape=(9, 9)
+    )
+    source_center = pre == 40
+    assert np.count_nonzero(source_center) == expected_pairs
+    assert not np.any(source_center & (post == 40))
+    assert factor[source_center & (post == 31)][0] == pytest.approx(near_factor)
+    assert factor[source_center & (post == 22)][0] == pytest.approx(far_factor)
+
+
 def test_normalized_gaussian_remains_a_paper_figure_audit_alternative() -> None:
     record = MODELDB_FIRST_ORDER.by_id("modeldb112923.projection.035")
     pre, post, factor = modeldb_topology_pairs(

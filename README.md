@@ -36,6 +36,11 @@ KInNeSS/paper alternatives, predeclared validation targets, and swap-ready
 interfaces. It does **not yet claim a full
 replication** of the paper's two 9×9 thalamocortical loops. See
 [`docs/replication-status.md`](docs/replication-status.md).
+The immutable `classic-smart-source-constrained-v0.1.0` tag preserves the first
+complete source-constrained reconstruction, including its failed official
+reproduction gates. It is a provenance baseline, not a claim that classic
+SMART has been reproduced; see
+[`docs/source-constrained-freeze-v0.1.0.md`](docs/source-constrained-freeze-v0.1.0.md).
 The acceptance criteria are fixed in
 [`docs/validation-matrix.md`](docs/validation-matrix.md), and the staged path to
 the frozen baseline is in
@@ -108,8 +113,12 @@ The immediate sequence is deliberately narrow:
   kernel;
 - reproduce one full first-order LGN–V1–TRN–nonspecific-thalamus sector;
 - reproduce match→gamma and mismatch→beta/reset benchmarks;
-- freeze the validated baseline before adding AdEx, GIF, alternative HH, and
-  multicompartment variants.
+- preserve the source-constrained reconstruction as an immutable provenance
+  baseline;
+- calibrate only unresolved legacy conventions on a separate branch, without
+  rewriting the frozen source facts;
+- freeze a validated behavioral baseline before adding AdEx, GIF, alternative
+  HH, and multicompartment variants.
 
 Contributions should preserve the distinction between **published**, **derived**,
 **calibrated**, and **exploratory** parameters.

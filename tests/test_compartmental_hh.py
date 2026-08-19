@@ -73,6 +73,22 @@ def test_transmembrane_readout_is_negative_net_axial_current() -> None:
     )
 
 
+def test_unit_depletion_coefficient_fully_depletes_transmitter_on_spike() -> None:
+    """KInNeSS Eq. 17 prose specifies the discrete jump z <- z-epsilon*z."""
+    brian.start_scope()
+    brian.defaultclock.dt = 0.01 * brian.ms
+    params = _params()
+    params.update({"depletion_epsilon": 1.0, "depletion_recovery_ms": 400.0})
+    population = create_compartmental_hh_population(
+        name="unit_depletion", size=1, params=params, brian=brian
+    )
+    population.group.transmitter = 1.0
+    population.group.armed = 1
+    population.group.v_soma = -1 * brian.mV
+    brian.Network(population.group).run(brian.defaultclock.dt)
+    assert population.group.transmitter[0] == pytest.approx(0.0)
+
+
 def test_relay_uses_table3_calcium_density_without_silent_global_override() -> None:
     brian.start_scope()
     population = create_compartmental_hh_population(

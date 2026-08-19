@@ -1,0 +1,28 @@
+schema_version: 1
+validation_id: transmitter-depletion-jump-106
+claim: KInNeSS applies a discrete proportional transmitter-depletion jump at each source spike.
+status: source-semantics-confirmed-no-runtime-change
+date: 2026-08-19
+sources:
+  framework: Versace et al. 2008 expanded KInNeSS manuscript, Equation 17 and its explanatory paragraph
+  executable: ModelDB 112923 population depletionRate and recoveryRate records
+source_interpretation:
+  recovery: dz/dt = (1-z)/tau between events
+  spike_jump: z_after = z_before - epsilon*z_before
+  unit_depletion: epsilon=1 sets z_after to zero
+rejected_alternative:
+  spike_jump: z_after = z_before*exp(-epsilon)
+  reason: This is a distributional-ODE impulse interpretation, but the framework prose explicitly specifies depletion by -epsilon*z every time a spike occurs.
+implementation:
+  population_event_reset: transmitter *= (1-epsilon)
+verification:
+  - A Brian2 population with epsilon=1, transmitter=1, and a forced soma event has transmitter=0 after the event.
+  - Layer 5 and layer 6II retain epsilon=0.5 with 100-ms recovery; layer 6I retains epsilon=1 with 400-ms recovery from SMART.nml.
+assessment:
+  source_semantics_pass: true
+  implementation_pass: true
+  correction_required: false
+  figure_rerun_required: false
+interpretation:
+  - The active implementation already matches the source-defined event jump.
+  - No network result changes, so official validation artifacts 098-105 remain current.

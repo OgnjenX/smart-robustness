@@ -1083,6 +1083,15 @@ regime, no layer-2/3 or layer-5 events, no causal teaching pair, and negative
 Figure 6c contrast (`figure6-continuous-timestep-105.yaml`). The high-precision
 0.01-ms baseline is retained.
 
+KInNeSS Equation 17's spike term has also been checked against its accompanying
+prose (`transmitter-depletion-jump-106.yaml`). The text explicitly says that a
+spike depletes the resource by `-epsilon*z`, confirming the implemented discrete
+jump `z <- z*(1-epsilon)`. In particular, SMART's layer-6I value `epsilon=1`
+fully depletes transmitter; the alternative impulse solution
+`z <- z*exp(-epsilon)` is not the stated simulator update. A Brian2 event-level
+regression test now protects this invariant. Because the runtime was already
+correct, no figure result changed and artifacts 098--105 remain current.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

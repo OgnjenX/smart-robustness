@@ -179,7 +179,12 @@ parameters:
   synapse.resource_target:
     value: 1
     status: published
-    source: Methods 4.4, Eq. 7
+    source: Methods 4.4, Eq. 7; Versace et al. (2008) KInNeSS expanded manuscript, Equation 17
+  synapse.resource_spike_jump:
+    value: z_after = z_before * (1 - epsilon)
+    status: published-simulator-convention
+    source: Versace et al. (2008) KInNeSS expanded manuscript, Equation 17 and its explanatory paragraph
+    note: the prose states that transmitter depletes by -epsilon*z at every spike; therefore epsilon=1 fully depletes the resource. The exponential impulse solution z*exp(-epsilon) is not the stated KInNeSS event update.
   protocol.match_mismatch.top_down_current:
     value: required explicit pA amplitude applied to one central layer 6II soma
     status: not-identifiable

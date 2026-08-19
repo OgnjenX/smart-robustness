@@ -1,0 +1,25 @@
+schema_version: 1
+name: trn-stage-a-survivor-gaussian-variance-v1
+parent_profile: configs/calibration/trn_stage_a_survivor_v1.yaml
+contract_fingerprint: 44f41f9f9b70d8a6c2cb4b8011ad7cccb10a52738102dca6b920934379cbc5ff
+candidate_fingerprint: 0b118fb5d10a22b8e59423ee96898a1a06ab9e5e5270db501c410b9a2d26765c
+runtime_fingerprint: 66e1c52500df14fd0cacb99a0d0b71a08304d95b87e1ab899150a853a91a91ce
+selection_rule: source_registered_gaussian_variance_discriminator
+source: >-
+  Versace et al. 2008 KInNeSS Connectivity section states that Spread X and
+  Spread Y set Gaussian variances; SMART.nml stores only the numeric spreads.
+candidate:
+  intrinsic_cell_convention: paper_table3
+  calcium_kinetics_convention: modeldb_112923
+  calcium_density_convention: methods_global_250
+  nak_rate_convention: standard_traub_miles
+  axial_convention: kinness_serialized_edge
+  membrane_initialization_convention: physical_leak_voltage
+  spike_event_rule: latched_peak_then_zero
+  gaussian_spread_convention: variance
+  relay_input_interpretation: archived_finite_conductance
+  top_down_current_pA: 600.0
+inherited_stage_a_result:
+  reason: Gaussian spread does not enter an isolated single-cell TRN assay.
+  control_post_drive_spikes: 0
+  driven_post_drive_spikes: 4

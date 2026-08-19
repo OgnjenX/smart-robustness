@@ -146,3 +146,11 @@ KInNeSS profiles remain suppressed. Since the full Equation-2 network also
 failed Figure 6 and Equation 2 is not a TRN survivor, no global profile is
 promoted. The next training-only discriminator is the source-defined transient
 excitation/inhibition waveform at layer 2/3.
+
+The registered Gaussian-spread ambiguity was then tested using the KInNeSS
+paper's wording that Spread X/Y set Gaussian variances. The resulting candidate
+(`calibration-network-gaussian-variance-123.yaml`) recruits layer 4 earlier but
+doubles layer-4 and interneuron events, increases TRN/category over-recruitment,
+and still produces no layer-2/3 or layer-5 events. All Figure 6 learning gates
+remain failed, so the variance interpretation is retained as a negative
+source-discriminator rather than promoted.

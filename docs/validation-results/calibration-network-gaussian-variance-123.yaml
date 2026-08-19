@@ -1,0 +1,93 @@
+schema_version: 1
+id: calibration-network-gaussian-variance-123
+date: '2026-08-19'
+profile: configs/calibration/trn_stage_a_survivor_gaussian_variance_v1.yaml
+candidate_fingerprint: 0b118fb5d10a22b8e59423ee96898a1a06ab9e5e5270db501c410b9a2d26765c
+runtime_fingerprint: 66e1c52500df14fd0cacb99a0d0b71a08304d95b87e1ab899150a853a91a91ce
+holdouts_consulted: false
+status: failed-figure6-training-target
+figure6:
+  protocol:
+    warmup_ms: 0.0
+    stimulus_ms: 100.0
+    post_stimulus_ms: 0.0
+    dt_ms: 0.01
+    source_value: 120.0
+    category_source_value: 70.0
+    winning_layer4_index: 40
+    active_category_index: 40
+    layer6ii_ahp_scale: 1.0
+    monitored_populations:
+    - thalamic_relay
+    - layer4_excitatory_v1
+    - layer23_inhibitory_v1
+    - layer23_excitatory_v1
+    - layer5_excitatory_v1
+    - layer6i_excitatory_v1
+    - layer6ii_excitatory_v1
+    - trn
+    - thalamic_nonspecific
+  population_spikes:
+    thalamic_relay: 81
+    trn: 1053
+    layer5_excitatory_v1: 0
+    layer6ii_excitatory_v1: 245
+    layer6i_excitatory_v1: 81
+    layer23_excitatory_v1: 0
+    layer4_excitatory_v1: 162
+    layer23_inhibitory_v1: 162
+    thalamic_nonspecific: 1
+  first_spike_ms:
+    thalamic_relay: 1.9000000000000001
+    trn: 1.6
+    layer5_excitatory_v1: null
+    layer6ii_excitatory_v1: 5.78
+    layer6i_excitatory_v1: 5.16
+    layer23_excitatory_v1: null
+    layer4_excitatory_v1: 19.24
+    layer23_inhibitory_v1: 22.680000000000003
+    thalamic_nonspecific: 1.7300000000000002
+  recruitment:
+    layer4_spike_ms: 19.24
+    layer23_spike_ms: null
+    layer5_spike_ms: null
+    layer6i_spike_ms: 5.16
+    layer6ii_spike_ms: 5.78
+  feedforward_chain_complete: false
+  top_down_timing:
+    category_spike_ms: 5.78
+    teaching_arrival_ms: 7.78
+    preceding_relay_spike_ms: 1.9000000000000001
+    following_relay_spike_ms: null
+  causal_pair_in_learning_window: false
+  bottom_up:
+    projection_id: modeldb112923.projection.035
+    map_role: incoming_to_winning_layer4
+    minimum_delta: -0.2422216808088109
+    maximum_delta: 0.034682264431510505
+    horizontal_orientation_contrast: -0.00020191202507868766
+    horizontal_retention_advantage: -0.001151449026970175
+  top_down_wide:
+    projection_id: modeldb112923.projection.005
+    map_role: outgoing_from_active_layer6ii
+    minimum_delta: -0.00023197760051586053
+    maximum_delta: 0.0
+    horizontal_orientation_contrast: 1.5573256437612093e-06
+    horizontal_retention_advantage: 6.977590960355329e-05
+  top_down_narrow:
+    projection_id: modeldb112923.projection.007
+    map_role: outgoing_from_active_layer6ii
+    minimum_delta: -0.00023197760051586053
+    maximum_delta: 0.0
+    horizontal_orientation_contrast: 4.2599941733976326e-07
+    horizontal_retention_advantage: 7.033347241069965e-05
+  bottom_up_oriented: false
+  top_down_oriented: false
+assessment:
+  figure6_reproduced: false
+  figure7_eligible: false
+  interpretation: >-
+    Treating SMART.nml Spread X/Y as variances advances layer-4 recruitment but
+    doubles layer-4 and interneuron output, broadens TRN/category recruitment,
+    and still fails the cortical chain and all learned-map gates. The candidate
+    is not promoted and Figure 7 remains ineligible.

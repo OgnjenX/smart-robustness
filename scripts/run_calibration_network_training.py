@@ -112,6 +112,12 @@ def main() -> None:
         "bottom_up_oriented": learning.result.bottom_up_oriented,
         "top_down_oriented": learning.result.top_down_oriented,
     }
+    figure6_reproduced = bool(
+        recruitment.feedforward_chain_complete
+        and timing.causal_pair_in_learning_window
+        and learning.result.bottom_up_oriented
+        and learning.result.top_down_oriented
+    )
 
     artifact: dict[str, Any] = {
         "schema_version": 1,
@@ -121,7 +127,12 @@ def main() -> None:
         "candidate_fingerprint": profile["candidate_fingerprint"],
         "runtime_fingerprint": conventions.fingerprint,
         "holdouts_consulted": False,
+        "status": "passing-figure6-training-target" if figure6_reproduced else "failed-figure6-training-target",
         "figure6": figure6,
+        "assessment": {
+            "figure6_reproduced": figure6_reproduced,
+            "figure7_eligible": figure6_reproduced,
+        },
     }
     output = Path(args.output)
     output.parent.mkdir(parents=True, exist_ok=True)

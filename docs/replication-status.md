@@ -1272,6 +1272,14 @@ also failed to recruit layer 2/3. Therefore neither an axial convention switch
 nor a peak-gate substitution is justified; the source-defined transient
 excitation/inhibition waveform is the earliest unresolved Figure 6 gate.
 
+The alternative KInNeSS-primary-source reading of SMART.nml Spread X/Y as
+Gaussian variances has also been executed under candidate fingerprint
+`0b118fb5...` (`calibration-network-gaussian-variance-123.yaml`). It advances
+the first layer-4 event from 23.26 to 19.24 ms but produces 162 layer-4 and 162
+interneuron events, 1053 TRN events, and 245 category events while layer 2/3 and
+layer 5 remain silent. Bottom-up and top-down orientation gates still fail.
+This rules out the registered Gaussian interpretation as a Figure 6 rescue.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

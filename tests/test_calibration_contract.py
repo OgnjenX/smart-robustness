@@ -15,6 +15,9 @@ TRN_SURVIVOR_PATH = ROOT / "configs/calibration/trn_stage_a_survivor_v1.yaml"
 NETWORK_CALIBRATION_PATH = (
     ROOT / "docs/validation-results/calibration-network-trn-survivor-121.yaml"
 )
+GAUSSIAN_VARIANCE_PROFILE_PATH = (
+    ROOT / "configs/calibration/trn_stage_a_survivor_gaussian_variance_v1.yaml"
+)
 
 
 def test_classic_calibration_contract_separates_training_and_holdout() -> None:
@@ -142,6 +145,18 @@ def test_network_calibration_artifact_is_bound_to_frozen_trn_survivor() -> None:
     assert artifact["figure6"]["feedforward_chain_complete"] is False
     assert artifact["assessment"]["figure6_reproduced"] is False
     assert artifact["assessment"]["figure7_eligible"] is False
+
+
+def test_gaussian_variance_discriminator_is_a_registered_complete_candidate() -> None:
+    contract = load_calibration_contract(CONTRACT_PATH)
+    profile = yaml.safe_load(GAUSSIAN_VARIANCE_PROFILE_PATH.read_text())
+    candidate = profile["candidate"]
+    assert candidate["gaussian_spread_convention"] == "variance"
+    assert profile["contract_fingerprint"] == contract.fingerprint
+    assert profile["candidate_fingerprint"] == contract.candidate_fingerprint(candidate)
+    assert profile["runtime_fingerprint"] == runtime_conventions_for_candidate(
+        candidate
+    ).fingerprint
 
 
 def test_contract_rejects_holdout_leakage(tmp_path: Path) -> None:

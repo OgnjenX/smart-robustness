@@ -1659,6 +1659,17 @@ activate all 81 relay cells and also produce zero TRN. No candidate advances to
 mismatch. A detector-origin offset cannot recover Figure 7 without either
 missing TRN output or destroying the prepared relay state.
 
+The registered density-by-offset interaction screen is complete in
+`figure7-trn-density-event-offset-cue-grid-177.yaml`. It fixes the first
+event-generating 50-mV detector offset and crosses the already registered
+10, 15, 20, 30, 40, 60, 80, and 100 mS/cm2 dendritic calcium densities. No
+candidate is cue-safe: equilibration TRN output is 162, 162, 162, 243, 243,
+324, 324, and 405 events, respectively, and all candidates add at least one
+population-wide 81-event volley during the top-down-only lead. The
+simultaneous match stage is therefore not run. This closes the simplest
+second-order scalar rescue; the missing behavior is not recoverable by trading
+dendritic calcium strength against a shifted somatic detector origin.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

@@ -387,3 +387,15 @@ mV preserve exactly relay cells 38--42 but emit no TRN event, while 60/67/69 mV
 activate all 81 relay cells and still emit no TRN event. No offset advances to
 mismatch. Detector voltage-origin calibration is closed; do not interpolate
 between 40 and 50 mV or tune the arm/release thresholds independently.
+
+Artifact 177 tests the only predeclared second-order rescue suggested by those
+single-factor screens: the complete registered 10--100 mS/cm2 dendritic
+calcium-density grid at the registered 50-mV detector offset. Every density
+fails before bottom-up onset. Equilibration TRN output rises from 162 to 405
+events across the grid, and every candidate emits at least 81 additional TRN
+events during the top-down-only cue lead. No density reaches the simultaneous
+match gate. Calcium density therefore cannot regularize the event-coordinate
+transition into a causal match detector. Do not fit intermediate density or
+offset values. The next calibration must represent a qualitatively different
+legacy compartment-to-event transfer hypothesis, remain separately named from
+the source reconstruction, and continue to lock Figures 10 and 14--16.

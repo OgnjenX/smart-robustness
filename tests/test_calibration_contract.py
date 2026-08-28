@@ -160,6 +160,13 @@ FIGURE7_TRN_EVENT_OFFSET_CUE_PATH = (
 FIGURE7_TRN_EVENT_OFFSET_MATCH_PATH = (
     ROOT / "docs/validation-results/figure7-trn-event-offset-match-grid-176.yaml"
 )
+FIGURE7_TRN_DENSITY_EVENT_OFFSET_PROFILE_PATH = (
+    ROOT / "configs/calibration/trn_density_event_offset_cross_v1.yaml"
+)
+FIGURE7_TRN_DENSITY_EVENT_OFFSET_CUE_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-trn-density-event-offset-cue-grid-177.yaml"
+)
 
 
 def test_classic_calibration_contract_separates_training_and_holdout() -> None:
@@ -910,6 +917,36 @@ def test_trn_event_offset_grid_has_no_selective_match_survivor() -> None:
         assert outcome["active_relay_indices"] == expected_relay
         assert outcome["trn_events"] == 0
         assert not outcome["stage_2a_pass"]
+
+
+def test_trn_density_event_offset_cross_has_no_cue_safe_survivor() -> None:
+    profile = yaml.safe_load(FIGURE7_TRN_DENSITY_EVENT_OFFSET_PROFILE_PATH.read_text())
+    artifact = yaml.safe_load(FIGURE7_TRN_DENSITY_EVENT_OFFSET_CUE_PATH.read_text())
+    assert profile["fixed_choices"]["trn_spike_event_voltage_offset_mV"] == 50.0
+    assert profile["dimension"]["grid"] == [
+        10.0,
+        15.0,
+        20.0,
+        30.0,
+        40.0,
+        60.0,
+        80.0,
+        100.0,
+    ]
+    assert artifact["status"] == "no-stage-1-survivor"
+    assert artifact["stage_1_survivor_densities_mS_cm2"] == []
+    assert [item["equilibration_trn_events"] for item in artifact["outcomes"]] == [
+        162,
+        162,
+        162,
+        243,
+        243,
+        324,
+        324,
+        405,
+    ]
+    assert all(item["cue_lead_trn_events"] >= 81 for item in artifact["outcomes"])
+    assert all(not item["stage_1_pass"] for item in artifact["outcomes"])
 
 
 def test_contract_rejects_holdout_leakage(tmp_path: Path) -> None:

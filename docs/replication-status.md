@@ -1550,6 +1550,25 @@ the absolute physical event coordinate remains active pending a source-backed
 resolution of why published-source TRN waveforms peak near +7 mV rather than
 crossing the printed +30-mV arm threshold.
 
+The absolute-coordinate cue screen (`figure7-absolute-cue-current-screen-163.yaml`)
+finds the first clean selective top-down operating point at 600 pA: the center
+category cell emits during the 10-ms lead, no off-source category cell emits,
+and no TRN or relay event precedes bottom-up onset. A full pair without a rest
+epoch (`figure7-absolute-event-coordinate-lead10-164.yaml`) is rejected as an
+initialization-contaminated diagnostic because all 81 TRN cells emit before the
+category event. The runner now exposes an explicit Figure 7 equilibration
+epoch, defaulting to the 20 ms used by the causal cue screen.
+
+With that equilibration (`figure7-absolute-event-coordinate-equilibrated-lead10-165.yaml`),
+the pre-cue TRN volley disappears and category recruitment remains selective,
+but both conditions eventually recruit all 81 relay cells, produce zero scored
+TRN events, and leave nonspecific thalamus silent at 0 Hz. The pathway is not
+under-driven: sampled TRN relay-AMPA gates peak near 84--100 and layer-6II AMPA
+gates near 16--25. TRN proximal voltage reaches approximately +37.09 mV, while
+sampled soma maxima remain between approximately -3.64 and -12.74 mV. The next
+discriminator is therefore the source meaning of TRN compartmental output and
+axial propagation, not a fitted increase in excitatory synaptic strength.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

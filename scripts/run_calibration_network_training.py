@@ -85,6 +85,15 @@ def main() -> None:
         default=0.0,
         help="Establish the Figure 7 top-down expectation before bottom-up onset.",
     )
+    parser.add_argument(
+        "--figure7-equilibration-ms",
+        type=float,
+        default=20.0,
+        help=(
+            "Settle intrinsic initialization transients before the Figure 7 cue "
+            "(default: 20 ms)."
+        ),
+    )
     args = parser.parse_args()
 
     import brian2 as brian
@@ -161,6 +170,7 @@ def main() -> None:
                 learned_weights=learning.learned_weights,
                 conventions=conventions,
                 top_down_cue_lead_ms=args.top_down_cue_lead_ms,
+                equilibration_ms=args.figure7_equilibration_ms,
                 record_relay_diagnostics=True,
                 brian=brian,
             )

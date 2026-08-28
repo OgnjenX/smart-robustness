@@ -171,6 +171,25 @@ Exit: full two-loop structural audit and higher-order validation report.
 Exit: a versioned classic baseline and a robustness experiment matrix that can
 distinguish architecture-level effects from neuron-model-dependent effects.
 
+## M8 — contemporary circuit robustness
+
+- Begin only after the validated classic baseline and controlled neuron-model
+  substitutions are complete.
+- Test post-2008 anatomical constraints as separately switchable modules rather
+  than using them to rescue the historical reproduction.
+- Start with direct first-order thalamus-to-layer-5 input and a documented
+  layer-5 subtype split; then consider TRN subnetworks, updated higher-order
+  thalamic routing, and interneuron-class specificity.
+- Keep species and modality explicit. Mouse somatosensory, mouse visual, and
+  primate visual measurements must not be combined into one unlabeled
+  "modern" anatomy.
+- Distinguish parameter-invariant survival, isolated-cell-matched survival, and
+  recovery after empirically bounded synaptic recalibration.
+
+Exit: a provenance-labeled anatomy robustness matrix that identifies whether
+classic SMART mechanisms are unchanged, strengthened, compensated, or broken
+by each contemporary circuit constraint.
+
 ## Original-source recovery track (recovered)
 
 ModelDB alternate version 112923 preserves the complete source bundle and was

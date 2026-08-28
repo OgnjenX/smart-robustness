@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import math
 from dataclasses import asdict, dataclass, replace
 from enum import StrEnum
 from typing import Any
@@ -91,6 +92,13 @@ class TrnCalciumSourceConvention(StrEnum):
     MODELDB_SOMA_CHANNEL_AND_REVERSAL = "modeldb_soma_channel_and_reversal"
 
 
+class TrnDendriticCalciumDensityConvention(StrEnum):
+    """Table-3 versus SMART.nml density on existing TRN dendritic T channels."""
+
+    SELECTED_SOURCE = "selected_source"
+    MODELDB_100 = "modeldb_100"
+
+
 class CalciumKineticsConvention(StrEnum):
     """Source selected for population-specific T-current gate equations."""
 
@@ -122,6 +130,8 @@ class FirstOrderRuntimeConventions:
     trn_spike_event_threshold_mV: float | None = None
     trn_potassium_convention: str = "selected_source"
     trn_calcium_source_convention: str = "selected_source"
+    trn_dendritic_calcium_density_convention: str = "selected_source"
+    trn_dendritic_calcium_density_mS_cm2: float | None = None
     postsynaptic_learning_coordinate: str = "absolute_physical"
     postsynaptic_learning_threshold_mV: float = 30.0
     top_down_learning_rule_convention: str = "serialized_presynaptic"
@@ -152,6 +162,10 @@ class FirstOrderRuntimeConventions:
             values.pop("trn_potassium_convention")
         if values["trn_calcium_source_convention"] == "selected_source":
             values.pop("trn_calcium_source_convention")
+        if values["trn_dendritic_calcium_density_convention"] == "selected_source":
+            values.pop("trn_dendritic_calcium_density_convention")
+        if values["trn_dendritic_calcium_density_mS_cm2"] is None:
+            values.pop("trn_dendritic_calcium_density_mS_cm2")
         if values["postsynaptic_learning_threshold_mV"] == values["spike_event_threshold_mV"]:
             # Historical profiles used one value for both roles. Preserve their
             # fingerprints while allowing Equation 6 to be audited separately.
@@ -262,28 +276,61 @@ def resolved_intrinsic_cell(
         cell = _table3_cell_for_population(facts.canonical_name)
     potassium = TrnPotassiumConvention(conventions.trn_potassium_convention)
     calcium = TrnCalciumSourceConvention(conventions.trn_calcium_source_convention)
+    dendritic_calcium = TrnDendriticCalciumDensityConvention(
+        conventions.trn_dendritic_calcium_density_convention
+    )
+    calibrated_density = conventions.trn_dendritic_calcium_density_mS_cm2
+    if calibrated_density is not None:
+        if not math.isfinite(calibrated_density) or calibrated_density <= 0:
+            raise ValueError("TRN dendritic calcium density must be finite and positive")
+        if dendritic_calcium is not TrnDendriticCalciumDensityConvention.SELECTED_SOURCE:
+            raise ValueError(
+                "TRN dendritic calcium source convention and calibrated density "
+                "cannot both override the selected cell"
+            )
     if facts.canonical_name != "trn":
         return cell
-    soma = cell.soma
+    compartments = list(cell.compartments)
     suffixes = []
     if potassium in {
         TrnPotassiumConvention.MODELDB_DENSITY,
         TrnPotassiumConvention.MODELDB_DENSITY_AND_REVERSAL,
     }:
-        soma = replace(soma, g_k_mS_cm2=facts.cell.soma.g_k_mS_cm2)
+        compartments[0] = replace(
+            compartments[0], g_k_mS_cm2=facts.cell.soma.g_k_mS_cm2
+        )
         suffixes.append("modeldb_k_density")
     if calcium in {
         TrnCalciumSourceConvention.MODELDB_SOMA_CHANNEL,
         TrnCalciumSourceConvention.MODELDB_SOMA_CHANNEL_AND_REVERSAL,
     }:
-        soma = replace(soma, g_ca_mS_cm2=facts.cell.soma.g_ca_mS_cm2)
+        compartments[0] = replace(
+            compartments[0], g_ca_mS_cm2=facts.cell.soma.g_ca_mS_cm2
+        )
         suffixes.append("modeldb_soma_calcium")
+    if dendritic_calcium is TrnDendriticCalciumDensityConvention.MODELDB_100:
+        archived = {item.name: item for item in facts.cell.compartments}
+        compartments[1:] = [
+            replace(item, g_ca_mS_cm2=archived[item.name].g_ca_mS_cm2)
+            if item.g_ca_mS_cm2 is not None
+            else item
+            for item in compartments[1:]
+        ]
+        suffixes.append("modeldb_dendritic_calcium")
+    elif calibrated_density is not None:
+        compartments[1:] = [
+            replace(item, g_ca_mS_cm2=calibrated_density)
+            if item.g_ca_mS_cm2 is not None
+            else item
+            for item in compartments[1:]
+        ]
+        suffixes.append(f"calibrated_dendritic_calcium_{calibrated_density:g}")
     if not suffixes:
         return cell
     return replace(
         cell,
         name=f"{cell.name}_{'_'.join(suffixes)}",
-        compartments=(soma, *cell.compartments[1:]),
+        compartments=tuple(compartments),
     )
 
 

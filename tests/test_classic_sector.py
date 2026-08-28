@@ -10,6 +10,7 @@ from smart_robustness.classic_sector import (
     FirstOrderRuntimeConventions,
     IntrinsicCellConvention,
     TrnCalciumSourceConvention,
+    TrnDendriticCalciumDensityConvention,
     TrnPotassiumConvention,
     ZeroSensitivityInputConvention,
     _resolved_projection_record,
@@ -250,6 +251,58 @@ def test_trn_calcium_source_conflicts_are_independently_selectable(
     assert trn["e_ca_mV"] == expected_reversal
     assert relay["cell_spec"].soma.g_ca_mS_cm2 == 0.1
     assert relay["e_ca_mV"] == facts["thalamic_relay"].e_ca_mV
+
+
+def test_trn_dendritic_calcium_density_conflict_is_explicit_and_scoped() -> None:
+    facts = {fact.canonical_name: fact for fact in first_order_population_facts()}
+    conventions = FirstOrderRuntimeConventions(
+        intrinsic_cell_convention=(
+            IntrinsicCellConvention.MODELDB_RELAY_PAPER_TABLE3_OTHERS.value
+        ),
+        trn_dendritic_calcium_density_convention=(
+            TrnDendriticCalciumDensityConvention.MODELDB_100.value
+        ),
+    )
+
+    trn = first_order_population_parameters(facts["trn"], conventions=conventions)
+    relay = first_order_population_parameters(
+        facts["thalamic_relay"], conventions=conventions
+    )
+
+    assert trn["cell_spec"].soma.g_ca_mS_cm2 is None
+    assert trn["cell_spec"].compartment("proximal_dendrite").g_ca_mS_cm2 == 100.0
+    assert trn["cell_spec"].compartment("distal_dendrite").g_ca_mS_cm2 == 100.0
+    assert relay["cell_spec"].compartment("proximal_dendrite").g_ca_mS_cm2 == 0.1
+
+
+def test_behavior_calibrated_trn_dendritic_density_is_explicit_and_validated() -> None:
+    facts = {fact.canonical_name: fact for fact in first_order_population_facts()}
+    conventions = FirstOrderRuntimeConventions(
+        intrinsic_cell_convention=(
+            IntrinsicCellConvention.MODELDB_RELAY_PAPER_TABLE3_OTHERS.value
+        ),
+        trn_dendritic_calcium_density_mS_cm2=40.0,
+    )
+    trn = first_order_population_parameters(facts["trn"], conventions=conventions)
+
+    assert trn["cell_spec"].compartment("proximal_dendrite").g_ca_mS_cm2 == 40.0
+    assert trn["cell_spec"].compartment("distal_dendrite").g_ca_mS_cm2 == 40.0
+
+    with pytest.raises(ValueError, match="finite and positive"):
+        first_order_population_parameters(
+            facts["trn"],
+            conventions=FirstOrderRuntimeConventions(
+                trn_dendritic_calcium_density_mS_cm2=0.0
+            ),
+        )
+    with pytest.raises(ValueError, match="cannot both override"):
+        first_order_population_parameters(
+            facts["trn"],
+            conventions=FirstOrderRuntimeConventions(
+                trn_dendritic_calcium_density_convention="modeldb_100",
+                trn_dendritic_calcium_density_mS_cm2=40.0,
+            ),
+        )
 
 
 def test_category_source_hybrid_also_uses_archived_layer6ii() -> None:

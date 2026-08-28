@@ -174,3 +174,11 @@ simultaneous bottom-up and top-down excitation. A top-down-only lead interval
 is therefore retained as a causal diagnostic, not treated as the canonical
 published protocol. Artifact 168 applies simultaneous onset after explicit
 equilibration when testing the archived TRN calcium reversal.
+
+The recovered Reticular entry also removes a possible compartment-topology
+ambiguity. Its `CableNeuron` structure is explicitly `linear`, with ordered
+substructures Soma, Dendrite 0, and Dendrite 1. Only Soma serializes
+`monitorSpikes=true`; both dendrites serialize `monitor=false`. Together with
+the manual's somatic-to-axon event description, this fixes adjacent chain
+coupling and somatic chemical output. Artifact 172 records why neither a star
+topology nor dendritic event emission is an admissible calibration route.

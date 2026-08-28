@@ -1599,6 +1599,38 @@ source discriminator is the still-unfactored TRN dendritic calcium density
 conflict (Table 3 10 versus SMART.nml 100 mS/cm2), preserving the same
 equilibration and simultaneous-onset contract.
 
+That final discrete density crossing is complete in
+`figure7-trn-dendritic-calcium-source-screen-169.yaml`. At the archived
+100-mS/cm2 dendritic density, all four soma-channel/reversal combinations
+remain post-equilibration quiescent and emit zero connected TRN events. This is
+not insufficient dendritic activation: sampled proximal peaks span
+approximately +85.99 to +134.33 mV, while the best sampled soma remains only
+-23.43 mV. Combined with artifacts 167 and 168, the complete public-source
+10/100 density x soma-channel x 180/120-mV reversal cube has no causal Figure 7
+survivor. The surviving sources therefore do not identify a discrete legacy
+TRN propagation convention that reproduces SMART. Any next density search must
+be labeled behavior calibration, predeclare a finite grid between the two
+official endpoints, and relinquish an exact-source parameter claim while
+retaining Figures 10 and 14--16 as untouched holdouts.
+
+The registered behavior-calibration density grid is complete in artifacts 170
+and 171. Stage 1 crosses 10, 15, 20, 30, 40, 60, 80, and 100 mS/cm2 at the
+archived 120-mV reversal. The 10-mS/cm2 endpoint repeats the 81-cell
+top-down-only TRN volley and is rejected; every value from 15 through 100 is
+cue-safe. Stage 2a then applies simultaneous match onset for 50 ms. All seven
+survivors preserve exactly the five horizontal relay cells, with total relay
+events increasing from five to nine, but every value produces zero TRN and
+zero nonspecific events. No value reaches the predeclared match gate, so no
+mismatch run is authorized. A scalar dendritic calcium density between the two
+official endpoints is now rejected as a sufficient behavioral calibration.
+Artifact 172 then resolves the suspected topology ambiguity: the executable
+source explicitly declares a linear Soma -> Dendrite 0 -> Dendrite 1 cable,
+only the soma monitors spikes, and the implementation already builds those two
+adjacent edges. A star topology or dendritic chemical output is not admissible.
+The active discrepancy is now confined to unidentified legacy KInNeSS
+propagation/somatic-event behavior: strong dendritic spikes coexist with silent
+somatic output despite source-matched ordering and output location.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

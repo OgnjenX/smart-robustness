@@ -1,0 +1,39 @@
+schema_version: 1
+name: trn-dendritic-density-behavior-grid-v1
+status: post-source-exhaustion-behavior-calibration
+base_profile: configs/calibration/figure6_kinness_equation27_transition_v1.yaml
+base_candidate_fingerprint: 12e0245e9a3044073200e90443582885a5410cf39b8b18d50d22a04a2fc48604
+fixed_source_choices:
+  trn_calcium_source_convention: modeldb_reversal
+  trn_soma_calcium_channel: absent_as_in_table3
+dimension:
+  name: trn_dendritic_calcium_density_mS_cm2
+  bounds: [10.0, 100.0]
+  grid: [10.0, 15.0, 20.0, 30.0, 40.0, 60.0, 80.0, 100.0]
+  lower_endpoint_source: Grossberg and Versace 2008 Table 3
+  upper_endpoint_source: ModelDB 112923 SMART.nml
+  interpretation: >-
+    Interior values are behavior-calibration candidates, not recovered original
+    SMART parameters. The finite grid is registered only after the exact
+    public-source cube produced no Figure 7 survivor.
+stage_1_gate:
+  protocol: 20-ms equilibration followed by a 10-ms top-down-only diagnostic lead
+  source_category_event_required: true
+  off_source_category_events: 0
+  trn_events_during_lead: 0
+  relay_events_during_lead: 0
+stage_2a_gate:
+  protocol: 50-ms simultaneous-onset match after 20-ms equilibration
+  active_relay_indices: [38, 39, 40, 41, 42]
+  trn_events: '>0'
+stage_2b_gate:
+  protocol: simultaneous bottom-up/top-down match and mismatch
+  match_relay_indices: [38, 39, 40, 41, 42]
+  mismatch_relay_indices_must_be_subset_of: [40]
+  trn_output_order: match_greater_than_mismatch
+  nonspecific_output_order: mismatch_greater_than_match
+locked_holdouts:
+  - figure10_reset
+  - figure14_spectra
+  - figure15_local_synchrony
+  - figure16_long_range_synchrony

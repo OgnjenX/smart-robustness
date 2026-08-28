@@ -12,7 +12,10 @@ from typing import Any
 import numpy as np
 import yaml
 
-from smart_robustness.classic_sector import TrnCalciumSourceConvention
+from smart_robustness.classic_sector import (
+    TrnCalciumSourceConvention,
+    TrnDendriticCalciumDensityConvention,
+)
 from smart_robustness.protocols import MatchCondition
 from smart_robustness.validation.calibration import runtime_conventions_for_candidate
 from smart_robustness.validation.figure7 import run_figure7_condition
@@ -50,6 +53,11 @@ def main() -> None:
     parser.add_argument("--duration-ms", type=float, default=50.0)
     parser.add_argument("--equilibration-ms", type=float, default=20.0)
     parser.add_argument("--cue-lead-ms", type=float, default=10.0)
+    parser.add_argument(
+        "--trn-dendritic-calcium-density-convention",
+        choices=tuple(item.value for item in TrnDendriticCalciumDensityConvention),
+        default=TrnDendriticCalciumDensityConvention.SELECTED_SOURCE.value,
+    )
     parser.add_argument("--isolated-only", action="store_true")
     args = parser.parse_args()
     if args.duration_ms <= 45.0 and not args.isolated_only:
@@ -64,7 +72,13 @@ def main() -> None:
     isolated_protocol = TrnRecruitmentProtocol(pre_drive_ms=args.equilibration_ms)
     outcomes = []
     for calcium in TrnCalciumSourceConvention:
-        conventions = replace(base, trn_calcium_source_convention=calcium.value)
+        conventions = replace(
+            base,
+            trn_calcium_source_convention=calcium.value,
+            trn_dendritic_calcium_density_convention=(
+                args.trn_dendritic_calcium_density_convention
+            ),
+        )
         control = run_trn_recruitment_condition(
             driven=False,
             conventions=conventions,
@@ -164,7 +178,8 @@ def main() -> None:
         ),
         "claim": (
             "Whether the Table 3 versus SMART.nml TRN soma-calcium-channel and "
-            "calcium-reversal conflicts explain the missing Figure 7 somatic event"
+            "calcium-reversal conflicts explain the missing Figure 7 somatic event "
+            "under the declared dendritic calcium density"
         ),
         "profile": args.profile,
         "base_candidate_fingerprint": profile["candidate_fingerprint"],
@@ -173,6 +188,8 @@ def main() -> None:
             "smart_nml_soma_calcium_density_mS_cm2": 100.0,
             "table3_calcium_reversal_mV": 180.0,
             "smart_nml_calcium_reversal_mV": 120.0,
+            "table3_dendritic_calcium_density_mS_cm2": 10.0,
+            "smart_nml_dendritic_calcium_density_mS_cm2": 100.0,
         },
         "protocol": {
             "isolated_pre_drive_ms": isolated_protocol.pre_drive_ms,
@@ -183,6 +200,9 @@ def main() -> None:
             "cue_lead_ms": args.cue_lead_ms,
             "top_down_current_pA": top_down_current_pA,
             "paper_constrained_learned_state": True,
+            "trn_dendritic_calcium_density_convention": (
+                args.trn_dendritic_calcium_density_convention
+            ),
         },
         "promotion_gate": {
             "post_equilibration_isolated_control_events": 0,

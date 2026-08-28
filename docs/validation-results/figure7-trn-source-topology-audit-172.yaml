@@ -1,0 +1,49 @@
+schema_version: 1
+id: figure7-trn-source-topology-audit-172
+date: '2026-08-28'
+status: source-topology-resolved-no-new-candidate
+claim: >-
+  Whether an unresolved star-versus-chain TRN compartment topology or a
+  dendritic output compartment can explain the missing Figure 7 TRN events.
+sources:
+  smart_nml:
+    path: tmp/modeldb-112923/versaceGrossberg2008/SMART.nml
+    sha256: 16fc196f2ed68d1c02a39395fa83bb0ffab8fcf8edffe6fd11022bb6c6e299e1
+    population: Reticular
+    neuron_class: CableNeuron
+    structure_class: linear
+    serialized_compartment_order: [Soma, Dendrite 0, Dendrite 1]
+    spike_monitoring:
+      Soma: true
+      Dendrite 0: false
+      Dendrite 1: false
+  kinness_manual: >-
+    Somatic potential is converted to the binary axonal spike signal consumed
+    by chemical projections; Output Spikes To File records axon activity.
+  kinness_framework: >-
+    Neighboring compartments exchange axial current according to the published
+    multicompartment equation.
+implementation:
+  cell_order: [soma, proximal_dendrite, distal_dendrite]
+  edge_builder: pairwise adjacent compartments
+  compiled_edges:
+    - [soma, proximal_dendrite]
+    - [proximal_dendrite, distal_dendrite]
+  chemical_output_compartment: soma
+assessment:
+  chain_topology_matches_source: true
+  star_topology_admissible: false
+  dendritic_event_output_admissible: false
+  topology_search_authorized: false
+  remaining_gap: >-
+    Legacy KInNeSS runtime propagation and somatic voltage/event behavior, not
+    compartment ordering or the identity of the chemical-output compartment.
+prior_discriminators:
+  - docs/validation-results/trn-axial-source-audit-042.yaml
+  - docs/validation-results/figure7-trn-axial-propagation-040.yaml
+  - docs/validation-results/trn-axial-scale-066.yaml
+  - docs/validation-results/spike-event-rule-038.yaml
+next_step: >-
+  If further behavior calibration is undertaken, register it explicitly and
+  vary only a localized propagation parameter; do not alter topology or emit
+  chemical events from a dendrite.

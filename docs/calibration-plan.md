@@ -329,3 +329,36 @@ is rejected. Do not fit an intermediate reversal. Next factor only the exact
 10-versus-100 mS/cm2 dendritic TRN calcium-density conflict before concluding
 that the surviving public sources cannot identify the legacy propagation
 convention.
+
+Artifact 169 completes that 10-versus-100 mS/cm2 crossing. All four archived-
+density channel/reversal combinations produce zero TRN events even though
+proximal dendrites exceed +85 mV. The exact public-source cube is exhausted.
+The no-survivor rule now permits a separately named behavior-calibration stage:
+predeclare a finite density grid bounded by 10 and 100 mS/cm2, first reject
+values that allow top-down-only population-wide TRN output, then test the
+surviving values under simultaneous match/mismatch onset. This stage may train
+on Figure 7 because that holdout has already been consulted, but it must leave
+Figures 10 and 14--16 locked and may not be described as recovery of the
+unreported original density.
+
+The behavior grid does not produce a survivor. Artifact 170 rejects only the
+10-mS/cm2 endpoint at the top-down-only gate; 15--100 mS/cm2 remain cue-safe.
+Artifact 171 then shows that all seven cue-safe values preserve exactly the
+five matched horizontal relay cells but produce zero TRN events during the
+50-ms simultaneous match condition. Mismatch evaluation is correctly skipped.
+Scalar dendritic calcium-density calibration is therefore closed. Return to
+source-level compartment topology and legacy axial/event propagation semantics
+before exposing any additional continuous cellular parameter.
+
+Artifact 172 closes the topology branch without a simulation sweep.
+`SMART.nml` declares the Reticular cell as a `linear` cable in the serialized
+order Soma, Dendrite 0, Dendrite 1; only the soma has `monitorSpikes=true`.
+The implementation already compiles those compartments into the two adjacent
+edges soma--proximal and proximal--distal, and the archived manual independently
+places chemical output at the somatic/axonal detector. A star topology and
+dendritic event output are therefore source-incompatible and must not be fitted.
+The next permissible behavior-calibration discriminator is a predeclared,
+localized soma--proximal propagation grid with the distal edge, intrinsic
+channels, event threshold, synaptic strengths, and Figures 10 and 14--16 held
+fixed. It must be reported as calibration of an unidentified legacy runtime
+effect, not as an original SMART parameter.

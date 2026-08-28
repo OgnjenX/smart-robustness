@@ -126,6 +126,22 @@ FIGURE7_TRN_CALCIUM_PAIR_PATH = (
     ROOT
     / "docs/validation-results/figure7-trn-calcium-reversal-simultaneous-pair-168.yaml"
 )
+FIGURE7_TRN_DENDRITIC_CALCIUM_SCREEN_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-trn-dendritic-calcium-source-screen-169.yaml"
+)
+FIGURE7_TRN_DENSITY_GRID_PROFILE_PATH = (
+    ROOT / "configs/calibration/trn_dendritic_density_behavior_grid_v1.yaml"
+)
+FIGURE7_TRN_DENSITY_CUE_GRID_PATH = (
+    ROOT / "docs/validation-results/figure7-trn-density-cue-grid-170.yaml"
+)
+FIGURE7_TRN_DENSITY_MATCH_GRID_PATH = (
+    ROOT / "docs/validation-results/figure7-trn-density-match-grid-171.yaml"
+)
+FIGURE7_TRN_SOURCE_TOPOLOGY_AUDIT_PATH = (
+    ROOT / "docs/validation-results/figure7-trn-source-topology-audit-172.yaml"
+)
 
 
 def test_classic_calibration_contract_separates_training_and_holdout() -> None:
@@ -725,6 +741,72 @@ def test_trn_calcium_reversal_simultaneous_pair_is_condition_invariant() -> None
     assert match["trn_spike_times_ms"] == mismatch["trn_spike_times_ms"]
     assert artifact["assessment"]["arousal"]["match_rate_hz"] == 30.0
     assert artifact["assessment"]["arousal"]["mismatch_rate_hz"] == 30.0
+
+
+def test_archived_trn_dendritic_calcium_density_closes_source_cube() -> None:
+    artifact = yaml.safe_load(FIGURE7_TRN_DENDRITIC_CALCIUM_SCREEN_PATH.read_text())
+    assert artifact["protocol"]["trn_dendritic_calcium_density_convention"] == (
+        "modeldb_100"
+    )
+    assert artifact["assessment"]["connected_causal_survivors"] == 0
+    assert all(item["post_bottom_up_trn_events"] == 0 for item in artifact["outcomes"])
+    assert all(item["sampled_trn_proximal_peak_mV"] > 85.0 for item in artifact["outcomes"])
+    assert max(item["sampled_trn_soma_peak_mV"] for item in artifact["outcomes"]) < -23.0
+
+
+def test_behavior_density_grid_rejects_low_endpoint_and_promotes_cue_safe_values() -> None:
+    profile = yaml.safe_load(FIGURE7_TRN_DENSITY_GRID_PROFILE_PATH.read_text())
+    cue = yaml.safe_load(FIGURE7_TRN_DENSITY_CUE_GRID_PATH.read_text())
+    assert profile["dimension"]["grid"] == [
+        10.0,
+        15.0,
+        20.0,
+        30.0,
+        40.0,
+        60.0,
+        80.0,
+        100.0,
+    ]
+    outcomes = {
+        item["trn_dendritic_calcium_density_mS_cm2"]: item
+        for item in cue["outcomes"]
+    }
+    assert outcomes[10.0]["cue_lead_trn_events"] == 81
+    assert not outcomes[10.0]["stage_1_pass"]
+    assert cue["stage_1_survivor_densities_mS_cm2"] == profile["dimension"][
+        "grid"
+    ][1:]
+
+
+def test_behavior_density_grid_has_no_simultaneous_match_survivor() -> None:
+    artifact = yaml.safe_load(FIGURE7_TRN_DENSITY_MATCH_GRID_PATH.read_text())
+    assert artifact["status"] == "no-stage-2a-survivor"
+    assert artifact["stage_2a_survivor_densities_mS_cm2"] == []
+    for outcome in artifact["outcomes"]:
+        assert outcome["active_relay_indices"] == [38, 39, 40, 41, 42]
+        assert outcome["trn_events"] == 0
+        assert outcome["nonspecific_events"] == 0
+        assert not outcome["stage_2a_pass"]
+
+
+def test_trn_source_topology_is_linear_somatic_output_and_not_a_search_dimension() -> None:
+    artifact = yaml.safe_load(FIGURE7_TRN_SOURCE_TOPOLOGY_AUDIT_PATH.read_text())
+    source = artifact["sources"]["smart_nml"]
+    assert source["structure_class"] == "linear"
+    assert source["serialized_compartment_order"] == ["Soma", "Dendrite 0", "Dendrite 1"]
+    assert source["spike_monitoring"] == {
+        "Soma": True,
+        "Dendrite 0": False,
+        "Dendrite 1": False,
+    }
+    assert artifact["implementation"]["compiled_edges"] == [
+        ["soma", "proximal_dendrite"],
+        ["proximal_dendrite", "distal_dendrite"],
+    ]
+    assert artifact["implementation"]["chemical_output_compartment"] == "soma"
+    assert not artifact["assessment"]["star_topology_admissible"]
+    assert not artifact["assessment"]["dendritic_event_output_admissible"]
+    assert not artifact["assessment"]["topology_search_authorized"]
 
 
 def test_contract_rejects_holdout_leakage(tmp_path: Path) -> None:

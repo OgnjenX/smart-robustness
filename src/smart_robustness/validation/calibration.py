@@ -233,6 +233,19 @@ def runtime_conventions_for_candidate(
                 ).trn_calcium_source_convention,
             )
         ),
+        trn_dendritic_calcium_density_convention=str(
+            values.get(
+                "trn_dendritic_calcium_density_convention",
+                (
+                    figure6_runtime_conventions() if base is None else base
+                ).trn_dendritic_calcium_density_convention,
+            )
+        ),
+        trn_dendritic_calcium_density_mS_cm2=(
+            None
+            if values.get("trn_dendritic_calcium_density_mS_cm2") is None
+            else float(values["trn_dendritic_calcium_density_mS_cm2"])
+        ),
         gaussian_spread_convention=str(values["gaussian_spread_convention"]),
         gaussian_learning_bounds_convention=str(
             values.get(

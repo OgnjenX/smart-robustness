@@ -246,6 +246,14 @@ def runtime_conventions_for_candidate(
             if values.get("trn_dendritic_calcium_density_mS_cm2") is None
             else float(values["trn_dendritic_calcium_density_mS_cm2"])
         ),
+        trn_soma_proximal_axial_conductance_scale=float(
+            values.get(
+                "trn_soma_proximal_axial_conductance_scale",
+                (
+                    figure6_runtime_conventions() if base is None else base
+                ).trn_soma_proximal_axial_conductance_scale,
+            )
+        ),
         gaussian_spread_convention=str(values["gaussian_spread_convention"]),
         gaussian_learning_bounds_convention=str(
             values.get(

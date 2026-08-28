@@ -132,6 +132,7 @@ class FirstOrderRuntimeConventions:
     trn_calcium_source_convention: str = "selected_source"
     trn_dendritic_calcium_density_convention: str = "selected_source"
     trn_dendritic_calcium_density_mS_cm2: float | None = None
+    trn_soma_proximal_axial_conductance_scale: float = 1.0
     postsynaptic_learning_coordinate: str = "absolute_physical"
     postsynaptic_learning_threshold_mV: float = 30.0
     top_down_learning_rule_convention: str = "serialized_presynaptic"
@@ -166,6 +167,8 @@ class FirstOrderRuntimeConventions:
             values.pop("trn_dendritic_calcium_density_convention")
         if values["trn_dendritic_calcium_density_mS_cm2"] is None:
             values.pop("trn_dendritic_calcium_density_mS_cm2")
+        if values["trn_soma_proximal_axial_conductance_scale"] == 1.0:
+            values.pop("trn_soma_proximal_axial_conductance_scale")
         if values["postsynaptic_learning_threshold_mV"] == values["spike_event_threshold_mV"]:
             # Historical profiles used one value for both roles. Preserve their
             # fingerprints while allowing Equation 6 to be audited separately.
@@ -414,6 +417,9 @@ def first_order_population_parameters(
             spike_event_coordinate = conventions.trn_spike_event_coordinate
         if conventions.trn_spike_event_threshold_mV is not None:
             spike_event_threshold_mV = conventions.trn_spike_event_threshold_mV
+    trn_axial_scale = conventions.trn_soma_proximal_axial_conductance_scale
+    if not math.isfinite(trn_axial_scale) or trn_axial_scale <= 0:
+        raise ValueError("TRN soma-proximal axial conductance scale must be finite and positive")
     parameters: dict[str, Any] = {
         "cell_spec": intrinsic_cell,
         "cell_class": facts.canonical_name,
@@ -475,6 +481,8 @@ def first_order_population_parameters(
         "depletion_epsilon": facts.depletion_epsilon,
         "depletion_recovery_ms": facts.depletion_recovery_ms,
     }
+    if facts.canonical_name == "trn":
+        parameters["axial_edge_conductance_scales"] = (trn_axial_scale, 1.0)
     if has_ahp:
         soma = intrinsic_cell.soma
         parameters.update(

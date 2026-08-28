@@ -117,6 +117,10 @@ def test_runtime_convention_fingerprint_is_stable_and_sensitive() -> None:
         trn_spike_event_coordinate="relative_to_soma_leak"
     )
     assert trn_internal_event.fingerprint != classic.fingerprint
+    trn_axial_scale = FirstOrderRuntimeConventions(
+        trn_soma_proximal_axial_conductance_scale=2.0
+    )
+    assert trn_axial_scale.fingerprint != classic.fingerprint
 
 
 def test_trn_event_coordinate_can_follow_kinness_without_changing_relay() -> None:
@@ -301,6 +305,28 @@ def test_behavior_calibrated_trn_dendritic_density_is_explicit_and_validated() -
             conventions=FirstOrderRuntimeConventions(
                 trn_dendritic_calcium_density_convention="modeldb_100",
                 trn_dendritic_calcium_density_mS_cm2=40.0,
+            ),
+        )
+
+
+def test_trn_soma_proximal_axial_scale_is_local_and_validated() -> None:
+    facts = {fact.canonical_name: fact for fact in first_order_population_facts()}
+    conventions = FirstOrderRuntimeConventions(
+        trn_soma_proximal_axial_conductance_scale=2.0
+    )
+    trn = first_order_population_parameters(facts["trn"], conventions=conventions)
+    relay = first_order_population_parameters(
+        facts["thalamic_relay"], conventions=conventions
+    )
+
+    assert trn["axial_edge_conductance_scales"] == (2.0, 1.0)
+    assert "axial_edge_conductance_scales" not in relay
+
+    with pytest.raises(ValueError, match="finite and positive"):
+        first_order_population_parameters(
+            facts["trn"],
+            conventions=FirstOrderRuntimeConventions(
+                trn_soma_proximal_axial_conductance_scale=0.0
             ),
         )
 

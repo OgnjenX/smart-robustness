@@ -73,6 +73,46 @@ def test_transmembrane_readout_is_negative_net_axial_current() -> None:
     )
 
 
+def test_axial_edge_scales_are_explicit_local_multipliers() -> None:
+    brian.start_scope()
+    baseline = create_compartmental_hh_population(
+        name="baseline_axial_edges", size=1, params=_params(), brian=brian
+    )
+    baseline_first_near = baseline.group.g_ax_0_into_soma[0] / brian.nsiemens
+    baseline_first_far = baseline.group.g_ax_0_into_proximal_dendrite[0] / brian.nsiemens
+    baseline_second_near = (
+        baseline.group.g_ax_1_into_proximal_dendrite[0] / brian.nsiemens
+    )
+
+    brian.start_scope()
+    params = _params()
+    params["axial_edge_conductance_scales"] = (2.0, 1.0)
+    scaled = create_compartmental_hh_population(
+        name="scaled_axial_edges", size=1, params=params, brian=brian
+    )
+
+    assert scaled.group.g_ax_0_into_soma[0] / brian.nsiemens == pytest.approx(
+        2.0 * baseline_first_near
+    )
+    assert scaled.group.g_ax_0_into_proximal_dendrite[0] / brian.nsiemens == pytest.approx(
+        2.0 * baseline_first_far
+    )
+    assert scaled.group.g_ax_1_into_proximal_dendrite[0] / brian.nsiemens == pytest.approx(
+        baseline_second_near
+    )
+
+
+@pytest.mark.parametrize("scales", [(1.0,), (1.0, 0.0), (1.0, True)])
+def test_axial_edge_scales_require_one_positive_number_per_edge(scales: tuple[float, ...]) -> None:
+    brian.start_scope()
+    params = _params()
+    params["axial_edge_conductance_scales"] = scales
+    with pytest.raises(ValueError, match="one finite positive number per adjacent edge"):
+        create_compartmental_hh_population(
+            name="invalid_axial_edge_scales", size=1, params=params, brian=brian
+        )
+
+
 def test_unit_depletion_coefficient_fully_depletes_transmitter_on_spike() -> None:
     """KInNeSS Eq. 17 prose specifies the discrete jump z <- z-epsilon*z."""
     brian.start_scope()

@@ -362,3 +362,14 @@ localized soma--proximal propagation grid with the distal edge, intrinsic
 channels, event threshold, synaptic strengths, and Figures 10 and 14--16 held
 fixed. It must be reported as calibration of an unidentified legacy runtime
 effect, not as an original SMART parameter.
+
+Artifacts 173 and 174 complete that localized propagation grid. All ten
+soma--proximal edge scales from 1x through 16x pass the top-down-only safety
+gate. Under simultaneous match onset, scales 1--3x retain exactly relay cells
+38--42 but emit no TRN event; scales 4--16x activate all 81 relay cells and
+still emit no TRN event. The largest sampled somatic peak over the complete
+grid is approximately -23.77 mV, while proximal dendrites reach regenerative
+positive voltages. No scale reaches Stage 2a, so mismatch is not run. A
+localized axial-gain correction is therefore closed as a sufficient behavior
+calibration. Do not search edge scales more finely or alter the fixed linear
+topology.

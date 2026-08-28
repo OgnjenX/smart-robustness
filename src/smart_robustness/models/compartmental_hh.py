@@ -473,16 +473,37 @@ def create_compartmental_hh_population(
                     t_type_h_inf(calcium_voltage, calcium_gate),
                 )
 
-    for edge_index, edge in enumerate(build_axial_edges(cell, axial)):
+    axial_edges = build_axial_edges(cell, axial)
+    axial_edge_scales = params.get(
+        "axial_edge_conductance_scales", (1.0,) * len(axial_edges)
+    )
+    if (
+        not isinstance(axial_edge_scales, tuple)
+        or len(axial_edge_scales) != len(axial_edges)
+        or any(
+            isinstance(scale, bool)
+            or not isinstance(scale, (int, float))
+            or not math.isfinite(scale)
+            or scale <= 0
+            for scale in axial_edge_scales
+        )
+    ):
+        raise ValueError(
+            "axial_edge_conductance_scales must contain one finite positive "
+            "number per adjacent edge"
+        )
+    for edge_index, (edge, scale) in enumerate(
+        zip(axial_edges, axial_edge_scales, strict=True)
+    ):
         _set(
             group,
             f"g_ax_{edge_index}_into_{edge.near.compartment_name}",
-            edge.conductance_into_near_nS * brian.nsiemens,
+            edge.conductance_into_near_nS * scale * brian.nsiemens,
         )
         _set(
             group,
             f"g_ax_{edge_index}_into_{edge.far.compartment_name}",
-            edge.conductance_into_far_nS * brian.nsiemens,
+            edge.conductance_into_far_nS * scale * brian.nsiemens,
         )
     for compartment_name, clamp_mV in voltage_clamps_mV.items():
         _set(group, f"v_{compartment_name}", float(clamp_mV) * brian.mV)

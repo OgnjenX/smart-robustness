@@ -1631,6 +1631,19 @@ The active discrepancy is now confined to unidentified legacy KInNeSS
 propagation/somatic-event behavior: strong dendritic spikes coexist with silent
 somatic output despite source-matched ordering and output location.
 
+The first explicitly behavior-calibrated propagation test is now complete in
+artifacts 173 and 174. It multiplies both directional conductances on only the
+TRN soma--proximal edge over the predeclared grid 1, 1.25, 1.5, 2, 3, 4, 6, 8,
+12, and 16, while fixing the linear topology, proximal--distal edge, archived
+120-mV calcium reversal, 100-mS/cm2 dendritic calcium density, intrinsic
+channels, synapses, and event detector. Every scale is cue-safe. In the
+simultaneous match assay, 1--3x preserve exactly relay indices 38--42 but give
+zero TRN output; 4--16x activate all 81 relay cells and still give zero TRN
+output. Sampled somatic peaks range from approximately -35.15 to -23.77 mV and
+never approach the printed +30-mV arm threshold. No candidate advances to
+mismatch. Local axial gain is rejected, and no finer edge-scale search is
+authorized.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

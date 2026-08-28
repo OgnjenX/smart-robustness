@@ -142,6 +142,15 @@ FIGURE7_TRN_DENSITY_MATCH_GRID_PATH = (
 FIGURE7_TRN_SOURCE_TOPOLOGY_AUDIT_PATH = (
     ROOT / "docs/validation-results/figure7-trn-source-topology-audit-172.yaml"
 )
+FIGURE7_TRN_AXIAL_GRID_PROFILE_PATH = (
+    ROOT / "configs/calibration/trn_soma_proximal_axial_behavior_grid_v1.yaml"
+)
+FIGURE7_TRN_AXIAL_CUE_GRID_PATH = (
+    ROOT / "docs/validation-results/figure7-trn-axial-cue-grid-173.yaml"
+)
+FIGURE7_TRN_AXIAL_MATCH_GRID_PATH = (
+    ROOT / "docs/validation-results/figure7-trn-axial-match-grid-174.yaml"
+)
 
 
 def test_classic_calibration_contract_separates_training_and_holdout() -> None:
@@ -807,6 +816,42 @@ def test_trn_source_topology_is_linear_somatic_output_and_not_a_search_dimension
     assert not artifact["assessment"]["star_topology_admissible"]
     assert not artifact["assessment"]["dendritic_event_output_admissible"]
     assert not artifact["assessment"]["topology_search_authorized"]
+
+
+def test_local_trn_axial_grid_is_registered_and_entirely_cue_safe() -> None:
+    profile = yaml.safe_load(FIGURE7_TRN_AXIAL_GRID_PROFILE_PATH.read_text())
+    cue = yaml.safe_load(FIGURE7_TRN_AXIAL_CUE_GRID_PATH.read_text())
+    assert profile["dimension"]["grid"] == [
+        1.0,
+        1.25,
+        1.5,
+        2.0,
+        3.0,
+        4.0,
+        6.0,
+        8.0,
+        12.0,
+        16.0,
+    ]
+    assert cue["stage_1_survivor_scales"] == profile["dimension"]["grid"]
+    assert all(item["stage_1_pass"] for item in cue["outcomes"])
+    assert all(item["cue_lead_trn_events"] == 0 for item in cue["outcomes"])
+    assert all(item["cue_lead_relay_events"] == 0 for item in cue["outcomes"])
+
+
+def test_local_trn_axial_grid_loses_relay_selectivity_before_recruiting_trn() -> None:
+    artifact = yaml.safe_load(FIGURE7_TRN_AXIAL_MATCH_GRID_PATH.read_text())
+    assert artifact["status"] == "no-stage-2a-survivor"
+    assert artifact["stage_2a_survivor_scales"] == []
+    for outcome in artifact["outcomes"]:
+        scale = outcome["trn_soma_proximal_axial_conductance_scale"]
+        expected_relay = list(range(81)) if scale >= 4.0 else [38, 39, 40, 41, 42]
+        assert outcome["active_relay_indices"] == expected_relay
+        assert outcome["trn_events"] == 0
+        assert not outcome["stage_2a_pass"]
+    assert max(
+        item["sampled_trn_soma_peak_mV"] for item in artifact["outcomes"]
+    ) < -23.7
 
 
 def test_contract_rejects_holdout_leakage(tmp_path: Path) -> None:

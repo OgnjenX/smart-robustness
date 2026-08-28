@@ -125,6 +125,10 @@ def test_runtime_convention_fingerprint_is_stable_and_sensitive() -> None:
         trn_spike_event_voltage_offset_mV=60.0
     )
     assert trn_event_offset.fingerprint != classic.fingerprint
+    trn_event_blend = FirstOrderRuntimeConventions(
+        trn_spike_event_proximal_blend_fraction=0.5
+    )
+    assert trn_event_blend.fingerprint != classic.fingerprint
 
 
 def test_trn_event_coordinate_can_follow_kinness_without_changing_relay() -> None:
@@ -162,6 +166,35 @@ def test_trn_numeric_event_offset_is_scoped_and_validated() -> None:
             facts["trn"],
             conventions=FirstOrderRuntimeConventions(
                 trn_spike_event_voltage_offset_mV=float("nan")
+            ),
+        )
+
+
+def test_trn_proximal_event_blend_is_scoped_and_validated() -> None:
+    conventions = FirstOrderRuntimeConventions(
+        trn_spike_event_proximal_blend_fraction=0.5
+    )
+    facts = {fact.canonical_name: fact for fact in first_order_population_facts()}
+    relay = first_order_population_parameters(
+        facts["thalamic_relay"], conventions=conventions
+    )
+    trn = first_order_population_parameters(facts["trn"], conventions=conventions)
+
+    assert "spike_event_proximal_blend_fraction" not in relay
+    assert trn["spike_event_proximal_blend_fraction"] == 0.5
+
+    with pytest.raises(ValueError, match="blend must be finite"):
+        first_order_population_parameters(
+            facts["trn"],
+            conventions=FirstOrderRuntimeConventions(
+                trn_spike_event_proximal_blend_fraction=float("nan")
+            ),
+        )
+    with pytest.raises(ValueError, match="between zero and one"):
+        first_order_population_parameters(
+            facts["trn"],
+            conventions=FirstOrderRuntimeConventions(
+                trn_spike_event_proximal_blend_fraction=1.01
             ),
         )
 

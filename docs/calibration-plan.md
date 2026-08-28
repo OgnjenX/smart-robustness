@@ -399,3 +399,23 @@ transition into a causal match detector. Do not fit intermediate density or
 offset values. The next calibration must represent a qualitatively different
 legacy compartment-to-event transfer hypothesis, remain separately named from
 the source reconstruction, and continue to lock Figures 10 and 14--16.
+
+Artifacts 178--180 test that transfer hypothesis as a soma--proximal detector
+blend while preserving somatic chemical output, cable topology, intrinsic
+channels, and the printed +30/0-mV detector. All registered 0--1 blend values
+pass the original cue screen. In the 50-ms match assay, 0.5 is the sole
+survivor: relay cells 38--42 emit five events and all 81 TRN cells emit once.
+A fresh 50-ms mismatch pair then produces the orthogonal relay set 22, 31, 40,
+49, 58, the same 81 TRN events, and zero nonspecific output in both conditions.
+Thus the blend recovers an early match pathway but not condition-dependent
+arousal.
+
+Artifact 181 corrects two validation assumptions by re-reading the primary
+paper. Top-down-only specific-thalamic cells are inhibited through TRN in the
+one-against-one regime, so cue-evoked TRN events are permitted if relay and
+nonspecific output remain silent. In addition, the complete-module mismatch
+trace uses 300-ms epochs and first increases nonspecific output around 50 ms;
+the 50-ms pair is therefore only an early pathway screen. Reopen only the
+already registered 600/800/1000-pA top-down-current dimension at blend 0.5,
+then use a 300-ms pair for the final Figure 7 arousal gate. Do not alter weights,
+delays, geometry, or holdout figures.

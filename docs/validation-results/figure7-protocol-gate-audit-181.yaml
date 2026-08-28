@@ -1,0 +1,62 @@
+schema_version: 1
+id: figure7-protocol-gate-audit-181
+date: '2026-08-29'
+status: validation-gate-correction-required
+primary_source:
+  citation: Grossberg and Versace 2008, Spikes, synchrony, and attentive learning by laminar thalamocortical circuits
+  url: https://sites.bu.edu/steveg/files/2016/06/GroVer2008BR.pdf
+findings:
+  - pages: 19-20
+    source_location: Figure 7 caption and Section 2.3
+    claim: >-
+      Layer-6II top-down excitation reaches both specific thalamus and TRN.
+      Top-down-only LGN cells are inhibited through TRN (one-against-one),
+      whereas simultaneous bottom-up and top-down excitation can overcome TRN
+      inhibition (two-against-one).
+    implementation_consequence: >-
+      Cue-evoked TRN events are not a Stage-1 failure by themselves. The causal
+      cue gate must require settled pre-cue activity, selective category
+      recruitment, and no relay or nonspecific output; TRN output is recorded
+      but permitted.
+  - pages: 19-20
+    source_location: Figure 7 caption and Section 2.3
+    claim: >-
+      Match uses a horizontal bottom-up bar and a learned horizontal top-down
+      expectation; mismatch uses a vertical bottom-up bar against that same
+      horizontal expectation. The convergent bottom-up drive to nonspecific
+      thalamus is unchanged across conditions.
+    implementation_consequence: >-
+      The current stimulus geometry and simultaneous-onset interpretation are
+      retained.
+  - pages: 22-23
+    source_location: Figure 9 caption and Section 2.5
+    claim: >-
+      The complete-module mismatch trace uses 300-ms simulation epochs, and the
+      first modeled nonspecific-thalamic increase occurs around 50 ms after
+      onset.
+    implementation_consequence: >-
+      A 50-ms match/mismatch pair is a pathway diagnostic, not a sufficient
+      final arousal assay. Stage 2b must use a 300-ms pair.
+scoring_correction:
+  preserve:
+    - simultaneous bottom-up/top-down onset
+    - horizontal match and vertical mismatch geometry
+    - equal nonspecific bottom-up drive across conditions
+    - match TRN output greater than mismatch
+    - mismatch nonspecific output greater than match
+  replace:
+    - old: any cue-period TRN event fails Stage 1
+      new: cue-period TRN events are permitted if relay and nonspecific output remain silent
+    - old: 50-ms pair is a final arousal assay
+      new: 50-ms match is an early pathway screen; final pair duration is 300 ms
+  avoid:
+    - post-hoc time windows selected from observed spike times
+    - changing synaptic weights or delays while auditing the protocol
+reopened_registered_dimension:
+  name: top_down_current_pA
+  source_status: not_identifiable
+  grid: [600.0, 800.0, 1000.0]
+  source: configs/calibration/classic_uncertainty_space.yaml
+  fixed_transfer_candidate:
+    trn_spike_event_proximal_blend_fraction: 0.5
+    provenance: sole Stage-2a survivor in artifact 179

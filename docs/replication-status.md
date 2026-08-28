@@ -1670,6 +1670,27 @@ simultaneous match stage is therefore not run. This closes the simplest
 second-order scalar rescue; the missing behavior is not recoverable by trading
 dendritic calcium strength against a shifted somatic detector origin.
 
+The soma--proximal event-transfer grid in artifacts 178 and 179 produces the
+first calibrated early-match survivor. Every blend from 0 through 1 is quiet
+during the original cue gate. Under simultaneous 50-ms match, blend 0.5 alone
+preserves relay indices 38--42 while generating 81 TRN events. Values 0--0.1
+remain selective but TRN-silent; 0.2--0.4 lose relay selectivity without TRN
+output; 0.6--0.9 recruit all relay cells and 81 TRN cells; the proximal endpoint
+is nonselective and silent. Artifact 180 independently repeats the 0.5 match,
+but mismatch activates the vertical input indices 22, 31, 40, 49, and 58 with
+the identical TRN event train and no nonspecific output. It is not yet a Figure
+7 reproduction.
+
+Primary-source audit 181 shows that two earlier gates were too restrictive.
+Grossberg and Versace explicitly route top-down layer-6II excitation through
+TRN to inhibit top-down-only LGN cells, so cue-period TRN output is compatible
+with the intended one-against-one mechanism. Their complete-module mismatch
+simulation uses 300-ms epochs and places the first nonspecific increase around
+50 ms, so a 50-ms pair cannot close the arousal claim. The next registered test
+holds blend 0.5 fixed, reopens only the existing 600/800/1000-pA undocumented
+top-down-current grid, permits causal cue-period TRN output, and evaluates final
+match/mismatch directionality over 300 ms.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

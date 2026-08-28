@@ -182,6 +182,9 @@ def create_compartmental_hh_population(
     )
     spike_coordinate = SpikeEventCoordinate(params["spike_event_coordinate"])
     spike_event_voltage_offset_mV = params.get("spike_event_voltage_offset_mV")
+    spike_event_proximal_blend_fraction = params.get(
+        "spike_event_proximal_blend_fraction"
+    )
     if spike_event_voltage_offset_mV is not None:
         spike_event_voltage_offset_mV = float(spike_event_voltage_offset_mV)
         if not np.isfinite(spike_event_voltage_offset_mV):
@@ -189,6 +192,25 @@ def create_compartmental_hh_population(
         if spike_coordinate is not SpikeEventCoordinate.ABSOLUTE_PHYSICAL:
             raise ValueError(
                 "numeric spike-event offset cannot be combined with a named "
+                "non-absolute coordinate"
+            )
+    if spike_event_proximal_blend_fraction is not None:
+        spike_event_proximal_blend_fraction = float(
+            spike_event_proximal_blend_fraction
+        )
+        if not np.isfinite(spike_event_proximal_blend_fraction) or not (
+            0.0 <= spike_event_proximal_blend_fraction <= 1.0
+        ):
+            raise ValueError(
+                "spike_event_proximal_blend_fraction must be finite and between zero and one"
+            )
+        if spike_event_voltage_offset_mV is not None:
+            raise ValueError(
+                "proximal spike-event blend cannot be combined with a numeric voltage offset"
+            )
+        if spike_coordinate is not SpikeEventCoordinate.ABSOLUTE_PHYSICAL:
+            raise ValueError(
+                "proximal spike-event blend cannot be combined with a named "
                 "non-absolute coordinate"
             )
     spike_event_rule = SpikeEventRule(params["spike_event_rule"])
@@ -222,6 +244,13 @@ def create_compartmental_hh_population(
     if not isinstance(voltage_clamps_mV, dict):
         raise TypeError("voltage_clamps_mV must be a dict")
     compartment_names = {compartment.name for compartment in cell.compartments}
+    if (
+        spike_event_proximal_blend_fraction is not None
+        and "proximal_dendrite" not in compartment_names
+    ):
+        raise ValueError(
+            "proximal spike-event blend requires a proximal_dendrite compartment"
+        )
     unknown_clamps = set(voltage_clamps_mV) - compartment_names
     if unknown_clamps:
         raise ValueError(f"unknown voltage-clamped compartments: {sorted(unknown_clamps)}")
@@ -271,7 +300,13 @@ def create_compartmental_hh_population(
         spike_reset += "; ahp_rise += 1; ahp_fall += 1"
     if compiled.depletion_enabled:
         spike_reset += f"; transmitter *= {1 - float(depletion_epsilon)}"
-    if spike_event_voltage_offset_mV is not None:
+    if spike_event_proximal_blend_fraction is not None:
+        spike_voltage = (
+            "v_soma+"
+            f"({spike_event_proximal_blend_fraction!r})*"
+            "(v_proximal_dendrite-v_soma)"
+        )
+    elif spike_event_voltage_offset_mV is not None:
         spike_voltage = f"v_soma+({spike_event_voltage_offset_mV!r})*mV"
     elif spike_coordinate is SpikeEventCoordinate.ABSOLUTE_PHYSICAL:
         spike_voltage = "v_soma"
@@ -351,7 +386,20 @@ def create_compartmental_hh_population(
             else cell.soma.e_leak_mV
         )
         initial_soma_voltage = params.get("v_init_mV", default_soma_voltage)
-        if spike_event_voltage_offset_mV is not None:
+        if spike_event_proximal_blend_fraction is not None:
+            default_proximal_voltage = (
+                0.0
+                if membrane_initialization
+                is MembraneInitializationConvention.KINNESS_INTERNAL_ZERO
+                else cell.compartment("proximal_dendrite").e_leak_mV
+            )
+            initial_proximal_voltage = params.get(
+                "v_init_mV", default_proximal_voltage
+            )
+            initial_soma_voltage += spike_event_proximal_blend_fraction * (
+                initial_proximal_voltage - initial_soma_voltage
+            )
+        elif spike_event_voltage_offset_mV is not None:
             initial_soma_voltage += spike_event_voltage_offset_mV
         elif spike_coordinate is SpikeEventCoordinate.SHIFTED_67_MV:
             initial_soma_voltage += 67.0

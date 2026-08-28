@@ -222,6 +222,11 @@ def runtime_conventions_for_candidate(
             if values.get("trn_spike_event_voltage_offset_mV") is None
             else float(values["trn_spike_event_voltage_offset_mV"])
         ),
+        trn_spike_event_proximal_blend_fraction=(
+            None
+            if values.get("trn_spike_event_proximal_blend_fraction") is None
+            else float(values["trn_spike_event_proximal_blend_fraction"])
+        ),
         trn_potassium_convention=str(
             values.get(
                 "trn_potassium_convention",

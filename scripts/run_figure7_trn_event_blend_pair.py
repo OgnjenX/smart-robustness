@@ -1,0 +1,169 @@
+"""Evaluate Stage-2a TRN detector-blend survivors on match and mismatch."""
+
+from __future__ import annotations
+
+import argparse
+from dataclasses import asdict, replace
+from datetime import UTC, datetime
+from enum import Enum
+from pathlib import Path
+from typing import Any
+
+import numpy as np
+import yaml
+
+from smart_robustness.protocols import MatchCondition
+from smart_robustness.validation.calibration import runtime_conventions_for_candidate
+from smart_robustness.validation.figure7 import run_figure7_condition
+
+EXPECTED_MATCH_RELAY_INDICES = frozenset({38, 39, 40, 41, 42})
+ALLOWED_MISMATCH_RELAY_INDICES = frozenset({40})
+
+
+def _plain(value: Any) -> Any:
+    if hasattr(value, "__dataclass_fields__"):
+        return _plain(asdict(value))
+    if isinstance(value, dict):
+        return {str(key): _plain(item) for key, item in value.items()}
+    if isinstance(value, (tuple, list, set, frozenset)):
+        return [_plain(item) for item in value]
+    if isinstance(value, np.generic):
+        return value.item()
+    if isinstance(value, Enum):
+        return value.value
+    return value
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--grid-profile",
+        default="configs/calibration/trn_soma_proximal_event_blend_v1.yaml",
+    )
+    parser.add_argument(
+        "--stage-2a-artifact",
+        default="docs/validation-results/figure7-trn-event-blend-match-grid-179.yaml",
+    )
+    parser.add_argument("--output", required=True)
+    args = parser.parse_args()
+
+    import brian2 as brian
+
+    brian.prefs.codegen.target = "numpy"
+    grid_profile = yaml.safe_load(Path(args.grid_profile).read_text())
+    stage_2a = yaml.safe_load(Path(args.stage_2a_artifact).read_text())
+    registered = {float(value) for value in grid_profile["dimension"]["grid"]}
+    blends = tuple(
+        float(value) for value in stage_2a["stage_2a_survivor_blend_fractions"]
+    )
+    if not blends or not set(blends) <= registered:
+        raise ValueError("Stage-2a survivors must be nonempty registered grid values")
+    base_profile_path = str(grid_profile["base_profile"])
+    base_profile = yaml.safe_load(Path(base_profile_path).read_text())
+    base = runtime_conventions_for_candidate(base_profile["candidate"])
+    fixed = grid_profile["fixed_choices"]
+    top_down_current_pA = float(base_profile["candidate"]["top_down_current_pA"])
+    output = Path(args.output)
+    output.parent.mkdir(parents=True, exist_ok=True)
+    outcomes = []
+    for blend in blends:
+        conventions = replace(
+            base,
+            trn_calcium_source_convention=str(
+                fixed["trn_calcium_source_convention"]
+            ),
+            trn_dendritic_calcium_density_mS_cm2=float(
+                fixed["trn_dendritic_calcium_density_mS_cm2"]
+            ),
+            trn_soma_proximal_axial_conductance_scale=float(
+                fixed["trn_soma_proximal_axial_conductance_scale"]
+            ),
+            trn_spike_event_proximal_blend_fraction=blend,
+        )
+        conditions = {}
+        for condition in (MatchCondition.MATCH, MatchCondition.MISMATCH):
+            result = run_figure7_condition(
+                condition=condition,
+                top_down_current_pA=top_down_current_pA,
+                use_paper_constrained_reference=True,
+                conventions=conventions,
+                duration_ms=50.0,
+                top_down_cue_lead_ms=0.0,
+                equilibration_ms=20.0,
+                record_relay_diagnostics=True,
+                brian=brian,
+            )
+            conditions[condition.value] = result
+            print(
+                f"blend={blend:g} {condition.value}: "
+                f"relay={len(result.relay_spike_times_ms)} "
+                f"active={sorted(set(result.relay_spike_indices))} "
+                f"trn={len(result.trn_spike_times_ms)} "
+                f"nonspecific={len(result.nonspecific_spike_times_ms)}",
+                flush=True,
+            )
+        match = conditions[MatchCondition.MATCH.value]
+        mismatch = conditions[MatchCondition.MISMATCH.value]
+        match_relay = frozenset(match.relay_spike_indices)
+        mismatch_relay = frozenset(mismatch.relay_spike_indices)
+        gates = {
+            "match_relay_subset": match_relay == EXPECTED_MATCH_RELAY_INDICES,
+            "mismatch_relay_suppressed": mismatch_relay
+            <= ALLOWED_MISMATCH_RELAY_INDICES,
+            "trn_match_greater_than_mismatch": len(match.trn_spike_times_ms)
+            > len(mismatch.trn_spike_times_ms),
+            "nonspecific_mismatch_greater_than_match": len(
+                mismatch.nonspecific_spike_times_ms
+            )
+            > len(match.nonspecific_spike_times_ms),
+        }
+        stage_2b_pass = all(gates.values())
+        outcomes.append(
+            {
+                "trn_spike_event_proximal_blend_fraction": blend,
+                "runtime_fingerprint": conventions.fingerprint,
+                "gates": gates,
+                "stage_2b_pass": stage_2b_pass,
+                "conditions": conditions,
+            }
+        )
+        checkpoint = {
+            "schema_version": 1,
+            "id": output.stem,
+            "status": "partial-survivor-checkpoint",
+            "completed_blend_fractions": [
+                item["trn_spike_event_proximal_blend_fraction"] for item in outcomes
+            ],
+            "outcomes": outcomes,
+        }
+        output.write_text(yaml.safe_dump(_plain(checkpoint), sort_keys=False))
+
+    survivors = [item for item in outcomes if item["stage_2b_pass"]]
+    artifact = {
+        "schema_version": 1,
+        "id": output.stem,
+        "date": datetime.now(tz=UTC).date().isoformat(),
+        "status": "stage-2b-survivors-found" if survivors else "no-stage-2b-survivor",
+        "grid_profile": args.grid_profile,
+        "stage_2a_artifact": args.stage_2a_artifact,
+        "protocol": {
+            "conditions": ["match", "mismatch"],
+            "duration_ms": 50.0,
+            "equilibration_ms": 20.0,
+            "top_down_cue_lead_ms": 0.0,
+            "timing": "simultaneous bottom-up/top-down onset",
+        },
+        "stage_2b_survivor_blend_fractions": [
+            item["trn_spike_event_proximal_blend_fraction"] for item in survivors
+        ],
+        "outcomes": outcomes,
+        "next_gate": (
+            "Evaluate Figure 10 reset and Figures 14--16 oscillation/synchrony holdouts "
+            "only for Stage-2b survivors."
+        ),
+    }
+    output.write_text(yaml.safe_dump(_plain(artifact), sort_keys=False))
+
+
+if __name__ == "__main__":
+    main()

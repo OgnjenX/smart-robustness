@@ -167,6 +167,21 @@ FIGURE7_TRN_DENSITY_EVENT_OFFSET_CUE_PATH = (
     ROOT
     / "docs/validation-results/figure7-trn-density-event-offset-cue-grid-177.yaml"
 )
+FIGURE7_TRN_EVENT_BLEND_PROFILE_PATH = (
+    ROOT / "configs/calibration/trn_soma_proximal_event_blend_v1.yaml"
+)
+FIGURE7_TRN_EVENT_BLEND_CUE_PATH = (
+    ROOT / "docs/validation-results/figure7-trn-event-blend-cue-grid-178.yaml"
+)
+FIGURE7_TRN_EVENT_BLEND_MATCH_PATH = (
+    ROOT / "docs/validation-results/figure7-trn-event-blend-match-grid-179.yaml"
+)
+FIGURE7_TRN_EVENT_BLEND_PAIR_PATH = (
+    ROOT / "docs/validation-results/figure7-trn-event-blend-pair-180.yaml"
+)
+FIGURE7_PROTOCOL_GATE_AUDIT_PATH = (
+    ROOT / "docs/validation-results/figure7-protocol-gate-audit-181.yaml"
+)
 
 
 def test_classic_calibration_contract_separates_training_and_holdout() -> None:
@@ -947,6 +962,53 @@ def test_trn_density_event_offset_cross_has_no_cue_safe_survivor() -> None:
     ]
     assert all(item["cue_lead_trn_events"] >= 81 for item in artifact["outcomes"])
     assert all(not item["stage_1_pass"] for item in artifact["outcomes"])
+
+
+def test_trn_event_blend_grid_is_cue_safe_and_has_one_match_survivor() -> None:
+    profile = yaml.safe_load(FIGURE7_TRN_EVENT_BLEND_PROFILE_PATH.read_text())
+    cue = yaml.safe_load(FIGURE7_TRN_EVENT_BLEND_CUE_PATH.read_text())
+    match = yaml.safe_load(FIGURE7_TRN_EVENT_BLEND_MATCH_PATH.read_text())
+    expected_grid = [index / 10 for index in range(11)]
+    assert profile["dimension"]["grid"] == expected_grid
+    assert cue["stage_1_survivor_blend_fractions"] == expected_grid
+    assert match["stage_2a_survivor_blend_fractions"] == [0.5]
+    survivor = next(
+        item
+        for item in match["outcomes"]
+        if item["trn_spike_event_proximal_blend_fraction"] == 0.5
+    )
+    assert survivor["active_relay_indices"] == [38, 39, 40, 41, 42]
+    assert survivor["relay_events"] == 5
+    assert survivor["trn_events"] == 81
+    assert survivor["stage_2a_pass"]
+
+
+def test_trn_event_blend_short_pair_fails_mismatch_gates() -> None:
+    artifact = yaml.safe_load(FIGURE7_TRN_EVENT_BLEND_PAIR_PATH.read_text())
+    assert artifact["status"] == "no-stage-2b-survivor"
+    assert artifact["stage_2b_survivor_blend_fractions"] == []
+    outcome = artifact["outcomes"][0]
+    assert outcome["trn_spike_event_proximal_blend_fraction"] == 0.5
+    assert outcome["gates"] == {
+        "match_relay_subset": True,
+        "mismatch_relay_suppressed": False,
+        "trn_match_greater_than_mismatch": False,
+        "nonspecific_mismatch_greater_than_match": False,
+    }
+    match = outcome["conditions"]["match"]
+    mismatch = outcome["conditions"]["mismatch"]
+    assert match["relay_spike_indices"] == [38, 39, 40, 41, 42]
+    assert mismatch["relay_spike_indices"] == [22, 31, 40, 49, 58]
+    assert match["trn_spike_times_ms"] == mismatch["trn_spike_times_ms"]
+
+
+def test_figure7_protocol_audit_reopens_cue_trn_and_extends_final_pair() -> None:
+    audit = yaml.safe_load(FIGURE7_PROTOCOL_GATE_AUDIT_PATH.read_text())
+    assert audit["status"] == "validation-gate-correction-required"
+    assert audit["reopened_registered_dimension"]["grid"] == [600.0, 800.0, 1000.0]
+    replacements = audit["scoring_correction"]["replace"]
+    assert any("TRN events are permitted" in item["new"] for item in replacements)
+    assert any("300 ms" in item["new"] for item in replacements)
 
 
 def test_contract_rejects_holdout_leakage(tmp_path: Path) -> None:

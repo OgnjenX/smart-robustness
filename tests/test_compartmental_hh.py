@@ -341,6 +341,59 @@ def test_numeric_spike_event_offset_rejects_named_nonabsolute_coordinate() -> No
         )
 
 
+def test_proximal_spike_event_blend_preserves_two_stage_detector() -> None:
+    brian.start_scope()
+    brian.defaultclock.dt = 0.01 * brian.ms
+    params = _params()
+    params["spike_event_proximal_blend_fraction"] = 0.5
+    params["voltage_clamps_mV"] = {
+        "soma": -20.0,
+        "proximal_dendrite": 100.0,
+    }
+    population = create_compartmental_hh_population(
+        name="proximal_spike_event_blend", size=1, params=params, brian=brian
+    )
+    spike_monitor = brian.SpikeMonitor(population.group)
+    network = brian.Network(population.group, spike_monitor)
+
+    # The blended detector sees +40 mV and arms while chemical output remains
+    # attached to the population's somatic spike event.
+    network.run(0.01 * brian.ms)
+    assert spike_monitor.count[0] == 0
+    assert population.group.armed[0] == 1
+    population.group.v_proximal_dendrite = -30 * brian.mV
+    network.run(0.01 * brian.ms)
+    assert spike_monitor.count[0] == 1
+
+
+@pytest.mark.parametrize("blend", [float("nan"), -0.01, 1.01])
+def test_proximal_spike_event_blend_requires_unit_interval(blend: float) -> None:
+    brian.start_scope()
+    params = _params()
+    params["spike_event_proximal_blend_fraction"] = blend
+    with pytest.raises(ValueError, match="between zero and one"):
+        create_compartmental_hh_population(
+            name="invalid_proximal_spike_event_blend",
+            size=1,
+            params=params,
+            brian=brian,
+        )
+
+
+def test_proximal_spike_event_blend_rejects_other_coordinate_transforms() -> None:
+    brian.start_scope()
+    params = _params()
+    params["spike_event_proximal_blend_fraction"] = 0.5
+    params["spike_event_voltage_offset_mV"] = 10.0
+    with pytest.raises(ValueError, match="cannot be combined"):
+        create_compartmental_hh_population(
+            name="conflicting_proximal_spike_event_blend",
+            size=1,
+            params=params,
+            brian=brian,
+        )
+
+
 def test_kinness_minus_20_mv_event_threshold_is_explicit() -> None:
     brian.start_scope()
     brian.defaultclock.dt = 0.01 * brian.ms

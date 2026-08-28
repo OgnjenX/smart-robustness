@@ -217,6 +217,22 @@ def runtime_conventions_for_candidate(
             if values.get("trn_spike_event_threshold_mV") is None
             else float(values["trn_spike_event_threshold_mV"])
         ),
+        trn_potassium_convention=str(
+            values.get(
+                "trn_potassium_convention",
+                (
+                    figure6_runtime_conventions() if base is None else base
+                ).trn_potassium_convention,
+            )
+        ),
+        trn_calcium_source_convention=str(
+            values.get(
+                "trn_calcium_source_convention",
+                (
+                    figure6_runtime_conventions() if base is None else base
+                ).trn_calcium_source_convention,
+            )
+        ),
         gaussian_spread_convention=str(values["gaussian_spread_convention"]),
         gaussian_learning_bounds_convention=str(
             values.get(

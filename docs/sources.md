@@ -168,3 +168,9 @@ target. The caption and Results Sections 2.2-2.3 publish only directional
 relay, TRN, and nonspecific-thalamus effects. The paper's 40-Hz value calibrates
 the Methods 4.9 relay input, while 70-Hz values belong to unrelated protocols.
 Artifact 157 records the corrected structural/qualitative contract.
+
+The same primary Figure 7 text states that matched LGN cells receive
+simultaneous bottom-up and top-down excitation. A top-down-only lead interval
+is therefore retained as a causal diagnostic, not treated as the canonical
+published protocol. Artifact 168 applies simultaneous onset after explicit
+equilibration when testing the archived TRN calcium reversal.

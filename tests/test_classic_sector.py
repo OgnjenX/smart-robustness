@@ -9,6 +9,8 @@ from smart_robustness.classic_sector import (
     CalciumKineticsConvention,
     FirstOrderRuntimeConventions,
     IntrinsicCellConvention,
+    TrnCalciumSourceConvention,
+    TrnPotassiumConvention,
     ZeroSensitivityInputConvention,
     _resolved_projection_record,
     build_first_order_chemical_sector,
@@ -178,6 +180,76 @@ def test_source_hybrid_uses_archived_relay_and_table3_for_other_cells() -> None:
     assert trn["cell_spec"].compartment("proximal_dendrite").g_ca_mS_cm2 == 10
     assert relay["e_k_mV"] == facts["thalamic_relay"].e_k_mV
     assert trn["e_k_mV"] == -90
+
+
+@pytest.mark.parametrize(
+    ("potassium", "expected_density", "expected_reversal"),
+    (
+        (TrnPotassiumConvention.SELECTED_SOURCE, 100.0, -90.0),
+        (TrnPotassiumConvention.MODELDB_DENSITY, 80.0, -90.0),
+        (TrnPotassiumConvention.MODELDB_REVERSAL, 100.0, -100.0),
+        (TrnPotassiumConvention.MODELDB_DENSITY_AND_REVERSAL, 80.0, -100.0),
+    ),
+)
+def test_trn_potassium_source_conflicts_are_independently_selectable(
+    potassium: TrnPotassiumConvention,
+    expected_density: float,
+    expected_reversal: float,
+) -> None:
+    facts = {fact.canonical_name: fact for fact in first_order_population_facts()}
+    conventions = FirstOrderRuntimeConventions(
+        intrinsic_cell_convention=(
+            IntrinsicCellConvention.MODELDB_RELAY_PAPER_TABLE3_OTHERS.value
+        ),
+        trn_potassium_convention=potassium.value,
+    )
+
+    trn = first_order_population_parameters(facts["trn"], conventions=conventions)
+    relay = first_order_population_parameters(
+        facts["thalamic_relay"], conventions=conventions
+    )
+
+    assert trn["cell_spec"].soma.g_k_mS_cm2 == expected_density
+    assert trn["e_k_mV"] == expected_reversal
+    assert relay["cell_spec"].soma.g_k_mS_cm2 == 100.0
+    assert relay["e_k_mV"] == -100.0
+
+
+@pytest.mark.parametrize(
+    ("calcium", "expected_soma_density", "expected_reversal"),
+    (
+        (TrnCalciumSourceConvention.SELECTED_SOURCE, None, 180.0),
+        (TrnCalciumSourceConvention.MODELDB_SOMA_CHANNEL, 100.0, 180.0),
+        (TrnCalciumSourceConvention.MODELDB_REVERSAL, None, 120.0),
+        (
+            TrnCalciumSourceConvention.MODELDB_SOMA_CHANNEL_AND_REVERSAL,
+            100.0,
+            120.0,
+        ),
+    ),
+)
+def test_trn_calcium_source_conflicts_are_independently_selectable(
+    calcium: TrnCalciumSourceConvention,
+    expected_soma_density: float | None,
+    expected_reversal: float,
+) -> None:
+    facts = {fact.canonical_name: fact for fact in first_order_population_facts()}
+    conventions = FirstOrderRuntimeConventions(
+        intrinsic_cell_convention=(
+            IntrinsicCellConvention.MODELDB_RELAY_PAPER_TABLE3_OTHERS.value
+        ),
+        trn_calcium_source_convention=calcium.value,
+    )
+
+    trn = first_order_population_parameters(facts["trn"], conventions=conventions)
+    relay = first_order_population_parameters(
+        facts["thalamic_relay"], conventions=conventions
+    )
+
+    assert trn["cell_spec"].soma.g_ca_mS_cm2 == expected_soma_density
+    assert trn["e_ca_mV"] == expected_reversal
+    assert relay["cell_spec"].soma.g_ca_mS_cm2 == 0.1
+    assert relay["e_ca_mV"] == facts["thalamic_relay"].e_ca_mV
 
 
 def test_category_source_hybrid_also_uses_archived_layer6ii() -> None:

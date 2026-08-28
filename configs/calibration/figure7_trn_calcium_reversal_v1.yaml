@@ -1,0 +1,32 @@
+schema_version: 1
+name: figure7-trn-calcium-reversal-v1
+status: post-holdout-official-source-candidate
+derivation: >-
+  Retain the population-resolved Figure 6 source profile and the Table 3 TRN
+  channel layout, but use the independently archived SMART.nml TRN calcium
+  reversal of 120 mV instead of the paper/Table 3 runtime's 180 mV value.
+  Artifact 167 exposed this candidate after the Figure 7 holdout, so it is
+  calibration evidence rather than an untouched holdout.
+base_profile: configs/calibration/figure6_kinness_equation27_transition_v1.yaml
+base_candidate_fingerprint: 12e0245e9a3044073200e90443582885a5410cf39b8b18d50d22a04a2fc48604
+candidate_fingerprint: e0e36f7b351133650a0ecf437f88bf7bf4609a28d8f8ad803135cbbb7a91340e
+runtime_fingerprint: e6d87bdaf0321de4ae3120ab2f922c022102cf6d7c30eb49e9f092f624fcbecd
+candidate:
+  intrinsic_cell_convention: modeldb_relay_paper_table3_others
+  calcium_kinetics_convention: modeldb_112923
+  calcium_density_convention: cell_specific
+  nak_rate_convention: standard_traub_miles
+  axial_convention: modeldb_relay_kinness_paper_others
+  membrane_initialization_convention: physical_leak_voltage
+  spike_event_rule: latched_peak_then_zero
+  gaussian_spread_convention: standard_deviation
+  relay_input_interpretation: archived_finite_conductance
+  top_down_current_pA: 600.0
+  postsynaptic_signal_convention: kinness_equation27_transition_time
+  trn_calcium_source_convention: modeldb_reversal
+promotion_gate: >-
+  Under the paper's simultaneous bottom-up/top-down Figure 7 protocol, require
+  the five-cell horizontal relay subset during match, mismatch relay output
+  confined to the horizontal/vertical overlap, match-greater-than-mismatch TRN
+  output, and mismatch-greater-than-match nonspecific output. A survivor must
+  then retain every Figure 6 prerequisite without changing this fingerprint.

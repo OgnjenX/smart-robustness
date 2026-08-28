@@ -73,6 +73,24 @@ class IntrinsicCellConvention(StrEnum):
     )
 
 
+class TrnPotassiumConvention(StrEnum):
+    """Discrete Table-3/SMART.nml conflicts in the TRN potassium system."""
+
+    SELECTED_SOURCE = "selected_source"
+    MODELDB_DENSITY = "modeldb_density"
+    MODELDB_REVERSAL = "modeldb_reversal"
+    MODELDB_DENSITY_AND_REVERSAL = "modeldb_density_and_reversal"
+
+
+class TrnCalciumSourceConvention(StrEnum):
+    """Discrete Table-3/SMART.nml conflicts in the TRN calcium system."""
+
+    SELECTED_SOURCE = "selected_source"
+    MODELDB_SOMA_CHANNEL = "modeldb_soma_channel"
+    MODELDB_REVERSAL = "modeldb_reversal"
+    MODELDB_SOMA_CHANNEL_AND_REVERSAL = "modeldb_soma_channel_and_reversal"
+
+
 class CalciumKineticsConvention(StrEnum):
     """Source selected for population-specific T-current gate equations."""
 
@@ -102,6 +120,8 @@ class FirstOrderRuntimeConventions:
     spike_event_threshold_mV: float = 30.0
     trn_spike_event_coordinate: str | None = None
     trn_spike_event_threshold_mV: float | None = None
+    trn_potassium_convention: str = "selected_source"
+    trn_calcium_source_convention: str = "selected_source"
     postsynaptic_learning_coordinate: str = "absolute_physical"
     postsynaptic_learning_threshold_mV: float = 30.0
     top_down_learning_rule_convention: str = "serialized_presynaptic"
@@ -128,6 +148,10 @@ class FirstOrderRuntimeConventions:
             values.pop("trn_spike_event_coordinate")
         if values["trn_spike_event_threshold_mV"] is None:
             values.pop("trn_spike_event_threshold_mV")
+        if values["trn_potassium_convention"] == "selected_source":
+            values.pop("trn_potassium_convention")
+        if values["trn_calcium_source_convention"] == "selected_source":
+            values.pop("trn_calcium_source_convention")
         if values["postsynaptic_learning_threshold_mV"] == values["spike_event_threshold_mV"]:
             # Historical profiles used one value for both roles. Preserve their
             # fingerprints while allowing Equation 6 to be audited separately.
@@ -233,8 +257,34 @@ def resolved_intrinsic_cell(
 
     selected = _resolved_intrinsic_source(facts, conventions=conventions)
     if selected is IntrinsicCellConvention.MODELDB_112923:
-        return facts.cell
-    return _table3_cell_for_population(facts.canonical_name)
+        cell = facts.cell
+    else:
+        cell = _table3_cell_for_population(facts.canonical_name)
+    potassium = TrnPotassiumConvention(conventions.trn_potassium_convention)
+    calcium = TrnCalciumSourceConvention(conventions.trn_calcium_source_convention)
+    if facts.canonical_name != "trn":
+        return cell
+    soma = cell.soma
+    suffixes = []
+    if potassium in {
+        TrnPotassiumConvention.MODELDB_DENSITY,
+        TrnPotassiumConvention.MODELDB_DENSITY_AND_REVERSAL,
+    }:
+        soma = replace(soma, g_k_mS_cm2=facts.cell.soma.g_k_mS_cm2)
+        suffixes.append("modeldb_k_density")
+    if calcium in {
+        TrnCalciumSourceConvention.MODELDB_SOMA_CHANNEL,
+        TrnCalciumSourceConvention.MODELDB_SOMA_CHANNEL_AND_REVERSAL,
+    }:
+        soma = replace(soma, g_ca_mS_cm2=facts.cell.soma.g_ca_mS_cm2)
+        suffixes.append("modeldb_soma_calcium")
+    if not suffixes:
+        return cell
+    return replace(
+        cell,
+        name=f"{cell.name}_{'_'.join(suffixes)}",
+        compartments=(soma, *cell.compartments[1:]),
+    )
 
 
 def _resolved_intrinsic_source(
@@ -336,8 +386,34 @@ def first_order_population_parameters(
         "specific_capacitance_uF_cm2": conventions.specific_capacitance_uF_cm2,
         "enable_ahp_ach": has_ahp,
         "e_na_mV": 50.0 if intrinsic_source is IntrinsicCellConvention.PAPER_TABLE3 else facts.e_na_mV,
-        "e_k_mV": -90.0 if intrinsic_source is IntrinsicCellConvention.PAPER_TABLE3 else facts.e_k_mV,
-        "e_ca_mV": 180.0 if intrinsic_source is IntrinsicCellConvention.PAPER_TABLE3 else facts.e_ca_mV,
+        "e_k_mV": (
+            facts.e_k_mV
+            if facts.canonical_name == "trn"
+            and TrnPotassiumConvention(conventions.trn_potassium_convention)
+            in {
+                TrnPotassiumConvention.MODELDB_REVERSAL,
+                TrnPotassiumConvention.MODELDB_DENSITY_AND_REVERSAL,
+            }
+            else (
+                -90.0
+                if intrinsic_source is IntrinsicCellConvention.PAPER_TABLE3
+                else facts.e_k_mV
+            )
+        ),
+        "e_ca_mV": (
+            facts.e_ca_mV
+            if facts.canonical_name == "trn"
+            and TrnCalciumSourceConvention(conventions.trn_calcium_source_convention)
+            in {
+                TrnCalciumSourceConvention.MODELDB_REVERSAL,
+                TrnCalciumSourceConvention.MODELDB_SOMA_CHANNEL_AND_REVERSAL,
+            }
+            else (
+                180.0
+                if intrinsic_source is IntrinsicCellConvention.PAPER_TABLE3
+                else facts.e_ca_mV
+            )
+        ),
         "method": conventions.integration_method,
         "synaptic_ports": modeldb_ports_for_target(
             catalog.projections, facts.canonical_name

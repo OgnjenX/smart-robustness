@@ -113,6 +113,19 @@ FIGURE7_POPULATION_TRN_PROFILE_PATH = (
 FIGURE6_POPULATION_TRN_RESULT_PATH = (
     ROOT / "docs/validation-results/figure6-population-resolved-trn-139.yaml"
 )
+FIGURE7_TRN_POTASSIUM_SCREEN_PATH = (
+    ROOT / "docs/validation-results/figure7-trn-potassium-source-screen-166.yaml"
+)
+FIGURE7_TRN_CALCIUM_SCREEN_PATH = (
+    ROOT / "docs/validation-results/figure7-trn-calcium-source-screen-167.yaml"
+)
+FIGURE7_TRN_CALCIUM_PROFILE_PATH = (
+    ROOT / "configs/calibration/figure7_trn_calcium_reversal_v1.yaml"
+)
+FIGURE7_TRN_CALCIUM_PAIR_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-trn-calcium-reversal-simultaneous-pair-168.yaml"
+)
 
 
 def test_classic_calibration_contract_separates_training_and_holdout() -> None:
@@ -668,6 +681,50 @@ def test_post_holdout_trn_source_candidates_fail_figure6_prerequisite(
     assert artifact["population_spikes"]["trn"] == trn_spikes
     assert not artifact["assessment"]["figure6_reproduced"]
     assert not artifact["assessment"]["promoted"]
+
+
+def test_trn_potassium_source_matrix_has_no_connected_survivor() -> None:
+    artifact = yaml.safe_load(FIGURE7_TRN_POTASSIUM_SCREEN_PATH.read_text())
+    assert artifact["status"] == "no-connected-causal-survivor"
+    assert artifact["assessment"]["connected_causal_survivors"] == 0
+    assert all(item["post_bottom_up_trn_events"] == 0 for item in artifact["outcomes"])
+    assert artifact["assessment"]["best_sampled_soma_peak_mV"] == pytest.approx(
+        -12.1097056947
+    )
+    assert artifact["assessment"]["gap_to_published_arm_threshold_mV"] > 42.0
+
+
+def test_trn_calcium_reversal_restores_wrong_cue_lead_mechanism() -> None:
+    artifact = yaml.safe_load(FIGURE7_TRN_CALCIUM_SCREEN_PATH.read_text())
+    outcomes = {
+        item["trn_calcium_source_convention"]: item for item in artifact["outcomes"]
+    }
+    reversal = outcomes["modeldb_reversal"]
+    assert reversal["post_bottom_up_trn_events"] == 112
+    assert len(reversal["connected_match"]["cue_lead_trn_spike_times_ms"]) == 81
+    assert reversal["post_bottom_up_relay_events"] == 0
+    assert not reversal["connected_causal_recruitment_pass"]
+    assert artifact["assessment"]["connected_causal_survivors"] == 0
+
+
+def test_trn_calcium_reversal_simultaneous_pair_is_condition_invariant() -> None:
+    profile = yaml.safe_load(FIGURE7_TRN_CALCIUM_PROFILE_PATH.read_text())
+    assert profile["runtime_fingerprint"] == runtime_conventions_for_candidate(
+        profile["candidate"]
+    ).fingerprint
+    artifact = yaml.safe_load(FIGURE7_TRN_CALCIUM_PAIR_PATH.read_text())
+    assert artifact["protocol"]["top_down_cue_lead_ms"] == 0.0
+    assert not artifact["reproduced"]
+    match = artifact["conditions"]["match"]
+    mismatch = artifact["conditions"]["mismatch"]
+    for condition in (match, mismatch):
+        assert condition["relay_spike_indices"] == []
+        assert len(condition["trn_spike_times_ms"]) == 229
+        assert len(set(condition["trn_spike_indices"])) == 81
+        assert len(condition["nonspecific_spike_times_ms"]) == 3
+    assert match["trn_spike_times_ms"] == mismatch["trn_spike_times_ms"]
+    assert artifact["assessment"]["arousal"]["match_rate_hz"] == 30.0
+    assert artifact["assessment"]["arousal"]["mismatch_rate_hz"] == 30.0
 
 
 def test_contract_rejects_holdout_leakage(tmp_path: Path) -> None:

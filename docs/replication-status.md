@@ -1569,6 +1569,36 @@ sampled soma maxima remain between approximately -3.64 and -12.74 mV. The next
 discriminator is therefore the source meaning of TRN compartmental output and
 axial propagation, not a fitted increase in excitatory synaptic strength.
 
+The next two finite official-source matrices close additional intrinsic
+explanations without fitting channel parameters. The Table 3/SMART.nml TRN
+potassium matrix (`figure7-trn-potassium-source-screen-166.yaml`) crosses soma
+potassium density 100/80 mS/cm2 with reversal -90/-100 mV. Every candidate is
+quiescent after 20 ms, but all produce zero post-bottom-up TRN events. The best
+sampled soma maximum is -12.11 mV, still 42.11 mV below the printed +30-mV arm
+threshold, while proximal dendrites reach +37.64 mV. Potassium density and
+reversal are therefore rejected as the missing propagation convention.
+
+The calcium source matrix (`figure7-trn-calcium-source-screen-167.yaml`) crosses
+the Table 3 absence versus SMART.nml presence of a somatic T channel with
+calcium reversal 180/120 mV. Adding the somatic channel does not restore output.
+The 120-mV reversal without that channel does cross the somatic event threshold,
+but all 81 TRN cells emit during the 10-ms top-down cue lead, suppress relay
+output completely, and fail the predeclared causal gate. This is a real
+excitability transition but not the Figure 7 match mechanism.
+
+Primary-paper review then corrects the protocol role of that lead interval.
+The Figure 7 Results text explicitly describes simultaneous bottom-up and
+top-down excitation; the 10-ms lead remains a diagnostic, not the canonical
+trial. The frozen 120-mV candidate was therefore tested once under simultaneous
+onset (`figure7-trn-calcium-reversal-simultaneous-pair-168.yaml`). Match and
+mismatch are identical: zero active relay cells, 229 TRN events across all 81
+cells, and 30-Hz nonspecific output. The source change restores TRN somatic
+events but destroys the two-against-one relay match and is rejected. No
+intermediate calcium reversal may be fitted to Figure 7. The next discrete
+source discriminator is the still-unfactored TRN dendritic calcium density
+conflict (Table 3 10 versus SMART.nml 100 mS/cm2), preserving the same
+equilibration and simultaneous-onset contract.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

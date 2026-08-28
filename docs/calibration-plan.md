@@ -316,3 +316,16 @@ Artifact 152 tests the last source-coordinate combination: leak-relative
 `+30 mV`. It preserves confined 40-Hz bar recruitment but peaks at only
 `0.18606`. All registered Equation 6 threshold/coordinate alternatives are now
 closed; do not lower the threshold into the diffuse subthreshold regime.
+
+Artifacts 166--168 continue the post-holdout TRN source decomposition. The
+complete 2x2 Table 3/SMART.nml potassium density/reversal matrix produces no
+post-bottom-up TRN event. The corresponding soma-channel/calcium-reversal
+matrix finds one excitable candidate at the archived 120-mV reversal, but it
+recruits all 81 TRN cells before bottom-up onset under the diagnostic cue lead.
+The primary paper specifies simultaneous bottom-up/top-down excitation, so the
+candidate received one paired canonical run. Match and mismatch are identical
+(zero relay cells, 229 TRN events, 30-Hz nonspecific output) and the candidate
+is rejected. Do not fit an intermediate reversal. Next factor only the exact
+10-versus-100 mS/cm2 dendritic TRN calcium-density conflict before concluding
+that the surviving public sources cannot identify the legacy propagation
+convention.

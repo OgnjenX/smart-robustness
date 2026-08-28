@@ -1644,6 +1644,21 @@ never approach the printed +30-mV arm threshold. No candidate advances to
 mismatch. Local axial gain is rejected, and no finer edge-scale search is
 authorized.
 
+Artifacts 175 and 176 then test the remaining detector-coordinate hypothesis
+without lowering SMART's +30/0-mV arm/release landmarks independently. A
+numeric TRN-only voltage-origin offset is predeclared from 0 through 69 mV,
+bounded by the absolute, fixed +67-mV, and TRN leak-relative +69-mV source
+coordinates. Figure 7 instrumentation now records equilibration-window output;
+the cue gate additionally requires the final 10 ms of equilibration to be
+quiescent. Offsets 0--40 mV retain the synchronized 81-event startup TRN volley,
+settle, and remain cue-safe. The 50-mV offset is rejected with 405 equilibration
+TRN events (162 in the tail) and 162 cue-lead events. Offsets 60/67/69 mV remove
+the startup volley entirely and are tail/cue quiet. During simultaneous match,
+0--40 mV preserve relay indices 38--42 but produce zero TRN; 60/67/69 mV
+activate all 81 relay cells and also produce zero TRN. No candidate advances to
+mismatch. A detector-origin offset cannot recover Figure 7 without either
+missing TRN output or destroying the prepared relay state.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

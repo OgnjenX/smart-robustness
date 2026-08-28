@@ -373,3 +373,17 @@ positive voltages. No scale reaches Stage 2a, so mismatch is not run. A
 localized axial-gain correction is therefore closed as a sufficient behavior
 calibration. Do not search edge scales more finely or alter the fixed linear
 topology.
+
+Artifacts 175 and 176 complete the source-bounded detector-origin grid. The
+numeric offset preserves the printed +30/0-mV two-stage detector while moving
+both landmarks together; 0, 67, and 69 mV are the absolute, fixed-shift, and
+TRN leak-relative source anchors. A corrected Stage 1 records equilibration
+output explicitly and requires its final 10 ms to be quiescent. Offsets 0--40
+mV retain the source-profile one-event-per-TRN startup volley and are cue-safe;
+50 mV generates 405 equilibration TRN events, including 162 in the tail and a
+further 162 in the cue lead, and is rejected. Offsets 60, 67, and 69 mV remove
+the startup volley and remain tail/cue quiet. Under simultaneous match, 0--40
+mV preserve exactly relay cells 38--42 but emit no TRN event, while 60/67/69 mV
+activate all 81 relay cells and still emit no TRN event. No offset advances to
+mismatch. Detector voltage-origin calibration is closed; do not interpolate
+between 40 and 50 mV or tune the arm/release thresholds independently.

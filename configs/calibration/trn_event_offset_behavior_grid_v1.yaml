@@ -1,0 +1,53 @@
+schema_version: 1
+name: trn-event-offset-behavior-grid-v1
+status: post-source-exhaustion-behavior-calibration
+base_profile: configs/calibration/figure6_kinness_equation27_transition_v1.yaml
+base_candidate_fingerprint: 12e0245e9a3044073200e90443582885a5410cf39b8b18d50d22a04a2fc48604
+fixed_choices:
+  trn_calcium_source_convention: modeldb_reversal
+  trn_soma_calcium_channel: absent_as_in_table3
+  trn_dendritic_calcium_density_mS_cm2: 100.0
+  trn_soma_proximal_axial_conductance_scale: 1.0
+  spike_event_threshold_mV: 30.0
+  spike_event_rule: latched_peak_then_zero
+dimension:
+  name: trn_spike_event_voltage_offset_mV
+  bounds: [0.0, 69.0]
+  grid: [0.0, 10.0, 20.0, 30.0, 40.0, 50.0, 60.0, 67.0, 69.0]
+  source_anchors:
+    absolute_physical_offset_mV: 0.0
+    fixed_shift_coordinate_offset_mV: 67.0
+    trn_leak_relative_offset_mV: 69.0
+  interpretation: >-
+    Behavior calibration of the voltage origin used only by the TRN two-stage
+    output-event detector. For offset s, the fixed +30/0 detector arms at
+    physical 30-s mV and emits after returning below physical -s mV. It is not
+    a recovered original SMART parameter.
+stage_1_gate:
+  protocol: 20-ms equilibration followed by a 10-ms top-down-only diagnostic lead
+  quiescent_equilibration_tail_ms: 10.0
+  monitored_output_events_in_equilibration_tail: 0
+  source_category_event_required: true
+  off_source_category_events: 0
+  trn_events_during_lead: 0
+  relay_events_during_lead: 0
+stage_2a_gate:
+  protocol: 50-ms simultaneous-onset match after 20-ms equilibration
+  active_relay_indices: [38, 39, 40, 41, 42]
+  trn_events: '>0'
+stage_2b_gate:
+  protocol: simultaneous bottom-up/top-down match and mismatch
+  match_relay_indices: [38, 39, 40, 41, 42]
+  mismatch_relay_indices_must_be_subset_of: [40]
+  trn_output_order: match_greater_than_mismatch
+  nonspecific_output_order: mismatch_greater_than_match
+locked_parameters:
+  - compartment_topology_and_output_compartment
+  - axial_edge_conductances
+  - intrinsic_channels
+  - synaptic_conductances_weights_delays_and_kinetics
+locked_holdouts:
+  - figure10_reset
+  - figure14_spectra
+  - figure15_local_synchrony
+  - figure16_long_range_synchrony

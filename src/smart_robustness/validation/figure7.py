@@ -171,6 +171,15 @@ class Figure7ConditionResult:
     trn_spike_times_ms: tuple[float, ...] = ()
     category_spike_indices: tuple[int, ...] = ()
     category_spike_times_ms: tuple[float, ...] = ()
+    equilibration_nonspecific_spike_times_ms: tuple[float, ...] = ()
+    equilibration_layer4_spike_indices: tuple[int, ...] = ()
+    equilibration_layer4_spike_times_ms: tuple[float, ...] = ()
+    equilibration_relay_spike_indices: tuple[int, ...] = ()
+    equilibration_relay_spike_times_ms: tuple[float, ...] = ()
+    equilibration_trn_spike_indices: tuple[int, ...] = ()
+    equilibration_trn_spike_times_ms: tuple[float, ...] = ()
+    equilibration_category_spike_indices: tuple[int, ...] = ()
+    equilibration_category_spike_times_ms: tuple[float, ...] = ()
     cue_lead_category_spike_indices: tuple[int, ...] = ()
     cue_lead_category_spike_times_ms: tuple[float, ...] = ()
     cue_lead_trn_spike_indices: tuple[int, ...] = ()
@@ -1012,6 +1021,24 @@ def run_figure7_condition(
             if cue_start_ms <= float(value) < cue_end_ms
         )
 
+    def equilibration_times(monitor) -> tuple[float, ...]:
+        start_ms = pretraining_elapsed_ms
+        end_ms = start_ms + equilibration_ms
+        return tuple(
+            float(value - start_ms)
+            for value in monitor.t / brian.ms
+            if start_ms <= float(value) < end_ms
+        )
+
+    def equilibration_indices(monitor) -> tuple[int, ...]:
+        start_ms = pretraining_elapsed_ms
+        end_ms = start_ms + equilibration_ms
+        return tuple(
+            int(index)
+            for index, value in zip(monitor.i, monitor.t / brian.ms, strict=True)
+            if start_ms <= float(value) < end_ms
+        )
+
     result = Figure7ConditionResult(
         condition=condition,
         duration_ms=duration_ms,
@@ -1024,6 +1051,15 @@ def run_figure7_condition(
         trn_spike_times_ms=stimulus_times(trn),
         category_spike_indices=stimulus_indices(category),
         category_spike_times_ms=stimulus_times(category),
+        equilibration_nonspecific_spike_times_ms=equilibration_times(nonspecific),
+        equilibration_layer4_spike_indices=equilibration_indices(layer4),
+        equilibration_layer4_spike_times_ms=equilibration_times(layer4),
+        equilibration_relay_spike_indices=equilibration_indices(relay),
+        equilibration_relay_spike_times_ms=equilibration_times(relay),
+        equilibration_trn_spike_indices=equilibration_indices(trn),
+        equilibration_trn_spike_times_ms=equilibration_times(trn),
+        equilibration_category_spike_indices=equilibration_indices(category),
+        equilibration_category_spike_times_ms=equilibration_times(category),
         cue_lead_category_spike_indices=cue_lead_indices(category),
         cue_lead_category_spike_times_ms=cue_lead_times(category),
         cue_lead_trn_spike_indices=cue_lead_indices(trn),

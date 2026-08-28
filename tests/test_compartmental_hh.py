@@ -308,6 +308,39 @@ def test_source_spike_event_coordinate_accepts_fixed_67_mv_shift() -> None:
     assert population.group.armed[0] == 0
 
 
+def test_numeric_spike_event_offset_preserves_two_stage_detector() -> None:
+    brian.start_scope()
+    brian.defaultclock.dt = 0.01 * brian.ms
+    params = _params()
+    params["spike_event_voltage_offset_mV"] = 60.0
+    params["voltage_clamps_mV"] = {"soma": -20.0}
+    population = create_compartmental_hh_population(
+        name="numeric_spike_event_offset", size=1, params=params, brian=brian
+    )
+    spike_monitor = brian.SpikeMonitor(population.group)
+    network = brian.Network(population.group, spike_monitor)
+
+    # Physical -20 mV maps to +40 mV and arms; release waits until the same
+    # shifted coordinate returns below zero, here physical -61 mV.
+    network.run(0.01 * brian.ms)
+    assert spike_monitor.count[0] == 0
+    assert population.group.armed[0] == 1
+    population.group.v_soma = -61 * brian.mV
+    network.run(0.01 * brian.ms)
+    assert spike_monitor.count[0] == 1
+
+
+def test_numeric_spike_event_offset_rejects_named_nonabsolute_coordinate() -> None:
+    brian.start_scope()
+    params = _params()
+    params["spike_event_coordinate"] = "shifted_67_mV"
+    params["spike_event_voltage_offset_mV"] = 60.0
+    with pytest.raises(ValueError, match="cannot be combined"):
+        create_compartmental_hh_population(
+            name="conflicting_spike_coordinates", size=1, params=params, brian=brian
+        )
+
+
 def test_kinness_minus_20_mv_event_threshold_is_explicit() -> None:
     brian.start_scope()
     brian.defaultclock.dt = 0.01 * brian.ms

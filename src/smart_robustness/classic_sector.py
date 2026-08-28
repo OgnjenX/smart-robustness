@@ -128,6 +128,7 @@ class FirstOrderRuntimeConventions:
     spike_event_threshold_mV: float = 30.0
     trn_spike_event_coordinate: str | None = None
     trn_spike_event_threshold_mV: float | None = None
+    trn_spike_event_voltage_offset_mV: float | None = None
     trn_potassium_convention: str = "selected_source"
     trn_calcium_source_convention: str = "selected_source"
     trn_dendritic_calcium_density_convention: str = "selected_source"
@@ -159,6 +160,8 @@ class FirstOrderRuntimeConventions:
             values.pop("trn_spike_event_coordinate")
         if values["trn_spike_event_threshold_mV"] is None:
             values.pop("trn_spike_event_threshold_mV")
+        if values["trn_spike_event_voltage_offset_mV"] is None:
+            values.pop("trn_spike_event_voltage_offset_mV")
         if values["trn_potassium_convention"] == "selected_source":
             values.pop("trn_potassium_convention")
         if values["trn_calcium_source_convention"] == "selected_source":
@@ -412,11 +415,17 @@ def first_order_population_parameters(
         )
     spike_event_coordinate = conventions.spike_event_coordinate
     spike_event_threshold_mV = conventions.spike_event_threshold_mV
+    spike_event_voltage_offset_mV = None
     if facts.canonical_name == "trn":
         if conventions.trn_spike_event_coordinate is not None:
             spike_event_coordinate = conventions.trn_spike_event_coordinate
         if conventions.trn_spike_event_threshold_mV is not None:
             spike_event_threshold_mV = conventions.trn_spike_event_threshold_mV
+        spike_event_voltage_offset_mV = conventions.trn_spike_event_voltage_offset_mV
+        if spike_event_voltage_offset_mV is not None and not math.isfinite(
+            spike_event_voltage_offset_mV
+        ):
+            raise ValueError("TRN spike-event voltage offset must be finite")
     trn_axial_scale = conventions.trn_soma_proximal_axial_conductance_scale
     if not math.isfinite(trn_axial_scale) or trn_axial_scale <= 0:
         raise ValueError("TRN soma-proximal axial conductance scale must be finite and positive")
@@ -483,6 +492,8 @@ def first_order_population_parameters(
     }
     if facts.canonical_name == "trn":
         parameters["axial_edge_conductance_scales"] = (trn_axial_scale, 1.0)
+        if spike_event_voltage_offset_mV is not None:
+            parameters["spike_event_voltage_offset_mV"] = spike_event_voltage_offset_mV
     if has_ahp:
         soma = intrinsic_cell.soma
         parameters.update(

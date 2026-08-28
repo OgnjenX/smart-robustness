@@ -151,6 +151,15 @@ FIGURE7_TRN_AXIAL_CUE_GRID_PATH = (
 FIGURE7_TRN_AXIAL_MATCH_GRID_PATH = (
     ROOT / "docs/validation-results/figure7-trn-axial-match-grid-174.yaml"
 )
+FIGURE7_TRN_EVENT_OFFSET_PROFILE_PATH = (
+    ROOT / "configs/calibration/trn_event_offset_behavior_grid_v1.yaml"
+)
+FIGURE7_TRN_EVENT_OFFSET_CUE_PATH = (
+    ROOT / "docs/validation-results/figure7-trn-event-offset-cue-grid-175.yaml"
+)
+FIGURE7_TRN_EVENT_OFFSET_MATCH_PATH = (
+    ROOT / "docs/validation-results/figure7-trn-event-offset-match-grid-176.yaml"
+)
 
 
 def test_classic_calibration_contract_separates_training_and_holdout() -> None:
@@ -852,6 +861,55 @@ def test_local_trn_axial_grid_loses_relay_selectivity_before_recruiting_trn() ->
     assert max(
         item["sampled_trn_soma_peak_mV"] for item in artifact["outcomes"]
     ) < -23.7
+
+
+def test_trn_event_offset_grid_has_a_nonmonotonic_cue_safety_boundary() -> None:
+    profile = yaml.safe_load(FIGURE7_TRN_EVENT_OFFSET_PROFILE_PATH.read_text())
+    cue = yaml.safe_load(FIGURE7_TRN_EVENT_OFFSET_CUE_PATH.read_text())
+    assert profile["dimension"]["grid"] == [
+        0.0,
+        10.0,
+        20.0,
+        30.0,
+        40.0,
+        50.0,
+        60.0,
+        67.0,
+        69.0,
+    ]
+    assert cue["stage_1_survivor_offsets_mV"] == [
+        0.0,
+        10.0,
+        20.0,
+        30.0,
+        40.0,
+        60.0,
+        67.0,
+        69.0,
+    ]
+    outcomes = {
+        item["trn_spike_event_voltage_offset_mV"]: item for item in cue["outcomes"]
+    }
+    for offset in (0.0, 10.0, 20.0, 30.0, 40.0):
+        assert len(outcomes[offset]["result"]["equilibration_trn_spike_times_ms"]) == 81
+        assert outcomes[offset]["equilibration_tail_output_events"] == 0
+    assert len(outcomes[50.0]["result"]["equilibration_trn_spike_times_ms"]) == 405
+    assert outcomes[50.0]["equilibration_tail_output_events"] == 162
+    assert outcomes[50.0]["cue_lead_trn_events"] == 162
+    for offset in (60.0, 67.0, 69.0):
+        assert outcomes[offset]["result"]["equilibration_trn_spike_times_ms"] == []
+
+
+def test_trn_event_offset_grid_has_no_selective_match_survivor() -> None:
+    artifact = yaml.safe_load(FIGURE7_TRN_EVENT_OFFSET_MATCH_PATH.read_text())
+    assert artifact["status"] == "no-stage-2a-survivor"
+    assert artifact["stage_2a_survivor_offsets_mV"] == []
+    for outcome in artifact["outcomes"]:
+        offset = outcome["trn_spike_event_voltage_offset_mV"]
+        expected_relay = list(range(81)) if offset >= 60.0 else [38, 39, 40, 41, 42]
+        assert outcome["active_relay_indices"] == expected_relay
+        assert outcome["trn_events"] == 0
+        assert not outcome["stage_2a_pass"]
 
 
 def test_contract_rejects_holdout_leakage(tmp_path: Path) -> None:

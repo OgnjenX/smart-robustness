@@ -181,6 +181,16 @@ def create_compartmental_hh_population(
         params["calcium_voltage_coordinate"]
     )
     spike_coordinate = SpikeEventCoordinate(params["spike_event_coordinate"])
+    spike_event_voltage_offset_mV = params.get("spike_event_voltage_offset_mV")
+    if spike_event_voltage_offset_mV is not None:
+        spike_event_voltage_offset_mV = float(spike_event_voltage_offset_mV)
+        if not np.isfinite(spike_event_voltage_offset_mV):
+            raise ValueError("spike_event_voltage_offset_mV must be finite")
+        if spike_coordinate is not SpikeEventCoordinate.ABSOLUTE_PHYSICAL:
+            raise ValueError(
+                "numeric spike-event offset cannot be combined with a named "
+                "non-absolute coordinate"
+            )
     spike_event_rule = SpikeEventRule(params["spike_event_rule"])
     spike_event_threshold_mV = float(params["spike_event_threshold_mV"])
     if not np.isfinite(spike_event_threshold_mV):
@@ -261,7 +271,9 @@ def create_compartmental_hh_population(
         spike_reset += "; ahp_rise += 1; ahp_fall += 1"
     if compiled.depletion_enabled:
         spike_reset += f"; transmitter *= {1 - float(depletion_epsilon)}"
-    if spike_coordinate is SpikeEventCoordinate.ABSOLUTE_PHYSICAL:
+    if spike_event_voltage_offset_mV is not None:
+        spike_voltage = f"v_soma+({spike_event_voltage_offset_mV!r})*mV"
+    elif spike_coordinate is SpikeEventCoordinate.ABSOLUTE_PHYSICAL:
         spike_voltage = "v_soma"
     elif spike_coordinate is SpikeEventCoordinate.SHIFTED_67_MV:
         spike_voltage = "v_soma+67*mV"
@@ -339,7 +351,9 @@ def create_compartmental_hh_population(
             else cell.soma.e_leak_mV
         )
         initial_soma_voltage = params.get("v_init_mV", default_soma_voltage)
-        if spike_coordinate is SpikeEventCoordinate.SHIFTED_67_MV:
+        if spike_event_voltage_offset_mV is not None:
+            initial_soma_voltage += spike_event_voltage_offset_mV
+        elif spike_coordinate is SpikeEventCoordinate.SHIFTED_67_MV:
             initial_soma_voltage += 67.0
         elif spike_coordinate is SpikeEventCoordinate.RELATIVE_TO_SOMA_LEAK:
             initial_soma_voltage -= (

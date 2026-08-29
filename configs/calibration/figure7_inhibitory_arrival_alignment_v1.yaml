@@ -1,0 +1,58 @@
+schema_version: 1
+name: figure7-inhibitory-arrival-alignment-v1
+status: registered-functional-loop-timing-diagnostic
+base_profile: configs/calibration/figure6_kinness_equation27_transition_v1.yaml
+base_candidate_fingerprint: 12e0245e9a3044073200e90443582885a5410cf39b8b18d50d22a04a2fc48604
+source_artifacts:
+  arrival_alignment: docs/validation-results/figure7-feedback-arrival-alignment-grid-189.yaml
+  local_transfer_match: docs/validation-results/figure7-trn-event-blend-arrival-match-grid-190.yaml
+fixed_choices:
+  top_down_current_pA: 800.0
+  trn_calcium_source_convention: modeldb_reversal
+  trn_dendritic_calcium_density_mS_cm2: 100.0
+  trn_soma_proximal_axial_conductance_scale: 1.0
+  trn_spike_event_proximal_blend_fraction: 0.48
+  nonspecific_spike_event_proximal_blend_fraction: null
+  trn_to_relay_delay_ms: 0.1
+  spike_event_threshold_mV: 30.0
+  spike_event_release_mV: 0.0
+  spike_event_rule: latched_peak_then_zero
+dimension:
+  name: top_down_cue_lead_ms
+  grid: [13.65, 13.75]
+  derivation:
+    13.65: 9.83-ms receptor-alignment lead plus observed 3.82-ms TRN event latency
+    13.75: 13.65-ms TRN event alignment plus archived 0.1-ms TRN-to-relay delay
+  interpretation: >-
+    These values align either the first top-down-driven TRN output event or its
+    inhibitory relay arrival with bottom-up onset. They are functional protocol
+    diagnostics, not changes to any source delay or fitted cellular parameter.
+stage_1_gate:
+  protocol: 20-ms match after a 20-ms equilibration and registered cue lead
+  source_category_event_before_bottom_up: true
+  off_source_category_events: 0
+  relay_events_during_lead: 0
+  nonspecific_events_during_lead: 0
+  trn_event_at_or_before_bottom_up: true
+  expected_match_relay_indices: [38, 39, 40, 41, 42]
+stage_2_gate:
+  protocol: fresh 20-ms mismatch only for Stage-1 survivors
+  relay_event_order: match_greater_than_mismatch
+  trn_event_order: match_greater_than_mismatch
+stage_3_gate:
+  protocol: 100-ms match/mismatch pair only for Stage-2 survivors
+  relay_event_order: match_greater_than_mismatch
+  trn_event_order: match_greater_than_mismatch
+locked_parameters:
+  - all_source_synaptic_delays
+  - learned_expectation_weights
+  - top_down_current
+  - trn_and_nonspecific_compartment_event_transfer
+  - stimulus_geometry_and_equal_nonspecific_bottom_up_drive
+  - synaptic_conductances_and_kinetics
+  - all_intrinsic_and_compartmental_parameters
+locked_holdouts:
+  - figure10_reset
+  - figure14_spectra
+  - figure15_local_synchrony
+  - figure16_long_range_synchrony

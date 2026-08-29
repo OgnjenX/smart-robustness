@@ -221,6 +221,9 @@ FIGURE7_TRN_BLEND_ARRIVAL_MISMATCH_PATH = (
     ROOT
     / "docs/validation-results/figure7-trn-event-blend-arrival-mismatch-191.yaml"
 )
+FIGURE7_INHIBITORY_ARRIVAL_PATH = (
+    ROOT / "docs/validation-results/figure7-inhibitory-arrival-alignment-192.yaml"
+)
 
 
 def test_classic_calibration_contract_separates_training_and_holdout() -> None:
@@ -1199,6 +1202,30 @@ def test_local_trn_blend_arrival_interaction_has_no_mismatch_survivor() -> None:
         assert len(item["match"]["trn_spike_times_ms"]) == 81
         assert len(item["mismatch"]["trn_spike_times_ms"]) == 81
         assert not item["stage_2_pass"]
+
+
+def test_inhibitory_arrival_alignment_never_generates_top_down_only_trn() -> None:
+    artifact = yaml.safe_load(FIGURE7_INHIBITORY_ARRIVAL_PATH.read_text())
+    assert artifact["status"] == "no-stage-2-survivor"
+    assert artifact["stage_2_survivor_leads_ms"] == []
+    assert [item["top_down_cue_lead_ms"] for item in artifact["outcomes"]] == [
+        13.65,
+        13.75,
+    ]
+    for item in artifact["outcomes"]:
+        assert item["match"]["cue_lead_trn_spike_times_ms"] == []
+        assert item["match"]["cue_lead_relay_spike_times_ms"] == []
+        assert set(item["match"]["relay_spike_indices"]) == {
+            31,
+            38,
+            39,
+            40,
+            41,
+            42,
+            49,
+        }
+        assert item["mismatch"] is None
+        assert not item["stage_1_pass"]
 
 
 def test_contract_rejects_holdout_leakage(tmp_path: Path) -> None:

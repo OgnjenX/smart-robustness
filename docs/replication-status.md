@@ -1734,6 +1734,15 @@ transition between blend 0.46 (zero TRN, global relay recruitment) and 0.48
 (81 TRN, confined match recruitment), but mismatch also saturates at 81 TRN
 events for every 0.48--0.50 survivor. No timing/transfer candidate is promoted.
 
+Artifact 192 additionally rejects aligning the complete apparent inhibitory
+loop. The first TRN event seen after bottom-up input is not a delayed
+top-down-only event: extending the cue to 13.65 or 13.75 ms still produces no
+TRN output before bottom-up. Both leads instead recruit two off-orientation
+relay neighbors after sensory onset and retain the 81-cell TRN volley. The
+feedback timing axis is now closed. The next work returns to equation-level
+axial/geometry verification and the Figure 6 learned-state prerequisite rather
+than fitting longer cue intervals.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

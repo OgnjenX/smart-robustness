@@ -465,3 +465,13 @@ Fresh mismatches at all three match-surviving values retain the five vertical
 relay cells and the same 81 TRN events. No value advances to 100 ms. This
 second-order source-timing/event-transfer interaction is closed; do not
 interpolate the 0.46--0.48 transition further.
+
+Artifact 192 closes the functional inhibitory-arrival extension. The 9.83-ms
+trial's first TRN event occurs 3.82 ms after bottom-up onset, but a 13.65-ms
+lead proves that this was relay-driven rather than top-down-driven. Leads 13.65
+and 13.75 ms, respectively aligning that apparent event and its archived
+0.1-ms GABA delay, remain free of cue-period TRN and relay output. After
+bottom-up onset they recruit the five horizontal cells plus vertical neighbors
+31 and 49, while all 81 TRN cells again emit once. Neither reaches mismatch.
+Do not extend the cue lead: top-down corticoreticular drive is spike-ineffective
+in this reconstruction, so post hoc timing cannot make its inhibition causal.

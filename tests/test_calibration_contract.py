@@ -207,6 +207,20 @@ FIGURE7_NONSPECIFIC_EVENT_BLEND_COMPARISON_PATH = (
     ROOT
     / "docs/validation-results/figure7-nonspecific-blend-match-comparison-187.yaml"
 )
+FIGURE7_FEEDBACK_ARRIVAL_AUDIT_PATH = (
+    ROOT / "docs/validation-results/figure7-feedback-arrival-order-audit-188.yaml"
+)
+FIGURE7_FEEDBACK_ARRIVAL_GRID_PATH = (
+    ROOT / "docs/validation-results/figure7-feedback-arrival-alignment-grid-189.yaml"
+)
+FIGURE7_TRN_BLEND_ARRIVAL_MATCH_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-trn-event-blend-arrival-match-grid-190.yaml"
+)
+FIGURE7_TRN_BLEND_ARRIVAL_MISMATCH_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-trn-event-blend-arrival-mismatch-191.yaml"
+)
 
 
 def test_classic_calibration_contract_separates_training_and_holdout() -> None:
@@ -1125,6 +1139,66 @@ def test_nonspecific_event_blend_has_no_match_mismatch_survivor() -> None:
             expected_nonspecific_events[blend]
         )
         assert not item["stage_2b_pass"]
+
+
+def test_feedback_arrival_audit_registers_only_archived_delay_landmarks() -> None:
+    audit = yaml.safe_load(FIGURE7_FEEDBACK_ARRIVAL_AUDIT_PATH.read_text())
+    assert audit["status"] == "protocol-timing-discrepancy-localized"
+    assert audit["fixed_operating_point"] == {
+        "top_down_current_pA": 800.0,
+        "first_category_event_ms_after_current_onset": 5.83,
+        "first_bottom_up_relay_event_ms_after_stimulus_onset": 4.1,
+    }
+    assert [
+        item["first_receptor_arrival_ms_after_current_onset"]
+        for item in audit["archived_feedback_delays"]
+    ] == [7.83, 8.83, 9.83]
+    assert audit["registered_diagnostic"]["top_down_cue_lead_ms"] == [
+        0.0,
+        7.83,
+        8.83,
+        9.83,
+    ]
+
+
+def test_feedback_arrival_alignment_has_no_early_pathway_survivor() -> None:
+    artifact = yaml.safe_load(FIGURE7_FEEDBACK_ARRIVAL_GRID_PATH.read_text())
+    assert artifact["status"] == "no-stage-2a-survivor"
+    assert artifact["stage_2a_survivor_leads_ms"] == []
+    assert [item["top_down_cue_lead_ms"] for item in artifact["outcomes"]] == [
+        0.0,
+        7.83,
+        8.83,
+        9.83,
+    ]
+    for item in artifact["outcomes"]:
+        match = item["conditions"]["match"]
+        mismatch = item["conditions"]["mismatch"]
+        assert set(match["relay_spike_indices"]) == {38, 39, 40, 41, 42}
+        assert set(mismatch["relay_spike_indices"]) == {22, 31, 40, 49, 58}
+        assert len(match["trn_spike_times_ms"]) == 81
+        assert len(mismatch["trn_spike_times_ms"]) == 81
+        assert not item["stage_2a_pass"]
+
+
+def test_local_trn_blend_arrival_interaction_has_no_mismatch_survivor() -> None:
+    match = yaml.safe_load(FIGURE7_TRN_BLEND_ARRIVAL_MATCH_PATH.read_text())
+    mismatch = yaml.safe_load(FIGURE7_TRN_BLEND_ARRIVAL_MISMATCH_PATH.read_text())
+    assert match["stage_1_survivor_blend_fractions"] == [0.48, 0.49, 0.5]
+    assert mismatch["status"] == "no-stage-2-survivor"
+    assert mismatch["stage_2_survivor_blend_fractions"] == []
+    for item in mismatch["outcomes"]:
+        assert set(item["match"]["relay_spike_indices"]) == {38, 39, 40, 41, 42}
+        assert set(item["mismatch"]["relay_spike_indices"]) == {
+            22,
+            31,
+            40,
+            49,
+            58,
+        }
+        assert len(item["match"]["trn_spike_times_ms"]) == 81
+        assert len(item["mismatch"]["trn_spike_times_ms"]) == 81
+        assert not item["stage_2_pass"]
 
 
 def test_contract_rejects_holdout_leakage(tmp_path: Path) -> None:

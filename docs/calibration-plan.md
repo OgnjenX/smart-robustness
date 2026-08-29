@@ -446,3 +446,22 @@ create mismatch selectivity from identical upstream event trains. No candidate
 advances to 300 ms. Keep this population-specific transfer available as a
 named calibration mechanism, but do not promote a value or tune it further.
 The next discriminator must act before the shared first relay/TRN volley.
+
+Artifacts 188 and 189 test whether simultaneous source onset was placing the
+learned expectation too late. At 800 pA, the sensory relay volley begins at
+4.10 ms, the selected category cell emits at 5.83 ms, and archived feedback
+delays place the first relay-NMDA, TRN-NMDA, and TRN-AMPA arrivals at 7.83,
+8.83, and 9.83 ms. Those three arrival times and the zero-lead control were
+registered before simulation. All nonzero leads are cue-safe and advance the
+relay/TRN volleys, with match modestly earlier than mismatch, but every pair
+still contains five orientation-specific relay events and 81/81 TRN events.
+Source-receptor arrival alignment is therefore insufficient.
+
+Artifacts 190 and 191 test the only registered local interaction suggested by
+that latency difference. At the 9.83-ms TRN-AMPA alignment, detector blends
+0.40--0.46 give no TRN output and allow all 81 relay cells to become active;
+0.48--0.50 preserve the five-cell horizontal match and generate 81 TRN events.
+Fresh mismatches at all three match-surviving values retain the five vertical
+relay cells and the same 81 TRN events. No value advances to 100 ms. This
+second-order source-timing/event-transfer interaction is closed; do not
+interpolate the 0.46--0.48 transition further.

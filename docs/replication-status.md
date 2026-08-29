@@ -1723,6 +1723,17 @@ events. A separately registered synaptic-arrival-alignment diagnostic is the
 next admissible protocol test; it must not be called a canonical reproduction
 unless the primary protocol supports that interpretation.
 
+The source-delay alignment audit is complete in artifacts 188--191. Learned
+feedback reaches relay and TRN only after the first sensory relay event under
+simultaneous source onset. Advancing the category cue by the exact archived
+2/3/4-ms receptor-arrival landmarks changes first-spike latencies but not the
+published directional computation: match and mismatch each activate five
+orientation-specific relay cells and all 81 TRN cells. A predeclared local
+TRN detector refinement at the strongest 9.83-ms alignment brackets a sharp
+transition between blend 0.46 (zero TRN, global relay recruitment) and 0.48
+(81 TRN, confined match recruitment), but mismatch also saturates at 81 TRN
+events for every 0.48--0.50 survivor. No timing/transfer candidate is promoted.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

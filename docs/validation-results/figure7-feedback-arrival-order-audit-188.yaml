@@ -1,0 +1,44 @@
+schema_version: 1
+id: figure7-feedback-arrival-order-audit-188
+date: '2026-08-29'
+status: protocol-timing-discrepancy-localized
+source_artifacts:
+  cue_current_grid: docs/validation-results/figure7-event-blend-current-cue-grid-182.yaml
+  simultaneous_match_grid: docs/validation-results/figure7-event-blend-current-match-grid-183.yaml
+fixed_operating_point:
+  top_down_current_pA: 800.0
+  first_category_event_ms_after_current_onset: 5.83
+  first_bottom_up_relay_event_ms_after_stimulus_onset: 4.10
+archived_feedback_delays:
+  - record_id: modeldb112923.projection.003
+    pathway: layer6ii_to_relay_nmda_wide
+    delay_ms: 2.0
+    first_receptor_arrival_ms_after_current_onset: 7.83
+  - record_id: modeldb112923.projection.009
+    pathway: layer6ii_to_trn_nmda
+    delay_ms: 3.0
+    first_receptor_arrival_ms_after_current_onset: 8.83
+  - record_id: modeldb112923.projection.012
+    pathway: layer6ii_to_trn_ampa
+    delay_ms: 4.0
+    first_receptor_arrival_ms_after_current_onset: 9.83
+finding: >-
+  Under simultaneous source-current and bottom-up input onset, the first relay
+  volley at 4.10 ms precedes both the category event at 5.83 ms and every
+  archived learned-feedback receptor arrival. The trial therefore does not
+  instantiate simultaneous bottom-up and top-down excitation at the specific
+  thalamic target during its first volley, despite simultaneous source onset.
+registered_diagnostic:
+  profile: configs/calibration/figure7_feedback_arrival_alignment_v1.yaml
+  top_down_cue_lead_ms: [0.0, 7.83, 8.83, 9.83]
+  interpretation: >-
+    Zero is the current source-onset control. The nonzero values align the
+    first archived relay-NMDA, TRN-NMDA, or TRN-AMPA receptor arrival with
+    bottom-up stimulus onset. This is a protocol diagnostic, not a changed
+    source delay and not an accepted reconstruction of the paper protocol.
+locked_during_test:
+  - source_delays
+  - synaptic_weights_and_kinetics
+  - intrinsic_and_compartmental_parameters
+  - learned_expectation_state
+  - figure10_and_figures14_through_16

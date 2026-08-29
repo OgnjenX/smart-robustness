@@ -1,0 +1,62 @@
+schema_version: 1
+name: figure7-feedback-arrival-alignment-v1
+status: registered-protocol-timing-diagnostic
+base_profile: configs/calibration/figure6_kinness_equation27_transition_v1.yaml
+base_candidate_fingerprint: 12e0245e9a3044073200e90443582885a5410cf39b8b18d50d22a04a2fc48604
+registration_artifact: docs/validation-results/figure7-feedback-arrival-order-audit-188.yaml
+fixed_choices:
+  top_down_current_pA: 800.0
+  trn_calcium_source_convention: modeldb_reversal
+  trn_dendritic_calcium_density_mS_cm2: 100.0
+  trn_soma_proximal_axial_conductance_scale: 1.0
+  trn_spike_event_proximal_blend_fraction: 0.5
+  nonspecific_spike_event_proximal_blend_fraction: null
+  spike_event_threshold_mV: 30.0
+  spike_event_release_mV: 0.0
+  spike_event_rule: latched_peak_then_zero
+dimension:
+  name: top_down_cue_lead_ms
+  grid: [0.0, 7.83, 8.83, 9.83]
+  derivation:
+    0.0: simultaneous source-current and bottom-up onset control
+    7.83: observed 5.83-ms category latency plus archived 2-ms relay delay
+    8.83: observed 5.83-ms category latency plus archived 3-ms TRN NMDA delay
+    9.83: observed 5.83-ms category latency plus archived 4-ms TRN AMPA delay
+stage_1_gate:
+  protocol: 20-ms equilibration followed by the registered top-down lead
+  source_category_event_before_bottom_up: required_for_nonzero_leads
+  off_source_category_events: 0
+  relay_events_during_lead: 0
+  nonspecific_events_during_lead: 0
+  trn_events_during_lead: permitted_and_recorded
+stage_2a_gate:
+  protocol: 20-ms match/mismatch pair after bottom-up onset
+  expected_match_relay_indices: [38, 39, 40, 41, 42]
+  allowed_mismatch_relay_indices: [40]
+  trn_event_order: match_greater_than_mismatch
+  rationale: >-
+    Test whether receptor-arrival alignment restores the paper's earliest
+    two-against-one versus one-against-one computation before any long-run
+    oscillation or arousal readout is considered.
+stage_2b_gate:
+  protocol: 100-ms match/mismatch pair for Stage-2a survivors only
+  relay_event_order: match_greater_than_mismatch
+  trn_event_order: match_greater_than_mismatch
+stage_2c_gate:
+  protocol: 300-ms match/mismatch pair after separately calibrating observable nonspecific output
+  relay_event_order: match_greater_than_mismatch
+  trn_event_order: match_greater_than_mismatch
+  nonspecific_event_order: mismatch_greater_than_match
+locked_parameters:
+  - source_synaptic_delays
+  - learned_expectation_weights
+  - top_down_current
+  - trn_and_nonspecific_compartment_event_transfer
+  - stimulus_geometry_and_equal_nonspecific_bottom_up_drive
+  - synaptic_conductances_and_kinetics
+  - all_intrinsic_and_compartmental_parameters
+locked_holdouts:
+  - figure10_reset
+  - figure14_spectra
+  - figure15_local_synchrony
+  - figure16_long_range_synchrony

@@ -1,0 +1,59 @@
+schema_version: 1
+name: trn-event-blend-arrival-interaction-v1
+status: registered-second-order-behavior-calibration
+base_profile: configs/calibration/figure6_kinness_equation27_transition_v1.yaml
+base_candidate_fingerprint: 12e0245e9a3044073200e90443582885a5410cf39b8b18d50d22a04a2fc48604
+source_artifacts:
+  coarse_event_blend: docs/validation-results/figure7-trn-event-blend-match-grid-179.yaml
+  arrival_alignment: docs/validation-results/figure7-feedback-arrival-alignment-grid-189.yaml
+fixed_choices:
+  top_down_current_pA: 800.0
+  top_down_cue_lead_ms: 9.83
+  trn_calcium_source_convention: modeldb_reversal
+  trn_dendritic_calcium_density_mS_cm2: 100.0
+  trn_soma_proximal_axial_conductance_scale: 1.0
+  nonspecific_spike_event_proximal_blend_fraction: null
+  spike_event_threshold_mV: 30.0
+  spike_event_release_mV: 0.0
+  spike_event_rule: latched_peak_then_zero
+dimension:
+  name: trn_spike_event_proximal_blend_fraction
+  bounds: [0.4, 0.5]
+  grid: [0.4, 0.42, 0.44, 0.46, 0.48, 0.49, 0.5]
+  rationale: >-
+    The registered coarse grid places a no-output value at 0.4 and the first
+    event-producing value at 0.5. Arrival alignment makes match TRN events up
+    to approximately 0.1 ms earlier than mismatch but saturates both at 81
+    events at 0.5. This finite local screen tests whether the transition
+    contains a nonsaturated condition-selective regime. It is not an inferred
+    SMART parameter.
+stage_1_gate:
+  protocol: 20-ms match after a 20-ms equilibration and 9.83-ms top-down lead
+  source_category_event_before_bottom_up: true
+  off_source_category_events: 0
+  relay_events_during_lead: 0
+  nonspecific_events_during_lead: 0
+  trn_events_during_lead: permitted_and_recorded
+  expected_match_relay_indices: [38, 39, 40, 41, 42]
+  match_trn_events: '>0'
+stage_2_gate:
+  protocol: fresh 20-ms mismatch only for Stage-1 survivors
+  allowed_mismatch_relay_indices: [40]
+  trn_event_order: match_greater_than_mismatch
+stage_3_gate:
+  protocol: 100-ms match/mismatch pair only for Stage-2 survivors
+  relay_event_order: match_greater_than_mismatch
+  trn_event_order: match_greater_than_mismatch
+locked_parameters:
+  - source_synaptic_delays
+  - learned_expectation_weights
+  - top_down_current
+  - nonspecific_compartment_event_transfer
+  - stimulus_geometry_and_equal_nonspecific_bottom_up_drive
+  - synaptic_conductances_and_kinetics
+  - all_intrinsic_and_compartmental_parameters_except_registered_trn_transfer
+locked_holdouts:
+  - figure10_reset
+  - figure14_spectra
+  - figure15_local_synchrony
+  - figure16_long_range_synchrony

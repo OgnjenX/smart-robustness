@@ -311,6 +311,7 @@ def test_figure7_result_accepts_relay_pathway_diagnostics() -> None:
     result = _result(MatchCondition.MATCH, 4)
     assert result.relay_top_down_ampa_peak_by_index == ()
     assert result.cue_lead_category_spike_times_ms == ()
+    assert result.cue_lead_nonspecific_spike_times_ms == ()
     assert result.cue_lead_trn_spike_times_ms == ()
     assert result.cue_lead_relay_spike_times_ms == ()
     assert result.layer4_spike_indices == ()

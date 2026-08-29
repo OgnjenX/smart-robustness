@@ -182,6 +182,7 @@ class Figure7ConditionResult:
     equilibration_category_spike_times_ms: tuple[float, ...] = ()
     cue_lead_category_spike_indices: tuple[int, ...] = ()
     cue_lead_category_spike_times_ms: tuple[float, ...] = ()
+    cue_lead_nonspecific_spike_times_ms: tuple[float, ...] = ()
     cue_lead_trn_spike_indices: tuple[int, ...] = ()
     cue_lead_trn_spike_times_ms: tuple[float, ...] = ()
     cue_lead_relay_spike_indices: tuple[int, ...] = ()
@@ -1062,6 +1063,7 @@ def run_figure7_condition(
         equilibration_category_spike_times_ms=equilibration_times(category),
         cue_lead_category_spike_indices=cue_lead_indices(category),
         cue_lead_category_spike_times_ms=cue_lead_times(category),
+        cue_lead_nonspecific_spike_times_ms=cue_lead_times(nonspecific),
         cue_lead_trn_spike_indices=cue_lead_indices(trn),
         cue_lead_trn_spike_times_ms=cue_lead_times(trn),
         cue_lead_relay_spike_indices=cue_lead_indices(relay),

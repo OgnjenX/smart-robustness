@@ -182,6 +182,18 @@ FIGURE7_TRN_EVENT_BLEND_PAIR_PATH = (
 FIGURE7_PROTOCOL_GATE_AUDIT_PATH = (
     ROOT / "docs/validation-results/figure7-protocol-gate-audit-181.yaml"
 )
+FIGURE7_EVENT_BLEND_CURRENT_PROFILE_PATH = (
+    ROOT / "configs/calibration/figure7_event_blend_top_down_grid_v1.yaml"
+)
+FIGURE7_EVENT_BLEND_CURRENT_CUE_PATH = (
+    ROOT / "docs/validation-results/figure7-event-blend-current-cue-grid-182.yaml"
+)
+FIGURE7_EVENT_BLEND_CURRENT_MATCH_PATH = (
+    ROOT / "docs/validation-results/figure7-event-blend-current-match-grid-183.yaml"
+)
+FIGURE7_EVENT_BLEND_CURRENT_PAIR_PATH = (
+    ROOT / "docs/validation-results/figure7-event-blend-current-pair-300ms-184.yaml"
+)
 
 
 def test_classic_calibration_contract_separates_training_and_holdout() -> None:
@@ -1009,6 +1021,54 @@ def test_figure7_protocol_audit_reopens_cue_trn_and_extends_final_pair() -> None
     replacements = audit["scoring_correction"]["replace"]
     assert any("TRN events are permitted" in item["new"] for item in replacements)
     assert any("300 ms" in item["new"] for item in replacements)
+
+
+def test_event_blend_top_down_current_grid_is_cue_safe_and_matches_early() -> None:
+    profile = yaml.safe_load(FIGURE7_EVENT_BLEND_CURRENT_PROFILE_PATH.read_text())
+    cue = yaml.safe_load(FIGURE7_EVENT_BLEND_CURRENT_CUE_PATH.read_text())
+    match = yaml.safe_load(FIGURE7_EVENT_BLEND_CURRENT_MATCH_PATH.read_text())
+    assert profile["dimension"]["grid"] == [600.0, 800.0, 1000.0]
+    assert cue["stage_1_survivor_currents_pA"] == profile["dimension"]["grid"]
+    assert match["stage_2a_survivor_currents_pA"] == profile["dimension"]["grid"]
+    assert [
+        item["result"]["cue_lead_category_spike_times_ms"][0]
+        for item in cue["outcomes"]
+    ] == pytest.approx([8.89, 5.83, 4.47])
+    assert all(item["cue_lead_trn_events"] == 0 for item in cue["outcomes"])
+    assert all(item["cue_lead_relay_events"] == 0 for item in cue["outcomes"])
+    for item in match["outcomes"]:
+        assert item["active_relay_indices"] == [38, 39, 40, 41, 42]
+        assert item["relay_events"] == 5
+        assert item["trn_events"] == 81
+
+
+def test_event_blend_top_down_current_grid_has_no_300ms_pair_survivor() -> None:
+    artifact = yaml.safe_load(FIGURE7_EVENT_BLEND_CURRENT_PAIR_PATH.read_text())
+    assert artifact["protocol"]["duration_ms"] == 300.0
+    assert artifact["protocol"]["scoring_window"] == "whole_epoch"
+    assert artifact["status"] == "no-stage-2b-survivor"
+    assert artifact["stage_2b_survivor_currents_pA"] == []
+    counts = []
+    for item in artifact["outcomes"]:
+        match = item["conditions"]["match"]
+        mismatch = item["conditions"]["mismatch"]
+        counts.append(
+            (
+                item["top_down_current_pA"],
+                len(match["relay_spike_times_ms"]),
+                len(mismatch["relay_spike_times_ms"]),
+                len(match["trn_spike_times_ms"]),
+                len(mismatch["trn_spike_times_ms"]),
+            )
+        )
+        assert match["nonspecific_spike_times_ms"] == []
+        assert mismatch["nonspecific_spike_times_ms"] == []
+        assert not item["stage_2b_pass"]
+    assert counts == [
+        (600.0, 389, 432, 81, 81),
+        (800.0, 441, 419, 81, 81),
+        (1000.0, 418, 426, 81, 81),
+    ]
 
 
 def test_contract_rejects_holdout_leakage(tmp_path: Path) -> None:

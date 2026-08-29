@@ -1691,6 +1691,24 @@ holds blend 0.5 fixed, reopens only the existing 600/800/1000-pA undocumented
 top-down-current grid, permits causal cue-period TRN output, and evaluates final
 match/mismatch directionality over 300 ms.
 
+The corrected current screen is complete in artifacts 182--184. Currents 600,
+800, and 1000 pA are all cue-safe and all pass the 50-ms match gate with five
+horizontal relay events and 81 TRN events. Over the primary-paper-motivated
+300-ms epoch, sustained relay activity emerges. Counts are 389/432, 441/419,
+and 418/426 for match/mismatch at the three currents; only 800 pA has the
+published match-greater-than-mismatch relay direction. TRN output remains
+81/81 and nonspecific output remains 0/0 at every current, so no amplitude is a
+Figure 7 survivor. Raising the undocumented current within its registered
+range cannot recover arousal.
+
+The next failure is cellular rather than an absence of nonspecific drive.
+Full pathway diagnostics in artifact 165 show nonspecific-thalamic proximal
+voltage above +129 mV under both conditions, with somatic peaks near +13 mV and
+no emitted event. This mirrors the legacy compartment-to-event propagation gap
+already found in TRN. A nonspecific-population event-transfer calibration is
+therefore the next isolated mechanism test; synaptic strengths, delays, and
+holdout figures remain locked.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

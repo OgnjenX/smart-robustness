@@ -1,0 +1,60 @@
+schema_version: 1
+name: figure7-event-blend-top-down-grid-v1
+status: primary-source-corrected-figure7-behavior-calibration
+base_profile: configs/calibration/figure6_kinness_equation27_transition_v1.yaml
+base_candidate_fingerprint: 12e0245e9a3044073200e90443582885a5410cf39b8b18d50d22a04a2fc48604
+fixed_choices:
+  trn_calcium_source_convention: modeldb_reversal
+  trn_soma_calcium_channel: absent_as_in_table3
+  trn_dendritic_calcium_density_mS_cm2: 100.0
+  trn_soma_proximal_axial_conductance_scale: 1.0
+  trn_spike_event_proximal_blend_fraction: 0.5
+  spike_event_threshold_mV: 30.0
+  spike_event_release_mV: 0.0
+  spike_event_rule: latched_peak_then_zero
+dimension:
+  name: top_down_current_pA
+  bounds: [600.0, 1000.0]
+  grid: [600.0, 800.0, 1000.0]
+  source: configs/calibration/classic_uncertainty_space.yaml
+  interpretation: >-
+    Methods 4.9 reports somatic injection into one layer-6II category cell but
+    does not report its amplitude. This is the original registered uncertainty
+    grid, reopened after the 0.5 compartment-event blend became the sole
+    50-ms match survivor.
+stage_1_gate:
+  protocol: 20-ms equilibration followed by a 10-ms top-down-only diagnostic lead
+  quiescent_equilibration_tail_ms: 10.0
+  monitored_output_events_in_equilibration_tail: 0
+  source_category_event_required: true
+  off_source_category_events: 0
+  relay_events_during_lead: 0
+  nonspecific_events_during_lead: 0
+  trn_events_during_lead: permitted_and_recorded
+  rationale: Grossberg and Versace 2008 Section 2.3 one-against-one TRN inhibition
+stage_2a_gate:
+  protocol: 50-ms simultaneous-onset match after 20-ms equilibration
+  active_relay_indices: [38, 39, 40, 41, 42]
+  trn_events: '>0'
+stage_2b_gate:
+  protocol: 300-ms simultaneous-onset match and mismatch after 20-ms equilibration
+  whole_epoch_scoring: true
+  relay_event_order: match_greater_than_mismatch
+  trn_event_order: match_greater_than_mismatch
+  nonspecific_event_order: mismatch_greater_than_match
+  nonspecific_mismatch_events: '>0'
+  rationale: >-
+    Figure 9 uses 300-ms complete-module epochs and reports the first modeled
+    nonspecific increase around 50 ms. Whole-epoch counts avoid a post-hoc
+    analysis window while testing the directional Figure 7 claims.
+locked_parameters:
+  - learned_expectation_weights
+  - stimulus_geometry_and_equal_nonspecific_bottom_up_drive
+  - simultaneous_onset
+  - synaptic_conductances_delays_and_kinetics
+  - all_intrinsic_and_compartmental_parameters
+locked_holdouts:
+  - figure10_reset
+  - figure14_spectra
+  - figure15_local_synchrony
+  - figure16_long_range_synchrony

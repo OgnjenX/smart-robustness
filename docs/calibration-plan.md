@@ -419,3 +419,17 @@ the 50-ms pair is therefore only an early pathway screen. Reopen only the
 already registered 600/800/1000-pA top-down-current dimension at blend 0.5,
 then use a 300-ms pair for the final Figure 7 arousal gate. Do not alter weights,
 delays, geometry, or holdout figures.
+
+Artifacts 182--184 execute that corrected protocol. All registered currents
+are settled and cue-safe; increasing current advances the isolated category
+event from 8.89 to 5.83 to 4.47 ms but produces no cue-period TRN output. All
+three currents reproduce the same early 50-ms match signature (five horizontal
+relay events and 81 TRN events). In the 300-ms pair, relay counts are match vs.
+mismatch 389/432, 441/419, and 418/426 at 600, 800, and 1000 pA. Only 800 pA
+has the correct relay-count direction. Every current yields 81/81 TRN events
+and zero/zero nonspecific events, so none passes. The undocumented current
+amplitude is closed at its registered bounds; do not extrapolate above 1000 pA.
+Existing diagnostics instead localize the next source-runtime discrepancy to
+nonspecific thalamus: proximal voltage exceeds +129 mV while soma peaks near
++13 mV, below the +30-mV event arm threshold. Audit/calibrate that population's
+compartment-to-event transfer separately before changing network weights.

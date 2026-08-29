@@ -1,0 +1,249 @@
+schema_version: 1
+id: figure7-event-blend-current-cue-grid-182
+date: '2026-08-29'
+status: stage-1-survivors-found
+grid_profile: configs/calibration/figure7_event_blend_top_down_grid_v1.yaml
+base_profile: configs/calibration/figure6_kinness_equation27_transition_v1.yaml
+protocol:
+  equilibration_ms: 20.0
+  quiescent_equilibration_tail_ms: 10.0
+  top_down_cue_lead_ms: 10.0
+  post_lead_bottom_up_ms: 1.0
+  cue_trn_events: permitted_and_recorded
+stage_1_survivor_currents_pA:
+- 600.0
+- 800.0
+- 1000.0
+outcomes:
+- top_down_current_pA: 600.0
+  runtime_fingerprint: d1ae858431b32bfe436a8c3a07c9c270e9600546c1f35be740695fe8834c83ee
+  equilibration_tail_output_events: 0
+  source_category_cue_events: 1
+  off_source_category_cue_events: 0
+  cue_lead_trn_events: 0
+  cue_lead_active_trn_cells: 0
+  cue_lead_relay_events: 0
+  cue_lead_nonspecific_events: 0
+  stage_1_pass: true
+  result:
+    condition: match
+    duration_ms: 1.0
+    nonspecific_spike_times_ms: []
+    layer4_spike_indices: []
+    layer4_spike_times_ms: []
+    relay_spike_indices: []
+    relay_spike_times_ms: []
+    trn_spike_indices: []
+    trn_spike_times_ms: []
+    category_spike_indices: []
+    category_spike_times_ms: []
+    equilibration_nonspecific_spike_times_ms:
+    - 0.75
+    equilibration_layer4_spike_indices: []
+    equilibration_layer4_spike_times_ms: []
+    equilibration_relay_spike_indices: []
+    equilibration_relay_spike_times_ms: []
+    equilibration_trn_spike_indices: []
+    equilibration_trn_spike_times_ms: []
+    equilibration_category_spike_indices: []
+    equilibration_category_spike_times_ms: []
+    cue_lead_category_spike_indices:
+    - 40
+    cue_lead_category_spike_times_ms:
+    - 8.89
+    cue_lead_nonspecific_spike_times_ms: []
+    cue_lead_trn_spike_indices: []
+    cue_lead_trn_spike_times_ms: []
+    cue_lead_relay_spike_indices: []
+    cue_lead_relay_spike_times_ms: []
+    v1_cortical_spike_times_ms: []
+    v2_layer4_spike_indices: []
+    v2_layer4_spike_times_ms: []
+    v2_relay_spike_indices: []
+    v2_relay_spike_times_ms: []
+    convention_fingerprint: d1ae858431b32bfe436a8c3a07c9c270e9600546c1f35be740695fe8834c83ee
+    top_down_current_pA: 600.0
+    top_down_cue_lead_ms: 10.0
+    equilibration_ms: 20.0
+    learned_state_provenance: paper-constrained-figure6c-reference
+    network_scope: first_order
+    relay_top_down_ampa_peak_by_index: []
+    relay_top_down_ampa_integral_ms_by_index: []
+    relay_top_down_nmda_peak_by_index: []
+    relay_distal_voltage_range_mV_by_index: []
+    relay_proximal_voltage_range_mV_by_index: []
+    relay_soma_voltage_range_mV_by_index: []
+    relay_trn_gaba_peak_by_index: []
+    relay_trn_gaba_integral_ms_by_index: []
+    relay_driven_current_range_pA_by_index_and_source: []
+    trn_layer6ii_ampa_peak_by_index: []
+    trn_layer6ii_nmda_peak_by_index: []
+    trn_relay_ampa_peak_by_index: []
+    trn_proximal_voltage_range_mV_by_index: []
+    trn_soma_voltage_range_mV_by_index: []
+    trn_post_startup_soma_voltage_range_mV_by_index: []
+    trn_driven_current_range_pA_by_index_and_source: []
+    nonspecific_trn_gaba_peak: null
+    nonspecific_trn_gaba_integral_ms: null
+    nonspecific_post_startup_trn_gaba_peak: null
+    nonspecific_layer6ii_ampa_peak: null
+    nonspecific_layer6ii_nmda_peak: null
+    nonspecific_direct_input_current_range_pA: null
+    nonspecific_trn_current_range_pA: null
+    nonspecific_layer6ii_current_range_pA: null
+    nonspecific_voltage_range_mV_by_compartment: []
+- top_down_current_pA: 800.0
+  runtime_fingerprint: d1ae858431b32bfe436a8c3a07c9c270e9600546c1f35be740695fe8834c83ee
+  equilibration_tail_output_events: 0
+  source_category_cue_events: 1
+  off_source_category_cue_events: 0
+  cue_lead_trn_events: 0
+  cue_lead_active_trn_cells: 0
+  cue_lead_relay_events: 0
+  cue_lead_nonspecific_events: 0
+  stage_1_pass: true
+  result:
+    condition: match
+    duration_ms: 1.0
+    nonspecific_spike_times_ms: []
+    layer4_spike_indices: []
+    layer4_spike_times_ms: []
+    relay_spike_indices: []
+    relay_spike_times_ms: []
+    trn_spike_indices: []
+    trn_spike_times_ms: []
+    category_spike_indices: []
+    category_spike_times_ms: []
+    equilibration_nonspecific_spike_times_ms:
+    - 0.75
+    equilibration_layer4_spike_indices: []
+    equilibration_layer4_spike_times_ms: []
+    equilibration_relay_spike_indices: []
+    equilibration_relay_spike_times_ms: []
+    equilibration_trn_spike_indices: []
+    equilibration_trn_spike_times_ms: []
+    equilibration_category_spike_indices: []
+    equilibration_category_spike_times_ms: []
+    cue_lead_category_spike_indices:
+    - 40
+    cue_lead_category_spike_times_ms:
+    - 5.830000000000002
+    cue_lead_nonspecific_spike_times_ms: []
+    cue_lead_trn_spike_indices: []
+    cue_lead_trn_spike_times_ms: []
+    cue_lead_relay_spike_indices: []
+    cue_lead_relay_spike_times_ms: []
+    v1_cortical_spike_times_ms: []
+    v2_layer4_spike_indices: []
+    v2_layer4_spike_times_ms: []
+    v2_relay_spike_indices: []
+    v2_relay_spike_times_ms: []
+    convention_fingerprint: d1ae858431b32bfe436a8c3a07c9c270e9600546c1f35be740695fe8834c83ee
+    top_down_current_pA: 800.0
+    top_down_cue_lead_ms: 10.0
+    equilibration_ms: 20.0
+    learned_state_provenance: paper-constrained-figure6c-reference
+    network_scope: first_order
+    relay_top_down_ampa_peak_by_index: []
+    relay_top_down_ampa_integral_ms_by_index: []
+    relay_top_down_nmda_peak_by_index: []
+    relay_distal_voltage_range_mV_by_index: []
+    relay_proximal_voltage_range_mV_by_index: []
+    relay_soma_voltage_range_mV_by_index: []
+    relay_trn_gaba_peak_by_index: []
+    relay_trn_gaba_integral_ms_by_index: []
+    relay_driven_current_range_pA_by_index_and_source: []
+    trn_layer6ii_ampa_peak_by_index: []
+    trn_layer6ii_nmda_peak_by_index: []
+    trn_relay_ampa_peak_by_index: []
+    trn_proximal_voltage_range_mV_by_index: []
+    trn_soma_voltage_range_mV_by_index: []
+    trn_post_startup_soma_voltage_range_mV_by_index: []
+    trn_driven_current_range_pA_by_index_and_source: []
+    nonspecific_trn_gaba_peak: null
+    nonspecific_trn_gaba_integral_ms: null
+    nonspecific_post_startup_trn_gaba_peak: null
+    nonspecific_layer6ii_ampa_peak: null
+    nonspecific_layer6ii_nmda_peak: null
+    nonspecific_direct_input_current_range_pA: null
+    nonspecific_trn_current_range_pA: null
+    nonspecific_layer6ii_current_range_pA: null
+    nonspecific_voltage_range_mV_by_compartment: []
+- top_down_current_pA: 1000.0
+  runtime_fingerprint: d1ae858431b32bfe436a8c3a07c9c270e9600546c1f35be740695fe8834c83ee
+  equilibration_tail_output_events: 0
+  source_category_cue_events: 1
+  off_source_category_cue_events: 0
+  cue_lead_trn_events: 0
+  cue_lead_active_trn_cells: 0
+  cue_lead_relay_events: 0
+  cue_lead_nonspecific_events: 0
+  stage_1_pass: true
+  result:
+    condition: match
+    duration_ms: 1.0
+    nonspecific_spike_times_ms: []
+    layer4_spike_indices: []
+    layer4_spike_times_ms: []
+    relay_spike_indices: []
+    relay_spike_times_ms: []
+    trn_spike_indices: []
+    trn_spike_times_ms: []
+    category_spike_indices: []
+    category_spike_times_ms: []
+    equilibration_nonspecific_spike_times_ms:
+    - 0.75
+    equilibration_layer4_spike_indices: []
+    equilibration_layer4_spike_times_ms: []
+    equilibration_relay_spike_indices: []
+    equilibration_relay_spike_times_ms: []
+    equilibration_trn_spike_indices: []
+    equilibration_trn_spike_times_ms: []
+    equilibration_category_spike_indices: []
+    equilibration_category_spike_times_ms: []
+    cue_lead_category_spike_indices:
+    - 40
+    cue_lead_category_spike_times_ms:
+    - 4.470000000000002
+    cue_lead_nonspecific_spike_times_ms: []
+    cue_lead_trn_spike_indices: []
+    cue_lead_trn_spike_times_ms: []
+    cue_lead_relay_spike_indices: []
+    cue_lead_relay_spike_times_ms: []
+    v1_cortical_spike_times_ms: []
+    v2_layer4_spike_indices: []
+    v2_layer4_spike_times_ms: []
+    v2_relay_spike_indices: []
+    v2_relay_spike_times_ms: []
+    convention_fingerprint: d1ae858431b32bfe436a8c3a07c9c270e9600546c1f35be740695fe8834c83ee
+    top_down_current_pA: 1000.0
+    top_down_cue_lead_ms: 10.0
+    equilibration_ms: 20.0
+    learned_state_provenance: paper-constrained-figure6c-reference
+    network_scope: first_order
+    relay_top_down_ampa_peak_by_index: []
+    relay_top_down_ampa_integral_ms_by_index: []
+    relay_top_down_nmda_peak_by_index: []
+    relay_distal_voltage_range_mV_by_index: []
+    relay_proximal_voltage_range_mV_by_index: []
+    relay_soma_voltage_range_mV_by_index: []
+    relay_trn_gaba_peak_by_index: []
+    relay_trn_gaba_integral_ms_by_index: []
+    relay_driven_current_range_pA_by_index_and_source: []
+    trn_layer6ii_ampa_peak_by_index: []
+    trn_layer6ii_nmda_peak_by_index: []
+    trn_relay_ampa_peak_by_index: []
+    trn_proximal_voltage_range_mV_by_index: []
+    trn_soma_voltage_range_mV_by_index: []
+    trn_post_startup_soma_voltage_range_mV_by_index: []
+    trn_driven_current_range_pA_by_index_and_source: []
+    nonspecific_trn_gaba_peak: null
+    nonspecific_trn_gaba_integral_ms: null
+    nonspecific_post_startup_trn_gaba_peak: null
+    nonspecific_layer6ii_ampa_peak: null
+    nonspecific_layer6ii_nmda_peak: null
+    nonspecific_direct_input_current_range_pA: null
+    nonspecific_trn_current_range_pA: null
+    nonspecific_layer6ii_current_range_pA: null
+    nonspecific_voltage_range_mV_by_compartment: []
+next_gate: Evaluate only Stage-1 survivors under 50-ms simultaneous match.

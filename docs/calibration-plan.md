@@ -433,3 +433,16 @@ Existing diagnostics instead localize the next source-runtime discrepancy to
 nonspecific thalamus: proximal voltage exceeds +129 mV while soma peaks near
 +13 mV, below the +30-mV event arm threshold. Audit/calibrate that population's
 compartment-to-event transfer separately before changing network weights.
+
+Artifacts 185--187 complete the nonspecific-thalamus compartment-to-event
+screen. All seven registered soma--proximal detector blends are settled and
+cue-safe. During the 100-ms mismatch assay, blends 0--0.2 remain silent;
+0.3/0.5 emit one nonspecific event and 0.7/1.0 emit two, so those four advance
+to the independently computed match comparison. Every survivor is exactly
+condition-invariant: match/mismatch counts are 20/20 relay events, 81/81 TRN
+events, and respectively 1/1, 1/1, 2/2, or 2/2 nonspecific events. The transfer
+is sufficient to expose dendritic activity at the output detector but cannot
+create mismatch selectivity from identical upstream event trains. No candidate
+advances to 300 ms. Keep this population-specific transfer available as a
+named calibration mechanism, but do not promote a value or tune it further.
+The next discriminator must act before the shared first relay/TRN volley.

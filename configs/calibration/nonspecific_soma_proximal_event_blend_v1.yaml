@@ -1,0 +1,65 @@
+schema_version: 1
+name: nonspecific-soma-proximal-event-blend-v1
+status: legacy-nonspecific-compartment-event-transfer-calibration
+base_profile: configs/calibration/figure6_kinness_equation27_transition_v1.yaml
+base_candidate_fingerprint: 12e0245e9a3044073200e90443582885a5410cf39b8b18d50d22a04a2fc48604
+fixed_choices:
+  top_down_current_pA: 800.0
+  trn_calcium_source_convention: modeldb_reversal
+  trn_dendritic_calcium_density_mS_cm2: 100.0
+  trn_soma_proximal_axial_conductance_scale: 1.0
+  trn_spike_event_proximal_blend_fraction: 0.5
+  spike_event_threshold_mV: 30.0
+  spike_event_release_mV: 0.0
+  spike_event_rule: latched_peak_then_zero
+dimension:
+  name: nonspecific_spike_event_proximal_blend_fraction
+  bounds: [0.0, 1.0]
+  grid: [0.0, 0.1, 0.2, 0.3, 0.5, 0.7, 1.0]
+  endpoint_interpretation:
+    0.0: exact somatic voltage used by the current source reconstruction
+    1.0: exact proximal-dendritic voltage, retained as a diagnostic endpoint
+  interpretation: >-
+    The nonspecific-thalamic detector voltage is
+    v_soma + f*(v_proximal-v_soma). Chemical output remains attached to its
+    somatic event; membrane equations, topology, axial conductances, and the
+    +30/0-mV detector are unchanged. Values above zero calibrate an unidentified
+    legacy compartment-to-event transfer and are not recovered SMART parameters.
+stage_1_gate:
+  protocol: 20-ms equilibration followed by a 10-ms top-down-only diagnostic lead
+  quiescent_equilibration_tail_ms: 10.0
+  monitored_output_events_in_equilibration_tail: 0
+  source_category_event_required: true
+  off_source_category_events: 0
+  relay_events_during_lead: 0
+  nonspecific_events_during_lead: 0
+  trn_events_during_lead: permitted_and_recorded
+stage_2a_gate:
+  protocol: 100-ms simultaneous-onset mismatch after 20-ms equilibration
+  nonspecific_events: '>0'
+  rationale: >-
+    Screen for a causal mismatch arousal event on a duration extending beyond
+    the paper's approximately 50-ms first nonspecific increase.
+stage_2b_gate:
+  protocol: 100-ms simultaneous-onset match and mismatch
+  relay_event_order: match_greater_than_mismatch
+  trn_event_order: match_greater_than_mismatch
+  nonspecific_event_order: mismatch_greater_than_match
+stage_2c_gate:
+  protocol: 300-ms simultaneous-onset match and mismatch
+  whole_epoch_scoring: true
+  relay_event_order: match_greater_than_mismatch
+  trn_event_order: match_greater_than_mismatch
+  nonspecific_event_order: mismatch_greater_than_match
+locked_parameters:
+  - learned_expectation_weights
+  - trn_compartment_event_transfer
+  - top_down_current
+  - stimulus_geometry_and_equal_nonspecific_bottom_up_drive
+  - synaptic_conductances_delays_and_kinetics
+  - all_intrinsic_and_compartmental_parameters
+locked_holdouts:
+  - figure10_reset
+  - figure14_spectra
+  - figure15_local_synchrony
+  - figure16_long_range_synchrony

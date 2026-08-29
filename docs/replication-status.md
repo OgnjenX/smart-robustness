@@ -1709,6 +1709,20 @@ already found in TRN. A nonspecific-population event-transfer calibration is
 therefore the next isolated mechanism test; synaptic strengths, delays, and
 holdout figures remain locked.
 
+That screen is now closed by artifacts 185--187. A nonspecific detector blend
+of at least 0.3 transfers the large proximal event into one or two emitted
+events without violating equilibration or top-down-only cue safety. However,
+all four output-producing values give identical 100-ms match and mismatch
+traces at every scored stage: 20 relay events, 81 TRN events, and equal
+nonspecific output. The detector hypothesis repairs observability, not the
+missing computation, and no blend is promoted. Timing diagnostics now expose
+the upstream ordering: the sensory relay volley occurs at 4.10 ms, the
+800-pA category source first emits at 5.83 ms, and its archived 2-ms relay and
+4-ms TRN feedback delays place learned feedback after the first relay/TRN
+events. A separately registered synaptic-arrival-alignment diagnostic is the
+next admissible protocol test; it must not be called a canonical reproduction
+unless the primary protocol supports that interpretation.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

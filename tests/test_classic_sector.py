@@ -129,6 +129,10 @@ def test_runtime_convention_fingerprint_is_stable_and_sensitive() -> None:
         trn_spike_event_proximal_blend_fraction=0.5
     )
     assert trn_event_blend.fingerprint != classic.fingerprint
+    nonspecific_event_blend = FirstOrderRuntimeConventions(
+        nonspecific_spike_event_proximal_blend_fraction=0.5
+    )
+    assert nonspecific_event_blend.fingerprint != classic.fingerprint
 
 
 def test_trn_event_coordinate_can_follow_kinness_without_changing_relay() -> None:
@@ -188,6 +192,32 @@ def test_trn_proximal_event_blend_is_scoped_and_validated() -> None:
             facts["trn"],
             conventions=FirstOrderRuntimeConventions(
                 trn_spike_event_proximal_blend_fraction=float("nan")
+            ),
+        )
+
+
+def test_nonspecific_proximal_event_blend_is_scoped_and_validated() -> None:
+    conventions = FirstOrderRuntimeConventions(
+        nonspecific_spike_event_proximal_blend_fraction=0.5
+    )
+    facts = {fact.canonical_name: fact for fact in first_order_population_facts()}
+    relay = first_order_population_parameters(
+        facts["thalamic_relay"], conventions=conventions
+    )
+    trn = first_order_population_parameters(facts["trn"], conventions=conventions)
+    nonspecific = first_order_population_parameters(
+        facts["thalamic_nonspecific"], conventions=conventions
+    )
+
+    assert "spike_event_proximal_blend_fraction" not in relay
+    assert "spike_event_proximal_blend_fraction" not in trn
+    assert nonspecific["spike_event_proximal_blend_fraction"] == 0.5
+
+    with pytest.raises(ValueError, match="nonspecific spike-event proximal blend"):
+        first_order_population_parameters(
+            facts["thalamic_nonspecific"],
+            conventions=FirstOrderRuntimeConventions(
+                nonspecific_spike_event_proximal_blend_fraction=1.01
             ),
         )
     with pytest.raises(ValueError, match="between zero and one"):

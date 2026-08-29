@@ -130,6 +130,7 @@ class FirstOrderRuntimeConventions:
     trn_spike_event_threshold_mV: float | None = None
     trn_spike_event_voltage_offset_mV: float | None = None
     trn_spike_event_proximal_blend_fraction: float | None = None
+    nonspecific_spike_event_proximal_blend_fraction: float | None = None
     trn_potassium_convention: str = "selected_source"
     trn_calcium_source_convention: str = "selected_source"
     trn_dendritic_calcium_density_convention: str = "selected_source"
@@ -165,6 +166,8 @@ class FirstOrderRuntimeConventions:
             values.pop("trn_spike_event_voltage_offset_mV")
         if values["trn_spike_event_proximal_blend_fraction"] is None:
             values.pop("trn_spike_event_proximal_blend_fraction")
+        if values["nonspecific_spike_event_proximal_blend_fraction"] is None:
+            values.pop("nonspecific_spike_event_proximal_blend_fraction")
         if values["trn_potassium_convention"] == "selected_source":
             values.pop("trn_potassium_convention")
         if values["trn_calcium_source_convention"] == "selected_source":
@@ -440,6 +443,18 @@ def first_order_population_parameters(
             raise ValueError(
                 "TRN spike-event proximal blend must be finite and between zero and one"
             )
+    if facts.canonical_name == "thalamic_nonspecific":
+        spike_event_proximal_blend_fraction = (
+            conventions.nonspecific_spike_event_proximal_blend_fraction
+        )
+        if spike_event_proximal_blend_fraction is not None and (
+            not math.isfinite(spike_event_proximal_blend_fraction)
+            or not 0.0 <= spike_event_proximal_blend_fraction <= 1.0
+        ):
+            raise ValueError(
+                "nonspecific spike-event proximal blend must be finite and "
+                "between zero and one"
+            )
     trn_axial_scale = conventions.trn_soma_proximal_axial_conductance_scale
     if not math.isfinite(trn_axial_scale) or trn_axial_scale <= 0:
         raise ValueError("TRN soma-proximal axial conductance scale must be finite and positive")
@@ -512,6 +527,13 @@ def first_order_population_parameters(
             parameters["spike_event_proximal_blend_fraction"] = (
                 spike_event_proximal_blend_fraction
             )
+    elif (
+        facts.canonical_name == "thalamic_nonspecific"
+        and spike_event_proximal_blend_fraction is not None
+    ):
+        parameters["spike_event_proximal_blend_fraction"] = (
+            spike_event_proximal_blend_fraction
+        )
     if has_ahp:
         soma = intrinsic_cell.soma
         parameters.update(

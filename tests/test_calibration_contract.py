@@ -194,6 +194,19 @@ FIGURE7_EVENT_BLEND_CURRENT_MATCH_PATH = (
 FIGURE7_EVENT_BLEND_CURRENT_PAIR_PATH = (
     ROOT / "docs/validation-results/figure7-event-blend-current-pair-300ms-184.yaml"
 )
+FIGURE7_NONSPECIFIC_EVENT_BLEND_PROFILE_PATH = (
+    ROOT / "configs/calibration/nonspecific_soma_proximal_event_blend_v1.yaml"
+)
+FIGURE7_NONSPECIFIC_EVENT_BLEND_CUE_PATH = (
+    ROOT / "docs/validation-results/figure7-nonspecific-blend-cue-grid-185.yaml"
+)
+FIGURE7_NONSPECIFIC_EVENT_BLEND_MISMATCH_PATH = (
+    ROOT / "docs/validation-results/figure7-nonspecific-blend-mismatch-grid-186.yaml"
+)
+FIGURE7_NONSPECIFIC_EVENT_BLEND_COMPARISON_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-nonspecific-blend-match-comparison-187.yaml"
+)
 
 
 def test_classic_calibration_contract_separates_training_and_holdout() -> None:
@@ -1069,6 +1082,49 @@ def test_event_blend_top_down_current_grid_has_no_300ms_pair_survivor() -> None:
         (800.0, 441, 419, 81, 81),
         (1000.0, 418, 426, 81, 81),
     ]
+
+
+def test_nonspecific_event_blend_grid_is_cue_safe_and_restores_output() -> None:
+    profile = yaml.safe_load(FIGURE7_NONSPECIFIC_EVENT_BLEND_PROFILE_PATH.read_text())
+    cue = yaml.safe_load(FIGURE7_NONSPECIFIC_EVENT_BLEND_CUE_PATH.read_text())
+    mismatch = yaml.safe_load(
+        FIGURE7_NONSPECIFIC_EVENT_BLEND_MISMATCH_PATH.read_text()
+    )
+    assert profile["dimension"]["grid"] == [0.0, 0.1, 0.2, 0.3, 0.5, 0.7, 1.0]
+    assert cue["stage_1_survivor_blend_fractions"] == profile["dimension"]["grid"]
+    assert mismatch["stage_2a_survivor_blend_fractions"] == [0.3, 0.5, 0.7, 1.0]
+    assert all(item["stage_1_pass"] for item in cue["outcomes"])
+    events = {
+        item["nonspecific_spike_event_proximal_blend_fraction"]: len(
+            item["result"]["nonspecific_spike_times_ms"]
+        )
+        for item in mismatch["outcomes"]
+    }
+    assert events == {0.0: 0, 0.1: 0, 0.2: 0, 0.3: 1, 0.5: 1, 0.7: 2, 1.0: 2}
+
+
+def test_nonspecific_event_blend_has_no_match_mismatch_survivor() -> None:
+    artifact = yaml.safe_load(
+        FIGURE7_NONSPECIFIC_EVENT_BLEND_COMPARISON_PATH.read_text()
+    )
+    assert artifact["status"] == "no-stage-2b-survivor"
+    assert artifact["stage_2b_survivor_blend_fractions"] == []
+    expected_nonspecific_events = {0.3: 1, 0.5: 1, 0.7: 2, 1.0: 2}
+    for item in artifact["outcomes"]:
+        blend = item["nonspecific_spike_event_proximal_blend_fraction"]
+        match = item["match"]
+        mismatch = item["mismatch"]
+        assert len(match["relay_spike_times_ms"]) == 20
+        assert len(mismatch["relay_spike_times_ms"]) == 20
+        assert len(match["trn_spike_times_ms"]) == 81
+        assert len(mismatch["trn_spike_times_ms"]) == 81
+        assert len(match["nonspecific_spike_times_ms"]) == expected_nonspecific_events[
+            blend
+        ]
+        assert len(mismatch["nonspecific_spike_times_ms"]) == (
+            expected_nonspecific_events[blend]
+        )
+        assert not item["stage_2b_pass"]
 
 
 def test_contract_rejects_holdout_leakage(tmp_path: Path) -> None:

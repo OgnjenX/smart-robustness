@@ -132,6 +132,7 @@ class FirstOrderRuntimeConventions:
     trn_spike_event_proximal_blend_fraction: float | None = None
     nonspecific_spike_event_proximal_blend_fraction: float | None = None
     trn_potassium_convention: str = "selected_source"
+    trn_soma_potassium_density_mS_cm2: float | None = None
     trn_calcium_source_convention: str = "selected_source"
     trn_dendritic_calcium_density_convention: str = "selected_source"
     trn_dendritic_calcium_density_mS_cm2: float | None = None
@@ -170,6 +171,8 @@ class FirstOrderRuntimeConventions:
             values.pop("nonspecific_spike_event_proximal_blend_fraction")
         if values["trn_potassium_convention"] == "selected_source":
             values.pop("trn_potassium_convention")
+        if values["trn_soma_potassium_density_mS_cm2"] is None:
+            values.pop("trn_soma_potassium_density_mS_cm2")
         if values["trn_calcium_source_convention"] == "selected_source":
             values.pop("trn_calcium_source_convention")
         if values["trn_dendritic_calcium_density_convention"] == "selected_source":
@@ -287,6 +290,21 @@ def resolved_intrinsic_cell(
     else:
         cell = _table3_cell_for_population(facts.canonical_name)
     potassium = TrnPotassiumConvention(conventions.trn_potassium_convention)
+    calibrated_potassium_density = conventions.trn_soma_potassium_density_mS_cm2
+    if calibrated_potassium_density is not None:
+        if (
+            not math.isfinite(calibrated_potassium_density)
+            or calibrated_potassium_density <= 0
+        ):
+            raise ValueError("TRN soma potassium density must be finite and positive")
+        if potassium in {
+            TrnPotassiumConvention.MODELDB_DENSITY,
+            TrnPotassiumConvention.MODELDB_DENSITY_AND_REVERSAL,
+        }:
+            raise ValueError(
+                "TRN potassium source density and calibrated density cannot both "
+                "override the selected cell"
+            )
     calcium = TrnCalciumSourceConvention(conventions.trn_calcium_source_convention)
     dendritic_calcium = TrnDendriticCalciumDensityConvention(
         conventions.trn_dendritic_calcium_density_convention
@@ -312,6 +330,11 @@ def resolved_intrinsic_cell(
             compartments[0], g_k_mS_cm2=facts.cell.soma.g_k_mS_cm2
         )
         suffixes.append("modeldb_k_density")
+    if calibrated_potassium_density is not None:
+        compartments[0] = replace(
+            compartments[0], g_k_mS_cm2=calibrated_potassium_density
+        )
+        suffixes.append(f"calibrated_k_{calibrated_potassium_density:g}")
     if calcium in {
         TrnCalciumSourceConvention.MODELDB_SOMA_CHANNEL,
         TrnCalciumSourceConvention.MODELDB_SOMA_CHANNEL_AND_REVERSAL,

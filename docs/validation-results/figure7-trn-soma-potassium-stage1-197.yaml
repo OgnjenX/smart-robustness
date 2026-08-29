@@ -1,0 +1,276 @@
+schema_version: 1
+id: figure7-trn-soma-potassium-stage1-197
+date: '2026-08-29'
+status: no-stage-1-survivor
+profile: configs/calibration/trn_soma_potassium_behavior_grid_v1.yaml
+base_candidate_fingerprint: 12e0245e9a3044073200e90443582885a5410cf39b8b18d50d22a04a2fc48604
+protocol:
+  pre_drive_ms: 20.0
+  drive_ms: 45.0
+  dt_ms: 0.01
+  relay_ampa_gate: 108.315
+  layer6ii_ampa_gate: 14.152
+  layer6ii_nmda_gate: 1.063
+  drive_multiplier: 1.0
+  axial_conductance_scale: 1.0
+stage_1_survivor_densities_mS_cm2: []
+outcomes:
+- trn_soma_potassium_density_mS_cm2: 20.0
+  runtime_fingerprint: ca05e724b8003faed59de036ca86f233ee145d7ba0a8613abdcab3cd7cd72ffb
+  control:
+    driven: false
+    spike_times_ms:
+    - 1.8800000000000001
+    post_drive_spike_times_ms: []
+    soma_voltage_range_mV:
+    - -27.66803877785595
+    - -22.92249564056821
+    proximal_voltage_range_mV:
+    - 54.445941445880244
+    - 96.35186143607193
+    finite: true
+    convention_fingerprint: ca05e724b8003faed59de036ca86f233ee145d7ba0a8613abdcab3cd7cd72ffb
+    applied_layer6ii_ampa_gate: 0.0
+    applied_layer6ii_nmda_gate: 0.0
+    applied_relay_ampa_gate: 0.0
+  driven:
+    driven: true
+    spike_times_ms:
+    - 1.8800000000000001
+    post_drive_spike_times_ms: []
+    soma_voltage_range_mV:
+    - -47.47938755663688
+    - -22.92249564056821
+    proximal_voltage_range_mV:
+    - 2.733060585656672
+    - 96.35186143607193
+    finite: true
+    convention_fingerprint: ca05e724b8003faed59de036ca86f233ee145d7ba0a8613abdcab3cd7cd72ffb
+    applied_layer6ii_ampa_gate: 14.152
+    applied_layer6ii_nmda_gate: 1.063
+    applied_relay_ampa_gate: 108.315
+  stage_1_pass: false
+- trn_soma_potassium_density_mS_cm2: 30.0
+  runtime_fingerprint: f17203d1e2a6bd01277abc1c43d5ac5f101c8fd00d77ed736b8ed27681580468
+  control:
+    driven: false
+    spike_times_ms:
+    - 1.79
+    post_drive_spike_times_ms: []
+    soma_voltage_range_mV:
+    - -31.57684320379348
+    - -28.190466179981417
+    proximal_voltage_range_mV:
+    - 52.977974154560606
+    - 95.59585170445499
+    finite: true
+    convention_fingerprint: f17203d1e2a6bd01277abc1c43d5ac5f101c8fd00d77ed736b8ed27681580468
+    applied_layer6ii_ampa_gate: 0.0
+    applied_layer6ii_nmda_gate: 0.0
+    applied_relay_ampa_gate: 0.0
+  driven:
+    driven: true
+    spike_times_ms:
+    - 1.79
+    post_drive_spike_times_ms: []
+    soma_voltage_range_mV:
+    - -51.48395793697287
+    - -25.442123128379862
+    proximal_voltage_range_mV:
+    - 2.6855455432153574
+    - 95.59585170445499
+    finite: true
+    convention_fingerprint: f17203d1e2a6bd01277abc1c43d5ac5f101c8fd00d77ed736b8ed27681580468
+    applied_layer6ii_ampa_gate: 14.152
+    applied_layer6ii_nmda_gate: 1.063
+    applied_relay_ampa_gate: 108.315
+  stage_1_pass: false
+- trn_soma_potassium_density_mS_cm2: 40.0
+  runtime_fingerprint: 1cbe853078e57c7ede8c971b9e2bc197bb0cc6078c5dbb86a6a8b18b12575256
+  control:
+    driven: false
+    spike_times_ms:
+    - 1.75
+    post_drive_spike_times_ms: []
+    soma_voltage_range_mV:
+    - -33.860492174890716
+    - -31.13118103057926
+    proximal_voltage_range_mV:
+    - 52.12103428118883
+    - 95.17385579546043
+    finite: true
+    convention_fingerprint: 1cbe853078e57c7ede8c971b9e2bc197bb0cc6078c5dbb86a6a8b18b12575256
+    applied_layer6ii_ampa_gate: 0.0
+    applied_layer6ii_nmda_gate: 0.0
+    applied_relay_ampa_gate: 0.0
+  driven:
+    driven: true
+    spike_times_ms:
+    - 1.75
+    post_drive_spike_times_ms: []
+    soma_voltage_range_mV:
+    - -53.999505815450725
+    - -24.89952733667923
+    proximal_voltage_range_mV:
+    - 2.5282862137476183
+    - 95.17385579546043
+    finite: true
+    convention_fingerprint: 1cbe853078e57c7ede8c971b9e2bc197bb0cc6078c5dbb86a6a8b18b12575256
+    applied_layer6ii_ampa_gate: 14.152
+    applied_layer6ii_nmda_gate: 1.063
+    applied_relay_ampa_gate: 108.315
+  stage_1_pass: false
+- trn_soma_potassium_density_mS_cm2: 50.0
+  runtime_fingerprint: 0dee1ff00b9f5fd711d5d42615bc73c9b324d07987f4b32066e18df2163c08fd
+  control:
+    driven: false
+    spike_times_ms:
+    - 1.7100000000000002
+    post_drive_spike_times_ms: []
+    soma_voltage_range_mV:
+    - -35.43959489301768
+    - -33.08720672713935
+    proximal_voltage_range_mV:
+    - 51.52882916909491
+    - 94.89318366374698
+    finite: true
+    convention_fingerprint: 0dee1ff00b9f5fd711d5d42615bc73c9b324d07987f4b32066e18df2163c08fd
+    applied_layer6ii_ampa_gate: 0.0
+    applied_layer6ii_nmda_gate: 0.0
+    applied_relay_ampa_gate: 0.0
+  driven:
+    driven: true
+    spike_times_ms:
+    - 1.7100000000000002
+    post_drive_spike_times_ms: []
+    soma_voltage_range_mV:
+    - -55.805596831929
+    - -24.35575851387231
+    proximal_voltage_range_mV:
+    - 2.483147687596459
+    - 94.89318366374698
+    finite: true
+    convention_fingerprint: 0dee1ff00b9f5fd711d5d42615bc73c9b324d07987f4b32066e18df2163c08fd
+    applied_layer6ii_ampa_gate: 14.152
+    applied_layer6ii_nmda_gate: 1.063
+    applied_relay_ampa_gate: 108.315
+  stage_1_pass: false
+- trn_soma_potassium_density_mS_cm2: 60.0
+  runtime_fingerprint: 5ad538cc960183b59555c74d54ea03d731f5203d4f5d2d335cac7cb8cb3f34c3
+  control:
+    driven: false
+    spike_times_ms:
+    - 1.6900000000000002
+    post_drive_spike_times_ms: []
+    soma_voltage_range_mV:
+    - -36.63618232274218
+    - -34.525119952547655
+    proximal_voltage_range_mV:
+    - 51.08027512416675
+    - 94.686868515014
+    finite: true
+    convention_fingerprint: 5ad538cc960183b59555c74d54ea03d731f5203d4f5d2d335cac7cb8cb3f34c3
+    applied_layer6ii_ampa_gate: 0.0
+    applied_layer6ii_nmda_gate: 0.0
+    applied_relay_ampa_gate: 0.0
+  driven:
+    driven: true
+    spike_times_ms:
+    - 1.6900000000000002
+    post_drive_spike_times_ms: []
+    soma_voltage_range_mV:
+    - -57.190285509707145
+    - -23.817405275745788
+    proximal_voltage_range_mV:
+    - 2.3984738852554854
+    - 94.686868515014
+    finite: true
+    convention_fingerprint: 5ad538cc960183b59555c74d54ea03d731f5203d4f5d2d335cac7cb8cb3f34c3
+    applied_layer6ii_ampa_gate: 14.152
+    applied_layer6ii_nmda_gate: 1.063
+    applied_relay_ampa_gate: 108.315
+  stage_1_pass: false
+- trn_soma_potassium_density_mS_cm2: 70.0
+  runtime_fingerprint: 782b3bbde993e071fe8976158b122252fd5ce89a22b1d97793e51a394ca74a8c
+  control:
+    driven: false
+    spike_times_ms:
+    - 1.67
+    post_drive_spike_times_ms: []
+    soma_voltage_range_mV:
+    - -37.595702401529756
+    - -35.650927206822935
+    proximal_voltage_range_mV:
+    - 50.7207103036224
+    - 94.52534316920033
+    finite: true
+    convention_fingerprint: 782b3bbde993e071fe8976158b122252fd5ce89a22b1d97793e51a394ca74a8c
+    applied_layer6ii_ampa_gate: 0.0
+    applied_layer6ii_nmda_gate: 0.0
+    applied_relay_ampa_gate: 0.0
+  driven:
+    driven: true
+    spike_times_ms:
+    - 1.67
+    post_drive_spike_times_ms: []
+    soma_voltage_range_mV:
+    - -58.294591678107004
+    - -23.287770574182492
+    proximal_voltage_range_mV:
+    - 2.3439580643648172
+    - 94.52534316920033
+    finite: true
+    convention_fingerprint: 782b3bbde993e071fe8976158b122252fd5ce89a22b1d97793e51a394ca74a8c
+    applied_layer6ii_ampa_gate: 14.152
+    applied_layer6ii_nmda_gate: 1.063
+    applied_relay_ampa_gate: 108.315
+  stage_1_pass: false
+- trn_soma_potassium_density_mS_cm2: 80.0
+  runtime_fingerprint: 2f8770ddb05248a433a76c8c0e0f2f44ae585f609e1fafea7880f48feda8e57e
+  control:
+    driven: false
+    spike_times_ms:
+    - 1.6500000000000001
+    post_drive_spike_times_ms: []
+    soma_voltage_range_mV:
+    - -38.395019845007646
+    - -36.57086913994315
+    proximal_voltage_range_mV:
+    - 50.421259908543064
+    - 94.39335990370822
+    finite: true
+    convention_fingerprint: 2f8770ddb05248a433a76c8c0e0f2f44ae585f609e1fafea7880f48feda8e57e
+    applied_layer6ii_ampa_gate: 0.0
+    applied_layer6ii_nmda_gate: 0.0
+    applied_relay_ampa_gate: 0.0
+  driven:
+    driven: true
+    spike_times_ms:
+    - 1.6500000000000001
+    post_drive_spike_times_ms: []
+    soma_voltage_range_mV:
+    - -59.199193360054
+    - -22.773756072497388
+    proximal_voltage_range_mV:
+    - 2.30710081633991
+    - 94.39335990370822
+    finite: true
+    convention_fingerprint: 2f8770ddb05248a433a76c8c0e0f2f44ae585f609e1fafea7880f48feda8e57e
+    applied_layer6ii_ampa_gate: 14.152
+    applied_layer6ii_nmda_gate: 1.063
+    applied_relay_ampa_gate: 108.315
+  stage_1_pass: false
+assessment:
+  stage_1_survivor_count: 0
+  all_controls_post_drive_quiet: true
+  all_driven_trials_finite: true
+  best_driven_soma_peak_mV: -22.773756072497388
+  published_source_range_mS_cm2:
+  - 80.0
+  - 100.0
+  lower_potassium_sufficient_for_recruitment: false
+  advance_to_connected_match: false
+  interpretation: lower-somatic-potassium-does-not-restore-evoked-trn-output
+next_gate: Run Figure 6 and then a genuine fresh-state Figure 7 match only for isolated
+  survivors. Do not use the rejected proximal detector blend and do not run a mismatch
+  until match relay/TRN gates pass.

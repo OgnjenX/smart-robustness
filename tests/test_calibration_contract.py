@@ -236,6 +236,12 @@ FIGURE7_SAME_NETWORK_DETECTOR_PATH = (
 FIGURE6_RELAY_DETECTOR_CYCLE_PATH = (
     ROOT / "docs/validation-results/figure6-relay-detector-cycle-audit-196.yaml"
 )
+FIGURE7_TRN_SOMA_POTASSIUM_PROFILE_PATH = (
+    ROOT / "configs/calibration/trn_soma_potassium_behavior_grid_v1.yaml"
+)
+FIGURE7_TRN_SOMA_POTASSIUM_STAGE1_PATH = (
+    ROOT / "docs/validation-results/figure7-trn-soma-potassium-stage1-197.yaml"
+)
 
 
 def test_classic_calibration_contract_separates_training_and_holdout() -> None:
@@ -802,6 +808,37 @@ def test_trn_potassium_source_matrix_has_no_connected_survivor() -> None:
         -12.1097056947
     )
     assert artifact["assessment"]["gap_to_published_arm_threshold_mV"] > 42.0
+
+
+def test_trn_soma_potassium_behavior_grid_is_registered_outside_source_range() -> None:
+    profile = yaml.safe_load(FIGURE7_TRN_SOMA_POTASSIUM_PROFILE_PATH.read_text())
+    assert profile["status"] == "registered-before-execution"
+    assert profile["dimension"]["source_status"] == (
+        "behavior_calibration_outside_published_80_to_100_range"
+    )
+    assert profile["dimension"]["grid"] == [
+        20.0,
+        30.0,
+        40.0,
+        50.0,
+        60.0,
+        70.0,
+        80.0,
+    ]
+    assert profile["fixed_choices"]["trn_spike_event_proximal_blend_fraction"] is None
+
+
+def test_lower_trn_soma_potassium_has_no_isolated_recruitment_survivor() -> None:
+    artifact = yaml.safe_load(FIGURE7_TRN_SOMA_POTASSIUM_STAGE1_PATH.read_text())
+    assert artifact["status"] == "no-stage-1-survivor"
+    assert artifact["stage_1_survivor_densities_mS_cm2"] == []
+    assert artifact["assessment"]["all_controls_post_drive_quiet"]
+    assert artifact["assessment"]["all_driven_trials_finite"]
+    assert not artifact["assessment"]["lower_potassium_sufficient_for_recruitment"]
+    assert not artifact["assessment"]["advance_to_connected_match"]
+    assert artifact["assessment"]["best_driven_soma_peak_mV"] < -22.0
+    assert all(not item["stage_1_pass"] for item in artifact["outcomes"])
+    assert all(item["driven"]["post_drive_spike_times_ms"] == [] for item in artifact["outcomes"])
 
 
 def test_trn_calcium_reversal_restores_wrong_cue_lead_mechanism() -> None:

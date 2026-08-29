@@ -1774,6 +1774,20 @@ arm or emit, while every active horizontal relay cell completes four measured
 Thus the Figure 6 40-Hz relay result is genuine under the implemented event
 rule; the initialization-latch defect does not explain that pass.
 
+The first post-diagnostic behavior calibration is closed in
+`figure7-trn-soma-potassium-stage1-197.yaml`. Table 3 and SMART.nml specify
+TRN soma potassium densities of 100 and 80 mS/cm2, respectively; neither
+source endpoint had recruited connected TRN output. A separately named,
+pre-registered grid lowered only that density from 80 through 20 mS/cm2 while
+retaining the original somatic +30/0-mV detector and applying the largest
+relay-AMPA, layer-6II-AMPA, and layer-6II-NMDA gates measured in artifact 195.
+All seven independent controls are post-startup quiet and all driven trials
+are finite, but none emits a post-drive event; the best driven soma peak is
+approximately -22.77 mV. No candidate advances to a connected match trial.
+The missing genuine TRN response therefore cannot be attributed to excessive
+somatic potassium density alone, and values below the published range remain
+rejected calibration probes rather than classic-SMART parameters.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

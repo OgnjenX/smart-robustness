@@ -164,6 +164,11 @@ parameters:
     value: framework_resting_leak or omit_all_zero; must be selected explicitly
     status: exploratory
     source: expanded KInNeSS Eqs. 5-7 state that an inactive input acts as extra leakage, but archived SMART contains large all-zero input channels whose executable legacy treatment is unavailable
+  model.multicompartment.trn_soma_potassium_density_calibration:
+    value: optional explicit density; registered rejected grid 20--80 mS/cm2
+    status: rejected-behavior-calibration
+    source: Table 3 specifies 100 mS/cm2 and SMART.nml specifies 80 mS/cm2; artifact 197 tests lower values only as a legacy-runtime hypothesis
+    note: all controls are post-startup quiet and all driven trials are finite, but none emits after applying the strongest measured Figure 7 receptor gates; no below-source value is promoted
   model.multicompartment.exact_voltage_clamp:
     value: optional fixed compartment voltage, separate from finite-conductance XML input
     status: published-protocol alternative

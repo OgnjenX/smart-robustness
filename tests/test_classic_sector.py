@@ -309,6 +309,43 @@ def test_trn_potassium_source_conflicts_are_independently_selectable(
     assert relay["e_k_mV"] == -100.0
 
 
+def test_trn_calibrated_potassium_density_is_local_and_explicit() -> None:
+    facts = {fact.canonical_name: fact for fact in first_order_population_facts()}
+    conventions = FirstOrderRuntimeConventions(
+        intrinsic_cell_convention=(
+            IntrinsicCellConvention.MODELDB_RELAY_PAPER_TABLE3_OTHERS.value
+        ),
+        trn_soma_potassium_density_mS_cm2=40.0,
+    )
+    trn = first_order_population_parameters(facts["trn"], conventions=conventions)
+    relay = first_order_population_parameters(
+        facts["thalamic_relay"], conventions=conventions
+    )
+    assert trn["cell_spec"].soma.g_k_mS_cm2 == 40.0
+    assert relay["cell_spec"].soma.g_k_mS_cm2 == 100.0
+    assert "calibrated_k_40" in trn["cell_spec"].name
+
+
+@pytest.mark.parametrize("density", [float("nan"), 0.0, -1.0])
+def test_trn_calibrated_potassium_density_must_be_positive(density: float) -> None:
+    facts = {fact.canonical_name: fact for fact in first_order_population_facts()}
+    conventions = FirstOrderRuntimeConventions(
+        trn_soma_potassium_density_mS_cm2=density
+    )
+    with pytest.raises(ValueError, match="finite and positive"):
+        first_order_population_parameters(facts["trn"], conventions=conventions)
+
+
+def test_trn_calibrated_potassium_density_rejects_source_density_override() -> None:
+    facts = {fact.canonical_name: fact for fact in first_order_population_facts()}
+    conventions = FirstOrderRuntimeConventions(
+        trn_potassium_convention=TrnPotassiumConvention.MODELDB_DENSITY.value,
+        trn_soma_potassium_density_mS_cm2=40.0,
+    )
+    with pytest.raises(ValueError, match="cannot both override"):
+        first_order_population_parameters(facts["trn"], conventions=conventions)
+
+
 @pytest.mark.parametrize(
     ("calcium", "expected_soma_density", "expected_reversal"),
     (

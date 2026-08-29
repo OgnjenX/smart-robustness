@@ -1756,6 +1756,17 @@ Classic SMART itself remains unfrozen because Figure 7 match/mismatch
 directionality, nonspecific reset, and later validation figures still fail or
 remain untested.
 
+Detector-cycle artifacts 194 and 195 further retract the sole 0.5-blend
+early-match survivor. In a fresh network, the 81 TRN outputs are releases of
+arms latched before stimulus onset: sampled cells have no in-trial +30-mV
+upcrossing, one arm-release transition/event, and no post-event re-arming. In
+the stronger continuous protocol, a full Figure 6 episode precedes Figure 7 in
+the same network and naturally removes that latent state. The ensuing matched
+trial produces no TRN event and activates every relay cell (181 events), with
+no nonspecific output. Therefore the present unified candidate lacks genuine
+stimulus-evoked TRN recruitment; earlier 81-event counts are not evidence of
+match resonance.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

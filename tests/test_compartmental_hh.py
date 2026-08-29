@@ -361,6 +361,7 @@ def test_proximal_spike_event_blend_preserves_two_stage_detector() -> None:
     network.run(0.01 * brian.ms)
     assert spike_monitor.count[0] == 0
     assert population.group.armed[0] == 1
+    assert population.group.spike_detector_voltage[0] / brian.mV == pytest.approx(40.0)
     population.group.v_proximal_dendrite = -30 * brian.mV
     network.run(0.01 * brian.ms)
     assert spike_monitor.count[0] == 1

@@ -227,6 +227,12 @@ FIGURE7_INHIBITORY_ARRIVAL_PATH = (
 FIGURE6_SOURCE_STRENGTH_REASSESSMENT_PATH = (
     ROOT / "docs/validation-results/figure6-source-strength-reassessment-193.yaml"
 )
+FIGURE7_TRN_DETECTOR_CYCLE_PATH = (
+    ROOT / "docs/validation-results/figure7-trn-detector-cycle-diagnostic-194.yaml"
+)
+FIGURE7_SAME_NETWORK_DETECTOR_PATH = (
+    ROOT / "docs/validation-results/figure7-same-network-detector-diagnostic-195.yaml"
+)
 
 
 def test_classic_calibration_contract_separates_training_and_holdout() -> None:
@@ -1245,6 +1251,42 @@ def test_figure6_source_strength_reassessment_promotes_only_verifiable_claims() 
     assert assessment["qualitative_figure6_reproduced"] is True
     assert assessment["exact_absolute_amplitude_reproduced"] is None
     assert assessment["figure7_eligible_as_source_strength_prerequisite"] is True
+
+
+def test_cold_network_trn_volley_releases_a_pre_stimulus_latch() -> None:
+    artifact = yaml.safe_load(FIGURE7_TRN_DETECTOR_CYCLE_PATH.read_text())
+    observed = artifact["observed"]
+    assert artifact["interpretation"] == (
+        "pre_stimulus_latched_arm_released_by_stimulus"
+    )
+    assert observed["active_relay_indices"] == [38, 39, 40, 41, 42]
+    assert observed["trn_events"] == 81
+    assert observed["pre_stimulus_latched_release_inferred"] is True
+    assert set(observed["threshold_upcrossings_by_index"].values()) == {0}
+    assert set(observed["release_transitions_by_index"].values()) == {1}
+    assert set(observed["emitted_events_by_index"].values()) == {1}
+    assert max(
+        item[2]
+        for item in observed[
+            "post_first_event_detector_voltage_range_mV_by_index"
+        ]
+    ) < 8.0
+
+
+def test_same_network_candidate_has_no_evoked_trn_and_global_relay_output() -> None:
+    artifact = yaml.safe_load(FIGURE7_SAME_NETWORK_DETECTOR_PATH.read_text())
+    observed = artifact["observed"]
+    assert artifact["interpretation"] == "unified_candidate_has_no_evoked_trn_output"
+    assert observed["relay_events"] == 181
+    assert observed["active_relay_indices"] == list(range(81))
+    assert observed["trn_events"] == 0
+    assert observed["nonspecific_events"] == 0
+    assert set(observed["threshold_upcrossings_by_index"].values()) == {0}
+    assert set(observed["arm_transitions_by_index"].values()) == {0}
+    assert set(observed["release_transitions_by_index"].values()) == {0}
+    assert max(
+        item[2] for item in observed["detector_voltage_range_mV_by_index"]
+    ) < -9.0
 
 
 def test_contract_rejects_holdout_leakage(tmp_path: Path) -> None:

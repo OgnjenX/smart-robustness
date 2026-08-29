@@ -490,3 +490,17 @@ approximately `0.893`; exact absolute map amplitude remains explicitly
 unverified. Figure 7 calibration may proceed from this learned state, but no
 classic baseline may be frozen until the published match/mismatch dynamics and
 the still-locked later figures pass.
+
+Artifacts 194 and 195 invalidate the apparent 0.5-blend early-match survivor.
+Exact detector instrumentation shows that the fresh-network 81-cell TRN volley
+contains zero in-trial +30-mV upcrossings. Each sampled detector instead
+releases one pre-stimulus latched arm and never re-arms; its post-event maximum
+is below +8 mV. Carrying the current Figure 6 episode into Figure 7 in the same
+network consumes that cold-start state, after which matched recognition gives
+zero TRN crossings/events, zero nonspecific output, and 181 relay events across
+all 81 cells. The blend is rejected as a behavioral match mechanism. Do not
+count initialization-latch release as resonance, and do not tune the detector
+threshold from this result. The next discriminator must audit whether Figure
+6's nominal four-event relay train itself contains a startup-latch release,
+then return to the missing stimulus-evoked corticoreticular/TRN regenerative
+pathway.

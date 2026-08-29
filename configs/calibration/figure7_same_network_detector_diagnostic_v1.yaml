@@ -1,0 +1,49 @@
+schema_version: 1
+name: figure7-same-network-detector-diagnostic-v1
+status: registered-before-execution
+base_profile: configs/calibration/figure6_kinness_equation27_transition_v1.yaml
+base_candidate_fingerprint: 12e0245e9a3044073200e90443582885a5410cf39b8b18d50d22a04a2fc48604
+fixed_choices:
+  condition: match
+  learned_state: same_network_figure6_episode
+  top_down_current_pA: 800.0
+  trn_calcium_source_convention: modeldb_reversal
+  trn_dendritic_calcium_density_mS_cm2: 100.0
+  trn_soma_proximal_axial_conductance_scale: 1.0
+  trn_spike_event_proximal_blend_fraction: 0.5
+  spike_event_threshold_mV: 30.0
+  spike_event_release_mV: 0.0
+  spike_event_rule: latched_peak_then_zero
+training:
+  protocol: current Figure6LearningProtocol
+  duration_ms: 100.0
+  preserve_membrane_channel_receptor_transmitter_detector_and_weight_state: true
+  freeze_learning_before_recognition: true
+protocol:
+  equilibration_ms: 0.0
+  top_down_cue_lead_ms: 0.0
+  simultaneous_bottom_up_top_down_onset: true
+  duration_ms: 100.0
+  dt_ms: 0.01
+  diagnostic_indices: [22, 31, 38, 39, 40, 41, 42, 49, 58]
+registered_questions:
+  - Does a completed Figure 6 episode naturally clear the cold-network latent TRN arm state?
+  - Does the unified training-to-recognition trajectory generate stimulus-evoked TRN detector cycles?
+  - Does the match retain the five horizontal relay cells under the same dynamic and learned state?
+decision_order:
+  - condition: no emitted TRN event and no threshold upcrossing
+    interpretation: unified_candidate_has_no_evoked_trn_output
+  - condition: emitted events have no in-trial threshold upcrossing but one release transition
+    interpretation: pre_training_latched_arm_survives_figure6_episode
+  - condition: repeated arm/release cycles produce repeated events
+    interpretation: unified_candidate_generates_recurrent_trn_output
+scope: >-
+  This is a protocol/state-continuity discriminator, not a parameter sweep.
+  It is the first detector-instrumented run to carry the complete current
+  Figure 6 trajectory into Figure 7 rather than installing learned weights in
+  a fresh network.
+locked_holdouts:
+  - figure10_reset
+  - figure14_spectra
+  - figure15_local_synchrony
+  - figure16_long_range_synchrony

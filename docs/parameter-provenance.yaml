@@ -59,7 +59,7 @@ parameters:
     value: emit below 0 mV after the soma has exceeded +30 mV
     status: published
     source: Methods 4.4, Eq. 8 discussion
-    note: the promoted candidate uses a latched peak because a literal immediately-previous-sample reading misses the recovered TRN startup spike at dt=0.01 ms; both readings remain explicit conventions
+    note: artifacts 194--195 show that the apparent fresh-network TRN startup output is a pre-stimulus latched arm released by the sensory perturbation, not a new in-trial +30-mV crossing. It no longer supports promotion of the latched rule; the exact legacy detector remains unresolved and every startup-derived event must be labeled separately from stimulus-evoked output
   model.classic_hh.spike_event_coordinate:
     value: absolute_physical; relative_to_soma_leak and shifted_67_mV retained as rejected audit alternatives
     status: unresolved-source-coordinate
@@ -129,7 +129,7 @@ parameters:
     value: steady_state_at_initial_voltage; zero retained as an audit alternative
     status: archived-simulator-cvs executable convention
     source: SANNDRA CVS revision history for gates.h revision 1.17 and unit.cpp revision 1.29 states that TGate.init resets to resting potential; Methods 4.9 initializes membrane compartments at Table 3 values, while the KInNeSS manual warns that voltage-gated channels shift actual rest away from the configured leak equilibrium
-    note: steady-state occupancy at the initialized Table 3 voltage is the current executable interpretation of the surviving revision message; direct source for TGate.init remains unavailable and startup behavior is under audit
+    note: steady-state occupancy at the initialized Table 3 voltage is the current executable interpretation of the surviving revision message; direct source for TGate.init remains unavailable. Artifacts 194--195 show that a cold network can preserve a detector arm across equilibration and release it only after stimulation, whereas a same-network Figure 6 episode consumes the latch and leaves TRN stimulus-silent. Initialization-latch releases are excluded from behavioral resonance evidence
   model.multicompartment.membrane_initialization_coordinate:
     value: physical_leak_voltage or kinness_internal_zero; must be selected explicitly
     status: source-ambiguity

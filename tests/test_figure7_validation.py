@@ -331,6 +331,13 @@ def test_figure7_result_accepts_relay_pathway_diagnostics() -> None:
     assert result.trn_proximal_voltage_range_mV_by_index == ()
     assert result.trn_soma_voltage_range_mV_by_index == ()
     assert result.trn_post_startup_soma_voltage_range_mV_by_index == ()
+    assert result.trn_detector_voltage_range_mV_by_index == ()
+    assert result.trn_detector_post_first_event_voltage_range_mV_by_index == ()
+    assert result.trn_detector_threshold_upcrossings_by_index == ()
+    assert result.trn_detector_zero_downcrossings_by_index == ()
+    assert result.trn_detector_arm_transitions_by_index == ()
+    assert result.trn_detector_release_transitions_by_index == ()
+    assert result.trn_detector_final_armed_by_index == ()
     assert result.trn_driven_current_range_pA_by_index_and_source == ()
     assert result.nonspecific_trn_gaba_peak is None
     assert result.nonspecific_trn_gaba_integral_ms is None

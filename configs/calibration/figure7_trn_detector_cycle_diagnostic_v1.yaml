@@ -1,0 +1,49 @@
+schema_version: 1
+name: figure7-trn-detector-cycle-diagnostic-v1
+status: registered-before-execution
+base_profile: configs/calibration/figure6_kinness_equation27_transition_v1.yaml
+base_candidate_fingerprint: 12e0245e9a3044073200e90443582885a5410cf39b8b18d50d22a04a2fc48604
+fixed_choices:
+  condition: match
+  learned_state: paper_constrained_figure6c_reference
+  top_down_current_pA: 800.0
+  trn_calcium_source_convention: modeldb_reversal
+  trn_dendritic_calcium_density_mS_cm2: 100.0
+  trn_soma_proximal_axial_conductance_scale: 1.0
+  trn_spike_event_proximal_blend_fraction: 0.5
+  spike_event_threshold_mV: 30.0
+  spike_event_release_mV: 0.0
+  spike_event_rule: latched_peak_then_zero
+protocol:
+  equilibration_ms: 20.0
+  top_down_cue_lead_ms: 0.0
+  simultaneous_bottom_up_top_down_onset: true
+  duration_ms: 100.0
+  dt_ms: 0.01
+  diagnostic_indices: [22, 31, 38, 39, 40, 41, 42, 49, 58]
+registered_questions:
+  - Does each sampled TRN detector return below the zero-mV release landmark?
+  - Does its detector-coordinate voltage cross the +30-mV arm landmark again after the first event?
+  - Does detector state re-arm after release, and if so does it release a second event?
+decision_order:
+  - condition: emitted events have no in-trial threshold upcrossing but one release transition
+    interpretation: pre_stimulus_latched_arm_released_by_stimulus
+  - condition: no sampled detector has more than one threshold upcrossing
+    interpretation: no_post_event_regenerative_threshold_recrossing
+  - condition: a detector has more voltage upcrossings than arm-state transitions
+    interpretation: detector_failed_to_rearm_despite_voltage_recrossing
+  - condition: a detector has more arm than release transitions
+    interpretation: detector_rearmed_but_failed_to_return_below_release
+  - condition: release transitions exceed emitted events
+    interpretation: event_monitor_or_scheduling_inconsistency
+  - condition: repeated arm/release cycles produce repeated events
+    interpretation: detector_cycles_and_upstream_event_timing_requires_localization
+scope: >-
+  Behavior-neutral instrumentation only. This diagnostic neither changes the
+  event rule nor exposes a tunable parameter. Its purpose is to choose the next
+  source/runtime audit after the condition-invariant 81-cell TRN volley.
+locked_holdouts:
+  - figure10_reset
+  - figure14_spectra
+  - figure15_local_synchrony
+  - figure16_long_range_synchrony

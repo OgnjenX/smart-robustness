@@ -318,29 +318,36 @@ def create_compartmental_hh_population(
         "method": params.get("method", "exponential_euler"),
         "name": name,
     }
-    equations = compiled.equations
+    # Expose the exact coordinate used by Equation 8 as a read-only state
+    # subexpression. Thresholds still use the same algebra, while pathway
+    # diagnostics can now distinguish membrane dynamics from detector state.
+    equations = compiled.equations + (
+        f"\nspike_detector_voltage = {spike_voltage} : volt"
+    )
     if spike_event_rule in {
         SpikeEventRule.LATCHED_PEAK_THEN_ZERO,
         SpikeEventRule.HYSTERETIC_THRESHOLD_THEN_ZERO,
     }:
         events = {
             "arm_spike": (
-                f"armed == 0 and {spike_voltage} > {spike_event_threshold_mV}*mV"
+                "armed == 0 and spike_detector_voltage > "
+                f"{spike_event_threshold_mV}*mV"
             )
         }
         if spike_event_rule is SpikeEventRule.HYSTERETIC_THRESHOLD_THEN_ZERO:
             spike_reset = spike_reset.replace("armed = 0", "armed = -1", 1)
             events["release_spike_detector"] = (
-                f"armed < -0.5 and {spike_voltage} < {spike_event_threshold_mV}*mV"
+                "armed < -0.5 and spike_detector_voltage < "
+                f"{spike_event_threshold_mV}*mV"
             )
         group_kwargs.update(
-            threshold=f"armed > 0.5 and {spike_voltage} < 0*mV",
+            threshold="armed > 0.5 and spike_detector_voltage < 0*mV",
             events=events,
         )
     else:
         equations += "\nprevious_spike_voltage : volt"
         group_kwargs["threshold"] = (
-            f"{spike_voltage} < 0*mV and "
+            "spike_detector_voltage < 0*mV and "
             f"previous_spike_voltage > {spike_event_threshold_mV}*mV"
         )
     group = brian.NeuronGroup(size, equations, reset=spike_reset, **group_kwargs)
@@ -363,7 +370,7 @@ def create_compartmental_hh_population(
         # peak. Capture the current source-coordinate voltage after all events so
         # the next threshold pass can evaluate that printed expression exactly.
         group.run_regularly(
-            f"previous_spike_voltage = {spike_voltage}", when="end", order=1
+            "previous_spike_voltage = spike_detector_voltage", when="end", order=1
         )
     if compiled.depletion_enabled:
         group.transmitter = 1

@@ -217,6 +217,17 @@ class Figure7ConditionResult:
     trn_post_startup_soma_voltage_range_mV_by_index: tuple[
         tuple[int, float, float], ...
     ] = ()
+    trn_detector_voltage_range_mV_by_index: tuple[
+        tuple[int, float, float], ...
+    ] = ()
+    trn_detector_post_first_event_voltage_range_mV_by_index: tuple[
+        tuple[int, float, float], ...
+    ] = ()
+    trn_detector_threshold_upcrossings_by_index: tuple[tuple[int, int], ...] = ()
+    trn_detector_zero_downcrossings_by_index: tuple[tuple[int, int], ...] = ()
+    trn_detector_arm_transitions_by_index: tuple[tuple[int, int], ...] = ()
+    trn_detector_release_transitions_by_index: tuple[tuple[int, int], ...] = ()
+    trn_detector_final_armed_by_index: tuple[tuple[int, float], ...] = ()
     trn_driven_current_range_pA_by_index_and_source: tuple[
         tuple[int, str, float, float], ...
     ] = ()
@@ -609,6 +620,8 @@ def run_figure7_condition(
                 "i_k_soma",
                 "v_proximal_dendrite",
                 "v_soma",
+                "spike_detector_voltage",
+                "armed",
                 *trn_calcium_variables,
             ),
             record=FIGURE7_RELAY_DIAGNOSTIC_INDICES,
@@ -702,6 +715,15 @@ def run_figure7_condition(
     trn_voltage_range: tuple[tuple[int, float, float], ...] = ()
     trn_soma_voltage_range: tuple[tuple[int, float, float], ...] = ()
     trn_post_startup_soma_voltage_range: tuple[tuple[int, float, float], ...] = ()
+    trn_detector_voltage_range: tuple[tuple[int, float, float], ...] = ()
+    trn_detector_post_first_event_voltage_range: tuple[
+        tuple[int, float, float], ...
+    ] = ()
+    trn_detector_threshold_upcrossings: tuple[tuple[int, int], ...] = ()
+    trn_detector_zero_downcrossings: tuple[tuple[int, int], ...] = ()
+    trn_detector_arm_transitions: tuple[tuple[int, int], ...] = ()
+    trn_detector_release_transitions: tuple[tuple[int, int], ...] = ()
+    trn_detector_final_armed: tuple[tuple[int, float], ...] = ()
     trn_driven_current_range: tuple[tuple[int, str, float, float], ...] = ()
     nonspecific_trn_gaba_peak = None
     nonspecific_trn_gaba_integral_ms = None
@@ -869,6 +891,115 @@ def run_figure7_condition(
             for index, values in zip(
                 FIGURE7_RELAY_DIAGNOSTIC_INDICES, trn_soma_voltage_mV, strict=True
             )
+        )
+        trn_detector_voltage_mV = np.asarray(
+            trn_state.spike_detector_voltage / brian.mV
+        )[:, diagnostic_window]
+        trn_detector_armed = np.asarray(trn_state.armed)[:, diagnostic_window]
+        trn_detector_voltage_range = tuple(
+            (index, float(np.min(values)), float(np.max(values)))
+            for index, values in zip(
+                FIGURE7_RELAY_DIAGNOSTIC_INDICES,
+                trn_detector_voltage_mV,
+                strict=True,
+            )
+        )
+        detector_threshold_mV = (
+            conventions.trn_spike_event_threshold_mV
+            if conventions.trn_spike_event_threshold_mV is not None
+            else conventions.spike_event_threshold_mV
+        )
+        trn_detector_threshold_upcrossings = tuple(
+            (
+                index,
+                int(
+                    np.count_nonzero(
+                        (values[:-1] <= detector_threshold_mV)
+                        & (values[1:] > detector_threshold_mV)
+                    )
+                ),
+            )
+            for index, values in zip(
+                FIGURE7_RELAY_DIAGNOSTIC_INDICES,
+                trn_detector_voltage_mV,
+                strict=True,
+            )
+        )
+        trn_detector_zero_downcrossings = tuple(
+            (
+                index,
+                int(
+                    np.count_nonzero(
+                        (values[:-1] >= 0.0) & (values[1:] < 0.0)
+                    )
+                ),
+            )
+            for index, values in zip(
+                FIGURE7_RELAY_DIAGNOSTIC_INDICES,
+                trn_detector_voltage_mV,
+                strict=True,
+            )
+        )
+        trn_detector_arm_transitions = tuple(
+            (
+                index,
+                int(
+                    np.count_nonzero(
+                        (values[:-1] <= 0.5) & (values[1:] > 0.5)
+                    )
+                ),
+            )
+            for index, values in zip(
+                FIGURE7_RELAY_DIAGNOSTIC_INDICES,
+                trn_detector_armed,
+                strict=True,
+            )
+        )
+        trn_detector_release_transitions = tuple(
+            (
+                index,
+                int(
+                    np.count_nonzero(
+                        (values[:-1] > 0.5) & (values[1:] <= 0.5)
+                    )
+                ),
+            )
+            for index, values in zip(
+                FIGURE7_RELAY_DIAGNOSTIC_INDICES,
+                trn_detector_armed,
+                strict=True,
+            )
+        )
+        trn_detector_final_armed = tuple(
+            (index, float(values[-1]))
+            for index, values in zip(
+                FIGURE7_RELAY_DIAGNOSTIC_INDICES,
+                trn_detector_armed,
+                strict=True,
+            )
+        )
+        trn_detector_post_first_event_voltage_range = tuple(
+            (
+                index,
+                float(np.min(trn_detector_voltage_mV[row, times_ms > first_event_ms])),
+                float(np.max(trn_detector_voltage_mV[row, times_ms > first_event_ms])),
+            )
+            for row, index in enumerate(FIGURE7_RELAY_DIAGNOSTIC_INDICES)
+            for first_event_ms in [
+                next(
+                    (
+                        float(value - stimulus_start_ms)
+                        for event_index, value in zip(
+                            trn.i, trn.t / brian.ms, strict=True
+                        )
+                        if int(event_index) == index
+                        and float(value) >= stimulus_start_ms
+                    ),
+                    None,
+                )
+            ]
+            if first_event_ms is not None
+            and np.any(times_ms > first_event_ms)
         )
         post_startup_window = times_ms >= 5.0
         trn_post_startup_soma_voltage_range = tuple(
@@ -1112,6 +1243,17 @@ def run_figure7_condition(
         trn_post_startup_soma_voltage_range_mV_by_index=(
             trn_post_startup_soma_voltage_range
         ),
+        trn_detector_voltage_range_mV_by_index=trn_detector_voltage_range,
+        trn_detector_post_first_event_voltage_range_mV_by_index=(
+            trn_detector_post_first_event_voltage_range
+        ),
+        trn_detector_threshold_upcrossings_by_index=(
+            trn_detector_threshold_upcrossings
+        ),
+        trn_detector_zero_downcrossings_by_index=trn_detector_zero_downcrossings,
+        trn_detector_arm_transitions_by_index=trn_detector_arm_transitions,
+        trn_detector_release_transitions_by_index=trn_detector_release_transitions,
+        trn_detector_final_armed_by_index=trn_detector_final_armed,
         trn_driven_current_range_pA_by_index_and_source=trn_driven_current_range,
         nonspecific_trn_gaba_peak=nonspecific_trn_gaba_peak,
         nonspecific_trn_gaba_integral_ms=nonspecific_trn_gaba_integral_ms,

@@ -1,0 +1,34 @@
+schema_version: 1
+name: figure6-relay-detector-cycle-audit-v1
+status: registered-before-execution
+base_profile: configs/calibration/figure6_kinness_equation27_transition_v1.yaml
+candidate_fingerprint: 12e0245e9a3044073200e90443582885a5410cf39b8b18d50d22a04a2fc48604
+control:
+  duration_ms: 20.0
+  dt_ms: 0.01
+  external_input: none
+  purpose: detect autonomous startup arming or release before the Figure 6 stimulus
+training:
+  protocol: current Figure6LearningProtocol
+  warmup_ms: 0.0
+  stimulus_ms: 100.0
+  source_value: 120.0
+  category_source_value: 70.0
+  active_relay_indices: [38, 39, 40, 41, 42]
+  expected_events_per_active_relay: 4
+registered_questions:
+  - Do unstimulated relay detectors cross +30 mV, latch, or emit during startup?
+  - Does every scored Figure 6 relay event have a corresponding in-episode arm and release cycle?
+  - Is the nominal four-event 40-Hz train independent of a latent startup detector state?
+decision_order:
+  - condition: control latches without release
+    interpretation: figure6_rate_is_at_risk_of_startup_latch_contamination
+  - condition: control is unarmed and training has four arm/release cycles per active cell
+    interpretation: figure6_relay_event_train_is_detector-cycle-valid
+  - condition: training events differ from release transitions
+    interpretation: figure6_event_monitor_or_scheduling_inconsistency
+  - condition: training has fewer than four genuine arm/release cycles
+    interpretation: figure6_40hz_claim_requires_reassessment
+scope: >-
+  Behavior-neutral detector instrumentation plus a no-input negative control.
+  No membrane, synaptic, learning, event, or protocol parameter is changed.

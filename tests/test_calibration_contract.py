@@ -233,6 +233,9 @@ FIGURE7_TRN_DETECTOR_CYCLE_PATH = (
 FIGURE7_SAME_NETWORK_DETECTOR_PATH = (
     ROOT / "docs/validation-results/figure7-same-network-detector-diagnostic-195.yaml"
 )
+FIGURE6_RELAY_DETECTOR_CYCLE_PATH = (
+    ROOT / "docs/validation-results/figure6-relay-detector-cycle-audit-196.yaml"
+)
 
 
 def test_classic_calibration_contract_separates_training_and_holdout() -> None:
@@ -1287,6 +1290,31 @@ def test_same_network_candidate_has_no_evoked_trn_and_global_relay_output() -> N
     assert max(
         item[2] for item in observed["detector_voltage_range_mV_by_index"]
     ) < -9.0
+
+
+def test_figure6_relay_train_has_four_genuine_detector_cycles_per_cell() -> None:
+    artifact = yaml.safe_load(FIGURE6_RELAY_DETECTOR_CYCLE_PATH.read_text())
+    control = artifact["control"]
+    training = artifact["training"]
+    assessment = artifact["assessment"]
+    assert control["relay_events"] == 0
+    assert control["active_relay_indices"] == []
+    assert set(control["threshold_upcrossings_by_index"].values()) == {0}
+    assert set(control["arm_transitions_by_index"].values()) == {0}
+    assert set(control["release_transitions_by_index"].values()) == {0}
+    assert set(control["final_armed_by_index"].values()) == {0.0}
+    for key in (
+        "relay_events_by_index",
+        "threshold_upcrossings_by_index",
+        "arm_transitions_by_index",
+        "release_transitions_by_index",
+    ):
+        assert set(training[key].values()) == {4}
+    assert assessment == {
+        "control_latched_without_release": False,
+        "training_cycle_valid": True,
+        "interpretation": "figure6_relay_event_train_is_detector-cycle-valid",
+    }
 
 
 def test_contract_rejects_holdout_leakage(tmp_path: Path) -> None:

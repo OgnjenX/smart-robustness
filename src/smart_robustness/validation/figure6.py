@@ -125,6 +125,14 @@ class Figure6LearningResult:
     top_down_narrow: Figure6MapSummary
     population_spike_indices: dict[str, tuple[int, ...]] | None = None
     population_spike_times_ms: dict[str, tuple[float, ...]] | None = None
+    relay_detector_voltage_range_mV_by_index: tuple[
+        tuple[int, float, float], ...
+    ] = ()
+    relay_detector_threshold_upcrossings_by_index: tuple[tuple[int, int], ...] = ()
+    relay_detector_zero_downcrossings_by_index: tuple[tuple[int, int], ...] = ()
+    relay_detector_arm_transitions_by_index: tuple[tuple[int, int], ...] = ()
+    relay_detector_release_transitions_by_index: tuple[tuple[int, int], ...] = ()
+    relay_detector_final_armed_by_index: tuple[tuple[int, float], ...] = ()
 
     @property
     def top_down_combined(self) -> Figure6MapSummary:
@@ -504,6 +512,7 @@ def run_figure6_learning(
     *,
     conventions=None,
     protocol: Figure6LearningProtocol | None = None,
+    record_relay_detector_diagnostics: bool = False,
     brian=None,
 ) -> Figure6LearningRun:
     """Run and summarize the official simultaneous Figure 6b/c episode."""
@@ -539,6 +548,15 @@ def run_figure6_learning(
     if unknown_monitors:
         raise ValueError(f"unknown monitored populations: {sorted(unknown_monitors)}")
     sector.network.add(*monitors.values())
+    relay_detector_state = None
+    if record_relay_detector_diagnostics:
+        relay_detector_state = brian.StateMonitor(
+            sector.populations["thalamic_relay"].group,
+            ("spike_detector_voltage", "armed"),
+            record=HORIZONTAL_INDICES,
+            name="figure6_relay_detector_state",
+        )
+        sector.network.add(relay_detector_state)
     if protocol.warmup_ms:
         sector.network.run(protocol.warmup_ms * brian.ms)
     warmup_counts = {name: int(monitor.num_spikes) for name, monitor in monitors.items()}
@@ -567,6 +585,85 @@ def run_figure6_learning(
         mask = times >= protocol.warmup_ms
         spike_indices[name] = tuple(int(value) for value in indices[mask])
         spike_times_ms[name] = tuple(float(value - protocol.warmup_ms) for value in times[mask])
+    relay_detector_voltage_range: tuple[tuple[int, float, float], ...] = ()
+    relay_detector_threshold_upcrossings: tuple[tuple[int, int], ...] = ()
+    relay_detector_zero_downcrossings: tuple[tuple[int, int], ...] = ()
+    relay_detector_arm_transitions: tuple[tuple[int, int], ...] = ()
+    relay_detector_release_transitions: tuple[tuple[int, int], ...] = ()
+    relay_detector_final_armed: tuple[tuple[int, float], ...] = ()
+    if relay_detector_state is not None:
+        state_times_ms = np.asarray(relay_detector_state.t / brian.ms)
+        stimulus_window = state_times_ms >= protocol.warmup_ms
+        detector_voltage_mV = np.asarray(
+            relay_detector_state.spike_detector_voltage / brian.mV
+        )[:, stimulus_window]
+        detector_armed = np.asarray(relay_detector_state.armed)[:, stimulus_window]
+        detector_threshold_mV = conventions.spike_event_threshold_mV
+        relay_detector_voltage_range = tuple(
+            (index, float(np.min(values)), float(np.max(values)))
+            for index, values in zip(
+                HORIZONTAL_INDICES, detector_voltage_mV, strict=True
+            )
+        )
+        relay_detector_threshold_upcrossings = tuple(
+            (
+                index,
+                int(
+                    np.count_nonzero(
+                        (values[:-1] <= detector_threshold_mV)
+                        & (values[1:] > detector_threshold_mV)
+                    )
+                ),
+            )
+            for index, values in zip(
+                HORIZONTAL_INDICES, detector_voltage_mV, strict=True
+            )
+        )
+        relay_detector_zero_downcrossings = tuple(
+            (
+                index,
+                int(
+                    np.count_nonzero(
+                        (values[:-1] >= 0.0) & (values[1:] < 0.0)
+                    )
+                ),
+            )
+            for index, values in zip(
+                HORIZONTAL_INDICES, detector_voltage_mV, strict=True
+            )
+        )
+        relay_detector_arm_transitions = tuple(
+            (
+                index,
+                int(
+                    np.count_nonzero(
+                        (values[:-1] <= 0.5) & (values[1:] > 0.5)
+                    )
+                ),
+            )
+            for index, values in zip(
+                HORIZONTAL_INDICES, detector_armed, strict=True
+            )
+        )
+        relay_detector_release_transitions = tuple(
+            (
+                index,
+                int(
+                    np.count_nonzero(
+                        (values[:-1] > 0.5) & (values[1:] <= 0.5)
+                    )
+                ),
+            )
+            for index, values in zip(
+                HORIZONTAL_INDICES, detector_armed, strict=True
+            )
+        )
+        relay_detector_final_armed = tuple(
+            (index, float(values[-1]))
+            for index, values in zip(
+                HORIZONTAL_INDICES, detector_armed, strict=True
+            )
+        )
     result = summarize_figure6_learning(
         convention_fingerprint=conventions.fingerprint,
         duration_ms=protocol.stimulus_ms,
@@ -585,6 +682,18 @@ def run_figure6_learning(
         top_down_narrow=result.top_down_narrow,
         population_spike_indices=spike_indices,
         population_spike_times_ms=spike_times_ms,
+        relay_detector_voltage_range_mV_by_index=relay_detector_voltage_range,
+        relay_detector_threshold_upcrossings_by_index=(
+            relay_detector_threshold_upcrossings
+        ),
+        relay_detector_zero_downcrossings_by_index=(
+            relay_detector_zero_downcrossings
+        ),
+        relay_detector_arm_transitions_by_index=relay_detector_arm_transitions,
+        relay_detector_release_transitions_by_index=(
+            relay_detector_release_transitions
+        ),
+        relay_detector_final_armed_by_index=relay_detector_final_armed,
     )
     learned = {
         projection_id: tuple(

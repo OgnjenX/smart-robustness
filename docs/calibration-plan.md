@@ -504,3 +504,13 @@ threshold from this result. The next discriminator must audit whether Figure
 6's nominal four-event relay train itself contains a startup-latch release,
 then return to the missing stimulus-evoked corticoreticular/TRN regenerative
 pathway.
+
+Artifact 196 completes that Figure 6 audit. In a separate 20-ms no-input
+control, all five sampled relay detectors stay between approximately -70 and
+-59.2 mV, remain unarmed, and emit nothing. During the canonical training
+episode, each of relay cells 38--42 has exactly four +30-mV upcrossings, four
+arm transitions, four release transitions, and four emitted events, ending
+unarmed. The 40-Hz relay criterion is therefore detector-cycle-valid and the
+qualitative Figure 6 promotion remains in force. The active failure is again
+specific to evoked TRN recruitment in recognition; do not reopen Figure 6 rate
+calibration on account of the TRN startup latch.

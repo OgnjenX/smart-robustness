@@ -110,6 +110,12 @@ def test_tiny_positive_top_down_contrast_does_not_count_as_reproduction() -> Non
 
     assert weak.horizontal_orientation_contrast > 0
     assert not result.top_down_oriented
+    assert result.relay_detector_voltage_range_mV_by_index == ()
+    assert result.relay_detector_threshold_upcrossings_by_index == ()
+    assert result.relay_detector_zero_downcrossings_by_index == ()
+    assert result.relay_detector_arm_transitions_by_index == ()
+    assert result.relay_detector_release_transitions_by_index == ()
+    assert result.relay_detector_final_armed_by_index == ()
 
 
 def test_figure6c_scores_the_combined_wide_and_narrow_field() -> None:

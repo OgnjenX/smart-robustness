@@ -1767,6 +1767,13 @@ no nonspecific output. Therefore the present unified candidate lacks genuine
 stimulus-evoked TRN recruitment; earlier 81-event counts are not evidence of
 match resonance.
 
+The corresponding Figure 6 negative control and detector audit passes
+(`figure6-relay-detector-cycle-audit-196.yaml`). Unstimulated relay cells never
+arm or emit, while every active horizontal relay cell completes four measured
++30-to-0-mV arm/release cycles and emits four events during the 100-ms episode.
+Thus the Figure 6 40-Hz relay result is genuine under the implemented event
+rule; the initialization-latch defect does not explain that pass.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

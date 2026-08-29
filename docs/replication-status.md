@@ -1784,9 +1784,30 @@ relay-AMPA, layer-6II-AMPA, and layer-6II-NMDA gates measured in artifact 195.
 All seven independent controls are post-startup quiet and all driven trials
 are finite, but none emits a post-drive event; the best driven soma peak is
 approximately -22.77 mV. No candidate advances to a connected match trial.
-The missing genuine TRN response therefore cannot be attributed to excessive
-somatic potassium density alone, and values below the published range remain
-rejected calibration probes rather than classic-SMART parameters.
+Lower potassium therefore fails this predeclared peak-held promotion assay,
+and values below the published range remain rejected calibration probes rather
+than classic-SMART parameters. Because a conductance/shunting drive need not be
+monotonic with gate amplitude, this assay is not generalized into a claim
+about every possible transient waveform.
+
+A fresh source-recovery follow-up is retained as
+`legacy-source-recovery-followup-198.yaml`. A public build thread independently
+reports downloading SANNDRA 1.0.0 from the KInNeSS site and names the original
+source headers, including `gates.h`, `channels.h`, `equations.h`, and
+`unit.cpp`. It does not publish those file bodies. The lead therefore
+strengthens package provenance but recovers neither `spikeevents.h` nor an
+executable membrane/event correction.
+
+The registered sodium-density-by-drive assay is complete in
+`figure7-trn-soma-sodium-stage1-199.yaml`. Both Table 3 and SMART.nml specify
+100 mS/cm2, so 125--400 mS/cm2 are explicitly non-source behavior probes.
+Each density is crossed with 0.05, 0.1, 0.2, 0.4, 0.7, and 1.0 times the
+artifact-195 peak receptor gates to respect the non-monotonicity of shunting
+drive. All six controls are post-startup quiet and all 36 driven trials are
+finite. Somatic response grows systematically, but even 400 mS/cm2 peaks at
+only approximately +14.65 mV and never completes a +30-to-0-mV detector
+cycle. No candidate advances to the full network, and increased effective
+somatic sodium density is rejected within this broad registered range.
 
 ## Validation gates
 

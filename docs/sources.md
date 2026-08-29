@@ -98,6 +98,13 @@ the file body or diff. Consequently the printed `V(t-dt)` spike expression can
 be tested literally, but cannot by itself establish whether the legacy event
 handler latched a peak or imposed threshold hysteresis.
 
+A later public build-log trace independently reports a SANNDRA 1.0.0 download
+from the KInNeSS site and exposes original header/source names through compiler
+diagnostics. It contains no source bodies and cannot resolve the missing spike
+event handler. The exact evidence and inference boundary are recorded in
+`validation-results/legacy-source-recovery-followup-198.yaml`; no code from
+that trace is treated as the legacy implementation.
+
 The same user manual distinguishes the configured leakage equilibrium from a
 compartment's actual resting potential: voltage-gated channels can move the
 latter away from the former. Consequently `E_leak`, the initialized membrane

@@ -240,6 +240,11 @@ def runtime_conventions_for_candidate(
                 ).trn_potassium_convention,
             )
         ),
+        trn_soma_sodium_density_mS_cm2=(
+            None
+            if values.get("trn_soma_sodium_density_mS_cm2") is None
+            else float(values["trn_soma_sodium_density_mS_cm2"])
+        ),
         trn_soma_potassium_density_mS_cm2=(
             None
             if values.get("trn_soma_potassium_density_mS_cm2") is None

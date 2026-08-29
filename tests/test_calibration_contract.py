@@ -242,6 +242,15 @@ FIGURE7_TRN_SOMA_POTASSIUM_PROFILE_PATH = (
 FIGURE7_TRN_SOMA_POTASSIUM_STAGE1_PATH = (
     ROOT / "docs/validation-results/figure7-trn-soma-potassium-stage1-197.yaml"
 )
+LEGACY_SOURCE_RECOVERY_FOLLOWUP_PATH = (
+    ROOT / "docs/validation-results/legacy-source-recovery-followup-198.yaml"
+)
+FIGURE7_TRN_SOMA_SODIUM_PROFILE_PATH = (
+    ROOT / "configs/calibration/trn_soma_sodium_behavior_grid_v1.yaml"
+)
+FIGURE7_TRN_SOMA_SODIUM_STAGE1_PATH = (
+    ROOT / "docs/validation-results/figure7-trn-soma-sodium-stage1-199.yaml"
+)
 
 
 def test_classic_calibration_contract_separates_training_and_holdout() -> None:
@@ -839,6 +848,53 @@ def test_lower_trn_soma_potassium_has_no_isolated_recruitment_survivor() -> None
     assert artifact["assessment"]["best_driven_soma_peak_mV"] < -22.0
     assert all(not item["stage_1_pass"] for item in artifact["outcomes"])
     assert all(item["driven"]["post_drive_spike_times_ms"] == [] for item in artifact["outcomes"])
+
+
+def test_source_recovery_followup_does_not_promote_compiler_log_to_source() -> None:
+    artifact = yaml.safe_load(LEGACY_SOURCE_RECOVERY_FOLLOWUP_PATH.read_text())
+    assert artifact["status"] == "source-body-not-recovered"
+    assert artifact["new_public_trace"]["evidence_class"] == "third-party-build-log"
+    assert not artifact["search_outcome"]["package_archive_recovered"]
+    assert not artifact["search_outcome"]["detector_implementation_recovered"]
+    assert not artifact["search_outcome"]["source_correction_authorized"]
+
+
+def test_trn_soma_sodium_grid_registers_nonmonotonic_shunting_drive() -> None:
+    profile = yaml.safe_load(FIGURE7_TRN_SOMA_SODIUM_PROFILE_PATH.read_text())
+    assert profile["status"] == "registered-before-execution"
+    assert profile["dimension"]["source_value_mS_cm2"] == 100.0
+    assert profile["dimension"]["grid"] == [
+        100.0,
+        125.0,
+        150.0,
+        200.0,
+        300.0,
+        400.0,
+    ]
+    assert profile["stage_1_protocol"]["drive_multipliers"] == [
+        0.05,
+        0.1,
+        0.2,
+        0.4,
+        0.7,
+        1.0,
+    ]
+
+
+def test_increased_trn_soma_sodium_has_no_detector_cycle_survivor() -> None:
+    artifact = yaml.safe_load(FIGURE7_TRN_SOMA_SODIUM_STAGE1_PATH.read_text())
+    assert artifact["status"] == "no-stage-1-survivor"
+    assert artifact["stage_1_survivor_densities_mS_cm2"] == []
+    assessment = artifact["assessment"]
+    assert assessment["all_controls_post_drive_quiet"]
+    assert assessment["finite_driven_trial_count"] == 36
+    assert assessment["total_driven_trial_count"] == 36
+    assert assessment["best_finite_driven_soma_peak_mV"] == pytest.approx(
+        14.6526694610
+    )
+    assert not assessment["sodium_density_sufficient_in_registered_assay"]
+    assert not assessment["advance_to_connected_match"]
+    assert all(not item["stage_1_pass"] for item in artifact["outcomes"])
 
 
 def test_trn_calcium_reversal_restores_wrong_cue_lead_mechanism() -> None:

@@ -168,7 +168,12 @@ parameters:
     value: optional explicit density; registered rejected grid 20--80 mS/cm2
     status: rejected-behavior-calibration
     source: Table 3 specifies 100 mS/cm2 and SMART.nml specifies 80 mS/cm2; artifact 197 tests lower values only as a legacy-runtime hypothesis
-    note: all controls are post-startup quiet and all driven trials are finite, but none emits after applying the strongest measured Figure 7 receptor gates; no below-source value is promoted
+    note: all controls are post-startup quiet and all driven trials are finite, but none emits under the registered peak-held Figure 7 receptor-gate assay; no below-source value is promoted, and conductance-drive nonmonotonicity prevents extending this result to every transient waveform
+  model.multicompartment.trn_soma_sodium_density_calibration:
+    value: optional explicit density; registered rejected grid 100--400 mS/cm2
+    status: rejected-behavior-calibration
+    source: Table 3 and SMART.nml both specify 100 mS/cm2; any alternative is a legacy-runtime sensitivity hypothesis rather than a published SMART value
+    note: all controls are post-startup quiet and all 36 density-by-drive trials are finite, but the best soma peak is approximately +14.65 mV and no trial completes a +30-to-0-mV detector cycle; no alternative advances to a connected test
   model.multicompartment.exact_voltage_clamp:
     value: optional fixed compartment voltage, separate from finite-conductance XML input
     status: published-protocol alternative

@@ -1,0 +1,53 @@
+schema_version: 1
+name: trn-soma-sodium-behavior-grid-v1
+status: registered-before-execution
+base_profile: configs/calibration/figure6_kinness_equation27_transition_v1.yaml
+base_candidate_fingerprint: 12e0245e9a3044073200e90443582885a5410cf39b8b18d50d22a04a2fc48604
+rationale: >-
+  Artifact 195 measures a stimulus-driven TRN soma peak between approximately
+  -10 and -5 mV, sodium current near +110 nA, and potassium current near
+  -133 nA without a +30-mV detector crossing. Artifact 197 shows that lowering
+  potassium alone fails its registered peak-held assay. This grid tests a
+  separately labeled legacy-runtime sensitivity hypothesis: increased
+  effective somatic sodium density. Multiple drive fractions are required
+  because conductance/shunting excitation is not monotonic with gate amplitude.
+fixed_choices:
+  intrinsic_cell_convention: modeldb_relay_paper_table3_others
+  trn_soma_potassium_density_mS_cm2: 100.0
+  trn_potassium_reversal_mV: -90.0
+  trn_calcium_source_convention: modeldb_reversal
+  trn_calcium_reversal_mV: 120.0
+  trn_dendritic_calcium_density_mS_cm2: 100.0
+  trn_spike_event_coordinate: absolute_physical
+  trn_spike_event_threshold_mV: 30.0
+  trn_spike_event_release_mV: 0.0
+  trn_spike_event_proximal_blend_fraction: null
+dimension:
+  name: trn_soma_sodium_density_mS_cm2
+  source_value_mS_cm2: 100.0
+  source_status: behavior_calibration_above_published_value
+  grid: [100.0, 125.0, 150.0, 200.0, 300.0, 400.0]
+stage_1_protocol:
+  assay: isolated TRN constant receptor drive
+  pre_drive_ms: 20.0
+  drive_ms: 45.0
+  dt_ms: 0.01
+  relay_ampa_gate: 108.315
+  layer6ii_ampa_gate: 14.152
+  layer6ii_nmda_gate: 1.063
+  drive_multipliers: [0.05, 0.1, 0.2, 0.4, 0.7, 1.0]
+  gate_source: maxima measured in same-network artifact 195
+stage_1_gate:
+  control_finite: true
+  control_post_drive_events: 0
+  any_driven_multiplier_finite: true
+  any_driven_multiplier_post_drive_events: '>0'
+next_gate: >-
+  Run Figure 6 and then a same-network Figure 7 match only for isolated
+  survivors. Preserve the original somatic detector and defer mismatch until
+  the connected match has genuine detector cycles and selective relay output.
+locked_holdouts:
+  - figure10_reset
+  - figure14_spectra
+  - figure15_local_synchrony
+  - figure16_long_range_synchrony

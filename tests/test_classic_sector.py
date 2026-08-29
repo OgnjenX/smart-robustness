@@ -326,6 +326,33 @@ def test_trn_calibrated_potassium_density_is_local_and_explicit() -> None:
     assert "calibrated_k_40" in trn["cell_spec"].name
 
 
+def test_trn_calibrated_sodium_density_is_local_and_explicit() -> None:
+    facts = {fact.canonical_name: fact for fact in first_order_population_facts()}
+    conventions = FirstOrderRuntimeConventions(
+        intrinsic_cell_convention=(
+            IntrinsicCellConvention.MODELDB_RELAY_PAPER_TABLE3_OTHERS.value
+        ),
+        trn_soma_sodium_density_mS_cm2=150.0,
+    )
+    trn = first_order_population_parameters(facts["trn"], conventions=conventions)
+    relay = first_order_population_parameters(
+        facts["thalamic_relay"], conventions=conventions
+    )
+    assert trn["cell_spec"].soma.g_na_mS_cm2 == 150.0
+    assert relay["cell_spec"].soma.g_na_mS_cm2 == 100.0
+    assert "calibrated_na_150" in trn["cell_spec"].name
+
+
+@pytest.mark.parametrize("density", [float("nan"), 0.0, -1.0])
+def test_trn_calibrated_sodium_density_must_be_positive(density: float) -> None:
+    facts = {fact.canonical_name: fact for fact in first_order_population_facts()}
+    conventions = FirstOrderRuntimeConventions(
+        trn_soma_sodium_density_mS_cm2=density
+    )
+    with pytest.raises(ValueError, match="finite and positive"):
+        first_order_population_parameters(facts["trn"], conventions=conventions)
+
+
 @pytest.mark.parametrize("density", [float("nan"), 0.0, -1.0])
 def test_trn_calibrated_potassium_density_must_be_positive(density: float) -> None:
     facts = {fact.canonical_name: fact for fact in first_order_population_facts()}

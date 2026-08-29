@@ -1,0 +1,36 @@
+schema_version: 1
+id: legacy-source-recovery-followup-198
+date: '2026-08-29'
+status: source-body-not-recovered
+question: >-
+  Can a newly indexed public trace recover the SANNDRA implementation body
+  that determined KInNeSS membrane initialization and somatic spike output?
+primary_source:
+  title: A modular framework for computational neuroscience
+  url: https://open.bu.edu/bitstreams/fb52de7c-9d29-4101-9093-a1d4324d8623/download
+  supported_facts:
+    - KInNeSS 0.3.4 used the separately distributed open-source SANNDRA engine.
+    - SANNDRA was a synchronous time-driven C++ runtime using Runge-Kutta integration.
+new_public_trace:
+  title: 'makefile-Probleme: wo überhaupt anfangen?'
+  url: https://www.c-plusplus.net/forum/topic/308029/makefile-probleme-wo-%C3%BCberhaupt-anfangen
+  evidence_class: third-party-build-log
+  supported_facts:
+    - The poster reports downloading SANNDRA 1.0.0 from the KInNeSS download area.
+    - >-
+      Compiler output names rates.h, internal.h, formulas.h, gates.h,
+      channels.h, equations.h, fanlink.h, input.cpp, and unit.cpp.
+    - >-
+      The local path contains gross_Smart, but that directory name alone does
+      not prove that the package contains the SMART model or its exact runtime.
+search_outcome:
+  package_archive_recovered: false
+  detector_implementation_recovered: false
+  membrane_equation_body_recovered: false
+  source_correction_authorized: false
+assessment: >-
+  The trace strengthens the historical existence and naming of the missing
+  source package but supplies compiler diagnostics, not the implementation
+  bodies needed for an executable correction. Continue separately labeled
+  behavior calibration without treating snippets or inferred class names as
+  source code.

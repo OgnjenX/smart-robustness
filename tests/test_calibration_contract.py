@@ -224,6 +224,9 @@ FIGURE7_TRN_BLEND_ARRIVAL_MISMATCH_PATH = (
 FIGURE7_INHIBITORY_ARRIVAL_PATH = (
     ROOT / "docs/validation-results/figure7-inhibitory-arrival-alignment-192.yaml"
 )
+FIGURE6_SOURCE_STRENGTH_REASSESSMENT_PATH = (
+    ROOT / "docs/validation-results/figure6-source-strength-reassessment-193.yaml"
+)
 
 
 def test_classic_calibration_contract_separates_training_and_holdout() -> None:
@@ -1226,6 +1229,22 @@ def test_inhibitory_arrival_alignment_never_generates_top_down_only_trn() -> Non
         }
         assert item["mismatch"] is None
         assert not item["stage_1_pass"]
+
+
+def test_figure6_source_strength_reassessment_promotes_only_verifiable_claims() -> None:
+    artifact = yaml.safe_load(FIGURE6_SOURCE_STRENGTH_REASSESSMENT_PATH.read_text())
+    correction = artifact["source_strength_correction"]
+    assessment = artifact["assessment"]
+    assert artifact["status"] == "qualitative-figure6-reproduced"
+    assert correction["absolute_map_amplitude"] == "not-identifiable"
+    assert correction["historical_2_0_peak_gate"] == "retracted-unsupported"
+    assert all(artifact["gates"].values())
+    assert artifact["observed"]["combined_adaptive_final_peak"] == pytest.approx(
+        0.893
+    )
+    assert assessment["qualitative_figure6_reproduced"] is True
+    assert assessment["exact_absolute_amplitude_reproduced"] is None
+    assert assessment["figure7_eligible_as_source_strength_prerequisite"] is True
 
 
 def test_contract_rejects_holdout_leakage(tmp_path: Path) -> None:

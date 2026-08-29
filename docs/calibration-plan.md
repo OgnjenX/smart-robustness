@@ -475,3 +475,18 @@ bottom-up onset they recruit the five horizontal cells plus vertical neighbors
 31 and 49, while all 81 TRN cells again emit once. Neither reaches mismatch.
 Do not extend the cue lead: top-down corticoreticular drive is spike-ineffective
 in this reconstruction, so post hoc timing cannot make its inhibition causal.
+
+Artifact 193 corrects the Figure 6 source-strength prerequisite. The former
+`2.0` absolute learned-map peak gate was inferred from a raster colorbar whose
+underlying numeric matrix was never published; moreover, the printed learning
+law bounds the sum of the two adaptive components at `1.55`. It is therefore
+not an identifiable official target. Using archived spike identities from the
+same candidate/runtime, the active candidate reproduces the source-supported
+Figure 6 claims: exactly four relay events in each of cells 38--42, complete
+cortical recruitment, a causal learning pair, and horizontally oriented
+bottom-up and top-down maps. Figure 6 is promoted as a qualitative,
+source-strength reproduction with a recorded combined adaptive peak of
+approximately `0.893`; exact absolute map amplitude remains explicitly
+unverified. Figure 7 calibration may proceed from this learned state, but no
+classic baseline may be frozen until the published match/mismatch dynamics and
+the still-locked later figures pass.

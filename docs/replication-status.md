@@ -1743,6 +1743,19 @@ feedback timing axis is now closed. The next work returns to equation-level
 axial/geometry verification and the Figure 6 learned-state prerequisite rather
 than fitting longer cue intervals.
 
+That prerequisite is resolved at the strength supported by the primary source
+in `figure6-source-strength-reassessment-193.yaml`. The historical `2.0`
+learned-map peak gate is retracted because Figure 6c publishes no numeric
+matrix and its colorbar endpoint is not evidence that the plotted map reaches
+that value; the printed learning law also proves a `1.55` upper bound for the
+two adaptive components. The candidate has the published 40-Hz five-cell relay
+pattern, complete cortical chain, causal learning timing, and horizontal shape
+in both learned directions. Figure 6 is therefore qualitatively reproduced,
+with exact absolute amplitude marked not identifiable rather than claimed.
+Classic SMART itself remains unfrozen because Figure 7 match/mismatch
+directionality, nonspecific reset, and later validation figures still fail or
+remain untested.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

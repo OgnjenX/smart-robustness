@@ -136,6 +136,8 @@ def test_figure6c_rejects_correct_shape_at_subpublished_amplitude() -> None:
     result = Figure6LearningResult("fingerprint", 100.0, {}, shaped, shaped, shaped)
     assert result.top_down_combined.horizontal_orientation_contrast > 0.01
     assert max(result.top_down_combined.after) < MINIMUM_TOP_DOWN_COMBINED_PEAK
+    assert result.top_down_shape_oriented
+    assert not result.top_down_legacy_amplitude_gate_pass
     assert not result.top_down_oriented
 
 

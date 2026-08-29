@@ -1,0 +1,32 @@
+schema_version: 1
+id: figure6-source-strength-reassessment-193
+date: '2026-08-29'
+status: qualitative-figure6-reproduced
+training_artifact: docs/validation-results/figure6-kinness-equation27-transition-153.yaml
+feasibility_artifact: docs/validation-results/figure6-published-amplitude-feasibility-155.yaml
+diagnostic_artifact: docs/validation-results/figure6-kinness-equation27-figure7-diagnostic-156.yaml
+candidate_fingerprint: 12e0245e9a3044073200e90443582885a5410cf39b8b18d50d22a04a2fc48604
+runtime_fingerprint: a63cc758069acac04360c4ef0d576b4e758d607ac4eb879a7f0d255a83fe4531
+source_strength_correction:
+  absolute_map_amplitude: not-identifiable
+  reason: The paper publishes a raster/colorbar but no numeric matrix; the printed
+    learning law's proven two-component bound is 1.55.
+  historical_2_0_peak_gate: retracted-unsupported
+  normalized_spatial_shape: verifiable
+observed:
+  combined_adaptive_final_peak: 0.893
+  combined_top_down_horizontal_contrast: 0.6454884366046489
+gates:
+  relay_confined_to_five_horizontal_cells_at_40_hz: true
+  feedforward_chain_complete: true
+  causal_pair_in_learning_window: true
+  bottom_up_horizontal_orientation: true
+  top_down_horizontal_contrast_at_least_0_01: true
+assessment:
+  qualitative_figure6_reproduced: true
+  exact_absolute_amplitude_reproduced: null
+  figure7_eligible_as_source_strength_prerequisite: true
+  candidate_promoted_for_downstream_calibration: true
+scope: This promotion validates the published relay rate/confinement, cortical recruitment,
+  causal timing, and horizontal map shapes. It does not claim recovery of an unpublished
+  numeric weight matrix.

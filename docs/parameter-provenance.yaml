@@ -144,7 +144,7 @@ parameters:
     value: population-resolved source pairing (archived relay uses kinness_serialized_edge; paper Table 3 populations use paper_literal Equation 2)
     status: paper/archive composite executable convention
     source: SMART.nml relay compartment edges; Grossberg and Versace 2008 Equation 2 and Table 3
-    note: the pairing reproduces four events per active relay, the complete cortical chain, and the orientation shape of both Figure 6 maps, but the top-down combined peak is only 0.11853 versus the official approximately 0.5--2.5 range; applying paper_literal globally overdrives relay cells to seven events each, while applying KInNeSS globally prevents the cortical chain
+    note: the pairing reproduces four events per active relay, the complete cortical chain, and the orientation shape of both Figure 6 maps; artifact 193 retracts the former absolute-amplitude gate because the paper provides no numeric Figure 6c matrix and the colorbar endpoint is not an observed map value. The later Equation-27 transition candidate reaches an approximately 0.893 combined adaptive peak, but only normalized shape is source-verifiable. Applying paper_literal globally overdrives relay cells to seven events each, while applying KInNeSS globally prevents the cortical chain
   model.connectivity.gaussian_weight_convention:
     value: source_peak with resulting-weight cutoff at 0.001
     status: archived-simulator-manual executable convention

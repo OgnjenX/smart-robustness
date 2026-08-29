@@ -30,9 +30,11 @@ L23_FEEDFORWARD_INHIBITION_ID = "modeldb112923.projection.031"
 L23_FEEDFORWARD_EXCITATION_ID = "modeldb112923.projection.032"
 L23_INTERNEURON_DRIVE_ID = "modeldb112923.projection.039"
 MINIMUM_TOP_DOWN_HORIZONTAL_CONTRAST = 0.01
-# Figure 6c's after-learning contour reaches the top of its approximately
-# 0.5--2.5 color scale. A map that merely touches the scale minimum is not a
-# reproduction; allow graphical-reading tolerance around the ~2.5 peak.
+# Historical calibration treated Figure 6c's approximately 0.5--2.5 colorbar
+# endpoint as a numeric map target. Artifact 155 proves that the raw matrix was
+# not published and that the printed learning law cannot reach that endpoint
+# from the stated baseline. Keep the gate for historical artifact comparison,
+# but do not conflate it with the source-supported orientation/shape claim.
 MINIMUM_TOP_DOWN_COMBINED_PEAK = 2.0
 HORIZONTAL_INDICES = (38, 39, 40, 41, 42)
 VERTICAL_INDICES = (22, 31, 40, 49, 58)
@@ -155,12 +157,29 @@ class Figure6LearningResult:
         return self.bottom_up.horizontal_orientation_contrast > 0
 
     @property
-    def top_down_oriented(self) -> bool:
+    def top_down_shape_oriented(self) -> bool:
+        """Return the source-supported horizontal Figure 6c shape gate."""
+
         return (
             self.top_down_combined.horizontal_orientation_contrast
             >= MINIMUM_TOP_DOWN_HORIZONTAL_CONTRAST
-            and max(self.top_down_combined.after) >= MINIMUM_TOP_DOWN_COMBINED_PEAK
         )
+
+    @property
+    def top_down_legacy_amplitude_gate_pass(self) -> bool:
+        """Retain the retracted colorbar-endpoint gate for provenance."""
+
+        return max(self.top_down_combined.after) >= MINIMUM_TOP_DOWN_COMBINED_PEAK
+
+    @property
+    def top_down_oriented(self) -> bool:
+        """Historical combined shape-plus-amplitude gate.
+
+        New source-strength assessments should use ``top_down_shape_oriented``
+        and report absolute amplitude as not identifiable.
+        """
+
+        return self.top_down_shape_oriented and self.top_down_legacy_amplitude_gate_pass
 
 
 @dataclass(frozen=True, slots=True)

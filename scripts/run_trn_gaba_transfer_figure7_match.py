@@ -50,9 +50,30 @@ def main() -> None:
     profile = yaml.safe_load(Path(args.profile).read_text())
     base_profile = yaml.safe_load(Path(profile["base_profile"]).read_text())
     figure6 = yaml.safe_load(Path(profile["figure6_artifact"]).read_text())
-    scale = float(profile["trn_to_relay_gaba"]["scale"])
-    if figure6["stage_2_survivor_scales"] != [scale]:
-        raise ValueError("match scale is not the sole Artifact 202 survivor")
+    transfer = profile["trn_to_relay_gaba"]
+    if "scales" in transfer:
+        projection_scales = {
+            str(projection_id): float(scale)
+            for projection_id, scale in transfer["scales"].items()
+        }
+        survivor_label = str(transfer["figure6_survivor_label"])
+        if figure6["stage_2_survivor_labels"] != [survivor_label]:
+            raise ValueError("match profile is not the sole Figure 6 survivor")
+        survivor = next(
+            item
+            for item in figure6["stage_2_outcomes"]
+            if item["label"] == survivor_label
+        )
+        if survivor["scales"] != projection_scales:
+            raise ValueError("match projection scales differ from Figure 6")
+    else:
+        scale = float(transfer["scale"])
+        if figure6["stage_2_survivor_scales"] != [scale]:
+            raise ValueError("match scale is not the sole Figure 6 survivor")
+        projection_scales = {
+            str(projection_id): scale
+            for projection_id in transfer["projection_ids"]
+        }
     base = runtime_conventions_for_candidate(base_profile["candidate"])
     detector = profile["detector"]
     conventions = replace(
@@ -63,10 +84,6 @@ def main() -> None:
         trn_spike_event_proximal_blend_fraction=None,
     )
     protocol = profile["protocol"]
-    projection_scales = {
-        str(projection_id): scale
-        for projection_id in profile["trn_to_relay_gaba"]["projection_ids"]
-    }
     result = run_figure7_condition(
         condition=MatchCondition.MATCH,
         top_down_current_pA=float(protocol["top_down_current_pA"]),

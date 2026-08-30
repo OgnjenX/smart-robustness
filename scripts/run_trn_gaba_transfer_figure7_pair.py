@@ -77,11 +77,18 @@ def main() -> None:
         trn_spike_event_release_mV=float(detector["release_mV"]),
         trn_spike_event_proximal_blend_fraction=None,
     )
-    scale = float(profile["trn_to_relay_gaba"]["scale"])
-    projection_scales = {
-        str(projection_id): scale
-        for projection_id in profile["trn_to_relay_gaba"]["projection_ids"]
-    }
+    transfer = profile["trn_to_relay_gaba"]
+    if "scales" in transfer:
+        projection_scales = {
+            str(projection_id): float(scale)
+            for projection_id, scale in transfer["scales"].items()
+        }
+    else:
+        scale = float(transfer["scale"])
+        projection_scales = {
+            str(projection_id): scale
+            for projection_id in transfer["projection_ids"]
+        }
     if projection_scales != match_artifact["projection_weight_scales"]:
         raise ValueError("mismatch projection scales differ from Artifact 203")
     protocol = profile["protocol"]

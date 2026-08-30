@@ -217,6 +217,11 @@ def runtime_conventions_for_candidate(
             if values.get("trn_spike_event_threshold_mV") is None
             else float(values["trn_spike_event_threshold_mV"])
         ),
+        trn_spike_event_release_mV=(
+            None
+            if values.get("trn_spike_event_release_mV") is None
+            else float(values["trn_spike_event_release_mV"])
+        ),
         trn_spike_event_voltage_offset_mV=(
             None
             if values.get("trn_spike_event_voltage_offset_mV") is None

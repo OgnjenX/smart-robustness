@@ -1,0 +1,64 @@
+schema_version: 1
+name: trn-detector-hysteresis-behavior-grid-v1
+status: registered-before-execution
+base_profile: configs/calibration/figure6_kinness_equation27_transition_v1.yaml
+base_candidate_fingerprint: 12e0245e9a3044073200e90443582885a5410cf39b8b18d50d22a04a2fc48604
+rationale: >-
+  Artifacts 197 and 199 reject broad potassium- and sodium-density probes while
+  artifact 198 still cannot recover the KInNeSS spikeevents.h body. This grid
+  leaves the membrane, channels, synapses, and somatic detector coordinate
+  unchanged and tests a bounded detector-hysteresis family. Every promoted
+  trial must show its own post-stimulus threshold upcrossing and arm/release
+  transitions; release of a startup-latched arm is explicitly rejected.
+fixed_choices:
+  intrinsic_cell_convention: modeldb_relay_paper_table3_others
+  trn_potassium_convention: selected_source
+  trn_calcium_source_convention: modeldb_reversal
+  trn_dendritic_calcium_density_mS_cm2: 100.0
+  trn_spike_event_coordinate: absolute_physical
+  trn_spike_event_proximal_blend_fraction: null
+  spike_event_rule: latched_peak_then_zero
+dimension:
+  name: trn_detector_arm_release_pair_mV
+  source_pair: {label: paper_30_to_0, arm_mV: 30.0, release_mV: 0.0, status: published}
+  calibrated_pairs:
+    - {label: arm_n35_release_n45, arm_mV: -35.0, release_mV: -45.0}
+    - {label: arm_n30_release_n40, arm_mV: -30.0, release_mV: -40.0}
+    - {label: arm_n25_release_n35, arm_mV: -25.0, release_mV: -35.0}
+    - {label: arm_n20_release_n30, arm_mV: -20.0, release_mV: -30.0}
+    - {label: arm_n10_release_n20, arm_mV: -10.0, release_mV: -20.0}
+    - {label: arm_0_release_n10, arm_mV: 0.0, release_mV: -10.0}
+    - {label: arm_10_release_0, arm_mV: 10.0, release_mV: 0.0}
+    - {label: arm_20_release_10, arm_mV: 20.0, release_mV: 10.0}
+    - {label: arm_30_release_20, arm_mV: 30.0, release_mV: 20.0}
+  source_status: behavior_calibration_except_paper_30_to_0
+stage_1_protocol:
+  assay: isolated TRN peak-held receptor drive followed by release recovery
+  pre_drive_ms: 20.0
+  drive_ms: 25.0
+  post_drive_recovery_ms: 20.0
+  dt_ms: 0.01
+  relay_ampa_gate: 108.315
+  layer6ii_ampa_gate: 14.152
+  layer6ii_nmda_gate: 1.063
+  drive_multipliers: [0.05, 0.1, 0.2, 0.4, 0.7, 1.0]
+stage_1_gate:
+  control_finite: true
+  control_post_stimulus_events: 0
+  control_threshold_upcrossings: 0
+  control_arm_transitions: 0
+  driven_finite: true
+  driven_post_stimulus_events: '>0'
+  driven_threshold_upcrossings: '>0'
+  driven_arm_transitions: '>0'
+  driven_release_transitions: '>0'
+next_gate: >-
+  For isolated survivors only, run Figure 6 and then a same-network Figure 7
+  match with detector-cycle diagnostics. Do not run mismatch unless Figure 6
+  remains valid and match produces genuine TRN cycles plus selective relay
+  output.
+locked_holdouts:
+  - figure10_reset
+  - figure14_spectra
+  - figure15_local_synchrony
+  - figure16_long_range_synchrony

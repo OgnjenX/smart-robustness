@@ -12,6 +12,7 @@ from smart_robustness.validation.isolated_cells import (
     figure8_voltage_peak_times_ms,
     run_layer5_propagation_condition,
     run_layer23_transfer_condition,
+    run_trn_detector_cycle_condition,
     run_trn_recruitment_condition,
 )
 
@@ -99,6 +100,14 @@ def test_trn_recruitment_protocol_rejects_invalid_values() -> None:
         TrnRecruitmentProtocol(axial_conductance_scale=0)
 
 
+def test_trn_detector_cycle_runner_rejects_invalid_recovery() -> None:
+    with pytest.raises(ValueError, match="recovery"):
+        run_trn_detector_cycle_condition(
+            driven=False,
+            post_drive_recovery_ms=float("nan"),
+        )
+
+
 def test_layer5_propagation_protocol_rejects_invalid_values() -> None:
     with pytest.raises(ValueError, match="durations"):
         Layer5PropagationProtocol(drive_ms=0)
@@ -170,6 +179,26 @@ def test_trn_recruitment_runner_reports_independent_control_trial() -> None:
     assert result.applied_layer6ii_ampa_gate == 0
     assert result.applied_layer6ii_nmda_gate == 0
     assert result.applied_relay_ampa_gate == 0
+
+
+def test_trn_detector_cycle_control_reports_no_fresh_transition_after_startup() -> None:
+    brian = pytest.importorskip("brian2")
+    brian.prefs.codegen.target = "numpy"
+    result = run_trn_detector_cycle_condition(
+        driven=False,
+        protocol=TrnRecruitmentProtocol(
+            pre_drive_ms=20.0,
+            drive_ms=0.02,
+            dt_ms=0.01,
+        ),
+        post_drive_recovery_ms=0.02,
+        brian=brian,
+    )
+    assert result.finite
+    assert result.threshold_upcrossings == 0
+    assert result.arm_transitions == 0
+    assert not result.post_stimulus_spike_times_ms
+    assert not result.fresh_detector_cycle_pass
 
 
 def test_trn_recruitment_runner_applies_declared_driven_gates() -> None:

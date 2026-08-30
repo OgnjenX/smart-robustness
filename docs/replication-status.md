@@ -1809,6 +1809,22 @@ only approximately +14.65 mV and never completes a +30-to-0-mV detector
 cycle. No candidate advances to the full network, and increased effective
 somatic sodium density is rejected within this broad registered range.
 
+The first detector-hysteresis behavior screen is complete in
+`figure7-trn-detector-hysteresis-stage1-200.yaml`. It preserves the selected
+TRN membrane, channels, synaptic drive, somatic detector coordinate, and
+latched event rule while varying only the arm/release pair. The published
++30-to-0-mV pair generates no fresh cycle at any of six held-drive levels.
+Four explicitly non-source pairs, -35/-45, -30/-40, -25/-35, and -20/-30 mV,
+generate at least one independently measured threshold upcrossing followed by
+an arm/release event, while every unstimulated control remains quiet. The
+least shifted survivor (-20/-30 mV) is also the sparsest: it produces exactly
+one fresh event only at 0.4 times the registered peak drive. This is isolated
+behavior-calibration evidence, not a source correction or a SMART
+reproduction. The four survivors advance only to the mandatory Figure 6
+prerequisite; Figure 7 mismatch remains locked until a candidate preserves
+Figure 6 and produces genuine connected match cycles with selective relay
+output.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

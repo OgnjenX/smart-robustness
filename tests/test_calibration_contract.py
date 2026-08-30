@@ -251,6 +251,12 @@ FIGURE7_TRN_SOMA_SODIUM_PROFILE_PATH = (
 FIGURE7_TRN_SOMA_SODIUM_STAGE1_PATH = (
     ROOT / "docs/validation-results/figure7-trn-soma-sodium-stage1-199.yaml"
 )
+FIGURE7_TRN_DETECTOR_HYSTERESIS_PROFILE_PATH = (
+    ROOT / "configs/calibration/trn_detector_hysteresis_behavior_grid_v1.yaml"
+)
+FIGURE7_TRN_DETECTOR_HYSTERESIS_STAGE1_PATH = (
+    ROOT / "docs/validation-results/figure7-trn-detector-hysteresis-stage1-200.yaml"
+)
 
 
 def test_classic_calibration_contract_separates_training_and_holdout() -> None:
@@ -895,6 +901,75 @@ def test_increased_trn_soma_sodium_has_no_detector_cycle_survivor() -> None:
     assert not assessment["sodium_density_sufficient_in_registered_assay"]
     assert not assessment["advance_to_connected_match"]
     assert all(not item["stage_1_pass"] for item in artifact["outcomes"])
+
+
+def test_trn_detector_hysteresis_grid_separates_source_and_calibration_pairs() -> None:
+    profile = yaml.safe_load(FIGURE7_TRN_DETECTOR_HYSTERESIS_PROFILE_PATH.read_text())
+    assert profile["status"] == "registered-before-execution"
+    assert profile["dimension"]["source_pair"] == {
+        "label": "paper_30_to_0",
+        "arm_mV": 30.0,
+        "release_mV": 0.0,
+        "status": "published",
+    }
+    assert profile["dimension"]["source_status"] == (
+        "behavior_calibration_except_paper_30_to_0"
+    )
+    assert profile["stage_1_protocol"]["drive_multipliers"] == [
+        0.05,
+        0.1,
+        0.2,
+        0.4,
+        0.7,
+        1.0,
+    ]
+
+
+def test_trn_detector_hysteresis_has_four_isolated_fresh_cycle_survivors() -> None:
+    artifact = yaml.safe_load(
+        FIGURE7_TRN_DETECTOR_HYSTERESIS_STAGE1_PATH.read_text()
+    )
+    assert artifact["status"] == "stage-1-survivors-found"
+    assert artifact["stage_1_survivor_labels"] == [
+        "arm_n35_release_n45",
+        "arm_n30_release_n40",
+        "arm_n25_release_n35",
+        "arm_n20_release_n30",
+    ]
+    assessment = artifact["assessment"]
+    assert assessment["stage_1_survivor_count"] == 4
+    assert not assessment["source_pair_survives"]
+    assert assessment["all_controls_pass"]
+    assert not assessment["startup_latched_release_counts_as_pass"]
+    assert assessment["advance_to_connected_prerequisite"]
+
+    outcomes = {item["pair"]["label"]: item for item in artifact["outcomes"]}
+    assert not outcomes["paper_30_to_0"]["stage_1_pass"]
+    assert all(
+        not item["fresh_detector_cycle_pass"]
+        for item in outcomes["paper_30_to_0"]["driven_outcomes"]
+    )
+    sparse = outcomes["arm_n20_release_n30"]
+    passing = [
+        item for item in sparse["driven_outcomes"] if item["fresh_detector_cycle_pass"]
+    ]
+    assert len(passing) == 1
+    assert passing[0]["drive_multiplier"] == 0.4
+    result = passing[0]["result"]
+    assert len(result["post_stimulus_spike_times_ms"]) == 1
+    assert result["threshold_upcrossings"] == 1
+    assert result["arm_transitions"] == 1
+    assert result["release_transitions"] == 1
+    assert all(
+        not outcomes[label]["stage_1_pass"]
+        for label in (
+            "arm_n10_release_n20",
+            "arm_0_release_n10",
+            "arm_10_release_0",
+            "arm_20_release_10",
+            "arm_30_release_20",
+        )
+    )
 
 
 def test_trn_calcium_reversal_restores_wrong_cue_lead_mechanism() -> None:

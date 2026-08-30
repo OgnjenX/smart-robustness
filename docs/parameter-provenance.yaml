@@ -174,6 +174,11 @@ parameters:
     status: rejected-behavior-calibration
     source: Table 3 and SMART.nml both specify 100 mS/cm2; any alternative is a legacy-runtime sensitivity hypothesis rather than a published SMART value
     note: all controls are post-startup quiet and all 36 density-by-drive trials are finite, but the best soma peak is approximately +14.65 mV and no trial completes a +30-to-0-mV detector cycle; no alternative advances to a connected test
+  model.multicompartment.trn_spike_event_release_voltage_calibration:
+    value: optional TRN-specific release voltage; published pair +30/0 mV plus registered arm/release probes -35/-45 through +30/+20 mV
+    status: behavior-calibration-in-progress
+    source: Grossberg and Versace 2008 Methods 4.3 specifies event detection after a +30-mV peak and return to 0 mV; artifact 200 tests alternatives only because the legacy spikeevents.h implementation remains unavailable
+    note: the published +30/0-mV pair produces no fresh isolated cycle in the registered peak-held assay; four non-source pairs (-35/-45, -30/-40, -25/-35, and -20/-30 mV) survive the isolated gate, but none is promoted until it preserves the source-supported Figure 6 behavior and passes connected Figure 7 validation
   model.multicompartment.exact_voltage_clamp:
     value: optional fixed compartment voltage, separate from finite-conductance XML input
     status: published-protocol alternative

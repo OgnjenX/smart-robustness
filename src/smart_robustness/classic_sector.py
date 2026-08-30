@@ -128,6 +128,7 @@ class FirstOrderRuntimeConventions:
     spike_event_threshold_mV: float = 30.0
     trn_spike_event_coordinate: str | None = None
     trn_spike_event_threshold_mV: float | None = None
+    trn_spike_event_release_mV: float | None = None
     trn_spike_event_voltage_offset_mV: float | None = None
     trn_spike_event_proximal_blend_fraction: float | None = None
     nonspecific_spike_event_proximal_blend_fraction: float | None = None
@@ -164,6 +165,8 @@ class FirstOrderRuntimeConventions:
             values.pop("trn_spike_event_coordinate")
         if values["trn_spike_event_threshold_mV"] is None:
             values.pop("trn_spike_event_threshold_mV")
+        if values["trn_spike_event_release_mV"] is None:
+            values.pop("trn_spike_event_release_mV")
         if values["trn_spike_event_voltage_offset_mV"] is None:
             values.pop("trn_spike_event_voltage_offset_mV")
         if values["trn_spike_event_proximal_blend_fraction"] is None:
@@ -458,6 +461,7 @@ def first_order_population_parameters(
         )
     spike_event_coordinate = conventions.spike_event_coordinate
     spike_event_threshold_mV = conventions.spike_event_threshold_mV
+    spike_event_release_mV = 0.0
     spike_event_voltage_offset_mV = None
     spike_event_proximal_blend_fraction = None
     if facts.canonical_name == "trn":
@@ -465,6 +469,10 @@ def first_order_population_parameters(
             spike_event_coordinate = conventions.trn_spike_event_coordinate
         if conventions.trn_spike_event_threshold_mV is not None:
             spike_event_threshold_mV = conventions.trn_spike_event_threshold_mV
+        if conventions.trn_spike_event_release_mV is not None:
+            spike_event_release_mV = conventions.trn_spike_event_release_mV
+        if not math.isfinite(spike_event_release_mV):
+            raise ValueError("TRN spike-event release voltage must be finite")
         spike_event_voltage_offset_mV = conventions.trn_spike_event_voltage_offset_mV
         if spike_event_voltage_offset_mV is not None and not math.isfinite(
             spike_event_voltage_offset_mV
@@ -509,6 +517,7 @@ def first_order_population_parameters(
         "calcium_density_convention": calcium_density_convention,
         "spike_event_coordinate": spike_event_coordinate,
         "spike_event_threshold_mV": spike_event_threshold_mV,
+        "spike_event_release_mV": spike_event_release_mV,
         "spike_event_rule": conventions.spike_event_rule,
         "ahp_convention": "smart_network_112923" if has_ahp else "modeldb_112923",
         "specific_capacitance_uF_cm2": conventions.specific_capacitance_uF_cm2,

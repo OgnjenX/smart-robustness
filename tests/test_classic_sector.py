@@ -152,6 +152,27 @@ def test_trn_event_coordinate_can_follow_kinness_without_changing_relay() -> Non
     assert trn["spike_event_threshold_mV"] == 30.0
 
 
+def test_trn_event_release_voltage_is_scoped_and_validated() -> None:
+    facts = {fact.canonical_name: fact for fact in first_order_population_facts()}
+    conventions = FirstOrderRuntimeConventions(trn_spike_event_release_mV=-40.0)
+    relay = first_order_population_parameters(
+        facts["thalamic_relay"], conventions=conventions
+    )
+    trn = first_order_population_parameters(facts["trn"], conventions=conventions)
+
+    assert relay["spike_event_release_mV"] == 0.0
+    assert trn["spike_event_release_mV"] == -40.0
+    assert conventions.fingerprint != FirstOrderRuntimeConventions().fingerprint
+
+    with pytest.raises(ValueError, match="release voltage must be finite"):
+        first_order_population_parameters(
+            facts["trn"],
+            conventions=FirstOrderRuntimeConventions(
+                trn_spike_event_release_mV=float("nan")
+            ),
+        )
+
+
 def test_trn_numeric_event_offset_is_scoped_and_validated() -> None:
     conventions = FirstOrderRuntimeConventions(
         trn_spike_event_voltage_offset_mV=60.0

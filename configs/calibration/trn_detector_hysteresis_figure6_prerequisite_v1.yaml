@@ -1,0 +1,50 @@
+schema_version: 1
+name: trn-detector-hysteresis-figure6-prerequisite-v1
+status: registered-before-execution
+base_profile: configs/calibration/figure6_kinness_equation27_transition_v1.yaml
+stage_1_artifact: docs/validation-results/figure7-trn-detector-hysteresis-stage1-200.yaml
+rationale: >-
+  Artifact 200 identifies four isolated detector-cycle survivors, none of which
+  is a published SMART arm/release pair. Before consulting Figure 7, test each
+  survivor against the already established source-supported Figure 6 learned-
+  state prerequisite. The order begins with the least shifted and sparsest
+  isolated survivor.
+fixed_choices:
+  trn_spike_event_coordinate: absolute_physical
+  trn_spike_event_proximal_blend_fraction: null
+  spike_event_rule: latched_peak_then_zero
+survivor_order:
+  - {label: arm_n20_release_n30, arm_mV: -20.0, release_mV: -30.0}
+  - {label: arm_n25_release_n35, arm_mV: -25.0, release_mV: -35.0}
+  - {label: arm_n30_release_n40, arm_mV: -30.0, release_mV: -40.0}
+  - {label: arm_n35_release_n45, arm_mV: -35.0, release_mV: -45.0}
+protocol:
+  warmup_ms: 0.0
+  stimulus_ms: 100.0
+  post_stimulus_ms: 0.0
+  dt_ms: 0.01
+  source_value: 120.0
+  category_source_value: 70.0
+  winning_layer4_index: 40
+  active_category_index: 40
+  layer6ii_ahp_scale: 1.0
+source_supported_gate:
+  relay_event_count: 20
+  relay_active_indices: [38, 39, 40, 41, 42]
+  relay_events_per_active_index: 4
+  relay_fresh_detector_cycles_per_active_index: 4
+  feedforward_chain_complete: true
+  causal_pair_in_learning_window: true
+  bottom_up_horizontal_orientation: true
+  minimum_top_down_horizontal_contrast: 0.01
+next_gate: >-
+  Run a same-network Figure 6 to Figure 7 match only for Figure 6 survivors,
+  with TRN detector-cycle diagnostics. Do not consult mismatch/reset unless
+  match preserves selective relay output and generates genuine fresh TRN
+  cycles.
+locked_holdouts:
+  - figure7_mismatch
+  - figure10_reset
+  - figure14_spectra
+  - figure15_local_synchrony
+  - figure16_long_range_synchrony

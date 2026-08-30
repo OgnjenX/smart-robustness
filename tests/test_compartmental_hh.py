@@ -413,6 +413,38 @@ def test_kinness_minus_20_mv_event_threshold_is_explicit() -> None:
     assert spike_monitor.count[0] == 1
 
 
+def test_explicit_spike_release_voltage_preserves_falling_phase_detector() -> None:
+    brian.start_scope()
+    brian.defaultclock.dt = 0.01 * brian.ms
+    params = _params()
+    params["spike_event_threshold_mV"] = -30.0
+    params["spike_event_release_mV"] = -40.0
+    params["voltage_clamps_mV"] = {"soma": -20.0}
+    population = create_compartmental_hh_population(
+        name="calibrated_release_voltage", size=1, params=params, brian=brian
+    )
+    spike_monitor = brian.SpikeMonitor(population.group)
+    network = brian.Network(population.group, spike_monitor)
+
+    network.run(0.01 * brian.ms)
+    assert spike_monitor.count[0] == 0
+    assert population.group.armed[0] == 1
+    population.group.v_soma = -41 * brian.mV
+    network.run(0.01 * brian.ms)
+    assert spike_monitor.count[0] == 1
+    assert population.group.armed[0] == 0
+
+
+def test_spike_release_voltage_must_be_finite() -> None:
+    brian.start_scope()
+    params = _params()
+    params["spike_event_release_mV"] = float("nan")
+    with pytest.raises(ValueError, match="release_mV must be finite"):
+        create_compartmental_hh_population(
+            name="invalid_release_voltage", size=1, params=params, brian=brian
+        )
+
+
 def test_literal_previous_sample_rule_uses_only_the_immediately_preceding_voltage() -> None:
     brian.start_scope()
     brian.defaultclock.dt = 0.01 * brian.ms

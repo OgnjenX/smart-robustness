@@ -1,0 +1,2133 @@
+schema_version: 1
+id: figure7-trn-detector-hysteresis-stage1-200
+date: '2026-08-29'
+status: stage-1-survivors-found
+profile: configs/calibration/trn_detector_hysteresis_behavior_grid_v1.yaml
+base_candidate_fingerprint: 12e0245e9a3044073200e90443582885a5410cf39b8b18d50d22a04a2fc48604
+protocol:
+  pre_drive_ms: 20.0
+  drive_ms: 25.0
+  dt_ms: 0.01
+  relay_ampa_gate: 108.315
+  layer6ii_ampa_gate: 14.152
+  layer6ii_nmda_gate: 1.063
+  drive_multiplier: 1.0
+  axial_conductance_scale: 1.0
+post_drive_recovery_ms: 20.0
+drive_multipliers:
+- 0.05
+- 0.1
+- 0.2
+- 0.4
+- 0.7
+- 1.0
+stage_1_survivor_labels:
+- arm_n35_release_n45
+- arm_n30_release_n40
+- arm_n25_release_n35
+- arm_n20_release_n30
+outcomes:
+- pair:
+    label: paper_30_to_0
+    arm_mV: 30.0
+    release_mV: 0.0
+    status: published
+  runtime_fingerprint: 4f2f56a3dcd493f4192076cd2e3264665a663d5a5acc34b67ba78c30d0a9a1d7
+  control:
+    driven: false
+    spike_times_ms:
+    - 1.6300000000000001
+    post_stimulus_spike_times_ms: []
+    soma_voltage_range_mV:
+    - -39.677135242575346
+    - -38.01418999747486
+    detector_voltage_range_mV:
+    - -39.677135242575346
+    - -38.01418999747486
+    threshold_upcrossings: 0
+    release_downcrossings: 0
+    arm_transitions: 0
+    release_transitions: 0
+    final_armed: 0.0
+    finite: true
+    convention_fingerprint: 4f2f56a3dcd493f4192076cd2e3264665a663d5a5acc34b67ba78c30d0a9a1d7
+    drive_multiplier: 1.0
+    post_drive_recovery_ms: 20.0
+  control_pass: true
+  driven_outcomes:
+  - drive_multiplier: 0.05
+    result:
+      driven: true
+      spike_times_ms:
+      - 1.6300000000000001
+      post_stimulus_spike_times_ms: []
+      soma_voltage_range_mV:
+      - -47.86216373139667
+      - -31.059554064285997
+      detector_voltage_range_mV:
+      - -47.86216373139667
+      - -31.059554064285997
+      threshold_upcrossings: 0
+      release_downcrossings: 0
+      arm_transitions: 0
+      release_transitions: 0
+      final_armed: 0.0
+      finite: true
+      convention_fingerprint: 4f2f56a3dcd493f4192076cd2e3264665a663d5a5acc34b67ba78c30d0a9a1d7
+      drive_multiplier: 0.05
+      post_drive_recovery_ms: 20.0
+    fresh_detector_cycle_pass: false
+  - drive_multiplier: 0.1
+    result:
+      driven: true
+      spike_times_ms:
+      - 1.6300000000000001
+      post_stimulus_spike_times_ms: []
+      soma_voltage_range_mV:
+      - -50.721766307140875
+      - -23.226183252404862
+      detector_voltage_range_mV:
+      - -50.721766307140875
+      - -23.226183252404862
+      threshold_upcrossings: 0
+      release_downcrossings: 0
+      arm_transitions: 0
+      release_transitions: 0
+      final_armed: 0.0
+      finite: true
+      convention_fingerprint: 4f2f56a3dcd493f4192076cd2e3264665a663d5a5acc34b67ba78c30d0a9a1d7
+      drive_multiplier: 0.1
+      post_drive_recovery_ms: 20.0
+    fresh_detector_cycle_pass: false
+  - drive_multiplier: 0.2
+    result:
+      driven: true
+      spike_times_ms:
+      - 1.6300000000000001
+      post_stimulus_spike_times_ms: []
+      soma_voltage_range_mV:
+      - -53.08258326847968
+      - -26.944960128135257
+      detector_voltage_range_mV:
+      - -53.08258326847968
+      - -26.944960128135257
+      threshold_upcrossings: 0
+      release_downcrossings: 0
+      arm_transitions: 0
+      release_transitions: 0
+      final_armed: 0.0
+      finite: true
+      convention_fingerprint: 4f2f56a3dcd493f4192076cd2e3264665a663d5a5acc34b67ba78c30d0a9a1d7
+      drive_multiplier: 0.2
+      post_drive_recovery_ms: 20.0
+    fresh_detector_cycle_pass: false
+  - drive_multiplier: 0.4
+    result:
+      driven: true
+      spike_times_ms:
+      - 1.6300000000000001
+      post_stimulus_spike_times_ms: []
+      soma_voltage_range_mV:
+      - -57.10931895073622
+      - -17.193999475874282
+      detector_voltage_range_mV:
+      - -57.10931895073622
+      - -17.193999475874282
+      threshold_upcrossings: 0
+      release_downcrossings: 0
+      arm_transitions: 0
+      release_transitions: 0
+      final_armed: 0.0
+      finite: true
+      convention_fingerprint: 4f2f56a3dcd493f4192076cd2e3264665a663d5a5acc34b67ba78c30d0a9a1d7
+      drive_multiplier: 0.4
+      post_drive_recovery_ms: 20.0
+    fresh_detector_cycle_pass: false
+  - drive_multiplier: 0.7
+    result:
+      driven: true
+      spike_times_ms:
+      - 1.6300000000000001
+      post_stimulus_spike_times_ms: []
+      soma_voltage_range_mV:
+      - -59.50810508006804
+      - -22.879298481184797
+      detector_voltage_range_mV:
+      - -59.50810508006804
+      - -22.879298481184797
+      threshold_upcrossings: 0
+      release_downcrossings: 0
+      arm_transitions: 0
+      release_transitions: 0
+      final_armed: 0.0
+      finite: true
+      convention_fingerprint: 4f2f56a3dcd493f4192076cd2e3264665a663d5a5acc34b67ba78c30d0a9a1d7
+      drive_multiplier: 0.7
+      post_drive_recovery_ms: 20.0
+    fresh_detector_cycle_pass: false
+  - drive_multiplier: 1.0
+    result:
+      driven: true
+      spike_times_ms:
+      - 1.6300000000000001
+      post_stimulus_spike_times_ms: []
+      soma_voltage_range_mV:
+      - -60.6119666422515
+      - -21.818512557904842
+      detector_voltage_range_mV:
+      - -60.6119666422515
+      - -21.818512557904842
+      threshold_upcrossings: 0
+      release_downcrossings: 0
+      arm_transitions: 0
+      release_transitions: 0
+      final_armed: 0.0
+      finite: true
+      convention_fingerprint: 4f2f56a3dcd493f4192076cd2e3264665a663d5a5acc34b67ba78c30d0a9a1d7
+      drive_multiplier: 1.0
+      post_drive_recovery_ms: 20.0
+    fresh_detector_cycle_pass: false
+  stage_1_pass: false
+- pair:
+    label: arm_n35_release_n45
+    arm_mV: -35.0
+    release_mV: -45.0
+  runtime_fingerprint: b1d38af0fa0071d1ad26a60b7ccdd4062578d6d3f9512e63ef2566985748490c
+  control:
+    driven: false
+    spike_times_ms:
+    - 1.9500000000000002
+    post_stimulus_spike_times_ms: []
+    soma_voltage_range_mV:
+    - -39.677135242575346
+    - -38.01418999747486
+    detector_voltage_range_mV:
+    - -39.677135242575346
+    - -38.01418999747486
+    threshold_upcrossings: 0
+    release_downcrossings: 0
+    arm_transitions: 0
+    release_transitions: 0
+    final_armed: 1.0
+    finite: true
+    convention_fingerprint: b1d38af0fa0071d1ad26a60b7ccdd4062578d6d3f9512e63ef2566985748490c
+    drive_multiplier: 1.0
+    post_drive_recovery_ms: 20.0
+  control_pass: true
+  driven_outcomes:
+  - drive_multiplier: 0.05
+    result:
+      driven: true
+      spike_times_ms:
+      - 1.9500000000000002
+      - 34.06
+      - 35.28000000000001
+      - 36.52
+      - 37.78
+      - 39.03
+      - 40.290000000000006
+      - 41.56
+      - 42.830000000000005
+      - 44.1
+      - 60.71000000000001
+      - 61.96000000000001
+      - 63.22
+      - 64.49000000000001
+      post_stimulus_spike_times_ms:
+      - 34.06
+      - 35.28000000000001
+      - 36.52
+      - 37.78
+      - 39.03
+      - 40.290000000000006
+      - 41.56
+      - 42.830000000000005
+      - 44.1
+      - 60.71000000000001
+      - 61.96000000000001
+      - 63.22
+      - 64.49000000000001
+      soma_voltage_range_mV:
+      - -47.86216373139667
+      - -31.059554064285997
+      detector_voltage_range_mV:
+      - -47.86216373139667
+      - -31.059554064285997
+      threshold_upcrossings: 19
+      release_downcrossings: 13
+      arm_transitions: 12
+      release_transitions: 13
+      final_armed: 0.0
+      finite: true
+      convention_fingerprint: b1d38af0fa0071d1ad26a60b7ccdd4062578d6d3f9512e63ef2566985748490c
+      drive_multiplier: 0.05
+      post_drive_recovery_ms: 20.0
+    fresh_detector_cycle_pass: true
+  - drive_multiplier: 0.1
+    result:
+      driven: true
+      spike_times_ms:
+      - 1.9500000000000002
+      - 20.16
+      - 21.460000000000004
+      - 22.750000000000004
+      - 24.020000000000003
+      - 25.27
+      - 26.520000000000003
+      - 27.78
+      - 29.040000000000003
+      - 30.310000000000002
+      - 31.580000000000002
+      - 32.86
+      - 34.14
+      - 35.42
+      - 36.71
+      - 38.00000000000001
+      - 39.290000000000006
+      - 40.580000000000005
+      - 41.88
+      - 43.190000000000005
+      - 44.49
+      - 59.830000000000005
+      - 61.040000000000006
+      - 62.290000000000006
+      - 63.56
+      - 64.83
+      post_stimulus_spike_times_ms:
+      - 20.16
+      - 21.460000000000004
+      - 22.750000000000004
+      - 24.020000000000003
+      - 25.27
+      - 26.520000000000003
+      - 27.78
+      - 29.040000000000003
+      - 30.310000000000002
+      - 31.580000000000002
+      - 32.86
+      - 34.14
+      - 35.42
+      - 36.71
+      - 38.00000000000001
+      - 39.290000000000006
+      - 40.580000000000005
+      - 41.88
+      - 43.190000000000005
+      - 44.49
+      - 59.830000000000005
+      - 61.040000000000006
+      - 62.290000000000006
+      - 63.56
+      - 64.83
+      soma_voltage_range_mV:
+      - -50.721766307140875
+      - -23.226183252404862
+      detector_voltage_range_mV:
+      - -50.721766307140875
+      - -23.226183252404862
+      threshold_upcrossings: 26
+      release_downcrossings: 25
+      arm_transitions: 24
+      release_transitions: 25
+      final_armed: 0.0
+      finite: true
+      convention_fingerprint: b1d38af0fa0071d1ad26a60b7ccdd4062578d6d3f9512e63ef2566985748490c
+      drive_multiplier: 0.1
+      post_drive_recovery_ms: 20.0
+    fresh_detector_cycle_pass: true
+  - drive_multiplier: 0.2
+    result:
+      driven: true
+      spike_times_ms:
+      - 1.9500000000000002
+      - 20.09
+      - 21.400000000000002
+      - 22.7
+      - 24.0
+      - 25.290000000000003
+      - 26.590000000000003
+      - 27.89
+      - 29.200000000000003
+      - 30.500000000000004
+      - 31.810000000000006
+      - 33.13
+      - 34.440000000000005
+      - 35.76
+      - 37.09
+      - 38.41
+      - 39.74
+      - 41.080000000000005
+      - 42.410000000000004
+      - 43.75
+      - 60.21000000000001
+      - 61.45
+      - 62.71
+      - 63.97
+      post_stimulus_spike_times_ms:
+      - 20.09
+      - 21.400000000000002
+      - 22.7
+      - 24.0
+      - 25.290000000000003
+      - 26.590000000000003
+      - 27.89
+      - 29.200000000000003
+      - 30.500000000000004
+      - 31.810000000000006
+      - 33.13
+      - 34.440000000000005
+      - 35.76
+      - 37.09
+      - 38.41
+      - 39.74
+      - 41.080000000000005
+      - 42.410000000000004
+      - 43.75
+      - 60.21000000000001
+      - 61.45
+      - 62.71
+      - 63.97
+      soma_voltage_range_mV:
+      - -53.08258326847968
+      - -26.944960128135257
+      detector_voltage_range_mV:
+      - -53.08258326847968
+      - -26.944960128135257
+      threshold_upcrossings: 26
+      release_downcrossings: 23
+      arm_transitions: 23
+      release_transitions: 23
+      final_armed: 1.0
+      finite: true
+      convention_fingerprint: b1d38af0fa0071d1ad26a60b7ccdd4062578d6d3f9512e63ef2566985748490c
+      drive_multiplier: 0.2
+      post_drive_recovery_ms: 20.0
+    fresh_detector_cycle_pass: true
+  - drive_multiplier: 0.4
+    result:
+      driven: true
+      spike_times_ms:
+      - 1.9500000000000002
+      - 20.060000000000002
+      - 21.400000000000002
+      - 22.740000000000002
+      - 24.07
+      - 25.41
+      - 26.750000000000004
+      - 28.090000000000003
+      - 29.44
+      - 30.79
+      - 32.14
+      - 33.49
+      - 34.85000000000001
+      - 36.21000000000001
+      - 37.57000000000001
+      - 38.940000000000005
+      - 40.300000000000004
+      - 41.67
+      - 43.050000000000004
+      - 44.42
+      - 61.050000000000004
+      - 62.300000000000004
+      - 63.57
+      - 64.85000000000001
+      post_stimulus_spike_times_ms:
+      - 20.060000000000002
+      - 21.400000000000002
+      - 22.740000000000002
+      - 24.07
+      - 25.41
+      - 26.750000000000004
+      - 28.090000000000003
+      - 29.44
+      - 30.79
+      - 32.14
+      - 33.49
+      - 34.85000000000001
+      - 36.21000000000001
+      - 37.57000000000001
+      - 38.940000000000005
+      - 40.300000000000004
+      - 41.67
+      - 43.050000000000004
+      - 44.42
+      - 61.050000000000004
+      - 62.300000000000004
+      - 63.57
+      - 64.85000000000001
+      soma_voltage_range_mV:
+      - -57.10931895073622
+      - -17.193999475874282
+      detector_voltage_range_mV:
+      - -57.10931895073622
+      - -17.193999475874282
+      threshold_upcrossings: 24
+      release_downcrossings: 23
+      arm_transitions: 22
+      release_transitions: 23
+      final_armed: 0.0
+      finite: true
+      convention_fingerprint: b1d38af0fa0071d1ad26a60b7ccdd4062578d6d3f9512e63ef2566985748490c
+      drive_multiplier: 0.4
+      post_drive_recovery_ms: 20.0
+    fresh_detector_cycle_pass: true
+  - drive_multiplier: 0.7
+    result:
+      driven: true
+      spike_times_ms:
+      - 1.9500000000000002
+      - 20.040000000000003
+      - 21.41
+      - 22.79
+      - 24.150000000000002
+      - 25.52
+      - 26.89
+      - 28.270000000000003
+      - 29.640000000000004
+      - 31.020000000000003
+      - 32.400000000000006
+      - 33.78
+      - 35.17
+      - 36.56
+      - 37.95
+      - 39.339999999999996
+      - 40.730000000000004
+      - 42.13
+      - 43.52
+      - 44.92
+      - 60.07000000000001
+      - 61.290000000000006
+      - 62.550000000000004
+      - 63.82
+      post_stimulus_spike_times_ms:
+      - 20.040000000000003
+      - 21.41
+      - 22.79
+      - 24.150000000000002
+      - 25.52
+      - 26.89
+      - 28.270000000000003
+      - 29.640000000000004
+      - 31.020000000000003
+      - 32.400000000000006
+      - 33.78
+      - 35.17
+      - 36.56
+      - 37.95
+      - 39.339999999999996
+      - 40.730000000000004
+      - 42.13
+      - 43.52
+      - 44.92
+      - 60.07000000000001
+      - 61.290000000000006
+      - 62.550000000000004
+      - 63.82
+      soma_voltage_range_mV:
+      - -59.50810508006804
+      - -22.879298481184797
+      detector_voltage_range_mV:
+      - -59.50810508006804
+      - -22.879298481184797
+      threshold_upcrossings: 25
+      release_downcrossings: 23
+      arm_transitions: 23
+      release_transitions: 23
+      final_armed: 1.0
+      finite: true
+      convention_fingerprint: b1d38af0fa0071d1ad26a60b7ccdd4062578d6d3f9512e63ef2566985748490c
+      drive_multiplier: 0.7
+      post_drive_recovery_ms: 20.0
+    fresh_detector_cycle_pass: true
+  - drive_multiplier: 1.0
+    result:
+      driven: true
+      spike_times_ms:
+      - 1.9500000000000002
+      - 20.03
+      - 21.42
+      - 22.81
+      - 24.200000000000003
+      - 25.59
+      - 26.97
+      - 28.360000000000003
+      - 29.76
+      - 31.150000000000002
+      - 32.550000000000004
+      - 33.940000000000005
+      - 35.34
+      - 36.74
+      - 38.150000000000006
+      - 39.550000000000004
+      - 40.96
+      - 42.370000000000005
+      - 43.77
+      - 60.53000000000001
+      - 61.76
+      - 63.03
+      - 64.30000000000001
+      post_stimulus_spike_times_ms:
+      - 20.03
+      - 21.42
+      - 22.81
+      - 24.200000000000003
+      - 25.59
+      - 26.97
+      - 28.360000000000003
+      - 29.76
+      - 31.150000000000002
+      - 32.550000000000004
+      - 33.940000000000005
+      - 35.34
+      - 36.74
+      - 38.150000000000006
+      - 39.550000000000004
+      - 40.96
+      - 42.370000000000005
+      - 43.77
+      - 60.53000000000001
+      - 61.76
+      - 63.03
+      - 64.30000000000001
+      soma_voltage_range_mV:
+      - -60.6119666422515
+      - -21.818512557904842
+      detector_voltage_range_mV:
+      - -60.6119666422515
+      - -21.818512557904842
+      threshold_upcrossings: 24
+      release_downcrossings: 22
+      arm_transitions: 22
+      release_transitions: 22
+      final_armed: 1.0
+      finite: true
+      convention_fingerprint: b1d38af0fa0071d1ad26a60b7ccdd4062578d6d3f9512e63ef2566985748490c
+      drive_multiplier: 1.0
+      post_drive_recovery_ms: 20.0
+    fresh_detector_cycle_pass: true
+  stage_1_pass: true
+- pair:
+    label: arm_n30_release_n40
+    arm_mV: -30.0
+    release_mV: -40.0
+  runtime_fingerprint: f623b2cb19e85d201346c4bdca780f28655c983742b2bc85619f3b7842f5e93d
+  control:
+    driven: false
+    spike_times_ms:
+    - 1.9000000000000001
+    - 3.02
+    post_stimulus_spike_times_ms: []
+    soma_voltage_range_mV:
+    - -39.677135242575346
+    - -38.01418999747486
+    detector_voltage_range_mV:
+    - -39.677135242575346
+    - -38.01418999747486
+    threshold_upcrossings: 0
+    release_downcrossings: 0
+    arm_transitions: 0
+    release_transitions: 0
+    final_armed: 0.0
+    finite: true
+    convention_fingerprint: f623b2cb19e85d201346c4bdca780f28655c983742b2bc85619f3b7842f5e93d
+    drive_multiplier: 1.0
+    post_drive_recovery_ms: 20.0
+  control_pass: true
+  driven_outcomes:
+  - drive_multiplier: 0.05
+    result:
+      driven: true
+      spike_times_ms:
+      - 1.9000000000000001
+      - 3.02
+      post_stimulus_spike_times_ms: []
+      soma_voltage_range_mV:
+      - -47.86216373139667
+      - -31.059554064285997
+      detector_voltage_range_mV:
+      - -47.86216373139667
+      - -31.059554064285997
+      threshold_upcrossings: 0
+      release_downcrossings: 36
+      arm_transitions: 0
+      release_transitions: 0
+      final_armed: 0.0
+      finite: true
+      convention_fingerprint: f623b2cb19e85d201346c4bdca780f28655c983742b2bc85619f3b7842f5e93d
+      drive_multiplier: 0.05
+      post_drive_recovery_ms: 20.0
+    fresh_detector_cycle_pass: false
+  - drive_multiplier: 0.1
+    result:
+      driven: true
+      spike_times_ms:
+      - 1.9000000000000001
+      - 3.02
+      - 39.190000000000005
+      - 40.480000000000004
+      - 41.79
+      - 43.09
+      - 44.4
+      - 45.67
+      post_stimulus_spike_times_ms:
+      - 39.190000000000005
+      - 40.480000000000004
+      - 41.79
+      - 43.09
+      - 44.4
+      - 45.67
+      soma_voltage_range_mV:
+      - -50.721766307140875
+      - -23.226183252404862
+      detector_voltage_range_mV:
+      - -50.721766307140875
+      - -23.226183252404862
+      threshold_upcrossings: 6
+      release_downcrossings: 36
+      arm_transitions: 6
+      release_transitions: 6
+      final_armed: 0.0
+      finite: true
+      convention_fingerprint: f623b2cb19e85d201346c4bdca780f28655c983742b2bc85619f3b7842f5e93d
+      drive_multiplier: 0.1
+      post_drive_recovery_ms: 20.0
+    fresh_detector_cycle_pass: true
+  - drive_multiplier: 0.2
+    result:
+      driven: true
+      spike_times_ms:
+      - 1.9000000000000001
+      - 3.02
+      - 21.310000000000002
+      - 22.6
+      - 23.89
+      - 25.19
+      - 26.490000000000002
+      - 27.8
+      - 29.1
+      - 30.410000000000004
+      - 31.73
+      - 33.04
+      - 34.36
+      - 35.68
+      - 37.01
+      - 38.330000000000005
+      - 39.66
+      - 41.0
+      - 42.330000000000005
+      - 43.67
+      - 45.02
+      post_stimulus_spike_times_ms:
+      - 21.310000000000002
+      - 22.6
+      - 23.89
+      - 25.19
+      - 26.490000000000002
+      - 27.8
+      - 29.1
+      - 30.410000000000004
+      - 31.73
+      - 33.04
+      - 34.36
+      - 35.68
+      - 37.01
+      - 38.330000000000005
+      - 39.66
+      - 41.0
+      - 42.330000000000005
+      - 43.67
+      - 45.02
+      soma_voltage_range_mV:
+      - -53.08258326847968
+      - -26.944960128135257
+      detector_voltage_range_mV:
+      - -53.08258326847968
+      - -26.944960128135257
+      threshold_upcrossings: 19
+      release_downcrossings: 35
+      arm_transitions: 19
+      release_transitions: 19
+      final_armed: 0.0
+      finite: true
+      convention_fingerprint: f623b2cb19e85d201346c4bdca780f28655c983742b2bc85619f3b7842f5e93d
+      drive_multiplier: 0.2
+      post_drive_recovery_ms: 20.0
+    fresh_detector_cycle_pass: true
+  - drive_multiplier: 0.4
+    result:
+      driven: true
+      spike_times_ms:
+      - 1.9000000000000001
+      - 3.02
+      - 21.330000000000002
+      - 22.660000000000004
+      - 24.0
+      - 25.34
+      - 26.680000000000003
+      - 28.020000000000003
+      - 29.370000000000005
+      - 30.720000000000002
+      - 32.07
+      - 33.42
+      - 34.78
+      - 36.14000000000001
+      - 37.50000000000001
+      - 38.87
+      - 40.24
+      - 41.61
+      - 42.980000000000004
+      - 44.36
+      - 45.67
+      post_stimulus_spike_times_ms:
+      - 21.330000000000002
+      - 22.660000000000004
+      - 24.0
+      - 25.34
+      - 26.680000000000003
+      - 28.020000000000003
+      - 29.370000000000005
+      - 30.720000000000002
+      - 32.07
+      - 33.42
+      - 34.78
+      - 36.14000000000001
+      - 37.50000000000001
+      - 38.87
+      - 40.24
+      - 41.61
+      - 42.980000000000004
+      - 44.36
+      - 45.67
+      soma_voltage_range_mV:
+      - -57.10931895073622
+      - -17.193999475874282
+      detector_voltage_range_mV:
+      - -57.10931895073622
+      - -17.193999475874282
+      threshold_upcrossings: 19
+      release_downcrossings: 35
+      arm_transitions: 19
+      release_transitions: 19
+      final_armed: 0.0
+      finite: true
+      convention_fingerprint: f623b2cb19e85d201346c4bdca780f28655c983742b2bc85619f3b7842f5e93d
+      drive_multiplier: 0.4
+      post_drive_recovery_ms: 20.0
+    fresh_detector_cycle_pass: true
+  - drive_multiplier: 0.7
+    result:
+      driven: true
+      spike_times_ms:
+      - 1.9000000000000001
+      - 3.02
+      - 21.35
+      - 22.72
+      - 24.09
+      - 25.460000000000004
+      - 26.830000000000002
+      - 28.200000000000003
+      - 29.580000000000002
+      - 30.96
+      - 32.34
+      - 33.72
+      - 35.11
+      - 36.49
+      - 37.88
+      - 39.28
+      - 40.67
+      - 42.06
+      - 43.46000000000001
+      - 44.86000000000001
+      - 45.92
+      post_stimulus_spike_times_ms:
+      - 21.35
+      - 22.72
+      - 24.09
+      - 25.460000000000004
+      - 26.830000000000002
+      - 28.200000000000003
+      - 29.580000000000002
+      - 30.96
+      - 32.34
+      - 33.72
+      - 35.11
+      - 36.49
+      - 37.88
+      - 39.28
+      - 40.67
+      - 42.06
+      - 43.46000000000001
+      - 44.86000000000001
+      - 45.92
+      soma_voltage_range_mV:
+      - -59.50810508006804
+      - -22.879298481184797
+      detector_voltage_range_mV:
+      - -59.50810508006804
+      - -22.879298481184797
+      threshold_upcrossings: 19
+      release_downcrossings: 35
+      arm_transitions: 19
+      release_transitions: 19
+      final_armed: 0.0
+      finite: true
+      convention_fingerprint: f623b2cb19e85d201346c4bdca780f28655c983742b2bc85619f3b7842f5e93d
+      drive_multiplier: 0.7
+      post_drive_recovery_ms: 20.0
+    fresh_detector_cycle_pass: true
+  - drive_multiplier: 1.0
+    result:
+      driven: true
+      spike_times_ms:
+      - 1.9000000000000001
+      - 3.02
+      - 21.37
+      - 22.750000000000004
+      - 24.14
+      - 25.52
+      - 26.910000000000004
+      - 28.3
+      - 29.69
+      - 31.090000000000003
+      - 32.49
+      - 33.88
+      - 35.28000000000001
+      - 36.68000000000001
+      - 38.09
+      - 39.49
+      - 40.900000000000006
+      - 42.31
+      - 43.71000000000001
+      - 45.31
+      post_stimulus_spike_times_ms:
+      - 21.37
+      - 22.750000000000004
+      - 24.14
+      - 25.52
+      - 26.910000000000004
+      - 28.3
+      - 29.69
+      - 31.090000000000003
+      - 32.49
+      - 33.88
+      - 35.28000000000001
+      - 36.68000000000001
+      - 38.09
+      - 39.49
+      - 40.900000000000006
+      - 42.31
+      - 43.71000000000001
+      - 45.31
+      soma_voltage_range_mV:
+      - -60.6119666422515
+      - -21.818512557904842
+      detector_voltage_range_mV:
+      - -60.6119666422515
+      - -21.818512557904842
+      threshold_upcrossings: 18
+      release_downcrossings: 30
+      arm_transitions: 18
+      release_transitions: 18
+      final_armed: 0.0
+      finite: true
+      convention_fingerprint: f623b2cb19e85d201346c4bdca780f28655c983742b2bc85619f3b7842f5e93d
+      drive_multiplier: 1.0
+      post_drive_recovery_ms: 20.0
+    fresh_detector_cycle_pass: true
+  stage_1_pass: true
+- pair:
+    label: arm_n25_release_n35
+    arm_mV: -25.0
+    release_mV: -35.0
+  runtime_fingerprint: 4fe9711567b0e200ba21ddf1fe53dfe535d8c96d8d472abef6ad60d398596a5a
+  control:
+    driven: false
+    spike_times_ms:
+    - 1.85
+    - 2.9000000000000004
+    post_stimulus_spike_times_ms: []
+    soma_voltage_range_mV:
+    - -39.677135242575346
+    - -38.01418999747486
+    detector_voltage_range_mV:
+    - -39.677135242575346
+    - -38.01418999747486
+    threshold_upcrossings: 0
+    release_downcrossings: 0
+    arm_transitions: 0
+    release_transitions: 0
+    final_armed: 0.0
+    finite: true
+    convention_fingerprint: 4fe9711567b0e200ba21ddf1fe53dfe535d8c96d8d472abef6ad60d398596a5a
+    drive_multiplier: 1.0
+    post_drive_recovery_ms: 20.0
+  control_pass: true
+  driven_outcomes:
+  - drive_multiplier: 0.05
+    result:
+      driven: true
+      spike_times_ms:
+      - 1.85
+      - 2.9000000000000004
+      post_stimulus_spike_times_ms: []
+      soma_voltage_range_mV:
+      - -47.86216373139667
+      - -31.059554064285997
+      detector_voltage_range_mV:
+      - -47.86216373139667
+      - -31.059554064285997
+      threshold_upcrossings: 0
+      release_downcrossings: 19
+      arm_transitions: 0
+      release_transitions: 0
+      final_armed: 0.0
+      finite: true
+      convention_fingerprint: 4fe9711567b0e200ba21ddf1fe53dfe535d8c96d8d472abef6ad60d398596a5a
+      drive_multiplier: 0.05
+      post_drive_recovery_ms: 20.0
+    fresh_detector_cycle_pass: false
+  - drive_multiplier: 0.1
+    result:
+      driven: true
+      spike_times_ms:
+      - 1.85
+      - 2.9000000000000004
+      - 45.57000000000001
+      post_stimulus_spike_times_ms:
+      - 45.57000000000001
+      soma_voltage_range_mV:
+      - -50.721766307140875
+      - -23.226183252404862
+      detector_voltage_range_mV:
+      - -50.721766307140875
+      - -23.226183252404862
+      threshold_upcrossings: 1
+      release_downcrossings: 26
+      arm_transitions: 1
+      release_transitions: 1
+      final_armed: 0.0
+      finite: true
+      convention_fingerprint: 4fe9711567b0e200ba21ddf1fe53dfe535d8c96d8d472abef6ad60d398596a5a
+      drive_multiplier: 0.1
+      post_drive_recovery_ms: 20.0
+    fresh_detector_cycle_pass: true
+  - drive_multiplier: 0.2
+    result:
+      driven: true
+      spike_times_ms:
+      - 1.85
+      - 2.9000000000000004
+      post_stimulus_spike_times_ms: []
+      soma_voltage_range_mV:
+      - -53.08258326847968
+      - -26.944960128135257
+      detector_voltage_range_mV:
+      - -53.08258326847968
+      - -26.944960128135257
+      threshold_upcrossings: 0
+      release_downcrossings: 26
+      arm_transitions: 0
+      release_transitions: 0
+      final_armed: 0.0
+      finite: true
+      convention_fingerprint: 4fe9711567b0e200ba21ddf1fe53dfe535d8c96d8d472abef6ad60d398596a5a
+      drive_multiplier: 0.2
+      post_drive_recovery_ms: 20.0
+    fresh_detector_cycle_pass: false
+  - drive_multiplier: 0.4
+    result:
+      driven: true
+      spike_times_ms:
+      - 1.85
+      - 2.9000000000000004
+      - 21.26
+      - 45.58
+      post_stimulus_spike_times_ms:
+      - 21.26
+      - 45.58
+      soma_voltage_range_mV:
+      - -57.10931895073622
+      - -17.193999475874282
+      detector_voltage_range_mV:
+      - -57.10931895073622
+      - -17.193999475874282
+      threshold_upcrossings: 2
+      release_downcrossings: 24
+      arm_transitions: 2
+      release_transitions: 2
+      final_armed: 0.0
+      finite: true
+      convention_fingerprint: 4fe9711567b0e200ba21ddf1fe53dfe535d8c96d8d472abef6ad60d398596a5a
+      drive_multiplier: 0.4
+      post_drive_recovery_ms: 20.0
+    fresh_detector_cycle_pass: true
+  - drive_multiplier: 0.7
+    result:
+      driven: true
+      spike_times_ms:
+      - 1.85
+      - 2.9000000000000004
+      - 21.290000000000003
+      - 35.04
+      - 36.43000000000001
+      - 37.82000000000001
+      - 39.21
+      - 40.61
+      - 42.0
+      - 43.4
+      - 44.800000000000004
+      post_stimulus_spike_times_ms:
+      - 21.290000000000003
+      - 35.04
+      - 36.43000000000001
+      - 37.82000000000001
+      - 39.21
+      - 40.61
+      - 42.0
+      - 43.4
+      - 44.800000000000004
+      soma_voltage_range_mV:
+      - -59.50810508006804
+      - -22.879298481184797
+      detector_voltage_range_mV:
+      - -59.50810508006804
+      - -22.879298481184797
+      threshold_upcrossings: 9
+      release_downcrossings: 25
+      arm_transitions: 9
+      release_transitions: 9
+      final_armed: 0.0
+      finite: true
+      convention_fingerprint: 4fe9711567b0e200ba21ddf1fe53dfe535d8c96d8d472abef6ad60d398596a5a
+      drive_multiplier: 0.7
+      post_drive_recovery_ms: 20.0
+    fresh_detector_cycle_pass: true
+  - drive_multiplier: 1.0
+    result:
+      driven: true
+      spike_times_ms:
+      - 1.85
+      - 2.9000000000000004
+      - 21.310000000000002
+      - 22.69
+      - 25.460000000000004
+      - 26.85
+      - 28.240000000000002
+      - 29.630000000000003
+      - 31.03
+      - 32.42
+      - 33.82
+      - 35.22
+      - 36.62
+      - 38.03
+      - 39.43
+      - 40.84
+      - 42.25
+      - 43.660000000000004
+      - 45.12
+      post_stimulus_spike_times_ms:
+      - 21.310000000000002
+      - 22.69
+      - 25.460000000000004
+      - 26.85
+      - 28.240000000000002
+      - 29.630000000000003
+      - 31.03
+      - 32.42
+      - 33.82
+      - 35.22
+      - 36.62
+      - 38.03
+      - 39.43
+      - 40.84
+      - 42.25
+      - 43.660000000000004
+      - 45.12
+      soma_voltage_range_mV:
+      - -60.6119666422515
+      - -21.818512557904842
+      detector_voltage_range_mV:
+      - -60.6119666422515
+      - -21.818512557904842
+      threshold_upcrossings: 17
+      release_downcrossings: 23
+      arm_transitions: 17
+      release_transitions: 17
+      final_armed: 0.0
+      finite: true
+      convention_fingerprint: 4fe9711567b0e200ba21ddf1fe53dfe535d8c96d8d472abef6ad60d398596a5a
+      drive_multiplier: 1.0
+      post_drive_recovery_ms: 20.0
+    fresh_detector_cycle_pass: true
+  stage_1_pass: true
+- pair:
+    label: arm_n20_release_n30
+    arm_mV: -20.0
+    release_mV: -30.0
+  runtime_fingerprint: aba1dd3a8e2e829c61a56c4e0d39a0c6e35f3d21538e6cc040434fdd86e4488d
+  control:
+    driven: false
+    spike_times_ms:
+    - 1.8
+    post_stimulus_spike_times_ms: []
+    soma_voltage_range_mV:
+    - -39.677135242575346
+    - -38.01418999747486
+    detector_voltage_range_mV:
+    - -39.677135242575346
+    - -38.01418999747486
+    threshold_upcrossings: 0
+    release_downcrossings: 0
+    arm_transitions: 0
+    release_transitions: 0
+    final_armed: 0.0
+    finite: true
+    convention_fingerprint: aba1dd3a8e2e829c61a56c4e0d39a0c6e35f3d21538e6cc040434fdd86e4488d
+    drive_multiplier: 1.0
+    post_drive_recovery_ms: 20.0
+  control_pass: true
+  driven_outcomes:
+  - drive_multiplier: 0.05
+    result:
+      driven: true
+      spike_times_ms:
+      - 1.8
+      post_stimulus_spike_times_ms: []
+      soma_voltage_range_mV:
+      - -47.86216373139667
+      - -31.059554064285997
+      detector_voltage_range_mV:
+      - -47.86216373139667
+      - -31.059554064285997
+      threshold_upcrossings: 0
+      release_downcrossings: 0
+      arm_transitions: 0
+      release_transitions: 0
+      final_armed: 0.0
+      finite: true
+      convention_fingerprint: aba1dd3a8e2e829c61a56c4e0d39a0c6e35f3d21538e6cc040434fdd86e4488d
+      drive_multiplier: 0.05
+      post_drive_recovery_ms: 20.0
+    fresh_detector_cycle_pass: false
+  - drive_multiplier: 0.1
+    result:
+      driven: true
+      spike_times_ms:
+      - 1.8
+      post_stimulus_spike_times_ms: []
+      soma_voltage_range_mV:
+      - -50.721766307140875
+      - -23.226183252404862
+      detector_voltage_range_mV:
+      - -50.721766307140875
+      - -23.226183252404862
+      threshold_upcrossings: 0
+      release_downcrossings: 6
+      arm_transitions: 0
+      release_transitions: 0
+      final_armed: 0.0
+      finite: true
+      convention_fingerprint: aba1dd3a8e2e829c61a56c4e0d39a0c6e35f3d21538e6cc040434fdd86e4488d
+      drive_multiplier: 0.1
+      post_drive_recovery_ms: 20.0
+    fresh_detector_cycle_pass: false
+  - drive_multiplier: 0.2
+    result:
+      driven: true
+      spike_times_ms:
+      - 1.8
+      post_stimulus_spike_times_ms: []
+      soma_voltage_range_mV:
+      - -53.08258326847968
+      - -26.944960128135257
+      detector_voltage_range_mV:
+      - -53.08258326847968
+      - -26.944960128135257
+      threshold_upcrossings: 0
+      release_downcrossings: 19
+      arm_transitions: 0
+      release_transitions: 0
+      final_armed: 0.0
+      finite: true
+      convention_fingerprint: aba1dd3a8e2e829c61a56c4e0d39a0c6e35f3d21538e6cc040434fdd86e4488d
+      drive_multiplier: 0.2
+      post_drive_recovery_ms: 20.0
+    fresh_detector_cycle_pass: false
+  - drive_multiplier: 0.4
+    result:
+      driven: true
+      spike_times_ms:
+      - 1.8
+      - 45.51
+      post_stimulus_spike_times_ms:
+      - 45.51
+      soma_voltage_range_mV:
+      - -57.10931895073622
+      - -17.193999475874282
+      detector_voltage_range_mV:
+      - -57.10931895073622
+      - -17.193999475874282
+      threshold_upcrossings: 1
+      release_downcrossings: 19
+      arm_transitions: 1
+      release_transitions: 1
+      final_armed: 0.0
+      finite: true
+      convention_fingerprint: aba1dd3a8e2e829c61a56c4e0d39a0c6e35f3d21538e6cc040434fdd86e4488d
+      drive_multiplier: 0.4
+      post_drive_recovery_ms: 20.0
+    fresh_detector_cycle_pass: true
+  - drive_multiplier: 0.7
+    result:
+      driven: true
+      spike_times_ms:
+      - 1.8
+      post_stimulus_spike_times_ms: []
+      soma_voltage_range_mV:
+      - -59.50810508006804
+      - -22.879298481184797
+      detector_voltage_range_mV:
+      - -59.50810508006804
+      - -22.879298481184797
+      threshold_upcrossings: 0
+      release_downcrossings: 19
+      arm_transitions: 0
+      release_transitions: 0
+      final_armed: 0.0
+      finite: true
+      convention_fingerprint: aba1dd3a8e2e829c61a56c4e0d39a0c6e35f3d21538e6cc040434fdd86e4488d
+      drive_multiplier: 0.7
+      post_drive_recovery_ms: 20.0
+    fresh_detector_cycle_pass: false
+  - drive_multiplier: 1.0
+    result:
+      driven: true
+      spike_times_ms:
+      - 1.8
+      post_stimulus_spike_times_ms: []
+      soma_voltage_range_mV:
+      - -60.6119666422515
+      - -21.818512557904842
+      detector_voltage_range_mV:
+      - -60.6119666422515
+      - -21.818512557904842
+      threshold_upcrossings: 0
+      release_downcrossings: 18
+      arm_transitions: 0
+      release_transitions: 0
+      final_armed: 0.0
+      finite: true
+      convention_fingerprint: aba1dd3a8e2e829c61a56c4e0d39a0c6e35f3d21538e6cc040434fdd86e4488d
+      drive_multiplier: 1.0
+      post_drive_recovery_ms: 20.0
+    fresh_detector_cycle_pass: false
+  stage_1_pass: true
+- pair:
+    label: arm_n10_release_n20
+    arm_mV: -10.0
+    release_mV: -20.0
+  runtime_fingerprint: f4cd8991ba437b2e9636395a09db22f92c5ec09cb21f0a2fdf79b5b4b45c22da
+  control:
+    driven: false
+    spike_times_ms:
+    - 1.7300000000000002
+    post_stimulus_spike_times_ms: []
+    soma_voltage_range_mV:
+    - -39.677135242575346
+    - -38.01418999747486
+    detector_voltage_range_mV:
+    - -39.677135242575346
+    - -38.01418999747486
+    threshold_upcrossings: 0
+    release_downcrossings: 0
+    arm_transitions: 0
+    release_transitions: 0
+    final_armed: 0.0
+    finite: true
+    convention_fingerprint: f4cd8991ba437b2e9636395a09db22f92c5ec09cb21f0a2fdf79b5b4b45c22da
+    drive_multiplier: 1.0
+    post_drive_recovery_ms: 20.0
+  control_pass: true
+  driven_outcomes:
+  - drive_multiplier: 0.05
+    result:
+      driven: true
+      spike_times_ms:
+      - 1.7300000000000002
+      post_stimulus_spike_times_ms: []
+      soma_voltage_range_mV:
+      - -47.86216373139667
+      - -31.059554064285997
+      detector_voltage_range_mV:
+      - -47.86216373139667
+      - -31.059554064285997
+      threshold_upcrossings: 0
+      release_downcrossings: 0
+      arm_transitions: 0
+      release_transitions: 0
+      final_armed: 0.0
+      finite: true
+      convention_fingerprint: f4cd8991ba437b2e9636395a09db22f92c5ec09cb21f0a2fdf79b5b4b45c22da
+      drive_multiplier: 0.05
+      post_drive_recovery_ms: 20.0
+    fresh_detector_cycle_pass: false
+  - drive_multiplier: 0.1
+    result:
+      driven: true
+      spike_times_ms:
+      - 1.7300000000000002
+      post_stimulus_spike_times_ms: []
+      soma_voltage_range_mV:
+      - -50.721766307140875
+      - -23.226183252404862
+      detector_voltage_range_mV:
+      - -50.721766307140875
+      - -23.226183252404862
+      threshold_upcrossings: 0
+      release_downcrossings: 0
+      arm_transitions: 0
+      release_transitions: 0
+      final_armed: 0.0
+      finite: true
+      convention_fingerprint: f4cd8991ba437b2e9636395a09db22f92c5ec09cb21f0a2fdf79b5b4b45c22da
+      drive_multiplier: 0.1
+      post_drive_recovery_ms: 20.0
+    fresh_detector_cycle_pass: false
+  - drive_multiplier: 0.2
+    result:
+      driven: true
+      spike_times_ms:
+      - 1.7300000000000002
+      post_stimulus_spike_times_ms: []
+      soma_voltage_range_mV:
+      - -53.08258326847968
+      - -26.944960128135257
+      detector_voltage_range_mV:
+      - -53.08258326847968
+      - -26.944960128135257
+      threshold_upcrossings: 0
+      release_downcrossings: 0
+      arm_transitions: 0
+      release_transitions: 0
+      final_armed: 0.0
+      finite: true
+      convention_fingerprint: f4cd8991ba437b2e9636395a09db22f92c5ec09cb21f0a2fdf79b5b4b45c22da
+      drive_multiplier: 0.2
+      post_drive_recovery_ms: 20.0
+    fresh_detector_cycle_pass: false
+  - drive_multiplier: 0.4
+    result:
+      driven: true
+      spike_times_ms:
+      - 1.7300000000000002
+      post_stimulus_spike_times_ms: []
+      soma_voltage_range_mV:
+      - -57.10931895073622
+      - -17.193999475874282
+      detector_voltage_range_mV:
+      - -57.10931895073622
+      - -17.193999475874282
+      threshold_upcrossings: 0
+      release_downcrossings: 1
+      arm_transitions: 0
+      release_transitions: 0
+      final_armed: 0.0
+      finite: true
+      convention_fingerprint: f4cd8991ba437b2e9636395a09db22f92c5ec09cb21f0a2fdf79b5b4b45c22da
+      drive_multiplier: 0.4
+      post_drive_recovery_ms: 20.0
+    fresh_detector_cycle_pass: false
+  - drive_multiplier: 0.7
+    result:
+      driven: true
+      spike_times_ms:
+      - 1.7300000000000002
+      post_stimulus_spike_times_ms: []
+      soma_voltage_range_mV:
+      - -59.50810508006804
+      - -22.879298481184797
+      detector_voltage_range_mV:
+      - -59.50810508006804
+      - -22.879298481184797
+      threshold_upcrossings: 0
+      release_downcrossings: 0
+      arm_transitions: 0
+      release_transitions: 0
+      final_armed: 0.0
+      finite: true
+      convention_fingerprint: f4cd8991ba437b2e9636395a09db22f92c5ec09cb21f0a2fdf79b5b4b45c22da
+      drive_multiplier: 0.7
+      post_drive_recovery_ms: 20.0
+    fresh_detector_cycle_pass: false
+  - drive_multiplier: 1.0
+    result:
+      driven: true
+      spike_times_ms:
+      - 1.7300000000000002
+      post_stimulus_spike_times_ms: []
+      soma_voltage_range_mV:
+      - -60.6119666422515
+      - -21.818512557904842
+      detector_voltage_range_mV:
+      - -60.6119666422515
+      - -21.818512557904842
+      threshold_upcrossings: 0
+      release_downcrossings: 0
+      arm_transitions: 0
+      release_transitions: 0
+      final_armed: 0.0
+      finite: true
+      convention_fingerprint: f4cd8991ba437b2e9636395a09db22f92c5ec09cb21f0a2fdf79b5b4b45c22da
+      drive_multiplier: 1.0
+      post_drive_recovery_ms: 20.0
+    fresh_detector_cycle_pass: false
+  stage_1_pass: false
+- pair:
+    label: arm_0_release_n10
+    arm_mV: 0.0
+    release_mV: -10.0
+  runtime_fingerprint: 4e4a1ec9fc297cdf2ae40b0dab52fa4e99a79af4cef03c167b9d797af78f4685
+  control:
+    driven: false
+    spike_times_ms:
+    - 1.68
+    post_stimulus_spike_times_ms: []
+    soma_voltage_range_mV:
+    - -39.677135242575346
+    - -38.01418999747486
+    detector_voltage_range_mV:
+    - -39.677135242575346
+    - -38.01418999747486
+    threshold_upcrossings: 0
+    release_downcrossings: 0
+    arm_transitions: 0
+    release_transitions: 0
+    final_armed: 0.0
+    finite: true
+    convention_fingerprint: 4e4a1ec9fc297cdf2ae40b0dab52fa4e99a79af4cef03c167b9d797af78f4685
+    drive_multiplier: 1.0
+    post_drive_recovery_ms: 20.0
+  control_pass: true
+  driven_outcomes:
+  - drive_multiplier: 0.05
+    result:
+      driven: true
+      spike_times_ms:
+      - 1.68
+      post_stimulus_spike_times_ms: []
+      soma_voltage_range_mV:
+      - -47.86216373139667
+      - -31.059554064285997
+      detector_voltage_range_mV:
+      - -47.86216373139667
+      - -31.059554064285997
+      threshold_upcrossings: 0
+      release_downcrossings: 0
+      arm_transitions: 0
+      release_transitions: 0
+      final_armed: 0.0
+      finite: true
+      convention_fingerprint: 4e4a1ec9fc297cdf2ae40b0dab52fa4e99a79af4cef03c167b9d797af78f4685
+      drive_multiplier: 0.05
+      post_drive_recovery_ms: 20.0
+    fresh_detector_cycle_pass: false
+  - drive_multiplier: 0.1
+    result:
+      driven: true
+      spike_times_ms:
+      - 1.68
+      post_stimulus_spike_times_ms: []
+      soma_voltage_range_mV:
+      - -50.721766307140875
+      - -23.226183252404862
+      detector_voltage_range_mV:
+      - -50.721766307140875
+      - -23.226183252404862
+      threshold_upcrossings: 0
+      release_downcrossings: 0
+      arm_transitions: 0
+      release_transitions: 0
+      final_armed: 0.0
+      finite: true
+      convention_fingerprint: 4e4a1ec9fc297cdf2ae40b0dab52fa4e99a79af4cef03c167b9d797af78f4685
+      drive_multiplier: 0.1
+      post_drive_recovery_ms: 20.0
+    fresh_detector_cycle_pass: false
+  - drive_multiplier: 0.2
+    result:
+      driven: true
+      spike_times_ms:
+      - 1.68
+      post_stimulus_spike_times_ms: []
+      soma_voltage_range_mV:
+      - -53.08258326847968
+      - -26.944960128135257
+      detector_voltage_range_mV:
+      - -53.08258326847968
+      - -26.944960128135257
+      threshold_upcrossings: 0
+      release_downcrossings: 0
+      arm_transitions: 0
+      release_transitions: 0
+      final_armed: 0.0
+      finite: true
+      convention_fingerprint: 4e4a1ec9fc297cdf2ae40b0dab52fa4e99a79af4cef03c167b9d797af78f4685
+      drive_multiplier: 0.2
+      post_drive_recovery_ms: 20.0
+    fresh_detector_cycle_pass: false
+  - drive_multiplier: 0.4
+    result:
+      driven: true
+      spike_times_ms:
+      - 1.68
+      post_stimulus_spike_times_ms: []
+      soma_voltage_range_mV:
+      - -57.10931895073622
+      - -17.193999475874282
+      detector_voltage_range_mV:
+      - -57.10931895073622
+      - -17.193999475874282
+      threshold_upcrossings: 0
+      release_downcrossings: 0
+      arm_transitions: 0
+      release_transitions: 0
+      final_armed: 0.0
+      finite: true
+      convention_fingerprint: 4e4a1ec9fc297cdf2ae40b0dab52fa4e99a79af4cef03c167b9d797af78f4685
+      drive_multiplier: 0.4
+      post_drive_recovery_ms: 20.0
+    fresh_detector_cycle_pass: false
+  - drive_multiplier: 0.7
+    result:
+      driven: true
+      spike_times_ms:
+      - 1.68
+      post_stimulus_spike_times_ms: []
+      soma_voltage_range_mV:
+      - -59.50810508006804
+      - -22.879298481184797
+      detector_voltage_range_mV:
+      - -59.50810508006804
+      - -22.879298481184797
+      threshold_upcrossings: 0
+      release_downcrossings: 0
+      arm_transitions: 0
+      release_transitions: 0
+      final_armed: 0.0
+      finite: true
+      convention_fingerprint: 4e4a1ec9fc297cdf2ae40b0dab52fa4e99a79af4cef03c167b9d797af78f4685
+      drive_multiplier: 0.7
+      post_drive_recovery_ms: 20.0
+    fresh_detector_cycle_pass: false
+  - drive_multiplier: 1.0
+    result:
+      driven: true
+      spike_times_ms:
+      - 1.68
+      post_stimulus_spike_times_ms: []
+      soma_voltage_range_mV:
+      - -60.6119666422515
+      - -21.818512557904842
+      detector_voltage_range_mV:
+      - -60.6119666422515
+      - -21.818512557904842
+      threshold_upcrossings: 0
+      release_downcrossings: 0
+      arm_transitions: 0
+      release_transitions: 0
+      final_armed: 0.0
+      finite: true
+      convention_fingerprint: 4e4a1ec9fc297cdf2ae40b0dab52fa4e99a79af4cef03c167b9d797af78f4685
+      drive_multiplier: 1.0
+      post_drive_recovery_ms: 20.0
+    fresh_detector_cycle_pass: false
+  stage_1_pass: false
+- pair:
+    label: arm_10_release_0
+    arm_mV: 10.0
+    release_mV: 0.0
+  runtime_fingerprint: c8c8ea14ded8e2818284e331aa57c0ca6a970062ac0bf26146a962c10643fe5d
+  control:
+    driven: false
+    spike_times_ms:
+    - 1.6300000000000001
+    post_stimulus_spike_times_ms: []
+    soma_voltage_range_mV:
+    - -39.677135242575346
+    - -38.01418999747486
+    detector_voltage_range_mV:
+    - -39.677135242575346
+    - -38.01418999747486
+    threshold_upcrossings: 0
+    release_downcrossings: 0
+    arm_transitions: 0
+    release_transitions: 0
+    final_armed: 0.0
+    finite: true
+    convention_fingerprint: c8c8ea14ded8e2818284e331aa57c0ca6a970062ac0bf26146a962c10643fe5d
+    drive_multiplier: 1.0
+    post_drive_recovery_ms: 20.0
+  control_pass: true
+  driven_outcomes:
+  - drive_multiplier: 0.05
+    result:
+      driven: true
+      spike_times_ms:
+      - 1.6300000000000001
+      post_stimulus_spike_times_ms: []
+      soma_voltage_range_mV:
+      - -47.86216373139667
+      - -31.059554064285997
+      detector_voltage_range_mV:
+      - -47.86216373139667
+      - -31.059554064285997
+      threshold_upcrossings: 0
+      release_downcrossings: 0
+      arm_transitions: 0
+      release_transitions: 0
+      final_armed: 0.0
+      finite: true
+      convention_fingerprint: c8c8ea14ded8e2818284e331aa57c0ca6a970062ac0bf26146a962c10643fe5d
+      drive_multiplier: 0.05
+      post_drive_recovery_ms: 20.0
+    fresh_detector_cycle_pass: false
+  - drive_multiplier: 0.1
+    result:
+      driven: true
+      spike_times_ms:
+      - 1.6300000000000001
+      post_stimulus_spike_times_ms: []
+      soma_voltage_range_mV:
+      - -50.721766307140875
+      - -23.226183252404862
+      detector_voltage_range_mV:
+      - -50.721766307140875
+      - -23.226183252404862
+      threshold_upcrossings: 0
+      release_downcrossings: 0
+      arm_transitions: 0
+      release_transitions: 0
+      final_armed: 0.0
+      finite: true
+      convention_fingerprint: c8c8ea14ded8e2818284e331aa57c0ca6a970062ac0bf26146a962c10643fe5d
+      drive_multiplier: 0.1
+      post_drive_recovery_ms: 20.0
+    fresh_detector_cycle_pass: false
+  - drive_multiplier: 0.2
+    result:
+      driven: true
+      spike_times_ms:
+      - 1.6300000000000001
+      post_stimulus_spike_times_ms: []
+      soma_voltage_range_mV:
+      - -53.08258326847968
+      - -26.944960128135257
+      detector_voltage_range_mV:
+      - -53.08258326847968
+      - -26.944960128135257
+      threshold_upcrossings: 0
+      release_downcrossings: 0
+      arm_transitions: 0
+      release_transitions: 0
+      final_armed: 0.0
+      finite: true
+      convention_fingerprint: c8c8ea14ded8e2818284e331aa57c0ca6a970062ac0bf26146a962c10643fe5d
+      drive_multiplier: 0.2
+      post_drive_recovery_ms: 20.0
+    fresh_detector_cycle_pass: false
+  - drive_multiplier: 0.4
+    result:
+      driven: true
+      spike_times_ms:
+      - 1.6300000000000001
+      post_stimulus_spike_times_ms: []
+      soma_voltage_range_mV:
+      - -57.10931895073622
+      - -17.193999475874282
+      detector_voltage_range_mV:
+      - -57.10931895073622
+      - -17.193999475874282
+      threshold_upcrossings: 0
+      release_downcrossings: 0
+      arm_transitions: 0
+      release_transitions: 0
+      final_armed: 0.0
+      finite: true
+      convention_fingerprint: c8c8ea14ded8e2818284e331aa57c0ca6a970062ac0bf26146a962c10643fe5d
+      drive_multiplier: 0.4
+      post_drive_recovery_ms: 20.0
+    fresh_detector_cycle_pass: false
+  - drive_multiplier: 0.7
+    result:
+      driven: true
+      spike_times_ms:
+      - 1.6300000000000001
+      post_stimulus_spike_times_ms: []
+      soma_voltage_range_mV:
+      - -59.50810508006804
+      - -22.879298481184797
+      detector_voltage_range_mV:
+      - -59.50810508006804
+      - -22.879298481184797
+      threshold_upcrossings: 0
+      release_downcrossings: 0
+      arm_transitions: 0
+      release_transitions: 0
+      final_armed: 0.0
+      finite: true
+      convention_fingerprint: c8c8ea14ded8e2818284e331aa57c0ca6a970062ac0bf26146a962c10643fe5d
+      drive_multiplier: 0.7
+      post_drive_recovery_ms: 20.0
+    fresh_detector_cycle_pass: false
+  - drive_multiplier: 1.0
+    result:
+      driven: true
+      spike_times_ms:
+      - 1.6300000000000001
+      post_stimulus_spike_times_ms: []
+      soma_voltage_range_mV:
+      - -60.6119666422515
+      - -21.818512557904842
+      detector_voltage_range_mV:
+      - -60.6119666422515
+      - -21.818512557904842
+      threshold_upcrossings: 0
+      release_downcrossings: 0
+      arm_transitions: 0
+      release_transitions: 0
+      final_armed: 0.0
+      finite: true
+      convention_fingerprint: c8c8ea14ded8e2818284e331aa57c0ca6a970062ac0bf26146a962c10643fe5d
+      drive_multiplier: 1.0
+      post_drive_recovery_ms: 20.0
+    fresh_detector_cycle_pass: false
+  stage_1_pass: false
+- pair:
+    label: arm_20_release_10
+    arm_mV: 20.0
+    release_mV: 10.0
+  runtime_fingerprint: e98e69099a574f95f349e4c5820d8213c38dc2e427aeeeb3ff75846a8d929e37
+  control:
+    driven: false
+    spike_times_ms:
+    - 1.59
+    post_stimulus_spike_times_ms: []
+    soma_voltage_range_mV:
+    - -39.677135242575346
+    - -38.01418999747486
+    detector_voltage_range_mV:
+    - -39.677135242575346
+    - -38.01418999747486
+    threshold_upcrossings: 0
+    release_downcrossings: 0
+    arm_transitions: 0
+    release_transitions: 0
+    final_armed: 0.0
+    finite: true
+    convention_fingerprint: e98e69099a574f95f349e4c5820d8213c38dc2e427aeeeb3ff75846a8d929e37
+    drive_multiplier: 1.0
+    post_drive_recovery_ms: 20.0
+  control_pass: true
+  driven_outcomes:
+  - drive_multiplier: 0.05
+    result:
+      driven: true
+      spike_times_ms:
+      - 1.59
+      post_stimulus_spike_times_ms: []
+      soma_voltage_range_mV:
+      - -47.86216373139667
+      - -31.059554064285997
+      detector_voltage_range_mV:
+      - -47.86216373139667
+      - -31.059554064285997
+      threshold_upcrossings: 0
+      release_downcrossings: 0
+      arm_transitions: 0
+      release_transitions: 0
+      final_armed: 0.0
+      finite: true
+      convention_fingerprint: e98e69099a574f95f349e4c5820d8213c38dc2e427aeeeb3ff75846a8d929e37
+      drive_multiplier: 0.05
+      post_drive_recovery_ms: 20.0
+    fresh_detector_cycle_pass: false
+  - drive_multiplier: 0.1
+    result:
+      driven: true
+      spike_times_ms:
+      - 1.59
+      post_stimulus_spike_times_ms: []
+      soma_voltage_range_mV:
+      - -50.721766307140875
+      - -23.226183252404862
+      detector_voltage_range_mV:
+      - -50.721766307140875
+      - -23.226183252404862
+      threshold_upcrossings: 0
+      release_downcrossings: 0
+      arm_transitions: 0
+      release_transitions: 0
+      final_armed: 0.0
+      finite: true
+      convention_fingerprint: e98e69099a574f95f349e4c5820d8213c38dc2e427aeeeb3ff75846a8d929e37
+      drive_multiplier: 0.1
+      post_drive_recovery_ms: 20.0
+    fresh_detector_cycle_pass: false
+  - drive_multiplier: 0.2
+    result:
+      driven: true
+      spike_times_ms:
+      - 1.59
+      post_stimulus_spike_times_ms: []
+      soma_voltage_range_mV:
+      - -53.08258326847968
+      - -26.944960128135257
+      detector_voltage_range_mV:
+      - -53.08258326847968
+      - -26.944960128135257
+      threshold_upcrossings: 0
+      release_downcrossings: 0
+      arm_transitions: 0
+      release_transitions: 0
+      final_armed: 0.0
+      finite: true
+      convention_fingerprint: e98e69099a574f95f349e4c5820d8213c38dc2e427aeeeb3ff75846a8d929e37
+      drive_multiplier: 0.2
+      post_drive_recovery_ms: 20.0
+    fresh_detector_cycle_pass: false
+  - drive_multiplier: 0.4
+    result:
+      driven: true
+      spike_times_ms:
+      - 1.59
+      post_stimulus_spike_times_ms: []
+      soma_voltage_range_mV:
+      - -57.10931895073622
+      - -17.193999475874282
+      detector_voltage_range_mV:
+      - -57.10931895073622
+      - -17.193999475874282
+      threshold_upcrossings: 0
+      release_downcrossings: 0
+      arm_transitions: 0
+      release_transitions: 0
+      final_armed: 0.0
+      finite: true
+      convention_fingerprint: e98e69099a574f95f349e4c5820d8213c38dc2e427aeeeb3ff75846a8d929e37
+      drive_multiplier: 0.4
+      post_drive_recovery_ms: 20.0
+    fresh_detector_cycle_pass: false
+  - drive_multiplier: 0.7
+    result:
+      driven: true
+      spike_times_ms:
+      - 1.59
+      post_stimulus_spike_times_ms: []
+      soma_voltage_range_mV:
+      - -59.50810508006804
+      - -22.879298481184797
+      detector_voltage_range_mV:
+      - -59.50810508006804
+      - -22.879298481184797
+      threshold_upcrossings: 0
+      release_downcrossings: 0
+      arm_transitions: 0
+      release_transitions: 0
+      final_armed: 0.0
+      finite: true
+      convention_fingerprint: e98e69099a574f95f349e4c5820d8213c38dc2e427aeeeb3ff75846a8d929e37
+      drive_multiplier: 0.7
+      post_drive_recovery_ms: 20.0
+    fresh_detector_cycle_pass: false
+  - drive_multiplier: 1.0
+    result:
+      driven: true
+      spike_times_ms:
+      - 1.59
+      post_stimulus_spike_times_ms: []
+      soma_voltage_range_mV:
+      - -60.6119666422515
+      - -21.818512557904842
+      detector_voltage_range_mV:
+      - -60.6119666422515
+      - -21.818512557904842
+      threshold_upcrossings: 0
+      release_downcrossings: 0
+      arm_transitions: 0
+      release_transitions: 0
+      final_armed: 0.0
+      finite: true
+      convention_fingerprint: e98e69099a574f95f349e4c5820d8213c38dc2e427aeeeb3ff75846a8d929e37
+      drive_multiplier: 1.0
+      post_drive_recovery_ms: 20.0
+    fresh_detector_cycle_pass: false
+  stage_1_pass: false
+- pair:
+    label: arm_30_release_20
+    arm_mV: 30.0
+    release_mV: 20.0
+  runtime_fingerprint: c5d2d26acc01b78b14a00cc34561df439c7d5563ceaf1a455e237a16d550c2b3
+  control:
+    driven: false
+    spike_times_ms:
+    - 1.54
+    post_stimulus_spike_times_ms: []
+    soma_voltage_range_mV:
+    - -39.677135242575346
+    - -38.01418999747486
+    detector_voltage_range_mV:
+    - -39.677135242575346
+    - -38.01418999747486
+    threshold_upcrossings: 0
+    release_downcrossings: 0
+    arm_transitions: 0
+    release_transitions: 0
+    final_armed: 0.0
+    finite: true
+    convention_fingerprint: c5d2d26acc01b78b14a00cc34561df439c7d5563ceaf1a455e237a16d550c2b3
+    drive_multiplier: 1.0
+    post_drive_recovery_ms: 20.0
+  control_pass: true
+  driven_outcomes:
+  - drive_multiplier: 0.05
+    result:
+      driven: true
+      spike_times_ms:
+      - 1.54
+      post_stimulus_spike_times_ms: []
+      soma_voltage_range_mV:
+      - -47.86216373139667
+      - -31.059554064285997
+      detector_voltage_range_mV:
+      - -47.86216373139667
+      - -31.059554064285997
+      threshold_upcrossings: 0
+      release_downcrossings: 0
+      arm_transitions: 0
+      release_transitions: 0
+      final_armed: 0.0
+      finite: true
+      convention_fingerprint: c5d2d26acc01b78b14a00cc34561df439c7d5563ceaf1a455e237a16d550c2b3
+      drive_multiplier: 0.05
+      post_drive_recovery_ms: 20.0
+    fresh_detector_cycle_pass: false
+  - drive_multiplier: 0.1
+    result:
+      driven: true
+      spike_times_ms:
+      - 1.54
+      post_stimulus_spike_times_ms: []
+      soma_voltage_range_mV:
+      - -50.721766307140875
+      - -23.226183252404862
+      detector_voltage_range_mV:
+      - -50.721766307140875
+      - -23.226183252404862
+      threshold_upcrossings: 0
+      release_downcrossings: 0
+      arm_transitions: 0
+      release_transitions: 0
+      final_armed: 0.0
+      finite: true
+      convention_fingerprint: c5d2d26acc01b78b14a00cc34561df439c7d5563ceaf1a455e237a16d550c2b3
+      drive_multiplier: 0.1
+      post_drive_recovery_ms: 20.0
+    fresh_detector_cycle_pass: false
+  - drive_multiplier: 0.2
+    result:
+      driven: true
+      spike_times_ms:
+      - 1.54
+      post_stimulus_spike_times_ms: []
+      soma_voltage_range_mV:
+      - -53.08258326847968
+      - -26.944960128135257
+      detector_voltage_range_mV:
+      - -53.08258326847968
+      - -26.944960128135257
+      threshold_upcrossings: 0
+      release_downcrossings: 0
+      arm_transitions: 0
+      release_transitions: 0
+      final_armed: 0.0
+      finite: true
+      convention_fingerprint: c5d2d26acc01b78b14a00cc34561df439c7d5563ceaf1a455e237a16d550c2b3
+      drive_multiplier: 0.2
+      post_drive_recovery_ms: 20.0
+    fresh_detector_cycle_pass: false
+  - drive_multiplier: 0.4
+    result:
+      driven: true
+      spike_times_ms:
+      - 1.54
+      post_stimulus_spike_times_ms: []
+      soma_voltage_range_mV:
+      - -57.10931895073622
+      - -17.193999475874282
+      detector_voltage_range_mV:
+      - -57.10931895073622
+      - -17.193999475874282
+      threshold_upcrossings: 0
+      release_downcrossings: 0
+      arm_transitions: 0
+      release_transitions: 0
+      final_armed: 0.0
+      finite: true
+      convention_fingerprint: c5d2d26acc01b78b14a00cc34561df439c7d5563ceaf1a455e237a16d550c2b3
+      drive_multiplier: 0.4
+      post_drive_recovery_ms: 20.0
+    fresh_detector_cycle_pass: false
+  - drive_multiplier: 0.7
+    result:
+      driven: true
+      spike_times_ms:
+      - 1.54
+      post_stimulus_spike_times_ms: []
+      soma_voltage_range_mV:
+      - -59.50810508006804
+      - -22.879298481184797
+      detector_voltage_range_mV:
+      - -59.50810508006804
+      - -22.879298481184797
+      threshold_upcrossings: 0
+      release_downcrossings: 0
+      arm_transitions: 0
+      release_transitions: 0
+      final_armed: 0.0
+      finite: true
+      convention_fingerprint: c5d2d26acc01b78b14a00cc34561df439c7d5563ceaf1a455e237a16d550c2b3
+      drive_multiplier: 0.7
+      post_drive_recovery_ms: 20.0
+    fresh_detector_cycle_pass: false
+  - drive_multiplier: 1.0
+    result:
+      driven: true
+      spike_times_ms:
+      - 1.54
+      post_stimulus_spike_times_ms: []
+      soma_voltage_range_mV:
+      - -60.6119666422515
+      - -21.818512557904842
+      detector_voltage_range_mV:
+      - -60.6119666422515
+      - -21.818512557904842
+      threshold_upcrossings: 0
+      release_downcrossings: 0
+      arm_transitions: 0
+      release_transitions: 0
+      final_armed: 0.0
+      finite: true
+      convention_fingerprint: c5d2d26acc01b78b14a00cc34561df439c7d5563ceaf1a455e237a16d550c2b3
+      drive_multiplier: 1.0
+      post_drive_recovery_ms: 20.0
+    fresh_detector_cycle_pass: false
+  stage_1_pass: false
+assessment:
+  stage_1_survivor_count: 4
+  source_pair_survives: false
+  all_controls_pass: true
+  startup_latched_release_counts_as_pass: false
+  advance_to_connected_prerequisite: true
+next_gate: For isolated survivors only, run Figure 6 and then a same-network Figure
+  7 match with detector-cycle diagnostics. Do not run mismatch unless Figure 6 remains
+  valid and match produces genuine TRN cycles plus selective relay output.

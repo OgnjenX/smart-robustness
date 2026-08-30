@@ -215,8 +215,11 @@ def create_compartmental_hh_population(
             )
     spike_event_rule = SpikeEventRule(params["spike_event_rule"])
     spike_event_threshold_mV = float(params["spike_event_threshold_mV"])
+    spike_event_release_mV = float(params.get("spike_event_release_mV", 0.0))
     if not np.isfinite(spike_event_threshold_mV):
         raise ValueError("spike_event_threshold_mV must be finite")
+    if not np.isfinite(spike_event_release_mV):
+        raise ValueError("spike_event_release_mV must be finite")
     ahp_convention = AHPConvention(params["ahp_convention"])
     synaptic_ports = params.get("synaptic_ports", ())
     if not isinstance(synaptic_ports, tuple) or not all(
@@ -341,13 +344,16 @@ def create_compartmental_hh_population(
                 f"{spike_event_threshold_mV}*mV"
             )
         group_kwargs.update(
-            threshold="armed > 0.5 and spike_detector_voltage < 0*mV",
+            threshold=(
+                "armed > 0.5 and spike_detector_voltage < "
+                f"{spike_event_release_mV}*mV"
+            ),
             events=events,
         )
     else:
         equations += "\nprevious_spike_voltage : volt"
         group_kwargs["threshold"] = (
-            "spike_detector_voltage < 0*mV and "
+            f"spike_detector_voltage < {spike_event_release_mV}*mV and "
             f"previous_spike_voltage > {spike_event_threshold_mV}*mV"
         )
     group = brian.NeuronGroup(size, equations, reset=spike_reset, **group_kwargs)
@@ -384,6 +390,8 @@ def create_compartmental_hh_population(
         group.ach_fall = 0
     # SMART Equation 8 emits on the falling phase: first remember a sample
     # above V_theta, then release one event when the soma returns below 0 mV.
+    # The source value remains the default; an explicit alternative release
+    # coordinate is available only for separately labeled detector calibration.
     group.armed = 0
     group.last_spike_onset = -1 * brian.second
     if spike_event_rule is SpikeEventRule.LITERAL_PREVIOUS_SAMPLE:

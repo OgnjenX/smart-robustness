@@ -192,6 +192,36 @@ class TrnRecruitmentResult:
 
 
 @dataclass(frozen=True, slots=True)
+class TrnDetectorCycleResult:
+    """Isolated TRN result that distinguishes fresh cycles from stale arms."""
+
+    driven: bool
+    spike_times_ms: tuple[float, ...]
+    post_stimulus_spike_times_ms: tuple[float, ...]
+    soma_voltage_range_mV: tuple[float, float]
+    detector_voltage_range_mV: tuple[float, float]
+    threshold_upcrossings: int
+    release_downcrossings: int
+    arm_transitions: int
+    release_transitions: int
+    final_armed: float
+    finite: bool
+    convention_fingerprint: str
+    drive_multiplier: float
+    post_drive_recovery_ms: float
+
+    @property
+    def fresh_detector_cycle_pass(self) -> bool:
+        return bool(
+            self.finite
+            and self.post_stimulus_spike_times_ms
+            and self.threshold_upcrossings > 0
+            and self.arm_transitions > 0
+            and self.release_transitions > 0
+        )
+
+
+@dataclass(frozen=True, slots=True)
 class Layer5PropagationProtocol:
     """Isolated Figure 10 apical-dendrite-to-soma propagation assay."""
 
@@ -527,6 +557,114 @@ def run_trn_recruitment_condition(
         applied_relay_ampa_gate=(
             protocol.relay_ampa_gate * protocol.drive_multiplier if driven else 0.0
         ),
+    )
+
+
+def run_trn_detector_cycle_condition(
+    *,
+    driven: bool,
+    conventions=None,
+    protocol: TrnRecruitmentProtocol | None = None,
+    post_drive_recovery_ms: float = 20.0,
+    brian=None,
+) -> TrnDetectorCycleResult:
+    """Run an isolated TRN trial with detector-cycle instrumentation.
+
+    Constant receptor gates are cleared before the recovery epoch. A promoted
+    event must contain an in-window arm transition and threshold upcrossing;
+    releasing a detector arm inherited from initialization is not sufficient.
+    """
+
+    if brian is None:
+        import brian2 as brian
+    from ..classic_sector import figure6_runtime_conventions, first_order_population_parameters
+    from ..models.modeldb112923 import first_order_population_facts
+
+    if not np.isfinite(post_drive_recovery_ms) or post_drive_recovery_ms < 0:
+        raise ValueError("post-drive recovery must be finite and nonnegative")
+    protocol = protocol or TrnRecruitmentProtocol()
+    conventions = conventions or figure6_runtime_conventions()
+    fact = next(
+        fact for fact in first_order_population_facts() if fact.canonical_name == "trn"
+    )
+    params = first_order_population_parameters(fact, conventions=conventions)
+    brian.start_scope()
+    brian.defaultclock.dt = protocol.dt_ms * brian.ms
+    population = create_compartmental_hh_population(
+        name="isolated_trn_detector_cycle", size=1, params=params, brian=brian
+    )
+    spikes = brian.SpikeMonitor(population.group)
+    state = brian.StateMonitor(
+        population.group,
+        ("v_soma", "spike_detector_voltage", "armed"),
+        record=True,
+    )
+    network = brian.Network(population.group, spikes, state)
+    if protocol.pre_drive_ms:
+        network.run(protocol.pre_drive_ms * brian.ms)
+    if driven:
+        population.group.port_002_gate = (
+            protocol.relay_ampa_gate * protocol.drive_multiplier
+        )
+        population.group.port_004_gate = (
+            protocol.layer6ii_ampa_gate * protocol.drive_multiplier
+        )
+        population.group.port_001_gate = (
+            protocol.layer6ii_nmda_gate * protocol.drive_multiplier
+        )
+    network.run(protocol.drive_ms * brian.ms)
+    if driven:
+        population.group.port_002_gate = 0
+        population.group.port_004_gate = 0
+        population.group.port_001_gate = 0
+    if post_drive_recovery_ms:
+        network.run(post_drive_recovery_ms * brian.ms)
+
+    time_ms = np.asarray(state.t / brian.ms, dtype=float)
+    window = time_ms >= protocol.pre_drive_ms
+    soma_mV = np.asarray(state.v_soma[0] / brian.mV, dtype=float)[window]
+    detector_mV = np.asarray(
+        state.spike_detector_voltage[0] / brian.mV, dtype=float
+    )[window]
+    armed = np.asarray(state.armed[0], dtype=float)[window]
+    finite = bool(
+        np.all(np.isfinite(soma_mV))
+        and np.all(np.isfinite(detector_mV))
+        and np.all(np.isfinite(armed))
+    )
+    threshold_mV = float(params["spike_event_threshold_mV"])
+    release_mV = float(params["spike_event_release_mV"])
+
+    def crossings(before: np.ndarray, after: np.ndarray) -> int:
+        return int(np.count_nonzero(before & after))
+
+    spike_times = np.asarray(spikes.t / brian.ms, dtype=float)
+    return TrnDetectorCycleResult(
+        driven=driven,
+        spike_times_ms=tuple(float(value) for value in spike_times),
+        post_stimulus_spike_times_ms=tuple(
+            float(value) for value in spike_times if value >= protocol.pre_drive_ms
+        ),
+        soma_voltage_range_mV=(float(np.min(soma_mV)), float(np.max(soma_mV))),
+        detector_voltage_range_mV=(
+            float(np.min(detector_mV)),
+            float(np.max(detector_mV)),
+        ),
+        threshold_upcrossings=crossings(
+            detector_mV[:-1] <= threshold_mV,
+            detector_mV[1:] > threshold_mV,
+        ),
+        release_downcrossings=crossings(
+            detector_mV[:-1] >= release_mV,
+            detector_mV[1:] < release_mV,
+        ),
+        arm_transitions=crossings(armed[:-1] <= 0.5, armed[1:] > 0.5),
+        release_transitions=crossings(armed[:-1] > 0.5, armed[1:] <= 0.5),
+        final_armed=float(armed[-1]),
+        finite=finite,
+        convention_fingerprint=conventions.fingerprint,
+        drive_multiplier=protocol.drive_multiplier,
+        post_drive_recovery_ms=post_drive_recovery_ms,
     )
 
 

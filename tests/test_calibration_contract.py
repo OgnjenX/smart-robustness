@@ -264,6 +264,9 @@ FIGURE6_TRN_DETECTOR_HYSTERESIS_PREREQUISITE_PATH = (
 FIGURE6_TRN_GABA_TRANSFER_GRID_PATH = (
     ROOT / "docs/validation-results/figure6-trn-gaba-transfer-grid-202.yaml"
 )
+FIGURE7_TRN_GABA_TRANSFER_MATCH_PATH = (
+    ROOT / "docs/validation-results/figure7-trn-gaba-transfer-match-203.yaml"
+)
 
 
 def test_classic_calibration_contract_separates_training_and_holdout() -> None:
@@ -1038,6 +1041,33 @@ def test_trn_gaba_transfer_grid_has_one_calibrated_figure6_survivor() -> None:
     ) == {4}
     assert all(survivor["gates"].values())
     assert survivor["pass"]
+
+
+def test_calibrated_trn_transfer_passes_same_network_match_gate() -> None:
+    artifact = yaml.safe_load(FIGURE7_TRN_GABA_TRANSFER_MATCH_PATH.read_text())
+    assert artifact["status"] == "match-pass"
+    assert artifact["holdouts_consulted"] == ["figure7_match"]
+    result = artifact["result"]
+    assert result["learned_state_provenance"] == "same-network-figure6-episode"
+    assert len(result["relay_spike_indices"]) == 25
+    assert set(result["relay_spike_indices"]) == {38, 39, 40, 41, 42}
+    assert len(result["trn_spike_indices"]) == 538
+    assert len(result["nonspecific_spike_times_ms"]) == 6
+    assert set(artifact["relay_event_counts_by_index"].values()) == {5}
+    assert artifact["sampled_trn_event_counts_by_index"] == artifact[
+        "sampled_trn_threshold_upcrossings_by_index"
+    ]
+    assert artifact["sampled_trn_event_counts_by_index"] == artifact[
+        "sampled_trn_arm_transitions_by_index"
+    ]
+    assert artifact["sampled_trn_event_counts_by_index"] == artifact[
+        "sampled_trn_release_transitions_by_index"
+    ]
+    assert all(artifact["gates"].values())
+    assert artifact["assessment"] == {
+        "same_network_match_pass": True,
+        "advance_to_mismatch": True,
+    }
 
 
 def test_trn_calcium_reversal_restores_wrong_cue_lead_mechanism() -> None:

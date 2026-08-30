@@ -1852,6 +1852,20 @@ emits 728 events. This is a calibrated Figure 6-compatible candidate, not a
 classic-SMART reproduction. It advances only to same-network Figure 7 match
 with the same transfer scale active during both learning and recognition.
 
+The preregistered same-network match passes in
+`figure7-trn-gaba-transfer-match-203.yaml`. One persistent network first runs
+the complete Figure 6 episode under the calibrated 0.01 transfer scale, freezes
+its adaptive weights, and then receives the simultaneous matched cue with no
+equilibration or cue lead. Recognition remains confined to relay cells 38--42,
+with five events per cell, while TRN emits 538 events and nonspecific thalamus
+emits six. Across all nine sampled TRN locations, every event count exactly
+matches the independently measured threshold upcrossings, arm transitions,
+and release transitions (nine or ten per cell); no startup-latched release is
+being counted as resonance. Match therefore unlocks one fresh mismatch run
+with all parameters fixed. Official Figure 7 remains unclaimed until the pair
+shows more specific-thalamic/TRN activity in match and more nonspecific output
+in mismatch.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

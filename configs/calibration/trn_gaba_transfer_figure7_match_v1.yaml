@@ -1,0 +1,46 @@
+schema_version: 1
+name: trn-gaba-transfer-figure7-match-v1
+status: registered-before-execution
+base_profile: configs/calibration/figure6_kinness_equation27_transition_v1.yaml
+figure6_artifact: docs/validation-results/figure6-trn-gaba-transfer-grid-202.yaml
+rationale: >-
+  Artifact 202 identifies 0.01 as the sole registered inhibitory-transfer scale
+  that preserves every source-supported Figure 6 gate with genuine dynamic TRN
+  output. Test match in the same network that performs that training episode;
+  do not install a separate learned snapshot or alter the scale between phases.
+detector:
+  arm_mV: -20.0
+  release_mV: -30.0
+trn_to_relay_gaba:
+  scale: 0.01
+  projection_ids:
+    - modeldb112923.projection.000
+    - modeldb112923.projection.001
+    - modeldb112923.projection.004
+protocol:
+  condition: match
+  pretrain_with_figure6_episode: true
+  top_down_current_pA: 600.0
+  top_down_cue_lead_ms: 0.0
+  equilibration_ms: 0.0
+  duration_ms: 100.0
+  dt_ms: 0.01
+  record_relay_diagnostics: true
+match_gate:
+  relay_active_indices: [38, 39, 40, 41, 42]
+  minimum_relay_events_per_active_index: 1
+  trn_events: '>0'
+  sampled_trn_events_have_fresh_cycles: true
+  finite: true
+next_gate: >-
+  Run a fresh same-network mismatch only if match remains confined to the five
+  horizontal relay cells and every sampled TRN event is supported by a fresh
+  detector arm/release cycle. Then score published match-greater-than-mismatch
+  specific-thalamic/TRN activity and mismatch-greater-than-match nonspecific
+  output without changing any parameter.
+locked_holdouts:
+  - figure7_mismatch
+  - figure10_reset
+  - figure14_spectra
+  - figure15_local_synchrony
+  - figure16_long_range_synchrony

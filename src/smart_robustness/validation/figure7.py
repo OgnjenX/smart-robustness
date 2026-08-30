@@ -401,6 +401,7 @@ def run_figure7_condition(
     record_relay_diagnostics: bool = False,
     record_v1_cortical_spikes: bool = False,
     projection_weight_scales: Mapping[str, float] | None = None,
+    persistent_projection_weight_scales: Mapping[str, float] | None = None,
     top_down_cue_lead_ms: float = 0.0,
     equilibration_ms: float = 0.0,
     cpp_standalone_directory: str | Path | None = None,
@@ -428,6 +429,14 @@ def run_figure7_condition(
         raise ValueError("equilibration_ms cannot be negative")
     if record_relay_diagnostics and duration_ms <= 45.0:
         raise ValueError("Figure 7 pathway diagnostics require duration_ms > 45")
+    overlapping_scales = set(projection_weight_scales or ()) & set(
+        persistent_projection_weight_scales or ()
+    )
+    if overlapping_scales:
+        raise ValueError(
+            "projection scale mappings overlap: "
+            f"{sorted(overlapping_scales)}"
+        )
     if brian is None:
         import brian2 as brian
     if cpp_standalone_directory is not None:
@@ -470,6 +479,27 @@ def run_figure7_condition(
         sector = build_full_smart_network(conventions=conventions, brian=brian)
     else:
         sector = build_first_order_connected_sector(conventions=conventions, brian=brian)
+
+    def apply_projection_scales(scales: Mapping[str, float] | None) -> None:
+        if not scales:
+            return
+        unknown = set(scales) - set(sector.projections)
+        if unknown:
+            raise ValueError(f"unknown projection scale IDs: {sorted(unknown)}")
+        for projection_id, scale in scales.items():
+            if not np.isfinite(scale) or scale <= 0:
+                raise ValueError("projection weight scales must be finite and positive")
+            projection = sector.projections[projection_id]
+            blocks = getattr(projection, "blocks", (projection,))
+            for block in blocks:
+                # Symbolic assignment also works before a deferred standalone
+                # build, when state arrays cannot yet be read.
+                block.w = f"w*({float(scale)!r})"
+
+    # Persistent scales define one altered network and therefore precede an
+    # optional same-network Figure 6 episode. The historical post-learning
+    # scales below remain available for recognition-only diagnostics.
+    apply_projection_scales(persistent_projection_weight_scales)
     pretraining_elapsed_ms = 0.0
     if pretrain_with_figure6_episode:
         from .figure6 import Figure6LearningProtocol
@@ -518,21 +548,7 @@ def run_figure7_condition(
             learned_weights,
             verify_runtime_bounds=cpp_standalone_directory is None,
         )
-    if projection_weight_scales:
-        unknown = set(projection_weight_scales) - set(sector.projections)
-        if unknown:
-            raise ValueError(f"unknown projection scale IDs: {sorted(unknown)}")
-        for projection_id, scale in projection_weight_scales.items():
-            if not np.isfinite(scale) or scale <= 0:
-                raise ValueError("projection weight scales must be finite and positive")
-            projection = sector.projections[projection_id]
-            blocks = getattr(projection, "blocks", (projection,))
-            for block in blocks:
-                # A symbolic assignment is evaluated by Brian after the
-                # source-defined spatial weights have been initialized.  It
-                # therefore works in both runtime and C++ standalone, where
-                # reading state arrays before the build is unsupported.
-                block.w = f"w*({float(scale)!r})"
+    apply_projection_scales(projection_weight_scales)
     nonspecific = brian.SpikeMonitor(
         sector.populations["thalamic_nonspecific"].group,
         name=f"figure7_{condition.value}_nonspecific_spikes",

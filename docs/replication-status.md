@@ -1825,6 +1825,18 @@ prerequisite; Figure 7 mismatch remains locked until a candidate preserves
 Figure 6 and produces genuine connected match cycles with selective relay
 output.
 
+The mandatory connected prerequisite is complete in
+`figure6-trn-detector-hysteresis-prerequisite-201.yaml`, without consulting a
+Figure 7 condition. All four isolated survivors fail Figure 6 in the same
+causal way. Each preserves the five intended horizontal relay indices but
+reduces them from four events each to one, recruits 489--525 TRN events, and
+leaves no relay event after the category teaching arrival. The cortical chain
+and normalized map orientation remain present, but the repeated 40-Hz relay
+train and causal learning pair fail. No detector pair advances to a
+same-network match trial. Therefore a simple lower TRN arm/release hysteresis
+is rejected as the missing legacy-runtime correction: it can make isolated
+TRN cells emit, but it destroys the already validated Figure 6 regime.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

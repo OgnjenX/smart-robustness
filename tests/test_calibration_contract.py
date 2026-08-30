@@ -257,6 +257,10 @@ FIGURE7_TRN_DETECTOR_HYSTERESIS_PROFILE_PATH = (
 FIGURE7_TRN_DETECTOR_HYSTERESIS_STAGE1_PATH = (
     ROOT / "docs/validation-results/figure7-trn-detector-hysteresis-stage1-200.yaml"
 )
+FIGURE6_TRN_DETECTOR_HYSTERESIS_PREREQUISITE_PATH = (
+    ROOT
+    / "docs/validation-results/figure6-trn-detector-hysteresis-prerequisite-201.yaml"
+)
 
 
 def test_classic_calibration_contract_separates_training_and_holdout() -> None:
@@ -970,6 +974,35 @@ def test_trn_detector_hysteresis_has_four_isolated_fresh_cycle_survivors() -> No
             "arm_30_release_20",
         )
     )
+
+
+def test_trn_detector_hysteresis_has_no_figure6_survivor() -> None:
+    artifact = yaml.safe_load(
+        FIGURE6_TRN_DETECTOR_HYSTERESIS_PREREQUISITE_PATH.read_text()
+    )
+    assert artifact["status"] == "figure6-prerequisite-complete"
+    assert not artifact["holdouts_consulted"]
+    assert artifact["figure6_survivor_labels"] == []
+    assessment = artifact["assessment"]
+    assert assessment["completed_candidate_count"] == 4
+    assert assessment["registered_candidate_count"] == 4
+    assert assessment["figure6_survivor_count"] == 0
+    assert not assessment["advance_to_same_network_match"]
+    assert [
+        item["population_spikes"]["trn"] for item in artifact["outcomes"]
+    ] == [506, 525, 489, 511]
+    for item in artifact["outcomes"]:
+        assert item["population_spikes"]["thalamic_relay"] == 5
+        assert item["relay_spike_indices"] == [38, 39, 40, 41, 42]
+        assert set(item["relay_event_counts_by_index"].values()) == {1}
+        assert item["gates"]["relay_active_indices"]
+        assert item["gates"]["feedforward_chain_complete"]
+        assert item["gates"]["bottom_up_horizontal_orientation"]
+        assert item["gates"]["top_down_horizontal_contrast"]
+        assert not item["gates"]["relay_event_count"]
+        assert not item["gates"]["relay_events_per_active_index"]
+        assert not item["gates"]["causal_pair_in_learning_window"]
+        assert not item["figure6_pass"]
 
 
 def test_trn_calcium_reversal_restores_wrong_cue_lead_mechanism() -> None:

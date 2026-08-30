@@ -1,0 +1,374 @@
+schema_version: 1
+id: figure6-trn-detector-hysteresis-prerequisite-201
+date: '2026-08-30'
+status: figure6-prerequisite-complete
+profile: configs/calibration/trn_detector_hysteresis_figure6_prerequisite_v1.yaml
+base_candidate_fingerprint: 12e0245e9a3044073200e90443582885a5410cf39b8b18d50d22a04a2fc48604
+stage_1_artifact: docs/validation-results/figure7-trn-detector-hysteresis-stage1-200.yaml
+holdouts_consulted: false
+outcomes:
+- pair:
+    label: arm_n20_release_n30
+    arm_mV: -20.0
+    release_mV: -30.0
+  runtime_fingerprint: 40079b59430530b7dd0bbfee7fd2d282b488bcf56ada4cd5d9482af248371ce0
+  protocol:
+    warmup_ms: 0.0
+    stimulus_ms: 100.0
+    post_stimulus_ms: 0.0
+    dt_ms: 0.01
+    source_value: 120.0
+    category_source_value: 70.0
+    winning_layer4_index: 40
+    active_category_index: 40
+    layer6ii_ahp_scale: 1.0
+    monitored_populations:
+    - thalamic_relay
+    - layer4_excitatory_v1
+    - layer23_inhibitory_v1
+    - layer23_excitatory_v1
+    - layer5_excitatory_v1
+    - layer6i_excitatory_v1
+    - layer6ii_excitatory_v1
+    - trn
+    - thalamic_nonspecific
+  population_spikes:
+    thalamic_relay: 5
+    trn: 506
+    layer5_excitatory_v1: 10
+    layer6ii_excitatory_v1: 40
+    layer6i_excitatory_v1: 10
+    layer23_excitatory_v1: 5
+    layer4_excitatory_v1: 13
+    layer23_inhibitory_v1: 10
+    thalamic_nonspecific: 3
+  relay_spike_indices:
+  - 38
+  - 39
+  - 40
+  - 41
+  - 42
+  relay_event_counts_by_index:
+    '38': 1
+    '39': 1
+    '40': 1
+    '41': 1
+    '42': 1
+  relay_detector_threshold_upcrossings_by_index:
+    '38': 1
+    '39': 1
+    '40': 1
+    '41': 1
+    '42': 1
+  relay_detector_arm_transitions_by_index:
+    '38': 1
+    '39': 1
+    '40': 1
+    '41': 1
+    '42': 1
+  relay_detector_release_transitions_by_index:
+    '38': 1
+    '39': 1
+    '40': 1
+    '41': 1
+    '42': 1
+  recruitment:
+    layer4_spike_ms: 9.930000000000001
+    layer23_spike_ms: 32.940000000000005
+    layer5_spike_ms: 35.660000000000004
+    layer6i_spike_ms: 8.110000000000001
+    layer6ii_spike_ms: 8.100000000000001
+  top_down_timing:
+    category_spike_ms: 8.100000000000001
+    teaching_arrival_ms: 10.100000000000001
+    preceding_relay_spike_ms: 5.280000000000001
+    following_relay_spike_ms: null
+  bottom_up_horizontal_orientation_contrast: 0.5804464299792153
+  top_down_combined_horizontal_orientation_contrast: 0.022116663769085967
+  top_down_combined_final_peak: 0.12385700202155142
+  gates:
+    relay_event_count: false
+    relay_active_indices: true
+    relay_events_per_active_index: false
+    relay_fresh_detector_cycles_per_active_index: false
+    feedforward_chain_complete: true
+    causal_pair_in_learning_window: false
+    bottom_up_horizontal_orientation: true
+    top_down_horizontal_contrast: true
+  figure6_pass: false
+- pair:
+    label: arm_n25_release_n35
+    arm_mV: -25.0
+    release_mV: -35.0
+  runtime_fingerprint: acc9ba6fb3029d4e675714152c47b3fdd48939176ef2d103b664d5a0874ca2bc
+  protocol:
+    warmup_ms: 0.0
+    stimulus_ms: 100.0
+    post_stimulus_ms: 0.0
+    dt_ms: 0.01
+    source_value: 120.0
+    category_source_value: 70.0
+    winning_layer4_index: 40
+    active_category_index: 40
+    layer6ii_ahp_scale: 1.0
+    monitored_populations:
+    - thalamic_relay
+    - layer4_excitatory_v1
+    - layer23_inhibitory_v1
+    - layer23_excitatory_v1
+    - layer5_excitatory_v1
+    - layer6i_excitatory_v1
+    - layer6ii_excitatory_v1
+    - trn
+    - thalamic_nonspecific
+  population_spikes:
+    thalamic_relay: 5
+    trn: 525
+    layer5_excitatory_v1: 10
+    layer6ii_excitatory_v1: 40
+    layer6i_excitatory_v1: 10
+    layer23_excitatory_v1: 5
+    layer4_excitatory_v1: 13
+    layer23_inhibitory_v1: 10
+    thalamic_nonspecific: 3
+  relay_spike_indices:
+  - 38
+  - 39
+  - 40
+  - 41
+  - 42
+  relay_event_counts_by_index:
+    '38': 1
+    '39': 1
+    '40': 1
+    '41': 1
+    '42': 1
+  relay_detector_threshold_upcrossings_by_index:
+    '38': 1
+    '39': 1
+    '40': 1
+    '41': 1
+    '42': 1
+  relay_detector_arm_transitions_by_index:
+    '38': 1
+    '39': 1
+    '40': 1
+    '41': 1
+    '42': 1
+  relay_detector_release_transitions_by_index:
+    '38': 1
+    '39': 1
+    '40': 1
+    '41': 1
+    '42': 1
+  recruitment:
+    layer4_spike_ms: 9.930000000000001
+    layer23_spike_ms: 32.940000000000005
+    layer5_spike_ms: 35.660000000000004
+    layer6i_spike_ms: 8.110000000000001
+    layer6ii_spike_ms: 8.100000000000001
+  top_down_timing:
+    category_spike_ms: 8.100000000000001
+    teaching_arrival_ms: 10.100000000000001
+    preceding_relay_spike_ms: 5.280000000000001
+    following_relay_spike_ms: null
+  bottom_up_horizontal_orientation_contrast: 0.5804464299792153
+  top_down_combined_horizontal_orientation_contrast: 0.022102629304219183
+  top_down_combined_final_peak: 0.12384186319861712
+  gates:
+    relay_event_count: false
+    relay_active_indices: true
+    relay_events_per_active_index: false
+    relay_fresh_detector_cycles_per_active_index: false
+    feedforward_chain_complete: true
+    causal_pair_in_learning_window: false
+    bottom_up_horizontal_orientation: true
+    top_down_horizontal_contrast: true
+  figure6_pass: false
+- pair:
+    label: arm_n30_release_n40
+    arm_mV: -30.0
+    release_mV: -40.0
+  runtime_fingerprint: 259dece46dcbb593ec32f5b3a6688a3899f017829aadec0cfea41c7cef764e93
+  protocol:
+    warmup_ms: 0.0
+    stimulus_ms: 100.0
+    post_stimulus_ms: 0.0
+    dt_ms: 0.01
+    source_value: 120.0
+    category_source_value: 70.0
+    winning_layer4_index: 40
+    active_category_index: 40
+    layer6ii_ahp_scale: 1.0
+    monitored_populations:
+    - thalamic_relay
+    - layer4_excitatory_v1
+    - layer23_inhibitory_v1
+    - layer23_excitatory_v1
+    - layer5_excitatory_v1
+    - layer6i_excitatory_v1
+    - layer6ii_excitatory_v1
+    - trn
+    - thalamic_nonspecific
+  population_spikes:
+    thalamic_relay: 5
+    trn: 489
+    layer5_excitatory_v1: 10
+    layer6ii_excitatory_v1: 40
+    layer6i_excitatory_v1: 10
+    layer23_excitatory_v1: 5
+    layer4_excitatory_v1: 13
+    layer23_inhibitory_v1: 10
+    thalamic_nonspecific: 3
+  relay_spike_indices:
+  - 38
+  - 39
+  - 40
+  - 41
+  - 42
+  relay_event_counts_by_index:
+    '38': 1
+    '39': 1
+    '40': 1
+    '41': 1
+    '42': 1
+  relay_detector_threshold_upcrossings_by_index:
+    '38': 1
+    '39': 1
+    '40': 1
+    '41': 1
+    '42': 1
+  relay_detector_arm_transitions_by_index:
+    '38': 1
+    '39': 1
+    '40': 1
+    '41': 1
+    '42': 1
+  relay_detector_release_transitions_by_index:
+    '38': 1
+    '39': 1
+    '40': 1
+    '41': 1
+    '42': 1
+  recruitment:
+    layer4_spike_ms: 9.930000000000001
+    layer23_spike_ms: 32.940000000000005
+    layer5_spike_ms: 35.660000000000004
+    layer6i_spike_ms: 8.110000000000001
+    layer6ii_spike_ms: 8.100000000000001
+  top_down_timing:
+    category_spike_ms: 8.100000000000001
+    teaching_arrival_ms: 10.100000000000001
+    preceding_relay_spike_ms: 5.280000000000001
+    following_relay_spike_ms: null
+  bottom_up_horizontal_orientation_contrast: 0.5804464299792153
+  top_down_combined_horizontal_orientation_contrast: 0.02134517359696143
+  top_down_combined_final_peak: 0.12302480405588397
+  gates:
+    relay_event_count: false
+    relay_active_indices: true
+    relay_events_per_active_index: false
+    relay_fresh_detector_cycles_per_active_index: false
+    feedforward_chain_complete: true
+    causal_pair_in_learning_window: false
+    bottom_up_horizontal_orientation: true
+    top_down_horizontal_contrast: true
+  figure6_pass: false
+- pair:
+    label: arm_n35_release_n45
+    arm_mV: -35.0
+    release_mV: -45.0
+  runtime_fingerprint: 05e4f601c8887c55e8da13716f28fcc995b31504465a4f0dfa7678641b632eb1
+  protocol:
+    warmup_ms: 0.0
+    stimulus_ms: 100.0
+    post_stimulus_ms: 0.0
+    dt_ms: 0.01
+    source_value: 120.0
+    category_source_value: 70.0
+    winning_layer4_index: 40
+    active_category_index: 40
+    layer6ii_ahp_scale: 1.0
+    monitored_populations:
+    - thalamic_relay
+    - layer4_excitatory_v1
+    - layer23_inhibitory_v1
+    - layer23_excitatory_v1
+    - layer5_excitatory_v1
+    - layer6i_excitatory_v1
+    - layer6ii_excitatory_v1
+    - trn
+    - thalamic_nonspecific
+  population_spikes:
+    thalamic_relay: 5
+    trn: 511
+    layer5_excitatory_v1: 10
+    layer6ii_excitatory_v1: 40
+    layer6i_excitatory_v1: 10
+    layer23_excitatory_v1: 5
+    layer4_excitatory_v1: 13
+    layer23_inhibitory_v1: 10
+    thalamic_nonspecific: 4
+  relay_spike_indices:
+  - 38
+  - 39
+  - 40
+  - 41
+  - 42
+  relay_event_counts_by_index:
+    '38': 1
+    '39': 1
+    '40': 1
+    '41': 1
+    '42': 1
+  relay_detector_threshold_upcrossings_by_index:
+    '38': 1
+    '39': 1
+    '40': 1
+    '41': 1
+    '42': 1
+  relay_detector_arm_transitions_by_index:
+    '38': 1
+    '39': 1
+    '40': 1
+    '41': 1
+    '42': 1
+  relay_detector_release_transitions_by_index:
+    '38': 1
+    '39': 1
+    '40': 1
+    '41': 1
+    '42': 1
+  recruitment:
+    layer4_spike_ms: 9.930000000000001
+    layer23_spike_ms: 32.940000000000005
+    layer5_spike_ms: 35.660000000000004
+    layer6i_spike_ms: 8.110000000000001
+    layer6ii_spike_ms: 8.100000000000001
+  top_down_timing:
+    category_spike_ms: 8.100000000000001
+    teaching_arrival_ms: 10.100000000000001
+    preceding_relay_spike_ms: 5.280000000000001
+    following_relay_spike_ms: null
+  bottom_up_horizontal_orientation_contrast: 0.5804464299792153
+  top_down_combined_horizontal_orientation_contrast: 0.022491101523082164
+  top_down_combined_final_peak: 0.12426090390961632
+  gates:
+    relay_event_count: false
+    relay_active_indices: true
+    relay_events_per_active_index: false
+    relay_fresh_detector_cycles_per_active_index: false
+    feedforward_chain_complete: true
+    causal_pair_in_learning_window: false
+    bottom_up_horizontal_orientation: true
+    top_down_horizontal_contrast: true
+  figure6_pass: false
+figure6_survivor_labels: []
+assessment:
+  completed_candidate_count: 4
+  registered_candidate_count: 4
+  figure6_survivor_count: 0
+  advance_to_same_network_match: false
+next_gate: Run a same-network Figure 6 to Figure 7 match only for Figure 6 survivors,
+  with TRN detector-cycle diagnostics. Do not consult mismatch/reset unless match
+  preserves selective relay output and generates genuine fresh TRN cycles.

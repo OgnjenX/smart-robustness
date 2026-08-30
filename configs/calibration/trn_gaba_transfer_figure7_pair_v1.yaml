@@ -1,0 +1,46 @@
+schema_version: 1
+name: trn-gaba-transfer-figure7-pair-v1
+status: registered-before-execution
+base_profile: configs/calibration/figure6_kinness_equation27_transition_v1.yaml
+figure6_artifact: docs/validation-results/figure6-trn-gaba-transfer-grid-202.yaml
+match_artifact: docs/validation-results/figure7-trn-gaba-transfer-match-203.yaml
+rationale: >-
+  Artifact 203 passes the preregistered same-network match gate. Run one fresh
+  mismatch with the identical learned-state protocol, detector, transfer scale,
+  current, timing, duration, and diagnostics, then apply the source-corrected
+  directional Figure 7 contract without fitting to mismatch.
+detector:
+  arm_mV: -20.0
+  release_mV: -30.0
+trn_to_relay_gaba:
+  scale: 0.01
+  projection_ids:
+    - modeldb112923.projection.000
+    - modeldb112923.projection.001
+    - modeldb112923.projection.004
+protocol:
+  condition: mismatch
+  pretrain_with_figure6_episode: true
+  top_down_current_pA: 600.0
+  top_down_cue_lead_ms: 0.0
+  equilibration_ms: 0.0
+  duration_ms: 100.0
+  dt_ms: 0.01
+  record_relay_diagnostics: true
+official_directional_gate:
+  match_relay_indices: [38, 39, 40, 41, 42]
+  mismatch_relay_indices_must_be_subset_of: [40]
+  relay_active_cell_order: match_greater_than_mismatch
+  trn_event_order: match_greater_than_mismatch
+  nonspecific_event_order: mismatch_greater_than_match
+  sampled_mismatch_trn_events_have_fresh_cycles: true
+next_gate: >-
+  If the complete pair passes, advance the unchanged candidate to Figure 10
+  mismatch/reset and later spectral holdouts. If it fails, retain the exact
+  directional failure and reopen only a separately preregistered mechanism;
+  do not fit any parameter to this mismatch result.
+locked_holdouts:
+  - figure10_reset
+  - figure14_spectra
+  - figure15_local_synchrony
+  - figure16_long_range_synchrony

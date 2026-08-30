@@ -181,9 +181,9 @@ parameters:
     note: the published +30/0-mV pair produces no fresh isolated cycle in the registered peak-held assay; four non-source pairs (-35/-45, -30/-40, -25/-35, and -20/-30 mV) survive the isolated gate, but all fail the mandatory Figure 6 prerequisite by reducing the five active relay cells from four events each to one and recruiting 489--525 TRN events. No alternative is promoted or tested on Figure 7
   model.connectivity.trn_to_relay_gaba_transfer_calibration:
     value: optional common scale on ModelDB projections 000, 001, and 004; registered grid 0.001--1.0, Figure 6 survivor 0.01
-    status: behavior-calibration-in-progress
+    status: rejected-uniform-behavior-calibration
     source: Grossberg and Versace 2008 Supplementary Table 3 and SMART.nml agree on the unscaled projection values; no surviving source identifies a lower gain
-    note: with the calibrated -20/-30-mV TRN detector, 0.01 is the sole registered scale that preserves the source-supported Figure 6 relay train, genuine relay detector cycles, cortical chain, causal learning pair, and oriented maps. It is not promoted unless the same scale also passes connected Figure 7 behavior
+    note: with the calibrated -20/-30-mV TRN detector, 0.01 is the sole registered uniform scale that preserves the source-supported Figure 6 relay train, genuine relay detector cycles, cortical chain, causal learning pair, and oriented maps. Same-network match passes, but mismatch retains all five vertical relay cells and produces more rather than fewer TRN events, so the uniform transfer mechanism is rejected and not promoted
   model.multicompartment.exact_voltage_clamp:
     value: optional fixed compartment voltage, separate from finite-conductance XML input
     status: published-protocol alternative

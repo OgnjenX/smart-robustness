@@ -1866,6 +1866,19 @@ with all parameters fixed. Official Figure 7 remains unclaimed until the pair
 shows more specific-thalamic/TRN activity in match and more nonspecific output
 in mismatch.
 
+The fresh mismatch completes the pair in
+`figure7-trn-gaba-transfer-pair-204.yaml` and rejects the candidate as an
+official Figure 7 reproduction. Match/mismatch totals are respectively
+25/24 relay events, 538/589 TRN events, and 6/7 nonspecific events. The
+nonspecific direction is correct (60 versus 70 Hz), and every sampled mismatch
+TRN event is a fresh detector cycle. However, all five vertical mismatch relay
+cells 22, 31, 40, 49, and 58 remain active rather than only overlap cell 40,
+and TRN output is greater in mismatch rather than match. Thus a single 0.01
+global scale solves the Figure 6 suppression tradeoff but leaves reticular
+inhibition too weak/nonselective to implement the published mismatch pathway.
+It is rejected as a full-pair candidate and does not unlock Figure 10 or the
+spectral holdouts.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

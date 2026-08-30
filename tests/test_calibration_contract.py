@@ -267,6 +267,9 @@ FIGURE6_TRN_GABA_TRANSFER_GRID_PATH = (
 FIGURE7_TRN_GABA_TRANSFER_MATCH_PATH = (
     ROOT / "docs/validation-results/figure7-trn-gaba-transfer-match-203.yaml"
 )
+FIGURE7_TRN_GABA_TRANSFER_PAIR_PATH = (
+    ROOT / "docs/validation-results/figure7-trn-gaba-transfer-pair-204.yaml"
+)
 
 
 def test_classic_calibration_contract_separates_training_and_holdout() -> None:
@@ -1067,6 +1070,37 @@ def test_calibrated_trn_transfer_passes_same_network_match_gate() -> None:
     assert artifact["assessment"] == {
         "same_network_match_pass": True,
         "advance_to_mismatch": True,
+    }
+
+
+def test_calibrated_trn_transfer_pair_fails_official_directional_pathway() -> None:
+    artifact = yaml.safe_load(FIGURE7_TRN_GABA_TRANSFER_PAIR_PATH.read_text())
+    assert artifact["status"] == "figure7-failed"
+    assert artifact["holdouts_consulted"] == ["figure7_match", "figure7_mismatch"]
+    assert not artifact["reproduced"]
+    assessment = artifact["official_assessment"]
+    assert assessment["arousal"] == {
+        "match_rate_hz": 60.0,
+        "mismatch_rate_hz": 70.0,
+    }
+    assert assessment["pathway"]["match_active_relay_cells"] == 5
+    assert assessment["pathway"]["mismatch_active_relay_cells"] == 5
+    assert assessment["pathway"]["match_trn_spikes"] == 538
+    assert assessment["pathway"]["mismatch_trn_spikes"] == 589
+    assert set(assessment["pathway"]["mismatch_active_relay_indices"]) == {
+        22,
+        31,
+        40,
+        49,
+        58,
+    }
+    assert artifact["gates"] == {
+        "match_relay_spatial_pattern": True,
+        "mismatch_relay_overlap_only": False,
+        "match_more_active_relay_cells": False,
+        "match_more_trn_events": False,
+        "mismatch_more_nonspecific_events": True,
+        "sampled_mismatch_trn_events_have_fresh_cycles": True,
     }
 
 

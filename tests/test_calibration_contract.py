@@ -278,6 +278,10 @@ FIGURE6_TRN_GABA_COMPARTMENT_INTERMEDIATE_PATH = (
     ROOT
     / "docs/validation-results/figure6-trn-gaba-compartment-intermediate-grid-206.yaml"
 )
+FIGURE7_TRN_GABA_COMPARTMENT_MATCH_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-trn-gaba-compartment-match-207.yaml"
+)
 
 
 def test_classic_calibration_contract_separates_training_and_holdout() -> None:
@@ -1178,6 +1182,43 @@ def test_distal_intermediate_grid_has_one_figure6_survivor() -> None:
     assert not rejected["gates"]["relay_event_count"]
     assert not rejected["gates"]["relay_events_per_active_index"]
     assert not rejected["pass"]
+
+
+def test_distal_transfer_survivor_passes_same_network_match() -> None:
+    artifact = yaml.safe_load(FIGURE7_TRN_GABA_COMPARTMENT_MATCH_PATH.read_text())
+    assert artifact["status"] == "match-pass"
+    assert artifact["holdouts_consulted"] == ["figure7_match"]
+    assert artifact["projection_weight_scales"] == {
+        "modeldb112923.projection.000": 0.01,
+        "modeldb112923.projection.001": 0.01,
+        "modeldb112923.projection.004": 0.015,
+    }
+    result = artifact["result"]
+    assert len(result["relay_spike_indices"]) == 22
+    assert set(result["relay_spike_indices"]) == {38, 39, 40, 41, 42}
+    assert len(result["trn_spike_indices"]) == 558
+    assert len(result["nonspecific_spike_times_ms"]) == 9
+    assert artifact["relay_event_counts_by_index"] == {
+        "38": 5,
+        "39": 4,
+        "40": 4,
+        "41": 4,
+        "42": 5,
+    }
+    assert artifact["sampled_trn_event_counts_by_index"] == artifact[
+        "sampled_trn_threshold_upcrossings_by_index"
+    ]
+    assert artifact["sampled_trn_event_counts_by_index"] == artifact[
+        "sampled_trn_arm_transitions_by_index"
+    ]
+    assert artifact["sampled_trn_event_counts_by_index"] == artifact[
+        "sampled_trn_release_transitions_by_index"
+    ]
+    assert all(artifact["gates"].values())
+    assert artifact["assessment"] == {
+        "same_network_match_pass": True,
+        "advance_to_mismatch": True,
+    }
 
 
 def test_trn_calcium_reversal_restores_wrong_cue_lead_mechanism() -> None:

@@ -1906,6 +1906,17 @@ independent same-network Figure 7 pair. They remain non-source behavior
 calibration and are not promoted as classic SMART parameters unless the
 predeclared downstream behavior also survives.
 
+The fixed distal-transfer survivor passes its independent same-network match
+gate in `figure7-trn-gaba-compartment-match-207.yaml`. After generating the
+learned state through a complete Figure 6 episode in the same network, match
+produces 22 relay events confined exactly to cells 38--42, 558 TRN events, and
+nine nonspecific-thalamus events. Each intended relay cell emits at least four
+times. Across all nine sampled TRN locations, emitted event counts exactly
+equal independently measured threshold upcrossings, arm transitions, and
+release transitions. The match result therefore authorizes the already
+registered fresh mismatch run with every parameter held fixed; it does not by
+itself establish Figure 7 or classic-SMART reproduction.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

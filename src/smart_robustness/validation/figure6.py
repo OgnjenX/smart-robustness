@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from collections.abc import Mapping
 from dataclasses import dataclass
 from itertools import pairwise
 from typing import Any
@@ -513,6 +514,7 @@ def run_figure6_learning(
     conventions=None,
     protocol: Figure6LearningProtocol | None = None,
     record_relay_detector_diagnostics: bool = False,
+    projection_weight_scales: Mapping[str, float] | None = None,
     brian=None,
 ) -> Figure6LearningRun:
     """Run and summarize the official simultaneous Figure 6b/c episode."""
@@ -528,6 +530,17 @@ def run_figure6_learning(
     brian.start_scope()
     brian.defaultclock.dt = protocol.dt_ms * brian.ms
     sector = build_first_order_connected_sector(conventions=conventions, brian=brian)
+    if projection_weight_scales:
+        unknown = set(projection_weight_scales) - set(sector.projections)
+        if unknown:
+            raise ValueError(f"unknown projection scale IDs: {sorted(unknown)}")
+        for projection_id, scale in projection_weight_scales.items():
+            if not np.isfinite(scale) or scale <= 0:
+                raise ValueError("projection weight scales must be finite and positive")
+            projection = sector.projections[projection_id]
+            blocks = getattr(projection, "blocks", (projection,))
+            for block in blocks:
+                block.w = f"w*({float(scale)!r})"
     category_group = sector.populations["layer6ii_excitatory_v1"].group
     category_group.g_ahp_max = category_group.g_ahp_max[:] * protocol.layer6ii_ahp_scale
     monitored_ids = (

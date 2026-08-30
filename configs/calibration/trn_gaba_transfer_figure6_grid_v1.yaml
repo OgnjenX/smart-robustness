@@ -1,0 +1,62 @@
+schema_version: 1
+name: trn-gaba-transfer-figure6-grid-v1
+status: registered-before-execution
+base_profile: configs/calibration/figure6_kinness_equation27_transition_v1.yaml
+predecessor_artifact: docs/validation-results/figure6-trn-detector-hysteresis-prerequisite-201.yaml
+rationale: >-
+  Artifact 201 shows that the closest isolated detector survivor recruits
+  dynamic TRN output but the three intact TRN-to-relay GABA projections then
+  suppress every relay event after the first. The paper supplement and
+  SMART.nml agree on those projection values, so this is explicitly a bounded
+  behavior calibration of unidentified legacy inhibitory-transfer semantics,
+  not a source parameter reconstruction.
+fixed_detector:
+  label: arm_n20_release_n30
+  arm_mV: -20.0
+  release_mV: -30.0
+  source_status: framework-threshold-plus-calibrated-rearm
+scaled_projection_ids:
+  - modeldb112923.projection.000
+  - modeldb112923.projection.001
+  - modeldb112923.projection.004
+dimension:
+  name: trn_to_relay_gaba_weight_scale
+  source_value: 1.0
+  grid: [0.001, 0.003, 0.01, 0.03, 0.1, 0.3, 0.6, 1.0]
+  source_status: behavior_calibration_below_published_value
+stage_1_protocol:
+  stimulus_ms: 55.0
+  dt_ms: 0.01
+  source_value: 120.0
+  category_source_value: 70.0
+stage_1_gate:
+  relay_active_indices: [38, 39, 40, 41, 42]
+  minimum_events_per_active_relay: 2
+  trn_events: '>0'
+  finite: true
+stage_2_protocol:
+  stimulus_ms: 100.0
+  dt_ms: 0.01
+  source_value: 120.0
+  category_source_value: 70.0
+stage_2_gate:
+  relay_event_count: 20
+  relay_active_indices: [38, 39, 40, 41, 42]
+  relay_events_per_active_index: 4
+  relay_fresh_detector_cycles_per_active_index: 4
+  feedforward_chain_complete: true
+  causal_pair_in_learning_window: true
+  bottom_up_horizontal_orientation: true
+  minimum_top_down_horizontal_contrast: 0.01
+next_gate: >-
+  For full Figure 6 survivors only, run same-network Figure 7 match with the
+  same detector and inhibitory-transfer scale active during both pretraining
+  and recognition. Do not consult mismatch/reset until match has selective
+  relay output and genuine post-stimulus TRN detector cycles.
+locked_holdouts:
+  - figure7_match_until_figure6_pass
+  - figure7_mismatch
+  - figure10_reset
+  - figure14_spectra
+  - figure15_local_synchrony
+  - figure16_long_range_synchrony

@@ -184,6 +184,11 @@ parameters:
     status: rejected-uniform-behavior-calibration
     source: Grossberg and Versace 2008 Supplementary Table 3 and SMART.nml agree on the unscaled projection values; no surviving source identifies a lower gain
     note: with the calibrated -20/-30-mV TRN detector, 0.01 is the sole registered uniform scale that preserves the source-supported Figure 6 relay train, genuine relay detector cycles, cortical chain, causal learning pair, and oriented maps. Same-network match passes, but mismatch retains all five vertical relay cells and produces more rather than fewer TRN events, so the uniform transfer mechanism is rejected and not promoted
+  model.connectivity.trn_to_relay_gaba_compartment_source_endpoints:
+    value: restore one of soma, proximal-dendrite, or distal-dendrite projection scales to source value 1.0 while holding the other two at calibrated 0.01
+    status: rejected-source-endpoint-discriminator
+    source: SMART.nml projections 000, 001, and 004; Grossberg and Versace 2008 Supplementary Table 3
+    note: every one-at-a-time source restoration yields five relay and 392 TRN events in the 55-ms Figure 6 prerequisite, so none advances to a full learning episode or Figure 7
   model.multicompartment.exact_voltage_clamp:
     value: optional fixed compartment voltage, separate from finite-conductance XML input
     status: published-protocol alternative

@@ -270,6 +270,10 @@ FIGURE7_TRN_GABA_TRANSFER_MATCH_PATH = (
 FIGURE7_TRN_GABA_TRANSFER_PAIR_PATH = (
     ROOT / "docs/validation-results/figure7-trn-gaba-transfer-pair-204.yaml"
 )
+FIGURE6_TRN_GABA_COMPARTMENT_SOURCE_PATH = (
+    ROOT
+    / "docs/validation-results/figure6-trn-gaba-compartment-source-endpoint-205.yaml"
+)
 
 
 def test_classic_calibration_contract_separates_training_and_holdout() -> None:
@@ -1102,6 +1106,32 @@ def test_calibrated_trn_transfer_pair_fails_official_directional_pathway() -> No
         "mismatch_more_nonspecific_events": True,
         "sampled_mismatch_trn_events_have_fresh_cycles": True,
     }
+
+
+def test_each_compartment_source_endpoint_fails_figure6_repeat_gate() -> None:
+    artifact = yaml.safe_load(FIGURE6_TRN_GABA_COMPARTMENT_SOURCE_PATH.read_text())
+    assert artifact["status"] == "complete"
+    assert not artifact["holdouts_consulted"]
+    assert artifact["stage_1_survivor_labels"] == []
+    assert artifact["stage_2_outcomes"] == []
+    assert artifact["stage_2_survivor_labels"] == []
+    assert artifact["assessment"] == {
+        "registered_profile_count": 3,
+        "stage_1_completed_count": 3,
+        "stage_2_completed_count": 0,
+        "figure6_survivor_count": 0,
+        "advance_to_figure7": False,
+    }
+    assert [item["label"] for item in artifact["stage_1_outcomes"]] == [
+        "restore_soma_source",
+        "restore_proximal_source",
+        "restore_distal_source",
+    ]
+    for item in artifact["stage_1_outcomes"]:
+        assert item["population_spikes"]["thalamic_relay"] == 5
+        assert item["population_spikes"]["trn"] == 392
+        assert set(item["relay_event_counts_by_index"].values()) == {1}
+        assert not item["pass"]
 
 
 def test_trn_calcium_reversal_restores_wrong_cue_lead_mechanism() -> None:

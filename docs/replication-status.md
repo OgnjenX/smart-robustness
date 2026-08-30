@@ -1879,6 +1879,17 @@ inhibition too weak/nonselective to implement the published mismatch pathway.
 It is rejected as a full-pair candidate and does not unlock Figure 10 or the
 spectral holdouts.
 
+Artifact `figure6-trn-gaba-compartment-source-endpoint-205.yaml` then tests
+whether the uniform-scale failure hid a source-faithful compartment effect.
+Starting from the 0.01 Figure 6-compatible transfer, it restores exactly one
+of the somatic, proximal-dendritic, or distal-dendritic TRN-to-relay GABA
+projections to its official 1.0 strength. Every one-at-a-time endpoint produces
+the identical 55-ms result: one event in each intended relay cell (five total)
+and 392 TRN events. None passes the relay-repeat prerequisite, so no full
+episode or Figure 7 condition is run. Official source-strength restoration on
+any single inhibitory target compartment is therefore rejected; any further
+compartment separation is necessarily intermediate behavior calibration.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

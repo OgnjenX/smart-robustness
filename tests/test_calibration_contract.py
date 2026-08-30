@@ -274,6 +274,10 @@ FIGURE6_TRN_GABA_COMPARTMENT_SOURCE_PATH = (
     ROOT
     / "docs/validation-results/figure6-trn-gaba-compartment-source-endpoint-205.yaml"
 )
+FIGURE6_TRN_GABA_COMPARTMENT_INTERMEDIATE_PATH = (
+    ROOT
+    / "docs/validation-results/figure6-trn-gaba-compartment-intermediate-grid-206.yaml"
+)
 
 
 def test_classic_calibration_contract_separates_training_and_holdout() -> None:
@@ -1132,6 +1136,48 @@ def test_each_compartment_source_endpoint_fails_figure6_repeat_gate() -> None:
         assert item["population_spikes"]["trn"] == 392
         assert set(item["relay_event_counts_by_index"].values()) == {1}
         assert not item["pass"]
+
+
+def test_distal_intermediate_grid_has_one_figure6_survivor() -> None:
+    artifact = yaml.safe_load(
+        FIGURE6_TRN_GABA_COMPARTMENT_INTERMEDIATE_PATH.read_text()
+    )
+    assert artifact["status"] == "complete"
+    assert not artifact["holdouts_consulted"]
+    assert artifact["stage_1_survivor_labels"] == [
+        "distal_0_015",
+        "distal_0_02",
+    ]
+    assert artifact["stage_2_survivor_labels"] == ["distal_0_015"]
+    assert artifact["assessment"] == {
+        "registered_profile_count": 9,
+        "stage_1_completed_count": 9,
+        "stage_2_completed_count": 2,
+        "figure6_survivor_count": 1,
+        "advance_to_figure7": True,
+    }
+
+    outcomes = {
+        item["label"]: item for item in artifact["stage_2_outcomes"]
+    }
+    survivor = outcomes["distal_0_015"]
+    assert survivor["scales"] == {
+        "modeldb112923.projection.000": 0.01,
+        "modeldb112923.projection.001": 0.01,
+        "modeldb112923.projection.004": 0.015,
+    }
+    assert survivor["population_spikes"]["thalamic_relay"] == 20
+    assert survivor["population_spikes"]["trn"] == 724
+    assert set(survivor["relay_event_counts_by_index"].values()) == {4}
+    assert all(survivor["gates"].values())
+    assert survivor["pass"]
+
+    rejected = outcomes["distal_0_02"]
+    assert rejected["population_spikes"]["thalamic_relay"] == 19
+    assert rejected["population_spikes"]["trn"] == 714
+    assert not rejected["gates"]["relay_event_count"]
+    assert not rejected["gates"]["relay_events_per_active_index"]
+    assert not rejected["pass"]
 
 
 def test_trn_calcium_reversal_restores_wrong_cue_lead_mechanism() -> None:

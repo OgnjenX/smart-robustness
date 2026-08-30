@@ -189,6 +189,11 @@ parameters:
     status: rejected-source-endpoint-discriminator
     source: SMART.nml projections 000, 001, and 004; Grossberg and Versace 2008 Supplementary Table 3
     note: every one-at-a-time source restoration yields five relay and 392 TRN events in the 55-ms Figure 6 prerequisite, so none advances to a full learning episode or Figure 7
+  model.connectivity.trn_to_relay_gaba_compartment_intermediate_calibration:
+    value: somatic 0.01, proximal 0.01, distal 0.015 times the published ModelDB projection weights
+    status: behavior-calibration-in-progress
+    source: preregistered artifact 206 grid over projections 000, 001, and 004; no surviving source identifies these scales
+    note: distal 0.015 is the sole registered complete Figure 6 survivor, with exactly four events in relay cells 38--42 and all learning/map gates passing. It advances unchanged to the independent same-network Figure 7 pair and is not yet promoted as a classic-SMART baseline parameter
   model.multicompartment.exact_voltage_clamp:
     value: optional fixed compartment voltage, separate from finite-conductance XML input
     status: published-protocol alternative

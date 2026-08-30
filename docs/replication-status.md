@@ -1890,6 +1890,22 @@ episode or Figure 7 condition is run. Official source-strength restoration on
 any single inhibitory target compartment is therefore rejected; any further
 compartment separation is necessarily intermediate behavior calibration.
 
+The preregistered intermediate compartment grid is complete in
+`figure6-trn-gaba-compartment-intermediate-grid-206.yaml`. It keeps somatic
+and proximal TRN-to-relay GABA at 0.01 and varies exactly one compartment at
+0.015, 0.02, or 0.03, with the same -20/-30-mV calibrated TRN detector. No
+somatic candidate survives the 55-ms repeat screen; proximal 0.015 produces
+only seven relay events and the remaining proximal candidates produce five.
+Distal 0.015 and 0.02 alone reach ten early relay events. In complete Figure 6
+episodes, distal 0.015 is the sole survivor: it produces exactly four events
+in each intended relay cell (20 total), 724 TRN events, the complete cortical
+chain, a causal teaching pair, and both oriented-map gates. Distal 0.02 misses
+one event in overlap cell 40 and fails with 19 total. The surviving scales are
+therefore fixed at soma=0.01, proximal=0.01, and distal=0.015 for one
+independent same-network Figure 7 pair. They remain non-source behavior
+calibration and are not promoted as classic SMART parameters unless the
+predeclared downstream behavior also survives.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

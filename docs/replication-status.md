@@ -1837,6 +1837,21 @@ same-network match trial. Therefore a simple lower TRN arm/release hysteresis
 is rejected as the missing legacy-runtime correction: it can make isolated
 TRN cells emit, but it destroys the already validated Figure 6 regime.
 
+A preregistered coupled behavior calibration now identifies one Figure 6
+survivor in `figure6-trn-gaba-transfer-grid-202.yaml`. The closest
+framework-motivated detector survivor (-20-mV arm, -30-mV rearm) is fixed while
+the three official TRN-to-relay GABA projection weights are scaled together
+over 0.001--1.0. This gain is not source-identified: the paper supplement and
+SMART.nml agree on the original values, so every subunit scale is explicitly
+calibrated legacy-transfer behavior. A 55-ms screen advances 0.001, 0.003, and
+0.01; full episodes reject 0.001/0.003 with 35/30 relay events. Scale 0.01
+alone reproduces exactly four genuine detector cycles in each of relay cells
+38--42 (20 events total), retains the complete cortical chain and causal
+teaching pair, and passes both learned horizontal map-shape gates while TRN
+emits 728 events. This is a calibrated Figure 6-compatible candidate, not a
+classic-SMART reproduction. It advances only to same-network Figure 7 match
+with the same transfer scale active during both learning and recognition.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

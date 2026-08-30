@@ -261,6 +261,9 @@ FIGURE6_TRN_DETECTOR_HYSTERESIS_PREREQUISITE_PATH = (
     ROOT
     / "docs/validation-results/figure6-trn-detector-hysteresis-prerequisite-201.yaml"
 )
+FIGURE6_TRN_GABA_TRANSFER_GRID_PATH = (
+    ROOT / "docs/validation-results/figure6-trn-gaba-transfer-grid-202.yaml"
+)
 
 
 def test_classic_calibration_contract_separates_training_and_holdout() -> None:
@@ -1003,6 +1006,38 @@ def test_trn_detector_hysteresis_has_no_figure6_survivor() -> None:
         assert not item["gates"]["relay_events_per_active_index"]
         assert not item["gates"]["causal_pair_in_learning_window"]
         assert not item["figure6_pass"]
+
+
+def test_trn_gaba_transfer_grid_has_one_calibrated_figure6_survivor() -> None:
+    artifact = yaml.safe_load(FIGURE6_TRN_GABA_TRANSFER_GRID_PATH.read_text())
+    assert artifact["status"] == "complete"
+    assert not artifact["holdouts_consulted"]
+    assert artifact["stage_1_survivor_scales"] == [0.001, 0.003, 0.01]
+    assert artifact["stage_2_survivor_scales"] == [0.01]
+    assessment = artifact["assessment"]
+    assert assessment["stage_1_completed_count"] == 8
+    assert assessment["registered_scale_count"] == 8
+    assert assessment["stage_2_completed_count"] == 3
+    assert assessment["figure6_survivor_count"] == 1
+    assert assessment["advance_to_same_network_match"]
+    outcomes = {item["scale"]: item for item in artifact["stage_2_outcomes"]}
+    assert outcomes[0.001]["population_spikes"]["thalamic_relay"] == 35
+    assert outcomes[0.003]["population_spikes"]["thalamic_relay"] == 30
+    survivor = outcomes[0.01]
+    assert survivor["population_spikes"]["thalamic_relay"] == 20
+    assert survivor["population_spikes"]["trn"] == 728
+    assert set(survivor["relay_event_counts_by_index"].values()) == {4}
+    assert set(
+        survivor["relay_detector_threshold_upcrossings_by_index"].values()
+    ) == {4}
+    assert set(survivor["relay_detector_arm_transitions_by_index"].values()) == {
+        4
+    }
+    assert set(
+        survivor["relay_detector_release_transitions_by_index"].values()
+    ) == {4}
+    assert all(survivor["gates"].values())
+    assert survivor["pass"]
 
 
 def test_trn_calcium_reversal_restores_wrong_cue_lead_mechanism() -> None:

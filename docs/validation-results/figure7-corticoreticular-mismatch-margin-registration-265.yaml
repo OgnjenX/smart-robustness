@@ -1,0 +1,39 @@
+schema_version: 1
+id: figure7-corticoreticular-mismatch-margin-registration-265
+date: '2026-08-31'
+status: registered-before-execution
+source_holdout_artifact: docs/validation-results/figure7-corticoreticular-gain-mismatch-264.yaml
+profile: configs/calibration/figure7_corticoreticular_gain_mismatch_v1.yaml
+candidate_changes: none
+diagnostic_only: true
+pre_event_offsets_ms: [2.0, 1.0, 0.5, 0.2]
+sampled_relay_indices: [22, 31, 40, 49, 58]
+readouts:
+  - soma_voltage_mV
+  - proximal_voltage_mV
+  - distal_voltage_mV
+  - direct_image_input_current_pA
+  - top_down_excitation_current_pA
+  - trn_gaba_current_pA
+  - interneuron_gaba_current_pA
+  - distal_calcium_current_pA
+  - proximal_calcium_current_pA
+  - soma_axial_current_pA
+  - soma_sodium_current_pA
+  - soma_potassium_current_pA
+  - trn_gaba_gate
+questions:
+  - >-
+    Do nonoverlap mismatch cells approach their first event despite a rising
+    inhibitory gate, or during a common inhibition trough?
+  - >-
+    Is the final 0.2-ms approach dominated by external/axial drive or by the
+    regenerative soma sodium current after threshold has already been crossed?
+selection_rule: >-
+  Use this readout-only rerun to choose the next mechanistic parameter family;
+  do not score it as a new holdout and do not change the rejected endpoint.
+locked_holdouts:
+  - figure10_reset
+  - figure14_spectra
+  - figure15_local_synchrony
+  - figure16_long_range_synchrony

@@ -547,6 +547,10 @@ FIGURE7_CORTICORETICULAR_MISMATCH_RESULT_PATH = (
     ROOT
     / "docs/validation-results/figure7-corticoreticular-gain-mismatch-264.yaml"
 )
+FIGURE7_CORTICORETICULAR_MARGIN_REGISTRATION_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-corticoreticular-mismatch-margin-registration-265.yaml"
+)
 
 
 def test_classic_calibration_contract_separates_training_and_holdout() -> None:
@@ -3276,6 +3280,19 @@ def test_corticoreticular_gain_endpoint_fails_mismatch_holdout() -> None:
     assert not artifact["gates"]["mismatch_relay_overlap_only"]
     assert not artifact["gates"]["mismatch_nonspecific_70_hz"]
     assert not artifact["gates"]["sampled_mismatch_trn_events_have_fresh_cycles"]
+
+
+def test_corticoreticular_margin_audit_is_readout_only() -> None:
+    registration = yaml.safe_load(
+        FIGURE7_CORTICORETICULAR_MARGIN_REGISTRATION_PATH.read_text()
+    )
+    assert registration["source_holdout_artifact"] == str(
+        FIGURE7_CORTICORETICULAR_MISMATCH_RESULT_PATH.relative_to(ROOT)
+    )
+    assert registration["candidate_changes"] == "none"
+    assert registration["diagnostic_only"]
+    assert registration["pre_event_offsets_ms"] == [2.0, 1.0, 0.5, 0.2]
+    assert registration["sampled_relay_indices"] == [22, 31, 40, 49, 58]
 
 
 def test_contract_rejects_holdout_leakage(tmp_path: Path) -> None:

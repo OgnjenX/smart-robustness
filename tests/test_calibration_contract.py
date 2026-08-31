@@ -595,6 +595,18 @@ FIGURE6_CORTICORETICULAR_AMPA_DELAY3_REGISTRATION_PATH = (
     ROOT
     / "docs/validation-results/figure6-corticoreticular-ampa-delay3-registration-273.yaml"
 )
+FIGURE6_CORTICORETICULAR_AMPA_DELAY3_RESULT_PATH = (
+    ROOT
+    / "docs/validation-results/figure6-corticoreticular-ampa-delay3-274.yaml"
+)
+FIGURE6_CORTICORETICULAR_AMPA_DELAY2_CORRECTED_PROFILE_PATH = (
+    ROOT
+    / "configs/calibration/figure6_corticoreticular_ampa_delay2_corrected_v1.yaml"
+)
+FIGURE6_CORTICORETICULAR_AMPA_DELAY2_CORRECTED_REGISTRATION_PATH = (
+    ROOT
+    / "docs/validation-results/figure6-corticoreticular-ampa-delay2-corrected-registration-275.yaml"
+)
 
 
 def test_classic_calibration_contract_separates_training_and_holdout() -> None:
@@ -3460,7 +3472,7 @@ def test_corticoreticular_ampa_delay_requires_complete_figure6_first() -> None:
     assert registration["figure7_lock"].startswith("do not inspect Figure 7")
 
 
-def test_corticoreticular_ampa_delay2_is_rejected_before_figure7() -> None:
+def test_corticoreticular_ampa_delay2_first_run_is_detector_mismatched() -> None:
     artifact = yaml.safe_load(
         FIGURE6_CORTICORETICULAR_AMPA_DELAY_RESULT_PATH.read_text()
     )
@@ -3475,6 +3487,10 @@ def test_corticoreticular_ampa_delay2_is_rejected_before_figure7() -> None:
     assert artifact["maps"]["bottom_up_oriented"]
     assert not artifact["maps"]["top_down_oriented"]
     assert not artifact["assessment"]["promoted"]
+    profile = yaml.safe_load(
+        FIGURE6_CORTICORETICULAR_AMPA_DELAY_PROFILE_PATH.read_text()
+    )
+    assert "detector" not in profile
 
 
 def test_corticoreticular_ampa_delay3_is_final_integer_intermediate() -> None:
@@ -3489,6 +3505,34 @@ def test_corticoreticular_ampa_delay3_is_final_integer_intermediate() -> None:
     assert registration["conditions_consulted"] == ["figure6"]
     assert registration["figure7_lock"].startswith("do not inspect Figure 7")
     assert registration["selection_boundary"].startswith("Do not interpolate")
+
+
+def test_delay2_and_delay3_first_runs_share_invalid_default_detector_trace() -> None:
+    delay2 = yaml.safe_load(
+        FIGURE6_CORTICORETICULAR_AMPA_DELAY_RESULT_PATH.read_text()
+    )
+    delay3 = yaml.safe_load(
+        FIGURE6_CORTICORETICULAR_AMPA_DELAY3_RESULT_PATH.read_text()
+    )
+    assert delay2["population_spikes"] == delay3["population_spikes"]
+    assert delay2["relay_recruitment"] == delay3["relay_recruitment"]
+    assert delay2["runtime_fingerprint"] != delay3["runtime_fingerprint"]
+    assert delay2["population_spikes"]["trn"] == 81
+
+
+def test_corrected_delay2_uses_exact_two_stage_detector_prerequisite() -> None:
+    profile = yaml.safe_load(
+        FIGURE6_CORTICORETICULAR_AMPA_DELAY2_CORRECTED_PROFILE_PATH.read_text()
+    )
+    registration = yaml.safe_load(
+        FIGURE6_CORTICORETICULAR_AMPA_DELAY2_CORRECTED_REGISTRATION_PATH.read_text()
+    )
+    assert profile["detector"] == {"arm_mV": -20.0, "release_mV": -30.0}
+    assert profile["runtime_overrides"]["corticoreticular_ampa_delay_ms"] == 2.0
+    assert profile["stage_1_protocol"]["stimulus_ms"] == 55.0
+    assert profile["stage_2_protocol"]["stimulus_ms"] == 100.0
+    assert registration["complete_figure6_first"]
+    assert registration["figure7_lock"].startswith("do not inspect Figure 7")
 
 
 def test_contract_rejects_holdout_leakage(tmp_path: Path) -> None:

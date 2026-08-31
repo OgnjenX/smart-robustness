@@ -2018,6 +2018,14 @@ but the residual-state confound is closed and the remaining failure is
 localized specifically to TRN-mediated suppression of bottom-up-only relay
 cells.
 
+The final endpoint from the pre-registered distal grid, 0.03, passes the
+source-resolved Figure 6 prerequisite in
+`figure6-projection022-distal003-217.yaml`: four genuine cycles in each relay
+cell 38--42, 20 relay events total, 554 TRN events, complete cortical and
+causal-learning gates, and combined top-down horizontal contrast approximately
+0.62013. No new distal values are opened. This strongest pre-existing endpoint
+advances only to the clean fresh-network learned-weight Figure 7 protocol.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

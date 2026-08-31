@@ -315,6 +315,9 @@ FIGURE7_PROJECTION022_DISTAL002_FRESH_PAIR_PATH = (
     ROOT
     / "docs/validation-results/figure7-projection022-distal002-fresh-pair-216.yaml"
 )
+FIGURE6_PROJECTION022_DISTAL003_PATH = (
+    ROOT / "docs/validation-results/figure6-projection022-distal003-217.yaml"
+)
 
 
 def test_classic_calibration_contract_separates_training_and_holdout() -> None:
@@ -1524,6 +1527,25 @@ def test_fresh_network_handoff_localizes_bottom_up_only_failure() -> None:
         "mismatch_more_nonspecific_events": False,
         "sampled_mismatch_trn_events_have_fresh_cycles": True,
     }
+
+
+def test_final_preregistered_distal_endpoint_preserves_figure6() -> None:
+    artifact = yaml.safe_load(FIGURE6_PROJECTION022_DISTAL003_PATH.read_text())
+    assert artifact["status"] == "complete"
+    assert not artifact["holdouts_consulted"]
+    assert artifact["stage_2_survivor_labels"] == [
+        "paper_supplement_projection022_distal_0_03"
+    ]
+    outcome = artifact["stage_2_outcomes"][0]
+    assert outcome["population_spikes"]["thalamic_relay"] == 20
+    assert outcome["population_spikes"]["trn"] == 554
+    assert set(outcome["relay_event_counts_by_index"].values()) == {4}
+    assert outcome["top_down_combined_horizontal_orientation_contrast"] == pytest.approx(
+        0.6201263250511576
+    )
+    assert all(outcome["gates"].values())
+    assert outcome["pass"]
+    assert artifact["assessment"]["advance_to_figure7"]
 
 
 def test_trn_calcium_reversal_restores_wrong_cue_lead_mechanism() -> None:

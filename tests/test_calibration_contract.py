@@ -543,6 +543,10 @@ FIGURE7_CORTICORETICULAR_MISMATCH_REGISTRATION_PATH = (
     ROOT
     / "docs/validation-results/figure7-corticoreticular-mismatch-registration-263.yaml"
 )
+FIGURE7_CORTICORETICULAR_MISMATCH_RESULT_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-corticoreticular-gain-mismatch-264.yaml"
+)
 
 
 def test_classic_calibration_contract_separates_training_and_holdout() -> None:
@@ -3254,6 +3258,24 @@ def test_mismatch_runner_keeps_recognition_gain_out_of_figure6() -> None:
     assert "training_scales = dict(scales)" in source
     assert "projection_weight_scales=training_scales" in source
     assert "persistent_projection_weight_scales=scales" in source
+
+
+def test_corticoreticular_gain_endpoint_fails_mismatch_holdout() -> None:
+    artifact = yaml.safe_load(
+        FIGURE7_CORTICORETICULAR_MISMATCH_RESULT_PATH.read_text()
+    )
+    mismatch = artifact["mismatch_result"]
+    assert artifact["status"] == "figure7-failed"
+    assert not artifact["reproduced"]
+    assert sorted(set(mismatch["relay_spike_indices"])) == [22, 31, 40, 49, 58]
+    assert len(mismatch["relay_spike_times_ms"]) == 15
+    assert len(mismatch["trn_spike_times_ms"]) == 565
+    assert len(mismatch["nonspecific_spike_times_ms"]) == 5
+    assert artifact["gates"]["match_more_trn_events"]
+    assert artifact["gates"]["mismatch_more_nonspecific_events"]
+    assert not artifact["gates"]["mismatch_relay_overlap_only"]
+    assert not artifact["gates"]["mismatch_nonspecific_70_hz"]
+    assert not artifact["gates"]["sampled_mismatch_trn_events_have_fresh_cycles"]
 
 
 def test_contract_rejects_holdout_leakage(tmp_path: Path) -> None:

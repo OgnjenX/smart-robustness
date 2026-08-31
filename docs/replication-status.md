@@ -2381,6 +2381,16 @@ counts exactly equal threshold upcrossings, detector-arm transitions, and
 release transitions. The verification therefore authorizes exactly one fixed
 mismatch run; it does not yet reproduce Figure 7 or unlock later holdouts.
 
+Artifact 264 executes that sole mismatch after a fresh Figure 6 handoff. The
+gain-8 candidate fails: relay cells 22, 31, 40, 49, and 58 each emit three
+events, so mismatch is not restricted to the overlap cell and does not recruit
+fewer active relay cells than match. TRN output is lower in mismatch (565
+versus 597), and nonspecific output increases, but only from four to five
+events (50 Hz), not the official seven (70 Hz). Sampled TRN cells 38 and 42
+also finish with an unreleased final arm. Figure 7 therefore remains
+unreproduced, downstream holdouts remain locked, and common corticoreticular
+gain is closed as a calibration family.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

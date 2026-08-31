@@ -2026,6 +2026,13 @@ causal-learning gates, and combined top-down horizontal contrast approximately
 0.62013. No new distal values are opened. This strongest pre-existing endpoint
 advances only to the clean fresh-network learned-weight Figure 7 protocol.
 
+The final endpoint passes that clean match in
+`figure7-projection022-distal003-fresh-match-218.yaml`: four events in each
+relay cell 38--42 (20 total), 558 genuine-cycle TRN events, and six nonspecific
+events. The learned state is again reproduced and transferred into a fresh
+recognition network. This authorizes one final fresh mismatch at distal 0.03;
+no further distal value is permitted by the registered family.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

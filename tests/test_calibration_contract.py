@@ -318,6 +318,10 @@ FIGURE7_PROJECTION022_DISTAL002_FRESH_PAIR_PATH = (
 FIGURE6_PROJECTION022_DISTAL003_PATH = (
     ROOT / "docs/validation-results/figure6-projection022-distal003-217.yaml"
 )
+FIGURE7_PROJECTION022_DISTAL003_FRESH_MATCH_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-projection022-distal003-fresh-match-218.yaml"
+)
 
 
 def test_classic_calibration_contract_separates_training_and_holdout() -> None:
@@ -1546,6 +1550,33 @@ def test_final_preregistered_distal_endpoint_preserves_figure6() -> None:
     assert all(outcome["gates"].values())
     assert outcome["pass"]
     assert artifact["assessment"]["advance_to_figure7"]
+
+
+def test_final_distal_endpoint_passes_clean_match() -> None:
+    artifact = yaml.safe_load(
+        FIGURE7_PROJECTION022_DISTAL003_FRESH_MATCH_PATH.read_text()
+    )
+    assert artifact["status"] == "match-pass"
+    assert artifact["learned_state_handoff"] == (
+        "fresh_network_from_figure6_weights"
+    )
+    result = artifact["result"]
+    assert len(result["relay_spike_indices"]) == 20
+    assert set(result["relay_spike_indices"]) == {38, 39, 40, 41, 42}
+    assert len(result["trn_spike_indices"]) == 558
+    assert len(result["nonspecific_spike_times_ms"]) == 6
+    assert set(artifact["relay_event_counts_by_index"].values()) == {4}
+    assert artifact["sampled_trn_event_counts_by_index"] == artifact[
+        "sampled_trn_threshold_upcrossings_by_index"
+    ]
+    assert artifact["sampled_trn_event_counts_by_index"] == artifact[
+        "sampled_trn_arm_transitions_by_index"
+    ]
+    assert artifact["sampled_trn_event_counts_by_index"] == artifact[
+        "sampled_trn_release_transitions_by_index"
+    ]
+    assert all(artifact["gates"].values())
+    assert artifact["assessment"]["advance_to_mismatch"]
 
 
 def test_trn_calcium_reversal_restores_wrong_cue_lead_mechanism() -> None:

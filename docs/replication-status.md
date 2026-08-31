@@ -1980,6 +1980,21 @@ their independent threshold-upcrossing, arm, and release counts. The result
 authorizes one fresh mismatch with distal scale 0.02 and all other source and
 runtime choices fixed; it is not by itself a Figure 7 reproduction.
 
+The distal-0.02 mismatch in
+`figure7-projection022-distal002-pair-214.yaml` closes that endpoint without a
+complete Figure 7 reproduction. Match/mismatch totals are 30/30 relay events,
+522/520 genuine-cycle TRN events, and 5/5 nonspecific events. The TRN direction
+is narrowly correct, but mismatch again activates the nine-cell union of the
+horizontal expectation and vertical input. Event timing localizes the four
+expectation-only horizontal spikes to 3.28--3.81 ms, before the first
+current-driven layer-6II spike at 3.03 ms plus the archived 2-ms direct
+corticothalamic delay can arrive. They are therefore residual dynamic state
+from the immediately preceding Figure 6 episode, not a valid recognition
+response. Distal gain interpolation is closed. The next protocol discriminator
+must transfer the learned weights into a freshly initialized recognition
+network, preserving learning while removing state contamination without an
+arbitrary washout interval.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

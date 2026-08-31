@@ -621,6 +621,14 @@ FIGURE7_DELAY2_GAIN8_MATCH_REGISTRATION_PATH = (
 FIGURE7_DELAY2_GAIN8_MATCH_RESULT_PATH = (
     ROOT / "docs/validation-results/figure7-delay2-gain8-match-278.yaml"
 )
+FIGURE6_CORTICORETICULAR_AMPA_DELAY3_CORRECTED_PROFILE_PATH = (
+    ROOT
+    / "configs/calibration/figure6_corticoreticular_ampa_delay3_corrected_v1.yaml"
+)
+FIGURE6_CORTICORETICULAR_AMPA_DELAY3_CORRECTED_REGISTRATION_PATH = (
+    ROOT
+    / "docs/validation-results/figure6-corticoreticular-ampa-delay3-corrected-registration-279.yaml"
+)
 
 
 def test_classic_calibration_contract_separates_training_and_holdout() -> None:
@@ -3594,6 +3602,20 @@ def test_delay2_gain8_fails_exact_match_without_mismatch() -> None:
     assert len(result["nonspecific_spike_times_ms"]) == 5
     assert outcome["gates"]["sampled_trn_events_have_fresh_cycles"]
     assert not outcome["gates"]["nonspecific_40_hz"]
+
+
+def test_corrected_delay3_is_final_exact_two_stage_prerequisite() -> None:
+    profile = yaml.safe_load(
+        FIGURE6_CORTICORETICULAR_AMPA_DELAY3_CORRECTED_PROFILE_PATH.read_text()
+    )
+    registration = yaml.safe_load(
+        FIGURE6_CORTICORETICULAR_AMPA_DELAY3_CORRECTED_REGISTRATION_PATH.read_text()
+    )
+    assert profile["detector"] == {"arm_mV": -20.0, "release_mV": -30.0}
+    assert profile["runtime_overrides"]["corticoreticular_ampa_delay_ms"] == 3.0
+    assert registration["complete_figure6_first"]
+    assert registration["selection_boundary"].startswith("no fractional")
+    assert registration["figure7_lock"].startswith("do not inspect Figure 7")
 
 
 def test_contract_rejects_holdout_leakage(tmp_path: Path) -> None:

@@ -1,0 +1,18 @@
+schema_version: 1
+id: figure6-corticoreticular-ampa-delay3-corrected-registration-279
+date: '2026-08-31'
+status: registered-before-execution
+profile: configs/calibration/figure6_corticoreticular_ampa_delay3_corrected_v1.yaml
+superseded_artifact: docs/validation-results/figure6-corticoreticular-ampa-delay3-274.yaml
+correction: >-
+  Use the exact Artifact-217 two-stage runner and calibrated TRN detector
+  instead of the generic default-detector runner.
+fixed_detector: {arm_mV: -20.0, release_mV: -30.0}
+fixed_timing:
+  projection_012_effective_delay_ms: 3.0
+  projection_003_delay_ms: 2.0
+  projection_009_delay_ms: 3.0
+complete_figure6_first: true
+figure7_lock: do not inspect Figure 7 unless every corrected Figure 6 gate passes
+selection_boundary: no fractional delay interpolation after this final integer endpoint
+execution_limit: one 55-ms screen and one 100-ms episode only if stage 1 passes

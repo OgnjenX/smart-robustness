@@ -2391,6 +2391,18 @@ also finish with an unreleased final arm. Figure 7 therefore remains
 unreproduced, downstream holdouts remain locked, and common corticoreticular
 gain is closed as a calibration family.
 
+Artifact 265 preregisters, and Artifact 266 executes, a readout-only rerun of
+the rejected endpoint at 2.0, 1.0, 0.5, and 0.2 ms before each relay event.
+It exactly preserves the 15/565/5 mismatch totals. Two milliseconds before the
+first nonoverlap events, TRN GABA current is approximately -191 to -199 pA,
+while direct sensory plus axial depolarizing current is approximately +382 to
++385 pA. By 0.5 ms, GABA has grown to approximately -300 to -342 pA, but soma
+sodium current is already regenerative at +4.3 to +4.5 nA and soma voltage is
+near -43 mV. Thus an off-surround inhibitory distinction is present but becomes
+effective too late to prevent threshold initiation. The next calibration
+family should test projection-specific ring geometry or AMPA/NMDA timing while
+leaving global intrinsic thresholds fixed.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

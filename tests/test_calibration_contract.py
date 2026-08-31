@@ -551,6 +551,10 @@ FIGURE7_CORTICORETICULAR_MARGIN_REGISTRATION_PATH = (
     ROOT
     / "docs/validation-results/figure7-corticoreticular-mismatch-margin-registration-265.yaml"
 )
+FIGURE7_CORTICORETICULAR_MARGIN_RESULT_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-corticoreticular-mismatch-margin-audit-266.yaml"
+)
 
 
 def test_classic_calibration_contract_separates_training_and_holdout() -> None:
@@ -3293,6 +3297,44 @@ def test_corticoreticular_margin_audit_is_readout_only() -> None:
     assert registration["diagnostic_only"]
     assert registration["pre_event_offsets_ms"] == [2.0, 1.0, 0.5, 0.2]
     assert registration["sampled_relay_indices"] == [22, 31, 40, 49, 58]
+
+
+def test_corticoreticular_margin_audit_localizes_late_inhibition() -> None:
+    artifact = yaml.safe_load(FIGURE7_CORTICORETICULAR_MARGIN_RESULT_PATH.read_text())
+    mismatch = artifact["mismatch_result"]
+    assert artifact["original_holdout_registration_artifact"].endswith(
+        "figure7-corticoreticular-mismatch-registration-263.yaml"
+    )
+    assert len(mismatch["relay_spike_times_ms"]) == 15
+    first_event_by_index: dict[int, float] = {}
+    for index, time_ms in zip(
+        mismatch["relay_spike_indices"],
+        mismatch["relay_spike_times_ms"],
+        strict=True,
+    ):
+        first_event_by_index.setdefault(index, time_ms)
+    current = {
+        (index, offset_ms, source): value
+        for index, event_time_ms, offset_ms, source, value in mismatch[
+            "relay_pre_event_current_samples_pA"
+        ]
+        if event_time_ms == first_event_by_index[index]
+    }
+    voltage = {
+        (index, offset_ms, source): value
+        for index, event_time_ms, offset_ms, source, value in mismatch[
+            "relay_pre_event_voltage_samples_mV"
+        ]
+        if event_time_ms == first_event_by_index[index]
+    }
+    for index in (22, 31, 49, 58):
+        early_depolarizing = (
+            current[index, 2.0, "direct_image_input"]
+            + current[index, 2.0, "soma_axial"]
+        )
+        assert early_depolarizing > abs(current[index, 2.0, "trn_gaba"])
+        assert current[index, 0.5, "soma_sodium"] > 4_000.0
+        assert voltage[index, 0.5, "soma"] > -44.0
 
 
 def test_contract_rejects_holdout_leakage(tmp_path: Path) -> None:

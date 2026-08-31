@@ -118,6 +118,7 @@ def main() -> None:
         str(key): float(value)
         for key, value in profile["trn_to_relay_gaba"]["scales"].items()
     }
+    training_scales = dict(scales)
     if corticoreticular is not None:
         scales.update(
             {
@@ -127,7 +128,7 @@ def main() -> None:
         )
     training = run_figure6_learning(
         conventions=conventions,
-        projection_weight_scales=scales,
+        projection_weight_scales=training_scales,
         brian=brian,
     )
     if training.result.population_spikes["thalamic_relay"] != 20:

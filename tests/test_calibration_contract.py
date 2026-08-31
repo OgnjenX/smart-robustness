@@ -3249,6 +3249,13 @@ def test_corticoreticular_mismatch_is_fixed_to_verified_endpoint() -> None:
     assert registration["execution_limit"].startswith("exactly one mismatch")
 
 
+def test_mismatch_runner_keeps_recognition_gain_out_of_figure6() -> None:
+    source = (ROOT / "scripts/run_figure7_aligned_on_center_mismatch.py").read_text()
+    assert "training_scales = dict(scales)" in source
+    assert "projection_weight_scales=training_scales" in source
+    assert "persistent_projection_weight_scales=scales" in source
+
+
 def test_contract_rejects_holdout_leakage(tmp_path: Path) -> None:
     raw = yaml.safe_load(CONTRACT_PATH.read_text())
     raw["training_targets"].append(raw["holdout_targets"][0])

@@ -1,0 +1,49 @@
+schema_version: 1
+id: figure7-mismatch-pre-event-trace-registration-249
+date: '2026-08-31'
+status: registered-before-execution
+parent_diagnostic: docs/validation-results/figure7-mismatch-event-current-audit-248.yaml
+profile: configs/calibration/figure7_aligned_on_center_mismatch_v1.yaml
+candidate_changes: none
+rationale: >-
+  Artifact 248 samples currents at the relay's emitted falling-phase event.
+  Those samples exclude broad top-down excitation and calcium rebound as the
+  primary source of the first nonoverlap events, but voltage-dependent current
+  magnitudes at that phase cannot identify spike initiation. Sample the same
+  deterministic mismatch immediately before each event to determine whether
+  bottom-up relay cells escape during a decay trough in reticular inhibition.
+rerun_contract:
+  condition: mismatch
+  independent_network_rebuild: true
+  all_randomness_and_parameters_unchanged: true
+  expected_exact_counts:
+    relay: 10
+    trn: 583
+    nonspecific: 7
+pre_event_offsets_ms: [2.0, 1.0, 0.5, 0.2]
+new_readouts:
+  currents_pA:
+    - direct_image_input
+    - top_down_excitation
+    - trn_gaba
+    - interneuron_gaba
+    - distal_calcium
+    - proximal_calcium
+    - soma_axial
+    - soma_sodium
+    - soma_potassium
+  voltages_mV:
+    - distal_dendrite
+    - proximal_dendrite
+    - soma
+  dimensionless_gates:
+    - trn_gaba_combined
+interpretation_contract:
+  - Compare the first event of nonoverlap cells 22, 31, 49, and 58 with overlap cell 40.
+  - Treat voltage-dependent current samples as state diagnostics, not fitted parameters.
+  - A reticular-inhibition trough requires the combined GABA gate to decline before initiation; event-time current magnitude alone is insufficient.
+  - Do not change an official gate or unlock Figure 10 or spectral holdouts.
+official_status_before_execution:
+  figure7_reproduced: false
+  downstream_holdouts_unlocked: false
+

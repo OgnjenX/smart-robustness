@@ -465,6 +465,10 @@ FIGURE7_EVENT_CURRENT_REGISTRATION_PATH = (
 FIGURE7_EVENT_CURRENT_AUDIT_PATH = (
     ROOT / "docs/validation-results/figure7-mismatch-event-current-audit-248.yaml"
 )
+FIGURE7_PRE_EVENT_TRACE_REGISTRATION_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-mismatch-pre-event-trace-registration-249.yaml"
+)
 
 
 def test_classic_calibration_contract_separates_training_and_holdout() -> None:
@@ -2815,6 +2819,30 @@ def test_mismatch_event_current_audit_localizes_first_nonoverlap_events() -> Non
     assert artifact["gates"]["match_more_trn_events"]
     assert artifact["gates"]["mismatch_more_nonspecific_events"]
     assert not artifact["gates"]["mismatch_relay_overlap_only"]
+
+
+def test_mismatch_pre_event_trace_audit_is_readout_only_and_preregistered() -> None:
+    registration = yaml.safe_load(
+        FIGURE7_PRE_EVENT_TRACE_REGISTRATION_PATH.read_text()
+    )
+    assert registration["status"] == "registered-before-execution"
+    assert registration["candidate_changes"] == "none"
+    assert registration["rerun_contract"][
+        "all_randomness_and_parameters_unchanged"
+    ]
+    assert registration["pre_event_offsets_ms"] == [2.0, 1.0, 0.5, 0.2]
+    assert len(registration["new_readouts"]["currents_pA"]) == 9
+    assert registration["new_readouts"]["voltages_mV"] == [
+        "distal_dendrite",
+        "proximal_dendrite",
+        "soma",
+    ]
+    assert registration["new_readouts"]["dimensionless_gates"] == [
+        "trn_gaba_combined"
+    ]
+    assert not registration["official_status_before_execution"][
+        "figure7_reproduced"
+    ]
 
 
 def test_contract_rejects_holdout_leakage(tmp_path: Path) -> None:

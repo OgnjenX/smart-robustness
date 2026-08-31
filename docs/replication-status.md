@@ -2464,6 +2464,38 @@ the corrected 2/3-ms calibrated alternatives and archived 4-ms endpoint exhaust
 the finite integer effective-delay family; all fail complete Figure 7 and no
 fractional interpolation is authorized.
 
+Artifact 283 closes projection 012 receptor kinetics as a source-semantics
+question. KInNeSS Equations 13--15 explicitly define manually supplied rise
+and fall constants, normalization of the dual exponential, retention of the
+last two arrivals, and bounded `g1 + g2 - g1*g2` combination. The implementation
+already follows those equations for the serialized 4/5-ms AMPA channel.
+Changing or swapping those constants would therefore be non-source fitting,
+not resolution of a simulator ambiguity, and no kinetic sweep is authorized.
+
+Artifacts 284--285 then preregister and execute the untested finite interaction
+between learned on-center headroom fractions 0.25, 0.5, and 0.75 and common
+layer-6II-to-TRN gains 1.25, 1.5, 2, 4, and 8. All 15 candidates use the same
+fresh Figure 6 handoff, 800-pA one-event cue, 7.85-ms receptor-arrival lead,
+source delays and kinetics, calibrated detector, and fixed TRN-to-relay scales.
+Only headroom 0.75 with gain 4 passes match, producing 15 relay, 528 TRN, and
+four nonspecific events. The surface is strongly non-monotonic: gain 8 at the
+same headroom retains 15 relay events but increases TRN to 606 and nonspecific
+output to six events.
+
+Artifacts 286--287 independently rebuild and verify that sole match endpoint.
+They reproduce 15/528/4 exactly. For every sampled TRN cell, emitted events,
+threshold upcrossings, detector-arm transitions, and releases are equal, so
+the match is a genuine-cycle result and authorizes one fixed mismatch.
+
+Artifacts 288--289 execute that independently rebuilt mismatch. It fails the
+official Figure 7 contract: relay cells 22, 31, 40, 49, and 58 each emit three
+events, giving the same 15-event/five-cell recruitment as match; TRN output is
+higher rather than lower in mismatch (586 versus 528); and nonspecific output
+rises only from four to five events (50 Hz), not seven (70 Hz). All sampled
+mismatch detector cycles are complete. The complete 15-point interaction
+surface is therefore closed, downstream holdouts remain locked, and Figure 7
+is still not reproduced.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

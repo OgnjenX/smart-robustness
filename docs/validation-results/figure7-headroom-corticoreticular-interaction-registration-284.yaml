@@ -1,0 +1,41 @@
+schema_version: 1
+id: figure7-headroom-corticoreticular-interaction-registration-284
+date: '2026-08-31'
+status: registered-before-execution-exploratory-behavior-calibration
+profile: configs/calibration/figure7_headroom_corticoreticular_interaction_match_v1.yaml
+rationale:
+  - >-
+    Learned headroom alone reaches the exact 40/70-Hz pair at fraction 1.0 but
+    fails mismatch spatial suppression.
+  - >-
+    At headroom fraction 1.0, common corticoreticular gain 8 reproduces exact
+    match but mismatch retains all five bottom-up relay cells.
+  - >-
+    The nonmaximal headroom-by-gain surface has not been consulted and directly
+    addresses whether the phenotype survives only in a bounded parameter region.
+source_boundary: >-
+  This is reconstruction calibration, not recovered KInNeSS behavior. The
+  original projection weights and learned maps remain preserved as controls.
+fixed:
+  figure6_handoff: docs/validation-results/figure6-projection022-distal003-217.yaml
+  detector: {arm_mV: -20.0, release_mV: -30.0}
+  cue_current_pA: 800.0
+  cue_lead_ms: 7.85
+  duration_ms: 100.0
+  dt_ms: 0.01
+  projection012_rise_fall_ms: [4.0, 5.0]
+registered_surface:
+  headroom_fractions: [0.25, 0.5, 0.75]
+  common_corticoreticular_gains: [1.25, 1.5, 2.0, 4.0, 8.0]
+  candidate_count: 15
+execution_order: headroom ascending, then gain ascending
+stopping_rule: >-
+  Consult match only for all 15 registered candidates. Mismatch remains locked
+  until an independent full-detector rerun of the lexicographically first exact
+  match survivor passes every gate.
+locked_holdouts:
+  - figure7_mismatch
+  - figure10_reset
+  - figure14_spectra
+  - figure15_local_synchrony
+  - figure16_long_range_synchrony

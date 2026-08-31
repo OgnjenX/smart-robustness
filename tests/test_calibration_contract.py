@@ -3695,3 +3695,67 @@ def test_contract_rejects_published_free_parameter(tmp_path: Path) -> None:
     path.write_text(yaml.safe_dump(raw))
     with pytest.raises(ValueError, match="not calibration-admissible"):
         load_calibration_contract(path)
+
+
+def test_projection012_kinetics_are_closed_by_source_semantics() -> None:
+    artifact = yaml.safe_load(
+        (ROOT / "docs/validation-results/kinness-projection012-kinetics-semantics-283.yaml").read_text()
+    )
+    assert artifact["status"] == "source-semantics-resolved-no-calibration-authorized"
+    assert artifact["implementation_audit"] == {
+        "normalized_dual_exponential": "implemented",
+        "last_two_arrivals_only": "implemented",
+        "bounded_pair_combination": "implemented",
+    }
+    assert not artifact["assessment"]["semantic_ambiguity_remaining"]
+    assert not artifact["assessment"]["source_faithful_kinetic_sweep_authorized"]
+
+
+def test_headroom_corticoreticular_surface_has_one_exact_match_survivor() -> None:
+    artifact = yaml.safe_load(
+        (ROOT / "docs/validation-results/figure7-headroom-corticoreticular-interaction-match-285.yaml").read_text()
+    )
+    assert artifact["assessment"]["registered_candidate_count"] == 15
+    assert artifact["assessment"]["completed_candidate_count"] == 15
+    assert artifact["match_survivors"] == [
+        {"headroom_fraction": 0.75, "common_gain": 4.0}
+    ]
+    survivor = next(item for item in artifact["outcomes"] if item["pass"])
+    assert len(survivor["result"]["relay_spike_times_ms"]) == 15
+    assert len(survivor["result"]["trn_spike_times_ms"]) == 528
+    assert len(survivor["result"]["nonspecific_spike_times_ms"]) == 4
+    assert artifact["assessment"]["mismatch_remains_locked"]
+
+
+def test_headroom_corticoreticular_match_verification_has_fresh_cycles() -> None:
+    artifact = yaml.safe_load(
+        (ROOT / "docs/validation-results/figure7-headroom-corticoreticular-verification-287.yaml").read_text()
+    )
+    outcome = artifact["outcomes"][0]
+    assert outcome["pass"]
+    assert outcome["headroom_fraction"] == 0.75
+    assert outcome["common_gain"] == 4.0
+    assert outcome["gates"]["sampled_trn_events_have_fresh_cycles"]
+    assert artifact["assessment"]["advance_to_mismatch"]
+
+
+def test_headroom_corticoreticular_pair_fails_official_mismatch() -> None:
+    artifact = yaml.safe_load(
+        (ROOT / "docs/validation-results/figure7-headroom-corticoreticular-pair-289.yaml").read_text()
+    )
+    assert artifact["status"] == "figure7-failed"
+    assert not artifact["reproduced"]
+    assert artifact["gates"]["sampled_mismatch_trn_events_have_fresh_cycles"]
+    assert not artifact["gates"]["mismatch_relay_overlap_only"]
+    assert not artifact["gates"]["match_more_active_relay_cells"]
+    assert not artifact["gates"]["match_more_trn_events"]
+    assert not artifact["gates"]["mismatch_nonspecific_70_hz"]
+    match = artifact["match_scoring_summary"]
+    mismatch = artifact["mismatch_result"]
+    assert len(match["relay_spike_times_ms"]) == 15
+    assert len(match["trn_spike_times_ms"]) == 528
+    assert len(match["nonspecific_spike_times_ms"]) == 4
+    assert sorted(set(mismatch["relay_spike_indices"])) == [22, 31, 40, 49, 58]
+    assert all(mismatch["relay_spike_indices"].count(index) == 3 for index in [22, 31, 40, 49, 58])
+    assert len(mismatch["trn_spike_times_ms"]) == 586
+    assert len(mismatch["nonspecific_spike_times_ms"]) == 5

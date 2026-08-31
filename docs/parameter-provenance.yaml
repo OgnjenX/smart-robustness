@@ -288,6 +288,16 @@ parameters:
     status: rejected-behavior-calibration
     source: final exact endpoint of the grid registered in Artifact 206 before the clean Figure 7 result
     note: Artifact 217 passes every Figure 6 gate and Artifact 218 passes clean match. In Artifact 219, match/mismatch each produce 20 relay events in five cells; all five vertical mismatch cells emit four times. The TRN direction becomes correct at 558 versus 534 events, but nonspecific output remains wrong at 6 versus 5. The complete distal family is closed with no stronger or interpolated value authorized
+  model.connectivity.projection012_ampa_kinetic_semantics:
+    value: serialized 4-ms rise and 5-ms fall interpreted as the normalized KInNeSS dual exponential
+    status: published-semantics-resolved
+    source: KInNeSS Equations 13--15, SMART.nml projection 012, and Artifact 283
+    note: the implementation already uses the source-defined normalized waveform, last-two-arrival memory, and bounded g1+g2-g1*g2 combination. Swapping or fitting these constants is not an admissible source-ambiguity calibration
+  model.connectivity.figure7_headroom_corticoreticular_surface:
+    value: learned on-center headroom fractions 0.25/0.5/0.75 crossed with common projection-009/012 gains 1.25/1.5/2/4/8
+    status: rejected-exploratory-behavior-calibration
+    source: Artifacts 284--289; values are not recovered SMART parameters
+    note: exactly one of 15 match points survives, headroom 0.75 with gain 4.0. Artifact 287 independently reproduces 15 relay, 528 TRN, and 4 nonspecific events with complete sampled detector cycles. The fixed mismatch in Artifact 289 retains three events in every vertical relay cell, produces 586 TRN and 5 nonspecific events, and fails the overlap-only, relay-order, TRN-order, and 70-Hz gates. The finite surface is closed and no interpolation is promoted
   model.multicompartment.exact_voltage_clamp:
     value: optional fixed compartment voltage, separate from finite-conductance XML input
     status: published-protocol alternative

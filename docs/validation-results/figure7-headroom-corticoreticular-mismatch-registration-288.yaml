@@ -1,0 +1,36 @@
+schema_version: 1
+id: figure7-headroom-corticoreticular-mismatch-registration-288
+date: '2026-09-01'
+status: registered-before-execution-exploratory-behavior-calibration
+profile: configs/calibration/figure7_headroom_corticoreticular_mismatch_v1.yaml
+authorization:
+  match_screen: docs/validation-results/figure7-headroom-corticoreticular-interaction-match-285.yaml
+  independent_match_verification: docs/validation-results/figure7-headroom-corticoreticular-verification-287.yaml
+  verified_match_counts: {relay: 15, trn: 528, nonspecific: 4}
+  sampled_match_detector_cycles_valid: true
+fixed_candidate:
+  learned_headroom_fraction: 0.75
+  applied_common_weight_factor: 2.7747940940475724
+  common_corticoreticular_gain: 4.0
+  detector: {arm_mV: -20.0, release_mV: -30.0}
+  cue_current_pA: 800.0
+  cue_lead_ms: 7.85
+  duration_ms: 100.0
+  dt_ms: 0.01
+official_gates:
+  mismatch_relay_indices_must_be_subset_of: [40]
+  match_more_active_relay_cells: true
+  match_more_trn_events: true
+  mismatch_more_nonspecific_events: true
+  mismatch_nonspecific_events: 7
+  mismatch_nonspecific_rate_hz: 70.0
+  sampled_mismatch_detector_cycles_valid: true
+stopping_rule: >-
+  Run exactly one independently rebuilt mismatch. Do not change headroom,
+  corticoreticular gain, detector, GABA transfer, cue, delays, kinetics, or
+  topology after seeing the result.
+locked_holdouts:
+  - figure10_reset
+  - figure14_spectra
+  - figure15_local_synchrony
+  - figure16_long_range_synchrony

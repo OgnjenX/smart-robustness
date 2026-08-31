@@ -1,0 +1,33 @@
+schema_version: 1
+id: kinness-projection012-kinetics-semantics-283
+date: '2026-08-31'
+status: source-semantics-resolved-no-calibration-authorized
+question: >-
+  Can projection 012's serialized AMPA rise/fall constants be reinterpreted or
+  varied as the next source-faithful Figure 7 timing discriminator?
+primary_sources:
+  framework:
+    title: 'KInNeSS: A modular framework for computational neuroscience'
+    equations: [13, 14, 15]
+    finding: >-
+      Chemical receptors use a normalized dual exponential with explicitly
+      supplied rise and fall time constants; the last two arrivals are combined
+      with the bounded g1 + g2 - g1*g2 rule.
+  executable_model:
+    title: ModelDB 112923 SMART.nml
+    projection_id: modeldb112923.projection.012
+    serialized_rise_ms: 4.0
+    serialized_fall_ms: 5.0
+implementation_audit:
+  normalized_dual_exponential: implemented
+  last_two_arrivals_only: implemented
+  bounded_pair_combination: implemented
+assessment:
+  semantic_ambiguity_remaining: false
+  source_faithful_kinetic_sweep_authorized: false
+  reason: >-
+    Altering or swapping 4/5 ms would be a knowingly non-source behavioral fit,
+    not resolution of an equation or serialization ambiguity.
+next_step: >-
+  Keep projection 012 kinetics fixed. Continue only with explicitly labeled
+  reconstruction calibration over already registered uncertain mechanisms.

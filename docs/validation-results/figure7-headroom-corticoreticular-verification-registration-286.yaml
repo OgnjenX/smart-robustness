@@ -1,0 +1,30 @@
+schema_version: 1
+id: figure7-headroom-corticoreticular-verification-registration-286
+date: '2026-08-31'
+status: registered-before-execution-exploratory-behavior-calibration
+profile: configs/calibration/figure7_headroom_corticoreticular_verification_v1.yaml
+screen_artifact: docs/validation-results/figure7-headroom-corticoreticular-interaction-match-285.yaml
+selected_candidate:
+  learned_headroom_fraction: 0.75
+  common_corticoreticular_gain: 4.0
+selection_basis:
+  survivor_count: 1
+  registered_candidate_count: 15
+  screen_outcome: {relay_events: 15, trn_events: 528, nonspecific_events: 4}
+verification_requirements:
+  fresh_figure6_handoff: true
+  fresh_recognition_network: true
+  exact_horizontal_relay_indices: [38, 39, 40, 41, 42]
+  minimum_relay_events_per_index: 1
+  exact_nonspecific_events: 4
+  exact_nonspecific_rate_hz: 40.0
+  sampled_trn_event_counts_equal_upcrossings_arms_and_releases: true
+stopping_rule: >-
+  Run the sole pair once. Authorize exactly one fresh mismatch only if every
+  listed gate passes; do not tune either dimension after verification.
+locked_holdouts:
+  - figure7_mismatch
+  - figure10_reset
+  - figure14_spectra
+  - figure15_local_synchrony
+  - figure16_long_range_synchrony

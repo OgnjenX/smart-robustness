@@ -243,6 +243,11 @@ parameters:
     status: bounded-source-duration-calibration-rejected-at-match
     source: Methods 4.9 leaves Figure 7 duration unspecified; Artifacts 255--256 test the sole integer intermediate between one-event and sustained three-event observations
     note: current clears exactly at 49.88 ms from cue onset and preserves 15 horizontal relay events, but produces 626 TRN and five nonspecific events (50 Hz). It fails exact match, mismatch stays locked, and the event-count duration family is closed without timing interpolation
+  protocol.figure7.corticoreticular_receptor_arrival_alignment:
+    value: 9.85-ms cue lead, derived from the selected category event at 5.85 ms plus the slowest 4-ms layer-6II-to-TRN delay
+    status: source-delay-alternative-rejected-at-match
+    source: SMART.nml projections 003/005/006/007 delay 2 ms, projection 009 delay 3 ms, and projection 012 delay 4 ms; Artifacts 257--258
+    note: the clean one-event match preserves 15 horizontal relay events but produces 649 TRN and five nonspecific events (50 Hz). It fails exact match, mismatch remains locked, and cue-lead interpolation is closed
   protocol.figure7.mismatch_relay_event_current_audit:
     value: nine current components sampled at the nearest 0.01-ms state sample to every emitted relay event; no candidate or protocol change
     status: diagnostic-readout-only

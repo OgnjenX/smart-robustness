@@ -511,6 +511,9 @@ FIGURE7_TRN_ARRIVAL_MATCH_REGISTRATION_PATH = (
     ROOT
     / "docs/validation-results/figure7-trn-arrival-aligned-registration-257.yaml"
 )
+FIGURE7_TRN_ARRIVAL_MATCH_RESULT_PATH = (
+    ROOT / "docs/validation-results/figure7-trn-arrival-aligned-match-258.yaml"
+)
 
 
 def test_classic_calibration_contract_separates_training_and_holdout() -> None:
@@ -3089,6 +3092,26 @@ def test_trn_arrival_alignment_is_source_derived_and_match_only() -> None:
     assert not registration["official_status_before_execution"][
         "figure7_reproduced"
     ]
+
+
+def test_trn_arrival_alignment_fails_exact_match_and_locks_mismatch() -> None:
+    artifact = yaml.safe_load(FIGURE7_TRN_ARRIVAL_MATCH_RESULT_PATH.read_text())
+    assert artifact["status"] == "complete"
+    assert artifact["stage_1_survivor_headroom_fractions"] == []
+    assert artifact["assessment"]["mismatch_remains_locked"]
+    assert not artifact["assessment"]["advance_to_mismatch"]
+    outcome = artifact["outcomes"][0]
+    result = outcome["result"]
+    assert result["top_down_cue_lead_ms"] == pytest.approx(9.85)
+    assert result["cue_lead_category_spike_indices"] == [40]
+    assert result["cue_lead_category_spike_times_ms"] == pytest.approx([5.85])
+    assert result["cue_lead_relay_spike_times_ms"] == []
+    assert len(result["relay_spike_times_ms"]) == 15
+    assert len(result["trn_spike_times_ms"]) == 649
+    assert len(result["nonspecific_spike_times_ms"]) == 5
+    assert outcome["gates"]["current_terminated_on_selected_event"]
+    assert not outcome["gates"]["nonspecific_40_hz"]
+    assert not outcome["pass"]
 
 
 def test_contract_rejects_holdout_leakage(tmp_path: Path) -> None:

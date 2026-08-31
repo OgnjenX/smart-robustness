@@ -2348,6 +2348,19 @@ fails the exact 40-Hz match prerequisite. Mismatch is not run. The one-event,
 two-event, and sustained/three-event observations now close the bounded
 current-duration family without timing interpolation.
 
+The archive's category-to-relay delays are all 2 ms, whereas category-to-TRN
+NMDA and AMPA delays are 3 and 4 ms. Artifact 257 therefore registers one final
+source-derived timing discriminator: extend the clean one-event cue lead from
+7.85 to 9.85 ms so the slowest corticoreticular receptor arrival coincides
+with bottom-up onset. The fresh match in
+`figure7-trn-arrival-aligned-match-258.yaml` contains one source-40 cue event,
+no relay cue-lead events, and 15 horizontal scored relay events. It nevertheless
+produces 649 scored TRN events and five nonspecific events (50 Hz), failing the
+exact match gate. The lead also contains the already known 81-cell startup TRN
+volley at 5.68 ms and one nonspecific startup event at 0.75 ms; neither is
+counted in the scored epoch, but both are retained as state. Mismatch is not
+run, and source-delay lead interpolation is closed.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

@@ -307,6 +307,10 @@ FIGURE7_PROJECTION022_DISTAL002_MATCH_PATH = (
 FIGURE7_PROJECTION022_DISTAL002_PAIR_PATH = (
     ROOT / "docs/validation-results/figure7-projection022-distal002-pair-214.yaml"
 )
+FIGURE7_PROJECTION022_DISTAL002_FRESH_MATCH_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-projection022-distal002-fresh-match-215.yaml"
+)
 
 
 def test_classic_calibration_contract_separates_training_and_holdout() -> None:
@@ -1446,6 +1450,35 @@ def test_source_resolved_distal002_pair_remains_nonselective() -> None:
         "mismatch_more_nonspecific_events": False,
         "sampled_mismatch_trn_events_have_fresh_cycles": True,
     }
+
+
+def test_fresh_network_learned_weight_handoff_passes_match() -> None:
+    artifact = yaml.safe_load(
+        FIGURE7_PROJECTION022_DISTAL002_FRESH_MATCH_PATH.read_text()
+    )
+    assert artifact["status"] == "match-pass"
+    assert artifact["learned_state_handoff"] == (
+        "fresh_network_from_figure6_weights"
+    )
+    assert artifact["handoff_figure6_population_spikes"]["thalamic_relay"] == 20
+    result = artifact["result"]
+    assert result["learned_state_provenance"] == "simulated-learned-weight-snapshot"
+    assert len(result["relay_spike_indices"]) == 20
+    assert set(result["relay_spike_indices"]) == {38, 39, 40, 41, 42}
+    assert len(result["trn_spike_indices"]) == 559
+    assert len(result["nonspecific_spike_times_ms"]) == 7
+    assert set(artifact["relay_event_counts_by_index"].values()) == {4}
+    assert artifact["sampled_trn_event_counts_by_index"] == artifact[
+        "sampled_trn_threshold_upcrossings_by_index"
+    ]
+    assert artifact["sampled_trn_event_counts_by_index"] == artifact[
+        "sampled_trn_arm_transitions_by_index"
+    ]
+    assert artifact["sampled_trn_event_counts_by_index"] == artifact[
+        "sampled_trn_release_transitions_by_index"
+    ]
+    assert all(artifact["gates"].values())
+    assert artifact["assessment"]["advance_to_mismatch"]
 
 
 def test_trn_calcium_reversal_restores_wrong_cue_lead_mechanism() -> None:

@@ -1995,6 +1995,17 @@ must transfer the learned weights into a freshly initialized recognition
 network, preserving learning while removing state contamination without an
 arbitrary washout interval.
 
+The fresh learned-weight handoff passes match in
+`figure7-projection022-distal002-fresh-match-215.yaml`. The runner first
+reproduces the 20-event Figure 6 training episode, extracts the three required
+adaptive projection arrays, reconstructs an otherwise identical network, and
+installs only those learned weights. Recognition then produces four events in
+each relay cell 38--42 (20 total), 559 genuine-cycle TRN events, and seven
+nonspecific events. The corresponding contiguous-state match produced
+30/522/5, so transient carryover materially affected every pathway. The clean
+match passes and authorizes one independently rebuilt mismatch with the same
+weight-handoff protocol.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

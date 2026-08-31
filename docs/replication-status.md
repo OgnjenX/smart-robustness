@@ -2087,6 +2087,14 @@ each candidate receives that snapshot in a separately rebuilt recognition
 network. Mismatch remains locked unless a candidate preserves the complete
 match relay/TRN mechanism and emits exactly four nonspecific events in 100 ms.
 
+The completed screen in `figure7-top-down-current-match-reopen-225.yaml` has a
+single exact match survivor. At 800 pA, cells 38--42 emit 24 relay events, TRN
+emits 559 genuine-cycle events, and nonspecific thalamus emits exactly four
+events (40 Hz). At 1000 pA the spatial and TRN gates still pass but
+nonspecific output returns to six events (60 Hz), matching the failed 600-pA
+control rate. Artifact 226 therefore preregisters one independently rebuilt
+800-pA mismatch with all learned weights and biological parameters fixed.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

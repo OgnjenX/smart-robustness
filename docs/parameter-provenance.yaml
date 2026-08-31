@@ -269,7 +269,7 @@ parameters:
     value: required explicit pA amplitude applied to one central layer 6II soma
     status: not-identifiable
     source: Methods 4.9 specifies somatic current injection but reports no amplitude; Figure 7 fixes a horizontal learned expectation for both conditions
-    note: the archived blue=70 TD INPUT is subthreshold in the isolated source-profile cell; the unchanged registered 600/800/1000-pA grid is reopened in Artifact 224 only because the upstream candidate now has source-resolved category feedback, fresh learned-state handoff, and condition-dependent genuine TRN output; no interpolation or expansion is authorized
+    note: the archived blue=70 TD INPUT is subthreshold in the isolated source-profile cell; Artifact 225 reopens the unchanged registered 600/800/1000-pA grid because the upstream candidate now has source-resolved category feedback, fresh learned-state handoff, and condition-dependent genuine TRN output. Only 800 pA passes complete clean match with exactly 4 nonspecific events (40 Hz); 600 and 1000 pA each produce 6. Artifact 226 registers one fixed 800-pA mismatch; no interpolation or expansion is authorized
   validation.figure7.rate_tolerance:
     value: exact 100-ms targets of 40 Hz match and 70 Hz mismatch; zero event-count tolerance
     status: published-rendered-figure

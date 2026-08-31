@@ -504,6 +504,13 @@ FIGURE7_TWO_EVENT_MATCH_REGISTRATION_PATH = (
 FIGURE7_TWO_EVENT_MATCH_RESULT_PATH = (
     ROOT / "docs/validation-results/figure7-aligned-two-event-match-256.yaml"
 )
+FIGURE7_TRN_ARRIVAL_MATCH_PROFILE_PATH = (
+    ROOT / "configs/calibration/figure7_trn_arrival_aligned_match_v1.yaml"
+)
+FIGURE7_TRN_ARRIVAL_MATCH_REGISTRATION_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-trn-arrival-aligned-registration-257.yaml"
+)
 
 
 def test_classic_calibration_contract_separates_training_and_holdout() -> None:
@@ -3058,6 +3065,30 @@ def test_two_event_current_fails_exact_match_and_locks_mismatch() -> None:
     assert outcome["gates"]["current_terminated_on_selected_event"]
     assert not outcome["gates"]["nonspecific_40_hz"]
     assert not outcome["pass"]
+
+
+def test_trn_arrival_alignment_is_source_derived_and_match_only() -> None:
+    profile = yaml.safe_load(FIGURE7_TRN_ARRIVAL_MATCH_PROFILE_PATH.read_text())
+    registration = yaml.safe_load(
+        FIGURE7_TRN_ARRIVAL_MATCH_REGISTRATION_PATH.read_text()
+    )
+    assert profile["protocol"]["top_down_cue_lead_ms"] == pytest.approx(9.85)
+    assert profile["protocol"]["top_down_current_mode"] == (
+        "until_cued_cell_first_event"
+    )
+    source = registration["source_basis"]
+    assert set(source["category_to_relay_delays_ms"].values()) == {2.0}
+    assert source["category_to_trn_delays_ms"] == {
+        "modeldb112923.projection.009": 3.0,
+        "modeldb112923.projection.012": 4.0,
+    }
+    assert source["registered_slowest_trn_arrival_lead_ms"] == pytest.approx(
+        source["selected_category_first_event_ms"] + 4.0
+    )
+    assert registration["execution_order"][-1].startswith("Keep mismatch locked")
+    assert not registration["official_status_before_execution"][
+        "figure7_reproduced"
+    ]
 
 
 def test_contract_rejects_holdout_leakage(tmp_path: Path) -> None:

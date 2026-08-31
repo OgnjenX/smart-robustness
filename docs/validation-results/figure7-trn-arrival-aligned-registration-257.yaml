@@ -1,0 +1,45 @@
+schema_version: 1
+id: figure7-trn-arrival-aligned-registration-257
+date: '2026-08-31'
+status: registered-before-execution
+profile: configs/calibration/figure7_trn_arrival_aligned_match_v1.yaml
+source_basis:
+  selected_category_first_event_ms: 5.85
+  category_to_relay_delays_ms:
+    modeldb112923.projection.003: 2.0
+    modeldb112923.projection.005: 2.0
+    modeldb112923.projection.006: 2.0
+    modeldb112923.projection.007: 2.0
+  category_to_trn_delays_ms:
+    modeldb112923.projection.009: 3.0
+    modeldb112923.projection.012: 4.0
+  existing_relay_arrival_lead_ms: 7.85
+  registered_slowest_trn_arrival_lead_ms: 9.85
+rationale: >-
+  The exact-rate aligned pair starts bottom-up input when category feedback
+  first arrives at relay cells. The intended off-surround reaches TRN one to
+  two milliseconds later. Artifact 250 shows relay feedback then dominates
+  TRN excitation. Delay bottom-up onset by the source-derived two milliseconds
+  so projection 012 arrives at TRN exactly at stimulus onset and projection 009
+  has arrived one millisecond earlier.
+relationship_to_older_timing_screen: >-
+  Artifact 189 tested related leads before the event-terminated cue, clean
+  learned-state handoff, receptor alignment, and genuine-cycle TRN candidate
+  existed; its cue leads produced off-source, relay, and nonspecific lead
+  events. It does not test this clean one-event source-40 protocol.
+fixed_choices:
+  current_pA: 800.0
+  current_mode: until_cued_cell_first_event
+  learned_headroom_fraction: 1.0
+  biological_parameters_topology_kinetics_and_delays_unchanged: true
+execution_order:
+  - Run one fresh Figure 7 match without full pathway diagnostics.
+  - Require one source-40 lead event, no relay lead event, the horizontal relay pattern, and exact 40-Hz nonspecific output.
+  - Keep mismatch locked unless an independent full-state match rerun also passes.
+stopping_rule: >-
+  Do not interpolate the 7.85--9.85-ms lead interval or extend beyond the
+  slowest source delay after a failed match.
+official_status_before_execution:
+  figure7_reproduced: false
+  downstream_holdouts_unlocked: false
+

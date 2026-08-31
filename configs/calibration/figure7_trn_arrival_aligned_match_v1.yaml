@@ -1,0 +1,50 @@
+schema_version: 1
+name: figure7-trn-arrival-aligned-match-v1
+status: registered-before-execution
+registration_artifact: docs/validation-results/figure7-trn-arrival-aligned-registration-257.yaml
+base_profile: configs/calibration/figure6_kinness_equation27_transition_v1.yaml
+figure6_artifact: docs/validation-results/figure6-projection022-distal003-217.yaml
+aligned_control_artifact: docs/validation-results/figure7-receptor-arrival-aligned-match-238.yaml
+verification_screen_artifact: docs/validation-results/figure7-aligned-on-center-headroom-screen-240.yaml
+detector: {arm_mV: -20.0, release_mV: -30.0}
+runtime_overrides:
+  projection_source_convention: paper_supplement_cross_checked
+trn_to_relay_gaba:
+  scales:
+    modeldb112923.projection.000: 0.01
+    modeldb112923.projection.001: 0.01
+    modeldb112923.projection.004: 0.03
+dimension:
+  name: selected_category_learned_on_center_headroom_fraction
+  source_index: 40
+  grid: [1.0]
+  transform: existing hard-bound shape-preserving learned-state transform
+protocol:
+  learned_state_handoff: fresh_network_from_figure6_weights_then_registered_headroom_transform
+  top_down_current_pA: 800.0
+  top_down_current_mode: until_cued_cell_first_event
+  top_down_cue_lead_ms: 9.85
+  equilibration_ms: 0.0
+  duration_ms: 100.0
+  dt_ms: 0.01
+stage_1_gate:
+  selected_category_events_during_lead: 1
+  off_source_category_events_during_lead: 0
+  relay_events_during_lead: 0
+  relay_active_indices: [38, 39, 40, 41, 42]
+  minimum_relay_events_per_active_index: 1
+  trn_events: '>0'
+  nonspecific_events: 4
+  nonspecific_rate_hz: 40.0
+selection_rule: the sole source-delay alignment must pass every exact match gate
+next_gate: >-
+  If match passes, independently verify it with full detector-cycle diagnostics
+  before registering one fresh mismatch. If match fails, close receptor-arrival
+  alignment; do not interpolate cue lead.
+locked_holdouts:
+  - figure7_mismatch
+  - figure10_reset
+  - figure14_spectra
+  - figure15_local_synchrony
+  - figure16_long_range_synchrony
+

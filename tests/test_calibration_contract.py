@@ -588,6 +588,13 @@ FIGURE6_CORTICORETICULAR_AMPA_DELAY_RESULT_PATH = (
     ROOT
     / "docs/validation-results/figure6-corticoreticular-ampa-delay2-272.yaml"
 )
+FIGURE6_CORTICORETICULAR_AMPA_DELAY3_PROFILE_PATH = (
+    ROOT / "configs/calibration/figure6_corticoreticular_ampa_delay3_v1.yaml"
+)
+FIGURE6_CORTICORETICULAR_AMPA_DELAY3_REGISTRATION_PATH = (
+    ROOT
+    / "docs/validation-results/figure6-corticoreticular-ampa-delay3-registration-273.yaml"
+)
 
 
 def test_classic_calibration_contract_separates_training_and_holdout() -> None:
@@ -3468,6 +3475,20 @@ def test_corticoreticular_ampa_delay2_is_rejected_before_figure7() -> None:
     assert artifact["maps"]["bottom_up_oriented"]
     assert not artifact["maps"]["top_down_oriented"]
     assert not artifact["assessment"]["promoted"]
+
+
+def test_corticoreticular_ampa_delay3_is_final_integer_intermediate() -> None:
+    profile = yaml.safe_load(
+        FIGURE6_CORTICORETICULAR_AMPA_DELAY3_PROFILE_PATH.read_text()
+    )
+    registration = yaml.safe_load(
+        FIGURE6_CORTICORETICULAR_AMPA_DELAY3_REGISTRATION_PATH.read_text()
+    )
+    assert profile["runtime_overrides"]["corticoreticular_ampa_delay_ms"] == 3.0
+    assert registration["timing_alternative"]["candidate_delay_ms"] == 3.0
+    assert registration["conditions_consulted"] == ["figure6"]
+    assert registration["figure7_lock"].startswith("do not inspect Figure 7")
+    assert registration["selection_boundary"].startswith("Do not interpolate")
 
 
 def test_contract_rejects_holdout_leakage(tmp_path: Path) -> None:

@@ -1,0 +1,30 @@
+schema_version: 1
+name: figure6-corticoreticular-ampa-delay3-v1
+status: registered-before-execution
+registration_artifact: docs/validation-results/figure6-corticoreticular-ampa-delay3-registration-273.yaml
+base_profile: configs/calibration/figure6_kinness_equation27_transition_v1.yaml
+base_candidate_fingerprint: 12e0245e9a3044073200e90443582885a5410cf39b8b18d50d22a04a2fc48604
+candidate_fingerprint: 12e0245e9a3044073200e90443582885a5410cf39b8b18d50d22a04a2fc48604
+candidate:
+  intrinsic_cell_convention: modeldb_relay_paper_table3_others
+  calcium_kinetics_convention: modeldb_112923
+  calcium_density_convention: cell_specific
+  nak_rate_convention: standard_traub_miles
+  axial_convention: modeldb_relay_kinness_paper_others
+  membrane_initialization_convention: physical_leak_voltage
+  spike_event_rule: latched_peak_then_zero
+  gaussian_spread_convention: standard_deviation
+  relay_input_interpretation: archived_finite_conductance
+  top_down_current_pA: 600.0
+  postsynaptic_signal_convention: kinness_equation27_transition_time
+runtime_overrides:
+  projection_source_convention: paper_supplement_cross_checked
+  corticoreticular_ampa_delay_ms: 3.0
+projection_weight_scales:
+  modeldb112923.projection.000: 0.01
+  modeldb112923.projection.001: 0.01
+  modeldb112923.projection.004: 0.03
+promotion_gate: >-
+  Advance to a separately registered Figure 7 match only if exact repeated
+  horizontal relay recruitment, cortical-chain ordering, causal learning, and
+  both horizontal map-orientation gates all pass.

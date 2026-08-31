@@ -1,0 +1,26 @@
+schema_version: 1
+id: figure6-corticoreticular-ampa-delay3-registration-273
+date: '2026-08-31'
+status: registered-before-execution
+profile: configs/calibration/figure6_corticoreticular_ampa_delay3_v1.yaml
+rationale: >-
+  Test the sole integer effective-delay intermediate between the rejected 2-ms
+  endpoint and archived 4-ms source value. At 3 ms, projection-012 AMPA and
+  projection-009 NMDA share an arrival delay while projection-003 relay NMDA
+  remains at 2 ms.
+timing_alternative:
+  projection_id: modeldb112923.projection.012
+  archived_delay_ms: 4.0
+  candidate_delay_ms: 3.0
+  unchanged_delays:
+    modeldb112923.projection.003: 2.0
+    modeldb112923.projection.009: 3.0
+  receptor_kinetics_changed: false
+  weights_changed_beyond_existing_baseline: false
+source_status: calibrated effective-delay alternative; not recovered KInNeSS behavior
+conditions_consulted: [figure6]
+figure7_lock: do not inspect Figure 7 unless every complete Figure 6 gate passes
+selection_boundary: >-
+  Do not interpolate fractional delays after this endpoint; 2, 3, and archived
+  4 ms exhaust the finite integer family.
+execution_limit: exactly one complete Figure 6 episode

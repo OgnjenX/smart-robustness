@@ -2258,6 +2258,23 @@ have five active relay cells each despite the correct total-event, TRN, and
 arousal directions. The bounded learned-amplitude family is rejected for
 official Figure 7, and reset/spectral holdouts remain locked.
 
+Because the failed nonoverlap relay cells recover only after 55--62 ms, while
+the one-event source cue ended before visual onset, Artifact 245 registers one
+remaining source-supported current-duration discriminator. Methods 4.9 states
+that layer-6II somatic current induces top-down feedback but does not report its
+Figure 7 duration; the until-one-spike wording belongs to Figure 9a. The sole
+candidate therefore keeps the aligned onset, 800-pA amplitude, hard-bound
+learned state, and every network parameter fixed while maintaining current
+through the 100-ms match.
+
+That sustained match fails in
+`figure7-aligned-sustained-match-246.yaml`, so mismatch is not run. The five
+horizontal relay cells still emit three events each, but TRN output falls from
+633 to 608 events and nonspecific thalamus emits five events (50 Hz) rather
+than four. The sustained-current protocol is therefore closed at this operating
+point; it cannot be used to rescue the mismatch spatial subset without first
+breaking the published match.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

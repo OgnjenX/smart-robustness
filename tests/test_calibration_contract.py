@@ -455,6 +455,9 @@ FIGURE7_ALIGNED_SUSTAINED_REGISTRATION_PATH = (
     ROOT
     / "docs/validation-results/figure7-aligned-sustained-registration-245.yaml"
 )
+FIGURE7_ALIGNED_SUSTAINED_RESULT_PATH = (
+    ROOT / "docs/validation-results/figure7-aligned-sustained-match-246.yaml"
+)
 
 
 def test_classic_calibration_contract_separates_training_and_holdout() -> None:
@@ -2745,6 +2748,22 @@ def test_aligned_sustained_current_is_single_preregistered_waveform() -> None:
     )
     assert registration["fixed_choices"]["learned_headroom_fraction"] == 1.0
     assert registration["mismatch_lock"].startswith("Do not run mismatch")
+
+
+def test_aligned_sustained_current_fails_exact_match_and_locks_mismatch() -> None:
+    artifact = yaml.safe_load(FIGURE7_ALIGNED_SUSTAINED_RESULT_PATH.read_text())
+    assert artifact["status"] == "complete"
+    assert artifact["stage_1_survivor_headroom_fractions"] == []
+    outcome = artifact["outcomes"][0]
+    assert set(outcome["relay_event_counts_by_index"].values()) == {3}
+    assert len(outcome["result"]["trn_spike_times_ms"]) == 608
+    assert len(outcome["result"]["nonspecific_spike_times_ms"]) == 5
+    assert outcome["result"]["top_down_current_termination_time_ms"] is None
+    assert outcome["gates"]["sustained_current_protocol"]
+    assert not outcome["gates"]["nonspecific_40_hz"]
+    assert not outcome["pass"]
+    assert artifact["assessment"]["mismatch_remains_locked"]
+    assert not artifact["assessment"]["advance_to_mismatch"]
 
 
 def test_contract_rejects_holdout_leakage(tmp_path: Path) -> None:

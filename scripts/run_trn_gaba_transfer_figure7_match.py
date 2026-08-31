@@ -76,12 +76,16 @@ def main() -> None:
         }
     base = runtime_conventions_for_candidate(base_profile["candidate"])
     detector = profile["detector"]
+    runtime_overrides = {
+        str(key): value for key, value in profile.get("runtime_overrides", {}).items()
+    }
     conventions = replace(
         base,
         trn_spike_event_coordinate="absolute_physical",
         trn_spike_event_threshold_mV=float(detector["arm_mV"]),
         trn_spike_event_release_mV=float(detector["release_mV"]),
         trn_spike_event_proximal_blend_fraction=None,
+        **runtime_overrides,
     )
     protocol = profile["protocol"]
     result = run_figure7_condition(

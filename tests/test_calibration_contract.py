@@ -386,6 +386,18 @@ FIGURE7_SELECTED_CATEGORY_REGISTRATION_PATH = (
 FIGURE7_SELECTED_CATEGORY_MATCH_PROFILE_PATH = (
     ROOT / "configs/calibration/figure7_selected_category_routing_match_v1.yaml"
 )
+FIGURE7_SELECTED_CATEGORY_MATCH_RESULT_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-selected-category-routing-match-233.yaml"
+)
+FIGURE7_SELECTED_CATEGORY_MISMATCH_REGISTRATION_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-selected-category-routing-mismatch-registration-234.yaml"
+)
+FIGURE7_SELECTED_CATEGORY_PAIR_PROFILE_PATH = (
+    ROOT
+    / "configs/calibration/figure7_selected_category_routing_fresh_pair_v1.yaml"
+)
 
 
 def test_classic_calibration_contract_separates_training_and_holdout() -> None:
@@ -1908,6 +1920,30 @@ def test_selected_category_routing_is_preregistered_as_diagnostic_only() -> None
     ]
     assert profile["protocol"]["top_down_relay_source_indices"] == [40]
     assert "cannot itself unlock official" in profile["next_gate"]
+
+
+def test_selected_category_match_passes_and_unlocks_only_diagnostic_mismatch() -> None:
+    artifact = yaml.safe_load(FIGURE7_SELECTED_CATEGORY_MATCH_RESULT_PATH.read_text())
+    registration = yaml.safe_load(
+        FIGURE7_SELECTED_CATEGORY_MISMATCH_REGISTRATION_PATH.read_text()
+    )
+    profile = yaml.safe_load(FIGURE7_SELECTED_CATEGORY_PAIR_PROFILE_PATH.read_text())
+    outcome = artifact["outcomes"][0]
+    result = outcome["result"]
+    assert artifact["survivor_currents_pA"] == [800.0]
+    assert result["top_down_relay_source_indices"] == [40]
+    assert result["top_down_current_termination_time_ms"] == 5.85
+    assert len(result["relay_spike_times_ms"]) == 25
+    assert len(result["trn_spike_times_ms"]) == 570
+    assert len(result["nonspecific_spike_times_ms"]) == 4
+    assert outcome["pass"]
+    assert registration["status"] == "registered-before-execution-diagnostic"
+    assert registration["interpretation_boundary"].startswith(
+        "This is a causal intervention"
+    )
+    assert profile["diagnostic_only"] is True
+    assert profile["protocol"]["top_down_relay_source_indices"] == [40]
+    assert profile["locked_holdouts"][0] == "figure10_reset"
 
 
 def test_trn_calcium_reversal_restores_wrong_cue_lead_mechanism() -> None:

@@ -1,0 +1,65 @@
+schema_version: 1
+id: figure7-selected-category-routing-mismatch-registration-234
+date: '2026-08-31'
+status: registered-before-execution-diagnostic
+protocol_registration: docs/validation-results/figure7-selected-category-routing-registration-232.yaml
+match_artifact: docs/validation-results/figure7-selected-category-routing-match-233.yaml
+numeric_target_artifact: docs/validation-results/figure7-rendered-target-correction-223.yaml
+match_result:
+  top_down_current_pA: 800.0
+  top_down_current_mode: until_cued_cell_first_event
+  top_down_relay_source_indices: [40]
+  relay_events: 25
+  trn_events: 570
+  nonspecific_events: 4
+  nonspecific_rate_hz: 40.0
+  all_registered_match_gates_passed: true
+fixed_intervention:
+  retained_source_indices: [40]
+  affected_projection_ids:
+    - modeldb112923.projection.003
+    - modeldb112923.projection.005
+    - modeldb112923.projection.006
+    - modeldb112923.projection.007
+  unchanged_pathways:
+    - layer6II_to_trn_off_surround
+    - layer6II_to_nonspecific_thalamus
+    - layer6II_to_thalamic_interneuron
+    - all_intracortical_connections
+    - all_bottom_up_inputs
+fixed_candidate:
+  projection_source_convention: paper_supplement_cross_checked
+  ring_kernel_convention: center_excluded_gaussian
+  trn_detector: {arm_mV: -20.0, release_mV: -30.0}
+  trn_to_relay_gaba_scales:
+    modeldb112923.projection.000: 0.01
+    modeldb112923.projection.001: 0.01
+    modeldb112923.projection.004: 0.03
+  learned_state_handoff: fresh_network_from_figure6_weights
+  simultaneous_onset: true
+  duration_ms: 100.0
+diagnostic_pair_gate:
+  both_currents_terminate_at_first_cued_cell_event: true
+  both_relay_output_masks_retain_only_source_indices: [40]
+  match_relay_indices: [38, 39, 40, 41, 42]
+  mismatch_relay_indices_must_be_subset_of: [40]
+  relay_active_cell_order: match_greater_than_mismatch
+  trn_event_order: match_greater_than_mismatch
+  match_nonspecific_events: 4
+  mismatch_nonspecific_events: 7
+  nonspecific_rates_hz: {match: 40.0, mismatch: 70.0}
+  sampled_mismatch_trn_events_have_fresh_cycles: true
+interpretation_boundary: >-
+  This is a causal intervention, not recovered SMART source behavior. Even a
+  complete phenotype pass cannot reproduce or freeze the official baseline;
+  it can only identify selected-category relay-output routing as sufficient
+  and motivate source recovery or explicit mechanism reconstruction.
+stopping_rule: >-
+  Run exactly one independently rebuilt mismatch. Do not change the source
+  mask, current, conductances, detector, geometry, or another pathway after
+  seeing the result.
+locked_holdouts:
+  - figure10_reset
+  - figure14_spectra
+  - figure15_local_synchrony
+  - figure16_long_range_synchrony

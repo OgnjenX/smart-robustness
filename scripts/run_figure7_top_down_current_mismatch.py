@@ -50,6 +50,17 @@ def _scoring_result(raw: dict[str, Any]) -> Figure7ConditionResult:
         relay_spike_times_ms=tuple(raw["relay_spike_times_ms"]),
         trn_spike_indices=tuple(raw["trn_spike_indices"]),
         trn_spike_times_ms=tuple(raw["trn_spike_times_ms"]),
+        top_down_current_mode=raw.get(
+            "top_down_current_mode", TopDownCurrentMode.SUSTAINED_EPOCH.value
+        ),
+        top_down_current_termination_time_ms=raw.get(
+            "top_down_current_termination_time_ms"
+        ),
+        top_down_relay_source_indices=(
+            None
+            if raw.get("top_down_relay_source_indices") is None
+            else tuple(raw["top_down_relay_source_indices"])
+        ),
     )
 
 
@@ -105,6 +116,19 @@ def main() -> None:
     current_mode = TopDownCurrentMode(
         protocol.get("top_down_current_mode", TopDownCurrentMode.SUSTAINED_EPOCH)
     )
+    relay_source_indices = protocol.get("top_down_relay_source_indices")
+    relay_source_indices = (
+        None
+        if relay_source_indices is None
+        else frozenset(int(index) for index in relay_source_indices)
+    )
+    expected_relay_source_indices = (
+        None
+        if relay_source_indices is None
+        else tuple(sorted(relay_source_indices))
+    )
+    if match.top_down_relay_source_indices != expected_relay_source_indices:
+        raise ValueError("match artifact does not use the registered relay-source mask")
     mismatch = run_figure7_condition(
         condition=MatchCondition.MISMATCH,
         top_down_current_pA=selected_current,
@@ -114,6 +138,7 @@ def main() -> None:
         dt_ms=float(protocol["dt_ms"]),
         record_relay_diagnostics=bool(protocol["record_relay_diagnostics"]),
         persistent_projection_weight_scales=scales,
+        top_down_relay_source_indices=relay_source_indices,
         top_down_current_mode=current_mode,
         top_down_cue_lead_ms=float(protocol["top_down_cue_lead_ms"]),
         equilibration_ms=float(protocol["equilibration_ms"]),
@@ -148,6 +173,12 @@ def main() -> None:
     )
     gates = {
         "match_exact_complete_gate": bool(match_outcome["pass"]),
+        "match_top_down_relay_source_protocol": (
+            match.top_down_relay_source_indices == expected_relay_source_indices
+        ),
+        "mismatch_top_down_relay_source_protocol": (
+            mismatch.top_down_relay_source_indices == expected_relay_source_indices
+        ),
         "mismatch_top_down_current_protocol": (
             current_mode is TopDownCurrentMode.SUSTAINED_EPOCH
             or (
@@ -170,12 +201,20 @@ def main() -> None:
         ),
         "sampled_mismatch_trn_events_have_fresh_cycles": fresh_cycles,
     }
-    reproduced = all(gates.values()) and assessment.reproduced
+    phenotype_reproduced = all(gates.values()) and assessment.reproduced
+    diagnostic_only = bool(profile.get("diagnostic_only", False))
+    reproduced = phenotype_reproduced and not diagnostic_only
     artifact = {
         "schema_version": 1,
         "id": Path(args.output).stem,
         "date": datetime.now(tz=UTC).date().isoformat(),
-        "status": "figure7-reproduced" if reproduced else "figure7-failed",
+        "status": (
+            "diagnostic-phenotype-pass"
+            if phenotype_reproduced and diagnostic_only
+            else "figure7-reproduced"
+            if reproduced
+            else "figure7-failed"
+        ),
         "profile": args.profile,
         "registration_artifact": profile["registration_artifact"],
         "base_candidate_fingerprint": base_profile["candidate_fingerprint"],
@@ -194,6 +233,8 @@ def main() -> None:
         "sampled_mismatch_trn_release_transitions_by_index": releases,
         "official_assessment": assessment,
         "gates": gates,
+        "diagnostic_only": diagnostic_only,
+        "phenotype_reproduced": phenotype_reproduced,
         "reproduced": reproduced,
         "next_gate": profile["next_gate"],
     }
@@ -206,7 +247,8 @@ def main() -> None:
         f"mismatch relay/trn/ns={len(mismatch.relay_spike_times_ms)}/"
         f"{len(mismatch.trn_spike_times_ms)}/"
         f"{len(mismatch.nonspecific_spike_times_ms)} "
-        f"reproduced={reproduced}",
+        f"phenotype_reproduced={phenotype_reproduced} "
+        f"official_reproduced={reproduced}",
         flush=True,
     )
 

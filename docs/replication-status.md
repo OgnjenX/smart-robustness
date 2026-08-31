@@ -2155,6 +2155,15 @@ explain the failed mismatch; it is not recovered source behavior, is ineligible
 for baseline freezing, and cannot directly unlock Figure 10 or spectral
 holdouts even if its match/mismatch phenotype succeeds.
 
+The preregistered match prerequisite passes in
+`figure7-selected-category-routing-match-233.yaml`. With the source mask fixed
+to category cell 40, the one-event 800-pA cue produces five events in each of
+relay cells 38--42 (25 total), 570 genuine-cycle TRN events, and exactly four
+nonspecific events (40 Hz). Artifact 234 therefore registers exactly one fresh
+vertical mismatch with the identical intervention and every biological
+parameter fixed. This result establishes only that the diagnostic preserves
+the match regime; all official downstream holdouts remain locked.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

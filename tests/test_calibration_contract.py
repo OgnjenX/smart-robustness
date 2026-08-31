@@ -341,6 +341,13 @@ FIGURE6_RING_KERNEL_RADIAL_ANNULUS_PATH = (
 FIGURE7_RENDERED_TARGET_CORRECTION_PATH = (
     ROOT / "docs/validation-results/figure7-rendered-target-correction-223.yaml"
 )
+FIGURE7_TOP_DOWN_CURRENT_REGISTRATION_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-top-down-current-reopen-registration-224.yaml"
+)
+FIGURE7_TOP_DOWN_CURRENT_MATCH_PROFILE_PATH = (
+    ROOT / "configs/calibration/figure7_top_down_current_match_reopen_v1.yaml"
+)
 
 
 def test_classic_calibration_contract_separates_training_and_holdout() -> None:
@@ -1716,6 +1723,21 @@ def test_rendered_figure7_restores_exact_numeric_target() -> None:
     assert artifact["correction"]["tolerance_hz"] == 0.0
     assert not artifact["rescored_leading_candidate"]["numeric_target_pass"]
     assert artifact["assessment"]["figure7_numeric_target_identifiable"]
+
+
+def test_top_down_current_reopen_preserves_original_grid_and_locks_mismatch() -> None:
+    registration = yaml.safe_load(
+        FIGURE7_TOP_DOWN_CURRENT_REGISTRATION_PATH.read_text()
+    )
+    profile = yaml.safe_load(FIGURE7_TOP_DOWN_CURRENT_MATCH_PROFILE_PATH.read_text())
+    assert registration["status"] == "registered-before-execution"
+    grid = registration["current_grid_pA"]
+    assert grid["historical_control"]["value"] == 600.0
+    assert grid["unopened_candidates"] == [800.0, 1000.0]
+    assert profile["protocol"]["top_down_currents_pA"] == [800.0, 1000.0]
+    assert profile["match_gate"]["nonspecific_events"] == 4
+    assert profile["match_gate"]["nonspecific_rate_hz"] == 40.0
+    assert profile["locked_holdouts"][0] == "figure7_mismatch"
 
 
 def test_trn_calcium_reversal_restores_wrong_cue_lead_mechanism() -> None:

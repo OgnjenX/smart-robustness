@@ -144,6 +144,8 @@ def main() -> None:
         ),
         "trn_events": len(result.trn_spike_times_ms) > 0,
         "sampled_trn_events_have_fresh_cycles": sampled_events_have_fresh_cycles,
+        "figure7_target_duration": result.duration_ms == 100.0,
+        "nonspecific_40_hz": result.nonspecific_rate_hz == 40.0,
     }
     artifact = {
         "schema_version": 1,

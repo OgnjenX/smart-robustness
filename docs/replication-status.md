@@ -2078,6 +2078,15 @@ Artifact 219 rescored against this source gives 60/50 Hz: +20/-20-Hz errors,
 the wrong direction, and no numeric pass. This correction tightens the target;
 it does not alter any model parameter or retroactively promote an old run.
 
+Artifact `figure7-top-down-current-reopen-registration-224.yaml` reopens only
+800 and 1000 pA from the original 600/800/1000-pA not-identifiable somatic-cue
+grid on the materially changed upstream candidate. The existing 600-pA clean
+match is the historical control and fails the restored exact target with six
+nonspecific events. One Figure 6 episode supplies a learned-weight snapshot;
+each candidate receives that snapshot in a separately rebuilt recognition
+network. Mismatch remains locked unless a candidate preserves the complete
+match relay/TRN mechanism and emits exactly four nonspecific events in 100 ms.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

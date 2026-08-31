@@ -269,7 +269,7 @@ parameters:
     value: required explicit pA amplitude applied to one central layer 6II soma
     status: not-identifiable
     source: Methods 4.9 specifies somatic current injection but reports no amplitude; Figure 7 fixes a horizontal learned expectation for both conditions
-    note: the archived blue=70 TD INPUT is subthreshold in the isolated source-profile cell; 600 pA gives 30 Hz and 1000 pA gives 40 Hz, but neither value is an official Figure 7 nonspecific-thalamus target
+    note: the archived blue=70 TD INPUT is subthreshold in the isolated source-profile cell; the unchanged registered 600/800/1000-pA grid is reopened in Artifact 224 only because the upstream candidate now has source-resolved category feedback, fresh learned-state handoff, and condition-dependent genuine TRN output; no interpolation or expansion is authorized
   validation.figure7.rate_tolerance:
     value: exact 100-ms targets of 40 Hz match and 70 Hz mismatch; zero event-count tolerance
     status: published-rendered-figure

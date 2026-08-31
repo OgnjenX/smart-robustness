@@ -20,6 +20,7 @@ from smart_robustness.validation.figure7 import (
     assess_figure7_arousal,
     assess_figure7_pathway,
     assess_figure7_reproduction,
+    expand_figure7_source_expectation_toward_bounds,
     paper_constrained_figure6_expectation,
     restrict_figure7_top_down_relay_sources,
     run_figure7_condition,
@@ -294,6 +295,37 @@ def test_source_derived_reference_matches_runtime_projection_arrays() -> None:
     )
     for projection_id in FIGURE7_REQUIRED_LEARNED_PROJECTIONS:
         assert np.asarray(source[projection_id]) == pytest.approx(runtime[projection_id])
+
+
+def test_source_expectation_headroom_preserves_shape_and_respects_bounds() -> None:
+    brian.start_scope()
+    brian.prefs.codegen.target = "numpy"
+    sector = build_first_order_connected_sector(
+        conventions=figure6_runtime_conventions(), brian=brian
+    )
+    learned = paper_constrained_figure6_expectation(
+        sector.projections,
+        Figure6ReferenceExpectation(peak_combined_weight=0.5),
+    )
+    unchanged, factor_zero = expand_figure7_source_expectation_toward_bounds(
+        learned, headroom_fraction=0.0
+    )
+    expanded, factor_full = expand_figure7_source_expectation_toward_bounds(
+        learned, headroom_fraction=1.0
+    )
+    assert factor_zero == pytest.approx(1.0)
+    assert factor_full > 1.0
+    for projection_id in FIGURE7_REQUIRED_LEARNED_PROJECTIONS:
+        before = np.asarray(learned[projection_id])
+        after = np.asarray(expanded[projection_id])
+        assert np.asarray(unchanged[projection_id]) == pytest.approx(before)
+        assert np.all(after >= before)
+        assert np.any(after > before)
+        assert np.all(after <= np.asarray(sector.projections[projection_id].w_maximum[:]))
+    with pytest.raises(ValueError, match="headroom_fraction"):
+        expand_figure7_source_expectation_toward_bounds(
+            learned, headroom_fraction=1.01
+        )
 
 
 def test_figure7_runner_requires_exactly_one_learned_state_source() -> None:

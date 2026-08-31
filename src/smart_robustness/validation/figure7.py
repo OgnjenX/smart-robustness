@@ -138,6 +138,71 @@ def paper_constrained_figure6_expectation(
     return learned
 
 
+def expand_figure7_source_expectation_toward_bounds(
+    learned_weights: Mapping[str, tuple[float, ...] | np.ndarray],
+    *,
+    headroom_fraction: float,
+    source_index: int = 40,
+) -> tuple[dict[str, tuple[float, ...]], float]:
+    """Scale one learned category's on-center while preserving its shape.
+
+    ``headroom_fraction=0`` returns the supplied learned state, while ``1``
+    applies the largest common multiplicative factor that does not exceed any
+    source-derived adaptive-weight maximum. Zero-weight connections remain
+    zero and every nonselected source row remains unchanged.
+    """
+
+    if not 0.0 <= headroom_fraction <= 1.0:
+        raise ValueError("headroom_fraction must lie in [0, 1]")
+    if not 0 <= source_index < 81:
+        raise ValueError("source_index must address the 9x9 sheet")
+    missing = set(FIGURE7_REQUIRED_LEARNED_PROJECTIONS) - set(learned_weights)
+    if missing:
+        raise ValueError(f"missing learned Figure 7 projections: {sorted(missing)}")
+
+    resolved: dict[str, tuple[np.ndarray, np.ndarray, np.ndarray]] = {}
+    factor_limits: list[float] = []
+    for projection_id in FIGURE7_REQUIRED_LEARNED_PROJECTIONS:
+        record = MODELDB_FIRST_ORDER.by_id(projection_id)
+        source, _, spatial_factor = modeldb_topology_pairs(
+            record,
+            source_shape=(9, 9),
+            target_shape=(9, 9),
+            gaussian_weight_convention="source_peak",
+        )
+        assert record.asymptotic_weight is not None and record.weight is not None
+        maximum = np.maximum(
+            float(record.weight),
+            float(record.asymptotic_weight) * spatial_factor,
+        )
+        values = np.asarray(learned_weights[projection_id], dtype=float).copy()
+        if values.shape != maximum.shape:
+            raise ValueError(
+                f"{projection_id}: expected {maximum.shape} weights, got {values.shape}"
+            )
+        if not np.all(np.isfinite(values)) or np.any(values < 0):
+            raise ValueError(f"{projection_id}: learned weights must be finite and nonnegative")
+        if np.any(values > maximum + 1e-12):
+            raise ValueError(f"{projection_id}: learned weights exceed source-derived maxima")
+        selected_positive = (source == source_index) & (values > 0)
+        if np.any(selected_positive):
+            factor_limits.extend(
+                float(value)
+                for value in maximum[selected_positive] / values[selected_positive]
+            )
+        resolved[projection_id] = (values, source, maximum)
+    if not factor_limits:
+        raise ValueError("selected source has no positive learned expectation weights")
+    maximum_common_factor = min(factor_limits)
+    applied_factor = 1.0 + headroom_fraction * (maximum_common_factor - 1.0)
+    expanded: dict[str, tuple[float, ...]] = {}
+    for projection_id, (values, source, maximum) in resolved.items():
+        selected = source == source_index
+        values[selected] = np.minimum(values[selected] * applied_factor, maximum[selected])
+        expanded[projection_id] = tuple(float(value) for value in values)
+    return expanded, float(applied_factor)
+
+
 def apply_figure7_learned_state(
     projections: Mapping[str, object],
     learned_weights: Mapping[str, tuple[float, ...] | np.ndarray],

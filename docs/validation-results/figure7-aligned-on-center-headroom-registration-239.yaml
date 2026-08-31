@@ -1,0 +1,51 @@
+schema_version: 1
+id: figure7-aligned-on-center-headroom-registration-239
+date: 2026-08-31
+status: registered-before-execution
+profile: configs/calibration/figure7_aligned_on_center_headroom_v1.yaml
+rationale: >-
+  Artifact 238 shows that receptor-level simultaneity supplies early
+  off-surround inhibition but over-suppresses the matched relay pattern. The
+  source Figure 6c matrix is not numerically published, while its two adaptive
+  layer-6II-to-relay channels serialize explicit maxima. This diagnostic asks
+  whether a stronger learned on-center within those bounds restores the
+  paper's two-against-one match without weakening inhibition.
+fixed_control:
+  artifact: docs/validation-results/figure7-receptor-arrival-aligned-match-238.yaml
+  headroom_fraction: 0.0
+  relay_events: 10
+  relay_events_per_active_cell: 2
+  trn_events: 604
+  nonspecific_events: 6
+dimension:
+  projection_ids:
+    - modeldb112923.projection.005
+    - modeldb112923.projection.007
+  selected_source_index: 40
+  registered_headroom_fractions: [0.25, 0.5, 0.75, 1.0]
+  scaling_rule: >-
+    Apply one common multiplier to positive source-40 weights only. Fraction 1
+    is the largest factor that reaches the first source-derived adaptive bound;
+    zero weights, field shape, and every nonselected source row remain fixed.
+  source_status: bounded_unpublished_learned_state_sensitivity
+fixed_choices:
+  top_down_current_pA: 800.0
+  current_mode: until_cued_cell_first_event
+  top_down_cue_lead_ms: 7.85
+  source_delays_unchanged: true
+  trn_to_relay_gaba_unchanged: true
+  intrinsic_and_compartmental_parameters_unchanged: true
+  synaptic_kinetics_unchanged: true
+stage_1:
+  consults: figure7_match_only
+  record_full_pathway_diagnostics: false
+  selection_rule: lowest registered headroom fraction passing all exact match gates
+stage_2:
+  action: rerun only the selected match with full TRN detector-cycle diagnostics
+  mismatch_locked: true
+freeze_eligibility: >-
+  A phenotype survivor remains a calibrated reconstruction because the numeric
+  Figure 6c weights are unpublished; it is not frozen as recovered source fact.
+official_status_before_execution:
+  figure7_reproduced: false
+  downstream_holdouts_unlocked: false

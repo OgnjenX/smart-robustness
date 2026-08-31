@@ -416,6 +416,13 @@ FIGURE7_RECEPTOR_ALIGNMENT_RESULT_PATH = (
     ROOT
     / "docs/validation-results/figure7-receptor-arrival-aligned-match-238.yaml"
 )
+FIGURE7_ALIGNED_HEADROOM_PROFILE_PATH = (
+    ROOT / "configs/calibration/figure7_aligned_on_center_headroom_v1.yaml"
+)
+FIGURE7_ALIGNED_HEADROOM_REGISTRATION_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-aligned-on-center-headroom-registration-239.yaml"
+)
 
 
 def test_classic_calibration_contract_separates_training_and_holdout() -> None:
@@ -2562,6 +2569,28 @@ def test_receptor_arrival_alignment_fails_match_and_keeps_mismatch_locked() -> N
     assert not outcome["gates"]["nonspecific_40_hz"]
     assert not outcome["pass"]
     assert not artifact["assessment"]["advance_to_mismatch"]
+
+
+def test_aligned_on_center_headroom_grid_is_preregistered_and_bounded() -> None:
+    profile = yaml.safe_load(FIGURE7_ALIGNED_HEADROOM_PROFILE_PATH.read_text())
+    registration = yaml.safe_load(
+        FIGURE7_ALIGNED_HEADROOM_REGISTRATION_PATH.read_text()
+    )
+    assert profile["status"] == "registered-before-execution"
+    assert profile["dimension"]["grid"] == [0.25, 0.5, 0.75, 1.0]
+    assert profile["selection_rule"].startswith("lowest headroom fraction")
+    assert registration["dimension"]["projection_ids"] == [
+        "modeldb112923.projection.005",
+        "modeldb112923.projection.007",
+    ]
+    assert registration["dimension"]["selected_source_index"] == 40
+    assert registration["fixed_choices"]["source_delays_unchanged"]
+    assert registration["fixed_choices"]["trn_to_relay_gaba_unchanged"]
+    assert registration["stage_1"]["consults"] == "figure7_match_only"
+    assert registration["stage_2"]["mismatch_locked"]
+    assert not registration["official_status_before_execution"][
+        "figure7_reproduced"
+    ]
 
 
 def test_contract_rejects_holdout_leakage(tmp_path: Path) -> None:

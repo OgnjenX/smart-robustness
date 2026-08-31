@@ -322,6 +322,10 @@ FIGURE7_PROJECTION022_DISTAL003_FRESH_MATCH_PATH = (
     ROOT
     / "docs/validation-results/figure7-projection022-distal003-fresh-match-218.yaml"
 )
+FIGURE7_PROJECTION022_DISTAL003_FRESH_PAIR_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-projection022-distal003-fresh-pair-219.yaml"
+)
 
 
 def test_classic_calibration_contract_separates_training_and_holdout() -> None:
@@ -1577,6 +1581,47 @@ def test_final_distal_endpoint_passes_clean_match() -> None:
     ]
     assert all(artifact["gates"].values())
     assert artifact["assessment"]["advance_to_mismatch"]
+
+
+def test_final_distal_endpoint_fails_complete_clean_figure7() -> None:
+    artifact = yaml.safe_load(
+        FIGURE7_PROJECTION022_DISTAL003_FRESH_PAIR_PATH.read_text()
+    )
+    assert artifact["status"] == "figure7-failed"
+    assert artifact["learned_state_handoff"] == (
+        "fresh_network_from_figure6_weights"
+    )
+    assert not artifact["reproduced"]
+    assessment = artifact["official_assessment"]
+    assert assessment["arousal"] == {
+        "match_rate_hz": 60.0,
+        "mismatch_rate_hz": 50.0,
+    }
+    pathway = assessment["pathway"]
+    assert pathway["match_active_relay_cells"] == 5
+    assert pathway["mismatch_active_relay_cells"] == 5
+    assert pathway["match_trn_spikes"] == 558
+    assert pathway["mismatch_trn_spikes"] == 534
+    assert set(pathway["mismatch_active_relay_indices"]) == {
+        22,
+        31,
+        40,
+        49,
+        58,
+    }
+    mismatch = artifact["mismatch_result"]
+    assert {
+        index: mismatch["relay_spike_indices"].count(index)
+        for index in (22, 31, 40, 49, 58)
+    } == {22: 4, 31: 4, 40: 4, 49: 4, 58: 4}
+    assert artifact["gates"] == {
+        "match_relay_spatial_pattern": True,
+        "mismatch_relay_overlap_only": False,
+        "match_more_active_relay_cells": False,
+        "match_more_trn_events": True,
+        "mismatch_more_nonspecific_events": False,
+        "sampled_mismatch_trn_events_have_fresh_cycles": True,
+    }
 
 
 def test_trn_calcium_reversal_restores_wrong_cue_lead_mechanism() -> None:

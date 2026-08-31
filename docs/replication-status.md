@@ -2033,6 +2033,20 @@ events. The learned state is again reproduced and transferred into a fresh
 recognition network. This authorizes one final fresh mismatch at distal 0.03;
 no further distal value is permitted by the registered family.
 
+The final clean pair in
+`figure7-projection022-distal003-fresh-pair-219.yaml` rejects the distal-transfer
+family. Match and mismatch each produce 20 relay events in five active cells.
+Mismatch is confined cleanly to vertical input cells 22, 31, 40, 49, and 58,
+but every cell emits four times rather than only overlap cell 40 surviving the
+published one-against-one regime. The stronger distal endpoint does correct
+the aggregate TRN direction (558 match versus 534 mismatch genuine-cycle
+events), but nonspecific output remains in the wrong direction (six match
+versus five mismatch events). Thus no registered distal endpoint reproduces
+complete Figure 7, no interpolation is authorized, and Figure 10 and spectral
+holdouts remain locked. The next candidate must address an independently
+source-defined spatial off-surround or nonspecific-disinhibition ambiguity,
+not another TRN-to-relay gain.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

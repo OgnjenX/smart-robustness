@@ -2095,6 +2095,21 @@ nonspecific output returns to six events (60 Hz), matching the failed 600-pA
 control rate. Artifact 226 therefore preregisters one independently rebuilt
 800-pA mismatch with all learned weights and biological parameters fixed.
 
+That fixed holdout fails in
+`figure7-top-down-current-800-fresh-pair-227.yaml`. Match remains exact at
+24 relay, 559 genuine-cycle TRN, and four nonspecific events, but mismatch
+produces 20 relay, 559 TRN, and five nonspecific events. Every vertical relay
+cell (22, 31, 40, 49, and 58) remains active and the 50-Hz nonspecific output
+misses the rendered 70-Hz target. The trace localizes why current amplitude
+cannot solve the failure: after the initially cued category cell 40 fires at
+5.85 ms, the recurrent cortical response recruits the whole presented bar in
+layer 6II at approximately 39--41 ms. In mismatch, those cells are 22, 31,
+40, 49, and 58, and their local corticothalamic feedback supplies the same
+vertical relay cells with additional excitation. The next bounded
+discriminator must therefore address an independently documented recognition
+cue/state or category-pathway ambiguity; the current and TRN-transfer families
+remain closed, and Figure 10 plus the spectral holdouts stay locked.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

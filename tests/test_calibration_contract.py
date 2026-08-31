@@ -358,6 +358,9 @@ FIGURE7_TOP_DOWN_CURRENT_MISMATCH_REGISTRATION_PATH = (
 FIGURE7_TOP_DOWN_CURRENT_PAIR_PROFILE_PATH = (
     ROOT / "configs/calibration/figure7_top_down_current_800_fresh_pair_v1.yaml"
 )
+FIGURE7_TOP_DOWN_CURRENT_PAIR_RESULT_PATH = (
+    ROOT / "docs/validation-results/figure7-top-down-current-800-fresh-pair-227.yaml"
+)
 
 
 def test_classic_calibration_contract_separates_training_and_holdout() -> None:
@@ -1777,6 +1780,27 @@ def test_800_pa_mismatch_is_registered_with_every_pair_gate_locked() -> None:
         "match": 40.0,
         "mismatch": 70.0,
     }
+
+
+def test_800_pa_pair_is_rejected_without_reopening_current_grid() -> None:
+    artifact = yaml.safe_load(FIGURE7_TOP_DOWN_CURRENT_PAIR_RESULT_PATH.read_text())
+    assert artifact["status"] == "figure7-failed"
+    assert artifact["selected_current_pA"] == 800.0
+    assert artifact["official_assessment"]["arousal"] == {
+        "match_rate_hz": 40.0,
+        "mismatch_rate_hz": 50.0,
+        "duration_ms": 100.0,
+    }
+    assert artifact["official_assessment"]["pathway"]["match_trn_spikes"] == 559
+    assert artifact["official_assessment"]["pathway"]["mismatch_trn_spikes"] == 559
+    assert set(
+        artifact["official_assessment"]["pathway"]["mismatch_active_relay_indices"]
+    ) == {22, 31, 40, 49, 58}
+    assert not artifact["gates"]["mismatch_relay_overlap_only"]
+    assert not artifact["gates"]["match_more_trn_events"]
+    assert not artifact["gates"]["mismatch_nonspecific_70_hz"]
+    assert artifact["gates"]["sampled_mismatch_trn_events_have_fresh_cycles"]
+    assert not artifact["reproduced"]
 
 
 def test_trn_calcium_reversal_restores_wrong_cue_lead_mechanism() -> None:

@@ -633,6 +633,13 @@ FIGURE6_CORTICORETICULAR_AMPA_DELAY3_CORRECTED_RESULT_PATH = (
     ROOT
     / "docs/validation-results/figure6-corticoreticular-ampa-delay3-corrected-280.yaml"
 )
+FIGURE7_DELAY3_GAIN8_MATCH_PROFILE_PATH = (
+    ROOT / "configs/calibration/figure7_delay3_gain8_match_v1.yaml"
+)
+FIGURE7_DELAY3_GAIN8_MATCH_REGISTRATION_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-delay3-gain8-match-registration-281.yaml"
+)
 
 
 def test_classic_calibration_contract_separates_training_and_holdout() -> None:
@@ -3636,6 +3643,22 @@ def test_corrected_delay3_passes_complete_figure6() -> None:
     assert stage2["population_spikes"]["trn"] == 552
     assert all(stage2["gates"].values())
     assert artifact["assessment"]["advance_to_figure7"]
+
+
+def test_delay3_gain8_match_is_final_integer_endpoint() -> None:
+    profile = yaml.safe_load(FIGURE7_DELAY3_GAIN8_MATCH_PROFILE_PATH.read_text())
+    registration = yaml.safe_load(
+        FIGURE7_DELAY3_GAIN8_MATCH_REGISTRATION_PATH.read_text()
+    )
+    assert profile["figure6_artifact"] == str(
+        FIGURE6_CORTICORETICULAR_AMPA_DELAY3_CORRECTED_RESULT_PATH.relative_to(ROOT)
+    )
+    assert profile["runtime_overrides"]["corticoreticular_ampa_delay_ms"] == 3.0
+    assert profile["dimension"]["grid"] == [8.0]
+    assert profile["protocol"]["record_relay_diagnostics"]
+    assert registration["figure6_prerequisite_passed"]
+    assert registration["selection_boundary"].startswith("no fractional")
+    assert registration["mismatch_lock"].startswith("do not inspect mismatch")
 
 
 def test_contract_rejects_holdout_leakage(tmp_path: Path) -> None:

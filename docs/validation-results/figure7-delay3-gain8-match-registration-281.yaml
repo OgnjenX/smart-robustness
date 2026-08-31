@@ -1,0 +1,25 @@
+schema_version: 1
+id: figure7-delay3-gain8-match-registration-281
+date: '2026-08-31'
+status: registered-before-execution
+profile: configs/calibration/figure7_delay3_gain8_match_v1.yaml
+figure6_prerequisite: docs/validation-results/figure6-corticoreticular-ampa-delay3-corrected-280.yaml
+figure6_prerequisite_passed: true
+fixed_candidate:
+  projection_012_effective_delay_ms: 3.0
+  projection_009_delay_ms: 3.0
+  projection_003_delay_ms: 2.0
+  corticoreticular_common_gain: 8.0
+  ring_geometry: center_excluded_gaussian
+  cue_lead_ms: 7.85
+  cue_current_pA: 800.0
+  cue_mode: until_cued_cell_first_event
+  learned_headroom_fraction: 1.0
+  trn_to_relay_scales: {soma: 0.01, proximal: 0.01, distal: 0.03}
+conditions_consulted: [figure7_match]
+mismatch_lock: do not inspect mismatch unless a later independent match verification passes
+execution_limit: exactly one independently rebuilt match
+selection_boundary: no fractional delay interpolation after this final integer endpoint
+interpretation_boundary: >-
+  A pass would identify a calibrated match endpoint, not recover the archived
+  projection-012 delay or establish the complete Figure 7 pair.

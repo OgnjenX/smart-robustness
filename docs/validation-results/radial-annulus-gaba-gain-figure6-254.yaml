@@ -1,0 +1,166 @@
+schema_version: 1
+id: radial-annulus-gaba-gain-figure6-254
+date: '2026-08-31'
+status: complete
+profile: configs/calibration/radial_annulus_gaba_gain_figure6_v1.yaml
+base_candidate_fingerprint: 12e0245e9a3044073200e90443582885a5410cf39b8b18d50d22a04a2fc48604
+runtime_fingerprint: 0b636a062deb0df8502bde5a941350b17e55d3dece22212163f3113c8cb2637e
+holdouts_consulted: false
+stage_1_outcomes:
+- scale: 1.125
+  projection_scales:
+    modeldb112923.projection.000: 0.01125
+    modeldb112923.projection.001: 0.01125
+    modeldb112923.projection.004: 0.03375
+  runtime_fingerprint: 0b636a062deb0df8502bde5a941350b17e55d3dece22212163f3113c8cb2637e
+  population_spikes:
+    thalamic_relay: 5
+    trn: 307
+    layer5_excitatory_v1: 5
+    layer6ii_excitatory_v1: 6
+    layer6i_excitatory_v1: 12
+    layer23_excitatory_v1: 7
+    layer4_excitatory_v1: 15
+    layer23_inhibitory_v1: 10
+    thalamic_nonspecific: 2
+  relay_spike_indices:
+  - 38
+  - 39
+  - 40
+  - 41
+  - 42
+  relay_event_counts_by_index:
+    '38': 1
+    '39': 1
+    '40': 1
+    '41': 1
+    '42': 1
+  pass: false
+- scale: 1.25
+  projection_scales:
+    modeldb112923.projection.000: 0.0125
+    modeldb112923.projection.001: 0.0125
+    modeldb112923.projection.004: 0.0375
+  runtime_fingerprint: 0b636a062deb0df8502bde5a941350b17e55d3dece22212163f3113c8cb2637e
+  population_spikes:
+    thalamic_relay: 5
+    trn: 307
+    layer5_excitatory_v1: 5
+    layer6ii_excitatory_v1: 6
+    layer6i_excitatory_v1: 12
+    layer23_excitatory_v1: 7
+    layer4_excitatory_v1: 15
+    layer23_inhibitory_v1: 10
+    thalamic_nonspecific: 2
+  relay_spike_indices:
+  - 38
+  - 39
+  - 40
+  - 41
+  - 42
+  relay_event_counts_by_index:
+    '38': 1
+    '39': 1
+    '40': 1
+    '41': 1
+    '42': 1
+  pass: false
+- scale: 1.5
+  projection_scales:
+    modeldb112923.projection.000: 0.015
+    modeldb112923.projection.001: 0.015
+    modeldb112923.projection.004: 0.045
+  runtime_fingerprint: 0b636a062deb0df8502bde5a941350b17e55d3dece22212163f3113c8cb2637e
+  population_spikes:
+    thalamic_relay: 5
+    trn: 307
+    layer5_excitatory_v1: 5
+    layer6ii_excitatory_v1: 6
+    layer6i_excitatory_v1: 12
+    layer23_excitatory_v1: 7
+    layer4_excitatory_v1: 15
+    layer23_inhibitory_v1: 10
+    thalamic_nonspecific: 2
+  relay_spike_indices:
+  - 38
+  - 39
+  - 40
+  - 41
+  - 42
+  relay_event_counts_by_index:
+    '38': 1
+    '39': 1
+    '40': 1
+    '41': 1
+    '42': 1
+  pass: false
+- scale: 2.0
+  projection_scales:
+    modeldb112923.projection.000: 0.02
+    modeldb112923.projection.001: 0.02
+    modeldb112923.projection.004: 0.06
+  runtime_fingerprint: 0b636a062deb0df8502bde5a941350b17e55d3dece22212163f3113c8cb2637e
+  population_spikes:
+    thalamic_relay: 5
+    trn: 307
+    layer5_excitatory_v1: 5
+    layer6ii_excitatory_v1: 6
+    layer6i_excitatory_v1: 12
+    layer23_excitatory_v1: 7
+    layer4_excitatory_v1: 15
+    layer23_inhibitory_v1: 10
+    thalamic_nonspecific: 2
+  relay_spike_indices:
+  - 38
+  - 39
+  - 40
+  - 41
+  - 42
+  relay_event_counts_by_index:
+    '38': 1
+    '39': 1
+    '40': 1
+    '41': 1
+    '42': 1
+  pass: false
+- scale: 3.0
+  projection_scales:
+    modeldb112923.projection.000: 0.03
+    modeldb112923.projection.001: 0.03
+    modeldb112923.projection.004: 0.09
+  runtime_fingerprint: 0b636a062deb0df8502bde5a941350b17e55d3dece22212163f3113c8cb2637e
+  population_spikes:
+    thalamic_relay: 5
+    trn: 307
+    layer5_excitatory_v1: 5
+    layer6ii_excitatory_v1: 6
+    layer6i_excitatory_v1: 12
+    layer23_excitatory_v1: 7
+    layer4_excitatory_v1: 15
+    layer23_inhibitory_v1: 10
+    thalamic_nonspecific: 2
+  relay_spike_indices:
+  - 38
+  - 39
+  - 40
+  - 41
+  - 42
+  relay_event_counts_by_index:
+    '38': 1
+    '39': 1
+    '40': 1
+    '41': 1
+    '42': 1
+  pass: false
+stage_1_survivor_scales: []
+stage_2_outcomes: []
+stage_2_survivor_scales: []
+assessment:
+  stage_1_completed_count: 5
+  registered_scale_count: 5
+  stage_2_completed_count: 0
+  figure6_survivor_count: 0
+  advance_to_same_network_match: false
+next_gate: If Figure 6 has a survivor, independently verify that sole selected endpoint
+  and register a fresh aligned Figure 7 match. If none survives, reject this annular-transfer
+  interaction without consulting Figure 7.

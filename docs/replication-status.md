@@ -2319,6 +2319,19 @@ five cells decline together, and none preserves the 70-Hz mismatch target.
 Scalar TRN-to-relay gain is therefore rejected as a sufficient spatial
 mechanism; no endpoint is promoted and downstream holdouts remain locked.
 
+The wrong pre-event spatial ordering motivates one explicitly post-hoc
+exploratory calibration after the original ring sensitivity had already been
+closed. Artifact 253 crosses the sole previously defined parameter-free
+`radial_annulus` geometry with the same finite common-gain grid, but enforces a
+Figure-6-first stopping rule. In
+`radial-annulus-gaba-gain-figure6-254.yaml`, every gain from 1.125 through 3.0
+produces exactly five relay events (one per horizontal cell) and 307 TRN events
+at the 55-ms prerequisite. None preserves repeated relay firing, so no endpoint
+advances to the 100-ms learning episode and Figure 7 is never consulted. The
+annular-plus-scalar interaction is therefore rejected within the complete
+registered grid; no inner radius, gain interpolation, or new ring equation is
+introduced.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

@@ -490,6 +490,10 @@ RADIAL_ANNULUS_GABA_GAIN_REGISTRATION_PATH = (
     ROOT
     / "docs/validation-results/radial-annulus-gaba-gain-registration-253.yaml"
 )
+RADIAL_ANNULUS_GABA_GAIN_RESULT_PATH = (
+    ROOT
+    / "docs/validation-results/radial-annulus-gaba-gain-figure6-254.yaml"
+)
 
 
 def test_classic_calibration_contract_separates_training_and_holdout() -> None:
@@ -2986,6 +2990,27 @@ def test_radial_annulus_gain_calibration_is_figure6_first_and_explicitly_explora
     assert not registration["official_status_before_execution"][
         "figure7_reproduced"
     ]
+
+
+def test_radial_annulus_gain_family_fails_before_figure7() -> None:
+    artifact = yaml.safe_load(RADIAL_ANNULUS_GABA_GAIN_RESULT_PATH.read_text())
+    assert artifact["status"] == "complete"
+    assert artifact["holdouts_consulted"] is False
+    assert artifact["stage_1_survivor_scales"] == []
+    assert artifact["stage_2_outcomes"] == []
+    assert artifact["stage_2_survivor_scales"] == []
+    assert not artifact["assessment"]["advance_to_same_network_match"]
+    outcomes = artifact["stage_1_outcomes"]
+    assert [outcome["scale"] for outcome in outcomes] == [
+        1.125,
+        1.25,
+        1.5,
+        2.0,
+        3.0,
+    ]
+    assert all(outcome["population_spikes"]["thalamic_relay"] == 5 for outcome in outcomes)
+    assert all(outcome["population_spikes"]["trn"] == 307 for outcome in outcomes)
+    assert all(not outcome["pass"] for outcome in outcomes)
 
 
 def test_contract_rejects_holdout_leakage(tmp_path: Path) -> None:

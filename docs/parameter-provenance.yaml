@@ -199,6 +199,11 @@ parameters:
     status: source-resolution-figure7-partial
     source: Grossberg and Versace 2008 Supplementary Table 3 and the SMART.nml channel name AMPA 2/3, contrasted with the archived layer4_inhibitory_v1 presynaptic endpoint
     note: the supplementary endpoint preserves every calibrated Figure 6 gate and changes Figure 7 TRN ordering to the published match-greater-than-mismatch direction (547 versus 514 events). Mismatch nevertheless activates the nine-cell union of expectation and input, and nonspecific output is 5 versus 5, so the complete candidate is not promoted or advanced
+  model.connectivity.projection022_distal002_interaction:
+    value: Supplementary projection-022 endpoint with distal TRN-to-relay GABA scale 0.02 and somatic/proximal scales 0.01
+    status: behavior-calibration-in-progress
+    source: discrete cross of the source-resolved endpoint with the already registered Artifact 206 distal-0.02 candidate
+    note: Artifact 212 passes every Figure 6 gate with 20 genuine relay events, 544 TRN events, and approximately 0.56874 top-down horizontal contrast. It advances unchanged to an independently registered Figure 7 pair
   model.multicompartment.exact_voltage_clamp:
     value: optional fixed compartment voltage, separate from finite-conductance XML input
     status: published-protocol alternative

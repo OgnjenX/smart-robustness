@@ -1963,6 +1963,16 @@ relay overlap selectivity, active-cell ordering, and mismatch disinhibition.
 Projection 022 remains a source-supported partial mechanism, but this parameter
 set does not unlock Figure 10 or spectral holdouts and cannot be frozen.
 
+The pre-existing distal-0.02 endpoint is retested under the source-resolved
+category pathway in `figure6-projection022-distal002-212.yaml`. Unlike its
+one-event near-miss before projection-022 correction, it now passes the full
+Figure 6 contract: four genuine cycles in each relay cell 38--42 (20 total),
+544 TRN events, complete cortical recruitment, a causal teaching pair, and
+combined top-down horizontal contrast approximately 0.56874. Because 0.02 was
+registered in Artifact 206 before these Figure 7 outcomes, this is not a new
+mismatch-fitted interpolation. The unchanged candidate advances to an
+independent same-network Figure 7 pair and remains provisional.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

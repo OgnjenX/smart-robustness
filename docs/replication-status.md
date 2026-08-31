@@ -2064,6 +2064,16 @@ must first preserve every Figure 6 gate; Figure 7 remains locked until then.
 Neither shape is called official KInNeSS behavior, and no fitted radius or
 third geometry is authorized after observing the result.
 
+The preregistered radial annulus is rejected in
+`figure6-ring-kernel-radial-annulus-222.yaml` without consulting Figure 7. Its
+55-ms screen passes with three relay events in each of cells 38--42. In the
+complete 100-ms prerequisite it preserves that correct active set, the full
+cortical chain, causal learning timing, bottom-up orientation, and top-down
+contrast, but produces five emitted relay events per cell (25 total) rather
+than four (20 total) and also fails the fresh-detector-cycle gate. The
+two-member executable ring family is therefore closed pending recovery of
+legacy KInNeSS source or a benchmark trace.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

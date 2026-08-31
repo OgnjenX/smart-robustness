@@ -335,6 +335,9 @@ RING_KERNEL_SENSITIVITY_REGISTRATION_PATH = (
 RING_KERNEL_RADIAL_ANNULUS_PROFILE_PATH = (
     ROOT / "configs/calibration/ring_kernel_radial_annulus_figure6_v1.yaml"
 )
+FIGURE6_RING_KERNEL_RADIAL_ANNULUS_PATH = (
+    ROOT / "docs/validation-results/figure6-ring-kernel-radial-annulus-222.yaml"
+)
 
 
 def test_classic_calibration_contract_separates_training_and_holdout() -> None:
@@ -1662,6 +1665,35 @@ def test_ring_sensitivity_is_bounded_and_registered_before_figure7() -> None:
     assert registration["ring_family"]["sole_new_candidate"]["free_parameters"] == 0
     assert profile["runtime_overrides"]["ring_kernel_convention"] == "radial_annulus"
     assert profile["locked_holdouts"][:2] == ["figure7_match", "figure7_mismatch"]
+
+
+def test_radial_annulus_is_rejected_before_figure7() -> None:
+    artifact = yaml.safe_load(FIGURE6_RING_KERNEL_RADIAL_ANNULUS_PATH.read_text())
+    assert artifact["status"] == "complete"
+    assert artifact["runtime_fingerprint"] == (
+        "0b636a062deb0df8502bde5a941350b17e55d3dece22212163f3113c8cb2637e"
+    )
+    assert artifact["holdouts_consulted"] is False
+    assert artifact["stage_1_survivor_labels"] == [
+        "radial_annulus_projection022_distal_0_03"
+    ]
+    assert artifact["stage_2_survivor_labels"] == []
+    outcome = artifact["stage_2_outcomes"][0]
+    assert outcome["population_spikes"]["thalamic_relay"] == 25
+    assert outcome["population_spikes"]["trn"] == 447
+    assert set(outcome["relay_event_counts_by_index"].values()) == {5}
+    assert outcome["gates"] == {
+        "relay_event_count": False,
+        "relay_active_indices": True,
+        "relay_events_per_active_index": False,
+        "relay_fresh_detector_cycles_per_active_index": False,
+        "feedforward_chain_complete": True,
+        "causal_pair_in_learning_window": True,
+        "bottom_up_horizontal_orientation": True,
+        "top_down_horizontal_contrast": True,
+    }
+    assert not outcome["pass"]
+    assert not artifact["assessment"]["advance_to_figure7"]
 
 
 def test_trn_calcium_reversal_restores_wrong_cue_lead_mechanism() -> None:

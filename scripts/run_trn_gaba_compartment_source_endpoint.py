@@ -60,6 +60,7 @@ def _write(
     stage_2: list[dict[str, Any]],
     *,
     complete: bool,
+    runtime_fingerprint: str,
 ) -> None:
     stage_1_survivors = [item["label"] for item in stage_1 if item["pass"]]
     stage_2_survivors = [item["label"] for item in stage_2 if item["pass"]]
@@ -70,6 +71,7 @@ def _write(
         "status": "complete" if complete else "running",
         "profile": profile_path,
         "base_candidate_fingerprint": base_profile["candidate_fingerprint"],
+        "runtime_fingerprint": runtime_fingerprint,
         "holdouts_consulted": False,
         "stage_1_outcomes": stage_1,
         "stage_1_survivor_labels": stage_1_survivors,
@@ -165,6 +167,7 @@ def main() -> None:
             stage_1,
             stage_2,
             complete=False,
+            runtime_fingerprint=conventions.fingerprint,
         )
         print(
             f"stage1 {candidate['label']}: relay={len(relay_indices)} "
@@ -244,6 +247,7 @@ def main() -> None:
             stage_1,
             stage_2,
             complete=False,
+            runtime_fingerprint=conventions.fingerprint,
         )
         print(
             f"stage2 {candidate['label']}: relay={len(relay_indices)} "
@@ -258,6 +262,7 @@ def main() -> None:
         stage_1,
         stage_2,
         complete=True,
+        runtime_fingerprint=conventions.fingerprint,
     )
 
 

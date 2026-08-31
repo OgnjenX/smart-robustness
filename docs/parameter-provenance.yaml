@@ -165,6 +165,10 @@ parameters:
       new candidate uses u*exp(1-u), with u fixed by serialized sigmas and no
       fitted radius. Neither convention is represented as recovered legacy
       behavior; Artifact 221 fixes the two-member family and stopping rule.
+      Artifact 222 rejects radial_annulus before Figure 7: it produces five
+      emitted events in each of the correct five relay cells, rather than four,
+      and fails both the event-count and fresh-detector-cycle Figure 6 gates.
+      No third geometry or fitted ring radius is authorized.
   model.learning.gaussian_bounds_convention:
     value: Figure 6 pathway-specific (bottom-up projection-level baseline; corticothalamic Gaussian-scaled baseline with projection-level maximum)
     status: paper-supported executable convention

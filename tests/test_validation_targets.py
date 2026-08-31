@@ -16,12 +16,16 @@ def test_target_ids_are_unique_and_source_backed() -> None:
     assert all(target.evidence for target in CLASSIC_SMART_TARGETS)
 
 
-def test_match_mismatch_target_is_directional_not_false_numeric_precision() -> None:
+def test_match_mismatch_target_uses_rendered_numeric_labels() -> None:
     target = get_validation_target("fig7_match_mismatch_arousal")
-    assert not target.numeric_targets
+    assert target.protocol["duration_ms"] == 100.0
+    assert target.numeric_targets == {
+        "match_rate_hz": 40.0,
+        "mismatch_rate_hz": 70.0,
+    }
+    assert EvidenceClass.EXACT_SOURCE in target.evidence
     assert EvidenceClass.STRUCTURAL in target.evidence
     assert EvidenceClass.QUALITATIVE in target.evidence
-    assert EvidenceClass.APPROXIMATE_NUMERIC not in target.evidence
 
 
 def test_figure14_preserves_both_published_middle_bands() -> None:

@@ -1520,20 +1520,16 @@ five horizontal relay cells, but its combined map peaks at only `0.18606`.
 Unlike leak-relative zero, it does not potentiate the surround. The registered
 threshold/coordinate family is now exhausted without a Figure 6c survivor.
 
-### Figure 7 numeric-target correction
+### Figure 7 numeric-target correction (superseded by rendered audit 223)
 
-A direct audit of the official Figure 7 caption and Results Sections 2.2-2.3
-retracts the repository's earlier 40/70-Hz nonspecific-thalamus acceptance
-pair. The paper states only a directional mechanism: a match recruits more
-specific-thalamic cells and therefore more TRN inhibition, while mismatch
-disinhibits the nonspecific thalamus and increases its firing. The paper's
-40-Hz value belongs to Methods 4.9 relay-input calibration, and its 70-Hz
-values occur in unrelated transmitter/firing protocols. Historical artifacts
-retain their predeclared numeric scorer for provenance, but the active Figure
-7 contract now requires the published spatial relay subset, stronger TRN
-output during match, and higher nonspecific output during mismatch. Artifact
-156 still fails the corrected contract because both conditions produce five
-active relay cells, 81 TRN events, and 10-Hz nonspecific output.
+The text-only audit in this section incorrectly retracted the repository's
+earlier 40/70-Hz acceptance pair because those numbers do not appear in the
+extracted caption. The rendered-page audit in Artifact 223 supersedes that
+conclusion: Figure 7c visibly labels its 0--100-ms traces `MATCH: 40 Hz` and
+`MISMATCH: 70 Hz`, with four and seven spikes. The active contract now requires
+those exact nonspecific event counts in addition to the spatial relay subset
+and stronger match TRN output. Historical artifacts retain their original
+scorers for provenance.
 
 Population-specific TRN event-coordinate discriminators are now executable.
 The leak-relative detector preserves the Figure 6 relay/cortical trajectory
@@ -2073,6 +2069,14 @@ contrast, but produces five emitted relay events per cell (25 total) rather
 than four (20 total) and also fails the fresh-detector-cycle gate. The
 two-member executable ring family is therefore closed pending recovery of
 legacy KInNeSS source or a benchmark trace.
+
+Artifact `figure7-rendered-target-correction-223.yaml` restores a numeric gate
+that the prior text-only audit had removed. The primary Figure 7c panel spans
+0--100 ms, labels match at 40 Hz and mismatch at 70 Hz, and visibly contains
+four and seven nonspecific-thalamus spikes. The leading clean candidate in
+Artifact 219 rescored against this source gives 60/50 Hz: +20/-20-Hz errors,
+the wrong direction, and no numeric pass. This correction tightens the target;
+it does not alter any model parameter or retroactively promote an old run.
 
 ## Validation gates
 

@@ -260,14 +260,39 @@ class Figure7ConditionResult:
 class Figure7ArousalAssessment:
     match_rate_hz: float
     mismatch_rate_hz: float
+    duration_ms: float
+
+    MATCH_TARGET_HZ = 40.0
+    MISMATCH_TARGET_HZ = 70.0
+    TARGET_DURATION_MS = 100.0
 
     @property
     def mismatch_disinhibition_pass(self) -> bool:
         return self.mismatch_rate_hz > self.match_rate_hz
 
     @property
+    def target_duration_pass(self) -> bool:
+        return self.duration_ms == self.TARGET_DURATION_MS
+
+    @property
+    def match_numeric_target_pass(self) -> bool:
+        return self.match_rate_hz == self.MATCH_TARGET_HZ
+
+    @property
+    def mismatch_numeric_target_pass(self) -> bool:
+        return self.mismatch_rate_hz == self.MISMATCH_TARGET_HZ
+
+    @property
+    def numeric_rate_pass(self) -> bool:
+        return (
+            self.target_duration_pass
+            and self.match_numeric_target_pass
+            and self.mismatch_numeric_target_pass
+        )
+
+    @property
     def reproduced_arousal(self) -> bool:
-        return self.mismatch_disinhibition_pass
+        return self.mismatch_disinhibition_pass and self.numeric_rate_pass
 
 
 @dataclass(frozen=True, slots=True)
@@ -344,12 +369,13 @@ def assess_figure7_arousal(
     match: Figure7ConditionResult,
     mismatch: Figure7ConditionResult,
 ) -> Figure7ArousalAssessment:
-    """Score the published mismatch-greater-than-match arousal claim."""
+    """Score Figure 7c's exact 100-ms 40-Hz/70-Hz arousal traces."""
 
     _validate_figure7_pair(match, mismatch)
     return Figure7ArousalAssessment(
         match_rate_hz=match.nonspecific_rate_hz,
         mismatch_rate_hz=mismatch.nonspecific_rate_hz,
+        duration_ms=match.duration_ms,
     )
 
 

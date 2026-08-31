@@ -271,9 +271,10 @@ parameters:
     source: Methods 4.9 specifies somatic current injection but reports no amplitude; Figure 7 fixes a horizontal learned expectation for both conditions
     note: the archived blue=70 TD INPUT is subthreshold in the isolated source-profile cell; 600 pA gives 30 Hz and 1000 pA gives 40 Hz, but neither value is an official Figure 7 nonspecific-thalamus target
   validation.figure7.rate_tolerance:
-    value: retracted; Figure 7 publishes directional disinhibition but no numeric rate pair
-    status: retracted-unsupported
-    source: Direct audit of Figure 7 caption and Results Sections 2.2-2.3; no numeric nonspecific-thalamus rate is stated
+    value: exact 100-ms targets of 40 Hz match and 70 Hz mismatch; zero event-count tolerance
+    status: published-rendered-figure
+    source: Grossberg and Versace 2008 Figure 7c; rendered-page audit Artifact 223
+    note: the labels are embedded in the figure and absent from caption text; four and seven visible spikes make the deterministic event-count targets explicit
   benchmark.population_sizes:
     value: see configs/*.yaml
     status: exploratory

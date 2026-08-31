@@ -1,0 +1,47 @@
+schema_version: 1
+id: figure7-rendered-target-correction-223
+date: '2026-08-31'
+status: official-numeric-target-restored
+primary_source:
+  citation: Grossberg and Versace (2008), Brain Research 1218:278-312
+  doi: 10.1016/j.brainres.2008.04.024
+  pdf: https://sites.bu.edu/steveg/files/2016/06/GroVer2008BR.pdf
+  pdf_sha256: c56c337624959d8c0bdf51aa79b0dbc82f31264af2b2cd675790879a6410d7ed
+visual_audit:
+  pdf_page: 20
+  printed_page: 20
+  figure: 7c
+  render_dpi: 150
+  rendered_png_sha256: fea6c7fb6b9ede317539b519f4d1d65c0bff9fc2243676e5458a38d976d7b23b
+  rendered_png_bytes: 503223
+  observations:
+    x_axis_ms: [0.0, 100.0]
+    match_label_hz: 40.0
+    mismatch_label_hz: 70.0
+    visible_match_spikes: 4
+    visible_mismatch_spikes: 7
+text_audit:
+  caption_numeric_rates_present: false
+  plotted_numeric_rates_present: true
+  results_direction: mismatch_greater_than_match
+correction:
+  supersedes_claim: Figure 7 publishes only directional arousal and no numeric rate pair.
+  active_protocol_duration_ms: 100.0
+  active_numeric_targets_hz: {match: 40.0, mismatch: 70.0}
+  tolerance_hz: 0.0
+  rationale: >-
+    The labels and four/seven spikes are explicit in the rendered primary
+    figure. They were missed by text-only extraction because the caption does
+    not repeat the numbers. A deterministic 100-ms reproduction therefore has
+    exact integer targets of four and seven nonspecific-thalamus events.
+rescored_leading_candidate:
+  artifact: docs/validation-results/figure7-projection022-distal003-fresh-pair-219.yaml
+  observed_hz: {match: 60.0, mismatch: 50.0}
+  errors_hz: {match: 20.0, mismatch: -20.0}
+  numeric_target_pass: false
+  direction_pass: false
+assessment:
+  figure7_numeric_target_identifiable: true
+  historical_direction_only_scorer_retracted: true
+  further_calibration_required: true
+

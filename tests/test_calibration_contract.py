@@ -338,6 +338,9 @@ RING_KERNEL_RADIAL_ANNULUS_PROFILE_PATH = (
 FIGURE6_RING_KERNEL_RADIAL_ANNULUS_PATH = (
     ROOT / "docs/validation-results/figure6-ring-kernel-radial-annulus-222.yaml"
 )
+FIGURE7_RENDERED_TARGET_CORRECTION_PATH = (
+    ROOT / "docs/validation-results/figure7-rendered-target-correction-223.yaml"
+)
 
 
 def test_classic_calibration_contract_separates_training_and_holdout() -> None:
@@ -1694,6 +1697,25 @@ def test_radial_annulus_is_rejected_before_figure7() -> None:
     }
     assert not outcome["pass"]
     assert not artifact["assessment"]["advance_to_figure7"]
+
+
+def test_rendered_figure7_restores_exact_numeric_target() -> None:
+    artifact = yaml.safe_load(FIGURE7_RENDERED_TARGET_CORRECTION_PATH.read_text())
+    assert artifact["status"] == "official-numeric-target-restored"
+    assert artifact["visual_audit"]["observations"] == {
+        "x_axis_ms": [0.0, 100.0],
+        "match_label_hz": 40.0,
+        "mismatch_label_hz": 70.0,
+        "visible_match_spikes": 4,
+        "visible_mismatch_spikes": 7,
+    }
+    assert artifact["correction"]["active_numeric_targets_hz"] == {
+        "match": 40.0,
+        "mismatch": 70.0,
+    }
+    assert artifact["correction"]["tolerance_hz"] == 0.0
+    assert not artifact["rescored_leading_candidate"]["numeric_target_pass"]
+    assert artifact["assessment"]["figure7_numeric_target_identifiable"]
 
 
 def test_trn_calcium_reversal_restores_wrong_cue_lead_mechanism() -> None:

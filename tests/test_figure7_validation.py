@@ -31,13 +31,15 @@ def _result(condition: MatchCondition, spike_count: int) -> Figure7ConditionResu
     )
 
 
-def test_figure7_arousal_accepts_directional_mismatch_disinhibition() -> None:
+def test_figure7_arousal_accepts_exact_rendered_rate_targets() -> None:
     assessment = assess_figure7_arousal(
         _result(MatchCondition.MATCH, 4),
         _result(MatchCondition.MISMATCH, 7),
     )
     assert assessment.match_rate_hz == pytest.approx(40.0)
     assert assessment.mismatch_rate_hz == pytest.approx(70.0)
+    assert assessment.duration_ms == 100.0
+    assert assessment.numeric_rate_pass
     assert assessment.reproduced_arousal
 
 
@@ -47,6 +49,34 @@ def test_higher_match_rate_is_not_mismatch_disinhibition() -> None:
         _result(MatchCondition.MISMATCH, 4),
     )
     assert not assessment.mismatch_disinhibition_pass
+    assert not assessment.reproduced_arousal
+
+
+def test_direction_without_rendered_rates_is_not_reproduction() -> None:
+    assessment = assess_figure7_arousal(
+        _result(MatchCondition.MATCH, 5),
+        _result(MatchCondition.MISMATCH, 6),
+    )
+    assert assessment.mismatch_disinhibition_pass
+    assert not assessment.numeric_rate_pass
+    assert not assessment.reproduced_arousal
+
+
+def test_correct_rates_over_wrong_duration_are_not_figure7c() -> None:
+    match = Figure7ConditionResult(
+        condition=MatchCondition.MATCH,
+        duration_ms=200.0,
+        nonspecific_spike_times_ms=(10.0,) * 8,
+    )
+    mismatch = Figure7ConditionResult(
+        condition=MatchCondition.MISMATCH,
+        duration_ms=200.0,
+        nonspecific_spike_times_ms=(10.0,) * 14,
+    )
+    assessment = assess_figure7_arousal(match, mismatch)
+    assert assessment.match_rate_hz == 40.0
+    assert assessment.mismatch_rate_hz == 70.0
+    assert not assessment.target_duration_pass
     assert not assessment.reproduced_arousal
 
 

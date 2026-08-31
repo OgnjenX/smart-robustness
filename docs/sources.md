@@ -179,11 +179,12 @@ a 25-ms tail. Both interpretations remain named runtime conventions. Artifact
 an attainable single-synapse value under the printed Equation 5 and
 Supplementary Table 3 bounds; the numeric Figure 6 matrix was not published.
 
-A direct Figure 7 audit also retracts the earlier 40/70-Hz nonspecific-thalamus
-target. The caption and Results Sections 2.2-2.3 publish only directional
-relay, TRN, and nonspecific-thalamus effects. The paper's 40-Hz value calibrates
-the Methods 4.9 relay input, while 70-Hz values belong to unrelated protocols.
-Artifact 157 records the corrected structural/qualitative contract.
+A rendered Figure 7 audit corrects the earlier text-only source reading. Panel
+7c itself explicitly labels the 0--100-ms traces `MATCH: 40 Hz` and `MISMATCH:
+70 Hz` and visibly contains four and seven spikes. Those values are absent
+from extracted caption text, which caused the erroneous direction-only
+contract. Artifact 223 records the PDF and rendered-page checksums and restores
+the exact numeric target alongside the caption's structural pathway gates.
 
 The same primary Figure 7 text states that matched LGN cells receive
 simultaneous bottom-up and top-down excitation. A top-down-only lead interval

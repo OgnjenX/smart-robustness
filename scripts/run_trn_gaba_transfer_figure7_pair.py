@@ -155,6 +155,11 @@ def main() -> None:
         "mismatch_more_nonspecific_events": (
             assessment.arousal.mismatch_disinhibition_pass
         ),
+        "figure7_target_duration": assessment.arousal.target_duration_pass,
+        "match_nonspecific_40_hz": assessment.arousal.match_numeric_target_pass,
+        "mismatch_nonspecific_70_hz": (
+            assessment.arousal.mismatch_numeric_target_pass
+        ),
         "sampled_mismatch_trn_events_have_fresh_cycles": mismatch_fresh_cycles,
     }
     reproduced = all(gates.values()) and assessment.reproduced

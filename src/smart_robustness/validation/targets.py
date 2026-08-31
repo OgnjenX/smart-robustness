@@ -66,17 +66,22 @@ CLASSIC_SMART_TARGETS: tuple[ValidationTarget, ...] = (
         id="fig7_match_mismatch_arousal",
         figure="Figure 7",
         outcome="Mismatch disinhibits nonspecific thalamus relative to match.",
-        evidence=(EvidenceClass.STRUCTURAL, EvidenceClass.QUALITATIVE),
-        source="Figure 7 caption and Results 2.5",
+        evidence=(
+            EvidenceClass.EXACT_SOURCE,
+            EvidenceClass.STRUCTURAL,
+            EvidenceClass.QUALITATIVE,
+        ),
+        source="Figure 7c rendered panel, caption, and Results 2.5",
         protocol={
+            "duration_ms": 100.0,
             "match_bottom_up": "horizontal",
             "match_top_down": "horizontal",
             "mismatch_bottom_up": "vertical",
             "mismatch_top_down": "horizontal",
         },
-        numeric_targets={},
+        numeric_targets={"match_rate_hz": 40.0, "mismatch_rate_hz": 70.0},
         unresolved=(
-            "The publication gives no numeric nonspecific-thalamus rates or complete time series.",
+            "Exact underlying voltage samples are graphical only; spike counts and rates are explicit.",
         ),
     ),
     _target(

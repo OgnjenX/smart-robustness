@@ -473,6 +473,13 @@ FIGURE7_PRE_EVENT_TRACE_AUDIT_PATH = (
     ROOT
     / "docs/validation-results/figure7-mismatch-pre-event-trace-audit-250.yaml"
 )
+FIGURE7_GABA_CAPACITY_PROFILE_PATH = (
+    ROOT / "configs/calibration/figure7_mismatch_gaba_capacity_v1.yaml"
+)
+FIGURE7_GABA_CAPACITY_REGISTRATION_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-mismatch-gaba-capacity-registration-251.yaml"
+)
 
 
 def test_classic_calibration_contract_separates_training_and_holdout() -> None:
@@ -2897,6 +2904,31 @@ def test_mismatch_pre_event_trace_audit_excludes_common_inhibition_trough() -> N
         assert -53.0 < soma_by_index_and_offset[(index, 2.0)] < -50.0
         assert -44.0 < soma_by_index_and_offset[(index, 0.5)] < -42.0
         assert soma_by_index_and_offset[(index, 0.2)] > 40.0
+
+
+def test_mismatch_gaba_capacity_screen_is_finite_and_diagnostic_only() -> None:
+    profile = yaml.safe_load(FIGURE7_GABA_CAPACITY_PROFILE_PATH.read_text())
+    registration = yaml.safe_load(
+        FIGURE7_GABA_CAPACITY_REGISTRATION_PATH.read_text()
+    )
+    assert profile["status"] == "registered-before-execution-diagnostic"
+    assert profile["dimension"]["control_gain"] == 1.0
+    assert profile["dimension"]["grid"] == [1.125, 1.25, 1.5, 2.0, 3.0]
+    assert registration["dimension"]["registered_common_gains"] == profile[
+        "dimension"
+    ]["grid"]
+    assert registration["dimension"]["source_status"] == (
+        "post_holdout_causal_capacity_diagnostic"
+    )
+    assert registration["capacity_criterion"]["overlap_only_active_indices"] == [
+        40
+    ]
+    assert registration["execution_contract"][-1].startswith(
+        "Do not select or promote"
+    )
+    assert not registration["official_status_before_execution"][
+        "figure7_reproduced"
+    ]
 
 
 def test_contract_rejects_holdout_leakage(tmp_path: Path) -> None:

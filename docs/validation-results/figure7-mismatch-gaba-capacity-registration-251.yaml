@@ -1,0 +1,46 @@
+schema_version: 1
+id: figure7-mismatch-gaba-capacity-registration-251
+date: '2026-08-31'
+status: registered-before-execution-diagnostic
+profile: configs/calibration/figure7_mismatch_gaba_capacity_v1.yaml
+parent_diagnostic: docs/validation-results/figure7-mismatch-pre-event-trace-audit-250.yaml
+rationale: >-
+  Artifact 250 shows that all five mismatch relay cells undergo similar tonic
+  bottom-up sodium threshold crossings and that no common GABA-gate trough
+  initiates the unwanted events. Before introducing a second calibration
+  dimension, test whether the implemented two-against-one circuit has any
+  scalar reticular-transfer window that suppresses nonoverlap cells while the
+  overlap cell survives.
+fixed_state:
+  figure6_training_rerun_once: true
+  learned_source_index: 40
+  learned_headroom_fraction: 1.0
+  receptor_arrival_lead_ms: 7.85
+  cue_current_pA: 800.0
+  cue_mode: until_cued_cell_first_event
+  intrinsic_parameters_unchanged: true
+  synaptic_kinetics_delays_and_topology_unchanged: true
+dimension:
+  baseline_scales:
+    modeldb112923.projection.000: 0.01
+    modeldb112923.projection.001: 0.01
+    modeldb112923.projection.004: 0.03
+  registered_common_gains: [1.125, 1.25, 1.5, 2.0, 3.0]
+  source_status: post_holdout_causal_capacity_diagnostic
+execution_contract:
+  - Rebuild an independent recognition network for every endpoint.
+  - Apply each gain only to the recognition network after the fixed Figure 6 learned-state handoff.
+  - Run mismatch only and report all endpoints without interpolation.
+  - Do not select or promote a gain from this screen.
+capacity_criterion:
+  overlap_only_active_indices: [40]
+  distinguish_from_complete_relay_silence: true
+interpretation_boundary: >-
+  Figure 7 mismatch has already been consulted, and the projection values are
+  source-serialized rather than free. A positive result demonstrates only
+  mechanistic capacity and must return to a Figure-6-first persistent-network
+  calibration. It is not independent validation or recovered legacy behavior.
+official_status_before_execution:
+  figure7_reproduced: false
+  downstream_holdouts_unlocked: false
+

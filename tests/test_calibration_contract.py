@@ -282,6 +282,10 @@ FIGURE7_TRN_GABA_COMPARTMENT_MATCH_PATH = (
     ROOT
     / "docs/validation-results/figure7-trn-gaba-compartment-match-207.yaml"
 )
+FIGURE7_TRN_GABA_COMPARTMENT_PAIR_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-trn-gaba-compartment-pair-208.yaml"
+)
 
 
 def test_classic_calibration_contract_separates_training_and_holdout() -> None:
@@ -1218,6 +1222,40 @@ def test_distal_transfer_survivor_passes_same_network_match() -> None:
     assert artifact["assessment"] == {
         "same_network_match_pass": True,
         "advance_to_mismatch": True,
+    }
+
+
+def test_distal_transfer_pair_fails_official_figure7_directions() -> None:
+    artifact = yaml.safe_load(FIGURE7_TRN_GABA_COMPARTMENT_PAIR_PATH.read_text())
+    assert artifact["status"] == "figure7-failed"
+    assert artifact["holdouts_consulted"] == [
+        "figure7_match",
+        "figure7_mismatch",
+    ]
+    assert not artifact["reproduced"]
+    assessment = artifact["official_assessment"]
+    assert assessment["arousal"] == {
+        "match_rate_hz": 90.0,
+        "mismatch_rate_hz": 80.0,
+    }
+    assert assessment["pathway"]["match_active_relay_cells"] == 5
+    assert assessment["pathway"]["mismatch_active_relay_cells"] == 5
+    assert assessment["pathway"]["match_trn_spikes"] == 558
+    assert assessment["pathway"]["mismatch_trn_spikes"] == 566
+    assert set(assessment["pathway"]["mismatch_active_relay_indices"]) == {
+        22,
+        31,
+        40,
+        49,
+        58,
+    }
+    assert artifact["gates"] == {
+        "match_relay_spatial_pattern": True,
+        "mismatch_relay_overlap_only": False,
+        "match_more_active_relay_cells": False,
+        "match_more_trn_events": False,
+        "mismatch_more_nonspecific_events": False,
+        "sampled_mismatch_trn_events_have_fresh_cycles": True,
     }
 
 

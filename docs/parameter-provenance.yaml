@@ -191,9 +191,9 @@ parameters:
     note: every one-at-a-time source restoration yields five relay and 392 TRN events in the 55-ms Figure 6 prerequisite, so none advances to a full learning episode or Figure 7
   model.connectivity.trn_to_relay_gaba_compartment_intermediate_calibration:
     value: somatic 0.01, proximal 0.01, distal 0.015 times the published ModelDB projection weights
-    status: behavior-calibration-in-progress
+    status: rejected-behavior-calibration
     source: preregistered artifact 206 grid over projections 000, 001, and 004; no surviving source identifies these scales
-    note: distal 0.015 is the sole registered complete Figure 6 survivor, with exactly four events in relay cells 38--42 and all learning/map gates passing. It advances unchanged to the independent same-network Figure 7 pair and is not yet promoted as a classic-SMART baseline parameter
+    note: distal 0.015 is the sole registered complete Figure 6 survivor and passes same-network match, but mismatch retains all five vertical relay cells, increases TRN output from 558 to 566 events, and decreases nonspecific output from 9 to 8 events. It is rejected by the official Figure 7 directional contract and is not promoted
   model.multicompartment.exact_voltage_clamp:
     value: optional fixed compartment voltage, separate from finite-conductance XML input
     status: published-protocol alternative

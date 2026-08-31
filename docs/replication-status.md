@@ -1917,6 +1917,18 @@ release transitions. The match result therefore authorizes the already
 registered fresh mismatch run with every parameter held fixed; it does not by
 itself establish Figure 7 or classic-SMART reproduction.
 
+The fresh mismatch completes and rejects that pair in
+`figure7-trn-gaba-compartment-pair-208.yaml`. Match/mismatch totals are 22/19
+relay events, 558/566 TRN events, and 9/8 nonspecific events. All five vertical
+mismatch relay cells 22, 31, 40, 49, and 58 remain active, TRN activity is
+higher rather than lower in mismatch, and nonspecific output is lower rather
+than higher in mismatch (90 versus 80 Hz). Every sampled mismatch TRN event is
+nevertheless a genuine detector cycle. Increasing distal inhibition from
+0.01 to 0.015 therefore preserves Figure 6 and match but neither creates the
+published mismatch relay suppression nor the required arousal direction. The
+candidate is rejected, does not unlock Figure 10 or spectral holdouts, and is
+not a classic-SMART baseline.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

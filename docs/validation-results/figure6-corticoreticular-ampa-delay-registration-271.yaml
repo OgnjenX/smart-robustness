@@ -1,0 +1,32 @@
+schema_version: 1
+id: figure6-corticoreticular-ampa-delay-registration-271
+date: '2026-08-31'
+status: registered-before-execution
+profile: configs/calibration/figure6_corticoreticular_ampa_delay2_v1.yaml
+rationale: >-
+  Artifact 266 localizes spatially stronger mismatch inhibition after soma
+  sodium recruitment. Artifact 270 shows that globally advancing all top-down
+  pathways also advances startup state and fails match. Test the smallest
+  relative-timing discriminator by changing only projection 012's effective
+  AMPA delay from 4 to 2 ms, aligning it with projection 003 relay NMDA while
+  leaving projection 009 NMDA at 3 ms.
+timing_alternative:
+  projection_id: modeldb112923.projection.012
+  archived_delay_ms: 4.0
+  candidate_delay_ms: 2.0
+  unchanged_delays:
+    modeldb112923.projection.003: 2.0
+    modeldb112923.projection.009: 3.0
+  receptor_kinetics_changed: false
+  weights_changed_beyond_existing_baseline: false
+source_status: calibrated effective-delay alternative; not recovered KInNeSS behavior
+conditions_consulted: [figure6]
+figure7_lock: do not inspect Figure 7 unless every complete Figure 6 gate passes
+complete_figure6_gates:
+  relay_active_indices: [38, 39, 40, 41, 42]
+  relay_events_per_active_index: 4
+  feedforward_chain_complete: true
+  causal_pair_in_learning_window: true
+  bottom_up_oriented: true
+  top_down_oriented: true
+execution_limit: exactly one complete Figure 6 episode

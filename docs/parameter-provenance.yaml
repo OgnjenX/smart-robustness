@@ -258,6 +258,11 @@ parameters:
     status: projection-specific-radial-annulus-rejected-at-match
     source: SMART.nml serializes ring=true but the unavailable KInNeSS implementation is unresolved; Artifact 267
     note: parameter-free radial annulus is tested only on layer-6II-to-TRN NMDA/AMPA while all unrelated ring projections retain center-excluded Gaussian geometry. Source gain gives relay/TRN/nonspecific 10/597/5 and gain 8 gives 10/692/3 in Artifact 268; neither passes exact match, so mismatch remains locked
+  model.connectivity.corticoreticular_ampa_effective_delay:
+    value: projection-012-only 2-ms calibrated alternative versus archived 4 ms
+    status: figure6-prerequisite-registered
+    source: SMART.nml fixes projection 003/009/012 delays at 2/3/4 ms; Artifacts 266 and 270 motivate but do not recover the alternative
+    note: explicit runtime fingerprint dimension; all receptor kinetics, projection 003/009 delays, and unrelated synapses remain fixed. Figure 7 is locked until a complete Figure 6 episode passes
   protocol.figure7.mismatch_relay_event_current_audit:
     value: nine current components sampled at the nearest 0.01-ms state sample to every emitted relay event; no candidate or protocol change
     status: diagnostic-readout-only

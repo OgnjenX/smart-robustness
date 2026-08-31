@@ -38,6 +38,28 @@ def test_methods_dual_and_override_is_scoped_to_adaptive_corticothalamic_records
     assert resolved["modeldb112923.projection.035"].learning_rule == "Postsynaptically gated"
 
 
+def test_corticoreticular_ampa_delay_override_is_projection_specific() -> None:
+    conventions = FirstOrderRuntimeConventions(corticoreticular_ampa_delay_ms=2.0)
+    resolved = {
+        record.id: _resolved_projection_record(record, conventions=conventions)
+        for record in MODELDB_FIRST_ORDER.projections
+    }
+    assert resolved["modeldb112923.projection.012"].delay_ms == 2.0
+    assert resolved["modeldb112923.projection.009"].delay_ms == 3.0
+    assert resolved["modeldb112923.projection.003"].delay_ms == 2.0
+
+
+def test_corticoreticular_ampa_delay_override_must_be_positive() -> None:
+    record = MODELDB_FIRST_ORDER.by_id("modeldb112923.projection.012")
+    with pytest.raises(ValueError, match="AMPA delay must be positive"):
+        _resolved_projection_record(
+            record,
+            conventions=FirstOrderRuntimeConventions(
+                corticoreticular_ampa_delay_ms=0.0
+            ),
+        )
+
+
 def test_protocol_voltage_clamp_preserves_sector_and_pins_selected_relay_dendrites() -> None:
     brian.start_scope()
     brian.prefs.codegen.target = "numpy"
@@ -142,6 +164,10 @@ def test_runtime_convention_fingerprint_is_stable_and_sensitive() -> None:
         corticoreticular_ring_kernel_convention="radial_annulus"
     )
     assert targeted_annulus.fingerprint != classic.fingerprint
+    targeted_ampa_delay = FirstOrderRuntimeConventions(
+        corticoreticular_ampa_delay_ms=2.0
+    )
+    assert targeted_ampa_delay.fingerprint != classic.fingerprint
 
 
 def test_corticoreticular_ring_override_is_projection_specific() -> None:

@@ -577,6 +577,13 @@ FIGURE7_GAIN8_AMPA_ARRIVAL_REGISTRATION_PATH = (
 FIGURE7_GAIN8_AMPA_ARRIVAL_RESULT_PATH = (
     ROOT / "docs/validation-results/figure7-gain8-ampa-arrival-match-270.yaml"
 )
+FIGURE6_CORTICORETICULAR_AMPA_DELAY_PROFILE_PATH = (
+    ROOT / "configs/calibration/figure6_corticoreticular_ampa_delay2_v1.yaml"
+)
+FIGURE6_CORTICORETICULAR_AMPA_DELAY_REGISTRATION_PATH = (
+    ROOT
+    / "docs/validation-results/figure6-corticoreticular-ampa-delay-registration-271.yaml"
+)
 
 
 def test_classic_calibration_contract_separates_training_and_holdout() -> None:
@@ -3423,6 +3430,23 @@ def test_gain8_ampa_arrival_interaction_fails_without_mismatch() -> None:
     assert len(result["cue_lead_trn_spike_times_ms"]) == 81
     assert len(result["cue_lead_nonspecific_spike_times_ms"]) == 1
     assert not outcome["gates"]["sampled_trn_events_have_fresh_cycles"]
+
+
+def test_corticoreticular_ampa_delay_requires_complete_figure6_first() -> None:
+    profile = yaml.safe_load(
+        FIGURE6_CORTICORETICULAR_AMPA_DELAY_PROFILE_PATH.read_text()
+    )
+    registration = yaml.safe_load(
+        FIGURE6_CORTICORETICULAR_AMPA_DELAY_REGISTRATION_PATH.read_text()
+    )
+    assert profile["runtime_overrides"]["corticoreticular_ampa_delay_ms"] == 2.0
+    assert registration["timing_alternative"]["projection_id"].endswith(".012")
+    assert registration["timing_alternative"]["unchanged_delays"] == {
+        "modeldb112923.projection.003": 2.0,
+        "modeldb112923.projection.009": 3.0,
+    }
+    assert registration["conditions_consulted"] == ["figure6"]
+    assert registration["figure7_lock"].startswith("do not inspect Figure 7")
 
 
 def test_contract_rejects_holdout_leakage(tmp_path: Path) -> None:

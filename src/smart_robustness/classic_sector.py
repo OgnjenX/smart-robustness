@@ -150,6 +150,7 @@ class FirstOrderRuntimeConventions:
     gaussian_spread_convention: str = "standard_deviation"
     ring_kernel_convention: str = "center_excluded_gaussian"
     corticoreticular_ring_kernel_convention: str | None = None
+    corticoreticular_ampa_delay_ms: float | None = None
     gaussian_learning_bounds_convention: str = "projection_level"
     postsynaptic_depression_scale_convention: str = "local_learning_bounds"
     projection_source_convention: str = "modeldb_as_serialized"
@@ -207,6 +208,8 @@ class FirstOrderRuntimeConventions:
             values.pop("ring_kernel_convention")
         if values["corticoreticular_ring_kernel_convention"] is None:
             values.pop("corticoreticular_ring_kernel_convention")
+        if values["corticoreticular_ampa_delay_ms"] is None:
+            values.pop("corticoreticular_ampa_delay_ms")
         payload = json.dumps(values, sort_keys=True, separators=(",", ":"))
         return hashlib.sha256(payload.encode()).hexdigest()
 
@@ -260,6 +263,15 @@ def _resolved_projection_record(record, *, conventions: FirstOrderRuntimeConvent
         raise ValueError(
             "unsupported top-down learning-rule convention "
             f"{conventions.top_down_learning_rule_convention!r}"
+        )
+    if (
+        record.id == "modeldb112923.projection.012"
+        and conventions.corticoreticular_ampa_delay_ms is not None
+    ):
+        if conventions.corticoreticular_ampa_delay_ms <= 0:
+            raise ValueError("corticoreticular AMPA delay must be positive")
+        record = replace(
+            record, delay_ms=float(conventions.corticoreticular_ampa_delay_ms)
         )
     return record
 

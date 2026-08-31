@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import argparse
-from dataclasses import asdict
+from dataclasses import asdict, replace
 from datetime import UTC, datetime
 from pathlib import Path
 
@@ -62,8 +62,19 @@ def main() -> None:
     brian.prefs.codegen.target = "numpy"
     profile = yaml.safe_load(Path(args.profile).read_text())
     conventions = runtime_conventions_for_candidate(profile["candidate"])
+    if profile.get("runtime_overrides"):
+        conventions = replace(conventions, **profile["runtime_overrides"])
+    projection_weight_scales = {
+        str(key): float(value)
+        for key, value in profile.get("projection_weight_scales", {}).items()
+    }
     protocol = Figure6LearningProtocol(monitored_populations=MONITORED)
-    run = run_figure6_learning(conventions=conventions, protocol=protocol, brian=brian)
+    run = run_figure6_learning(
+        conventions=conventions,
+        protocol=protocol,
+        projection_weight_scales=projection_weight_scales or None,
+        brian=brian,
+    )
     recruitment = assess_figure6_cortical_recruitment(run.result)
     timing = assess_figure6_top_down_timing(run.result)
     spike_indices = run.result.population_spike_indices or {}
@@ -99,6 +110,8 @@ def main() -> None:
         "profile": args.profile,
         "candidate_fingerprint": profile["candidate_fingerprint"],
         "runtime_fingerprint": conventions.fingerprint,
+        "runtime_overrides": profile.get("runtime_overrides", {}),
+        "projection_weight_scales": projection_weight_scales,
         "holdouts_consulted": False,
         "status": (
             "complete-figure6-pass"

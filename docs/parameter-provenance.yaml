@@ -260,9 +260,9 @@ parameters:
     note: parameter-free radial annulus is tested only on layer-6II-to-TRN NMDA/AMPA while all unrelated ring projections retain center-excluded Gaussian geometry. Source gain gives relay/TRN/nonspecific 10/597/5 and gain 8 gives 10/692/3 in Artifact 268; neither passes exact match, so mismatch remains locked
   model.connectivity.corticoreticular_ampa_effective_delay:
     value: projection-012-only 2-ms calibrated alternative versus archived 4 ms
-    status: 2-ms-passes-figure6-rejected-at-figure7-match
+    status: integer-effective-delay-family-closed-at-figure7-match
     source: SMART.nml fixes projection 003/009/012 delays at 2/3/4 ms; Artifacts 266 and 270 motivate but do not recover the alternative
-    note: explicit runtime fingerprint dimension; all receptor kinetics, projection 003/009 delays, and unrelated synapses remain fixed. Artifacts 272/274 are detector-mismatched controls. Corrected delay 2 passes Figure 6 but fails match at 10/623/5 in Artifact 278. Corrected delay 3 passes complete Figure 6 in Artifact 280 and is eligible for one separately registered match
+    note: explicit runtime fingerprint dimension; all receptor kinetics, projection 003/009 delays, and unrelated synapses remain fixed. Artifacts 272/274 are detector-mismatched controls. Corrected delays 2 and 3 pass Figure 6 but fail match at 10/623/5 and 14/601/5 in Artifacts 278/282. Archived delay 4 yields the verified 15/597/4 match but fails mismatch in Artifact 264. Integer delay family is closed without fractional interpolation
   protocol.figure7.mismatch_relay_event_current_audit:
     value: nine current components sampled at the nearest 0.01-ms state sample to every emitted relay event; no candidate or protocol change
     status: diagnostic-readout-only

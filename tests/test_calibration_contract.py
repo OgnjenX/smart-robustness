@@ -640,6 +640,9 @@ FIGURE7_DELAY3_GAIN8_MATCH_REGISTRATION_PATH = (
     ROOT
     / "docs/validation-results/figure7-delay3-gain8-match-registration-281.yaml"
 )
+FIGURE7_DELAY3_GAIN8_MATCH_RESULT_PATH = (
+    ROOT / "docs/validation-results/figure7-delay3-gain8-match-282.yaml"
+)
 
 
 def test_classic_calibration_contract_separates_training_and_holdout() -> None:
@@ -3659,6 +3662,21 @@ def test_delay3_gain8_match_is_final_integer_endpoint() -> None:
     assert registration["figure6_prerequisite_passed"]
     assert registration["selection_boundary"].startswith("no fractional")
     assert registration["mismatch_lock"].startswith("do not inspect mismatch")
+
+
+def test_delay3_gain8_fails_exact_match_and_closes_integer_family() -> None:
+    artifact = yaml.safe_load(FIGURE7_DELAY3_GAIN8_MATCH_RESULT_PATH.read_text())
+    outcome = artifact["outcomes"][0]
+    result = outcome["result"]
+    assert not outcome["pass"]
+    assert artifact["mismatch_consulted"] is False
+    assert artifact["assessment"]["mismatch_remains_locked"]
+    assert sorted(set(result["relay_spike_indices"])) == [38, 39, 40, 41, 42]
+    assert len(result["relay_spike_times_ms"]) == 14
+    assert len(result["trn_spike_times_ms"]) == 601
+    assert len(result["nonspecific_spike_times_ms"]) == 5
+    assert outcome["gates"]["sampled_trn_events_have_fresh_cycles"]
+    assert not outcome["gates"]["nonspecific_40_hz"]
 
 
 def test_contract_rejects_holdout_leakage(tmp_path: Path) -> None:

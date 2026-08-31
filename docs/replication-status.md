@@ -2456,6 +2456,14 @@ learning, and horizontal maps with top-down contrast approximately 0.607. All
 Figure 6 gates pass, so delay 3 is eligible for one separately registered
 fresh gain-8 match. Fractional delay interpolation remains disallowed.
 
+Artifacts 281--282 test that final delay-3 survivor at fixed gain 8. Match
+retains relay cells 38--42, with event counts 3/3/2/3/3 (14 total), and
+produces 601 detector-valid TRN events. Nonspecific output remains five events
+(50 Hz), not four. No mismatch is run. Together with delay 2's 10/623/5 match,
+the corrected 2/3-ms calibrated alternatives and archived 4-ms endpoint exhaust
+the finite integer effective-delay family; all fail complete Figure 7 and no
+fractional interpolation is authorized.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

@@ -434,6 +434,17 @@ FIGURE7_ALIGNED_VERIFICATION_REGISTRATION_PATH = (
     ROOT
     / "docs/validation-results/figure7-aligned-on-center-verification-registration-241.yaml"
 )
+FIGURE7_ALIGNED_VERIFICATION_RESULT_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-aligned-on-center-verification-242.yaml"
+)
+FIGURE7_ALIGNED_MISMATCH_PROFILE_PATH = (
+    ROOT / "configs/calibration/figure7_aligned_on_center_mismatch_v1.yaml"
+)
+FIGURE7_ALIGNED_MISMATCH_REGISTRATION_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-aligned-on-center-mismatch-registration-243.yaml"
+)
 
 
 def test_classic_calibration_contract_separates_training_and_holdout() -> None:
@@ -2643,6 +2654,46 @@ def test_aligned_on_center_verification_registers_only_screen_survivor() -> None
     assert registration["verification"]["candidates"] == 1
     assert registration["verification"]["independently_rebuilt_network"]
     assert registration["mismatch_lock"].startswith("Do not run mismatch")
+
+
+def test_aligned_on_center_verification_has_fresh_trn_cycles() -> None:
+    artifact = yaml.safe_load(FIGURE7_ALIGNED_VERIFICATION_RESULT_PATH.read_text())
+    assert artifact["status"] == "complete"
+    assert artifact["stage_1_survivor_headroom_fractions"] == [1.0]
+    outcome = artifact["outcomes"][0]
+    assert outcome["pass"]
+    assert set(outcome["relay_event_counts_by_index"].values()) == {3}
+    assert len(outcome["result"]["trn_spike_times_ms"]) == 633
+    assert len(outcome["result"]["nonspecific_spike_times_ms"]) == 4
+    assert outcome["gates"]["sampled_trn_events_have_fresh_cycles"]
+    for index, event_count in outcome[
+        "sampled_trn_event_counts_by_index"
+    ].items():
+        assert event_count == outcome[
+            "sampled_trn_threshold_upcrossings_by_index"
+        ][index]
+        assert event_count == outcome["sampled_trn_arm_transitions_by_index"][index]
+        assert event_count == outcome[
+            "sampled_trn_release_transitions_by_index"
+        ][index]
+    assert artifact["assessment"]["advance_to_mismatch"]
+    assert not artifact["assessment"]["mismatch_remains_locked"]
+
+
+def test_aligned_on_center_mismatch_is_single_locked_holdout() -> None:
+    profile = yaml.safe_load(FIGURE7_ALIGNED_MISMATCH_PROFILE_PATH.read_text())
+    registration = yaml.safe_load(
+        FIGURE7_ALIGNED_MISMATCH_REGISTRATION_PATH.read_text()
+    )
+    assert profile["status"] == "registered-before-execution"
+    assert profile["learned_state"]["selected_headroom_fraction"] == 1.0
+    assert registration["registered_holdout"]["conditions"] == ["mismatch"]
+    assert registration["registered_holdout"]["independent_network_rebuild"]
+    assert registration["execution_limit"].startswith("exactly one mismatch")
+    assert registration["official_gates"]["mismatch_nonspecific_events"] == 7
+    assert not registration["official_status_before_execution"][
+        "figure7_reproduced"
+    ]
 
 
 def test_contract_rejects_holdout_leakage(tmp_path: Path) -> None:

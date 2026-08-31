@@ -2237,6 +2237,16 @@ verification of that sole endpoint. Mismatch remains locked until sampled TRN
 event counts are shown to equal threshold upcrossings, arm transitions, and
 release transitions in the verification run.
 
+That independent full-state rerun passes in
+`figure7-aligned-on-center-verification-242.yaml`. It reproduces 15 horizontal
+relay events, 633 TRN events, and four nonspecific events. Across sampled TRN
+indices 22, 31, 38--42, 49, and 58, emitted counts of 8--10 events exactly
+equal threshold upcrossings, arm transitions, and release transitions. The
+match phenotype is therefore detector-cycle-valid rather than a startup-latch
+artifact. Artifact 243 registers exactly one independently rebuilt mismatch at
+the unchanged hard-bound endpoint; no intermediate amplitude or second
+mismatch candidate is authorized.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

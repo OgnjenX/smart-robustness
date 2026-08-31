@@ -1929,6 +1929,19 @@ published mismatch relay suppression nor the required arousal direction. The
 candidate is rejected, does not unlock Figure 10 or spectral holdouts, and is
 not a classic-SMART baseline.
 
+Artifact `figure6-projection022-source-resolution-209.yaml` reopens one
+discrete, independently documented source conflict in the category pathway.
+SMART.nml serializes projection 022 as layer-4 inhibitory to layer 6II through
+an excitatory channel named `AMPA 2/3`; Supplementary Table 3 instead specifies
+layer-2/3 excitatory to layer 6II, one-to-one. Applying only the supplementary
+endpoint in the current calibrated network passes both Figure 6 stages. The
+complete episode produces exactly four events in each relay cell 38--42 (20
+total), 541 TRN events, the complete cortical chain, a causal teaching pair,
+and a combined top-down horizontal contrast of approximately 0.48047. This is
+a source-resolution candidate rather than a fitted topology change. It
+advances unchanged to an independently registered same-network Figure 7 pair,
+but remains provisional until that downstream behavior is tested.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

@@ -194,6 +194,11 @@ parameters:
     status: rejected-behavior-calibration
     source: preregistered artifact 206 grid over projections 000, 001, and 004; no surviving source identifies these scales
     note: distal 0.015 is the sole registered complete Figure 6 survivor and passes same-network match, but mismatch retains all five vertical relay cells, increases TRN output from 558 to 566 events, and decreases nonspecific output from 9 to 8 events. It is rejected by the official Figure 7 directional contract and is not promoted
+  model.connectivity.projection022_source_resolution:
+    value: layer23_excitatory_v1 to layer6ii_excitatory_v1 distal dendrite, one-to-one
+    status: source-resolution-candidate
+    source: Grossberg and Versace 2008 Supplementary Table 3 and the SMART.nml channel name AMPA 2/3, contrasted with the archived layer4_inhibitory_v1 presynaptic endpoint
+    note: the supplementary endpoint preserves every calibrated Figure 6 gate in artifact 209, including 20 genuine relay events and approximately 0.48047 top-down horizontal contrast. It advances unchanged to Figure 7 and remains provisional until that pair is scored
   model.multicompartment.exact_voltage_clamp:
     value: optional fixed compartment voltage, separate from finite-conductance XML input
     status: published-protocol alternative

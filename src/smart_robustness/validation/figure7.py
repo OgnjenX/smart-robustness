@@ -291,9 +291,11 @@ class Figure7ConditionResult:
             raise ValueError("equilibration_ms cannot be negative")
         TopDownCurrentMode(self.top_down_current_mode)
         if self.top_down_current_termination_time_ms is not None and not (
-            0 <= self.top_down_current_termination_time_ms <= self.duration_ms
+            0
+            <= self.top_down_current_termination_time_ms
+            <= self.top_down_cue_lead_ms + self.duration_ms
         ):
-            raise ValueError("top-down current termination must lie within the trial")
+            raise ValueError("top-down current termination must lie within the cue/trial")
         if self.top_down_relay_source_indices is not None and (
             not self.top_down_relay_source_indices
             or any(not 0 <= index < 81 for index in self.top_down_relay_source_indices)
@@ -1286,18 +1288,39 @@ def run_figure7_condition(
     category_stimulus_times = stimulus_times(category)
     current_termination_time_ms = None
     if current_mode is TopDownCurrentMode.UNTIL_CUED_CELL_FIRST_EVENT:
-        current_termination_time_ms = next(
+        cue_lead_category_indices = cue_lead_indices(category)
+        cue_lead_category_times = cue_lead_times(category)
+        cue_lead_termination_time_ms = next(
             (
                 time
                 for index, time in zip(
-                    category_stimulus_indices,
-                    category_stimulus_times,
+                    cue_lead_category_indices,
+                    cue_lead_category_times,
                     strict=True,
                 )
                 if index == cue.top_down_cell_index
             ),
             None,
         )
+        if cue_lead_termination_time_ms is not None:
+            current_termination_time_ms = cue_lead_termination_time_ms
+        else:
+            stimulus_termination_time_ms = next(
+                (
+                    time
+                    for index, time in zip(
+                        category_stimulus_indices,
+                        category_stimulus_times,
+                        strict=True,
+                    )
+                    if index == cue.top_down_cell_index
+                ),
+                None,
+            )
+            if stimulus_termination_time_ms is not None:
+                current_termination_time_ms = (
+                    top_down_cue_lead_ms + stimulus_termination_time_ms
+                )
     result = Figure7ConditionResult(
         condition=condition,
         duration_ms=duration_ms,

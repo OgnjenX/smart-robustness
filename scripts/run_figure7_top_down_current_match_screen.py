@@ -165,7 +165,16 @@ def main() -> None:
             == releases[index]
             for index in event_counts
         )
-        first_cued_event_ms = next(
+        cue_lead_source_events_ms = tuple(
+            time
+            for index, time in zip(
+                result.cue_lead_category_spike_indices,
+                result.cue_lead_category_spike_times_ms,
+                strict=True,
+            )
+            if index == 40
+        )
+        first_stimulus_cued_event_ms = next(
             (
                 time
                 for index, time in zip(
@@ -176,6 +185,14 @@ def main() -> None:
                 if index == 40
             ),
             None,
+        )
+        first_cued_event_ms = (
+            cue_lead_source_events_ms[0]
+            if cue_lead_source_events_ms
+            else None
+            if first_stimulus_cued_event_ms is None
+            else float(protocol["top_down_cue_lead_ms"])
+            + first_stimulus_cued_event_ms
         )
         gates = {
             "top_down_relay_source_protocol": (
@@ -209,6 +226,28 @@ def main() -> None:
             "nonspecific_40_hz": result.nonspecific_rate_hz
             == float(gate["nonspecific_rate_hz"]),
         }
+        cue_lead_gate = profile.get("cue_lead_gate")
+        if cue_lead_gate is not None:
+            gates.update(
+                {
+                    "one_selected_category_event_during_lead": (
+                        len(cue_lead_source_events_ms)
+                        == int(cue_lead_gate["selected_category_events"])
+                    ),
+                    "no_off_source_category_events_during_lead": all(
+                        index == 40
+                        for index in result.cue_lead_category_spike_indices
+                    ),
+                    "no_relay_events_during_lead": (
+                        len(result.cue_lead_relay_spike_times_ms)
+                        == int(cue_lead_gate["relay_events"])
+                    ),
+                    "no_nonspecific_events_during_lead": (
+                        len(result.cue_lead_nonspecific_spike_times_ms)
+                        == int(cue_lead_gate["nonspecific_events"])
+                    ),
+                }
+            )
         outcomes.append(
             {
                 "top_down_current_pA": float(current_pA),

@@ -52,6 +52,26 @@ def test_figure7_result_validates_named_current_modes() -> None:
         )
 
 
+def test_figure7_result_allows_termination_during_registered_cue_lead() -> None:
+    result = Figure7ConditionResult(
+        condition=MatchCondition.MATCH,
+        duration_ms=100.0,
+        nonspecific_spike_times_ms=(),
+        top_down_current_mode=TopDownCurrentMode.UNTIL_CUED_CELL_FIRST_EVENT,
+        top_down_current_termination_time_ms=5.85,
+        top_down_cue_lead_ms=7.85,
+    )
+    assert result.top_down_current_termination_time_ms == 5.85
+    with pytest.raises(ValueError, match="cue/trial"):
+        Figure7ConditionResult(
+            condition=MatchCondition.MATCH,
+            duration_ms=100.0,
+            nonspecific_spike_times_ms=(),
+            top_down_current_termination_time_ms=108.0,
+            top_down_cue_lead_ms=7.85,
+        )
+
+
 def test_selected_category_diagnostic_masks_only_relay_directed_source_rows() -> None:
     brian.start_scope()
     sector = build_first_order_connected_sector(

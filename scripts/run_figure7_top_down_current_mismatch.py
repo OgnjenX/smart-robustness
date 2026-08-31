@@ -50,12 +50,32 @@ def _scoring_result(raw: dict[str, Any]) -> Figure7ConditionResult:
         relay_spike_times_ms=tuple(raw["relay_spike_times_ms"]),
         trn_spike_indices=tuple(raw["trn_spike_indices"]),
         trn_spike_times_ms=tuple(raw["trn_spike_times_ms"]),
+        cue_lead_category_spike_indices=tuple(
+            raw.get("cue_lead_category_spike_indices", ())
+        ),
+        cue_lead_category_spike_times_ms=tuple(
+            raw.get("cue_lead_category_spike_times_ms", ())
+        ),
+        cue_lead_nonspecific_spike_times_ms=tuple(
+            raw.get("cue_lead_nonspecific_spike_times_ms", ())
+        ),
+        cue_lead_trn_spike_indices=tuple(raw.get("cue_lead_trn_spike_indices", ())),
+        cue_lead_trn_spike_times_ms=tuple(
+            raw.get("cue_lead_trn_spike_times_ms", ())
+        ),
+        cue_lead_relay_spike_indices=tuple(
+            raw.get("cue_lead_relay_spike_indices", ())
+        ),
+        cue_lead_relay_spike_times_ms=tuple(
+            raw.get("cue_lead_relay_spike_times_ms", ())
+        ),
         top_down_current_mode=raw.get(
             "top_down_current_mode", TopDownCurrentMode.SUSTAINED_EPOCH.value
         ),
         top_down_current_termination_time_ms=raw.get(
             "top_down_current_termination_time_ms"
         ),
+        top_down_cue_lead_ms=float(raw.get("top_down_cue_lead_ms", 0.0)),
         top_down_relay_source_indices=(
             None
             if raw.get("top_down_relay_source_indices") is None
@@ -159,7 +179,16 @@ def main() -> None:
         == releases[index]
         for index in event_counts
     )
-    first_cued_event_ms = next(
+    cue_lead_source_events_ms = tuple(
+        time
+        for index, time in zip(
+            mismatch.cue_lead_category_spike_indices,
+            mismatch.cue_lead_category_spike_times_ms,
+            strict=True,
+        )
+        if index == 40
+    )
+    first_stimulus_cued_event_ms = next(
         (
             time
             for index, time in zip(
@@ -170,6 +199,14 @@ def main() -> None:
             if index == 40
         ),
         None,
+    )
+    first_cued_event_ms = (
+        cue_lead_source_events_ms[0]
+        if cue_lead_source_events_ms
+        else None
+        if first_stimulus_cued_event_ms is None
+        else float(protocol["top_down_cue_lead_ms"])
+        + first_stimulus_cued_event_ms
     )
     gates = {
         "match_exact_complete_gate": bool(match_outcome["pass"]),
@@ -201,6 +238,28 @@ def main() -> None:
         ),
         "sampled_mismatch_trn_events_have_fresh_cycles": fresh_cycles,
     }
+    cue_lead_gate = profile.get("cue_lead_gate")
+    if cue_lead_gate is not None:
+        gates.update(
+            {
+                "mismatch_one_selected_category_event_during_lead": (
+                    len(cue_lead_source_events_ms)
+                    == int(cue_lead_gate["selected_category_events"])
+                ),
+                "mismatch_no_off_source_category_events_during_lead": all(
+                    index == 40
+                    for index in mismatch.cue_lead_category_spike_indices
+                ),
+                "mismatch_no_relay_events_during_lead": (
+                    len(mismatch.cue_lead_relay_spike_times_ms)
+                    == int(cue_lead_gate["relay_events"])
+                ),
+                "mismatch_no_nonspecific_events_during_lead": (
+                    len(mismatch.cue_lead_nonspecific_spike_times_ms)
+                    == int(cue_lead_gate["nonspecific_events"])
+                ),
+            }
+        )
     phenotype_reproduced = all(gates.values()) and assessment.reproduced
     diagnostic_only = bool(profile.get("diagnostic_only", False))
     reproduced = phenotype_reproduced and not diagnostic_only

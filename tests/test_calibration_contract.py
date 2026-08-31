@@ -405,6 +405,13 @@ FIGURE7_SELECTED_CATEGORY_PAIR_RESULT_PATH = (
 SPIKE_EVENT_EQUATION_VISUAL_AUDIT_PATH = (
     ROOT / "docs/validation-results/spike-event-equation-visual-audit-236.yaml"
 )
+FIGURE7_RECEPTOR_ALIGNMENT_PROFILE_PATH = (
+    ROOT / "configs/calibration/figure7_receptor_arrival_aligned_match_v1.yaml"
+)
+FIGURE7_RECEPTOR_ALIGNMENT_REGISTRATION_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-receptor-arrival-alignment-registration-237.yaml"
+)
 
 
 def test_classic_calibration_contract_separates_training_and_holdout() -> None:
@@ -2509,6 +2516,27 @@ def test_visual_spike_equation_audit_fixes_temporal_order_without_promotion() ->
     assert not assessment["literal_minus20_promoted"]
     assert not assessment["official_smart_reproduced"]
     assert not assessment["downstream_holdouts_unlocked"]
+
+
+def test_receptor_arrival_alignment_is_single_value_preregistered() -> None:
+    profile = yaml.safe_load(FIGURE7_RECEPTOR_ALIGNMENT_PROFILE_PATH.read_text())
+    registration = yaml.safe_load(
+        FIGURE7_RECEPTOR_ALIGNMENT_REGISTRATION_PATH.read_text()
+    )
+    assert profile["status"] == "registered-before-execution"
+    assert profile["protocol"]["top_down_cue_lead_ms"] == pytest.approx(7.85)
+    assert profile["protocol"]["top_down_current_mode"] == (
+        "until_cued_cell_first_event"
+    )
+    assert registration["dimension"]["registered_values"] == [7.85]
+    assert registration["dimension"]["derivation"] == (
+        "5.85-ms selected-category latency plus the archived 2-ms relay-NMDA delay"
+    )
+    assert registration["fixed_choices"]["source_delays_unchanged"]
+    assert registration["mismatch_lock"].startswith("Do not run mismatch")
+    assert not registration["official_status_before_execution"][
+        "figure7_reproduced"
+    ]
 
 
 def test_contract_rejects_holdout_leakage(tmp_path: Path) -> None:

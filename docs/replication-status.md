@@ -2403,6 +2403,15 @@ effective too late to prevent threshold initiation. The next calibration
 family should test projection-specific ring geometry or AMPA/NMDA timing while
 leaving global intrinsic thresholds fixed.
 
+Artifacts 267--268 test that inference with the existing parameter-free radial
+annulus applied only to layer-6II-to-TRN NMDA/AMPA projections 009 and 012.
+All unrelated ring pathways retain the historical center-excluded Gaussian.
+At source gain 1, match produces 10 relay, 597 TRN, and five nonspecific events;
+at gain 8 it produces 10 relay, 692 TRN, and three nonspecific events. Both
+retain the correct five horizontal relay indices but fail the exact four-event
+nonspecific gate. No endpoint survives, mismatch is not consulted, and the
+projection-specific radial-annulus family is closed.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

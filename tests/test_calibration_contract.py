@@ -563,6 +563,10 @@ FIGURE7_TARGETED_ANNULAR_REGISTRATION_PATH = (
     ROOT
     / "docs/validation-results/figure7-targeted-annular-corticoreticular-registration-267.yaml"
 )
+FIGURE7_TARGETED_ANNULAR_RESULT_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-targeted-annular-corticoreticular-match-268.yaml"
+)
 
 
 def test_classic_calibration_contract_separates_training_and_holdout() -> None:
@@ -3359,6 +3363,26 @@ def test_targeted_annular_screen_changes_only_corticoreticular_ring_geometry() -
     ]
     assert registration["conditions_consulted"] == ["figure7_match"]
     assert registration["mismatch_lock"].startswith("do not inspect mismatch")
+
+
+def test_targeted_annular_screen_closes_without_mismatch() -> None:
+    artifact = yaml.safe_load(FIGURE7_TARGETED_ANNULAR_RESULT_PATH.read_text())
+    assert artifact["match_survivor_gains"] == []
+    assert artifact["selected_gain"] is None
+    assert artifact["mismatch_consulted"] is False
+    assert artifact["assessment"]["mismatch_remains_locked"]
+    outcomes = artifact["outcomes"]
+    assert [len(item["result"]["relay_spike_times_ms"]) for item in outcomes] == [
+        10,
+        10,
+    ]
+    assert [len(item["result"]["trn_spike_times_ms"]) for item in outcomes] == [
+        597,
+        692,
+    ]
+    assert [
+        len(item["result"]["nonspecific_spike_times_ms"]) for item in outcomes
+    ] == [5, 3]
 
 
 def test_contract_rejects_holdout_leakage(tmp_path: Path) -> None:

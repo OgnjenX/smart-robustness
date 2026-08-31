@@ -255,9 +255,9 @@ parameters:
     note: gains 1.25, 1.5, 2, and 4 fail exact match; gain 8 independently reproduces the match in Artifact 262 but fails the locked mismatch in Artifact 264. All five vertical relay cells emit three events, nonspecific output is 50 rather than 70 Hz, and two sampled TRN cells end armed without release. Common corticoreticular gain is closed
   model.connectivity.corticoreticular_ring_kernel_convention:
     value: projection-specific radial_annulus alternative on records 009 and 012
-    status: post-holdout-exploratory-registered
+    status: projection-specific-radial-annulus-rejected-at-match
     source: SMART.nml serializes ring=true but the unavailable KInNeSS implementation is unresolved; Artifact 267
-    note: parameter-free radial annulus is tested only on layer-6II-to-TRN NMDA/AMPA while all unrelated ring projections retain center-excluded Gaussian geometry
+    note: parameter-free radial annulus is tested only on layer-6II-to-TRN NMDA/AMPA while all unrelated ring projections retain center-excluded Gaussian geometry. Source gain gives relay/TRN/nonspecific 10/597/5 and gain 8 gives 10/692/3 in Artifact 268; neither passes exact match, so mismatch remains locked
   protocol.figure7.mismatch_relay_event_current_audit:
     value: nine current components sampled at the nearest 0.01-ms state sample to every emitted relay event; no candidate or protocol change
     status: diagnostic-readout-only

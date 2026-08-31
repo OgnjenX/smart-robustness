@@ -607,6 +607,10 @@ FIGURE6_CORTICORETICULAR_AMPA_DELAY2_CORRECTED_REGISTRATION_PATH = (
     ROOT
     / "docs/validation-results/figure6-corticoreticular-ampa-delay2-corrected-registration-275.yaml"
 )
+FIGURE6_CORTICORETICULAR_AMPA_DELAY2_CORRECTED_RESULT_PATH = (
+    ROOT
+    / "docs/validation-results/figure6-corticoreticular-ampa-delay2-corrected-276.yaml"
+)
 
 
 def test_classic_calibration_contract_separates_training_and_holdout() -> None:
@@ -3533,6 +3537,22 @@ def test_corrected_delay2_uses_exact_two_stage_detector_prerequisite() -> None:
     assert profile["stage_2_protocol"]["stimulus_ms"] == 100.0
     assert registration["complete_figure6_first"]
     assert registration["figure7_lock"].startswith("do not inspect Figure 7")
+
+
+def test_corrected_delay2_passes_complete_figure6() -> None:
+    artifact = yaml.safe_load(
+        FIGURE6_CORTICORETICULAR_AMPA_DELAY2_CORRECTED_RESULT_PATH.read_text()
+    )
+    stage1 = artifact["stage_1_outcomes"][0]
+    stage2 = artifact["stage_2_outcomes"][0]
+    assert stage1["pass"]
+    assert stage1["population_spikes"]["thalamic_relay"] == 10
+    assert stage1["population_spikes"]["trn"] == 368
+    assert stage2["pass"]
+    assert stage2["population_spikes"]["thalamic_relay"] == 20
+    assert stage2["population_spikes"]["trn"] == 565
+    assert all(stage2["gates"].values())
+    assert artifact["assessment"]["advance_to_figure7"]
 
 
 def test_contract_rejects_holdout_leakage(tmp_path: Path) -> None:

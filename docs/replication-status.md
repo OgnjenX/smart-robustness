@@ -2431,6 +2431,15 @@ protocol-mismatched negative controls, not evidence against either delay. The
 timing endpoints require corrected reruns through the exact two-stage Artifact
 217 prerequisite before Figure 7 can be consulted.
 
+Artifacts 275--276 correct the delay-2 rerun. With the calibrated detector,
+the 55-ms screen reproduces 10 horizontal relay and 368 TRN events. The 100-ms
+episode then reproduces exactly four fresh detector cycles in each relay cell
+38--42 (20 total), the complete cortical chain, a causal learning pair, and
+horizontal bottom-up and top-down maps; top-down contrast is approximately
+0.601. The candidate therefore passes the complete Figure 6 prerequisite and
+is eligible for one separately registered fresh Figure 7 match. This does not
+yet establish recognition behavior or recovered source timing.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

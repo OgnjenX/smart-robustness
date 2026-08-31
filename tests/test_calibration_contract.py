@@ -380,6 +380,12 @@ FIGURE7_ONE_EVENT_CURRENT_PAIR_PROFILE_PATH = (
 FIGURE7_ONE_EVENT_CURRENT_PAIR_RESULT_PATH = (
     ROOT / "docs/validation-results/figure7-one-event-current-fresh-pair-231.yaml"
 )
+FIGURE7_SELECTED_CATEGORY_REGISTRATION_PATH = (
+    ROOT / "docs/validation-results/figure7-selected-category-routing-registration-232.yaml"
+)
+FIGURE7_SELECTED_CATEGORY_MATCH_PROFILE_PATH = (
+    ROOT / "configs/calibration/figure7_selected_category_routing_match_v1.yaml"
+)
 
 
 def test_classic_calibration_contract_separates_training_and_holdout() -> None:
@@ -1887,6 +1893,21 @@ def test_one_event_current_pair_is_rejected_on_spatial_and_arousal_gates() -> No
     assert not artifact["gates"]["mismatch_more_nonspecific_events"]
     assert not artifact["gates"]["mismatch_nonspecific_70_hz"]
     assert not artifact["reproduced"]
+
+
+def test_selected_category_routing_is_preregistered_as_diagnostic_only() -> None:
+    registration = yaml.safe_load(FIGURE7_SELECTED_CATEGORY_REGISTRATION_PATH.read_text())
+    profile = yaml.safe_load(FIGURE7_SELECTED_CATEGORY_MATCH_PROFILE_PATH.read_text())
+    assert registration["status"] == "registered-before-execution-diagnostic"
+    assert registration["intervention"]["retained_source_indices"] == [40]
+    assert registration["intervention"]["affected_projection_ids"] == [
+        "modeldb112923.projection.003",
+        "modeldb112923.projection.005",
+        "modeldb112923.projection.006",
+        "modeldb112923.projection.007",
+    ]
+    assert profile["protocol"]["top_down_relay_source_indices"] == [40]
+    assert "cannot itself unlock official" in profile["next_gate"]
 
 
 def test_trn_calcium_reversal_restores_wrong_cue_lead_mechanism() -> None:

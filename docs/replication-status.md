@@ -2144,6 +2144,17 @@ and amplitude are now closed. A further run is justified only as a separately
 labeled causal test of selected-category output routing, not as another
 current fit or an official-source claim.
 
+Artifact `figure7-selected-category-routing-registration-232.yaml` defines
+that causal test before execution. It preserves every parameter and pathway
+from Artifact 231 except that, during fresh recognition, only selected category
+cell 40 may drive the four layer-6II-to-specific-relay on-center projections
+(003, 005, 006, and 007). Layer-6II feedback to TRN, nonspecific thalamus, and
+the thalamic interneuron remains unmasked, as does the complete cortical loop.
+This intervention tests whether nonselected category outputs are sufficient to
+explain the failed mismatch; it is not recovered source behavior, is ineligible
+for baseline freezing, and cannot directly unlock Figure 10 or spectral
+holdouts even if its match/mismatch phenotype succeeds.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

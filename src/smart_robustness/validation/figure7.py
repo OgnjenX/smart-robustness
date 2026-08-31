@@ -41,6 +41,12 @@ FIGURE7_REQUIRED_LEARNED_PROJECTIONS = (
     TOP_DOWN_WIDE_PROJECTION_ID,
     TOP_DOWN_NARROW_PROJECTION_ID,
 )
+FIGURE7_TOP_DOWN_RELAY_PROJECTION_IDS = (
+    "modeldb112923.projection.003",
+    "modeldb112923.projection.005",
+    "modeldb112923.projection.006",
+    "modeldb112923.projection.007",
+)
 FIGURE7_RELAY_DIAGNOSTIC_INDICES = (22, 31, 38, 39, 40, 41, 42, 49, 58)
 FIGURE7_MATCH_RELAY_INDICES = frozenset((38, 39, 40, 41, 42))
 FIGURE7_MISMATCH_INPUT_INDICES = frozenset((22, 31, 40, 49, 58))
@@ -166,6 +172,28 @@ def apply_figure7_learned_state(
             projection.modifiable = 0
 
 
+def restrict_figure7_top_down_relay_sources(
+    projections: Mapping[str, object],
+    source_indices: frozenset[int],
+) -> None:
+    """Diagnostic mask for selected-category relay-directed feedback.
+
+    This is not part of the recovered SMART source. It isolates whether
+    bottom-up recruitment of nonselected layer-6II cells defeats the intended
+    learned on-center/off-surround match computation.
+    """
+
+    if not source_indices or any(not 0 <= index < 81 for index in source_indices):
+        raise ValueError("top-down relay source indices must address the 9x9 sheet")
+    for projection_id in FIGURE7_TOP_DOWN_RELAY_PROJECTION_IDS:
+        projection = projections[projection_id]
+        for block in getattr(projection, "blocks", (projection,)):
+            presynaptic = np.asarray(block.i[:], dtype=int)
+            weights = np.asarray(block.w[:], dtype=float).copy()
+            weights[~np.isin(presynaptic, tuple(source_indices))] = 0.0
+            block.w = weights
+
+
 @dataclass(frozen=True, slots=True)
 class Figure7ConditionResult:
     condition: MatchCondition
@@ -204,6 +232,7 @@ class Figure7ConditionResult:
     top_down_current_pA: float | None = None
     top_down_current_mode: str = TopDownCurrentMode.SUSTAINED_EPOCH.value
     top_down_current_termination_time_ms: float | None = None
+    top_down_relay_source_indices: tuple[int, ...] | None = None
     top_down_cue_lead_ms: float = 0.0
     equilibration_ms: float = 0.0
     learned_state_provenance: str = "unspecified"
@@ -265,6 +294,11 @@ class Figure7ConditionResult:
             0 <= self.top_down_current_termination_time_ms <= self.duration_ms
         ):
             raise ValueError("top-down current termination must lie within the trial")
+        if self.top_down_relay_source_indices is not None and (
+            not self.top_down_relay_source_indices
+            or any(not 0 <= index < 81 for index in self.top_down_relay_source_indices)
+        ):
+            raise ValueError("top-down relay source indices must address the 9x9 sheet")
 
     @property
     def nonspecific_rate_hz(self) -> float:
@@ -443,6 +477,7 @@ def run_figure7_condition(
     record_v1_cortical_spikes: bool = False,
     projection_weight_scales: Mapping[str, float] | None = None,
     persistent_projection_weight_scales: Mapping[str, float] | None = None,
+    top_down_relay_source_indices: frozenset[int] | None = None,
     top_down_current_mode: TopDownCurrentMode | str = (
         TopDownCurrentMode.SUSTAINED_EPOCH
     ),
@@ -477,6 +512,8 @@ def run_figure7_condition(
         and top_down_cue_lead_ms > 0
     ):
         raise ValueError("one-event top-down current requires simultaneous cue onset")
+    if top_down_relay_source_indices is not None and cpp_standalone_directory is not None:
+        raise ValueError("selected-category source masking is a numpy diagnostic only")
     if record_relay_diagnostics and duration_ms <= 45.0:
         raise ValueError("Figure 7 pathway diagnostics require duration_ms > 45")
     overlapping_scales = set(projection_weight_scales or ()) & set(
@@ -599,6 +636,10 @@ def run_figure7_condition(
             verify_runtime_bounds=cpp_standalone_directory is None,
         )
     apply_projection_scales(projection_weight_scales)
+    if top_down_relay_source_indices is not None:
+        restrict_figure7_top_down_relay_sources(
+            sector.projections, top_down_relay_source_indices
+        )
     nonspecific = brian.SpikeMonitor(
         sector.populations["thalamic_nonspecific"].group,
         name=f"figure7_{condition.value}_nonspecific_spikes",
@@ -1308,6 +1349,11 @@ def run_figure7_condition(
         top_down_current_pA=top_down_current_pA,
         top_down_current_mode=current_mode.value,
         top_down_current_termination_time_ms=current_termination_time_ms,
+        top_down_relay_source_indices=(
+            None
+            if top_down_relay_source_indices is None
+            else tuple(sorted(top_down_relay_source_indices))
+        ),
         top_down_cue_lead_ms=top_down_cue_lead_ms,
         equilibration_ms=equilibration_ms,
         learned_state_provenance=provenance,

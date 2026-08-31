@@ -12,6 +12,7 @@ from smart_robustness.classic_sector import (
 from smart_robustness.protocols import MatchCondition
 from smart_robustness.validation.figure7 import (
     FIGURE7_REQUIRED_LEARNED_PROJECTIONS,
+    FIGURE7_TOP_DOWN_RELAY_PROJECTION_IDS,
     Figure6ReferenceExpectation,
     Figure7ConditionResult,
     TopDownCurrentMode,
@@ -20,6 +21,7 @@ from smart_robustness.validation.figure7 import (
     assess_figure7_pathway,
     assess_figure7_reproduction,
     paper_constrained_figure6_expectation,
+    restrict_figure7_top_down_relay_sources,
     run_figure7_condition,
 )
 
@@ -48,6 +50,29 @@ def test_figure7_result_validates_named_current_modes() -> None:
             nonspecific_spike_times_ms=(),
             top_down_current_termination_time_ms=101.0,
         )
+
+
+def test_selected_category_diagnostic_masks_only_relay_directed_source_rows() -> None:
+    brian.start_scope()
+    sector = build_first_order_connected_sector(
+        conventions=figure6_runtime_conventions(), brian=brian
+    )
+    restrict_figure7_top_down_relay_sources(sector.projections, frozenset({40}))
+    for projection_id in FIGURE7_TOP_DOWN_RELAY_PROJECTION_IDS:
+        projection = sector.projections[projection_id]
+        for block in getattr(projection, "blocks", (projection,)):
+            presynaptic = np.asarray(block.i[:], dtype=int)
+            weights = np.asarray(block.w[:], dtype=float)
+            assert np.all(weights[presynaptic != 40] == 0)
+            assert np.any(weights[presynaptic == 40] > 0)
+
+    # The selected-category intervention is intentionally confined to the
+    # relay on-center; the layer-6II -> TRN off-surround remains untouched.
+    trn_projection = sector.projections["modeldb112923.projection.012"]
+    trn_sources = np.asarray(trn_projection.i[:], dtype=int)
+    trn_weights = np.asarray(trn_projection.w[:], dtype=float)
+    assert np.any(trn_weights[trn_sources != 40] > 0)
+    sector.network.run(0 * brian.ms)
 
 
 def test_figure7_arousal_accepts_exact_rendered_rate_targets() -> None:

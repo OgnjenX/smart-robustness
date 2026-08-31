@@ -122,6 +122,12 @@ def main() -> None:
     current_mode = TopDownCurrentMode(
         protocol.get("top_down_current_mode", TopDownCurrentMode.SUSTAINED_EPOCH)
     )
+    relay_source_indices = protocol.get("top_down_relay_source_indices")
+    relay_source_indices = (
+        None
+        if relay_source_indices is None
+        else frozenset(int(index) for index in relay_source_indices)
+    )
     gate = profile["match_gate"]
     expected = tuple(int(index) for index in gate["relay_active_indices"])
     output = Path(args.output)
@@ -136,6 +142,7 @@ def main() -> None:
             dt_ms=float(protocol["dt_ms"]),
             record_relay_diagnostics=bool(protocol["record_relay_diagnostics"]),
             persistent_projection_weight_scales=scales,
+            top_down_relay_source_indices=relay_source_indices,
             top_down_current_mode=current_mode,
             top_down_cue_lead_ms=float(protocol["top_down_cue_lead_ms"]),
             equilibration_ms=float(protocol["equilibration_ms"]),
@@ -171,6 +178,14 @@ def main() -> None:
             None,
         )
         gates = {
+            "top_down_relay_source_protocol": (
+                result.top_down_relay_source_indices
+                == (
+                    None
+                    if relay_source_indices is None
+                    else tuple(sorted(relay_source_indices))
+                )
+            ),
             "top_down_current_protocol": (
                 current_mode is TopDownCurrentMode.SUSTAINED_EPOCH
                 or (

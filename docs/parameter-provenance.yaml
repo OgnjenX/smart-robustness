@@ -155,6 +155,16 @@ parameters:
     status: source-ambiguity
     source: SMART.nml sigma_x/sigma_y field names versus KInNeSS Section 4.9 variance wording
     note: the variance alternative creates a causal Figure 6 pair but fails the cortical-chain and Figure 6c contrast gates; standard_deviation remains active
+  model.connectivity.ring_kernel_convention:
+    value: center_excluded_gaussian historical control or radial_annulus sensitivity
+    status: source-ambiguity-preregistered-sensitivity
+    source: archived KInNeSS User Manual and Artifact 220 source-recovery audit
+    note: >-
+      The manual and recovered examples do not define ring=true. The historical
+      project convention removes only the colocated Gaussian sample. The sole
+      new candidate uses u*exp(1-u), with u fixed by serialized sigmas and no
+      fitted radius. Neither convention is represented as recovered legacy
+      behavior; Artifact 221 fixes the two-member family and stopping rule.
   model.learning.gaussian_bounds_convention:
     value: Figure 6 pathway-specific (bottom-up projection-level baseline; corticothalamic Gaussian-scaled baseline with projection-level maximum)
     status: paper-supported executable convention

@@ -326,6 +326,15 @@ FIGURE7_PROJECTION022_DISTAL003_FRESH_PAIR_PATH = (
     ROOT
     / "docs/validation-results/figure7-projection022-distal003-fresh-pair-219.yaml"
 )
+KINNESS_RING_SOURCE_RECOVERY_PATH = (
+    ROOT / "docs/validation-results/kinness-ring-source-recovery-220.yaml"
+)
+RING_KERNEL_SENSITIVITY_REGISTRATION_PATH = (
+    ROOT / "docs/validation-results/ring-kernel-sensitivity-registration-221.yaml"
+)
+RING_KERNEL_RADIAL_ANNULUS_PROFILE_PATH = (
+    ROOT / "configs/calibration/ring_kernel_radial_annulus_figure6_v1.yaml"
+)
 
 
 def test_classic_calibration_contract_separates_training_and_holdout() -> None:
@@ -1622,6 +1631,37 @@ def test_final_distal_endpoint_fails_complete_clean_figure7() -> None:
         "mismatch_more_nonspecific_events": False,
         "sampled_mismatch_trn_events_have_fresh_cycles": True,
     }
+
+
+def test_ring_source_recovery_preserves_identifiability_boundary() -> None:
+    artifact = yaml.safe_load(KINNESS_RING_SOURCE_RECOVERY_PATH.read_text())
+    assert artifact["status"] == "source-not-recovered-ring-not-identifiable"
+    assert artifact["primary_release"]["payload_recovered"] is False
+    assert artifact["recovered_predecessor_source"]["sha256"] == (
+        "ee6f0700280ea3df8ab1be0f2b45a03a351842ba4390c275df0ec45f64f466a3"
+    )
+    assert artifact["recovered_kinness_example"]["sha256"] == (
+        "6c3047d281f4fe432c5144748171a05b2e2ef8bcc4cdd6361c3d7612962f352a"
+    )
+    assert not artifact["assessment"]["exact_legacy_ring_geometry_identifiable"]
+    assert not artifact["assessment"]["center_excluded_gaussian_is_officially_verified"]
+    assert not artifact["assessment"]["radial_annulus_is_officially_verified"]
+
+
+def test_ring_sensitivity_is_bounded_and_registered_before_figure7() -> None:
+    registration = yaml.safe_load(
+        RING_KERNEL_SENSITIVITY_REGISTRATION_PATH.read_text()
+    )
+    profile = yaml.safe_load(RING_KERNEL_RADIAL_ANNULUS_PROFILE_PATH.read_text())
+    assert registration["status"] == "registered-before-execution"
+    assert registration["identifiability"] == "source-unresolved"
+    assert set(registration["ring_family"]) == {
+        "historical_control",
+        "sole_new_candidate",
+    }
+    assert registration["ring_family"]["sole_new_candidate"]["free_parameters"] == 0
+    assert profile["runtime_overrides"]["ring_kernel_convention"] == "radial_annulus"
+    assert profile["locked_holdouts"][:2] == ["figure7_match", "figure7_mismatch"]
 
 
 def test_trn_calcium_reversal_restores_wrong_cue_lead_mechanism() -> None:

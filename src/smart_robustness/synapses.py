@@ -32,6 +32,13 @@ class GaussianSpreadConvention(StrEnum):
     VARIANCE = "variance"
 
 
+class RingKernelConvention(StrEnum):
+    """Executable interpretations of KInNeSS's undocumented ``ring`` flag."""
+
+    CENTER_EXCLUDED_GAUSSIAN = "center_excluded_gaussian"
+    RADIAL_ANNULUS = "radial_annulus"
+
+
 KINNESS_GAUSSIAN_WEIGHT_CUTOFF = 0.001
 """Minimum KInNeSS Gaussian connection weight retained by the legacy editor."""
 
@@ -233,6 +240,9 @@ def modeldb_topology_pairs(
     gaussian_spread_convention: GaussianSpreadConvention | str = (
         GaussianSpreadConvention.STANDARD_DEVIATION
     ),
+    ring_kernel_convention: RingKernelConvention | str = (
+        RingKernelConvention.CENTER_EXCLUDED_GAUSSIAN
+    ),
 ) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
     """Apply the connect method and spatial metadata serialized by KInNeSS."""
 
@@ -279,14 +289,22 @@ def modeldb_topology_pairs(
         if spread_convention is GaussianSpreadConvention.STANDARD_DEVIATION
         else kernel.sigma_y
     )
-    factor = np.exp(-(dx**2 / (2 * variance_x) + dy**2 / (2 * variance_y)))
+    scaled_radius_squared = dx**2 / (2 * variance_x) + dy**2 / (2 * variance_y)
+    factor = np.exp(-scaled_radius_squared)
+    ring_convention = RingKernelConvention(ring_kernel_convention)
+    if kernel.ring:
+        if ring_convention is RingKernelConvention.CENTER_EXCLUDED_GAUSSIAN:
+            # This is the historical project interpretation: preserve the
+            # Gaussian shoulders and remove only the colocated sample.
+            factor[(dx == 0) & (dy == 0)] = 0
+        else:
+            # Parameter-free annular sensitivity: r^2 exp(-r^2) has a zero
+            # center and a unit peak at the elliptical radius fixed by the
+            # serialized sigmas. This is not claimed as recovered KInNeSS
+            # behavior; it is the sole preregistered alternative geometry.
+            factor = scaled_radius_squared * np.exp(1 - scaled_radius_squared)
     if convention is GaussianWeightConvention.NORMALIZED_DENSITY:
         factor /= 2 * np.pi * np.sqrt(variance_x * variance_y)
-    if kernel.ring:
-        # KInNeSS serializes no radius for a ring kernel. Its executable UI
-        # convention is retained here as a center-excluding Gaussian candidate
-        # until legacy source or a benchmark trace resolves the exact stencil.
-        factor[(dx == 0) & (dy == 0)] = 0
     peak_weight = float(record.weight) if record.weight is not None else 1.0
     retained = peak_weight * factor >= KINNESS_GAUSSIAN_WEIGHT_CUTOFF
     return pre[retained], post[retained], factor[retained]
@@ -303,6 +321,9 @@ def connect_modeldb_projection(
     gaussian_weight_convention: GaussianWeightConvention | str,
     gaussian_spread_convention: GaussianSpreadConvention | str = (
         GaussianSpreadConvention.STANDARD_DEVIATION
+    ),
+    ring_kernel_convention: RingKernelConvention | str = (
+        RingKernelConvention.CENTER_EXCLUDED_GAUSSIAN
     ),
     gaussian_learning_bounds_convention: GaussianLearningBoundsConvention | str,
     spike_event_coordinate: str = "absolute_physical",
@@ -480,6 +501,7 @@ def connect_modeldb_projection(
             target_shape=target_shape,
             gaussian_weight_convention=gaussian_weight_convention,
             gaussian_spread_convention=gaussian_spread_convention,
+            ring_kernel_convention=ring_kernel_convention,
         )
     else:
         source_indices, target_indices, spatial_factor = (
@@ -584,6 +606,9 @@ def connect_modeldb_gap_junction(
     gaussian_spread_convention: GaussianSpreadConvention | str = (
         GaussianSpreadConvention.STANDARD_DEVIATION
     ),
+    ring_kernel_convention: RingKernelConvention | str = (
+        RingKernelConvention.CENTER_EXCLUDED_GAUSSIAN
+    ),
     topology_override: tuple[np.ndarray, np.ndarray, np.ndarray] | None = None,
     brian: Any,
 ) -> Any:
@@ -610,6 +635,7 @@ def connect_modeldb_gap_junction(
             target_shape=target_shape,
             gaussian_weight_convention=gaussian_weight_convention,
             gaussian_spread_convention=gaussian_spread_convention,
+            ring_kernel_convention=ring_kernel_convention,
         )
     else:
         source_indices, target_indices, spatial_factor = (

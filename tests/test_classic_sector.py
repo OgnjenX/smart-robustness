@@ -133,6 +133,10 @@ def test_runtime_convention_fingerprint_is_stable_and_sensitive() -> None:
         nonspecific_spike_event_proximal_blend_fraction=0.5
     )
     assert nonspecific_event_blend.fingerprint != classic.fingerprint
+    radial_annulus = FirstOrderRuntimeConventions(
+        ring_kernel_convention="radial_annulus"
+    )
+    assert radial_annulus.fingerprint != classic.fingerprint
 
 
 def test_trn_event_coordinate_can_follow_kinness_without_changing_relay() -> None:

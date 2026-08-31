@@ -1,0 +1,67 @@
+schema_version: 1
+id: kinness-ring-source-recovery-220
+date: '2026-08-31'
+status: source-not-recovered-ring-not-identifiable
+question: What executable geometry did KInNeSS 0.3.4-RC2 assign to Kernel ring=true?
+primary_release:
+  url: http://symphony.bu.edu/Snapshots/KInNeSS-0.3.4-RC2.tar.gz
+  release_date: '2008-06-10'
+  archive_snapshot: null
+  payload_recovered: false
+  evidence: >-
+    The release URL is preserved by the archived KInNeSS downloads page, but
+    prior exact CDX and availability queries found no archived payload. A final
+    availability retry on 2026-08-31 was inconclusive because archive.org DNS
+    resolution failed; it does not supersede the prior no-capture result.
+other_release_urls_checked:
+  - http://symphony.bu.edu/Snapshots/kinness-0.3.3RC1.tar.gz
+  - http://symphony.bu.edu/Snapshots/kinness-0.3.2.tar.gz
+  - http://symphony.bu.edu/Snapshots/kinness-0.3.1.tar.gz
+anonymous_cvs:
+  root: ':pserver:anonymous@symphony.bu.edu:/srv/cvs'
+  predecessor_root: temporal.bu.edu/home/cvs
+  source_body_recovered: false
+  evidence: >-
+    Archived site pages preserve the CVS roots, module/file lists, and a host
+    migration script, but no source-file bodies. The live symphony.bu.edu host
+    no longer resolves and no public Software Heritage origin or GitHub source
+    mirror was found.
+recovered_predecessor_source:
+  name: SANNDRA-0.4.0
+  url: http://temporal.bu.edu/Snapshots/SANNDRA-0.4.0.tar.gz
+  capture_timestamp: '20010604165244'
+  compressed_bytes: 148714
+  sha256: ee6f0700280ea3df8ab1be0f2b45a03a351842ba4390c275df0ec45f64f466a3
+  findings:
+    - Spatial filters are supplied as explicit connection-weight arrays.
+    - No ring flag or ring-construction routine exists in this predecessor release.
+  resolves_ring_semantics: false
+recovered_kinness_example:
+  name: KINENSS_tonic_burst
+  url: http://temporal.bu.edu/Docs/KInNeSS/examples/Thalamic%20Cell/thalamus.tgz
+  capture_timestamp: '20040718192212'
+  compressed_bytes: 1043412
+  sha256: 6c3047d281f4fe432c5144748171a05b2e2ef8bcc4cdd6361c3d7612962f352a
+  contents:
+    - two KInNeSS XML networks
+    - tonic and burst relay traces
+    - MATLAB plotting script and reference PDF
+  kernel_record: '<Kernel ring="false" sigma_x="1" borderEffect="extend" sigma_y="1" />'
+  source_code_present: false
+  resolves_ring_semantics: false
+manual_evidence:
+  resolves:
+    - Weight is the Gaussian peak.
+    - Resulting connection weights below 0.001 are omitted.
+  does_not_resolve:
+    - Kernel ring=true geometry
+assessment:
+  exact_legacy_ring_geometry_identifiable: false
+  center_excluded_gaussian_is_officially_verified: false
+  radial_annulus_is_officially_verified: false
+  permitted_next_step: >-
+    Preserve center_excluded_gaussian as the historical project convention and
+    test exactly one parameter-free radial_annulus alternative as a labeled
+    source-ambiguity sensitivity. Neither may be called recovered KInNeSS
+    behavior unless legacy source or a benchmark trace is later obtained.
+

@@ -2047,6 +2047,23 @@ holdouts remain locked. The next candidate must address an independently
 source-defined spatial off-surround or nonspecific-disinhibition ambiguity,
 not another TRN-to-relay gain.
 
+Artifact `kinness-ring-source-recovery-220.yaml` closes the available legacy
+source trail without resolving the remaining spatial ambiguity. The recovered
+SANNDRA 0.4.0 source confirms explicit spatial weight arrays but predates the
+KInNeSS `ring` flag. The recovered 2004 KInNeSS tonic/burst archive contains a
+valid `ring=false` XML projection and raw relay traces but no source code. The
+June 2008 source-release URL and CVS roots survive only as metadata. Exact
+`ring=true` geometry is therefore not identifiable from recovered primary
+material.
+
+Artifact `ring-kernel-sensitivity-registration-221.yaml` preregisters the only
+new geometry permitted by that ambiguity: a parameter-free radial annulus
+`u*exp(1-u)` whose scale is fixed by each record's serialized sigmas. The
+existing center-excluded Gaussian remains the historical control. The annulus
+must first preserve every Figure 6 gate; Figure 7 remains locked until then.
+Neither shape is called official KInNeSS behavior, and no fitted radius or
+third geometry is authorized after observing the result.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

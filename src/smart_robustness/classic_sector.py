@@ -148,6 +148,7 @@ class FirstOrderRuntimeConventions:
     modifiable_weight_initialization: str = "source_serialized_weight"
     gaussian_weight_convention: str = "source_peak"
     gaussian_spread_convention: str = "standard_deviation"
+    ring_kernel_convention: str = "center_excluded_gaussian"
     gaussian_learning_bounds_convention: str = "projection_level"
     postsynaptic_depression_scale_convention: str = "local_learning_bounds"
     projection_source_convention: str = "modeldb_as_serialized"
@@ -199,6 +200,10 @@ class FirstOrderRuntimeConventions:
             values.pop("postsynaptic_learning_timestamp")
         if values["postsynaptic_signal_convention"] == "paper_equation6_literal":
             values.pop("postsynaptic_signal_convention")
+        if values["ring_kernel_convention"] == "center_excluded_gaussian":
+            # Preserve every historical runtime fingerprint while making the
+            # newly registered alternative geometry independently traceable.
+            values.pop("ring_kernel_convention")
         payload = json.dumps(values, sort_keys=True, separators=(",", ":"))
         return hashlib.sha256(payload.encode()).hexdigest()
 
@@ -648,6 +653,7 @@ def build_full_smart_network(
                 modifiable_weight_initialization=conventions.modifiable_weight_initialization,
                 gaussian_weight_convention=conventions.gaussian_weight_convention,
                 gaussian_spread_convention=conventions.gaussian_spread_convention,
+                ring_kernel_convention=conventions.ring_kernel_convention,
                 gaussian_learning_bounds_convention=(
                     conventions.gaussian_learning_bounds_convention
                 ),
@@ -674,6 +680,7 @@ def build_full_smart_network(
                 **kwargs,
                 gaussian_weight_convention=conventions.gaussian_weight_convention,
                 gaussian_spread_convention=conventions.gaussian_spread_convention,
+                ring_kernel_convention=conventions.ring_kernel_convention,
             )
         projections[record.id] = projection
         network.add(projection)
@@ -764,6 +771,7 @@ def build_first_order_chemical_sector(
             ),
             gaussian_weight_convention=resolved_conventions.gaussian_weight_convention,
             gaussian_spread_convention=resolved_conventions.gaussian_spread_convention,
+            ring_kernel_convention=resolved_conventions.ring_kernel_convention,
             gaussian_learning_bounds_convention=(
                 resolved_conventions.gaussian_learning_bounds_convention
             ),
@@ -884,6 +892,7 @@ def build_first_order_connected_sector(
             target_shape=facts_by_name[record.target_population].shape,
             gaussian_weight_convention=resolved_conventions.gaussian_weight_convention,
             gaussian_spread_convention=resolved_conventions.gaussian_spread_convention,
+            ring_kernel_convention=resolved_conventions.ring_kernel_convention,
             brian=brian,
         )
     sector.projections.update(electrical)

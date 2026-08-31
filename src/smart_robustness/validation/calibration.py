@@ -285,6 +285,14 @@ def runtime_conventions_for_candidate(
             )
         ),
         gaussian_spread_convention=str(values["gaussian_spread_convention"]),
+        ring_kernel_convention=str(
+            values.get(
+                "ring_kernel_convention",
+                (
+                    figure6_runtime_conventions() if base is None else base
+                ).ring_kernel_convention,
+            )
+        ),
         gaussian_learning_bounds_convention=str(
             values.get(
                 "gaussian_learning_bounds_convention",

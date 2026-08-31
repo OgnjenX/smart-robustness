@@ -129,6 +129,15 @@ is the peak of the Gaussian, and shoulders whose resulting weight is below
 `6bf71e0aee1720694ca4c0942068fc7b73258c92f3a29cf7e5a4d6757c77afcd`.
 The manual does not explain the separate `Kernel ring` XML flag.
 
+A final source-recovery audit is preserved in
+`validation-results/kinness-ring-source-recovery-220.yaml`. It recovers and
+checksums the 2001 SANNDRA 0.4.0 source and the 2004 KInNeSS thalamic example.
+The former predates the XML `ring` flag; the latter contains only a
+`ring=false` one-cell projection and no simulator source. The archived June
+2008 KInNeSS source-release URL and anonymous CVS roots survive, but their
+source bodies do not. Exact `ring=true` geometry is therefore not identifiable
+from currently recovered primary material.
+
 ## Known source ambiguity
 
 The article is internally inconsistent about T-type calcium density. Table 3

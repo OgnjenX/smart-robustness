@@ -20,6 +20,7 @@ from smart_robustness.synapses import (
     GaussianSpreadConvention,
     GaussianWeightConvention,
     ModifiableWeightInitialization,
+    RingKernelConvention,
     connect_modeldb_projection,
     kinness_gap_total_conductance_nS,
     modeldb_topology_pairs,
@@ -290,6 +291,40 @@ def test_layer6ii_trn_ring_is_center_excluding_off_surround(
     assert not np.any(source_center & (post == 40))
     assert factor[source_center & (post == 31)][0] == pytest.approx(near_factor)
     assert factor[source_center & (post == 22)][0] == pytest.approx(far_factor)
+
+
+def test_radial_annulus_is_a_parameter_free_ring_sensitivity() -> None:
+    record = MODELDB_FIRST_ORDER.by_id("modeldb112923.projection.012")
+    pre, post, factor = modeldb_topology_pairs(
+        record,
+        source_shape=(9, 9),
+        target_shape=(9, 9),
+        ring_kernel_convention=RingKernelConvention.RADIAL_ANNULUS,
+    )
+    center = pre == 40
+    assert not np.any(center & (post == 40))
+    near_scaled_radius_squared = 1 / (2 * 1.5**2)
+    expected_near = near_scaled_radius_squared * np.exp(
+        1 - near_scaled_radius_squared
+    )
+    assert factor[center & (post == 31)][0] == pytest.approx(expected_near)
+    assert factor.max() <= 1.0
+    assert np.all(float(record.weight) * factor >= 0.001)
+
+
+def test_ring_convention_does_not_change_nonring_projection() -> None:
+    record = MODELDB_FIRST_ORDER.by_id("modeldb112923.projection.035")
+    default = modeldb_topology_pairs(
+        record, source_shape=(9, 9), target_shape=(9, 9)
+    )
+    annular = modeldb_topology_pairs(
+        record,
+        source_shape=(9, 9),
+        target_shape=(9, 9),
+        ring_kernel_convention=RingKernelConvention.RADIAL_ANNULUS,
+    )
+    for default_values, annular_values in zip(default, annular, strict=True):
+        assert np.array_equal(default_values, annular_values)
 
 
 def test_normalized_gaussian_remains_a_paper_figure_audit_alternative() -> None:

@@ -2422,6 +2422,16 @@ The lead contains the known 81-cell startup TRN volley and one startup
 nonspecific event. No mismatch is run, and the global gain-by-cue-lead
 interaction is closed.
 
+Artifacts 271--272 isolate projection 012 by changing only its effective AMPA
+delay from the archived 4 ms to 2 ms, with all receptor kinetics and projection
+003/009 delays fixed. The complete Figure 6 prerequisite fails decisively:
+relay output expands to 104 events across all 81 cells rather than four events
+in each of cells 38--42, and the learned top-down map loses horizontal
+orientation (contrast approximately 0.139). The feedforward cortical chain and
+causal learning pair remain present, but they cannot compensate for failed
+relay confinement and orientation. Figure 7 is not consulted and the 2-ms
+effective-delay endpoint is rejected.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

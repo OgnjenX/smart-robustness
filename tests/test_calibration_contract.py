@@ -584,6 +584,10 @@ FIGURE6_CORTICORETICULAR_AMPA_DELAY_REGISTRATION_PATH = (
     ROOT
     / "docs/validation-results/figure6-corticoreticular-ampa-delay-registration-271.yaml"
 )
+FIGURE6_CORTICORETICULAR_AMPA_DELAY_RESULT_PATH = (
+    ROOT
+    / "docs/validation-results/figure6-corticoreticular-ampa-delay2-272.yaml"
+)
 
 
 def test_classic_calibration_contract_separates_training_and_holdout() -> None:
@@ -3447,6 +3451,23 @@ def test_corticoreticular_ampa_delay_requires_complete_figure6_first() -> None:
     }
     assert registration["conditions_consulted"] == ["figure6"]
     assert registration["figure7_lock"].startswith("do not inspect Figure 7")
+
+
+def test_corticoreticular_ampa_delay2_is_rejected_before_figure7() -> None:
+    artifact = yaml.safe_load(
+        FIGURE6_CORTICORETICULAR_AMPA_DELAY_RESULT_PATH.read_text()
+    )
+    assert artifact["status"] == "partial-figure6b-pass-figure6c-fail"
+    assert artifact["population_spikes"]["thalamic_relay"] == 104
+    assert artifact["relay_recruitment"]["active_indices"] == list(range(81))
+    assert not artifact["relay_recruitment"][
+        "confined_to_horizontal_bar_at_40_hz"
+    ]
+    assert artifact["recruitment"]["feedforward_chain_complete"]
+    assert artifact["top_down_timing"]["causal_pair_in_learning_window"]
+    assert artifact["maps"]["bottom_up_oriented"]
+    assert not artifact["maps"]["top_down_oriented"]
+    assert not artifact["assessment"]["promoted"]
 
 
 def test_contract_rejects_holdout_leakage(tmp_path: Path) -> None:

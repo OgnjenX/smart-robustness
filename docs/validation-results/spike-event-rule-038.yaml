@@ -4,7 +4,7 @@ claim: the printed immediately-previous-sample or framework-threshold rule resol
 evidence_class: [published-equation, archived-revision-history, behavioral]
 sources:
   paper: Grossberg and Versace 2008 Methods 4.4 Equation 8
-  framework: Versace et al. 2008 KInNeSS Equation 18
+  framework: Versace et al. 2008 KInNeSS Equation 14
   implementation_history: SANNDRA spikeevents.h revisions 1.1-1.7; revision 1.2 says proper spike detecting was fixed
 protocol:
   cell: recovered ModelDB 112923 TRN

@@ -8,12 +8,21 @@ DOI: [10.1016/j.brainres.2008.04.024](https://doi.org/10.1016/j.brainres.2008.04
 [Author-hosted manuscript](https://sites.bu.edu/steveg/files/2016/06/GroVer2008BR.pdf).
 
 Visual inspection of Methods 4.4, 4.9, and 4.12 confirms that the article
-defines the preceding-sample spike expression and 100/1000-ms protocol epochs,
+defines the spike expression as current voltage below zero after the immediately
+preceding sample exceeded +30 mV, as well as the 100/1000-ms protocol epochs,
 but does not report the numerical integration timestep. The KInNeSS manual
 stores timestep as a user preference, and the recovered NeuroML does not carry
 that preference. The repository's 0.01-ms default is therefore a converged,
 explicit reconstruction parameter rather than a published SMART value
 (`validation-results/spike-event-timestep-054.yaml`).
+
+A paired visual audit of SMART Equation 8 and KInNeSS Equation 14 records the
+rendered pages and checksums in
+`validation-results/spike-event-equation-visual-audit-236.yaml`. KInNeSS uses
+the same temporal expression with a -20-mV Hodgkin-Huxley threshold. That
+printed literal alternative is implemented but behaviorally rejected; the
+missing legacy event-handler body is still needed to determine whether KInNeSS
+debounced or latched the expression in practice.
 
 ## Original supplementary parameter table
 

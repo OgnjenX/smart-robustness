@@ -402,6 +402,9 @@ FIGURE7_SELECTED_CATEGORY_PAIR_RESULT_PATH = (
     ROOT
     / "docs/validation-results/figure7-selected-category-routing-fresh-pair-235.yaml"
 )
+SPIKE_EVENT_EQUATION_VISUAL_AUDIT_PATH = (
+    ROOT / "docs/validation-results/spike-event-equation-visual-audit-236.yaml"
+)
 
 
 def test_classic_calibration_contract_separates_training_and_holdout() -> None:
@@ -2483,6 +2486,29 @@ def test_figure6_relay_train_has_four_genuine_detector_cycles_per_cell() -> None
         "training_cycle_valid": True,
         "interpretation": "figure6_relay_event_train_is_detector-cycle-valid",
     }
+
+
+def test_visual_spike_equation_audit_fixes_temporal_order_without_promotion() -> None:
+    artifact = yaml.safe_load(SPIKE_EVENT_EQUATION_VISUAL_AUDIT_PATH.read_text())
+    assert artifact["status"] == (
+        "printed-equations-visually-verified_no-detector-promotion"
+    )
+    assert artifact["printed_rules"] == {
+        "common_temporal_form": (
+            "delta(t)=1 when V(t)<0 and V(t-delta_t)>V_theta; otherwise delta(t)=0"
+        ),
+        "smart_threshold_mV": 30.0,
+        "kinness_hodgkin_huxley_threshold_mV": -20.0,
+    }
+    implementation = artifact["implementation_assessment"]
+    assert implementation["literal_previous_sample_matches_printed_temporal_form"]
+    assert not implementation["legacy_spikeevents_source_body_recovered"]
+    assessment = artifact["assessment"]
+    assert assessment["prior_kinness_equation_number_corrected_from"] == 18
+    assert assessment["prior_kinness_equation_number_corrected_to"] == 14
+    assert not assessment["literal_minus20_promoted"]
+    assert not assessment["official_smart_reproduced"]
+    assert not assessment["downstream_holdouts_unlocked"]
 
 
 def test_contract_rejects_holdout_leakage(tmp_path: Path) -> None:

@@ -1,0 +1,47 @@
+schema_version: 1
+id: spike-event-equation-visual-audit-236
+date: 2026-08-31
+status: printed-equations-visually-verified_no-detector-promotion
+claim: Visual inspection fixes the literal temporal ordering and equation numbers of the SMART and KInNeSS spike-event expressions.
+evidence_class:
+  - primary-paper-render
+  - contemporaneous-framework-render
+sources:
+  smart:
+    citation: Grossberg and Versace 2008, Methods 4.4, Equation 8
+    url: https://sites.bu.edu/steveg/files/2016/06/GroVer2008BR.pdf
+    downloaded_pdf_sha256: c56c337624959d8c0bdf51aa79b0dbc82f31264af2b2cd675790879a6410d7ed
+    rendered_pdf_page_one_based: 41
+    rendered_page_sha256: efaff0e3dc8e07a8dee32435ef1ec432384c3491368f8fabaf1f81f2607a5fdd
+  kinness:
+    citation: Versace et al. 2008 expanded KInNeSS manuscript, Equation 14
+    url: https://open.bu.edu/bitstreams/90c95747-61c3-4517-930e-9a5404dbbf18/download
+    downloaded_pdf_sha256: eb1b41afaba4af721b1a1cbfed6628858c26ab136fe9fa3daf677d2b81c33d16
+    rendered_pdf_page_one_based: 18
+    rendered_page_sha256: 8bad20caee04e1b4d8b4ec4671cf11af4634176507a4d966ef00a02bbcb6d08e
+printed_rules:
+  common_temporal_form: delta(t)=1 when V(t)<0 and V(t-delta_t)>V_theta; otherwise delta(t)=0
+  smart_threshold_mV: 30.0
+  kinness_hodgkin_huxley_threshold_mV: -20.0
+implementation_assessment:
+  literal_previous_sample_matches_printed_temporal_form: true
+  smart_latched_peak_then_zero_is_a_runtime_reconstruction: true
+  legacy_spikeevents_source_body_recovered: false
+behavioral_cross_reference:
+  artifact: docs/validation-results/spike-event-rule-038.yaml
+  literal_minus20_isolated_trn_events_300ms: 2535
+  literal_minus20_figure7_trn_events_100ms: 35667
+  literal_minus20_figure7_nonspecific_events_100ms: 0
+  hysteretic_minus20_isolated_trn_events_300ms: 163
+assessment:
+  prior_kinness_equation_number_corrected_from: 18
+  prior_kinness_equation_number_corrected_to: 14
+  prior_upstroke_description_corrected: true
+  literal_minus20_promoted: false
+  official_smart_reproduced: false
+  downstream_holdouts_unlocked: false
+interpretation:
+  - The literal rule checks the current sample below zero and the immediately preceding sample above threshold; it is not a preceding-sample-below-zero or upward-crossing test.
+  - With a -20-mV threshold, every immediately adjacent sample in the interval (-20, 0) can satisfy the printed expression. The recovered network therefore produces an event storm rather than one clean event per action potential.
+  - The surviving PDFs determine the printed formula but do not reveal whether the missing 2008 spikeevents implementation latched, debounced, or otherwise transformed it.
+  - This source correction changes documentation only. It does not select a new detector, alter a model parameter, or establish official SMART behavior.

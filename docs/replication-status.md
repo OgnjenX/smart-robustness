@@ -505,11 +505,13 @@ conditions unchanged; a deliberately extreme 100-fold multiplier raises the
 combined inhibitory gate from about 0.41 to 41 and reduces every driven relay
 from four to three spikes, but still does so identically in match and mismatch.
 The contemporaneous KInNeSS framework's printed -20-mV HH event threshold was
-also tested as an explicit alternative to SMART Methods' +30 mV. Combined with
-the framework's preceding-sample-below-zero rule it emits repeatedly during a
-single upstroke, yielding 35,667 TRN events and no nonspecific spikes in either
-condition. It is therefore retained as a rejected source contradiction, not a
-classic-baseline setting.
+also tested as an explicit alternative to SMART Methods' +30 mV. A visual
+equation audit corrects its citation to Equation 14 and confirms the literal
+rule checks current voltage below zero after the immediately preceding sample
+exceeded -20 mV. It consequently emits on adjacent samples while voltage lies
+between -20 and 0 mV, yielding 35,667 TRN events and no nonspecific spikes in
+either condition. It is therefore retained as a rejected source contradiction,
+not a classic-baseline setting (`spike-event-equation-visual-audit-236.yaml`).
 
 Expectation timing is now an explicit Figure 7 protocol variable rather than
 an implicit simultaneous onset. Giving the 600-pA layer-6II cue a 10-ms lead
@@ -2187,6 +2189,14 @@ events, while preserving Figure 6 requires reducing the three published
 TRN-to-relay GABA projections to 0.01/0.01/0.03 of their serialized values.
 No recoverable public `spikeevents.h` or KInNeSS source implementation has yet
 been found to resolve that legacy simulator convention.
+
+Artifact `spike-event-equation-visual-audit-236.yaml` closes a documentation
+ambiguity without changing that conclusion. Direct page renders verify SMART
+Equation 8 at +30 mV and KInNeSS Equation 14 at -20 mV use the same literal
+current-below-zero/immediately-previous-above-threshold form. The implemented
+`literal_previous_sample` rule is therefore faithful to the printed algebra.
+Its event storm is not an implementation-ordering mistake, and the PDF audit
+does not promote it, alter the candidate detector, or unlock any holdout.
 
 ## Validation gates
 

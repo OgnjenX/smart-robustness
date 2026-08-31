@@ -83,13 +83,13 @@ parameters:
   model.classic_hh.kinness_spike_threshold:
     value: framework alternative with V_theta=-20 mV and event release below 0 mV
     status: published-executable-framework-alternative
-    source: Versace et al. 2008 KInNeSS expanded manuscript, Equation 18
+    source: Versace et al. 2008 KInNeSS expanded manuscript, Equation 14
     note: Grossberg and Versace 2008 instead prints +30 mV; SMART.nml does not serialize the simulator-wide event threshold; literal and hysteretic implementations are rejected by isolated recovered-TRN assays
   model.classic_hh.spike_event_rule:
     value: latched_peak_then_zero, literal_previous_sample, or hysteretic_threshold_then_zero; must be selected explicitly
     status: source-ambiguity
-    source: Grossberg and Versace 2008 Equation 8; Versace et al. 2008 KInNeSS Equation 18; SANNDRA spikeevents.h revision history
-    note: surviving equations print V(t-dt), but the 2008 detector source body is unavailable; SANNDRA revision 1.2 only records that proper spike detecting was fixed
+    source: Grossberg and Versace 2008 Equation 8; Versace et al. 2008 KInNeSS Equation 14; SANNDRA spikeevents.h revision history
+    note: visual inspection confirms the literal rule uses current V(t)<0 after immediately preceding V(t-dt)>V_theta; the 2008 detector source body is unavailable, and SANNDRA revision 1.2 only records that proper spike detecting was fixed
   model.classic_hh.integration_timestep:
     value: 0.01 ms project default; must remain protocol-explicit
     status: source-unreported-numerically-audited

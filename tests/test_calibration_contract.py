@@ -532,6 +532,10 @@ FIGURE7_CORTICORETICULAR_VERIFICATION_REGISTRATION_PATH = (
     ROOT
     / "docs/validation-results/figure7-corticoreticular-verification-registration-261.yaml"
 )
+FIGURE7_CORTICORETICULAR_VERIFICATION_RESULT_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-corticoreticular-gain-verification-262.yaml"
+)
 
 
 def test_classic_calibration_contract_separates_training_and_holdout() -> None:
@@ -3201,6 +3205,21 @@ def test_corticoreticular_verification_registers_only_screen_survivor() -> None:
         "require_event_count_equals_release_transitions"
     ]
     assert registration["mismatch_lock"].startswith("Do not run mismatch")
+
+
+def test_corticoreticular_verification_authorizes_one_mismatch() -> None:
+    artifact = yaml.safe_load(
+        FIGURE7_CORTICORETICULAR_VERIFICATION_RESULT_PATH.read_text()
+    )
+    outcome = artifact["outcomes"][0]
+    assert artifact["verification_screen_artifact"] == str(
+        FIGURE7_CORTICORETICULAR_GAIN_RESULT_PATH.relative_to(ROOT)
+    )
+    assert artifact["selected_gain"] == 8.0
+    assert outcome["pass"]
+    assert outcome["gates"]["sampled_trn_events_have_fresh_cycles"]
+    assert artifact["assessment"]["advance_to_mismatch"]
+    assert not artifact["assessment"]["mismatch_remains_locked"]
 
 
 def test_contract_rejects_holdout_leakage(tmp_path: Path) -> None:

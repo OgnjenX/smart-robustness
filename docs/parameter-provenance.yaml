@@ -250,9 +250,9 @@ parameters:
     note: the clean one-event match preserves 15 horizontal relay events but produces 649 TRN and five nonspecific events (50 Hz). It fails exact match, mismatch remains locked, and cue-lead interpolation is closed
   model.connectivity.figure7_corticoreticular_common_gain:
     value: common recognition-only gain 8.0 on fixed layer-6II-to-TRN projections 009 and 012
-    status: post-holdout-exploratory-match-survivor-pending-verification
+    status: independently-verified-match-survivor-mismatch-authorized
     source: SMART.nml explicitly fixes weights 0.3 and 4.0; Artifacts 259--260 calibrate rather than recover this gain
-    note: gains 1.25, 1.5, 2, and 4 fail exact match; gain 8 alone produces 15 horizontal relay events, 597 TRN events, and four nonspecific events. Mismatch remains locked until independent detector-cycle verification, and any later pass remains a calibrated reconstruction rather than recovered source behavior
+    note: gains 1.25, 1.5, 2, and 4 fail exact match; gain 8 alone independently reproduces 15 horizontal relay events, 597 TRN events, four nonspecific events, and exact sampled detector cycles in Artifact 262. Exactly one fixed mismatch is authorized, and any later pass remains a calibrated reconstruction rather than recovered source behavior
   protocol.figure7.mismatch_relay_event_current_audit:
     value: nine current components sampled at the nearest 0.01-ms state sample to every emitted relay event; no candidate or protocol change
     status: diagnostic-readout-only

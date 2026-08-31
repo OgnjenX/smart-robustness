@@ -2374,6 +2374,13 @@ nonspecific events (40 Hz). Artifact 261 registers an independent full-state
 rerun of only that endpoint. Mismatch remains locked pending proof that sampled
 TRN events are genuine detector cycles.
 
+Artifact 262 independently rebuilds and verifies the sole gain-8 endpoint. It
+reproduces 15 horizontal relay events, 597 TRN events, and exactly four
+nonspecific events (40 Hz). For all nine sampled TRN cells, emitted event
+counts exactly equal threshold upcrossings, detector-arm transitions, and
+release transitions. The verification therefore authorizes exactly one fixed
+mismatch run; it does not yet reproduce Figure 7 or unlock later holdouts.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

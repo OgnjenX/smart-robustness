@@ -212,8 +212,13 @@ def main() -> None:
         "assessment": {
             "registered_candidate_count": len(profile["dimension"]["grid"]),
             "completed_candidate_count": len(outcomes),
-            "advance_to_full_state_match_verification": bool(survivors),
-            "mismatch_remains_locked": True,
+            "advance_to_full_state_match_verification": bool(survivors)
+            and verification_screen_path is None,
+            "advance_to_mismatch": bool(survivors)
+            and verification_screen_path is not None,
+            "mismatch_remains_locked": not (
+                bool(survivors) and verification_screen_path is not None
+            ),
         },
         "next_gate": profile["next_gate"],
     }

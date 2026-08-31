@@ -509,11 +509,6 @@ def run_figure7_condition(
     if equilibration_ms < 0:
         raise ValueError("equilibration_ms cannot be negative")
     current_mode = TopDownCurrentMode(top_down_current_mode)
-    if (
-        current_mode is TopDownCurrentMode.UNTIL_CUED_CELL_FIRST_EVENT
-        and top_down_cue_lead_ms > 0
-    ):
-        raise ValueError("one-event top-down current requires simultaneous cue onset")
     if top_down_relay_source_indices is not None and cpp_standalone_directory is not None:
         raise ValueError("selected-category source masking is a numpy diagnostic only")
     if record_relay_diagnostics and duration_ms <= 45.0:

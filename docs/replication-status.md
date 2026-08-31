@@ -2110,6 +2110,17 @@ discriminator must therefore address an independently documented recognition
 cue/state or category-pathway ambiguity; the current and TRN-transfer families
 remain closed, and Figure 10 plus the spectral holdouts stay locked.
 
+Artifact `figure7-current-termination-registration-228.yaml` opens one such
+bounded protocol discriminator. Methods 4.9 reports layer-6II somatic current
+injection but does not state its duration, while the related complete-module
+simulation in Figure 9a explicitly stimulates the central layer-6II neuron
+until it produces one spike. The sole new candidate therefore keeps the
+selected 800-pA amplitude and every network parameter fixed, but clears that
+cell's current on its first emitted event. This Figure-9-derived waveform is a
+source-adjacent sensitivity, not a recovered Figure 7 setting. It is tested on
+fresh match first; mismatch remains locked unless the exact 40-Hz match and
+all relay/TRN mechanism gates survive.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

@@ -1,14 +1,15 @@
 """Source-constrained Figure 7 match/mismatch arousal metrics.
 
-Figure 7 reports a directional effect: mismatch disinhibits the nonspecific
-thalamus relative to match. It does not publish numeric firing-rate targets or
-a complete trace, so absolute rates are reported but are not fitted.
+The rendered Figure 7c panel fixes a 100-ms comparison with 40-Hz match and
+70-Hz mismatch nonspecific-thalamus output. The caption also fixes the spatial
+relay and TRN-order mechanism; no complete numeric trace is published.
 """
 
 from __future__ import annotations
 
 from collections.abc import Mapping
 from dataclasses import dataclass
+from enum import StrEnum
 from pathlib import Path
 
 import numpy as np
@@ -28,6 +29,13 @@ from ..protocols import (
 )
 from ..synapses import modeldb_topology_pairs
 from .figure6 import TOP_DOWN_NARROW_PROJECTION_ID, TOP_DOWN_WIDE_PROJECTION_ID
+
+
+class TopDownCurrentMode(StrEnum):
+    """Published or source-adjacent interpretations of cue-current duration."""
+
+    SUSTAINED_EPOCH = "sustained_epoch"
+    UNTIL_CUED_CELL_FIRST_EVENT = "until_cued_cell_first_event"
 
 FIGURE7_REQUIRED_LEARNED_PROJECTIONS = (
     TOP_DOWN_WIDE_PROJECTION_ID,
@@ -194,6 +202,8 @@ class Figure7ConditionResult:
     v2_relay_spike_times_ms: tuple[float, ...] = ()
     convention_fingerprint: str | None = None
     top_down_current_pA: float | None = None
+    top_down_current_mode: str = TopDownCurrentMode.SUSTAINED_EPOCH.value
+    top_down_current_termination_time_ms: float | None = None
     top_down_cue_lead_ms: float = 0.0
     equilibration_ms: float = 0.0
     learned_state_provenance: str = "unspecified"
@@ -250,6 +260,11 @@ class Figure7ConditionResult:
             raise ValueError("top_down_cue_lead_ms cannot be negative")
         if self.equilibration_ms < 0:
             raise ValueError("equilibration_ms cannot be negative")
+        TopDownCurrentMode(self.top_down_current_mode)
+        if self.top_down_current_termination_time_ms is not None and not (
+            0 <= self.top_down_current_termination_time_ms <= self.duration_ms
+        ):
+            raise ValueError("top-down current termination must lie within the trial")
 
     @property
     def nonspecific_rate_hz(self) -> float:
@@ -428,6 +443,9 @@ def run_figure7_condition(
     record_v1_cortical_spikes: bool = False,
     projection_weight_scales: Mapping[str, float] | None = None,
     persistent_projection_weight_scales: Mapping[str, float] | None = None,
+    top_down_current_mode: TopDownCurrentMode | str = (
+        TopDownCurrentMode.SUSTAINED_EPOCH
+    ),
     top_down_cue_lead_ms: float = 0.0,
     equilibration_ms: float = 0.0,
     cpp_standalone_directory: str | Path | None = None,
@@ -453,6 +471,12 @@ def run_figure7_condition(
         raise ValueError("top_down_cue_lead_ms cannot be negative")
     if equilibration_ms < 0:
         raise ValueError("equilibration_ms cannot be negative")
+    current_mode = TopDownCurrentMode(top_down_current_mode)
+    if (
+        current_mode is TopDownCurrentMode.UNTIL_CUED_CELL_FIRST_EVENT
+        and top_down_cue_lead_ms > 0
+    ):
+        raise ValueError("one-event top-down current requires simultaneous cue onset")
     if record_relay_diagnostics and duration_ms <= 45.0:
         raise ValueError("Figure 7 pathway diagnostics require duration_ms > 45")
     overlapping_scales = set(projection_weight_scales or ()) & set(
@@ -715,6 +739,10 @@ def run_figure7_condition(
         top_down_current_pA=top_down_current_pA,
         duration_ms=duration_ms,
     )
+    if current_mode is TopDownCurrentMode.UNTIL_CUED_CELL_FIRST_EVENT:
+        category_group = sector.populations[cue.top_down_population].group
+        category_group.clear_drive_on_spike = 0
+        category_group.clear_drive_on_spike[cue.top_down_cell_index] = 1
     if top_down_cue_lead_ms > 0:
         apply_layer6ii_somatic_cue(
             sector,
@@ -1213,6 +1241,22 @@ def run_figure7_condition(
             if start_ms <= float(value) < end_ms
         )
 
+    category_stimulus_indices = stimulus_indices(category)
+    category_stimulus_times = stimulus_times(category)
+    current_termination_time_ms = None
+    if current_mode is TopDownCurrentMode.UNTIL_CUED_CELL_FIRST_EVENT:
+        current_termination_time_ms = next(
+            (
+                time
+                for index, time in zip(
+                    category_stimulus_indices,
+                    category_stimulus_times,
+                    strict=True,
+                )
+                if index == cue.top_down_cell_index
+            ),
+            None,
+        )
     result = Figure7ConditionResult(
         condition=condition,
         duration_ms=duration_ms,
@@ -1223,8 +1267,8 @@ def run_figure7_condition(
         relay_spike_times_ms=stimulus_times(relay),
         trn_spike_indices=stimulus_indices(trn),
         trn_spike_times_ms=stimulus_times(trn),
-        category_spike_indices=stimulus_indices(category),
-        category_spike_times_ms=stimulus_times(category),
+        category_spike_indices=category_stimulus_indices,
+        category_spike_times_ms=category_stimulus_times,
         equilibration_nonspecific_spike_times_ms=equilibration_times(nonspecific),
         equilibration_layer4_spike_indices=equilibration_indices(layer4),
         equilibration_layer4_spike_times_ms=equilibration_times(layer4),
@@ -1262,6 +1306,8 @@ def run_figure7_condition(
         ),
         convention_fingerprint=conventions.fingerprint,
         top_down_current_pA=top_down_current_pA,
+        top_down_current_mode=current_mode.value,
+        top_down_current_termination_time_ms=current_termination_time_ms,
         top_down_cue_lead_ms=top_down_cue_lead_ms,
         equilibration_ms=equilibration_ms,
         learned_state_provenance=provenance,

@@ -270,6 +270,11 @@ parameters:
     status: not-identifiable
     source: Methods 4.9 specifies somatic current injection but reports no amplitude; Figure 7 fixes a horizontal learned expectation for both conditions
     note: the archived blue=70 TD INPUT is subthreshold in the isolated source-profile cell; Artifact 225 reopens the unchanged registered 600/800/1000-pA grid because the upstream candidate now has source-resolved category feedback, fresh learned-state handoff, and condition-dependent genuine TRN output. Only 800 pA passes complete clean match with exactly 4 nonspecific events (40 Hz); 600 and 1000 pA each produce 6. Artifact 227 rejects the fixed 800-pA pair: mismatch produces 5 rather than 7 nonspecific events, retains all five vertical relay cells, and has 559 TRN events just like match. No interpolation or expansion is authorized
+  protocol.match_mismatch.top_down_current_mode:
+    value: sustained_epoch historical control or until_cued_cell_first_event sensitivity
+    status: source-ambiguity-preregistered-sensitivity
+    source: Methods 4.9 leaves current duration unspecified; Figure 9a explicitly stimulates the central layer-6II cell until one spike in a related complete-module protocol
+    note: Artifact 228 registers one parameter-free match-only sensitivity at the already selected 800 pA. Figure 9a is source-adjacent rather than proof of the Figure 7 waveform; mismatch remains locked unless exact match survives
   validation.figure7.rate_tolerance:
     value: exact 100-ms targets of 40 Hz match and 70 Hz mismatch; zero event-count tolerance
     status: published-rendered-figure

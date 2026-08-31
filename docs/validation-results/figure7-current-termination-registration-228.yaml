@@ -1,0 +1,50 @@
+schema_version: 1
+id: figure7-current-termination-registration-228
+date: '2026-08-31'
+status: registered-before-execution
+failed_pair_artifact: docs/validation-results/figure7-top-down-current-800-fresh-pair-227.yaml
+source_basis:
+  methods_4_9: reports somatic current injection into layer 6II but not its duration
+  figure9a: a complete corticothalamic module is stimulated until the central layer-6II neuron produces one spike
+interpretation_boundary: >-
+  Figure 9a does not prove that Figure 7 used the same termination rule. This is
+  therefore a named source-adjacent protocol sensitivity, not a recovered
+  official setting.
+fixed_candidate:
+  base_profile: configs/calibration/figure6_kinness_equation27_transition_v1.yaml
+  projection_source_convention: paper_supplement_cross_checked
+  ring_kernel_convention: center_excluded_gaussian
+  trn_detector: {arm_mV: -20.0, release_mV: -30.0}
+  trn_to_relay_gaba_scales:
+    modeldb112923.projection.000: 0.01
+    modeldb112923.projection.001: 0.01
+    modeldb112923.projection.004: 0.03
+  learned_state_handoff: fresh_network_from_figure6_weights
+  top_down_current_pA: 800.0
+  simultaneous_onset: true
+  duration_ms: 100.0
+sole_new_candidate:
+  top_down_current_mode: until_cued_cell_first_event
+  free_numeric_parameters: 0
+match_gate:
+  current_terminates_at_first_cued_cell_event: true
+  relay_active_indices: [38, 39, 40, 41, 42]
+  minimum_relay_events_per_active_index: 1
+  trn_events: '>0'
+  sampled_trn_events_have_fresh_cycles: true
+  nonspecific_events: 4
+  nonspecific_rate_hz: 40.0
+execution_order:
+  - independently reproduce Figure 6 and extract only learned weights
+  - rebuild one fresh recognition network
+  - run only the one-event-current match condition
+  - expose mismatch only if every match gate passes
+stopping_rule: >-
+  Do not fit pulse duration, current amplitude, or another parameter after this
+  result. Reject the sensitivity if exact match fails.
+locked_holdouts:
+  - figure7_mismatch_until_exact_match_pass
+  - figure10_reset
+  - figure14_spectra
+  - figure15_local_synchrony
+  - figure16_long_range_synchrony

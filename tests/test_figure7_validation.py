@@ -14,6 +14,7 @@ from smart_robustness.validation.figure7 import (
     FIGURE7_REQUIRED_LEARNED_PROJECTIONS,
     Figure6ReferenceExpectation,
     Figure7ConditionResult,
+    TopDownCurrentMode,
     apply_figure7_learned_state,
     assess_figure7_arousal,
     assess_figure7_pathway,
@@ -29,6 +30,24 @@ def _result(condition: MatchCondition, spike_count: int) -> Figure7ConditionResu
         duration_ms=100.0,
         nonspecific_spike_times_ms=tuple(float(index * 10) for index in range(spike_count)),
     )
+
+
+def test_figure7_result_validates_named_current_modes() -> None:
+    result = Figure7ConditionResult(
+        condition=MatchCondition.MATCH,
+        duration_ms=100.0,
+        nonspecific_spike_times_ms=(),
+        top_down_current_mode=TopDownCurrentMode.UNTIL_CUED_CELL_FIRST_EVENT,
+        top_down_current_termination_time_ms=5.85,
+    )
+    assert result.top_down_current_mode == "until_cued_cell_first_event"
+    with pytest.raises(ValueError, match="top-down current termination"):
+        Figure7ConditionResult(
+            condition=MatchCondition.MATCH,
+            duration_ms=100.0,
+            nonspecific_spike_times_ms=(),
+            top_down_current_termination_time_ms=101.0,
+        )
 
 
 def test_figure7_arousal_accepts_exact_rendered_rate_targets() -> None:

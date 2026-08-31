@@ -298,7 +298,9 @@ def create_compartmental_hh_population(
         depletion_epsilon=depletion_epsilon,
         depletion_recovery_ms=depletion_recovery_ms,
     )
-    spike_reset = "armed = 0"
+    # Protocols can request a one-event somatic current pulse. The flag
+    # defaults to zero, preserving sustained-current behavior exactly.
+    spike_reset = "armed = 0; i_drive_soma *= (1-clear_drive_on_spike)"
     if enable_ahp_ach:
         spike_reset += "; ahp_rise += 1; ahp_fall += 1"
     if compiled.depletion_enabled:
@@ -326,6 +328,7 @@ def create_compartmental_hh_population(
     # diagnostics can now distinguish membrane dynamics from detector state.
     equations = compiled.equations + (
         f"\nspike_detector_voltage = {spike_voltage} : volt"
+        "\nclear_drive_on_spike : 1 (constant)"
     )
     if spike_event_rule in {
         SpikeEventRule.LATCHED_PEAK_THEN_ZERO,
@@ -357,6 +360,7 @@ def create_compartmental_hh_population(
             f"previous_spike_voltage > {spike_event_threshold_mV}*mV"
         )
     group = brian.NeuronGroup(size, equations, reset=spike_reset, **group_kwargs)
+    group.clear_drive_on_spike = 0
     if spike_event_rule in {
         SpikeEventRule.LATCHED_PEAK_THEN_ZERO,
         SpikeEventRule.HYSTERETIC_THRESHOLD_THEN_ZERO,

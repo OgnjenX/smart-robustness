@@ -129,6 +129,20 @@ def test_unit_depletion_coefficient_fully_depletes_transmitter_on_spike() -> Non
     assert population.group.transmitter[0] == pytest.approx(0.0)
 
 
+def test_spike_can_end_a_protocol_controlled_somatic_current_pulse() -> None:
+    brian.start_scope()
+    brian.defaultclock.dt = 0.01 * brian.ms
+    population = create_compartmental_hh_population(
+        name="one_event_current_pulse", size=1, params=_params(), brian=brian
+    )
+    population.group.i_drive_soma = 800 * brian.pA
+    population.group.clear_drive_on_spike = 1
+    population.group.armed = 1
+    population.group.v_soma = -1 * brian.mV
+    brian.Network(population.group).run(brian.defaultclock.dt)
+    assert population.group.i_drive_soma[0] / brian.pA == pytest.approx(0.0)
+
+
 def test_relay_uses_table3_calcium_density_without_silent_global_override() -> None:
     brian.start_scope()
     population = create_compartmental_hh_population(

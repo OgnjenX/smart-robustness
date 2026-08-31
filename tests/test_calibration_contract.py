@@ -361,6 +361,12 @@ FIGURE7_TOP_DOWN_CURRENT_PAIR_PROFILE_PATH = (
 FIGURE7_TOP_DOWN_CURRENT_PAIR_RESULT_PATH = (
     ROOT / "docs/validation-results/figure7-top-down-current-800-fresh-pair-227.yaml"
 )
+FIGURE7_CURRENT_TERMINATION_REGISTRATION_PATH = (
+    ROOT / "docs/validation-results/figure7-current-termination-registration-228.yaml"
+)
+FIGURE7_ONE_EVENT_CURRENT_MATCH_PROFILE_PATH = (
+    ROOT / "configs/calibration/figure7_one_event_current_match_v1.yaml"
+)
 
 
 def test_classic_calibration_contract_separates_training_and_holdout() -> None:
@@ -1801,6 +1807,25 @@ def test_800_pa_pair_is_rejected_without_reopening_current_grid() -> None:
     assert not artifact["gates"]["mismatch_nonspecific_70_hz"]
     assert artifact["gates"]["sampled_mismatch_trn_events_have_fresh_cycles"]
     assert not artifact["reproduced"]
+
+
+def test_one_event_current_sensitivity_is_bounded_before_match() -> None:
+    registration = yaml.safe_load(
+        FIGURE7_CURRENT_TERMINATION_REGISTRATION_PATH.read_text()
+    )
+    profile = yaml.safe_load(FIGURE7_ONE_EVENT_CURRENT_MATCH_PROFILE_PATH.read_text())
+    assert registration["status"] == "registered-before-execution"
+    assert registration["sole_new_candidate"] == {
+        "top_down_current_mode": "until_cued_cell_first_event",
+        "free_numeric_parameters": 0,
+    }
+    assert profile["protocol"]["top_down_currents_pA"] == [800.0]
+    assert (
+        profile["protocol"]["top_down_current_mode"]
+        == "until_cued_cell_first_event"
+    )
+    assert profile["protocol"]["top_down_cue_lead_ms"] == 0.0
+    assert registration["locked_holdouts"][0].startswith("figure7_mismatch")
 
 
 def test_trn_calcium_reversal_restores_wrong_cue_lead_mechanism() -> None:

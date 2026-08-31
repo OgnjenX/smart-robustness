@@ -279,7 +279,7 @@ parameters:
     value: optional diagnostic source-index mask on projections 003, 005, 006, and 007
     status: causal-diagnostic-not-source-reconstruction
     source: Artifact 231 trace plus Figure 7's conceptual selected top-down expectation
-    note: Artifact 232 preregisters only source cell 40 as a causal intervention after nonselected vertical layer-6II cells were observed to reactivate the same mismatch relay cells. Artifact 233 passes the exact match prerequisite with 25 relay, 570 genuine-cycle TRN, and 4 nonspecific events; Artifact 234 registers one fresh mismatch. This mask remains ineligible for baseline freezing and cannot directly unlock official holdouts
+    note: Artifact 232 preregisters only source cell 40 as a causal intervention after nonselected vertical layer-6II cells were observed to reactivate the same mismatch relay cells. Artifact 233 passes the exact match prerequisite with 25 relay, 570 genuine-cycle TRN, and 4 nonspecific events. Artifact 235 rejects the fixed mismatch with 20 relay events across all five vertical cells, 555 TRN events, and 4 nonspecific events; the mask is not sufficient and is closed without promotion
   validation.figure7.rate_tolerance:
     value: exact 100-ms targets of 40 Hz match and 70 Hz mismatch; zero event-count tolerance
     status: published-rendered-figure

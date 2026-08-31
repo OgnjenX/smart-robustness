@@ -2164,6 +2164,30 @@ vertical mismatch with the identical intervention and every biological
 parameter fixed. This result establishes only that the diagnostic preserves
 the match regime; all official downstream holdouts remain locked.
 
+The fixed mismatch rejects the routing intervention in
+`figure7-selected-category-routing-fresh-pair-235.yaml`. Match/mismatch totals
+are 25/20 relay events, 570/555 genuine-cycle TRN events, and 4/4 nonspecific
+events. Thus the intervention preserves the correct TRN direction but all five
+vertical relay cells still emit four times, and nonspecific output remains 40
+Hz rather than increasing to 70 Hz. The first vertical relay volley occurs at
+5.28 ms, before category cell 40 emits at 5.85 ms; later volleys likewise retain
+all five vertical cells even though only source 40 can use the four
+relay-directed corticothalamic projections. Selected-category relay-output
+routing is therefore neither necessary to explain the prior failure nor
+sufficient to reproduce Figure 7. The intervention family is closed and no
+source mask is promoted.
+
+Primary-paper re-audit confirms that this negative result cannot be dismissed
+by weakening the spatial gate. Figure 7b explicitly says mismatch leaves only
+a subset of specific-thalamic cells firing, and the accompanying text says a
+large horizontal-versus-vertical mismatch hyperpolarizes LGN cells through the
+layer-6II--TRN--LGN pathway. The remaining conflict is therefore the calibrated
+event/transfer combination: the current TRN detector creates hundreds of
+events, while preserving Figure 6 requires reducing the three published
+TRN-to-relay GABA projections to 0.01/0.01/0.03 of their serialized values.
+No recoverable public `spikeevents.h` or KInNeSS source implementation has yet
+been found to resolve that legacy simulator convention.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

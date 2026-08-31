@@ -398,6 +398,10 @@ FIGURE7_SELECTED_CATEGORY_PAIR_PROFILE_PATH = (
     ROOT
     / "configs/calibration/figure7_selected_category_routing_fresh_pair_v1.yaml"
 )
+FIGURE7_SELECTED_CATEGORY_PAIR_RESULT_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-selected-category-routing-fresh-pair-235.yaml"
+)
 
 
 def test_classic_calibration_contract_separates_training_and_holdout() -> None:
@@ -1944,6 +1948,28 @@ def test_selected_category_match_passes_and_unlocks_only_diagnostic_mismatch() -
     assert profile["diagnostic_only"] is True
     assert profile["protocol"]["top_down_relay_source_indices"] == [40]
     assert profile["locked_holdouts"][0] == "figure10_reset"
+
+
+def test_selected_category_routing_diagnostic_is_rejected() -> None:
+    artifact = yaml.safe_load(FIGURE7_SELECTED_CATEGORY_PAIR_RESULT_PATH.read_text())
+    mismatch = artifact["mismatch_result"]
+    assessment = artifact["official_assessment"]
+    assert artifact["status"] == "figure7-failed"
+    assert artifact["diagnostic_only"] is True
+    assert artifact["phenotype_reproduced"] is False
+    assert artifact["reproduced"] is False
+    assert mismatch["top_down_relay_source_indices"] == [40]
+    assert mismatch["top_down_current_termination_time_ms"] == 5.85
+    assert set(mismatch["relay_spike_indices"]) == {22, 31, 40, 49, 58}
+    assert assessment["pathway"]["match_trn_spikes"] == 570
+    assert assessment["pathway"]["mismatch_trn_spikes"] == 555
+    assert assessment["arousal"]["match_rate_hz"] == 40.0
+    assert assessment["arousal"]["mismatch_rate_hz"] == 40.0
+    assert artifact["gates"]["match_more_trn_events"]
+    assert not artifact["gates"]["mismatch_relay_overlap_only"]
+    assert not artifact["gates"]["match_more_active_relay_cells"]
+    assert not artifact["gates"]["mismatch_more_nonspecific_events"]
+    assert not artifact["gates"]["mismatch_nonspecific_70_hz"]
 
 
 def test_trn_calcium_reversal_restores_wrong_cue_lead_mechanism() -> None:

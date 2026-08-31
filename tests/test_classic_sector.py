@@ -14,6 +14,7 @@ from smart_robustness.classic_sector import (
     TrnPotassiumConvention,
     ZeroSensitivityInputConvention,
     _resolved_projection_record,
+    _ring_kernel_convention_for_record,
     build_first_order_chemical_sector,
     build_first_order_intrinsic_sector,
     build_first_order_voltage_clamp_sector,
@@ -137,6 +138,34 @@ def test_runtime_convention_fingerprint_is_stable_and_sensitive() -> None:
         ring_kernel_convention="radial_annulus"
     )
     assert radial_annulus.fingerprint != classic.fingerprint
+    targeted_annulus = FirstOrderRuntimeConventions(
+        corticoreticular_ring_kernel_convention="radial_annulus"
+    )
+    assert targeted_annulus.fingerprint != classic.fingerprint
+
+
+def test_corticoreticular_ring_override_is_projection_specific() -> None:
+    conventions = FirstOrderRuntimeConventions(
+        corticoreticular_ring_kernel_convention="radial_annulus"
+    )
+    assert (
+        _ring_kernel_convention_for_record(
+            "modeldb112923.projection.009", conventions=conventions
+        )
+        == "radial_annulus"
+    )
+    assert (
+        _ring_kernel_convention_for_record(
+            "modeldb112923.projection.012", conventions=conventions
+        )
+        == "radial_annulus"
+    )
+    assert (
+        _ring_kernel_convention_for_record(
+            "modeldb112923.projection.011", conventions=conventions
+        )
+        == "center_excluded_gaussian"
+    )
 
 
 def test_trn_event_coordinate_can_follow_kinness_without_changing_relay() -> None:

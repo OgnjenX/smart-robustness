@@ -149,6 +149,7 @@ class FirstOrderRuntimeConventions:
     gaussian_weight_convention: str = "source_peak"
     gaussian_spread_convention: str = "standard_deviation"
     ring_kernel_convention: str = "center_excluded_gaussian"
+    corticoreticular_ring_kernel_convention: str | None = None
     gaussian_learning_bounds_convention: str = "projection_level"
     postsynaptic_depression_scale_convention: str = "local_learning_bounds"
     projection_source_convention: str = "modeldb_as_serialized"
@@ -204,6 +205,8 @@ class FirstOrderRuntimeConventions:
             # Preserve every historical runtime fingerprint while making the
             # newly registered alternative geometry independently traceable.
             values.pop("ring_kernel_convention")
+        if values["corticoreticular_ring_kernel_convention"] is None:
+            values.pop("corticoreticular_ring_kernel_convention")
         payload = json.dumps(values, sort_keys=True, separators=(",", ":"))
         return hashlib.sha256(payload.encode()).hexdigest()
 
@@ -259,6 +262,18 @@ def _resolved_projection_record(record, *, conventions: FirstOrderRuntimeConvent
             f"{conventions.top_down_learning_rule_convention!r}"
         )
     return record
+
+
+def _ring_kernel_convention_for_record(
+    record_id: str, *, conventions: FirstOrderRuntimeConventions
+) -> str:
+    if (
+        record_id
+        in {"modeldb112923.projection.009", "modeldb112923.projection.012"}
+        and conventions.corticoreticular_ring_kernel_convention is not None
+    ):
+        return conventions.corticoreticular_ring_kernel_convention
+    return conventions.ring_kernel_convention
 
 
 _TABLE3_CELL_BY_CANONICAL_STEM = {
@@ -653,7 +668,9 @@ def build_full_smart_network(
                 modifiable_weight_initialization=conventions.modifiable_weight_initialization,
                 gaussian_weight_convention=conventions.gaussian_weight_convention,
                 gaussian_spread_convention=conventions.gaussian_spread_convention,
-                ring_kernel_convention=conventions.ring_kernel_convention,
+                ring_kernel_convention=_ring_kernel_convention_for_record(
+                    record.id, conventions=conventions
+                ),
                 gaussian_learning_bounds_convention=(
                     conventions.gaussian_learning_bounds_convention
                 ),
@@ -771,7 +788,9 @@ def build_first_order_chemical_sector(
             ),
             gaussian_weight_convention=resolved_conventions.gaussian_weight_convention,
             gaussian_spread_convention=resolved_conventions.gaussian_spread_convention,
-            ring_kernel_convention=resolved_conventions.ring_kernel_convention,
+            ring_kernel_convention=_ring_kernel_convention_for_record(
+                record.id, conventions=resolved_conventions
+            ),
             gaussian_learning_bounds_convention=(
                 resolved_conventions.gaussian_learning_bounds_convention
             ),

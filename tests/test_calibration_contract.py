@@ -555,6 +555,14 @@ FIGURE7_CORTICORETICULAR_MARGIN_RESULT_PATH = (
     ROOT
     / "docs/validation-results/figure7-corticoreticular-mismatch-margin-audit-266.yaml"
 )
+FIGURE7_TARGETED_ANNULAR_PROFILE_PATH = (
+    ROOT
+    / "configs/calibration/figure7_targeted_annular_corticoreticular_match_v1.yaml"
+)
+FIGURE7_TARGETED_ANNULAR_REGISTRATION_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-targeted-annular-corticoreticular-registration-267.yaml"
+)
 
 
 def test_classic_calibration_contract_separates_training_and_holdout() -> None:
@@ -3335,6 +3343,22 @@ def test_corticoreticular_margin_audit_localizes_late_inhibition() -> None:
         assert early_depolarizing > abs(current[index, 2.0, "trn_gaba"])
         assert current[index, 0.5, "soma_sodium"] > 4_000.0
         assert voltage[index, 0.5, "soma"] > -44.0
+
+
+def test_targeted_annular_screen_changes_only_corticoreticular_ring_geometry() -> None:
+    profile = yaml.safe_load(FIGURE7_TARGETED_ANNULAR_PROFILE_PATH.read_text())
+    registration = yaml.safe_load(
+        FIGURE7_TARGETED_ANNULAR_REGISTRATION_PATH.read_text()
+    )
+    assert profile["runtime_overrides"][
+        "corticoreticular_ring_kernel_convention"
+    ] == "radial_annulus"
+    assert profile["dimension"]["grid"] == [1.0, 8.0]
+    assert registration["fixed_topology_change"][
+        "unrelated_ring_projections_unchanged"
+    ]
+    assert registration["conditions_consulted"] == ["figure7_match"]
+    assert registration["mismatch_lock"].startswith("do not inspect mismatch")
 
 
 def test_contract_rejects_holdout_leakage(tmp_path: Path) -> None:

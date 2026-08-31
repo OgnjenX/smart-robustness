@@ -1,0 +1,30 @@
+schema_version: 1
+id: figure7-targeted-annular-corticoreticular-registration-267
+date: '2026-08-31'
+status: registered-before-execution
+profile: configs/calibration/figure7_targeted_annular_corticoreticular_match_v1.yaml
+rationale: >-
+  Artifact 266 shows that spatially differentiated TRN inhibition develops
+  only after nonoverlap relay somata approach regenerative sodium activation.
+  The archived KInNeSS ring flag has no recovered implementation. Test the one
+  existing parameter-free annular interpretation only on the two relevant
+  layer-6II-to-TRN records, rather than globally altering all ring pathways.
+fixed_topology_change:
+  projection_ids:
+    - modeldb112923.projection.009
+    - modeldb112923.projection.012
+  from: center_excluded_gaussian
+  to: radial_annulus
+  unrelated_ring_projections_unchanged: true
+registered_gains: [1.0, 8.0]
+gain_rationale:
+  1.0: archived source weights
+  8.0: independently verified match gain under the prior ring interpretation
+conditions_consulted: [figure7_match]
+mismatch_lock: do not inspect mismatch during this finite match screen
+prerequisites:
+  fresh_figure6_handoff: true
+  exact_match_spatial_and_40hz_gates: true
+interpretation_boundary: >-
+  radial_annulus is a documented reconstruction alternative, not recovered
+  KInNeSS source behavior.

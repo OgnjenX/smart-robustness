@@ -1951,6 +1951,18 @@ threshold upcrossings, arm transitions, and release transitions. This unlocks
 the preregistered mismatch with the same source resolution and every calibrated
 parameter fixed; match alone remains insufficient for a Figure 7 claim.
 
+The corresponding mismatch in
+`figure7-projection022-source-resolution-pair-211.yaml` yields a mechanistic
+partial correction but fails complete Figure 7. Match now has more TRN output
+than mismatch (547 versus 514 genuine-cycle events), which is the published
+direction and reverses the archived-endpoint failure. However, mismatch
+activates all nine cells in the union of the horizontal expectation and
+vertical input (22, 31, 38--42, 49, and 58), while match activates five; both
+conditions emit five nonspecific events (50 Hz). The candidate therefore fails
+relay overlap selectivity, active-cell ordering, and mismatch disinhibition.
+Projection 022 remains a source-supported partial mechanism, but this parameter
+set does not unlock Figure 10 or spectral holdouts and cannot be frozen.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

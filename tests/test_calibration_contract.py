@@ -501,6 +501,9 @@ FIGURE7_TWO_EVENT_MATCH_REGISTRATION_PATH = (
     ROOT
     / "docs/validation-results/figure7-aligned-two-event-registration-255.yaml"
 )
+FIGURE7_TWO_EVENT_MATCH_RESULT_PATH = (
+    ROOT / "docs/validation-results/figure7-aligned-two-event-match-256.yaml"
+)
 
 
 def test_classic_calibration_contract_separates_training_and_holdout() -> None:
@@ -3036,6 +3039,25 @@ def test_two_event_current_match_is_the_sole_discrete_duration_intermediate() ->
     assert not registration["official_status_before_execution"][
         "figure7_reproduced"
     ]
+
+
+def test_two_event_current_fails_exact_match_and_locks_mismatch() -> None:
+    artifact = yaml.safe_load(FIGURE7_TWO_EVENT_MATCH_RESULT_PATH.read_text())
+    assert artifact["status"] == "complete"
+    assert artifact["stage_1_survivor_headroom_fractions"] == []
+    assert artifact["assessment"]["mismatch_remains_locked"]
+    assert not artifact["assessment"]["advance_to_mismatch"]
+    outcome = artifact["outcomes"][0]
+    result = outcome["result"]
+    assert result["top_down_current_mode"] == "until_cued_cell_event_limit"
+    assert result["top_down_current_event_limit"] == 2
+    assert result["top_down_current_termination_time_ms"] == pytest.approx(49.88)
+    assert len(result["relay_spike_times_ms"]) == 15
+    assert len(result["trn_spike_times_ms"]) == 626
+    assert len(result["nonspecific_spike_times_ms"]) == 5
+    assert outcome["gates"]["current_terminated_on_selected_event"]
+    assert not outcome["gates"]["nonspecific_40_hz"]
+    assert not outcome["pass"]
 
 
 def test_contract_rejects_holdout_leakage(tmp_path: Path) -> None:

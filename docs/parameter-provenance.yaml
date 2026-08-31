@@ -238,6 +238,11 @@ parameters:
     status: source-duration-ambiguity-rejected-at-match
     source: Grossberg and Versace 2008 Methods 4.9 does not report Figure 7 current duration; Figure 9a separately specifies stimulation until one spike
     note: Artifact 246 preserves three events in each matched relay cell but changes TRN/nonspecific output to 608/5 events (50 Hz), so it fails the exact match and mismatch remains locked
+  protocol.figure7.aligned_two_event_current:
+    value: aligned 800-pA layer-6II current cleared on the selected cell's second emitted event
+    status: bounded-source-duration-calibration-rejected-at-match
+    source: Methods 4.9 leaves Figure 7 duration unspecified; Artifacts 255--256 test the sole integer intermediate between one-event and sustained three-event observations
+    note: current clears exactly at 49.88 ms from cue onset and preserves 15 horizontal relay events, but produces 626 TRN and five nonspecific events (50 Hz). It fails exact match, mismatch stays locked, and the event-count duration family is closed without timing interpolation
   protocol.figure7.mismatch_relay_event_current_audit:
     value: nine current components sampled at the nearest 0.01-ms state sample to every emitted relay event; no candidate or protocol change
     status: diagnostic-readout-only

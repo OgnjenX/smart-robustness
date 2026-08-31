@@ -2332,6 +2332,22 @@ annular-plus-scalar interaction is therefore rejected within the complete
 registered grid; no inner radius, gain interpolation, or new ring equation is
 introduced.
 
+The full-state mismatch traces also show that relay-driven TRN AMPA peaks at
+roughly 12--18 gate units, whereas layer-6II-driven AMPA peaks at only
+0.9--2.3. Because Methods 4.9 does not report Figure 7's category-current
+duration, Artifact 255 registers the sole integer intermediate between the
+one selected-cell event in the passing match and the three selected-cell events
+observed under sustained current: clear the 800-pA cue on the second selected
+event. The implementation clears that current inside the emitting neuron's
+Brian2 reset and is protected by an event-level unit test.
+
+The fresh match in `figure7-aligned-two-event-match-256.yaml` clears on cell
+40's second event at 49.88 ms from cue onset. It preserves 15 horizontal relay
+events but produces 626 TRN events and five nonspecific events (50 Hz), so it
+fails the exact 40-Hz match prerequisite. Mismatch is not run. The one-event,
+two-event, and sustained/three-event observations now close the bounded
+current-duration family without timing interpolation.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

@@ -2006,6 +2006,18 @@ nonspecific events. The corresponding contiguous-state match produced
 match passes and authorizes one independently rebuilt mismatch with the same
 weight-handoff protocol.
 
+The independently rebuilt mismatch completes the clean pair in
+`figure7-projection022-distal002-fresh-pair-216.yaml`. Removing state carryover
+eliminates every expectation-only horizontal mismatch spike: the active set is
+now exactly vertical cells 22, 31, 40, 49, and 58. However, all five emit four
+times, so the published one-against-one off-surround still fails to suppress
+bottom-up-only cells. Match/mismatch totals are 20/20 relay events, 559/567
+genuine-cycle TRN events, and 7/6 nonspecific events. Thus both TRN and arousal
+directions are wrong in the clean protocol. The candidate does not advance,
+but the residual-state confound is closed and the remaining failure is
+localized specifically to TRN-mediated suppression of bottom-up-only relay
+cells.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

@@ -196,14 +196,19 @@ parameters:
     note: distal 0.015 is the sole registered complete Figure 6 survivor and passes same-network match, but mismatch retains all five vertical relay cells, increases TRN output from 558 to 566 events, and decreases nonspecific output from 9 to 8 events. It is rejected by the official Figure 7 directional contract and is not promoted
   model.connectivity.projection022_source_resolution:
     value: layer23_excitatory_v1 to layer6ii_excitatory_v1 distal dendrite, one-to-one
-    status: source-resolution-figure7-partial
+    status: source-resolution-figure6-supported
     source: Grossberg and Versace 2008 Supplementary Table 3 and the SMART.nml channel name AMPA 2/3, contrasted with the archived layer4_inhibitory_v1 presynaptic endpoint
-    note: the supplementary endpoint preserves every calibrated Figure 6 gate and changes Figure 7 TRN ordering to the published match-greater-than-mismatch direction (547 versus 514 events). Mismatch nevertheless activates the nine-cell union of expectation and input, and nonspecific output is 5 versus 5, so the complete candidate is not promoted or advanced
+    note: the supplementary endpoint preserves every calibrated Figure 6 gate. Its apparent Figure 7 TRN-order correction in the contiguous protocol was caused by residual training state; after a fresh learned-weight handoff, match/mismatch TRN output is 559/567 and the complete Figure 7 candidate fails. Retain the source resolution for Figure 6, but do not claim a Figure 7 mechanism
   model.connectivity.projection022_distal002_interaction:
     value: Supplementary projection-022 endpoint with distal TRN-to-relay GABA scale 0.02 and somatic/proximal scales 0.01
     status: rejected-contiguous-state-figure7-candidate
     source: discrete cross of the source-resolved endpoint with the already registered Artifact 206 distal-0.02 candidate
     note: Artifact 212 passes every Figure 6 gate, and Figure 7 retains match-greater TRN output at 522 versus 520 events, but mismatch activates the nine-cell union and nonspecific output is 5 versus 5. The four expectation-only mismatch spikes precede causal feedback arrival and expose residual Figure 6 dynamic state; this contiguous-state candidate is rejected and further distal interpolation is closed
+  protocol.figure7.learned_state_handoff:
+    value: reproduce Figure 6 learning, rebuild a fresh identical network, and transfer only the required learned projection weights
+    status: promoted-protocol-correction
+    source: Figure 6 and Figure 7 are distinct published protocols; causal arrival audit of Artifact 214 proves that contiguous-state expectation-only events precede possible recognition feedback
+    note: fresh handoff removes all four contaminated horizontal mismatch-arm events. Artifact 216 cleanly localizes the remaining failure to four repeated events in every vertical bottom-up relay cell, with mismatch TRN and nonspecific directions still wrong
   model.multicompartment.exact_voltage_clamp:
     value: optional fixed compartment voltage, separate from finite-conductance XML input
     status: published-protocol alternative

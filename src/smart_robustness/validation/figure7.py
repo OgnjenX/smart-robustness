@@ -313,6 +313,9 @@ class Figure7ConditionResult:
     relay_driven_current_range_pA_by_index_and_source: tuple[
         tuple[int, str, float, float], ...
     ] = ()
+    relay_event_current_samples_pA: tuple[
+        tuple[int, float, str, float], ...
+    ] = ()
     trn_layer6ii_ampa_peak_by_index: tuple[tuple[int, float], ...] = ()
     trn_layer6ii_nmda_peak_by_index: tuple[tuple[int, float], ...] = ()
     trn_relay_ampa_peak_by_index: tuple[tuple[int, float], ...] = ()
@@ -882,6 +885,7 @@ def run_figure7_condition(
     relay_trn_gaba_peak: tuple[tuple[int, float], ...] = ()
     relay_trn_gaba_integral: tuple[tuple[int, float], ...] = ()
     relay_driven_current_range: tuple[tuple[int, str, float, float], ...] = ()
+    relay_event_current_samples: tuple[tuple[int, float, str, float], ...] = ()
     trn_layer6ii_ampa_peak: tuple[tuple[int, float], ...] = ()
     trn_layer6ii_nmda_peak: tuple[tuple[int, float], ...] = ()
     trn_relay_ampa_peak: tuple[tuple[int, float], ...] = ()
@@ -1021,6 +1025,25 @@ def run_figure7_condition(
                 traces[:, relay_driven_window],
                 strict=True,
             )
+        )
+        diagnostic_row = {
+            index: row for row, index in enumerate(FIGURE7_RELAY_DIAGNOSTIC_INDICES)
+        }
+        relay_event_current_samples = tuple(
+            (
+                event_index,
+                event_time_ms,
+                source,
+                float(traces[diagnostic_row[event_index], sample]),
+            )
+            for event_index, absolute_event_time_ms in zip(
+                relay.i, relay.t / brian.ms, strict=True
+            )
+            if int(event_index) in diagnostic_row
+            and float(absolute_event_time_ms) >= stimulus_start_ms
+            for event_time_ms in [float(absolute_event_time_ms) - stimulus_start_ms]
+            for sample in [int(np.argmin(np.abs(times_ms - event_time_ms)))]
+            for source, traces in relay_current_sources_pA.items()
         )
     if trn_state is not None:
         trn_layer6ii_ampa_peak = tuple(
@@ -1452,6 +1475,7 @@ def run_figure7_condition(
         relay_driven_current_range_pA_by_index_and_source=(
             relay_driven_current_range
         ),
+        relay_event_current_samples_pA=relay_event_current_samples,
         trn_layer6ii_ampa_peak_by_index=trn_layer6ii_ampa_peak,
         trn_layer6ii_nmda_peak_by_index=trn_layer6ii_nmda_peak,
         trn_relay_ampa_peak_by_index=trn_relay_ampa_peak,

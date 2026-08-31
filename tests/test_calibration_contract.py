@@ -458,6 +458,10 @@ FIGURE7_ALIGNED_SUSTAINED_REGISTRATION_PATH = (
 FIGURE7_ALIGNED_SUSTAINED_RESULT_PATH = (
     ROOT / "docs/validation-results/figure7-aligned-sustained-match-246.yaml"
 )
+FIGURE7_EVENT_CURRENT_REGISTRATION_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-mismatch-event-current-registration-247.yaml"
+)
 
 
 def test_classic_calibration_contract_separates_training_and_holdout() -> None:
@@ -2764,6 +2768,18 @@ def test_aligned_sustained_current_fails_exact_match_and_locks_mismatch() -> Non
     assert not outcome["pass"]
     assert artifact["assessment"]["mismatch_remains_locked"]
     assert not artifact["assessment"]["advance_to_mismatch"]
+
+
+def test_mismatch_event_current_audit_changes_readout_only() -> None:
+    registration = yaml.safe_load(FIGURE7_EVENT_CURRENT_REGISTRATION_PATH.read_text())
+    assert registration["status"] == "registered-before-execution"
+    assert registration["candidate_changes"] == "none"
+    assert registration["rerun_contract"]["condition"] == "mismatch"
+    assert registration["rerun_contract"]["all_randomness_and_parameters_unchanged"]
+    assert len(registration["new_readout"]["currents_pA"]) == 9
+    assert not registration["official_status_before_execution"][
+        "figure7_reproduced"
+    ]
 
 
 def test_contract_rejects_holdout_leakage(tmp_path: Path) -> None:

@@ -1,0 +1,36 @@
+schema_version: 1
+id: figure7-mismatch-event-current-registration-247
+date: 2026-08-31
+status: registered-before-execution
+source_pair_artifact: docs/validation-results/figure7-aligned-on-center-pair-244.yaml
+profile: configs/calibration/figure7_aligned_on_center_mismatch_v1.yaml
+purpose: localize the current balance that permits the four nonoverlap mismatch relay cells to emit twice
+candidate_changes: none
+rerun_contract:
+  condition: mismatch
+  selected_headroom_fraction: 1.0
+  expected_common_weight_factor: 3.366392125396763
+  top_down_current_pA: 800.0
+  top_down_current_mode: until_cued_cell_first_event
+  top_down_cue_lead_ms: 7.85
+  all_randomness_and_parameters_unchanged: true
+new_readout:
+  event_indices: every emitted event among relay cells 22, 31, 38--42, 49, and 58
+  sampling: nearest 0.01-ms state sample to each emitted relay event
+  currents_pA:
+    - direct_image_input
+    - top_down_excitation
+    - trn_gaba
+    - interneuron_gaba
+    - distal_calcium
+    - proximal_calcium
+    - soma_axial
+    - soma_sodium
+    - soma_potassium
+interpretation_limits:
+  - This rerun may localize the failed event balance but cannot promote Figure 7.
+  - No parameter may be changed or selected from this readout.
+  - A subsequent intervention requires a separately sourced and preregistered mechanism.
+official_status_before_execution:
+  figure7_reproduced: false
+  downstream_holdouts_unlocked: false

@@ -480,6 +480,9 @@ FIGURE7_GABA_CAPACITY_REGISTRATION_PATH = (
     ROOT
     / "docs/validation-results/figure7-mismatch-gaba-capacity-registration-251.yaml"
 )
+FIGURE7_GABA_CAPACITY_RESULT_PATH = (
+    ROOT / "docs/validation-results/figure7-mismatch-gaba-capacity-252.yaml"
+)
 
 
 def test_classic_calibration_contract_separates_training_and_holdout() -> None:
@@ -2929,6 +2932,30 @@ def test_mismatch_gaba_capacity_screen_is_finite_and_diagnostic_only() -> None:
     assert not registration["official_status_before_execution"][
         "figure7_reproduced"
     ]
+
+
+def test_mismatch_gaba_capacity_screen_has_no_overlap_only_window() -> None:
+    artifact = yaml.safe_load(FIGURE7_GABA_CAPACITY_RESULT_PATH.read_text())
+    assert artifact["status"] == "complete"
+    assert artifact["diagnostic_only"]
+    assert artifact["overlap_only_gains"] == []
+    assert not artifact["assessment"]["scalar_gain_has_overlap_only_window"]
+    assert not artifact["assessment"]["candidate_promoted"]
+    assert not artifact["assessment"]["downstream_holdouts_unlocked"]
+    outcomes = artifact["outcomes"]
+    assert [outcome["common_gain"] for outcome in outcomes] == [
+        1.125,
+        1.25,
+        1.5,
+        2.0,
+        3.0,
+    ]
+    assert all(
+        outcome["relay_active_indices"] == [22, 31, 40, 49, 58]
+        for outcome in outcomes
+    )
+    assert [outcome["relay_events"] for outcome in outcomes] == [10, 10, 10, 10, 5]
+    assert [outcome["nonspecific_events"] for outcome in outcomes] == [5, 4, 4, 4, 4]
 
 
 def test_contract_rejects_holdout_leakage(tmp_path: Path) -> None:

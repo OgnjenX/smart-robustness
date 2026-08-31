@@ -2306,6 +2306,19 @@ release window. This further rules out learned-map redistribution as a direct
 remedy and points back to the under-recovered legacy spike-event/GABA transfer
 semantics. The official Figure 7 failure and downstream locks are unchanged.
 
+Artifact 251 then preregisters a post-holdout causal-capacity diagnostic rather
+than another candidate fit. With the learned state, cue, receptor alignment,
+kinetics, and topology fixed, `figure7-mismatch-gaba-capacity-252.yaml`
+multiplies all three recognition-network TRN-to-relay GABA scales by common
+gains 1.125, 1.25, 1.5, 2.0, and 3.0. Gains through 2.0 retain ten relay events,
+two in every vertical cell 22, 31, 40, 49, and 58. Gain 3.0 reduces output to
+five events but still leaves exactly one event in every one of those cells.
+Nonspecific output is only five events at 1.125 and four at every stronger
+endpoint. No scalar-transfer endpoint yields overlap-only output before the
+five cells decline together, and none preserves the 70-Hz mismatch target.
+Scalar TRN-to-relay gain is therefore rejected as a sufficient spatial
+mechanism; no endpoint is promoted and downstream holdouts remain locked.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

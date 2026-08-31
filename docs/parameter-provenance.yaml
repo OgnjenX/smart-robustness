@@ -248,6 +248,11 @@ parameters:
     status: diagnostic-readout-only
     source: Artifact 249 preregistration and deterministic Artifact 250 rerun
     note: all five bottom-up mismatch cells exhibit near-identical somatic threshold trajectories, while the GABA gate falls before some first events and rises before others. There is no common inhibitory trough; tonic bottom-up drive eventually recruits fast somatic sodium despite dendritic inhibition. This rules out learned-map redistribution as a direct spatial rescue and retains legacy spike-event/GABA transfer semantics as the unresolved source boundary
+  model.connectivity.figure7_recognition_only_common_gaba_capacity:
+    value: common gains 1.125, 1.25, 1.5, 2.0, and 3.0 on the rejected aligned candidate's three TRN-to-relay scales
+    status: rejected-post-holdout-causal-diagnostic
+    source: Artifacts 251--252; values are not recovered SMART parameters
+    note: gains through 2.0 leave two events in every vertical mismatch relay cell, while gain 3.0 leaves one event in every cell. No overlap-only window appears and nonspecific output falls to 40--50 Hz. Scalar transfer is insufficient, no gain is promoted, and Figure 7 remains failed
   model.connectivity.projection022_distal003_interaction:
     value: Supplementary projection-022 endpoint with distal TRN-to-relay GABA scale 0.03 and somatic/proximal scales 0.01
     status: rejected-behavior-calibration

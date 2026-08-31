@@ -445,6 +445,9 @@ FIGURE7_ALIGNED_MISMATCH_REGISTRATION_PATH = (
     ROOT
     / "docs/validation-results/figure7-aligned-on-center-mismatch-registration-243.yaml"
 )
+FIGURE7_ALIGNED_PAIR_RESULT_PATH = (
+    ROOT / "docs/validation-results/figure7-aligned-on-center-pair-244.yaml"
+)
 
 
 def test_classic_calibration_contract_separates_training_and_holdout() -> None:
@@ -2694,6 +2697,30 @@ def test_aligned_on_center_mismatch_is_single_locked_holdout() -> None:
     assert not registration["official_status_before_execution"][
         "figure7_reproduced"
     ]
+
+
+def test_aligned_on_center_pair_hits_rates_but_fails_spatial_subset() -> None:
+    artifact = yaml.safe_load(FIGURE7_ALIGNED_PAIR_RESULT_PATH.read_text())
+    assert artifact["status"] == "figure7-failed"
+    assert not artifact["reproduced"]
+    match = artifact["match_scoring_summary"]
+    mismatch = artifact["mismatch_result"]
+    assert len(match["relay_spike_times_ms"]) == 15
+    assert len(mismatch["relay_spike_times_ms"]) == 10
+    assert len(match["trn_spike_times_ms"]) == 633
+    assert len(mismatch["trn_spike_times_ms"]) == 583
+    assert len(match["nonspecific_spike_times_ms"]) == 4
+    assert len(mismatch["nonspecific_spike_times_ms"]) == 7
+    assert set(match["relay_spike_indices"]) == {38, 39, 40, 41, 42}
+    assert set(mismatch["relay_spike_indices"]) == {22, 31, 40, 49, 58}
+    gates = artifact["gates"]
+    assert gates["match_more_trn_events"]
+    assert gates["mismatch_more_nonspecific_events"]
+    assert gates["match_nonspecific_40_hz"]
+    assert gates["mismatch_nonspecific_70_hz"]
+    assert gates["sampled_mismatch_trn_events_have_fresh_cycles"]
+    assert not gates["mismatch_relay_overlap_only"]
+    assert not gates["match_more_active_relay_cells"]
 
 
 def test_contract_rejects_holdout_leakage(tmp_path: Path) -> None:

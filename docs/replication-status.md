@@ -2247,6 +2247,17 @@ artifact. Artifact 243 registers exactly one independently rebuilt mismatch at
 the unchanged hard-bound endpoint; no intermediate amplitude or second
 mismatch candidate is authorized.
 
+The locked mismatch in `figure7-aligned-on-center-pair-244.yaml` reaches the
+closest complete quantitative phenotype so far but still fails the caption's
+spatial mechanism. Match/mismatch totals are 15/10 relay events, 633/583 TRN
+events, and exactly 4/7 nonspecific events (40/70 Hz). All sampled mismatch TRN
+events have fresh detector cycles. However, the ten mismatch relay events are
+two events in each of vertical cells 22, 31, 40, 49, and 58; activity is not
+restricted to the horizontal/vertical overlap cell 40. Match and mismatch thus
+have five active relay cells each despite the correct total-event, TRN, and
+arousal directions. The bounded learned-amplitude family is rejected for
+official Figure 7, and reset/spectral holdouts remain locked.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

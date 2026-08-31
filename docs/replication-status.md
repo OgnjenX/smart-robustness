@@ -2130,6 +2130,20 @@ rebuilt vertical mismatch with the identical event-terminated cue and every
 network parameter fixed. This match result does not by itself establish
 Figure 7, and no pulse duration or current amplitude is reopened.
 
+The fixed mismatch in
+`figure7-one-event-current-fresh-pair-231.yaml` rejects the cue-waveform
+sensitivity as a complete Figure 7 mechanism. Match/mismatch totals are
+25/20 relay events, 570/557 genuine-cycle TRN events, and 4/4 nonspecific
+events. Event termination therefore restores the published TRN direction, but
+all five vertical relay cells still emit four times and nonspecific output
+remains 40 Hz instead of rising to 70 Hz. The causal trace is unchanged after
+the current ends at 5.85 ms: vertical layer-6II cells 31 and 49 fire at
+39.12 ms, cells 22 and 58 at 41.33 ms, and their local corticothalamic
+feedback reaches the same bottom-up relay cells. Current waveform, duration,
+and amplitude are now closed. A further run is justified only as a separately
+labeled causal test of selected-category output routing, not as another
+current fit or an official-source claim.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

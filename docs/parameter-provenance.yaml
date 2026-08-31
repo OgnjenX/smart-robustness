@@ -274,7 +274,7 @@ parameters:
     value: sustained_epoch historical control or until_cued_cell_first_event sensitivity
     status: source-ambiguity-preregistered-sensitivity
     source: Methods 4.9 leaves current duration unspecified; Figure 9a explicitly stimulates the central layer-6II cell until one spike in a related complete-module protocol
-    note: Artifact 228 registers one parameter-free match-only sensitivity at the already selected 800 pA. Artifact 229 clears the current at the first cell-40 event (5.85 ms) and passes exact match with 25 relay, 570 genuine-cycle TRN, and 4 nonspecific events. Artifact 230 registers one fixed fresh mismatch. Figure 9a is source-adjacent rather than proof of the Figure 7 waveform
+    note: Artifact 228 registers one parameter-free match-only sensitivity at the already selected 800 pA. Artifact 229 clears the current at the first cell-40 event (5.85 ms) and passes exact match with 25 relay, 570 genuine-cycle TRN, and 4 nonspecific events. Artifact 231 rejects the fixed pair: mismatch has 20 relay events across all five vertical cells, 557 TRN events, and 4 nonspecific events. The waveform corrects TRN ordering but not overlap selection or 70-Hz disinhibition; this family is closed. Figure 9a is source-adjacent rather than proof of the Figure 7 waveform
   validation.figure7.rate_tolerance:
     value: exact 100-ms targets of 40 Hz match and 70 Hz mismatch; zero event-count tolerance
     status: published-rendered-figure

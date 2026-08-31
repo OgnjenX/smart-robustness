@@ -2275,6 +2275,21 @@ than four. The sustained-current protocol is therefore closed at this operating
 point; it cannot be used to rescue the mismatch spatial subset without first
 breaking the published match.
 
+Artifact 247 preregisters a readout-only rerun of the rejected aligned mismatch
+to localize the surviving nonoverlap relay events without changing a parameter.
+The deterministic rerun in `figure7-mismatch-event-current-audit-248.yaml`
+reproduces the exact 15/10 relay, 633/583 TRN, and 4/7 nonspecific event totals.
+At the first emitted event of each nonoverlap vertical relay cell (22, 31, 49,
+and 58), top-down excitation is below 1.1 pA and distal and proximal T-type
+calcium currents are each below 2 pA, whereas direct image current remains
+above 115 pA and TRN GABA current exceeds 1000 pA in magnitude. Because the
+current sample is taken at the emitted falling-phase event, it is not an
+initiation-threshold measurement; nevertheless, it excludes broad learned
+expectation and calcium rebound as the primary sources of those first events.
+The unresolved mechanism is bottom-up-driven relay escape through the temporal
+profile of reticular inhibition. No official gate changes, and Figure 10 and
+spectral holdouts remain locked.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

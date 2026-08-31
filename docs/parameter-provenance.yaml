@@ -238,6 +238,11 @@ parameters:
     status: source-duration-ambiguity-rejected-at-match
     source: Grossberg and Versace 2008 Methods 4.9 does not report Figure 7 current duration; Figure 9a separately specifies stimulation until one spike
     note: Artifact 246 preserves three events in each matched relay cell but changes TRN/nonspecific output to 608/5 events (50 Hz), so it fails the exact match and mismatch remains locked
+  protocol.figure7.mismatch_relay_event_current_audit:
+    value: nine current components sampled at the nearest 0.01-ms state sample to every emitted relay event; no candidate or protocol change
+    status: diagnostic-readout-only
+    source: Artifact 247 preregistration and deterministic Artifact 248 rerun of the rejected aligned pair
+    note: the exact pair is reproduced. At the first nonoverlap events, top-down and T-type calcium currents are negligible while bottom-up image drive remains substantial; this excludes expectation leakage and rebound as primary causes and localizes the unresolved failure to bottom-up escape through the temporal reticular-inhibition profile. Event-time samples are falling-phase diagnostics, not initiation-threshold estimates
   model.connectivity.projection022_distal003_interaction:
     value: Supplementary projection-022 endpoint with distal TRN-to-relay GABA scale 0.03 and somatic/proximal scales 0.01
     status: rejected-behavior-calibration

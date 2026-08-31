@@ -462,6 +462,9 @@ FIGURE7_EVENT_CURRENT_REGISTRATION_PATH = (
     ROOT
     / "docs/validation-results/figure7-mismatch-event-current-registration-247.yaml"
 )
+FIGURE7_EVENT_CURRENT_AUDIT_PATH = (
+    ROOT / "docs/validation-results/figure7-mismatch-event-current-audit-248.yaml"
+)
 
 
 def test_classic_calibration_contract_separates_training_and_holdout() -> None:
@@ -2780,6 +2783,38 @@ def test_mismatch_event_current_audit_changes_readout_only() -> None:
     assert not registration["official_status_before_execution"][
         "figure7_reproduced"
     ]
+
+
+def test_mismatch_event_current_audit_localizes_first_nonoverlap_events() -> None:
+    artifact = yaml.safe_load(FIGURE7_EVENT_CURRENT_AUDIT_PATH.read_text())
+    assert artifact["status"] == "figure7-failed"
+    assert not artifact["reproduced"]
+    match = artifact["match_scoring_summary"]
+    mismatch = artifact["mismatch_result"]
+    assert len(match["relay_spike_times_ms"]) == 15
+    assert len(mismatch["relay_spike_times_ms"]) == 10
+    assert len(match["trn_spike_times_ms"]) == 633
+    assert len(mismatch["trn_spike_times_ms"]) == 583
+    assert len(match["nonspecific_spike_times_ms"]) == 4
+    assert len(mismatch["nonspecific_spike_times_ms"]) == 7
+
+    samples = mismatch["relay_event_current_samples_pA"]
+    assert len(samples) == 90
+    first_by_index: dict[int, dict[str, float]] = {}
+    for index, _time_ms, source, current_pA in samples:
+        first_by_index.setdefault(index, {}).setdefault(source, current_pA)
+
+    for index in (22, 31, 49, 58):
+        currents = first_by_index[index]
+        assert currents["direct_image_input"] > 115.0
+        assert currents["top_down_excitation"] < 1.1
+        assert currents["distal_calcium"] < 2.0
+        assert currents["proximal_calcium"] < 2.0
+        assert currents["trn_gaba"] < -1000.0
+
+    assert artifact["gates"]["match_more_trn_events"]
+    assert artifact["gates"]["mismatch_more_nonspecific_events"]
+    assert not artifact["gates"]["mismatch_relay_overlap_only"]
 
 
 def test_contract_rejects_holdout_leakage(tmp_path: Path) -> None:

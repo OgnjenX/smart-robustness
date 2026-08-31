@@ -567,6 +567,13 @@ FIGURE7_TARGETED_ANNULAR_RESULT_PATH = (
     ROOT
     / "docs/validation-results/figure7-targeted-annular-corticoreticular-match-268.yaml"
 )
+FIGURE7_GAIN8_AMPA_ARRIVAL_PROFILE_PATH = (
+    ROOT / "configs/calibration/figure7_gain8_ampa_arrival_match_v1.yaml"
+)
+FIGURE7_GAIN8_AMPA_ARRIVAL_REGISTRATION_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-gain8-ampa-arrival-registration-269.yaml"
+)
 
 
 def test_classic_calibration_contract_separates_training_and_holdout() -> None:
@@ -3383,6 +3390,20 @@ def test_targeted_annular_screen_closes_without_mismatch() -> None:
     assert [
         len(item["result"]["nonspecific_spike_times_ms"]) for item in outcomes
     ] == [5, 3]
+
+
+def test_gain8_ampa_arrival_interaction_is_single_match_only_endpoint() -> None:
+    profile = yaml.safe_load(FIGURE7_GAIN8_AMPA_ARRIVAL_PROFILE_PATH.read_text())
+    registration = yaml.safe_load(
+        FIGURE7_GAIN8_AMPA_ARRIVAL_REGISTRATION_PATH.read_text()
+    )
+    assert profile["dimension"]["grid"] == [8.0]
+    assert profile["protocol"]["top_down_cue_lead_ms"] == 9.85
+    assert profile["protocol"]["record_relay_diagnostics"]
+    assert registration["fixed_candidate"]["source_delays_changed"] is False
+    assert registration["fixed_candidate"]["source_kinetics_changed"] is False
+    assert registration["conditions_consulted"] == ["figure7_match"]
+    assert registration["execution_limit"].startswith("exactly one")
 
 
 def test_contract_rejects_holdout_leakage(tmp_path: Path) -> None:

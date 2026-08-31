@@ -1,0 +1,31 @@
+schema_version: 1
+id: figure7-gain8-ampa-arrival-registration-269
+date: '2026-08-31'
+status: registered-before-execution
+profile: configs/calibration/figure7_gain8_ampa_arrival_match_v1.yaml
+rationale: >-
+  Artifact 266 shows that nonoverlap TRN inhibition becomes spatially stronger
+  only after relay soma sodium recruitment. Before changing source-fixed
+  kinetics, cross the sole verified match gain with the previously derived
+  cue lead that places the slowest archived corticoreticular AMPA arrival at
+  bottom-up onset.
+fixed_candidate:
+  common_gain: 8.0
+  projection_ids:
+    - modeldb112923.projection.009
+    - modeldb112923.projection.012
+  top_down_cue_lead_ms: 9.85
+  lead_derivation: selected-category latency 5.85 ms plus projection-012 delay 4.0 ms
+  source_delays_changed: false
+  source_kinetics_changed: false
+  ring_geometry: center_excluded_gaussian
+  learned_headroom_fraction: 1.0
+controls:
+  gain8_lead7_85_match: docs/validation-results/figure7-corticoreticular-gain-verification-262.yaml
+  gain1_lead9_85_match: docs/validation-results/figure7-trn-arrival-aligned-match-258.yaml
+conditions_consulted: [figure7_match]
+mismatch_lock: do not inspect mismatch unless the interaction passes every exact match gate
+execution_limit: exactly one independently rebuilt match
+interpretation_boundary: >-
+  This is a calibrated interaction between two previously registered
+  source-adjacent dimensions, not evidence that the paper used a cue lead.

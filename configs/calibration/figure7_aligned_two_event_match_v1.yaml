@@ -4,7 +4,7 @@ status: registered-before-execution
 registration_artifact: docs/validation-results/figure7-aligned-two-event-registration-255.yaml
 base_profile: configs/calibration/figure6_kinness_equation27_transition_v1.yaml
 figure6_artifact: docs/validation-results/figure6-projection022-distal003-217.yaml
-aligned_control_artifact: docs/validation-results/figure7-aligned-sustained-match-246.yaml
+aligned_control_artifact: docs/validation-results/figure7-receptor-arrival-aligned-match-238.yaml
 verification_screen_artifact: docs/validation-results/figure7-aligned-on-center-headroom-screen-240.yaml
 detector: {arm_mV: -20.0, release_mV: -30.0}
 runtime_overrides:
@@ -48,4 +48,3 @@ locked_holdouts:
   - figure14_spectra
   - figure15_local_synchrony
   - figure16_long_range_synchrony
-

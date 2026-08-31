@@ -483,6 +483,13 @@ FIGURE7_GABA_CAPACITY_REGISTRATION_PATH = (
 FIGURE7_GABA_CAPACITY_RESULT_PATH = (
     ROOT / "docs/validation-results/figure7-mismatch-gaba-capacity-252.yaml"
 )
+RADIAL_ANNULUS_GABA_GAIN_PROFILE_PATH = (
+    ROOT / "configs/calibration/radial_annulus_gaba_gain_figure6_v1.yaml"
+)
+RADIAL_ANNULUS_GABA_GAIN_REGISTRATION_PATH = (
+    ROOT
+    / "docs/validation-results/radial-annulus-gaba-gain-registration-253.yaml"
+)
 
 
 def test_classic_calibration_contract_separates_training_and_holdout() -> None:
@@ -2956,6 +2963,29 @@ def test_mismatch_gaba_capacity_screen_has_no_overlap_only_window() -> None:
     )
     assert [outcome["relay_events"] for outcome in outcomes] == [10, 10, 10, 10, 5]
     assert [outcome["nonspecific_events"] for outcome in outcomes] == [5, 4, 4, 4, 4]
+
+
+def test_radial_annulus_gain_calibration_is_figure6_first_and_explicitly_exploratory() -> None:
+    profile = yaml.safe_load(RADIAL_ANNULUS_GABA_GAIN_PROFILE_PATH.read_text())
+    registration = yaml.safe_load(
+        RADIAL_ANNULUS_GABA_GAIN_REGISTRATION_PATH.read_text()
+    )
+    assert profile["runtime_overrides"]["ring_kernel_convention"] == (
+        "radial_annulus"
+    )
+    assert profile["dimension"]["grid"] == [1.125, 1.25, 1.5, 2.0, 3.0]
+    assert registration["dimension"]["source_status"] == (
+        "exploratory_behavior_calibration"
+    )
+    assert registration["execution_order"][-1].endswith(
+        "without consulting Figure 7."
+    )
+    assert "post-hoc exploratory" in registration[
+        "relationship_to_prior_registration"
+    ]
+    assert not registration["official_status_before_execution"][
+        "figure7_reproduced"
+    ]
 
 
 def test_contract_rejects_holdout_leakage(tmp_path: Path) -> None:

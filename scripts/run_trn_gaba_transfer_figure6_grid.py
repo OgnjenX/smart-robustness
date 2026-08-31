@@ -115,6 +115,7 @@ def main() -> None:
         trn_spike_event_threshold_mV=float(detector["arm_mV"]),
         trn_spike_event_release_mV=float(detector["release_mV"]),
         trn_spike_event_proximal_blend_fraction=None,
+        **profile.get("runtime_overrides", {}),
     )
     projection_ids = tuple(str(value) for value in profile["scaled_projection_ids"])
     expected_indices = tuple(
@@ -123,6 +124,23 @@ def main() -> None:
     output = Path(args.output)
     stage_1_outcomes: list[dict[str, Any]] = []
     stage_2_outcomes: list[dict[str, Any]] = []
+    baseline_projection_scales = {
+        str(key): float(value)
+        for key, value in profile.get("baseline_projection_scales", {}).items()
+    }
+
+    def projection_scales(scale: float) -> dict[str, float]:
+        if baseline_projection_scales:
+            if set(baseline_projection_scales) != set(projection_ids):
+                raise ValueError(
+                    "baseline projection scales must match scaled projection IDs"
+                )
+            return {
+                projection_id: baseline_projection_scales[projection_id] * scale
+                for projection_id in projection_ids
+            }
+        return {projection_id: scale for projection_id in projection_ids}
+
     for raw_scale in profile["dimension"]["grid"]:
         scale = float(raw_scale)
         values = profile["stage_1_protocol"]
@@ -136,7 +154,7 @@ def main() -> None:
         run = run_figure6_learning(
             conventions=conventions,
             protocol=protocol,
-            projection_weight_scales={key: scale for key in projection_ids},
+            projection_weight_scales=projection_scales(scale),
             brian=brian,
         )
         result = run.result
@@ -154,6 +172,7 @@ def main() -> None:
         stage_1_outcomes.append(
             {
                 "scale": scale,
+                "projection_scales": projection_scales(scale),
                 "runtime_fingerprint": conventions.fingerprint,
                 "population_spikes": result.population_spikes,
                 "relay_spike_indices": relay_indices,
@@ -190,7 +209,7 @@ def main() -> None:
             conventions=conventions,
             protocol=protocol,
             record_relay_detector_diagnostics=True,
-            projection_weight_scales={key: scale for key in projection_ids},
+            projection_weight_scales=projection_scales(scale),
             brian=brian,
         )
         result = run.result
@@ -231,6 +250,7 @@ def main() -> None:
         stage_2_outcomes.append(
             {
                 "scale": scale,
+                "projection_scales": projection_scales(scale),
                 "population_spikes": result.population_spikes,
                 "relay_spike_indices": relay_indices,
                 "relay_event_counts_by_index": counts,

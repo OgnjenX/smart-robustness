@@ -2440,6 +2440,14 @@ horizontal bottom-up and top-down maps; top-down contrast is approximately
 is eligible for one separately registered fresh Figure 7 match. This does not
 yet establish recognition behavior or recovered source timing.
 
+Artifacts 277--278 test the complete-Figure6 delay-2 survivor at the fixed
+gain-8 recognition endpoint. The fresh match retains the correct relay indices
+38--42 with two events each (10 total), produces 623 TRN events with valid
+sampled detector cycles, but emits five nonspecific events (50 Hz) rather than
+the official four. The cue lead also contains the known 81-cell TRN startup
+volley and one nonspecific startup event. Exact match fails, mismatch is not
+consulted, and the delay-2 endpoint is rejected at recognition.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

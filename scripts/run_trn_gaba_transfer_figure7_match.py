@@ -14,6 +14,7 @@ import yaml
 
 from smart_robustness.protocols import MatchCondition
 from smart_robustness.validation.calibration import runtime_conventions_for_candidate
+from smart_robustness.validation.figure6 import run_figure6_learning
 from smart_robustness.validation.figure7 import run_figure7_condition
 
 
@@ -88,10 +89,29 @@ def main() -> None:
         **runtime_overrides,
     )
     protocol = profile["protocol"]
+    learned_state_handoff = protocol.get(
+        "learned_state_handoff", "contiguous_same_network"
+    )
+    handoff_training = None
+    if learned_state_handoff == "fresh_network_from_figure6_weights":
+        handoff_training = run_figure6_learning(
+            conventions=conventions,
+            projection_weight_scales=projection_scales,
+            brian=brian,
+        )
+        learning_arguments = {
+            "learned_weights": handoff_training.learned_weights,
+            "pretrain_with_figure6_episode": False,
+        }
+    elif learned_state_handoff == "contiguous_same_network":
+        learning_arguments = {
+            "pretrain_with_figure6_episode": True,
+        }
+    else:
+        raise ValueError(f"unsupported learned-state handoff {learned_state_handoff!r}")
     result = run_figure7_condition(
         condition=MatchCondition.MATCH,
         top_down_current_pA=float(protocol["top_down_current_pA"]),
-        pretrain_with_figure6_episode=True,
         conventions=conventions,
         duration_ms=float(protocol["duration_ms"]),
         dt_ms=float(protocol["dt_ms"]),
@@ -100,6 +120,7 @@ def main() -> None:
         top_down_cue_lead_ms=float(protocol["top_down_cue_lead_ms"]),
         equilibration_ms=float(protocol["equilibration_ms"]),
         brian=brian,
+        **learning_arguments,
     )
     expected = tuple(int(value) for value in profile["match_gate"]["relay_active_indices"])
     relay_counts = {index: result.relay_spike_indices.count(index) for index in expected}
@@ -135,6 +156,12 @@ def main() -> None:
         "figure6_artifact": profile["figure6_artifact"],
         "holdouts_consulted": ["figure7_match"],
         "projection_weight_scales": projection_scales,
+        "learned_state_handoff": learned_state_handoff,
+        "handoff_figure6_population_spikes": (
+            None
+            if handoff_training is None
+            else handoff_training.result.population_spikes
+        ),
         "result": result,
         "relay_event_counts_by_index": relay_counts,
         "sampled_trn_event_counts_by_index": event_counts,

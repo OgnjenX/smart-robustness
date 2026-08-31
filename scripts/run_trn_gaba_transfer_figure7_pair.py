@@ -14,6 +14,7 @@ import yaml
 
 from smart_robustness.protocols import MatchCondition
 from smart_robustness.validation.calibration import runtime_conventions_for_candidate
+from smart_robustness.validation.figure6 import run_figure6_learning
 from smart_robustness.validation.figure7 import (
     Figure7ConditionResult,
     assess_figure7_reproduction,
@@ -96,10 +97,33 @@ def main() -> None:
     if projection_scales != match_artifact["projection_weight_scales"]:
         raise ValueError("mismatch projection scales differ from Artifact 203")
     protocol = profile["protocol"]
+    learned_state_handoff = protocol.get(
+        "learned_state_handoff", "contiguous_same_network"
+    )
+    if learned_state_handoff != match_artifact.get(
+        "learned_state_handoff", "contiguous_same_network"
+    ):
+        raise ValueError("mismatch learned-state handoff differs from match")
+    handoff_training = None
+    if learned_state_handoff == "fresh_network_from_figure6_weights":
+        handoff_training = run_figure6_learning(
+            conventions=conventions,
+            projection_weight_scales=projection_scales,
+            brian=brian,
+        )
+        learning_arguments = {
+            "learned_weights": handoff_training.learned_weights,
+            "pretrain_with_figure6_episode": False,
+        }
+    elif learned_state_handoff == "contiguous_same_network":
+        learning_arguments = {
+            "pretrain_with_figure6_episode": True,
+        }
+    else:
+        raise ValueError(f"unsupported learned-state handoff {learned_state_handoff!r}")
     mismatch = run_figure7_condition(
         condition=MatchCondition.MISMATCH,
         top_down_current_pA=float(protocol["top_down_current_pA"]),
-        pretrain_with_figure6_episode=True,
         conventions=conventions,
         duration_ms=float(protocol["duration_ms"]),
         dt_ms=float(protocol["dt_ms"]),
@@ -108,6 +132,7 @@ def main() -> None:
         top_down_cue_lead_ms=float(protocol["top_down_cue_lead_ms"]),
         equilibration_ms=float(protocol["equilibration_ms"]),
         brian=brian,
+        **learning_arguments,
     )
     match = _scoring_result(match_artifact["result"])
     assessment = assess_figure7_reproduction(match, mismatch)
@@ -145,6 +170,12 @@ def main() -> None:
         "match_artifact": profile["match_artifact"],
         "holdouts_consulted": ["figure7_match", "figure7_mismatch"],
         "projection_weight_scales": projection_scales,
+        "learned_state_handoff": learned_state_handoff,
+        "handoff_figure6_population_spikes": (
+            None
+            if handoff_training is None
+            else handoff_training.result.population_spikes
+        ),
         "match_scoring_summary": match,
         "mismatch_result": mismatch,
         "sampled_mismatch_trn_event_counts_by_index": event_counts,

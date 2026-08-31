@@ -2121,6 +2121,15 @@ source-adjacent sensitivity, not a recovered Figure 7 setting. It is tested on
 fresh match first; mismatch remains locked unless the exact 40-Hz match and
 all relay/TRN mechanism gates survive.
 
+The sensitivity passes that prerequisite in
+`figure7-one-event-current-match-229.yaml`. The current clears on cell 40's
+first emitted event at 5.85 ms. Match then produces exactly five events in
+each horizontal relay cell (25 total), 570 genuine-cycle TRN events, and four
+nonspecific events (40 Hz). Artifact 230 preregisters one independently
+rebuilt vertical mismatch with the identical event-terminated cue and every
+network parameter fixed. This match result does not by itself establish
+Figure 7, and no pulse duration or current amplitude is reopened.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

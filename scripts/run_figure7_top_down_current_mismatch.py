@@ -17,6 +17,7 @@ from smart_robustness.validation.calibration import runtime_conventions_for_cand
 from smart_robustness.validation.figure6 import run_figure6_learning
 from smart_robustness.validation.figure7 import (
     Figure7ConditionResult,
+    TopDownCurrentMode,
     assess_figure7_reproduction,
     run_figure7_condition,
 )
@@ -101,6 +102,9 @@ def main() -> None:
     if training.result.population_spikes["thalamic_relay"] != 20:
         raise ValueError("fresh handoff did not reproduce the Figure 6 relay train")
     protocol = profile["protocol"]
+    current_mode = TopDownCurrentMode(
+        protocol.get("top_down_current_mode", TopDownCurrentMode.SUSTAINED_EPOCH)
+    )
     mismatch = run_figure7_condition(
         condition=MatchCondition.MISMATCH,
         top_down_current_pA=selected_current,
@@ -110,6 +114,7 @@ def main() -> None:
         dt_ms=float(protocol["dt_ms"]),
         record_relay_diagnostics=bool(protocol["record_relay_diagnostics"]),
         persistent_projection_weight_scales=scales,
+        top_down_current_mode=current_mode,
         top_down_cue_lead_ms=float(protocol["top_down_cue_lead_ms"]),
         equilibration_ms=float(protocol["equilibration_ms"]),
         brian=brian,
@@ -129,8 +134,28 @@ def main() -> None:
         == releases[index]
         for index in event_counts
     )
+    first_cued_event_ms = next(
+        (
+            time
+            for index, time in zip(
+                mismatch.category_spike_indices,
+                mismatch.category_spike_times_ms,
+                strict=True,
+            )
+            if index == 40
+        ),
+        None,
+    )
     gates = {
         "match_exact_complete_gate": bool(match_outcome["pass"]),
+        "mismatch_top_down_current_protocol": (
+            current_mode is TopDownCurrentMode.SUSTAINED_EPOCH
+            or (
+                first_cued_event_ms is not None
+                and mismatch.top_down_current_termination_time_ms
+                == first_cued_event_ms
+            )
+        ),
         "match_relay_spatial_pattern": assessment.pathway.relay_spatial_match_pass,
         "mismatch_relay_overlap_only": assessment.pathway.relay_mismatch_overlap_pass,
         "match_more_active_relay_cells": assessment.pathway.relay_subset_pass,
@@ -188,4 +213,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

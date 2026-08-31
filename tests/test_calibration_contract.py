@@ -367,6 +367,16 @@ FIGURE7_CURRENT_TERMINATION_REGISTRATION_PATH = (
 FIGURE7_ONE_EVENT_CURRENT_MATCH_PROFILE_PATH = (
     ROOT / "configs/calibration/figure7_one_event_current_match_v1.yaml"
 )
+FIGURE7_ONE_EVENT_CURRENT_MATCH_RESULT_PATH = (
+    ROOT / "docs/validation-results/figure7-one-event-current-match-229.yaml"
+)
+FIGURE7_ONE_EVENT_CURRENT_MISMATCH_REGISTRATION_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-one-event-current-mismatch-registration-230.yaml"
+)
+FIGURE7_ONE_EVENT_CURRENT_PAIR_PROFILE_PATH = (
+    ROOT / "configs/calibration/figure7_one_event_current_fresh_pair_v1.yaml"
+)
 
 
 def test_classic_calibration_contract_separates_training_and_holdout() -> None:
@@ -1826,6 +1836,35 @@ def test_one_event_current_sensitivity_is_bounded_before_match() -> None:
     )
     assert profile["protocol"]["top_down_cue_lead_ms"] == 0.0
     assert registration["locked_holdouts"][0].startswith("figure7_mismatch")
+
+
+def test_one_event_current_match_passes_and_unlocks_only_fixed_mismatch() -> None:
+    artifact = yaml.safe_load(FIGURE7_ONE_EVENT_CURRENT_MATCH_RESULT_PATH.read_text())
+    registration = yaml.safe_load(
+        FIGURE7_ONE_EVENT_CURRENT_MISMATCH_REGISTRATION_PATH.read_text()
+    )
+    profile = yaml.safe_load(FIGURE7_ONE_EVENT_CURRENT_PAIR_PROFILE_PATH.read_text())
+    outcome = artifact["outcomes"][0]
+    result = outcome["result"]
+    assert artifact["status"] == "complete"
+    assert artifact["survivor_currents_pA"] == [800.0]
+    assert result["top_down_current_mode"] == "until_cued_cell_first_event"
+    assert result["top_down_current_termination_time_ms"] == 5.85
+    assert set(result["relay_spike_indices"]) == {38, 39, 40, 41, 42}
+    assert len(result["trn_spike_times_ms"]) == 570
+    assert len(result["nonspecific_spike_times_ms"]) == 4
+    assert outcome["gates"]["top_down_current_protocol"]
+    assert outcome["pass"]
+    assert registration["status"] == "registered-before-execution"
+    assert registration["selected_candidate"] == {
+        "top_down_current_pA": 800.0,
+        "top_down_current_mode": "until_cued_cell_first_event",
+    }
+    assert profile["selected_current_pA"] == 800.0
+    assert (
+        profile["protocol"]["top_down_current_mode"]
+        == "until_cued_cell_first_event"
+    )
 
 
 def test_trn_calcium_reversal_restores_wrong_cue_lead_mechanism() -> None:

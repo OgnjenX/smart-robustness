@@ -223,6 +223,11 @@ parameters:
     status: promoted-protocol-correction
     source: Figure 6 and Figure 7 are distinct published protocols; causal arrival audit of Artifact 214 proves that contiguous-state expectation-only events precede possible recognition feedback
     note: fresh handoff removes all four contaminated horizontal mismatch-arm events. Artifact 216 cleanly localizes the remaining failure to four repeated events in every vertical bottom-up relay cell, with mismatch TRN and nonspecific directions still wrong
+  protocol.figure7.receptor_arrival_alignment:
+    value: 7.85-ms one-event cue lead aligns the first archived layer-6II-to-relay NMDA arrival with bottom-up stimulus onset
+    status: source-derived-protocol-candidate-rejected-at-match
+    source: Grossberg and Versace 2008 Section 2.3 and Figure 7; SMART.nml projection 003 delay; Artifact 237 preregistration
+    note: Artifact 238 records one selected-category event at 5.85 ms with no cue-lead relay event, but the matched bar is over-suppressed to two events per relay cell and nonspecific output rises to 60 Hz; mismatch remains locked
   model.connectivity.projection022_distal003_interaction:
     value: Supplementary projection-022 endpoint with distal TRN-to-relay GABA scale 0.03 and somatic/proximal scales 0.01
     status: rejected-behavior-calibration

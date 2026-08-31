@@ -412,6 +412,10 @@ FIGURE7_RECEPTOR_ALIGNMENT_REGISTRATION_PATH = (
     ROOT
     / "docs/validation-results/figure7-receptor-arrival-alignment-registration-237.yaml"
 )
+FIGURE7_RECEPTOR_ALIGNMENT_RESULT_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-receptor-arrival-aligned-match-238.yaml"
+)
 
 
 def test_classic_calibration_contract_separates_training_and_holdout() -> None:
@@ -2537,6 +2541,27 @@ def test_receptor_arrival_alignment_is_single_value_preregistered() -> None:
     assert not registration["official_status_before_execution"][
         "figure7_reproduced"
     ]
+
+
+def test_receptor_arrival_alignment_fails_match_and_keeps_mismatch_locked() -> None:
+    artifact = yaml.safe_load(FIGURE7_RECEPTOR_ALIGNMENT_RESULT_PATH.read_text())
+    assert artifact["status"] == "complete"
+    assert artifact["survivor_currents_pA"] == []
+    outcome = artifact["outcomes"][0]
+    result = outcome["result"]
+    assert result["cue_lead_category_spike_indices"] == [40]
+    assert result["cue_lead_category_spike_times_ms"] == [pytest.approx(5.85)]
+    assert result["cue_lead_relay_spike_times_ms"] == []
+    assert len(result["cue_lead_nonspecific_spike_times_ms"]) == 1
+    assert result["top_down_current_termination_time_ms"] == pytest.approx(5.85)
+    assert set(result["relay_spike_indices"]) == {38, 39, 40, 41, 42}
+    assert set(outcome["relay_event_counts_by_index"].values()) == {2}
+    assert len(result["trn_spike_times_ms"]) == 604
+    assert len(result["nonspecific_spike_times_ms"]) == 6
+    assert outcome["gates"]["sampled_trn_events_have_fresh_cycles"]
+    assert not outcome["gates"]["nonspecific_40_hz"]
+    assert not outcome["pass"]
+    assert not artifact["assessment"]["advance_to_mismatch"]
 
 
 def test_contract_rejects_holdout_leakage(tmp_path: Path) -> None:

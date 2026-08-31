@@ -2198,6 +2198,26 @@ current-below-zero/immediately-previous-above-threshold form. The implemented
 Its event storm is not an implementation-ordering mistake, and the PDF audit
 does not promote it, alter the candidate detector, or unlock any holdout.
 
+Artifact `figure7-receptor-arrival-alignment-registration-237.yaml` then tests
+the primary text's requirement that matched LGN cells receive simultaneous
+bottom-up and top-down excitation at the relay, rather than merely starting
+the cortical source current and retinal input together. The single registered
+7.85-ms lead combines cell 40's measured 5.85-ms event latency with archived
+projection 003's 2-ms delay. It preserves the fresh Figure 6 weights, the
+one-event 800-pA cue, all source delays, and every biological parameter.
+
+The aligned match fails in
+`figure7-receptor-arrival-aligned-match-238.yaml`, so mismatch is not run. The
+lead produces exactly one selected-category event at 5.85 ms and no relay
+event before visual onset, but one nonspecific startup event is already
+present. During the 100-ms match, the correct horizontal relay set remains
+spatially confined but each cell emits only twice (10 total), TRN emits 604
+genuine-cycle events, and nonspecific thalamus emits six events (60 Hz) rather
+than the required four. Receptor-level arrival alignment therefore changes
+the dynamics in the expected inhibitory direction but over-suppresses the
+published match regime. This timing candidate is rejected without consulting
+mismatch or reopening source delays.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

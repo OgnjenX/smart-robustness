@@ -423,6 +423,17 @@ FIGURE7_ALIGNED_HEADROOM_REGISTRATION_PATH = (
     ROOT
     / "docs/validation-results/figure7-aligned-on-center-headroom-registration-239.yaml"
 )
+FIGURE7_ALIGNED_HEADROOM_SCREEN_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-aligned-on-center-headroom-screen-240.yaml"
+)
+FIGURE7_ALIGNED_VERIFICATION_PROFILE_PATH = (
+    ROOT / "configs/calibration/figure7_aligned_on_center_verification_v1.yaml"
+)
+FIGURE7_ALIGNED_VERIFICATION_REGISTRATION_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-aligned-on-center-verification-registration-241.yaml"
+)
 
 
 def test_classic_calibration_contract_separates_training_and_holdout() -> None:
@@ -2591,6 +2602,47 @@ def test_aligned_on_center_headroom_grid_is_preregistered_and_bounded() -> None:
     assert not registration["official_status_before_execution"][
         "figure7_reproduced"
     ]
+
+
+def test_aligned_on_center_screen_selects_only_the_hard_bound() -> None:
+    artifact = yaml.safe_load(FIGURE7_ALIGNED_HEADROOM_SCREEN_PATH.read_text())
+    assert artifact["status"] == "complete"
+    assert artifact["stage_1_survivor_headroom_fractions"] == [1.0]
+    assert artifact["selected_headroom_fraction"] == 1.0
+    assert [
+        item["applied_common_weight_factor"] for item in artifact["outcomes"]
+    ] == pytest.approx(
+        [
+            1.5915980313491906,
+            2.1831960626983813,
+            2.7747940940475724,
+            3.366392125396763,
+        ]
+    )
+    assert [
+        len(item["result"]["nonspecific_spike_times_ms"])
+        for item in artifact["outcomes"]
+    ] == [6, 6, 6, 4]
+    selected = artifact["outcomes"][-1]
+    assert set(selected["relay_event_counts_by_index"].values()) == {3}
+    assert len(selected["result"]["trn_spike_times_ms"]) == 633
+    assert selected["pass"]
+    assert artifact["assessment"]["advance_to_diagnostic_match"]
+    assert artifact["assessment"]["mismatch_remains_locked"]
+
+
+def test_aligned_on_center_verification_registers_only_screen_survivor() -> None:
+    profile = yaml.safe_load(FIGURE7_ALIGNED_VERIFICATION_PROFILE_PATH.read_text())
+    registration = yaml.safe_load(
+        FIGURE7_ALIGNED_VERIFICATION_REGISTRATION_PATH.read_text()
+    )
+    assert profile["status"] == "registered-before-execution"
+    assert profile["dimension"]["grid"] == [1.0]
+    assert profile["protocol"]["record_relay_diagnostics"]
+    assert registration["screen_result"]["selected_headroom_fraction"] == 1.0
+    assert registration["verification"]["candidates"] == 1
+    assert registration["verification"]["independently_rebuilt_network"]
+    assert registration["mismatch_lock"].startswith("Do not run mismatch")
 
 
 def test_contract_rejects_holdout_leakage(tmp_path: Path) -> None:

@@ -49,6 +49,7 @@ def _write(
 ) -> None:
     survivors = [item["headroom_fraction"] for item in outcomes if item["pass"]]
     selected = min(survivors) if survivors else None
+    verification = profile.get("verification_screen_artifact") is not None
     artifact = {
         "schema_version": 1,
         "id": output.stem,
@@ -69,8 +70,13 @@ def _write(
         "assessment": {
             "registered_candidate_count": len(profile["dimension"]["grid"]),
             "completed_candidate_count": len(outcomes),
-            "advance_to_diagnostic_match": bool(complete and survivors),
-            "mismatch_remains_locked": True,
+            "advance_to_diagnostic_match": bool(
+                complete and survivors and not verification
+            ),
+            "advance_to_mismatch": bool(complete and survivors and verification),
+            "mismatch_remains_locked": not bool(
+                complete and survivors and verification
+            ),
         },
         "next_gate": profile["next_gate"],
     }
@@ -95,6 +101,11 @@ def main() -> None:
     control = yaml.safe_load(Path(profile["aligned_control_artifact"]).read_text())
     if control["survivor_currents_pA"]:
         raise ValueError("aligned control unexpectedly passed exact match")
+    verification_path = profile.get("verification_screen_artifact")
+    if verification_path is not None:
+        screen = yaml.safe_load(Path(verification_path).read_text())
+        if screen["selected_headroom_fraction"] != profile["dimension"]["grid"][0]:
+            raise ValueError("verification fraction differs from selected screen survivor")
     base = runtime_conventions_for_candidate(base_profile["candidate"])
     detector = profile["detector"]
     conventions = replace(
@@ -135,7 +146,9 @@ def main() -> None:
             conventions=conventions,
             duration_ms=float(protocol["duration_ms"]),
             dt_ms=float(protocol["dt_ms"]),
-            record_relay_diagnostics=False,
+            record_relay_diagnostics=bool(
+                protocol.get("record_relay_diagnostics", False)
+            ),
             persistent_projection_weight_scales=scales,
             top_down_current_mode=TopDownCurrentMode(
                 protocol["top_down_current_mode"]
@@ -182,12 +195,41 @@ def main() -> None:
                 result.nonspecific_rate_hz == float(gate["nonspecific_rate_hz"])
             ),
         }
+        event_counts: dict[int, int] = {}
+        upcrossings: dict[int, int] = {}
+        arms: dict[int, int] = {}
+        releases: dict[int, int] = {}
+        if protocol.get("record_relay_diagnostics", False):
+            sampled = tuple(
+                index for index, _ in result.trn_detector_arm_transitions_by_index
+            )
+            event_counts = {
+                index: result.trn_spike_indices.count(index) for index in sampled
+            }
+            upcrossings = dict(result.trn_detector_threshold_upcrossings_by_index)
+            arms = dict(result.trn_detector_arm_transitions_by_index)
+            releases = dict(result.trn_detector_release_transitions_by_index)
+            gates["sampled_trn_events_have_fresh_cycles"] = (
+                bool(event_counts)
+                and any(event_counts.values())
+                and all(
+                    event_counts[index]
+                    == upcrossings[index]
+                    == arms[index]
+                    == releases[index]
+                    for index in event_counts
+                )
+            )
         outcomes.append(
             {
                 "headroom_fraction": float(fraction),
                 "applied_common_weight_factor": applied_factor,
                 "result": result,
                 "relay_event_counts_by_index": relay_counts,
+                "sampled_trn_event_counts_by_index": event_counts,
+                "sampled_trn_threshold_upcrossings_by_index": upcrossings,
+                "sampled_trn_arm_transitions_by_index": arms,
+                "sampled_trn_release_transitions_by_index": releases,
                 "gates": gates,
                 "pass": all(gates.values()),
             }

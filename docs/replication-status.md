@@ -2218,6 +2218,25 @@ the dynamics in the expected inhibitory direction but over-suppresses the
 published match regime. This timing candidate is rejected without consulting
 mismatch or reopening source delays.
 
+Artifact `figure7-aligned-on-center-headroom-registration-239.yaml` combines
+that timing result with the remaining underidentified learned-state amplitude.
+Only positive source-40 weights in adaptive projections 005 and 007 are scaled
+by one common factor; zeros, spatial shape, nonselected source rows, inhibition,
+delays, and all cell dynamics remain fixed. Four fractions of the remaining
+source-derived headroom are registered, and the lowest exact match survivor is
+selected without consulting mismatch.
+
+The completed match screen in
+`figure7-aligned-on-center-headroom-screen-240.yaml` has one survivor. At 25%,
+50%, and 75% headroom, the applied factors are 1.59160, 2.18320, and 2.77479;
+relay output is 10, 15, and 15 events, while nonspecific output remains six
+events (60 Hz). At the hard bound, factor 3.36639 yields three events in each
+horizontal relay cell (15 total), 633 TRN events, and exactly four nonspecific
+events (40 Hz). Artifact 241 preregisters an independently rebuilt full-state
+verification of that sole endpoint. Mismatch remains locked until sampled TRN
+event counts are shown to equal threshold upcrossings, arm transitions, and
+release transitions in the verification run.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

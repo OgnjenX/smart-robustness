@@ -1,0 +1,24 @@
+schema_version: 1
+id: figure7-aligned-on-center-verification-registration-241
+date: 2026-08-31
+status: registered-before-execution
+profile: configs/calibration/figure7_aligned_on_center_verification_v1.yaml
+screen_artifact: docs/validation-results/figure7-aligned-on-center-headroom-screen-240.yaml
+screen_result:
+  selected_headroom_fraction: 1.0
+  applied_common_weight_factor: 3.366392125396763
+  relay_events: 15
+  relay_events_per_active_index: 3
+  trn_events: 633
+  nonspecific_events: 4
+  nonspecific_rate_hz: 40.0
+verification:
+  candidates: 1
+  independently_rebuilt_network: true
+  record_full_relay_trn_pathway_state: true
+  require_sampled_trn_event_count_equals_threshold_upcrossings_equals_arm_transitions_equals_release_transitions: true
+  require_all_stage_1_match_gates: true
+mismatch_lock: Do not run mismatch unless this independent diagnostic match passes every gate.
+official_status_before_execution:
+  figure7_reproduced: false
+  downstream_holdouts_unlocked: false

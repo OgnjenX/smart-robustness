@@ -514,6 +514,13 @@ FIGURE7_TRN_ARRIVAL_MATCH_REGISTRATION_PATH = (
 FIGURE7_TRN_ARRIVAL_MATCH_RESULT_PATH = (
     ROOT / "docs/validation-results/figure7-trn-arrival-aligned-match-258.yaml"
 )
+FIGURE7_CORTICORETICULAR_GAIN_PROFILE_PATH = (
+    ROOT / "configs/calibration/figure7_corticoreticular_gain_match_v1.yaml"
+)
+FIGURE7_CORTICORETICULAR_GAIN_REGISTRATION_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-corticoreticular-gain-registration-259.yaml"
+)
 
 
 def test_classic_calibration_contract_separates_training_and_holdout() -> None:
@@ -3112,6 +3119,28 @@ def test_trn_arrival_alignment_fails_exact_match_and_locks_mismatch() -> None:
     assert outcome["gates"]["current_terminated_on_selected_event"]
     assert not outcome["gates"]["nonspecific_40_hz"]
     assert not outcome["pass"]
+
+
+def test_corticoreticular_gain_screen_is_finite_match_only_calibration() -> None:
+    profile = yaml.safe_load(FIGURE7_CORTICORETICULAR_GAIN_PROFILE_PATH.read_text())
+    registration = yaml.safe_load(
+        FIGURE7_CORTICORETICULAR_GAIN_REGISTRATION_PATH.read_text()
+    )
+    assert profile["dimension"]["projection_ids"] == [
+        "modeldb112923.projection.009",
+        "modeldb112923.projection.012",
+    ]
+    assert profile["dimension"]["grid"] == [1.25, 1.5, 2.0, 4.0, 8.0]
+    assert registration["dimension"]["source_status"] == (
+        "post_holdout_exploratory_behavior_calibration"
+    )
+    assert registration["execution_order"][-1] == (
+        "Do not inspect mismatch during this screen."
+    )
+    assert registration["fixed_choices"]["relay_to_trn_projection_010_unchanged"]
+    assert not registration["official_status_before_execution"][
+        "figure7_reproduced"
+    ]
 
 
 def test_contract_rejects_holdout_leakage(tmp_path: Path) -> None:

@@ -1,0 +1,47 @@
+schema_version: 1
+id: figure7-corticoreticular-gain-registration-259
+date: '2026-08-31'
+status: registered-before-execution-exploratory-behavior-calibration
+profile: configs/calibration/figure7_corticoreticular_gain_match_v1.yaml
+rationale: >-
+  Artifact 250 records layer-6II-driven TRN AMPA peaks of approximately
+  0.9--2.3 and NMDA peaks of 0.04--0.21, versus relay-driven AMPA peaks of
+  approximately 12--18. Scalar TRN-to-relay gain, annular geometry, cue-event
+  count, and source-delay alignment have all failed their registered gates.
+  Test whether restoring top-down control over TRN is mechanistically possible
+  by scaling only the two corticoreticular projections in fresh match networks.
+source_boundary: >-
+  SMART.nml explicitly serializes projection-009 and projection-012 weights;
+  they are not free source parameters. This is post-holdout exploratory behavior
+  calibration of a localized pathway imbalance, not recovered SMART or
+  independent validation.
+fixed_choices:
+  projection_ids:
+    - modeldb112923.projection.009
+    - modeldb112923.projection.012
+  projection_009_source_weight: 0.3
+  projection_012_source_weight: 4.0
+  relay_to_trn_projection_010_unchanged: true
+  trn_to_relay_scales: {soma: 0.01, proximal: 0.01, distal: 0.03}
+  one_event_current_pA: 800.0
+  cue_lead_ms: 7.85
+  learned_headroom_fraction: 1.0
+  cell_dynamics_ring_geometry_delays_and_kinetics_unchanged: true
+dimension:
+  registered_common_gains: [1.25, 1.5, 2.0, 4.0, 8.0]
+  rationale: >-
+    Finite quarter-step and doubling grid from a small perturbation through the
+    approximately eightfold AMPA peak imbalance measured in Artifact 250.
+  source_status: post_holdout_exploratory_behavior_calibration
+execution_order:
+  - Reproduce Figure 6 once with the unchanged baseline network and transfer only learned weights.
+  - Rebuild an independent Figure 7 match network for every registered gain.
+  - Select the lowest endpoint passing the exact 40-Hz and horizontal-relay match gates.
+  - Do not inspect mismatch during this screen.
+stopping_rule: >-
+  Do not interpolate, expand the grid, separately scale AMPA and NMDA, or alter
+  relay-to-TRN feedback after seeing the result.
+official_status_before_execution:
+  figure7_reproduced: false
+  downstream_holdouts_unlocked: false
+

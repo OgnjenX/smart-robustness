@@ -2448,6 +2448,14 @@ the official four. The cue lead also contains the known 81-cell TRN startup
 volley and one nonspecific startup event. Exact match fails, mismatch is not
 consulted, and the delay-2 endpoint is rejected at recognition.
 
+Artifacts 279--280 correct the final integer delay-3 prerequisite using the
+same exact two-stage detector protocol. Stage 1 again produces 10 horizontal
+relay and 368 TRN events. Stage 2 produces four fresh cycles in each relay cell
+38--42 (20 total), 552 TRN events, complete cortical recruitment, causal
+learning, and horizontal maps with top-down contrast approximately 0.607. All
+Figure 6 gates pass, so delay 3 is eligible for one separately registered
+fresh gain-8 match. Fractional delay interpolation remains disallowed.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

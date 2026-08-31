@@ -1,0 +1,99 @@
+schema_version: 1
+id: figure6-corticoreticular-ampa-delay3-corrected-280
+date: '2026-08-31'
+status: complete
+profile: configs/calibration/figure6_corticoreticular_ampa_delay3_corrected_v1.yaml
+base_candidate_fingerprint: 12e0245e9a3044073200e90443582885a5410cf39b8b18d50d22a04a2fc48604
+runtime_fingerprint: 561c7ce031c431a725ab548d4c0acf372a5e03619c69708f4bbf49f0236f4c64
+holdouts_consulted: false
+stage_1_outcomes:
+- label: projection012_effective_delay_3ms
+  scales:
+    modeldb112923.projection.000: 0.01
+    modeldb112923.projection.001: 0.01
+    modeldb112923.projection.004: 0.03
+  population_spikes:
+    thalamic_relay: 10
+    trn: 368
+    layer5_excitatory_v1: 5
+    layer6ii_excitatory_v1: 6
+    layer6i_excitatory_v1: 15
+    layer23_excitatory_v1: 10
+    layer4_excitatory_v1: 18
+    layer23_inhibitory_v1: 15
+    thalamic_nonspecific: 2
+  relay_spike_indices:
+  - 38
+  - 39
+  - 40
+  - 41
+  - 42
+  - 40
+  - 39
+  - 41
+  - 38
+  - 42
+  relay_event_counts_by_index:
+    '38': 2
+    '39': 2
+    '40': 2
+    '41': 2
+    '42': 2
+  pass: true
+stage_1_survivor_labels:
+- projection012_effective_delay_3ms
+stage_2_outcomes:
+- label: projection012_effective_delay_3ms
+  scales:
+    modeldb112923.projection.000: 0.01
+    modeldb112923.projection.001: 0.01
+    modeldb112923.projection.004: 0.03
+  population_spikes:
+    thalamic_relay: 20
+    trn: 552
+    layer5_excitatory_v1: 14
+    layer6ii_excitatory_v1: 12
+    layer6i_excitatory_v1: 42
+    layer23_excitatory_v1: 22
+    layer4_excitatory_v1: 36
+    layer23_inhibitory_v1: 20
+    thalamic_nonspecific: 6
+  relay_event_counts_by_index:
+    '38': 4
+    '39': 4
+    '40': 4
+    '41': 4
+    '42': 4
+  recruitment:
+    layer4_spike_ms: 9.930000000000001
+    layer23_spike_ms: 32.940000000000005
+    layer5_spike_ms: 35.660000000000004
+    layer6i_spike_ms: 8.110000000000001
+    layer6ii_spike_ms: 8.100000000000001
+  top_down_timing:
+    category_spike_ms: 39.300000000000004
+    teaching_arrival_ms: 41.300000000000004
+    preceding_relay_spike_ms: 5.280000000000001
+    following_relay_spike_ms: 42.04
+  top_down_combined_horizontal_orientation_contrast: 0.6073241052039379
+  gates:
+    relay_event_count: true
+    relay_active_indices: true
+    relay_events_per_active_index: true
+    relay_fresh_detector_cycles_per_active_index: true
+    feedforward_chain_complete: true
+    causal_pair_in_learning_window: true
+    bottom_up_horizontal_orientation: true
+    top_down_horizontal_contrast: true
+  pass: true
+stage_2_survivor_labels:
+- projection012_effective_delay_3ms
+assessment:
+  registered_profile_count: 1
+  stage_1_completed_count: 1
+  stage_2_completed_count: 1
+  figure6_survivor_count: 1
+  advance_to_figure7: true
+next_gate: Only if every corrected Figure 6 gate passes, register a fresh Figure 7
+  match at fixed delay 3 and gain 8. Otherwise close the integer effective-delay family
+  without consulting Figure 7.

@@ -1,0 +1,50 @@
+schema_version: 1
+name: projection022-source-resolution-figure6-v1
+status: registered-before-execution
+base_profile: configs/calibration/figure6_kinness_equation27_transition_v1.yaml
+figure7_failure_artifact: docs/validation-results/figure7-trn-gaba-compartment-pair-208.yaml
+rationale: >-
+  Artifact 208 shows condition-dependent layer-6II activity propagating into
+  both TRN and nonspecific thalamus, but mismatch has the greater TRN drive and
+  retains all five bottom-up relay cells. Archived projection 022 is the one
+  localized source conflict in this category pathway: SMART.nml connects
+  layer-4 inhibitory cells excitatorily to layer 6II with a channel named
+  AMPA 2/3, whereas Supplementary Table 3 specifies layer-2/3 excitatory to
+  layer 6II, one-to-one. Retest that source-cross-checked endpoint only in the
+  current Figure 6-valid regime. This is a discrete source resolution, not a
+  fitted weight or topology search.
+detector: {arm_mV: -20.0, release_mV: -30.0}
+runtime_overrides:
+  projection_source_convention: paper_supplement_cross_checked
+profiles:
+  - label: paper_supplement_projection022
+    scales:
+      modeldb112923.projection.000: 0.01
+      modeldb112923.projection.001: 0.01
+      modeldb112923.projection.004: 0.015
+stage_1_protocol: {stimulus_ms: 55.0, dt_ms: 0.01}
+stage_1_gate:
+  relay_active_indices: [38, 39, 40, 41, 42]
+  minimum_events_per_active_relay: 2
+  trn_events: '>0'
+stage_2_protocol: {stimulus_ms: 100.0, dt_ms: 0.01}
+stage_2_gate:
+  relay_event_count: 20
+  relay_active_indices: [38, 39, 40, 41, 42]
+  relay_events_per_active_index: 4
+  relay_fresh_detector_cycles_per_active_index: 4
+  feedforward_chain_complete: true
+  causal_pair_in_learning_window: true
+  bottom_up_horizontal_orientation: true
+  minimum_top_down_horizontal_contrast: 0.01
+next_gate: >-
+  Advance unchanged to a new same-network Figure 7 match only if every Figure
+  6 gate passes. If Figure 6 fails, retain the exact failure and reject this
+  source resolution in the calibrated regime without consulting Figure 7.
+locked_holdouts:
+  - figure7_match
+  - figure7_mismatch
+  - figure10_reset
+  - figure14_spectra
+  - figure15_local_synchrony
+  - figure16_long_range_synchrony

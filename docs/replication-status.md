@@ -1973,6 +1973,13 @@ registered in Artifact 206 before these Figure 7 outcomes, this is not a new
 mismatch-fitted interpolation. The unchanged candidate advances to an
 independent same-network Figure 7 pair and remains provisional.
 
+Artifact `figure7-projection022-distal002-match-213.yaml` passes the unchanged
+same-network match gate: six relay events in each of cells 38--42 (30 total),
+522 TRN events, and five nonspecific events. All sampled TRN event counts equal
+their independent threshold-upcrossing, arm, and release counts. The result
+authorizes one fresh mismatch with distal scale 0.02 and all other source and
+runtime choices fixed; it is not by itself a Figure 7 reproduction.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

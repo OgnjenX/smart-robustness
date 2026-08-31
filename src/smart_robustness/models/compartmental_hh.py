@@ -300,7 +300,12 @@ def create_compartmental_hh_population(
     )
     # Protocols can request a one-event somatic current pulse. The flag
     # defaults to zero, preserving sustained-current behavior exactly.
-    spike_reset = "armed = 0; i_drive_soma *= (1-clear_drive_on_spike)"
+    spike_reset = (
+        "armed = 0; "
+        "i_drive_soma *= (1-clear_drive_on_spike); "
+        "i_drive_soma *= int(drive_spikes_until_clear != 1); "
+        "drive_spikes_until_clear -= int(drive_spikes_until_clear > 0)"
+    )
     if enable_ahp_ach:
         spike_reset += "; ahp_rise += 1; ahp_fall += 1"
     if compiled.depletion_enabled:
@@ -329,6 +334,7 @@ def create_compartmental_hh_population(
     equations = compiled.equations + (
         f"\nspike_detector_voltage = {spike_voltage} : volt"
         "\nclear_drive_on_spike : 1 (constant)"
+        "\ndrive_spikes_until_clear : integer"
     )
     if spike_event_rule in {
         SpikeEventRule.LATCHED_PEAK_THEN_ZERO,
@@ -361,6 +367,7 @@ def create_compartmental_hh_population(
         )
     group = brian.NeuronGroup(size, equations, reset=spike_reset, **group_kwargs)
     group.clear_drive_on_spike = 0
+    group.drive_spikes_until_clear = 0
     if spike_event_rule in {
         SpikeEventRule.LATCHED_PEAK_THEN_ZERO,
         SpikeEventRule.HYSTERETIC_THRESHOLD_THEN_ZERO,

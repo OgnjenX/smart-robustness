@@ -494,6 +494,13 @@ RADIAL_ANNULUS_GABA_GAIN_RESULT_PATH = (
     ROOT
     / "docs/validation-results/radial-annulus-gaba-gain-figure6-254.yaml"
 )
+FIGURE7_TWO_EVENT_MATCH_PROFILE_PATH = (
+    ROOT / "configs/calibration/figure7_aligned_two_event_match_v1.yaml"
+)
+FIGURE7_TWO_EVENT_MATCH_REGISTRATION_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-aligned-two-event-registration-255.yaml"
+)
 
 
 def test_classic_calibration_contract_separates_training_and_holdout() -> None:
@@ -3011,6 +3018,24 @@ def test_radial_annulus_gain_family_fails_before_figure7() -> None:
     assert all(outcome["population_spikes"]["thalamic_relay"] == 5 for outcome in outcomes)
     assert all(outcome["population_spikes"]["trn"] == 307 for outcome in outcomes)
     assert all(not outcome["pass"] for outcome in outcomes)
+
+
+def test_two_event_current_match_is_the_sole_discrete_duration_intermediate() -> None:
+    profile = yaml.safe_load(FIGURE7_TWO_EVENT_MATCH_PROFILE_PATH.read_text())
+    registration = yaml.safe_load(
+        FIGURE7_TWO_EVENT_MATCH_REGISTRATION_PATH.read_text()
+    )
+    assert profile["protocol"]["top_down_current_mode"] == (
+        "until_cued_cell_event_limit"
+    )
+    assert profile["protocol"]["top_down_current_event_limit"] == 2
+    assert profile["dimension"]["grid"] == [1.0]
+    assert registration["dimension"]["candidates"] == 1
+    assert registration["dimension"]["current_termination_event_limit"] == 2
+    assert registration["execution_order"][-1].startswith("Keep mismatch locked")
+    assert not registration["official_status_before_execution"][
+        "figure7_reproduced"
+    ]
 
 
 def test_contract_rejects_holdout_leakage(tmp_path: Path) -> None:

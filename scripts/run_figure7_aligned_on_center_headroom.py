@@ -154,6 +154,9 @@ def main() -> None:
             top_down_current_mode=TopDownCurrentMode(
                 current_mode
             ),
+            top_down_current_event_limit=protocol.get(
+                "top_down_current_event_limit"
+            ),
             top_down_cue_lead_ms=float(protocol["top_down_cue_lead_ms"]),
             equilibration_ms=float(protocol["equilibration_ms"]),
             brian=brian,
@@ -192,10 +195,28 @@ def main() -> None:
                 result.nonspecific_rate_hz == float(gate["nonspecific_rate_hz"])
             ),
         }
-        if current_mode is TopDownCurrentMode.UNTIL_CUED_CELL_FIRST_EVENT:
+        if current_mode in {
+            TopDownCurrentMode.UNTIL_CUED_CELL_FIRST_EVENT,
+            TopDownCurrentMode.UNTIL_CUED_CELL_EVENT_LIMIT,
+        }:
+            event_limit = (
+                1
+                if current_mode is TopDownCurrentMode.UNTIL_CUED_CELL_FIRST_EVENT
+                else int(protocol["top_down_current_event_limit"])
+            )
+            selected_events_from_cue_start = list(source_events) + [
+                float(protocol["top_down_cue_lead_ms"]) + time
+                for index, time in zip(
+                    result.category_spike_indices,
+                    result.category_spike_times_ms,
+                    strict=True,
+                )
+                if index == int(profile["dimension"]["source_index"])
+            ]
             gates["current_terminated_on_selected_event"] = (
-                bool(source_events)
-                and result.top_down_current_termination_time_ms == source_events[0]
+                len(selected_events_from_cue_start) >= event_limit
+                and result.top_down_current_termination_time_ms
+                == selected_events_from_cue_start[event_limit - 1]
             )
         else:
             gates["sustained_current_protocol"] = (

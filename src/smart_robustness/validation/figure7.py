@@ -36,6 +36,7 @@ class TopDownCurrentMode(StrEnum):
 
     SUSTAINED_EPOCH = "sustained_epoch"
     UNTIL_CUED_CELL_FIRST_EVENT = "until_cued_cell_first_event"
+    UNTIL_CUED_CELL_EVENT_LIMIT = "until_cued_cell_event_limit"
 
 FIGURE7_REQUIRED_LEARNED_PROJECTIONS = (
     TOP_DOWN_WIDE_PROJECTION_ID,
@@ -296,6 +297,7 @@ class Figure7ConditionResult:
     convention_fingerprint: str | None = None
     top_down_current_pA: float | None = None
     top_down_current_mode: str = TopDownCurrentMode.SUSTAINED_EPOCH.value
+    top_down_current_event_limit: int | None = None
     top_down_current_termination_time_ms: float | None = None
     top_down_relay_source_indices: tuple[int, ...] | None = None
     top_down_cue_lead_ms: float = 0.0
@@ -367,6 +369,10 @@ class Figure7ConditionResult:
         if self.equilibration_ms < 0:
             raise ValueError("equilibration_ms cannot be negative")
         TopDownCurrentMode(self.top_down_current_mode)
+        if self.top_down_current_event_limit is not None and (
+            self.top_down_current_event_limit < 1
+        ):
+            raise ValueError("top-down current event limit must be positive")
         if self.top_down_current_termination_time_ms is not None and not (
             0
             <= self.top_down_current_termination_time_ms
@@ -561,6 +567,7 @@ def run_figure7_condition(
     top_down_current_mode: TopDownCurrentMode | str = (
         TopDownCurrentMode.SUSTAINED_EPOCH
     ),
+    top_down_current_event_limit: int | None = None,
     top_down_cue_lead_ms: float = 0.0,
     equilibration_ms: float = 0.0,
     cpp_standalone_directory: str | Path | None = None,
@@ -587,6 +594,11 @@ def run_figure7_condition(
     if equilibration_ms < 0:
         raise ValueError("equilibration_ms cannot be negative")
     current_mode = TopDownCurrentMode(top_down_current_mode)
+    if current_mode is TopDownCurrentMode.UNTIL_CUED_CELL_EVENT_LIMIT:
+        if top_down_current_event_limit is None or top_down_current_event_limit < 1:
+            raise ValueError("event-limited top-down current requires a positive limit")
+    elif top_down_current_event_limit is not None:
+        raise ValueError("top-down current event limit requires event-limited mode")
     if top_down_relay_source_indices is not None and cpp_standalone_directory is not None:
         raise ValueError("selected-category source masking is a numpy diagnostic only")
     if record_relay_diagnostics and duration_ms <= 45.0:
@@ -866,6 +878,12 @@ def run_figure7_condition(
         category_group = sector.populations[cue.top_down_population].group
         category_group.clear_drive_on_spike = 0
         category_group.clear_drive_on_spike[cue.top_down_cell_index] = 1
+    elif current_mode is TopDownCurrentMode.UNTIL_CUED_CELL_EVENT_LIMIT:
+        category_group = sector.populations[cue.top_down_population].group
+        category_group.drive_spikes_until_clear = 0
+        category_group.drive_spikes_until_clear[cue.top_down_cell_index] = int(
+            top_down_current_event_limit
+        )
     if top_down_cue_lead_ms > 0:
         apply_layer6ii_somatic_cue(
             sector,
@@ -1459,40 +1477,32 @@ def run_figure7_condition(
     category_stimulus_indices = stimulus_indices(category)
     category_stimulus_times = stimulus_times(category)
     current_termination_time_ms = None
-    if current_mode is TopDownCurrentMode.UNTIL_CUED_CELL_FIRST_EVENT:
-        cue_lead_category_indices = cue_lead_indices(category)
-        cue_lead_category_times = cue_lead_times(category)
-        cue_lead_termination_time_ms = next(
-            (
-                time
-                for index, time in zip(
-                    cue_lead_category_indices,
-                    cue_lead_category_times,
-                    strict=True,
-                )
-                if index == cue.top_down_cell_index
-            ),
-            None,
+    if current_mode in {
+        TopDownCurrentMode.UNTIL_CUED_CELL_FIRST_EVENT,
+        TopDownCurrentMode.UNTIL_CUED_CELL_EVENT_LIMIT,
+    }:
+        termination_event_limit = (
+            1
+            if current_mode is TopDownCurrentMode.UNTIL_CUED_CELL_FIRST_EVENT
+            else int(top_down_current_event_limit)
         )
-        if cue_lead_termination_time_ms is not None:
-            current_termination_time_ms = cue_lead_termination_time_ms
-        else:
-            stimulus_termination_time_ms = next(
-                (
-                    time
-                    for index, time in zip(
-                        category_stimulus_indices,
-                        category_stimulus_times,
-                        strict=True,
-                    )
-                    if index == cue.top_down_cell_index
-                ),
-                None,
+        selected_event_times_from_cue_start = [
+            time
+            for index, time in zip(
+                cue_lead_indices(category), cue_lead_times(category), strict=True
             )
-            if stimulus_termination_time_ms is not None:
-                current_termination_time_ms = (
-                    top_down_cue_lead_ms + stimulus_termination_time_ms
-                )
+            if index == cue.top_down_cell_index
+        ] + [
+            top_down_cue_lead_ms + time
+            for index, time in zip(
+                category_stimulus_indices, category_stimulus_times, strict=True
+            )
+            if index == cue.top_down_cell_index
+        ]
+        if len(selected_event_times_from_cue_start) >= termination_event_limit:
+            current_termination_time_ms = selected_event_times_from_cue_start[
+                termination_event_limit - 1
+            ]
     result = Figure7ConditionResult(
         condition=condition,
         duration_ms=duration_ms,
@@ -1543,6 +1553,7 @@ def run_figure7_condition(
         convention_fingerprint=conventions.fingerprint,
         top_down_current_pA=top_down_current_pA,
         top_down_current_mode=current_mode.value,
+        top_down_current_event_limit=top_down_current_event_limit,
         top_down_current_termination_time_ms=current_termination_time_ms,
         top_down_relay_source_indices=(
             None

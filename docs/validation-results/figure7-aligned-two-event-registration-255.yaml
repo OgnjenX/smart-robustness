@@ -1,0 +1,40 @@
+schema_version: 1
+id: figure7-aligned-two-event-registration-255
+date: '2026-08-31'
+status: registered-before-execution
+profile: configs/calibration/figure7_aligned_two_event_match_v1.yaml
+source_ambiguity: >-
+  Methods 4.9 says that somatic current induces the Figure 7 top-down feedback
+  but gives no duration. Figure 9a's until-one-spike instruction belongs to a
+  different protocol. Artifact 242's one-event interpretation passes exact
+  match, while Artifact 246's sustained current yields three selected-cell
+  events and fails at 50-Hz nonspecific output.
+mechanistic_evidence:
+  artifact: docs/validation-results/figure7-mismatch-pre-event-trace-audit-250.yaml
+  finding: >-
+    During mismatch, relay-driven TRN AMPA peaks at roughly 12--18 gate units,
+    whereas layer-6II-driven AMPA peaks at roughly 0.9--2.3. The intended
+    top-down off-surround is therefore feedback-dominated in the one-event run.
+dimension:
+  current_termination_event_limit: 2
+  candidates: 1
+  rationale: sole integer intermediate between one selected event and the three selected events observed under sustained current
+  source_status: bounded_unreported_figure7_current_duration_calibration
+fixed_choices:
+  current_pA: 800.0
+  cue_lead_ms: 7.85
+  learned_headroom_fraction: 1.0
+  trn_to_relay_scales: {soma: 0.01, proximal: 0.01, distal: 0.03}
+  ring_geometry: center_excluded_gaussian
+  intrinsic_synaptic_and_topological_parameters_unchanged: true
+execution_order:
+  - Run one fresh Figure 7 match without full pathway diagnostics.
+  - Require exact 40-Hz nonspecific output and the five-cell horizontal relay pattern.
+  - Keep mismatch locked unless an independent full-state match rerun also passes.
+stopping_rule: >-
+  Do not interpolate current time, add event limits beyond two, or inspect
+  mismatch after a failed match.
+official_status_before_execution:
+  figure7_reproduced: false
+  downstream_holdouts_unlocked: false
+

@@ -1942,6 +1942,15 @@ a source-resolution candidate rather than a fitted topology change. It
 advances unchanged to an independently registered same-network Figure 7 pair,
 but remains provisional until that downstream behavior is tested.
 
+The source-resolved circuit passes its independent match prerequisite in
+`figure7-projection022-source-resolution-match-210.yaml`. Same-network Figure
+6 pretraining followed by matched recognition yields six relay events in each
+of cells 38--42 (30 total), 547 TRN events, and five nonspecific-thalamus
+events. Across all nine sampled TRN cells, emitted events exactly match fresh
+threshold upcrossings, arm transitions, and release transitions. This unlocks
+the preregistered mismatch with the same source resolution and every calibrated
+parameter fixed; match alone remains insufficient for a Figure 7 claim.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

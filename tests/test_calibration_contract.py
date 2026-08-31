@@ -290,6 +290,10 @@ FIGURE6_PROJECTION022_SOURCE_RESOLUTION_PATH = (
     ROOT
     / "docs/validation-results/figure6-projection022-source-resolution-209.yaml"
 )
+FIGURE7_PROJECTION022_SOURCE_RESOLUTION_MATCH_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-projection022-source-resolution-match-210.yaml"
+)
 
 
 def test_classic_calibration_contract_separates_training_and_holdout() -> None:
@@ -1289,6 +1293,31 @@ def test_projection022_source_resolution_preserves_complete_figure6() -> None:
     )
     assert all(outcome["gates"].values())
     assert outcome["pass"]
+
+
+def test_projection022_source_resolution_passes_same_network_match() -> None:
+    artifact = yaml.safe_load(
+        FIGURE7_PROJECTION022_SOURCE_RESOLUTION_MATCH_PATH.read_text()
+    )
+    assert artifact["status"] == "match-pass"
+    assert artifact["holdouts_consulted"] == ["figure7_match"]
+    result = artifact["result"]
+    assert len(result["relay_spike_indices"]) == 30
+    assert set(result["relay_spike_indices"]) == {38, 39, 40, 41, 42}
+    assert len(result["trn_spike_indices"]) == 547
+    assert len(result["nonspecific_spike_times_ms"]) == 5
+    assert set(artifact["relay_event_counts_by_index"].values()) == {6}
+    assert artifact["sampled_trn_event_counts_by_index"] == artifact[
+        "sampled_trn_threshold_upcrossings_by_index"
+    ]
+    assert artifact["sampled_trn_event_counts_by_index"] == artifact[
+        "sampled_trn_arm_transitions_by_index"
+    ]
+    assert artifact["sampled_trn_event_counts_by_index"] == artifact[
+        "sampled_trn_release_transitions_by_index"
+    ]
+    assert all(artifact["gates"].values())
+    assert artifact["assessment"]["advance_to_mismatch"]
 
 
 def test_trn_calcium_reversal_restores_wrong_cue_lead_mechanism() -> None:

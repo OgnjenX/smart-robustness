@@ -75,6 +75,8 @@ def main() -> None:
         default="configs/calibration/figure7_aligned_on_center_mismatch_v1.yaml",
     )
     parser.add_argument("--output", required=True)
+    parser.add_argument("--diagnostic-registration")
+    parser.add_argument("--pre-event-offsets-ms", type=float, nargs="*", default=[])
     args = parser.parse_args()
 
     import brian2 as brian
@@ -134,6 +136,7 @@ def main() -> None:
         duration_ms=float(protocol["duration_ms"]),
         dt_ms=float(protocol["dt_ms"]),
         record_relay_diagnostics=True,
+        relay_pre_event_offsets_ms=tuple(args.pre_event_offsets_ms),
         persistent_projection_weight_scales=scales,
         top_down_current_mode=TopDownCurrentMode(protocol["top_down_current_mode"]),
         top_down_cue_lead_ms=float(protocol["top_down_cue_lead_ms"]),
@@ -191,7 +194,14 @@ def main() -> None:
         "date": datetime.now(tz=UTC).date().isoformat(),
         "status": "figure7-reproduced" if reproduced else "figure7-failed",
         "profile": args.profile,
-        "registration_artifact": profile["registration_artifact"],
+        "registration_artifact": (
+            args.diagnostic_registration or profile["registration_artifact"]
+        ),
+        "original_holdout_registration_artifact": (
+            profile["registration_artifact"]
+            if args.diagnostic_registration
+            else None
+        ),
         "base_candidate_fingerprint": base_profile["candidate_fingerprint"],
         "runtime_fingerprint": conventions.fingerprint,
         "figure6_artifact": profile["figure6_artifact"],

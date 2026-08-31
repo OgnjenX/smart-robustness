@@ -337,6 +337,14 @@ def test_figure7_runner_requires_exactly_one_learned_state_source() -> None:
 
 
 def test_figure7_runner_rejects_invalid_projection_discriminators() -> None:
+    with pytest.raises(ValueError, match="pre-event samples require"):
+        run_figure7_condition(
+            condition=MatchCondition.MATCH,
+            top_down_current_pA=100.0,
+            use_paper_constrained_reference=True,
+            relay_pre_event_offsets_ms=(1.0,),
+            duration_ms=0.01,
+        )
     with pytest.raises(ValueError, match="unknown projection scale"):
         run_figure7_condition(
             condition=MatchCondition.MATCH,

@@ -2290,6 +2290,22 @@ The unresolved mechanism is bottom-up-driven relay escape through the temporal
 profile of reticular inhibition. No official gate changes, and Figure 10 and
 spectral holdouts remain locked.
 
+Artifact 249 preregisters a second unchanged rerun because emitted-event
+currents are measured after spike initiation. The pre-event audit in
+`figure7-mismatch-pre-event-trace-audit-250.yaml` again reproduces exactly
+15/10 relay, 633/583 TRN, and 4/7 nonspecific match/mismatch events. At the
+first event, all five bottom-up relay cells follow a nearly identical somatic
+trajectory: approximately -51 to -52 mV at 2 ms before the event, -43.1 to
+-43.3 mV at 0.5 ms, and above +43 mV at 0.2 ms. The combined TRN GABA gate is
+not at a shared decay trough: it falls from 0.339 to 0.273 in cells 31/49 but
+rises from 0.214 to 0.287 in cells 22/58. At 0.5 ms, direct image current is
+242--262 pA and somatic sodium current is already 4.22--4.45 nA in all five
+cells. Thus the spatial failure is a family of delayed tonic bottom-up
+threshold crossings whose timing is shifted by inhibition, not a common
+release window. This further rules out learned-map redistribution as a direct
+remedy and points back to the under-recovered legacy spike-event/GABA transfer
+semantics. The official Figure 7 failure and downstream locks are unchanged.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

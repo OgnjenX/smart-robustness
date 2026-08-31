@@ -243,6 +243,11 @@ parameters:
     status: diagnostic-readout-only
     source: Artifact 247 preregistration and deterministic Artifact 248 rerun of the rejected aligned pair
     note: the exact pair is reproduced. At the first nonoverlap events, top-down and T-type calcium currents are negligible while bottom-up image drive remains substantial; this excludes expectation leakage and rebound as primary causes and localizes the unresolved failure to bottom-up escape through the temporal reticular-inhibition profile. Event-time samples are falling-phase diagnostics, not initiation-threshold estimates
+  protocol.figure7.mismatch_relay_pre_event_trace_audit:
+    value: currents, compartment voltages, and combined TRN GABA gate at 2.0, 1.0, 0.5, and 0.2 ms before every emitted relay event; no candidate or protocol change
+    status: diagnostic-readout-only
+    source: Artifact 249 preregistration and deterministic Artifact 250 rerun
+    note: all five bottom-up mismatch cells exhibit near-identical somatic threshold trajectories, while the GABA gate falls before some first events and rises before others. There is no common inhibitory trough; tonic bottom-up drive eventually recruits fast somatic sodium despite dendritic inhibition. This rules out learned-map redistribution as a direct spatial rescue and retains legacy spike-event/GABA transfer semantics as the unresolved source boundary
   model.connectivity.projection022_distal003_interaction:
     value: Supplementary projection-022 endpoint with distal TRN-to-relay GABA scale 0.03 and somatic/proximal scales 0.01
     status: rejected-behavior-calibration

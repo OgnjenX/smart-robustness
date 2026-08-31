@@ -469,6 +469,10 @@ FIGURE7_PRE_EVENT_TRACE_REGISTRATION_PATH = (
     ROOT
     / "docs/validation-results/figure7-mismatch-pre-event-trace-registration-249.yaml"
 )
+FIGURE7_PRE_EVENT_TRACE_AUDIT_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-mismatch-pre-event-trace-audit-250.yaml"
+)
 
 
 def test_classic_calibration_contract_separates_training_and_holdout() -> None:
@@ -2843,6 +2847,56 @@ def test_mismatch_pre_event_trace_audit_is_readout_only_and_preregistered() -> N
     assert not registration["official_status_before_execution"][
         "figure7_reproduced"
     ]
+
+
+def test_mismatch_pre_event_trace_audit_excludes_common_inhibition_trough() -> None:
+    artifact = yaml.safe_load(FIGURE7_PRE_EVENT_TRACE_AUDIT_PATH.read_text())
+    assert artifact["status"] == "figure7-failed"
+    assert artifact["registration_artifact"].endswith(
+        "figure7-mismatch-pre-event-trace-registration-249.yaml"
+    )
+    assert not artifact["reproduced"]
+    mismatch = artifact["mismatch_result"]
+    assert len(mismatch["relay_spike_times_ms"]) == 10
+    assert len(mismatch["trn_spike_times_ms"]) == 583
+    assert len(mismatch["nonspecific_spike_times_ms"]) == 7
+    assert len(mismatch["relay_pre_event_current_samples_pA"]) == 360
+    assert len(mismatch["relay_pre_event_voltage_samples_mV"]) == 120
+    assert len(mismatch["relay_pre_event_trn_gaba_gate_samples"]) == 40
+
+    first_event_by_index: dict[int, float] = {}
+    for index, time_ms in zip(
+        mismatch["relay_spike_indices"],
+        mismatch["relay_spike_times_ms"],
+        strict=True,
+    ):
+        first_event_by_index.setdefault(index, time_ms)
+
+    gate_by_index_and_offset = {
+        (index, offset_ms): value
+        for index, event_time_ms, offset_ms, value in mismatch[
+            "relay_pre_event_trn_gaba_gate_samples"
+        ]
+        if event_time_ms == first_event_by_index[index]
+    }
+    assert gate_by_index_and_offset[(31, 0.2)] < gate_by_index_and_offset[
+        (31, 2.0)
+    ]
+    assert gate_by_index_and_offset[(22, 0.2)] > gate_by_index_and_offset[
+        (22, 2.0)
+    ]
+
+    soma_by_index_and_offset = {
+        (index, offset_ms): value
+        for index, event_time_ms, offset_ms, source, value in mismatch[
+            "relay_pre_event_voltage_samples_mV"
+        ]
+        if event_time_ms == first_event_by_index[index] and source == "soma"
+    }
+    for index in (22, 31, 40, 49, 58):
+        assert -53.0 < soma_by_index_and_offset[(index, 2.0)] < -50.0
+        assert -44.0 < soma_by_index_and_offset[(index, 0.5)] < -42.0
+        assert soma_by_index_and_offset[(index, 0.2)] > 40.0
 
 
 def test_contract_rejects_holdout_leakage(tmp_path: Path) -> None:

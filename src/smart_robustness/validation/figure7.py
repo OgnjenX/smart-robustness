@@ -316,6 +316,15 @@ class Figure7ConditionResult:
     relay_event_current_samples_pA: tuple[
         tuple[int, float, str, float], ...
     ] = ()
+    relay_pre_event_current_samples_pA: tuple[
+        tuple[int, float, float, str, float], ...
+    ] = ()
+    relay_pre_event_voltage_samples_mV: tuple[
+        tuple[int, float, float, str, float], ...
+    ] = ()
+    relay_pre_event_trn_gaba_gate_samples: tuple[
+        tuple[int, float, float, float], ...
+    ] = ()
     trn_layer6ii_ampa_peak_by_index: tuple[tuple[int, float], ...] = ()
     trn_layer6ii_nmda_peak_by_index: tuple[tuple[int, float], ...] = ()
     trn_relay_ampa_peak_by_index: tuple[tuple[int, float], ...] = ()
@@ -544,6 +553,7 @@ def run_figure7_condition(
     relay_clamp_compartment: str = "proximal_dendrite",
     include_higher_order_loop: bool = False,
     record_relay_diagnostics: bool = False,
+    relay_pre_event_offsets_ms: tuple[float, ...] = (),
     record_v1_cortical_spikes: bool = False,
     projection_weight_scales: Mapping[str, float] | None = None,
     persistent_projection_weight_scales: Mapping[str, float] | None = None,
@@ -581,6 +591,13 @@ def run_figure7_condition(
         raise ValueError("selected-category source masking is a numpy diagnostic only")
     if record_relay_diagnostics and duration_ms <= 45.0:
         raise ValueError("Figure 7 pathway diagnostics require duration_ms > 45")
+    if relay_pre_event_offsets_ms and not record_relay_diagnostics:
+        raise ValueError("pre-event samples require relay diagnostics")
+    if (
+        any(not np.isfinite(offset) or offset <= 0 for offset in relay_pre_event_offsets_ms)
+        or len(set(relay_pre_event_offsets_ms)) != len(relay_pre_event_offsets_ms)
+    ):
+        raise ValueError("pre-event offsets must be unique, finite, and positive")
     overlapping_scales = set(projection_weight_scales or ()) & set(
         persistent_projection_weight_scales or ()
     )
@@ -886,6 +903,15 @@ def run_figure7_condition(
     relay_trn_gaba_integral: tuple[tuple[int, float], ...] = ()
     relay_driven_current_range: tuple[tuple[int, str, float, float], ...] = ()
     relay_event_current_samples: tuple[tuple[int, float, str, float], ...] = ()
+    relay_pre_event_current_samples: tuple[
+        tuple[int, float, float, str, float], ...
+    ] = ()
+    relay_pre_event_voltage_samples: tuple[
+        tuple[int, float, float, str, float], ...
+    ] = ()
+    relay_pre_event_trn_gaba_gate_samples: tuple[
+        tuple[int, float, float, float], ...
+    ] = ()
     trn_layer6ii_ampa_peak: tuple[tuple[int, float], ...] = ()
     trn_layer6ii_nmda_peak: tuple[tuple[int, float], ...] = ()
     trn_relay_ampa_peak: tuple[tuple[int, float], ...] = ()
@@ -1044,6 +1070,69 @@ def run_figure7_condition(
             for event_time_ms in [float(absolute_event_time_ms) - stimulus_start_ms]
             for sample in [int(np.argmin(np.abs(times_ms - event_time_ms)))]
             for source, traces in relay_current_sources_pA.items()
+        )
+        relay_voltage_sources_mV = {
+            "distal_dendrite": voltage_mV,
+            "proximal_dendrite": proximal_voltage_mV,
+            "soma": soma_voltage_mV,
+        }
+        relay_pre_event_current_samples = tuple(
+            (
+                event_index,
+                event_time_ms,
+                float(offset_ms),
+                source,
+                float(traces[diagnostic_row[event_index], sample]),
+            )
+            for event_index, absolute_event_time_ms in zip(
+                relay.i, relay.t / brian.ms, strict=True
+            )
+            if int(event_index) in diagnostic_row
+            and float(absolute_event_time_ms) >= stimulus_start_ms
+            for event_time_ms in [float(absolute_event_time_ms) - stimulus_start_ms]
+            for offset_ms in relay_pre_event_offsets_ms
+            for sample in [
+                int(np.argmin(np.abs(times_ms - (event_time_ms - offset_ms))))
+            ]
+            for source, traces in relay_current_sources_pA.items()
+        )
+        relay_pre_event_voltage_samples = tuple(
+            (
+                event_index,
+                event_time_ms,
+                float(offset_ms),
+                source,
+                float(traces[diagnostic_row[event_index], sample]),
+            )
+            for event_index, absolute_event_time_ms in zip(
+                relay.i, relay.t / brian.ms, strict=True
+            )
+            if int(event_index) in diagnostic_row
+            and float(absolute_event_time_ms) >= stimulus_start_ms
+            for event_time_ms in [float(absolute_event_time_ms) - stimulus_start_ms]
+            for offset_ms in relay_pre_event_offsets_ms
+            for sample in [
+                int(np.argmin(np.abs(times_ms - (event_time_ms - offset_ms))))
+            ]
+            for source, traces in relay_voltage_sources_mV.items()
+        )
+        relay_pre_event_trn_gaba_gate_samples = tuple(
+            (
+                event_index,
+                event_time_ms,
+                float(offset_ms),
+                float(relay_trn_gaba[diagnostic_row[event_index], sample]),
+            )
+            for event_index, absolute_event_time_ms in zip(
+                relay.i, relay.t / brian.ms, strict=True
+            )
+            if int(event_index) in diagnostic_row
+            and float(absolute_event_time_ms) >= stimulus_start_ms
+            for event_time_ms in [float(absolute_event_time_ms) - stimulus_start_ms]
+            for offset_ms in relay_pre_event_offsets_ms
+            for sample in [
+                int(np.argmin(np.abs(times_ms - (event_time_ms - offset_ms))))
+            ]
         )
     if trn_state is not None:
         trn_layer6ii_ampa_peak = tuple(
@@ -1476,6 +1565,11 @@ def run_figure7_condition(
             relay_driven_current_range
         ),
         relay_event_current_samples_pA=relay_event_current_samples,
+        relay_pre_event_current_samples_pA=relay_pre_event_current_samples,
+        relay_pre_event_voltage_samples_mV=relay_pre_event_voltage_samples,
+        relay_pre_event_trn_gaba_gate_samples=(
+            relay_pre_event_trn_gaba_gate_samples
+        ),
         trn_layer6ii_ampa_peak_by_index=trn_layer6ii_ampa_peak,
         trn_layer6ii_nmda_peak_by_index=trn_layer6ii_nmda_peak,
         trn_relay_ampa_peak_by_index=trn_relay_ampa_peak,

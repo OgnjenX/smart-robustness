@@ -2412,6 +2412,16 @@ retain the correct five horizontal relay indices but fail the exact four-event
 nonspecific gate. No endpoint survives, mismatch is not consulted, and the
 projection-specific radial-annulus family is closed.
 
+Artifacts 269--270 then cross the independently verified gain-8 endpoint with
+the earlier 9.85-ms cue lead that aligns the archived projection-012 AMPA
+arrival to bottom-up onset. Source delays and kinetics remain unchanged. The
+fresh match retains 15 events across relay cells 38--42 and produces 594 TRN
+events, but nonspecific output is five events (50 Hz), not four. Sampled TRN
+cells 31, 40, and 49 also end with an extra arm/upcrossing without release.
+The lead contains the known 81-cell startup TRN volley and one startup
+nonspecific event. No mismatch is run, and the global gain-by-cue-lead
+interaction is closed.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

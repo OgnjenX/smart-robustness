@@ -574,6 +574,9 @@ FIGURE7_GAIN8_AMPA_ARRIVAL_REGISTRATION_PATH = (
     ROOT
     / "docs/validation-results/figure7-gain8-ampa-arrival-registration-269.yaml"
 )
+FIGURE7_GAIN8_AMPA_ARRIVAL_RESULT_PATH = (
+    ROOT / "docs/validation-results/figure7-gain8-ampa-arrival-match-270.yaml"
+)
 
 
 def test_classic_calibration_contract_separates_training_and_holdout() -> None:
@@ -3404,6 +3407,22 @@ def test_gain8_ampa_arrival_interaction_is_single_match_only_endpoint() -> None:
     assert registration["fixed_candidate"]["source_kinetics_changed"] is False
     assert registration["conditions_consulted"] == ["figure7_match"]
     assert registration["execution_limit"].startswith("exactly one")
+
+
+def test_gain8_ampa_arrival_interaction_fails_without_mismatch() -> None:
+    artifact = yaml.safe_load(FIGURE7_GAIN8_AMPA_ARRIVAL_RESULT_PATH.read_text())
+    outcome = artifact["outcomes"][0]
+    result = outcome["result"]
+    assert not outcome["pass"]
+    assert artifact["mismatch_consulted"] is False
+    assert artifact["assessment"]["mismatch_remains_locked"]
+    assert sorted(set(result["relay_spike_indices"])) == [38, 39, 40, 41, 42]
+    assert len(result["relay_spike_times_ms"]) == 15
+    assert len(result["trn_spike_times_ms"]) == 594
+    assert len(result["nonspecific_spike_times_ms"]) == 5
+    assert len(result["cue_lead_trn_spike_times_ms"]) == 81
+    assert len(result["cue_lead_nonspecific_spike_times_ms"]) == 1
+    assert not outcome["gates"]["sampled_trn_events_have_fresh_cycles"]
 
 
 def test_contract_rejects_holdout_leakage(tmp_path: Path) -> None:

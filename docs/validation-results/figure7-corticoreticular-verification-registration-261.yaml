@@ -1,0 +1,38 @@
+schema_version: 1
+id: figure7-corticoreticular-verification-registration-261
+date: '2026-08-31'
+status: registered-before-execution
+profile: configs/calibration/figure7_corticoreticular_gain_verification_v1.yaml
+screen_artifact: docs/validation-results/figure7-corticoreticular-gain-match-260.yaml
+screen_result:
+  registered_gains: [1.25, 1.5, 2.0, 4.0, 8.0]
+  survivor_gains: [8.0]
+  selected_gain: 8.0
+  selection_rule: lowest exact match survivor
+fixed_candidate:
+  projection_ids:
+    - modeldb112923.projection.009
+    - modeldb112923.projection.012
+  common_gain: 8.0
+  current_pA: 800.0
+  current_mode: until_cued_cell_first_event
+  cue_lead_ms: 7.85
+  learned_headroom_fraction: 1.0
+  trn_to_relay_scales: {soma: 0.01, proximal: 0.01, distal: 0.03}
+  independent_network_rebuild: true
+diagnostic_gate:
+  sampled_trn_indices: [22, 31, 38, 39, 40, 41, 42, 49, 58]
+  require_event_count_equals_threshold_upcrossings: true
+  require_event_count_equals_arm_transitions: true
+  require_event_count_equals_release_transitions: true
+mismatch_lock: >-
+  Do not run mismatch unless this independent full-state match reproduces the
+  horizontal relay pattern, exact 40-Hz nonspecific output, and fresh sampled
+  TRN detector cycles.
+interpretation_boundary: >-
+  A verification pass authorizes one calibrated mismatch test. It does not
+  convert the explicit eightfold source-weight change into recovered SMART.
+official_status_before_execution:
+  figure7_reproduced: false
+  downstream_holdouts_unlocked: false
+

@@ -2361,6 +2361,19 @@ volley at 5.68 ms and one nonspecific startup event at 0.75 ms; neither is
 counted in the scored epoch, but both are retained as state. Mismatch is not
 run, and source-delay lead interpolation is closed.
 
+Artifact 259 next preregisters a post-holdout match-only calibration of the
+localized corticoreticular imbalance. It multiplies both fixed layer-6II-to-TRN
+projections 009 and 012 by common gains 1.25, 1.5, 2, 4, and 8 while leaving
+relay-to-TRN feedback, GABA transfer, learned weights, cue, topology, delays,
+kinetics, and intrinsic dynamics unchanged. The completed screen in
+`figure7-corticoreticular-gain-match-260.yaml` is strongly non-monotonic. Gains
+1.25/1.5/2 produce 10 relay events and 6/6/5 nonspecific events; gain 4 restores
+15 relay events but leaves six nonspecific events. Gain 8 is the sole exact
+match survivor with 15 horizontal relay events, 597 TRN events, and four
+nonspecific events (40 Hz). Artifact 261 registers an independent full-state
+rerun of only that endpoint. Mismatch remains locked pending proof that sampled
+TRN events are genuine detector cycles.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

@@ -536,6 +536,13 @@ FIGURE7_CORTICORETICULAR_VERIFICATION_RESULT_PATH = (
     ROOT
     / "docs/validation-results/figure7-corticoreticular-gain-verification-262.yaml"
 )
+FIGURE7_CORTICORETICULAR_MISMATCH_PROFILE_PATH = (
+    ROOT / "configs/calibration/figure7_corticoreticular_gain_mismatch_v1.yaml"
+)
+FIGURE7_CORTICORETICULAR_MISMATCH_REGISTRATION_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-corticoreticular-mismatch-registration-263.yaml"
+)
 
 
 def test_classic_calibration_contract_separates_training_and_holdout() -> None:
@@ -3220,6 +3227,26 @@ def test_corticoreticular_verification_authorizes_one_mismatch() -> None:
     assert outcome["gates"]["sampled_trn_events_have_fresh_cycles"]
     assert artifact["assessment"]["advance_to_mismatch"]
     assert not artifact["assessment"]["mismatch_remains_locked"]
+
+
+def test_corticoreticular_mismatch_is_fixed_to_verified_endpoint() -> None:
+    profile = yaml.safe_load(FIGURE7_CORTICORETICULAR_MISMATCH_PROFILE_PATH.read_text())
+    registration = yaml.safe_load(
+        FIGURE7_CORTICORETICULAR_MISMATCH_REGISTRATION_PATH.read_text()
+    )
+    assert profile["match_verification_artifact"] == str(
+        FIGURE7_CORTICORETICULAR_VERIFICATION_RESULT_PATH.relative_to(ROOT)
+    )
+    assert profile["corticoreticular_common_gain"] == {
+        "projection_ids": [
+            "modeldb112923.projection.009",
+            "modeldb112923.projection.012",
+        ],
+        "value": 8.0,
+    }
+    assert profile["protocol"]["condition"] == "mismatch"
+    assert registration["registered_holdout"]["no_mismatch_tuning"]
+    assert registration["execution_limit"].startswith("exactly one mismatch")
 
 
 def test_contract_rejects_holdout_leakage(tmp_path: Path) -> None:

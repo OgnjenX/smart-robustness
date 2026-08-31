@@ -87,12 +87,21 @@ def main() -> None:
     match_artifact = yaml.safe_load(
         Path(profile["match_verification_artifact"]).read_text()
     )
-    if not match_artifact["assessment"]["advance_to_mismatch"]:
+    if not match_artifact["assessment"].get("advance_to_mismatch", False):
         raise ValueError("verified match does not authorize mismatch")
     selected_fraction = float(profile["learned_state"]["selected_headroom_fraction"])
     match_outcome = match_artifact["outcomes"][0]
-    if not match_outcome["pass"] or float(match_outcome["headroom_fraction"]) != selected_fraction:
+    if not match_outcome["pass"]:
         raise ValueError("match artifact does not contain the selected sole survivor")
+    if "headroom_fraction" in match_outcome and not np.isclose(
+        float(match_outcome["headroom_fraction"]), selected_fraction
+    ):
+        raise ValueError("match artifact headroom differs from registered mismatch")
+    corticoreticular = profile.get("corticoreticular_common_gain")
+    if corticoreticular is not None and not np.isclose(
+        float(match_outcome["common_gain"]), float(corticoreticular["value"])
+    ):
+        raise ValueError("match artifact corticoreticular gain differs from registration")
     match = _scoring_result(match_outcome["result"])
 
     base = runtime_conventions_for_candidate(base_profile["candidate"])
@@ -109,6 +118,13 @@ def main() -> None:
         str(key): float(value)
         for key, value in profile["trn_to_relay_gaba"]["scales"].items()
     }
+    if corticoreticular is not None:
+        scales.update(
+            {
+                str(projection_id): float(corticoreticular["value"])
+                for projection_id in corticoreticular["projection_ids"]
+            }
+        )
     training = run_figure6_learning(
         conventions=conventions,
         projection_weight_scales=scales,
@@ -208,6 +224,7 @@ def main() -> None:
         "match_verification_artifact": profile["match_verification_artifact"],
         "selected_headroom_fraction": selected_fraction,
         "applied_common_weight_factor": applied_factor,
+        "corticoreticular_common_gain": corticoreticular,
         "holdouts_consulted": ["figure7_match", "figure7_mismatch"],
         "handoff_figure6_population_spikes": training.result.population_spikes,
         "match_scoring_summary": match,

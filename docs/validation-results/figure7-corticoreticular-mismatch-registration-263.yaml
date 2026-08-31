@@ -1,0 +1,38 @@
+schema_version: 1
+id: figure7-corticoreticular-mismatch-registration-263
+date: '2026-08-31'
+status: registered-before-execution
+profile: configs/calibration/figure7_corticoreticular_gain_mismatch_v1.yaml
+match_verification_artifact: docs/validation-results/figure7-corticoreticular-gain-verification-262.yaml
+verified_match:
+  corticoreticular_common_gain: 8.0
+  projection_ids:
+    - modeldb112923.projection.009
+    - modeldb112923.projection.012
+  learned_headroom_fraction: 1.0
+  relay_active_indices: [38, 39, 40, 41, 42]
+  relay_events: 15
+  trn_events: 597
+  nonspecific_events: 4
+  nonspecific_rate_hz: 40.0
+  sampled_trn_fresh_cycles: true
+registered_holdout:
+  conditions: [mismatch]
+  independent_network_rebuild: true
+  fresh_figure6_learning_handoff: true
+  all_match_survivor_parameters_fixed: true
+  no_mismatch_tuning: true
+official_gates:
+  mismatch_relay_active_indices_subset_of: [40]
+  match_more_active_relay_cells: true
+  match_more_trn_events: true
+  mismatch_nonspecific_events: 7
+  mismatch_nonspecific_rate_hz: 70.0
+  sampled_mismatch_trn_fresh_cycles: true
+execution_limit: exactly one mismatch at the independently verified endpoint
+interpretation_boundary: >-
+  A pass would establish a calibrated classic SMART reconstruction, not prove
+  that the unavailable original source used the eightfold gain.
+official_status_before_execution:
+  figure7_reproduced: false
+  downstream_holdouts_unlocked: false

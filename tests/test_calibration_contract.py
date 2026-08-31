@@ -448,6 +448,13 @@ FIGURE7_ALIGNED_MISMATCH_REGISTRATION_PATH = (
 FIGURE7_ALIGNED_PAIR_RESULT_PATH = (
     ROOT / "docs/validation-results/figure7-aligned-on-center-pair-244.yaml"
 )
+FIGURE7_ALIGNED_SUSTAINED_PROFILE_PATH = (
+    ROOT / "configs/calibration/figure7_aligned_sustained_match_v1.yaml"
+)
+FIGURE7_ALIGNED_SUSTAINED_REGISTRATION_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-aligned-sustained-registration-245.yaml"
+)
 
 
 def test_classic_calibration_contract_separates_training_and_holdout() -> None:
@@ -2721,6 +2728,23 @@ def test_aligned_on_center_pair_hits_rates_but_fails_spatial_subset() -> None:
     assert gates["sampled_mismatch_trn_events_have_fresh_cycles"]
     assert not gates["mismatch_relay_overlap_only"]
     assert not gates["match_more_active_relay_cells"]
+
+
+def test_aligned_sustained_current_is_single_preregistered_waveform() -> None:
+    profile = yaml.safe_load(FIGURE7_ALIGNED_SUSTAINED_PROFILE_PATH.read_text())
+    registration = yaml.safe_load(
+        FIGURE7_ALIGNED_SUSTAINED_REGISTRATION_PATH.read_text()
+    )
+    assert profile["status"] == "registered-before-execution"
+    assert profile["protocol"]["top_down_current_mode"] == "sustained_epoch"
+    assert profile["dimension"]["grid"] == [1.0]
+    assert registration["dimension"]["registered_values"] == ["sustained_epoch"]
+    assert registration["source_basis"]["duration_reported_for_figure7"] is False
+    assert registration["fixed_choices"]["top_down_cue_lead_ms"] == pytest.approx(
+        7.85
+    )
+    assert registration["fixed_choices"]["learned_headroom_fraction"] == 1.0
+    assert registration["mismatch_lock"].startswith("Do not run mismatch")
 
 
 def test_contract_rejects_holdout_leakage(tmp_path: Path) -> None:

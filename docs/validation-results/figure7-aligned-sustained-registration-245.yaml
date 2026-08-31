@@ -1,0 +1,35 @@
+schema_version: 1
+id: figure7-aligned-sustained-registration-245
+date: 2026-08-31
+status: registered-before-execution
+profile: configs/calibration/figure7_aligned_sustained_match_v1.yaml
+source_basis:
+  methods: Grossberg and Versace 2008 Methods 4.9
+  statement: top-down feedback is induced by current injection to a layer-6II soma
+  duration_reported_for_figure7: false
+  one_event_source: Figure 9a separate complete-module simulation
+causal_basis:
+  failed_pair: docs/validation-results/figure7-aligned-on-center-pair-244.yaml
+  observation: mismatch nonoverlap relay cells first recover at 57.69--61.70 ms after the one-event off-surround decays
+  later_nonselected_category_events_ms: [86.04]
+dimension:
+  name: top_down_current_mode
+  registered_values: [sustained_epoch]
+  control: until_cued_cell_first_event
+  source_status: unresolved_figure7_protocol_duration
+fixed_choices:
+  top_down_current_pA: 800.0
+  top_down_cue_lead_ms: 7.85
+  learned_headroom_fraction: 1.0
+  applied_common_weight_factor: 3.366392125396763
+  source_delays_unchanged: true
+  synaptic_weights_except_fixed_learned_state_unchanged: true
+  inhibitory_and_intrinsic_parameters_unchanged: true
+stage_1:
+  condition: match
+  full_pathway_diagnostics: false
+  exact_nonspecific_target_hz: 40.0
+mismatch_lock: Do not run mismatch unless sustained match passes and is independently cycle-verified.
+official_status_before_execution:
+  figure7_reproduced: false
+  downstream_holdouts_unlocked: false

@@ -129,6 +129,7 @@ def main() -> None:
         raise ValueError("fresh handoff did not reproduce the Figure 6 relay train")
 
     protocol = profile["protocol"]
+    current_mode = TopDownCurrentMode(protocol["top_down_current_mode"])
     gate = profile["stage_1_gate"]
     expected = tuple(int(index) for index in gate["relay_active_indices"])
     output = Path(args.output)
@@ -151,7 +152,7 @@ def main() -> None:
             ),
             persistent_projection_weight_scales=scales,
             top_down_current_mode=TopDownCurrentMode(
-                protocol["top_down_current_mode"]
+                current_mode
             ),
             top_down_cue_lead_ms=float(protocol["top_down_cue_lead_ms"]),
             equilibration_ms=float(protocol["equilibration_ms"]),
@@ -176,10 +177,6 @@ def main() -> None:
                 for index in result.cue_lead_category_spike_indices
             ),
             "no_relay_events_during_lead": not result.cue_lead_relay_spike_times_ms,
-            "current_terminated_on_selected_event": (
-                bool(source_events)
-                and result.top_down_current_termination_time_ms == source_events[0]
-            ),
             "relay_active_indices": set(result.relay_spike_indices) == set(expected),
             "minimum_relay_events_per_active_index": all(
                 count >= int(gate["minimum_relay_events_per_active_index"])
@@ -195,6 +192,15 @@ def main() -> None:
                 result.nonspecific_rate_hz == float(gate["nonspecific_rate_hz"])
             ),
         }
+        if current_mode is TopDownCurrentMode.UNTIL_CUED_CELL_FIRST_EVENT:
+            gates["current_terminated_on_selected_event"] = (
+                bool(source_events)
+                and result.top_down_current_termination_time_ms == source_events[0]
+            )
+        else:
+            gates["sustained_current_protocol"] = (
+                result.top_down_current_termination_time_ms is None
+            )
         event_counts: dict[int, int] = {}
         upcrossings: dict[int, int] = {}
         arms: dict[int, int] = {}

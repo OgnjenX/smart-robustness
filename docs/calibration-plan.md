@@ -547,3 +547,11 @@ hard-bound learned state. The full-detector match retains the correct five
 horizontal relay cells with 10 events and 607 genuine-cycle TRN events, but
 emits five nonspecific events (50 Hz). It therefore fails before mismatch.
 Close the ring-by-peak interaction without a radius, gain, or headroom sweep.
+
+Artifacts 310--311 then admit one explicitly calibrated radius because exact
+legacy `ring=true` semantics remain missing. Projection 012's sigma 1.5 fixes
+the nearest-arm peak scale at 0.4714045207910316; the two-cell alternative is
+effectively the already rejected default annulus and is not repeated. The
+nearest-arm candidate produces 25 rather than 20 relay events during the fresh
+Figure 6 handoff, so recognition is never constructed. Close geometry-derived
+radius calibration before Figure 7 and retain the exact failure counts.

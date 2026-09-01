@@ -508,6 +508,18 @@ FIGURE7_RECEPTOR_PEAK_ANNULUS_RESULT_PATH = (
     ROOT
     / "docs/validation-results/figure7-receptor-peak-radial-annulus-match-309.yaml"
 )
+FIGURE7_RECEPTOR_PEAK_ADJACENT_ANNULUS_PROFILE_PATH = (
+    ROOT
+    / "configs/calibration/figure7_receptor_peak_adjacent_annulus_match_v1.yaml"
+)
+FIGURE7_RECEPTOR_PEAK_ADJACENT_ANNULUS_REGISTRATION_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-receptor-peak-adjacent-annulus-registration-310.yaml"
+)
+FIGURE7_RECEPTOR_PEAK_ADJACENT_ANNULUS_RESULT_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-receptor-peak-adjacent-annulus-match-311.yaml"
+)
 FIGURE7_ALIGNED_VERIFICATION_PROFILE_PATH = (
     ROOT / "configs/calibration/figure7_aligned_on_center_verification_v1.yaml"
 )
@@ -3174,6 +3186,48 @@ def test_receptor_peak_annulus_fails_match_rate_and_locks_mismatch() -> None:
     assert not outcome["gates"]["nonspecific_events"]
     assert not outcome["gates"]["nonspecific_40_hz"]
     assert not outcome["pass"]
+
+
+def test_adjacent_annulus_radius_is_geometry_derived_and_single_value() -> None:
+    profile = yaml.safe_load(
+        FIGURE7_RECEPTOR_PEAK_ADJACENT_ANNULUS_PROFILE_PATH.read_text()
+    )
+    registration = yaml.safe_load(
+        FIGURE7_RECEPTOR_PEAK_ADJACENT_ANNULUS_REGISTRATION_PATH.read_text()
+    )
+    expected_scale = 1 / (2**0.5 * 1.5)
+    assert profile["runtime_overrides"][
+        "corticoreticular_ring_kernel_convention"
+    ] == "radial_annulus"
+    assert profile["runtime_overrides"][
+        "corticoreticular_ring_peak_radius_scale"
+    ] == pytest.approx(expected_scale)
+    assert profile["dimension"]["grid"] == [1.0]
+    assert registration["fixed"]["target_peak_lattice_distance"] == 1.0
+    assert registration["fixed"]["ring_peak_radius_scale"] == pytest.approx(
+        expected_scale
+    )
+    assert registration["fixed"]["sensory_input_unchanged"]
+    assert registration["stopping_rule"].startswith("Run one full-detector match")
+
+
+def test_adjacent_annulus_fails_figure6_before_holdout_consultation() -> None:
+    artifact = yaml.safe_load(
+        FIGURE7_RECEPTOR_PEAK_ADJACENT_ANNULUS_RESULT_PATH.read_text()
+    )
+    assert artifact["status"] == "figure6-prerequisite-failed"
+    assert artifact["holdouts_consulted"] == ["figure6_prerequisite"]
+    assert not artifact["mismatch_consulted"]
+    assert artifact["handoff_figure6_population_spikes"] == {
+        "thalamic_relay": 25,
+        "layer6ii_excitatory_v1": 12,
+        "layer4_excitatory_v1": 36,
+    }
+    assert artifact["assessment"]["figure6_relay_target"] == 20
+    assert not artifact["assessment"]["figure6_relay_pass"]
+    assert not artifact["assessment"]["advance_to_full_state_match_verification"]
+    assert not artifact["assessment"]["advance_to_mismatch"]
+    assert artifact["assessment"]["mismatch_remains_locked"]
 
 
 def test_aligned_on_center_verification_registers_only_screen_survivor() -> None:

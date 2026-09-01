@@ -87,7 +87,39 @@ def main() -> None:
         brian=brian,
     )
     if training.result.population_spikes["thalamic_relay"] != 20:
-        raise ValueError("corticoreticular screen did not reproduce Figure 6")
+        failure = {
+            "schema_version": 1,
+            "id": Path(args.output).stem,
+            "date": datetime.now(tz=UTC).date().isoformat(),
+            "status": "figure6-prerequisite-failed",
+            "profile": args.profile,
+            "registration_artifact": profile["registration_artifact"],
+            "verification_screen_artifact": verification_screen_path,
+            "base_candidate_fingerprint": base_profile["candidate_fingerprint"],
+            "runtime_fingerprint": conventions.fingerprint,
+            "holdouts_consulted": ["figure6_prerequisite"],
+            "mismatch_consulted": False,
+            "handoff_figure6_population_spikes": training.result.population_spikes,
+            "match_survivors": [],
+            "selected_candidate": None,
+            "assessment": {
+                "figure6_relay_target": 20,
+                "figure6_relay_pass": False,
+                "advance_to_full_state_match_verification": False,
+                "advance_to_mismatch": False,
+                "mismatch_remains_locked": True,
+            },
+            "next_gate": profile["next_gate"],
+        }
+        output = Path(args.output)
+        output.parent.mkdir(parents=True, exist_ok=True)
+        output.write_text(yaml.safe_dump(_plain(failure), sort_keys=False))
+        print(
+            "figure6 prerequisite failed: "
+            f"relay={training.result.population_spikes['thalamic_relay']}",
+            flush=True,
+        )
+        return
     headroom_grid = tuple(
         float(value)
         for value in profile["learned_state"].get(

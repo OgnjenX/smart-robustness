@@ -2587,6 +2587,20 @@ remains locked. The ring-by-peak interaction is closed; the radial annulus
 remains explicitly a reconstruction sensitivity rather than recovered legacy
 behavior.
 
+Artifacts 310--311 test the sole geometrically distinct calibrated peak radius
+enabled after the parameter-free annulus failed. Projection 012 has sigma 1.5;
+placing its annular peak exactly one lattice cell from category cell 40 fixes
+the scale analytically at `1/(sqrt(2)*1.5) = 0.4714045207910316`, targeting the
+nearest official mismatch arms. A two-cell peak would use 0.942809 and is a
+near-duplicate of the rejected default radius 1.0, so it is not rerun.
+
+The adjacent-arm radius fails the fresh Figure 6 prerequisite before any
+recognition holdout is consulted: relay output is 25 rather than 20 events,
+with 12 layer-6II and 36 layer-4 events. The runner now preserves such failures
+as explicit artifacts instead of aborting without evidence. Match and mismatch
+remain unconstructed and locked. This closes geometry-derived ring-radius
+calibration without fitting an arbitrary radius.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

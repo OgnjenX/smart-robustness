@@ -1,0 +1,26 @@
+schema_version: 1
+id: figure7-receptor-peak-adjacent-annulus-match-311
+date: '2026-09-01'
+status: figure6-prerequisite-failed
+profile: configs/calibration/figure7_receptor_peak_adjacent_annulus_match_v1.yaml
+registration_artifact: docs/validation-results/figure7-receptor-peak-adjacent-annulus-registration-310.yaml
+verification_screen_artifact: null
+base_candidate_fingerprint: 12e0245e9a3044073200e90443582885a5410cf39b8b18d50d22a04a2fc48604
+runtime_fingerprint: c7bd4fbe094f0e89279b50b58881910c43296b400f126b0ab8bda542402f5e44
+holdouts_consulted:
+- figure6_prerequisite
+mismatch_consulted: false
+handoff_figure6_population_spikes:
+  thalamic_relay: 25
+  layer6ii_excitatory_v1: 12
+  layer4_excitatory_v1: 36
+match_survivors: []
+selected_candidate: null
+assessment:
+  figure6_relay_target: 20
+  figure6_relay_pass: false
+  advance_to_full_state_match_verification: false
+  advance_to_mismatch: false
+  mismatch_remains_locked: true
+next_gate: Independently verify this endpoint only if it passes. Register one fixed
+  mismatch after verification; otherwise close calibrated ring radius.

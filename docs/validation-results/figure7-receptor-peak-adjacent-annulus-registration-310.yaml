@@ -1,0 +1,42 @@
+schema_version: 1
+id: figure7-receptor-peak-adjacent-annulus-registration-310
+date: '2026-09-01'
+status: registered-before-execution-calibrated-ring-semantics
+profile: configs/calibration/figure7_receptor_peak_adjacent_annulus_match_v1.yaml
+rationale:
+  - >-
+    KInNeSS ring=true source code remains unavailable, so ring peak radius is
+    under-recovered. The default radial annulus peaks at the elliptical radius
+    encoded by sigma and was rejected in Artifact 309 at 50-Hz match output.
+  - >-
+    The official mismatch has nonoverlap relay arms one and two lattice cells
+    from overlap cell 40. For wide corticoreticular projection 012, sigma=1.5;
+    placing the annular peak at the nearest arm gives the unique geometric scale
+    1/(sqrt(2)*1.5)=0.4714045207910316.
+  - >-
+    Placing the peak at the two-cell arm gives 0.9428090415820632, effectively
+    the already tested default scale 1.0 on this discrete 9x9 lattice. It is not
+    admitted as a second near-duplicate candidate.
+calibration_boundary: >-
+  This is an explicit reconstruction of missing legacy ring semantics, not a
+  recovered source fact. It may support a frozen calibrated baseline only after
+  every independent official behavior gate passes.
+fixed:
+  affected_projection_ids:
+    - modeldb112923.projection.009
+    - modeldb112923.projection.012
+  ring_kernel: radial_annulus
+  projection012_sigma: 1.5
+  target_peak_lattice_distance: 1.0
+  ring_peak_radius_scale: 0.4714045207910316
+  corticoreticular_common_gain: 1.0
+  receptor_peak_cue_lead_ms: 11.35773631178703
+  learned_headroom_fraction: 1.0
+  sensory_input_unchanged: true
+  neuron_synapse_delay_kinetic_and_learning_parameters_unchanged: true
+stopping_rule: >-
+  Run one full-detector match after a fresh Figure 6 handoff. Do not inspect
+  mismatch unless an independent rebuild reproduces every exact match gate.
+official_status_before_execution:
+  figure7_reproduced: false
+  downstream_holdouts_unlocked: false

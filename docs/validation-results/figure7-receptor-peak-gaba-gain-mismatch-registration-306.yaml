@@ -1,0 +1,35 @@
+schema_version: 1
+id: figure7-receptor-peak-gaba-gain-mismatch-registration-306
+date: '2026-09-01'
+status: registered-before-execution-fixed-holdout
+profile: configs/calibration/figure7_receptor_peak_gaba_gain_mismatch_v1.yaml
+verified_match:
+  artifact: docs/validation-results/figure7-receptor-peak-gaba-gain-verification-305.yaml
+  independently_rebuilt: true
+  receptor_peak_cue_lead_ms: 11.35773631178703
+  recognition_trn_to_relay_common_gain: 1.5
+  relay_active_indices: [38, 39, 40, 41, 42]
+  relay_events: 10
+  trn_events: 584
+  nonspecific_events: 4
+  sampled_trn_fresh_cycles: true
+registered_holdout:
+  conditions: [mismatch]
+  independent_network_rebuild: true
+  fresh_figure6_learning_handoff: true
+  training_gaba_scales_unchanged: true
+  recognition_gaba_gain_fixed: true
+  learned_state_timing_and_all_other_parameters_fixed: true
+official_gates:
+  mismatch_relay_active_indices_subset_of: [40]
+  match_more_active_relay_cells: true
+  match_more_trn_events: true
+  mismatch_more_nonspecific_events: true
+  match_nonspecific_events: 4
+  mismatch_nonspecific_events: 7
+  mismatch_nonspecific_rate_hz: 70.0
+  sampled_mismatch_trn_fresh_cycles: true
+execution_limit: exactly one mismatch at gain 1.5
+official_status_before_execution:
+  figure7_reproduced: false
+  downstream_holdouts_unlocked: false

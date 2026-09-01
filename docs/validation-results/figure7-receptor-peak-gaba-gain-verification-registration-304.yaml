@@ -1,0 +1,23 @@
+schema_version: 1
+id: figure7-receptor-peak-gaba-gain-verification-registration-304
+date: '2026-09-01'
+status: registered-before-execution-independent-verification
+profile: configs/calibration/figure7_receptor_peak_gaba_gain_verification_v1.yaml
+screen_result:
+  artifact: docs/validation-results/figure7-receptor-peak-gaba-gain-match-303.yaml
+  match_survivor_gains: [1.5, 2.0, 3.0]
+  selected_gain: 1.5
+  relay_events: 10
+  relay_active_indices: [38, 39, 40, 41, 42]
+  trn_events: 584
+  nonspecific_events: 4
+verification:
+  candidates: 1
+  independently_rebuilt_network: true
+  fresh_figure6_learning_handoff: true
+  full_trn_detector_cycle_diagnostics: true
+  every_parameter_and_protocol_value_fixed: true
+mismatch_lock: Do not run mismatch unless the independent gain-1.5 match passes.
+official_status_before_execution:
+  figure7_reproduced: false
+  downstream_holdouts_unlocked: false

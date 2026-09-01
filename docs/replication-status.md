@@ -2551,6 +2551,30 @@ peak alignment therefore closes as a successful match repair but not a
 match/mismatch discriminator; Figure 7 and all downstream holdouts remain
 unreproduced and locked.
 
+Artifacts 302--307 test the only previously declared inhibitory-capacity
+interaction not covered by that timing result. Artifact 252 had screened common
+TRN-to-relay gains 1.125, 1.25, 1.5, 2, and 3 at receptor-arrival timing. The
+same finite grid is reused without interpolation at receptor-peak timing, where
+matched cells now receive the intended second excitatory vote. Registration
+302 locks match-first selection and permits mismatch only after independent
+verification of the lowest survivor.
+
+Artifact 303 finds exact match survivors at gains 1.5, 2, and 3. Gains 1.125
+and 1.25 retain the horizontal relay set but emit five nonspecific events and
+fail the 40-Hz gate. The selected gain 1.5 emits 10 relay, 584 TRN, and four
+nonspecific events. Artifacts 304--305 independently rebuild that endpoint and
+reproduce 10/584/4 with complete sampled detector cycles.
+
+Registration 306 then fixes one recognition-only gain-1.5 mismatch while
+retaining baseline inhibition during the fresh Figure 6 handoff. Artifact 307
+is exactly condition-invariant in aggregate: match and mismatch each emit 10
+relay, 584 TRN, and four nonspecific events. Mismatch cells 22, 31, 40, 49,
+and 58 each emit twice, and sampled TRN cycles are genuine. The pair therefore
+fails overlap-only recruitment, both relay/TRN order gates, disinhibition, and
+70 Hz. Under the preregistered lowest-survivor rule, gains 2 and 3 are not
+opened post hoc. Receptor-peak timing by scalar inhibitory capacity is closed;
+Figure 7 and downstream holdouts remain locked.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

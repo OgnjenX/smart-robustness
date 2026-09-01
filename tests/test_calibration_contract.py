@@ -462,6 +462,40 @@ FIGURE7_RECEPTOR_PEAK_MISMATCH_REGISTRATION_PATH = (
 FIGURE7_RECEPTOR_PEAK_PAIR_RESULT_PATH = (
     ROOT / "docs/validation-results/figure7-receptor-peak-aligned-pair-301.yaml"
 )
+FIGURE7_RECEPTOR_PEAK_GABA_PROFILE_PATH = (
+    ROOT / "configs/calibration/figure7_receptor_peak_gaba_gain_match_v1.yaml"
+)
+FIGURE7_RECEPTOR_PEAK_GABA_REGISTRATION_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-receptor-peak-gaba-gain-registration-302.yaml"
+)
+FIGURE7_RECEPTOR_PEAK_GABA_SCREEN_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-receptor-peak-gaba-gain-match-303.yaml"
+)
+FIGURE7_RECEPTOR_PEAK_GABA_VERIFICATION_PROFILE_PATH = (
+    ROOT
+    / "configs/calibration/figure7_receptor_peak_gaba_gain_verification_v1.yaml"
+)
+FIGURE7_RECEPTOR_PEAK_GABA_VERIFICATION_REGISTRATION_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-receptor-peak-gaba-gain-verification-registration-304.yaml"
+)
+FIGURE7_RECEPTOR_PEAK_GABA_VERIFICATION_RESULT_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-receptor-peak-gaba-gain-verification-305.yaml"
+)
+FIGURE7_RECEPTOR_PEAK_GABA_MISMATCH_PROFILE_PATH = (
+    ROOT / "configs/calibration/figure7_receptor_peak_gaba_gain_mismatch_v1.yaml"
+)
+FIGURE7_RECEPTOR_PEAK_GABA_MISMATCH_REGISTRATION_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-receptor-peak-gaba-gain-mismatch-registration-306.yaml"
+)
+FIGURE7_RECEPTOR_PEAK_GABA_PAIR_RESULT_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-receptor-peak-gaba-gain-pair-307.yaml"
+)
 FIGURE7_ALIGNED_VERIFICATION_PROFILE_PATH = (
     ROOT / "configs/calibration/figure7_aligned_on_center_verification_v1.yaml"
 )
@@ -2980,6 +3014,110 @@ def test_receptor_peak_pair_repairs_match_but_fails_mismatch_separation() -> Non
     assert len(mismatch["nonspecific_spike_times_ms"]) == 4
     assert gates["match_relay_spatial_pattern"]
     assert gates["match_nonspecific_40_hz"]
+    assert gates["sampled_mismatch_trn_events_have_fresh_cycles"]
+    assert not gates["mismatch_relay_overlap_only"]
+    assert not gates["match_more_active_relay_cells"]
+    assert not gates["match_more_trn_events"]
+    assert not gates["mismatch_more_nonspecific_events"]
+    assert not gates["mismatch_nonspecific_70_hz"]
+
+
+def test_receptor_peak_gaba_interaction_reuses_closed_capacity_grid() -> None:
+    profile = yaml.safe_load(FIGURE7_RECEPTOR_PEAK_GABA_PROFILE_PATH.read_text())
+    registration = yaml.safe_load(
+        FIGURE7_RECEPTOR_PEAK_GABA_REGISTRATION_PATH.read_text()
+    )
+    assert profile["status"] == "registered-before-execution-finite-interaction"
+    assert profile["protocol"]["condition"] == "match"
+    assert profile["protocol"]["top_down_cue_lead_ms"] == pytest.approx(
+        11.35773631178703
+    )
+    assert profile["dimension"]["grid"] == [1.125, 1.25, 1.5, 2.0, 3.0]
+    assert registration["registered_dimension"]["common_gains"] == profile[
+        "dimension"
+    ]["grid"]
+    assert registration["registered_dimension"]["candidate_count"] == 5
+    assert registration["stopping_rule"].startswith("Run all five matches")
+    assert not registration["official_status_before_execution"][
+        "figure7_reproduced"
+    ]
+
+
+def test_receptor_peak_gaba_screen_selects_lowest_exact_match_survivor() -> None:
+    screen = yaml.safe_load(FIGURE7_RECEPTOR_PEAK_GABA_SCREEN_PATH.read_text())
+    profile = yaml.safe_load(
+        FIGURE7_RECEPTOR_PEAK_GABA_VERIFICATION_PROFILE_PATH.read_text()
+    )
+    registration = yaml.safe_load(
+        FIGURE7_RECEPTOR_PEAK_GABA_VERIFICATION_REGISTRATION_PATH.read_text()
+    )
+    assert screen["match_survivor_gains"] == [1.5, 2.0, 3.0]
+    assert screen["selected_gain"] == 1.5
+    selected = next(
+        outcome for outcome in screen["outcomes"] if outcome["common_gain"] == 1.5
+    )
+    assert selected["pass"]
+    assert selected["relay_active_indices"] == [38, 39, 40, 41, 42]
+    assert selected["relay_events"] == 10
+    assert selected["trn_events"] == 584
+    assert selected["nonspecific_events"] == 4
+    assert profile["dimension"]["grid"] == [1.5]
+    assert profile["protocol"]["record_relay_diagnostics"]
+    assert registration["verification"]["candidates"] == 1
+    assert registration["mismatch_lock"].startswith("Do not run mismatch")
+
+
+def test_receptor_peak_gaba_verification_unlocks_only_gain_1_5_mismatch() -> None:
+    verification = yaml.safe_load(
+        FIGURE7_RECEPTOR_PEAK_GABA_VERIFICATION_RESULT_PATH.read_text()
+    )
+    profile = yaml.safe_load(
+        FIGURE7_RECEPTOR_PEAK_GABA_MISMATCH_PROFILE_PATH.read_text()
+    )
+    registration = yaml.safe_load(
+        FIGURE7_RECEPTOR_PEAK_GABA_MISMATCH_REGISTRATION_PATH.read_text()
+    )
+    outcome = verification["outcomes"][0]
+    assert outcome["pass"]
+    assert outcome["common_gain"] == 1.5
+    assert outcome["relay_events"] == 10
+    assert outcome["trn_events"] == 584
+    assert outcome["nonspecific_events"] == 4
+    assert outcome["gates"]["sampled_trn_events_have_fresh_cycles"]
+    assert verification["assessment"]["advance_to_mismatch"]
+    assert profile["recognition_trn_to_relay_common_gain"]["value"] == 1.5
+    assert profile["recognition_trn_to_relay_common_gain"][
+        "training_scales_unchanged"
+    ]
+    assert registration["execution_limit"] == "exactly one mismatch at gain 1.5"
+    assert not registration["official_status_before_execution"][
+        "figure7_reproduced"
+    ]
+
+
+def test_receptor_peak_gaba_pair_is_condition_invariant_and_closes_family() -> None:
+    artifact = yaml.safe_load(
+        FIGURE7_RECEPTOR_PEAK_GABA_PAIR_RESULT_PATH.read_text()
+    )
+    match = artifact["match_scoring_summary"]
+    mismatch = artifact["mismatch_result"]
+    gates = artifact["gates"]
+    assert artifact["status"] == "figure7-failed"
+    assert not artifact["reproduced"]
+    assert len(match["relay_spike_times_ms"]) == len(
+        mismatch["relay_spike_times_ms"]
+    ) == 10
+    assert len(match["trn_spike_times_ms"]) == len(
+        mismatch["trn_spike_times_ms"]
+    ) == 584
+    assert len(match["nonspecific_spike_times_ms"]) == len(
+        mismatch["nonspecific_spike_times_ms"]
+    ) == 4
+    assert set(mismatch["relay_spike_indices"]) == {22, 31, 40, 49, 58}
+    assert all(
+        mismatch["relay_spike_indices"].count(index) == 2
+        for index in (22, 31, 40, 49, 58)
+    )
     assert gates["sampled_mismatch_trn_events_have_fresh_cycles"]
     assert not gates["mismatch_relay_overlap_only"]
     assert not gates["match_more_active_relay_cells"]

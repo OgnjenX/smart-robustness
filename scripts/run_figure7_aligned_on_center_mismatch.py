@@ -119,6 +119,12 @@ def main() -> None:
         for key, value in profile["trn_to_relay_gaba"]["scales"].items()
     }
     training_scales = dict(scales)
+    recognition_gaba = profile.get("recognition_trn_to_relay_common_gain")
+    if recognition_gaba is not None:
+        scales = {
+            projection_id: baseline * float(recognition_gaba["value"])
+            for projection_id, baseline in training_scales.items()
+        }
     if corticoreticular is not None:
         scales.update(
             {
@@ -226,6 +232,7 @@ def main() -> None:
         "selected_headroom_fraction": selected_fraction,
         "applied_common_weight_factor": applied_factor,
         "corticoreticular_common_gain": corticoreticular,
+        "recognition_trn_to_relay_common_gain": recognition_gaba,
         "holdouts_consulted": ["figure7_match", "figure7_mismatch"],
         "handoff_figure6_population_spikes": training.result.population_spikes,
         "match_scoring_summary": match,

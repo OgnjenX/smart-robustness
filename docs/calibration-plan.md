@@ -529,3 +529,14 @@ match-only repair. Do not interpolate around 11.357736 ms or tune the
 successful match endpoint; the next candidate must explain pre-regenerative
 suppression of bottom-up-only mismatch relay cells and subsequent nonspecific
 disinhibition.
+
+Artifacts 302--307 cross receptor-peak timing with the exact five common
+TRN-to-relay gains previously declared for the capacity assay. Match-first
+screening retains gains 1.5, 2, and 3; the lowest survivor, gain 1.5, produces
+10 relay, 584 TRN, and four nonspecific events and reproduces independently
+with complete detector cycles. Its sole fixed mismatch produces exactly the
+same aggregate counts, with two events in each vertical relay cell 22, 31, 40,
+49, and 58. Close the full interaction under the preregistered lowest-survivor
+rule; do not inspect mismatch at gains 2 or 3. Scalar inhibitory capacity can
+preserve the repaired match but cannot create SMART's condition-dependent
+spatial selection or nonspecific disinhibition.

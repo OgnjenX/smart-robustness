@@ -5,6 +5,7 @@ from pathlib import Path
 import pytest
 import yaml
 
+from smart_robustness.models.currents import biexponential_peak_time_ms
 from smart_robustness.validation.calibration import (
     TrnStageAResult,
     load_calibration_contract,
@@ -426,6 +427,40 @@ FIGURE7_ALIGNED_HEADROOM_REGISTRATION_PATH = (
 FIGURE7_ALIGNED_HEADROOM_SCREEN_PATH = (
     ROOT
     / "docs/validation-results/figure7-aligned-on-center-headroom-screen-240.yaml"
+)
+FIGURE7_RECEPTOR_PEAK_PROFILE_PATH = (
+    ROOT
+    / "configs/calibration/figure7_receptor_peak_aligned_headroom_match_v1.yaml"
+)
+FIGURE7_RECEPTOR_PEAK_REGISTRATION_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-receptor-peak-aligned-headroom-registration-296.yaml"
+)
+FIGURE7_RECEPTOR_PEAK_SCREEN_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-receptor-peak-aligned-headroom-match-297.yaml"
+)
+FIGURE7_RECEPTOR_PEAK_VERIFICATION_PROFILE_PATH = (
+    ROOT
+    / "configs/calibration/figure7_receptor_peak_aligned_headroom_verification_v1.yaml"
+)
+FIGURE7_RECEPTOR_PEAK_VERIFICATION_REGISTRATION_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-receptor-peak-aligned-verification-registration-298.yaml"
+)
+FIGURE7_RECEPTOR_PEAK_VERIFICATION_RESULT_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-receptor-peak-aligned-verification-299.yaml"
+)
+FIGURE7_RECEPTOR_PEAK_MISMATCH_PROFILE_PATH = (
+    ROOT / "configs/calibration/figure7_receptor_peak_aligned_mismatch_v1.yaml"
+)
+FIGURE7_RECEPTOR_PEAK_MISMATCH_REGISTRATION_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-receptor-peak-aligned-mismatch-registration-300.yaml"
+)
+FIGURE7_RECEPTOR_PEAK_PAIR_RESULT_PATH = (
+    ROOT / "docs/validation-results/figure7-receptor-peak-aligned-pair-301.yaml"
 )
 FIGURE7_ALIGNED_VERIFICATION_PROFILE_PATH = (
     ROOT / "configs/calibration/figure7_aligned_on_center_verification_v1.yaml"
@@ -2838,6 +2873,119 @@ def test_aligned_on_center_screen_selects_only_the_hard_bound() -> None:
     assert selected["pass"]
     assert artifact["assessment"]["advance_to_diagnostic_match"]
     assert artifact["assessment"]["mismatch_remains_locked"]
+
+
+def test_receptor_peak_alignment_is_single_value_and_source_derived() -> None:
+    profile = yaml.safe_load(FIGURE7_RECEPTOR_PEAK_PROFILE_PATH.read_text())
+    registration = yaml.safe_load(
+        FIGURE7_RECEPTOR_PEAK_REGISTRATION_PATH.read_text()
+    )
+    peak_ms = biexponential_peak_time_ms(2.0, 7.0)
+    expected_lead_ms = 5.85 + 2.0 + peak_ms
+    assert profile["status"] == (
+        "registered-before-execution-source-derived-timing-diagnostic"
+    )
+    assert profile["dimension"]["grid"] == [1.0]
+    assert profile["protocol"]["top_down_cue_lead_ms"] == pytest.approx(
+        expected_lead_ms
+    )
+    assert profile["protocol"]["record_relay_diagnostics"]
+    assert registration["source_derivation"][
+        "receptor_peak_after_arrival_ms"
+    ] == pytest.approx(peak_ms)
+    assert registration["source_derivation"][
+        "registered_top_down_cue_lead_ms"
+    ] == pytest.approx(expected_lead_ms)
+    assert registration["fixed"]["source_delays_unchanged"]
+    assert registration["fixed"]["receptor_kinetics_unchanged"]
+    assert registration["fixed"]["weights_fixed_before_timing_test"]
+    assert registration["stopping_rule"].startswith("Run the sole match candidate")
+    assert not registration["official_status_before_execution"][
+        "figure7_reproduced"
+    ]
+
+
+def test_receptor_peak_match_passes_and_verification_is_locked_to_it() -> None:
+    screen = yaml.safe_load(FIGURE7_RECEPTOR_PEAK_SCREEN_PATH.read_text())
+    profile = yaml.safe_load(
+        FIGURE7_RECEPTOR_PEAK_VERIFICATION_PROFILE_PATH.read_text()
+    )
+    registration = yaml.safe_load(
+        FIGURE7_RECEPTOR_PEAK_VERIFICATION_REGISTRATION_PATH.read_text()
+    )
+    outcome = screen["outcomes"][0]
+    result = outcome["result"]
+    assert screen["stage_1_survivor_headroom_fractions"] == [1.0]
+    assert outcome["pass"]
+    assert result["cue_lead_relay_spike_times_ms"] == []
+    assert set(outcome["relay_event_counts_by_index"].values()) == {3}
+    assert len(result["trn_spike_times_ms"]) == 635
+    assert len(result["nonspecific_spike_times_ms"]) == 4
+    assert outcome["gates"]["sampled_trn_events_have_fresh_cycles"]
+    assert profile["verification_screen_artifact"] == str(
+        FIGURE7_RECEPTOR_PEAK_SCREEN_PATH.relative_to(ROOT)
+    )
+    assert profile["dimension"]["grid"] == [1.0]
+    assert registration["verification"]["candidates"] == 1
+    assert registration["verification"]["independently_rebuilt_network"]
+    assert registration["mismatch_lock"].startswith("Do not run mismatch")
+
+
+def test_receptor_peak_verification_unlocks_only_fixed_mismatch() -> None:
+    verification = yaml.safe_load(
+        FIGURE7_RECEPTOR_PEAK_VERIFICATION_RESULT_PATH.read_text()
+    )
+    profile = yaml.safe_load(FIGURE7_RECEPTOR_PEAK_MISMATCH_PROFILE_PATH.read_text())
+    registration = yaml.safe_load(
+        FIGURE7_RECEPTOR_PEAK_MISMATCH_REGISTRATION_PATH.read_text()
+    )
+    outcome = verification["outcomes"][0]
+    result = outcome["result"]
+    assert verification["assessment"]["advance_to_mismatch"]
+    assert outcome["pass"]
+    assert set(outcome["relay_event_counts_by_index"].values()) == {3}
+    assert len(result["trn_spike_times_ms"]) == 635
+    assert len(result["nonspecific_spike_times_ms"]) == 4
+    assert outcome["gates"]["sampled_trn_events_have_fresh_cycles"]
+    assert profile["match_verification_artifact"] == str(
+        FIGURE7_RECEPTOR_PEAK_VERIFICATION_RESULT_PATH.relative_to(ROOT)
+    )
+    assert profile["protocol"]["top_down_cue_lead_ms"] == pytest.approx(
+        11.35773631178703
+    )
+    assert registration["execution_limit"].startswith("exactly one mismatch")
+    assert registration["registered_holdout"]["receptor_peak_timing_fixed"]
+    assert not registration["official_status_before_execution"][
+        "figure7_reproduced"
+    ]
+
+
+def test_receptor_peak_pair_repairs_match_but_fails_mismatch_separation() -> None:
+    artifact = yaml.safe_load(FIGURE7_RECEPTOR_PEAK_PAIR_RESULT_PATH.read_text())
+    mismatch = artifact["mismatch_result"]
+    gates = artifact["gates"]
+    assert artifact["status"] == "figure7-failed"
+    assert not artifact["reproduced"]
+    assert len(artifact["match_scoring_summary"]["relay_spike_times_ms"]) == 15
+    assert len(artifact["match_scoring_summary"]["trn_spike_times_ms"]) == 635
+    assert len(
+        artifact["match_scoring_summary"]["nonspecific_spike_times_ms"]
+    ) == 4
+    assert set(mismatch["relay_spike_indices"]) == {22, 31, 40, 49, 58}
+    assert all(
+        mismatch["relay_spike_indices"].count(index) == 3
+        for index in (22, 31, 40, 49, 58)
+    )
+    assert len(mismatch["trn_spike_times_ms"]) == 653
+    assert len(mismatch["nonspecific_spike_times_ms"]) == 4
+    assert gates["match_relay_spatial_pattern"]
+    assert gates["match_nonspecific_40_hz"]
+    assert gates["sampled_mismatch_trn_events_have_fresh_cycles"]
+    assert not gates["mismatch_relay_overlap_only"]
+    assert not gates["match_more_active_relay_cells"]
+    assert not gates["match_more_trn_events"]
+    assert not gates["mismatch_more_nonspecific_events"]
+    assert not gates["mismatch_nonspecific_70_hz"]
 
 
 def test_aligned_on_center_verification_registers_only_screen_survivor() -> None:

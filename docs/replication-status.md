@@ -2524,6 +2524,33 @@ headroom/gain family therefore fails the overlap-only, relay-order, TRN-order,
 mismatch-disinhibition, and 70-Hz gates and is closed. Figure 7 remains
 unreproduced and every downstream holdout remains locked.
 
+Artifacts 296--301 test the remaining analytic timing consequence of the
+archived learned on-center receptor kinetics. Artifact 238 had aligned the
+first layer-6II-to-relay receptor arrival with visual onset, but projections
+005 and 007 are normalized 2/7-ms dual exponentials. Their exact gate peak is
+3.50773631178703 ms after arrival, so Registration 296 fixes one cue lead at
+11.35773631178703 ms: the measured 5.85-ms category latency plus the archived
+2-ms delay plus that analytic peak. No delay, kinetic, weight, inhibition, or
+geometry is changed, and this is a single preregistered value rather than a
+timing grid.
+
+Artifact 297 passes every match gate at the previously bounded learned-state
+endpoint. Relay cells 38--42 each emit three events (15 total), TRN emits 635
+events, and nonspecific thalamus emits exactly four events (40 Hz); no relay
+event occurs during the cue lead. Artifacts 298--299 independently rebuild the
+network and reproduce 15/635/4 exactly. Every sampled TRN event has a matching
+threshold upcrossing, detector arm, and release, so this is a reproducible
+match phenotype rather than a startup-latch artifact.
+
+Registration 300 then fixes the sole authorized mismatch without retuning.
+Artifact 301 does not reproduce the official pair: mismatch relay cells 22,
+31, 40, 49, and 58 each emit three events (15 total), TRN rises to 653 rather
+than falling below match, and nonspecific output remains four events instead
+of increasing to seven. Sampled mismatch TRN cycles are complete. Receptor
+peak alignment therefore closes as a successful match repair but not a
+match/mismatch discriminator; Figure 7 and all downstream holdouts remain
+unreproduced and locked.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

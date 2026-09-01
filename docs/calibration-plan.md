@@ -514,3 +514,18 @@ unarmed. The 40-Hz relay criterion is therefore detector-cycle-valid and the
 qualitative Figure 6 promotion remains in force. The active failure is again
 specific to evoked TRN recruitment in recognition; do not reopen Figure 6 rate
 calibration on account of the TRN startup latch.
+
+Artifacts 296--301 add one source-derived timing diagnostic after the later
+pre-event current audit localized the direct-feedback deficit to waveform
+timing. The archived adaptive AMPA channels 005/007 have a 2-ms delay and
+2/7-ms normalized dual-exponential kinetics, fixing their analytic peak
+3.507736 ms after arrival. Adding that peak time to the measured 5.85-ms
+category latency registers a sole 11.357736-ms cue lead; no timing grid or
+parameter change is allowed. The match passes twice in independent fresh
+networks with 15 relay, 635 genuine-cycle TRN, and four nonspecific events.
+The fixed mismatch remains five-cell/15-event recruitment, produces 653 TRN
+events, and stays at four nonspecific events. Close receptor-peak timing as a
+match-only repair. Do not interpolate around 11.357736 ms or tune the
+successful match endpoint; the next candidate must explain pre-regenerative
+suppression of bottom-up-only mismatch relay cells and subsequent nonspecific
+disinhibition.

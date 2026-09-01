@@ -1,0 +1,27 @@
+schema_version: 1
+id: figure7-receptor-peak-aligned-verification-registration-298
+date: '2026-09-01'
+status: registered-before-execution-independent-verification
+profile: configs/calibration/figure7_receptor_peak_aligned_headroom_verification_v1.yaml
+screen_result:
+  artifact: docs/validation-results/figure7-receptor-peak-aligned-headroom-match-297.yaml
+  selected_headroom_fraction: 1.0
+  applied_common_weight_factor: 3.366392125396763
+  top_down_cue_lead_ms: 11.35773631178703
+  relay_active_indices: [38, 39, 40, 41, 42]
+  relay_events_per_active_index: 3
+  relay_events: 15
+  trn_events: 635
+  nonspecific_events: 4
+  sampled_trn_fresh_cycles: true
+verification:
+  candidates: 1
+  independently_rebuilt_network: true
+  fresh_figure6_learning_handoff: true
+  full_trn_detector_cycle_diagnostics: true
+  all_weights_delays_kinetics_geometry_and_protocol_fixed: true
+acceptance_rule: reproduce every screen gate and complete sampled TRN detector cycles
+mismatch_lock: Do not run mismatch unless this independent verification passes.
+official_status_before_execution:
+  figure7_reproduced: false
+  downstream_holdouts_unlocked: false

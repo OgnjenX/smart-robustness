@@ -1,0 +1,38 @@
+schema_version: 1
+id: figure7-receptor-peak-aligned-mismatch-registration-300
+date: '2026-09-01'
+status: registered-before-execution-fixed-holdout
+profile: configs/calibration/figure7_receptor_peak_aligned_mismatch_v1.yaml
+verified_match:
+  artifact: docs/validation-results/figure7-receptor-peak-aligned-verification-299.yaml
+  independently_rebuilt: true
+  headroom_fraction: 1.0
+  applied_common_weight_factor: 3.366392125396763
+  top_down_cue_lead_ms: 11.35773631178703
+  relay_active_indices: [38, 39, 40, 41, 42]
+  relay_events_per_active_index: 3
+  relay_events: 15
+  trn_events: 635
+  nonspecific_events: 4
+  nonspecific_rate_hz: 40.0
+  sampled_trn_fresh_cycles: true
+registered_holdout:
+  conditions: [mismatch]
+  independent_network_rebuild: true
+  fresh_figure6_learning_handoff: true
+  headroom_transform_fixed: true
+  receptor_peak_timing_fixed: true
+  all_intrinsic_synaptic_inhibitory_and_geometry_parameters_fixed: true
+official_gates:
+  mismatch_relay_active_indices_subset_of: [40]
+  match_more_active_relay_cells: true
+  match_more_trn_events: true
+  mismatch_more_nonspecific_events: true
+  match_nonspecific_events: 4
+  mismatch_nonspecific_events: 7
+  mismatch_nonspecific_rate_hz: 70.0
+  sampled_mismatch_trn_fresh_cycles: true
+execution_limit: exactly one mismatch at the independently verified endpoint
+official_status_before_execution:
+  figure7_reproduced: false
+  downstream_holdouts_unlocked: false

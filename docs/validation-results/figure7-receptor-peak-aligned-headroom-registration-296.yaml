@@ -1,0 +1,66 @@
+schema_version: 1
+id: figure7-receptor-peak-aligned-headroom-registration-296
+date: '2026-09-01'
+status: registered-before-execution-source-derived-timing-diagnostic
+profile: configs/calibration/figure7_receptor_peak_aligned_headroom_match_v1.yaml
+rationale:
+  - >-
+    Artifact 238 aligned the onset of layer-6II-to-relay receptor activation
+    with bottom-up onset. Pre-event current traces later show that bottom-up
+    relay cells enter sodium regeneration before the learned top-down current
+    reaches comparable amplitude.
+  - >-
+    Projections 005 and 007 are the archived adaptive AMPA on-center channels.
+    Both serialize a 2-ms delay and 2/7-ms normalized dual-exponential
+    kinetics, whose analytic peak is 3.50773631178703 ms after arrival.
+  - >-
+    This tests one timing value derived before execution. It is not a timing
+    grid, interpolation, or fitted source-delay change; all archived delays
+    and receptor constants remain unchanged.
+source_derivation:
+  selected_category_latency_ms: 5.85
+  archived_projection_ids:
+    - modeldb112923.projection.005
+    - modeldb112923.projection.007
+  archived_delay_ms: 2.0
+  archived_rise_fall_ms: [2.0, 7.0]
+  normalized_dual_exponential: exp(-t/7)-exp(-t/2)
+  analytic_peak_formula: rise*fall*ln(fall/rise)/(fall-rise)
+  receptor_peak_after_arrival_ms: 3.50773631178703
+  registered_top_down_cue_lead_ms: 11.35773631178703
+  intended_alignment: adaptive AMPA on-center receptor peak at bottom-up stimulus onset
+boundary_relative_to_artifact_192: >-
+  Artifact 192 closed further post-hoc timing of spike-ineffective
+  corticoreticular inhibition. This diagnostic concerns the distinct direct
+  learned layer-6II-to-relay pathway and its analytically known receptor peak;
+  it does not reopen corticoreticular timing or alter projection 012.
+fixed:
+  figure6_handoff: docs/validation-results/figure6-projection022-distal003-217.yaml
+  hard_bound_headroom_fraction: 1.0
+  hard_bound_common_weight_factor_expected: 3.366392125396763
+  cue_current_pA: 800.0
+  current_mode: until_cued_cell_first_event
+  detector: {arm_mV: -20.0, release_mV: -30.0}
+  trn_to_relay_gaba_scales:
+    modeldb112923.projection.000: 0.01
+    modeldb112923.projection.001: 0.01
+    modeldb112923.projection.004: 0.03
+  source_delays_unchanged: true
+  receptor_kinetics_unchanged: true
+  weights_fixed_before_timing_test: true
+  ring_geometry: archived_center_excluded_gaussian
+  duration_ms: 100.0
+  dt_ms: 0.01
+stopping_rule: >-
+  Run the sole match candidate once in a fresh network with full detector-cycle
+  diagnostics. Reject it if any relay event occurs during the cue lead or any
+  exact match gate fails. Do not inspect mismatch after rejection.
+locked_holdouts:
+  - figure7_mismatch
+  - figure10_reset
+  - figure14_spectra
+  - figure15_local_synchrony
+  - figure16_long_range_synchrony
+official_status_before_execution:
+  figure7_reproduced: false
+  downstream_holdouts_unlocked: false

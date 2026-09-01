@@ -243,6 +243,7 @@ def modeldb_topology_pairs(
     ring_kernel_convention: RingKernelConvention | str = (
         RingKernelConvention.CENTER_EXCLUDED_GAUSSIAN
     ),
+    ring_peak_radius_scale: float = 1.0,
 ) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
     """Apply the connect method and spatial metadata serialized by KInNeSS."""
 
@@ -292,6 +293,8 @@ def modeldb_topology_pairs(
     scaled_radius_squared = dx**2 / (2 * variance_x) + dy**2 / (2 * variance_y)
     factor = np.exp(-scaled_radius_squared)
     ring_convention = RingKernelConvention(ring_kernel_convention)
+    if not np.isfinite(ring_peak_radius_scale) or ring_peak_radius_scale <= 0:
+        raise ValueError("ring_peak_radius_scale must be finite and positive")
     if kernel.ring:
         if ring_convention is RingKernelConvention.CENTER_EXCLUDED_GAUSSIAN:
             # This is the historical project interpretation: preserve the
@@ -302,7 +305,10 @@ def modeldb_topology_pairs(
             # center and a unit peak at the elliptical radius fixed by the
             # serialized sigmas. This is not claimed as recovered KInNeSS
             # behavior; it is the sole preregistered alternative geometry.
-            factor = scaled_radius_squared * np.exp(1 - scaled_radius_squared)
+            annular_radius_squared = (
+                scaled_radius_squared / ring_peak_radius_scale**2
+            )
+            factor = annular_radius_squared * np.exp(1 - annular_radius_squared)
     if convention is GaussianWeightConvention.NORMALIZED_DENSITY:
         factor /= 2 * np.pi * np.sqrt(variance_x * variance_y)
     peak_weight = float(record.weight) if record.weight is not None else 1.0
@@ -325,6 +331,7 @@ def connect_modeldb_projection(
     ring_kernel_convention: RingKernelConvention | str = (
         RingKernelConvention.CENTER_EXCLUDED_GAUSSIAN
     ),
+    ring_peak_radius_scale: float = 1.0,
     gaussian_learning_bounds_convention: GaussianLearningBoundsConvention | str,
     spike_event_coordinate: str = "absolute_physical",
     spike_event_threshold_mV: float = 30.0,
@@ -502,6 +509,7 @@ def connect_modeldb_projection(
             gaussian_weight_convention=gaussian_weight_convention,
             gaussian_spread_convention=gaussian_spread_convention,
             ring_kernel_convention=ring_kernel_convention,
+            ring_peak_radius_scale=ring_peak_radius_scale,
         )
     else:
         source_indices, target_indices, spatial_factor = (

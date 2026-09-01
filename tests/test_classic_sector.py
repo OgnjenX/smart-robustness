@@ -15,6 +15,7 @@ from smart_robustness.classic_sector import (
     ZeroSensitivityInputConvention,
     _resolved_projection_record,
     _ring_kernel_convention_for_record,
+    _ring_peak_radius_scale_for_record,
     build_first_order_chemical_sector,
     build_first_order_intrinsic_sector,
     build_first_order_voltage_clamp_sector,
@@ -164,6 +165,11 @@ def test_runtime_convention_fingerprint_is_stable_and_sensitive() -> None:
         corticoreticular_ring_kernel_convention="radial_annulus"
     )
     assert targeted_annulus.fingerprint != classic.fingerprint
+    targeted_annulus_radius = FirstOrderRuntimeConventions(
+        corticoreticular_ring_kernel_convention="radial_annulus",
+        corticoreticular_ring_peak_radius_scale=2.0,
+    )
+    assert targeted_annulus_radius.fingerprint != targeted_annulus.fingerprint
     targeted_ampa_delay = FirstOrderRuntimeConventions(
         corticoreticular_ampa_delay_ms=2.0
     )
@@ -192,6 +198,32 @@ def test_corticoreticular_ring_override_is_projection_specific() -> None:
         )
         == "center_excluded_gaussian"
     )
+
+
+def test_corticoreticular_ring_radius_override_is_projection_specific() -> None:
+    conventions = FirstOrderRuntimeConventions(
+        corticoreticular_ring_kernel_convention="radial_annulus",
+        corticoreticular_ring_peak_radius_scale=2.0,
+    )
+    assert _ring_peak_radius_scale_for_record(
+        "modeldb112923.projection.009", conventions=conventions
+    ) == pytest.approx(2.0)
+    assert _ring_peak_radius_scale_for_record(
+        "modeldb112923.projection.012", conventions=conventions
+    ) == pytest.approx(2.0)
+    assert _ring_peak_radius_scale_for_record(
+        "modeldb112923.projection.011", conventions=conventions
+    ) == pytest.approx(1.0)
+
+
+def test_corticoreticular_ring_radius_requires_annular_kernel() -> None:
+    conventions = FirstOrderRuntimeConventions(
+        corticoreticular_ring_peak_radius_scale=2.0
+    )
+    with pytest.raises(ValueError, match="requires radial_annulus"):
+        _ring_peak_radius_scale_for_record(
+            "modeldb112923.projection.009", conventions=conventions
+        )
 
 
 def test_trn_event_coordinate_can_follow_kinness_without_changing_relay() -> None:

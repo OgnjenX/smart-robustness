@@ -312,6 +312,37 @@ def test_radial_annulus_is_a_parameter_free_ring_sensitivity() -> None:
     assert np.all(float(record.weight) * factor >= 0.001)
 
 
+def test_radial_annulus_peak_radius_is_explicitly_calibratable() -> None:
+    record = MODELDB_FIRST_ORDER.by_id("modeldb112923.projection.012")
+    pre, post, factor = modeldb_topology_pairs(
+        record,
+        source_shape=(9, 9),
+        target_shape=(9, 9),
+        ring_kernel_convention=RingKernelConvention.RADIAL_ANNULUS,
+        ring_peak_radius_scale=2.0,
+    )
+    center = pre == 40
+    near_u = (1 / (2 * 1.5**2)) / 2.0**2
+    assert factor[center & (post == 31)][0] == pytest.approx(
+        near_u * np.exp(1 - near_u)
+    )
+    assert not np.any(center & (post == 40))
+    assert factor.max() <= 1.0
+
+
+@pytest.mark.parametrize("scale", [0.0, -1.0, np.inf, np.nan])
+def test_radial_annulus_rejects_invalid_peak_radius(scale: float) -> None:
+    record = MODELDB_FIRST_ORDER.by_id("modeldb112923.projection.012")
+    with pytest.raises(ValueError, match="ring_peak_radius_scale"):
+        modeldb_topology_pairs(
+            record,
+            source_shape=(9, 9),
+            target_shape=(9, 9),
+            ring_kernel_convention=RingKernelConvention.RADIAL_ANNULUS,
+            ring_peak_radius_scale=scale,
+        )
+
+
 def test_ring_convention_does_not_change_nonring_projection() -> None:
     record = MODELDB_FIRST_ORDER.by_id("modeldb112923.projection.035")
     default = modeldb_topology_pairs(

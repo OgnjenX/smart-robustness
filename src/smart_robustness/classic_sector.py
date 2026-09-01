@@ -150,6 +150,7 @@ class FirstOrderRuntimeConventions:
     gaussian_spread_convention: str = "standard_deviation"
     ring_kernel_convention: str = "center_excluded_gaussian"
     corticoreticular_ring_kernel_convention: str | None = None
+    corticoreticular_ring_peak_radius_scale: float | None = None
     corticoreticular_ampa_delay_ms: float | None = None
     gaussian_learning_bounds_convention: str = "projection_level"
     postsynaptic_depression_scale_convention: str = "local_learning_bounds"
@@ -208,6 +209,8 @@ class FirstOrderRuntimeConventions:
             values.pop("ring_kernel_convention")
         if values["corticoreticular_ring_kernel_convention"] is None:
             values.pop("corticoreticular_ring_kernel_convention")
+        if values["corticoreticular_ring_peak_radius_scale"] is None:
+            values.pop("corticoreticular_ring_peak_radius_scale")
         if values["corticoreticular_ampa_delay_ms"] is None:
             values.pop("corticoreticular_ampa_delay_ms")
         payload = json.dumps(values, sort_keys=True, separators=(",", ":"))
@@ -286,6 +289,27 @@ def _ring_kernel_convention_for_record(
     ):
         return conventions.corticoreticular_ring_kernel_convention
     return conventions.ring_kernel_convention
+
+
+def _ring_peak_radius_scale_for_record(
+    record_id: str, *, conventions: FirstOrderRuntimeConventions
+) -> float:
+    if (
+        record_id
+        in {"modeldb112923.projection.009", "modeldb112923.projection.012"}
+        and conventions.corticoreticular_ring_peak_radius_scale is not None
+    ):
+        if conventions.corticoreticular_ring_kernel_convention != "radial_annulus":
+            raise ValueError(
+                "corticoreticular ring peak radius scale requires radial_annulus"
+            )
+        scale = float(conventions.corticoreticular_ring_peak_radius_scale)
+        if not math.isfinite(scale) or scale <= 0:
+            raise ValueError(
+                "corticoreticular ring peak radius scale must be finite and positive"
+            )
+        return scale
+    return 1.0
 
 
 _TABLE3_CELL_BY_CANONICAL_STEM = {
@@ -683,6 +707,9 @@ def build_full_smart_network(
                 ring_kernel_convention=_ring_kernel_convention_for_record(
                     record.id, conventions=conventions
                 ),
+                ring_peak_radius_scale=_ring_peak_radius_scale_for_record(
+                    record.id, conventions=conventions
+                ),
                 gaussian_learning_bounds_convention=(
                     conventions.gaussian_learning_bounds_convention
                 ),
@@ -801,6 +828,9 @@ def build_first_order_chemical_sector(
             gaussian_weight_convention=resolved_conventions.gaussian_weight_convention,
             gaussian_spread_convention=resolved_conventions.gaussian_spread_convention,
             ring_kernel_convention=_ring_kernel_convention_for_record(
+                record.id, conventions=resolved_conventions
+            ),
+            ring_peak_radius_scale=_ring_peak_radius_scale_for_record(
                 record.id, conventions=resolved_conventions
             ),
             gaussian_learning_bounds_convention=(

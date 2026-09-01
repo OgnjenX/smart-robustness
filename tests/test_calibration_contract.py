@@ -496,6 +496,18 @@ FIGURE7_RECEPTOR_PEAK_GABA_PAIR_RESULT_PATH = (
     ROOT
     / "docs/validation-results/figure7-receptor-peak-gaba-gain-pair-307.yaml"
 )
+FIGURE7_RECEPTOR_PEAK_ANNULUS_PROFILE_PATH = (
+    ROOT
+    / "configs/calibration/figure7_receptor_peak_radial_annulus_match_v1.yaml"
+)
+FIGURE7_RECEPTOR_PEAK_ANNULUS_REGISTRATION_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-receptor-peak-radial-annulus-registration-308.yaml"
+)
+FIGURE7_RECEPTOR_PEAK_ANNULUS_RESULT_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-receptor-peak-radial-annulus-match-309.yaml"
+)
 FIGURE7_ALIGNED_VERIFICATION_PROFILE_PATH = (
     ROOT / "configs/calibration/figure7_aligned_on_center_verification_v1.yaml"
 )
@@ -3124,6 +3136,44 @@ def test_receptor_peak_gaba_pair_is_condition_invariant_and_closes_family() -> N
     assert not gates["match_more_trn_events"]
     assert not gates["mismatch_more_nonspecific_events"]
     assert not gates["mismatch_nonspecific_70_hz"]
+
+
+def test_receptor_peak_annulus_is_one_parameter_free_match_endpoint() -> None:
+    profile = yaml.safe_load(FIGURE7_RECEPTOR_PEAK_ANNULUS_PROFILE_PATH.read_text())
+    registration = yaml.safe_load(
+        FIGURE7_RECEPTOR_PEAK_ANNULUS_REGISTRATION_PATH.read_text()
+    )
+    assert profile["runtime_overrides"][
+        "corticoreticular_ring_kernel_convention"
+    ] == "radial_annulus"
+    assert profile["learned_state"]["selected_headroom_fraction"] == 1.0
+    assert profile["dimension"]["grid"] == [1.0]
+    assert profile["protocol"]["top_down_cue_lead_ms"] == pytest.approx(
+        11.35773631178703
+    )
+    assert profile["protocol"]["record_relay_diagnostics"]
+    assert registration["fixed"]["corticoreticular_common_gain"] == 1.0
+    assert registration["source_boundary"].startswith(
+        "Radial annulus is reconstruction calibration"
+    )
+    assert registration["stopping_rule"].startswith("Run one full-detector match")
+
+
+def test_receptor_peak_annulus_fails_match_rate_and_locks_mismatch() -> None:
+    artifact = yaml.safe_load(FIGURE7_RECEPTOR_PEAK_ANNULUS_RESULT_PATH.read_text())
+    outcome = artifact["outcomes"][0]
+    result = outcome["result"]
+    assert artifact["match_survivors"] == []
+    assert artifact["selected_candidate"] is None
+    assert not artifact["assessment"]["advance_to_mismatch"]
+    assert set(result["relay_spike_indices"]) == {38, 39, 40, 41, 42}
+    assert len(result["relay_spike_times_ms"]) == 10
+    assert len(result["trn_spike_times_ms"]) == 607
+    assert len(result["nonspecific_spike_times_ms"]) == 5
+    assert outcome["gates"]["sampled_trn_events_have_fresh_cycles"]
+    assert not outcome["gates"]["nonspecific_events"]
+    assert not outcome["gates"]["nonspecific_40_hz"]
+    assert not outcome["pass"]
 
 
 def test_aligned_on_center_verification_registers_only_screen_survivor() -> None:

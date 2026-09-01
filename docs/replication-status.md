@@ -2575,6 +2575,18 @@ fails overlap-only recruitment, both relay/TRN order gates, disinhibition, and
 opened post hoc. Receptor-peak timing by scalar inhibitory capacity is closed;
 Figure 7 and downstream holdouts remain locked.
 
+Artifacts 308--309 close the remaining parameter-free interaction with the
+unrecovered KInNeSS `ring=true` geometry. Registration 308 applies the already
+declared radial-annulus interpretation only to corticoreticular projections
+009/012, at receptor-peak timing, hard-bound learned state, archived
+corticoreticular gain, and baseline inhibition. It introduces no radius,
+interpolation, or secondary grid. The fresh full-detector match retains relay
+cells 38--42 with 10 events and produces 607 genuine-cycle TRN events, but
+nonspecific output is five events (50 Hz), not four. Match fails and mismatch
+remains locked. The ring-by-peak interaction is closed; the radial annulus
+remains explicitly a reconstruction sensitivity rather than recovered legacy
+behavior.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

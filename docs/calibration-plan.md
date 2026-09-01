@@ -540,3 +540,10 @@ same aggregate counts, with two events in each vertical relay cell 22, 31, 40,
 rule; do not inspect mismatch at gains 2 or 3. Scalar inhibitory capacity can
 preserve the repaired match but cannot create SMART's condition-dependent
 spatial selection or nonspecific disinhibition.
+
+Artifacts 308--309 test the sole parameter-free radial-annulus ring
+interpretation at receptor-peak timing, archived corticoreticular gain, and
+hard-bound learned state. The full-detector match retains the correct five
+horizontal relay cells with 10 events and 607 genuine-cycle TRN events, but
+emits five nonspecific events (50 Hz). It therefore fails before mismatch.
+Close the ring-by-peak interaction without a radius, gain, or headroom sweep.

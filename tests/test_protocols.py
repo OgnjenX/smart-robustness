@@ -91,6 +91,53 @@ def test_bar_input_reconstructs_published_minus_12mV_drive() -> None:
     assert getattr(matrix.group, f"{matrix_port.name}_input_green")[0] == 0
 
 
+def test_optional_relay_gains_only_modulate_local_bottom_up_pixels() -> None:
+    brian.start_scope()
+    sector = build_first_order_intrinsic_sector(brian=brian)
+    stimulus = ClassicBarStimulus(BarOrientation.HORIZONTAL)
+    gains = np.ones(81)
+    gains[40] = 0.5
+
+    apply_bar_stimulus(sector, stimulus, relay_input_gains=gains)
+
+    relay = sector.populations["thalamic_relay"]
+    relay_port = next(
+        port
+        for port in relay.compiled.external_input_ports
+        if port.record_id == stimulus.relay_input_record_id
+    )
+    source = np.asarray(getattr(relay.group, f"{relay_port.name}_input_green")[:])
+    assert source[list(stimulus.active_indices)] == pytest.approx((120, 120, 60, 120, 120))
+    nonspecific = sector.populations["thalamic_nonspecific"]
+    nonspecific_port = next(
+        port
+        for port in nonspecific.compiled.external_input_ports
+        if port.record_id == stimulus.nonspecific_input_record_id
+    )
+    assert getattr(nonspecific.group, f"{nonspecific_port.name}_input_green")[0] == 600
+
+
+@pytest.mark.parametrize(
+    ("gains", "message"),
+    [
+        (np.ones(80), "shape"),
+        (np.full(81, np.nan), "finite"),
+        (np.full(81, 1.01), r"\[0, 1\]"),
+    ],
+)
+def test_relay_input_gains_are_bounded_9x9_fields(
+    gains: np.ndarray, message: str
+) -> None:
+    brian.start_scope()
+    sector = build_first_order_intrinsic_sector(brian=brian)
+    with pytest.raises(ValueError, match=message):
+        apply_bar_stimulus(
+            sector,
+            ClassicBarStimulus(BarOrientation.HORIZONTAL),
+            relay_input_gains=gains,
+        )
+
+
 def test_match_and_mismatch_share_a_horizontal_top_down_category() -> None:
     match = ClassicMatchMismatchCue(MatchCondition.MATCH, top_down_current_pA=100.0)
     mismatch = ClassicMatchMismatchCue(MatchCondition.MISMATCH, top_down_current_pA=100.0)

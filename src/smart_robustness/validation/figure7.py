@@ -63,6 +63,66 @@ FIGURE14_V1_CORTICAL_POPULATIONS = (
 )
 
 
+def learned_expectation_support_by_target(
+    learned_weights: Mapping[str, tuple[float, ...] | np.ndarray],
+    *,
+    source_index: int = 40,
+) -> np.ndarray:
+    """Resolve one learned category's normalized target support.
+
+    This is an explicitly reconstructed mesoscopic comparator signal, not a
+    recovered SMART source equation. It uses only the adaptive projection
+    weights learned by the selected layer-6II category and their archived
+    ModelDB topology; it does not inspect the trial condition or bar labels.
+    """
+
+    if not 0 <= source_index < 81:
+        raise ValueError("source_index must address the 9x9 sheet")
+    missing = set(FIGURE7_REQUIRED_LEARNED_PROJECTIONS) - set(learned_weights)
+    if missing:
+        raise ValueError(f"missing learned Figure 7 projections: {sorted(missing)}")
+
+    support = np.zeros(81, dtype=float)
+    for projection_id in FIGURE7_REQUIRED_LEARNED_PROJECTIONS:
+        record = MODELDB_FIRST_ORDER.by_id(projection_id)
+        source, target, _ = modeldb_topology_pairs(
+            record,
+            source_shape=(9, 9),
+            target_shape=(9, 9),
+            gaussian_weight_convention="source_peak",
+        )
+        values = np.asarray(learned_weights[projection_id], dtype=float)
+        if values.shape != source.shape:
+            raise ValueError(
+                f"{projection_id}: expected {source.shape} weights, got {values.shape}"
+            )
+        if not np.all(np.isfinite(values)) or np.any(values < 0):
+            raise ValueError(f"{projection_id}: learned weights must be finite and nonnegative")
+        selected = source == source_index
+        np.add.at(support, target[selected], values[selected])
+
+    peak = float(np.max(support))
+    if peak <= 0:
+        raise ValueError("selected source has no positive learned expectation support")
+    return support / peak
+
+
+def comparator_relay_input_gains(
+    learned_weights: Mapping[str, tuple[float, ...] | np.ndarray],
+    *,
+    floor: float,
+    source_index: int = 40,
+) -> np.ndarray:
+    """Blend learned local coincidence support with a uniform relay floor."""
+
+    if not np.isfinite(floor) or not 0.0 <= floor <= 1.0:
+        raise ValueError("comparator floor must be finite and lie in [0, 1]")
+    support = learned_expectation_support_by_target(
+        learned_weights, source_index=source_index
+    )
+    return floor + (1.0 - floor) * support
+
+
 @dataclass(frozen=True, slots=True)
 class Figure6ReferenceExpectation:
     """Paper-constrained horizontal expectation for downstream assays.
@@ -303,6 +363,8 @@ class Figure7ConditionResult:
     top_down_cue_lead_ms: float = 0.0
     equilibration_ms: float = 0.0
     learned_state_provenance: str = "unspecified"
+    comparator_relay_floor: float | None = None
+    comparator_source_index: int | None = None
     network_scope: str = "first_order"
     relay_top_down_ampa_peak_by_index: tuple[tuple[int, float], ...] = ()
     relay_top_down_ampa_integral_ms_by_index: tuple[tuple[int, float], ...] = ()
@@ -384,6 +446,15 @@ class Figure7ConditionResult:
             or any(not 0 <= index < 81 for index in self.top_down_relay_source_indices)
         ):
             raise ValueError("top-down relay source indices must address the 9x9 sheet")
+        if self.comparator_relay_floor is not None and (
+            not np.isfinite(self.comparator_relay_floor)
+            or not 0.0 <= self.comparator_relay_floor <= 1.0
+        ):
+            raise ValueError("comparator relay floor must be finite and lie in [0, 1]")
+        if self.comparator_source_index is not None and not (
+            0 <= self.comparator_source_index < 81
+        ):
+            raise ValueError("comparator source index must address the 9x9 sheet")
 
     @property
     def nonspecific_rate_hz(self) -> float:
@@ -564,6 +635,8 @@ def run_figure7_condition(
     projection_weight_scales: Mapping[str, float] | None = None,
     persistent_projection_weight_scales: Mapping[str, float] | None = None,
     top_down_relay_source_indices: frozenset[int] | None = None,
+    comparator_relay_floor: float | None = None,
+    comparator_source_index: int = 40,
     top_down_current_mode: TopDownCurrentMode | str = (
         TopDownCurrentMode.SUSTAINED_EPOCH
     ),
@@ -601,6 +674,12 @@ def run_figure7_condition(
         raise ValueError("top-down current event limit requires event-limited mode")
     if top_down_relay_source_indices is not None and cpp_standalone_directory is not None:
         raise ValueError("selected-category source masking is a numpy diagnostic only")
+    if comparator_relay_floor is not None and cpp_standalone_directory is not None:
+        raise ValueError("the reconstructed comparator is a numpy calibration only")
+    if comparator_relay_floor is not None and pretrain_with_figure6_episode:
+        raise ValueError(
+            "the reconstructed comparator requires an explicit learned-weight snapshot"
+        )
     if record_relay_diagnostics and duration_ms <= 45.0:
         raise ValueError("Figure 7 pathway diagnostics require duration_ms > 45")
     if relay_pre_event_offsets_ms and not record_relay_diagnostics:
@@ -728,6 +807,14 @@ def run_figure7_condition(
             sector.projections,
             learned_weights,
             verify_runtime_bounds=cpp_standalone_directory is None,
+        )
+    relay_input_gains = None
+    if comparator_relay_floor is not None:
+        assert learned_weights is not None
+        relay_input_gains = comparator_relay_input_gains(
+            learned_weights,
+            floor=comparator_relay_floor,
+            source_index=comparator_source_index,
         )
     apply_projection_scales(projection_weight_scales)
     if top_down_relay_source_indices is not None:
@@ -896,10 +983,15 @@ def run_figure7_condition(
             sector,
             cue.bottom_up_stimulus,
             apply_relay_input=not exact_relay_voltage_clamp,
+            relay_input_gains=relay_input_gains,
         )
     else:
         apply_match_mismatch_cue(
-            sector, cue, apply_relay_input=not exact_relay_voltage_clamp, brian=brian
+            sector,
+            cue,
+            apply_relay_input=not exact_relay_voltage_clamp,
+            relay_input_gains=relay_input_gains,
+            brian=brian,
         )
     sector.network.run(duration_ms * brian.ms)
     if top_down_cue_lead_ms > 0:
@@ -1563,6 +1655,10 @@ def run_figure7_condition(
         top_down_cue_lead_ms=top_down_cue_lead_ms,
         equilibration_ms=equilibration_ms,
         learned_state_provenance=provenance,
+        comparator_relay_floor=comparator_relay_floor,
+        comparator_source_index=(
+            comparator_source_index if comparator_relay_floor is not None else None
+        ),
         network_scope="full_two_area" if include_higher_order_loop else "first_order",
         relay_top_down_ampa_peak_by_index=ampa_peak,
         relay_top_down_ampa_integral_ms_by_index=ampa_integral,

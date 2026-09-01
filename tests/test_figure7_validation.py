@@ -20,7 +20,9 @@ from smart_robustness.validation.figure7 import (
     assess_figure7_arousal,
     assess_figure7_pathway,
     assess_figure7_reproduction,
+    comparator_relay_input_gains,
     expand_figure7_source_expectation_toward_bounds,
+    learned_expectation_support_by_target,
     paper_constrained_figure6_expectation,
     restrict_figure7_top_down_relay_sources,
     run_figure7_condition,
@@ -326,6 +328,33 @@ def test_source_expectation_headroom_preserves_shape_and_respects_bounds() -> No
         expand_figure7_source_expectation_toward_bounds(
             learned, headroom_fraction=1.01
         )
+
+
+def test_reconstructed_comparator_is_derived_from_learned_target_support() -> None:
+    brian.start_scope()
+    brian.prefs.codegen.target = "numpy"
+    sector = build_first_order_connected_sector(
+        conventions=figure6_runtime_conventions(), brian=brian
+    )
+    learned = paper_constrained_figure6_expectation(
+        sector.projections,
+        Figure6ReferenceExpectation(peak_combined_weight=0.5),
+    )
+
+    support = learned_expectation_support_by_target(learned)
+    gains = comparator_relay_input_gains(learned, floor=0.25)
+
+    assert support.shape == (81,)
+    assert support[40] == pytest.approx(1.0)
+    assert support[39] > support[31]
+    assert gains == pytest.approx(0.25 + 0.75 * support)
+    assert comparator_relay_input_gains(learned, floor=1.0) == pytest.approx(
+        np.ones(81)
+    )
+    with pytest.raises(ValueError, match="comparator floor"):
+        comparator_relay_input_gains(learned, floor=-0.01)
+    with pytest.raises(ValueError, match="missing learned"):
+        learned_expectation_support_by_target({})
 
 
 def test_figure7_runner_requires_exactly_one_learned_state_source() -> None:

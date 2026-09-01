@@ -115,18 +115,35 @@ def apply_bar_stimulus(
     stimulus: ClassicBarStimulus,
     *,
     apply_relay_input: bool = True,
+    relay_input_gains: np.ndarray | None = None,
 ) -> None:
     """Apply all nonzero channels of one recovered KInNeSS stimulus PNG."""
 
+    gains = None
+    if relay_input_gains is not None:
+        gains = np.asarray(relay_input_gains, dtype=float)
+        if gains.shape != (81,):
+            raise ValueError("relay_input_gains must have shape (81,)")
+        if not np.all(np.isfinite(gains)) or np.any((gains < 0) | (gains > 1)):
+            raise ValueError("relay_input_gains must be finite and lie in [0, 1]")
+
     relay = sector.populations["thalamic_relay"]
     relay.set_external_input(stimulus.relay_input_record_id, stimulus.source_channel, 0.0)
-    if apply_relay_input:
+    if apply_relay_input and gains is None:
         relay.set_external_input(
             stimulus.relay_input_record_id,
             stimulus.source_channel,
             stimulus.source_value,
             indices=list(stimulus.active_indices),
         )
+    elif apply_relay_input:
+        for index in stimulus.active_indices:
+            relay.set_external_input(
+                stimulus.relay_input_record_id,
+                stimulus.source_channel,
+                stimulus.source_value * gains[index],
+                indices=[index],
+            )
     sector.populations["layer6ii_excitatory_v1"].set_external_input(
         stimulus.category_input_record_id,
         "blue",
@@ -203,6 +220,7 @@ def apply_match_mismatch_cue(
     cue: ClassicMatchMismatchCue,
     *,
     apply_relay_input: bool = True,
+    relay_input_gains: np.ndarray | None = None,
     brian=None,
 ) -> None:
     """Apply Figure 7 bottom-up input and the Methods 4.9 layer-6II current cue."""
@@ -211,7 +229,10 @@ def apply_match_mismatch_cue(
         import brian2 as brian
 
     apply_bar_stimulus(
-        sector, cue.bottom_up_stimulus, apply_relay_input=apply_relay_input
+        sector,
+        cue.bottom_up_stimulus,
+        apply_relay_input=apply_relay_input,
+        relay_input_gains=relay_input_gains,
     )
     layer6ii = sector.populations[cue.top_down_population].group
     layer6ii.i_drive_soma = 0 * brian.pA

@@ -520,6 +520,13 @@ FIGURE7_RECEPTOR_PEAK_ADJACENT_ANNULUS_RESULT_PATH = (
     ROOT
     / "docs/validation-results/figure7-receptor-peak-adjacent-annulus-match-311.yaml"
 )
+FIGURE7_LEARNED_COMPARATOR_PROFILE_PATH = (
+    ROOT / "configs/calibration/figure7_learned_comparator_floor_match_v1.yaml"
+)
+FIGURE7_LEARNED_COMPARATOR_REGISTRATION_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-learned-comparator-floor-registration-312.yaml"
+)
 FIGURE7_ALIGNED_VERIFICATION_PROFILE_PATH = (
     ROOT / "configs/calibration/figure7_aligned_on_center_verification_v1.yaml"
 )
@@ -3228,6 +3235,31 @@ def test_adjacent_annulus_fails_figure6_before_holdout_consultation() -> None:
     assert not artifact["assessment"]["advance_to_full_state_match_verification"]
     assert not artifact["assessment"]["advance_to_mismatch"]
     assert artifact["assessment"]["mismatch_remains_locked"]
+
+
+def test_learned_comparator_floor_is_preregistered_as_reconstruction() -> None:
+    profile = yaml.safe_load(FIGURE7_LEARNED_COMPARATOR_PROFILE_PATH.read_text())
+    registration = yaml.safe_load(
+        FIGURE7_LEARNED_COMPARATOR_REGISTRATION_PATH.read_text()
+    )
+    assert profile["status"] == (
+        "registered-before-execution-calibrated-reconstruction"
+    )
+    assert profile["dimension"]["grid"] == [0.0, 0.25, 0.5, 0.75]
+    assert profile["dimension"]["control_floor"] == 1.0
+    assert profile["dimension"]["selection_rule"].startswith("highest")
+    assert registration["registered_dimension"]["candidate_count"] == 4
+    assert registration["scope_boundary"]["classification"] == (
+        "calibrated-reconstruction-not-recovered-source"
+    )
+    assert registration["scope_boundary"]["affects"].startswith(
+        "active bottom-up relay pixels"
+    )
+    assert "Figure 6 training inputs and dynamics" in registration[
+        "scope_boundary"
+    ]["leaves_unchanged"]
+    assert registration["stopping_rule"].startswith("Run all four match-only")
+    assert registration["locked_holdouts"][0] == "figure7_mismatch"
 
 
 def test_aligned_on_center_verification_registers_only_screen_survivor() -> None:

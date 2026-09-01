@@ -1,0 +1,51 @@
+schema_version: 1
+id: figure7-annular-headroom-corticoreticular-mismatch-registration-294
+date: '2026-09-01'
+status: registered-before-execution-exploratory-behavior-calibration
+profile: configs/calibration/figure7_annular_headroom_corticoreticular_mismatch_v1.yaml
+match_verification_artifact: docs/validation-results/figure7-annular-headroom-corticoreticular-verification-293.yaml
+authorization:
+  independently_verified_match: true
+  match_counts: {relay_events: 10, trn_events: 708, nonspecific_events: 4}
+  sampled_trn_detector_cycles_complete: true
+fixed_candidate:
+  ring_kernel: radial_annulus
+  learned_headroom_fraction: 0.75
+  common_corticoreticular_gain: 8.0
+  projection012_delay_ms: 4.0
+  projection012_rise_fall_ms: [4.0, 5.0]
+  expected_common_weight_factor: 4.657051136420019
+registration_correction:
+  status: corrected-before-holdout-execution
+  original_value: 2.7747940940475724
+  corrected_value: 4.657051136420019
+  evidence:
+    - docs/validation-results/figure7-annular-headroom-corticoreticular-interaction-match-291.yaml
+    - docs/validation-results/figure7-annular-headroom-corticoreticular-verification-293.yaml
+  note: >-
+    The original value was copied from the Gaussian candidate. The first
+    mismatch attempt stopped at the pre-run equality guard before constructing
+    or simulating a mismatch condition. Both completed annular match artifacts
+    independently record the corrected value.
+execution:
+  condition: mismatch
+  run_count: 1
+  fresh_figure6_handoff: true
+  fresh_recognition_network: true
+official_gates:
+  mismatch_relay_indices_subset_of: [40]
+  match_active_relay_count_greater_than_mismatch: true
+  match_trn_events_greater_than_mismatch: true
+  match_nonspecific_events: 4
+  mismatch_nonspecific_events: 7
+  mismatch_nonspecific_rate_hz: 70.0
+  sampled_mismatch_trn_detector_cycles_complete: true
+stopping_rule: >-
+  Run exactly once and score every official gate. Do not alter ring geometry,
+  headroom, gain, delay, kinetics, detector, or protocol after observing the
+  mismatch. Unlock Figure 10 and spectral holdouts only on a complete pass.
+locked_holdouts:
+  - figure10_reset
+  - figure14_spectra
+  - figure15_local_synchrony
+  - figure16_long_range_synchrony

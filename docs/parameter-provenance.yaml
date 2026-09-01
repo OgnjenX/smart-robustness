@@ -298,6 +298,18 @@ parameters:
     status: rejected-exploratory-behavior-calibration
     source: Artifacts 284--289; values are not recovered SMART parameters
     note: exactly one of 15 match points survives, headroom 0.75 with gain 4.0. Artifact 287 independently reproduces 15 relay, 528 TRN, and 4 nonspecific events with complete sampled detector cycles. The fixed mismatch in Artifact 289 retains three events in every vertical relay cell, produces 586 TRN and 5 nonspecific events, and fails the overlap-only, relay-order, TRN-order, and 70-Hz gates. The finite surface is closed and no interpolation is promoted
+  model.connectivity.figure7_annular_headroom_corticoreticular_surface:
+    value: parameter-free radial annulus crossed with learned headroom fractions 0.25/0.5/0.75 and common projection-009/012 gains 1.25/1.5/2/4/8
+    status: rejected-exploratory-behavior-calibration
+    source: Artifacts 290--295; exact KInNeSS ring=true geometry remains unavailable and these values are not recovered SMART parameters
+    note: >-
+      The sole match survivor, headroom 0.75 with gain 8.0, independently
+      reproduces 10 horizontal relay, 708 TRN, and 4 nonspecific events with
+      complete sampled detector cycles. Its fixed mismatch emits twice in all
+      five vertical relay cells, produces the same 708 TRN events as match, and
+      only 3 nonspecific events. It fails overlap-only, relay-order, TRN-order,
+      mismatch-disinhibition, and 70-Hz gates. The complete 15-point interaction
+      is closed without a fitted radius or interpolation.
   model.multicompartment.exact_voltage_clamp:
     value: optional fixed compartment voltage, separate from finite-conductance XML input
     status: published-protocol alternative

@@ -3759,3 +3759,106 @@ def test_headroom_corticoreticular_pair_fails_official_mismatch() -> None:
     assert all(mismatch["relay_spike_indices"].count(index) == 3 for index in [22, 31, 40, 49, 58])
     assert len(mismatch["trn_spike_times_ms"]) == 586
     assert len(mismatch["nonspecific_spike_times_ms"]) == 5
+
+
+def test_annular_headroom_gain_interaction_is_bounded_before_execution() -> None:
+    profile = yaml.safe_load(
+        (ROOT / "configs/calibration/figure7_annular_headroom_corticoreticular_interaction_match_v1.yaml").read_text()
+    )
+    registration = yaml.safe_load(
+        (ROOT / "docs/validation-results/figure7-annular-headroom-corticoreticular-interaction-registration-290.yaml").read_text()
+    )
+    assert profile["runtime_overrides"][
+        "corticoreticular_ring_kernel_convention"
+    ] == "radial_annulus"
+    assert profile["learned_state"]["headroom_grid"] == [0.25, 0.5, 0.75]
+    assert profile["dimension"]["grid"] == [1.25, 1.5, 2.0, 4.0, 8.0]
+    assert registration["registered_surface"]["candidate_count"] == 15
+    assert registration["fixed"]["projection012_delay_ms"] == 4.0
+    assert registration["fixed"]["projection012_rise_fall_ms"] == [4.0, 5.0]
+    assert registration["fixed"]["unrelated_ring_projections_unchanged"]
+    assert registration["locked_holdouts"][0] == "figure7_mismatch"
+    assert "without inventing another ring radius" in registration["stopping_rule"]
+
+
+def test_annular_headroom_gain_surface_selects_one_verification_candidate() -> None:
+    artifact = yaml.safe_load(
+        (ROOT / "docs/validation-results/figure7-annular-headroom-corticoreticular-interaction-match-291.yaml").read_text()
+    )
+    verification = yaml.safe_load(
+        (ROOT / "docs/validation-results/figure7-annular-headroom-corticoreticular-verification-registration-292.yaml").read_text()
+    )
+    assert artifact["assessment"]["registered_candidate_count"] == 15
+    assert artifact["assessment"]["completed_candidate_count"] == 15
+    assert artifact["match_survivors"] == [
+        {"headroom_fraction": 0.75, "common_gain": 8.0}
+    ]
+    survivor = next(item for item in artifact["outcomes"] if item["pass"])
+    assert len(survivor["result"]["relay_spike_times_ms"]) == 10
+    assert sorted(set(survivor["result"]["relay_spike_indices"])) == [38, 39, 40, 41, 42]
+    assert len(survivor["result"]["trn_spike_times_ms"]) == 708
+    assert len(survivor["result"]["nonspecific_spike_times_ms"]) == 4
+    assert verification["selected_candidate"] == {
+        "ring_kernel": "radial_annulus",
+        "learned_headroom_fraction": 0.75,
+        "common_corticoreticular_gain": 8.0,
+    }
+
+
+def test_annular_candidate_verifies_before_single_mismatch() -> None:
+    artifact = yaml.safe_load(
+        (ROOT / "docs/validation-results/figure7-annular-headroom-corticoreticular-verification-293.yaml").read_text()
+    )
+    registration = yaml.safe_load(
+        (ROOT / "docs/validation-results/figure7-annular-headroom-corticoreticular-mismatch-registration-294.yaml").read_text()
+    )
+    outcome = artifact["outcomes"][0]
+    assert outcome["pass"]
+    assert outcome["gates"]["sampled_trn_events_have_fresh_cycles"]
+    assert artifact["assessment"]["advance_to_mismatch"]
+    assert registration["authorization"] == {
+        "independently_verified_match": True,
+        "match_counts": {
+            "relay_events": 10,
+            "trn_events": 708,
+            "nonspecific_events": 4,
+        },
+        "sampled_trn_detector_cycles_complete": True,
+    }
+    assert registration["execution"]["run_count"] == 1
+    assert registration["fixed_candidate"]["expected_common_weight_factor"] == pytest.approx(
+        artifact["outcomes"][0]["applied_common_weight_factor"]
+    )
+    assert registration["registration_correction"]["status"] == (
+        "corrected-before-holdout-execution"
+    )
+    assert "Do not alter ring geometry" in registration["stopping_rule"]
+
+
+def test_annular_candidate_fails_fixed_official_mismatch() -> None:
+    artifact = yaml.safe_load(
+        (ROOT / "docs/validation-results/figure7-annular-headroom-corticoreticular-pair-295.yaml").read_text()
+    )
+    assert artifact["status"] == "figure7-failed"
+    assert not artifact["reproduced"]
+    assert artifact["gates"]["sampled_mismatch_trn_events_have_fresh_cycles"]
+    for failed_gate in (
+        "mismatch_relay_overlap_only",
+        "match_more_active_relay_cells",
+        "match_more_trn_events",
+        "mismatch_more_nonspecific_events",
+        "mismatch_nonspecific_70_hz",
+    ):
+        assert not artifact["gates"][failed_gate]
+    match = artifact["match_scoring_summary"]
+    mismatch = artifact["mismatch_result"]
+    assert len(match["relay_spike_times_ms"]) == 10
+    assert len(match["trn_spike_times_ms"]) == 708
+    assert len(match["nonspecific_spike_times_ms"]) == 4
+    assert sorted(set(mismatch["relay_spike_indices"])) == [22, 31, 40, 49, 58]
+    assert all(
+        mismatch["relay_spike_indices"].count(index) == 2
+        for index in [22, 31, 40, 49, 58]
+    )
+    assert len(mismatch["trn_spike_times_ms"]) == 708
+    assert len(mismatch["nonspecific_spike_times_ms"]) == 3

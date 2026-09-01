@@ -2496,6 +2496,34 @@ mismatch detector cycles are complete. The complete 15-point interaction
 surface is therefore closed, downstream holdouts remain locked, and Figure 7
 is still not reproduced.
 
+Artifacts 290--295 test the last unobserved interaction among the existing
+ring-geometry sensitivity and the already declared headroom/gain values. The
+source audit first confirms that projection 012's archived 4-ms delay is not a
+publication conflict and that exact KInNeSS `ring=true` geometry remains
+unrecoverable. Artifact 290 therefore preregisters the parameter-free radial
+annulus only on projections 009/012, crossed with headroom fractions
+0.25/0.5/0.75 and common gains 1.25/1.5/2/4/8. No new radius, delay, receptor
+kinetic, intrinsic-cell parameter, or interpolated endpoint is introduced.
+
+Artifact 291 completes all 15 match-only endpoints. The sole survivor is
+headroom 0.75 with gain 8.0, producing 10 relay events across cells 38--42,
+708 TRN events, and four nonspecific events. Artifact 293 independently
+rebuilds that endpoint and reproduces all counts exactly; for every sampled
+TRN cell, emitted events equal threshold upcrossings, detector arms, and
+releases. A copied Gaussian learned-weight factor initially stops at the
+pre-holdout equality guard; Registration 294 corrects it to the value recorded
+identically by both annular match artifacts, 4.657051136420019. No mismatch
+network was constructed or simulated before that correction.
+
+Artifact 295 executes the one authorized fixed mismatch. Relay cells 22, 31,
+40, 49, and 58 each emit twice, giving the same 10 relay events and five-cell
+recruitment as match. TRN output is also identical at 708 events, while
+nonspecific output falls from four to three events rather than increasing to
+seven. All sampled mismatch detector cycles are complete. The annular
+headroom/gain family therefore fails the overlap-only, relay-order, TRN-order,
+mismatch-disinhibition, and 70-Hz gates and is closed. Figure 7 remains
+unreproduced and every downstream holdout remains locked.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

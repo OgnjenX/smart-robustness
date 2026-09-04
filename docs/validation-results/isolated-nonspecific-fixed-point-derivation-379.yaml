@@ -1,0 +1,76 @@
+schema_version: 1
+id: isolated-nonspecific-fixed-point-derivation-379
+date: '2026-09-04'
+status: exploratory-fixed-point-derivation-complete
+classification: source-equation-initialization-audit
+profile: configs/calibration/isolated_nonspecific_fixed_point_derivation_v1.yaml
+predecessor_artifact: docs/validation-results/isolated-nonspecific-rest-audit-378.yaml
+runtime_fingerprint: 7c164995390f7d2df9a618f529d375519114163fd254125d8829bd6642cc8c93
+root_search:
+  compartment_order:
+  - soma
+  - proximal_dendrite
+  - distal_dendrite
+  initial_guess_axis_mV:
+  - -100.0
+  - -70.0
+  - -40.0
+  - -10.0
+  - 20.0
+  maximum_absolute_residual_pA: 0.001
+  uniqueness_tolerance_mV: 0.001
+attempt_count: 125
+converged_attempt_count: 54
+unique_root_count: 1
+unique_fixed_points_mV:
+- - -37.64292925949306
+  - -29.37693872874881
+  - -25.70881637435125
+expected_fixed_point_pass: null
+stationarity_probe:
+  duration_ms: 100.0
+  dt_ms: 0.01
+  recording_dt_ms: 0.1
+  maximum_peak_to_peak_mV: 1.0
+stationarity_result:
+  initial_residual_pA:
+  - 1.6543612251060553e-11
+  - 1.6802106192483375e-13
+  - 2.455692443516801e-13
+  initial_voltage_perturbation_mV:
+  - 0.0
+  - 0.0
+  - 0.0
+  detector_event_count: 0
+  detector_event_times_ms: []
+  maximum_peak_to_peak_mV: 0.0
+  trajectories:
+    soma:
+      initial_mV: -37.64292925949306
+      terminal_mV: -37.64292925949306
+      minimum_mV: -37.64292925949306
+      maximum_mV: -37.64292925949306
+      peak_to_peak_mV: 0.0
+    proximal_dendrite:
+      initial_mV: -29.37693872874881
+      terminal_mV: -29.37693872874881
+      minimum_mV: -29.37693872874881
+      maximum_mV: -29.37693872874881
+      peak_to_peak_mV: 0.0
+    distal_dendrite:
+      initial_mV: -25.70881637435125
+      terminal_mV: -25.70881637435125
+      minimum_mV: -25.70881637435125
+      maximum_mV: -25.70881637435125
+      peak_to_peak_mV: 0.0
+  stationary_by_registered_probe: true
+interpretation_limits:
+- This derives current-balance fixed points; it does not assert that KInNeSS used
+  them.
+- The search is bounded by the declared starting grid and is not a mathematical proof
+  that no other root exists.
+- Figure 7 match and mismatch remain unconsulted.
+next_gate: If exactly one bounded fixed point is recovered and remains stationary
+  under direct integration, independently register and verify that fixed point, then
+  test its dynamical stability with fixed small perturbations. Do not test it in Figure
+  7 unless it passes both checks or new source evidence requires it.

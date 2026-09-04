@@ -134,7 +134,7 @@ parameters:
     value: physical_leak_voltage or kinness_internal_zero; must be selected explicitly
     status: source-ambiguity
     source: Methods 4.9, Table 3, and KInNeSS output-voltage footnote 12
-    note: the internal-zero alternative is retained for audit but fails the Figure 7 network discriminator
+    note: the internal-zero alternative is retained for audit but fails the Figure 7 network discriminator. Artifacts 377--378 reject choosing a warm-up duration as a resting-state correction because the recovered nonspecific cell remains autonomously oscillatory over 500 ms when started at its serialized leak reversals. Artifacts 379--383 derive the sole bounded fixed point found by a 125-start search and verify exact stationarity, but a preregistered +1e-6-mV somatic perturbation grows into a 56.32-mV excursion in 100 ms. Reject both fitted equilibration and the non-robust fixed point unless newly recovered primary source explicitly requires one
   model.multicompartment.calcium_voltage_coordinate:
     value: integrated_voltage or internal_zero_plus_serialized_leak; must be selected explicitly
     status: source-ambiguity

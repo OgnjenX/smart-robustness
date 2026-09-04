@@ -1,0 +1,25 @@
+schema_version: 1
+id: isolated-nonspecific-fixed-point-soma-perturbation-registration-382
+date: '2026-09-04'
+status: registered-before-execution-stability-audit
+profile: configs/calibration/isolated_nonspecific_fixed_point_soma_perturbation_v1.yaml
+fixed_point_verification: docs/validation-results/isolated-nonspecific-fixed-point-verification-381.yaml
+fixed_runtime:
+  runtime_fingerprint: 7c164995390f7d2df9a618f529d375519114163fd254125d8829bd6642cc8c93
+  independently_rebuilt_population: true
+fixed_perturbation:
+  coordinate: soma_voltage
+  magnitude_mV: 0.000001
+  gate_perturbation: none
+fixed_probe:
+  duration_ms: 100.0
+  dt_ms: 0.01
+  recording_dt_ms: 0.1
+  maximum_peak_to_peak_mV: 1.0
+holdout_lock:
+  figure7_match_runs: 0
+  figure7_mismatch_runs: 0
+stopping_rule: >-
+  Run the single positive somatic perturbation. Do not change its magnitude,
+  sign, target compartment, duration, integration step, or acceptance bound
+  after execution.

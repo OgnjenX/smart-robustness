@@ -2895,6 +2895,24 @@ Nonspecific output is 40 Hz in both conditions, so both the disinhibition and
 without interpolation. Figure 7 and all downstream holdouts remain
 unreproduced and locked.
 
+Artifacts 377--378 audit whether the complete recovered nonspecific cell can
+define its own resting initialization by simple pre-protocol relaxation. It
+cannot: a fixed 500-ms no-input run stays finite but remains strongly
+oscillatory, with 51.39 mV somatic peak-to-peak motion in the terminal 100 ms.
+This rejects arbitrary equilibration as a source-faithful repair and leaves
+Figure 7 unreproduced. A later initialization candidate must be independently
+derived from the cell equations or newly recovered source before either
+behavioral condition is reopened.
+
+Artifacts 379--381 find one current-balance fixed point for the recovered
+nonspecific cell and reproduce its exact stationarity in a fresh build.
+Artifacts 382--383 distinguish stationarity from stability: a preregistered
++1e-6-mV somatic perturbation grows to a 56.32-mV excursion in 100 ms. The
+derived point is therefore not a robust resting state. Neither relaxation nor
+fixed-point initialization authorizes another Figure 7 run; the remaining
+work must target unresolved source semantics rather than initialization-time
+or numerical-precision fitting.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

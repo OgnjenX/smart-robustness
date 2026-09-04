@@ -870,6 +870,36 @@ FIGURE7_NONSPECIFIC_MODELDB_CALIBRATED20_PAIR_RESULT_PATH = (
     ROOT
     / "docs/validation-results/figure7-top5-nonspecific-modeldb-calibrated20-pair-376.yaml"
 )
+ISOLATED_NONSPECIFIC_REST_AUDIT_PROFILE_PATH = (
+    ROOT / "configs/calibration/isolated_nonspecific_rest_audit_v1.yaml"
+)
+ISOLATED_NONSPECIFIC_REST_AUDIT_REGISTRATION_PATH = (
+    ROOT
+    / "docs/validation-results/isolated-nonspecific-rest-audit-registration-377.yaml"
+)
+ISOLATED_NONSPECIFIC_REST_AUDIT_RESULT_PATH = (
+    ROOT / "docs/validation-results/isolated-nonspecific-rest-audit-378.yaml"
+)
+ISOLATED_NONSPECIFIC_FIXED_POINT_DERIVATION_PATH = (
+    ROOT
+    / "docs/validation-results/isolated-nonspecific-fixed-point-derivation-379.yaml"
+)
+ISOLATED_NONSPECIFIC_FIXED_POINT_VERIFICATION_PATH = (
+    ROOT
+    / "docs/validation-results/isolated-nonspecific-fixed-point-verification-381.yaml"
+)
+ISOLATED_NONSPECIFIC_FIXED_POINT_PERTURBATION_PROFILE_PATH = (
+    ROOT
+    / "configs/calibration/isolated_nonspecific_fixed_point_soma_perturbation_v1.yaml"
+)
+ISOLATED_NONSPECIFIC_FIXED_POINT_PERTURBATION_REGISTRATION_PATH = (
+    ROOT
+    / "docs/validation-results/isolated-nonspecific-fixed-point-soma-perturbation-registration-382.yaml"
+)
+ISOLATED_NONSPECIFIC_FIXED_POINT_PERTURBATION_RESULT_PATH = (
+    ROOT
+    / "docs/validation-results/isolated-nonspecific-fixed-point-soma-perturbation-383.yaml"
+)
 FIGURE7_ALIGNED_VERIFICATION_PROFILE_PATH = (
     ROOT / "configs/calibration/figure7_aligned_on_center_verification_v1.yaml"
 )
@@ -5237,6 +5267,85 @@ def test_nonspecific_modeldb_calibrated20_fails_mismatch_holdout() -> None:
     assert not artifact["gates"]["mismatch_nonspecific_70_hz"]
     assert len(mismatch["nonspecific_positive_soma_local_maxima_ms_mV"]) == 6
     assert not artifact["reproduced"]
+
+
+def test_recovered_nonspecific_cell_does_not_relax_to_quiescent_rest() -> None:
+    profile = yaml.safe_load(ISOLATED_NONSPECIFIC_REST_AUDIT_PROFILE_PATH.read_text())
+    registration = yaml.safe_load(
+        ISOLATED_NONSPECIFIC_REST_AUDIT_REGISTRATION_PATH.read_text()
+    )
+    artifact = yaml.safe_load(ISOLATED_NONSPECIFIC_REST_AUDIT_RESULT_PATH.read_text())
+    assert profile["protocol"] == {
+        "duration_ms": 500.0,
+        "dt_ms": 0.01,
+        "recording_dt_ms": 0.1,
+        "terminal_window_ms": 100.0,
+        "applied_input": "none",
+    }
+    assert registration["fixed_runtime"]["runtime_fingerprint"] == (
+        "7c164995390f7d2df9a618f529d375519114163fd254125d8829bd6642cc8c93"
+    )
+    assert artifact["status"] == "quiescent-rest-not-supported"
+    assert artifact["all_state_samples_finite"]
+    assert artifact["terminal_detector_event_count"] == 0
+    assert artifact["maximum_terminal_peak_to_peak_mV"] == pytest.approx(
+        51.39470959905637
+    )
+    assert artifact["compartments"]["soma"][
+        "terminal_peak_to_peak_mV"
+    ] > profile["operational_gate"]["terminal_peak_to_peak_at_most_mV"]
+    assert not artifact["quiescent_rest_supported"]
+
+
+def test_recovered_nonspecific_cell_has_one_stationary_fixed_point() -> None:
+    derivation = yaml.safe_load(
+        ISOLATED_NONSPECIFIC_FIXED_POINT_DERIVATION_PATH.read_text()
+    )
+    verification = yaml.safe_load(
+        ISOLATED_NONSPECIFIC_FIXED_POINT_VERIFICATION_PATH.read_text()
+    )
+    assert derivation["attempt_count"] == 125
+    assert derivation["converged_attempt_count"] == 54
+    assert derivation["unique_root_count"] == 1
+    assert derivation["stationarity_result"]["stationary_by_registered_probe"]
+    assert verification["status"] == "fixed-point-verification-complete"
+    assert verification["expected_fixed_point_pass"]
+    assert verification["unique_fixed_points_mV"][0] == pytest.approx(
+        [-37.64292925949306, -29.37693872874881, -25.70881637435125]
+    )
+    assert verification["stationarity_result"]["maximum_peak_to_peak_mV"] == 0.0
+
+
+def test_nonspecific_fixed_point_fails_registered_somatic_perturbation() -> None:
+    profile = yaml.safe_load(
+        ISOLATED_NONSPECIFIC_FIXED_POINT_PERTURBATION_PROFILE_PATH.read_text()
+    )
+    registration = yaml.safe_load(
+        ISOLATED_NONSPECIFIC_FIXED_POINT_PERTURBATION_REGISTRATION_PATH.read_text()
+    )
+    artifact = yaml.safe_load(
+        ISOLATED_NONSPECIFIC_FIXED_POINT_PERTURBATION_RESULT_PATH.read_text()
+    )
+    assert profile["stationarity_probe"]["initial_voltage_perturbation_mV"] == [
+        0.000001,
+        0.0,
+        0.0,
+    ]
+    assert registration["holdout_lock"] == {
+        "figure7_match_runs": 0,
+        "figure7_mismatch_runs": 0,
+    }
+    assert artifact["status"] == "fixed-point-stability-probe-failed"
+    assert artifact["expected_fixed_point_pass"]
+    assert artifact["stationarity_result"]["initial_voltage_perturbation_mV"] == [
+        0.000001,
+        0.0,
+        0.0,
+    ]
+    assert artifact["stationarity_result"][
+        "maximum_peak_to_peak_mV"
+    ] == pytest.approx(56.31728131527776)
+    assert not artifact["stationarity_result"]["stationary_by_registered_probe"]
 
 
 def test_aligned_on_center_verification_registers_only_screen_survivor() -> None:

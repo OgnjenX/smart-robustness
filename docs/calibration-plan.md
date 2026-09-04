@@ -817,3 +817,26 @@ events, but nonspecific output remains five rather than seven. The recovered
 mismatch waveform has only six positive somatic maxima, so no lower shared
 amplitude threshold can create seven independent cycles. Reject +20 mV and
 close scalar event-arm calibration; do not inspect another threshold.
+
+Artifacts 377--378 test the paper/manual initialization ambiguity without
+consulting another behavioral holdout. Starting the complete recovered
+nonspecific thalamic cell at its serialized -64 mV leak reversals with gates at
+their corresponding steady-state values does not relax to a quiescent rest in
+500 ms. The trajectory remains finite, but the last 100 ms span 51.39 mV at
+the soma (about -56.98 to -5.59 mV), with smaller persistent dendritic
+oscillations. Therefore a chosen pre-protocol warm-up cannot be called a
+source-grounded resting-potential correction. Close equilibration-time fitting;
+if initialization is revisited, it must come from an independently derived
+fixed point or newly recovered simulator source, not Figure 7 output.
+
+Artifacts 379--381 derive and independently verify the only fixed point found
+from a 125-start bounded current-balance search of the recovered nonspecific
+cell. Fifty-four starts converge to soma/proximal/distal voltages of about
+-37.643/-29.377/-25.709 mV. Refined to a residual below 2e-11 pA, that state is
+exactly stationary for 100 ms. Exact stationarity is not stability. Artifacts
+382--383 therefore apply one preregistered +1e-6-mV somatic perturbation with
+all gates left at the fixed-point state. It grows into 56.32 mV of somatic
+motion within 100 ms. Reject this point as a robust resting initialization and
+keep Figure 7 locked. Do not round the point into a behavioral candidate or
+fit its precision; only newly recovered primary source could require that
+non-robust initialization.

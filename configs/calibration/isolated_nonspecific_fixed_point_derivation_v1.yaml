@@ -1,0 +1,25 @@
+schema_version: 1
+name: isolated-nonspecific-fixed-point-derivation-v1
+status: exploratory-derivation-after-registered-relaxation-failure
+predecessor_artifact: docs/validation-results/isolated-nonspecific-rest-audit-378.yaml
+runtime_profile: configs/calibration/figure7_top5_nonspecific_modeldb_calibrated20_match_v1.yaml
+population: thalamic_nonspecific
+root_search:
+  compartment_order: [soma, proximal_dendrite, distal_dendrite]
+  initial_guess_axis_mV: [-100.0, -70.0, -40.0, -10.0, 20.0]
+  maximum_absolute_residual_pA: 0.001
+  uniqueness_tolerance_mV: 0.001
+stationarity_probe:
+  duration_ms: 100.0
+  dt_ms: 0.01
+  recording_dt_ms: 0.1
+  maximum_peak_to_peak_mV: 1.0
+interpretation_limits:
+  - This derives current-balance fixed points; it does not assert that KInNeSS used them.
+  - The search is bounded by the declared starting grid and is not a mathematical proof that no other root exists.
+  - Figure 7 match and mismatch remain unconsulted.
+next_gate: >-
+  If exactly one bounded fixed point is recovered and remains stationary under
+  direct integration, independently register and verify that fixed point, then
+  test its dynamical stability with fixed small perturbations. Do not test it in
+  Figure 7 unless it passes both checks or new source evidence requires it.

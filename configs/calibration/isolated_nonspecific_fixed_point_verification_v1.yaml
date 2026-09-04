@@ -1,0 +1,28 @@
+schema_version: 1
+name: isolated-nonspecific-fixed-point-verification-v1
+status: registered-before-execution-independent-verification
+registration_artifact: docs/validation-results/isolated-nonspecific-fixed-point-verification-registration-380.yaml
+predecessor_artifact: docs/validation-results/isolated-nonspecific-fixed-point-derivation-379.yaml
+runtime_profile: configs/calibration/figure7_top5_nonspecific_modeldb_calibrated20_match_v1.yaml
+population: thalamic_nonspecific
+root_search:
+  compartment_order: [soma, proximal_dendrite, distal_dendrite]
+  initial_guess_vectors_mV:
+    - [-37.64292925944548, -29.376938728700992, -25.708816372385417]
+  maximum_absolute_residual_pA: 0.001
+  uniqueness_tolerance_mV: 0.001
+  expected_fixed_point_mV: [-37.64292925944548, -29.376938728700992, -25.708816372385417]
+  expected_fixed_point_tolerance_mV: 0.000001
+stationarity_probe:
+  duration_ms: 100.0
+  dt_ms: 0.01
+  recording_dt_ms: 0.1
+  maximum_peak_to_peak_mV: 1.0
+interpretation_limits:
+  - This verifies the derived current-balance point in a fresh Brian2 reconstruction; it does not claim that KInNeSS used it.
+  - Exact stationarity does not establish dynamical stability; a separately registered perturbation audit is required.
+  - Figure 7 match and mismatch remain unconsulted.
+next_gate: >-
+  If the fixed point is recovered within 1e-6 mV and remains within the fixed
+  1-mV stationarity bound, register small perturbations before testing them.
+  Do not open Figure 7 from exact stationarity alone.

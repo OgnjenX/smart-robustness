@@ -1,0 +1,32 @@
+schema_version: 1
+name: isolated-nonspecific-rest-audit-v1
+status: registered-before-execution-source-interpretation-audit
+registration_artifact: docs/validation-results/isolated-nonspecific-rest-audit-registration-377.yaml
+runtime_profile: configs/calibration/figure7_top5_nonspecific_modeldb_calibrated20_match_v1.yaml
+population: thalamic_nonspecific
+protocol:
+  duration_ms: 500.0
+  dt_ms: 0.01
+  recording_dt_ms: 0.1
+  terminal_window_ms: 100.0
+  applied_input: none
+rest_interpretation:
+  initial_voltage_source: recovered_modeldb_leak_reversal
+  gate_initialization: steady_state_at_initial_voltage
+  network_context: isolated_cell_with_recovered_zero-state_external_ports
+operational_gate:
+  all_state_samples_finite: true
+  terminal_peak_to_peak_at_most_mV: 1.0
+  terminal_detector_events: 0
+next_gate: >-
+  If the recovered cell relaxes to a finite quiescent state, derive that state
+  independently before testing it as the paper's resting-potential
+  initialization. If it remains oscillatory, reject pre-protocol relaxation as
+  a faithful initialization correction; do not select an equilibration time
+  from Figure 7 behavior.
+locked_holdouts:
+  - figure7_match
+  - figure7_mismatch
+  - figure10_reset
+  - figure14_spectra
+

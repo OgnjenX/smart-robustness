@@ -1,0 +1,31 @@
+schema_version: 1
+id: isolated-nonspecific-rest-audit-registration-377
+date: '2026-09-04'
+status: registered-before-execution-source-interpretation-audit
+profile: configs/calibration/isolated_nonspecific_rest_audit_v1.yaml
+scientific_question: >-
+  Does the recovered nonspecific thalamic cell relax from its serialized -64 mV
+  leak-reversal initialization to a finite quiescent resting state, thereby
+  supporting a source-grounded pre-protocol equilibration interpretation of
+  Grossberg and Versace's phrase "resting membrane potential"?
+fixed_runtime:
+  source_profile: configs/calibration/figure7_top5_nonspecific_modeldb_calibrated20_match_v1.yaml
+  runtime_fingerprint: 7c164995390f7d2df9a618f529d375519114163fd254125d8829bd6642cc8c93
+  nonspecific_intrinsic_cell_convention: modeldb_112923
+  membrane_initialization_convention: physical_leak_voltage
+  gate_initialization_convention: steady_state_at_initial_voltage
+fixed_protocol:
+  duration_ms: 500.0
+  dt_ms: 0.01
+  recording_dt_ms: 0.1
+  terminal_window_ms: 100.0
+  input: none
+operational_quiescence_definition:
+  all_state_samples_finite: true
+  maximum_terminal_peak_to_peak_mV_per_compartment: 1.0
+  terminal_detector_events: 0
+stopping_rule: >-
+  Run the one fixed isolated-cell trajectory and classify it from the registered
+  terminal window. Do not choose an equilibration duration or initial voltage
+  after looking at Figure 7.
+

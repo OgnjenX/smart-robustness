@@ -1,0 +1,31 @@
+schema_version: 1
+name: isolated-nonspecific-fixed-point-soma-perturbation-v1
+status: registered-before-execution-stability-audit
+registration_artifact: docs/validation-results/isolated-nonspecific-fixed-point-soma-perturbation-registration-382.yaml
+predecessor_artifact: docs/validation-results/isolated-nonspecific-fixed-point-verification-381.yaml
+runtime_profile: configs/calibration/figure7_top5_nonspecific_modeldb_calibrated20_match_v1.yaml
+population: thalamic_nonspecific
+root_search:
+  compartment_order: [soma, proximal_dendrite, distal_dendrite]
+  initial_guess_vectors_mV:
+    - [-37.64292925949306, -29.37693872874881, -25.70881637435125]
+  maximum_absolute_residual_pA: 0.001
+  uniqueness_tolerance_mV: 0.001
+  expected_fixed_point_mV: [-37.64292925949306, -29.37693872874881, -25.70881637435125]
+  expected_fixed_point_tolerance_mV: 0.000001
+stationarity_probe:
+  duration_ms: 100.0
+  dt_ms: 0.01
+  recording_dt_ms: 0.1
+  initial_voltage_perturbation_mV: [0.000001, 0.0, 0.0]
+  maximum_peak_to_peak_mV: 1.0
+interpretation_limits:
+  - This is a one-direction local stability audit, not a complete Jacobian analysis.
+  - The perturbation was fixed before execution and is not selected from Figure 7.
+  - Figure 7 match and mismatch remain unconsulted.
+next_gate: >-
+  If the 1e-6-mV somatic perturbation grows beyond the fixed 1-mV bound, reject
+  the derived point as a robust resting initialization and do not open Figure
+  7. If it remains bounded, register complementary perturbation directions
+  before any behavioral test.
+

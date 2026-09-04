@@ -1,0 +1,48 @@
+schema_version: 1
+id: isolated-nonspecific-rest-audit-378
+date: '2026-09-04'
+status: quiescent-rest-not-supported
+classification: source-interpretation-audit
+profile: configs/calibration/isolated_nonspecific_rest_audit_v1.yaml
+registration_artifact: docs/validation-results/isolated-nonspecific-rest-audit-registration-377.yaml
+runtime_fingerprint: 7c164995390f7d2df9a618f529d375519114163fd254125d8829bd6642cc8c93
+population: thalamic_nonspecific
+protocol:
+  duration_ms: 500.0
+  dt_ms: 0.01
+  recording_dt_ms: 0.1
+  terminal_window_ms: 100.0
+  applied_input: none
+detector_event_count: 1
+detector_event_times_ms:
+- 0.89
+terminal_detector_event_count: 0
+all_state_samples_finite: true
+maximum_terminal_peak_to_peak_mV: 51.39470959905637
+compartments:
+  soma:
+    finite: true
+    initial_mV: -64.0
+    terminal_mV: -39.88200959568704
+    terminal_min_mV: -56.983427717983076
+    terminal_max_mV: -5.588718118926708
+    terminal_peak_to_peak_mV: 51.39470959905637
+  proximal_dendrite:
+    finite: true
+    initial_mV: -64.0
+    terminal_mV: -31.31729572013331
+    terminal_min_mV: -31.680328505320766
+    terminal_max_mV: -26.59474448764675
+    terminal_peak_to_peak_mV: 5.085584017674016
+  distal_dendrite:
+    finite: true
+    initial_mV: -64.0
+    terminal_mV: -26.170565235395664
+    terminal_min_mV: -26.222266621962035
+    terminal_max_mV: -25.48559174531777
+    terminal_peak_to_peak_mV: 0.7366748766442655
+quiescent_rest_supported: false
+next_gate: If the recovered cell relaxes to a finite quiescent state, derive that
+  state independently before testing it as the paper's resting-potential initialization.
+  If it remains oscillatory, reject pre-protocol relaxation as a faithful initialization
+  correction; do not select an equilibration time from Figure 7 behavior.

@@ -1,0 +1,81 @@
+schema_version: 1
+id: isolated-nonspecific-fixed-point-soma-perturbation-383
+date: '2026-09-04'
+status: fixed-point-stability-probe-failed
+classification: source-equation-initialization-audit
+profile: configs/calibration/isolated_nonspecific_fixed_point_soma_perturbation_v1.yaml
+predecessor_artifact: docs/validation-results/isolated-nonspecific-fixed-point-verification-381.yaml
+runtime_fingerprint: 7c164995390f7d2df9a618f529d375519114163fd254125d8829bd6642cc8c93
+root_search:
+  compartment_order:
+  - soma
+  - proximal_dendrite
+  - distal_dendrite
+  initial_guess_vectors_mV:
+  - - -37.64292925949306
+    - -29.37693872874881
+    - -25.70881637435125
+  maximum_absolute_residual_pA: 0.001
+  uniqueness_tolerance_mV: 0.001
+  expected_fixed_point_mV:
+  - -37.64292925949306
+  - -29.37693872874881
+  - -25.70881637435125
+  expected_fixed_point_tolerance_mV: 1.0e-06
+attempt_count: 1
+converged_attempt_count: 1
+unique_root_count: 1
+unique_fixed_points_mV:
+- - -37.64292925949306
+  - -29.37693872874881
+  - -25.70881637435125
+expected_fixed_point_pass: true
+stationarity_probe:
+  duration_ms: 100.0
+  dt_ms: 0.01
+  recording_dt_ms: 0.1
+  initial_voltage_perturbation_mV:
+  - 1.0e-06
+  - 0.0
+  - 0.0
+  maximum_peak_to_peak_mV: 1.0
+stationarity_result:
+  initial_residual_pA:
+  - 1.6543612251060553e-11
+  - 1.6802106192483375e-13
+  - 2.455692443516801e-13
+  initial_voltage_perturbation_mV:
+  - 1.0e-06
+  - 0.0
+  - 0.0
+  detector_event_count: 0
+  detector_event_times_ms: []
+  maximum_peak_to_peak_mV: 56.31728131527776
+  trajectories:
+    soma:
+      initial_mV: -37.642928259493054
+      terminal_mV: -41.599921649217464
+      minimum_mV: -58.13296657382405
+      maximum_mV: -1.8156852585462886
+      peak_to_peak_mV: 56.31728131527776
+    proximal_dendrite:
+      initial_mV: -29.37693872874881
+      terminal_mV: -26.74192797844343
+      minimum_mV: -32.94329737176381
+      maximum_mV: -26.564465442188673
+      peak_to_peak_mV: 6.378831929575139
+    distal_dendrite:
+      initial_mV: -25.70881637435125
+      terminal_mV: -25.735321623930705
+      minimum_mV: -27.088467394618785
+      maximum_mV: -25.32234008675889
+      peak_to_peak_mV: 1.7661273078598967
+  stationary_by_registered_probe: false
+interpretation_limits:
+- This is a one-direction local stability audit, not a complete Jacobian analysis.
+- The perturbation was fixed before execution and is not selected from Figure 7.
+- Figure 7 match and mismatch remain unconsulted.
+next_gate: If the 1e-6-mV somatic perturbation grows beyond the fixed 1-mV bound,
+  reject the derived point as a robust resting initialization and do not open Figure
+  7. If it remains bounded, register complementary perturbation directions before
+  any behavioral test.

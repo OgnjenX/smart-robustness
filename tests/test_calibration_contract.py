@@ -779,6 +779,14 @@ FIGURE7_NONSPECIFIC_KINNESS_AXIAL_RESULT_PATH = (
     ROOT
     / "docs/validation-results/figure7-top5-nonspecific-kinness-axial-match-358.yaml"
 )
+FIGURE7_NONSPECIFIC_MODELDB_INTRINSIC_PROFILE_PATH = (
+    ROOT
+    / "configs/calibration/figure7_top5_nonspecific_modeldb_intrinsic_match_v1.yaml"
+)
+FIGURE7_NONSPECIFIC_MODELDB_INTRINSIC_REGISTRATION_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-top5-nonspecific-modeldb-intrinsic-registration-359.yaml"
+)
 FIGURE7_ALIGNED_VERIFICATION_PROFILE_PATH = (
     ROOT / "configs/calibration/figure7_aligned_on_center_verification_v1.yaml"
 )
@@ -4753,6 +4761,40 @@ def test_nonspecific_kinness_axial_source_fails_match_before_mismatch() -> None:
         ]
     }["soma"]
     assert soma_range[1] < -50.0
+
+
+def test_nonspecific_modeldb_intrinsic_source_is_complete_and_isolated() -> None:
+    profile = yaml.safe_load(
+        FIGURE7_NONSPECIFIC_MODELDB_INTRINSIC_PROFILE_PATH.read_text()
+    )
+    registration = yaml.safe_load(
+        FIGURE7_NONSPECIFIC_MODELDB_INTRINSIC_REGISTRATION_PATH.read_text()
+    )
+    assert profile["runtime_overrides"][
+        "nonspecific_intrinsic_cell_convention"
+    ] == "modeldb_112923"
+    assert profile["runtime_expectations"] == {
+        "nonspecific_intrinsic_cell_convention": "modeldb_112923"
+    }
+    assert registration["registered_dimension"]["candidate_count"] == 1
+    assert registration["source_contrast"]["paper_soma_mS_cm2"] == {
+        "sodium": 100.0,
+        "potassium": 100.0,
+    }
+    assert registration["source_contrast"]["modeldb_soma_mS_cm2"] == {
+        "sodium": 50.0,
+        "potassium": 30.0,
+    }
+    assert registration["fixed"]["nonspecific_axial_convention"] == (
+        "paper_literal"
+    )
+    assert registration["scope_boundary"]["changes"] == (
+        "complete nonspecific intrinsic cell record only"
+    )
+    assert registration["stopping_rule"].startswith(
+        "Run one fresh complete Figure 6"
+    )
+    assert "figure7_mismatch" in registration["locked_holdouts"]
 
 
 def test_aligned_on_center_verification_registers_only_screen_survivor() -> None:

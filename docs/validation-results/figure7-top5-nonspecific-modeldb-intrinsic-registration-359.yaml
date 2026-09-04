@@ -1,0 +1,70 @@
+schema_version: 1
+id: figure7-top5-nonspecific-modeldb-intrinsic-registration-359
+date: '2026-09-04'
+status: registered-before-execution-source-discriminator
+profile: configs/calibration/figure7_top5_nonspecific_modeldb_intrinsic_match_v1.yaml
+rationale:
+  - >-
+    The remaining Figure 7 deficit is localized to the nonspecific cell's
+    compartmental rebound. Paper-only T-current kinetics overdrive match while
+    archived axial coupling abolishes somatic output, leaving the intrinsic
+    cell catalog as an untested discrete official-source choice.
+  - >-
+    Grossberg and Versace Table 3 gives the nonspecific soma 100 mS/cm2 sodium
+    and 100 mS/cm2 potassium. The recovered SMART executable gives the same
+    geometry, leak, and dendritic 250-mS/cm2 T current, but 50 mS/cm2 sodium
+    and 30 mS/cm2 potassium in the soma.
+  - >-
+    Select the complete archived nonspecific intrinsic cell as one unit. Do not
+    fit either conductance separately. Keep paper-literal nonspecific axial
+    coupling, executable calcium kinetics, every synapse, and all upstream
+    population source choices fixed.
+registered_dimension:
+  population: thalamic_nonspecific
+  mechanism: complete intrinsic cell source
+  source_alternative: modeldb_112923
+  candidate_count: 1
+source_contrast:
+  unchanged:
+    - compartment geometry
+    - leak reversal and density
+    - proximal and distal T-current density
+  paper_soma_mS_cm2: {sodium: 100.0, potassium: 100.0}
+  modeldb_soma_mS_cm2: {sodium: 50.0, potassium: 30.0}
+fixed:
+  relay_intrinsic_source: modeldb_112923
+  trn_intrinsic_source: paper_table3
+  cortical_intrinsic_source: paper_table3
+  nonspecific_axial_convention: paper_literal
+  nonspecific_calcium_kinetics: modeldb_112923
+  all_synaptic_weights_kinetics_delays_and_reversals_unchanged: true
+  comparator_transform: top_k_binary
+  comparator_target_count: 5
+  learned_headroom_fraction: 1.0
+  source_index: 40
+  cue_current_pA: 800.0
+  current_mode: until_cued_cell_first_event
+  receptor_peak_cue_lead_ms: 11.35773631178703
+  trn_detector: {arm_mV: -20.0, release_mV: -30.0}
+  duration_ms: 100.0
+  dt_ms: 0.01
+scope_boundary:
+  classification: official-source-discriminator-not-yet-baseline
+  changes: complete nonspecific intrinsic cell record only
+  leaves_unchanged:
+    - axial and synaptic equations
+    - all upstream intrinsic records
+    - stimulus values and timing
+    - learned comparator and cardinality
+    - event detectors
+stopping_rule: >-
+  Run one fresh complete Figure 6 and construct match only if every prerequisite
+  passes. Do not run mismatch in this artifact. A match pass requires an
+  independent rebuild before one fixed mismatch; a failure closes the complete
+  source alternative without mixing individual conductance values.
+locked_holdouts:
+  - figure7_mismatch
+  - figure10_reset
+  - figure14_spectra
+  - figure15_local_synchrony
+  - figure16_long_range_synchrony

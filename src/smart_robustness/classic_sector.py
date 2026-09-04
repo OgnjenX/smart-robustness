@@ -120,6 +120,7 @@ class FirstOrderRuntimeConventions:
     axial_convention: str = "kinness_serialized_edge"
     nonspecific_axial_convention: str | None = None
     intrinsic_cell_convention: str = "modeldb_112923"
+    nonspecific_intrinsic_cell_convention: str | None = None
     leak_convention: str = "table3_reversal"
     voltage_coordinate: str = "relative_to_table3_leak"
     nak_rate_convention: str = "standard_traub_miles"
@@ -175,6 +176,8 @@ class FirstOrderRuntimeConventions:
         values = asdict(self)
         if values["nonspecific_axial_convention"] is None:
             values.pop("nonspecific_axial_convention")
+        if values["nonspecific_intrinsic_cell_convention"] is None:
+            values.pop("nonspecific_intrinsic_cell_convention")
         if values["postsynaptic_depression_scale_convention"] == "local_learning_bounds":
             # Preserve the identity of every historical profile. This optional
             # discriminator is serialized only when it differs from the
@@ -485,6 +488,13 @@ def _resolved_intrinsic_source(
 ) -> IntrinsicCellConvention:
     """Resolve a declared source profile to one population's intrinsic source."""
 
+    if (
+        facts.canonical_name == "thalamic_nonspecific"
+        and conventions.nonspecific_intrinsic_cell_convention is not None
+    ):
+        return IntrinsicCellConvention(
+            conventions.nonspecific_intrinsic_cell_convention
+        )
     selected = IntrinsicCellConvention(conventions.intrinsic_cell_convention)
     if selected in {
         IntrinsicCellConvention.MODELDB_RELAY_PAPER_TABLE3_OTHERS,

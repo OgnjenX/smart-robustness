@@ -198,6 +198,11 @@ def runtime_conventions_for_candidate(
     return replace(
         figure6_runtime_conventions() if base is None else base,
         intrinsic_cell_convention=str(values["intrinsic_cell_convention"]),
+        nonspecific_intrinsic_cell_convention=(
+            None
+            if values.get("nonspecific_intrinsic_cell_convention") is None
+            else str(values["nonspecific_intrinsic_cell_convention"])
+        ),
         calcium_kinetics_convention=calcium_kinetics,
         nonspecific_calcium_kinetics_convention=(
             None

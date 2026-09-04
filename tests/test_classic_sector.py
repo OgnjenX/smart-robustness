@@ -727,6 +727,32 @@ def test_nonspecific_axial_source_can_be_selected_without_changing_trn() -> None
     assert layer4["axial_convention"] == "paper_literal"
 
 
+def test_nonspecific_intrinsic_source_can_be_selected_without_changing_trn() -> None:
+    facts = {fact.canonical_name: fact for fact in first_order_population_facts()}
+    conventions = FirstOrderRuntimeConventions(
+        intrinsic_cell_convention=(
+            IntrinsicCellConvention.MODELDB_RELAY_PAPER_TABLE3_OTHERS.value
+        ),
+        nonspecific_intrinsic_cell_convention=(
+            IntrinsicCellConvention.MODELDB_112923.value
+        ),
+    )
+
+    nonspecific = first_order_population_parameters(
+        facts["thalamic_nonspecific"], conventions=conventions
+    )["cell_spec"]
+    trn = first_order_population_parameters(facts["trn"], conventions=conventions)[
+        "cell_spec"
+    ]
+
+    assert nonspecific.name == "modeldb112923_thalamic_nonspecific"
+    assert nonspecific.soma.g_na_mS_cm2 == 50.0
+    assert nonspecific.soma.g_k_mS_cm2 == 30.0
+    assert trn.name == "trn"
+    assert trn.soma.g_na_mS_cm2 == 100.0
+    assert trn.soma.g_k_mS_cm2 == 100.0
+
+
 def test_figure6_profile_names_the_source_constrained_runtime() -> None:
     conventions = figure6_runtime_conventions()
     assert conventions.gate_initialization_convention == "steady_state_at_initial_voltage"

@@ -663,6 +663,16 @@ FIGURE7_NONSPECIFIC_VOLTAGE_AUDIT_RESULT_PATH = (
     ROOT
     / "docs/validation-results/figure7-top5-nonspecific-voltage-peak-audit-338.yaml"
 )
+FIGURE7_TOP5_ARRIVAL_MATCH_PROFILE_PATH = (
+    ROOT / "configs/calibration/figure7_top5_arrival_aligned_match_v1.yaml"
+)
+FIGURE7_TOP5_ARRIVAL_MATCH_REGISTRATION_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-top5-arrival-aligned-registration-339.yaml"
+)
+FIGURE7_TOP5_ARRIVAL_MATCH_RESULT_PATH = (
+    ROOT / "docs/validation-results/figure7-top5-arrival-aligned-match-340.yaml"
+)
 FIGURE7_ALIGNED_VERIFICATION_PROFILE_PATH = (
     ROOT / "configs/calibration/figure7_aligned_on_center_verification_v1.yaml"
 )
@@ -4088,6 +4098,25 @@ def test_nonspecific_voltage_audit_closes_shared_detector_threshold() -> None:
     assert not threshold["exact_shared_threshold_exists"]
     assert threshold["maximum_mismatch_peaks_while_preserving_match_count"] == 5
     assert not artifact["reproduced"]
+
+
+def test_top5_arrival_interaction_is_one_match_only_candidate() -> None:
+    profile = yaml.safe_load(FIGURE7_TOP5_ARRIVAL_MATCH_PROFILE_PATH.read_text())
+    registration = yaml.safe_load(
+        FIGURE7_TOP5_ARRIVAL_MATCH_REGISTRATION_PATH.read_text()
+    )
+    assert profile["dimension"]["grid"] == [5]
+    assert profile["protocol"]["top_down_cue_lead_ms"] == 7.85
+    assert profile["protocol"]["record_relay_diagnostics"]
+    assert registration["execution"]["condition"] == "match"
+    assert registration["execution"]["candidate_count"] == 1
+    assert registration["rationale"]["arrival_aligned_evidence"][
+        "mismatch_counts"
+    ]["nonspecific"] == 7
+    assert registration["rationale"]["top5_evidence"]["mismatch_counts"][
+        "relay"
+    ] == 3
+    assert registration["mismatch_lock"].startswith("Do not inspect mismatch")
 
 
 def test_aligned_on_center_verification_registers_only_screen_survivor() -> None:

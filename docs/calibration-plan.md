@@ -632,3 +632,14 @@ monitor all cortical-chain populations, so its separate chain gate is not used
 as evidence; the relay failures alone decisively reject the prerequisite. Keep
 the archived tuple as the calibrated baseline, close this source alternative,
 and do not construct its Figure 7 holdouts.
+
+Artifacts 328--330 screen one common multiplicative transfer on the three
+archived TRN-to-nonspecific GABA contacts while preserving their relative
+compartment weights. Artifact 329 is superseded because its runner omitted the
+three cortical monitors required by its own Figure 6 chain gate; the unchanged
+grid is rerun correctly in Artifact 330. All four scales pass complete Figure
+6 and preserve 15 relay and 635 genuine-cycle TRN match events. Scales 0.25 and
+0.5 emit only two nonspecific events; scales 0.75 and 1.0 emit the required
+four. The preregistered weakest-survivor rule therefore fixes 0.75 for an
+independent Figure 6-plus-match rebuild. Do not inspect mismatch until that
+verification passes.

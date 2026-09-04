@@ -2661,6 +2661,17 @@ failures already reject the candidate. Figure 7 match and mismatch are not
 run. This source discrepancy cannot repair the remaining 50-versus-70-Hz
 Figure 7 mismatch deficit while preserving the learned baseline.
 
+Artifacts 328--330 introduce a coarse, explicitly calibrated common transfer
+scale on the three TRN-to-nonspecific GABA projections. The first execution
+(Artifact 329) is superseded because the runner omitted layers required by its
+Figure 6 chain scorer. With the same registered grid and complete monitoring,
+all four candidates pass Figure 6 and preserve the top-five match's 15 relay
+and 635 genuine-cycle TRN events. Scales 0.25 and 0.5 yield two nonspecific
+events, while 0.75 and the source control 1.0 yield the exact four-event/40-Hz
+match. The match-only weakest-survivor rule selects 0.75. This does not yet
+repair or reproduce Figure 7: an independent 0.75 match and then one fixed
+mismatch are still required.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

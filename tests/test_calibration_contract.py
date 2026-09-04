@@ -609,6 +609,14 @@ FIGURE7_TOP5_NONSPECIFIC_GABA_TRANSFER_REGISTRATION_PATH = (
     ROOT
     / "docs/validation-results/figure7-top5-nonspecific-gaba-transfer-registration-328.yaml"
 )
+FIGURE7_TOP5_NONSPECIFIC_GABA_TRANSFER_SUPERSEDED_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-top5-nonspecific-gaba-transfer-match-329.yaml"
+)
+FIGURE7_TOP5_NONSPECIFIC_GABA_TRANSFER_RESULT_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-top5-nonspecific-gaba-transfer-match-330.yaml"
+)
 FIGURE7_ALIGNED_VERIFICATION_PROFILE_PATH = (
     ROOT / "configs/calibration/figure7_aligned_on_center_verification_v1.yaml"
 )
@@ -3793,6 +3801,40 @@ def test_top5_nonspecific_gaba_transfer_is_preregistered_match_first() -> None:
         "Figure 7 recognition",
     ]
     assert registration["stopping_rule"].startswith("For each registered scale")
+
+
+def test_top5_nonspecific_gaba_transfer_selects_weakest_match_survivor() -> None:
+    superseded = yaml.safe_load(
+        FIGURE7_TOP5_NONSPECIFIC_GABA_TRANSFER_SUPERSEDED_PATH.read_text()
+    )
+    artifact = yaml.safe_load(
+        FIGURE7_TOP5_NONSPECIFIC_GABA_TRANSFER_RESULT_PATH.read_text()
+    )
+    assert superseded["status"] == "superseded-runner-monitor-omission"
+    assert superseded["superseded_by"] == str(
+        FIGURE7_TOP5_NONSPECIFIC_GABA_TRANSFER_RESULT_PATH.relative_to(ROOT)
+    )
+    assert artifact["status"] == "complete"
+    assert not artifact["mismatch_consulted"]
+    assert artifact["match_survivor_common_scales"] == [0.75, 1.0]
+    assert artifact["selected_common_scale"] == 0.75
+    expected_nonspecific = {0.25: 2, 0.5: 2, 0.75: 4, 1.0: 4}
+    for outcome in artifact["outcomes"]:
+        assert outcome["figure6_pass"]
+        assert all(outcome["figure6_gates"].values())
+        result = outcome["match_result"]
+        assert len(result["relay_spike_times_ms"]) == 15
+        assert len(result["trn_spike_times_ms"]) == 635
+        assert len(result["nonspecific_spike_times_ms"]) == (
+            expected_nonspecific[outcome["common_scale"]]
+        )
+        assert outcome["match_gates"][
+            "sampled_trn_events_have_fresh_cycles"
+        ]
+        assert outcome["pass"] == (outcome["common_scale"] >= 0.75)
+    assert artifact["assessment"]["advance_to_independent_match_verification"]
+    assert not artifact["assessment"]["advance_to_mismatch"]
+    assert artifact["assessment"]["mismatch_remains_locked"]
 
 
 def test_aligned_on_center_verification_registers_only_screen_survivor() -> None:

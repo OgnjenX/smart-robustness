@@ -1,0 +1,67 @@
+schema_version: 1
+id: figure7-top5-nonspecific-paper-ttype-registration-349
+date: '2026-09-04'
+status: registered-before-execution-source-discriminator
+profile: configs/calibration/figure7_top5_nonspecific_paper_ttype_match_v1.yaml
+rationale:
+  - >-
+    Artifact 348 localizes the remaining Figure 7 output deficit to a nonlinear
+    interaction between compartment-resolved TRN inhibition and rebound in the
+    nonspecific thalamic cell. It does not authorize choosing a synaptic gain.
+  - >-
+    The calibrated baseline already selects the paper Table 3 intrinsic cell
+    for nonspecific thalamus, including 250 mS/cm2 dendritic T current, but its
+    global calcium-kinetics convention still supplies the ModelDB executable
+    Simple_Tau constants. Grossberg and Versace 2008 Equations 21--27 are the
+    primary-paper alternative for T-current gating.
+  - >-
+    Apply that discrete paper alternative only to the causally localized
+    nonspecific cell. Keep the validated ModelDB reticular kinetics in TRN and
+    every relay/cortical convention fixed. This is a source discriminator, not
+    a fitted continuous parameter and not a claim that the mixed-source
+    reconstruction was the original simulator configuration.
+registered_dimension:
+  population: thalamic_nonspecific
+  mechanism: T-type calcium activation/inactivation kinetics
+  source_alternative: paper_2008
+  candidate_count: 1
+fixed:
+  trn_calcium_kinetics: modeldb_reticular_112923
+  relay_calcium_kinetics: modeldb_112923
+  nonspecific_calcium_density_mS_cm2: 250
+  nonspecific_gaba_projection_ids:
+    - modeldb112923.projection.047
+    - modeldb112923.projection.048
+    - modeldb112923.projection.049
+  nonspecific_gaba_weights_and_kinetics_unchanged: true
+  comparator_transform: top_k_binary
+  comparator_target_count: 5
+  learned_headroom_fraction: 1.0
+  source_index: 40
+  cue_current_pA: 800.0
+  current_mode: until_cued_cell_first_event
+  receptor_peak_cue_lead_ms: 11.35773631178703
+  trn_detector: {arm_mV: -20.0, release_mV: -30.0}
+  duration_ms: 100.0
+  dt_ms: 0.01
+scope_boundary:
+  classification: official-source-discriminator-not-yet-baseline
+  changes: nonspecific T-type gate equations only
+  leaves_unchanged:
+    - all projection weights, receptor kinetics, delays, and reversals
+    - all TRN and relay intrinsic equations
+    - stimulus values and timing
+    - learned comparator and cardinality
+    - event detectors
+stopping_rule: >-
+  Run one fresh complete Figure 6 and construct match only if every prerequisite
+  passes. Do not run mismatch in this artifact. If match passes, independently
+  verify the same candidate before registering one fixed mismatch. If either
+  stage fails, close this population-specific source alternative without a
+  hybrid kinetic interpolation.
+locked_holdouts:
+  - figure7_mismatch
+  - figure10_reset
+  - figure14_spectra
+  - figure15_local_synchrony
+  - figure16_long_range_synchrony

@@ -123,6 +123,7 @@ class FirstOrderRuntimeConventions:
     voltage_coordinate: str = "relative_to_table3_leak"
     nak_rate_convention: str = "standard_traub_miles"
     calcium_kinetics_convention: str = "modeldb_112923"
+    nonspecific_calcium_kinetics_convention: str | None = None
     calcium_gate_convention: str = "modeldb_112923"
     calcium_voltage_coordinate: str = "integrated_voltage"
     gate_initialization_convention: str = "steady_state_at_initial_voltage"
@@ -178,6 +179,8 @@ class FirstOrderRuntimeConventions:
             values.pop("postsynaptic_depression_scale_convention")
         if values["trn_spike_event_coordinate"] is None:
             values.pop("trn_spike_event_coordinate")
+        if values["nonspecific_calcium_kinetics_convention"] is None:
+            values.pop("nonspecific_calcium_kinetics_convention")
         if values["trn_spike_event_threshold_mV"] is None:
             values.pop("trn_spike_event_threshold_mV")
         if values["trn_spike_event_release_mV"] is None:
@@ -524,12 +527,20 @@ def first_order_population_parameters(
             else "kinness_serialized_edge"
         )
     calcium_kinetics = CalciumKineticsConvention(conventions.calcium_kinetics_convention)
-    calcium_gate_convention = conventions.calcium_gate_convention
     if (
-        calcium_kinetics is CalciumKineticsConvention.MODELDB_112923
-        and facts.calcium_gate_convention is not None
+        facts.canonical_name == "thalamic_nonspecific"
+        and conventions.nonspecific_calcium_kinetics_convention is not None
     ):
+        calcium_kinetics = CalciumKineticsConvention(
+            conventions.nonspecific_calcium_kinetics_convention
+        )
+    calcium_gate_convention = conventions.calcium_gate_convention
+    if calcium_kinetics is CalciumKineticsConvention.PAPER_2008:
+        calcium_gate_convention = "reciprocal"
+    elif facts.calcium_gate_convention is not None:
         calcium_gate_convention = facts.calcium_gate_convention
+    else:
+        calcium_gate_convention = "modeldb_112923"
     zero_input_convention = ZeroSensitivityInputConvention(
         conventions.zero_sensitivity_input_convention
     )

@@ -199,6 +199,11 @@ def runtime_conventions_for_candidate(
         figure6_runtime_conventions() if base is None else base,
         intrinsic_cell_convention=str(values["intrinsic_cell_convention"]),
         calcium_kinetics_convention=calcium_kinetics,
+        nonspecific_calcium_kinetics_convention=(
+            None
+            if values.get("nonspecific_calcium_kinetics_convention") is None
+            else str(values["nonspecific_calcium_kinetics_convention"])
+        ),
         calcium_gate_convention=calcium_gate,
         calcium_density_convention=calcium_density,
         nak_rate_convention=str(values["nak_rate_convention"]),

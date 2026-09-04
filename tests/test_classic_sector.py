@@ -689,6 +689,24 @@ def test_calcium_kinetics_source_is_independent_from_intrinsic_cell_source() -> 
     assert paper["calcium_gate_convention"] == "reciprocal"
 
 
+def test_nonspecific_calcium_kinetics_can_be_selected_without_changing_trn() -> None:
+    facts = {fact.canonical_name: fact for fact in first_order_population_facts()}
+    conventions = FirstOrderRuntimeConventions(
+        calcium_kinetics_convention=CalciumKineticsConvention.MODELDB_112923.value,
+        nonspecific_calcium_kinetics_convention=(
+            CalciumKineticsConvention.PAPER_2008.value
+        ),
+    )
+
+    nonspecific = first_order_population_parameters(
+        facts["thalamic_nonspecific"], conventions=conventions
+    )
+    trn = first_order_population_parameters(facts["trn"], conventions=conventions)
+
+    assert nonspecific["calcium_gate_convention"] == "reciprocal"
+    assert trn["calcium_gate_convention"] == "modeldb_reticular_112923"
+
+
 def test_figure6_profile_names_the_source_constrained_runtime() -> None:
     conventions = figure6_runtime_conventions()
     assert conventions.gate_initialization_convention == "steady_state_at_initial_voltage"

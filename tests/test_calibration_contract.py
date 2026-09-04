@@ -719,6 +719,14 @@ FIGURE7_NONSPECIFIC_GABA_COMPARTMENT_ABLATION_RESULT_PATH = (
     ROOT
     / "docs/validation-results/figure7-top5-nonspecific-gaba-compartment-ablation-348.yaml"
 )
+FIGURE7_NONSPECIFIC_PAPER_TTYPE_PROFILE_PATH = (
+    ROOT
+    / "configs/calibration/figure7_top5_nonspecific_paper_ttype_match_v1.yaml"
+)
+FIGURE7_NONSPECIFIC_PAPER_TTYPE_REGISTRATION_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-top5-nonspecific-paper-ttype-registration-349.yaml"
+)
 FIGURE7_ALIGNED_VERIFICATION_PROFILE_PATH = (
     ROOT / "configs/calibration/figure7_aligned_on_center_verification_v1.yaml"
 )
@@ -4417,6 +4425,31 @@ def test_nonspecific_gaba_compartment_ablation_localizes_rebound_roles() -> None
     ]
     assert no_gaba["match_trn_gaba_integral_ms"] == 0.0
     assert no_gaba["mismatch_trn_gaba_integral_ms"] == 0.0
+
+
+def test_nonspecific_paper_ttype_discriminator_is_preregistered_and_locked() -> None:
+    profile = yaml.safe_load(FIGURE7_NONSPECIFIC_PAPER_TTYPE_PROFILE_PATH.read_text())
+    registration = yaml.safe_load(
+        FIGURE7_NONSPECIFIC_PAPER_TTYPE_REGISTRATION_PATH.read_text()
+    )
+    assert profile["runtime_overrides"][
+        "nonspecific_calcium_kinetics_convention"
+    ] == "paper_2008"
+    assert registration["registered_dimension"]["candidate_count"] == 1
+    assert registration["fixed"]["trn_calcium_kinetics"] == (
+        "modeldb_reticular_112923"
+    )
+    assert registration["fixed"]["relay_calcium_kinetics"] == "modeldb_112923"
+    assert registration["fixed"][
+        "nonspecific_gaba_weights_and_kinetics_unchanged"
+    ]
+    assert registration["scope_boundary"]["changes"] == (
+        "nonspecific T-type gate equations only"
+    )
+    assert registration["stopping_rule"].startswith(
+        "Run one fresh complete Figure 6"
+    )
+    assert "figure7_mismatch" in registration["locked_holdouts"]
 
 
 def test_aligned_on_center_verification_registers_only_screen_survivor() -> None:

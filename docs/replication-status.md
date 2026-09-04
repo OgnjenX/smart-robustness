@@ -2624,6 +2624,20 @@ candidate must preserve all three contacts and test one preregistered,
 intact-network compartment-transfer hypothesis; no gain may be selected from
 the ablated event counts.
 
+Artifacts 349--350 test the remaining discrete primary-paper alternative for
+the causally localized rebound cell. The nonspecific population keeps its
+paper Table 3 geometry, passive values, and 250-mS/cm2 dendritic T-current
+density, but replaces the executable-backup Simple_Tau constants with the
+reciprocal interpretation of Grossberg and Versace 2008 Equations 21--27.
+Relay and TRN retain their already selected executable-source kinetics, and no
+synaptic parameter changes. A fresh Figure 6 passes every prerequisite with
+the exact 20-event relay train. Match preserves the correct five relay cells
+and 15 relay events, but rises to 639 TRN events and eight nonspecific events
+(80 Hz), failing the exact four-event/40-Hz gate. Mismatch was not run. Close
+the population-specific paper-kinetics alternative without interpolating
+between kinetic equations; the executable-backup nonspecific kinetics remain
+the calibrated baseline convention.
+
 Artifacts 302--307 test the only previously declared inhibitory-capacity
 interaction not covered by that timing result. Artifact 252 had screened common
 TRN-to-relay gains 1.125, 1.25, 1.5, 2, and 3 at receptor-arrival timing. The

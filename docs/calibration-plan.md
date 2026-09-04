@@ -716,3 +716,11 @@ weight from an ablation endpoint. The next admissible step is one separately
 registered intact-network transfer mechanism that preserves all three source
 contacts, passes fresh Figure 6 and match before mismatch, and remains labeled
 as calibrated reconstruction rather than recovered source.
+
+Artifacts 349--350 apply the discrete primary-paper T-type gate equations only
+to the nonspecific cell, leaving the selected relay/TRN kinetics and all
+synapses fixed. The fresh network passes every Figure 6 prerequisite, but
+match produces 15 relay, 639 TRN, and eight nonspecific events (80 Hz). It
+therefore fails before mismatch, which remains uninspected. Close this
+population-specific source alternative and retain the executable-backup
+nonspecific kinetics; do not interpolate between the two equation families.

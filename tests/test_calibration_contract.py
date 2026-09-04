@@ -727,6 +727,10 @@ FIGURE7_NONSPECIFIC_PAPER_TTYPE_REGISTRATION_PATH = (
     ROOT
     / "docs/validation-results/figure7-top5-nonspecific-paper-ttype-registration-349.yaml"
 )
+FIGURE7_NONSPECIFIC_PAPER_TTYPE_RESULT_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-top5-nonspecific-paper-ttype-match-350.yaml"
+)
 FIGURE7_ALIGNED_VERIFICATION_PROFILE_PATH = (
     ROOT / "configs/calibration/figure7_aligned_on_center_verification_v1.yaml"
 )
@@ -4450,6 +4454,38 @@ def test_nonspecific_paper_ttype_discriminator_is_preregistered_and_locked() -> 
         "Run one fresh complete Figure 6"
     )
     assert "figure7_mismatch" in registration["locked_holdouts"]
+
+
+def test_nonspecific_paper_ttype_fails_exact_match_before_mismatch() -> None:
+    artifact = yaml.safe_load(
+        FIGURE7_NONSPECIFIC_PAPER_TTYPE_RESULT_PATH.read_text()
+    )
+    assert artifact["id"] == "figure7-top5-nonspecific-paper-ttype-match-350"
+    assert artifact["status"] == "match-failed"
+    assert artifact["classification"] == (
+        "official-source-discriminator-not-yet-baseline"
+    )
+    assert artifact["nonspecific_calcium_kinetics_convention"] == "paper_2008"
+    assert artifact["figure6_pass"]
+    assert all(artifact["figure6_gates"].values())
+    assert not artifact["match_pass"]
+    assert not artifact["mismatch_consulted"]
+    assert not artifact["promotable"]
+    assert not artifact["reproduced"]
+    assert not artifact["advance_to_independent_match_verification"]
+
+    match = artifact["match_result"]
+    assert sorted(set(match["relay_spike_indices"])) == [38, 39, 40, 41, 42]
+    assert len(match["relay_spike_times_ms"]) == 15
+    assert len(match["trn_spike_times_ms"]) == 639
+    assert len(match["nonspecific_spike_times_ms"]) == 8
+    assert not artifact["match_gates"]["nonspecific_events"]
+    assert not artifact["match_gates"]["nonspecific_40_hz"]
+    assert all(
+        value
+        for key, value in artifact["match_gates"].items()
+        if key not in {"nonspecific_events", "nonspecific_40_hz"}
+    )
 
 
 def test_aligned_on_center_verification_registers_only_screen_survivor() -> None:

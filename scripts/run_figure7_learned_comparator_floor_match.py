@@ -49,9 +49,11 @@ def _write(
     complete: bool,
 ) -> None:
     transform = profile["dimension"].get("kind", "linear_floor")
-    candidate_key = (
-        "comparator_floor" if transform == "linear_floor" else "support_threshold"
-    )
+    candidate_key = {
+        "linear_floor": "comparator_floor",
+        "half_max_binary": "support_threshold",
+        "top_k_binary": "target_count",
+    }[transform]
     survivors = [item[candidate_key] for item in outcomes if item["pass"]]
     selected = max(survivors) if survivors else None
     artifact = {
@@ -75,11 +77,15 @@ def _write(
             "match_survivor_floors"
             if transform == "linear_floor"
             else "match_survivor_thresholds"
+            if transform == "half_max_binary"
+            else "match_survivor_target_counts"
         ): survivors,
         (
             "selected_comparator_floor"
             if transform == "linear_floor"
             else "selected_support_threshold"
+            if transform == "half_max_binary"
+            else "selected_target_count"
         ): selected,
         "assessment": {
             "registered_candidate_count": len(profile["dimension"]["grid"]),
@@ -143,7 +149,7 @@ def main() -> None:
     output = Path(args.output)
     outcomes: list[dict[str, Any]] = []
     transform = profile["dimension"].get("kind", "linear_floor")
-    if transform not in {"linear_floor", "half_max_binary"}:
+    if transform not in {"linear_floor", "half_max_binary", "top_k_binary"}:
         raise ValueError(f"unknown comparator transform: {transform}")
     for candidate in profile["dimension"]["grid"]:
         if transform == "half_max_binary" and float(candidate) != 0.5:
@@ -160,6 +166,9 @@ def main() -> None:
                 float(candidate) if transform == "linear_floor" else None
             ),
             comparator_half_max_gate=transform == "half_max_binary",
+            comparator_top_k_targets=(
+                int(candidate) if transform == "top_k_binary" else None
+            ),
             comparator_source_index=source_index,
             top_down_current_mode=TopDownCurrentMode(
                 protocol["top_down_current_mode"]
@@ -209,7 +218,11 @@ def main() -> None:
                     "comparator_floor"
                     if transform == "linear_floor"
                     else "support_threshold"
-                ): float(candidate),
+                    if transform == "half_max_binary"
+                    else "target_count"
+                ): int(candidate)
+                if transform == "top_k_binary"
+                else float(candidate),
                 "result": result,
                 "relay_event_counts_by_index": relay_counts,
                 "gates": gates,

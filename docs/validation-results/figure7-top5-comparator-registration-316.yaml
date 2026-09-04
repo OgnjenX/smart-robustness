@@ -1,0 +1,62 @@
+schema_version: 1
+id: figure7-top5-comparator-registration-316
+date: '2026-09-04'
+status: registered-before-execution-calibrated-reconstruction
+profile: configs/calibration/figure7_top5_comparator_match_v1.yaml
+rationale:
+  - >-
+    Both smooth attenuation and a standard half-maximum threshold weaken or
+    eliminate expected outer-bar cells and thereby fail the official match.
+    Moving either fitted boundary after seeing those failures is disallowed.
+  - >-
+    SMART/ART circuits include competitive normalization. A fixed-cardinality
+    winner field is a qualitatively distinct reconstruction of that missing
+    mesoscopic transfer: supported winners retain full sensory drive rather
+    than receiving a graded attenuation.
+  - >-
+    Cardinality five is fixed by the archived training input's five nonzero
+    sensory pixels, not by Figure 7 output. Ranking uses only learned weights
+    from selected source row 40 of adaptive projections 005/007 and receives
+    no orientation, condition, overlap, or target-rate labels.
+registered_candidate:
+  transform: top_k_binary
+  target_count: 5
+  candidate_count: 1
+  selected_target_gain: 1.0
+  unselected_target_gain: 0.0
+  tie_break: ascending_flat_sheet_index
+scope_boundary:
+  classification: calibrated-reconstruction-not-recovered-source
+  affects: active bottom-up relay pixels during Figure 7 recognition only
+  leaves_unchanged:
+    - Figure 6 training inputs and dynamics
+    - nonspecific and matrix external inputs
+    - learned weights
+    - neuron and synapse equations
+    - delays, receptor kinetics, and ring geometry
+fixed:
+  figure6_handoff: docs/validation-results/figure6-projection022-distal003-217.yaml
+  learned_headroom_fraction: 1.0
+  source_index: 40
+  cue_current_pA: 800.0
+  current_mode: until_cued_cell_first_event
+  receptor_peak_cue_lead_ms: 11.35773631178703
+  detector: {arm_mV: -20.0, release_mV: -30.0}
+  trn_to_relay_gaba_scales:
+    modeldb112923.projection.000: 0.01
+    modeldb112923.projection.001: 0.01
+    modeldb112923.projection.004: 0.03
+  duration_ms: 100.0
+  dt_ms: 0.01
+stopping_rule: >-
+  Run the sole top-five match once. Do not vary cardinality or inspect mismatch.
+  Only an independently rebuilt exact match may authorize one fixed mismatch.
+locked_holdouts:
+  - figure7_mismatch
+  - figure10_reset
+  - figure14_spectra
+  - figure15_local_synchrony
+  - figure16_long_range_synchrony
+official_status_before_execution:
+  figure7_reproduced: false
+  downstream_holdouts_unlocked: false

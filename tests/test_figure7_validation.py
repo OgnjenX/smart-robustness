@@ -27,6 +27,7 @@ from smart_robustness.validation.figure7 import (
     paper_constrained_figure6_expectation,
     restrict_figure7_top_down_relay_sources,
     run_figure7_condition,
+    top_k_comparator_relay_input_gains,
 )
 
 
@@ -357,6 +358,16 @@ def test_reconstructed_comparator_is_derived_from_learned_target_support() -> No
     assert binary[40] == 1.0
     assert binary[39] == 1.0
     assert binary[31] == 0.0
+    top_five = top_k_comparator_relay_input_gains(learned, target_count=5)
+    assert set(np.flatnonzero(top_five)) == {31, 39, 40, 41, 49}
+    assert np.count_nonzero(top_five) == 5
+    assert top_k_comparator_relay_input_gains(
+        learned, target_count=5
+    ) == pytest.approx(top_five)
+    with pytest.raises(TypeError, match="integer"):
+        top_k_comparator_relay_input_gains(learned, target_count=5.0)  # type: ignore[arg-type]
+    with pytest.raises(ValueError, match=r"\[1, 81\]"):
+        top_k_comparator_relay_input_gains(learned, target_count=0)
     with pytest.raises(ValueError, match="comparator floor"):
         comparator_relay_input_gains(learned, floor=-0.01)
     with pytest.raises(ValueError, match="missing learned"):

@@ -541,6 +541,12 @@ FIGURE7_HALF_MAX_COMPARATOR_REGISTRATION_PATH = (
 FIGURE7_HALF_MAX_COMPARATOR_RESULT_PATH = (
     ROOT / "docs/validation-results/figure7-half-max-comparator-match-315.yaml"
 )
+FIGURE7_TOP5_COMPARATOR_PROFILE_PATH = (
+    ROOT / "configs/calibration/figure7_top5_comparator_match_v1.yaml"
+)
+FIGURE7_TOP5_COMPARATOR_REGISTRATION_PATH = (
+    ROOT / "docs/validation-results/figure7-top5-comparator-registration-316.yaml"
+)
 FIGURE7_ALIGNED_VERIFICATION_PROFILE_PATH = (
     ROOT / "configs/calibration/figure7_aligned_on_center_verification_v1.yaml"
 )
@@ -3364,6 +3370,32 @@ def test_half_max_comparator_fails_match_without_threshold_fitting() -> None:
     assert artifact["selected_support_threshold"] is None
     assert not artifact["assessment"]["advance_to_mismatch"]
     assert artifact["assessment"]["mismatch_remains_locked"]
+
+
+def test_top5_comparator_cardinality_is_derived_before_execution() -> None:
+    profile = yaml.safe_load(FIGURE7_TOP5_COMPARATOR_PROFILE_PATH.read_text())
+    registration = yaml.safe_load(
+        FIGURE7_TOP5_COMPARATOR_REGISTRATION_PATH.read_text()
+    )
+    assert profile["dimension"]["kind"] == "top_k_binary"
+    assert profile["dimension"]["grid"] == [5]
+    assert profile["dimension"]["candidate_count"] == 1
+    assert profile["dimension"]["derivation"] == (
+        "archived training stimulus has exactly five active sensory pixels"
+    )
+    assert registration["registered_candidate"] == {
+        "transform": "top_k_binary",
+        "target_count": 5,
+        "candidate_count": 1,
+        "selected_target_gain": 1.0,
+        "unselected_target_gain": 0.0,
+        "tie_break": "ascending_flat_sheet_index",
+    }
+    assert registration["scope_boundary"]["classification"] == (
+        "calibrated-reconstruction-not-recovered-source"
+    )
+    assert registration["stopping_rule"].startswith("Run the sole top-five")
+    assert registration["locked_holdouts"][0] == "figure7_mismatch"
 
 
 def test_aligned_on_center_verification_registers_only_screen_survivor() -> None:

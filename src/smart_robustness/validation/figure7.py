@@ -136,6 +136,27 @@ def half_max_comparator_relay_input_gains(
     return (support >= 0.5).astype(float)
 
 
+def top_k_comparator_relay_input_gains(
+    learned_weights: Mapping[str, tuple[float, ...] | np.ndarray],
+    *,
+    target_count: int,
+    source_index: int = 40,
+) -> np.ndarray:
+    """Select a fixed-cardinality learned field with deterministic tie order."""
+
+    if isinstance(target_count, bool) or not isinstance(target_count, int):
+        raise TypeError("comparator target_count must be an integer")
+    if not 1 <= target_count <= 81:
+        raise ValueError("comparator target_count must lie in [1, 81]")
+    support = learned_expectation_support_by_target(
+        learned_weights, source_index=source_index
+    )
+    selected = np.lexsort((np.arange(81), -support))[:target_count]
+    gains = np.zeros(81, dtype=float)
+    gains[selected] = 1.0
+    return gains
+
+
 @dataclass(frozen=True, slots=True)
 class Figure6ReferenceExpectation:
     """Paper-constrained horizontal expectation for downstream assays.
@@ -379,6 +400,7 @@ class Figure7ConditionResult:
     comparator_relay_floor: float | None = None
     comparator_source_index: int | None = None
     comparator_transform: str | None = None
+    comparator_target_count: int | None = None
     network_scope: str = "first_order"
     relay_top_down_ampa_peak_by_index: tuple[tuple[int, float], ...] = ()
     relay_top_down_ampa_integral_ms_by_index: tuple[tuple[int, float], ...] = ()
@@ -469,6 +491,10 @@ class Figure7ConditionResult:
             0 <= self.comparator_source_index < 81
         ):
             raise ValueError("comparator source index must address the 9x9 sheet")
+        if self.comparator_target_count is not None and not (
+            1 <= self.comparator_target_count <= 81
+        ):
+            raise ValueError("comparator target count must lie in [1, 81]")
 
     @property
     def nonspecific_rate_hz(self) -> float:
@@ -651,6 +677,7 @@ def run_figure7_condition(
     top_down_relay_source_indices: frozenset[int] | None = None,
     comparator_relay_floor: float | None = None,
     comparator_half_max_gate: bool = False,
+    comparator_top_k_targets: int | None = None,
     comparator_source_index: int = 40,
     top_down_current_mode: TopDownCurrentMode | str = (
         TopDownCurrentMode.SUSTAINED_EPOCH
@@ -691,12 +718,21 @@ def run_figure7_condition(
         raise ValueError("selected-category source masking is a numpy diagnostic only")
     if comparator_relay_floor is not None and cpp_standalone_directory is not None:
         raise ValueError("the reconstructed comparator is a numpy calibration only")
-    if comparator_half_max_gate and cpp_standalone_directory is not None:
+    if (
+        comparator_half_max_gate or comparator_top_k_targets is not None
+    ) and cpp_standalone_directory is not None:
         raise ValueError("the reconstructed comparator is a numpy calibration only")
-    if comparator_relay_floor is not None and comparator_half_max_gate:
+    comparator_transform_count = sum(
+        (
+            comparator_relay_floor is not None,
+            comparator_half_max_gate,
+            comparator_top_k_targets is not None,
+        )
+    )
+    if comparator_transform_count > 1:
         raise ValueError("select only one reconstructed comparator transform")
     if (
-        comparator_relay_floor is not None or comparator_half_max_gate
+        comparator_transform_count
     ) and pretrain_with_figure6_episode:
         raise ValueError(
             "the reconstructed comparator requires an explicit learned-weight snapshot"
@@ -841,6 +877,13 @@ def run_figure7_condition(
         assert learned_weights is not None
         relay_input_gains = half_max_comparator_relay_input_gains(
             learned_weights,
+            source_index=comparator_source_index,
+        )
+    elif comparator_top_k_targets is not None:
+        assert learned_weights is not None
+        relay_input_gains = top_k_comparator_relay_input_gains(
+            learned_weights,
+            target_count=comparator_top_k_targets,
             source_index=comparator_source_index,
         )
     apply_projection_scales(projection_weight_scales)
@@ -1685,7 +1728,7 @@ def run_figure7_condition(
         comparator_relay_floor=comparator_relay_floor,
         comparator_source_index=(
             comparator_source_index
-            if comparator_relay_floor is not None or comparator_half_max_gate
+            if comparator_transform_count
             else None
         ),
         comparator_transform=(
@@ -1693,8 +1736,11 @@ def run_figure7_condition(
             if comparator_relay_floor is not None
             else "half_max_binary"
             if comparator_half_max_gate
+            else "top_k_binary"
+            if comparator_top_k_targets is not None
             else None
         ),
+        comparator_target_count=comparator_top_k_targets,
         network_scope="full_two_area" if include_higher_order_loop else "first_order",
         relay_top_down_ampa_peak_by_index=ampa_peak,
         relay_top_down_ampa_integral_ms_by_index=ampa_integral,

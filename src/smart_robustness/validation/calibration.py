@@ -237,6 +237,14 @@ def runtime_conventions_for_candidate(
             if values.get("nonspecific_spike_event_proximal_blend_fraction") is None
             else float(values["nonspecific_spike_event_proximal_blend_fraction"])
         ),
+        nonspecific_spike_event_release_proximal_blend_fraction=(
+            None
+            if values.get("nonspecific_spike_event_release_proximal_blend_fraction")
+            is None
+            else float(
+                values["nonspecific_spike_event_release_proximal_blend_fraction"]
+            )
+        ),
         trn_potassium_convention=str(
             values.get(
                 "trn_potassium_convention",

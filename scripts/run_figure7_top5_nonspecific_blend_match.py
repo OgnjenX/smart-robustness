@@ -64,6 +64,9 @@ def _write(
         "base_candidate_fingerprint": base_profile["candidate_fingerprint"],
         "figure6_artifact": profile["figure6_artifact"],
         "top5_pair_artifact": profile["top5_pair_artifact"],
+        "release_proximal_blend_fraction": profile["dimension"].get(
+            "release_proximal_blend_fraction"
+        ),
         "holdouts_consulted": ["figure7_match"],
         "mismatch_with_output_transfer_consulted": False,
         "handoff_figure6_population_spikes": training_spikes,
@@ -138,6 +141,14 @@ def main() -> None:
         conventions = replace(
             baseline_conventions,
             nonspecific_spike_event_proximal_blend_fraction=float(fraction),
+            nonspecific_spike_event_release_proximal_blend_fraction=(
+                None
+                if profile["dimension"].get("release_proximal_blend_fraction")
+                is None
+                else float(
+                    profile["dimension"]["release_proximal_blend_fraction"]
+                )
+            ),
         )
         result = run_figure7_condition(
             condition=MatchCondition.MATCH,

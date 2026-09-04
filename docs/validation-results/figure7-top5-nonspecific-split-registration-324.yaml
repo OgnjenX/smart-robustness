@@ -1,0 +1,55 @@
+schema_version: 1
+id: figure7-top5-nonspecific-split-registration-324
+date: '2026-09-04'
+status: registered-before-execution-calibrated-output-transfer
+profile: configs/calibration/figure7_top5_nonspecific_split_detector_match_v1.yaml
+rationale:
+  - >-
+    Shared soma--proximal arm/release blends preserve upstream match but silence
+    nonspecific output because the blended coordinate does not return below the
+    release boundary often enough to rearm.
+  - >-
+    A split detector is qualitatively distinct and mechanistically targeted:
+    dendritic depolarization may contribute to event arming while somatic
+    repolarization controls output release and rearming. It changes no membrane
+    or synapse equation and remains explicitly a reconstructed legacy transfer.
+  - >-
+    The arm grid exactly reuses fractions registered in Artifacts 185--187 and
+    322; somatic release is the baseline endpoint. Match alone selects the
+    highest exact survivor without consulting mismatch.
+registered_dimension:
+  arm_proximal_blend_fractions: [0.1, 0.2, 0.3, 0.5, 0.7, 1.0]
+  release_proximal_blend_fraction: 0.0
+  baseline_arm_fraction: 0.0
+  candidate_count: 6
+  selection_rule: highest exact-match survivor
+fixed:
+  comparator_transform: top_k_binary
+  comparator_target_count: 5
+  learned_headroom_fraction: 1.0
+  source_index: 40
+  cue_current_pA: 800.0
+  current_mode: until_cued_cell_first_event
+  receptor_peak_cue_lead_ms: 11.35773631178703
+  trn_detector: {arm_mV: -20.0, release_mV: -30.0}
+  duration_ms: 100.0
+  dt_ms: 0.01
+scope_boundary:
+  classification: calibrated-reconstruction-not-recovered-source
+  changes: nonspecific event arming coordinate during recognition only
+  preserves: somatic release/rearming coordinate
+  leaves_unchanged:
+    - Figure 6 training and learned weights
+    - relay and TRN event coordinates
+    - membrane and synapse equations
+    - weights, delays, receptor kinetics, and stimulus values
+stopping_rule: >-
+  Run all six registered arm blends on match only with release fixed at soma.
+  Select the highest exact 15/635/4 survivor. Do not inspect mismatch,
+  interpolate fractions, or change the successful comparator mechanism.
+locked_holdouts:
+  - figure7_mismatch_with_split_output_transfer
+  - figure10_reset
+  - figure14_spectra
+  - figure15_local_synchrony
+  - figure16_long_range_synchrony

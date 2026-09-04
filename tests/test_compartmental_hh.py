@@ -400,6 +400,31 @@ def test_proximal_spike_event_blend_preserves_two_stage_detector() -> None:
     assert spike_monitor.count[0] == 1
 
 
+def test_spike_event_can_arm_from_blend_and_release_from_soma() -> None:
+    brian.start_scope()
+    brian.defaultclock.dt = 0.01 * brian.ms
+    params = _params()
+    params["spike_event_proximal_blend_fraction"] = 0.5
+    params["spike_event_release_proximal_blend_fraction"] = 0.0
+    params["voltage_clamps_mV"] = {
+        "soma": -20.0,
+        "proximal_dendrite": 100.0,
+    }
+    population = create_compartmental_hh_population(
+        name="split_spike_event_coordinates", size=1, params=params, brian=brian
+    )
+    spike_monitor = brian.SpikeMonitor(population.group)
+    network = brian.Network(population.group, spike_monitor)
+
+    network.run(0.01 * brian.ms)
+    assert spike_monitor.count[0] == 0
+    assert population.group.armed[0] == 1
+    assert population.group.spike_detector_voltage[0] / brian.mV == pytest.approx(40.0)
+    assert population.group.spike_release_voltage[0] / brian.mV == pytest.approx(-20.0)
+    network.run(0.01 * brian.ms)
+    assert spike_monitor.count[0] == 1
+
+
 @pytest.mark.parametrize("blend", [float("nan"), -0.01, 1.01])
 def test_proximal_spike_event_blend_requires_unit_interval(blend: float) -> None:
     brian.start_scope()
@@ -408,6 +433,23 @@ def test_proximal_spike_event_blend_requires_unit_interval(blend: float) -> None
     with pytest.raises(ValueError, match="between zero and one"):
         create_compartmental_hh_population(
             name="invalid_proximal_spike_event_blend",
+            size=1,
+            params=params,
+            brian=brian,
+        )
+
+
+@pytest.mark.parametrize("blend", [float("nan"), -0.01, 1.01])
+def test_proximal_spike_event_release_blend_requires_unit_interval(
+    blend: float,
+) -> None:
+    brian.start_scope()
+    params = _params()
+    params["spike_event_proximal_blend_fraction"] = 0.5
+    params["spike_event_release_proximal_blend_fraction"] = blend
+    with pytest.raises(ValueError, match="release_proximal_blend_fraction"):
+        create_compartmental_hh_population(
+            name="invalid_proximal_spike_event_release_blend",
             size=1,
             params=params,
             brian=brian,

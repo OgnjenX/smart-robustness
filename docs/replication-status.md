@@ -2637,6 +2637,12 @@ output increases during mismatch. Detector cycles are complete. The remaining
 failure is numeric arousal amplitude: mismatch reaches 50 Hz, not 70 Hz.
 Therefore Figure 7 is not yet reproduced and later holdouts remain locked.
 
+Artifacts 322--323 show that the pre-existing nonspecific soma--proximal blend
+cannot repair the numeric amplitude. Relay/TRN match behavior remains exactly
+15/635 at every positive fraction, but blends 0.1--0.7 silence nonspecific
+events and fraction 1.0 emits only one. No match survivor exists and no new
+mismatch is opened. The shared arm/release coordinate family is closed.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

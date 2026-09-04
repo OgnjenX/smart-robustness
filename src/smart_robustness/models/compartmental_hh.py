@@ -185,6 +185,9 @@ def create_compartmental_hh_population(
     spike_event_proximal_blend_fraction = params.get(
         "spike_event_proximal_blend_fraction"
     )
+    spike_event_release_proximal_blend_fraction = params.get(
+        "spike_event_release_proximal_blend_fraction"
+    )
     if spike_event_voltage_offset_mV is not None:
         spike_event_voltage_offset_mV = float(spike_event_voltage_offset_mV)
         if not np.isfinite(spike_event_voltage_offset_mV):
@@ -211,6 +214,22 @@ def create_compartmental_hh_population(
         if spike_coordinate is not SpikeEventCoordinate.ABSOLUTE_PHYSICAL:
             raise ValueError(
                 "proximal spike-event blend cannot be combined with a named "
+                "non-absolute coordinate"
+            )
+    if spike_event_release_proximal_blend_fraction is not None:
+        spike_event_release_proximal_blend_fraction = float(
+            spike_event_release_proximal_blend_fraction
+        )
+        if not np.isfinite(spike_event_release_proximal_blend_fraction) or not (
+            0.0 <= spike_event_release_proximal_blend_fraction <= 1.0
+        ):
+            raise ValueError(
+                "spike_event_release_proximal_blend_fraction must be finite and "
+                "between zero and one"
+            )
+        if spike_coordinate is not SpikeEventCoordinate.ABSOLUTE_PHYSICAL:
+            raise ValueError(
+                "proximal spike-event release blend cannot be combined with a named "
                 "non-absolute coordinate"
             )
     spike_event_rule = SpikeEventRule(params["spike_event_rule"])
@@ -253,6 +272,13 @@ def create_compartmental_hh_population(
     ):
         raise ValueError(
             "proximal spike-event blend requires a proximal_dendrite compartment"
+        )
+    if (
+        spike_event_release_proximal_blend_fraction is not None
+        and "proximal_dendrite" not in compartment_names
+    ):
+        raise ValueError(
+            "proximal spike-event release blend requires a proximal_dendrite compartment"
         )
     unknown_clamps = set(voltage_clamps_mV) - compartment_names
     if unknown_clamps:
@@ -324,6 +350,14 @@ def create_compartmental_hh_population(
         spike_voltage = "v_soma+67*mV"
     else:
         spike_voltage = "v_soma-e_l_soma"
+    if spike_event_release_proximal_blend_fraction is not None:
+        spike_release_voltage = (
+            "v_soma+"
+            f"({spike_event_release_proximal_blend_fraction!r})*"
+            "(v_proximal_dendrite-v_soma)"
+        )
+    else:
+        spike_release_voltage = "spike_detector_voltage"
     group_kwargs: dict[str, Any] = {
         "method": params.get("method", "exponential_euler"),
         "name": name,
@@ -333,6 +367,7 @@ def create_compartmental_hh_population(
     # diagnostics can now distinguish membrane dynamics from detector state.
     equations = compiled.equations + (
         f"\nspike_detector_voltage = {spike_voltage} : volt"
+        f"\nspike_release_voltage = {spike_release_voltage} : volt"
         "\nclear_drive_on_spike : 1 (constant)"
         "\ndrive_spikes_until_clear : integer"
     )
@@ -349,12 +384,12 @@ def create_compartmental_hh_population(
         if spike_event_rule is SpikeEventRule.HYSTERETIC_THRESHOLD_THEN_ZERO:
             spike_reset = spike_reset.replace("armed = 0", "armed = -1", 1)
             events["release_spike_detector"] = (
-                "armed < -0.5 and spike_detector_voltage < "
+                "armed < -0.5 and spike_release_voltage < "
                 f"{spike_event_threshold_mV}*mV"
             )
         group_kwargs.update(
             threshold=(
-                "armed > 0.5 and spike_detector_voltage < "
+                "armed > 0.5 and spike_release_voltage < "
                 f"{spike_event_release_mV}*mV"
             ),
             events=events,
@@ -362,7 +397,7 @@ def create_compartmental_hh_population(
     else:
         equations += "\nprevious_spike_voltage : volt"
         group_kwargs["threshold"] = (
-            f"spike_detector_voltage < {spike_event_release_mV}*mV and "
+            f"spike_release_voltage < {spike_event_release_mV}*mV and "
             f"previous_spike_voltage > {spike_event_threshold_mV}*mV"
         )
     group = brian.NeuronGroup(size, equations, reset=spike_reset, **group_kwargs)

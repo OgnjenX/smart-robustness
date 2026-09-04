@@ -602,3 +602,12 @@ output rises only from four to five events (50 Hz), not the official seven
 (70 Hz), so complete Figure 7 still fails. Preserve the successful comparator
 and next calibrate only the already named nonspecific compartment-to-event
 transfer against match, keeping mismatch as a new holdout.
+
+Artifacts 322--323 reuse the complete predeclared nonspecific soma--proximal
+detector-blend grid after upstream selectivity is restored. Every positive
+blend preserves the exact 15 relay and 635 TRN match counts, but fractions
+0.1--0.7 suppress all nonspecific events and the proximal endpoint emits only
+one. No value preserves the four-event/40-Hz match, so none advances to
+mismatch. Close a shared arm-and-release coordinate blend. The next output
+candidate, if pursued, must separate dendritic arming from somatic rearming
+rather than interpolate this family.

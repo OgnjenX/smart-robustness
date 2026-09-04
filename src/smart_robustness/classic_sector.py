@@ -132,6 +132,7 @@ class FirstOrderRuntimeConventions:
     trn_spike_event_voltage_offset_mV: float | None = None
     trn_spike_event_proximal_blend_fraction: float | None = None
     nonspecific_spike_event_proximal_blend_fraction: float | None = None
+    nonspecific_spike_event_release_proximal_blend_fraction: float | None = None
     trn_potassium_convention: str = "selected_source"
     trn_soma_sodium_density_mS_cm2: float | None = None
     trn_soma_potassium_density_mS_cm2: float | None = None
@@ -177,6 +178,8 @@ class FirstOrderRuntimeConventions:
             values.pop("trn_spike_event_proximal_blend_fraction")
         if values["nonspecific_spike_event_proximal_blend_fraction"] is None:
             values.pop("nonspecific_spike_event_proximal_blend_fraction")
+        if values["nonspecific_spike_event_release_proximal_blend_fraction"] is None:
+            values.pop("nonspecific_spike_event_release_proximal_blend_fraction")
         if values["trn_potassium_convention"] == "selected_source":
             values.pop("trn_potassium_convention")
         if values["trn_soma_sodium_density_mS_cm2"] is None:
@@ -520,6 +523,7 @@ def first_order_population_parameters(
     spike_event_release_mV = 0.0
     spike_event_voltage_offset_mV = None
     spike_event_proximal_blend_fraction = None
+    spike_event_release_proximal_blend_fraction = None
     if facts.canonical_name == "trn":
         if conventions.trn_spike_event_coordinate is not None:
             spike_event_coordinate = conventions.trn_spike_event_coordinate
@@ -555,6 +559,24 @@ def first_order_population_parameters(
             raise ValueError(
                 "nonspecific spike-event proximal blend must be finite and "
                 "between zero and one"
+            )
+        spike_event_release_proximal_blend_fraction = (
+            conventions.nonspecific_spike_event_release_proximal_blend_fraction
+        )
+        if spike_event_release_proximal_blend_fraction is not None and (
+            not math.isfinite(spike_event_release_proximal_blend_fraction)
+            or not 0.0 <= spike_event_release_proximal_blend_fraction <= 1.0
+        ):
+            raise ValueError(
+                "nonspecific spike-event release proximal blend must be finite and "
+                "between zero and one"
+            )
+        if (
+            spike_event_release_proximal_blend_fraction is not None
+            and spike_event_proximal_blend_fraction is None
+        ):
+            raise ValueError(
+                "nonspecific release blend requires a nonspecific arm blend"
             )
     trn_axial_scale = conventions.trn_soma_proximal_axial_conductance_scale
     if not math.isfinite(trn_axial_scale) or trn_axial_scale <= 0:
@@ -636,6 +658,10 @@ def first_order_population_parameters(
         parameters["spike_event_proximal_blend_fraction"] = (
             spike_event_proximal_blend_fraction
         )
+        if spike_event_release_proximal_blend_fraction is not None:
+            parameters["spike_event_release_proximal_blend_fraction"] = (
+                spike_event_release_proximal_blend_fraction
+            )
     if has_ahp:
         soma = intrinsic_cell.soma
         parameters.update(

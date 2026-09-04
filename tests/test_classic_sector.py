@@ -157,6 +157,11 @@ def test_runtime_convention_fingerprint_is_stable_and_sensitive() -> None:
         nonspecific_spike_event_proximal_blend_fraction=0.5
     )
     assert nonspecific_event_blend.fingerprint != classic.fingerprint
+    nonspecific_split_event = FirstOrderRuntimeConventions(
+        nonspecific_spike_event_proximal_blend_fraction=0.5,
+        nonspecific_spike_event_release_proximal_blend_fraction=0.0,
+    )
+    assert nonspecific_split_event.fingerprint != nonspecific_event_blend.fingerprint
     radial_annulus = FirstOrderRuntimeConventions(
         ring_kernel_convention="radial_annulus"
     )
@@ -325,11 +330,28 @@ def test_nonspecific_proximal_event_blend_is_scoped_and_validated() -> None:
     assert "spike_event_proximal_blend_fraction" not in trn
     assert nonspecific["spike_event_proximal_blend_fraction"] == 0.5
 
+    split = first_order_population_parameters(
+        facts["thalamic_nonspecific"],
+        conventions=FirstOrderRuntimeConventions(
+            nonspecific_spike_event_proximal_blend_fraction=0.5,
+            nonspecific_spike_event_release_proximal_blend_fraction=0.0,
+        ),
+    )
+    assert split["spike_event_proximal_blend_fraction"] == 0.5
+    assert split["spike_event_release_proximal_blend_fraction"] == 0.0
+
     with pytest.raises(ValueError, match="nonspecific spike-event proximal blend"):
         first_order_population_parameters(
             facts["thalamic_nonspecific"],
             conventions=FirstOrderRuntimeConventions(
                 nonspecific_spike_event_proximal_blend_fraction=1.01
+            ),
+        )
+    with pytest.raises(ValueError, match="release blend requires"):
+        first_order_population_parameters(
+            facts["thalamic_nonspecific"],
+            conventions=FirstOrderRuntimeConventions(
+                nonspecific_spike_event_release_proximal_blend_fraction=0.0
             ),
         )
     with pytest.raises(ValueError, match="between zero and one"):

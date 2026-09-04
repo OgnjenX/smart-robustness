@@ -577,6 +577,17 @@ FIGURE7_TOP5_NONSPECIFIC_BLEND_REGISTRATION_PATH = (
     ROOT
     / "docs/validation-results/figure7-top5-nonspecific-blend-registration-322.yaml"
 )
+FIGURE7_TOP5_NONSPECIFIC_BLEND_RESULT_PATH = (
+    ROOT / "docs/validation-results/figure7-top5-nonspecific-blend-match-323.yaml"
+)
+FIGURE7_TOP5_NONSPECIFIC_SPLIT_PROFILE_PATH = (
+    ROOT
+    / "configs/calibration/figure7_top5_nonspecific_split_detector_match_v1.yaml"
+)
+FIGURE7_TOP5_NONSPECIFIC_SPLIT_REGISTRATION_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-top5-nonspecific-split-registration-324.yaml"
+)
 FIGURE7_ALIGNED_VERIFICATION_PROFILE_PATH = (
     ROOT / "configs/calibration/figure7_aligned_on_center_verification_v1.yaml"
 )
@@ -3580,6 +3591,60 @@ def test_top5_nonspecific_transfer_reuses_predeclared_finite_grid() -> None:
     assert registration["locked_holdouts"][0] == (
         "figure7_mismatch_with_output_transfer"
     )
+
+
+def test_shared_arm_release_blend_has_no_exact_match_survivor() -> None:
+    artifact = yaml.safe_load(FIGURE7_TOP5_NONSPECIFIC_BLEND_RESULT_PATH.read_text())
+    assert artifact["status"] == "complete"
+    assert artifact["holdouts_consulted"] == ["figure7_match"]
+    assert not artifact["mismatch_with_output_transfer_consulted"]
+    assert artifact["match_survivor_blend_fractions"] == []
+    assert artifact["selected_nonspecific_event_blend_fraction"] is None
+    expected_nonspecific = {
+        0.1: 0,
+        0.2: 0,
+        0.3: 0,
+        0.5: 0,
+        0.7: 0,
+        1.0: 1,
+    }
+    for outcome in artifact["outcomes"]:
+        result = outcome["result"]
+        assert len(result["relay_spike_times_ms"]) == 15
+        assert len(result["trn_spike_times_ms"]) == 635
+        assert len(result["nonspecific_spike_times_ms"]) == expected_nonspecific[
+            outcome["nonspecific_event_blend_fraction"]
+        ]
+        assert outcome["gates"]["relay_events"]
+        assert outcome["gates"]["trn_events"]
+        assert not outcome["gates"]["nonspecific_events"]
+        assert not outcome["pass"]
+    assert not artifact["assessment"]["advance_to_mismatch"]
+    assert artifact["assessment"]["mismatch_remains_locked"]
+
+
+def test_split_nonspecific_detector_reuses_arm_grid_and_somatic_release() -> None:
+    profile = yaml.safe_load(FIGURE7_TOP5_NONSPECIFIC_SPLIT_PROFILE_PATH.read_text())
+    registration = yaml.safe_load(
+        FIGURE7_TOP5_NONSPECIFIC_SPLIT_REGISTRATION_PATH.read_text()
+    )
+    assert profile["dimension"]["grid"] == [0.1, 0.2, 0.3, 0.5, 0.7, 1.0]
+    assert profile["dimension"]["release_proximal_blend_fraction"] == 0.0
+    assert profile["dimension"]["selection_rule"].startswith("highest")
+    assert registration["registered_dimension"] == {
+        "arm_proximal_blend_fractions": [0.1, 0.2, 0.3, 0.5, 0.7, 1.0],
+        "release_proximal_blend_fraction": 0.0,
+        "baseline_arm_fraction": 0.0,
+        "candidate_count": 6,
+        "selection_rule": "highest exact-match survivor",
+    }
+    assert registration["scope_boundary"]["changes"].startswith(
+        "nonspecific event arming coordinate"
+    )
+    assert registration["scope_boundary"]["preserves"] == (
+        "somatic release/rearming coordinate"
+    )
+    assert registration["stopping_rule"].startswith("Run all six registered")
 
 
 def test_aligned_on_center_verification_registers_only_screen_survivor() -> None:

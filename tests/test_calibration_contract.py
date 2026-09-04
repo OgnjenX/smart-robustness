@@ -676,6 +676,16 @@ FIGURE7_NONSPECIFIC_PEAK_CURRENT_AUDIT_RESULT_PATH = (
     ROOT
     / "docs/validation-results/figure7-top5-nonspecific-peak-current-audit-366.yaml"
 )
+FIGURE7_TOP5_TRN_VOLLEY_AUDIT_PROFILE_PATH = (
+    ROOT / "configs/calibration/figure7_top5_trn_volley_audit_v1.yaml"
+)
+FIGURE7_TOP5_TRN_VOLLEY_AUDIT_REGISTRATION_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-top5-trn-volley-audit-registration-367.yaml"
+)
+FIGURE7_TOP5_TRN_VOLLEY_AUDIT_RESULT_PATH = (
+    ROOT / "docs/validation-results/figure7-top5-trn-volley-audit-368.yaml"
+)
 FIGURE7_TOP5_ARRIVAL_MATCH_PROFILE_PATH = (
     ROOT / "configs/calibration/figure7_top5_arrival_aligned_match_v1.yaml"
 )
@@ -4292,6 +4302,47 @@ def test_nonspecific_peak_current_audit_is_read_only_and_complete() -> None:
         assert len(condition["nonspecific_peak_gate_samples"]) == (
             peak_count * gate_source_count
         )
+    assert not artifact["reproduced"]
+
+
+def test_top5_trn_volley_audit_localizes_downstream_transfer_loss() -> None:
+    profile = yaml.safe_load(FIGURE7_TOP5_TRN_VOLLEY_AUDIT_PROFILE_PATH.read_text())
+    registration = yaml.safe_load(
+        FIGURE7_TOP5_TRN_VOLLEY_AUDIT_REGISTRATION_PATH.read_text()
+    )
+    artifact = yaml.safe_load(FIGURE7_TOP5_TRN_VOLLEY_AUDIT_RESULT_PATH.read_text())
+    assert profile["active_bin_minimum_event_count_rule"] == (
+        "ceiling_fraction_times_population_size"
+    )
+    assert registration["execution"]["network_rerun"] is False
+    assert artifact["network_rerun"] is False
+    assert artifact["parameter_changes"] == "none"
+    assert artifact["active_bin_minimum_event_count"] == 9
+    assert artifact["classification"] == (
+        "downstream_nonspecific_transfer_loses_two_of_seven_trn_volleys"
+    )
+    match = artifact["conditions"]["match"]
+    mismatch = artifact["conditions"]["mismatch"]
+    assert (match["volley_count"], match["responding_volley_count"]) == (10, 4)
+    assert (mismatch["volley_count"], mismatch["responding_volley_count"]) == (
+        7,
+        5,
+    )
+    assert [volley["event_count"] for volley in mismatch["volleys"]] == [
+        81,
+        81,
+        81,
+        81,
+        81,
+        81,
+        57,
+    ]
+    assert not mismatch["volleys"][0]["nonspecific_response_times_ms"]
+    assert not mismatch["volleys"][1]["nonspecific_response_times_ms"]
+    assert all(
+        volley["nonspecific_response_times_ms"]
+        for volley in mismatch["volleys"][2:]
+    )
     assert not artifact["reproduced"]
 
 

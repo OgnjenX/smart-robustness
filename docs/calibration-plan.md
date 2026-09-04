@@ -788,3 +788,14 @@ The intervening positive soma maxima are Na/K-dominated after-spike ringing,
 not two nearly suprathreshold independent rebound cycles. Next audit the
 temporal cycle content of the fixed aggregate TRN-to-nonspecific drive; do not
 amplify the ringing or fit an intrinsic conductance from this diagnostic.
+
+Artifacts 367--368 analyze the already recorded TRN events with one fixed
+offline rule: 1-ms bins containing at least 10% of the 81-cell population are
+active, and contiguous active bins form one volley. Match contains ten volleys
+but four nonspecific responses. Mismatch contains exactly seven volleys of
+81/81/81/81/81/81/57 events, but the first two have no nonspecific response and
+the last five each have one. The official 70-Hz temporal opportunities already
+exist upstream; the two-event deficit is downstream transfer loss. The next
+admissible candidate is the same population-uniform KInNeSS handler already
+used for TRN, applied with the complete recovered nonspecific cell and tested
+match-first. Do not alter ionic or synaptic parameters.

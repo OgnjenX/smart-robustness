@@ -2727,6 +2727,17 @@ after-spike waveform and are not independent rebound cycles approaching the
 aggregate TRN inhibitory drive next, rather than changing detector or ionic
 parameters.
 
+Artifacts 367--368 classify the fixed event lists offline, without rerunning
+or changing the network. Using predeclared 1-ms bins and a 10%-of-population
+activity threshold, match contains ten TRN volleys with four nonspecific
+responses. Mismatch contains exactly seven TRN volleys; the first six contain
+81 events and the last 57. The first two mismatch volleys have no nonspecific
+response, while each of the final five has exactly one. Thus the upstream
+mismatch circuit already supplies the official seven temporal opportunities;
+the remaining two-event deficit is in nonspecific membrane-to-axon transfer.
+This supports one final uniform-handler discriminator using the already
+calibrated KInNeSS -20/-30-mV arm/fall pair, not a new fitted threshold.
+
 Artifacts 302--307 test the only previously declared inhibitory-capacity
 interaction not covered by that timing result. Artifact 252 had screened common
 TRN-to-relay gains 1.125, 1.25, 1.5, 2, and 3 at receptor-arrival timing. The

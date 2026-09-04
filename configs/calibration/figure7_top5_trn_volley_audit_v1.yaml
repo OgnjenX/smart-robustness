@@ -1,0 +1,32 @@
+schema_version: 1
+name: figure7-top5-trn-volley-audit-v1
+status: registered-before-execution-read-only-offline-diagnostic
+registration_artifact: docs/validation-results/figure7-top5-trn-volley-audit-registration-367.yaml
+source_artifact: docs/validation-results/figure7-top5-nonspecific-peak-current-audit-366.yaml
+population_size: 81
+duration_ms: 100.0
+bin_width_ms: 1.0
+active_bin_minimum_population_fraction: 0.10
+active_bin_minimum_event_count_rule: ceiling_fraction_times_population_size
+volley_rule: merge_contiguous_active_bins
+response_rule: >-
+  Assign a nonspecific event to a volley when it occurs at or after that
+  volley's first event and before the next volley's first event. The last
+  volley owns responses through the 100-ms endpoint.
+expected_controls:
+  match: {relay_events: 15, trn_events: 635, nonspecific_events: 4}
+  mismatch: {relay_events: 3, trn_events: 560, nonspecific_events: 5}
+classification_rule: >-
+  If mismatch contains seven TRN volleys but fewer than seven corresponding
+  nonspecific responses, classify the deficit as downstream transfer loss. If
+  mismatch contains fewer than seven volleys, classify it as an upstream TRN
+  timing deficit. Do not modify model or protocol parameters.
+next_gate: >-
+  Test only a previously documented, population-uniform KInNeSS spike-handler
+  interpretation against match before consulting mismatch. Figure 10 and all
+  spectral holdouts remain locked.
+locked_holdouts:
+  - figure10_reset
+  - figure14_spectra
+  - figure15_local_synchrony
+  - figure16_long_range_synchrony

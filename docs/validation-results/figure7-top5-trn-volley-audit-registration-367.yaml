@@ -1,0 +1,35 @@
+schema_version: 1
+id: figure7-top5-trn-volley-audit-registration-367
+date: '2026-09-04'
+status: registered-before-execution-read-only-offline-diagnostic
+profile: configs/calibration/figure7_top5_trn_volley_audit_v1.yaml
+source_artifact:
+  path: docs/validation-results/figure7-top5-nonspecific-peak-current-audit-366.yaml
+  runtime_fingerprint: 0aa301be0a82a34b0a3337030eedb66dbc33e0ec0532ead902638088a434b4d9
+  parameter_changes: none
+execution:
+  network_rerun: false
+  conditions: [match, mismatch]
+  bin_width_ms: 1.0
+  active_bin_threshold: ceiling(0.10 * 81) = 9 events
+  merge_rule: contiguous active bins form one volley
+  run_count: 1
+predeclared_readouts:
+  - trn_event_histogram_by_1ms_bin
+  - active_bins
+  - merged_trn_volleys
+  - nonspecific_responses_by_volley
+  - unmatched_nonspecific_events
+classification_rule: >-
+  Seven mismatch TRN volleys with fewer than seven corresponding nonspecific
+  responses is downstream transfer loss. Fewer than seven mismatch volleys is
+  an upstream timing deficit. This audit cannot promote a parameter.
+stopping_rule: >-
+  Analyze the already frozen event lists once using only the declared binning,
+  threshold, merge, and response rules. Do not inspect a second threshold or
+  alter a model/protocol setting.
+locked_holdouts:
+  - figure10_reset
+  - figure14_spectra
+  - figure15_local_synchrony
+  - figure16_long_range_synchrony

@@ -1,0 +1,44 @@
+schema_version: 1
+id: figure7-top5-arrival-aligned-verification-registration-341
+date: '2026-09-04'
+status: registered-before-execution-independent-verification
+profile: configs/calibration/figure7_top5_arrival_aligned_verification_v1.yaml
+screen_artifact: docs/validation-results/figure7-top5-arrival-aligned-match-340.yaml
+screen_result:
+  comparator_target_count: 5
+  relay_active_indices: [38, 39, 40, 41, 42]
+  relay_events: 15
+  relay_events_per_index: {38: 3, 39: 3, 40: 3, 41: 3, 42: 3}
+  trn_events: 633
+  nonspecific_events: 4
+  nonspecific_rate_hz: 40.0
+  all_match_gates_passed: true
+  sampled_trn_detector_cycles_complete: true
+fixed_candidate:
+  classification: calibrated-reconstruction-not-recovered-source
+  comparator_transform: top_k_binary
+  comparator_target_count: 5
+  receptor_arrival_cue_lead_ms: 7.85
+  learned_headroom_fraction: 1.0
+  source_index: 40
+  cue_current_pA: 800.0
+  current_mode: until_cued_cell_first_event
+  trn_detector: {arm_mV: -20.0, release_mV: -30.0}
+verification:
+  candidates: 1
+  independently_rebuilt_figure6: true
+  independently_rebuilt_match: true
+  full_detector_cycle_diagnostics: true
+mismatch_lock: >-
+  Do not run mismatch unless the independent rebuild reproduces every screen
+  count, spatial gate, cue gate, and sampled detector-cycle equality.
+stopping_rule: >-
+  Run one independent match at the exact Artifact 340 configuration. Do not
+  change timing, cardinality, learned state, current, detector, weights, or
+  inhibition after observing the result.
+locked_holdouts:
+  - figure7_mismatch
+  - figure10_reset
+  - figure14_spectra
+  - figure15_local_synchrony
+  - figure16_long_range_synchrony

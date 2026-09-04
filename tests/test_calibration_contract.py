@@ -641,6 +641,13 @@ FIGURE7_TOP5_NONSPECIFIC_GABA_TRANSFER_PAIR_RESULT_PATH = (
     ROOT
     / "docs/validation-results/figure7-top5-nonspecific-gaba-transfer-pair-334.yaml"
 )
+FIGURE6_METHODS_GLOBAL_CALCIUM_PROFILE_PATH = (
+    ROOT / "configs/calibration/figure6_methods_global_calcium_v1.yaml"
+)
+FIGURE6_METHODS_GLOBAL_CALCIUM_REGISTRATION_PATH = (
+    ROOT
+    / "docs/validation-results/figure6-methods-global-calcium-registration-335.yaml"
+)
 FIGURE7_ALIGNED_VERIFICATION_PROFILE_PATH = (
     ROOT / "configs/calibration/figure7_aligned_on_center_verification_v1.yaml"
 )
@@ -3969,6 +3976,24 @@ def test_top5_nonspecific_gaba_transfer_pair_fails_arousal_only() -> None:
             "sampled_mismatch_trn_release_transitions_by_index"
         ][index]
     assert not artifact["reproduced"]
+
+
+def test_methods_global_calcium_is_registered_as_literal_source_choice() -> None:
+    profile = yaml.safe_load(FIGURE6_METHODS_GLOBAL_CALCIUM_PROFILE_PATH.read_text())
+    registration = yaml.safe_load(
+        FIGURE6_METHODS_GLOBAL_CALCIUM_REGISTRATION_PATH.read_text()
+    )
+    assert profile["runtime_overrides"]["calcium_density_convention"] == (
+        "methods_global_250"
+    )
+    assert profile["protocol"]["complete_cortical_monitoring"]
+    assert registration["resolution_policy"]["literal_global_application"]
+    assert registration["resolution_policy"]["add_no_new_calcium_channels"]
+    assert registration["resolution_policy"]["historical_default_unchanged"]
+    assert registration["fixed"]["all_projection_and_protocol_parameters_unchanged"]
+    assert registration["stopping_rule"].startswith(
+        "Run one complete, fully monitored Figure 6"
+    )
 
 
 def test_aligned_on_center_verification_registers_only_screen_survivor() -> None:

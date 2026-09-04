@@ -1,0 +1,48 @@
+schema_version: 1
+id: figure6-methods-global-calcium-registration-335
+date: '2026-09-04'
+status: registered-before-execution-source-conflict-resolution
+profile: configs/calibration/figure6_methods_global_calcium_v1.yaml
+source_conflict:
+  table3: compartment-specific calcium densities
+  recovered_modeldb: cell-and-compartment-specific calcium densities
+  methods_4_6: 250 mS/cm2 wherever a calcium current is present
+resolution_policy:
+  candidate: methods_global_250
+  literal_global_application: true
+  add_no_new_calcium_channels: true
+  historical_default_unchanged: true
+  new_runtime_fingerprint_required: true
+rationale:
+  - >-
+    The remaining Figure 7 error is the nonspecific-thalamic output amplitude,
+    and that cell's recovered soma calcium density is 0.1 mS/cm2 while Methods
+    4.6 states 250 mS/cm2 globally. The same statement also changes existing
+    TRN calcium compartments, so it must be tested literally rather than only
+    on the desired cell.
+  - >-
+    Earlier global-250 assays used incomplete-drive or different Stage A
+    candidates and do not establish behavior of the current Figure 6-calibrated
+    baseline with the top-five comparator.
+  - >-
+    Because the convention changes intrinsic dynamics during learning, full
+    Figure 6 is the first gate. No recognition result may be consulted after a
+    prerequisite failure.
+fixed:
+  calcium_kinetics: modeldb_112923
+  calcium_gate_families: population-specific recovered families
+  calcium_reversal_values: current calibrated baseline
+  all_noncalcium_intrinsic_parameters_unchanged: true
+  all_projection_and_protocol_parameters_unchanged: true
+stopping_rule: >-
+  Run one complete, fully monitored Figure 6 episode under the literal global
+  250 convention. Reject before recognition on any relay, cortical-chain,
+  causal-learning, or horizontal-map failure. Do not introduce a cell-specific
+  hybrid after inspecting this result.
+locked_holdouts:
+  - figure7_match
+  - figure7_mismatch
+  - figure10_reset
+  - figure14_spectra
+  - figure15_local_synchrony
+  - figure16_long_range_synchrony

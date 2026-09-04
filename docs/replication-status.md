@@ -2574,6 +2574,23 @@ threshold/rearming calibration is closed. The remaining deficit is a
 condition-dependent membrane/input-dynamics problem, not an event-counter
 problem; Figure 7 and downstream holdouts remain unreproduced and locked.
 
+Artifacts 339--344 test the single untried interaction between the two closest
+prior Figure 7 candidates. The 7.85-ms receptor-arrival alignment had produced
+exact 4/7 arousal but retained all five mismatch relay cells, while the fixed
+top-five comparator at receptor-peak alignment had restricted mismatch to cell
+40 but produced only 4/5 arousal. The combined match passes and independently
+repeats at 15 relay, 633 TRN, and four nonspecific events, with complete sampled
+detector cycles. Its fixed mismatch preserves the desired spatial pathway:
+only cell 40 emits three relay events and TRN falls to 560. Nonspecific output,
+however, remains four events rather than increasing to seven. Detector cycles
+again agree exactly. The interaction therefore closes without retuning. The
+comparison to the non-comparator mismatch shows that suppressing the four
+nonoverlap relay paths also reduces layer-6II-to-nonspecific NMDA peak gating
+from about 1.55 to 0.546, while the TRN GABA integral falls only from about
+1229 to 1200 gate-ms. The old 70-Hz output depended on excitation associated
+with the spatially incorrect relay paths, not solely on the published
+disinhibitory mechanism. Figure 7 and downstream holdouts remain locked.
+
 Artifacts 302--307 test the only previously declared inhibitory-capacity
 interaction not covered by that timing result. Artifact 252 had screened common
 TRN-to-relay gains 1.125, 1.25, 1.5, 2, and 3 at receptor-arrival timing. The

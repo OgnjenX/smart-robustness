@@ -4213,6 +4213,42 @@ def test_top5_arrival_mismatch_is_fixed_after_verified_match() -> None:
     )
 
 
+def test_top5_arrival_pair_preserves_spatial_path_but_loses_arousal() -> None:
+    artifact = yaml.safe_load(FIGURE7_TOP5_ARRIVAL_PAIR_RESULT_PATH.read_text())
+    match = artifact["match_scoring_summary"]
+    mismatch = artifact["mismatch_result"]
+    assert artifact["status"] == "figure7-failed"
+    assert not artifact["reproduced"]
+    assert len(match["relay_spike_times_ms"]) == 15
+    assert len(match["trn_spike_times_ms"]) == 633
+    assert len(match["nonspecific_spike_times_ms"]) == 4
+    assert sorted(set(mismatch["relay_spike_indices"])) == [40]
+    assert len(mismatch["relay_spike_times_ms"]) == 3
+    assert len(mismatch["trn_spike_times_ms"]) == 560
+    assert len(mismatch["nonspecific_spike_times_ms"]) == 4
+    for passed_gate in (
+        "match_relay_spatial_set",
+        "mismatch_relay_overlap_only",
+        "match_more_active_relay_cells",
+        "match_more_trn_events",
+        "match_nonspecific_40_hz",
+        "figure7_target_duration",
+        "sampled_mismatch_trn_events_have_fresh_cycles",
+    ):
+        assert artifact["gates"][passed_gate]
+    assert not artifact["gates"]["mismatch_more_nonspecific_events"]
+    assert not artifact["gates"]["mismatch_nonspecific_70_hz"]
+    assert artifact["sampled_mismatch_trn_event_counts_by_index"] == artifact[
+        "sampled_mismatch_trn_threshold_upcrossings_by_index"
+    ]
+    assert artifact["sampled_mismatch_trn_event_counts_by_index"] == artifact[
+        "sampled_mismatch_trn_arm_transitions_by_index"
+    ]
+    assert artifact["sampled_mismatch_trn_event_counts_by_index"] == artifact[
+        "sampled_mismatch_trn_release_transitions_by_index"
+    ]
+
+
 def test_aligned_on_center_verification_registers_only_screen_survivor() -> None:
     profile = yaml.safe_load(FIGURE7_ALIGNED_VERIFICATION_PROFILE_PATH.read_text())
     registration = yaml.safe_load(

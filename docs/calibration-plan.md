@@ -679,3 +679,17 @@ can preserve four match events and yield seven mismatch events. Close shared
 nonspecific threshold/rearming calibration. The next candidate must alter a
 predeclared condition-sensitive input or membrane mechanism while preserving
 the exact match and spatial pathway, not reinterpret detector bookkeeping.
+
+Artifacts 339--344 cross the fixed top-five comparator with the already
+source-derived 7.85-ms receptor-arrival alignment. The sole match candidate
+passes at 15/633/4 and repeats exactly in an independent full-detector rebuild.
+The preregistered mismatch then retains only overlap relay cell 40 and reduces
+TRN output to 560, but nonspecific output stays at four events. Close the
+interaction without timing or cardinality interpolation. Relative to the old
+spatially incorrect 4/7 pair, the corrected mismatch reduces the peak
+layer-6II-to-nonspecific NMDA gate from approximately 1.55 to 0.546 while the
+TRN GABA integral changes from about 1229 to 1200 gate-ms. This establishes
+that the earlier exact 70-Hz rate relied on excitation carried by nonoverlap
+paths that should have been silent. The next mechanism must make genuine
+nonspecific disinhibition dominate after spatial mismatch, not restore those
+incorrect relay paths.

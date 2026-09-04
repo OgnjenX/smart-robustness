@@ -2601,6 +2601,14 @@ as explicit artifacts instead of aborting without evidence. Match and mismatch
 remain unconstructed and locked. This closes geometry-derived ring-radius
 calibration without fitting an arbitrary radius.
 
+Artifacts 312--313 test the first explicitly labeled comparator reconstruction,
+not a recovered SMART equation. A smooth learned-support gain applied only to
+active relay pixels fails all four preregistered floors before mismatch: relay /
+TRN / nonspecific counts are 6/573/6 at floors 0 and 0.25, 8/609/6 at 0.5, and
+13/616/5 at 0.75. The two larger floors retain the correct horizontal relay set
+but not the exact 40-Hz match output. No floor survives, mismatch remains
+locked, and Figure 7 is still not reproduced.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

@@ -527,6 +527,10 @@ FIGURE7_LEARNED_COMPARATOR_REGISTRATION_PATH = (
     ROOT
     / "docs/validation-results/figure7-learned-comparator-floor-registration-312.yaml"
 )
+FIGURE7_LEARNED_COMPARATOR_RESULT_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-learned-comparator-floor-match-313.yaml"
+)
 FIGURE7_ALIGNED_VERIFICATION_PROFILE_PATH = (
     ROOT / "configs/calibration/figure7_aligned_on_center_verification_v1.yaml"
 )
@@ -3260,6 +3264,40 @@ def test_learned_comparator_floor_is_preregistered_as_reconstruction() -> None:
     ]["leaves_unchanged"]
     assert registration["stopping_rule"].startswith("Run all four match-only")
     assert registration["locked_holdouts"][0] == "figure7_mismatch"
+
+
+def test_smooth_learned_comparator_floor_fails_match_before_mismatch() -> None:
+    artifact = yaml.safe_load(FIGURE7_LEARNED_COMPARATOR_RESULT_PATH.read_text())
+    assert artifact["status"] == "complete"
+    assert artifact["classification"] == (
+        "calibrated-reconstruction-not-recovered-source"
+    )
+    assert artifact["holdouts_consulted"] == ["figure7_match"]
+    assert not artifact["mismatch_consulted"]
+    assert artifact["handoff_figure6_population_spikes"]["thalamic_relay"] == 20
+    assert artifact["match_survivor_floors"] == []
+    assert artifact["selected_comparator_floor"] is None
+    expected = {
+        0.0: (6, {39, 40, 41}, 573, 6),
+        0.25: (6, {39, 40, 41}, 573, 6),
+        0.5: (8, {38, 39, 40, 41, 42}, 609, 6),
+        0.75: (13, {38, 39, 40, 41, 42}, 616, 5),
+    }
+    for outcome in artifact["outcomes"]:
+        result = outcome["result"]
+        relay_count, relay_indices, trn_count, nonspecific_count = expected[
+            outcome["comparator_floor"]
+        ]
+        assert len(result["relay_spike_times_ms"]) == relay_count
+        assert set(result["relay_spike_indices"]) == relay_indices
+        assert len(result["trn_spike_times_ms"]) == trn_count
+        assert len(result["nonspecific_spike_times_ms"]) == nonspecific_count
+        assert not outcome["pass"]
+    assert not artifact["assessment"][
+        "advance_to_independent_match_verification"
+    ]
+    assert not artifact["assessment"]["advance_to_mismatch"]
+    assert artifact["assessment"]["mismatch_remains_locked"]
 
 
 def test_aligned_on_center_verification_registers_only_screen_survivor() -> None:

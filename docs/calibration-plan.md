@@ -555,3 +555,18 @@ effectively the already rejected default annulus and is not repeated. The
 nearest-arm candidate produces 25 rather than 20 relay events during the fresh
 Figure 6 handoff, so recognition is never constructed. Close geometry-derived
 radius calibration before Figure 7 and retain the exact failure counts.
+
+Artifacts 312--313 begin an explicitly labeled mesoscopic reconstruction after
+source recovery and geometry-derived calibration were exhausted. The candidate
+multiplies only active relay-image pixels by normalized learned support from
+adaptive projections 005/007, blended with preregistered floors 0, 0.25, 0.5,
+and 0.75; floor 1 is the previously verified uniform-input control. It does not
+inspect orientation, condition, or overlap labels and leaves nonspecific/matrix
+input, training, weights, cells, and synapses unchanged.
+
+No smooth-floor candidate preserves the exact match. Floors 0/0.25 recruit only
+cells 39--41 with 6 relay, 573 TRN, and 6 nonspecific events; floor 0.5 recruits
+the correct horizontal set with 8/609/6 events; floor 0.75 gives 13/616/5.
+Every candidate misses the 40-Hz nonspecific gate, so none advances to
+verification or mismatch. Close smooth multiplicative support blending and do
+not interpolate toward the known floor-1 control.

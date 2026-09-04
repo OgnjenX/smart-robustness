@@ -142,6 +142,7 @@ class FirstOrderRuntimeConventions:
     trn_spike_event_voltage_offset_mV: float | None = None
     trn_spike_event_proximal_blend_fraction: float | None = None
     nonspecific_spike_event_threshold_mV: float | None = None
+    nonspecific_spike_event_rule: str | None = None
     nonspecific_spike_event_proximal_blend_fraction: float | None = None
     nonspecific_spike_event_release_proximal_blend_fraction: float | None = None
     trn_potassium_convention: str = "selected_source"
@@ -198,6 +199,8 @@ class FirstOrderRuntimeConventions:
             values.pop("trn_spike_event_proximal_blend_fraction")
         if values["nonspecific_spike_event_threshold_mV"] is None:
             values.pop("nonspecific_spike_event_threshold_mV")
+        if values["nonspecific_spike_event_rule"] is None:
+            values.pop("nonspecific_spike_event_rule")
         if values["nonspecific_spike_event_proximal_blend_fraction"] is None:
             values.pop("nonspecific_spike_event_proximal_blend_fraction")
         if values["nonspecific_spike_event_release_proximal_blend_fraction"] is None:
@@ -580,6 +583,7 @@ def first_order_population_parameters(
     spike_event_coordinate = conventions.spike_event_coordinate
     spike_event_threshold_mV = conventions.spike_event_threshold_mV
     spike_event_release_mV = 0.0
+    spike_event_rule = conventions.spike_event_rule
     spike_event_voltage_offset_mV = None
     spike_event_proximal_blend_fraction = None
     spike_event_release_proximal_blend_fraction = None
@@ -616,6 +620,8 @@ def first_order_population_parameters(
             raise ValueError(
                 "nonspecific spike-event threshold voltage must be finite"
             )
+        if conventions.nonspecific_spike_event_rule is not None:
+            spike_event_rule = conventions.nonspecific_spike_event_rule
         spike_event_proximal_blend_fraction = (
             conventions.nonspecific_spike_event_proximal_blend_fraction
         )
@@ -663,7 +669,7 @@ def first_order_population_parameters(
         "spike_event_coordinate": spike_event_coordinate,
         "spike_event_threshold_mV": spike_event_threshold_mV,
         "spike_event_release_mV": spike_event_release_mV,
-        "spike_event_rule": conventions.spike_event_rule,
+        "spike_event_rule": spike_event_rule,
         "ahp_convention": "smart_network_112923" if has_ahp else "modeldb_112923",
         "specific_capacitance_uF_cm2": conventions.specific_capacitance_uF_cm2,
         "enable_ahp_ach": has_ahp,

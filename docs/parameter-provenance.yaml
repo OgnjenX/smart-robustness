@@ -392,6 +392,11 @@ parameters:
     status: conflicting-official-source-tested
     source: Grossberg and Versace 2008 Table 3 compared with ModelDB 112923 INTRALAMINAR cell
     note: Artifacts 359--360 switch the complete nonspecific intrinsic record, including soma sodium/potassium from 100/100 to 50/30 mS/cm2. Figure 6 and upstream match remain exact, but nonspecific soma peaks at 28.14 mV and emits zero events under the paper +30-mV arm. Individual channel hybrids are not authorized; an executable-cell plus KInNeSS-detector combination remains a discrete source-coherence question
+  model.classic_hh.nonspecific_kinness_threshold_pair:
+    value: -20 mV arm with 0 mV release rejected under latched_peak_then_zero
+    status: official-threshold-handler-combination-tested
+    source: Versace et al. 2008 KInNeSS Equation 14; SANNDRA spikeevents revision history; Artifacts 361--362
+    note: the recovered nonspecific cell with the KInNeSS arm emits 287 match events because the -20-to-0-mV arm and release regions overlap under the simple latch. Consecutive events begin 0.02 ms apart. Mismatch is not consulted; threshold interpolation is prohibited, while the separately named hysteretic handler remains a source-adjacent discriminator
   benchmark.population_sizes:
     value: see configs/*.yaml
     status: exploratory

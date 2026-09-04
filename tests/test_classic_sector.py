@@ -780,6 +780,21 @@ def test_nonspecific_event_threshold_can_be_selected_without_changing_trn() -> N
         )
 
 
+def test_nonspecific_event_rule_can_be_selected_without_changing_trn() -> None:
+    facts = {fact.canonical_name: fact for fact in first_order_population_facts()}
+    conventions = FirstOrderRuntimeConventions(
+        nonspecific_spike_event_rule="hysteretic_threshold_then_zero"
+    )
+
+    nonspecific = first_order_population_parameters(
+        facts["thalamic_nonspecific"], conventions=conventions
+    )
+    trn = first_order_population_parameters(facts["trn"], conventions=conventions)
+
+    assert nonspecific["spike_event_rule"] == "hysteretic_threshold_then_zero"
+    assert trn["spike_event_rule"] == "latched_peak_then_zero"
+
+
 def test_figure6_profile_names_the_source_constrained_runtime() -> None:
     conventions = figure6_runtime_conventions()
     assert conventions.gate_initialization_convention == "steady_state_at_initial_voltage"

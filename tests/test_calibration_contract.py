@@ -799,6 +799,18 @@ FIGURE7_NONSPECIFIC_MODELDB_KINNESS_DETECTOR_REGISTRATION_PATH = (
     ROOT
     / "docs/validation-results/figure7-top5-nonspecific-modeldb-kinness-detector-registration-361.yaml"
 )
+FIGURE7_NONSPECIFIC_MODELDB_KINNESS_DETECTOR_RESULT_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-top5-nonspecific-modeldb-kinness-detector-match-362.yaml"
+)
+FIGURE7_NONSPECIFIC_MODELDB_KINNESS_HYSTERESIS_PROFILE_PATH = (
+    ROOT
+    / "configs/calibration/figure7_top5_nonspecific_modeldb_kinness_hysteresis_match_v1.yaml"
+)
+FIGURE7_NONSPECIFIC_MODELDB_KINNESS_HYSTERESIS_REGISTRATION_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-top5-nonspecific-modeldb-kinness-hysteresis-registration-363.yaml"
+)
 FIGURE7_ALIGNED_VERIFICATION_PROFILE_PATH = (
     ROOT / "configs/calibration/figure7_aligned_on_center_verification_v1.yaml"
 )
@@ -4867,6 +4879,58 @@ def test_nonspecific_modeldb_kinness_detector_pair_is_source_fixed() -> None:
     assert dimensions["event_threshold_source"] == "kinness_2008"
     assert dimensions["event_arm_mV"] == -20.0
     assert dimensions["event_release_mV"] == 0.0
+    assert dimensions["candidate_count"] == 1
+    assert registration["fixed"]["all_trn_and_relay_event_detectors_unchanged"]
+    assert registration["stopping_rule"].startswith(
+        "Run one fresh complete Figure 6"
+    )
+    assert "figure7_mismatch" in registration["locked_holdouts"]
+
+
+def test_nonspecific_modeldb_kinness_detector_pair_rearms_pathologically() -> None:
+    artifact = yaml.safe_load(
+        FIGURE7_NONSPECIFIC_MODELDB_KINNESS_DETECTOR_RESULT_PATH.read_text()
+    )
+    assert artifact["id"] == (
+        "figure7-top5-nonspecific-modeldb-kinness-detector-match-362"
+    )
+    assert artifact["status"] == "match-failed"
+    assert artifact["runtime_discriminator"] == {
+        "nonspecific_intrinsic_cell_convention": "modeldb_112923",
+        "nonspecific_spike_event_threshold_mV": -20.0,
+    }
+    assert artifact["figure6_pass"]
+    assert not artifact["match_pass"]
+    assert not artifact["mismatch_consulted"]
+    match = artifact["match_result"]
+    assert len(match["relay_spike_times_ms"]) == 15
+    assert len(match["trn_spike_times_ms"]) == 635
+    assert len(match["nonspecific_spike_times_ms"]) == 287
+    first_interval = (
+        match["nonspecific_spike_times_ms"][1]
+        - match["nonspecific_spike_times_ms"][0]
+    )
+    assert first_interval == pytest.approx(0.02)
+    assert not artifact["promotable"]
+    assert not artifact["reproduced"]
+
+
+def test_nonspecific_modeldb_kinness_hysteresis_is_fixed_and_isolated() -> None:
+    profile = yaml.safe_load(
+        FIGURE7_NONSPECIFIC_MODELDB_KINNESS_HYSTERESIS_PROFILE_PATH.read_text()
+    )
+    registration = yaml.safe_load(
+        FIGURE7_NONSPECIFIC_MODELDB_KINNESS_HYSTERESIS_REGISTRATION_PATH.read_text()
+    )
+    assert profile["runtime_expectations"] == {
+        "nonspecific_intrinsic_cell_convention": "modeldb_112923",
+        "nonspecific_spike_event_threshold_mV": -20.0,
+        "nonspecific_spike_event_rule": "hysteretic_threshold_then_zero",
+    }
+    dimensions = registration["registered_dimensions"]
+    assert dimensions["event_arm_mV"] == -20.0
+    assert dimensions["event_release_mV"] == 0.0
+    assert dimensions["event_rule"] == "hysteretic_threshold_then_zero"
     assert dimensions["candidate_count"] == 1
     assert registration["fixed"]["all_trn_and_relay_event_detectors_unchanged"]
     assert registration["stopping_rule"].startswith(

@@ -2692,6 +2692,17 @@ individually. A separately registered source-coherence test may pair the
 executable cell with the contemporaneous KInNeSS event threshold, but this
 artifact does not authorize threshold fitting.
 
+Artifacts 361--362 pair that complete executable nonspecific cell with the
+contemporaneous KInNeSS `V_theta=-20 mV` event arm while retaining the current
+peak-latch/release handler. Figure 6 and upstream match again remain exact, but
+the nonspecific cell emits 287 events in 100 ms. Consecutive events begin 0.02
+ms apart because voltages between -20 and 0 mV satisfy both the arm and release
+regions on alternating integration steps. This exact cell/threshold/handler
+combination is rejected before mismatch. The result makes the missing legacy
+"proper spike detecting" semantics behaviorally material; a separately
+registered hysteretic handler is the only named follow-up that prevents
+re-arming until voltage returns below the arm threshold.
+
 Artifacts 302--307 test the only previously declared inhibitory-capacity
 interaction not covered by that timing result. Artifact 252 had screened common
 TRN-to-relay gains 1.125, 1.25, 1.5, 2, and 3 at receptor-arrival timing. The

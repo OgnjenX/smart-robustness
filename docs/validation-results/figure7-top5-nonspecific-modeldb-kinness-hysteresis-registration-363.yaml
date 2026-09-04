@@ -1,0 +1,67 @@
+schema_version: 1
+id: figure7-top5-nonspecific-modeldb-kinness-hysteresis-registration-363
+date: '2026-09-04'
+status: registered-before-execution-legacy-handler-discriminator
+profile: configs/calibration/figure7_top5_nonspecific_modeldb_kinness_hysteresis_match_v1.yaml
+rationale:
+  - >-
+    Artifact 362 proves that the simple peak latch is incompatible with the
+    KInNeSS -20-mV arm and 0-mV release: their overlapping voltage regions
+    generate alternating-step events. That pathology concerns event-handler
+    state, not the recovered intrinsic cell or threshold magnitude.
+  - >-
+    SANNDRA revision history records a dedicated spikeevents handler and a
+    2005 fix for "proper spike detecting," but its body is unavailable. The
+    existing hysteretic implementation is the sole named handler that prevents
+    re-arming after release until voltage falls below V_theta.
+  - >-
+    Apply hysteresis only to nonspecific thalamus with the complete recovered
+    intrinsic cell and exact KInNeSS threshold. This is an explicit legacy
+    handler discriminator, not a recovered source fact or continuous fit.
+registered_dimensions:
+  population: thalamic_nonspecific
+  intrinsic_cell_source: modeldb_112923
+  event_threshold_source: kinness_2008
+  event_arm_mV: -20.0
+  event_release_mV: 0.0
+  event_coordinate: absolute_physical
+  event_rule: hysteretic_threshold_then_zero
+  candidate_count: 1
+fixed:
+  nonspecific_axial_convention: paper_literal
+  nonspecific_calcium_kinetics: modeldb_112923
+  all_trn_and_relay_event_detectors_unchanged: true
+  all_synaptic_weights_kinetics_delays_and_reversals_unchanged: true
+  comparator_transform: top_k_binary
+  comparator_target_count: 5
+  learned_headroom_fraction: 1.0
+  source_index: 40
+  cue_current_pA: 800.0
+  current_mode: until_cued_cell_first_event
+  receptor_peak_cue_lead_ms: 11.35773631178703
+  trn_detector: {arm_mV: -20.0, release_mV: -30.0}
+  duration_ms: 100.0
+  dt_ms: 0.01
+scope_boundary:
+  classification: legacy-handler-discriminator-not-recovered-source
+  changes:
+    - complete nonspecific intrinsic cell record
+    - nonspecific event arm to KInNeSS -20 mV
+    - nonspecific event handler to threshold hysteresis
+  leaves_unchanged:
+    - event release and coordinate
+    - axial, calcium, and synaptic equations
+    - all upstream intrinsic records and event detectors
+    - stimulus values and timing
+    - learned comparator and cardinality
+stopping_rule: >-
+  Run one fresh complete Figure 6 and construct match only if every prerequisite
+  passes. Do not run mismatch in this artifact. A match pass requires an
+  independent rebuild before one fixed mismatch. A failure closes this exact
+  handler without threshold interpolation or channel hybridization.
+locked_holdouts:
+  - figure7_mismatch
+  - figure10_reset
+  - figure14_spectra
+  - figure15_local_synchrony
+  - figure16_long_range_synchrony

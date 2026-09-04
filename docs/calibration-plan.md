@@ -762,3 +762,11 @@ alternative and retain the paper Table 3 intrinsic cell; do not create a
 post-hoc sodium/potassium hybrid. The only source-coherent follow-up is the
 discrete executable-cell plus contemporaneous KInNeSS detector combination,
 registered before execution and tested match-first.
+
+Artifacts 361--362 add the exact KInNeSS -20-mV event arm to the recovered
+nonspecific cell while retaining the calibrated peak latch. Match emits 287
+nonspecific events, beginning at alternating 0.02-ms intervals, because the
+-20-to-0-mV arm/release regions overlap. Reject this handler combination
+before mismatch and do not interpolate the threshold. The next discrete test
+may use the existing hysteretic handler only in nonspecific thalamus; all
+upstream detectors and parameters must remain fixed.

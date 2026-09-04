@@ -567,6 +567,16 @@ FIGURE7_TOP5_COMPARATOR_MISMATCH_REGISTRATION_PATH = (
     ROOT
     / "docs/validation-results/figure7-top5-comparator-mismatch-registration-320.yaml"
 )
+FIGURE7_TOP5_COMPARATOR_PAIR_RESULT_PATH = (
+    ROOT / "docs/validation-results/figure7-top5-comparator-pair-321.yaml"
+)
+FIGURE7_TOP5_NONSPECIFIC_BLEND_PROFILE_PATH = (
+    ROOT / "configs/calibration/figure7_top5_nonspecific_blend_match_v1.yaml"
+)
+FIGURE7_TOP5_NONSPECIFIC_BLEND_REGISTRATION_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-top5-nonspecific-blend-registration-322.yaml"
+)
 FIGURE7_ALIGNED_VERIFICATION_PROFILE_PATH = (
     ROOT / "configs/calibration/figure7_aligned_on_center_verification_v1.yaml"
 )
@@ -3510,6 +3520,66 @@ def test_top5_mismatch_is_fixed_only_after_verified_match() -> None:
     assert registration["execution"]["condition"] == "mismatch"
     assert registration["execution"]["run_count"] == 1
     assert registration["stopping_rule"].startswith("Run one fixed vertical")
+
+
+def test_top5_pair_recovers_pathway_but_not_70hz_arousal() -> None:
+    artifact = yaml.safe_load(FIGURE7_TOP5_COMPARATOR_PAIR_RESULT_PATH.read_text())
+    mismatch = artifact["mismatch_result"]
+    assert artifact["status"] == "figure7-failed"
+    assert artifact["classification"] == (
+        "calibrated-reconstruction-not-recovered-source"
+    )
+    assert not artifact["reproduced"]
+    assert set(mismatch["relay_spike_indices"]) == {40}
+    assert len(mismatch["relay_spike_times_ms"]) == 3
+    assert len(mismatch["trn_spike_times_ms"]) == 560
+    assert len(mismatch["nonspecific_spike_times_ms"]) == 5
+    assert artifact["assessment"]["arousal"]["mismatch_rate_hz"] == 50.0
+    for passed_gate in (
+        "match_relay_spatial_set",
+        "mismatch_relay_overlap_only",
+        "match_more_active_relay_cells",
+        "match_more_trn_events",
+        "match_nonspecific_40_hz",
+        "mismatch_more_nonspecific_events",
+        "figure7_target_duration",
+        "sampled_mismatch_trn_events_have_fresh_cycles",
+    ):
+        assert artifact["gates"][passed_gate]
+    assert not artifact["gates"]["mismatch_nonspecific_70_hz"]
+    assert artifact["sampled_mismatch_trn_event_counts_by_index"] == artifact[
+        "sampled_mismatch_trn_threshold_upcrossings_by_index"
+    ]
+    assert artifact["sampled_mismatch_trn_event_counts_by_index"] == artifact[
+        "sampled_mismatch_trn_arm_transitions_by_index"
+    ]
+    assert artifact["sampled_mismatch_trn_event_counts_by_index"] == artifact[
+        "sampled_mismatch_trn_release_transitions_by_index"
+    ]
+
+
+def test_top5_nonspecific_transfer_reuses_predeclared_finite_grid() -> None:
+    profile = yaml.safe_load(FIGURE7_TOP5_NONSPECIFIC_BLEND_PROFILE_PATH.read_text())
+    registration = yaml.safe_load(
+        FIGURE7_TOP5_NONSPECIFIC_BLEND_REGISTRATION_PATH.read_text()
+    )
+    prior = yaml.safe_load(
+        (ROOT / profile["prior_transfer_profile"]).read_text()
+    )
+    assert profile["dimension"]["grid"] == [0.1, 0.2, 0.3, 0.5, 0.7, 1.0]
+    assert profile["dimension"]["baseline_control"] == 0.0
+    assert [0.0, *profile["dimension"]["grid"]] == prior["dimension"]["grid"]
+    assert profile["dimension"]["selection_rule"].startswith("highest")
+    assert registration["registered_dimension"]["candidate_count"] == 6
+    assert registration["fixed"]["comparator_transform"] == "top_k_binary"
+    assert registration["fixed"]["comparator_target_count"] == 5
+    assert registration["scope_boundary"]["changes"].startswith(
+        "nonspecific output event coordinate"
+    )
+    assert registration["stopping_rule"].startswith("Run all six positive")
+    assert registration["locked_holdouts"][0] == (
+        "figure7_mismatch_with_output_transfer"
+    )
 
 
 def test_aligned_on_center_verification_registers_only_screen_survivor() -> None:

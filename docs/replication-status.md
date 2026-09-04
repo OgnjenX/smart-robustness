@@ -2630,6 +2630,13 @@ detector cycle. Registration 320 now permits one fixed vertical mismatch with
 no retuning. Figure 7 is still unproven until that holdout satisfies overlap,
 TRN-order, disinhibition, and exact 70-Hz gates.
 
+Artifacts 320--321 show that the fixed mismatch recovers all qualitative
+Figure 7 mechanisms: only overlap cell 40 fires (three relay events), match has
+more active relay cells and more TRN events (635 versus 560), and nonspecific
+output increases during mismatch. Detector cycles are complete. The remaining
+failure is numeric arousal amplitude: mismatch reaches 50 Hz, not 70 Hz.
+Therefore Figure 7 is not yet reproduced and later holdouts remain locked.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

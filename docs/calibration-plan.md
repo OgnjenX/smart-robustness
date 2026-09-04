@@ -592,3 +592,13 @@ Artifact 319 independently rebuilds the top-five endpoint and reproduces
 TRN events equal detector upcrossings, arm transitions, and releases (9 or 10
 cycles per cell). Registration 320 therefore unlocks one fixed vertical
 mismatch with no retuning; all later figures remain locked.
+
+Artifacts 320--321 execute that sole mismatch. Fixed-cardinality competition
+recovers the published spatial and causal pathway: only overlap cell 40 emits
+three relay events, match exceeds mismatch in active relay cells and TRN events
+(635 versus 560), and nonspecific output is directionally disinhibited. All
+sampled mismatch TRN events are fresh detector cycles. However, nonspecific
+output rises only from four to five events (50 Hz), not the official seven
+(70 Hz), so complete Figure 7 still fails. Preserve the successful comparator
+and next calibrate only the already named nonspecific compartment-to-event
+transfer against match, keeping mismatch as a new holdout.

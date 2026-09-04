@@ -731,3 +731,10 @@ Figure 6 and exact match at 15 relay, 635 TRN, and four nonspecific events,
 with fresh detector cycles. Do not inspect mismatch yet. Independently rebuild
 the same persistent factor-2 network and repeat Figure 6 plus match; only that
 verification can authorize one fixed mismatch.
+
+Artifacts 353--354 complete that independent verification. The newly rebuilt
+network repeats every Figure 6 and match gate, including exact 20-event
+training and 15/635/4 recognition counts. Register one vertical mismatch with
+the identical factor-2 somatic transfer. Do not change or add any scale after
+the holdout result; unlock Figure 10 only if every Figure 7 pathway and 40/70
+Hz gate passes.

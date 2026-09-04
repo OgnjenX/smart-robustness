@@ -751,6 +751,18 @@ FIGURE7_NONSPECIFIC_SOMATIC_GABA_VERIFICATION_REGISTRATION_PATH = (
     ROOT
     / "docs/validation-results/figure7-top5-nonspecific-somatic-gaba-verification-registration-353.yaml"
 )
+FIGURE7_NONSPECIFIC_SOMATIC_GABA_VERIFICATION_RESULT_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-top5-nonspecific-somatic-gaba-verification-354.yaml"
+)
+FIGURE7_NONSPECIFIC_SOMATIC_GABA_MISMATCH_PROFILE_PATH = (
+    ROOT
+    / "configs/calibration/figure7_top5_nonspecific_somatic_gaba_mismatch_v1.yaml"
+)
+FIGURE7_NONSPECIFIC_SOMATIC_GABA_MISMATCH_REGISTRATION_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-top5-nonspecific-somatic-gaba-mismatch-registration-355.yaml"
+)
 FIGURE7_ALIGNED_VERIFICATION_PROFILE_PATH = (
     ROOT / "configs/calibration/figure7_aligned_on_center_verification_v1.yaml"
 )
@@ -4582,6 +4594,49 @@ def test_nonspecific_somatic_gaba_verification_is_fixed_and_locked() -> None:
     assert registration["verification"]["persistent_somatic_scale"] == 2.0
     assert registration["verification"]["independently_rebuilt_network"]
     assert registration["mismatch_lock"].startswith("Do not run mismatch")
+
+
+def test_nonspecific_somatic_gaba_verification_repeats_exact_match() -> None:
+    artifact = yaml.safe_load(
+        FIGURE7_NONSPECIFIC_SOMATIC_GABA_VERIFICATION_RESULT_PATH.read_text()
+    )
+    assert artifact["id"] == (
+        "figure7-top5-nonspecific-somatic-gaba-verification-354"
+    )
+    assert artifact["status"] == "complete"
+    assert artifact["selected_common_scale"] == 2.0
+    assert not artifact["mismatch_consulted"]
+    assert artifact["assessment"]["advance_to_mismatch"]
+    assert not artifact["assessment"]["mismatch_remains_locked"]
+    outcome = artifact["outcomes"][0]
+    assert outcome["figure6_pass"]
+    assert all(outcome["figure6_gates"].values())
+    assert outcome["match_pass"]
+    assert all(outcome["match_gates"].values())
+    assert len(outcome["match_result"]["relay_spike_times_ms"]) == 15
+    assert len(outcome["match_result"]["trn_spike_times_ms"]) == 635
+    assert len(outcome["match_result"]["nonspecific_spike_times_ms"]) == 4
+
+
+def test_nonspecific_somatic_gaba_mismatch_is_fixed_before_execution() -> None:
+    profile = yaml.safe_load(
+        FIGURE7_NONSPECIFIC_SOMATIC_GABA_MISMATCH_PROFILE_PATH.read_text()
+    )
+    registration = yaml.safe_load(
+        FIGURE7_NONSPECIFIC_SOMATIC_GABA_MISMATCH_REGISTRATION_PATH.read_text()
+    )
+    assert profile["match_verification_artifact"] == (
+        "docs/validation-results/figure7-top5-nonspecific-somatic-gaba-verification-354.yaml"
+    )
+    assert profile["nonspecific_gaba_transfer"] == {
+        "common_scale": 2.0,
+        "projection_ids": ["modeldb112923.projection.047"],
+    }
+    assert registration["holdout"]["condition"] == "mismatch"
+    assert registration["holdout"]["execution_count"] == 1
+    assert registration["fixed"]["persistent_somatic_scale"] == 2.0
+    assert registration["official_gates"]["mismatch_nonspecific_events"] == 7
+    assert registration["stopping_rule"].startswith("Execute one fresh")
 
 
 def test_aligned_on_center_verification_registers_only_screen_survivor() -> None:

@@ -1,0 +1,49 @@
+schema_version: 1
+id: figure7-top5-nonspecific-somatic-gaba-mismatch-registration-355
+date: '2026-09-04'
+status: registered-before-execution-fixed-holdout
+profile: configs/calibration/figure7_top5_nonspecific_somatic_gaba_mismatch_v1.yaml
+match_verification_artifact: docs/validation-results/figure7-top5-nonspecific-somatic-gaba-verification-354.yaml
+verified_prerequisites:
+  independent_figure6_pass: true
+  independent_match_pass: true
+  figure6_relay_events: 20
+  match_relay_events: 15
+  match_trn_events: 635
+  match_nonspecific_events: 4
+holdout:
+  condition: mismatch
+  execution_count: 1
+  inspected_before_registration: false
+fixed:
+  projection_id: modeldb112923.projection.047
+  persistent_somatic_scale: 2.0
+  proximal_and_distal_gaba_scales: 1.0
+  nonspecific_calcium_kinetics: modeldb_112923
+  comparator_transform: top_k_binary
+  comparator_target_count: 5
+  learned_headroom_fraction: 1.0
+  source_index: 40
+  cue_current_pA: 800.0
+  current_mode: until_cued_cell_first_event
+  receptor_peak_cue_lead_ms: 11.35773631178703
+  trn_detector: {arm_mV: -20.0, release_mV: -30.0}
+  duration_ms: 100.0
+  dt_ms: 0.01
+official_gates:
+  mismatch_relay_allowed_indices: [40]
+  match_more_active_relay_cells: true
+  match_more_trn_events: true
+  match_nonspecific_events: 4
+  mismatch_nonspecific_events: 7
+  mismatch_nonspecific_rate_hz: 70.0
+  sampled_mismatch_trn_events_have_fresh_cycles: true
+stopping_rule: >-
+  Execute one fresh Figure 6 handoff and one fixed vertical mismatch. Do not
+  alter or add a somatic scale after observing the holdout. Unlock Figure 10
+  only if every registered Figure 7 gate passes.
+locked_holdouts:
+  - figure10_reset
+  - figure14_spectra
+  - figure15_local_synchrony
+  - figure16_long_range_synchrony

@@ -2648,6 +2648,13 @@ and four nonspecific events. Because this is a calibrated transfer rather than
 a recovered 2008 value, it is not promoted yet. An independently rebuilt
 Figure 6-plus-match repeat is registered before mismatch can be opened.
 
+Artifacts 353--354 independently rebuild that factor-2 network and repeat the
+entire Figure 6-plus-match sequence. Every prerequisite passes again, including
+the exact 20-event Figure 6 relay train and 15/635/4 match counts with complete
+sampled TRN detector cycles. This deterministic repeat authorizes one fixed
+vertical mismatch at the same persistent somatic scale. It does not itself
+establish Figure 7 reproduction or permit another scale.
+
 Artifacts 302--307 test the only previously declared inhibitory-capacity
 interaction not covered by that timing result. Artifact 252 had screened common
 TRN-to-relay gains 1.125, 1.25, 1.5, 2, and 3 at receptor-arrival timing. The

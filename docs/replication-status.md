@@ -2643,6 +2643,12 @@ cannot repair the numeric amplitude. Relay/TRN match behavior remains exactly
 events and fraction 1.0 emits only one. No match survivor exists and no new
 mismatch is opened. The shared arm/release coordinate family is closed.
 
+Artifacts 324--325 test dendritic arming with somatic release/rearming. Arm
+fractions 0.1--0.7 produce zero nonspecific events, while the fully proximal
+arm endpoint produces 100 events in 100 ms; relay/TRN stay exactly 15/635.
+No 40-Hz match survivor exists, so no mismatch is opened and the split detector
+family is closed without interpolation.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

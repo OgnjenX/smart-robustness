@@ -588,6 +588,9 @@ FIGURE7_TOP5_NONSPECIFIC_SPLIT_REGISTRATION_PATH = (
     ROOT
     / "docs/validation-results/figure7-top5-nonspecific-split-registration-324.yaml"
 )
+FIGURE7_TOP5_NONSPECIFIC_SPLIT_RESULT_PATH = (
+    ROOT / "docs/validation-results/figure7-top5-nonspecific-split-match-325.yaml"
+)
 FIGURE7_ALIGNED_VERIFICATION_PROFILE_PATH = (
     ROOT / "configs/calibration/figure7_aligned_on_center_verification_v1.yaml"
 )
@@ -3645,6 +3648,37 @@ def test_split_nonspecific_detector_reuses_arm_grid_and_somatic_release() -> Non
         "somatic release/rearming coordinate"
     )
     assert registration["stopping_rule"].startswith("Run all six registered")
+
+
+def test_split_nonspecific_detector_has_no_exact_match_survivor() -> None:
+    artifact = yaml.safe_load(FIGURE7_TOP5_NONSPECIFIC_SPLIT_RESULT_PATH.read_text())
+    assert artifact["status"] == "complete"
+    assert artifact["release_proximal_blend_fraction"] == 0.0
+    assert artifact["holdouts_consulted"] == ["figure7_match"]
+    assert not artifact["mismatch_with_output_transfer_consulted"]
+    assert artifact["match_survivor_blend_fractions"] == []
+    assert artifact["selected_nonspecific_event_blend_fraction"] is None
+    expected_nonspecific = {
+        0.1: 0,
+        0.2: 0,
+        0.3: 0,
+        0.5: 0,
+        0.7: 0,
+        1.0: 100,
+    }
+    for outcome in artifact["outcomes"]:
+        result = outcome["result"]
+        assert len(result["relay_spike_times_ms"]) == 15
+        assert len(result["trn_spike_times_ms"]) == 635
+        assert len(result["nonspecific_spike_times_ms"]) == expected_nonspecific[
+            outcome["nonspecific_event_blend_fraction"]
+        ]
+        assert outcome["gates"]["relay_events"]
+        assert outcome["gates"]["trn_events"]
+        assert not outcome["gates"]["nonspecific_events"]
+        assert not outcome["pass"]
+    assert not artifact["assessment"]["advance_to_mismatch"]
+    assert artifact["assessment"]["mismatch_remains_locked"]
 
 
 def test_aligned_on_center_verification_registers_only_screen_survivor() -> None:

@@ -611,3 +611,11 @@ one. No value preserves the four-event/40-Hz match, so none advances to
 mismatch. Close a shared arm-and-release coordinate blend. The next output
 candidate, if pursued, must separate dendritic arming from somatic rearming
 rather than interpolate this family.
+
+Artifacts 324--325 test that split-coordinate hypothesis with the same finite
+arm grid and somatic release fixed at its baseline endpoint. Fractions 0.1--0.7
+still emit no nonspecific match events; a fully proximal arm instead emits 100
+events in 100 ms while relay/TRN remain exactly 15/635. There is no 40-Hz
+survivor between silence and pathological 1-kHz output. Close split arming and
+somatic rearming without interpolating the 0.7--1 transition; mismatch remains
+locked.

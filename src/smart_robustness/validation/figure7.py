@@ -402,6 +402,7 @@ class Figure7ConditionResult:
     comparator_transform: str | None = None
     comparator_target_count: int | None = None
     network_scope: str = "first_order"
+    disabled_projection_ids: tuple[str, ...] = ()
     relay_top_down_ampa_peak_by_index: tuple[tuple[int, float], ...] = ()
     relay_top_down_ampa_integral_ms_by_index: tuple[tuple[int, float], ...] = ()
     relay_top_down_nmda_peak_by_index: tuple[tuple[int, float], ...] = ()
@@ -686,6 +687,7 @@ def run_figure7_condition(
     record_v1_cortical_spikes: bool = False,
     projection_weight_scales: Mapping[str, float] | None = None,
     persistent_projection_weight_scales: Mapping[str, float] | None = None,
+    disabled_projection_ids: tuple[str, ...] = (),
     top_down_relay_source_indices: frozenset[int] | None = None,
     comparator_relay_floor: float | None = None,
     comparator_half_max_gate: bool = False,
@@ -766,6 +768,15 @@ def run_figure7_condition(
             "projection scale mappings overlap: "
             f"{sorted(overlapping_scales)}"
         )
+    scaled_projection_ids = set(projection_weight_scales or ()) | set(
+        persistent_projection_weight_scales or ()
+    )
+    disabled_and_scaled = set(disabled_projection_ids) & scaled_projection_ids
+    if disabled_and_scaled:
+        raise ValueError(
+            "disabled and scaled projection IDs overlap: "
+            f"{sorted(disabled_and_scaled)}"
+        )
     if brian is None:
         import brian2 as brian
     if cpp_standalone_directory is not None:
@@ -808,6 +819,14 @@ def run_figure7_condition(
         sector = build_full_smart_network(conventions=conventions, brian=brian)
     else:
         sector = build_first_order_connected_sector(conventions=conventions, brian=brian)
+
+    unknown_disabled = set(disabled_projection_ids) - set(sector.projections)
+    if unknown_disabled:
+        raise ValueError(
+            f"unknown disabled projection IDs: {sorted(unknown_disabled)}"
+        )
+    for projection_id in disabled_projection_ids:
+        sector.network.remove(sector.projections[projection_id])
 
     def apply_projection_scales(scales: Mapping[str, float] | None) -> None:
         if not scales:
@@ -1827,6 +1846,7 @@ def run_figure7_condition(
         ),
         comparator_target_count=comparator_top_k_targets,
         network_scope="full_two_area" if include_higher_order_loop else "first_order",
+        disabled_projection_ids=tuple(sorted(disabled_projection_ids)),
         relay_top_down_ampa_peak_by_index=ampa_peak,
         relay_top_down_ampa_integral_ms_by_index=ampa_integral,
         relay_top_down_nmda_peak_by_index=nmda_peak,

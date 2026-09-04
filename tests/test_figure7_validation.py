@@ -399,6 +399,23 @@ def test_figure7_runner_rejects_invalid_projection_discriminators() -> None:
             duration_ms=0.01,
             projection_weight_scales={"not-a-projection": 2.0},
         )
+    with pytest.raises(ValueError, match="unknown disabled projection"):
+        run_figure7_condition(
+            condition=MatchCondition.MATCH,
+            top_down_current_pA=100.0,
+            use_paper_constrained_reference=True,
+            duration_ms=0.01,
+            disabled_projection_ids=("not-a-projection",),
+        )
+    with pytest.raises(ValueError, match="disabled and scaled"):
+        run_figure7_condition(
+            condition=MatchCondition.MATCH,
+            top_down_current_pA=100.0,
+            use_paper_constrained_reference=True,
+            duration_ms=0.01,
+            projection_weight_scales={"modeldb112923.projection.050": 2.0},
+            disabled_projection_ids=("modeldb112923.projection.050",),
+        )
     with pytest.raises(ValueError, match="top_down_cue_lead_ms"):
         run_figure7_condition(
             condition=MatchCondition.MATCH,
@@ -544,4 +561,5 @@ def test_figure7_result_accepts_relay_pathway_diagnostics() -> None:
     assert result.nonspecific_detector_arm_transitions is None
     assert result.nonspecific_detector_release_transitions is None
     assert result.nonspecific_detector_final_armed is None
+    assert result.disabled_projection_ids == ()
     assert result.v1_cortical_spike_times_ms == ()

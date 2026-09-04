@@ -695,6 +695,18 @@ FIGURE7_TOP5_ARRIVAL_MISMATCH_REGISTRATION_PATH = (
 FIGURE7_TOP5_ARRIVAL_PAIR_RESULT_PATH = (
     ROOT / "docs/validation-results/figure7-top5-arrival-aligned-pair-344.yaml"
 )
+FIGURE7_CORTICOINTRALAMINAR_ABLATION_PROFILE_PATH = (
+    ROOT
+    / "configs/calibration/figure7_top5_corticointralaminar_ablation_v1.yaml"
+)
+FIGURE7_CORTICOINTRALAMINAR_ABLATION_REGISTRATION_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-top5-corticointralaminar-ablation-registration-345.yaml"
+)
+FIGURE7_CORTICOINTRALAMINAR_ABLATION_RESULT_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-top5-corticointralaminar-ablation-346.yaml"
+)
 FIGURE7_ALIGNED_VERIFICATION_PROFILE_PATH = (
     ROOT / "configs/calibration/figure7_aligned_on_center_verification_v1.yaml"
 )
@@ -4247,6 +4259,29 @@ def test_top5_arrival_pair_preserves_spatial_path_but_loses_arousal() -> None:
     assert artifact["sampled_mismatch_trn_event_counts_by_index"] == artifact[
         "sampled_mismatch_trn_release_transitions_by_index"
     ]
+
+
+def test_corticointralaminar_ablation_is_diagnostic_not_candidate() -> None:
+    profile = yaml.safe_load(
+        FIGURE7_CORTICOINTRALAMINAR_ABLATION_PROFILE_PATH.read_text()
+    )
+    registration = yaml.safe_load(
+        FIGURE7_CORTICOINTRALAMINAR_ABLATION_REGISTRATION_PATH.read_text()
+    )
+    expected = [
+        "modeldb112923.projection.050",
+        "modeldb112923.projection.051",
+    ]
+    assert profile["causal_ablation"]["disabled_projection_ids"] == expected
+    assert profile["causal_ablation"]["stage"] == (
+        "recognition_only_after_fresh_figure6_handoff"
+    )
+    assert profile["protocol"]["conditions"] == ["match", "mismatch"]
+    assert registration["causal_intervention"]["disabled_projection_ids"] == expected
+    assert registration["execution"]["run_count_per_condition"] == 1
+    assert registration["classification_rule"].endswith(
+        "Do not promote an ablated network."
+    )
 
 
 def test_aligned_on_center_verification_registers_only_screen_survivor() -> None:

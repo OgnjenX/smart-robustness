@@ -2655,6 +2655,17 @@ sampled TRN detector cycles. This deterministic repeat authorizes one fixed
 vertical mismatch at the same persistent somatic scale. It does not itself
 establish Figure 7 reproduction or permit another scale.
 
+Artifacts 355--356 expose the independently verified factor-2 somatic-GABA
+candidate to its sole fixed mismatch. A new Figure 6 handoff again passes.
+Mismatch preserves the strongest already recovered pathway result: relay cell
+40 alone emits three events, versus 15 events in five match cells, and TRN
+falls from 635 to 560 genuine-cycle events. Nonspecific output remains only
+five events (50 Hz), however, exactly as at the source somatic weight rather
+than the required seven (70 Hz). The directional disinhibition gate passes but
+the numeric gate fails. Close this single factor-2 sensitivity and do not add a
+larger somatic scale after the holdout. Figure 10 and spectral holdouts remain
+locked.
+
 Artifacts 302--307 test the only previously declared inhibitory-capacity
 interaction not covered by that timing result. Artifact 252 had screened common
 TRN-to-relay gains 1.125, 1.25, 1.5, 2, and 3 at receptor-arrival timing. The

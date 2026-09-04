@@ -377,6 +377,11 @@ parameters:
     status: conflicting-official-source-tested
     source: ModelDB 112923 SMART.nml compared with Grossberg and Versace 2008 Equations 21--27
     note: Artifacts 349--350 apply the paper equations only to nonspecific thalamus after compartment-specific causal localization. Figure 6 remains exact, but Figure 7 match rises from four to eight nonspecific events and fails before mismatch. No kinetic interpolation is authorized
+  calibration.figure7.nonspecific_somatic_gaba_transfer:
+    value: source control 1.0 retained; preregistered factor-2 sensitivity rejected
+    status: calibrated-reconstruction-sensitivity-tested
+    source: Artifacts 347--348 and 351--356; ModelDB projection 047 source weight 0.01
+    note: doubling only somatic TRN-to-nonspecific GABA passes Figure 6 and independently repeats exact 40-Hz match, but its fixed mismatch remains at five rather than seven nonspecific events. The overlap-only relay and TRN-order gates pass. No larger or interpolated somatic scale is authorized from this holdout
   benchmark.population_sizes:
     value: see configs/*.yaml
     status: exploratory

@@ -738,3 +738,10 @@ training and 15/635/4 recognition counts. Register one vertical mismatch with
 the identical factor-2 somatic transfer. Do not change or add any scale after
 the holdout result; unlock Figure 10 only if every Figure 7 pathway and 40/70
 Hz gate passes.
+
+Artifacts 355--356 run that one fixed mismatch. The pair retains exact match
+and overlap-only mismatch, with relay/TRN/nonspecific totals of 15/635/4 and
+3/560/5. Every gate passes except the published seven-event/70-Hz mismatch
+target. Close factor-2 somatic GABA without adding another scale. The next
+candidate must be an independently motivated intact-network membrane-transfer
+mechanism, not a stronger value selected from this failed holdout.

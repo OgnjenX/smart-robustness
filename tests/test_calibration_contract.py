@@ -763,6 +763,10 @@ FIGURE7_NONSPECIFIC_SOMATIC_GABA_MISMATCH_REGISTRATION_PATH = (
     ROOT
     / "docs/validation-results/figure7-top5-nonspecific-somatic-gaba-mismatch-registration-355.yaml"
 )
+FIGURE7_NONSPECIFIC_SOMATIC_GABA_PAIR_RESULT_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-top5-nonspecific-somatic-gaba-pair-356.yaml"
+)
 FIGURE7_ALIGNED_VERIFICATION_PROFILE_PATH = (
     ROOT / "configs/calibration/figure7_aligned_on_center_verification_v1.yaml"
 )
@@ -4637,6 +4641,38 @@ def test_nonspecific_somatic_gaba_mismatch_is_fixed_before_execution() -> None:
     assert registration["fixed"]["persistent_somatic_scale"] == 2.0
     assert registration["official_gates"]["mismatch_nonspecific_events"] == 7
     assert registration["stopping_rule"].startswith("Execute one fresh")
+
+
+def test_nonspecific_somatic_gaba_pair_preserves_path_but_misses_70_hz() -> None:
+    artifact = yaml.safe_load(
+        FIGURE7_NONSPECIFIC_SOMATIC_GABA_PAIR_RESULT_PATH.read_text()
+    )
+    assert artifact["id"] == "figure7-top5-nonspecific-somatic-gaba-pair-356"
+    assert artifact["status"] == "figure7-failed"
+    assert artifact["classification"] == (
+        "calibrated-reconstruction-not-recovered-source"
+    )
+    assert artifact["nonspecific_gaba_common_scale"] == 2.0
+    assert artifact["projection_weight_scales"][
+        "modeldb112923.projection.047"
+    ] == 2.0
+    assert not artifact["reproduced"]
+    assert all(artifact["figure6_gates"].values())
+
+    match = artifact["match_scoring_summary"]
+    mismatch = artifact["mismatch_result"]
+    assert len(match["relay_spike_times_ms"]) == 15
+    assert len(match["trn_spike_times_ms"]) == 635
+    assert len(match["nonspecific_spike_times_ms"]) == 4
+    assert sorted(set(mismatch["relay_spike_indices"])) == [40]
+    assert len(mismatch["relay_spike_times_ms"]) == 3
+    assert len(mismatch["trn_spike_times_ms"]) == 560
+    assert len(mismatch["nonspecific_spike_times_ms"]) == 5
+    assert artifact["gates"]["mismatch_relay_overlap_only"]
+    assert artifact["gates"]["match_more_trn_events"]
+    assert artifact["gates"]["mismatch_more_nonspecific_events"]
+    assert not artifact["gates"]["mismatch_nonspecific_70_hz"]
+    assert artifact["gates"]["sampled_mismatch_trn_events_have_fresh_cycles"]
 
 
 def test_aligned_on_center_verification_registers_only_screen_survivor() -> None:

@@ -2714,6 +2714,19 @@ semantics and closes the recovered-cell/KInNeSS-threshold route without
 threshold, refractory, or channel fitting. Retain the paper Table 3
 nonspecific cell, +30-mV arm, and current calibrated handler.
 
+Artifacts 365--366 add read-only current and T-gate sampling at every positive
+nonspecific somatic maximum in the retained top-five pair. The fresh rebuild
+preserves all controls: Figure 6 is exact, match is 15 relay/635 TRN/4
+nonspecific events, and mismatch is overlap-only at 3 relay/560 TRN/5
+nonspecific events. After the conditions diverge, each genuine mismatch spike
+is produced while proximal and distal T-type currents of about 6--8 nA oppose
+compartmental TRN GABA currents of comparable magnitude. Layer-6II excitation
+is only tens of pA. The additional positive maxima occur within the Na/K
+after-spike waveform and are not independent rebound cycles approaching the
++30-mV event threshold. This supports auditing the temporal structure of the
+aggregate TRN inhibitory drive next, rather than changing detector or ionic
+parameters.
+
 Artifacts 302--307 test the only previously declared inhibitory-capacity
 interaction not covered by that timing result. Artifact 252 had screened common
 TRN-to-relay gains 1.125, 1.25, 1.5, 2, and 3 at receptor-arrival timing. The

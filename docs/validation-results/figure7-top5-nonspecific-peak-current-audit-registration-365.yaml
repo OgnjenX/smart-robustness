@@ -1,0 +1,50 @@
+schema_version: 1
+id: figure7-top5-nonspecific-peak-current-audit-registration-365
+date: '2026-09-04'
+status: registered-before-execution-read-only-diagnostic
+profile: configs/calibration/figure7_top5_nonspecific_peak_current_audit_v1.yaml
+fixed_candidate:
+  classification: calibrated-reconstruction-not-recovered-source
+  source_pair_artifact: docs/validation-results/figure7-top5-comparator-pair-321.yaml
+  match_counts: {relay: 15, trn: 635, nonspecific: 4}
+  mismatch_counts: {relay: 3, trn: 560, nonspecific: 5}
+  mismatch_relay_indices: [40]
+  comparator_transform: top_k_binary
+  comparator_target_count: 5
+  learned_headroom_fraction: 1.0
+  source_index: 40
+  cue_current_pA: 800.0
+  current_mode: until_cued_cell_first_event
+  receptor_peak_cue_lead_ms: 11.35773631178703
+  nonspecific_detector: {threshold_mV: 30.0, release_mV: 0.0}
+execution:
+  independently_rebuild_figure6_once: true
+  independently_rebuild_each_condition: true
+  conditions: [match, mismatch]
+  run_count_per_condition: 1
+  parameter_changes: none
+  state_added_to_monitor:
+    - nonspecific_compartment_membrane_currents
+    - nonspecific_compartment_axial_currents
+    - nonspecific_soma_sodium_and_potassium_currents
+    - nonspecific_dendritic_t_type_calcium_currents_and_gates
+    - nonspecific_compartment_resolved_synaptic_currents
+predeclared_readouts:
+  - all_positive_soma_peak_times_and_amplitudes
+  - current_decomposition_at_each_positive_soma_peak
+  - t_type_activation_and_inactivation_at_each_positive_soma_peak
+  - exact_match_and_mismatch_pathway_controls
+classification_rule: >-
+  Compare source currents and T-current gates at every positive nonspecific
+  somatic maximum in the fixed match/mismatch pair. Attribute the two missing
+  suprathreshold mismatch cycles only at the level supported by the recorded
+  current balance. This is a read-only audit and cannot promote a parameter.
+stopping_rule: >-
+  Run exactly one fixed match and one fixed mismatch after one fresh Figure 6
+  handoff. Do not change a threshold, weight, current, timing, cell parameter,
+  synapse parameter, or source convention after inspecting the result.
+locked_holdouts:
+  - figure10_reset
+  - figure14_spectra
+  - figure15_local_synchrony
+  - figure16_long_range_synchrony

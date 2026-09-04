@@ -777,3 +777,14 @@ events while Figure 6 and upstream 15/635 match counts remain exact. Reject the
 handler before mismatch. Close the complete recovered-cell/KInNeSS-threshold
 family without adding a refractory period, threshold interpolation, or
 individual sodium/potassium tuning.
+
+Artifacts 365--366 decompose the retained 4/5 pair without changing any model
+or protocol parameter. Match and mismatch are identical through the shared
+startup and then retain exact 15/635/4 and overlap-only 3/560/5 controls. The
+post-divergence mismatch action potentials are inhibitory-rebound events:
+proximal and distal T-type currents of roughly 6--8 nA nearly cancel GABA
+currents of similar magnitude, while layer-6II current is only tens of pA.
+The intervening positive soma maxima are Na/K-dominated after-spike ringing,
+not two nearly suprathreshold independent rebound cycles. Next audit the
+temporal cycle content of the fixed aggregate TRN-to-nonspecific drive; do not
+amplify the ringing or fit an intrinsic conductance from this diagnostic.

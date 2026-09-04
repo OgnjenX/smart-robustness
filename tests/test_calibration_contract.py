@@ -664,6 +664,18 @@ FIGURE7_NONSPECIFIC_VOLTAGE_AUDIT_RESULT_PATH = (
     ROOT
     / "docs/validation-results/figure7-top5-nonspecific-voltage-peak-audit-338.yaml"
 )
+FIGURE7_NONSPECIFIC_PEAK_CURRENT_AUDIT_PROFILE_PATH = (
+    ROOT
+    / "configs/calibration/figure7_top5_nonspecific_peak_current_audit_v1.yaml"
+)
+FIGURE7_NONSPECIFIC_PEAK_CURRENT_AUDIT_REGISTRATION_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-top5-nonspecific-peak-current-audit-registration-365.yaml"
+)
+FIGURE7_NONSPECIFIC_PEAK_CURRENT_AUDIT_RESULT_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-top5-nonspecific-peak-current-audit-366.yaml"
+)
 FIGURE7_TOP5_ARRIVAL_MATCH_PROFILE_PATH = (
     ROOT / "configs/calibration/figure7_top5_arrival_aligned_match_v1.yaml"
 )
@@ -4240,6 +4252,46 @@ def test_nonspecific_voltage_audit_closes_shared_detector_threshold() -> None:
     }
     assert not threshold["exact_shared_threshold_exists"]
     assert threshold["maximum_mismatch_peaks_while_preserving_match_count"] == 5
+    assert not artifact["reproduced"]
+
+
+def test_nonspecific_peak_current_audit_is_read_only_and_complete() -> None:
+    profile = yaml.safe_load(
+        FIGURE7_NONSPECIFIC_PEAK_CURRENT_AUDIT_PROFILE_PATH.read_text()
+    )
+    registration = yaml.safe_load(
+        FIGURE7_NONSPECIFIC_PEAK_CURRENT_AUDIT_REGISTRATION_PATH.read_text()
+    )
+    artifact = yaml.safe_load(
+        FIGURE7_NONSPECIFIC_PEAK_CURRENT_AUDIT_RESULT_PATH.read_text()
+    )
+    assert profile["diagnostic"]["parameter_changes"] == "none"
+    assert registration["execution"]["parameter_changes"] == "none"
+    assert registration["execution"]["run_count_per_condition"] == 1
+    assert artifact["status"] == "complete-read-only-diagnostic"
+    assert artifact["parameter_changes"] == "none"
+    assert artifact["runtime_fingerprint"] == (
+        "0aa301be0a82a34b0a3337030eedb66dbc33e0ec0532ead902638088a434b4d9"
+    )
+    match = artifact["match_result"]
+    mismatch = artifact["mismatch_result"]
+    assert len(match["relay_spike_times_ms"]) == 15
+    assert len(match["trn_spike_times_ms"]) == 635
+    assert len(match["nonspecific_spike_times_ms"]) == 4
+    assert len(mismatch["relay_spike_times_ms"]) == 3
+    assert set(mismatch["relay_spike_indices"]) == {40}
+    assert len(mismatch["trn_spike_times_ms"]) == 560
+    assert len(mismatch["nonspecific_spike_times_ms"]) == 5
+    current_source_count = len(profile["diagnostic"]["current_readouts"])
+    gate_source_count = len(profile["diagnostic"]["gate_readouts"])
+    for condition in (match, mismatch):
+        peak_count = len(condition["nonspecific_positive_soma_local_maxima_ms_mV"])
+        assert len(condition["nonspecific_peak_current_samples_pA"]) == (
+            peak_count * current_source_count
+        )
+        assert len(condition["nonspecific_peak_gate_samples"]) == (
+            peak_count * gate_source_count
+        )
     assert not artifact["reproduced"]
 
 

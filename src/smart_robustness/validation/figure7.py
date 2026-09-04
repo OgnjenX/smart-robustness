@@ -465,6 +465,12 @@ class Figure7ConditionResult:
     nonspecific_positive_detector_local_maxima_ms_mV: tuple[
         tuple[float, float], ...
     ] = ()
+    nonspecific_peak_current_samples_pA: tuple[
+        tuple[float, float, str, float], ...
+    ] = ()
+    nonspecific_peak_gate_samples: tuple[
+        tuple[float, float, str, float], ...
+    ] = ()
     nonspecific_detector_voltage_range_mV: tuple[float, float] | None = None
     nonspecific_detector_threshold_upcrossings: int | None = None
     nonspecific_detector_zero_downcrossings: int | None = None
@@ -1035,6 +1041,20 @@ def run_figure7_condition(
                 "v_soma",
                 "spike_detector_voltage",
                 "armed",
+                "i_membrane_inward_soma",
+                "i_axial_inward_soma",
+                "i_na_soma",
+                "i_k_soma",
+                "i_membrane_inward_proximal_dendrite",
+                "i_axial_inward_proximal_dendrite",
+                "i_ca_proximal_dendrite",
+                "m_ca_proximal_dendrite",
+                "h_ca_proximal_dendrite",
+                "i_membrane_inward_distal_dendrite",
+                "i_axial_inward_distal_dendrite",
+                "i_ca_distal_dendrite",
+                "m_ca_distal_dendrite",
+                "h_ca_distal_dendrite",
             ),
             record=True,
             name=f"figure7_{condition.value}_nonspecific_pathway_state",
@@ -1157,6 +1177,12 @@ def run_figure7_condition(
     ] = ()
     nonspecific_positive_detector_local_maxima_ms_mV: tuple[
         tuple[float, float], ...
+    ] = ()
+    nonspecific_peak_current_samples_pA: tuple[
+        tuple[float, float, str, float], ...
+    ] = ()
+    nonspecific_peak_gate_samples: tuple[
+        tuple[float, float, str, float], ...
     ] = ()
     nonspecific_detector_voltage_range_mV = None
     nonspecific_detector_threshold_upcrossings = None
@@ -1654,6 +1680,91 @@ def run_figure7_condition(
         nonspecific_positive_detector_local_maxima_ms_mV = positive_local_maxima(
             nonspecific_detector_voltage_mV
         )
+        peak_indices = np.flatnonzero(
+            (nonspecific_soma_voltage_mV[1:-1] > nonspecific_soma_voltage_mV[:-2])
+            & (
+                nonspecific_soma_voltage_mV[1:-1]
+                >= nonspecific_soma_voltage_mV[2:]
+            )
+            & (nonspecific_soma_voltage_mV[1:-1] > 0.0)
+        ) + 1
+        membrane_current_sources_pA = {
+            "soma_membrane": np.asarray(
+                nonspecific_state.i_membrane_inward_soma / brian.pA
+            )[0][diagnostic_window],
+            "soma_axial": np.asarray(
+                nonspecific_state.i_axial_inward_soma / brian.pA
+            )[0][diagnostic_window],
+            "soma_sodium": np.asarray(nonspecific_state.i_na_soma / brian.pA)[0][
+                diagnostic_window
+            ],
+            "soma_potassium": np.asarray(nonspecific_state.i_k_soma / brian.pA)[0][
+                diagnostic_window
+            ],
+            "soma_trn_gaba": np.asarray(nonspecific_state.i_port_000 / brian.pA)[0][
+                diagnostic_window
+            ],
+            "proximal_membrane": np.asarray(
+                nonspecific_state.i_membrane_inward_proximal_dendrite / brian.pA
+            )[0][diagnostic_window],
+            "proximal_axial": np.asarray(
+                nonspecific_state.i_axial_inward_proximal_dendrite / brian.pA
+            )[0][diagnostic_window],
+            "proximal_calcium": np.asarray(
+                nonspecific_state.i_ca_proximal_dendrite / brian.pA
+            )[0][diagnostic_window],
+            "proximal_trn_gaba": np.asarray(
+                nonspecific_state.i_port_001 / brian.pA
+            )[0][diagnostic_window],
+            "proximal_direct_input": nonspecific_direct_input_pA,
+            "distal_membrane": np.asarray(
+                nonspecific_state.i_membrane_inward_distal_dendrite / brian.pA
+            )[0][diagnostic_window],
+            "distal_axial": np.asarray(
+                nonspecific_state.i_axial_inward_distal_dendrite / brian.pA
+            )[0][diagnostic_window],
+            "distal_calcium": np.asarray(
+                nonspecific_state.i_ca_distal_dendrite / brian.pA
+            )[0][diagnostic_window],
+            "distal_trn_gaba": np.asarray(
+                nonspecific_state.i_port_002 / brian.pA
+            )[0][diagnostic_window],
+            "distal_layer6ii": nonspecific_layer6ii_current_pA,
+        }
+        nonspecific_peak_current_samples_pA = tuple(
+            (
+                float(times_ms[index]),
+                float(nonspecific_soma_voltage_mV[index]),
+                source,
+                float(values[index]),
+            )
+            for index in peak_indices
+            for source, values in membrane_current_sources_pA.items()
+        )
+        gate_sources = {
+            "proximal_m_ca": np.asarray(
+                nonspecific_state.m_ca_proximal_dendrite
+            )[0][diagnostic_window],
+            "proximal_h_ca": np.asarray(
+                nonspecific_state.h_ca_proximal_dendrite
+            )[0][diagnostic_window],
+            "distal_m_ca": np.asarray(nonspecific_state.m_ca_distal_dendrite)[0][
+                diagnostic_window
+            ],
+            "distal_h_ca": np.asarray(nonspecific_state.h_ca_distal_dendrite)[0][
+                diagnostic_window
+            ],
+        }
+        nonspecific_peak_gate_samples = tuple(
+            (
+                float(times_ms[index]),
+                float(nonspecific_soma_voltage_mV[index]),
+                source,
+                float(values[index]),
+            )
+            for index in peak_indices
+            for source, values in gate_sources.items()
+        )
         nonspecific_detector_voltage_range_mV = (
             float(np.min(nonspecific_detector_voltage_mV)),
             float(np.max(nonspecific_detector_voltage_mV)),
@@ -1907,6 +2018,8 @@ def run_figure7_condition(
         nonspecific_positive_detector_local_maxima_ms_mV=(
             nonspecific_positive_detector_local_maxima_ms_mV
         ),
+        nonspecific_peak_current_samples_pA=nonspecific_peak_current_samples_pA,
+        nonspecific_peak_gate_samples=nonspecific_peak_gate_samples,
         nonspecific_detector_voltage_range_mV=(
             nonspecific_detector_voltage_range_mV
         ),

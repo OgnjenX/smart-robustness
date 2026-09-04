@@ -1,0 +1,63 @@
+schema_version: 1
+id: figure7-top5-nonspecific-kinness-axial-registration-357
+date: '2026-09-04'
+status: registered-before-execution-source-discriminator
+profile: configs/calibration/figure7_top5_nonspecific_kinness_axial_match_v1.yaml
+rationale:
+  - >-
+    Artifact 348 localizes the remaining output deficit to nonlinear transfer
+    among the nonspecific cell's soma, proximal dendrite, and distal dendrite.
+    Axial coupling is therefore an intact membrane-transfer mechanism, unlike
+    a detector reinterpretation or removal of a published contact.
+  - >-
+    The calibrated profile uses paper-literal axial coupling in nonspecific
+    thalamus. The archived executable supplies KInNeSS serialized-edge
+    coupling for the same three-compartment cell and is a discrete official
+    source alternative.
+  - >-
+    Artifact 138 changed axial coupling in every thalamic population and failed
+    Figure 6 after altering relay/TRN dynamics. It cannot identify the effect
+    of nonspecific axial coupling alone. This test changes only that population
+    and leaves the validated relay/TRN source choices fixed.
+registered_dimension:
+  population: thalamic_nonspecific
+  mechanism: soma-proximal-distal axial coupling
+  source_alternative: kinness_serialized_edge
+  candidate_count: 1
+fixed:
+  relay_axial_convention: kinness_serialized_edge
+  trn_axial_convention: paper_literal
+  cortical_axial_convention: paper_literal
+  nonspecific_intrinsic_cell: paper_table3
+  nonspecific_calcium_kinetics: modeldb_112923
+  all_synaptic_weights_kinetics_delays_and_reversals_unchanged: true
+  comparator_transform: top_k_binary
+  comparator_target_count: 5
+  learned_headroom_fraction: 1.0
+  source_index: 40
+  cue_current_pA: 800.0
+  current_mode: until_cued_cell_first_event
+  receptor_peak_cue_lead_ms: 11.35773631178703
+  trn_detector: {arm_mV: -20.0, release_mV: -30.0}
+  duration_ms: 100.0
+  dt_ms: 0.01
+scope_boundary:
+  classification: official-source-discriminator-not-yet-baseline
+  changes: nonspecific axial equation/conductance interpretation only
+  leaves_unchanged:
+    - all relay, TRN, cortical, and synaptic equations
+    - all source weights and continuous parameters
+    - stimulus values and timing
+    - learned comparator and cardinality
+    - event detectors
+stopping_rule: >-
+  Run one fresh complete Figure 6 and construct match only if every prerequisite
+  passes. Do not run mismatch in this artifact. A match pass requires an
+  independent rebuild before one fixed mismatch; a failure closes this discrete
+  source alternative without interpolation or scaling.
+locked_holdouts:
+  - figure7_mismatch
+  - figure10_reset
+  - figure14_spectra
+  - figure15_local_synchrony
+  - figure16_long_range_synchrony

@@ -208,6 +208,11 @@ def runtime_conventions_for_candidate(
         calcium_density_convention=calcium_density,
         nak_rate_convention=str(values["nak_rate_convention"]),
         axial_convention=str(values["axial_convention"]),
+        nonspecific_axial_convention=(
+            None
+            if values.get("nonspecific_axial_convention") is None
+            else str(values["nonspecific_axial_convention"])
+        ),
         membrane_initialization_convention=str(
             values["membrane_initialization_convention"]
         ),

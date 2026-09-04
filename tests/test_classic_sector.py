@@ -707,6 +707,26 @@ def test_nonspecific_calcium_kinetics_can_be_selected_without_changing_trn() -> 
     assert trn["calcium_gate_convention"] == "modeldb_reticular_112923"
 
 
+def test_nonspecific_axial_source_can_be_selected_without_changing_trn() -> None:
+    facts = {fact.canonical_name: fact for fact in first_order_population_facts()}
+    conventions = FirstOrderRuntimeConventions(
+        axial_convention="modeldb_relay_kinness_paper_others",
+        nonspecific_axial_convention="kinness_serialized_edge",
+    )
+
+    nonspecific = first_order_population_parameters(
+        facts["thalamic_nonspecific"], conventions=conventions
+    )
+    trn = first_order_population_parameters(facts["trn"], conventions=conventions)
+    layer4 = first_order_population_parameters(
+        facts["layer4_excitatory_v1"], conventions=conventions
+    )
+
+    assert nonspecific["axial_convention"] == "kinness_serialized_edge"
+    assert trn["axial_convention"] == "paper_literal"
+    assert layer4["axial_convention"] == "paper_literal"
+
+
 def test_figure6_profile_names_the_source_constrained_runtime() -> None:
     conventions = figure6_runtime_conventions()
     assert conventions.gate_initialization_convention == "steady_state_at_initial_voltage"

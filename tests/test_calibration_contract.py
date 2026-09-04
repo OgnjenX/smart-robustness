@@ -767,6 +767,14 @@ FIGURE7_NONSPECIFIC_SOMATIC_GABA_PAIR_RESULT_PATH = (
     ROOT
     / "docs/validation-results/figure7-top5-nonspecific-somatic-gaba-pair-356.yaml"
 )
+FIGURE7_NONSPECIFIC_KINNESS_AXIAL_PROFILE_PATH = (
+    ROOT
+    / "configs/calibration/figure7_top5_nonspecific_kinness_axial_match_v1.yaml"
+)
+FIGURE7_NONSPECIFIC_KINNESS_AXIAL_REGISTRATION_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-top5-nonspecific-kinness-axial-registration-357.yaml"
+)
 FIGURE7_ALIGNED_VERIFICATION_PROFILE_PATH = (
     ROOT / "configs/calibration/figure7_aligned_on_center_verification_v1.yaml"
 )
@@ -4673,6 +4681,34 @@ def test_nonspecific_somatic_gaba_pair_preserves_path_but_misses_70_hz() -> None
     assert artifact["gates"]["mismatch_more_nonspecific_events"]
     assert not artifact["gates"]["mismatch_nonspecific_70_hz"]
     assert artifact["gates"]["sampled_mismatch_trn_events_have_fresh_cycles"]
+
+
+def test_nonspecific_kinness_axial_source_discriminator_is_isolated() -> None:
+    profile = yaml.safe_load(
+        FIGURE7_NONSPECIFIC_KINNESS_AXIAL_PROFILE_PATH.read_text()
+    )
+    registration = yaml.safe_load(
+        FIGURE7_NONSPECIFIC_KINNESS_AXIAL_REGISTRATION_PATH.read_text()
+    )
+    assert profile["runtime_overrides"]["nonspecific_axial_convention"] == (
+        "kinness_serialized_edge"
+    )
+    assert profile["runtime_expectations"] == {
+        "nonspecific_axial_convention": "kinness_serialized_edge"
+    }
+    assert registration["registered_dimension"]["candidate_count"] == 1
+    assert registration["fixed"]["relay_axial_convention"] == (
+        "kinness_serialized_edge"
+    )
+    assert registration["fixed"]["trn_axial_convention"] == "paper_literal"
+    assert registration["fixed"]["cortical_axial_convention"] == "paper_literal"
+    assert registration["scope_boundary"]["changes"] == (
+        "nonspecific axial equation/conductance interpretation only"
+    )
+    assert registration["stopping_rule"].startswith(
+        "Run one fresh complete Figure 6"
+    )
+    assert "figure7_mismatch" in registration["locked_holdouts"]
 
 
 def test_aligned_on_center_verification_registers_only_screen_survivor() -> None:

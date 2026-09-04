@@ -77,8 +77,13 @@ def main() -> None:
         trn_spike_event_proximal_blend_fraction=None,
         **profile["runtime_overrides"],
     )
-    if conventions.nonspecific_calcium_kinetics_convention != "paper_2008":
-        raise ValueError("profile must select paper nonspecific calcium kinetics")
+    runtime_expectations = profile.get(
+        "runtime_expectations",
+        {"nonspecific_calcium_kinetics_convention": "paper_2008"},
+    )
+    for field, expected in runtime_expectations.items():
+        if getattr(conventions, field) != expected:
+            raise ValueError(f"runtime field {field!r} does not match registration")
 
     scales = {
         str(key): float(value)
@@ -216,6 +221,9 @@ def main() -> None:
         "nonspecific_calcium_kinetics_convention": (
             conventions.nonspecific_calcium_kinetics_convention
         ),
+        "runtime_discriminator": {
+            field: getattr(conventions, field) for field in runtime_expectations
+        },
         "figure6_result": training_result,
         "figure6_relay_event_counts_by_index": training_counts,
         "figure6_cortical_recruitment": recruitment,

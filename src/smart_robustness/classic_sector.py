@@ -118,6 +118,7 @@ class FirstOrderRuntimeConventions:
     """Complete executable convention profile for one classic-sector run."""
 
     axial_convention: str = "kinness_serialized_edge"
+    nonspecific_axial_convention: str | None = None
     intrinsic_cell_convention: str = "modeldb_112923"
     leak_convention: str = "table3_reversal"
     voltage_coordinate: str = "relative_to_table3_leak"
@@ -172,6 +173,8 @@ class FirstOrderRuntimeConventions:
     @property
     def fingerprint(self) -> str:
         values = asdict(self)
+        if values["nonspecific_axial_convention"] is None:
+            values.pop("nonspecific_axial_convention")
         if values["postsynaptic_depression_scale_convention"] == "local_learning_bounds":
             # Preserve the identity of every historical profile. This optional
             # discriminator is serialized only when it differs from the
@@ -526,6 +529,11 @@ def first_order_population_parameters(
             if facts.canonical_name.startswith("layer")
             else "kinness_serialized_edge"
         )
+    if (
+        facts.canonical_name == "thalamic_nonspecific"
+        and conventions.nonspecific_axial_convention is not None
+    ):
+        axial_convention = conventions.nonspecific_axial_convention
     calcium_kinetics = CalciumKineticsConvention(conventions.calcium_kinetics_convention)
     if (
         facts.canonical_name == "thalamic_nonspecific"

@@ -2560,6 +2560,20 @@ fail. No Figure 7 condition is run. The compartment-specific Table 3/ModelDB
 density convention remains the only one compatible with the current Figure 6
 baseline; a desired-cell-only hybrid is not inferred from this result.
 
+Artifacts 337--338 add a preregistered, read-only voltage audit to the fixed
+top-five Figure 7 pair. The independent rebuild reproduces 15/635/4
+relay/TRN/nonspecific events in match and 3/560/5 in mismatch, with only relay
+cell 40 active in mismatch. Nonspecific detector upcrossings, arms, releases,
+and emitted events agree exactly at 4 and 5, and the detector finishes rearmed
+in both conditions. The soma contains 22 positive local maxima in match and 23
+in mismatch, but only 4 and 5 exceed +30 mV. Across every threshold boundary
+defined by those observed peaks, no shared somatic threshold can retain four
+match events while producing seven mismatch events; the maximum is five.
+Thus the detector is not dropping suprathreshold mismatch cycles, and shared
+threshold/rearming calibration is closed. The remaining deficit is a
+condition-dependent membrane/input-dynamics problem, not an event-counter
+problem; Figure 7 and downstream holdouts remain unreproduced and locked.
+
 Artifacts 302--307 test the only previously declared inhibitory-capacity
 interaction not covered by that timing result. Artifact 252 had screened common
 TRN-to-relay gains 1.125, 1.25, 1.5, 2, and 3 at receptor-arrival timing. The

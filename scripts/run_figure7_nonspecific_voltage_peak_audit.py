@@ -87,6 +87,61 @@ def _classify_mismatch(
     return "official_mismatch_event_count_present"
 
 
+def _shared_soma_threshold_analysis(
+    match: Figure7ConditionResult,
+    mismatch: Figure7ConditionResult,
+    *,
+    expected_match: int,
+    expected_mismatch: int,
+    current_threshold_mV: float,
+) -> dict[str, Any]:
+    match_amplitudes = tuple(
+        amplitude
+        for _, amplitude in match.nonspecific_positive_soma_local_maxima_ms_mV
+    )
+    mismatch_amplitudes = tuple(
+        amplitude
+        for _, amplitude in mismatch.nonspecific_positive_soma_local_maxima_ms_mV
+    )
+    thresholds = sorted(
+        {0.0, current_threshold_mV, *match_amplitudes, *mismatch_amplitudes}
+    )
+    outcomes = tuple(
+        (
+            threshold,
+            sum(amplitude > threshold for amplitude in match_amplitudes),
+            sum(amplitude > threshold for amplitude in mismatch_amplitudes),
+        )
+        for threshold in thresholds
+    )
+    match_preserving = tuple(
+        outcome for outcome in outcomes if outcome[1] == expected_match
+    )
+    return {
+        "expected_counts": {"match": expected_match, "mismatch": expected_mismatch},
+        "evaluated_threshold_count": len(thresholds),
+        "current_threshold_mV": current_threshold_mV,
+        "current_threshold_peak_counts": {
+            "match": sum(
+                amplitude > current_threshold_mV for amplitude in match_amplitudes
+            ),
+            "mismatch": sum(
+                amplitude > current_threshold_mV for amplitude in mismatch_amplitudes
+            ),
+        },
+        "exact_shared_threshold_exists": any(
+            match_count == expected_match and mismatch_count == expected_mismatch
+            for _, match_count, mismatch_count in outcomes
+        ),
+        "maximum_mismatch_peaks_while_preserving_match_count": max(
+            (outcome[2] for outcome in match_preserving), default=None
+        ),
+        "interpretation": (
+            "shared_somatic_threshold_cannot_recover_4_7_from_observed_peaks"
+        ),
+    }
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument(
@@ -159,6 +214,7 @@ def main() -> None:
     mismatch = results[MatchCondition.MISMATCH]
     official_assessment = assess_figure7_reproduction(match, mismatch)
     expected_mismatch = int(profile["diagnostic"]["expected_mismatch_events"])
+    expected_match = int(profile["diagnostic"]["expected_match_events"])
     classification = _classify_mismatch(mismatch, expected_mismatch)
     artifact = {
         "schema_version": 1,
@@ -178,6 +234,15 @@ def main() -> None:
         "match_diagnostic": _condition_summary(match),
         "mismatch_diagnostic": _condition_summary(mismatch),
         "diagnostic_classification": classification,
+        "derived_shared_soma_threshold_analysis": _shared_soma_threshold_analysis(
+            match,
+            mismatch,
+            expected_match=expected_match,
+            expected_mismatch=expected_mismatch,
+            current_threshold_mV=float(
+                profile["diagnostic"]["detector_threshold_upcrossing_mV"]
+            ),
+        ),
         "official_assessment": official_assessment,
         "reproduced": official_assessment.reproduced,
         "next_gate": profile["next_gate"],

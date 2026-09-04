@@ -668,3 +668,14 @@ and 5 emit 81 and 162, causal learning timing fails, and the learned map loses
 horizontal contrast. Reject the global-250 convention before recognition;
 retain compartment-specific Table 3/ModelDB densities and do not introduce a
 nonspecific-only source hybrid after observing this failure.
+
+Artifacts 337--338 audit the fixed top-five pair without changing any model or
+protocol parameter. Match and mismatch reproduce 4 and 5 nonspecific events,
+and each count exactly equals +30-mV detector upcrossings, arm transitions,
+and release transitions; neither condition ends with a latched detector. The
+underlying soma has 22 versus 23 positive local maxima, most of which remain
+below +30 mV. No single threshold applied to the observed peak distributions
+can preserve four match events and yield seven mismatch events. Close shared
+nonspecific threshold/rearming calibration. The next candidate must alter a
+predeclared condition-sensitive input or membrane mechanism while preserving
+the exact match and spatial pathway, not reinterpret detector bookkeeping.

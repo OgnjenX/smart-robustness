@@ -4057,6 +4057,39 @@ def test_nonspecific_voltage_audit_is_registered_as_read_only() -> None:
     )
 
 
+def test_nonspecific_voltage_audit_closes_shared_detector_threshold() -> None:
+    artifact = yaml.safe_load(
+        FIGURE7_NONSPECIFIC_VOLTAGE_AUDIT_RESULT_PATH.read_text()
+    )
+    match = artifact["match_diagnostic"]
+    mismatch = artifact["mismatch_diagnostic"]
+    assert artifact["status"] == "complete-read-only-diagnostic"
+    assert artifact["parameter_changes"] == "none"
+    assert match["nonspecific_event_count"] == 4
+    assert mismatch["nonspecific_event_count"] == 5
+    assert match["positive_soma_local_maximum_count"] == 22
+    assert mismatch["positive_soma_local_maximum_count"] == 23
+    for condition in (match, mismatch):
+        assert condition["nonspecific_event_count"] == condition[
+            "detector_threshold_upcrossings"
+        ]
+        assert condition["nonspecific_event_count"] == condition[
+            "detector_arm_transitions"
+        ]
+        assert condition["nonspecific_event_count"] == condition[
+            "detector_release_transitions"
+        ]
+        assert condition["detector_final_armed"] == 0.0
+    threshold = artifact["derived_shared_soma_threshold_analysis"]
+    assert threshold["current_threshold_peak_counts"] == {
+        "match": 4,
+        "mismatch": 5,
+    }
+    assert not threshold["exact_shared_threshold_exists"]
+    assert threshold["maximum_mismatch_peaks_while_preserving_match_count"] == 5
+    assert not artifact["reproduced"]
+
+
 def test_aligned_on_center_verification_registers_only_screen_survivor() -> None:
     profile = yaml.safe_load(FIGURE7_ALIGNED_VERIFICATION_PROFILE_PATH.read_text())
     registration = yaml.safe_load(

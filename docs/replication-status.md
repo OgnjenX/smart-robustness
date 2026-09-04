@@ -2678,6 +2678,20 @@ this population-specific source alternative without axial interpolation or
 scaling, and retain paper-literal nonspecific coupling in the calibrated
 baseline.
 
+Artifacts 359--360 test the complete recovered executable intrinsic record for
+nonspecific thalamus while retaining paper-literal axial coupling. Geometry,
+leak, and dendritic T-current density agree between sources; the decisive
+change is the soma's executable 50/30-mS/cm2 sodium/potassium pair instead of
+Table 3's 100/100 pair. A fresh Figure 6 passes every prerequisite, and match
+retains 15 relay plus 635 genuine-cycle TRN events. The nonspecific soma peaks
+at only 28.14 mV, below the paper's +30-mV event arm, and emits zero events.
+Mismatch was not run. The complete executable-cell alternative therefore fails
+under the paper event detector; retain the Table 3 nonspecific intrinsic cell
+for the calibrated baseline and do not mix its sodium and potassium values
+individually. A separately registered source-coherence test may pair the
+executable cell with the contemporaneous KInNeSS event threshold, but this
+artifact does not authorize threshold fitting.
+
 Artifacts 302--307 test the only previously declared inhibitory-capacity
 interaction not covered by that timing result. Artifact 252 had screened common
 TRN-to-relay gains 1.125, 1.25, 1.5, 2, and 3 at receptor-arrival timing. The

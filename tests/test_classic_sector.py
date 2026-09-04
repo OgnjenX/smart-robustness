@@ -745,7 +745,7 @@ def test_nonspecific_intrinsic_source_can_be_selected_without_changing_trn() -> 
         "cell_spec"
     ]
 
-    assert nonspecific.name == "modeldb112923_thalamic_nonspecific"
+    assert nonspecific.name == "modeldb112923_intralaminar"
     assert nonspecific.soma.g_na_mS_cm2 == 50.0
     assert nonspecific.soma.g_k_mS_cm2 == 30.0
     assert trn.name == "trn"

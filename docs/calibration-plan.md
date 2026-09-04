@@ -753,3 +753,12 @@ and 635 TRN events, but nonspecific soma never approaches threshold and emits
 zero events. Close this discrete axial source alternative before mismatch;
 retain paper-literal nonspecific coupling and do not add an axial scale or
 interpolation.
+
+Artifacts 359--360 replace only the nonspecific intrinsic cell with its
+complete recovered executable record. Figure 6 remains exact and upstream
+match stays at 15 relay/635 TRN, but the soma peaks at 28.14 mV and emits zero
+events under the paper +30-mV detector. Close this cell record as a standalone
+alternative and retain the paper Table 3 intrinsic cell; do not create a
+post-hoc sodium/potassium hybrid. The only source-coherent follow-up is the
+discrete executable-cell plus contemporaneous KInNeSS detector combination,
+registered before execution and tested match-first.

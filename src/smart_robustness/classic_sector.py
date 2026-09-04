@@ -142,6 +142,7 @@ class FirstOrderRuntimeConventions:
     trn_spike_event_voltage_offset_mV: float | None = None
     trn_spike_event_proximal_blend_fraction: float | None = None
     nonspecific_spike_event_threshold_mV: float | None = None
+    nonspecific_spike_event_release_mV: float | None = None
     nonspecific_spike_event_rule: str | None = None
     nonspecific_spike_event_proximal_blend_fraction: float | None = None
     nonspecific_spike_event_release_proximal_blend_fraction: float | None = None
@@ -199,6 +200,8 @@ class FirstOrderRuntimeConventions:
             values.pop("trn_spike_event_proximal_blend_fraction")
         if values["nonspecific_spike_event_threshold_mV"] is None:
             values.pop("nonspecific_spike_event_threshold_mV")
+        if values["nonspecific_spike_event_release_mV"] is None:
+            values.pop("nonspecific_spike_event_release_mV")
         if values["nonspecific_spike_event_rule"] is None:
             values.pop("nonspecific_spike_event_rule")
         if values["nonspecific_spike_event_proximal_blend_fraction"] is None:
@@ -616,9 +619,15 @@ def first_order_population_parameters(
             spike_event_threshold_mV = (
                 conventions.nonspecific_spike_event_threshold_mV
             )
+        if conventions.nonspecific_spike_event_release_mV is not None:
+            spike_event_release_mV = conventions.nonspecific_spike_event_release_mV
         if not math.isfinite(spike_event_threshold_mV):
             raise ValueError(
                 "nonspecific spike-event threshold voltage must be finite"
+            )
+        if not math.isfinite(spike_event_release_mV):
+            raise ValueError(
+                "nonspecific spike-event release voltage must be finite"
             )
         if conventions.nonspecific_spike_event_rule is not None:
             spike_event_rule = conventions.nonspecific_spike_event_rule

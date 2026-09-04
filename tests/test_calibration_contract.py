@@ -838,6 +838,18 @@ FIGURE7_NONSPECIFIC_MODELDB_KINNESS_HYSTERESIS_RESULT_PATH = (
     ROOT
     / "docs/validation-results/figure7-top5-nonspecific-modeldb-kinness-hysteresis-match-364.yaml"
 )
+FIGURE7_NONSPECIFIC_MODELDB_UNIFORM_HANDLER_PROFILE_PATH = (
+    ROOT
+    / "configs/calibration/figure7_top5_nonspecific_modeldb_uniform_handler_match_v1.yaml"
+)
+FIGURE7_NONSPECIFIC_MODELDB_UNIFORM_HANDLER_REGISTRATION_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-top5-nonspecific-modeldb-uniform-handler-registration-369.yaml"
+)
+FIGURE7_NONSPECIFIC_MODELDB_UNIFORM_HANDLER_RESULT_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-top5-nonspecific-modeldb-uniform-handler-match-370.yaml"
+)
 FIGURE7_ALIGNED_VERIFICATION_PROFILE_PATH = (
     ROOT / "configs/calibration/figure7_aligned_on_center_verification_v1.yaml"
 )
@@ -5078,6 +5090,61 @@ def test_nonspecific_modeldb_kinness_hysteresis_still_overfires_match() -> None:
         for earlier, later in pairwise(times)
     ]
     assert min(intervals) > 1.0
+
+
+def test_nonspecific_modeldb_uniform_handler_is_fixed_and_isolated() -> None:
+    profile = yaml.safe_load(
+        FIGURE7_NONSPECIFIC_MODELDB_UNIFORM_HANDLER_PROFILE_PATH.read_text()
+    )
+    registration = yaml.safe_load(
+        FIGURE7_NONSPECIFIC_MODELDB_UNIFORM_HANDLER_REGISTRATION_PATH.read_text()
+    )
+    assert profile["runtime_expectations"] == {
+        "nonspecific_intrinsic_cell_convention": "modeldb_112923",
+        "nonspecific_spike_event_threshold_mV": -20.0,
+        "nonspecific_spike_event_release_mV": -30.0,
+        "nonspecific_spike_event_rule": "latched_peak_then_zero",
+    }
+    dimensions = registration["registered_dimension"]
+    assert dimensions["candidate_count"] == 1
+    assert dimensions["nonspecific_spike_event_threshold_mV"] == -20.0
+    assert dimensions["nonspecific_spike_event_release_mV"] == -30.0
+    assert registration["fixed"]["trn_handler"] == {
+        "arm_mV": -20.0,
+        "release_mV": -30.0,
+    }
+    assert registration["stopping_rule"].startswith(
+        "Run one fresh complete Figure 6"
+    )
+    assert "figure7_mismatch" in registration["locked_holdouts"]
+
+
+def test_nonspecific_modeldb_uniform_handler_still_overfires_match() -> None:
+    artifact = yaml.safe_load(
+        FIGURE7_NONSPECIFIC_MODELDB_UNIFORM_HANDLER_RESULT_PATH.read_text()
+    )
+    assert artifact["id"] == (
+        "figure7-top5-nonspecific-modeldb-uniform-handler-match-370"
+    )
+    assert artifact["status"] == "match-failed"
+    assert artifact["runtime_discriminator"] == {
+        "nonspecific_intrinsic_cell_convention": "modeldb_112923",
+        "nonspecific_spike_event_threshold_mV": -20.0,
+        "nonspecific_spike_event_release_mV": -30.0,
+        "nonspecific_spike_event_rule": "latched_peak_then_zero",
+    }
+    assert artifact["figure6_pass"]
+    assert all(artifact["figure6_gates"].values())
+    assert not artifact["match_pass"]
+    assert not artifact["mismatch_consulted"]
+    assert not artifact["promotable"]
+    assert not artifact["reproduced"]
+    match = artifact["match_result"]
+    assert len(match["relay_spike_times_ms"]) == 15
+    assert len(match["trn_spike_times_ms"]) == 635
+    assert len(match["nonspecific_spike_times_ms"]) == 22
+    assert not artifact["match_gates"]["nonspecific_events"]
+    assert not artifact["match_gates"]["nonspecific_40_hz"]
 
 
 def test_aligned_on_center_verification_registers_only_screen_survivor() -> None:

@@ -2738,6 +2738,15 @@ the remaining two-event deficit is in nonspecific membrane-to-axon transfer.
 This supports one final uniform-handler discriminator using the already
 calibrated KInNeSS -20/-30-mV arm/fall pair, not a new fitted threshold.
 
+Artifacts 369--370 apply that exact -20/-30-mV pair to the complete recovered
+INTRALAMINAR cell. This keeps all Figure 6 gates and upstream match counts
+exact, but nonspecific match output remains 22 events rather than four. The
+-30-mV falling coordinate therefore does not consolidate the repeated
+excursions. Mismatch was not consulted. Fixed-threshold transfers of the
+available KInNeSS handler interpretations are now closed; any further detector
+reconstruction would require the unavailable legacy implementation body or an
+explicitly calibrated, non-source parameter.
+
 Artifacts 302--307 test the only previously declared inhibitory-capacity
 interaction not covered by that timing result. Artifact 252 had screened common
 TRN-to-relay gains 1.125, 1.25, 1.5, 2, and 3 at receptor-arrival timing. The

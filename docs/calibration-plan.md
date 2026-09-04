@@ -799,3 +799,11 @@ exist upstream; the two-event deficit is downstream transfer loss. The next
 admissible candidate is the same population-uniform KInNeSS handler already
 used for TRN, applied with the complete recovered nonspecific cell and tested
 match-first. Do not alter ionic or synaptic parameters.
+
+Artifacts 369--370 execute that one uniform-handler transfer. The fresh
+network passes every Figure 6 prerequisite and keeps upstream match exact at
+15 relay and 635 TRN events, but the recovered nonspecific cell still emits 22
+events rather than four. Moving the falling event coordinate from 0 to -30 mV
+therefore does not group the repeated voltage excursions into the official
+match spikes. Reject before mismatch and close fixed-threshold KInNeSS handler
+transfer without interpolating either voltage.

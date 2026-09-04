@@ -1,0 +1,52 @@
+schema_version: 1
+id: figure7-top5-nonspecific-modeldb-uniform-handler-registration-369
+date: '2026-09-04'
+status: registered-before-execution-calibrated-handler-transfer
+profile: configs/calibration/figure7_top5_nonspecific_modeldb_uniform_handler_match_v1.yaml
+rationale:
+  source_cell: >-
+    SMART.nml serializes the complete INTRALAMINAR intrinsic cell, including
+    50/30 mS/cm2 somatic sodium/potassium and somatic plus dendritic T-current.
+  source_handler: >-
+    KInNeSS Equation 14 supplies the -20-mV arm. The reconstruction already
+    uses one calibrated -30-mV falling threshold for every TRN axon because
+    the legacy proper-spike-detection body is unavailable.
+  uniformity: >-
+    The KInNeSS manual describes the same somatic-to-axon conversion for cell
+    populations. Apply the existing -20/-30-mV pair to nonspecific thalamus as
+    one uniform-handler discriminator; do not select a new voltage.
+  localization: >-
+    Artifact 368 shows seven mismatch TRN volleys but only five nonspecific
+    responses, localizing the remaining failure downstream of TRN timing.
+registered_dimension:
+  candidate_count: 1
+  nonspecific_intrinsic_cell_convention: modeldb_112923
+  nonspecific_spike_event_threshold_mV: -20.0
+  nonspecific_spike_event_release_mV: -30.0
+  nonspecific_spike_event_rule: latched_peak_then_zero
+fixed:
+  trn_handler: {arm_mV: -20.0, release_mV: -30.0}
+  all_intrinsic_and_synaptic_parameters_unchanged: true
+  top5_comparator_target_count: 5
+  source_index: 40
+  cue_current_pA: 800.0
+  current_mode: until_cued_cell_first_event
+  cue_lead_ms: 11.35773631178703
+execution:
+  figure6_fresh_runs: 1
+  match_fresh_runs: 1
+  mismatch_runs: 0
+  parameter_grid_size: 1
+classification_boundary: >-
+  This is a calibrated reconstruction discriminator, not a claim that the
+  unavailable legacy handler body has been recovered.
+stopping_rule: >-
+  Run one fresh complete Figure 6 and one match. Advance only on every Figure 6
+  gate plus exact 15/635/4 recognition counts and fresh TRN detector cycles.
+  Do not vary either threshold or inspect mismatch after failure.
+locked_holdouts:
+  - figure7_mismatch
+  - figure10_reset
+  - figure14_spectra
+  - figure15_local_synchrony
+  - figure16_long_range_synchrony

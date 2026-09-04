@@ -795,6 +795,29 @@ def test_nonspecific_event_rule_can_be_selected_without_changing_trn() -> None:
     assert trn["spike_event_rule"] == "latched_peak_then_zero"
 
 
+def test_nonspecific_event_release_can_be_selected_without_changing_trn() -> None:
+    facts = {fact.canonical_name: fact for fact in first_order_population_facts()}
+    conventions = FirstOrderRuntimeConventions(
+        nonspecific_spike_event_release_mV=-30.0
+    )
+
+    nonspecific = first_order_population_parameters(
+        facts["thalamic_nonspecific"], conventions=conventions
+    )
+    trn = first_order_population_parameters(facts["trn"], conventions=conventions)
+
+    assert nonspecific["spike_event_release_mV"] == -30.0
+    assert trn["spike_event_release_mV"] == 0.0
+
+    with pytest.raises(ValueError, match="nonspecific spike-event release"):
+        first_order_population_parameters(
+            facts["thalamic_nonspecific"],
+            conventions=FirstOrderRuntimeConventions(
+                nonspecific_spike_event_release_mV=float("nan")
+            ),
+        )
+
+
 def test_figure6_profile_names_the_source_constrained_runtime() -> None:
     conventions = figure6_runtime_conventions()
     assert conventions.gate_initialization_convention == "steady_state_at_initial_voltage"

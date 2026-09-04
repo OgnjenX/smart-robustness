@@ -252,6 +252,11 @@ def runtime_conventions_for_candidate(
             if values.get("nonspecific_spike_event_threshold_mV") is None
             else float(values["nonspecific_spike_event_threshold_mV"])
         ),
+        nonspecific_spike_event_release_mV=(
+            None
+            if values.get("nonspecific_spike_event_release_mV") is None
+            else float(values["nonspecific_spike_event_release_mV"])
+        ),
         nonspecific_spike_event_rule=(
             None
             if values.get("nonspecific_spike_event_rule") is None

@@ -402,6 +402,11 @@ parameters:
     status: legacy-handler-discriminator-tested
     source: SANNDRA spikeevents revision history plus explicit hysteretic reconstruction; Artifacts 363--364
     note: hysteresis removes the alternating-step pathology but emits 22 nonspecific match events in 100 ms while all Figure 6 and upstream match gates pass. Mismatch is not consulted. Close the recovered-cell/KInNeSS-threshold family without refractory or threshold fitting
+  model.classic_hh.nonspecific_uniform_kinness_handler:
+    value: recovered cell with -20 mV arm and calibrated -30 mV falling event rejected
+    status: calibrated-handler-transfer-tested
+    source: KInNeSS Equation 14, existing TRN -20/-30 mV reconstruction, and Artifacts 367--370
+    note: the fixed uniform handler passes Figure 6 and preserves 15/635 upstream match events but emits 22 nonspecific events rather than four. Mismatch is not consulted. No interpolation of the arm or falling voltage is authorized
   benchmark.population_sizes:
     value: see configs/*.yaml
     status: exploratory

@@ -538,6 +538,9 @@ FIGURE7_HALF_MAX_COMPARATOR_REGISTRATION_PATH = (
     ROOT
     / "docs/validation-results/figure7-half-max-comparator-registration-314.yaml"
 )
+FIGURE7_HALF_MAX_COMPARATOR_RESULT_PATH = (
+    ROOT / "docs/validation-results/figure7-half-max-comparator-match-315.yaml"
+)
 FIGURE7_ALIGNED_VERIFICATION_PROFILE_PATH = (
     ROOT / "configs/calibration/figure7_aligned_on_center_verification_v1.yaml"
 )
@@ -3331,6 +3334,36 @@ def test_half_max_comparator_is_one_parameter_free_registered_candidate() -> Non
     )
     assert registration["stopping_rule"].startswith("Run the sole half-max")
     assert registration["locked_holdouts"][0] == "figure7_mismatch"
+
+
+def test_half_max_comparator_fails_match_without_threshold_fitting() -> None:
+    artifact = yaml.safe_load(FIGURE7_HALF_MAX_COMPARATOR_RESULT_PATH.read_text())
+    outcome = artifact["outcomes"][0]
+    result = outcome["result"]
+    assert artifact["status"] == "complete"
+    assert artifact["classification"] == (
+        "calibrated-reconstruction-not-recovered-source"
+    )
+    assert artifact["holdouts_consulted"] == ["figure7_match"]
+    assert not artifact["mismatch_consulted"]
+    assert outcome["support_threshold"] == 0.5
+    assert result["comparator_transform"] == "half_max_binary"
+    assert len(result["relay_spike_times_ms"]) == 9
+    assert set(result["relay_spike_indices"]) == {39, 40, 41}
+    assert outcome["relay_event_counts_by_index"] == {
+        "38": 0,
+        "39": 3,
+        "40": 3,
+        "41": 3,
+        "42": 0,
+    }
+    assert len(result["trn_spike_times_ms"]) == 607
+    assert len(result["nonspecific_spike_times_ms"]) == 5
+    assert not outcome["pass"]
+    assert artifact["match_survivor_thresholds"] == []
+    assert artifact["selected_support_threshold"] is None
+    assert not artifact["assessment"]["advance_to_mismatch"]
+    assert artifact["assessment"]["mismatch_remains_locked"]
 
 
 def test_aligned_on_center_verification_registers_only_screen_survivor() -> None:

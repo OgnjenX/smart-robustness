@@ -570,3 +570,10 @@ the correct horizontal set with 8/609/6 events; floor 0.75 gives 13/616/5.
 Every candidate misses the 40-Hz nonspecific gate, so none advances to
 verification or mismatch. Close smooth multiplicative support blending and do
 not interpolate toward the known floor-1 control.
+
+Artifacts 314--315 test a sole standard half-maximum saturated gate rather
+than fitting the threshold between the failed smooth floors and uniform-input
+control. The gate recruits only learned-field cells 39--41, yielding 9 relay,
+607 TRN, and 5 nonspecific events. It fails both the full horizontal relay-set
+and 40-Hz match gates. Close thresholded half-maximum support without moving
+the threshold after observing the learned map; mismatch remains locked.

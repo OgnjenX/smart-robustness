@@ -2609,6 +2609,12 @@ TRN / nonspecific counts are 6/573/6 at floors 0 and 0.25, 8/609/6 at 0.5, and
 but not the exact 40-Hz match output. No floor survives, mismatch remains
 locked, and Figure 7 is still not reproduced.
 
+Artifacts 314--315 test the parameter-free half-maximum saturated alternative.
+It recruits only relay cells 39--41 (9 events), followed by 607 TRN and five
+nonspecific events. Because it loses the outer learned-bar cells and gives
+50 Hz rather than 40 Hz, it fails match before mismatch. No threshold is moved
+post hoc; Figure 7 and downstream holdouts remain locked.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

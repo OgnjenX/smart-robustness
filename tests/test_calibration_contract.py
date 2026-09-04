@@ -531,6 +531,13 @@ FIGURE7_LEARNED_COMPARATOR_RESULT_PATH = (
     ROOT
     / "docs/validation-results/figure7-learned-comparator-floor-match-313.yaml"
 )
+FIGURE7_HALF_MAX_COMPARATOR_PROFILE_PATH = (
+    ROOT / "configs/calibration/figure7_half_max_comparator_match_v1.yaml"
+)
+FIGURE7_HALF_MAX_COMPARATOR_REGISTRATION_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-half-max-comparator-registration-314.yaml"
+)
 FIGURE7_ALIGNED_VERIFICATION_PROFILE_PATH = (
     ROOT / "configs/calibration/figure7_aligned_on_center_verification_v1.yaml"
 )
@@ -3298,6 +3305,32 @@ def test_smooth_learned_comparator_floor_fails_match_before_mismatch() -> None:
     ]
     assert not artifact["assessment"]["advance_to_mismatch"]
     assert artifact["assessment"]["mismatch_remains_locked"]
+
+
+def test_half_max_comparator_is_one_parameter_free_registered_candidate() -> None:
+    profile = yaml.safe_load(FIGURE7_HALF_MAX_COMPARATOR_PROFILE_PATH.read_text())
+    registration = yaml.safe_load(
+        FIGURE7_HALF_MAX_COMPARATOR_REGISTRATION_PATH.read_text()
+    )
+    assert profile["dimension"] == {
+        "name": "learned_expectation_half_max_saturated_gate",
+        "kind": "half_max_binary",
+        "grid": [0.5],
+        "candidate_count": 1,
+        "transform": profile["dimension"]["transform"],
+    }
+    assert registration["registered_candidate"] == {
+        "transform": "half_max_binary",
+        "support_threshold": 0.5,
+        "candidate_count": 1,
+        "gain_above_or_equal_threshold": 1.0,
+        "gain_below_threshold": 0.0,
+    }
+    assert registration["scope_boundary"]["classification"] == (
+        "calibrated-reconstruction-not-recovered-source"
+    )
+    assert registration["stopping_rule"].startswith("Run the sole half-max")
+    assert registration["locked_holdouts"][0] == "figure7_mismatch"
 
 
 def test_aligned_on_center_verification_registers_only_screen_survivor() -> None:

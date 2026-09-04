@@ -22,6 +22,7 @@ from smart_robustness.validation.figure7 import (
     assess_figure7_reproduction,
     comparator_relay_input_gains,
     expand_figure7_source_expectation_toward_bounds,
+    half_max_comparator_relay_input_gains,
     learned_expectation_support_by_target,
     paper_constrained_figure6_expectation,
     restrict_figure7_top_down_relay_sources,
@@ -351,6 +352,11 @@ def test_reconstructed_comparator_is_derived_from_learned_target_support() -> No
     assert comparator_relay_input_gains(learned, floor=1.0) == pytest.approx(
         np.ones(81)
     )
+    binary = half_max_comparator_relay_input_gains(learned)
+    assert set(binary) == {0.0, 1.0}
+    assert binary[40] == 1.0
+    assert binary[39] == 1.0
+    assert binary[31] == 0.0
     with pytest.raises(ValueError, match="comparator floor"):
         comparator_relay_input_gains(learned, floor=-0.01)
     with pytest.raises(ValueError, match="missing learned"):
@@ -418,6 +424,14 @@ def test_figure7_runner_rejects_invalid_projection_discriminators() -> None:
             top_down_current_pA=1000,
             use_paper_constrained_reference=True,
             pretrain_with_figure6_episode=True,
+        )
+    with pytest.raises(ValueError, match="only one reconstructed comparator"):
+        run_figure7_condition(
+            condition=MatchCondition.MATCH,
+            top_down_current_pA=1000,
+            use_paper_constrained_reference=True,
+            comparator_relay_floor=0.5,
+            comparator_half_max_gate=True,
         )
 
 

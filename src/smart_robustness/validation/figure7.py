@@ -123,6 +123,19 @@ def comparator_relay_input_gains(
     return floor + (1.0 - floor) * support
 
 
+def half_max_comparator_relay_input_gains(
+    learned_weights: Mapping[str, tuple[float, ...] | np.ndarray],
+    *,
+    source_index: int = 40,
+) -> np.ndarray:
+    """Return a saturated gate at the learned field's standard half maximum."""
+
+    support = learned_expectation_support_by_target(
+        learned_weights, source_index=source_index
+    )
+    return (support >= 0.5).astype(float)
+
+
 @dataclass(frozen=True, slots=True)
 class Figure6ReferenceExpectation:
     """Paper-constrained horizontal expectation for downstream assays.
@@ -365,6 +378,7 @@ class Figure7ConditionResult:
     learned_state_provenance: str = "unspecified"
     comparator_relay_floor: float | None = None
     comparator_source_index: int | None = None
+    comparator_transform: str | None = None
     network_scope: str = "first_order"
     relay_top_down_ampa_peak_by_index: tuple[tuple[int, float], ...] = ()
     relay_top_down_ampa_integral_ms_by_index: tuple[tuple[int, float], ...] = ()
@@ -636,6 +650,7 @@ def run_figure7_condition(
     persistent_projection_weight_scales: Mapping[str, float] | None = None,
     top_down_relay_source_indices: frozenset[int] | None = None,
     comparator_relay_floor: float | None = None,
+    comparator_half_max_gate: bool = False,
     comparator_source_index: int = 40,
     top_down_current_mode: TopDownCurrentMode | str = (
         TopDownCurrentMode.SUSTAINED_EPOCH
@@ -676,7 +691,13 @@ def run_figure7_condition(
         raise ValueError("selected-category source masking is a numpy diagnostic only")
     if comparator_relay_floor is not None and cpp_standalone_directory is not None:
         raise ValueError("the reconstructed comparator is a numpy calibration only")
-    if comparator_relay_floor is not None and pretrain_with_figure6_episode:
+    if comparator_half_max_gate and cpp_standalone_directory is not None:
+        raise ValueError("the reconstructed comparator is a numpy calibration only")
+    if comparator_relay_floor is not None and comparator_half_max_gate:
+        raise ValueError("select only one reconstructed comparator transform")
+    if (
+        comparator_relay_floor is not None or comparator_half_max_gate
+    ) and pretrain_with_figure6_episode:
         raise ValueError(
             "the reconstructed comparator requires an explicit learned-weight snapshot"
         )
@@ -814,6 +835,12 @@ def run_figure7_condition(
         relay_input_gains = comparator_relay_input_gains(
             learned_weights,
             floor=comparator_relay_floor,
+            source_index=comparator_source_index,
+        )
+    elif comparator_half_max_gate:
+        assert learned_weights is not None
+        relay_input_gains = half_max_comparator_relay_input_gains(
+            learned_weights,
             source_index=comparator_source_index,
         )
     apply_projection_scales(projection_weight_scales)
@@ -1657,7 +1684,16 @@ def run_figure7_condition(
         learned_state_provenance=provenance,
         comparator_relay_floor=comparator_relay_floor,
         comparator_source_index=(
-            comparator_source_index if comparator_relay_floor is not None else None
+            comparator_source_index
+            if comparator_relay_floor is not None or comparator_half_max_gate
+            else None
+        ),
+        comparator_transform=(
+            "linear_floor"
+            if comparator_relay_floor is not None
+            else "half_max_binary"
+            if comparator_half_max_gate
+            else None
         ),
         network_scope="full_two_area" if include_higher_order_loop else "first_order",
         relay_top_down_ampa_peak_by_index=ampa_peak,

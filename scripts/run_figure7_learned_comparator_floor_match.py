@@ -48,7 +48,11 @@ def _write(
     outcomes: list[dict[str, Any]],
     complete: bool,
 ) -> None:
-    survivors = [item["comparator_floor"] for item in outcomes if item["pass"]]
+    transform = profile["dimension"].get("kind", "linear_floor")
+    candidate_key = (
+        "comparator_floor" if transform == "linear_floor" else "support_threshold"
+    )
+    survivors = [item[candidate_key] for item in outcomes if item["pass"]]
     selected = max(survivors) if survivors else None
     artifact = {
         "schema_version": 1,
@@ -67,8 +71,16 @@ def _write(
         "handoff_figure6_population_spikes": training_spikes,
         "applied_common_weight_factor": applied_factor,
         "outcomes": outcomes,
-        "match_survivor_floors": survivors,
-        "selected_comparator_floor": selected,
+        (
+            "match_survivor_floors"
+            if transform == "linear_floor"
+            else "match_survivor_thresholds"
+        ): survivors,
+        (
+            "selected_comparator_floor"
+            if transform == "linear_floor"
+            else "selected_support_threshold"
+        ): selected,
         "assessment": {
             "registered_candidate_count": len(profile["dimension"]["grid"]),
             "completed_candidate_count": len(outcomes),
@@ -130,7 +142,12 @@ def main() -> None:
     expected = tuple(int(index) for index in gate["relay_active_indices"])
     output = Path(args.output)
     outcomes: list[dict[str, Any]] = []
-    for floor in profile["dimension"]["grid"]:
+    transform = profile["dimension"].get("kind", "linear_floor")
+    if transform not in {"linear_floor", "half_max_binary"}:
+        raise ValueError(f"unknown comparator transform: {transform}")
+    for candidate in profile["dimension"]["grid"]:
+        if transform == "half_max_binary" and float(candidate) != 0.5:
+            raise ValueError("half-max comparator threshold must be exactly 0.5")
         result = run_figure7_condition(
             condition=MatchCondition.MATCH,
             top_down_current_pA=float(protocol["top_down_current_pA"]),
@@ -139,7 +156,10 @@ def main() -> None:
             duration_ms=float(protocol["duration_ms"]),
             dt_ms=float(protocol["dt_ms"]),
             persistent_projection_weight_scales=scales,
-            comparator_relay_floor=float(floor),
+            comparator_relay_floor=(
+                float(candidate) if transform == "linear_floor" else None
+            ),
+            comparator_half_max_gate=transform == "half_max_binary",
             comparator_source_index=source_index,
             top_down_current_mode=TopDownCurrentMode(
                 protocol["top_down_current_mode"]
@@ -185,7 +205,11 @@ def main() -> None:
         }
         outcomes.append(
             {
-                "comparator_floor": float(floor),
+                (
+                    "comparator_floor"
+                    if transform == "linear_floor"
+                    else "support_threshold"
+                ): float(candidate),
                 "result": result,
                 "relay_event_counts_by_index": relay_counts,
                 "gates": gates,
@@ -204,7 +228,8 @@ def main() -> None:
             complete=False,
         )
         print(
-            f"floor={float(floor):g} relay={len(result.relay_spike_times_ms)} "
+            f"{transform}={float(candidate):g} "
+            f"relay={len(result.relay_spike_times_ms)} "
             f"trn={len(result.trn_spike_times_ms)} "
             f"nonspecific={len(result.nonspecific_spike_times_ms)} "
             f"pass={all(gates.values())}",

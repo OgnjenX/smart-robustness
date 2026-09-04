@@ -731,6 +731,14 @@ FIGURE7_NONSPECIFIC_PAPER_TTYPE_RESULT_PATH = (
     ROOT
     / "docs/validation-results/figure7-top5-nonspecific-paper-ttype-match-350.yaml"
 )
+FIGURE7_NONSPECIFIC_SOMATIC_GABA_PROFILE_PATH = (
+    ROOT
+    / "configs/calibration/figure7_top5_nonspecific_somatic_gaba_match_v1.yaml"
+)
+FIGURE7_NONSPECIFIC_SOMATIC_GABA_REGISTRATION_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-top5-nonspecific-somatic-gaba-registration-351.yaml"
+)
 FIGURE7_ALIGNED_VERIFICATION_PROFILE_PATH = (
     ROOT / "configs/calibration/figure7_aligned_on_center_verification_v1.yaml"
 )
@@ -4486,6 +4494,36 @@ def test_nonspecific_paper_ttype_fails_exact_match_before_mismatch() -> None:
         for key, value in artifact["match_gates"].items()
         if key not in {"nonspecific_events", "nonspecific_40_hz"}
     )
+
+
+def test_nonspecific_somatic_gaba_sensitivity_is_single_and_locked() -> None:
+    profile = yaml.safe_load(
+        FIGURE7_NONSPECIFIC_SOMATIC_GABA_PROFILE_PATH.read_text()
+    )
+    registration = yaml.safe_load(
+        FIGURE7_NONSPECIFIC_SOMATIC_GABA_REGISTRATION_PATH.read_text()
+    )
+    transfer = profile["nonspecific_gaba_transfer"]
+    assert transfer["projection_ids"] == ["modeldb112923.projection.047"]
+    assert transfer["common_scale_grid"] == [2.0]
+    assert transfer["selection_rule"] == "sole preregistered non-source candidate"
+    assert registration["registered_dimension"] == {
+        "projection_id": "modeldb112923.projection.047",
+        "target_compartment": "soma",
+        "source_weight": 0.01,
+        "persistent_scale": 2.0,
+        "effective_weight": 0.02,
+        "candidate_count": 1,
+    }
+    assert registration["fixed"]["proximal_gaba_scale"] == 1.0
+    assert registration["fixed"]["distal_gaba_scale"] == 1.0
+    assert registration["scope_boundary"]["classification"] == (
+        "calibrated-reconstruction-not-recovered-source"
+    )
+    assert registration["stopping_rule"].startswith(
+        "Run one fresh complete Figure 6"
+    )
+    assert "figure7_mismatch" in registration["locked_holdouts"]
 
 
 def test_aligned_on_center_verification_registers_only_screen_survivor() -> None:

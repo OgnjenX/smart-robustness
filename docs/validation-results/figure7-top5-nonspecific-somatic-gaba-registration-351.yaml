@@ -1,0 +1,66 @@
+schema_version: 1
+id: figure7-top5-nonspecific-somatic-gaba-registration-351
+date: '2026-09-04'
+status: registered-before-execution-calibrated-local-transfer
+profile: configs/calibration/figure7_top5_nonspecific_somatic_gaba_match_v1.yaml
+rationale:
+  - >-
+    Artifact 348 shows that removing only somatic TRN-to-nonspecific GABA
+    erases the intact mismatch advantage while leaving match output unchanged.
+    Proximal inhibition is required for rebound output and distal inhibition
+    suppresses one match event, so both remain fixed at their source values.
+  - >-
+    Artifact 350 shows that paper-only nonspecific T-current kinetics provide
+    ample rebound gain but overdrive match to 80 Hz. Retain the selected
+    executable-backup kinetics and perturb only the causally localized somatic
+    inhibitory transfer.
+  - >-
+    A factor of two is the smallest standard dyadic upward sensitivity and is
+    fixed before execution. It is not derived from the desired seven-event
+    mismatch count, and no grid, interpolation, or post-result scale selection
+    is authorized.
+registered_dimension:
+  projection_id: modeldb112923.projection.047
+  target_compartment: soma
+  source_weight: 0.01
+  persistent_scale: 2.0
+  effective_weight: 0.02
+  candidate_count: 1
+fixed:
+  proximal_gaba_projection: modeldb112923.projection.048
+  proximal_gaba_scale: 1.0
+  distal_gaba_projection: modeldb112923.projection.049
+  distal_gaba_scale: 1.0
+  nonspecific_calcium_kinetics: modeldb_112923
+  all_receptor_kinetics_delays_and_reversals_unchanged: true
+  comparator_transform: top_k_binary
+  comparator_target_count: 5
+  learned_headroom_fraction: 1.0
+  source_index: 40
+  cue_current_pA: 800.0
+  current_mode: until_cued_cell_first_event
+  receptor_peak_cue_lead_ms: 11.35773631178703
+  trn_detector: {arm_mV: -20.0, release_mV: -30.0}
+  duration_ms: 100.0
+  dt_ms: 0.01
+scope_boundary:
+  classification: calibrated-reconstruction-not-recovered-source
+  changes: persistent twofold scale on projection 047 only
+  leaves_unchanged:
+    - neuron equations and all intrinsic parameters
+    - proximal and distal TRN-to-nonspecific GABA contacts
+    - all other projection weights, kinetics, delays, and reversals
+    - stimulus values and timing
+    - learned comparator and cardinality
+    - event detectors
+stopping_rule: >-
+  Run one fresh complete Figure 6 and construct match only if every prerequisite
+  passes. Do not run mismatch in this artifact. If match passes, independently
+  verify the identical candidate before registering one fixed mismatch. If
+  either stage fails, close this single sensitivity without adding scales.
+locked_holdouts:
+  - figure7_mismatch
+  - figure10_reset
+  - figure14_spectra
+  - figure15_local_synchrony
+  - figure16_long_range_synchrony

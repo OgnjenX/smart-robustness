@@ -1,0 +1,51 @@
+schema_version: 1
+id: figure7-top5-nonspecific-gaba-transfer-mismatch-registration-333
+date: '2026-09-04'
+status: registered-before-execution-fixed-holdout
+profile: configs/calibration/figure7_top5_nonspecific_gaba_transfer_mismatch_v1.yaml
+authorization:
+  independent_verification_artifact: docs/validation-results/figure7-top5-nonspecific-gaba-transfer-verification-332.yaml
+  selected_common_scale: 0.75
+  figure6_pass: true
+  match_counts: {relay: 15, trn: 635, nonspecific: 4}
+  sampled_match_trn_detector_cycles_complete: true
+fixed_candidate:
+  classification: calibrated-reconstruction-not-recovered-source
+  nonspecific_gaba_common_scale: 0.75
+  nonspecific_gaba_projection_ids:
+    - modeldb112923.projection.047
+    - modeldb112923.projection.048
+    - modeldb112923.projection.049
+  comparator_transform: top_k_binary
+  comparator_target_count: 5
+  learned_headroom_fraction: 1.0
+  source_index: 40
+  cue_current_pA: 800.0
+  current_mode: until_cued_cell_first_event
+  receptor_peak_cue_lead_ms: 11.35773631178703
+  detector: {arm_mV: -20.0, release_mV: -30.0}
+  duration_ms: 100.0
+  dt_ms: 0.01
+execution:
+  condition: vertical_mismatch
+  run_count: 1
+  fresh_complete_figure6_handoff: true
+  independently_rebuilt_mismatch_network: true
+  full_detector_cycle_diagnostics: true
+official_pass_requirements:
+  duration_ms: 100.0
+  mismatch_relay_nonempty_subset_of: [40]
+  match_more_active_relay_cells: true
+  match_more_trn_events: true
+  match_nonspecific_rate_hz: 40.0
+  mismatch_nonspecific_rate_hz: 70.0
+stopping_rule: >-
+  Run exactly one fresh vertical mismatch at the verified 0.75 transfer. Report
+  every official gate and complete sampled detector-cycle equality. Do not
+  vary transfer, comparator, timing, learned state, detector, or inhibition
+  after observing this holdout.
+locked_holdouts:
+  - figure10_reset
+  - figure14_spectra
+  - figure15_local_synchrony
+  - figure16_long_range_synchrony

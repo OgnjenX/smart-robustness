@@ -629,6 +629,14 @@ FIGURE7_TOP5_NONSPECIFIC_GABA_TRANSFER_VERIFICATION_RESULT_PATH = (
     ROOT
     / "docs/validation-results/figure7-top5-nonspecific-gaba-transfer-verification-332.yaml"
 )
+FIGURE7_TOP5_NONSPECIFIC_GABA_TRANSFER_MISMATCH_PROFILE_PATH = (
+    ROOT
+    / "configs/calibration/figure7_top5_nonspecific_gaba_transfer_mismatch_v1.yaml"
+)
+FIGURE7_TOP5_NONSPECIFIC_GABA_TRANSFER_MISMATCH_REGISTRATION_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-top5-nonspecific-gaba-transfer-mismatch-registration-333.yaml"
+)
 FIGURE7_ALIGNED_VERIFICATION_PROFILE_PATH = (
     ROOT / "configs/calibration/figure7_aligned_on_center_verification_v1.yaml"
 )
@@ -3900,6 +3908,28 @@ def test_top5_nonspecific_gaba_transfer_verification_reproduces_match() -> None:
         ][index]
     assert artifact["assessment"]["advance_to_mismatch"]
     assert not artifact["assessment"]["mismatch_remains_locked"]
+
+
+def test_top5_nonspecific_gaba_transfer_mismatch_is_fixed_to_verification() -> None:
+    profile = yaml.safe_load(
+        FIGURE7_TOP5_NONSPECIFIC_GABA_TRANSFER_MISMATCH_PROFILE_PATH.read_text()
+    )
+    registration = yaml.safe_load(
+        FIGURE7_TOP5_NONSPECIFIC_GABA_TRANSFER_MISMATCH_REGISTRATION_PATH.read_text()
+    )
+    assert profile["match_verification_artifact"] == str(
+        FIGURE7_TOP5_NONSPECIFIC_GABA_TRANSFER_VERIFICATION_RESULT_PATH.relative_to(
+            ROOT
+        )
+    )
+    assert profile["nonspecific_gaba_transfer"]["common_scale"] == 0.75
+    assert profile["official_gates"]["mismatch_nonspecific_events"] == 7
+    assert registration["authorization"]["selected_common_scale"] == 0.75
+    assert registration["execution"]["run_count"] == 1
+    assert registration["execution"]["fresh_complete_figure6_handoff"]
+    assert registration["stopping_rule"].startswith(
+        "Run exactly one fresh vertical mismatch"
+    )
 
 
 def test_aligned_on_center_verification_registers_only_screen_survivor() -> None:

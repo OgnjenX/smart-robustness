@@ -1,0 +1,49 @@
+schema_version: 1
+id: figure7-top5-nonspecific-modeldb-calibrated20-registration-371
+date: '2026-09-04'
+status: registered-before-execution-match-calibration
+profile: configs/calibration/figure7_top5_nonspecific_modeldb_calibrated20_match_v1.yaml
+classification: calibrated-reconstruction-not-recovered-source
+rationale:
+  source_gap: >-
+    The recovered SMART.nml INTRALAMINAR cell peaks below the paper's +30-mV
+    arm, while KInNeSS's printed -20-mV arm overcounts repeated excursions.
+    The legacy proper-spike-detection implementation body is unavailable.
+  match_only_evidence: >-
+    Artifact 370's recovered-cell match waveform has exactly four positive
+    maxima above +20 mV (22.05, 25.65, 28.14, and 27.59 mV). The next-largest
+    maximum is 11.74 mV. No mismatch waveform has been inspected for this
+    candidate.
+  selected_value: >-
+    +20 mV is a round, fixed arm between the fourth and fifth match peaks. It
+    retains SMART's falling-phase event semantics and adds no refractory state
+    or membrane dynamics.
+registered_dimension:
+  candidate_count: 1
+  nonspecific_intrinsic_cell_convention: modeldb_112923
+  nonspecific_spike_event_threshold_mV: 20.0
+  nonspecific_spike_event_release_mV: 0.0
+  nonspecific_spike_event_rule: latched_peak_then_zero
+fixed:
+  trn_handler: {arm_mV: -20.0, release_mV: -30.0}
+  all_intrinsic_and_synaptic_parameters_unchanged: true
+  top5_comparator_target_count: 5
+  source_index: 40
+  cue_current_pA: 800.0
+  current_mode: until_cued_cell_first_event
+  cue_lead_ms: 11.35773631178703
+execution:
+  figure6_fresh_runs: 1
+  match_fresh_runs: 1
+  mismatch_runs: 0
+  parameter_grid_size: 1
+stopping_rule: >-
+  Run one fresh complete Figure 6 and one match. Advance only on every Figure 6
+  gate plus exact 15/635/4 recognition counts and fresh TRN detector cycles.
+  Do not vary the threshold or inspect mismatch after failure.
+locked_holdouts:
+  - figure7_mismatch
+  - figure10_reset
+  - figure14_spectra
+  - figure15_local_synchrony
+  - figure16_long_range_synchrony

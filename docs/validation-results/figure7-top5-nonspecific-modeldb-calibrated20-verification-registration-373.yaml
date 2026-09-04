@@ -1,0 +1,32 @@
+schema_version: 1
+id: figure7-top5-nonspecific-modeldb-calibrated20-verification-registration-373
+date: '2026-09-04'
+status: registered-before-execution-independent-match-verification
+profile: configs/calibration/figure7_top5_nonspecific_modeldb_calibrated20_verification_v1.yaml
+screen_artifact:
+  path: docs/validation-results/figure7-top5-nonspecific-modeldb-calibrated20-match-372.yaml
+  figure6_pass: true
+  match_counts: {relay: 15, trn: 635, nonspecific: 4}
+  match_rate_hz: 40.0
+fixed_candidate:
+  nonspecific_intrinsic_cell_convention: modeldb_112923
+  nonspecific_spike_event_threshold_mV: 20.0
+  nonspecific_spike_event_release_mV: 0.0
+  nonspecific_spike_event_rule: latched_peak_then_zero
+  runtime_fingerprint: 7c164995390f7d2df9a618f529d375519114163fd254125d8829bd6642cc8c93
+execution:
+  independently_rebuild_network: true
+  figure6_fresh_runs: 1
+  match_fresh_runs: 1
+  mismatch_runs: 0
+  parameter_changes_after_screen: none
+stopping_rule: >-
+  Repeat the fixed Figure 6 and match exactly once from fresh state. Advance
+  only if every gate and the candidate fingerprint repeat exactly. Do not
+  inspect mismatch on any verification failure.
+locked_holdouts:
+  - figure7_mismatch
+  - figure10_reset
+  - figure14_spectra
+  - figure15_local_synchrony
+  - figure16_long_range_synchrony

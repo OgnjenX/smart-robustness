@@ -2747,6 +2747,18 @@ available KInNeSS handler interpretations are now closed; any further detector
 reconstruction would require the unavailable legacy implementation body or an
 explicitly calibrated, non-source parameter.
 
+Artifacts 371--374 make that calibration boundary explicit. A +20-mV
+nonspecific arm is selected from match only because exactly four recovered-cell
+match maxima exceed it; a fresh independent rebuild repeats complete Figure 6
+and exact 15/635/4 match behavior with runtime fingerprint
+`7c164995390f7d2df9a618f529d375519114163fd254125d8829bd6642cc8c93`.
+Artifacts 375--376 then run one unchanged mismatch holdout. Every pathway and
+directional gate passes: only relay cell 40 is active, match has more relay and
+TRN activity, and mismatch raises nonspecific output. The numeric target still
+fails at five rather than seven events. The recovered-cell mismatch trace has
+only six positive soma maxima, proving that no shared amplitude threshold can
+recover 4/7 from these waveforms. Scalar detector-arm calibration is closed.
+
 Artifacts 302--307 test the only previously declared inhibitory-capacity
 interaction not covered by that timing result. Artifact 252 had screened common
 TRN-to-relay gains 1.125, 1.25, 1.5, 2, and 3 at receptor-arrival timing. The

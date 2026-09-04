@@ -850,6 +850,26 @@ FIGURE7_NONSPECIFIC_MODELDB_UNIFORM_HANDLER_RESULT_PATH = (
     ROOT
     / "docs/validation-results/figure7-top5-nonspecific-modeldb-uniform-handler-match-370.yaml"
 )
+FIGURE7_NONSPECIFIC_MODELDB_CALIBRATED20_MATCH_PROFILE_PATH = (
+    ROOT
+    / "configs/calibration/figure7_top5_nonspecific_modeldb_calibrated20_match_v1.yaml"
+)
+FIGURE7_NONSPECIFIC_MODELDB_CALIBRATED20_MATCH_REGISTRATION_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-top5-nonspecific-modeldb-calibrated20-registration-371.yaml"
+)
+FIGURE7_NONSPECIFIC_MODELDB_CALIBRATED20_MATCH_RESULT_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-top5-nonspecific-modeldb-calibrated20-match-372.yaml"
+)
+FIGURE7_NONSPECIFIC_MODELDB_CALIBRATED20_VERIFICATION_RESULT_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-top5-nonspecific-modeldb-calibrated20-verification-374.yaml"
+)
+FIGURE7_NONSPECIFIC_MODELDB_CALIBRATED20_PAIR_RESULT_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-top5-nonspecific-modeldb-calibrated20-pair-376.yaml"
+)
 FIGURE7_ALIGNED_VERIFICATION_PROFILE_PATH = (
     ROOT / "configs/calibration/figure7_aligned_on_center_verification_v1.yaml"
 )
@@ -5145,6 +5165,78 @@ def test_nonspecific_modeldb_uniform_handler_still_overfires_match() -> None:
     assert len(match["nonspecific_spike_times_ms"]) == 22
     assert not artifact["match_gates"]["nonspecific_events"]
     assert not artifact["match_gates"]["nonspecific_40_hz"]
+
+
+def test_nonspecific_modeldb_calibrated20_is_match_only_and_fixed() -> None:
+    profile = yaml.safe_load(
+        FIGURE7_NONSPECIFIC_MODELDB_CALIBRATED20_MATCH_PROFILE_PATH.read_text()
+    )
+    registration = yaml.safe_load(
+        FIGURE7_NONSPECIFIC_MODELDB_CALIBRATED20_MATCH_REGISTRATION_PATH.read_text()
+    )
+    assert profile["runtime_expectations"] == {
+        "nonspecific_intrinsic_cell_convention": "modeldb_112923",
+        "nonspecific_spike_event_threshold_mV": 20.0,
+        "nonspecific_spike_event_release_mV": 0.0,
+        "nonspecific_spike_event_rule": "latched_peak_then_zero",
+    }
+    assert registration["classification"] == (
+        "calibrated-reconstruction-not-recovered-source"
+    )
+    assert registration["registered_dimension"]["candidate_count"] == 1
+    assert registration["execution"]["mismatch_runs"] == 0
+    assert "figure7_mismatch" in registration["locked_holdouts"]
+
+
+def test_nonspecific_modeldb_calibrated20_repeats_exact_match() -> None:
+    screen = yaml.safe_load(
+        FIGURE7_NONSPECIFIC_MODELDB_CALIBRATED20_MATCH_RESULT_PATH.read_text()
+    )
+    verification = yaml.safe_load(
+        FIGURE7_NONSPECIFIC_MODELDB_CALIBRATED20_VERIFICATION_RESULT_PATH.read_text()
+    )
+    for artifact in (screen, verification):
+        assert artifact["status"] == "match-pass"
+        assert artifact["figure6_pass"]
+        assert all(artifact["figure6_gates"].values())
+        assert artifact["match_pass"]
+        assert artifact["runtime_fingerprint"] == (
+            "7c164995390f7d2df9a618f529d375519114163fd254125d8829bd6642cc8c93"
+        )
+        match = artifact["match_result"]
+        assert len(match["relay_spike_times_ms"]) == 15
+        assert len(match["trn_spike_times_ms"]) == 635
+        assert len(match["nonspecific_spike_times_ms"]) == 4
+        assert artifact["match_gates"]["nonspecific_40_hz"]
+        assert not artifact["mismatch_consulted"]
+
+
+def test_nonspecific_modeldb_calibrated20_fails_mismatch_holdout() -> None:
+    artifact = yaml.safe_load(
+        FIGURE7_NONSPECIFIC_MODELDB_CALIBRATED20_PAIR_RESULT_PATH.read_text()
+    )
+    assert artifact["status"] == "figure7-failed"
+    assert artifact["runtime_fingerprint"] == (
+        "7c164995390f7d2df9a618f529d375519114163fd254125d8829bd6642cc8c93"
+    )
+    assert artifact["handoff_figure6_population_spikes"]["thalamic_relay"] == 20
+    match = artifact["match_scoring_summary"]
+    mismatch = artifact["mismatch_result"]
+    assert len(match["relay_spike_times_ms"]) == 15
+    assert len(match["trn_spike_times_ms"]) == 635
+    assert len(match["nonspecific_spike_times_ms"]) == 4
+    assert len(mismatch["relay_spike_times_ms"]) == 3
+    assert set(mismatch["relay_spike_indices"]) == {40}
+    assert len(mismatch["trn_spike_times_ms"]) == 560
+    assert len(mismatch["nonspecific_spike_times_ms"]) == 5
+    assert all(
+        value
+        for gate, value in artifact["gates"].items()
+        if gate != "mismatch_nonspecific_70_hz"
+    )
+    assert not artifact["gates"]["mismatch_nonspecific_70_hz"]
+    assert len(mismatch["nonspecific_positive_soma_local_maxima_ms_mV"]) == 6
+    assert not artifact["reproduced"]
 
 
 def test_aligned_on_center_verification_registers_only_screen_survivor() -> None:

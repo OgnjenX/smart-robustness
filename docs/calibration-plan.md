@@ -807,3 +807,13 @@ events rather than four. Moving the falling event coordinate from 0 to -30 mV
 therefore does not group the repeated voltage excursions into the official
 match spikes. Reject before mismatch and close fixed-threshold KInNeSS handler
 transfer without interpolating either voltage.
+
+Artifacts 371--374 calibrate one explicit non-source arm at +20 mV using only
+the recovered-cell match waveform, then independently rebuild it. Both fresh
+runs pass every Figure 6 gate and reproduce exact 15/635/4 match activity with
+the same runtime fingerprint. Artifacts 375--376 open one fixed mismatch
+holdout: relay activity remains overlap-only at cell 40 and TRN falls to 560
+events, but nonspecific output remains five rather than seven. The recovered
+mismatch waveform has only six positive somatic maxima, so no lower shared
+amplitude threshold can create seven independent cycles. Reject +20 mV and
+close scalar event-arm calibration; do not inspect another threshold.

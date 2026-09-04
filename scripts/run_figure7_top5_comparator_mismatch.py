@@ -70,15 +70,26 @@ def main() -> None:
     verified = yaml.safe_load(
         Path(profile["match_verification_artifact"]).read_text()
     )
-    if not verified["assessment"].get("advance_to_mismatch", False):
-        raise ValueError("verified match does not authorize mismatch")
-    match_outcome = verified["outcomes"][0]
-    if not match_outcome["pass"]:
-        raise ValueError("match verification does not contain a passing endpoint")
     target_count = int(profile["comparator"]["target_count"])
-    if match_outcome["target_count"] != target_count:
-        raise ValueError("registered mismatch cardinality differs from verified match")
-    match = _scoring_result(match_outcome["result"])
+    if "match_pass" in verified:
+        if not verified["match_pass"]:
+            raise ValueError("verified match does not authorize mismatch")
+        match = _scoring_result(verified["match_result"])
+        if match.comparator_target_count != target_count:
+            raise ValueError(
+                "registered mismatch cardinality differs from verified match"
+            )
+    else:
+        if not verified["assessment"].get("advance_to_mismatch", False):
+            raise ValueError("verified match does not authorize mismatch")
+        match_outcome = verified["outcomes"][0]
+        if not match_outcome["pass"]:
+            raise ValueError("match verification does not contain a passing endpoint")
+        if match_outcome["target_count"] != target_count:
+            raise ValueError(
+                "registered mismatch cardinality differs from verified match"
+            )
+        match = _scoring_result(match_outcome["result"])
 
     base = runtime_conventions_for_candidate(base_profile["candidate"])
     detector = profile["detector"]
@@ -90,6 +101,14 @@ def main() -> None:
         trn_spike_event_proximal_blend_fraction=None,
         **profile["runtime_overrides"],
     )
+    for field, expected in profile.get("runtime_expectations", {}).items():
+        if getattr(conventions, field) != expected:
+            raise ValueError(f"runtime field {field!r} does not match registration")
+    if (
+        "runtime_fingerprint" in verified
+        and verified["runtime_fingerprint"] != conventions.fingerprint
+    ):
+        raise ValueError("registered mismatch runtime differs from verified match")
     scales = {
         str(key): float(value)
         for key, value in profile["trn_to_relay_gaba"]["scales"].items()

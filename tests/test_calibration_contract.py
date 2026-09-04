@@ -651,6 +651,18 @@ FIGURE6_METHODS_GLOBAL_CALCIUM_REGISTRATION_PATH = (
 FIGURE6_METHODS_GLOBAL_CALCIUM_RESULT_PATH = (
     ROOT / "docs/validation-results/figure6-methods-global-calcium-336.yaml"
 )
+FIGURE7_NONSPECIFIC_VOLTAGE_AUDIT_PROFILE_PATH = (
+    ROOT
+    / "configs/calibration/figure7_top5_nonspecific_voltage_peak_audit_v1.yaml"
+)
+FIGURE7_NONSPECIFIC_VOLTAGE_AUDIT_REGISTRATION_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-top5-nonspecific-voltage-peak-audit-registration-337.yaml"
+)
+FIGURE7_NONSPECIFIC_VOLTAGE_AUDIT_RESULT_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-top5-nonspecific-voltage-peak-audit-338.yaml"
+)
 FIGURE7_ALIGNED_VERIFICATION_PROFILE_PATH = (
     ROOT / "configs/calibration/figure7_aligned_on_center_verification_v1.yaml"
 )
@@ -4024,6 +4036,25 @@ def test_methods_global_calcium_fails_figure6_selectivity() -> None:
     assert not artifact["gates"]["top_down_horizontal_contrast"]
     assert not artifact["assessment"]["advance_to_figure7_match"]
     assert artifact["assessment"]["figure7_holdouts_remain_locked"]
+
+
+def test_nonspecific_voltage_audit_is_registered_as_read_only() -> None:
+    profile = yaml.safe_load(
+        FIGURE7_NONSPECIFIC_VOLTAGE_AUDIT_PROFILE_PATH.read_text()
+    )
+    registration = yaml.safe_load(
+        FIGURE7_NONSPECIFIC_VOLTAGE_AUDIT_REGISTRATION_PATH.read_text()
+    )
+    assert profile["diagnostic"]["parameter_changes"] == "none"
+    assert profile["protocol"]["conditions"] == ["match", "mismatch"]
+    assert profile["diagnostic"]["positive_local_maximum_floor_mV"] == 0.0
+    assert profile["diagnostic"]["detector_threshold_upcrossing_mV"] == 30.0
+    assert profile["diagnostic"]["detector_recovery_downcrossing_mV"] == 0.0
+    assert registration["execution"]["parameter_changes"] == "none"
+    assert registration["execution"]["run_count_per_condition"] == 1
+    assert registration["stopping_rule"].startswith(
+        "Run exactly one fixed match and one fixed mismatch"
+    )
 
 
 def test_aligned_on_center_verification_registers_only_screen_survivor() -> None:

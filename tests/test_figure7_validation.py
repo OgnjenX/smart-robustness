@@ -536,4 +536,12 @@ def test_figure7_result_accepts_relay_pathway_diagnostics() -> None:
     assert result.nonspecific_trn_current_range_pA is None
     assert result.nonspecific_layer6ii_current_range_pA is None
     assert result.nonspecific_voltage_range_mV_by_compartment == ()
+    assert result.nonspecific_positive_soma_local_maxima_ms_mV == ()
+    assert result.nonspecific_positive_detector_local_maxima_ms_mV == ()
+    assert result.nonspecific_detector_voltage_range_mV is None
+    assert result.nonspecific_detector_threshold_upcrossings is None
+    assert result.nonspecific_detector_zero_downcrossings is None
+    assert result.nonspecific_detector_arm_transitions is None
+    assert result.nonspecific_detector_release_transitions is None
+    assert result.nonspecific_detector_final_armed is None
     assert result.v1_cortical_spike_times_ms == ()

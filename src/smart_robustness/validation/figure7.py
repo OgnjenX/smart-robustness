@@ -458,6 +458,18 @@ class Figure7ConditionResult:
     nonspecific_voltage_range_mV_by_compartment: tuple[
         tuple[str, float, float], ...
     ] = ()
+    nonspecific_positive_soma_local_maxima_ms_mV: tuple[
+        tuple[float, float], ...
+    ] = ()
+    nonspecific_positive_detector_local_maxima_ms_mV: tuple[
+        tuple[float, float], ...
+    ] = ()
+    nonspecific_detector_voltage_range_mV: tuple[float, float] | None = None
+    nonspecific_detector_threshold_upcrossings: int | None = None
+    nonspecific_detector_zero_downcrossings: int | None = None
+    nonspecific_detector_arm_transitions: int | None = None
+    nonspecific_detector_release_transitions: int | None = None
+    nonspecific_detector_final_armed: float | None = None
 
     def __post_init__(self) -> None:
         if self.duration_ms <= 0:
@@ -1002,6 +1014,8 @@ def run_figure7_condition(
                 "v_distal_dendrite",
                 "v_proximal_dendrite",
                 "v_soma",
+                "spike_detector_voltage",
+                "armed",
             ),
             record=True,
             name=f"figure7_{condition.value}_nonspecific_pathway_state",
@@ -1119,6 +1133,18 @@ def run_figure7_condition(
     nonspecific_voltage_range_mV_by_compartment: tuple[
         tuple[str, float, float], ...
     ] = ()
+    nonspecific_positive_soma_local_maxima_ms_mV: tuple[
+        tuple[float, float], ...
+    ] = ()
+    nonspecific_positive_detector_local_maxima_ms_mV: tuple[
+        tuple[float, float], ...
+    ] = ()
+    nonspecific_detector_voltage_range_mV = None
+    nonspecific_detector_threshold_upcrossings = None
+    nonspecific_detector_zero_downcrossings = None
+    nonspecific_detector_arm_transitions = None
+    nonspecific_detector_release_transitions = None
+    nonspecific_detector_final_armed = None
     if relay_state is not None:
         ampa = np.asarray(relay_state.port_005_gate) + np.asarray(
             relay_state.port_007_gate
@@ -1580,6 +1606,65 @@ def run_figure7_condition(
                 ),
             )
         )
+        nonspecific_soma_voltage_mV = np.asarray(
+            nonspecific_state.v_soma / brian.mV
+        )[0][diagnostic_window]
+        nonspecific_detector_voltage_mV = np.asarray(
+            nonspecific_state.spike_detector_voltage / brian.mV
+        )[0][diagnostic_window]
+        nonspecific_detector_armed = np.asarray(nonspecific_state.armed)[0][
+            diagnostic_window
+        ]
+
+        def positive_local_maxima(
+            values: np.ndarray,
+        ) -> tuple[tuple[float, float], ...]:
+            peak_indices = np.flatnonzero(
+                (values[1:-1] > values[:-2])
+                & (values[1:-1] >= values[2:])
+                & (values[1:-1] > 0.0)
+            ) + 1
+            return tuple(
+                (float(times_ms[index]), float(values[index]))
+                for index in peak_indices
+            )
+
+        nonspecific_positive_soma_local_maxima_ms_mV = positive_local_maxima(
+            nonspecific_soma_voltage_mV
+        )
+        nonspecific_positive_detector_local_maxima_ms_mV = positive_local_maxima(
+            nonspecific_detector_voltage_mV
+        )
+        nonspecific_detector_voltage_range_mV = (
+            float(np.min(nonspecific_detector_voltage_mV)),
+            float(np.max(nonspecific_detector_voltage_mV)),
+        )
+        detector_threshold_mV = conventions.spike_event_threshold_mV
+        nonspecific_detector_threshold_upcrossings = int(
+            np.count_nonzero(
+                (nonspecific_detector_voltage_mV[:-1] <= detector_threshold_mV)
+                & (nonspecific_detector_voltage_mV[1:] > detector_threshold_mV)
+            )
+        )
+        nonspecific_detector_zero_downcrossings = int(
+            np.count_nonzero(
+                (nonspecific_detector_voltage_mV[:-1] >= 0.0)
+                & (nonspecific_detector_voltage_mV[1:] < 0.0)
+            )
+        )
+        nonspecific_detector_arm_transitions = int(
+            np.count_nonzero(
+                (nonspecific_detector_armed[:-1] <= 0.5)
+                & (nonspecific_detector_armed[1:] > 0.5)
+            )
+        )
+        nonspecific_detector_release_transitions = int(
+            np.count_nonzero(
+                (nonspecific_detector_armed[:-1] > 0.5)
+                & (nonspecific_detector_armed[1:] <= 0.5)
+            )
+        )
+        nonspecific_detector_final_armed = float(nonspecific_detector_armed[-1])
     def stimulus_times(monitor) -> tuple[float, ...]:
         stimulus_start_ms = (
             pretraining_elapsed_ms + equilibration_ms + top_down_cue_lead_ms
@@ -1796,6 +1881,28 @@ def run_figure7_condition(
         nonspecific_voltage_range_mV_by_compartment=(
             nonspecific_voltage_range_mV_by_compartment
         ),
+        nonspecific_positive_soma_local_maxima_ms_mV=(
+            nonspecific_positive_soma_local_maxima_ms_mV
+        ),
+        nonspecific_positive_detector_local_maxima_ms_mV=(
+            nonspecific_positive_detector_local_maxima_ms_mV
+        ),
+        nonspecific_detector_voltage_range_mV=(
+            nonspecific_detector_voltage_range_mV
+        ),
+        nonspecific_detector_threshold_upcrossings=(
+            nonspecific_detector_threshold_upcrossings
+        ),
+        nonspecific_detector_zero_downcrossings=(
+            nonspecific_detector_zero_downcrossings
+        ),
+        nonspecific_detector_arm_transitions=(
+            nonspecific_detector_arm_transitions
+        ),
+        nonspecific_detector_release_transitions=(
+            nonspecific_detector_release_transitions
+        ),
+        nonspecific_detector_final_armed=nonspecific_detector_final_armed,
     )
     if cpp_standalone_directory is not None:
         brian.device.reinit()

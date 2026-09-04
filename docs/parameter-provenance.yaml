@@ -397,6 +397,11 @@ parameters:
     status: official-threshold-handler-combination-tested
     source: Versace et al. 2008 KInNeSS Equation 14; SANNDRA spikeevents revision history; Artifacts 361--362
     note: the recovered nonspecific cell with the KInNeSS arm emits 287 match events because the -20-to-0-mV arm and release regions overlap under the simple latch. Consecutive events begin 0.02 ms apart. Mismatch is not consulted; threshold interpolation is prohibited, while the separately named hysteretic handler remains a source-adjacent discriminator
+  model.classic_hh.nonspecific_kinness_hysteretic_handler:
+    value: hysteretic_threshold_then_zero rejected with recovered cell and -20 mV arm
+    status: legacy-handler-discriminator-tested
+    source: SANNDRA spikeevents revision history plus explicit hysteretic reconstruction; Artifacts 363--364
+    note: hysteresis removes the alternating-step pathology but emits 22 nonspecific match events in 100 ms while all Figure 6 and upstream match gates pass. Mismatch is not consulted. Close the recovered-cell/KInNeSS-threshold family without refractory or threshold fitting
   benchmark.population_sizes:
     value: see configs/*.yaml
     status: exploratory

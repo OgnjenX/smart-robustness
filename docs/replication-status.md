@@ -2703,6 +2703,17 @@ combination is rejected before mismatch. The result makes the missing legacy
 registered hysteretic handler is the only named follow-up that prevents
 re-arming until voltage returns below the arm threshold.
 
+Artifacts 363--364 apply that hysteretic handler only to the recovered
+nonspecific cell with the exact KInNeSS -20-mV arm. The alternating-step
+pathology is removed: inter-event intervals now exceed 1 ms. Figure 6 and
+upstream match remain exact at 20 training relay events and 15/635 recognition
+relay/TRN events. The nonspecific cell nevertheless emits 22 match events in
+100 ms, far above the required four. Mismatch was not run. This rejects the
+strongest available reconstruction of the missing proper-spike-detection
+semantics and closes the recovered-cell/KInNeSS-threshold route without
+threshold, refractory, or channel fitting. Retain the paper Table 3
+nonspecific cell, +30-mV arm, and current calibrated handler.
+
 Artifacts 302--307 test the only previously declared inhibitory-capacity
 interaction not covered by that timing result. Artifact 252 had screened common
 TRN-to-relay gains 1.125, 1.25, 1.5, 2, and 3 at receptor-arrival timing. The

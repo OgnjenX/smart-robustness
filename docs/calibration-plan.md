@@ -770,3 +770,10 @@ nonspecific events, beginning at alternating 0.02-ms intervals, because the
 before mismatch and do not interpolate the threshold. The next discrete test
 may use the existing hysteretic handler only in nonspecific thalamus; all
 upstream detectors and parameters must remain fixed.
+
+Artifacts 363--364 execute that isolated hysteretic-handler test. Hysteresis
+eliminates alternating-step rearming but still produces 22 nonspecific match
+events while Figure 6 and upstream 15/635 match counts remain exact. Reject the
+handler before mismatch. Close the complete recovered-cell/KInNeSS-threshold
+family without adding a refractory period, threshold interpolation, or
+individual sodium/potassium tuning.

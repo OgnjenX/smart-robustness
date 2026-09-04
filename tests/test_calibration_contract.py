@@ -4284,6 +4284,40 @@ def test_corticointralaminar_ablation_is_diagnostic_not_candidate() -> None:
     )
 
 
+def test_corticointralaminar_ablation_is_rate_neutral_and_exposes_one_event() -> None:
+    artifact = yaml.safe_load(
+        FIGURE7_CORTICOINTRALAMINAR_ABLATION_RESULT_PATH.read_text()
+    )
+    readout = artifact["causal_readout"]
+    match = artifact["match_result"]
+    mismatch = artifact["mismatch_result"]
+    expected_disabled = [
+        "modeldb112923.projection.050",
+        "modeldb112923.projection.051",
+    ]
+    assert artifact["status"] == "complete-causal-diagnostic-not-candidate"
+    assert not artifact["promotable"]
+    assert not artifact["reproduced"]
+    assert match["disabled_projection_ids"] == expected_disabled
+    assert mismatch["disabled_projection_ids"] == expected_disabled
+    assert readout["corticointralaminar_gates_are_zero"]
+    assert match["nonspecific_layer6ii_ampa_peak"] == 0.0
+    assert match["nonspecific_layer6ii_nmda_peak"] == 0.0
+    assert mismatch["nonspecific_layer6ii_ampa_peak"] == 0.0
+    assert mismatch["nonspecific_layer6ii_nmda_peak"] == 0.0
+    assert readout["match_nonspecific_events"] == 4
+    assert readout["mismatch_nonspecific_events"] == 5
+    assert readout["event_count_delta_mismatch_minus_match"] == 1
+    assert readout["match_trn_events"] == 635
+    assert readout["mismatch_trn_events"] == 560
+    assert readout["match_trn_gaba_integral_ms"] > readout[
+        "mismatch_trn_gaba_integral_ms"
+    ]
+    assert readout["classification"] == (
+        "latent_trn_disinhibition_has_correct_sign"
+    )
+
+
 def test_aligned_on_center_verification_registers_only_screen_survivor() -> None:
     profile = yaml.safe_load(FIGURE7_ALIGNED_VERIFICATION_PROFILE_PATH.read_text())
     registration = yaml.safe_load(

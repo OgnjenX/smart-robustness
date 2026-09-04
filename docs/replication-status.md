@@ -2591,6 +2591,20 @@ from about 1.55 to 0.546, while the TRN GABA integral falls only from about
 with the spatially incorrect relay paths, not solely on the published
 disinhibitory mechanism. Figure 7 and downstream holdouts remain locked.
 
+Artifacts 345--346 causally remove only the two layer-6II-to-nonspecific
+thalamic projections (050 AMPA and 051 NMDA) from the fixed peak-aligned
+top-five recognition network, after an unchanged fresh Figure 6 handoff. Both
+recorded receptor gates and their summed current are exactly zero. The ablated
+match nevertheless remains 15/635/4 and the ablated mismatch remains 3/560/5,
+identical to the intact aggregate counts. The TRN GABA integral is still lower
+in mismatch (1149.3 versus 1257.5 gate-ms), and nonspecific output retains the
+correct one-event direction. Thus corticointralaminar excitation is not
+masking two missing mismatch events; the intact TRN-to-nonspecific path carries
+a genuine disinhibition signal but has only one-event output capacity at this
+operating point. The ablated network is explicitly non-promotable. Subsequent
+calibration must act on the inhibitory transfer or nonspecific membrane
+response, not on event detection or removal of cortical excitation.
+
 Artifacts 302--307 test the only previously declared inhibitory-capacity
 interaction not covered by that timing result. Artifact 252 had screened common
 TRN-to-relay gains 1.125, 1.25, 1.5, 2, and 3 at receptor-arrival timing. The

@@ -693,3 +693,13 @@ that the earlier exact 70-Hz rate relied on excitation carried by nonoverlap
 paths that should have been silent. The next mechanism must make genuine
 nonspecific disinhibition dominate after spatial mismatch, not restore those
 incorrect relay paths.
+
+Artifacts 345--346 isolate that disinhibitory path by removing recognition-only
+layer-6II-to-nonspecific AMPA/NMDA projections 050/051. Their gates and currents
+are exactly zero, but the full counts remain 15/635/4 in match and 3/560/5 in
+mismatch. Because mismatch still has the lower TRN GABA integral and one extra
+nonspecific event, the inhibitory path has the correct causal sign. Because
+the ablation changes no aggregate rate, cortical excitation is not the source
+of the missing two mismatch events. Treat this network only as a causal
+diagnostic. The next calibration target is the TRN-GABA-to-nonspecific membrane
+transfer, with detector and corticointralaminar hypotheses closed.

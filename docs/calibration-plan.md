@@ -586,3 +586,9 @@ match exactly reproduces relay cells 38--42 with three events each, 635 TRN
 events, and four nonspecific events (40 Hz). Registration 318 fixes this
 endpoint for one independently rebuilt match with full detector-cycle checks;
 mismatch remains locked until that verification passes.
+
+Artifact 319 independently rebuilds the top-five endpoint and reproduces
+15/635/4 exactly. Across diagnostic cells 22, 31, 38--42, 49, and 58, emitted
+TRN events equal detector upcrossings, arm transitions, and releases (9 or 10
+cycles per cell). Registration 320 therefore unlocks one fixed vertical
+mismatch with no retuning; all later figures remain locked.

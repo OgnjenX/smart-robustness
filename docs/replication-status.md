@@ -2624,6 +2624,12 @@ independent full-detector match. This is promising but is not yet Figure 7:
 mismatch has not been consulted, and the mechanism remains labeled as a
 calibrated reconstruction rather than recovered 2008 source.
 
+Artifact 319 independently reproduces the top-five match at 15 relay, 635 TRN,
+and four nonspecific events. Every sampled TRN event is a complete fresh
+detector cycle. Registration 320 now permits one fixed vertical mismatch with
+no retuning. Figure 7 is still unproven until that holdout satisfies overlap,
+TRN-order, disinhibition, and exact 70-Hz gates.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

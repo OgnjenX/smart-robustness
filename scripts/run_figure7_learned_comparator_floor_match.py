@@ -56,6 +56,7 @@ def _write(
     }[transform]
     survivors = [item[candidate_key] for item in outcomes if item["pass"]]
     selected = max(survivors) if survivors else None
+    verification = profile.get("verification_screen_artifact") is not None
     artifact = {
         "schema_version": 1,
         "id": output.stem,
@@ -68,6 +69,7 @@ def _write(
         "runtime_fingerprint": runtime_fingerprint,
         "figure6_artifact": profile["figure6_artifact"],
         "uniform_input_control_artifact": profile["uniform_input_control_artifact"],
+        "verification_screen_artifact": profile.get("verification_screen_artifact"),
         "holdouts_consulted": ["figure7_match"],
         "mismatch_consulted": False,
         "handoff_figure6_population_spikes": training_spikes,
@@ -90,9 +92,13 @@ def _write(
         "assessment": {
             "registered_candidate_count": len(profile["dimension"]["grid"]),
             "completed_candidate_count": len(outcomes),
-            "advance_to_independent_match_verification": bool(complete and survivors),
-            "advance_to_mismatch": False,
-            "mismatch_remains_locked": True,
+            "advance_to_independent_match_verification": bool(
+                complete and survivors and not verification
+            ),
+            "advance_to_mismatch": bool(complete and survivors and verification),
+            "mismatch_remains_locked": not bool(
+                complete and survivors and verification
+            ),
         },
         "next_gate": profile["next_gate"],
     }
@@ -114,6 +120,11 @@ def main() -> None:
     brian.prefs.codegen.target = "numpy"
     profile = yaml.safe_load(Path(args.profile).read_text())
     base_profile = yaml.safe_load(Path(profile["base_profile"]).read_text())
+    verification_path = profile.get("verification_screen_artifact")
+    if verification_path is not None:
+        screen = yaml.safe_load(Path(verification_path).read_text())
+        if screen["selected_target_count"] != profile["dimension"]["grid"][0]:
+            raise ValueError("verification target count differs from screen survivor")
     base = runtime_conventions_for_candidate(base_profile["candidate"])
     detector = profile["detector"]
     conventions = replace(
@@ -161,6 +172,9 @@ def main() -> None:
             conventions=conventions,
             duration_ms=float(protocol["duration_ms"]),
             dt_ms=float(protocol["dt_ms"]),
+            record_relay_diagnostics=bool(
+                protocol.get("record_relay_diagnostics", False)
+            ),
             persistent_projection_weight_scales=scales,
             comparator_relay_floor=(
                 float(candidate) if transform == "linear_floor" else None
@@ -212,6 +226,31 @@ def main() -> None:
                 and result.top_down_current_termination_time_ms == source_events[0]
             ),
         }
+        event_counts: dict[int, int] = {}
+        upcrossings: dict[int, int] = {}
+        arms: dict[int, int] = {}
+        releases: dict[int, int] = {}
+        if protocol.get("record_relay_diagnostics", False):
+            sampled = tuple(
+                index for index, _ in result.trn_detector_arm_transitions_by_index
+            )
+            event_counts = {
+                index: result.trn_spike_indices.count(index) for index in sampled
+            }
+            upcrossings = dict(result.trn_detector_threshold_upcrossings_by_index)
+            arms = dict(result.trn_detector_arm_transitions_by_index)
+            releases = dict(result.trn_detector_release_transitions_by_index)
+            gates["sampled_trn_events_have_fresh_cycles"] = (
+                bool(event_counts)
+                and any(event_counts.values())
+                and all(
+                    event_counts[index]
+                    == upcrossings[index]
+                    == arms[index]
+                    == releases[index]
+                    for index in event_counts
+                )
+            )
         outcomes.append(
             {
                 (
@@ -225,6 +264,10 @@ def main() -> None:
                 else float(candidate),
                 "result": result,
                 "relay_event_counts_by_index": relay_counts,
+                "sampled_trn_event_counts_by_index": event_counts,
+                "sampled_trn_threshold_upcrossings_by_index": upcrossings,
+                "sampled_trn_arm_transitions_by_index": arms,
+                "sampled_trn_release_transitions_by_index": releases,
                 "gates": gates,
                 "pass": all(gates.values()),
             }

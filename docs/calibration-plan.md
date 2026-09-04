@@ -577,3 +577,12 @@ control. The gate recruits only learned-field cells 39--41, yielding 9 relay,
 607 TRN, and 5 nonspecific events. It fails both the full horizontal relay-set
 and 40-Hz match gates. Close thresholded half-maximum support without moving
 the threshold after observing the learned map; mismatch remains locked.
+
+Artifacts 316--317 preregister and test fixed-cardinality learned competition.
+Cardinality five comes from the five nonzero sensory pixels in the archived
+training image, not from Figure 7 output; the gate ranks only selected-category
+adaptive weights and supplies no orientation or condition label. The sole
+match exactly reproduces relay cells 38--42 with three events each, 635 TRN
+events, and four nonspecific events (40 Hz). Registration 318 fixes this
+endpoint for one independently rebuilt match with full detector-cycle checks;
+mismatch remains locked until that verification passes.

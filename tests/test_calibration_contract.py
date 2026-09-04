@@ -547,6 +547,16 @@ FIGURE7_TOP5_COMPARATOR_PROFILE_PATH = (
 FIGURE7_TOP5_COMPARATOR_REGISTRATION_PATH = (
     ROOT / "docs/validation-results/figure7-top5-comparator-registration-316.yaml"
 )
+FIGURE7_TOP5_COMPARATOR_RESULT_PATH = (
+    ROOT / "docs/validation-results/figure7-top5-comparator-match-317.yaml"
+)
+FIGURE7_TOP5_COMPARATOR_VERIFICATION_PROFILE_PATH = (
+    ROOT / "configs/calibration/figure7_top5_comparator_verification_v1.yaml"
+)
+FIGURE7_TOP5_COMPARATOR_VERIFICATION_REGISTRATION_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-top5-comparator-verification-registration-318.yaml"
+)
 FIGURE7_ALIGNED_VERIFICATION_PROFILE_PATH = (
     ROOT / "configs/calibration/figure7_aligned_on_center_verification_v1.yaml"
 )
@@ -3396,6 +3406,52 @@ def test_top5_comparator_cardinality_is_derived_before_execution() -> None:
     )
     assert registration["stopping_rule"].startswith("Run the sole top-five")
     assert registration["locked_holdouts"][0] == "figure7_mismatch"
+
+
+def test_top5_comparator_is_an_exact_match_screen_survivor() -> None:
+    artifact = yaml.safe_load(FIGURE7_TOP5_COMPARATOR_RESULT_PATH.read_text())
+    outcome = artifact["outcomes"][0]
+    result = outcome["result"]
+    assert artifact["classification"] == (
+        "calibrated-reconstruction-not-recovered-source"
+    )
+    assert artifact["match_survivor_target_counts"] == [5]
+    assert artifact["selected_target_count"] == 5
+    assert outcome["target_count"] == 5
+    assert result["comparator_transform"] == "top_k_binary"
+    assert set(result["relay_spike_indices"]) == {38, 39, 40, 41, 42}
+    assert set(outcome["relay_event_counts_by_index"].values()) == {3}
+    assert len(result["relay_spike_times_ms"]) == 15
+    assert len(result["trn_spike_times_ms"]) == 635
+    assert len(result["nonspecific_spike_times_ms"]) == 4
+    assert outcome["pass"]
+    assert artifact["assessment"]["advance_to_independent_match_verification"]
+    assert not artifact["assessment"]["advance_to_mismatch"]
+    assert artifact["assessment"]["mismatch_remains_locked"]
+
+
+def test_top5_verification_registers_only_the_screen_survivor() -> None:
+    profile = yaml.safe_load(
+        FIGURE7_TOP5_COMPARATOR_VERIFICATION_PROFILE_PATH.read_text()
+    )
+    registration = yaml.safe_load(
+        FIGURE7_TOP5_COMPARATOR_VERIFICATION_REGISTRATION_PATH.read_text()
+    )
+    assert profile["dimension"]["grid"] == [5]
+    assert profile["protocol"]["record_relay_diagnostics"]
+    assert registration["screen_result"] == {
+        "selected_target_count": 5,
+        "relay_active_indices": [38, 39, 40, 41, 42],
+        "relay_events": 15,
+        "trn_events": 635,
+        "nonspecific_events": 4,
+        "nonspecific_rate_hz": 40.0,
+        "all_match_gates_passed": True,
+    }
+    assert registration["verification"]["candidates"] == 1
+    assert registration["verification"]["independently_rebuilt_network"]
+    assert registration["verification"]["full_detector_cycle_diagnostics"]
+    assert registration["mismatch_lock"].startswith("Do not run mismatch")
 
 
 def test_aligned_on_center_verification_registers_only_screen_survivor() -> None:

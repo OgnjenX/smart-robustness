@@ -2615,6 +2615,15 @@ nonspecific events. Because it loses the outer learned-bar cells and gives
 50 Hz rather than 40 Hz, it fails match before mismatch. No threshold is moved
 post hoc; Figure 7 and downstream holdouts remain locked.
 
+Artifacts 316--317 find the first exact match under the explicitly calibrated
+comparator reconstruction. A top-five competitive mask, whose cardinality is
+fixed by the archived five-pixel training pattern, reproduces horizontal relay
+cells 38--42 with three events each, 635 TRN events, and exactly four
+nonspecific events (40 Hz). Registration 318 locks the endpoint for an
+independent full-detector match. This is promising but is not yet Figure 7:
+mismatch has not been consulted, and the mechanism remains labeled as a
+calibrated reconstruction rather than recovered 2008 source.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

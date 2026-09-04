@@ -2,6 +2,11 @@ schema_version: 1
 id: figure6-nonspecific-distal-gaba-source-327
 date: '2026-09-04'
 status: figure6-failed
+validity_note: >-
+  The initial runner used the default monitor set, which omits layers 2/3, 5,
+  and 6I; its cortical_chain_complete value is therefore not interpretable.
+  The relay active-set, per-cell event-count, and total-event gates are fully
+  observed and independently sufficient to reject this Figure 6 prerequisite.
 profile: configs/calibration/figure6_nonspecific_distal_gaba_supplement_v1.yaml
 registration_artifact: docs/validation-results/figure6-nonspecific-distal-gaba-source-registration-326.yaml
 base_candidate_fingerprint: 12e0245e9a3044073200e90443582885a5410cf39b8b18d50d22a04a2fc48604
@@ -1001,5 +1006,7 @@ pass: false
 assessment:
   advance_to_figure7_match: false
   figure7_holdouts_remain_locked: true
+  cortical_chain_gate_valid: false
+  decisive_failure: relay recruitment and event-count gates
 next_gate: Only a complete Figure 6 pass may authorize a separately registered top-five
   Figure 7 match under the paper-supplement distal GABA source alternative.

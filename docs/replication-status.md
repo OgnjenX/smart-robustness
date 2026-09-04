@@ -2655,10 +2655,11 @@ TRN-to-nonspecific distal GABA projection. The paper-supplement tuple
 runtime convention; the historical archived tuple (1.461, 1/4 ms) remains the
 default. The supplement alternative fails the fresh Figure 6 gate with 104
 relay events instead of 20, trained-cell counts 5/6/6/6/5, additional relay
-recruitment, and an incomplete cortical chain. Its Figure 7 match and mismatch
-are therefore not run. This source discrepancy cannot repair the remaining
-50-versus-70-Hz Figure 7 mismatch deficit while preserving the learned
-baseline.
+recruitment. Its initial runner omitted three cortical populations required by
+the chain scorer, so the reported chain failure is not interpreted; the relay
+failures already reject the candidate. Figure 7 match and mismatch are not
+run. This source discrepancy cannot repair the remaining 50-versus-70-Hz
+Figure 7 mismatch deficit while preserving the learned baseline.
 
 ## Validation gates
 

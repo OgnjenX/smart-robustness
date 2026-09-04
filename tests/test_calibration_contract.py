@@ -3748,7 +3748,10 @@ def test_projection049_supplement_tuple_fails_figure6_prerequisite() -> None:
     assert not artifact["gates"]["relay_active_indices"]
     assert not artifact["gates"]["relay_events_per_active_index"]
     assert not artifact["gates"]["relay_events"]
-    assert not artifact["gates"]["cortical_chain_complete"]
+    assert not artifact["assessment"]["cortical_chain_gate_valid"]
+    assert artifact["assessment"]["decisive_failure"].startswith(
+        "relay recruitment"
+    )
     assert artifact["gates"]["causal_learning_pair"]
     assert artifact["gates"]["top_down_horizontal_contrast"]
     assert not artifact["assessment"]["advance_to_figure7_match"]

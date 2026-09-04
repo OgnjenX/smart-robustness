@@ -15,6 +15,7 @@ import yaml
 from smart_robustness.protocols import MatchCondition
 from smart_robustness.validation.calibration import runtime_conventions_for_candidate
 from smart_robustness.validation.figure6 import (
+    Figure6LearningProtocol,
     assess_figure6_cortical_recruitment,
     assess_figure6_top_down_timing,
     run_figure6_learning,
@@ -23,6 +24,15 @@ from smart_robustness.validation.figure7 import (
     TopDownCurrentMode,
     expand_figure7_source_expectation_toward_bounds,
     run_figure7_condition,
+)
+
+FIGURE6_MONITORED_POPULATIONS = (
+    "thalamic_relay",
+    "layer4_excitatory_v1",
+    "layer23_excitatory_v1",
+    "layer5_excitatory_v1",
+    "layer6i_excitatory_v1",
+    "layer6ii_excitatory_v1",
 )
 
 
@@ -136,6 +146,9 @@ def main() -> None:
         }
         training = run_figure6_learning(
             conventions=conventions,
+            protocol=Figure6LearningProtocol(
+                monitored_populations=FIGURE6_MONITORED_POPULATIONS
+            ),
             projection_weight_scales=scales,
             brian=brian,
         )

@@ -1,0 +1,44 @@
+schema_version: 1
+id: figure7-top5-nonspecific-gaba-transfer-verification-registration-331
+date: '2026-09-04'
+status: registered-before-execution-independent-verification
+profile: configs/calibration/figure7_top5_nonspecific_gaba_transfer_verification_v1.yaml
+screen_result:
+  artifact: docs/validation-results/figure7-top5-nonspecific-gaba-transfer-match-330.yaml
+  selected_common_scale: 0.75
+  figure6_relay_events: 20
+  match_counts: {relay: 15, trn: 635, nonspecific: 4}
+  sampled_match_trn_detector_cycles_complete: true
+fixed_candidate:
+  classification: calibrated-reconstruction-not-recovered-source
+  common_scale: 0.75
+  projection_ids:
+    - modeldb112923.projection.047
+    - modeldb112923.projection.048
+    - modeldb112923.projection.049
+  comparator_transform: top_k_binary
+  comparator_target_count: 5
+  learned_headroom_fraction: 1.0
+  source_index: 40
+  cue_current_pA: 800.0
+  current_mode: until_cued_cell_first_event
+  receptor_peak_cue_lead_ms: 11.35773631178703
+  trn_detector: {arm_mV: -20.0, release_mV: -30.0}
+  duration_ms: 100.0
+  dt_ms: 0.01
+verification:
+  candidate_count: 1
+  independently_rebuilt_figure6_network: true
+  independently_rebuilt_match_network: true
+  complete_figure6_cortical_monitoring: true
+  full_match_detector_cycle_diagnostics: true
+stopping_rule: >-
+  Run one fresh Figure 6 and one fresh match at the fixed 0.75 scale. Reject on
+  any prerequisite or match gate. Only an exact independent pass may authorize
+  one fixed vertical mismatch; no parameter may change after verification.
+locked_holdouts:
+  - figure7_mismatch_with_nonspecific_gaba_transfer
+  - figure10_reset
+  - figure14_spectra
+  - figure15_local_synchrony
+  - figure16_long_range_synchrony

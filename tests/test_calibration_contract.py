@@ -617,6 +617,14 @@ FIGURE7_TOP5_NONSPECIFIC_GABA_TRANSFER_RESULT_PATH = (
     ROOT
     / "docs/validation-results/figure7-top5-nonspecific-gaba-transfer-match-330.yaml"
 )
+FIGURE7_TOP5_NONSPECIFIC_GABA_TRANSFER_VERIFICATION_PROFILE_PATH = (
+    ROOT
+    / "configs/calibration/figure7_top5_nonspecific_gaba_transfer_verification_v1.yaml"
+)
+FIGURE7_TOP5_NONSPECIFIC_GABA_TRANSFER_VERIFICATION_REGISTRATION_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-top5-nonspecific-gaba-transfer-verification-registration-331.yaml"
+)
 FIGURE7_ALIGNED_VERIFICATION_PROFILE_PATH = (
     ROOT / "configs/calibration/figure7_aligned_on_center_verification_v1.yaml"
 )
@@ -3835,6 +3843,26 @@ def test_top5_nonspecific_gaba_transfer_selects_weakest_match_survivor() -> None
     assert artifact["assessment"]["advance_to_independent_match_verification"]
     assert not artifact["assessment"]["advance_to_mismatch"]
     assert artifact["assessment"]["mismatch_remains_locked"]
+
+
+def test_top5_nonspecific_gaba_transfer_verification_is_fixed_to_screen() -> None:
+    profile = yaml.safe_load(
+        FIGURE7_TOP5_NONSPECIFIC_GABA_TRANSFER_VERIFICATION_PROFILE_PATH.read_text()
+    )
+    registration = yaml.safe_load(
+        FIGURE7_TOP5_NONSPECIFIC_GABA_TRANSFER_VERIFICATION_REGISTRATION_PATH.read_text()
+    )
+    assert profile["verification_screen_artifact"] == str(
+        FIGURE7_TOP5_NONSPECIFIC_GABA_TRANSFER_RESULT_PATH.relative_to(ROOT)
+    )
+    assert profile["nonspecific_gaba_transfer"]["common_scale_grid"] == [0.75]
+    assert registration["screen_result"]["selected_common_scale"] == 0.75
+    assert registration["fixed_candidate"]["common_scale"] == 0.75
+    assert registration["verification"]["candidate_count"] == 1
+    assert registration["verification"][
+        "complete_figure6_cortical_monitoring"
+    ]
+    assert registration["stopping_rule"].startswith("Run one fresh Figure 6")
 
 
 def test_aligned_on_center_verification_registers_only_screen_survivor() -> None:

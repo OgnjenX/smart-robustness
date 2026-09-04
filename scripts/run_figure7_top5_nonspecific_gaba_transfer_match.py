@@ -74,6 +74,9 @@ def _write(
         "runtime_fingerprint": runtime_fingerprint,
         "figure6_baseline_artifact": profile["figure6_baseline_artifact"],
         "top5_pair_artifact": profile["top5_pair_artifact"],
+        "verification_screen_artifact": profile.get(
+            "verification_screen_artifact"
+        ),
         "holdouts_consulted": ["figure6", "figure7_match"],
         "mismatch_consulted": False,
         "outcomes": outcomes,
@@ -85,10 +88,20 @@ def _write(
             ),
             "completed_candidate_count": len(outcomes),
             "advance_to_independent_match_verification": bool(
-                complete and survivors
+                complete
+                and survivors
+                and profile.get("verification_screen_artifact") is None
             ),
-            "advance_to_mismatch": False,
-            "mismatch_remains_locked": True,
+            "advance_to_mismatch": bool(
+                complete
+                and survivors
+                and profile.get("verification_screen_artifact") is not None
+            ),
+            "mismatch_remains_locked": not bool(
+                complete
+                and survivors
+                and profile.get("verification_screen_artifact") is not None
+            ),
         },
         "next_gate": profile["next_gate"],
     }
@@ -113,6 +126,12 @@ def main() -> None:
     brian.prefs.codegen.target = "numpy"
     profile = yaml.safe_load(Path(args.profile).read_text())
     base_profile = yaml.safe_load(Path(profile["base_profile"]).read_text())
+    verification_path = profile.get("verification_screen_artifact")
+    if verification_path is not None:
+        screen = yaml.safe_load(Path(verification_path).read_text())
+        grid = profile["nonspecific_gaba_transfer"]["common_scale_grid"]
+        if grid != [screen["selected_common_scale"]]:
+            raise ValueError("verification scale differs from screen selection")
     base = runtime_conventions_for_candidate(base_profile["candidate"])
     detector = profile["detector"]
     conventions = replace(

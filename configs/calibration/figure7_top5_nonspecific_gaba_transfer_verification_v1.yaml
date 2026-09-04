@@ -1,0 +1,62 @@
+schema_version: 1
+name: figure7-top5-nonspecific-gaba-transfer-verification-v1
+status: registered-before-execution-independent-verification
+registration_artifact: docs/validation-results/figure7-top5-nonspecific-gaba-transfer-verification-registration-331.yaml
+verification_screen_artifact: docs/validation-results/figure7-top5-nonspecific-gaba-transfer-match-330.yaml
+base_profile: configs/calibration/figure6_kinness_equation27_transition_v1.yaml
+figure6_baseline_artifact: docs/validation-results/figure6-projection022-distal003-217.yaml
+top5_pair_artifact: docs/validation-results/figure7-top5-comparator-pair-321.yaml
+detector: {arm_mV: -20.0, release_mV: -30.0}
+runtime_overrides:
+  projection_source_convention: paper_supplement_cross_checked
+trn_to_relay_gaba:
+  scales:
+    modeldb112923.projection.000: 0.01
+    modeldb112923.projection.001: 0.01
+    modeldb112923.projection.004: 0.03
+nonspecific_gaba_transfer:
+  projection_ids:
+    - modeldb112923.projection.047
+    - modeldb112923.projection.048
+    - modeldb112923.projection.049
+  common_scale_grid: [0.75]
+  source_control_scale: 1.0
+  selection_rule: reproduce the sole match-selected scale
+learned_state:
+  source_index: 40
+  headroom_fraction: 1.0
+comparator:
+  transform: top_k_binary
+  target_count: 5
+protocol:
+  top_down_current_pA: 800.0
+  top_down_current_mode: until_cued_cell_first_event
+  top_down_cue_lead_ms: 11.35773631178703
+  equilibration_ms: 0.0
+  duration_ms: 100.0
+  dt_ms: 0.01
+  record_relay_diagnostics: true
+figure6_gate:
+  relay_active_indices: [38, 39, 40, 41, 42]
+  relay_events_per_active_index: 4
+  relay_events: 20
+  cortical_chain_complete: true
+  causal_learning_pair: true
+  top_down_horizontal_contrast: '>0'
+match_gate:
+  relay_active_indices: [38, 39, 40, 41, 42]
+  minimum_relay_events_per_active_index: 1
+  trn_events: '>0'
+  nonspecific_events: 4
+  nonspecific_rate_hz: 40.0
+  sampled_trn_events_have_fresh_cycles: true
+next_gate: >-
+  Register exactly one fixed 0.75-scale vertical mismatch only if this fresh
+  network independently repeats every Figure 6 and match gate. Do not retune
+  the transfer, comparator, timing, learned state, or detector.
+locked_holdouts:
+  - figure7_mismatch_with_nonspecific_gaba_transfer
+  - figure10_reset
+  - figure14_spectra
+  - figure15_local_synchrony
+  - figure16_long_range_synchrony

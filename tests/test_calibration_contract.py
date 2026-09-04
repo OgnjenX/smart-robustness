@@ -601,6 +601,14 @@ FIGURE6_NONSPECIFIC_DISTAL_GABA_REGISTRATION_PATH = (
 FIGURE6_NONSPECIFIC_DISTAL_GABA_RESULT_PATH = (
     ROOT / "docs/validation-results/figure6-nonspecific-distal-gaba-source-327.yaml"
 )
+FIGURE7_TOP5_NONSPECIFIC_GABA_TRANSFER_PROFILE_PATH = (
+    ROOT
+    / "configs/calibration/figure7_top5_nonspecific_gaba_transfer_match_v1.yaml"
+)
+FIGURE7_TOP5_NONSPECIFIC_GABA_TRANSFER_REGISTRATION_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-top5-nonspecific-gaba-transfer-registration-328.yaml"
+)
 FIGURE7_ALIGNED_VERIFICATION_PROFILE_PATH = (
     ROOT / "configs/calibration/figure7_aligned_on_center_verification_v1.yaml"
 )
@@ -3745,6 +3753,43 @@ def test_projection049_supplement_tuple_fails_figure6_prerequisite() -> None:
     assert artifact["gates"]["top_down_horizontal_contrast"]
     assert not artifact["assessment"]["advance_to_figure7_match"]
     assert artifact["assessment"]["figure7_holdouts_remain_locked"]
+
+
+def test_top5_nonspecific_gaba_transfer_is_preregistered_match_first() -> None:
+    profile = yaml.safe_load(
+        FIGURE7_TOP5_NONSPECIFIC_GABA_TRANSFER_PROFILE_PATH.read_text()
+    )
+    registration = yaml.safe_load(
+        FIGURE7_TOP5_NONSPECIFIC_GABA_TRANSFER_REGISTRATION_PATH.read_text()
+    )
+    expected_ids = [
+        "modeldb112923.projection.047",
+        "modeldb112923.projection.048",
+        "modeldb112923.projection.049",
+    ]
+    assert profile["nonspecific_gaba_transfer"]["projection_ids"] == expected_ids
+    assert profile["nonspecific_gaba_transfer"]["common_scale_grid"] == [
+        0.25,
+        0.5,
+        0.75,
+        1.0,
+    ]
+    assert profile["nonspecific_gaba_transfer"]["selection_rule"].startswith(
+        "weakest"
+    )
+    assert registration["registered_dimension"]["projection_ids"] == expected_ids
+    assert registration["registered_dimension"]["common_scales"] == [
+        0.25,
+        0.5,
+        0.75,
+        1.0,
+    ]
+    assert registration["fixed"]["relative_projection_weights_unchanged"]
+    assert registration["scope_boundary"]["applies_during"] == [
+        "Figure 6 learning",
+        "Figure 7 recognition",
+    ]
+    assert registration["stopping_rule"].startswith("For each registered scale")
 
 
 def test_aligned_on_center_verification_registers_only_screen_survivor() -> None:

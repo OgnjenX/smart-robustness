@@ -1,0 +1,64 @@
+schema_version: 1
+id: figure7-top5-nonspecific-gaba-transfer-registration-328
+date: '2026-09-04'
+status: registered-before-execution-calibrated-output-transfer
+profile: configs/calibration/figure7_top5_nonspecific_gaba_transfer_match_v1.yaml
+rationale:
+  - >-
+    The top-five comparator already recovers overlap-only mismatch and the
+    correct relay/TRN/nonspecific directions, leaving only five rather than
+    seven mismatch nonspecific events while match is exactly four.
+  - >-
+    Full match diagnostics show 1257.55 ms of integrated TRN GABA gate versus
+    1149.32 ms in mismatch. A common transfer scale can test whether that
+    source-generated difference crosses distinct output thresholds without
+    changing the three published compartment ratios.
+  - >-
+    This is an explicit behavioral calibration, not a recovered 2008 value.
+    The four quarter-strength points form one finite coarse grid from weak
+    inhibition to the archived source control; zero is excluded because it
+    deletes the pathway.
+registered_dimension:
+  projection_ids:
+    - modeldb112923.projection.047
+    - modeldb112923.projection.048
+    - modeldb112923.projection.049
+  common_scales: [0.25, 0.5, 0.75, 1.0]
+  candidate_count: 4
+  selection_rule: weakest complete Figure 6 and Figure 7 match survivor
+fixed:
+  relative_projection_weights_unchanged: true
+  relative_compartment_targets_unchanged: true
+  receptor_kinetics_delays_and_reversals_unchanged: true
+  comparator_transform: top_k_binary
+  comparator_target_count: 5
+  learned_headroom_fraction: 1.0
+  source_index: 40
+  cue_current_pA: 800.0
+  current_mode: until_cued_cell_first_event
+  receptor_peak_cue_lead_ms: 11.35773631178703
+  trn_detector: {arm_mV: -20.0, release_mV: -30.0}
+  duration_ms: 100.0
+  dt_ms: 0.01
+scope_boundary:
+  classification: calibrated-reconstruction-not-recovered-source
+  changes: common receptor-density transfer on TRN-to-nonspecific GABA contacts
+  applies_during:
+    - Figure 6 learning
+    - Figure 7 recognition
+  leaves_unchanged:
+    - neuron and synapse equations
+    - stimulus values and timing
+    - learned comparator and cardinality
+    - TRN-to-relay calibration
+stopping_rule: >-
+  For each registered scale, run a fresh complete Figure 6 first and construct
+  match only after every prerequisite passes. Select the weakest match survivor
+  using no mismatch result. Do not interpolate or expand the grid. Require an
+  independent full-detector match before opening one fixed mismatch.
+locked_holdouts:
+  - figure7_mismatch_with_nonspecific_gaba_transfer
+  - figure10_reset
+  - figure14_spectra
+  - figure15_local_synchrony
+  - figure16_long_range_synchrony

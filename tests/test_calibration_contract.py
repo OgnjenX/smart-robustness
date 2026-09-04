@@ -685,6 +685,16 @@ FIGURE7_TOP5_ARRIVAL_VERIFICATION_RESULT_PATH = (
     ROOT
     / "docs/validation-results/figure7-top5-arrival-aligned-verification-342.yaml"
 )
+FIGURE7_TOP5_ARRIVAL_MISMATCH_PROFILE_PATH = (
+    ROOT / "configs/calibration/figure7_top5_arrival_aligned_mismatch_v1.yaml"
+)
+FIGURE7_TOP5_ARRIVAL_MISMATCH_REGISTRATION_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-top5-arrival-aligned-mismatch-registration-343.yaml"
+)
+FIGURE7_TOP5_ARRIVAL_PAIR_RESULT_PATH = (
+    ROOT / "docs/validation-results/figure7-top5-arrival-aligned-pair-344.yaml"
+)
 FIGURE7_ALIGNED_VERIFICATION_PROFILE_PATH = (
     ROOT / "configs/calibration/figure7_aligned_on_center_verification_v1.yaml"
 )
@@ -4162,6 +4172,45 @@ def test_top5_arrival_verification_registers_exact_screen_survivor() -> None:
     assert registration["verification"]["independently_rebuilt_match"]
     assert registration["verification"]["full_detector_cycle_diagnostics"]
     assert registration["mismatch_lock"].startswith("Do not run mismatch")
+
+
+def test_top5_arrival_match_verifies_before_mismatch_registration() -> None:
+    artifact = yaml.safe_load(
+        FIGURE7_TOP5_ARRIVAL_VERIFICATION_RESULT_PATH.read_text()
+    )
+    outcome = artifact["outcomes"][0]
+    result = outcome["result"]
+    assert outcome["pass"]
+    assert len(result["relay_spike_times_ms"]) == 15
+    assert len(result["trn_spike_times_ms"]) == 633
+    assert len(result["nonspecific_spike_times_ms"]) == 4
+    assert outcome["gates"]["sampled_trn_events_have_fresh_cycles"]
+    assert artifact["assessment"]["advance_to_mismatch"]
+    assert not artifact["assessment"]["mismatch_remains_locked"]
+
+
+def test_top5_arrival_mismatch_is_fixed_after_verified_match() -> None:
+    profile = yaml.safe_load(
+        FIGURE7_TOP5_ARRIVAL_MISMATCH_PROFILE_PATH.read_text()
+    )
+    registration = yaml.safe_load(
+        FIGURE7_TOP5_ARRIVAL_MISMATCH_REGISTRATION_PATH.read_text()
+    )
+    assert profile["comparator"]["target_count"] == 5
+    assert profile["protocol"]["top_down_cue_lead_ms"] == 7.85
+    assert registration["authorization"]["match_counts"] == {
+        "relay": 15,
+        "trn": 633,
+        "nonspecific": 4,
+    }
+    assert registration["authorization"][
+        "sampled_match_trn_detector_cycles_complete"
+    ]
+    assert registration["execution"]["condition"] == "vertical_mismatch"
+    assert registration["execution"]["run_count"] == 1
+    assert registration["stopping_rule"].startswith(
+        "Run exactly one fresh vertical mismatch"
+    )
 
 
 def test_aligned_on_center_verification_registers_only_screen_survivor() -> None:

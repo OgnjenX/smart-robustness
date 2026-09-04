@@ -775,6 +775,10 @@ FIGURE7_NONSPECIFIC_KINNESS_AXIAL_REGISTRATION_PATH = (
     ROOT
     / "docs/validation-results/figure7-top5-nonspecific-kinness-axial-registration-357.yaml"
 )
+FIGURE7_NONSPECIFIC_KINNESS_AXIAL_RESULT_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-top5-nonspecific-kinness-axial-match-358.yaml"
+)
 FIGURE7_ALIGNED_VERIFICATION_PROFILE_PATH = (
     ROOT / "configs/calibration/figure7_aligned_on_center_verification_v1.yaml"
 )
@@ -4709,6 +4713,46 @@ def test_nonspecific_kinness_axial_source_discriminator_is_isolated() -> None:
         "Run one fresh complete Figure 6"
     )
     assert "figure7_mismatch" in registration["locked_holdouts"]
+
+
+def test_nonspecific_kinness_axial_source_fails_match_before_mismatch() -> None:
+    artifact = yaml.safe_load(
+        FIGURE7_NONSPECIFIC_KINNESS_AXIAL_RESULT_PATH.read_text()
+    )
+    assert artifact["id"] == "figure7-top5-nonspecific-kinness-axial-match-358"
+    assert artifact["status"] == "match-failed"
+    assert artifact["classification"] == (
+        "official-source-discriminator-not-yet-baseline"
+    )
+    assert artifact["runtime_discriminator"] == {
+        "nonspecific_axial_convention": "kinness_serialized_edge"
+    }
+    assert artifact["figure6_pass"]
+    assert all(artifact["figure6_gates"].values())
+    assert not artifact["match_pass"]
+    assert not artifact["mismatch_consulted"]
+    assert not artifact["promotable"]
+    assert not artifact["reproduced"]
+    assert not artifact["advance_to_independent_match_verification"]
+
+    match = artifact["match_result"]
+    assert len(match["relay_spike_times_ms"]) == 15
+    assert len(match["trn_spike_times_ms"]) == 635
+    assert len(match["nonspecific_spike_times_ms"]) == 0
+    assert not artifact["match_gates"]["nonspecific_events"]
+    assert not artifact["match_gates"]["nonspecific_40_hz"]
+    assert all(
+        value
+        for key, value in artifact["match_gates"].items()
+        if key not in {"nonspecific_events", "nonspecific_40_hz"}
+    )
+    soma_range = {
+        name: (minimum, maximum)
+        for name, minimum, maximum in match[
+            "nonspecific_voltage_range_mV_by_compartment"
+        ]
+    }["soma"]
+    assert soma_range[1] < -50.0
 
 
 def test_aligned_on_center_verification_registers_only_screen_survivor() -> None:

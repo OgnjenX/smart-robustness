@@ -382,6 +382,11 @@ parameters:
     status: calibrated-reconstruction-sensitivity-tested
     source: Artifacts 347--348 and 351--356; ModelDB projection 047 source weight 0.01
     note: doubling only somatic TRN-to-nonspecific GABA passes Figure 6 and independently repeats exact 40-Hz match, but its fixed mismatch remains at five rather than seven nonspecific events. The overlap-only relay and TRN-order gates pass. No larger or interpolated somatic scale is authorized from this holdout
+  model.multicompartment.nonspecific_axial_source:
+    value: paper_literal retained; kinness_serialized_edge tested and rejected for the calibrated baseline
+    status: conflicting-official-source-tested
+    source: Grossberg and Versace 2008 Equation 2 compared with ModelDB 112923 serialized axial edges and KInNeSS Equation 9
+    note: Artifacts 357--358 isolate KInNeSS serialized-edge coupling to nonspecific thalamus. Figure 6 and upstream Figure 7 match activity remain exact, but nonspecific soma stays below -55 mV and emits zero match events. Mismatch is not consulted; no axial interpolation or scaling is authorized
   benchmark.population_sizes:
     value: see configs/*.yaml
     status: exploratory

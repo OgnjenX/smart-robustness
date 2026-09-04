@@ -745,3 +745,11 @@ and overlap-only mismatch, with relay/TRN/nonspecific totals of 15/635/4 and
 target. Close factor-2 somatic GABA without adding another scale. The next
 candidate must be an independently motivated intact-network membrane-transfer
 mechanism, not a stronger value selected from this failed holdout.
+
+Artifacts 357--358 test archived KInNeSS serialized-edge axial coupling only
+inside the nonspecific three-compartment cell, avoiding the upstream TRN
+confound of Artifact 138. Figure 6 remains exact, and match preserves 15 relay
+and 635 TRN events, but nonspecific soma never approaches threshold and emits
+zero events. Close this discrete axial source alternative before mismatch;
+retain paper-literal nonspecific coupling and do not add an axial scale or
+interpolation.

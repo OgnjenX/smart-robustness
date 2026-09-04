@@ -2666,6 +2666,18 @@ the numeric gate fails. Close this single factor-2 sensitivity and do not add a
 larger somatic scale after the holdout. Figure 10 and spectral holdouts remain
 locked.
 
+Artifacts 357--358 isolate the remaining axial source choice to nonspecific
+thalamus. Relay keeps archived KInNeSS coupling, while TRN and cortex retain
+the paper-literal coupling required by the accepted upstream calibration; only
+the nonspecific soma--proximal--distal edges switch from paper-literal to the
+archived serialized-edge equation. A fresh Figure 6 still passes every gate
+with 20 relay events, and match retains 15 relay plus 635 genuine-cycle TRN
+events. Nonspecific output is completely abolished, however: its soma remains
+between -67.47 and -55.10 mV and emits zero events. Mismatch was not run. Close
+this population-specific source alternative without axial interpolation or
+scaling, and retain paper-literal nonspecific coupling in the calibrated
+baseline.
+
 Artifacts 302--307 test the only previously declared inhibitory-capacity
 interaction not covered by that timing result. Artifact 252 had screened common
 TRN-to-relay gains 1.125, 1.25, 1.5, 2, and 3 at receptor-arrival timing. The

@@ -1,0 +1,46 @@
+schema_version: 1
+id: figure7-top5-nonspecific-somatic-gaba-verification-registration-353
+date: '2026-09-04'
+status: registered-before-execution-independent-verification
+profile: configs/calibration/figure7_top5_nonspecific_somatic_gaba_verification_v1.yaml
+screen_artifact: docs/validation-results/figure7-top5-nonspecific-somatic-gaba-match-352.yaml
+screen_result:
+  figure6_relay_events: 20
+  match_relay_events: 15
+  match_trn_events: 635
+  match_nonspecific_events: 4
+  complete_gate_pass: true
+verification:
+  candidate_count: 1
+  projection_id: modeldb112923.projection.047
+  persistent_somatic_scale: 2.0
+  independently_rebuilt_network: true
+  repeat_fresh_figure6: true
+  repeat_match: true
+  require_all_figure6_and_match_gates: true
+fixed:
+  proximal_and_distal_gaba_scales: 1.0
+  nonspecific_calcium_kinetics: modeldb_112923
+  comparator_transform: top_k_binary
+  comparator_target_count: 5
+  learned_headroom_fraction: 1.0
+  source_index: 40
+  cue_current_pA: 800.0
+  current_mode: until_cued_cell_first_event
+  receptor_peak_cue_lead_ms: 11.35773631178703
+  trn_detector: {arm_mV: -20.0, release_mV: -30.0}
+  duration_ms: 100.0
+  dt_ms: 0.01
+mismatch_lock: >-
+  Do not run mismatch unless the independent network exactly repeats every
+  Figure 6 prerequisite and every Figure 7 match gate. A passing repeat may
+  authorize only one separately registered mismatch at factor 2.0.
+stopping_rule: >-
+  Execute the sole fixed verification once. Do not alter the scale, source
+  equations, comparator, timing, or detector after observing the result.
+locked_holdouts:
+  - figure7_mismatch
+  - figure10_reset
+  - figure14_spectra
+  - figure15_local_synchrony
+  - figure16_long_range_synchrony

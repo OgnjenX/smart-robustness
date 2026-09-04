@@ -724,3 +724,10 @@ match produces 15 relay, 639 TRN, and eight nonspecific events (80 Hz). It
 therefore fails before mismatch, which remains uninspected. Close this
 population-specific source alternative and retain the executable-backup
 nonspecific kinetics; do not interpolate between the two equation families.
+
+Artifacts 351--352 test one preregistered twofold sensitivity on only somatic
+TRN-to-nonspecific GABA projection 047. The altered network passes complete
+Figure 6 and exact match at 15 relay, 635 TRN, and four nonspecific events,
+with fresh detector cycles. Do not inspect mismatch yet. Independently rebuild
+the same persistent factor-2 network and repeat Figure 6 plus match; only that
+verification can authorize one fixed mismatch.

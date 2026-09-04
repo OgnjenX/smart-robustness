@@ -2638,6 +2638,16 @@ the population-specific paper-kinetics alternative without interpolating
 between kinetic equations; the executable-backup nonspecific kinetics remain
 the calibrated baseline convention.
 
+Artifacts 351--352 preregister and execute one non-source, dyadic sensitivity
+on the somatic member of the intact TRN-to-nonspecific GABA triplet. Only
+projection 047 is doubled, from weight 0.01 to effective weight 0.02;
+proximal/distal inhibition, intrinsic equations, receptor kinetics, timing,
+and the top-five comparator remain fixed. The fresh Figure 6 passes every gate
+with 20 relay events. Match then reproduces 15 relay, 635 genuine-cycle TRN,
+and four nonspecific events. Because this is a calibrated transfer rather than
+a recovered 2008 value, it is not promoted yet. An independently rebuilt
+Figure 6-plus-match repeat is registered before mismatch can be opened.
+
 Artifacts 302--307 test the only previously declared inhibitory-capacity
 interaction not covered by that timing result. Artifact 252 had screened common
 TRN-to-relay gains 1.125, 1.25, 1.5, 2, and 3 at receptor-arrival timing. The

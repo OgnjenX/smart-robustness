@@ -141,6 +141,7 @@ class FirstOrderRuntimeConventions:
     trn_spike_event_release_mV: float | None = None
     trn_spike_event_voltage_offset_mV: float | None = None
     trn_spike_event_proximal_blend_fraction: float | None = None
+    nonspecific_spike_event_threshold_mV: float | None = None
     nonspecific_spike_event_proximal_blend_fraction: float | None = None
     nonspecific_spike_event_release_proximal_blend_fraction: float | None = None
     trn_potassium_convention: str = "selected_source"
@@ -195,6 +196,8 @@ class FirstOrderRuntimeConventions:
             values.pop("trn_spike_event_voltage_offset_mV")
         if values["trn_spike_event_proximal_blend_fraction"] is None:
             values.pop("trn_spike_event_proximal_blend_fraction")
+        if values["nonspecific_spike_event_threshold_mV"] is None:
+            values.pop("nonspecific_spike_event_threshold_mV")
         if values["nonspecific_spike_event_proximal_blend_fraction"] is None:
             values.pop("nonspecific_spike_event_proximal_blend_fraction")
         if values["nonspecific_spike_event_release_proximal_blend_fraction"] is None:
@@ -605,6 +608,14 @@ def first_order_population_parameters(
                 "TRN spike-event proximal blend must be finite and between zero and one"
             )
     if facts.canonical_name == "thalamic_nonspecific":
+        if conventions.nonspecific_spike_event_threshold_mV is not None:
+            spike_event_threshold_mV = (
+                conventions.nonspecific_spike_event_threshold_mV
+            )
+        if not math.isfinite(spike_event_threshold_mV):
+            raise ValueError(
+                "nonspecific spike-event threshold voltage must be finite"
+            )
         spike_event_proximal_blend_fraction = (
             conventions.nonspecific_spike_event_proximal_blend_fraction
         )

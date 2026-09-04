@@ -791,6 +791,14 @@ FIGURE7_NONSPECIFIC_MODELDB_INTRINSIC_RESULT_PATH = (
     ROOT
     / "docs/validation-results/figure7-top5-nonspecific-modeldb-intrinsic-match-360.yaml"
 )
+FIGURE7_NONSPECIFIC_MODELDB_KINNESS_DETECTOR_PROFILE_PATH = (
+    ROOT
+    / "configs/calibration/figure7_top5_nonspecific_modeldb_kinness_detector_match_v1.yaml"
+)
+FIGURE7_NONSPECIFIC_MODELDB_KINNESS_DETECTOR_REGISTRATION_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-top5-nonspecific-modeldb-kinness-detector-registration-361.yaml"
+)
 FIGURE7_ALIGNED_VERIFICATION_PROFILE_PATH = (
     ROOT / "configs/calibration/figure7_aligned_on_center_verification_v1.yaml"
 )
@@ -4841,6 +4849,30 @@ def test_nonspecific_modeldb_intrinsic_source_fails_match_before_mismatch() -> N
         ]
     }["soma"]
     assert 28.0 < soma_maximum < 30.0
+
+
+def test_nonspecific_modeldb_kinness_detector_pair_is_source_fixed() -> None:
+    profile = yaml.safe_load(
+        FIGURE7_NONSPECIFIC_MODELDB_KINNESS_DETECTOR_PROFILE_PATH.read_text()
+    )
+    registration = yaml.safe_load(
+        FIGURE7_NONSPECIFIC_MODELDB_KINNESS_DETECTOR_REGISTRATION_PATH.read_text()
+    )
+    assert profile["runtime_expectations"] == {
+        "nonspecific_intrinsic_cell_convention": "modeldb_112923",
+        "nonspecific_spike_event_threshold_mV": -20.0,
+    }
+    dimensions = registration["registered_dimensions"]
+    assert dimensions["intrinsic_cell_source"] == "modeldb_112923"
+    assert dimensions["event_threshold_source"] == "kinness_2008"
+    assert dimensions["event_arm_mV"] == -20.0
+    assert dimensions["event_release_mV"] == 0.0
+    assert dimensions["candidate_count"] == 1
+    assert registration["fixed"]["all_trn_and_relay_event_detectors_unchanged"]
+    assert registration["stopping_rule"].startswith(
+        "Run one fresh complete Figure 6"
+    )
+    assert "figure7_mismatch" in registration["locked_holdouts"]
 
 
 def test_aligned_on_center_verification_registers_only_screen_survivor() -> None:

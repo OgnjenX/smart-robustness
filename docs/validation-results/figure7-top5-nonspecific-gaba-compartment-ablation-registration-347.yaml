@@ -1,0 +1,56 @@
+schema_version: 1
+id: figure7-top5-nonspecific-gaba-compartment-ablation-registration-347
+date: '2026-09-04'
+status: registered-before-execution-causal-localization
+profile: configs/calibration/figure7_top5_nonspecific_gaba_compartment_ablation_v1.yaml
+rationale:
+  fixed_pair: {match_nonspecific: 4, mismatch_nonspecific: 5}
+  intact_gaba_integrals_ms: {match: 1257.5477714307644, mismatch: 1149.3196848023142}
+  preceding_ablation: >-
+    Removing both corticointralaminar excitatory contacts leaves the intact
+    4/5 event pair unchanged, proving that the one-event difference is carried
+    by direct sensory drive plus TRN GABA rather than masked cortical input.
+  purpose: >-
+    Localize the causal contribution of the three source-defined GABA target
+    compartments before considering another intact-network transfer model.
+fixed_candidate:
+  classification: calibrated-reconstruction-causal-ablation
+  comparator_transform: top_k_binary
+  comparator_target_count: 5
+  receptor_peak_cue_lead_ms: 11.35773631178703
+  learned_headroom_fraction: 1.0
+  source_index: 40
+  cue_current_pA: 800.0
+  current_mode: until_cued_cell_first_event
+  trn_detector: {arm_mV: -20.0, release_mV: -30.0}
+registered_ablations:
+  - {label: without_somatic_gaba, projection_ids: [modeldb112923.projection.047], target: soma}
+  - {label: without_proximal_gaba, projection_ids: [modeldb112923.projection.048], target: proximal_dendrite}
+  - {label: without_distal_gaba, projection_ids: [modeldb112923.projection.049], target: distal_dendrite}
+  - label: without_all_trn_gaba
+    projection_ids:
+      - modeldb112923.projection.047
+      - modeldb112923.projection.048
+      - modeldb112923.projection.049
+    target: all
+execution:
+  independently_rebuild_figure6_once: true
+  independently_rebuild_each_ablation_condition: true
+  conditions_per_ablation: [match, mismatch]
+  ablation_count: 4
+  run_count_per_ablation_condition: 1
+  full_pathway_diagnostics: true
+scope_boundary:
+  promotable: false
+  changes_only_recognition_connectivity: true
+  no_weight_or_cell_parameter_calibration: true
+  complete_corticointralaminar_path_preserved: true
+stopping_rule: >-
+  Execute all four fixed ablations and both conditions exactly once after one
+  fresh Figure 6 handoff. Report every event delta and pathway current. Do not
+  tune, interpolate, rank as a candidate, or open downstream holdouts.
+locked_holdouts:
+  - figure10_reset
+  - figure14_spectra
+  - figure15_local_synchrony
+  - figure16_long_range_synchrony

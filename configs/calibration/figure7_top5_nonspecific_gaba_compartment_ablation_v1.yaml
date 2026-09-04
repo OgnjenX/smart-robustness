@@ -1,0 +1,61 @@
+schema_version: 1
+name: figure7-top5-nonspecific-gaba-compartment-ablation-v1
+status: registered-before-execution-causal-localization
+registration_artifact: docs/validation-results/figure7-top5-nonspecific-gaba-compartment-ablation-registration-347.yaml
+base_profile: configs/calibration/figure6_kinness_equation27_transition_v1.yaml
+figure6_artifact: docs/validation-results/figure6-projection022-distal003-217.yaml
+fixed_pair_artifact: docs/validation-results/figure7-top5-comparator-pair-321.yaml
+corticointralaminar_ablation_artifact: docs/validation-results/figure7-top5-corticointralaminar-ablation-346.yaml
+detector: {arm_mV: -20.0, release_mV: -30.0}
+runtime_overrides:
+  projection_source_convention: paper_supplement_cross_checked
+trn_to_relay_gaba:
+  scales:
+    modeldb112923.projection.000: 0.01
+    modeldb112923.projection.001: 0.01
+    modeldb112923.projection.004: 0.03
+learned_state:
+  source_index: 40
+  headroom_fraction: 1.0
+comparator:
+  transform: top_k_binary
+  target_count: 5
+causal_ablations:
+  - label: without_somatic_gaba
+    disabled_projection_ids: [modeldb112923.projection.047]
+    target_compartment: soma
+  - label: without_proximal_gaba
+    disabled_projection_ids: [modeldb112923.projection.048]
+    target_compartment: proximal_dendrite
+  - label: without_distal_gaba
+    disabled_projection_ids: [modeldb112923.projection.049]
+    target_compartment: distal_dendrite
+  - label: without_all_trn_gaba
+    disabled_projection_ids:
+      - modeldb112923.projection.047
+      - modeldb112923.projection.048
+      - modeldb112923.projection.049
+    target_compartment: all
+protocol:
+  conditions: [match, mismatch]
+  top_down_current_pA: 800.0
+  top_down_current_mode: until_cued_cell_first_event
+  top_down_cue_lead_ms: 11.35773631178703
+  equilibration_ms: 0.0
+  duration_ms: 100.0
+  dt_ms: 0.01
+  record_relay_diagnostics: true
+classification_rule: >-
+  Report mismatch-minus-match nonspecific event deltas for every fixed
+  ablation. Individual removals localize each compartment's causal effect;
+  the all-three removal is a negative control for TRN-mediated disinhibition.
+  Do not rank or promote an ablated network as a baseline candidate.
+next_gate: >-
+  Use the compartment-resolved causal pattern to preregister at most one
+  intact-network transfer mechanism. Do not choose a gain from these ablated
+  event counts. Keep reset and spectral holdouts locked.
+locked_holdouts:
+  - figure10_reset
+  - figure14_spectra
+  - figure15_local_synchrony
+  - figure16_long_range_synchrony

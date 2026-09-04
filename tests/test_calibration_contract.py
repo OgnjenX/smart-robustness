@@ -707,6 +707,18 @@ FIGURE7_CORTICOINTRALAMINAR_ABLATION_RESULT_PATH = (
     ROOT
     / "docs/validation-results/figure7-top5-corticointralaminar-ablation-346.yaml"
 )
+FIGURE7_NONSPECIFIC_GABA_COMPARTMENT_ABLATION_PROFILE_PATH = (
+    ROOT
+    / "configs/calibration/figure7_top5_nonspecific_gaba_compartment_ablation_v1.yaml"
+)
+FIGURE7_NONSPECIFIC_GABA_COMPARTMENT_ABLATION_REGISTRATION_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-top5-nonspecific-gaba-compartment-ablation-registration-347.yaml"
+)
+FIGURE7_NONSPECIFIC_GABA_COMPARTMENT_ABLATION_RESULT_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-top5-nonspecific-gaba-compartment-ablation-348.yaml"
+)
 FIGURE7_ALIGNED_VERIFICATION_PROFILE_PATH = (
     ROOT / "configs/calibration/figure7_aligned_on_center_verification_v1.yaml"
 )
@@ -4315,6 +4327,31 @@ def test_corticointralaminar_ablation_is_rate_neutral_and_exposes_one_event() ->
     ]
     assert readout["classification"] == (
         "latent_trn_disinhibition_has_correct_sign"
+    )
+
+
+def test_nonspecific_gaba_compartment_ablation_is_fixed_and_nonpromotable() -> None:
+    profile = yaml.safe_load(
+        FIGURE7_NONSPECIFIC_GABA_COMPARTMENT_ABLATION_PROFILE_PATH.read_text()
+    )
+    registration = yaml.safe_load(
+        FIGURE7_NONSPECIFIC_GABA_COMPARTMENT_ABLATION_REGISTRATION_PATH.read_text()
+    )
+    assert [item["label"] for item in profile["causal_ablations"]] == [
+        "without_somatic_gaba",
+        "without_proximal_gaba",
+        "without_distal_gaba",
+        "without_all_trn_gaba",
+    ]
+    assert registration["execution"]["ablation_count"] == 4
+    assert registration["execution"]["conditions_per_ablation"] == [
+        "match",
+        "mismatch",
+    ]
+    assert not registration["scope_boundary"]["promotable"]
+    assert registration["scope_boundary"]["no_weight_or_cell_parameter_calibration"]
+    assert registration["stopping_rule"].startswith(
+        "Execute all four fixed ablations"
     )
 
 

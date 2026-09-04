@@ -2672,6 +2672,13 @@ match. The match-only weakest-survivor rule selects 0.75. This does not yet
 repair or reproduce Figure 7: an independent 0.75 match and then one fixed
 mismatch are still required.
 
+Artifacts 331--332 independently repeat the selected 0.75 endpoint in fresh
+Figure 6 and match networks. Every prerequisite and match gate passes at the
+same 20-event training relay train and 15/635/4 recognition counts, with full
+sampled TRN detector-cycle equality. One fixed vertical mismatch is now
+authorized. Figure 7 and downstream behaviors remain officially unreproduced
+until that holdout passes.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

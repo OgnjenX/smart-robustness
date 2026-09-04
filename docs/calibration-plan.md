@@ -643,3 +643,10 @@ grid is rerun correctly in Artifact 330. All four scales pass complete Figure
 four. The preregistered weakest-survivor rule therefore fixes 0.75 for an
 independent Figure 6-plus-match rebuild. Do not inspect mismatch until that
 verification passes.
+
+Artifacts 331--332 independently rebuild the fixed 0.75 candidate. The fresh
+network again passes every Figure 6 prerequisite and reproduces the match at
+15 relay, 635 TRN, and four nonspecific events. For every sampled TRN cell,
+emitted events equal threshold upcrossings, detector arms, and releases. This
+verification authorizes one separately registered vertical mismatch at the
+unchanged 0.75 scale; it does not itself establish Figure 7 reproduction.

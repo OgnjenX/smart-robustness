@@ -625,6 +625,10 @@ FIGURE7_TOP5_NONSPECIFIC_GABA_TRANSFER_VERIFICATION_REGISTRATION_PATH = (
     ROOT
     / "docs/validation-results/figure7-top5-nonspecific-gaba-transfer-verification-registration-331.yaml"
 )
+FIGURE7_TOP5_NONSPECIFIC_GABA_TRANSFER_VERIFICATION_RESULT_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-top5-nonspecific-gaba-transfer-verification-332.yaml"
+)
 FIGURE7_ALIGNED_VERIFICATION_PROFILE_PATH = (
     ROOT / "configs/calibration/figure7_aligned_on_center_verification_v1.yaml"
 )
@@ -3863,6 +3867,39 @@ def test_top5_nonspecific_gaba_transfer_verification_is_fixed_to_screen() -> Non
         "complete_figure6_cortical_monitoring"
     ]
     assert registration["stopping_rule"].startswith("Run one fresh Figure 6")
+
+
+def test_top5_nonspecific_gaba_transfer_verification_reproduces_match() -> None:
+    artifact = yaml.safe_load(
+        FIGURE7_TOP5_NONSPECIFIC_GABA_TRANSFER_VERIFICATION_RESULT_PATH.read_text()
+    )
+    assert artifact["status"] == "complete"
+    assert artifact["match_survivor_common_scales"] == [0.75]
+    assert artifact["selected_common_scale"] == 0.75
+    assert not artifact["mismatch_consulted"]
+    outcome = artifact["outcomes"][0]
+    assert outcome["figure6_pass"]
+    assert all(outcome["figure6_gates"].values())
+    assert outcome["match_pass"]
+    assert all(outcome["match_gates"].values())
+    result = outcome["match_result"]
+    assert len(result["relay_spike_times_ms"]) == 15
+    assert len(result["trn_spike_times_ms"]) == 635
+    assert len(result["nonspecific_spike_times_ms"]) == 4
+    for index, event_count in outcome[
+        "sampled_match_trn_event_counts_by_index"
+    ].items():
+        assert event_count == outcome[
+            "sampled_match_trn_threshold_upcrossings_by_index"
+        ][index]
+        assert event_count == outcome[
+            "sampled_match_trn_arm_transitions_by_index"
+        ][index]
+        assert event_count == outcome[
+            "sampled_match_trn_release_transitions_by_index"
+        ][index]
+    assert artifact["assessment"]["advance_to_mismatch"]
+    assert not artifact["assessment"]["mismatch_remains_locked"]
 
 
 def test_aligned_on_center_verification_registers_only_screen_survivor() -> None:

@@ -1,0 +1,56 @@
+schema_version: 1
+id: figure6-nonspecific-distal-gaba-source-registration-326
+date: '2026-09-04'
+status: registered-before-execution-source-conflict-resolution
+profile: configs/calibration/figure6_nonspecific_distal_gaba_supplement_v1.yaml
+source_conflict:
+  record: modeldb112923.projection.049
+  pathway: TRN to nonspecific-thalamus distal dendrite GABA_A
+  archived_modeldb:
+    channel_conductance_mS_cm2: 1.461
+    rise_ms: 1.0
+    fall_ms: 4.0
+  grossberg_versace_2008_supplement:
+    channel_conductance_mS_cm2: 1.5
+    rise_ms: 1.0
+    fall_ms: 7.0
+  shared:
+    weight_density_1e6_cm2: 0.16
+    delay_ms: 0.1
+    reversal_mV: -70.0
+resolution_policy:
+  named_runtime_convention: paper_supplement_1p5_1_7
+  historical_default_unchanged: true
+  new_runtime_fingerprint_required: true
+  changes_only_projection_049: true
+rationale:
+  - >-
+    The top-five reconstruction recovers Figure 7's spatial pathway and
+    directional arousal but leaves mismatch at 50 rather than 70 Hz. Output
+    detector alternatives fail match, so the next test returns to a direct
+    conflict between the primary supplement and archived executable record.
+  - >-
+    Projection 049 directly controls TRN inhibition of the nonspecific cell.
+    The complete paper-supplement tuple is tested as one discrete source
+    alternative; conductance and fall time are not varied independently.
+  - >-
+    Because this pathway is active during learning, Figure 6 is the first gate.
+    Recognition is not constructed unless the source alternative preserves the
+    full prerequisite.
+fixed:
+  projection049_weight_density_1e6_cm2: 0.16
+  projection049_delay_ms: 0.1
+  projection049_reversal_mV: -70.0
+  all_other_projection_records_unchanged: true
+  baseline_runtime_and_trn_to_relay_scales_unchanged: true
+stopping_rule: >-
+  Run one full Figure 6 learning episode with the complete supplement tuple.
+  Reject before recognition on any relay, cortical-chain, causal-learning, or
+  horizontal-map gate failure. Do not mix or interpolate the conflicting tuples.
+locked_holdouts:
+  - figure7_match
+  - figure7_mismatch
+  - figure10_reset
+  - figure14_spectra
+  - figure15_local_synchrony
+  - figure16_long_range_synchrony

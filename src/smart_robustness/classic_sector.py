@@ -63,6 +63,13 @@ class ProjectionSourceConvention(StrEnum):
     PAPER_SUPPLEMENT_CROSS_CHECKED = "paper_supplement_cross_checked"
 
 
+class NonspecificDistalGabaSourceConvention(StrEnum):
+    """Resolve the supplement/ModelDB conflict for projection 049."""
+
+    MODELDB_SERIALIZED_1P461_1_4 = "modeldb_serialized_1p461_1_4"
+    PAPER_SUPPLEMENT_1P5_1_7 = "paper_supplement_1p5_1_7"
+
+
 class IntrinsicCellConvention(StrEnum):
     """Source selected for dimensions and passive/intrinsic cell parameters."""
 
@@ -156,6 +163,9 @@ class FirstOrderRuntimeConventions:
     gaussian_learning_bounds_convention: str = "projection_level"
     postsynaptic_depression_scale_convention: str = "local_learning_bounds"
     projection_source_convention: str = "modeldb_as_serialized"
+    nonspecific_distal_gaba_source_convention: str = (
+        "modeldb_serialized_1p461_1_4"
+    )
     convergent_external_input_convention: str = "sum_independent_currents"
 
     @property
@@ -216,6 +226,10 @@ class FirstOrderRuntimeConventions:
             values.pop("corticoreticular_ring_peak_radius_scale")
         if values["corticoreticular_ampa_delay_ms"] is None:
             values.pop("corticoreticular_ampa_delay_ms")
+        if values["nonspecific_distal_gaba_source_convention"] == (
+            "modeldb_serialized_1p461_1_4"
+        ):
+            values.pop("nonspecific_distal_gaba_source_convention")
         payload = json.dumps(values, sort_keys=True, separators=(",", ":"))
         return hashlib.sha256(payload.encode()).hexdigest()
 
@@ -245,6 +259,9 @@ def figure6_runtime_conventions() -> FirstOrderRuntimeConventions:
 
 def _resolved_projection_record(record, *, conventions: FirstOrderRuntimeConventions):
     source_convention = ProjectionSourceConvention(conventions.projection_source_convention)
+    nonspecific_distal_gaba = NonspecificDistalGabaSourceConvention(
+        conventions.nonspecific_distal_gaba_source_convention
+    )
     if (
         source_convention is ProjectionSourceConvention.PAPER_SUPPLEMENT_CROSS_CHECKED
         and record.id == "modeldb112923.projection.022"
@@ -269,6 +286,16 @@ def _resolved_projection_record(record, *, conventions: FirstOrderRuntimeConvent
         raise ValueError(
             "unsupported top-down learning-rule convention "
             f"{conventions.top_down_learning_rule_convention!r}"
+        )
+    if (
+        record.id == "modeldb112923.projection.049"
+        and nonspecific_distal_gaba
+        is NonspecificDistalGabaSourceConvention.PAPER_SUPPLEMENT_1P5_1_7
+    ):
+        record = replace(
+            record,
+            channel_conductance_mS_cm2=1.5,
+            fall_ms=7.0,
         )
     if (
         record.id == "modeldb112923.projection.012"

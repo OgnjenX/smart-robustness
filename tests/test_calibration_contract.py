@@ -591,6 +591,13 @@ FIGURE7_TOP5_NONSPECIFIC_SPLIT_REGISTRATION_PATH = (
 FIGURE7_TOP5_NONSPECIFIC_SPLIT_RESULT_PATH = (
     ROOT / "docs/validation-results/figure7-top5-nonspecific-split-match-325.yaml"
 )
+FIGURE6_NONSPECIFIC_DISTAL_GABA_PROFILE_PATH = (
+    ROOT / "configs/calibration/figure6_nonspecific_distal_gaba_supplement_v1.yaml"
+)
+FIGURE6_NONSPECIFIC_DISTAL_GABA_REGISTRATION_PATH = (
+    ROOT
+    / "docs/validation-results/figure6-nonspecific-distal-gaba-source-registration-326.yaml"
+)
 FIGURE7_ALIGNED_VERIFICATION_PROFILE_PATH = (
     ROOT / "configs/calibration/figure7_aligned_on_center_verification_v1.yaml"
 )
@@ -3679,6 +3686,31 @@ def test_split_nonspecific_detector_has_no_exact_match_survivor() -> None:
         assert not outcome["pass"]
     assert not artifact["assessment"]["advance_to_mismatch"]
     assert artifact["assessment"]["mismatch_remains_locked"]
+
+
+def test_projection049_supplement_tuple_is_registered_as_discrete_source_choice() -> None:
+    profile = yaml.safe_load(FIGURE6_NONSPECIFIC_DISTAL_GABA_PROFILE_PATH.read_text())
+    registration = yaml.safe_load(
+        FIGURE6_NONSPECIFIC_DISTAL_GABA_REGISTRATION_PATH.read_text()
+    )
+    assert profile["source_conflict"]["projection_id"] == (
+        "modeldb112923.projection.049"
+    )
+    assert profile["source_conflict"]["modeldb_serialized"] == {
+        "channel_conductance_mS_cm2": 1.461,
+        "rise_fall_ms": [1.0, 4.0],
+    }
+    assert profile["source_conflict"]["paper_supplement"] == {
+        "channel_conductance_mS_cm2": 1.5,
+        "rise_fall_ms": [1.0, 7.0],
+    }
+    assert profile["runtime_overrides"][
+        "nonspecific_distal_gaba_source_convention"
+    ] == "paper_supplement_1p5_1_7"
+    assert registration["resolution_policy"]["historical_default_unchanged"]
+    assert registration["resolution_policy"]["new_runtime_fingerprint_required"]
+    assert registration["resolution_policy"]["changes_only_projection_049"]
+    assert registration["stopping_rule"].startswith("Run one full Figure 6")
 
 
 def test_aligned_on_center_verification_registers_only_screen_survivor() -> None:

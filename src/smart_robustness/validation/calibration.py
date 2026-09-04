@@ -245,6 +245,14 @@ def runtime_conventions_for_candidate(
                 values["nonspecific_spike_event_release_proximal_blend_fraction"]
             )
         ),
+        nonspecific_distal_gaba_source_convention=str(
+            values.get(
+                "nonspecific_distal_gaba_source_convention",
+                (
+                    figure6_runtime_conventions() if base is None else base
+                ).nonspecific_distal_gaba_source_convention,
+            )
+        ),
         trn_potassium_convention=str(
             values.get(
                 "trn_potassium_convention",

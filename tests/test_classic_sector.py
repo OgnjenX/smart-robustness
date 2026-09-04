@@ -9,6 +9,7 @@ from smart_robustness.classic_sector import (
     CalciumKineticsConvention,
     FirstOrderRuntimeConventions,
     IntrinsicCellConvention,
+    NonspecificDistalGabaSourceConvention,
     TrnCalciumSourceConvention,
     TrnDendriticCalciumDensityConvention,
     TrnPotassiumConvention,
@@ -59,6 +60,31 @@ def test_corticoreticular_ampa_delay_override_must_be_positive() -> None:
                 corticoreticular_ampa_delay_ms=0.0
             ),
         )
+
+
+def test_nonspecific_distal_gaba_source_alternative_is_projection_specific() -> None:
+    serialized = MODELDB_FIRST_ORDER.by_id("modeldb112923.projection.049")
+    conventions = FirstOrderRuntimeConventions(
+        nonspecific_distal_gaba_source_convention=(
+            NonspecificDistalGabaSourceConvention.PAPER_SUPPLEMENT_1P5_1_7
+        )
+    )
+    resolved = {
+        projection_id: _resolved_projection_record(
+            MODELDB_FIRST_ORDER.by_id(projection_id), conventions=conventions
+        )
+        for projection_id in (
+            "modeldb112923.projection.047",
+            "modeldb112923.projection.048",
+            "modeldb112923.projection.049",
+        )
+    }
+    assert serialized.channel_conductance_mS_cm2 == 1.461
+    assert serialized.fall_ms == 4.0
+    assert resolved["modeldb112923.projection.049"].channel_conductance_mS_cm2 == 1.5
+    assert resolved["modeldb112923.projection.049"].fall_ms == 7.0
+    assert resolved["modeldb112923.projection.047"].fall_ms == 4.0
+    assert resolved["modeldb112923.projection.048"].fall_ms == 4.0
 
 
 def test_protocol_voltage_clamp_preserves_sector_and_pins_selected_relay_dendrites() -> None:
@@ -179,6 +205,10 @@ def test_runtime_convention_fingerprint_is_stable_and_sensitive() -> None:
         corticoreticular_ampa_delay_ms=2.0
     )
     assert targeted_ampa_delay.fingerprint != classic.fingerprint
+    paper_nonspecific_distal_gaba = FirstOrderRuntimeConventions(
+        nonspecific_distal_gaba_source_convention="paper_supplement_1p5_1_7"
+    )
+    assert paper_nonspecific_distal_gaba.fingerprint != classic.fingerprint
 
 
 def test_corticoreticular_ring_override_is_projection_specific() -> None:

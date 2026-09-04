@@ -2605,6 +2605,25 @@ operating point. The ablated network is explicitly non-promotable. Subsequent
 calibration must act on the inhibitory transfer or nonspecific membrane
 response, not on event detection or removal of cortical excitation.
 
+Artifacts 347--348 resolve the three archived TRN-to-nonspecific GABA contacts
+by target compartment without changing any weight, intrinsic parameter, or
+protocol timing. Each ablation reuses one fresh, passing Figure 6 handoff and
+the fixed peak-aligned top-five match/mismatch pair. Removing somatic GABA
+(projection 047) leaves four nonspecific events in both conditions, erasing
+the intact one-event mismatch advantage. Removing proximal-dendritic GABA
+(048) abolishes nonspecific output in both conditions even though the
+unclamped dendrite reaches large positive voltages. Removing distal-dendritic
+GABA (049) instead raises match from four to five events and leaves mismatch at
+five. Removing all three contacts abolishes output in both conditions. Relay
+and TRN counts remain 15/635 in match and 3/560 in mismatch in every ablation.
+Thus the nonspecific cell is not a monotonic inhibitory-rate readout: proximal
+inhibition enables the somatic rebound, distal inhibition suppresses one match
+event, and somatic inhibition creates the remaining condition contrast. This
+causal network is non-promotable and does not reproduce Figure 7. Any next
+candidate must preserve all three contacts and test one preregistered,
+intact-network compartment-transfer hypothesis; no gain may be selected from
+the ablated event counts.
+
 Artifacts 302--307 test the only previously declared inhibitory-capacity
 interaction not covered by that timing result. Artifact 252 had screened common
 TRN-to-relay gains 1.125, 1.25, 1.5, 2, and 3 at receptor-arrival timing. The

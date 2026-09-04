@@ -703,3 +703,16 @@ the ablation changes no aggregate rate, cortical excitation is not the source
 of the missing two mismatch events. Treat this network only as a causal
 diagnostic. The next calibration target is the TRN-GABA-to-nonspecific membrane
 transfer, with detector and corticointralaminar hypotheses closed.
+
+Artifacts 347--348 localize the intact path's nonlinear compartment roles with
+four fixed, non-promotable ablations. Removing somatic GABA yields 4/4
+match/mismatch nonspecific events, removing proximal GABA yields 0/0, removing
+distal GABA yields 5/5, and removing all three yields 0/0. Upstream relay/TRN
+counts remain fixed at 15/635 and 3/560. The result rejects a scalar
+"less inhibition means more arousal" interpretation: proximal inhibition is
+required for rebound output, distal inhibition suppresses one match event, and
+somatic inhibition supplies the one-event mismatch advantage. Do not infer a
+weight from an ablation endpoint. The next admissible step is one separately
+registered intact-network transfer mechanism that preserves all three source
+contacts, passes fresh Figure 6 and match before mismatch, and remains labeled
+as calibrated reconstruction rather than recovered source.

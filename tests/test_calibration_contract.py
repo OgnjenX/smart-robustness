@@ -4355,6 +4355,70 @@ def test_nonspecific_gaba_compartment_ablation_is_fixed_and_nonpromotable() -> N
     )
 
 
+def test_nonspecific_gaba_compartment_ablation_localizes_rebound_roles() -> None:
+    artifact = yaml.safe_load(
+        FIGURE7_NONSPECIFIC_GABA_COMPARTMENT_ABLATION_RESULT_PATH.read_text()
+    )
+    assert artifact["id"] == (
+        "figure7-top5-nonspecific-gaba-compartment-ablation-348"
+    )
+    assert artifact["status"] == "complete-causal-localization-not-candidate"
+    assert artifact["classification"] == (
+        "calibrated-reconstruction-causal-ablation"
+    )
+    assert not artifact["promotable"]
+    assert not artifact["reproduced"]
+
+    outcomes = {item["label"]: item for item in artifact["outcomes"]}
+    assert set(outcomes) == {
+        "without_somatic_gaba",
+        "without_proximal_gaba",
+        "without_distal_gaba",
+        "without_all_trn_gaba",
+    }
+    expected = {
+        "without_somatic_gaba": (4, 4, ["modeldb112923.projection.047"]),
+        "without_proximal_gaba": (0, 0, ["modeldb112923.projection.048"]),
+        "without_distal_gaba": (5, 5, ["modeldb112923.projection.049"]),
+        "without_all_trn_gaba": (
+            0,
+            0,
+            [
+                "modeldb112923.projection.047",
+                "modeldb112923.projection.048",
+                "modeldb112923.projection.049",
+            ],
+        ),
+    }
+    for label, (match_events, mismatch_events, disabled_ids) in expected.items():
+        outcome = outcomes[label]
+        readout = outcome["causal_readout"]
+        assert outcome["disabled_projection_ids"] == disabled_ids
+        assert outcome["match_result"]["disabled_projection_ids"] == disabled_ids
+        assert outcome["mismatch_result"]["disabled_projection_ids"] == disabled_ids
+        assert readout["match_nonspecific_events"] == match_events
+        assert readout["mismatch_nonspecific_events"] == mismatch_events
+        assert readout["event_count_delta_mismatch_minus_match"] == 0
+        assert readout["match_trn_events"] == 635
+        assert readout["mismatch_trn_events"] == 560
+
+    no_soma = outcomes["without_somatic_gaba"]["causal_readout"]
+    no_proximal = outcomes["without_proximal_gaba"]["causal_readout"]
+    no_distal = outcomes["without_distal_gaba"]["causal_readout"]
+    no_gaba = outcomes["without_all_trn_gaba"]["causal_readout"]
+    assert no_soma["match_trn_gaba_integral_ms"] > no_soma[
+        "mismatch_trn_gaba_integral_ms"
+    ]
+    assert no_proximal["match_trn_gaba_integral_ms"] > no_proximal[
+        "mismatch_trn_gaba_integral_ms"
+    ]
+    assert no_distal["match_trn_gaba_integral_ms"] > no_distal[
+        "mismatch_trn_gaba_integral_ms"
+    ]
+    assert no_gaba["match_trn_gaba_integral_ms"] == 0.0
+    assert no_gaba["mismatch_trn_gaba_integral_ms"] == 0.0
+
+
 def test_aligned_on_center_verification_registers_only_screen_survivor() -> None:
     profile = yaml.safe_load(FIGURE7_ALIGNED_VERIFICATION_PROFILE_PATH.read_text())
     registration = yaml.safe_load(

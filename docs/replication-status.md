@@ -2679,6 +2679,14 @@ sampled TRN detector-cycle equality. One fixed vertical mismatch is now
 authorized. Figure 7 and downstream behaviors remain officially unreproduced
 until that holdout passes.
 
+Artifacts 333--334 reject the fixed 0.75 mismatch. Relay selection remains
+overlap-only (three events in cell 40), match retains greater TRN output (635
+versus 560), and all sampled mismatch events are genuine detector cycles.
+Nonspecific output is 40 Hz in both conditions, so both the disinhibition and
+70-Hz gates fail. The common TRN-to-nonspecific transfer family is closed
+without interpolation. Figure 7 and all downstream holdouts remain
+unreproduced and locked.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

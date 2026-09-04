@@ -650,3 +650,12 @@ network again passes every Figure 6 prerequisite and reproduces the match at
 emitted events equal threshold upcrossings, detector arms, and releases. This
 verification authorizes one separately registered vertical mismatch at the
 unchanged 0.75 scale; it does not itself establish Figure 7 reproduction.
+
+Artifacts 333--334 execute that sole fixed mismatch. The successful comparator
+path remains intact: only relay cell 40 emits, with three events; match exceeds
+mismatch in active relay cells and TRN events (635 versus 560); and sampled TRN
+events are complete detector cycles. Nonspecific output, however, is four
+events in both conditions, rather than 40-Hz match versus 70-Hz mismatch. Close
+common TRN-to-nonspecific GABA transfer scaling: weakening the source weights
+to the lowest match survivor removes the prior 50-Hz directional effect rather
+than amplifying it. Do not interpolate between 0.75 and 1.0 after this holdout.

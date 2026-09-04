@@ -371,7 +371,7 @@ parameters:
     value: match-selected common scale 0.75 on projections 047, 048, and 049
     status: calibrated-reconstruction-not-recovered-source
     source: Artifacts 328--330; archived ModelDB projection records preserve the source-relative soma/proximal/distal weights
-    note: all four preregistered scales pass complete Figure 6; 0.75 is the weakest value that also preserves the exact four-event Figure 7 match. Mismatch remains unconsulted pending independent verification
+    note: all four preregistered scales pass complete Figure 6; 0.75 is the weakest value that also preserves the exact four-event Figure 7 match and independently verifies. Its fixed mismatch preserves overlap-only relay selection and lower TRN output but emits four, not seven, nonspecific events. The family is rejected and closed without interpolation
   benchmark.population_sizes:
     value: see configs/*.yaml
     status: exploratory

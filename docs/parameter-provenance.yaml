@@ -42,7 +42,7 @@ parameters:
     value: table3 or methods_global_250; must be selected explicitly
     status: conflicting-published-source
     source: Main article Table 3 compared with Methods 4.6 after Eq. 27
-    note: Table 3 prints compartment-specific values including 10 mS/cm2 in relay and TRN dendrites, while Methods 4.6 states 250 mS/cm2 for every neuron with calcium current
+    note: Table 3 prints compartment-specific values including 10 mS/cm2 in relay and TRN dendrites, while Methods 4.6 states 250 mS/cm2 for every neuron with calcium current. Artifacts 335--336 apply the Methods statement literally to the current calibrated network; it recruits all 81 relay cells and fails Figure 6 before recognition, so compartment-specific densities remain the viable baseline convention
   model.table3.leak_runtime_convention:
     value: use each cell compartment's Table 3 E_L as its leak reversal
     status: derived

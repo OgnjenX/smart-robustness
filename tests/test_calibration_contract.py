@@ -648,6 +648,9 @@ FIGURE6_METHODS_GLOBAL_CALCIUM_REGISTRATION_PATH = (
     ROOT
     / "docs/validation-results/figure6-methods-global-calcium-registration-335.yaml"
 )
+FIGURE6_METHODS_GLOBAL_CALCIUM_RESULT_PATH = (
+    ROOT / "docs/validation-results/figure6-methods-global-calcium-336.yaml"
+)
 FIGURE7_ALIGNED_VERIFICATION_PROFILE_PATH = (
     ROOT / "configs/calibration/figure7_aligned_on_center_verification_v1.yaml"
 )
@@ -3994,6 +3997,33 @@ def test_methods_global_calcium_is_registered_as_literal_source_choice() -> None
     assert registration["stopping_rule"].startswith(
         "Run one complete, fully monitored Figure 6"
     )
+
+
+def test_methods_global_calcium_fails_figure6_selectivity() -> None:
+    artifact = yaml.safe_load(FIGURE6_METHODS_GLOBAL_CALCIUM_RESULT_PATH.read_text())
+    assert artifact["status"] == "figure6-failed"
+    assert not artifact["pass"]
+    assert artifact["runtime_fingerprint"] == artifact["result"][
+        "convention_fingerprint"
+    ]
+    assert artifact["result"]["population_spikes"] == {
+        "thalamic_relay": 81,
+        "layer5_excitatory_v1": 162,
+        "layer6ii_excitatory_v1": 83,
+        "layer6i_excitatory_v1": 162,
+        "layer23_excitatory_v1": 81,
+        "layer4_excitatory_v1": 243,
+    }
+    assert len(artifact["relay_event_counts_by_index"]) == 81
+    assert set(artifact["relay_event_counts_by_index"].values()) == {1}
+    assert not artifact["gates"]["relay_active_indices"]
+    assert not artifact["gates"]["relay_events_per_active_index"]
+    assert not artifact["gates"]["relay_events"]
+    assert artifact["gates"]["cortical_chain_complete"]
+    assert not artifact["gates"]["causal_learning_pair"]
+    assert not artifact["gates"]["top_down_horizontal_contrast"]
+    assert not artifact["assessment"]["advance_to_figure7_match"]
+    assert artifact["assessment"]["figure7_holdouts_remain_locked"]
 
 
 def test_aligned_on_center_verification_registers_only_screen_survivor() -> None:

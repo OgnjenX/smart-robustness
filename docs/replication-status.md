@@ -2551,6 +2551,15 @@ peak alignment therefore closes as a successful match repair but not a
 match/mismatch discriminator; Figure 7 and all downstream holdouts remain
 unreproduced and locked.
 
+Artifacts 335--336 revisit the unresolved Table 3-versus-Methods calcium
+density conflict on the current calibrated baseline. Literal Methods-global
+250 mS/cm2 recruits every relay cell once and produces 243 layer-4, 81
+layer-2/3, and 162 layer-5 events. Although the cortical chain is active, the
+five-cell relay train, causal learning pair, and horizontal learned map all
+fail. No Figure 7 condition is run. The compartment-specific Table 3/ModelDB
+density convention remains the only one compatible with the current Figure 6
+baseline; a desired-cell-only hybrid is not inferred from this result.
+
 Artifacts 302--307 test the only previously declared inhibitory-capacity
 interaction not covered by that timing result. Artifact 252 had screened common
 TRN-to-relay gains 1.125, 1.25, 1.5, 2, and 3 at receptor-arrival timing. The

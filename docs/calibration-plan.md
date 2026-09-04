@@ -659,3 +659,12 @@ events in both conditions, rather than 40-Hz match versus 70-Hz mismatch. Close
 common TRN-to-nonspecific GABA transfer scaling: weakening the source weights
 to the lowest match survivor removes the prior 50-Hz directional effect rather
 than amplifying it. Do not interpolate between 0.75 and 1.0 after this holdout.
+
+Artifacts 335--336 test the article's conflicting Methods 4.6 statement that
+every existing calcium current uses 250 mS/cm2. Applied literally to the
+current calibrated network, the discrete source alternative destroys Figure 6
+selectivity: all 81 relay cells emit once, layer 4 emits 243 events, layers 2/3
+and 5 emit 81 and 162, causal learning timing fails, and the learned map loses
+horizontal contrast. Reject the global-250 convention before recognition;
+retain compartment-specific Table 3/ModelDB densities and do not introduce a
+nonspecific-only source hybrid after observing this failure.

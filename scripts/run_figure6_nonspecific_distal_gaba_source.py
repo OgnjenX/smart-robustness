@@ -102,8 +102,9 @@ def main() -> None:
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(yaml.safe_dump(_plain(artifact), sort_keys=False))
     print(
-        f"relay={len(relay_indices)} trn={result.population_spikes['trn']} "
-        f"nonspecific={result.population_spikes['thalamic_nonspecific']} "
+        f"relay={len(relay_indices)} "
+        f"layer4={result.population_spikes['layer4_excitatory_v1']} "
+        f"layer6ii={result.population_spikes['layer6ii_excitatory_v1']} "
         f"contrast={result.top_down_combined.horizontal_orientation_contrast:.6g} "
         f"pass={passed}",
         flush=True,

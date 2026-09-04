@@ -598,6 +598,9 @@ FIGURE6_NONSPECIFIC_DISTAL_GABA_REGISTRATION_PATH = (
     ROOT
     / "docs/validation-results/figure6-nonspecific-distal-gaba-source-registration-326.yaml"
 )
+FIGURE6_NONSPECIFIC_DISTAL_GABA_RESULT_PATH = (
+    ROOT / "docs/validation-results/figure6-nonspecific-distal-gaba-source-327.yaml"
+)
 FIGURE7_ALIGNED_VERIFICATION_PROFILE_PATH = (
     ROOT / "configs/calibration/figure7_aligned_on_center_verification_v1.yaml"
 )
@@ -3711,6 +3714,37 @@ def test_projection049_supplement_tuple_is_registered_as_discrete_source_choice(
     assert registration["resolution_policy"]["new_runtime_fingerprint_required"]
     assert registration["resolution_policy"]["changes_only_projection_049"]
     assert registration["stopping_rule"].startswith("Run one full Figure 6")
+
+
+def test_projection049_supplement_tuple_fails_figure6_prerequisite() -> None:
+    artifact = yaml.safe_load(
+        FIGURE6_NONSPECIFIC_DISTAL_GABA_RESULT_PATH.read_text()
+    )
+    assert artifact["status"] == "figure6-failed"
+    assert not artifact["pass"]
+    assert artifact["runtime_fingerprint"] == artifact["result"][
+        "convention_fingerprint"
+    ]
+    assert artifact["result"]["population_spikes"] == {
+        "thalamic_relay": 104,
+        "layer6ii_excitatory_v1": 12,
+        "layer4_excitatory_v1": 100,
+    }
+    assert artifact["relay_event_counts_by_index"] == {
+        "38": 5,
+        "39": 6,
+        "40": 6,
+        "41": 6,
+        "42": 5,
+    }
+    assert not artifact["gates"]["relay_active_indices"]
+    assert not artifact["gates"]["relay_events_per_active_index"]
+    assert not artifact["gates"]["relay_events"]
+    assert not artifact["gates"]["cortical_chain_complete"]
+    assert artifact["gates"]["causal_learning_pair"]
+    assert artifact["gates"]["top_down_horizontal_contrast"]
+    assert not artifact["assessment"]["advance_to_figure7_match"]
+    assert artifact["assessment"]["figure7_holdouts_remain_locked"]
 
 
 def test_aligned_on_center_verification_registers_only_screen_survivor() -> None:

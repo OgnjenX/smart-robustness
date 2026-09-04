@@ -2649,6 +2649,17 @@ arm endpoint produces 100 events in 100 ms; relay/TRN stay exactly 15/635.
 No 40-Hz match survivor exists, so no mismatch is opened and the split detector
 family is closed without interpolation.
 
+Artifacts 326--327 isolate a publication-versus-executable conflict for the
+TRN-to-nonspecific distal GABA projection. The paper-supplement tuple
+(conductance 1.5, 1/7-ms rise/fall) is available as a separately fingerprinted
+runtime convention; the historical archived tuple (1.461, 1/4 ms) remains the
+default. The supplement alternative fails the fresh Figure 6 gate with 104
+relay events instead of 20, trained-cell counts 5/6/6/6/5, additional relay
+recruitment, and an incomplete cortical chain. Its Figure 7 match and mismatch
+are therefore not run. This source discrepancy cannot repair the remaining
+50-versus-70-Hz Figure 7 mismatch deficit while preserving the learned
+baseline.
+
 ## Validation gates
 
 A milestone may be marked complete only when:

@@ -619,3 +619,14 @@ events in 100 ms while relay/TRN remain exactly 15/635. There is no 40-Hz
 survivor between silence and pathological 1-kHz output. Close split arming and
 somatic rearming without interpolating the 0.7--1 transition; mismatch remains
 locked.
+
+Artifacts 326--327 resolve the remaining direct source conflict on projection
+049, from TRN to the nonspecific thalamic distal dendrite. The archived ModelDB
+record uses conductance 1.461 and 1/4-ms rise/fall constants, whereas the paper
+supplement gives 1.5 and 1/7 ms. The complete supplement tuple is represented
+as a named runtime convention and tested first against Figure 6, without
+altering the historical default. It fails that prerequisite: relay output rises
+from the required 20 events to 104, including activity outside the five trained
+cells; trained cells 38--42 emit 5/6/6/6/5 events, and the cortical chain stops
+after layers 6II and 4. Keep the archived tuple as the calibrated baseline,
+close this source alternative, and do not construct its Figure 7 holdouts.

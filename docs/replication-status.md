@@ -2,6 +2,16 @@
 
 ## Current interpretation (2026-09-05)
 
+Source audit 410 checks all four relay-directed inhibitory records directly
+against the checksum-pinned XML and independently enumerates their selected
+Gaussian connectivity. All three TRN projections have 81 inputs per relay
+cell; the proximal interneuron projection has five. The kernels include their
+centers and are not rings. Compartment, source, conductance, reversal, kinetics,
+delay, peak weight, and kernel fields agree. This establishes consistency for
+the unscaled source records under the chosen wrapped-Gaussian convention,
+not legacy runtime equivalence, correctness of the calibrated scales, or a
+resolution of the spatial failure.
+
 Artifacts 406--409 complete the separately registered whole-relay calcium
 intervention. The comparison verifies identical recorded cue histories and
 pre-stimulus state, and zero somatic plus both dendritic calcium currents

@@ -1,0 +1,36 @@
+schema_version: 1
+source_sha256: 16fc196f2ed68d1c02a39395fa83bb0ffab8fcf8edffe6fd11022bb6c6e299e1
+source_fields_and_selected_topology_consistent: true
+projections:
+- id: modeldb112923.projection.000
+  compartment: soma
+  source: trn
+  edges: 6561
+  inputs_per_cell: 81
+  colocated_factor: 1.0
+  source_peak_weight: 0.19
+- id: modeldb112923.projection.001
+  compartment: proximal_dendrite
+  source: trn
+  edges: 6561
+  inputs_per_cell: 81
+  colocated_factor: 1.0
+  source_peak_weight: 0.18
+- id: modeldb112923.projection.002
+  compartment: proximal_dendrite
+  source: thalamic_interneuron
+  edges: 405
+  inputs_per_cell: 5
+  colocated_factor: 1.0
+  source_peak_weight: 1.8
+- id: modeldb112923.projection.004
+  compartment: distal_dendrite
+  source: trn
+  edges: 6561
+  inputs_per_cell: 81
+  colocated_factor: 1.0
+  source_peak_weight: 0.19
+scope: Unscaled source weights; checks standard-deviation Gaussian with minimum wrapped
+  distance and 0.001 cutoff. Does not recover legacy runtime semantics or validate
+  calibrated weights or behavior.
+baseline_promoted: false

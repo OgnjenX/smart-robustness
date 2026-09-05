@@ -1,0 +1,31 @@
+schema_version: 1
+id: relay-continuous-trace-registration-392
+date: '2026-09-05'
+status: registered-before-continuous-trace-execution
+classification: diagnostic-replay-of-previously-observed-calibrated-mismatch
+profile: configs/calibration/figure7_aligned_on_center_mismatch_v1.yaml
+reference_result: docs/validation-results/figure7-mismatch-pre-event-trace-audit-250.yaml
+rationale: >-
+  Audit391 finds that sparse samples do not establish calcium availability or
+  spike initiation. Preserve continuous relay voltage, current, and calcium
+  activation/inactivation samples through the cue and sensory epochs.
+model_and_protocol_changes: none
+readout_changes:
+  - Record m_ca and h_ca in both relay dendritic compartments at the simulation step.
+  - Export all relay diagnostic monitor variables with units and cell indices.
+  - Preserve pre-stimulus samples with negative stimulus-relative timestamps.
+execution:
+  fresh_training_runs: 1
+  mismatch_diagnostic_runs: 1
+  match_runs: 0
+  new_parameter_candidates: 0
+  pre_event_offsets_ms: [2.0, 1.0, 0.5, 0.2]
+expected_repeatability_counts: {relay: 10, trn: 583, nonspecific: 7}
+result: docs/validation-results/figure7-relay-continuous-trace-393.yaml
+local_trace: tmp/figure7-relay-continuous-trace-393.npz
+interpretation:
+  - Compare complete event trains to Artifact250 before interpreting added state histories.
+  - Monitor state is sampled at Brian2 start phase; falling-phase output events are not spike-initiation timestamps.
+  - Gate availability and calcium current can support a mechanistic hypothesis but do not alone prove causal necessity.
+  - This repeatedly consulted mismatch is calibration evidence, not an independent holdout.
+  - No acceptance criterion is relaxed, no source convention is selected, and no baseline promotion follows from this replay.

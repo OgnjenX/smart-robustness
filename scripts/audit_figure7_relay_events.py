@@ -65,6 +65,8 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--input", required=True)
     parser.add_argument("--output", required=True)
+    parser.add_argument("--trace")
+    parser.add_argument("--reference")
     args = parser.parse_args()
     source = Path(args.input)
     payload = source.read_bytes()
@@ -76,7 +78,82 @@ def main() -> None:
         "source_sha256": hashlib.sha256(payload).hexdigest(),
         **summarize(artifact["mismatch_result"]),
     }
+    if args.trace:
+        if not args.reference:
+            parser.error("--trace requires --reference for event-train verification")
+        trace_path = Path(args.trace)
+        expected = artifact["mismatch_result"]["relay_trace_sha256"]
+        if hashlib.sha256(trace_path.read_bytes()).hexdigest() != expected:
+            raise ValueError("trace checksum does not match the recorded result")
+        reference = yaml.safe_load(Path(args.reference).read_bytes())
+        with np.load(trace_path, allow_pickle=False) as trace:
+            report["continuous_trace"] = summarize_trace(trace, artifact, reference)
+        report["continuous_trace"].update(
+            trace_path=str(trace_path), trace_sha256=expected,
+            reference_artifact=args.reference,
+        )
     Path(args.output).write_text(yaml.safe_dump(report, sort_keys=False))
+
+
+def summarize_trace(trace, artifact: dict, reference: dict) -> dict:
+    """Describe state ranges only after exact event-train and metadata checks."""
+    if artifact["runtime_fingerprint"] != reference["runtime_fingerprint"]:
+        raise ValueError("runtime fingerprint differs from the reference")
+    actual, previous = artifact["mismatch_result"], reference["mismatch_result"]
+    for population in ("relay", "trn", "nonspecific", "category"):
+        for suffix in ("spike_indices", "spike_times_ms"):
+            field = f"{population}_{suffix}"
+            if field == "nonspecific_spike_indices":
+                continue  # One nonspecific cell; its result stores times only.
+            if actual[field] != previous[field]:
+                raise ValueError(f"event train changed: {field}")
+    if str(trace["runtime_fingerprint"]) != artifact["runtime_fingerprint"]:
+        raise ValueError("trace runtime fingerprint does not match the result")
+    if str(trace["condition"]) != "mismatch" or int(trace["schema_version"]) != 1:
+        raise ValueError("unexpected trace condition or schema")
+    time = np.asarray(trace["time_ms"])
+    indices = np.asarray(trace["cell_indices"])
+    if time.ndim != 1 or not len(time) or not np.all(np.isfinite(time)) or np.any(np.diff(time) <= 0):
+        raise ValueError("trace times must be finite and strictly increasing")
+    if indices.ndim != 1 or len(set(indices)) != len(indices):
+        raise ValueError("trace cell indices must be unique")
+    names = trace["variable_names"].tolist()
+    units = dict(zip(names, trace["variable_units"].tolist(), strict=True))
+    selected = [name for name in names if name.startswith(("v_", "m_ca_", "h_ca_", "i_ca_"))]
+    required = {"v_soma"} | {
+        f"{prefix}_{compartment}"
+        for prefix in ("v", "m_ca", "h_ca", "i_ca")
+        for compartment in ("distal_dendrite", "proximal_dendrite")
+    }
+    if not required <= set(selected):
+        raise ValueError("trace lacks required relay voltage/calcium state")
+    for name in selected:
+        expected_unit = "mV" if name.startswith("v_") else "pA" if name.startswith("i_") else "dimensionless"
+        if units[name] != expected_unit:
+            raise ValueError(f"invalid state unit: {name}")
+        values = np.asarray(trace[name])
+        if values.shape != (len(indices), len(time)) or not np.all(np.isfinite(values)):
+            raise ValueError(f"invalid state array: {name}")
+    cells = {}
+    for row, index in enumerate(indices):
+        cells[int(index)] = {
+            epoch: {
+                name: {"unit": units[name], "min": float(np.min(trace[name][row, mask])),
+                       "max": float(np.max(trace[name][row, mask]))}
+                for name in selected
+            }
+            for epoch, mask in (("pre_stimulus", time < 0), ("stimulus", time >= 0))
+            if np.any(mask)
+        }
+    return {
+        "event_trains_identical_to_reference": True,
+        "monitor_when": str(trace["monitor_when"]),
+        "sample_count": len(time),
+        "time_range_ms": [float(time[0]), float(time[-1])],
+        "cells": cells,
+        "causal_calcium_contribution_identified": False,
+        "interpretation": "Continuous state ranges are descriptive; no burst label or reproduction promotion is assigned.",
+    }
 
 
 if __name__ == "__main__":

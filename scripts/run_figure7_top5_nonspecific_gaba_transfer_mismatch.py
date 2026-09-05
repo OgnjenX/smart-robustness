@@ -62,6 +62,7 @@ def _scoring_result(raw: dict[str, Any]) -> Figure7ConditionResult:
         trn_spike_indices=tuple(raw["trn_spike_indices"]),
         trn_spike_times_ms=tuple(raw["trn_spike_times_ms"]),
         comparator_source_index=raw.get("comparator_source_index"),
+        comparator_relay_floor=raw.get("comparator_relay_floor"),
         comparator_transform=raw.get("comparator_transform"),
         comparator_target_count=raw.get("comparator_target_count"),
     )

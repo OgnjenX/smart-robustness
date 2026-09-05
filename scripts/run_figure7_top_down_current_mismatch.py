@@ -45,6 +45,10 @@ def _scoring_result(raw: dict[str, Any]) -> Figure7ConditionResult:
     return Figure7ConditionResult(
         condition=MatchCondition(raw["condition"]),
         duration_ms=float(raw["duration_ms"]),
+        comparator_relay_floor=raw.get("comparator_relay_floor"),
+        comparator_source_index=raw.get("comparator_source_index"),
+        comparator_transform=raw.get("comparator_transform"),
+        comparator_target_count=raw.get("comparator_target_count"),
         nonspecific_spike_times_ms=tuple(raw["nonspecific_spike_times_ms"]),
         relay_spike_indices=tuple(raw["relay_spike_indices"]),
         relay_spike_times_ms=tuple(raw["relay_spike_times_ms"]),

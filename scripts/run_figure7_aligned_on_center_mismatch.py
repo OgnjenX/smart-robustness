@@ -42,6 +42,10 @@ def _scoring_result(raw: dict[str, Any]) -> Figure7ConditionResult:
     return Figure7ConditionResult(
         condition=MatchCondition(raw["condition"]),
         duration_ms=float(raw["duration_ms"]),
+        comparator_relay_floor=raw.get("comparator_relay_floor"),
+        comparator_source_index=raw.get("comparator_source_index"),
+        comparator_transform=raw.get("comparator_transform"),
+        comparator_target_count=raw.get("comparator_target_count"),
         nonspecific_spike_times_ms=tuple(raw["nonspecific_spike_times_ms"]),
         relay_spike_indices=tuple(raw["relay_spike_indices"]),
         relay_spike_times_ms=tuple(raw["relay_spike_times_ms"]),
@@ -76,6 +80,7 @@ def main() -> None:
     )
     parser.add_argument("--output", required=True)
     parser.add_argument("--diagnostic-registration")
+    parser.add_argument("--relay-trace-output")
     parser.add_argument("--pre-event-offsets-ms", type=float, nargs="*", default=[])
     args = parser.parse_args()
 
@@ -160,6 +165,7 @@ def main() -> None:
         dt_ms=float(protocol["dt_ms"]),
         record_relay_diagnostics=True,
         relay_pre_event_offsets_ms=tuple(args.pre_event_offsets_ms),
+        relay_trace_output=args.relay_trace_output,
         persistent_projection_weight_scales=scales,
         top_down_current_mode=TopDownCurrentMode(protocol["top_down_current_mode"]),
         top_down_cue_lead_ms=float(protocol["top_down_cue_lead_ms"]),

@@ -402,6 +402,8 @@ class Figure7ConditionResult:
     comparator_source_index: int | None = None
     comparator_transform: str | None = None
     comparator_target_count: int | None = None
+    relay_trace_path: str | None = None
+    relay_trace_sha256: str | None = None
     network_scope: str = "first_order"
     disabled_projection_ids: tuple[str, ...] = ()
     relay_top_down_ampa_peak_by_index: tuple[tuple[int, float], ...] = ()
@@ -723,6 +725,7 @@ def run_figure7_condition(
     top_down_cue_lead_ms: float = 0.0,
     equilibration_ms: float = 0.0,
     convergent_external_source_scope: str = "nonzero_pixels",
+    relay_trace_output: str | Path | None = None,
     cpp_standalone_directory: str | Path | None = None,
     brian=None,
 ) -> Figure7ConditionResult:
@@ -742,6 +745,13 @@ def run_figure7_condition(
         )
     if duration_ms <= 0 or dt_ms <= 0:
         raise ValueError("duration_ms and dt_ms must be positive")
+    if relay_trace_output is not None:
+        if not record_relay_diagnostics:
+            raise ValueError("relay trace output requires relay diagnostics")
+        if Path(relay_trace_output).exists():
+            raise FileExistsError(relay_trace_output)
+        if not Path(relay_trace_output).parent.is_dir():
+            raise ValueError("relay trace output parent directory must exist")
     if top_down_cue_lead_ms < 0:
         raise ValueError("top_down_cue_lead_ms cannot be negative")
     if equilibration_ms < 0:
@@ -1020,6 +1030,11 @@ def run_figure7_condition(
                 "v_distal_dendrite",
                 "v_proximal_dendrite",
                 "v_soma",
+                *(
+                    ("m_ca_distal_dendrite", "h_ca_distal_dendrite",
+                     "m_ca_proximal_dendrite", "h_ca_proximal_dendrite")
+                    if relay_trace_output is not None else ()
+                ),
             ),
             record=FIGURE7_RELAY_DIAGNOSTIC_INDICES,
             name=f"figure7_{condition.value}_relay_pathway_state",
@@ -1917,8 +1932,23 @@ def run_figure7_condition(
             current_termination_time_ms = selected_event_times_from_cue_start[
                 termination_event_limit - 1
             ]
+    relay_trace_sha256 = None
+    if relay_trace_output is not None:
+        from .relay_trace import write_relay_trace
+
+        relay_trace_sha256 = write_relay_trace(
+            relay_state, relay_trace_output,
+            stimulus_start_ms=(
+                pretraining_elapsed_ms + equilibration_ms + top_down_cue_lead_ms
+            ),
+            condition=condition,
+            fingerprint=conventions.fingerprint,
+            brian=brian,
+        )
     result = Figure7ConditionResult(
         condition=condition,
+        relay_trace_path=str(relay_trace_output) if relay_trace_output is not None else None,
+        relay_trace_sha256=relay_trace_sha256,
         duration_ms=duration_ms,
         nonspecific_spike_times_ms=stimulus_times(nonspecific),
         layer4_spike_indices=stimulus_indices(layer4),

@@ -2,6 +2,14 @@
 
 ## Current interpretation (2026-09-05)
 
+The fixed declared-input Figure 6 test (413--415) passes all six registered
+prerequisites: 20 relay events confined to the five horizontal cells, four per
+cell, complete cortical recruitment, causal teaching timing, and positive
+horizontal map contrast (0.56623). Five interneurons fire at 2.96 ms in the
+stimulated locations. This is not a full learning reproduction or proof of a
+repaired mismatch mechanism. It permits registering a fresh comparator-free
+match test, not substituting the historical match or advancing to mismatch.
+
 Resolution 412 visually checks framework Section 4.1, Equations 5--6, and
 supports a selectable `declared_external_input` interpretation of the mixed
 interneuron gate: image-driven input with green sensitivity 0.37 replaces the

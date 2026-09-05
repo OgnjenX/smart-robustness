@@ -1,0 +1,37 @@
+schema_version: 1
+id: figure6-declared-interneuron-input-assessment-415
+registration: figure6-declared-interneuron-input-registration-413.yaml
+result: figure6-declared-interneuron-input-414.yaml
+classification: completed-fixed-source-interpretation-prerequisite-test
+runtime_fingerprint: e016bc9f3d0557e2b23ad00e7d956509df9cf44de42db6f66c6a484a42d1f7a0
+all_six_registered_gates_pass: true
+observations:
+  duration_ms: 100
+  relay_events: 20
+  relay_events_per_active_cell: 4
+  active_relay_indices: [38, 39, 40, 41, 42]
+  interneuron_events: 5
+  active_interneuron_indices: [38, 39, 40, 41, 42]
+  interneuron_event_time_ms: 2.96
+  layer4_events: 34
+  layer6ii_events: 11
+  trn_events: 567
+  combined_horizontal_contrast_approx: 0.56623
+  category_spike_ms: 60.14
+  teaching_arrival_ms: 62.14
+  preceding_relay_spike_ms: 41.33
+  following_relay_spike_ms: 63.68
+interpretation:
+  - The declared image-input route recruits interneurons while preserving the fixed Figure 6 prerequisites.
+  - Interneuron spikes do not by themselves quantify inhibitory current at relay targets or establish its effect on mismatch selection.
+  - This is one calibrated-network run, not independent full Figure 6 reproduction or a recovered legacy-runtime certificate.
+  - No sensitivity, conductance, weight scale, or detector tuning was performed in this test.
+next_action: >-
+  Register one comparator-free Figure 7 match experiment using this input
+  interpretation and a declared learned-state handoff. Preserve the distinction
+  between actual Figure 6 learned weights and any calibrated headroom expansion.
+  Do not reuse the historical match as validation of this changed network.
+match_test_may_be_registered: true
+mismatch_test_authorized: false
+baseline_promoted: false
+original_smart_reproduced: false

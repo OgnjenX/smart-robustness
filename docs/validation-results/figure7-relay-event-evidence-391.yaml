@@ -1,0 +1,214 @@
+schema_version: 1
+classification: post-hoc-descriptive-audit-no-new-simulation
+source_artifact: docs/validation-results/figure7-mismatch-pre-event-trace-audit-250.yaml
+source_sha256: 38d567095c5f2e8a7ac1a828af20b2d7b23a484950d0079493ca9a5b2c1a50bb
+cells:
+  22:
+    event_times_ms:
+    - 61.699999999999996
+    - 80.84
+    interevent_intervals_ms:
+    - 19.140000000000008
+    sample_offsets_ms:
+    - 0.2
+    - 0.5
+    - 1.0
+    - 2.0
+    sampled_current_ranges_pA_by_label:
+      direct_image_input:
+      - 144.3205689605784
+      - 251.84039418918132
+      distal_calcium:
+      - 1.4119246373087622
+      - 1.7511020699600068
+      interneuron_gaba:
+      - -0.0
+      - -0.0
+      proximal_calcium:
+      - 0.20827792615051724
+      - 0.42959175118687115
+      soma_axial:
+      - -418.3293075181347
+      - 152.21000504143746
+      soma_potassium:
+      - -33135.93895860572
+      - -13.292480466560782
+      soma_sodium:
+      - 128.02969097137316
+      - 28339.222154961764
+      top_down_excitation:
+      - 0.40097688378365065
+      - 21.518095236006307
+      trn_gaba:
+      - -1773.7780585113317
+      - -121.65503701398562
+    positive_soma_samples_before_emitted_event: 2
+  31:
+    event_times_ms:
+    - 57.690000000000005
+    - 79.02000000000001
+    interevent_intervals_ms:
+    - 21.330000000000005
+    sample_offsets_ms:
+    - 0.2
+    - 0.5
+    - 1.0
+    - 2.0
+    sampled_current_ranges_pA_by_label:
+      direct_image_input:
+      - 129.84194073772935
+      - 269.67291666994345
+      distal_calcium:
+      - 1.4100897015281293
+      - 1.6192482497373628
+      interneuron_gaba:
+      - -0.0
+      - -0.0
+      proximal_calcium:
+      - 0.22050294612274762
+      - 0.5081170085584695
+      soma_axial:
+      - -415.7230614682822
+      - 149.8612766591233
+      soma_potassium:
+      - -36725.65329707065
+      - -15.048459272188797
+      soma_sodium:
+      - 126.05252197838
+      - 31080.261341127112
+      top_down_excitation:
+      - 0.9407812919025733
+      - 19.31013098885814
+      trn_gaba:
+      - -1679.522559238033
+      - -139.87515221099838
+    positive_soma_samples_before_emitted_event: 2
+  40:
+    event_times_ms:
+    - 54.91000000000001
+    - 78.10000000000002
+    interevent_intervals_ms:
+    - 23.190000000000012
+    sample_offsets_ms:
+    - 0.2
+    - 0.5
+    - 1.0
+    - 2.0
+    sampled_current_ranges_pA_by_label:
+      direct_image_input:
+      - 110.87617116382262
+      - 268.5990357721895
+      distal_calcium:
+      - 1.0781733315001636
+      - 1.4139765649923304
+      interneuron_gaba:
+      - -0.0
+      - -0.0
+      proximal_calcium:
+      - 0.2203743729216615
+      - 0.5559242990976574
+      soma_axial:
+      - -425.1303664006161
+      - 154.32932919853252
+      soma_potassium:
+      - -33846.030156090346
+      - -16.53671935018519
+      soma_sodium:
+      - 128.80140069954308
+      - 29467.28110100816
+      top_down_excitation:
+      - 4.522351332256089
+      - 128.07555893025344
+      trn_gaba:
+      - -2312.100636249861
+      - -177.7277462403962
+    positive_soma_samples_before_emitted_event: 2
+  49:
+    event_times_ms:
+    - 57.690000000000005
+    - 79.02000000000001
+    interevent_intervals_ms:
+    - 21.330000000000005
+    sample_offsets_ms:
+    - 0.2
+    - 0.5
+    - 1.0
+    - 2.0
+    sampled_current_ranges_pA_by_label:
+      direct_image_input:
+      - 129.84194073792702
+      - 269.67291666994583
+      distal_calcium:
+      - 1.4100897015281317
+      - 1.6192482497373624
+      interneuron_gaba:
+      - -0.0
+      - -0.0
+      proximal_calcium:
+      - 0.22050294612276358
+      - 0.50811700855847
+      soma_axial:
+      - -415.72306146907846
+      - 149.86127665912718
+      soma_potassium:
+      - -36725.653296420365
+      - -15.048459272182683
+      soma_sodium:
+      - 126.0525219783268
+      - 31080.2613407647
+      top_down_excitation:
+      - 0.9407812919025725
+      - 19.31013098885817
+      trn_gaba:
+      - -1679.5225592392212
+      - -139.875152210988
+    positive_soma_samples_before_emitted_event: 2
+  58:
+    event_times_ms:
+    - 61.699999999999996
+    - 80.84
+    interevent_intervals_ms:
+    - 19.140000000000008
+    sample_offsets_ms:
+    - 0.2
+    - 0.5
+    - 1.0
+    - 2.0
+    sampled_current_ranges_pA_by_label:
+      direct_image_input:
+      - 144.32056896058384
+      - 251.84039418918132
+      distal_calcium:
+      - 1.4119246373087622
+      - 1.7511020699600068
+      interneuron_gaba:
+      - -0.0
+      - -0.0
+      proximal_calcium:
+      - 0.20827792615051766
+      - 0.42959175118687115
+      soma_axial:
+      - -418.32930751813467
+      - 152.2100050414375
+      soma_potassium:
+      - -33135.938958599596
+      - -13.292480466560727
+      soma_sodium:
+      - 128.02969097137236
+      - 28339.222154961837
+      top_down_excitation:
+      - 0.40097688378365065
+      - 21.518095236006303
+      trn_gaba:
+      - -1773.7780585113314
+      - -121.65503701398562
+    positive_soma_samples_before_emitted_event: 2
+interpretation:
+  burst_mechanism_identified: false
+  causal_calcium_contribution_identified: false
+  limitations:
+  - Interevent intervals alone do not establish a T-type rebound mechanism.
+  - Sparse samples do not recover the preceding calcium inactivation history.
+  - An emitted falling-phase event is not the time of spike initiation.
+  - Currents at different compartments are not a single local current balance.
+  - No reproduction gate or model parameter is changed by this analysis.

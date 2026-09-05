@@ -36,6 +36,24 @@ changed nonspecific timing but did not repair the candidate. The Figure 7
 scorer now explicitly rejects reconstructed-comparator runs as reproduction,
 while retaining their behavioral-target scores for diagnostic use.
 
+Visual source recheck 390 confirms Figure 7's qualitative overlap-selection
+claim and its 40/70-Hz nonspecific targets. It also records that the paper does
+not provide a numeric relay raster proving silence of every nonoverlap cell
+throughout the scoring window. The strict project overlap-only gate is retained
+without post-hoc relaxation, but is not mislabeled as such a recovered raster.
+The earlier comparator-free Artifact 244 meets 40/70 Hz yet activates all five
+vertical relay cells; its calibrated scaling and learned-state expansion also
+remain obstacles to source certification.
+
+Descriptive audit 391 summarizes the preserved pre-event samples from Artifact
+250 without a new simulation. Nonoverlap cells have two events separated by
+19.14 or 21.33 ms. Some samples before the emitted falling-phase event already
+have positive somatic voltage; they cannot be treated as samples strictly before
+spike initiation. Sparse current values do not establish calcium-gate history
+or causal rebound contribution. No burst label, revised spatial pass, or causal
+calcium exclusion is inferred. The summary is reproducible with
+`scripts/audit_figure7_relay_events.py` and pins the input artifact's checksum.
+
 ## What the 2008 model contains
 
 The Methods section describes two hierarchically organized thalamocortical

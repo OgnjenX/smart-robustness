@@ -1,0 +1,33 @@
+schema_version: 1
+id: declared-input-unexpanded-match-registration-416
+status: registered-before-execution
+classification: fixed-source-interpretation-match-diagnostic
+training_profile: configs/calibration/figure6_declared_interneuron_input_v1.yaml
+training_result: docs/validation-results/figure6-declared-interneuron-input-414.yaml
+runtime_fingerprint: e016bc9f3d0557e2b23ad00e7d956509df9cf44de42db6f66c6a484a42d1f7a0
+result: docs/validation-results/declared-input-unexpanded-match-417.yaml
+weight_handoff: Actual fresh Figure 6 learned weights; no headroom expansion, common factor 1.
+repeatability_check: Exact monitored population event trains and all three saved learned maps must equal 414 before match runs.
+protocol:
+  condition: match
+  top_down_current_pA: 800
+  top_down_current_mode: until_cued_cell_first_event
+  top_down_cue_lead_ms: 7.85
+  duration_ms: 100
+  dt_ms: 0.01
+  equilibration_ms: 0
+  comparator: none
+  calcium_ablation: none
+execution: {figure6_learning_runs: 1, match_runs: 1, mismatch_runs: 0, parameter_search: false}
+gates:
+  - Exactly one source-40 category event in cue, no other category or relay cue events, current ends on that event.
+  - Relay active indices exactly 38,39,40,41,42 with at least three events per cell.
+  - Nonzero TRN activity, with sampled event counts matching fresh detector cycles.
+  - Exactly four nonspecific events in 100 ms (40 Hz).
+  - No reconstructed comparator or calcium ablation.
+interpretation:
+  - This tests unexpanded learned weights and must not be conflated with the prior expanded-headroom control.
+  - Inhibitory scales, detector choices, and other calibrated conventions remain unchanged and source-unverified.
+  - Failure is retained without tuning weights, input sensitivity, or cue timing within this experiment.
+  - A pass permits registering mismatch but does not establish complete SMART reproduction.
+baseline_promoted: false

@@ -1,0 +1,31 @@
+schema_version: 1
+id: relay-complete-calcium-assessment-405
+date: '2026-09-05'
+classification: registered-control-replay-descriptive-assessment
+registration: relay-complete-calcium-trace-registration-402.yaml
+result: figure7-complete-relay-calcium-trace-403.yaml
+integrity_checked_summary: figure7-complete-relay-calcium-summary-404.yaml
+model_and_protocol_changes: none
+checks:
+  recorded_trial_event_trains_identical_to_reference: true
+  calcium_compartments_recorded: [soma, proximal_dendrite, distal_dendrite]
+  trace_sha256: d1a7c233aac2b91a18daaa4438863345dcc297133c0860f09bdbf17754cfeef1
+  sample_count: 10785
+  time_range_ms: [-7.85, 99.99]
+observations:
+  nonoverlap_cell_22_stimulus_somatic_calcium_current_pA: [10.594517440568646, 25.75973542635055]
+  nonoverlap_cell_31_stimulus_somatic_calcium_current_pA: [10.598125444118672, 26.04199204824938]
+  nonoverlap_cell_22_stimulus_somatic_h_ca: [0.016489068608704853, 0.027046351190068978]
+  nonoverlap_cell_31_stimulus_somatic_h_ca: [0.017358728481225442, 0.02745671540330664]
+interpretation:
+  - The missing somatic calcium readout is repaired without altering the event trains.
+  - Somatic calcium current is nonzero; dendritic-only ablation cannot exclude whole-cell calcium involvement.
+  - Current and gate ranges do not establish causal necessity or justify labeling the nonoverlap events as rebound bursts.
+  - The calibrated control still fails spatial selection. Repeatability is not independent predictive validation.
+next_discriminator: >-
+  A separately registered whole-relay calcium intervention, retaining the same
+  cue history and zeroing all three conductances only at sensory onset, could
+  test whether ongoing relay calcium is necessary for nonoverlap firing in this
+  calibrated configuration. It would not establish fidelity or rescue reproduction.
+baseline_promoted: false
+original_smart_reproduced: false

@@ -1,0 +1,1555 @@
+schema_version: 1
+classification: post-hoc-descriptive-audit-no-new-simulation
+source_artifact: docs/validation-results/figure7-complete-relay-calcium-trace-403.yaml
+source_sha256: cac029d86f5c1c5e5edc84ecd83bee62e3b685171126fe511979f83680658d38
+cells:
+  22:
+    event_times_ms:
+    - 61.699999999999996
+    - 80.84
+    interevent_intervals_ms:
+    - 19.140000000000008
+    sample_offsets_ms:
+    - 0.2
+    - 0.5
+    - 1.0
+    - 2.0
+    sampled_current_ranges_pA_by_label:
+      direct_image_input:
+      - 144.3205689605784
+      - 251.84039418918132
+      distal_calcium:
+      - 1.4119246373087622
+      - 1.7511020699600068
+      interneuron_gaba:
+      - -0.0
+      - -0.0
+      proximal_calcium:
+      - 0.20827792615051724
+      - 0.42959175118687115
+      soma_axial:
+      - -418.3293075181347
+      - 152.21000504143746
+      soma_potassium:
+      - -33135.93895860572
+      - -13.292480466560782
+      soma_sodium:
+      - 128.02969097137316
+      - 28339.222154961764
+      top_down_excitation:
+      - 0.40097688378365065
+      - 21.518095236006307
+      trn_gaba:
+      - -1773.7780585113317
+      - -121.65503701398562
+    positive_soma_samples_before_emitted_event: 2
+  31:
+    event_times_ms:
+    - 57.690000000000005
+    - 79.02000000000001
+    interevent_intervals_ms:
+    - 21.330000000000005
+    sample_offsets_ms:
+    - 0.2
+    - 0.5
+    - 1.0
+    - 2.0
+    sampled_current_ranges_pA_by_label:
+      direct_image_input:
+      - 129.84194073772935
+      - 269.67291666994345
+      distal_calcium:
+      - 1.4100897015281293
+      - 1.6192482497373628
+      interneuron_gaba:
+      - -0.0
+      - -0.0
+      proximal_calcium:
+      - 0.22050294612274762
+      - 0.5081170085584695
+      soma_axial:
+      - -415.7230614682822
+      - 149.8612766591233
+      soma_potassium:
+      - -36725.65329707065
+      - -15.048459272188797
+      soma_sodium:
+      - 126.05252197838
+      - 31080.261341127112
+      top_down_excitation:
+      - 0.9407812919025733
+      - 19.31013098885814
+      trn_gaba:
+      - -1679.522559238033
+      - -139.87515221099838
+    positive_soma_samples_before_emitted_event: 2
+  40:
+    event_times_ms:
+    - 54.91000000000001
+    - 78.10000000000002
+    interevent_intervals_ms:
+    - 23.190000000000012
+    sample_offsets_ms:
+    - 0.2
+    - 0.5
+    - 1.0
+    - 2.0
+    sampled_current_ranges_pA_by_label:
+      direct_image_input:
+      - 110.87617116382262
+      - 268.5990357721895
+      distal_calcium:
+      - 1.0781733315001636
+      - 1.4139765649923304
+      interneuron_gaba:
+      - -0.0
+      - -0.0
+      proximal_calcium:
+      - 0.2203743729216615
+      - 0.5559242990976574
+      soma_axial:
+      - -425.1303664006161
+      - 154.32932919853252
+      soma_potassium:
+      - -33846.030156090346
+      - -16.53671935018519
+      soma_sodium:
+      - 128.80140069954308
+      - 29467.28110100816
+      top_down_excitation:
+      - 4.522351332256089
+      - 128.07555893025344
+      trn_gaba:
+      - -2312.100636249861
+      - -177.7277462403962
+    positive_soma_samples_before_emitted_event: 2
+  49:
+    event_times_ms:
+    - 57.690000000000005
+    - 79.02000000000001
+    interevent_intervals_ms:
+    - 21.330000000000005
+    sample_offsets_ms:
+    - 0.2
+    - 0.5
+    - 1.0
+    - 2.0
+    sampled_current_ranges_pA_by_label:
+      direct_image_input:
+      - 129.84194073792702
+      - 269.67291666994583
+      distal_calcium:
+      - 1.4100897015281317
+      - 1.6192482497373624
+      interneuron_gaba:
+      - -0.0
+      - -0.0
+      proximal_calcium:
+      - 0.22050294612276358
+      - 0.50811700855847
+      soma_axial:
+      - -415.72306146907846
+      - 149.86127665912718
+      soma_potassium:
+      - -36725.653296420365
+      - -15.048459272182683
+      soma_sodium:
+      - 126.0525219783268
+      - 31080.2613407647
+      top_down_excitation:
+      - 0.9407812919025725
+      - 19.31013098885817
+      trn_gaba:
+      - -1679.5225592392212
+      - -139.875152210988
+    positive_soma_samples_before_emitted_event: 2
+  58:
+    event_times_ms:
+    - 61.699999999999996
+    - 80.84
+    interevent_intervals_ms:
+    - 19.140000000000008
+    sample_offsets_ms:
+    - 0.2
+    - 0.5
+    - 1.0
+    - 2.0
+    sampled_current_ranges_pA_by_label:
+      direct_image_input:
+      - 144.32056896058384
+      - 251.84039418918132
+      distal_calcium:
+      - 1.4119246373087622
+      - 1.7511020699600068
+      interneuron_gaba:
+      - -0.0
+      - -0.0
+      proximal_calcium:
+      - 0.20827792615051766
+      - 0.42959175118687115
+      soma_axial:
+      - -418.32930751813467
+      - 152.2100050414375
+      soma_potassium:
+      - -33135.938958599596
+      - -13.292480466560727
+      soma_sodium:
+      - 128.02969097137236
+      - 28339.222154961837
+      top_down_excitation:
+      - 0.40097688378365065
+      - 21.518095236006303
+      trn_gaba:
+      - -1773.7780585113314
+      - -121.65503701398562
+    positive_soma_samples_before_emitted_event: 2
+interpretation:
+  burst_mechanism_identified: false
+  causal_calcium_contribution_identified: false
+  limitations:
+  - Interevent intervals alone do not establish a T-type rebound mechanism.
+  - Sparse samples do not recover the preceding calcium inactivation history.
+  - An emitted falling-phase event is not the time of spike initiation.
+  - Currents at different compartments are not a single local current balance.
+  - No reproduction gate or model parameter is changed by this analysis.
+continuous_trace:
+  event_trains_identical_to_reference: true
+  calcium_compartments_recorded:
+  - soma
+  - proximal_dendrite
+  - distal_dendrite
+  monitor_when: start
+  sample_count: 10785
+  time_range_ms:
+  - -7.85
+  - 99.99000000000001
+  cells:
+    22:
+      pre_stimulus:
+        i_ca_distal_dendrite:
+          unit: pA
+          min: 1.189355775947508
+          max: 1.2094301186652086
+        i_ca_proximal_dendrite:
+          unit: pA
+          min: 1.4880729931098235
+          max: 1.503151007664587
+        v_distal_dendrite:
+          unit: mV
+          min: -64.72076896743002
+          max: -59.565392359488435
+        v_proximal_dendrite:
+          unit: mV
+          min: -61.42828810264306
+          max: -59.696263277949555
+        v_soma:
+          unit: mV
+          min: -61.9133461710408
+          max: -59.21316965536812
+        m_ca_inf_soma:
+          unit: dimensionless
+          min: 0.5347724263328639
+          max: 0.619043669879795
+        h_ca_inf_soma:
+          unit: dimensionless
+          min: 0.020733512928295218
+          max: 0.03147889390349094
+        i_ca_soma:
+          unit: pA
+          min: 11.160104315635367
+          max: 11.439856784753001
+        m_ca_inf_proximal_dendrite:
+          unit: dimensionless
+          min: 0.5502056218317395
+          max: 0.6043338531350902
+        h_ca_inf_proximal_dendrite:
+          unit: dimensionless
+          min: 0.022349005900277243
+          max: 0.029214331063221414
+        m_ca_inf_distal_dendrite:
+          unit: dimensionless
+          min: 0.44506975312075936
+          max: 0.6083386879313581
+        h_ca_inf_distal_dendrite:
+          unit: dimensionless
+          min: 0.02189959746204121
+          max: 0.04829944728480057
+        h_ca_distal_dendrite:
+          unit: dimensionless
+          min: 0.0233349252298399
+          max: 0.023599530839819405
+        h_ca_proximal_dendrite:
+          unit: dimensionless
+          min: 0.02336141857167847
+          max: 0.023429650170296402
+        h_ca_soma:
+          unit: dimensionless
+          min: 0.023263744507193086
+          max: 0.023427035937057025
+        m_ca_distal_dendrite:
+          unit: dimensionless
+          min: 0.5894938053466992
+          max: 0.5984864617402208
+        m_ca_proximal_dendrite:
+          unit: dimensionless
+          min: 0.5945499102189258
+          max: 0.597444067540871
+        m_ca_soma:
+          unit: dimensionless
+          min: 0.5949857935227716
+          max: 0.6012222207991296
+      stimulus:
+        i_ca_distal_dendrite:
+          unit: pA
+          min: 1.1238501662632976
+          max: 1.7937888850985821
+        i_ca_proximal_dendrite:
+          unit: pA
+          min: 0.13132667402795847
+          max: 3.74351736516981
+        v_distal_dendrite:
+          unit: mV
+          min: -64.86393744049661
+          max: -32.14259202219257
+        v_proximal_dendrite:
+          unit: mV
+          min: -61.43607989783411
+          max: -18.314606583269423
+        v_soma:
+          unit: mV
+          min: -95.15589799954473
+          max: 45.28021979801132
+        m_ca_inf_soma:
+          unit: dimensionless
+          min: 0.015944771916909198
+          max: 0.9999990644024275
+        h_ca_inf_soma:
+          unit: dimensionless
+          min: 1.325727155857209e-09
+          max: 0.8641438379050265
+        i_ca_soma:
+          unit: pA
+          min: 10.594517440568646
+          max: 25.75973542635055
+        m_ca_inf_proximal_dendrite:
+          unit: dimensionless
+          min: 0.5499583903806357
+          max: 0.9967598705036613
+        h_ca_inf_proximal_dendrite:
+          unit: dimensionless
+          min: 3.2091481530679e-05
+          max: 0.029249427996856828
+        m_ca_inf_distal_dendrite:
+          unit: dimensionless
+          min: 0.44054109605534736
+          max: 0.9812213584919366
+        h_ca_inf_distal_dendrite:
+          unit: dimensionless
+          min: 0.00028808423267525957
+          max: 0.04935483369733295
+        h_ca_distal_dendrite:
+          unit: dimensionless
+          min: 0.007975781496823247
+          max: 0.023954674256610794
+        h_ca_proximal_dendrite:
+          unit: dimensionless
+          min: 0.0005239708351522466
+          max: 0.02343177216812476
+        h_ca_soma:
+          unit: dimensionless
+          min: 0.016489068608704853
+          max: 0.027046351190068978
+        m_ca_distal_dendrite:
+          unit: dimensionless
+          min: 0.579206587269082
+          max: 0.9677367287924362
+        m_ca_proximal_dendrite:
+          unit: dimensionless
+          min: 0.5944668306742247
+          max: 0.9887973690630307
+        m_ca_soma:
+          unit: dimensionless
+          min: 0.5809325616374834
+          max: 0.8251587278039484
+    31:
+      pre_stimulus:
+        i_ca_distal_dendrite:
+          unit: pA
+          min: 1.189355775947508
+          max: 1.2094301186652086
+        i_ca_proximal_dendrite:
+          unit: pA
+          min: 1.4880729931098235
+          max: 1.503151007664587
+        v_distal_dendrite:
+          unit: mV
+          min: -64.72076896743002
+          max: -59.565392359488435
+        v_proximal_dendrite:
+          unit: mV
+          min: -61.42828810264306
+          max: -59.696263277949555
+        v_soma:
+          unit: mV
+          min: -61.9133461710408
+          max: -59.21316965536812
+        m_ca_inf_soma:
+          unit: dimensionless
+          min: 0.5347724263328639
+          max: 0.619043669879795
+        h_ca_inf_soma:
+          unit: dimensionless
+          min: 0.020733512928295218
+          max: 0.03147889390349094
+        i_ca_soma:
+          unit: pA
+          min: 11.160104315635367
+          max: 11.439856784753001
+        m_ca_inf_proximal_dendrite:
+          unit: dimensionless
+          min: 0.5502056218317395
+          max: 0.6043338531350902
+        h_ca_inf_proximal_dendrite:
+          unit: dimensionless
+          min: 0.022349005900277243
+          max: 0.029214331063221414
+        m_ca_inf_distal_dendrite:
+          unit: dimensionless
+          min: 0.44506975312075936
+          max: 0.6083386879313581
+        h_ca_inf_distal_dendrite:
+          unit: dimensionless
+          min: 0.02189959746204121
+          max: 0.04829944728480057
+        h_ca_distal_dendrite:
+          unit: dimensionless
+          min: 0.0233349252298399
+          max: 0.023599530839819405
+        h_ca_proximal_dendrite:
+          unit: dimensionless
+          min: 0.02336141857167847
+          max: 0.023429650170296402
+        h_ca_soma:
+          unit: dimensionless
+          min: 0.023263744507193086
+          max: 0.023427035937057025
+        m_ca_distal_dendrite:
+          unit: dimensionless
+          min: 0.5894938053466992
+          max: 0.5984864617402208
+        m_ca_proximal_dendrite:
+          unit: dimensionless
+          min: 0.5945499102189258
+          max: 0.597444067540871
+        m_ca_soma:
+          unit: dimensionless
+          min: 0.5949857935227716
+          max: 0.6012222207991296
+      stimulus:
+        i_ca_distal_dendrite:
+          unit: pA
+          min: 1.1299316391195366
+          max: 1.8220889916076697
+        i_ca_proximal_dendrite:
+          unit: pA
+          min: 0.1264316130911727
+          max: 3.7463361984955466
+        v_distal_dendrite:
+          unit: mV
+          min: -64.84755375870046
+          max: -35.04555270310171
+        v_proximal_dendrite:
+          unit: mV
+          min: -61.43607989783411
+          max: -16.87958061353139
+        v_soma:
+          unit: mV
+          min: -95.51622267103795
+          max: 45.46501883514679
+        m_ca_inf_soma:
+          unit: dimensionless
+          min: 0.015235917083661303
+          max: 0.9999990863082346
+        h_ca_inf_soma:
+          unit: dimensionless
+          min: 1.2874041772102154e-09
+          max: 0.8707196703018151
+        i_ca_soma:
+          unit: pA
+          min: 10.598125444118672
+          max: 26.04199204824938
+        m_ca_inf_proximal_dendrite:
+          unit: dimensionless
+          min: 0.5499583903806357
+          max: 0.9973028915721363
+        h_ca_inf_proximal_dendrite:
+          unit: dimensionless
+          min: 2.5554546836864784e-05
+          max: 0.029249427996856828
+        m_ca_inf_distal_dendrite:
+          unit: dimensionless
+          min: 0.44105885260738087
+          max: 0.9729830837717101
+        h_ca_inf_distal_dendrite:
+          unit: dimensionless
+          min: 0.0004566292140878692
+          max: 0.04923295994621896
+        h_ca_distal_dendrite:
+          unit: dimensionless
+          min: 0.0071761147217879705
+          max: 0.023889865321740943
+        h_ca_proximal_dendrite:
+          unit: dimensionless
+          min: 0.0005133928981040924
+          max: 0.023431772167772418
+        h_ca_soma:
+          unit: dimensionless
+          min: 0.017358728481225442
+          max: 0.02745671540330664
+        m_ca_distal_dendrite:
+          unit: dimensionless
+          min: 0.5809769874706157
+          max: 0.9614628308770766
+        m_ca_proximal_dendrite:
+          unit: dimensionless
+          min: 0.5944668306891612
+          max: 0.9889972804165928
+        m_ca_soma:
+          unit: dimensionless
+          min: 0.581031143000478
+          max: 0.8182006631055311
+    38:
+      pre_stimulus:
+        i_ca_distal_dendrite:
+          unit: pA
+          min: 1.189355775947508
+          max: 1.2094301186652086
+        i_ca_proximal_dendrite:
+          unit: pA
+          min: 1.4880729931098235
+          max: 1.503151007664587
+        v_distal_dendrite:
+          unit: mV
+          min: -64.72076896743002
+          max: -59.565392359488435
+        v_proximal_dendrite:
+          unit: mV
+          min: -61.42828810264306
+          max: -59.696263277949555
+        v_soma:
+          unit: mV
+          min: -61.9133461710408
+          max: -59.21316965536812
+        m_ca_inf_soma:
+          unit: dimensionless
+          min: 0.5347724263328639
+          max: 0.619043669879795
+        h_ca_inf_soma:
+          unit: dimensionless
+          min: 0.020733512928295218
+          max: 0.03147889390349094
+        i_ca_soma:
+          unit: pA
+          min: 11.160104315635367
+          max: 11.439856784753001
+        m_ca_inf_proximal_dendrite:
+          unit: dimensionless
+          min: 0.5502056218317395
+          max: 0.6043338531350902
+        h_ca_inf_proximal_dendrite:
+          unit: dimensionless
+          min: 0.022349005900277243
+          max: 0.029214331063221414
+        m_ca_inf_distal_dendrite:
+          unit: dimensionless
+          min: 0.44506975312075936
+          max: 0.6083386879313581
+        h_ca_inf_distal_dendrite:
+          unit: dimensionless
+          min: 0.02189959746204121
+          max: 0.04829944728480057
+        h_ca_distal_dendrite:
+          unit: dimensionless
+          min: 0.0233349252298399
+          max: 0.023599530839819405
+        h_ca_proximal_dendrite:
+          unit: dimensionless
+          min: 0.02336141857167847
+          max: 0.023429650170296402
+        h_ca_soma:
+          unit: dimensionless
+          min: 0.023263744507193086
+          max: 0.023427035937057025
+        m_ca_distal_dendrite:
+          unit: dimensionless
+          min: 0.5894938053466992
+          max: 0.5984864617402208
+        m_ca_proximal_dendrite:
+          unit: dimensionless
+          min: 0.5945499102189258
+          max: 0.597444067540871
+        m_ca_soma:
+          unit: dimensionless
+          min: 0.5949857935227716
+          max: 0.6012222207991296
+      stimulus:
+        i_ca_distal_dendrite:
+          unit: pA
+          min: 0.6527596330731957
+          max: 2.8868793496359597
+        i_ca_proximal_dendrite:
+          unit: pA
+          min: 1.1426270908543439
+          max: 1.493772021593052
+        v_distal_dendrite:
+          unit: mV
+          min: -66.93689618344276
+          max: -37.409202884928135
+        v_proximal_dendrite:
+          unit: mV
+          min: -63.342013709054605
+          max: -59.659262730441625
+        v_soma:
+          unit: mV
+          min: -67.53918595546918
+          max: -61.92902318062654
+        m_ca_inf_soma:
+          unit: dimensionless
+          min: 0.358484731149783
+          max: 0.5342723534770317
+        h_ca_inf_soma:
+          unit: dimensionless
+          min: 0.03155484912446284
+          max: 0.07354537230602994
+        i_ca_soma:
+          unit: pA
+          min: 5.609337738606424
+          max: 11.376367306711172
+        m_ca_inf_proximal_dendrite:
+          unit: dimensionless
+          min: 0.48903977813555777
+          max: 0.6054675675293317
+        h_ca_inf_proximal_dendrite:
+          unit: dimensionless
+          min: 0.022221040725312582
+          max: 0.03917775305027994
+        m_ca_inf_distal_dendrite:
+          unit: dimensionless
+          min: 0.3764296810851873
+          max: 0.9637667264568385
+        h_ca_inf_distal_dendrite:
+          unit: dimensionless
+          min: 0.0006643747815647462
+          max: 0.06729116689219707
+        h_ca_distal_dendrite:
+          unit: dimensionless
+          min: 0.01673936614925218
+          max: 0.03483698865680001
+        h_ca_proximal_dendrite:
+          unit: dimensionless
+          min: 0.023430533682496424
+          max: 0.03142200330111256
+        h_ca_soma:
+          unit: dimensionless
+          min: 0.023336176009219094
+          max: 0.04921297552848316
+        m_ca_distal_dendrite:
+          unit: dimensionless
+          min: 0.4254874701109848
+          max: 0.8875819269616181
+        m_ca_proximal_dendrite:
+          unit: dimensionless
+          min: 0.501201299000509
+          max: 0.5945157552692246
+        m_ca_soma:
+          unit: dimensionless
+          min: 0.3785889974976236
+          max: 0.5979592725113332
+    39:
+      pre_stimulus:
+        i_ca_distal_dendrite:
+          unit: pA
+          min: 1.189355775947508
+          max: 1.2094301186652086
+        i_ca_proximal_dendrite:
+          unit: pA
+          min: 1.4880729931098235
+          max: 1.503151007664587
+        v_distal_dendrite:
+          unit: mV
+          min: -64.72076896743002
+          max: -59.565392359488435
+        v_proximal_dendrite:
+          unit: mV
+          min: -61.42828810264306
+          max: -59.696263277949555
+        v_soma:
+          unit: mV
+          min: -61.9133461710408
+          max: -59.21316965536812
+        m_ca_inf_soma:
+          unit: dimensionless
+          min: 0.5347724263328639
+          max: 0.619043669879795
+        h_ca_inf_soma:
+          unit: dimensionless
+          min: 0.020733512928295218
+          max: 0.03147889390349094
+        i_ca_soma:
+          unit: pA
+          min: 11.160104315635367
+          max: 11.439856784753001
+        m_ca_inf_proximal_dendrite:
+          unit: dimensionless
+          min: 0.5502056218317395
+          max: 0.6043338531350902
+        h_ca_inf_proximal_dendrite:
+          unit: dimensionless
+          min: 0.022349005900277243
+          max: 0.029214331063221414
+        m_ca_inf_distal_dendrite:
+          unit: dimensionless
+          min: 0.44506975312075936
+          max: 0.6083386879313581
+        h_ca_inf_distal_dendrite:
+          unit: dimensionless
+          min: 0.02189959746204121
+          max: 0.04829944728480057
+        h_ca_distal_dendrite:
+          unit: dimensionless
+          min: 0.0233349252298399
+          max: 0.023599530839819405
+        h_ca_proximal_dendrite:
+          unit: dimensionless
+          min: 0.02336141857167847
+          max: 0.023429650170296402
+        h_ca_soma:
+          unit: dimensionless
+          min: 0.023263744507193086
+          max: 0.023427035937057025
+        m_ca_distal_dendrite:
+          unit: dimensionless
+          min: 0.5894938053466992
+          max: 0.5984864617402208
+        m_ca_proximal_dendrite:
+          unit: dimensionless
+          min: 0.5945499102189258
+          max: 0.597444067540871
+        m_ca_soma:
+          unit: dimensionless
+          min: 0.5949857935227716
+          max: 0.6012222207991296
+      stimulus:
+        i_ca_distal_dendrite:
+          unit: pA
+          min: 0.6260623600061364
+          max: 3.1550334259098713
+        i_ca_proximal_dendrite:
+          unit: pA
+          min: 1.1458828015964972
+          max: 1.569127510858051
+        v_distal_dendrite:
+          unit: mV
+          min: -66.86223380050356
+          max: -25.70118081119638
+        v_proximal_dendrite:
+          unit: mV
+          min: -63.311346423078106
+          max: -58.48093589144692
+        v_soma:
+          unit: mV
+          min: -67.521425023866
+          max: -61.92902318062654
+        m_ca_inf_soma:
+          unit: dimensionless
+          min: 0.359008558993809
+          max: 0.5342723534770317
+        h_ca_inf_soma:
+          unit: dimensionless
+          min: 0.03155484912446284
+          max: 0.07335351312334368
+        i_ca_soma:
+          unit: pA
+          min: 5.631961216263157
+          max: 11.376367306711172
+        m_ca_inf_proximal_dendrite:
+          unit: dimensionless
+          min: 0.49002227273887417
+          max: 0.6409217845508796
+        h_ca_inf_proximal_dendrite:
+          unit: dimensionless
+          min: 0.01850056769973395
+          max: 0.03899492476179733
+        m_ca_inf_distal_dendrite:
+          unit: dimensionless
+          min: 0.3786791874104826
+          max: 0.99168957925976
+        h_ca_inf_distal_dendrite:
+          unit: dimensionless
+          min: 0.0001036470276123457
+          max: 0.06655115453492169
+        h_ca_distal_dendrite:
+          unit: dimensionless
+          min: 0.01335888570076564
+          max: 0.031724938403124556
+        h_ca_proximal_dendrite:
+          unit: dimensionless
+          min: 0.023103690862330137
+          max: 0.030776512989724975
+        h_ca_soma:
+          unit: dimensionless
+          min: 0.023336176009219094
+          max: 0.049153729514310386
+        m_ca_distal_dendrite:
+          unit: dimensionless
+          min: 0.4320169054415598
+          max: 0.9520988070075134
+        m_ca_proximal_dendrite:
+          unit: dimensionless
+          min: 0.5020490897783351
+          max: 0.6086580059410621
+        m_ca_soma:
+          unit: dimensionless
+          min: 0.37822894795871775
+          max: 0.5979592725113332
+    40:
+      pre_stimulus:
+        i_ca_distal_dendrite:
+          unit: pA
+          min: 1.189355775947508
+          max: 1.2094301186652086
+        i_ca_proximal_dendrite:
+          unit: pA
+          min: 1.4880729931098235
+          max: 1.503151007664587
+        v_distal_dendrite:
+          unit: mV
+          min: -64.72076896743002
+          max: -59.565392359488435
+        v_proximal_dendrite:
+          unit: mV
+          min: -61.42828810264306
+          max: -59.696263277949555
+        v_soma:
+          unit: mV
+          min: -61.9133461710408
+          max: -59.21316965536812
+        m_ca_inf_soma:
+          unit: dimensionless
+          min: 0.5347724263328639
+          max: 0.619043669879795
+        h_ca_inf_soma:
+          unit: dimensionless
+          min: 0.020733512928295218
+          max: 0.03147889390349094
+        i_ca_soma:
+          unit: pA
+          min: 11.160104315635367
+          max: 11.439856784753001
+        m_ca_inf_proximal_dendrite:
+          unit: dimensionless
+          min: 0.5502056218317395
+          max: 0.6043338531350902
+        h_ca_inf_proximal_dendrite:
+          unit: dimensionless
+          min: 0.022349005900277243
+          max: 0.029214331063221414
+        m_ca_inf_distal_dendrite:
+          unit: dimensionless
+          min: 0.44506975312075936
+          max: 0.6083386879313581
+        h_ca_inf_distal_dendrite:
+          unit: dimensionless
+          min: 0.02189959746204121
+          max: 0.04829944728480057
+        h_ca_distal_dendrite:
+          unit: dimensionless
+          min: 0.0233349252298399
+          max: 0.023599530839819405
+        h_ca_proximal_dendrite:
+          unit: dimensionless
+          min: 0.02336141857167847
+          max: 0.023429650170296402
+        h_ca_soma:
+          unit: dimensionless
+          min: 0.023263744507193086
+          max: 0.023427035937057025
+        m_ca_distal_dendrite:
+          unit: dimensionless
+          min: 0.5894938053466992
+          max: 0.5984864617402208
+        m_ca_proximal_dendrite:
+          unit: dimensionless
+          min: 0.5945499102189258
+          max: 0.597444067540871
+        m_ca_soma:
+          unit: dimensionless
+          min: 0.5949857935227716
+          max: 0.6012222207991296
+      stimulus:
+        i_ca_distal_dendrite:
+          unit: pA
+          min: 0.8829603339330809
+          max: 3.1314258067685325
+        i_ca_proximal_dendrite:
+          unit: pA
+          min: 0.11697834655793041
+          max: 3.774866262221144
+        v_distal_dendrite:
+          unit: mV
+          min: -64.76475237611264
+          max: -21.203912879230227
+        v_proximal_dendrite:
+          unit: mV
+          min: -61.43607989783411
+          max: -15.370756439501816
+        v_soma:
+          unit: mV
+          min: -95.58941607349153
+          max: 45.39434263322609
+        m_ca_inf_soma:
+          unit: dimensionless
+          min: 0.015095763607706585
+          max: 0.9999990779916123
+        h_ca_inf_soma:
+          unit: dimensionless
+          min: 1.3019281657809005e-09
+          max: 0.8720218497309247
+        i_ca_soma:
+          unit: pA
+          min: 10.46824145008282
+          max: 25.894873729564697
+        m_ca_inf_proximal_dendrite:
+          unit: dimensionless
+          min: 0.5499583903806357
+          max: 0.9977762038133358
+        h_ca_inf_proximal_dendrite:
+          unit: dimensionless
+          min: 2.011216389791546e-05
+          max: 0.029249427996856828
+        m_ca_inf_distal_dendrite:
+          unit: dimensionless
+          min: 0.44367747785367767
+          max: 0.9953139710017592
+        h_ca_inf_distal_dendrite:
+          unit: dimensionless
+          min: 5.076423115689126e-05
+          max: 0.04862137678716852
+        h_ca_distal_dendrite:
+          unit: dimensionless
+          min: 0.004629858594083422
+          max: 0.02367715665178121
+        h_ca_proximal_dendrite:
+          unit: dimensionless
+          min: 0.00048812407772141247
+          max: 0.02343177215451755
+        h_ca_soma:
+          unit: dimensionless
+          min: 0.017789750630756666
+          max: 0.027639009118081436
+        m_ca_distal_dendrite:
+          unit: dimensionless
+          min: 0.5871333949425664
+          max: 0.9669637886916732
+        m_ca_proximal_dendrite:
+          unit: dimensionless
+          min: 0.5944668312510591
+          max: 0.9899520564333578
+        m_ca_soma:
+          unit: dimensionless
+          min: 0.5827784458029797
+          max: 0.8007591203601163
+    41:
+      pre_stimulus:
+        i_ca_distal_dendrite:
+          unit: pA
+          min: 1.189355775947508
+          max: 1.2094301186652086
+        i_ca_proximal_dendrite:
+          unit: pA
+          min: 1.4880729931098235
+          max: 1.503151007664587
+        v_distal_dendrite:
+          unit: mV
+          min: -64.72076896743002
+          max: -59.565392359488435
+        v_proximal_dendrite:
+          unit: mV
+          min: -61.42828810264306
+          max: -59.696263277949555
+        v_soma:
+          unit: mV
+          min: -61.9133461710408
+          max: -59.21316965536812
+        m_ca_inf_soma:
+          unit: dimensionless
+          min: 0.5347724263328639
+          max: 0.619043669879795
+        h_ca_inf_soma:
+          unit: dimensionless
+          min: 0.020733512928295218
+          max: 0.03147889390349094
+        i_ca_soma:
+          unit: pA
+          min: 11.160104315635367
+          max: 11.439856784753001
+        m_ca_inf_proximal_dendrite:
+          unit: dimensionless
+          min: 0.5502056218317395
+          max: 0.6043338531350902
+        h_ca_inf_proximal_dendrite:
+          unit: dimensionless
+          min: 0.022349005900277243
+          max: 0.029214331063221414
+        m_ca_inf_distal_dendrite:
+          unit: dimensionless
+          min: 0.44506975312075936
+          max: 0.6083386879313581
+        h_ca_inf_distal_dendrite:
+          unit: dimensionless
+          min: 0.02189959746204121
+          max: 0.04829944728480057
+        h_ca_distal_dendrite:
+          unit: dimensionless
+          min: 0.0233349252298399
+          max: 0.023599530839819405
+        h_ca_proximal_dendrite:
+          unit: dimensionless
+          min: 0.02336141857167847
+          max: 0.023429650170296402
+        h_ca_soma:
+          unit: dimensionless
+          min: 0.023263744507193086
+          max: 0.023427035937057025
+        m_ca_distal_dendrite:
+          unit: dimensionless
+          min: 0.5894938053466992
+          max: 0.5984864617402208
+        m_ca_proximal_dendrite:
+          unit: dimensionless
+          min: 0.5945499102189258
+          max: 0.597444067540871
+        m_ca_soma:
+          unit: dimensionless
+          min: 0.5949857935227716
+          max: 0.6012222207991296
+      stimulus:
+        i_ca_distal_dendrite:
+          unit: pA
+          min: 0.6260623600061364
+          max: 3.1550334259098713
+        i_ca_proximal_dendrite:
+          unit: pA
+          min: 1.1458828015964972
+          max: 1.569127510858051
+        v_distal_dendrite:
+          unit: mV
+          min: -66.86223380050356
+          max: -25.70118081119638
+        v_proximal_dendrite:
+          unit: mV
+          min: -63.311346423078106
+          max: -58.48093589144692
+        v_soma:
+          unit: mV
+          min: -67.521425023866
+          max: -61.92902318062654
+        m_ca_inf_soma:
+          unit: dimensionless
+          min: 0.359008558993809
+          max: 0.5342723534770317
+        h_ca_inf_soma:
+          unit: dimensionless
+          min: 0.03155484912446284
+          max: 0.07335351312334368
+        i_ca_soma:
+          unit: pA
+          min: 5.631961216263157
+          max: 11.376367306711172
+        m_ca_inf_proximal_dendrite:
+          unit: dimensionless
+          min: 0.49002227273887417
+          max: 0.6409217845508796
+        h_ca_inf_proximal_dendrite:
+          unit: dimensionless
+          min: 0.01850056769973395
+          max: 0.03899492476179733
+        m_ca_inf_distal_dendrite:
+          unit: dimensionless
+          min: 0.3786791874104826
+          max: 0.99168957925976
+        h_ca_inf_distal_dendrite:
+          unit: dimensionless
+          min: 0.0001036470276123457
+          max: 0.06655115453492169
+        h_ca_distal_dendrite:
+          unit: dimensionless
+          min: 0.01335888570076564
+          max: 0.031724938403124556
+        h_ca_proximal_dendrite:
+          unit: dimensionless
+          min: 0.023103690862330137
+          max: 0.030776512989724975
+        h_ca_soma:
+          unit: dimensionless
+          min: 0.023336176009219094
+          max: 0.049153729514310386
+        m_ca_distal_dendrite:
+          unit: dimensionless
+          min: 0.4320169054415598
+          max: 0.9520988070075134
+        m_ca_proximal_dendrite:
+          unit: dimensionless
+          min: 0.5020490897783351
+          max: 0.6086580059410621
+        m_ca_soma:
+          unit: dimensionless
+          min: 0.37822894795871775
+          max: 0.5979592725113332
+    42:
+      pre_stimulus:
+        i_ca_distal_dendrite:
+          unit: pA
+          min: 1.189355775947508
+          max: 1.2094301186652086
+        i_ca_proximal_dendrite:
+          unit: pA
+          min: 1.4880729931098235
+          max: 1.503151007664587
+        v_distal_dendrite:
+          unit: mV
+          min: -64.72076896743002
+          max: -59.565392359488435
+        v_proximal_dendrite:
+          unit: mV
+          min: -61.42828810264306
+          max: -59.696263277949555
+        v_soma:
+          unit: mV
+          min: -61.9133461710408
+          max: -59.21316965536812
+        m_ca_inf_soma:
+          unit: dimensionless
+          min: 0.5347724263328639
+          max: 0.619043669879795
+        h_ca_inf_soma:
+          unit: dimensionless
+          min: 0.020733512928295218
+          max: 0.03147889390349094
+        i_ca_soma:
+          unit: pA
+          min: 11.160104315635367
+          max: 11.439856784753001
+        m_ca_inf_proximal_dendrite:
+          unit: dimensionless
+          min: 0.5502056218317395
+          max: 0.6043338531350902
+        h_ca_inf_proximal_dendrite:
+          unit: dimensionless
+          min: 0.022349005900277243
+          max: 0.029214331063221414
+        m_ca_inf_distal_dendrite:
+          unit: dimensionless
+          min: 0.44506975312075936
+          max: 0.6083386879313581
+        h_ca_inf_distal_dendrite:
+          unit: dimensionless
+          min: 0.02189959746204121
+          max: 0.04829944728480057
+        h_ca_distal_dendrite:
+          unit: dimensionless
+          min: 0.0233349252298399
+          max: 0.023599530839819405
+        h_ca_proximal_dendrite:
+          unit: dimensionless
+          min: 0.02336141857167847
+          max: 0.023429650170296402
+        h_ca_soma:
+          unit: dimensionless
+          min: 0.023263744507193086
+          max: 0.023427035937057025
+        m_ca_distal_dendrite:
+          unit: dimensionless
+          min: 0.5894938053466992
+          max: 0.5984864617402208
+        m_ca_proximal_dendrite:
+          unit: dimensionless
+          min: 0.5945499102189258
+          max: 0.597444067540871
+        m_ca_soma:
+          unit: dimensionless
+          min: 0.5949857935227716
+          max: 0.6012222207991296
+      stimulus:
+        i_ca_distal_dendrite:
+          unit: pA
+          min: 0.6527596330731957
+          max: 2.8868793496359597
+        i_ca_proximal_dendrite:
+          unit: pA
+          min: 1.1426270908543439
+          max: 1.493772021593052
+        v_distal_dendrite:
+          unit: mV
+          min: -66.93689618344276
+          max: -37.409202884928135
+        v_proximal_dendrite:
+          unit: mV
+          min: -63.342013709054605
+          max: -59.659262730441625
+        v_soma:
+          unit: mV
+          min: -67.53918595546918
+          max: -61.92902318062654
+        m_ca_inf_soma:
+          unit: dimensionless
+          min: 0.358484731149783
+          max: 0.5342723534770317
+        h_ca_inf_soma:
+          unit: dimensionless
+          min: 0.03155484912446284
+          max: 0.07354537230602994
+        i_ca_soma:
+          unit: pA
+          min: 5.609337738606424
+          max: 11.376367306711172
+        m_ca_inf_proximal_dendrite:
+          unit: dimensionless
+          min: 0.48903977813555777
+          max: 0.6054675675293317
+        h_ca_inf_proximal_dendrite:
+          unit: dimensionless
+          min: 0.022221040725312582
+          max: 0.03917775305027994
+        m_ca_inf_distal_dendrite:
+          unit: dimensionless
+          min: 0.3764296810851873
+          max: 0.9637667264568385
+        h_ca_inf_distal_dendrite:
+          unit: dimensionless
+          min: 0.0006643747815647462
+          max: 0.06729116689219707
+        h_ca_distal_dendrite:
+          unit: dimensionless
+          min: 0.01673936614925218
+          max: 0.03483698865680001
+        h_ca_proximal_dendrite:
+          unit: dimensionless
+          min: 0.023430533682496424
+          max: 0.03142200330111256
+        h_ca_soma:
+          unit: dimensionless
+          min: 0.023336176009219094
+          max: 0.04921297552848316
+        m_ca_distal_dendrite:
+          unit: dimensionless
+          min: 0.4254874701109848
+          max: 0.8875819269616181
+        m_ca_proximal_dendrite:
+          unit: dimensionless
+          min: 0.501201299000509
+          max: 0.5945157552692246
+        m_ca_soma:
+          unit: dimensionless
+          min: 0.3785889974976236
+          max: 0.5979592725113332
+    49:
+      pre_stimulus:
+        i_ca_distal_dendrite:
+          unit: pA
+          min: 1.189355775947508
+          max: 1.2094301186652086
+        i_ca_proximal_dendrite:
+          unit: pA
+          min: 1.4880729931098235
+          max: 1.503151007664587
+        v_distal_dendrite:
+          unit: mV
+          min: -64.72076896743002
+          max: -59.565392359488435
+        v_proximal_dendrite:
+          unit: mV
+          min: -61.42828810264306
+          max: -59.696263277949555
+        v_soma:
+          unit: mV
+          min: -61.9133461710408
+          max: -59.21316965536812
+        m_ca_inf_soma:
+          unit: dimensionless
+          min: 0.5347724263328639
+          max: 0.619043669879795
+        h_ca_inf_soma:
+          unit: dimensionless
+          min: 0.020733512928295218
+          max: 0.03147889390349094
+        i_ca_soma:
+          unit: pA
+          min: 11.160104315635367
+          max: 11.439856784753001
+        m_ca_inf_proximal_dendrite:
+          unit: dimensionless
+          min: 0.5502056218317395
+          max: 0.6043338531350902
+        h_ca_inf_proximal_dendrite:
+          unit: dimensionless
+          min: 0.022349005900277243
+          max: 0.029214331063221414
+        m_ca_inf_distal_dendrite:
+          unit: dimensionless
+          min: 0.44506975312075936
+          max: 0.6083386879313581
+        h_ca_inf_distal_dendrite:
+          unit: dimensionless
+          min: 0.02189959746204121
+          max: 0.04829944728480057
+        h_ca_distal_dendrite:
+          unit: dimensionless
+          min: 0.0233349252298399
+          max: 0.023599530839819405
+        h_ca_proximal_dendrite:
+          unit: dimensionless
+          min: 0.02336141857167847
+          max: 0.023429650170296402
+        h_ca_soma:
+          unit: dimensionless
+          min: 0.023263744507193086
+          max: 0.023427035937057025
+        m_ca_distal_dendrite:
+          unit: dimensionless
+          min: 0.5894938053466992
+          max: 0.5984864617402208
+        m_ca_proximal_dendrite:
+          unit: dimensionless
+          min: 0.5945499102189258
+          max: 0.597444067540871
+        m_ca_soma:
+          unit: dimensionless
+          min: 0.5949857935227716
+          max: 0.6012222207991296
+      stimulus:
+        i_ca_distal_dendrite:
+          unit: pA
+          min: 1.1299316391195366
+          max: 1.8220889916076721
+        i_ca_proximal_dendrite:
+          unit: pA
+          min: 0.1264316130911757
+          max: 3.7463361984955466
+        v_distal_dendrite:
+          unit: mV
+          min: -64.84755375870046
+          max: -35.04555270310173
+        v_proximal_dendrite:
+          unit: mV
+          min: -61.43607989783411
+          max: -16.879580613531157
+        v_soma:
+          unit: mV
+          min: -95.51622267103785
+          max: 45.46501883514106
+        m_ca_inf_soma:
+          unit: dimensionless
+          min: 0.015235917083661515
+          max: 0.9999990863082346
+        h_ca_inf_soma:
+          unit: dimensionless
+          min: 1.2874041772113909e-09
+          max: 0.8707196703018131
+        i_ca_soma:
+          unit: pA
+          min: 10.598125444118674
+          max: 26.041992048249163
+        m_ca_inf_proximal_dendrite:
+          unit: dimensionless
+          min: 0.5499583903806357
+          max: 0.9973028915721365
+        h_ca_inf_proximal_dendrite:
+          unit: dimensionless
+          min: 2.5554546836863876e-05
+          max: 0.029249427996856828
+        m_ca_inf_distal_dendrite:
+          unit: dimensionless
+          min: 0.44105885260738087
+          max: 0.9729830837717101
+        h_ca_inf_distal_dendrite:
+          unit: dimensionless
+          min: 0.00045662921408787043
+          max: 0.04923295994621896
+        h_ca_distal_dendrite:
+          unit: dimensionless
+          min: 0.007176114721787979
+          max: 0.023889865321740943
+        h_ca_proximal_dendrite:
+          unit: dimensionless
+          min: 0.0005133928981040938
+          max: 0.023431772167772418
+        h_ca_soma:
+          unit: dimensionless
+          min: 0.017358728481225084
+          max: 0.027456715403306384
+        m_ca_distal_dendrite:
+          unit: dimensionless
+          min: 0.5809769874706157
+          max: 0.9614628308770765
+        m_ca_proximal_dendrite:
+          unit: dimensionless
+          min: 0.5944668306891612
+          max: 0.9889972804165926
+        m_ca_soma:
+          unit: dimensionless
+          min: 0.5810311430004781
+          max: 0.8182006631055353
+    58:
+      pre_stimulus:
+        i_ca_distal_dendrite:
+          unit: pA
+          min: 1.189355775947508
+          max: 1.2094301186652086
+        i_ca_proximal_dendrite:
+          unit: pA
+          min: 1.4880729931098235
+          max: 1.503151007664587
+        v_distal_dendrite:
+          unit: mV
+          min: -64.72076896743002
+          max: -59.565392359488435
+        v_proximal_dendrite:
+          unit: mV
+          min: -61.42828810264306
+          max: -59.696263277949555
+        v_soma:
+          unit: mV
+          min: -61.9133461710408
+          max: -59.21316965536812
+        m_ca_inf_soma:
+          unit: dimensionless
+          min: 0.5347724263328639
+          max: 0.619043669879795
+        h_ca_inf_soma:
+          unit: dimensionless
+          min: 0.020733512928295218
+          max: 0.03147889390349094
+        i_ca_soma:
+          unit: pA
+          min: 11.160104315635367
+          max: 11.439856784753001
+        m_ca_inf_proximal_dendrite:
+          unit: dimensionless
+          min: 0.5502056218317395
+          max: 0.6043338531350902
+        h_ca_inf_proximal_dendrite:
+          unit: dimensionless
+          min: 0.022349005900277243
+          max: 0.029214331063221414
+        m_ca_inf_distal_dendrite:
+          unit: dimensionless
+          min: 0.44506975312075936
+          max: 0.6083386879313581
+        h_ca_inf_distal_dendrite:
+          unit: dimensionless
+          min: 0.02189959746204121
+          max: 0.04829944728480057
+        h_ca_distal_dendrite:
+          unit: dimensionless
+          min: 0.0233349252298399
+          max: 0.023599530839819405
+        h_ca_proximal_dendrite:
+          unit: dimensionless
+          min: 0.02336141857167847
+          max: 0.023429650170296402
+        h_ca_soma:
+          unit: dimensionless
+          min: 0.023263744507193086
+          max: 0.023427035937057025
+        m_ca_distal_dendrite:
+          unit: dimensionless
+          min: 0.5894938053466992
+          max: 0.5984864617402208
+        m_ca_proximal_dendrite:
+          unit: dimensionless
+          min: 0.5945499102189258
+          max: 0.597444067540871
+        m_ca_soma:
+          unit: dimensionless
+          min: 0.5949857935227716
+          max: 0.6012222207991296
+      stimulus:
+        i_ca_distal_dendrite:
+          unit: pA
+          min: 1.1238501662632976
+          max: 1.7937888850985821
+        i_ca_proximal_dendrite:
+          unit: pA
+          min: 0.13132667402795847
+          max: 3.74351736516981
+        v_distal_dendrite:
+          unit: mV
+          min: -64.8639374404966
+          max: -32.14259202219256
+        v_proximal_dendrite:
+          unit: mV
+          min: -61.43607989783411
+          max: -18.31460658326945
+        v_soma:
+          unit: mV
+          min: -95.15589799954473
+          max: 45.28021979801153
+        m_ca_inf_soma:
+          unit: dimensionless
+          min: 0.015944771916909198
+          max: 0.9999990644024275
+        h_ca_inf_soma:
+          unit: dimensionless
+          min: 1.3257271558571665e-09
+          max: 0.8641438379050265
+        i_ca_soma:
+          unit: pA
+          min: 10.594517440568646
+          max: 25.75973542635058
+        m_ca_inf_proximal_dendrite:
+          unit: dimensionless
+          min: 0.5499583903806357
+          max: 0.9967598705036613
+        h_ca_inf_proximal_dendrite:
+          unit: dimensionless
+          min: 3.209148153067906e-05
+          max: 0.029249427996856828
+        m_ca_inf_distal_dendrite:
+          unit: dimensionless
+          min: 0.44054109605534786
+          max: 0.9812213584919366
+        h_ca_inf_distal_dendrite:
+          unit: dimensionless
+          min: 0.0002880842326752591
+          max: 0.049354833697332845
+        h_ca_distal_dendrite:
+          unit: dimensionless
+          min: 0.007975781496823247
+          max: 0.023954674256610794
+        h_ca_proximal_dendrite:
+          unit: dimensionless
+          min: 0.0005239708351522466
+          max: 0.02343177216812476
+        h_ca_soma:
+          unit: dimensionless
+          min: 0.016489068608704853
+          max: 0.027046351190068985
+        m_ca_distal_dendrite:
+          unit: dimensionless
+          min: 0.579206587269082
+          max: 0.9677367287924362
+        m_ca_proximal_dendrite:
+          unit: dimensionless
+          min: 0.5944668306742247
+          max: 0.9887973690630307
+        m_ca_soma:
+          unit: dimensionless
+          min: 0.5809325616374834
+          max: 0.8251587278039484
+  causal_calcium_contribution_identified: false
+  interpretation: Continuous state ranges are descriptive; no burst label or reproduction
+    promotion is assigned.
+  trace_path: tmp/figure7-complete-relay-calcium-trace-403.npz
+  trace_sha256: d1a7c233aac2b91a18daaa4438863345dcc297133c0860f09bdbf17754cfeef1
+  reference_artifact: docs/validation-results/figure7-relay-continuous-trace-393.yaml

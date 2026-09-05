@@ -2,6 +2,14 @@
 
 ## Current interpretation (2026-09-05)
 
+Artifacts 402--405 complete the unchanged control replay with calcium current
+and gates recorded in soma and both dendrites. Recorded trial event trains
+match Artifact 393 exactly. Somatic calcium is nonzero (approximately
+10.59--26.04 pA across nonoverlap cells 22 and 31 during stimulation), so the
+earlier dendritic-only intervention cannot establish whole-relay calcium
+independence. This closes a recording gap, not the spatial-selection failure;
+causal necessity remains untested for the complete relay calcium system.
+
 **Scope correction 401:** the calcium ablation in Artifacts 396--399 removed
 only dendritic currents. The recovered relay soma retains a 9.4248-nS calcium
 conductance. Any earlier conclusion excluding all ongoing relay T-type

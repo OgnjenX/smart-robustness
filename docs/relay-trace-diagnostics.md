@@ -61,6 +61,12 @@ recurrent network consequences are part of this intervention. It is neither a
 source-faithful model variant nor a baseline candidate. Scoring explicitly
 rejects reproduction eligibility for an ablated condition.
 
+Correction 401: this option is **dendritic-only** despite its historical name.
+Somatic relay calcium remains active. The original traces 393/397 omitted that
+current and its gates, so their comparison cannot exclude all relay calcium.
+New optional recordings include the available somatic calcium variables;
+do not treat them as identical in variable coverage to those older archives.
+
 To execute that diagnostic, use the replay command above with the following
 changes (choose new filenames if repeating an already completed run):
 

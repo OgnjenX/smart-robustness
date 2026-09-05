@@ -1,0 +1,34 @@
+schema_version: 1
+id: relay-calcium-scope-correction-401
+date: '2026-09-05'
+status: prior-total-relay-calcium-exclusion-retracted
+supersedes_interpretation: docs/validation-results/relay-calcium-ablation-assessment-399.yaml
+raw_results_preserved: [figure7-relay-calcium-ablation-397.yaml, relay-calcium-ablation-comparison-398.yaml]
+verified_runtime_fingerprint: 0aa301be0a82a34b0a3337030eedb66dbc33e0ec0532ead902638088a434b4d9
+new_evidence:
+  relay_somatic_calcium_conductance_nS: 9.424777960769381
+  soma_voltage_equation_contains: i_ca_soma
+  ablation_code_changes: [g_ca_distal_dendrite, g_ca_proximal_dendrite]
+  ablation_code_leaves_active: g_ca_soma
+  archived_trace_393_397_does_not_record: [i_ca_soma, m_ca_soma, h_ca_soma]
+corrected_conclusion: >-
+  Nonoverlap firing persists without the two dendritic T-type currents during
+  the sensory epoch in this calibrated network. The experiment does not
+  establish firing without all relay T-type current: somatic calcium remained
+  active, and its time course was not recorded. Statements excluding ongoing
+  relay calcium as a whole in Assessment399 and earlier status text are
+  retracted. Registration396 correctly specified only the two dendrites;
+  the error arose when its result was generalized beyond that scope.
+implementation_policy: >-
+  Preserve the historical ablation option's dendritic-only behavior. Do not
+  silently change it to remove the soma as well. Expand optional trace
+  recording to include all available relay calcium gates and somatic calcium
+  current before any new causal inference. A whole-cell ablation would require
+  a separately named and registered diagnostic.
+axial_check:
+  source_geometry_half_resistance_soma_proximal_conductance_nS: 6.09024630426061
+  source_geometry_half_resistance_proximal_distal_conductance_nS: 2.3361039958282226
+  both_directional_implementations_agree_with_half_resistance_calculation: true
+  recorded_somatic_axial_current_max_absolute_residual_pA: 2.2737367544323206e-13
+  scope: Implementation consistency with the selected serialized-edge convention; not full source certification.
+baseline_promoted: false

@@ -55,7 +55,8 @@ def compare(control, intervention, control_trace, intervention_trace):
         }
     return {
         "pre_stimulus_state_and_cue_events_identical": True,
-        "sampled_relay_calcium_currents_zero_during_stimulus": True,
+        "sampled_relay_dendritic_calcium_currents_zero_during_stimulus": True,
+        "ablation_scope": "distal_and_proximal_dendrites_only_somatic_calcium_retained",
         "cells": cells,
         "nonoverlap_cells_still_firing": [i for i in (22, 31, 49, 58) if cells[i]["ablation_times_ms"]],
         "reproduction_eligible": False,

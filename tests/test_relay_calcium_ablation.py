@@ -19,6 +19,8 @@ def test_ablation_is_relay_only_and_begins_after_cue(monkeypatch, lead_ms, ablat
         relay = next(o for o in network.objects if o.name == "smart_v1_thalamic_relay")
         nonspecific = next(o for o in network.objects if o.name == "smart_v1_thalamic_nonspecific")
         is_cue = lead_ms > 0 and not runs
+        # This legacy diagnostic is dendritic-only, not whole-relay ablation.
+        assert np.all(relay.g_ca_soma[:] > 0 * brian.nsiemens)
         for compartment in ("distal_dendrite", "proximal_dendrite"):
             conductance = np.asarray(getattr(relay, f"g_ca_{compartment}") / brian.nsiemens)
             if ablate and not is_cue:

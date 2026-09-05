@@ -33,7 +33,8 @@ def fixture_data():
 def test_verified_ablation_does_not_become_reproduction():
     report = compare(*fixture_data())
     assert report["pre_stimulus_state_and_cue_events_identical"]
-    assert report["sampled_relay_calcium_currents_zero_during_stimulus"]
+    assert report["sampled_relay_dendritic_calcium_currents_zero_during_stimulus"]
+    assert report["ablation_scope"] == "distal_and_proximal_dendrites_only_somatic_calcium_retained"
     assert report["nonoverlap_cells_still_firing"] == [22]
     assert not report["reproduction_eligible"]
 

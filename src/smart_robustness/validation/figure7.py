@@ -1043,8 +1043,10 @@ def run_figure7_condition(
                 "v_proximal_dendrite",
                 "v_soma",
                 *(
-                    ("m_ca_distal_dendrite", "h_ca_distal_dendrite",
-                     "m_ca_proximal_dendrite", "h_ca_proximal_dendrite")
+                    tuple(
+                        name for name in sector.populations["thalamic_relay"].group.variables
+                        if name.startswith(("m_ca_", "h_ca_")) or name == "i_ca_soma"
+                    )
                     if relay_trace_output is not None else ()
                 ),
             ),
@@ -1161,6 +1163,7 @@ def run_figure7_condition(
     if ablate_relay_calcium_at_stimulus:
         # Diagnostic intervention only: preserve training/cue histories and
         # switch off both relay dendritic T-type currents at sensory onset.
+        # Historical option name: somatic calcium is deliberately retained.
         relay_group = sector.populations["thalamic_relay"].group
         relay_group.g_ca_distal_dendrite = 0 * brian.nsiemens
         relay_group.g_ca_proximal_dendrite = 0 * brian.nsiemens

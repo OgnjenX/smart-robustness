@@ -60,6 +60,7 @@ def test_trace_mode_records_calcium_gates_in_actual_relay_monitor(tmp_path, monk
         assert {
             "m_ca_distal_dendrite", "h_ca_distal_dendrite",
             "m_ca_proximal_dendrite", "h_ca_proximal_dendrite",
+            "m_ca_soma", "h_ca_soma", "i_ca_soma",
         } <= set(monitor.record_variables)
         raise MonitorChecked
 

@@ -1,0 +1,58 @@
+schema_version: 1
+id: relay-compartment-timing-audit-400
+date: '2026-09-05'
+classification: post-hoc-continuous-trace-description-not-causal-test
+source_result: docs/validation-results/figure7-relay-continuous-trace-393.yaml
+trace_sha256: e348741a01ad0951e8202c4742b64d9e46b0e8bcba913ef4491a71cd5adfe939
+source_mapping:
+  method: modeldb_ports_for_target applied to MODELDB_FIRST_ORDER for thalamic_relay
+  sensory_input: {variable: i_external_001, record: modeldb112923.external.002, compartment: proximal_dendrite}
+  trn_inputs:
+    soma: {variable: i_port_000, gate: port_000_gate, record: modeldb112923.projection.000}
+    proximal_dendrite: {variable: i_port_001, gate: port_001_gate, record: modeldb112923.projection.001}
+    distal_dendrite: {variable: i_port_004, gate: port_004_gate, record: modeldb112923.projection.004}
+  adaptive_top_down_ampa: {compartment: distal_dendrite, records: [modeldb112923.projection.005, modeldb112923.projection.007]}
+algorithm: >-
+  For each selected cell, locate its first emitted trial event in Artifact393.
+  In the continuous soma trace, select the last transition from V<=0 to V>0
+  with stimulus-relative time >=0 and before that event. Use the first sampled
+  positive voltage as the reference time, not as biological spike initiation.
+  Locate the first sample at or after reference_time-2 ms using searchsorted.
+  Report per-compartment endpoint values; do not sum currents across compartments.
+observations:
+  '22':
+    first_emitted_event_ms: 61.699999999999996
+    sampled_zero_upcrossing_ms: 61.4
+    reference_window_start_ms: 59.4
+    trn_gate_start_end:
+      soma: [0.045272555851321075, 0.06046549287330299]
+      proximal_dendrite: [0.04006537351138622, 0.054020633913106096]
+      distal_dendrite: [0.12687368278605635, 0.1710653407248361]
+    proximal_voltage_start_end_mV: [-30.377844403668323, -28.0816540554822]
+    distal_voltage_start_end_mV: [-55.5637465170546, -55.35917198921495]
+  '31':
+    first_emitted_event_ms: 57.690000000000005
+    sampled_zero_upcrossing_ms: 57.38
+    reference_window_start_ms: 55.38
+    trn_gate_start_end:
+      soma: [0.07483504725162196, 0.05896092883906245]
+      proximal_dendrite: [0.06623024042097542, 0.05217986524609912]
+      distal_dendrite: [0.20972909466642226, 0.16523623994598052]
+    proximal_voltage_start_end_mV: [-31.62766507553743, -28.654838319673214]
+    distal_voltage_start_end_mV: [-58.40583487745458, -57.132644223217525]
+interpretation: >-
+  Sensory excitation and adaptive top-down excitation terminate on different
+  dendritic compartments, while TRN inhibition targets all three compartments.
+  A sum of all TRN gate variables is not a local membrane current balance.
+  Over this explicitly post-hoc two-ms reference window, cell22 has higher
+  TRN-gate endpoints at its positive soma crossing, whereas cell31 has lower
+  endpoints. A universal description of all unwanted events as immediate
+  inhibitory-conductance decay is therefore unsupported by these endpoints.
+  This does not exclude an earlier trough, a transient within the window, or
+  a role for inhibitory timing in either cell. The sampled crossing occurs on
+  the action-potential rise and does not identify its initiation mechanism.
+next_source_check: >-
+  Audit the compartment-resolved membrane and axial terms against their source
+  equations before attributing the mismatch failure to one summed E/I scalar
+  or choosing further conductance or delay adjustments.
+baseline_promoted: false

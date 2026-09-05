@@ -2,6 +2,13 @@
 
 ## Current interpretation (2026-09-05)
 
+**Scope correction 401:** the calcium ablation in Artifacts 396--399 removed
+only dendritic currents. The recovered relay soma retains a 9.4248-nS calcium
+conductance. Any earlier conclusion excluding all ongoing relay T-type
+current is retracted: persistence without dendritic current was demonstrated,
+but somatic current remained active and was missing from those traces. Future
+optional traces now include available somatic calcium current and gates.
+
 **The original SMART baseline is not yet reproduced or ready to freeze.**
 The chronological entries below preserve the investigation history; their
 older promotion, rejection, and independence language is not a current
@@ -75,6 +82,16 @@ remain part of the experiment; no claim of universal calcium irrelevance or
 original-model reproduction follows. The ablated run is explicitly excluded
 from reproduction scoring. Original SMART's calcium channels remain intact
 in non-diagnostic runs.
+
+Audit 400 maps relay currents to their source compartments and inspects the
+continuous control trace. Sensory drive enters the proximal dendrite; adaptive
+top-down AMPA enters the distal dendrite; TRN inhibition targets both dendrites
+and soma. Across a post-hoc two-ms window before the sampled positive soma
+crossing, TRN-gate endpoints increase in cell 22 but decrease in cell 31.
+Thus a universal immediate-decay account is unsupported by those endpoints.
+Earlier troughs and within-window changes remain possible; this is not a
+causal exclusion. Future membrane-balance checks must remain compartment
+resolved rather than summing all inhibitory current as one local balance.
 
 ## What the 2008 model contains
 

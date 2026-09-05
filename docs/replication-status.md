@@ -54,6 +54,16 @@ or causal rebound contribution. No burst label, revised spatial pass, or causal
 calcium exclusion is inferred. The summary is reproducible with
 `scripts/audit_figure7_relay_events.py` and pins the input artifact's checksum.
 
+Artifacts 392--395 add and execute a continuous relay-state diagnostic replay.
+All recorded trial event trains equal Artifact 250 exactly; the unit-labeled
+trace spans -7.85 to 99.99 ms at 0.01-ms spacing. Nonoverlap relay cells retain
+`h_ca < 0.024` in both dendrites through the stimulus. These histories do not
+demonstrate a strongly de-inactivated rebound explanation, but do not establish
+calcium's causal irrelevance either. The 10/583/7 mismatch counts and spatial
+failure remain unchanged. No new parameter candidate or revised pass criterion
+was introduced. See `relay-trace-diagnostics.md` for reproducible recording and
+integrity-checked analysis commands.
+
 ## What the 2008 model contains
 
 The Methods section describes two hierarchically organized thalamocortical

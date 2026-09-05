@@ -1,0 +1,42 @@
+schema_version: 1
+id: relay-continuous-assessment-395
+date: '2026-09-05'
+status: continuous-state-recovered-spatial-failure-remains
+registration: docs/validation-results/relay-continuous-trace-registration-392.yaml
+result: docs/validation-results/figure7-relay-continuous-trace-393.yaml
+summary: docs/validation-results/figure7-relay-continuous-summary-394.yaml
+classification: diagnostic-replay-of-calibrated-comparator-free-network
+verified:
+  complete_trial_event_trains_equal_to_artifact250: true
+  checked_populations: [relay, trn, nonspecific, category]
+  trace_checksum_matches_result: true
+  recording_phase: start
+  samples_per_cell: 10785
+  time_range_relative_to_sensory_onset_ms: [-7.85, 99.99000000000001]
+  mismatch_counts: {relay: 10, trn: 583, nonspecific: 7}
+observations:
+  nonoverlap_cells: [22, 31, 49, 58]
+  nonoverlap_h_ca_below_0_024_in_both_dendrites_throughout_stimulus: true
+  cell22_distal_h_ca_stimulus_range: [0.007975781496823247, 0.023954674256610794]
+  cell22_proximal_h_ca_stimulus_range: [0.0005239708351522466, 0.02343177216812476]
+  cell22_distal_calcium_current_stimulus_range_pA: [1.1238501662632976, 1.7937888850985821]
+  cell22_proximal_calcium_current_stimulus_range_pA: [0.13132667402795847, 3.74351736516981]
+interpretation: >-
+  The added recording leaves the archived trial output unchanged. The recorded
+  inactivation-gate history does not demonstrate a strongly de-inactivated
+  rebound mechanism in the nonoverlap cells. Nevertheless, small calcium
+  currents may affect a near-threshold trajectory; amplitude and state ranges
+  alone cannot rule out their causal contribution. Do not recategorize the
+  nonoverlap spikes as an acceptable burst or promote the baseline from these
+  observations. The spatial matching failure remains unresolved.
+next_mechanistic_question: >-
+  Determine whether the offending relay events require their T-type current
+  using a separately declared causal diagnostic with the original learned
+  weights and protocol fixed. Any intervention is diagnostic, not an original
+  SMART implementation or a new parameter candidate selected for target fit.
+metadata_scope: >-
+  Raw Artifact393 inherits historical holdouts_consulted and official_assessment
+  field names from its runner. This is a replay of previously consulted
+  calibration evidence, not an independent holdout or source certification.
+  The complete local trace is in ignored tmp/ and is reproducible using the
+  documented command; the committed summary pins its checksum.

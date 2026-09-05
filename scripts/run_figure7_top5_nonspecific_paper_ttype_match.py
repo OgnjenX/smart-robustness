@@ -220,7 +220,7 @@ def main() -> None:
         "id": Path(args.output).stem,
         "date": datetime.now(tz=UTC).date().isoformat(),
         "status": status,
-        "classification": "official-source-discriminator-not-yet-baseline",
+        "classification": "calibrated-reconstruction-source-sensitivity-not-baseline",
         "profile": args.profile,
         "registration_artifact": profile["registration_artifact"],
         "base_candidate_fingerprint": base_profile["candidate_fingerprint"],

@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from dataclasses import replace
+
 import numpy as np
 import pytest
 
@@ -180,6 +182,23 @@ def test_figure7_pathway_requires_more_relay_cells_and_trn_spikes_during_match()
     assert pathway.trn_order_pass
     assert pathway.reproduced_pathway
     assert combined.reproduced
+
+    # Output agreement cannot certify the original mechanism when an
+    # artificial comparator has selected the relay's bottom-up input.
+    for intervention in (
+        {"comparator_transform": "top_k_binary", "comparator_target_count": 5},
+        {"comparator_transform": "half_max_binary"},
+        {"comparator_relay_floor": 0.0},
+        {"comparator_target_count": 5},
+    ):
+        for altered_match, altered_mismatch in (
+            (replace(match, **intervention), mismatch),
+            (match, replace(mismatch, **intervention)),
+        ):
+            diagnostic = assess_figure7_reproduction(altered_match, altered_mismatch)
+            assert diagnostic.behavioral_targets_pass
+            assert diagnostic.reconstructed_comparator_present
+            assert not diagnostic.reproduced
 
 
 def test_figure7_pathway_rejects_count_difference_with_wrong_spatial_mechanism() -> None:

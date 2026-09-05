@@ -608,14 +608,24 @@ class Figure7PathwayAssessment:
 
 @dataclass(frozen=True, slots=True)
 class Figure7ReproductionAssessment:
-    """Combined behavioral and causal validation for the Figure 7 result."""
+    """Figure 7 target checks, not certification of the complete SMART model.
+
+    Reject known artificial comparator interventions even when output targets
+    pass. Absence of this intervention does not prove source fidelity of all
+    remaining equations, parameters, or protocols.
+    """
 
     arousal: Figure7ArousalAssessment
     pathway: Figure7PathwayAssessment
+    reconstructed_comparator_present: bool = False
+
+    @property
+    def behavioral_targets_pass(self) -> bool:
+        return self.arousal.reproduced_arousal and self.pathway.reproduced_pathway
 
     @property
     def reproduced(self) -> bool:
-        return self.arousal.reproduced_arousal and self.pathway.reproduced_pathway
+        return self.behavioral_targets_pass and not self.reconstructed_comparator_present
 
 
 def _validate_figure7_pair(
@@ -672,6 +682,12 @@ def assess_figure7_reproduction(
     return Figure7ReproductionAssessment(
         arousal=assess_figure7_arousal(match, mismatch),
         pathway=assess_figure7_pathway(match, mismatch),
+        reconstructed_comparator_present=any(
+            result.comparator_transform not in (None, "none")
+            or result.comparator_relay_floor is not None
+            or result.comparator_target_count is not None
+            for result in (match, mismatch)
+        ),
     )
 
 

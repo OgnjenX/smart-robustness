@@ -1,0 +1,37 @@
+schema_version: 1
+id: persistent-grid-assessment-389
+date: '2026-09-05'
+status: tested-calibrated-configuration-failed-match
+registration: docs/validation-results/persistent-grid-registration-387.yaml
+result: docs/validation-results/figure7-persistent-grid-match-388.yaml
+comparison: docs/validation-results/figure7-top5-full-grid-connectfromall-match-385.yaml
+classification: lifecycle-discriminator-in-calibrated-reconstruction
+observed:
+  figure6_result_identical_to_epoch_only_candidate: true
+  figure6_relay_events: 20
+  figure6_all_registered_gates_pass: true
+  match_relay_events: 15
+  match_trn_events: 635
+  match_nonspecific_events: 6
+  match_nonspecific_target: 4
+  match_nonspecific_times_ms: [18.312263688212973, 30.96226368821297, 44.00226368821298, 63.282263688212986, 84.81226368821297, 91.10226368821299]
+  cue_lead_nonspecific_events: 1
+  mismatch_executed: false
+interpretation:
+  lifecycle_changed_dynamics: true
+  lifecycle_change_repairs_match: false
+  original_input_semantics_resolved: false
+  original_SMART_reproduced: false
+  promote_or_freeze: false
+metadata_correction: >-
+  Raw Artifact388 retains the runner's historical classification
+  official-source-discriminator-not-yet-baseline. The classification in this
+  assessment and Registration387 governs interpretation: the experiment used
+  a reconstructed top-five comparator and calibrated controls. Raw output is
+  preserved, not retroactively relabeled. The runner is corrected for future
+  executions. The later reproduction-scorer guard was not part of this run.
+next_action: >-
+  Do not interpolate input source counts or reopen mismatch to fit this
+  candidate. Return to the original network's matching mechanism and unresolved
+  source provenance. Input lifecycle alone has not repaired this calibrated
+  configuration; target disagreement cannot decide legacy source semantics.

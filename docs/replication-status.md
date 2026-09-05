@@ -28,6 +28,14 @@ This remains a diagnostic within the calibrated reconstruction. Agreement
 would not remove the comparator's provenance gap or establish the complete
 gamma/beta/reset and higher-order results required by the goal.
 
+Artifact 388 completed that experiment: all registered Figure 6 gates passed,
+but match again produced six nonspecific events rather than four. Relay/TRN
+counts remained 15/635; no mismatch was run. Assessment 389 preserves the raw
+result and corrects its inherited classification label. The input lifecycle
+changed nonspecific timing but did not repair the candidate. The Figure 7
+scorer now explicitly rejects reconstructed-comparator runs as reproduction,
+while retaining their behavioral-target scores for diagnostic use.
+
 ## What the 2008 model contains
 
 The Methods section describes two hierarchically organized thalamocortical

@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
+import json
 from dataclasses import asdict, replace
 from datetime import UTC, datetime
 from enum import Enum
@@ -90,12 +92,17 @@ def main() -> None:
         for key, value in profile["trn_to_relay_gaba"]["scales"].items()
     }
     figure6_gate = profile["figure6_gate"]
+    protocol = profile["protocol"]
+    convergent_source_scope = protocol.get(
+        "convergent_external_source_scope", "nonzero_pixels"
+    )
     training = run_figure6_learning(
         conventions=conventions,
         protocol=Figure6LearningProtocol(
             monitored_populations=FIGURE6_MONITORED_POPULATIONS
         ),
         projection_weight_scales=scales,
+        convergent_external_source_scope=convergent_source_scope,
         brian=brian,
     )
     training_result = training.result
@@ -132,7 +139,6 @@ def main() -> None:
             ),
             source_index=source_index,
         )
-        protocol = profile["protocol"]
         match = run_figure7_condition(
             condition=MatchCondition.MATCH,
             top_down_current_pA=float(protocol["top_down_current_pA"]),
@@ -149,6 +155,7 @@ def main() -> None:
             ),
             top_down_cue_lead_ms=float(protocol["top_down_cue_lead_ms"]),
             equilibration_ms=float(protocol["equilibration_ms"]),
+            convergent_external_source_scope=convergent_source_scope,
             brian=brian,
         )
         match_gate = profile["match_gate"]
@@ -218,12 +225,16 @@ def main() -> None:
         "registration_artifact": profile["registration_artifact"],
         "base_candidate_fingerprint": base_profile["candidate_fingerprint"],
         "runtime_fingerprint": conventions.fingerprint,
+        "protocol_fingerprint": hashlib.sha256(
+            json.dumps(profile["protocol"], sort_keys=True).encode()
+        ).hexdigest(),
         "nonspecific_calcium_kinetics_convention": (
             conventions.nonspecific_calcium_kinetics_convention
         ),
         "runtime_discriminator": {
             field: getattr(conventions, field) for field in runtime_expectations
         },
+        "convergent_external_source_scope": convergent_source_scope,
         "figure6_result": training_result,
         "figure6_relay_event_counts_by_index": training_counts,
         "figure6_cortical_recruitment": recruitment,

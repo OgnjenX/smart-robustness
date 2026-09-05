@@ -1,0 +1,37 @@
+schema_version: 1
+id: connectfromall-lifecycle-audit-386
+date: '2026-09-05'
+status: source-interpretation-conclusion-corrected
+classification: read-only-code-and-artifact-audit
+audited_result: docs/validation-results/figure7-top5-full-grid-connectfromall-match-385.yaml
+observations:
+  initialization_source_count: 1
+  figure7_cue_interval_source_count: 1
+  stimulus_epoch_source_count: 81
+  clear_stimulus_source_count: 1
+  figure6_relay_events: 20
+  match_relay_events: 15
+  match_trn_events: 635
+  match_nonspecific_events: 6
+  mismatch_executed: false
+evidence:
+  - src/smart_robustness/models/compartmental_hh.py initializes external source counts to one.
+  - src/smart_robustness/protocols.py applies full_input_grid only at apply_bar_stimulus.
+  - clear_bar_stimulus calls set_external_input, which resets source count to one.
+  - Figure7 executes the cue interval before apply_bar_stimulus.
+assessment:
+  recorded_match_failure_valid: true
+  persistent_81_location_topology_tested: false
+  source_semantics_resolved: false
+  historical_raw_result_preserved: true
+next_action: >-
+  Determine external-input topology and zero-input semantics from source
+  evidence, then implement a separately named lifecycle-consistent protocol
+  with the selected connectivity present before, during, and after stimulation.
+  Document its protocol fingerprint and test zero-input current algebra before
+  any new simulation. Failure under one calibrated configuration cannot reject
+  the original simulator's connection semantics.
+methodology_corrections:
+  - Repeated consultation of Figure7 mismatch makes it a calibration target, not an independent held-out dataset.
+  - Exact deterministic repeats demonstrate reproducibility, not independent predictive validation.
+  - Registrations written after exploratory executions must disclose that history; they cannot be described as prospective for those executions.

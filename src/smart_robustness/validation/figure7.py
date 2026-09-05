@@ -26,6 +26,7 @@ from ..protocols import (
     clear_bar_stimulus,
     clear_layer6ii_somatic_cue,
     clear_match_mismatch_cue,
+    initialize_convergent_external_input,
 )
 from ..synapses import modeldb_topology_pairs
 from .figure6 import TOP_DOWN_NARROW_PROJECTION_ID, TOP_DOWN_WIDE_PROJECTION_ID
@@ -705,6 +706,7 @@ def run_figure7_condition(
     top_down_current_event_limit: int | None = None,
     top_down_cue_lead_ms: float = 0.0,
     equilibration_ms: float = 0.0,
+    convergent_external_source_scope: str = "nonzero_pixels",
     cpp_standalone_directory: str | Path | None = None,
     brian=None,
 ) -> Figure7ConditionResult:
@@ -827,6 +829,10 @@ def run_figure7_condition(
         sector = build_first_order_connected_sector(conventions=conventions, brian=brian)
 
     unknown_disabled = set(disabled_projection_ids) - set(sector.projections)
+    initialize_convergent_external_input(
+        sector, orientation,
+        convergent_source_scope=convergent_external_source_scope,
+    )
     if unknown_disabled:
         raise ValueError(
             f"unknown disabled projection IDs: {sorted(unknown_disabled)}"
@@ -875,9 +881,16 @@ def run_figure7_condition(
             category_source_value=training.category_source_value,
             include_archived_category_pixel=True,
         )
-        apply_bar_stimulus(sector, training_stimulus)
+        apply_bar_stimulus(
+            sector,
+            training_stimulus,
+            convergent_source_scope=convergent_external_source_scope,
+        )
         sector.network.run(training.stimulus_ms * brian.ms)
-        clear_bar_stimulus(sector, training_stimulus)
+        clear_bar_stimulus(
+            sector, training_stimulus,
+            convergent_source_scope=convergent_external_source_scope,
+        )
         if training.post_stimulus_ms:
             sector.network.run(training.post_stimulus_ms * brian.ms)
         pretraining_elapsed_ms = (
@@ -1107,6 +1120,7 @@ def run_figure7_condition(
             cue.bottom_up_stimulus,
             apply_relay_input=not exact_relay_voltage_clamp,
             relay_input_gains=relay_input_gains,
+            convergent_source_scope=convergent_external_source_scope,
         )
     else:
         apply_match_mismatch_cue(
@@ -1114,14 +1128,21 @@ def run_figure7_condition(
             cue,
             apply_relay_input=not exact_relay_voltage_clamp,
             relay_input_gains=relay_input_gains,
+            convergent_source_scope=convergent_external_source_scope,
             brian=brian,
         )
     sector.network.run(duration_ms * brian.ms)
     if top_down_cue_lead_ms > 0:
-        clear_bar_stimulus(sector, cue.bottom_up_stimulus)
+        clear_bar_stimulus(
+            sector, cue.bottom_up_stimulus,
+            convergent_source_scope=convergent_external_source_scope,
+        )
         clear_layer6ii_somatic_cue(sector, brian=brian)
     else:
-        clear_match_mismatch_cue(sector, cue, brian=brian)
+        clear_match_mismatch_cue(
+            sector, cue, brian=brian,
+            convergent_source_scope=convergent_external_source_scope,
+        )
     if cpp_standalone_directory is not None:
         from ..standalone import build_and_run_cpp_standalone
 

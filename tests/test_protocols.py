@@ -10,6 +10,7 @@ from smart_robustness.protocols import (
     BarOrientation,
     ClassicBarStimulus,
     ClassicMatchMismatchCue,
+    ConvergentExternalSourceScope,
     MatchCondition,
     apply_bar_stimulus,
     apply_layer6ii_somatic_cue,
@@ -17,6 +18,7 @@ from smart_robustness.protocols import (
     clear_bar_stimulus,
     clear_layer6ii_somatic_cue,
     clear_match_mismatch_cue,
+    initialize_convergent_external_input,
 )
 
 
@@ -89,6 +91,150 @@ def test_bar_input_reconstructs_published_minus_12mV_drive() -> None:
     assert getattr(nonspecific.group, f"{nonspecific_port.name}_input_green")[0] == 0
     assert getattr(nonspecific.group, f"{nonspecific_port.name}_input_source_count")[0] == 1
     assert getattr(matrix.group, f"{matrix_port.name}_input_green")[0] == 0
+
+
+def test_full_grid_connect_from_all_counts_zero_valued_pixels() -> None:
+    brian.start_scope()
+    sector = build_first_order_intrinsic_sector(brian=brian)
+    stimulus = ClassicBarStimulus(BarOrientation.HORIZONTAL)
+    apply_bar_stimulus(
+        sector,
+        stimulus,
+        convergent_source_scope=ConvergentExternalSourceScope.FULL_INPUT_GRID,
+    )
+    for population_name, record_id in (
+        ("thalamic_nonspecific", stimulus.nonspecific_input_record_id),
+        ("thalamic_matrix", stimulus.matrix_input_record_id),
+    ):
+        population = sector.populations[population_name]
+        port = next(
+            item
+            for item in population.compiled.external_input_ports
+            if item.record_id == record_id
+        )
+        assert getattr(population.group, f"{port.name}_input_green")[0] == 600
+        assert getattr(
+            population.group, f"{port.name}_input_source_count"
+        )[0] == pytest.approx(81)
+        # At a displaced voltage, black pixels still carry current under the
+        # independent-conductance interpretation. Test the explicit sum,
+        # rather than just the stored multiplicity.
+        voltage_mV = -50.0
+        setattr(population.group, f"v_{port.compartment}", voltage_mV * brian.mV)
+        leak_mV = float(
+            getattr(population.group, f"e_l_{port.compartment}")[0] / brian.mV
+        )
+        conductance_nS = float(
+            getattr(population.group, f"g_{port.name}")[0] / brian.nsiemens
+        )
+        sources = stimulus.source_grid().ravel()
+        expected_pA = conductance_nS * np.sum(
+            leak_mV + port.reversal_mV
+            + port.sensitivities_mV[1] * sources - voltage_mV
+        )
+        assert float(getattr(population.group, f"i_{port.name}")[0] / brian.pA) == (
+            pytest.approx(expected_pA)
+        )
+
+    # Preserve and expose the historical epoch-only lifecycle. It must not be
+    # mistaken for a persistent connection whose black pixels remain present.
+    clear_bar_stimulus(sector, stimulus)
+    for population_name, record_id in (
+        ("thalamic_nonspecific", stimulus.nonspecific_input_record_id),
+        ("thalamic_matrix", stimulus.matrix_input_record_id),
+    ):
+        population = sector.populations[population_name]
+        port = next(
+            item for item in population.compiled.external_input_ports
+            if item.record_id == record_id
+        )
+        assert getattr(population.group, f"{port.name}_input_source_count")[0] == 1
+
+
+def test_persistent_input_topology_retains_black_pixel_currents_across_epochs() -> None:
+    brian.start_scope()
+    sector = build_first_order_intrinsic_sector(brian=brian)
+    stimulus = ClassicBarStimulus(BarOrientation.HORIZONTAL)
+    scope = ConvergentExternalSourceScope.PERSISTENT_FULL_INPUT_GRID
+    initialize_convergent_external_input(sector, stimulus, convergent_source_scope=scope)
+    for epoch in ("before", "during", "after"):
+        if epoch == "during":
+            apply_bar_stimulus(sector, stimulus, convergent_source_scope=scope)
+        elif epoch == "after":
+            clear_bar_stimulus(sector, stimulus, convergent_source_scope=scope)
+        for name, record_id in (
+            ("thalamic_nonspecific", stimulus.nonspecific_input_record_id),
+            ("thalamic_matrix", stimulus.matrix_input_record_id),
+        ):
+            population = sector.populations[name]
+            port = next(p for p in population.compiled.external_input_ports if p.record_id == record_id)
+            group = population.group
+            setattr(group, f"v_{port.compartment}", -50 * brian.mV)
+            leak_mV = float(getattr(group, f"e_l_{port.compartment}")[0] / brian.mV)
+            g_nS = float(getattr(group, f"g_{port.name}")[0] / brian.nsiemens)
+            green_sum = 600 if epoch == "during" else 0
+            expected_pA = g_nS * (
+                81 * (leak_mV + port.reversal_mV + 50)
+                + port.sensitivities_mV[1] * green_sum
+            )
+            assert getattr(group, f"{port.name}_input_source_count")[0] == 81
+            assert getattr(group, f"{port.name}_input_green")[0] == green_sum
+            assert float(getattr(group, f"i_{port.name}")[0] / brian.pA) == pytest.approx(expected_pA)
+
+
+@pytest.mark.parametrize("figure", [6, 7])
+def test_persistent_topology_installed_before_first_protocol_integration(
+    monkeypatch, figure: int,
+) -> None:
+    from smart_robustness.validation import figure6, figure7
+
+    module = figure6 if figure == 6 else figure7
+    initialized = []
+
+    def capture_initialization(sector, stimulus, **kwargs):
+        initialize_convergent_external_input(sector, stimulus, **kwargs)
+        initialized.append((sector, stimulus))
+
+    class FirstIntegrationChecked(Exception):
+        pass
+
+    def check_first_run(network, *args, **kwargs):
+        assert len(initialized) == 1
+        sector, stimulus = initialized[0]
+        assert network is sector.network
+        for name, record_id in (
+            ("thalamic_nonspecific", stimulus.nonspecific_input_record_id),
+            ("thalamic_matrix", stimulus.matrix_input_record_id),
+        ):
+            population = sector.populations[name]
+            port = next(
+                p for p in population.compiled.external_input_ports
+                if p.record_id == record_id
+            )
+            assert getattr(population.group, f"{port.name}_input_source_count")[0] == 81
+            assert getattr(population.group, f"{port.name}_input_green")[0] == 0
+        # Stop before integration: this checks protocol wiring, not dynamics.
+        raise FirstIntegrationChecked
+
+    monkeypatch.setattr(module, "initialize_convergent_external_input", capture_initialization)
+    monkeypatch.setattr(brian.Network, "run", check_first_run)
+    scope = ConvergentExternalSourceScope.PERSISTENT_FULL_INPUT_GRID
+    with pytest.raises(FirstIntegrationChecked):
+        if figure == 6:
+            figure6.run_figure6_learning(
+                protocol=figure6.Figure6LearningProtocol(warmup_ms=0.01),
+                convergent_external_source_scope=scope,
+                brian=brian,
+            )
+        else:
+            figure7.run_figure7_condition(
+                condition=MatchCondition.MATCH,
+                top_down_current_pA=600,
+                use_paper_constrained_reference=True,
+                top_down_cue_lead_ms=0.01,
+                convergent_external_source_scope=scope,
+                brian=brian,
+            )
 
 
 def test_optional_relay_gains_only_modulate_local_bottom_up_pixels() -> None:

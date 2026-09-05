@@ -1,0 +1,31 @@
+schema_version: 1
+id: figure7-top5-full-grid-connectfromall-registration-384
+date: '2026-09-04'
+status: registered-before-execution-source-semantics-discriminator
+profile: configs/calibration/figure7_top5_full_grid_connectfromall_match_v1.yaml
+scientific_question: >-
+  Does KInNeSS connectFromAll apply the input-gate conductance from all 81
+  image locations, including zero-valued pixels, rather than only the five
+  nonzero bar pixels used by Artifact 080?
+source_basis:
+  model_archive: SMART.nml marks the nonspecific and matrix external input gates connectFromAll
+  supplement: bottom-up input to the matrix is all-to-one
+  framework_equations: Equations 5-6 state that a zero-valued input remains an extra leak current
+  image_geometry: 9x9 RGBA input grid with five green=120 pixels and 76 green=0 pixels
+fixed_discriminator:
+  previous_source_count: 5
+  candidate_source_count: 81
+  summed_green_value: 600
+  fitted_parameters: none
+execution:
+  complete_figure6_runs: 1
+  figure7_match_runs_if_figure6_passes: 1
+  figure7_mismatch_runs: 0
+stopping_rule: >-
+  Test the discrete 81-source interpretation once through complete Figure 6
+  and, only if that passes, one match. Do not interpolate source count or alter
+  input conductance, sensitivity, detector, timing, learned state, or weights.
+locked_holdouts:
+  - figure7_mismatch
+  - figure10_reset
+  - figure14_spectra

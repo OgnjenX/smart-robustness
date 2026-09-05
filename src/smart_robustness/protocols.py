@@ -20,6 +20,14 @@ class MatchCondition(StrEnum):
     MISMATCH = "mismatch"
 
 
+class ConvergentExternalSourceScope(StrEnum):
+    """Which image locations contribute to an all-to-one external-input gate."""
+
+    NONZERO_PIXELS = "nonzero_pixels"
+    FULL_INPUT_GRID = "full_input_grid"
+    PERSISTENT_FULL_INPUT_GRID = "persistent_full_input_grid"
+
+
 @dataclass(frozen=True, slots=True)
 class ClassicBarStimulus:
     orientation: BarOrientation
@@ -110,14 +118,50 @@ class ClassicMatchMismatchCue:
         )
 
 
+def initialize_convergent_external_input(
+    sector: FirstOrderSector,
+    stimulus: ClassicBarStimulus,
+    *,
+    convergent_source_scope: ConvergentExternalSourceScope | str = (
+        ConvergentExternalSourceScope.NONZERO_PIXELS
+    ),
+) -> None:
+    """Install the selected blank input topology before any integration.
+
+    Historical epoch-only modes retain their initialized one-source state.
+    The persistent alternative connects every pixel, including black pixels.
+    """
+    scope = ConvergentExternalSourceScope(convergent_source_scope)
+    if scope is ConvergentExternalSourceScope.PERSISTENT_FULL_INPUT_GRID:
+        for name, record_id in (
+            ("thalamic_nonspecific", stimulus.nonspecific_input_record_id),
+            ("thalamic_matrix", stimulus.matrix_input_record_id),
+        ):
+            sector.populations[name].set_convergent_external_input(
+                record_id, "green", np.zeros(stimulus.source_grid().size)
+            )
+
+
 def apply_bar_stimulus(
     sector: FirstOrderSector,
     stimulus: ClassicBarStimulus,
     *,
     apply_relay_input: bool = True,
     relay_input_gains: np.ndarray | None = None,
+    convergent_source_scope: ConvergentExternalSourceScope | str = (
+        ConvergentExternalSourceScope.NONZERO_PIXELS
+    ),
 ) -> None:
-    """Apply all nonzero channels of one recovered KInNeSS stimulus PNG."""
+    """Apply stimulus values using the requested convergent source scope.
+
+    ``full_input_grid`` does not initialize prestimulus connectivity. Clearing
+    this legacy protocol restores one source, so this option alone must not be
+    interpreted as a persistent 81-location input topology.
+    For ``persistent_full_input_grid``, callers must initialize connectivity
+    before any integration and pass the same scope when clearing the stimulus.
+    """
+
+    source_scope = ConvergentExternalSourceScope(convergent_source_scope)
 
     gains = None
     if relay_input_gains is not None:
@@ -158,7 +202,14 @@ def apply_bar_stimulus(
         )
     # These KInNeSS input gates use connectFromAll onto 1x1 populations, so
     # the five nonzero green source pixels contribute convergently.
-    green_sources = np.full(len(stimulus.active_indices), stimulus.source_value)
+    green_sources = (
+        stimulus.source_grid().ravel()
+        if source_scope in {
+            ConvergentExternalSourceScope.FULL_INPUT_GRID,
+            ConvergentExternalSourceScope.PERSISTENT_FULL_INPUT_GRID,
+        }
+        else np.full(len(stimulus.active_indices), stimulus.source_value)
+    )
     sector.populations["thalamic_nonspecific"].set_convergent_external_input(
         stimulus.nonspecific_input_record_id,
         "green",
@@ -171,7 +222,15 @@ def apply_bar_stimulus(
     )
 
 
-def clear_bar_stimulus(sector: FirstOrderSector, stimulus: ClassicBarStimulus) -> None:
+def clear_bar_stimulus(
+    sector: FirstOrderSector,
+    stimulus: ClassicBarStimulus,
+    *,
+    convergent_source_scope: ConvergentExternalSourceScope | str = (
+        ConvergentExternalSourceScope.NONZERO_PIXELS
+    ),
+) -> None:
+    scope = ConvergentExternalSourceScope(convergent_source_scope)
     relay = sector.populations["thalamic_relay"]
     relay.set_external_input(
         stimulus.relay_input_record_id,
@@ -186,6 +245,9 @@ def clear_bar_stimulus(sector: FirstOrderSector, stimulus: ClassicBarStimulus) -
     )
     sector.populations["thalamic_matrix"].set_external_input(
         stimulus.matrix_input_record_id, "green", 0.0
+    )
+    initialize_convergent_external_input(
+        sector, stimulus, convergent_source_scope=scope
     )
 
 
@@ -221,6 +283,9 @@ def apply_match_mismatch_cue(
     *,
     apply_relay_input: bool = True,
     relay_input_gains: np.ndarray | None = None,
+    convergent_source_scope: ConvergentExternalSourceScope | str = (
+        ConvergentExternalSourceScope.NONZERO_PIXELS
+    ),
     brian=None,
 ) -> None:
     """Apply Figure 7 bottom-up input and the Methods 4.9 layer-6II current cue."""
@@ -233,6 +298,7 @@ def apply_match_mismatch_cue(
         cue.bottom_up_stimulus,
         apply_relay_input=apply_relay_input,
         relay_input_gains=relay_input_gains,
+        convergent_source_scope=convergent_source_scope,
     )
     layer6ii = sector.populations[cue.top_down_population].group
     layer6ii.i_drive_soma = 0 * brian.pA
@@ -243,10 +309,16 @@ def clear_match_mismatch_cue(
     sector: FirstOrderSector,
     cue: ClassicMatchMismatchCue,
     *,
+    convergent_source_scope: ConvergentExternalSourceScope | str = (
+        ConvergentExternalSourceScope.NONZERO_PIXELS
+    ),
     brian=None,
 ) -> None:
     if brian is None:
         import brian2 as brian
 
-    clear_bar_stimulus(sector, cue.bottom_up_stimulus)
+    clear_bar_stimulus(
+        sector, cue.bottom_up_stimulus,
+        convergent_source_scope=convergent_source_scope,
+    )
     sector.populations[cue.top_down_population].group.i_drive_soma = 0 * brian.pA

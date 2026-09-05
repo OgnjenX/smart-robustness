@@ -109,6 +109,11 @@ def main() -> None:
         and verified["runtime_fingerprint"] != conventions.fingerprint
     ):
         raise ValueError("registered mismatch runtime differs from verified match")
+    source_scope = profile["protocol"].get(
+        "convergent_external_source_scope", "nonzero_pixels"
+    )
+    if verified.get("convergent_external_source_scope", "nonzero_pixels") != source_scope:
+        raise ValueError("registered mismatch input scope differs from verified match")
     scales = {
         str(key): float(value)
         for key, value in profile["trn_to_relay_gaba"]["scales"].items()
@@ -116,6 +121,9 @@ def main() -> None:
     training = run_figure6_learning(
         conventions=conventions,
         projection_weight_scales=scales,
+        convergent_external_source_scope=profile["protocol"].get(
+            "convergent_external_source_scope", "nonzero_pixels"
+        ),
         brian=brian,
     )
     if training.result.population_spikes["thalamic_relay"] != 20:
@@ -142,6 +150,9 @@ def main() -> None:
         ),
         top_down_cue_lead_ms=float(protocol["top_down_cue_lead_ms"]),
         equilibration_ms=float(protocol["equilibration_ms"]),
+        convergent_external_source_scope=protocol.get(
+            "convergent_external_source_scope", "nonzero_pixels"
+        ),
         brian=brian,
     )
     assessment = assess_figure7_reproduction(match, mismatch)
@@ -188,6 +199,7 @@ def main() -> None:
         "match_verification_artifact": profile["match_verification_artifact"],
         "base_candidate_fingerprint": base_profile["candidate_fingerprint"],
         "runtime_fingerprint": conventions.fingerprint,
+        "convergent_external_source_scope": source_scope,
         "handoff_figure6_population_spikes": training.result.population_spikes,
         "applied_common_weight_factor": applied_factor,
         "match_scoring_summary": match,

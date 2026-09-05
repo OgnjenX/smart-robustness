@@ -22,6 +22,7 @@ from ..protocols import (
     ClassicBarStimulus,
     apply_bar_stimulus,
     clear_bar_stimulus,
+    initialize_convergent_external_input,
 )
 
 BOTTOM_UP_PROJECTION_ID = "modeldb112923.projection.035"
@@ -515,6 +516,7 @@ def run_figure6_learning(
     protocol: Figure6LearningProtocol | None = None,
     record_relay_detector_diagnostics: bool = False,
     projection_weight_scales: Mapping[str, float] | None = None,
+    convergent_external_source_scope: str = "nonzero_pixels",
     brian=None,
 ) -> Figure6LearningRun:
     """Run and summarize the official simultaneous Figure 6b/c episode."""
@@ -530,6 +532,10 @@ def run_figure6_learning(
     brian.start_scope()
     brian.defaultclock.dt = protocol.dt_ms * brian.ms
     sector = build_first_order_connected_sector(conventions=conventions, brian=brian)
+    initialize_convergent_external_input(
+        sector, ClassicBarStimulus(BarOrientation.HORIZONTAL),
+        convergent_source_scope=convergent_external_source_scope,
+    )
     if projection_weight_scales:
         unknown = set(projection_weight_scales) - set(sector.projections)
         if unknown:
@@ -580,11 +586,18 @@ def run_figure6_learning(
         category_source_value=protocol.category_source_value,
         include_archived_category_pixel=True,
     )
-    apply_bar_stimulus(sector, stimulus)
+    apply_bar_stimulus(
+        sector,
+        stimulus,
+        convergent_source_scope=convergent_external_source_scope,
+    )
     sector.network.run(protocol.stimulus_ms * brian.ms)
 
     if protocol.post_stimulus_ms:
-        clear_bar_stimulus(sector, stimulus)
+        clear_bar_stimulus(
+            sector, stimulus,
+            convergent_source_scope=convergent_external_source_scope,
+        )
         sector.network.run(protocol.post_stimulus_ms * brian.ms)
     spike_counts = {
         name: int(monitor.num_spikes) - warmup_counts[name]

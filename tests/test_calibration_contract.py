@@ -900,6 +900,17 @@ ISOLATED_NONSPECIFIC_FIXED_POINT_PERTURBATION_RESULT_PATH = (
     ROOT
     / "docs/validation-results/isolated-nonspecific-fixed-point-soma-perturbation-383.yaml"
 )
+FIGURE7_FULL_GRID_CONNECTFROMALL_PROFILE_PATH = (
+    ROOT / "configs/calibration/figure7_top5_full_grid_connectfromall_match_v1.yaml"
+)
+FIGURE7_FULL_GRID_CONNECTFROMALL_REGISTRATION_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-top5-full-grid-connectfromall-registration-384.yaml"
+)
+FIGURE7_FULL_GRID_CONNECTFROMALL_RESULT_PATH = (
+    ROOT
+    / "docs/validation-results/figure7-top5-full-grid-connectfromall-match-385.yaml"
+)
 FIGURE7_ALIGNED_VERIFICATION_PROFILE_PATH = (
     ROOT / "configs/calibration/figure7_aligned_on_center_verification_v1.yaml"
 )
@@ -5346,6 +5357,35 @@ def test_nonspecific_fixed_point_fails_registered_somatic_perturbation() -> None
         "maximum_peak_to_peak_mV"
     ] == pytest.approx(56.31728131527776)
     assert not artifact["stationarity_result"]["stationary_by_registered_probe"]
+
+
+def test_full_grid_connectfromall_fails_match_before_mismatch() -> None:
+    profile = yaml.safe_load(FIGURE7_FULL_GRID_CONNECTFROMALL_PROFILE_PATH.read_text())
+    registration = yaml.safe_load(
+        FIGURE7_FULL_GRID_CONNECTFROMALL_REGISTRATION_PATH.read_text()
+    )
+    artifact = yaml.safe_load(FIGURE7_FULL_GRID_CONNECTFROMALL_RESULT_PATH.read_text())
+    assert profile["protocol"]["convergent_external_source_scope"] == (
+        "full_input_grid"
+    )
+    assert registration["fixed_discriminator"] == {
+        "previous_source_count": 5,
+        "candidate_source_count": 81,
+        "summed_green_value": 600,
+        "fitted_parameters": "none",
+    }
+    assert artifact["convergent_external_source_scope"] == "full_input_grid"
+    assert artifact["figure6_pass"]
+    assert all(artifact["figure6_gates"].values())
+    assert artifact["figure6_result"]["population_spikes"]["thalamic_relay"] == 20
+    assert artifact["status"] == "match-failed"
+    assert not artifact["match_pass"]
+    assert not artifact["mismatch_consulted"]
+    match = artifact["match_result"]
+    assert len(match["relay_spike_times_ms"]) == 15
+    assert len(match["trn_spike_times_ms"]) == 635
+    assert len(match["nonspecific_spike_times_ms"]) == 6
+    assert not artifact["match_gates"]["nonspecific_40_hz"]
 
 
 def test_aligned_on_center_verification_registers_only_screen_survivor() -> None:

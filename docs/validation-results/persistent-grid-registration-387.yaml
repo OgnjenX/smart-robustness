@@ -1,0 +1,24 @@
+schema_version: 1
+id: persistent-grid-registration-387
+date: '2026-09-05'
+status: registered-before-execution
+profile: configs/calibration/figure7_persistent_grid_match_v1.yaml
+predecessor: docs/validation-results/connectfromall-lifecycle-audit-386.yaml
+classification: lifecycle-discriminator-in-calibrated-reconstruction
+prior_observations:
+  - Artifact385 uses 1/81/1 input-source counts before/during/after the stimulus and fails match at six events.
+  - Figure7 mismatch has already been repeatedly consulted during calibration.
+proposed_input_source_counts: {before: 81, during: 81, after: 81}
+scope: first-order nonspecific and matrix bottom-up external conductance ports
+fixed_controls:
+  green_pixel_values: five at 120 and 76 at zero during the stimulus
+  blank_pixel_values: all 81 at zero
+  all_other_model_and_protocol_parameters: identical to Artifact385
+execution:
+  figure6_runs: 1
+  match_runs_if_figure6_passes: 1
+  mismatch_runs: 0
+interpretation: >-
+  This is a prospective test of a lifecycle correction after an observed
+  stimulus-only failure. It cannot independently validate SMART or determine
+  original simulator semantics from target agreement alone.

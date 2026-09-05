@@ -412,6 +412,11 @@ parameters:
     status: calibrated-reconstruction-holdout-failed
     source: recovered SMART.nml INTRALAMINAR cell, unavailable legacy spike handler, and Artifacts 371--376
     note: +20 mV independently reproduces exact Figure 6 and 15/635/4 match behavior, but the fixed mismatch remains overlap-only 3/560/5 rather than seven nonspecific events. The mismatch waveform contains only six positive soma maxima, so no shared scalar amplitude threshold can recover 4/7. Do not inspect another threshold
+  model.external_input.connectfromall_source_scope:
+    value: nonzero_pixels historical default; full_input_grid stimulus-epoch alternative
+    status: source-ambiguity-unresolved-lifecycle-audit-required
+    source: KInNeSS expanded Equations 5-6, SMART.nml connectFromAll records, and the archived 9x9 stimulus images
+    note: Artifact 385 preserves Figure 6 and 15/635 upstream match counts but yields six nonspecific match events. Audit 386 identifies source counts of one before stimulation, 81 during stimulation, and one after clearing. Persistent 81-location topology was not tested. This failed configuration cannot establish which source interpretation is faithful
   benchmark.population_sizes:
     value: see configs/*.yaml
     status: exploratory

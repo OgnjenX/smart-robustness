@@ -7,6 +7,17 @@ similar.
 
 ## Scientific contract
 
+### Research sequence
+
+The active goal remains source-faithful SMART reproduction and an explicitly
+validated, versioned baseline. After that, compare neuron models and identify
+the parameter regions in which the baseline observations survive. Only after
+those comparisons, explore evidence-backed updates to the 2008 anatomy and
+dynamics (including cell-type-, area-, and thalamic-nucleus-specific input to
+layer 5). Keep these as separately identified circuit variants, not retroactive
+changes to the classic baseline. Their benefit, neutrality, or disruption is
+an experimental question, not an assumption.
+
 1. Search dimensions must be unresolved, conflicting, or not identifiable in
    the surviving sources.
 2. Each dimension must list provenance, admissible values or bounds, and why it
@@ -840,3 +851,23 @@ motion within 100 ms. Reject this point as a robust resting initialization and
 keep Figure 7 locked. Do not round the point into a behavioral candidate or
 fit its precision; only newly recovered primary source could require that
 non-robust initialization.
+
+Artifacts 384--385 revisit the archived external-input `connectFromAll`
+semantics as one discrete source interpretation. KInNeSS Equations 5--6 say a
+zero-valued input remains an extra leak, while SMART.nml marks the 9x9 input to
+nonspecific and matrix thalamus as `connectFromAll`. Counting all 81 image
+locations rather than only the five nonzero bar pixels preserves every Figure
+6 gate and exact upstream match activity at 15 relay/635 TRN events, but
+nonspecific match output rises to six events (60 Hz). This configuration fails
+before mismatch. Audit 386 subsequently establishes that source count was one
+during the cue interval and reset to one on clearing. Thus this experiment
+does not test persistent 81-location topology or resolve source semantics.
+The next source audit must account for the entire input lifecycle.
+
+Methodological correction (2026-09-05): repeated Figure 7 mismatch evaluations
+make that condition part of calibration, despite earlier "holdout" wording.
+Deterministic rebuilds establish repeatability, not independent validation.
+Source interpretations must be assessed against source evidence; failure to
+recover a target under a calibrated configuration cannot falsify the source
+interpretation itself. Future registrations must disclose prior exploratory
+observations, including those preceding the resting-state audit registration.

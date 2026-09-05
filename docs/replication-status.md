@@ -1,5 +1,33 @@
 # Replication status
 
+## Current interpretation (2026-09-05)
+
+**The original SMART baseline is not yet reproduced or ready to freeze.**
+The chronological entries below preserve the investigation history; their
+older promotion, rejection, and independence language is not a current
+certification of source fidelity.
+
+- Passing unit tests establishes implementation properties, not reproduction
+  of the paper's network behavior.
+- The top-five comparator is a calibrated reconstruction, not a recovered
+  original SMART mechanism. Its favorable relay selection cannot establish
+  source-faithful matching, even if all spike-count targets eventually pass.
+- Repeated Figure 7 mismatch evaluations are calibration observations, not
+  fresh holdouts. Deterministic reruns establish repeatability rather than
+  independent predictive validation.
+- A failed candidate rejects that tested combination of conventions and
+  parameters, not an unresolved source interpretation in every context.
+- Registration timing must be checked against execution history. In
+  particular, the resting-state audit registration followed exploration;
+  it was not prospective evidence for that exploration.
+
+The persistent-grid experiment registered in Artifact 387 tests a distinct
+input lifecycle (81 sources before, during, and after stimulation), following
+the epoch-only failure in Artifact 385 and its scope correction in Audit 386.
+This remains a diagnostic within the calibrated reconstruction. Agreement
+would not remove the comparator's provenance gap or establish the complete
+gamma/beta/reset and higher-order results required by the goal.
+
 ## What the 2008 model contains
 
 The Methods section describes two hierarchically organized thalamocortical
@@ -2912,6 +2940,18 @@ derived point is therefore not a robust resting state. Neither relaxation nor
 fixed-point initialization authorizes another Figure 7 run; the remaining
 work must target unresolved source semantics rather than initialization-time
 or numerical-precision fitting.
+
+Artifacts 384--385 test the remaining discrete interpretation of the archived
+9x9 `connectFromAll` external-input gate. Treating all 81 image locations,
+including 76 zero-valued pixels, as independent Equation-5 currents leaves the
+complete Figure 6 baseline intact and preserves 15/635 upstream match events.
+It changes nonspecific output to 60 Hz rather than the published 40 Hz, so the
+candidate fails before mismatch. Audit 386 finds that the implementation uses
+81 sources only during stimulation, with one source during the cue interval
+and after clearing. This result therefore does not resolve persistent input
+topology. The source interpretation remains open. Repeated Figure 7 mismatch
+evaluations are calibration evidence; earlier references to independent
+holdouts overstate their evidential independence.
 
 ## Validation gates
 

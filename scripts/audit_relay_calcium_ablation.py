@@ -40,7 +40,13 @@ def compare(control, intervention, control_trace, intervention_trace):
             raise ValueError(f"invalid state array: {name}")
         if not np.array_equal(baseline[:, before], changed[:, before]):
             raise ValueError(f"pre-stimulus state changed: {name}")
-    for name in ("i_ca_distal_dendrite", "i_ca_proximal_dendrite"):
+    scope = intervention.get("relay_calcium_ablation_scope", "dendrites_only")
+    if scope not in ("dendrites_only", "all_relay_compartments"):
+        raise ValueError("unrecognized relay calcium ablation scope")
+    currents = ["i_ca_distal_dendrite", "i_ca_proximal_dendrite"]
+    if scope == "all_relay_compartments":
+        currents.append("i_ca_soma")
+    for name in currents:
         if name not in names:
             raise ValueError(f"missing intervention observable: {name}")
         if not np.any(control_trace[name][:, during] != 0):
@@ -56,7 +62,11 @@ def compare(control, intervention, control_trace, intervention_trace):
     return {
         "pre_stimulus_state_and_cue_events_identical": True,
         "sampled_relay_dendritic_calcium_currents_zero_during_stimulus": True,
-        "ablation_scope": "distal_and_proximal_dendrites_only_somatic_calcium_retained",
+        "ablation_scope": (
+            scope if scope == "all_relay_compartments"
+            else "distal_and_proximal_dendrites_only_somatic_calcium_retained"
+        ),
+        "verified_zero_current_variables": currents,
         "cells": cells,
         "nonoverlap_cells_still_firing": [i for i in (22, 31, 49, 58) if cells[i]["ablation_times_ms"]],
         "reproduction_eligible": False,

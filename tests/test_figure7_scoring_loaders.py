@@ -21,6 +21,8 @@ from smart_robustness.validation.figure7 import (
 @pytest.mark.parametrize("intervention", [
     {"comparator_relay_floor": 0.0},
     {"relay_calcium_ablated_at_stimulus": True},
+    {"relay_calcium_ablated_at_stimulus": True,
+     "relay_calcium_ablation_scope": "all_relay_compartments"},
     {"comparator_transform": "top_k_binary", "comparator_target_count": 5,
      "comparator_source_index": 40},
 ])

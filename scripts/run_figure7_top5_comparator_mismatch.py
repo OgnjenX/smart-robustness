@@ -43,6 +43,10 @@ def _scoring_result(raw: dict[str, Any]) -> Figure7ConditionResult:
         condition=MatchCondition(raw["condition"]),
         duration_ms=float(raw["duration_ms"]),
         relay_calcium_ablated_at_stimulus=raw.get("relay_calcium_ablated_at_stimulus", False),
+        relay_calcium_ablation_scope=raw.get(
+            "relay_calcium_ablation_scope",
+            "dendrites_only" if raw.get("relay_calcium_ablated_at_stimulus", False) else "none",
+        ),
         nonspecific_spike_times_ms=tuple(raw["nonspecific_spike_times_ms"]),
         relay_spike_indices=tuple(raw["relay_spike_indices"]),
         relay_spike_times_ms=tuple(raw["relay_spike_times_ms"]),

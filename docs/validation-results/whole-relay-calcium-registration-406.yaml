@@ -1,0 +1,27 @@
+schema_version: 1
+id: whole-relay-calcium-registration-406
+date: '2026-09-05'
+status: registered-before-execution
+classification: causal-diagnostic-not-reproduction-candidate
+control: docs/validation-results/figure7-complete-relay-calcium-trace-403.yaml
+profile: configs/calibration/figure7_aligned_on_center_mismatch_v1.yaml
+intervention:
+  timing: sensory onset after unchanged training and cue
+  population: all 81 thalamic relay cells
+  conductances_set_to_zero: [g_ca_soma, g_ca_proximal_dendrite, g_ca_distal_dendrite]
+  other_parameter_changes: none
+  legacy_dendritic_only_option_changed: false
+execution: {fresh_training_runs: 1, mismatch_runs: 1, new_parameter_candidates: 0}
+result: docs/validation-results/figure7-whole-relay-calcium-ablation-407.yaml
+trace: tmp/figure7-whole-relay-calcium-ablation-407.npz
+comparison: docs/validation-results/whole-relay-calcium-comparison-408.yaml
+required_checks:
+  - Exact recorded cue event and pre-stimulus state equality with control.
+  - Matching trace metadata, configuration fingerprint, and valid checksums.
+  - All three recorded calcium currents zero during stimulation and nonzero in control.
+readout: Relay event times in cells 22,31,40,49,58 and all population event counts.
+interpretation:
+  - Persistence of nonoverlap firing would show that ongoing relay calcium during this epoch is not necessary for that firing in this calibrated network.
+  - Loss of firing would show dependence on this intervention but would not alone establish a physiological rebound mechanism.
+  - Prior calcium history and recurrent network consequences remain part of the experiment.
+  - Neither outcome establishes source fidelity or promotes the baseline. No reproduction criterion is changed.

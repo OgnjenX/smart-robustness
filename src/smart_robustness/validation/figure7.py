@@ -405,6 +405,7 @@ class Figure7ConditionResult:
     relay_trace_path: str | None = None
     relay_trace_sha256: str | None = None
     relay_calcium_ablated_at_stimulus: bool = False
+    relay_calcium_ablation_scope: str = "none"
     network_scope: str = "first_order"
     disabled_projection_ids: tuple[str, ...] = ()
     relay_top_down_ampa_peak_by_index: tuple[tuple[int, float], ...] = ()
@@ -736,6 +737,7 @@ def run_figure7_condition(
     convergent_external_source_scope: str = "nonzero_pixels",
     relay_trace_output: str | Path | None = None,
     ablate_relay_calcium_at_stimulus: bool = False,
+    ablate_all_relay_calcium_at_stimulus: bool = False,
     cpp_standalone_directory: str | Path | None = None,
     brian=None,
 ) -> Figure7ConditionResult:
@@ -757,6 +759,10 @@ def run_figure7_condition(
         raise ValueError("duration_ms and dt_ms must be positive")
     if not isinstance(ablate_relay_calcium_at_stimulus, bool):
         raise TypeError("relay calcium ablation must be boolean")
+    if not isinstance(ablate_all_relay_calcium_at_stimulus, bool):
+        raise TypeError("whole-relay calcium ablation must be boolean")
+    if ablate_relay_calcium_at_stimulus and ablate_all_relay_calcium_at_stimulus:
+        raise ValueError("choose dendritic-only or whole-relay calcium ablation")
     if relay_trace_output is not None:
         if not record_relay_diagnostics:
             raise ValueError("relay trace output requires relay diagnostics")
@@ -1160,13 +1166,15 @@ def run_figure7_condition(
             brian=brian,
         )
         sector.network.run(top_down_cue_lead_ms * brian.ms)
-    if ablate_relay_calcium_at_stimulus:
+    if ablate_relay_calcium_at_stimulus or ablate_all_relay_calcium_at_stimulus:
         # Diagnostic intervention only: preserve training/cue histories and
         # switch off both relay dendritic T-type currents at sensory onset.
         # Historical option name: somatic calcium is deliberately retained.
         relay_group = sector.populations["thalamic_relay"].group
         relay_group.g_ca_distal_dendrite = 0 * brian.nsiemens
         relay_group.g_ca_proximal_dendrite = 0 * brian.nsiemens
+        if ablate_all_relay_calcium_at_stimulus:
+            relay_group.g_ca_soma = 0 * brian.nsiemens
     if top_down_cue_lead_ms > 0:
         apply_bar_stimulus(
             sector,
@@ -1971,7 +1979,13 @@ def run_figure7_condition(
         condition=condition,
         relay_trace_path=str(relay_trace_output) if relay_trace_output is not None else None,
         relay_trace_sha256=relay_trace_sha256,
-        relay_calcium_ablated_at_stimulus=ablate_relay_calcium_at_stimulus,
+        relay_calcium_ablated_at_stimulus=(
+            ablate_relay_calcium_at_stimulus or ablate_all_relay_calcium_at_stimulus
+        ),
+        relay_calcium_ablation_scope=(
+            "all_relay_compartments" if ablate_all_relay_calcium_at_stimulus
+            else "dendrites_only" if ablate_relay_calcium_at_stimulus else "none"
+        ),
         duration_ms=duration_ms,
         nonspecific_spike_times_ms=stimulus_times(nonspecific),
         layer4_spike_indices=stimulus_indices(layer4),

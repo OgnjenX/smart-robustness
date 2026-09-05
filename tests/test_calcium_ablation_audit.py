@@ -50,3 +50,21 @@ def test_audit_rejects_changed_control_or_failed_ablation(failure):
         changed["i_ca_distal_dendrite"][0, 1] = 1
     with pytest.raises(ValueError):
         compare(control, intervention, trace, changed)
+
+
+def test_whole_relay_ablation_requires_zero_somatic_current():
+    control, intervention, trace, changed = fixture_data()
+    intervention["relay_calcium_ablation_scope"] = "all_relay_compartments"
+    with pytest.raises(ValueError, match="missing intervention observable"):
+        compare(control, intervention, trace, changed)
+    for item in (trace, changed):
+        item["variable_names"] = np.append(item["variable_names"], "i_ca_soma")
+        item["variable_units"] = np.append(item["variable_units"], "pA")
+        item["i_ca_soma"] = np.ones((1, 3))
+    with pytest.raises(ValueError, match="persists after ablation"):
+        compare(control, intervention, trace, changed)
+    changed["i_ca_soma"][:, 1:] = 0
+    report = compare(control, intervention, trace, changed)
+    assert report["ablation_scope"] == "all_relay_compartments"
+    assert "i_ca_soma" in report["verified_zero_current_variables"]
+    assert not report["reproduction_eligible"]

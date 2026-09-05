@@ -1,4 +1,4 @@
-"""Test the discrete supplement tuple for projection 049 at Figure 6."""
+"""Run a profile-declared source interpretation through fixed Figure 6 gates."""
 
 from __future__ import annotations
 
@@ -68,7 +68,9 @@ def main() -> None:
     run = run_figure6_learning(
         conventions=conventions,
         protocol=Figure6LearningProtocol(
-            monitored_populations=FIGURE6_MONITORED_POPULATIONS
+            monitored_populations=tuple(profile.get(
+                "monitored_populations", FIGURE6_MONITORED_POPULATIONS
+            ))
         ),
         projection_weight_scales=scales,
         brian=brian,
@@ -113,7 +115,8 @@ def main() -> None:
     }
     output = Path(args.output)
     output.parent.mkdir(parents=True, exist_ok=True)
-    output.write_text(yaml.safe_dump(_plain(artifact), sort_keys=False))
+    with output.open("x") as stream:
+        yaml.safe_dump(_plain(artifact), stream, sort_keys=False)
     print(
         f"relay={len(relay_indices)} "
         f"layer4={result.population_spikes['layer4_excitatory_v1']} "

@@ -1,0 +1,26 @@
+schema_version: 1
+id: figure6-declared-interneuron-input-registration-413
+status: registered-before-execution
+profile: configs/calibration/figure6_declared_interneuron_input_v1.yaml
+source_resolution: mixed-input-semantic-resolution-412.yaml
+classification: single-source-interpretation-diagnostic-in-calibrated-network
+baseline: Comparator-free calibrated control used in 403, with unchanged TRN detector and inhibitory scales.
+change: mixed_input_gate_convention from historical_nested_projection to declared_external_input
+execution: {figure6_learning_runs: 1, match_runs: 0, mismatch_runs: 0, parameter_search: false}
+result: docs/validation-results/figure6-declared-interneuron-input-414.yaml
+prerequisite_gates:
+  relay_active_indices: [38, 39, 40, 41, 42]
+  events_per_active_relay: 4
+  total_relay_events: 20
+  cortical_chain_complete: true
+  causal_learning_pair: true
+  horizontal_combined_map_contrast: '>0'
+additional_readouts:
+  - Interneuron event counts, indices, and times; no new firing target is fitted.
+  - Full learned maps and causal timing summary preserved by the existing runner.
+scope:
+  - These are established Figure 6 prerequisite gates, not proof of complete published learning reproduction.
+  - No headroom expansion or reconstructed comparator is used in this learning test.
+  - Input sensitivity and conductance are archived values 0.37 and 0.21 mS/cm2.
+  - Failure does not falsify the source input interpretation in every configuration.
+baseline_promoted: false

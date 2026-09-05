@@ -147,6 +147,10 @@ def summarize_trace(trace, artifact: dict, reference: dict) -> dict:
         }
     return {
         "event_trains_identical_to_reference": True,
+        "calcium_compartments_recorded": [
+            compartment for compartment in ("soma", "proximal_dendrite", "distal_dendrite")
+            if all(f"{prefix}_{compartment}" in selected for prefix in ("i_ca", "m_ca", "h_ca"))
+        ],
         "monitor_when": str(trace["monitor_when"]),
         "sample_count": len(time),
         "time_range_ms": [float(time[0]), float(time[-1])],

@@ -64,9 +64,18 @@ def test_continuous_trace_requires_exact_events_and_preserves_epoch_ranges():
     }
     summary = summarize_trace(trace, artifact, deepcopy(artifact))
     assert summary["event_trains_identical_to_reference"]
+    assert summary["calcium_compartments_recorded"] == ["proximal_dendrite", "distal_dendrite"]
     assert summary["cells"][22]["pre_stimulus"]["h_ca_distal_dendrite"]["max"] == 0.1
     assert summary["cells"][22]["stimulus"]["h_ca_distal_dendrite"]["max"] == 0.3
     assert not summary["causal_calcium_contribution_identified"]
+    complete = deepcopy(trace)
+    soma_names = ["i_ca_soma", "m_ca_soma", "h_ca_soma"]
+    complete["variable_names"] = np.concatenate((trace["variable_names"], soma_names))
+    complete["variable_units"] = np.concatenate((trace["variable_units"], ["pA", "dimensionless", "dimensionless"]))
+    complete.update({name: np.array([[0.1, 0.2, 0.3]]) for name in soma_names})
+    assert summarize_trace(complete, artifact, artifact)["calcium_compartments_recorded"] == [
+        "soma", "proximal_dendrite", "distal_dendrite",
+    ]
     changed = deepcopy(artifact)
     changed["mismatch_result"]["relay_spike_times_ms"] = [1.01]
     with pytest.raises(ValueError, match="event train changed"):

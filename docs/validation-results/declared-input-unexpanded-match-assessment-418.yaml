@@ -1,0 +1,29 @@
+schema_version: 1
+id: declared-input-unexpanded-match-assessment-418
+registration: declared-input-unexpanded-match-registration-416.yaml
+result: declared-input-unexpanded-match-417.yaml
+classification: completed-fixed-match-diagnostic-failed
+training_spike_trains_and_learned_maps_repeat_exactly: true
+weight_handoff: actual_figure6_weights_no_expansion
+applied_common_weight_factor: 1.0
+counts: {relay: 10, trn: 604, nonspecific: 6}
+relay_events_per_active_cell: 2
+active_relay_indices: [38, 39, 40, 41, 42]
+failed_gates:
+  - minimum_relay_events_per_active_index
+  - nonspecific_events
+  - nonspecific_40_hz
+passed_features:
+  - Selected category cue and current termination, no relay cue events.
+  - Correct active relay spatial pattern and nonzero TRN output.
+  - Sampled TRN events match fresh detector cycles.
+  - Correct 100-ms duration, no reconstructed comparator, no calcium ablation.
+interpretation:
+  - The declared image-input interpretation plus actual learned weights does not meet fixed match prerequisites in this calibrated configuration.
+  - This does not falsify declared input semantics in other configurations or establish that stronger learned weights are the correct repair.
+  - The saved relay diagnostic current ranges report zero interneuron contribution; their sampling window must be checked before inferring a silent pathway throughout the trial.
+  - No mismatch, reset, or spectral trial was run, and no pass criterion is revised.
+next_action: Audit the match protocol input lifecycle and interneuron recruitment relative to training before further calibration.
+mismatch_authorized: false
+baseline_promoted: false
+original_smart_reproduced: false

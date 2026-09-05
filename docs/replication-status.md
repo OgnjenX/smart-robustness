@@ -2,6 +2,15 @@
 
 ## Current interpretation (2026-09-05)
 
+The unexpanded-weight match test (416--418) repeats Figure 6 event trains and
+learned maps exactly, then fails match with 10 relay, 604 TRN, and six
+nonspecific events. All five expected relay cells fire twice rather than the
+required minimum of three times; nonspecific output is 60 rather than 40 Hz.
+Cue and sampled TRN cycle checks pass. This test used actual learned weights,
+not the earlier headroom expansion. Mismatch remains unauthorized for this
+configuration. Next: audit the match input lifecycle and interneuron activity
+before attributing failure to learned strength or changing parameters.
+
 The fixed declared-input Figure 6 test (413--415) passes all six registered
 prerequisites: 20 relay events confined to the five horizontal cells, four per
 cell, complete cortical recruitment, causal teaching timing, and positive

@@ -64,6 +64,18 @@ failure remain unchanged. No new parameter candidate or revised pass criterion
 was introduced. See `relay-trace-diagnostics.md` for reproducible recording and
 integrity-checked analysis commands.
 
+Artifacts 396--399 execute the declared relay-calcium ablation at sensory
+onset. The control check verifies identical recorded pre-stimulus state and
+cue events, then zero sampled relay calcium current throughout the stimulus.
+All four nonoverlap cells still emit two events. Relay/TRN/nonspecific counts
+change from 10/583/7 to 10/579/5, with altered relay event times. Thus the
+spatial failure can persist without ongoing relay T-type current during this
+epoch in the calibrated network. Prior calcium history and recurrent effects
+remain part of the experiment; no claim of universal calcium irrelevance or
+original-model reproduction follows. The ablated run is explicitly excluded
+from reproduction scoring. Original SMART's calcium channels remain intact
+in non-diagnostic runs.
+
 ## What the 2008 model contains
 
 The Methods section describes two hierarchically organized thalamocortical

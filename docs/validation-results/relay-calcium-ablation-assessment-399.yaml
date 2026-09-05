@@ -1,0 +1,39 @@
+schema_version: 1
+id: relay-calcium-ablation-assessment-399
+date: '2026-09-05'
+status: nonoverlap-firing-persists-without-epoch-relay-calcium-current
+classification: causal-diagnostic-in-calibrated-network-not-baseline
+registration: docs/validation-results/relay-calcium-ablation-registration-396.yaml
+control: docs/validation-results/figure7-relay-continuous-trace-393.yaml
+intervention: docs/validation-results/figure7-relay-calcium-ablation-397.yaml
+verified_comparison: docs/validation-results/relay-calcium-ablation-comparison-398.yaml
+verified:
+  pre_stimulus_recorded_states_identical: true
+  cue_event_histories_identical: true
+  sampled_relay_calcium_current_zero_throughout_stimulus: true
+  trace_checksums_and_runtime_metadata_match: true
+observed:
+  control_mismatch_counts: {relay: 10, trn: 583, nonspecific: 7}
+  ablation_mismatch_counts: {relay: 10, trn: 579, nonspecific: 5}
+  nonoverlap_cells_still_firing: [22, 31, 49, 58]
+  events_per_nonoverlap_cell_after_ablation: 2
+  all_five_recorded_active_relay_cells_have_changed_event_times: true
+interpretation: >-
+  In this calibrated network, the offending nonoverlap cells can fire during
+  the sensory epoch with both relay dendritic T-type conductances set to zero.
+  Their firing during that epoch therefore does not require ongoing relay
+  T-type current under this intervention. Calcium nonetheless affects event
+  timing and recurrent TRN/nonspecific output; it is not generally irrelevant.
+  Training and cue-period calcium histories were retained. Network feedback
+  is allowed to change, so this is not a cell-autonomous current-clamp assay or
+  a statement about all calcium-dependent mechanisms in original SMART.
+consequences:
+  remove_calcium_from_original_model: false
+  relabel_failed_spatial_matching_as_verified_rebound_burst: false
+  promote_or_freeze_baseline: false
+  continue_tuning_calcium_to_rescue_this_spatial_failure: false
+next_source_fidelity_focus: >-
+  Return to the original corticothalamic excitation/inhibition matching
+  pathway and its unresolved source conventions. Preserve this diagnostic
+  rather than using it as a substitute baseline or selecting a conductance
+  that happens to improve a target count.

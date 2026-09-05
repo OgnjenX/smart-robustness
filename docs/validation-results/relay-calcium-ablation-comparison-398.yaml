@@ -1,0 +1,52 @@
+pre_stimulus_state_and_cue_events_identical: true
+sampled_relay_calcium_currents_zero_during_stimulus: true
+cells:
+  22:
+    control_times_ms:
+    - 61.699999999999996
+    - 80.84
+    ablation_times_ms:
+    - 64.49000000000001
+    - 84.09000000000002
+  31:
+    control_times_ms:
+    - 57.690000000000005
+    - 79.02000000000001
+    ablation_times_ms:
+    - 64.00000000000001
+    - 83.93000000000002
+  40:
+    control_times_ms:
+    - 54.91000000000001
+    - 78.10000000000002
+    ablation_times_ms:
+    - 55.74
+    - 81.58000000000001
+  49:
+    control_times_ms:
+    - 57.690000000000005
+    - 79.02000000000001
+    ablation_times_ms:
+    - 64.00000000000001
+    - 83.93000000000002
+  58:
+    control_times_ms:
+    - 61.699999999999996
+    - 80.84
+    ablation_times_ms:
+    - 64.49000000000001
+    - 84.09000000000002
+nonoverlap_cells_still_firing:
+- 22
+- 31
+- 49
+- 58
+reproduction_eligible: false
+scope: Calibrated network intervention; recurrent effects are included, and prior
+  calcium history is retained.
+schema_version: 1
+control_artifact: docs/validation-results/figure7-relay-continuous-trace-393.yaml
+intervention_artifact: docs/validation-results/figure7-relay-calcium-ablation-397.yaml
+trace_sha256:
+- e348741a01ad0951e8202c4742b64d9e46b0e8bcba913ef4491a71cd5adfe939
+- 5b3483cd53618efd2c157f75e8143c0da8909250f0eea39cfb730e7fb16e3c05

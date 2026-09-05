@@ -17,6 +17,7 @@ from .models.modeldb112923 import (
     second_order_population_facts,
 )
 from .models.ports import (
+    ExternalInputPortSpec,
     modeldb_external_ports_for_target,
     modeldb_gap_ports_for_target,
     modeldb_injection_ports_for_target,
@@ -161,6 +162,7 @@ class FirstOrderRuntimeConventions:
     spike_event_rule: str = "latched_peak_then_zero"
     modifiable_weight_initialization: str = "source_serialized_weight"
     gaussian_weight_convention: str = "source_peak"
+    mixed_input_gate_convention: str = "historical_nested_projection"
     gaussian_spread_convention: str = "standard_deviation"
     ring_kernel_convention: str = "center_excluded_gaussian"
     corticoreticular_ring_kernel_convention: str | None = None
@@ -238,6 +240,8 @@ class FirstOrderRuntimeConventions:
             # Preserve every historical runtime fingerprint while making the
             # newly registered alternative geometry independently traceable.
             values.pop("ring_kernel_convention")
+        if values["mixed_input_gate_convention"] == "historical_nested_projection":
+            values.pop("mixed_input_gate_convention")
         if values["corticoreticular_ring_kernel_convention"] is None:
             values.pop("corticoreticular_ring_kernel_convention")
         if values["corticoreticular_ring_peak_radius_scale"] is None:
@@ -574,6 +578,26 @@ def first_order_population_parameters(
     external_input_ports = modeldb_external_ports_for_target(
         catalog.external_channels, facts.canonical_name
     )
+    if conventions.mixed_input_gate_convention not in (
+        "historical_nested_projection", "declared_external_input"
+    ):
+        raise ValueError("unknown mixed input gate convention")
+    if conventions.mixed_input_gate_convention == "declared_external_input":
+        for record in catalog.projections:
+            if record.dependency == "input" and record.target_population == facts.canonical_name:
+                # XML audit 411: this single gate also declares a direct
+                # connectFromOne input method. Keep its archived projection ID
+                # as provenance; do not renumber other external channels.
+                if record.id != "modeldb112923.projection.042":
+                    raise ValueError("unaudited mixed input record")
+                external_input_ports += (ExternalInputPortSpec(
+                    name="external_mixed_input",
+                    record_id=record.id,
+                    compartment=record.target_compartment,
+                    conductance_density_mS_cm2=float(record.channel_conductance_mS_cm2),
+                    reversal_mV=float(record.reversal_mV),
+                    sensitivities_mV=tuple(float(record.gate_attributes.get(f"input{i}", 0)) for i in range(1, 5)),
+                ),)
     if zero_input_convention is ZeroSensitivityInputConvention.OMIT_ALL_ZERO:
         external_input_ports = tuple(
             port for port in external_input_ports if any(port.sensitivities_mV)
@@ -796,6 +820,8 @@ def build_full_smart_network(
     network = brian.Network(*(population.group for population in populations.values()))
     projections: dict[str, Any] = {}
     for record in MODELDB_FULL.projections:
+        if conventions.mixed_input_gate_convention == "declared_external_input" and record.dependency == "input":
+            continue
         if projection_ids is not None and record.id not in projection_ids:
             continue
         kwargs = {
@@ -917,6 +943,8 @@ def build_first_order_chemical_sector(
     projections: dict[str, Any] = {}
     for record in MODELDB_FIRST_ORDER.projections:
         if record.kind != "chemical":
+            continue
+        if resolved_conventions.mixed_input_gate_convention == "declared_external_input" and record.dependency == "input":
             continue
         record = _resolved_projection_record(record, conventions=resolved_conventions)
         if record.source_population not in sector.populations:

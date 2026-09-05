@@ -2,6 +2,14 @@
 
 ## Current interpretation (2026-09-05)
 
+Resolution 412 visually checks framework Section 4.1, Equations 5--6, and
+supports a selectable `declared_external_input` interpretation of the mixed
+interneuron gate: image-driven input with green sensitivity 0.37 replaces the
+nested layer-4 spike route. Zero image retains the channel's extra leak.
+Historical behavior remains the default with unchanged fingerprints; the new
+option is fingerprinted separately and is not claimed as recovered legacy
+precedence. Network behavioral validation remains pending.
+
 Audit 411 identifies one mixed input gate in the complete archived XML:
 Relay_INT proximal `Input` declares `dependency=input`, green sensitivity
 0.37, and a direct `connectFromOne` method, but also retains a nested Layer_4

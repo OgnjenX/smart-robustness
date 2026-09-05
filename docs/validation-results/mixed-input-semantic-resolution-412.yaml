@@ -1,0 +1,36 @@
+schema_version: 1
+id: mixed-input-semantic-resolution-412
+classification: source-supported-selectable-interpretation-not-legacy-runtime-recovery
+source_gate_audit: mixed-input-gate-source-audit-411.yaml
+framework:
+  file: tmp/kinness-framework-expanded.pdf
+  sha256: 15a7f9166e301c9740e7cff4258810d315bd95b196ea5dff3419c5cc2879f177
+  pdf_page: 11
+  printed_page: 10
+  section: '4.1 Injection and input'
+  equations: [5, 6]
+  visually_checked: true
+  findings:
+    - Input gates supply external voltage-driven stimuli through four color channels.
+    - Driving potential is local resting potential plus sensitivity-weighted image values.
+    - With zero image the channel remains an extra leak; it is not switched off.
+archived_gate:
+  population: Relay_INT
+  compartment: Dendrite 0
+  dependency: input
+  direct_method: connectFromOne
+  green_sensitivity: 0.37
+  conductance_mS_cm2: 0.21
+  nested_projection_source: Layer_4
+decision:
+  runtime_option: mixed_input_gate_convention
+  candidate: declared_external_input
+  historical_default: historical_nested_projection
+  changes:
+    - Supply the archived one-to-one image input using the existing Equation-5/6 external port implementation.
+    - Do not instantiate nested projection 042 as a spike-driven ligand synapse under this option.
+    - Preserve other projection and external IDs, and preserve historical fingerprints for the old option.
+    - Apply and clear the unmodified bar image to the interneuron input, without relay-specific comparator gains.
+  unresolved: The missing legacy runtime prevents verifying its precedence rule for conflicting retained XML metadata.
+  no_claim: No independent supplementary retinal-input record has been established by this audit.
+baseline_promoted: false

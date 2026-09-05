@@ -8,6 +8,21 @@ from enum import StrEnum
 import numpy as np
 
 from .classic_sector import FirstOrderSector
+from .partition import population_parts
+
+
+def _set_mixed_interneuron_image(sector, stimulus, *, clear=False):
+    population = sector.populations.get("thalamic_interneuron")
+    if population is None:
+        return
+    record_id = "modeldb112923.projection.042"
+    if not any(port.record_id == record_id for _, part in population_parts(population)
+               for port in part.compiled.external_input_ports):
+        return
+    population.set_external_input(record_id, stimulus.source_channel, 0.0)
+    if not clear:
+        population.set_external_input(record_id, stimulus.source_channel,
+                                      stimulus.source_value, indices=list(stimulus.active_indices))
 
 
 class BarOrientation(StrEnum):
@@ -162,6 +177,7 @@ def apply_bar_stimulus(
     """
 
     source_scope = ConvergentExternalSourceScope(convergent_source_scope)
+    _set_mixed_interneuron_image(sector, stimulus)
 
     gains = None
     if relay_input_gains is not None:
@@ -231,6 +247,7 @@ def clear_bar_stimulus(
     ),
 ) -> None:
     scope = ConvergentExternalSourceScope(convergent_source_scope)
+    _set_mixed_interneuron_image(sector, stimulus, clear=True)
     relay = sector.populations["thalamic_relay"]
     relay.set_external_input(
         stimulus.relay_input_record_id,

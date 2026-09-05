@@ -90,3 +90,31 @@ configuration metadata and trace checksums, and exactly zero sampled relay
 calcium current throughout the sensory epoch. The result is descriptive of
 this calibrated network intervention, not proof about original SMART or a
 cell-autonomous rebound mechanism.
+
+## Whole-relay intervention (registration 406)
+
+The separately named `--ablate-all-relay-calcium-at-stimulus` option removes
+somatic as well as proximal and distal calcium conductance at sensory onset.
+It cannot be combined with the historical dendritic-only option. Training and
+cue conductances remain unchanged. The saved result carries both the general
+ablation flag (which disqualifies reproduction) and the explicit
+`all_relay_compartments` scope; scoring loaders preserve both.
+
+This diagnostic uses the complete-coverage control 403, not the older
+dendritic-only trace 393. Registration 406 specifies result 407 and its local
+trace. After it finishes, run:
+
+```sh
+.venv/bin/python scripts/audit_relay_calcium_ablation.py \
+  --control docs/validation-results/figure7-complete-relay-calcium-trace-403.yaml \
+  --intervention docs/validation-results/figure7-whole-relay-calcium-ablation-407.yaml \
+  --output docs/validation-results/whole-relay-calcium-comparison-408.yaml
+```
+
+For this scope the verifier additionally requires recorded somatic calcium
+current, nonzero in the control and zero during the intervention. Its output
+lists the verified current variables explicitly. Missing somatic observations
+or residual somatic current cause failure, rather than a whole-cell claim
+based on dendritic observations alone. Persistence or loss of nonoverlap
+firing addresses dependence on this intervention in the calibrated network;
+neither outcome is evidence of complete original SMART reproduction.

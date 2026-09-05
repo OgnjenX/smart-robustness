@@ -1,0 +1,36 @@
+schema_version: 1
+id: match-interneuron-input-lifecycle-audit-419
+classification: protocol-path-tests-and-saved-readout-scope-audit
+result_under_investigation: declared-input-unexpanded-match-417.yaml
+runtime_profile: configs/calibration/figure6_declared_interneuron_input_v1.yaml
+tests:
+  file: tests/test_match_interneuron_input_lifecycle.py
+  cases: 4
+  passed: 4
+  conditions: [match, mismatch]
+  cue_lead_ms: [0, 7.85]
+  method: Intercept actual Figure 7 Network.run boundaries, inspect declared image variables before integration.
+  limitation: These boundary tests do not integrate cue dynamics; they use reference learned weights because input routing is independent of weight values.
+verified_delivery:
+  cue_image: all zero
+  sensory_image: 120 at the five condition-specific bar indices, zero elsewhere
+  source_count_per_interneuron: 1
+  external_conductance: positive during cue and stimulus
+saved_readout_scope:
+  current: relay i_port_002, proximal interneuron GABA
+  recorded_relay_cells: [22, 31, 38, 39, 40, 41, 42, 49, 58]
+  window_definition: All StateMonitor samples at or after sensory onset; not merely emitted-event times.
+  saved_minimum_and_maximum_pA: [0, 0]
+  whole_interneuron_population_silence_established: false
+conclusion: >-
+  The new input route is applied at the intended runner boundary. No dropped
+  image is demonstrated. Saved zero current at nine relay targets spans the
+  sampled sensory interval but does not determine interneuron membrane state,
+  its own emitted events, or behavior at unrecorded targets.
+next_discriminator: >-
+  Replay the unchanged match with interneuron spike and state recording across
+  cue and stimulation. Include image drive, soma/proximal voltage, incoming
+  TRN and layer-6II currents, and output gate activity. Require unchanged
+  recorded match event trains before using the expanded diagnostics. Do not
+  change cue lead or inhibitory scales merely to induce firing.
+baseline_promoted: false

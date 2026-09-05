@@ -2,6 +2,15 @@
 
 ## Current interpretation (2026-09-05)
 
+Lifecycle audit 419 passes four actual Figure 7 runner-boundary tests: the
+declared interneuron input is zero during the cue and supplies green=120 to
+the five appropriate image locations at sensory onset, for match/mismatch
+and zero/7.85-ms cue leads. The tests intercept integration and do not establish
+the cue's physiological effect. The saved zero interneuron-to-relay current
+ranges in 417 cover all sampled sensory times at nine relay cells. Direct
+interneuron spike/state recording is still needed to explain the difference
+from its Figure 6 recruitment; no missing image delivery was found.
+
 The unexpanded-weight match test (416--418) repeats Figure 6 event trains and
 learned maps exactly, then fails match with 10 relay, 604 TRN, and six
 nonspecific events. All five expected relay cells fire twice rather than the

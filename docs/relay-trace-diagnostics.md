@@ -52,3 +52,35 @@ Continuous histories can reveal calcium availability and temporal relations.
 They do not alone prove calcium's causal necessity, establish a physiological
 burst label, or turn spatially incorrect output into a reproduction. An
 emitted falling-phase event must not be confused with spike initiation.
+
+## Registered causal diagnostic
+
+Registration 396 switches off both relay dendritic T-type conductances at
+sensory onset, after the unchanged cue. It affects all first-order relay cells;
+recurrent network consequences are part of this intervention. It is neither a
+source-faithful model variant nor a baseline candidate. Scoring explicitly
+rejects reproduction eligibility for an ablated condition.
+
+To execute that diagnostic, use the replay command above with the following
+changes (choose new filenames if repeating an already completed run):
+
+- `--diagnostic-registration docs/validation-results/relay-calcium-ablation-registration-396.yaml`
+- `--output docs/validation-results/figure7-relay-calcium-ablation-397.yaml`
+- `--relay-trace-output tmp/figure7-relay-calcium-ablation-397.npz`
+- add `--ablate-relay-calcium-at-stimulus`.
+
+After completion, verify the control and describe its outcome:
+
+```sh
+.venv/bin/python scripts/audit_relay_calcium_ablation.py \
+  --control docs/validation-results/figure7-relay-continuous-trace-393.yaml \
+  --intervention docs/validation-results/figure7-relay-calcium-ablation-397.yaml \
+  --output docs/validation-results/relay-calcium-ablation-comparison-398.yaml
+```
+
+Unlike the repeatability audit, this comparison permits changed trial events.
+It requires identical cue events and recorded pre-stimulus states, matching
+configuration metadata and trace checksums, and exactly zero sampled relay
+calcium current throughout the sensory epoch. The result is descriptive of
+this calibrated network intervention, not proof about original SMART or a
+cell-autonomous rebound mechanism.

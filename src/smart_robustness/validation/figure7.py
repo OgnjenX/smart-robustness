@@ -404,6 +404,7 @@ class Figure7ConditionResult:
     comparator_target_count: int | None = None
     relay_trace_path: str | None = None
     relay_trace_sha256: str | None = None
+    relay_calcium_ablated_at_stimulus: bool = False
     network_scope: str = "first_order"
     disabled_projection_ids: tuple[str, ...] = ()
     relay_top_down_ampa_peak_by_index: tuple[tuple[int, float], ...] = ()
@@ -620,6 +621,7 @@ class Figure7ReproductionAssessment:
     arousal: Figure7ArousalAssessment
     pathway: Figure7PathwayAssessment
     reconstructed_comparator_present: bool = False
+    relay_calcium_ablation_present: bool = False
 
     @property
     def behavioral_targets_pass(self) -> bool:
@@ -627,7 +629,11 @@ class Figure7ReproductionAssessment:
 
     @property
     def reproduced(self) -> bool:
-        return self.behavioral_targets_pass and not self.reconstructed_comparator_present
+        return (
+            self.behavioral_targets_pass
+            and not self.reconstructed_comparator_present
+            and not self.relay_calcium_ablation_present
+        )
 
 
 def _validate_figure7_pair(
@@ -690,6 +696,9 @@ def assess_figure7_reproduction(
             or result.comparator_target_count is not None
             for result in (match, mismatch)
         ),
+        relay_calcium_ablation_present=any(
+            result.relay_calcium_ablated_at_stimulus for result in (match, mismatch)
+        ),
     )
 
 
@@ -726,6 +735,7 @@ def run_figure7_condition(
     equilibration_ms: float = 0.0,
     convergent_external_source_scope: str = "nonzero_pixels",
     relay_trace_output: str | Path | None = None,
+    ablate_relay_calcium_at_stimulus: bool = False,
     cpp_standalone_directory: str | Path | None = None,
     brian=None,
 ) -> Figure7ConditionResult:
@@ -745,6 +755,8 @@ def run_figure7_condition(
         )
     if duration_ms <= 0 or dt_ms <= 0:
         raise ValueError("duration_ms and dt_ms must be positive")
+    if not isinstance(ablate_relay_calcium_at_stimulus, bool):
+        raise TypeError("relay calcium ablation must be boolean")
     if relay_trace_output is not None:
         if not record_relay_diagnostics:
             raise ValueError("relay trace output requires relay diagnostics")
@@ -1146,6 +1158,13 @@ def run_figure7_condition(
             brian=brian,
         )
         sector.network.run(top_down_cue_lead_ms * brian.ms)
+    if ablate_relay_calcium_at_stimulus:
+        # Diagnostic intervention only: preserve training/cue histories and
+        # switch off both relay dendritic T-type currents at sensory onset.
+        relay_group = sector.populations["thalamic_relay"].group
+        relay_group.g_ca_distal_dendrite = 0 * brian.nsiemens
+        relay_group.g_ca_proximal_dendrite = 0 * brian.nsiemens
+    if top_down_cue_lead_ms > 0:
         apply_bar_stimulus(
             sector,
             cue.bottom_up_stimulus,
@@ -1949,6 +1968,7 @@ def run_figure7_condition(
         condition=condition,
         relay_trace_path=str(relay_trace_output) if relay_trace_output is not None else None,
         relay_trace_sha256=relay_trace_sha256,
+        relay_calcium_ablated_at_stimulus=ablate_relay_calcium_at_stimulus,
         duration_ms=duration_ms,
         nonspecific_spike_times_ms=stimulus_times(nonspecific),
         layer4_spike_indices=stimulus_indices(layer4),

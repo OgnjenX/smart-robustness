@@ -44,6 +44,7 @@ def _scoring_result(raw: dict[str, Any]) -> Figure7ConditionResult:
     return Figure7ConditionResult(
         condition=MatchCondition(raw["condition"]),
         duration_ms=float(raw["duration_ms"]),
+        relay_calcium_ablated_at_stimulus=raw.get("relay_calcium_ablated_at_stimulus", False),
         comparator_relay_floor=raw.get("comparator_relay_floor"),
         comparator_source_index=raw.get("comparator_source_index"),
         comparator_transform=raw.get("comparator_transform"),

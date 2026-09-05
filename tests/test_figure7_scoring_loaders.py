@@ -20,6 +20,7 @@ from smart_robustness.validation.figure7 import (
 ])
 @pytest.mark.parametrize("intervention", [
     {"comparator_relay_floor": 0.0},
+    {"relay_calcium_ablated_at_stimulus": True},
     {"comparator_transform": "top_k_binary", "comparator_target_count": 5,
      "comparator_source_index": 40},
 ])
@@ -44,5 +45,5 @@ def test_scoring_loaders_cannot_erase_comparator_intervention(script, interventi
         assert getattr(loaded, key) == value
     assessment = assess_figure7_reproduction(loaded, loader(asdict(mismatch)))
     assert assessment.behavioral_targets_pass
-    assert assessment.reconstructed_comparator_present
+    assert assessment.reconstructed_comparator_present or assessment.relay_calcium_ablation_present
     assert not assessment.reproduced

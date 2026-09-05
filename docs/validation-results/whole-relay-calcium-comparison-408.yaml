@@ -1,0 +1,57 @@
+pre_stimulus_state_and_cue_events_identical: true
+sampled_relay_dendritic_calcium_currents_zero_during_stimulus: true
+ablation_scope: all_relay_compartments
+verified_zero_current_variables:
+- i_ca_distal_dendrite
+- i_ca_proximal_dendrite
+- i_ca_soma
+cells:
+  22:
+    control_times_ms:
+    - 61.699999999999996
+    - 80.84
+    ablation_times_ms:
+    - 66.96000000000001
+    - 88.22000000000001
+  31:
+    control_times_ms:
+    - 57.690000000000005
+    - 79.02000000000001
+    ablation_times_ms:
+    - 66.95
+    - 88.41000000000001
+  40:
+    control_times_ms:
+    - 54.91000000000001
+    - 78.10000000000002
+    ablation_times_ms:
+    - 66.91000000000001
+    - 88.45000000000002
+  49:
+    control_times_ms:
+    - 57.690000000000005
+    - 79.02000000000001
+    ablation_times_ms:
+    - 66.95
+    - 88.41000000000001
+  58:
+    control_times_ms:
+    - 61.699999999999996
+    - 80.84
+    ablation_times_ms:
+    - 66.96000000000001
+    - 88.22000000000001
+nonoverlap_cells_still_firing:
+- 22
+- 31
+- 49
+- 58
+reproduction_eligible: false
+scope: Calibrated network intervention; recurrent effects are included, and prior
+  calcium history is retained.
+schema_version: 1
+control_artifact: docs/validation-results/figure7-complete-relay-calcium-trace-403.yaml
+intervention_artifact: docs/validation-results/figure7-whole-relay-calcium-ablation-407.yaml
+trace_sha256:
+- d1a7c233aac2b91a18daaa4438863345dcc297133c0860f09bdbf17754cfeef1
+- e675a96915263ddfc5faeb6fe6b53cb3bfe9ab920c5608330f271d29fe424986

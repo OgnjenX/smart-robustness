@@ -2,13 +2,24 @@
 
 ## Current interpretation (2026-09-05)
 
+Artifacts 406--409 complete the separately registered whole-relay calcium
+intervention. The comparison verifies identical recorded cue histories and
+pre-stimulus state, and zero somatic plus both dendritic calcium currents
+during stimulation. All four nonoverlap cells still fire twice; relay/TRN/
+nonspecific counts change from 10/583/7 to 10/576/5, with later relay events.
+Thus ongoing relay calcium during this epoch is not necessary for the spatial
+failure in this calibrated network. Calcium still affects timing and network
+output; prior calcium history is retained. This does not identify original
+SMART's rebound mechanism or resolve source fidelity. The next investigation
+returns to source-grounded relay input and spatial inhibition accounting.
+
 Artifacts 402--405 complete the unchanged control replay with calcium current
 and gates recorded in soma and both dendrites. Recorded trial event trains
 match Artifact 393 exactly. Somatic calcium is nonzero (approximately
 10.59--26.04 pA across nonoverlap cells 22 and 31 during stimulation), so the
 earlier dendritic-only intervention cannot establish whole-relay calcium
-independence. This closes a recording gap, not the spatial-selection failure;
-causal necessity remains untested for the complete relay calcium system.
+independence. This closed a recording gap, not the spatial-selection failure;
+the subsequent complete-current intervention is reported above.
 
 **Scope correction 401:** the calcium ablation in Artifacts 396--399 removed
 only dendritic currents. The recovered relay soma retains a 9.4248-nS calcium

@@ -1,0 +1,31 @@
+schema_version: 1
+id: whole-relay-calcium-assessment-409
+date: '2026-09-05'
+classification: registered-causal-diagnostic-in-calibrated-network
+registration: whole-relay-calcium-registration-406.yaml
+result: figure7-whole-relay-calcium-ablation-407.yaml
+verified_comparison: whole-relay-calcium-comparison-408.yaml
+control: figure7-complete-relay-calcium-trace-403.yaml
+checks:
+  recorded_pre_stimulus_state_and_cue_events_identical: true
+  zero_sampled_stimulus_currents: [i_ca_soma, i_ca_proximal_dendrite, i_ca_distal_dendrite]
+  trace_checksums_verified: true
+observed_counts:
+  control: {relay: 10, trn: 583, nonspecific: 7}
+  whole_relay_calcium_ablation: {relay: 10, trn: 576, nonspecific: 5}
+nonoverlap_cells_still_firing: [22, 31, 49, 58]
+nonoverlap_events_per_cell: 2
+interpretation:
+  - Nonoverlap firing persists without ongoing calcium current in any relay compartment during stimulation in this calibrated configuration.
+  - Event timing and downstream counts change, so this is not evidence that calcium is dynamically irrelevant.
+  - Earlier calcium activity, retained initial state, and recurrent network effects remain in scope; this is not a cell-autonomous mechanism test.
+  - Unlike the dendritic-only experiment, this comparison verifies somatic current removal as well.
+  - The result does not establish absence of calcium-dependent rebound in original SMART or identify a physiological burst type.
+next_action: >-
+  Return to source-grounded relay input and inhibition accounting, including
+  compartment targeting and spatial connectivity. Do not reinterpret the
+  persistent nonoverlap events as a demonstrated T-type rebound mechanism or
+  tune calcium conductance to obtain a spatial pass. Distinguish implementation
+  errors from unresolved source semantics and calibrated parameter choices.
+original_smart_reproduced: false
+baseline_promoted: false

@@ -1,0 +1,26 @@
+schema_version: 1
+source_sha256: 16fc196f2ed68d1c02a39395fa83bb0ffab8fcf8edffe6fd11022bb6c6e299e1
+mixed_input_gates:
+- population: Relay_INT
+  compartment: Dendrite 0
+  channel:
+    g_bar: '0.21'
+    equilibriumPotential: '0'
+    name: Input
+  gate:
+    tau_r: '2'
+    dependency: input
+    tau_f: '2'
+    input1: '0'
+    input2: '0.37'
+    input3: '0'
+    name: m1
+    input4: '0'
+  direct_input_methods:
+  - target: connectFromOne
+  nested_projection_sources:
+  - target: Layer_4
+interpretation: Extractor currently suppresses external input whenever nested projections
+  exist and classifies those records as chemical. Mixed metadata needs explicit source-semantic
+  resolution, not silent ligand conversion.
+baseline_promoted: false

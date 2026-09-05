@@ -2,6 +2,20 @@
 
 ## Current interpretation (2026-09-05)
 
+Audit 411 identifies one mixed input gate in the complete archived XML:
+Relay_INT proximal `Input` declares `dependency=input`, green sensitivity
+0.37, and a direct `connectFromOne` method, but also retains a nested Layer_4
+projection. The extractor's `and not projections` condition suppresses its
+external channel; record 042 is instead compiled as a spike-driven chemical
+projection. This is a concrete source-semantic discrepancy requiring resolution,
+not a demonstrated explanation of the network failure. No runtime correction
+has yet been made. The checksum-verified complete control trace 403 contains
+exactly zero `i_port_002` (interneuron inhibition) at all 9 recorded relay cells
+over all 10,785 cue/stimulus samples; it does not record the interneurons' own
+spikes and cannot establish silence of the entire population. Next: cross-check
+the declared image-input semantics and supplementary retinal-to-interneuron
+pathway before registering any corrected-input diagnostic.
+
 Source audit 410 checks all four relay-directed inhibitory records directly
 against the checksum-pinned XML and independently enumerates their selected
 Gaussian connectivity. All three TRN projections have 81 inputs per relay

@@ -2,6 +2,15 @@
 
 ## Current interpretation (2026-09-07)
 
+Artifacts 448--450 test the paper's simultaneous receptor-level condition
+directly by priming one category-40 arrival at all four layer-6II-to-relay and
+both layer-6II-to-TRN records at sensory onset. The intervention is verified on
+all six paths, but it suppresses every relay cell in match and mismatch and
+leaves equal 200-event TRN output. It is a causal diagnostic, not recovered
+legacy state, and is closed without fitting arrival amplitude or time. The
+failure is now localized to the on-center/off-surround balance rather than
+transport delay alone; relay-only versus TRN-only decomposition is next.
+
 Artifacts 445--447 close the paper's unreported top-down-current amplitude as
 a bounded explanation under the corrected Relay_INT circuit. Feedback arrives
 at 10.92, 7.85, and 6.49 ms for 600, 800, and 1000 pA, while relay escape begins

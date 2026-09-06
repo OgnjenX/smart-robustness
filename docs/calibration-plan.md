@@ -1007,3 +1007,14 @@ fresh Figure 6 handoff, and declared Relay_INT input remain fixed. This
 deliberately collapses the six first-event delay differences and is not legacy
 runtime recovery. It asks only whether receptor-level simultaneity is causally
 sufficient for the paper's two-against-one spatial comparison in a 25-ms pair.
+
+Artifacts 448--450 reject combined receptor-level priming as a sufficient
+timing repair. All six records are verifiably primed for category source 40,
+but match and mismatch both lose every relay event and each produces 200 TRN
+events. The ordinary category event remains at 5.85 ms and Relay_INT image
+events remain present, so the intervention did not erase cue delivery. Close
+unit first-arrival priming without fitting its amplitude or time. The result
+points to an imbalance between direct learned on-center excitation and the
+TRN-mediated off-surround. Next decompose the same fixed prime into relay-only
+and TRN-only arms, compared against the existing no-prime and combined-prime
+controls.

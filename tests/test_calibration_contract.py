@@ -6916,3 +6916,31 @@ def test_receptor_simultaneity_diagnostic_is_one_factor_and_nonpromotable() -> N
     }
     assert "not source recovery" in registration["interpretation_boundary"]
     assert registration["baseline_promoted"] is False
+
+
+def test_receptor_simultaneity_prime_silences_both_conditions() -> None:
+    result_path = (
+        ROOT
+        / "docs/validation-results/figure7-receptor-simultaneity-diagnostic-449.yaml"
+    )
+    result = yaml.safe_load(result_path.read_text())
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-receptor-simultaneity-assessment-450.yaml"
+        ).read_text()
+    )
+
+    assert result["gates"]["all_six_expectation_records_primed"]
+    assert result["match"]["relay_spike_indices"] == []
+    assert result["mismatch"]["relay_spike_indices"] == []
+    assert len(result["match"]["trn_spike_indices"]) == 200
+    assert len(result["mismatch"]["trn_spike_indices"]) == 200
+    assert result["match"]["category_spike_times_ms"] == pytest.approx([5.85])
+    assert result["mismatch"]["category_spike_times_ms"] == pytest.approx([5.85])
+    assert not result["mechanism_screen_pass"]
+    assert assessment["result_sha256"] == (
+        "57cbc3c8805734c6ea88351fed7516ea856f0776f2339182cf0d7f2384b9ac1e"
+    )
+    assert assessment["assessment"]["combined_prime_closed_without_tuning"]
+    assert not assessment["assessment"]["baseline_promoted"]

@@ -452,6 +452,11 @@ parameters:
     status: rejected-source-bounded-protocol-recheck
     source: Methods 4.9 unreported somatic-current amplitude and Artifacts 443--447
     note: Under corrected declared Relay_INT input, learned feedback first arrives at 10.92, 7.85, and 6.49 ms for 600, 800, and 1000 pA, respectively, while the relay first volley begins at 6.03 ms. Every bounded current is therefore causally late and both tested endpoint pairs retain all five image-driven cells with equal TRN output. Close this amplitude family without interpolation or expansion.
+  protocol.match_mismatch.receptor_simultaneity_prime:
+    value: one source-40 arrival initialized at time zero on projections 003/005/006/007/009/012
+    status: rejected-causal-protocol-semantics-diagnostic
+    source: Figure 7 simultaneous bottom-up/top-down LGN mechanism, archived corticothalamic records, and Artifacts 448--450
+    note: All six expectation records are verifiably primed, but both match and mismatch lose all relay output and produce equal 200-event TRN trains in 25 ms. The prime collapses first-arrival delay differences and is not recovered runtime state. Receptor timing alone is insufficient; close combined priming without amplitude or timing fitting.
   benchmark.population_sizes:
     value: see configs/*.yaml
     status: exploratory

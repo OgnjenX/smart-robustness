@@ -1,0 +1,49 @@
+schema_version: 1
+id: figure7-receptor-simultaneity-assessment-450
+date: '2026-09-07'
+status: receptor-simultaneity-causal-mechanism-rejected
+registration: docs/validation-results/figure7-receptor-simultaneity-registration-448.yaml
+result: docs/validation-results/figure7-receptor-simultaneity-diagnostic-449.yaml
+result_sha256: 57cbc3c8805734c6ea88351fed7516ea856f0776f2339182cf0d7f2384b9ac1e
+classification: protocol-semantics-causal-diagnostic-not-source-recovery
+training_repeat_verified: true
+intervention_integrity:
+  all_six_expectation_records_primed: true
+  selected_source_index: 40
+  primed_edge_counts:
+    modeldb112923.projection.003: 61
+    modeldb112923.projection.005: 69
+    modeldb112923.projection.006: 5
+    modeldb112923.projection.007: 5
+    modeldb112923.projection.009: 48
+    modeldb112923.projection.012: 80
+pair:
+  match:
+    relay_active_indices: []
+    trn_event_count: 200
+    nonspecific_event_times_ms: [0.74]
+    category_first_event_ms: 5.85
+  mismatch:
+    relay_active_indices: []
+    trn_event_count: 200
+    nonspecific_event_times_ms: [0.74]
+    category_first_event_ms: 5.85
+assessment:
+  original_smart_reproduced: false
+  baseline_promoted: false
+  receptor_simultaneity_sufficient: false
+  combined_prime_closed_without_tuning: true
+  conclusion: >-
+    The registered first-arrival prime is applied to every archived on-center
+    and off-surround record, but it suppresses all relay output in both
+    conditions and yields equal 200-event TRN trains. Receptor-level timing
+    alone is therefore not sufficient. Do not tune the prime amplitude or
+    timing. The result localizes the remaining failure to the reconstructed
+    balance between the direct learned on-center and the TRN-mediated
+    off-surround, not merely category-to-thalamus transport latency.
+  next_step: >-
+    Register a two-arm causal decomposition using the same unit arrival:
+    prime only the four layer-6II-to-relay on-center records, then prime only
+    the two layer-6II-to-TRN off-surround records. Compare both paired trials
+    with the already fixed no-prime and combined-prime controls. Do not vary
+    amplitude, timing, weights, or delays.

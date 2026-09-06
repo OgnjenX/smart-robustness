@@ -2,6 +2,17 @@
 
 ## Current interpretation (2026-09-05)
 
+Interneuron replay 420--423 reproduces the failed match's cue and trial event
+trains exactly and passes trace integrity checks. The image-driven cells reach
+approximately -43.85 mV somatically but never arm the +30-mV detector or emit
+an event; relay interneuron current remains zero. All 81 TRN cells emit at
+5.68 ms in the 7.85-ms cue period, before image onset, and active interneurons
+receive roughly -653 to -200 pA TRN current during stimulation. The trace is
+descriptive, not a causal proof. A primary-paper timing recheck finds no
+reported pre-stimulus cue lead and describes simultaneous bottom-up/top-down
+excitation. The 7.85-ms lead is calibrated. One fixed zero-lead match is now
+the source-adjacent timing discriminator; mismatch remains locked.
+
 Lifecycle audit 419 passes four actual Figure 7 runner-boundary tests: the
 declared interneuron input is zero during the cue and supplies green=120 to
 the five appropriate image locations at sensory onset, for match/mismatch

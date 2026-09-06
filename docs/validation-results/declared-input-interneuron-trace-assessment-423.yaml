@@ -1,0 +1,49 @@
+schema_version: 1
+id: declared-input-interneuron-trace-assessment-423
+date: '2026-09-06'
+classification: completed-unchanged-match-replay-mechanistic-readout
+registration: declared-input-interneuron-trace-registration-420.yaml
+result: declared-input-interneuron-trace-421.yaml
+integrity_checked_summary: declared-input-interneuron-trace-summary-422.yaml
+trace_sha256: eafdd334b006dc3630c789f717918b0c11b403b4cc1929308886278257f725e5
+checks:
+  figure6_training_and_learned_maps_repeat_exactly: true
+  match_cue_and_trial_event_trains_repeat_417_exactly: true
+  trace_integrity_checks_pass: true
+  sample_count: 10785
+  time_range_ms: [-7.85, 99.99]
+observations:
+  interneuron_cue_events: 0
+  interneuron_stimulus_events: 0
+  sampled_relay_interneuron_current_pA: [0, 0]
+  active_interneuron_soma_max_mV: -43.84989794379721
+  active_interneuron_proximal_max_mV: -43.502381638756
+  active_interneuron_detector_armed_range: [0, 0]
+  active_interneuron_stimulus_trn_current_pA: [-652.5408438142719, -199.92696621391195]
+  active_interneuron_stimulus_image_current_pA: [256.6524163632709, 403.5170465117728]
+  active_interneuron_stimulus_layer6ii_current_pA: [0, 94.94562122406683]
+  cue_category_event_ms: 5.85
+  cue_trn_events: 81
+  cue_trn_event_ms: 5.68
+mechanistic_interpretation:
+  - The image route is active, but no interneuron emitted event reaches its relay output projection.
+  - Zero relay interneuron current is explained by absent interneuron events, not a demonstrated outgoing-transmission defect.
+  - The 7.85-ms cue lead lets all 81 TRN cells emit at 5.68 ms, before image onset, and the active interneurons receive substantial TRN inhibition during stimulation.
+  - These temporal relations are descriptive; they do not establish that TRN input alone caused silence.
+primary_source_timing_recheck:
+  paper: Grossberg and Versace 2008
+  local_pdf_sha256: c56c337624959d8c0bdf51aa79b0dbc82f31264af2b2cd675790879a6410d7ed
+  sections: [Figure 7 discussion on pages 20-21, Methods 4.9 on page 44]
+  findings:
+    - The matching explanation requires sufficiently large simultaneous bottom-up and top-down excitation.
+    - Methods 4.9 specifies static bottom-up bars and indicated top-down current injection, but no pre-stimulus cue lead.
+    - The project-derived 7.85-ms receptor-arrival lead is therefore calibrated rather than reported by the paper.
+next_action: >-
+  Register one zero-lead, simultaneous-onset match using actual unexpanded
+  Figure 6 learned weights and the declared interneuron image input. Keep all
+  other runtime choices, currents, scales, and match gates fixed. Record
+  interneuron events but do not require them as a fitted pass target. This is a
+  source-timing candidate, not an independent holdout or legacy-runtime proof.
+mismatch_authorized: false
+baseline_promoted: false
+original_smart_reproduced: false

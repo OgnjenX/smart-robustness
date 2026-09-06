@@ -39,6 +39,25 @@ def test_match_gates_reject_changed_rate_comparator_and_missing_cycles(runner):
         assert not all(score(changed).values())
 
 
+def test_match_gates_support_simultaneous_current_termination(runner):
+    result = Figure7ConditionResult(
+        condition=MatchCondition.MATCH,
+        duration_ms=100,
+        nonspecific_spike_times_ms=(10, 30, 50, 70),
+        relay_spike_indices=(38, 39, 40, 41, 42) * 3,
+        relay_spike_times_ms=(10,) * 15,
+        trn_spike_indices=(40,),
+        trn_spike_times_ms=(10,),
+        trn_detector_threshold_upcrossings_by_index=((40, 1),),
+        trn_detector_arm_transitions_by_index=((40, 1),),
+        trn_detector_release_transitions_by_index=((40, 1),),
+        category_spike_indices=(40, 38),
+        category_spike_times_ms=(5.85, 80),
+        top_down_current_termination_time_ms=5.85,
+    )
+    assert all(runner["score_match"](result, cue_lead_ms=0).values())
+
+
 def test_training_handoff_rejects_changed_map(runner):
     record = {k: [] for k in ("convention_fingerprint", "duration_ms", "population_spike_indices",
                               "population_spike_times_ms", "bottom_up", "top_down_wide", "top_down_narrow")}

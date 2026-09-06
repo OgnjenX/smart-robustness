@@ -141,3 +141,26 @@ def test_interneuron_trace_requires_declared_input_and_distinct_path(tmp_path):
             relay_trace_output=tmp_path / "same.npz",
             interneuron_trace_output=tmp_path / "same.npz",
         )
+
+
+def test_interneuron_spike_only_mode_does_not_require_declared_input(monkeypatch):
+    class MonitorChecked(Exception):
+        pass
+
+    def inspect_monitor(network, *args, **kwargs):
+        assert any(
+            o.name == "figure7_match_interneuron_spikes" for o in network.objects
+        )
+        assert not any(
+            o.name == "figure7_match_interneuron_state" for o in network.objects
+        )
+        raise MonitorChecked
+
+    monkeypatch.setattr(brian.Network, "run", inspect_monitor)
+    with pytest.raises(MonitorChecked):
+        run_figure7_condition(
+            condition=MatchCondition.MATCH,
+            top_down_current_pA=800,
+            use_paper_constrained_reference=True,
+            record_interneuron_spikes=True,
+        )

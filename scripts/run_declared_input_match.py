@@ -21,10 +21,24 @@ def verify_training(result, reference):
             raise ValueError(f"fresh Figure 6 handoff differs: {field}")
 
 
-def score_match(result):
+def score_match(result, *, cue_lead_ms=7.85):
     expected = {38, 39, 40, 41, 42}
-    events = [t for i, t in zip(result.cue_lead_category_spike_indices,
-                               result.cue_lead_category_spike_times_ms, strict=True) if i == 40]
+    category_events = list(
+        zip(
+            result.cue_lead_category_spike_indices,
+            result.cue_lead_category_spike_times_ms,
+            strict=True,
+        )
+    ) + [
+        (index, cue_lead_ms + time)
+        for index, time in zip(
+            result.category_spike_indices,
+            result.category_spike_times_ms,
+            strict=True,
+        )
+    ]
+    source_events = [time for index, time in category_events if index == 40]
+    termination = result.top_down_current_termination_time_ms
     counts = {i: result.relay_spike_indices.count(i) for i in expected}
     up = dict(result.trn_detector_threshold_upcrossings_by_index)
     arms = dict(result.trn_detector_arm_transitions_by_index)
@@ -32,9 +46,14 @@ def score_match(result):
     cycles = bool(arms) and any(result.trn_spike_indices.count(i) for i in arms) and all(
         result.trn_spike_indices.count(i) == up.get(i) == arms[i] == releases.get(i) for i in arms)
     return {
-        "one_selected_category_event_during_lead": len(events) == 1,
-        "no_off_source_category_events_during_lead": all(i == 40 for i in result.cue_lead_category_spike_indices),
-        "current_terminated_on_selected_event": len(events) == 1 and result.top_down_current_termination_time_ms == events[0],
+        "selected_category_event_available": bool(source_events),
+        "no_off_source_category_events_before_termination": (
+            termination is not None
+            and all(index == 40 for index, time in category_events if time <= termination)
+        ),
+        "current_terminated_on_first_selected_event": (
+            bool(source_events) and termination == source_events[0]
+        ),
         "no_relay_events_during_lead": not result.cue_lead_relay_spike_times_ms,
         "relay_active_indices": set(result.relay_spike_indices) == expected,
         "minimum_relay_events_per_active_index": all(n >= 3 for n in counts.values()),
@@ -79,6 +98,7 @@ def main():
     parser.add_argument("--output", required=True)
     parser.add_argument("--interneuron-trace-output")
     parser.add_argument("--reference-match")
+    parser.add_argument("--record-interneuron-spikes", action="store_true")
     args = parser.parse_args()
     if bool(args.interneuron_trace_output) != bool(args.reference_match):
         raise ValueError(
@@ -104,17 +124,26 @@ def main():
         protocol=Figure6LearningProtocol(monitored_populations=tuple(profile["monitored_populations"])),
         projection_weight_scales=scales, brian=brian)
     verify_training(training.result, reference["result"])
+    protocol = registration.get("protocol", {})
+    cue_lead_ms = float(protocol.get("top_down_cue_lead_ms", 7.85))
     result = run_figure7_condition(
         condition=MatchCondition.MATCH, learned_weights=training.learned_weights,
         conventions=conventions, persistent_projection_weight_scales=scales,
-        top_down_current_pA=800, top_down_current_mode=TopDownCurrentMode.UNTIL_CUED_CELL_FIRST_EVENT,
-        top_down_cue_lead_ms=7.85, duration_ms=100, dt_ms=0.01, equilibration_ms=0,
+        top_down_current_pA=float(protocol.get("top_down_current_pA", 800)),
+        top_down_current_mode=TopDownCurrentMode(
+            protocol.get("top_down_current_mode", "until_cued_cell_first_event")
+        ),
+        top_down_cue_lead_ms=cue_lead_ms,
+        duration_ms=float(protocol.get("duration_ms", 100)),
+        dt_ms=float(protocol.get("dt_ms", 0.01)),
+        equilibration_ms=float(protocol.get("equilibration_ms", 0)),
         record_relay_diagnostics=True, interneuron_trace_output=args.interneuron_trace_output,
+        record_interneuron_spikes=args.record_interneuron_spikes,
         brian=brian)
     if args.reference_match:
         previous = yaml.safe_load(Path(args.reference_match).read_text())
         verify_match_event_trains(result, previous)
-    gates = score_match(result)
+    gates = score_match(result, cue_lead_ms=cue_lead_ms)
     artifact = {"schema_version": 1, "registration": args.registration,
                 "runtime_fingerprint": conventions.fingerprint,
                 "runtime_conventions": asdict(conventions),

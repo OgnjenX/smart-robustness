@@ -743,6 +743,7 @@ def run_figure7_condition(
     convergent_external_source_scope: str = "nonzero_pixels",
     relay_trace_output: str | Path | None = None,
     interneuron_trace_output: str | Path | None = None,
+    record_interneuron_spikes: bool = False,
     ablate_relay_calcium_at_stimulus: bool = False,
     ablate_all_relay_calcium_at_stimulus: bool = False,
     cpp_standalone_directory: str | Path | None = None,
@@ -766,6 +767,8 @@ def run_figure7_condition(
         raise ValueError("duration_ms and dt_ms must be positive")
     if not isinstance(ablate_relay_calcium_at_stimulus, bool):
         raise TypeError("relay calcium ablation must be boolean")
+    if not isinstance(record_interneuron_spikes, bool):
+        raise TypeError("interneuron spike recording flag must be boolean")
     if not isinstance(ablate_all_relay_calcium_at_stimulus, bool):
         raise TypeError("whole-relay calcium ablation must be boolean")
     if ablate_relay_calcium_at_stimulus and ablate_all_relay_calcium_at_stimulus:
@@ -1022,8 +1025,13 @@ def run_figure7_condition(
     monitors = [nonspecific, layer4, relay, trn, category]
     interneuron_spikes = None
     interneuron_state = None
-    if interneuron_trace_output is not None:
+    if record_interneuron_spikes or interneuron_trace_output is not None:
         group = sector.populations["thalamic_interneuron"].group
+        interneuron_spikes = brian.SpikeMonitor(
+            group, name=f"figure7_{condition.value}_interneuron_spikes"
+        )
+        monitors.append(interneuron_spikes)
+    if interneuron_trace_output is not None:
         variables = (
             "v_soma",
             "v_proximal_dendrite",
@@ -1043,16 +1051,13 @@ def run_figure7_condition(
         )
         if any(name not in group.variables for name in variables):
             raise ValueError("interneuron trace requires the declared external input interpretation")
-        interneuron_spikes = brian.SpikeMonitor(
-            group, name=f"figure7_{condition.value}_interneuron_spikes"
-        )
         interneuron_state = brian.StateMonitor(
             group,
             variables,
             record=FIGURE7_RELAY_DIAGNOSTIC_INDICES,
             name=f"figure7_{condition.value}_interneuron_state",
         )
-        monitors.extend((interneuron_spikes, interneuron_state))
+        monitors.append(interneuron_state)
     cortical_spike_monitors: dict[str, object] = {}
     if record_v1_cortical_spikes:
         cortical_spike_monitors = {

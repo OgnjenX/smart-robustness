@@ -964,3 +964,14 @@ precede learned-feedback arrival, so headroom cannot prevent them. Close
 headroom under this route without interpolation. Next test a finite logarithmic
 gain on the already verified projection-002 feed-forward inhibitory transfer;
 this is behavioral causal calibration, not source recovery.
+
+Artifacts 442--444 test that finite projection-002 gain screen at 1, 2, 4,
+and 8 times its reconstructed Relay_INT-to-relay GABA weight. Gains 1 and 2
+leave the full five-cell horizontal and vertical sensory bars active, with
+equal within-pair TRN counts of 194 and 198. Gains 4 and 8 silence every relay
+cell in both conditions and produce 243 TRN events in each. The image-aligned
+Relay_INT events remain present at every gain, so the result is a genuine
+transfer-strength test rather than loss of interneuron recruitment. No gain
+passes. Close this grid without interpolation or extension. Before another
+behavioral screen, audit the source-record timing of relay excitation,
+Relay_INT inhibition, and learned feedback at the first relay volley.

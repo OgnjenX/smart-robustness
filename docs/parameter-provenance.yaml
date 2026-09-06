@@ -442,6 +442,11 @@ parameters:
     status: rejected-source-bounded-behavioral-endpoint
     source: actual Figure 6 learned arrays, archived adaptive maxima, and Artifacts 439--441
     note: Under declared Relay_INT input and simultaneous onset, the maximal endpoint leaves match and mismatch at five relay events over their respective full bars and 194 TRN events each during 25 ms. All relay events occur at 6.03--6.05 ms before learned feedback arrives. Close selected-row headroom without interpolation; the endpoint is not the actual learned state and is not source reproduction.
+  calibration.figure7.interneuron_gaba_gain:
+    value: projection-002 gains 1.0, 2.0, 4.0, and 8.0 at simultaneous command onset
+    status: rejected-behavioral-mechanism-screen
+    source: archived projection 002 pathway plus Artifacts 442--444
+    note: Gains 1 and 2 preserve all five image-driven relay cells in both match and mismatch, while gains 4 and 8 silence all relay cells in both conditions. Relay_INT recruitment remains image aligned and TRN counts are equal within every pair. No match-selective interval appears on the preregistered finite grid; close scalar projection-002 gain without interpolation or extension.
   benchmark.population_sizes:
     value: see configs/*.yaml
     status: exploratory

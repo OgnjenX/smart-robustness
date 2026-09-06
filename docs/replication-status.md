@@ -1,5 +1,17 @@
 # Replication status
 
+## Current interpretation (2026-09-07)
+
+Artifacts 442--444 reject scalar strengthening of the Relay_INT-to-relay GABA
+pathway as a standalone repair for Figure 7. At gains 1 and 2, match and
+mismatch each retain their complete five-cell sensory bar and equal TRN output;
+at gains 4 and 8, both relay patterns are fully silenced and TRN output remains
+equal. Image-aligned Relay_INT events are present at all gains. The registered
+grid has no survivor and is closed without interpolation. Original SMART
+Figure 7 remains unreproduced and the behavioral baseline is not promoted.
+The next step is a source-record timing audit of the three competing inputs at
+the first relay volley, before registering another behavioral parameter screen.
+
 ## Current interpretation (2026-09-05)
 
 Interneuron replay 420--423 reproduces the failed match's cue and trial event

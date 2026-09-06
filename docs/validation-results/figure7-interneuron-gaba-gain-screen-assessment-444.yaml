@@ -1,0 +1,52 @@
+schema_version: 1
+id: figure7-interneuron-gaba-gain-screen-assessment-444
+date: '2026-09-07'
+status: no-survivor-projection-002-gain-grid-closed
+registration: docs/validation-results/figure7-interneuron-gaba-gain-screen-registration-442.yaml
+result: docs/validation-results/figure7-interneuron-gaba-gain-screen-443.yaml
+result_sha256: 7ebad431a6b05d991fd25e50f3913be6a2a6836254b93908a39d9fd3f2c96fcc
+classification: behavioral-calibration-causal-screen-not-source-recovery
+training_repeat_verified: true
+screen:
+  projection_id: modeldb112923.projection.002
+  tested_gains: [1.0, 2.0, 4.0, 8.0]
+  surviving_gains: []
+outcomes:
+  gain_1:
+    match_relay_active_indices: [38, 39, 40, 41, 42]
+    mismatch_relay_active_indices: [22, 31, 40, 49, 58]
+    match_trn_event_count: 194
+    mismatch_trn_event_count: 194
+  gain_2:
+    match_relay_active_indices: [38, 39, 40, 41, 42]
+    mismatch_relay_active_indices: [22, 31, 40, 49, 58]
+    match_trn_event_count: 198
+    mismatch_trn_event_count: 198
+  gain_4:
+    match_relay_active_indices: []
+    mismatch_relay_active_indices: []
+    match_trn_event_count: 243
+    mismatch_trn_event_count: 243
+  gain_8:
+    match_relay_active_indices: []
+    mismatch_relay_active_indices: []
+    match_trn_event_count: 243
+    mismatch_trn_event_count: 243
+assessment:
+  original_smart_reproduced: false
+  baseline_promoted: false
+  projection_002_gain_grid_closed: true
+  conclusion: >-
+    Strengthening the reconstructed Relay_INT-to-relay GABA transfer does not
+    create match-selective relay gating. Gains 1 and 2 preserve the complete
+    five-cell sensory bar in both conditions; gains 4 and 8 suppress every
+    relay cell in both conditions. Relay_INT events remain image aligned, and
+    TRN counts are equal within every pair. The tested pathway therefore acts
+    as a condition-insensitive inhibitory threshold under the fixed protocol.
+    Close this finite gain grid without interpolation or extension.
+  next_step: >-
+    Return to the temporal ordering of relay excitation, Relay_INT inhibition,
+    and learned feedback. Register a source-record timing audit before any new
+    behavioral parameter screen, because the first relay volley currently
+    occurs before learned feedback and a scalar inhibitory gain cannot
+    distinguish match from mismatch at that time.

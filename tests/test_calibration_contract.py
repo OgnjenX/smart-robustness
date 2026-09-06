@@ -6729,3 +6729,51 @@ def test_interneuron_gaba_gain_screen_is_finite_and_recognition_only() -> None:
     }
     assert "recognition-only" in registration["interpretation_boundary"]
     assert registration["baseline_promoted"] is False
+
+
+def test_interneuron_gaba_gain_screen_has_no_match_selective_survivor() -> None:
+    result_path = (
+        ROOT
+        / "docs/validation-results/figure7-interneuron-gaba-gain-screen-443.yaml"
+    )
+    result = yaml.safe_load(result_path.read_text())
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-interneuron-gaba-gain-screen-assessment-444.yaml"
+        ).read_text()
+    )
+
+    assert result["surviving_gains"] == []
+    assert result["selected_gain"] is None
+    by_gain = {item["projection_002_gain"]: item for item in result["outcomes"]}
+    for gain in (1.0, 2.0):
+        assert sorted(set(by_gain[gain]["match"]["relay_spike_indices"])) == [
+            38,
+            39,
+            40,
+            41,
+            42,
+        ]
+        assert sorted(set(by_gain[gain]["mismatch"]["relay_spike_indices"])) == [
+            22,
+            31,
+            40,
+            49,
+            58,
+        ]
+    for gain in (4.0, 8.0):
+        assert by_gain[gain]["match"]["relay_spike_indices"] == []
+        assert by_gain[gain]["mismatch"]["relay_spike_indices"] == []
+    for item in result["outcomes"]:
+        assert len(item["match"]["trn_spike_indices"]) == len(
+            item["mismatch"]["trn_spike_indices"]
+        )
+        assert item["match"]["interneuron_spike_indices"]
+        assert item["mismatch"]["interneuron_spike_indices"]
+        assert not item["pass"]
+    assert assessment["result_sha256"] == (
+        "7ebad431a6b05d991fd25e50f3913be6a2a6836254b93908a39d9fd3f2c96fcc"
+    )
+    assert assessment["assessment"]["projection_002_gain_grid_closed"]
+    assert not assessment["assessment"]["baseline_promoted"]

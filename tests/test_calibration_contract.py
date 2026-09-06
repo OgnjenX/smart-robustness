@@ -7056,3 +7056,37 @@ def test_receptor_prime_max_headroom_is_one_fixed_endpoint_cross() -> None:
     }
     assert "Do not interpolate" in registration["interpretation_boundary"]
     assert registration["baseline_promoted"] is False
+
+
+def test_receptor_prime_max_headroom_has_partial_wrong_geometry() -> None:
+    result_path = (
+        ROOT
+        / "docs/validation-results/figure7-receptor-prime-max-headroom-endpoint-455.yaml"
+    )
+    result = yaml.safe_load(result_path.read_text())
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-receptor-prime-max-headroom-assessment-456.yaml"
+        ).read_text()
+    )
+
+    assert result["applied_common_weight_factor"] == pytest.approx(
+        3.6531686628985414
+    )
+    assert result["match"]["relay_spike_indices"] == [38, 42]
+    assert result["match"]["relay_spike_times_ms"] == pytest.approx([11.91, 11.91])
+    assert result["mismatch"]["relay_spike_indices"] == []
+    assert len(result["match"]["trn_spike_indices"]) == 189
+    assert len(result["mismatch"]["trn_spike_indices"]) == 200
+    assert result["gates"]["match_more_active_relay_cells"]
+    assert not result["gates"]["match_horizontal_relay_set"]
+    assert not result["gates"]["mismatch_overlap_only"]
+    assert not result["gates"]["match_more_trn_events"]
+    assert result["gates"]["all_six_expectation_records_primed"]
+    assert not result["mechanism_screen_pass"]
+    assert assessment["result_sha256"] == (
+        "1fda1cf3aad48a71cf561d5975d081a8361d3f58540f4befcf9b12811125e649"
+    )
+    assert assessment["assessment"]["maximal_interaction_endpoint_closed"]
+    assert not assessment["assessment"]["baseline_promoted"]

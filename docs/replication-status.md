@@ -2,6 +2,14 @@
 
 ## Current interpretation (2026-09-07)
 
+Artifacts 454--456 cross the early combined receptor prime with the maximal
+archived-bound learned row. It partially counteracts inhibition, but only outer
+match cells 38 and 42 fire, mismatch is fully silent, and TRN direction is
+wrong at 189 versus 200 events. The endpoint is closed without interpolation.
+Original SMART remains unreproduced. A fixed 55-ms pathway trace is next to
+explain why center/inner matched cells remain suppressed while outer cells
+escape; it will add readouts, not a parameter.
+
 Artifacts 451--453 decompose the failed receptor prime. Priming only direct
 layer-6II-to-relay on-center records leaves the no-prime full-bar, 194/194-TRN
 phenotype unchanged. Priming only layer-6II-to-TRN off-surround records fully

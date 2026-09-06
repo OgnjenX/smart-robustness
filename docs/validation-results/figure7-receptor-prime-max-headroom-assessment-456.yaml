@@ -1,0 +1,49 @@
+schema_version: 1
+id: figure7-receptor-prime-max-headroom-assessment-456
+date: '2026-09-07'
+status: bounded-interaction-endpoint-rejected-partial-wrong-geometry
+registration: docs/validation-results/figure7-receptor-prime-max-headroom-registration-454.yaml
+result: docs/validation-results/figure7-receptor-prime-max-headroom-endpoint-455.yaml
+result_sha256: 1fda1cf3aad48a71cf561d5975d081a8361d3f58540f4befcf9b12811125e649
+classification: source-bounded-behavioral-interaction-not-source-recovery
+training_repeat_verified: true
+candidate:
+  headroom_fraction: 1.0
+  applied_common_weight_factor: 3.6531686628985414
+  all_six_expectation_records_primed: true
+pair:
+  match:
+    relay_active_indices: [38, 42]
+    relay_event_times_ms: [11.91, 11.91]
+    trn_event_count: 189
+    nonspecific_event_times_ms: [0.74]
+  mismatch:
+    relay_active_indices: []
+    relay_event_times_ms: []
+    trn_event_count: 200
+    nonspecific_event_times_ms: [0.74]
+gates:
+  match_horizontal_relay_set: false
+  mismatch_overlap_only: false
+  match_more_active_relay_cells: true
+  match_more_trn_events: false
+  no_reconstructed_comparator: true
+  no_calcium_ablation: true
+  all_six_expectation_records_primed: true
+assessment:
+  original_smart_reproduced: false
+  baseline_promoted: false
+  maximal_interaction_endpoint_closed: true
+  conclusion: >-
+    Maximal bounded selected-row support partially counteracts the early
+    off-surround, but only outer horizontal cells 38 and 42 emit, at 11.91 ms.
+    The center and inner matched cells remain suppressed, mismatch is entirely
+    silent rather than overlap-only, and TRN direction is reversed at 189
+    versus 200 events. This is not the SMART two-against-one geometry. Close
+    the endpoint without interpolating either component.
+  next_step: >-
+    Rerun this exact fixed endpoint with relay/TRN pathway diagnostics for a
+    preregistered 55-ms observation window. Compare direct on-center, TRN GABA,
+    Relay_INT GABA, bottom-up drive, and compartment voltages at cells 38--42
+    and mismatch cell 40. This is readout-only localization; do not change or
+    select any parameter from the traces.

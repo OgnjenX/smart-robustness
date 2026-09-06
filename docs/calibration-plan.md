@@ -1043,3 +1043,13 @@ all six on-center/off-surround records at sensory onset. This asks whether
 stronger bounded learned support can rescue only matched two-against-one cells
 from the verified early off-surround. No intermediate headroom, prime change,
 or additional parameter dimension may follow from this endpoint.
+
+Artifacts 454--456 reject the maximal interaction endpoint. The fixed factor
+3.6531686628985414 plus all-six-record prime rescues only outer horizontal
+cells 38 and 42 at 11.91 ms; matched cells 39--41 remain silent, mismatch is
+fully silent rather than overlap-only, and TRN direction is reversed at
+189 versus 200 events. This partial response proves that bounded learned
+support interacts with early inhibition, but not with the paper's spatial
+geometry. Close the endpoint without interpolation. Next repeat the exact
+candidate for 55 ms with pathway readouts only, to localize direct on-center,
+TRN GABA, Relay_INT GABA, bottom-up current, and compartment-voltage balances.

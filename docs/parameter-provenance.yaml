@@ -462,6 +462,11 @@ parameters:
     status: causal-imbalance-localized-not-source-recovery
     source: archived corticothalamic records and Artifacts 451--453
     note: Relay-only priming leaves the no-prime full-bar 194/194-TRN phenotype unchanged. TRN-only priming independently silences both conditions with 200/200 TRN events, matching the combined prime. This localizes dominant early off-surround and insufficient actual learned on-center support; neither arm is promotable.
+  calibration.figure7.receptor_prime_maximal_headroom_interaction:
+    value: combined unit receptor prime crossed with selected-row factor 3.6531686628985414
+    status: rejected-source-bounded-behavioral-interaction
+    source: archived adaptive maxima and Artifacts 439--441, 448--455
+    note: The sole endpoint cross rescues only outer matched cells 38 and 42 at 11.91 ms, suppresses mismatch completely, and reverses the required TRN direction at 189 versus 200 events. It is not source recovery and does not reproduce two-against-one geometry. Close without interpolation; a fixed-parameter pathway trace may localize the spatial imbalance.
   benchmark.population_sizes:
     value: see configs/*.yaml
     status: exploratory

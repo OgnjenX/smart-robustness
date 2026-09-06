@@ -1,0 +1,46 @@
+schema_version: 1
+id: declared-input-arrival-aligned-sustained-mismatch-registration-433
+date: '2026-09-06'
+status: registered-after-match-failure-before-mismatch-execution
+classification: post-failure-causal-localization-not-holdout
+predecessor: docs/validation-results/declared-input-arrival-aligned-sustained-assessment-432.yaml
+training_profile: configs/calibration/figure6_declared_interneuron_input_v1.yaml
+training_result: docs/validation-results/figure6-declared-interneuron-input-414.yaml
+match_result: docs/validation-results/declared-input-arrival-aligned-sustained-match-431.yaml
+match_result_sha256: 23e68e522b35a89b317f1569bd941945fd43ef575cbcb9c0aa10ac0a0b42a151
+runtime_fingerprint: e016bc9f3d0557e2b23ad00e7d956509df9cf44de42db6f66c6a484a42d1f7a0
+result: docs/validation-results/declared-input-arrival-aligned-sustained-pair-434.yaml
+prior_observation:
+  match_pass: false
+  match_counts: {relay: 10, trn: 564, nonspecific: 5}
+  match_relay_active_indices: [38, 39, 40, 41, 42]
+  failed_gates: [minimum relay recurrence, exact 40-Hz nonspecific output]
+purpose: >-
+  Determine whether receptor-arrival alignment plus a sustained expectation
+  recovers the qualitative two-against-one mismatch selection mechanism. This
+  localizes the failed match; it does not validate the pair.
+protocol:
+  condition: mismatch
+  top_down_current_pA: 800.0
+  top_down_current_mode: sustained_epoch
+  top_down_cue_lead_ms: 7.85
+  duration_ms: 100.0
+  dt_ms: 0.01
+  equilibration_ms: 0.0
+unchanged:
+  - Actual fresh Figure 6 learned arrays with no headroom expansion; factor 1.
+  - Declared voltage-driven Relay_INT image input and runtime fingerprint.
+  - TRN-to-relay scales 0.01, 0.01, and 0.03.
+  - No comparator, calcium ablation, equilibration, or disabled projection.
+execution: {figure6_learning_runs: 1, mismatch_runs: 1, parameter_search: false}
+diagnostic_questions:
+  - Is mismatch relay output nonempty and restricted to overlap cell 40?
+  - Does match recruit more relay cells and more TRN events than mismatch?
+  - Does mismatch increase nonspecific output, and does it reach seven events?
+interpretation_boundary: >-
+  This run follows an observed failed match and is not an independent holdout.
+  It cannot promote or freeze the baseline. Report the result without changing
+  timing, current, weights, thresholds, input sensitivity, inhibition, or
+  event-count scoring.
+baseline_promoted: false
+

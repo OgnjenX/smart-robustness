@@ -911,3 +911,16 @@ cells fire before the two-against-one circuit can compare them. The earlier
 protocol number. Next test that alignment with a sustained Figure 7 expectation
 as one discrete current-duration interpretation; run match before mismatch and
 do not alter model parameters or scoring.
+
+Artifacts 430--432 test that fixed receptor-arrival alignment with a sustained
+800-pA category current. The horizontal active set remains exact but every
+relay cell emits only twice (10 total), TRN emits 564 times, and nonspecific
+thalamus emits five times. Sustaining the current therefore changes the old
+one-event result from 10/604/6 to 10/564/5 but does not restore relay recurrence
+or 40-Hz match output. Both current-duration endpoints fail under the declared
+interneuron input, so no intermediate duration may be selected from Figure 7.
+The 81-cell 5.68-ms TRN cue-lead volley and absent interneuron output are shared
+with the one-event alignment and precede sensory onset. Registration 433 opens
+one unchanged vertical run only to test whether the arrival-aligned sustained
+circuit has the qualitative overlap-selection mechanism; it is explicitly not
+a validation holdout and cannot promote the baseline.

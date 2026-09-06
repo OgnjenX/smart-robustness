@@ -1,0 +1,64 @@
+schema_version: 1
+id: declared-input-arrival-aligned-sustained-assessment-432
+date: '2026-09-06'
+status: match-failed-current-duration-family-closed
+registration: docs/validation-results/declared-input-arrival-aligned-sustained-match-registration-430.yaml
+result: docs/validation-results/declared-input-arrival-aligned-sustained-match-431.yaml
+result_sha256: 23e68e522b35a89b317f1569bd941945fd43ef575cbcb9c0aa10ac0a0b42a151
+classification: source-mechanism-constrained-protocol-discriminator
+fixed_network:
+  runtime_fingerprint: e016bc9f3d0557e2b23ad00e7d956509df9cf44de42db6f66c6a484a42d1f7a0
+  learned_weight_handoff: actual fresh Figure 6 arrays
+  learned_weight_expansion_factor: 1.0
+  comparator: none
+  relay_calcium_ablation: false
+protocol:
+  top_down_current_pA: 800.0
+  top_down_current_mode: sustained_epoch
+  top_down_cue_lead_ms: 7.85
+  duration_ms: 100.0
+match:
+  selected_category_lead_event: {index: 40, time_ms: 5.85}
+  current_termination_ms: null
+  cue_lead_relay_events: 0
+  cue_lead_trn_events: 81
+  cue_lead_trn_event_time_ms: 5.68
+  cue_lead_interneuron_events: 0
+  relay_active_indices: [38, 39, 40, 41, 42]
+  relay_event_count: 10
+  relay_events_per_active_index: 2
+  relay_event_times_ms: [62.0, 62.03, 62.15, 81.63, 81.76, 81.78]
+  trn_event_count: 564
+  sampled_trn_detector_cycles_complete: true
+  nonspecific_event_times_ms: [32.39, 45.18, 58.24, 71.85, 91.86]
+  nonspecific_rate_hz: 50.0
+  category_trial_event_count: 7
+gates:
+  exact_horizontal_relay_set: true
+  minimum_three_relay_events_per_cell: false
+  exact_nonspecific_40_hz: false
+  selected_category_event_available: true
+  current_sustained_for_complete_epoch: true
+  no_relay_events_during_lead: true
+  sampled_trn_cycles_complete: true
+  no_reconstructed_comparator: true
+  no_calcium_ablation: true
+comparison_to_one_event_arrival_aligned_417:
+  one_event: {relay_events: 10, trn_events: 604, nonspecific_events: 6}
+  sustained: {relay_events: 10, trn_events: 564, nonspecific_events: 5}
+  conclusion: >-
+    Sustaining the expectation changes downstream TRN and nonspecific timing but
+    does not increase relay recurrence or recover the official match rate. The
+    one-event and sustained endpoints therefore do not identify a passing
+    Figure 7 current duration under this network.
+assessment:
+  original_smart_reproduced: false
+  mismatch_authorized_as_validation: false
+  baseline_promoted: false
+  current_duration_family_closed: true
+  next_diagnostic: >-
+    A single unchanged mismatch may be run only as post-failure causal
+    localization to determine whether arrival alignment plus sustained
+    expectation recovers overlap selection. It is not a holdout and cannot
+    promote the baseline regardless of its outcome.
+

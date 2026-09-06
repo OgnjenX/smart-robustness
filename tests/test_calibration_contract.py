@@ -6521,3 +6521,39 @@ def test_arrival_aligned_sustained_match_is_registered_before_execution() -> Non
     assert registration["protocol"]["top_down_current_mode"] == "sustained_epoch"
     assert registration["execution"]["mismatch_runs"] == 0
     assert registration["baseline_promoted"] is False
+
+
+def test_arrival_aligned_sustained_match_fails_and_localization_is_bounded() -> None:
+    match = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/declared-input-arrival-aligned-sustained-match-431.yaml"
+        ).read_text()
+    )
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/declared-input-arrival-aligned-sustained-assessment-432.yaml"
+        ).read_text()
+    )
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/declared-input-arrival-aligned-sustained-mismatch-registration-433.yaml"
+        ).read_text()
+    )
+    result = match["match_result"]
+
+    assert sorted(set(result["relay_spike_indices"])) == [38, 39, 40, 41, 42]
+    assert all(result["relay_spike_indices"].count(index) == 2 for index in range(38, 43))
+    assert len(result["trn_spike_times_ms"]) == 564
+    assert result["nonspecific_spike_times_ms"] == pytest.approx(
+        [32.39, 45.18, 58.24, 71.85, 91.86]
+    )
+    assert result["top_down_current_termination_time_ms"] is None
+    assert not match["match_prerequisites_pass"]
+    assert assessment["assessment"]["current_duration_family_closed"]
+    assert not registration["prior_observation"]["match_pass"]
+    assert registration["protocol"]["top_down_current_mode"] == "sustained_epoch"
+    assert "not an independent holdout" in registration["interpretation_boundary"]
+    assert registration["baseline_promoted"] is False

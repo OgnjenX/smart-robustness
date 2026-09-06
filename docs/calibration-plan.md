@@ -924,3 +924,22 @@ with the one-event alignment and precede sensory onset. Registration 433 opens
 one unchanged vertical run only to test whether the arrival-aligned sustained
 circuit has the qualitative overlap-selection mechanism; it is explicitly not
 a validation holdout and cannot promote the baseline.
+
+Artifacts 433--435 complete that bounded localization. The fixed vertical
+mismatch emits twice in every directly driven relay cell 22/31/40/49/58 (10
+events), versus twice in every matched horizontal cell (also 10). TRN output
+is 564 for match and 568 for mismatch, while both conditions produce five
+nonspecific events. None of overlap-only selection, match-greater relay/TRN
+recruitment, mismatch disinhibition, or the exact 40/70-Hz pair is recovered.
+
+The timing intervention also crosses the intrinsic startup transient. All 81
+TRN cells emit at 5.68 ms, 2.17 ms before arrival-aligned sensory onset, and no
+Relay_INT image cell fires during the subsequent trial; simultaneous command
+onset instead let the five image-aligned interneurons fire at 2.96 ms. Thus a
+7.85-ms lead changes the circuit state and removes feed-forward inhibition; it
+cannot be treated as a neutral correction. Reject arrival-aligned sustained
+timing and close cue-duration fitting. Return to simultaneous command onset as
+the source-facing protocol while auditing the unavailable legacy initial-state
+lifecycle. If primary runtime evidence remains unavailable, separate any
+multi-figure behavioral calibration explicitly from the source-constrained
+classic reconstruction.

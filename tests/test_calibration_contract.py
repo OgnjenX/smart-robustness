@@ -6557,3 +6557,46 @@ def test_arrival_aligned_sustained_match_fails_and_localization_is_bounded() -> 
     assert registration["protocol"]["top_down_current_mode"] == "sustained_epoch"
     assert "not an independent holdout" in registration["interpretation_boundary"]
     assert registration["baseline_promoted"] is False
+
+
+def test_arrival_aligned_sustained_pair_rejects_overlap_hypothesis() -> None:
+    pair = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/declared-input-arrival-aligned-sustained-pair-434.yaml"
+        ).read_text()
+    )
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/declared-input-arrival-aligned-sustained-pair-assessment-435.yaml"
+        ).read_text()
+    )
+    mismatch = pair["mismatch_result"]
+
+    assert pair["training_repeat_verified"]
+    assert sorted(set(mismatch["relay_spike_indices"])) == [22, 31, 40, 49, 58]
+    assert all(
+        mismatch["relay_spike_indices"].count(index) == 2
+        for index in [22, 31, 40, 49, 58]
+    )
+    assert len(mismatch["trn_spike_times_ms"]) == 568
+    assert mismatch["nonspecific_spike_times_ms"] == pytest.approx(
+        [32.39, 45.18, 58.24, 72.25, 92.24]
+    )
+    for failed_gate in (
+        "mismatch_overlap_relay_set",
+        "match_more_active_relay_cells",
+        "match_more_trn_events",
+        "match_nonspecific_40_hz",
+        "mismatch_more_nonspecific_events",
+        "mismatch_nonspecific_70_hz",
+    ):
+        assert not pair["gates"][failed_gate]
+    assert assessment["timing_localization"]["startup_trn_volley"] == {
+        "event_count": 81,
+        "time_ms": 5.68,
+        "relative_to_sensory_onset_ms": -2.17,
+    }
+    assert assessment["assessment"]["arrival_aligned_sustained_hypothesis_rejected"]
+    assert not assessment["assessment"]["baseline_promoted"]

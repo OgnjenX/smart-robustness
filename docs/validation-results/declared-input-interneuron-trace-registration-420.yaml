@@ -1,0 +1,42 @@
+schema_version: 1
+id: declared-input-interneuron-trace-registration-420
+date: '2026-09-06'
+status: registered-before-execution
+classification: unchanged-failed-match-replay-with-interneuron-readout
+source_interpretation: mixed-input-semantic-resolution-412.yaml
+training_profile: configs/calibration/figure6_declared_interneuron_input_v1.yaml
+training_reference: docs/validation-results/figure6-declared-interneuron-input-414.yaml
+match_reference: docs/validation-results/declared-input-unexpanded-match-417.yaml
+runtime_fingerprint: e016bc9f3d0557e2b23ad00e7d956509df9cf44de42db6f66c6a484a42d1f7a0
+model_protocol_and_weight_changes: none
+weight_handoff: Actual fresh Figure 6 learned weights, no expansion; common factor 1.
+execution: {figure6_learning_runs: 1, match_runs: 1, mismatch_runs: 0, parameter_search: false}
+result: docs/validation-results/declared-input-interneuron-trace-421.yaml
+local_trace: tmp/declared-input-interneuron-trace-421.npz
+recorded_interneuron_state_indices: [22, 31, 38, 39, 40, 41, 42, 49, 58]
+recorded_interneuron_variables:
+  - v_soma
+  - v_proximal_dendrite
+  - armed
+  - i_na_soma
+  - i_k_soma
+  - i_axial_inward_soma
+  - i_port_001
+  - i_port_002
+  - i_port_003
+  - port_001_gate
+  - port_002_gate
+  - port_003_gate
+  - i_external_mixed_input
+  - external_mixed_input_input_green
+  - external_mixed_input_input_source_count
+recorded_interneuron_events: all_81_cells
+integrity_gates:
+  - Exact repeated Figure 6 monitored event trains and learned maps.
+  - Exact match trial and cue event trains for relay, TRN, category, nonspecific, and layer 4 relative to 417.
+  - Trace checksum, runtime fingerprint, population label, units, shape, finite values, and cue/stimulus time coverage.
+interpretation:
+  - Readout-only replay; it cannot promote the failed match or authorize mismatch.
+  - Interneuron firing distinguishes no emitted output from downstream transmission failure, but state relations alone are not causal evidence.
+  - No criterion, parameter, timing, or pathway is changed by this replay.
+baseline_promoted: false

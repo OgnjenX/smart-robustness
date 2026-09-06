@@ -46,3 +46,26 @@ def test_training_handoff_rejects_changed_map(runner):
     changed = dict(record, top_down_wide=[1])
     with pytest.raises(ValueError, match="top_down_wide"):
         runner["verify_training"](changed, record)
+
+
+def test_match_repeat_check_includes_cue_and_trial_events(runner):
+    result = Figure7ConditionResult(
+        condition=MatchCondition.MATCH,
+        duration_ms=100,
+        relay_spike_indices=(40,),
+        relay_spike_times_ms=(50,),
+        trn_spike_indices=(40,),
+        trn_spike_times_ms=(51,),
+        category_spike_indices=(40,),
+        category_spike_times_ms=(52,),
+        nonspecific_spike_times_ms=(53,),
+        layer4_spike_indices=(40,),
+        layer4_spike_times_ms=(54,),
+        cue_lead_category_spike_indices=(40,),
+        cue_lead_category_spike_times_ms=(2,),
+    )
+    reference = {"match_result": runner["_plain"](result)}
+    runner["verify_match_event_trains"](result, reference)
+    changed = replace(result, cue_lead_category_spike_times_ms=(2.01,))
+    with pytest.raises(ValueError, match="cue_lead_category_spike_times_ms"):
+        runner["verify_match_event_trains"](changed, reference)

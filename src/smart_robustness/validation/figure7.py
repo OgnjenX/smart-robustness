@@ -404,6 +404,12 @@ class Figure7ConditionResult:
     comparator_target_count: int | None = None
     relay_trace_path: str | None = None
     relay_trace_sha256: str | None = None
+    interneuron_trace_path: str | None = None
+    interneuron_trace_sha256: str | None = None
+    interneuron_spike_indices: tuple[int, ...] = ()
+    interneuron_spike_times_ms: tuple[float, ...] = ()
+    cue_lead_interneuron_spike_indices: tuple[int, ...] = ()
+    cue_lead_interneuron_spike_times_ms: tuple[float, ...] = ()
     relay_calcium_ablated_at_stimulus: bool = False
     relay_calcium_ablation_scope: str = "none"
     network_scope: str = "first_order"
@@ -736,6 +742,7 @@ def run_figure7_condition(
     equilibration_ms: float = 0.0,
     convergent_external_source_scope: str = "nonzero_pixels",
     relay_trace_output: str | Path | None = None,
+    interneuron_trace_output: str | Path | None = None,
     ablate_relay_calcium_at_stimulus: bool = False,
     ablate_all_relay_calcium_at_stimulus: bool = False,
     cpp_standalone_directory: str | Path | None = None,
@@ -770,6 +777,13 @@ def run_figure7_condition(
             raise FileExistsError(relay_trace_output)
         if not Path(relay_trace_output).parent.is_dir():
             raise ValueError("relay trace output parent directory must exist")
+    if interneuron_trace_output is not None:
+        if Path(interneuron_trace_output).exists():
+            raise FileExistsError(interneuron_trace_output)
+        if not Path(interneuron_trace_output).parent.is_dir():
+            raise ValueError("interneuron trace output parent directory must exist")
+        if relay_trace_output is not None and Path(interneuron_trace_output).resolve() == Path(relay_trace_output).resolve():
+            raise ValueError("relay and interneuron traces require distinct paths")
     if top_down_cue_lead_ms < 0:
         raise ValueError("top_down_cue_lead_ms cannot be negative")
     if equilibration_ms < 0:
@@ -1006,6 +1020,39 @@ def run_figure7_condition(
         name=f"figure7_{condition.value}_category_spikes",
     )
     monitors = [nonspecific, layer4, relay, trn, category]
+    interneuron_spikes = None
+    interneuron_state = None
+    if interneuron_trace_output is not None:
+        group = sector.populations["thalamic_interneuron"].group
+        variables = (
+            "v_soma",
+            "v_proximal_dendrite",
+            "armed",
+            "i_na_soma",
+            "i_k_soma",
+            "i_axial_inward_soma",
+            "i_port_001",
+            "i_port_002",
+            "i_port_003",
+            "port_001_gate",
+            "port_002_gate",
+            "port_003_gate",
+            "i_external_mixed_input",
+            "external_mixed_input_input_green",
+            "external_mixed_input_input_source_count",
+        )
+        if any(name not in group.variables for name in variables):
+            raise ValueError("interneuron trace requires the declared external input interpretation")
+        interneuron_spikes = brian.SpikeMonitor(
+            group, name=f"figure7_{condition.value}_interneuron_spikes"
+        )
+        interneuron_state = brian.StateMonitor(
+            group,
+            variables,
+            record=FIGURE7_RELAY_DIAGNOSTIC_INDICES,
+            name=f"figure7_{condition.value}_interneuron_state",
+        )
+        monitors.extend((interneuron_spikes, interneuron_state))
     cortical_spike_monitors: dict[str, object] = {}
     if record_v1_cortical_spikes:
         cortical_spike_monitors = {
@@ -1975,10 +2022,39 @@ def run_figure7_condition(
             fingerprint=conventions.fingerprint,
             brian=brian,
         )
+    interneuron_trace_sha256 = None
+    if interneuron_trace_output is not None:
+        from .relay_trace import write_relay_trace
+
+        interneuron_trace_sha256 = write_relay_trace(
+            interneuron_state,
+            interneuron_trace_output,
+            stimulus_start_ms=(
+                pretraining_elapsed_ms + equilibration_ms + top_down_cue_lead_ms
+            ),
+            condition=condition,
+            fingerprint=conventions.fingerprint,
+            brian=brian,
+            population="thalamic_interneuron",
+        )
     result = Figure7ConditionResult(
         condition=condition,
         relay_trace_path=str(relay_trace_output) if relay_trace_output is not None else None,
         relay_trace_sha256=relay_trace_sha256,
+        interneuron_trace_path=(
+            str(interneuron_trace_output)
+            if interneuron_trace_output is not None
+            else None
+        ),
+        interneuron_trace_sha256=interneuron_trace_sha256,
+        interneuron_spike_indices=() if interneuron_spikes is None else stimulus_indices(interneuron_spikes),
+        interneuron_spike_times_ms=() if interneuron_spikes is None else stimulus_times(interneuron_spikes),
+        cue_lead_interneuron_spike_indices=(
+            () if interneuron_spikes is None else cue_lead_indices(interneuron_spikes)
+        ),
+        cue_lead_interneuron_spike_times_ms=(
+            () if interneuron_spikes is None else cue_lead_times(interneuron_spikes)
+        ),
         relay_calcium_ablated_at_stimulus=(
             ablate_relay_calcium_at_stimulus or ablate_all_relay_calcium_at_stimulus
         ),

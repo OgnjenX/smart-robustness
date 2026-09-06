@@ -48,11 +48,42 @@ def score_match(result):
     }
 
 
+def verify_match_event_trains(result, previous):
+    actual = _plain(result)
+    fields = (
+        "relay_spike_indices",
+        "relay_spike_times_ms",
+        "trn_spike_indices",
+        "trn_spike_times_ms",
+        "category_spike_indices",
+        "category_spike_times_ms",
+        "nonspecific_spike_times_ms",
+        "layer4_spike_indices",
+        "layer4_spike_times_ms",
+        "cue_lead_relay_spike_indices",
+        "cue_lead_relay_spike_times_ms",
+        "cue_lead_trn_spike_indices",
+        "cue_lead_trn_spike_times_ms",
+        "cue_lead_category_spike_indices",
+        "cue_lead_category_spike_times_ms",
+        "cue_lead_nonspecific_spike_times_ms",
+    )
+    for field in fields:
+        if actual[field] != previous["match_result"][field]:
+            raise ValueError(f"diagnostic replay changes event train: {field}")
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--registration", required=True)
     parser.add_argument("--output", required=True)
+    parser.add_argument("--interneuron-trace-output")
+    parser.add_argument("--reference-match")
     args = parser.parse_args()
+    if bool(args.interneuron_trace_output) != bool(args.reference_match):
+        raise ValueError(
+            "interneuron diagnostic requires both trace output and reference match"
+        )
     output = Path(args.output)
     if output.exists():
         raise FileExistsError(output)
@@ -78,13 +109,19 @@ def main():
         conventions=conventions, persistent_projection_weight_scales=scales,
         top_down_current_pA=800, top_down_current_mode=TopDownCurrentMode.UNTIL_CUED_CELL_FIRST_EVENT,
         top_down_cue_lead_ms=7.85, duration_ms=100, dt_ms=0.01, equilibration_ms=0,
-        record_relay_diagnostics=True, brian=brian)
+        record_relay_diagnostics=True, interneuron_trace_output=args.interneuron_trace_output,
+        brian=brian)
+    if args.reference_match:
+        previous = yaml.safe_load(Path(args.reference_match).read_text())
+        verify_match_event_trains(result, previous)
     gates = score_match(result)
     artifact = {"schema_version": 1, "registration": args.registration,
                 "runtime_fingerprint": conventions.fingerprint,
                 "runtime_conventions": asdict(conventions),
                 "training_repeat_verified": True, "training_result": training.result,
                 "weight_handoff": "actual_figure6_weights_no_expansion",
+                "reference_match": args.reference_match,
+                "recorded_match_events_repeat_exactly": True if args.reference_match else None,
                 "applied_common_weight_factor": 1.0,
                 "match_result": result, "gates": gates, "match_prerequisites_pass": all(gates.values()),
                 "original_smart_reproduced": False, "baseline_promoted": False}

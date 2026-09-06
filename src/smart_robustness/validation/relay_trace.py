@@ -6,11 +6,20 @@ from pathlib import Path
 import numpy as np
 
 
-def write_relay_trace(monitor, path, *, stimulus_start_ms, condition, fingerprint, brian):
-    """Preserve cue and trial samples; never overwrite an existing trace.
+def write_relay_trace(
+    monitor,
+    path,
+    *,
+    stimulus_start_ms,
+    condition,
+    fingerprint,
+    brian,
+    population=None,
+):
+    """Preserve unit-labeled cue and trial samples; never overwrite a trace.
 
     Negative relative times belong to the pre-stimulus recording period.
-    Traces are state observations, not a causal test of calcium contribution.
+    Traces are state observations, not causal interventions.
     """
     output = Path(path)
     variables = tuple(monitor.record_variables)
@@ -37,6 +46,8 @@ def write_relay_trace(monitor, path, *, stimulus_start_ms, condition, fingerprin
         monitor_when=np.asarray(monitor.when),
         monitor_order=np.asarray(monitor.order),
     )
+    if population is not None:
+        values["population"] = np.asarray(population)
     # Exclusive creation also protects against a file appearing while a long
     # simulation is running. Let missing-parent errors remain explicit.
     with output.open("xb") as stream:

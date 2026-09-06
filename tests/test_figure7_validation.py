@@ -14,6 +14,7 @@ from smart_robustness.classic_sector import (
 from smart_robustness.protocols import MatchCondition
 from smart_robustness.validation.figure7 import (
     FIGURE7_REQUIRED_LEARNED_PROJECTIONS,
+    FIGURE7_TOP_DOWN_EXPECTATION_PROJECTION_IDS,
     FIGURE7_TOP_DOWN_RELAY_PROJECTION_IDS,
     Figure6ReferenceExpectation,
     Figure7ConditionResult,
@@ -27,6 +28,7 @@ from smart_robustness.validation.figure7 import (
     half_max_comparator_relay_input_gains,
     learned_expectation_support_by_target,
     paper_constrained_figure6_expectation,
+    prime_figure7_top_down_expectation_arrivals,
     restrict_figure7_top_down_relay_sources,
     run_figure7_condition,
     top_k_comparator_relay_input_gains,
@@ -99,6 +101,29 @@ def test_selected_category_diagnostic_masks_only_relay_directed_source_rows() ->
     trn_sources = np.asarray(trn_projection.i[:], dtype=int)
     trn_weights = np.asarray(trn_projection.w[:], dtype=float)
     assert np.any(trn_weights[trn_sources != 40] > 0)
+
+
+def test_receptor_prime_targets_one_category_row_on_every_expectation_path() -> None:
+    brian.start_scope()
+    sector = build_first_order_connected_sector(
+        conventions=figure6_runtime_conventions(), brian=brian
+    )
+    counts = dict(
+        prime_figure7_top_down_expectation_arrivals(
+            sector.projections,
+            source_index=40,
+            arrival_time=sector.network.t,
+        )
+    )
+
+    assert set(counts) == set(FIGURE7_TOP_DOWN_EXPECTATION_PROJECTION_IDS)
+    assert all(count > 0 for count in counts.values())
+    for projection_id in FIGURE7_TOP_DOWN_EXPECTATION_PROJECTION_IDS:
+        projection = sector.projections[projection_id]
+        source_indices = np.asarray(projection.i[:], dtype=int)
+        amplitudes = np.asarray(projection.last_amplitude[:], dtype=float)
+        assert np.all(amplitudes[source_indices == 40] == 1.0)
+        assert np.all(amplitudes[source_indices != 40] == 0.0)
     sector.network.run(0 * brian.ms)
 
 
@@ -463,6 +488,14 @@ def test_figure7_runner_rejects_invalid_projection_discriminators() -> None:
             top_down_current_pA=100.0,
             learned_weights={},
             use_paper_constrained_reference=True,
+        )
+    with pytest.raises(ValueError, match="cannot be combined with a cue lead"):
+        run_figure7_condition(
+            condition=MatchCondition.MATCH,
+            top_down_current_pA=100.0,
+            use_paper_constrained_reference=True,
+            top_down_cue_lead_ms=1.0,
+            prime_top_down_receptors_at_stimulus=True,
         )
 
     with pytest.raises(ValueError, match="requires exactly one"):

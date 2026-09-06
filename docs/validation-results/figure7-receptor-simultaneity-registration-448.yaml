@@ -1,0 +1,44 @@
+schema_version: 1
+id: figure7-receptor-simultaneity-registration-448
+date: '2026-09-07'
+status: registered-before-execution
+classification: protocol-semantics-causal-diagnostic-not-source-recovery
+predecessor: docs/validation-results/figure7-declared-input-top-down-current-recheck-assessment-447.yaml
+profile: configs/calibration/figure7_receptor_simultaneity_diagnostic_v1.yaml
+training_profile: configs/calibration/figure6_declared_interneuron_input_v1.yaml
+training_result: docs/validation-results/figure6-declared-interneuron-input-414.yaml
+runtime_fingerprint: e016bc9f3d0557e2b23ad00e7d956509df9cf44de42db6f66c6a484a42d1f7a0
+result: docs/validation-results/figure7-receptor-simultaneity-diagnostic-449.yaml
+hypothesis: >-
+  The bounded category-current family fails because learned feedback reaches
+  LGN after the first relay volley. The primary paper defines the match
+  mechanism at the receptor level: matched LGN cells receive sufficiently
+  large simultaneous bottom-up and top-down excitation while the TRN supplies
+  the off-surround. Priming one selected-category arrival at all six archived
+  on-center/off-surround receptors at sensory onset tests whether that missing
+  receptor-level simultaneity is causally sufficient.
+fixed:
+  - Actual fresh Figure 6 learned arrays with no headroom expansion.
+  - Declared voltage-driven Relay_INT input and every archived projection weight.
+  - Simultaneous image and 800-pA category-current command onset.
+  - Current cleared on the selected-category cell's first emitted event.
+  - Intrinsic dynamics, receptor kinetics, later source delays, and event rules.
+  - No cue lead, comparator, scaling, calcium ablation, or equilibration.
+intervention:
+  source_index: 40
+  arrival_time_ms_from_stimulus_onset: 0.0
+  projection_ids: [003, 005, 006, 007, 009, 012]
+  modifies_weights: false
+  modifies_delays: false
+  recovered_legacy_state: false
+screen:
+  duration_ms: 25.0
+  conditions: [match, mismatch]
+  required_interpretation: causal sufficiency only
+execution: {figure6_learning_runs: 1, short_match_runs: 1, short_mismatch_runs: 1}
+interpretation_boundary: >-
+  Independent receptor priming collapses the six records' first-arrival delay
+  differences and is not source recovery. Failure rejects it as a sufficient
+  timing mechanism. Success would authorize an independently rebuilt 100-ms
+  pair, not promote the classic baseline or establish legacy equivalence.
+baseline_promoted: false

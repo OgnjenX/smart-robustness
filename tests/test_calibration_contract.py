@@ -6877,3 +6877,42 @@ def test_declared_input_current_recheck_closes_every_bounded_endpoint() -> None:
     )
     assert assessment["assessment"]["source_bounded_current_family_closed"]
     assert not assessment["assessment"]["baseline_promoted"]
+
+
+def test_receptor_simultaneity_diagnostic_is_one_factor_and_nonpromotable() -> None:
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-receptor-simultaneity-registration-448.yaml"
+        ).read_text()
+    )
+    profile = yaml.safe_load((ROOT / registration["profile"]).read_text())
+
+    assert profile["intervention"]["source_index"] == 40
+    assert profile["intervention"]["projection_ids"] == [
+        "modeldb112923.projection.003",
+        "modeldb112923.projection.005",
+        "modeldb112923.projection.006",
+        "modeldb112923.projection.007",
+        "modeldb112923.projection.009",
+        "modeldb112923.projection.012",
+    ]
+    assert profile["protocol"] == {
+        "duration_ms": 25.0,
+        "dt_ms": 0.01,
+        "top_down_current_pA": 800.0,
+        "top_down_current_mode": "until_cued_cell_first_event",
+        "top_down_cue_lead_ms": 0.0,
+        "uniform_relay_input_gain": 1.0,
+        "projection_002_gain": 1.0,
+    }
+    assert registration["intervention"]["modifies_weights"] is False
+    assert registration["intervention"]["modifies_delays"] is False
+    assert registration["intervention"]["recovered_legacy_state"] is False
+    assert registration["execution"] == {
+        "figure6_learning_runs": 1,
+        "short_match_runs": 1,
+        "short_mismatch_runs": 1,
+    }
+    assert "not source recovery" in registration["interpretation_boundary"]
+    assert registration["baseline_promoted"] is False

@@ -49,6 +49,11 @@ FIGURE7_TOP_DOWN_RELAY_PROJECTION_IDS = (
     "modeldb112923.projection.006",
     "modeldb112923.projection.007",
 )
+FIGURE7_TOP_DOWN_EXPECTATION_PROJECTION_IDS = (
+    *FIGURE7_TOP_DOWN_RELAY_PROJECTION_IDS,
+    "modeldb112923.projection.009",
+    "modeldb112923.projection.012",
+)
 FIGURE7_RELAY_DIAGNOSTIC_INDICES = (22, 31, 38, 39, 40, 41, 42, 49, 58)
 FIGURE7_MATCH_RELAY_INDICES = frozenset((38, 39, 40, 41, 42))
 FIGURE7_MISMATCH_INPUT_INDICES = frozenset((22, 31, 40, 49, 58))
@@ -355,6 +360,50 @@ def restrict_figure7_top_down_relay_sources(
             block.w = weights
 
 
+def prime_figure7_top_down_expectation_arrivals(
+    projections: Mapping[str, object],
+    *,
+    source_index: int,
+    arrival_time,
+) -> tuple[tuple[str, int], ...]:
+    """Prime one category event at all corticothalamic receptor gates.
+
+    This is a protocol-semantics diagnostic for Figure 7's stated simultaneous
+    bottom-up/top-down excitation. It does not reconstruct a legacy scheduler:
+    every selected receptor record receives its first arrival at the supplied
+    network time, independently of its serialized axonal delay.
+    """
+
+    if not 0 <= source_index < 81:
+        raise ValueError("top-down expectation source must address the 9x9 sheet")
+    unknown = set(FIGURE7_TOP_DOWN_EXPECTATION_PROJECTION_IDS) - set(projections)
+    if unknown:
+        raise ValueError(f"missing top-down expectation projections: {sorted(unknown)}")
+    counts = []
+    for projection_id in FIGURE7_TOP_DOWN_EXPECTATION_PROJECTION_IDS:
+        projection = projections[projection_id]
+        if hasattr(projection, "blocks"):
+            block_sources = zip(
+                projection.blocks, projection.source_global, strict=True
+            )
+        else:
+            block_sources = ((projection, np.asarray(projection.i[:], dtype=int)),)
+        selected_count = 0
+        for block, source_indices in block_sources:
+            selected = np.asarray(source_indices, dtype=int) == source_index
+            selected_count += int(np.count_nonzero(selected))
+            amplitudes = np.asarray(block.last_amplitude[:], dtype=float)
+            amplitudes[selected] = 1.0
+            block.last_amplitude = amplitudes
+            arrivals = block.last_arrival[:]
+            arrivals[selected] = arrival_time
+            block.last_arrival = arrivals
+        if selected_count == 0:
+            raise ValueError(f"{projection_id}: selected source has no receptor edges")
+        counts.append((projection_id, selected_count))
+    return tuple(counts)
+
+
 @dataclass(frozen=True, slots=True)
 class Figure7ConditionResult:
     condition: MatchCondition
@@ -395,6 +444,8 @@ class Figure7ConditionResult:
     top_down_current_event_limit: int | None = None
     top_down_current_termination_time_ms: float | None = None
     top_down_relay_source_indices: tuple[int, ...] | None = None
+    top_down_receptor_prime_present: bool = False
+    top_down_receptor_prime_edge_counts: tuple[tuple[str, int], ...] = ()
     uniform_relay_input_gain: float = 1.0
     top_down_cue_lead_ms: float = 0.0
     equilibration_ms: float = 0.0
@@ -735,6 +786,7 @@ def run_figure7_condition(
     persistent_projection_weight_scales: Mapping[str, float] | None = None,
     disabled_projection_ids: tuple[str, ...] = (),
     top_down_relay_source_indices: frozenset[int] | None = None,
+    prime_top_down_receptors_at_stimulus: bool = False,
     comparator_relay_floor: float | None = None,
     comparator_half_max_gate: bool = False,
     comparator_top_k_targets: int | None = None,
@@ -795,6 +847,10 @@ def run_figure7_condition(
             raise ValueError("relay and interneuron traces require distinct paths")
     if top_down_cue_lead_ms < 0:
         raise ValueError("top_down_cue_lead_ms cannot be negative")
+    if prime_top_down_receptors_at_stimulus and top_down_cue_lead_ms > 0:
+        raise ValueError("receptor priming cannot be combined with a cue lead")
+    if prime_top_down_receptors_at_stimulus and cpp_standalone_directory is not None:
+        raise ValueError("receptor priming is a numpy protocol diagnostic")
     if not np.isfinite(uniform_relay_input_gain) or not (
         0.0 < uniform_relay_input_gain <= 1.0
     ):
@@ -1213,6 +1269,15 @@ def run_figure7_condition(
     # discriminator, never an implicit part of the classic trial.
     if equilibration_ms > 0:
         sector.network.run(equilibration_ms * brian.ms)
+    top_down_receptor_prime_edge_counts: tuple[tuple[str, int], ...] = ()
+    if prime_top_down_receptors_at_stimulus:
+        top_down_receptor_prime_edge_counts = (
+            prime_figure7_top_down_expectation_arrivals(
+                sector.projections,
+                source_index=40,
+                arrival_time=sector.network.t,
+            )
+        )
     cue = ClassicMatchMismatchCue(
         condition=condition,
         top_down_current_pA=top_down_current_pA,
@@ -2140,6 +2205,8 @@ def run_figure7_condition(
             if top_down_relay_source_indices is None
             else tuple(sorted(top_down_relay_source_indices))
         ),
+        top_down_receptor_prime_present=prime_top_down_receptors_at_stimulus,
+        top_down_receptor_prime_edge_counts=top_down_receptor_prime_edge_counts,
         uniform_relay_input_gain=uniform_relay_input_gain,
         top_down_cue_lead_ms=top_down_cue_lead_ms,
         equilibration_ms=equilibration_ms,

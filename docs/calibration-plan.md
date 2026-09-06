@@ -998,3 +998,12 @@ without interpolation or expansion. Next test receptor-level simultaneity as
 a protocol-semantics diagnostic: initialize the archived learned feedback
 arrival at sensory onset without integrating a top-down-only cue interval or
 altering source delays and weights.
+
+Registration 448 defines that one-factor diagnostic. At sensory onset, one
+selected-category arrival is initialized at the four archived layer-6II-to-
+relay on-center records and the two layer-6II-to-TRN off-surround records.
+Weights, later delays, receptor kinetics, the ordinary 800-pA one-event cue,
+fresh Figure 6 handoff, and declared Relay_INT input remain fixed. This
+deliberately collapses the six first-event delay differences and is not legacy
+runtime recovery. It asks only whether receptor-level simultaneity is causally
+sufficient for the paper's two-against-one spatial comparison in a 25-ms pair.

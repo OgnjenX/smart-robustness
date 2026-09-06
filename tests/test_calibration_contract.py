@@ -6600,3 +6600,27 @@ def test_arrival_aligned_sustained_pair_rejects_overlap_hypothesis() -> None:
     }
     assert assessment["assessment"]["arrival_aligned_sustained_hypothesis_rejected"]
     assert not assessment["assessment"]["baseline_promoted"]
+
+
+def test_uniform_relay_input_gain_screen_is_bounded_and_not_a_comparator() -> None:
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-uniform-relay-input-gain-screen-registration-436.yaml"
+        ).read_text()
+    )
+    profile = yaml.safe_load((ROOT / registration["profile"]).read_text())
+
+    assert profile["protocol"]["uniform_relay_input_gains"] == [1.0, 0.75, 0.5, 0.25]
+    assert profile["protocol"]["duration_ms"] == 25.0
+    assert profile["protocol"]["top_down_cue_lead_ms"] == 0.0
+    assert registration["screen"]["selection_rule"] == (
+        "strongest gain passing every spatial/pathway gate"
+    )
+    assert registration["execution"] == {
+        "figure6_learning_runs": 1,
+        "short_match_runs": 4,
+        "short_mismatch_runs": 4,
+    }
+    assert "not recovered SMART parameters" in registration["interpretation_boundary"]
+    assert registration["baseline_promoted"] is False

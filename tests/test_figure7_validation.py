@@ -480,6 +480,21 @@ def test_figure7_runner_rejects_invalid_projection_discriminators() -> None:
             comparator_relay_floor=0.5,
             comparator_half_max_gate=True,
         )
+    with pytest.raises(ValueError, match="uniform relay input gain"):
+        run_figure7_condition(
+            condition=MatchCondition.MATCH,
+            top_down_current_pA=1000,
+            use_paper_constrained_reference=True,
+            uniform_relay_input_gain=0.0,
+        )
+    with pytest.raises(ValueError, match="cannot be combined"):
+        run_figure7_condition(
+            condition=MatchCondition.MATCH,
+            top_down_current_pA=1000,
+            use_paper_constrained_reference=True,
+            uniform_relay_input_gain=0.5,
+            comparator_top_k_targets=5,
+        )
 
 
 def test_figure7_pathway_diagnostics_require_a_post_startup_window() -> None:

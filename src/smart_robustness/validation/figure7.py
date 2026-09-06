@@ -395,6 +395,7 @@ class Figure7ConditionResult:
     top_down_current_event_limit: int | None = None
     top_down_current_termination_time_ms: float | None = None
     top_down_relay_source_indices: tuple[int, ...] | None = None
+    uniform_relay_input_gain: float = 1.0
     top_down_cue_lead_ms: float = 0.0
     equilibration_ms: float = 0.0
     learned_state_provenance: str = "unspecified"
@@ -494,6 +495,10 @@ class Figure7ConditionResult:
             raise ValueError("duration_ms must be positive")
         if self.top_down_cue_lead_ms < 0:
             raise ValueError("top_down_cue_lead_ms cannot be negative")
+        if not np.isfinite(self.uniform_relay_input_gain) or not (
+            0.0 < self.uniform_relay_input_gain <= 1.0
+        ):
+            raise ValueError("uniform relay input gain must be finite and lie in (0, 1]")
         if self.equilibration_ms < 0:
             raise ValueError("equilibration_ms cannot be negative")
         TopDownCurrentMode(self.top_down_current_mode)
@@ -734,6 +739,7 @@ def run_figure7_condition(
     comparator_half_max_gate: bool = False,
     comparator_top_k_targets: int | None = None,
     comparator_source_index: int = 40,
+    uniform_relay_input_gain: float = 1.0,
     top_down_current_mode: TopDownCurrentMode | str = (
         TopDownCurrentMode.SUSTAINED_EPOCH
     ),
@@ -789,6 +795,10 @@ def run_figure7_condition(
             raise ValueError("relay and interneuron traces require distinct paths")
     if top_down_cue_lead_ms < 0:
         raise ValueError("top_down_cue_lead_ms cannot be negative")
+    if not np.isfinite(uniform_relay_input_gain) or not (
+        0.0 < uniform_relay_input_gain <= 1.0
+    ):
+        raise ValueError("uniform relay input gain must be finite and lie in (0, 1]")
     if equilibration_ms < 0:
         raise ValueError("equilibration_ms cannot be negative")
     current_mode = TopDownCurrentMode(top_down_current_mode)
@@ -814,6 +824,8 @@ def run_figure7_condition(
     )
     if comparator_transform_count > 1:
         raise ValueError("select only one reconstructed comparator transform")
+    if comparator_transform_count and uniform_relay_input_gain != 1.0:
+        raise ValueError("uniform relay input gain cannot be combined with a comparator")
     if (
         comparator_transform_count
     ) and pretrain_with_figure6_episode:
@@ -872,6 +884,8 @@ def run_figure7_condition(
     ).bottom_up_stimulus
     if exact_relay_voltage_clamp and include_higher_order_loop:
         raise ValueError("the exact relay-clamp audit is only defined for the first-order assay")
+    if exact_relay_voltage_clamp and uniform_relay_input_gain != 1.0:
+        raise ValueError("uniform relay input gain is undefined for exact relay clamp")
     if exact_relay_voltage_clamp and pretrain_with_figure6_episode:
         raise ValueError("same-network Figure 6 pretraining requires an unclamped relay")
     if exact_relay_voltage_clamp and top_down_cue_lead_ms > 0:
@@ -976,7 +990,11 @@ def run_figure7_condition(
             learned_weights,
             verify_runtime_bounds=cpp_standalone_directory is None,
         )
-    relay_input_gains = None
+    relay_input_gains = (
+        None
+        if uniform_relay_input_gain == 1.0
+        else np.full(81, uniform_relay_input_gain, dtype=float)
+    )
     if comparator_relay_floor is not None:
         assert learned_weights is not None
         relay_input_gains = comparator_relay_input_gains(
@@ -2122,6 +2140,7 @@ def run_figure7_condition(
             if top_down_relay_source_indices is None
             else tuple(sorted(top_down_relay_source_indices))
         ),
+        uniform_relay_input_gain=uniform_relay_input_gain,
         top_down_cue_lead_ms=top_down_cue_lead_ms,
         equilibration_ms=equilibration_ms,
         learned_state_provenance=provenance,

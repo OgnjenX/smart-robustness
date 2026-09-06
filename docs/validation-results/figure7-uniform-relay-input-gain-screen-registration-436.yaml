@@ -1,0 +1,41 @@
+schema_version: 1
+id: figure7-uniform-relay-input-gain-screen-registration-436
+date: '2026-09-06'
+status: registered-before-execution
+classification: behavioral-calibration-mechanism-screen-not-source-recovery
+predecessor: docs/validation-results/declared-input-arrival-aligned-sustained-pair-assessment-435.yaml
+profile: configs/calibration/figure7_uniform_relay_input_gain_screen_v1.yaml
+training_profile: configs/calibration/figure6_declared_interneuron_input_v1.yaml
+training_result: docs/validation-results/figure6-declared-interneuron-input-414.yaml
+runtime_fingerprint: e016bc9f3d0557e2b23ad00e7d956509df9cf44de42db6f66c6a484a42d1f7a0
+result: docs/validation-results/figure7-uniform-relay-input-gain-screen-437.yaml
+hypothesis: >-
+  The source-strength bottom-up drive lets mismatch-only relay cells escape
+  despite lacking learned top-down support. A uniform reduction may expose the
+  conductance model's endogenous two-against-one threshold: all five matched
+  horizontal cells remain active, while the vertical mismatch retains only
+  overlap cell 40.
+fixed:
+  - Fresh exact Figure 6 learned arrays with no headroom expansion.
+  - Declared voltage-driven Relay_INT image input.
+  - Simultaneous category-current and image command onset.
+  - 800-pA current cleared on the first selected-category event.
+  - All intrinsic, synaptic, delay, detector, and TRN-to-relay parameters.
+  - No reconstructed comparator, calcium ablation, or equilibration.
+screen:
+  duration_ms: 25.0
+  gains_in_execution_order: [1.0, 0.75, 0.5, 0.25]
+  conditions_per_gain: [match, mismatch]
+  selection_rule: strongest gain passing every spatial/pathway gate
+  required_gates:
+    - match_horizontal_relay_set
+    - mismatch_overlap_only
+    - match_more_active_relay_cells
+    - match_more_trn_events
+execution: {figure6_learning_runs: 1, short_match_runs: 4, short_mismatch_runs: 4}
+interpretation_boundary: >-
+  This is a post-failure behavioral-calibration screen. Gain 1.0 is the
+  archived image strength; lower gains are not recovered SMART parameters.
+  Short-run success cannot reproduce Figure 7 or promote the baseline. A
+  survivor only authorizes an independently rebuilt 100-ms match.
+baseline_promoted: false

@@ -5,10 +5,14 @@ status: registered-before-execution
 classification: unchanged-failed-match-replay-with-interneuron-readout
 source_interpretation: mixed-input-semantic-resolution-412.yaml
 training_profile: configs/calibration/figure6_declared_interneuron_input_v1.yaml
-training_reference: docs/validation-results/figure6-declared-interneuron-input-414.yaml
+training_result: docs/validation-results/figure6-declared-interneuron-input-414.yaml
 match_reference: docs/validation-results/declared-input-unexpanded-match-417.yaml
 runtime_fingerprint: e016bc9f3d0557e2b23ad00e7d956509df9cf44de42db6f66c6a484a42d1f7a0
 model_protocol_and_weight_changes: none
+pre_execution_correction: >-
+  The first launch stopped before network construction because this field was
+  initially named training_reference while the runner requires training_result.
+  No simulation, result, or trace was created before this clerical correction.
 weight_handoff: Actual fresh Figure 6 learned weights, no expansion; common factor 1.
 execution: {figure6_learning_runs: 1, match_runs: 1, mismatch_runs: 0, parameter_search: false}
 result: docs/validation-results/declared-input-interneuron-trace-421.yaml

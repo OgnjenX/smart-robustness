@@ -437,6 +437,11 @@ parameters:
     status: rejected-behavioral-mechanism-screen
     source: archived source value 1.0 plus bounded calibrated sensitivities in Artifacts 436--438
     note: Gain 1.0 activates all five driven relay cells in both 25-ms conditions with identical 194-event TRN output. Every lower gain silences both relay sets while preserving image-aligned Relay_INT events and identical 243-event TRN output. No endogenous comparison interval appears on the preregistered grid; close uniform input scaling without interpolation or refinement.
+  calibration.figure7.declared_input_selected_headroom_endpoint:
+    value: selected source row 40 scaled by maximal archived-bound factor 3.6531686628985414
+    status: rejected-source-bounded-behavioral-endpoint
+    source: actual Figure 6 learned arrays, archived adaptive maxima, and Artifacts 439--441
+    note: Under declared Relay_INT input and simultaneous onset, the maximal endpoint leaves match and mismatch at five relay events over their respective full bars and 194 TRN events each during 25 ms. All relay events occur at 6.03--6.05 ms before learned feedback arrives. Close selected-row headroom without interpolation; the endpoint is not the actual learned state and is not source reproduction.
   benchmark.population_sizes:
     value: see configs/*.yaml
     status: exploratory

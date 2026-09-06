@@ -6677,3 +6677,55 @@ def test_declared_input_headroom_endpoint_is_single_and_source_bounded() -> None
     )
     assert "not the actual Figure 6 learned state" in registration["interpretation_boundary"]
     assert registration["baseline_promoted"] is False
+
+
+def test_declared_input_headroom_endpoint_fails_before_feedback_arrival() -> None:
+    result = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-declared-input-headroom-endpoint-440.yaml"
+        ).read_text()
+    )
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-declared-input-headroom-endpoint-assessment-441.yaml"
+        ).read_text()
+    )
+
+    assert result["applied_common_weight_factor"] == pytest.approx(3.6531686628985414)
+    assert sorted(set(result["match"]["relay_spike_indices"])) == [38, 39, 40, 41, 42]
+    assert sorted(set(result["mismatch"]["relay_spike_indices"])) == [22, 31, 40, 49, 58]
+    assert result["match"]["relay_spike_times_ms"] == pytest.approx(
+        [6.03, 6.03, 6.05, 6.05, 6.05]
+    )
+    assert result["mismatch"]["relay_spike_times_ms"] == pytest.approx(
+        [6.03, 6.03, 6.05, 6.05, 6.05]
+    )
+    assert not result["mechanism_screen_pass"]
+    assert assessment["assessment"]["maximal_bounded_headroom_rejected"]
+    assert not assessment["assessment"]["baseline_promoted"]
+
+
+def test_interneuron_gaba_gain_screen_is_finite_and_recognition_only() -> None:
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-interneuron-gaba-gain-screen-registration-442.yaml"
+        ).read_text()
+    )
+    profile = yaml.safe_load((ROOT / registration["profile"]).read_text())
+
+    assert profile["pathway"]["projection_id"] == "modeldb112923.projection.002"
+    assert profile["pathway"]["gains"] == [1.0, 2.0, 4.0, 8.0]
+    assert profile["protocol"]["uniform_relay_input_gain"] == 1.0
+    assert registration["screen"]["selection_rule"] == (
+        "weakest gain passing every spatial/pathway gate"
+    )
+    assert registration["execution"] == {
+        "figure6_learning_runs": 1,
+        "short_match_runs": 4,
+        "short_mismatch_runs": 4,
+    }
+    assert "recognition-only" in registration["interpretation_boundary"]
+    assert registration["baseline_promoted"] is False

@@ -1,0 +1,36 @@
+schema_version: 1
+id: figure7-interneuron-gaba-gain-screen-registration-442
+date: '2026-09-07'
+status: registered-before-execution
+classification: behavioral-calibration-causal-screen-not-source-recovery
+predecessor: docs/validation-results/figure7-declared-input-headroom-endpoint-assessment-441.yaml
+profile: configs/calibration/figure7_interneuron_gaba_gain_screen_v1.yaml
+training_profile: configs/calibration/figure6_declared_interneuron_input_v1.yaml
+training_result: docs/validation-results/figure6-declared-interneuron-input-414.yaml
+runtime_fingerprint: e016bc9f3d0557e2b23ad00e7d956509df9cf44de42db6f66c6a484a42d1f7a0
+result: docs/validation-results/figure7-interneuron-gaba-gain-screen-443.yaml
+hypothesis: >-
+  The declared Relay_INT image volley is correctly timed and reaches relay
+  cells, but its reconstructed brief GABA transfer is insufficient to prevent
+  bottom-up-only relay escape. Increasing only projection 002 may reveal the
+  endogenous operating regime in which learned support rescues the matched bar
+  and overlap cell while mismatch-only cells remain inhibited.
+fixed:
+  - Actual fresh Figure 6 learned arrays with no headroom expansion.
+  - Declared voltage-driven Relay_INT input and source-strength retinal drive.
+  - Simultaneous category-current and image command onset.
+  - 800-pA current cleared on the first selected-category event.
+  - All other weights, kinetics, delays, intrinsic dynamics, and event rules.
+  - No comparator, uniform input scaling, calcium ablation, or equilibration.
+screen:
+  duration_ms: 25.0
+  gains_in_execution_order: [1.0, 2.0, 4.0, 8.0]
+  conditions_per_gain: [match, mismatch]
+  selection_rule: weakest gain passing every spatial/pathway gate
+execution: {figure6_learning_runs: 1, short_match_runs: 4, short_mismatch_runs: 4}
+interpretation_boundary: >-
+  Gains above 1.0 are not recovered SMART parameters. The short recognition-only
+  screen is a causal localization and cannot reproduce Figure 7. A survivor
+  only authorizes a fresh persistent-scale Figure 6 prerequisite; failure closes
+  the grid without interpolation or extension.
+baseline_promoted: false

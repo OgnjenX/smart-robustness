@@ -954,3 +954,13 @@ output. No gain passes, so the registered coarse input-gain family is closed
 without refinement. Next test one source-bounded learned-feedback endpoint
 under declared-interneuron input; do not combine it with input scaling or a
 reconstructed comparator.
+
+Artifacts 439--441 test the sole maximal learned-feedback endpoint with the
+declared interneuron route. Scaling selected category row 40 by the largest
+common archived-bound factor, 3.653169, leaves the 25-ms match and mismatch
+condition-insensitive: both emit one relay event in each of their five driven
+cells at 6.03--6.05 ms and both produce 194 TRN events. These relay events
+precede learned-feedback arrival, so headroom cannot prevent them. Close
+headroom under this route without interpolation. Next test a finite logarithmic
+gain on the already verified projection-002 feed-forward inhibitory transfer;
+this is behavioral causal calibration, not source recovery.

@@ -1,0 +1,46 @@
+schema_version: 1
+id: figure7-declared-input-headroom-endpoint-assessment-441
+date: '2026-09-07'
+status: no-survivor-headroom-endpoint-closed
+registration: docs/validation-results/figure7-declared-input-headroom-endpoint-registration-439.yaml
+result: docs/validation-results/figure7-declared-input-headroom-endpoint-440.yaml
+result_sha256: ca4ae34bf2451374dabe1cc9372983a8c35a37fb8d7b910d237ff5c5646e2c89
+classification: source-bounded-behavioral-calibration-not-source-recovery
+training_repeat_verified: true
+candidate:
+  headroom_fraction: 1.0
+  applied_common_weight_factor: 3.6531686628985414
+pair:
+  match:
+    relay_active_indices: [38, 39, 40, 41, 42]
+    relay_event_count: 5
+    relay_event_times_ms: [6.03, 6.03, 6.05, 6.05, 6.05]
+    trn_event_count: 194
+    nonspecific_event_times_ms: [0.74]
+  mismatch:
+    relay_active_indices: [22, 31, 40, 49, 58]
+    relay_event_count: 5
+    relay_event_times_ms: [6.03, 6.03, 6.05, 6.05, 6.05]
+    trn_event_count: 194
+    nonspecific_event_times_ms: [0.74]
+gates:
+  match_horizontal_relay_set: true
+  mismatch_overlap_only: false
+  match_more_active_relay_cells: false
+  match_more_trn_events: false
+  no_reconstructed_comparator: true
+  no_calcium_ablation: true
+assessment:
+  original_smart_reproduced: false
+  baseline_promoted: false
+  maximal_bounded_headroom_rejected: true
+  conclusion: >-
+    Maximal selected-row feedback does not change the first relay volley because
+    every relay event precedes the first possible learned-feedback arrival.
+    Match and mismatch remain condition-insensitive through the 25-ms screen.
+    Close this endpoint under declared input and do not interpolate headroom.
+  next_step: >-
+    Test the feed-forward Relay_INT-to-relay GABA transfer as the pathway that
+    must hold bottom-up-only mismatch cells below event threshold until learned
+    support arrives. Use a finite logarithmic recognition-only causal screen;
+    any survivor must later pass Figure 6 with the scale made persistent.

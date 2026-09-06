@@ -1,0 +1,29 @@
+schema_version: 1
+name: figure7_interneuron_gaba_gain_screen_v1
+classification: behavioral-calibration-causal-screen-not-source-recovery
+base_profile: configs/calibration/figure6_declared_interneuron_input_v1.yaml
+pathway:
+  projection_id: modeldb112923.projection.002
+  source: thalamic_interneuron
+  target: thalamic_relay
+  gains: [1.0, 2.0, 4.0, 8.0]
+protocol:
+  duration_ms: 25.0
+  dt_ms: 0.01
+  top_down_current_pA: 800.0
+  top_down_current_mode: until_cued_cell_first_event
+  top_down_cue_lead_ms: 0.0
+  uniform_relay_input_gain: 1.0
+selection:
+  order: weakest_gain_first
+  required_gates:
+    - match_horizontal_relay_set
+    - mismatch_overlap_only
+    - match_more_active_relay_cells
+    - match_more_trn_events
+boundaries:
+  - Gain 1.0 is the archived control; larger gains are calibrated causal interventions.
+  - The grid is logarithmic and finite; no interpolation or stronger gain follows failure.
+  - The scale is recognition-only in this screen so one Figure 6 handoff is shared.
+  - A survivor must be made persistent and independently pass Figure 6 before full Figure 7 testing.
+  - No comparator, learned headroom, input scaling, calcium ablation, or cue lead is permitted.

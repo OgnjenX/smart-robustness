@@ -7019,3 +7019,40 @@ def test_receptor_prime_decomposition_localizes_dominant_off_surround() -> None:
     )
     assert assessment["assessment"]["causal_imbalance_localized"]
     assert not assessment["assessment"]["baseline_promoted"]
+
+
+def test_receptor_prime_max_headroom_is_one_fixed_endpoint_cross() -> None:
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-receptor-prime-max-headroom-registration-454.yaml"
+        ).read_text()
+    )
+    profile = yaml.safe_load((ROOT / registration["profile"]).read_text())
+
+    assert profile["learned_state"] == {
+        "source_index": 40,
+        "headroom_fraction": 1.0,
+        "expected_common_weight_factor": pytest.approx(3.6531686628985414),
+    }
+    assert profile["receptor_prime"]["projection_ids"] == [
+        "modeldb112923.projection.003",
+        "modeldb112923.projection.005",
+        "modeldb112923.projection.006",
+        "modeldb112923.projection.007",
+        "modeldb112923.projection.009",
+        "modeldb112923.projection.012",
+    ]
+    assert registration["candidate"] == {
+        "count": 1,
+        "headroom_fraction": 1.0,
+        "receptor_prime": "combined_on_center_and_off_surround",
+        "selection": "sole previously fixed endpoint cross",
+    }
+    assert registration["execution"] == {
+        "figure6_learning_runs": 1,
+        "short_match_runs": 1,
+        "short_mismatch_runs": 1,
+    }
+    assert "Do not interpolate" in registration["interpretation_boundary"]
+    assert registration["baseline_promoted"] is False

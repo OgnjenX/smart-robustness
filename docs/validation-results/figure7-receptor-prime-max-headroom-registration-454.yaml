@@ -1,0 +1,38 @@
+schema_version: 1
+id: figure7-receptor-prime-max-headroom-registration-454
+date: '2026-09-07'
+status: registered-before-execution
+classification: source-bounded-behavioral-interaction-not-source-recovery
+predecessor: docs/validation-results/figure7-receptor-prime-decomposition-assessment-453.yaml
+profile: configs/calibration/figure7_receptor_prime_max_headroom_endpoint_v1.yaml
+training_profile: configs/calibration/figure6_declared_interneuron_input_v1.yaml
+training_result: docs/validation-results/figure6-declared-interneuron-input-414.yaml
+headroom_control: docs/validation-results/figure7-declared-input-headroom-endpoint-440.yaml
+combined_prime_control: docs/validation-results/figure7-receptor-simultaneity-diagnostic-449.yaml
+runtime_fingerprint: e016bc9f3d0557e2b23ad00e7d956509df9cf44de42db6f66c6a484a42d1f7a0
+result: docs/validation-results/figure7-receptor-prime-max-headroom-endpoint-455.yaml
+hypothesis: >-
+  Early off-surround priming suppresses both conditions because the actual
+  learned on-center cannot rescue matched cells. Scaling only category row 40
+  to the largest common archived adaptive bound may restore the intended
+  two-against-one regime: bottom-up plus learned support preserves matched
+  cells, while mismatch-only cells remain suppressed by the off-surround.
+fixed:
+  - Actual fresh Figure 6 learned arrays before the registered row transform.
+  - Maximal common selected-row factor previously measured as 3.6531686628985414.
+  - Unit source-40 arrival at all six corticothalamic records at sensory onset.
+  - Declared Relay_INT input and ordinary simultaneous 800-pA one-event cue.
+  - Every intrinsic, synaptic, detector, later delay, and other protocol value.
+  - No other scaling, timing change, comparator, calcium ablation, or equilibration.
+candidate:
+  count: 1
+  headroom_fraction: 1.0
+  receptor_prime: combined_on_center_and_off_surround
+  selection: sole previously fixed endpoint cross
+execution: {figure6_learning_runs: 1, short_match_runs: 1, short_mismatch_runs: 1}
+interpretation_boundary: >-
+  Both components are post-failure diagnostics; their cross is behavioral
+  calibration and cannot establish source recovery. Do not interpolate either
+  component. Success permits only a fresh 100-ms pair and does not promote the
+  classic baseline; failure closes the interaction.
+baseline_promoted: false

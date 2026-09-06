@@ -1035,3 +1035,11 @@ dominates while the actual Figure 6 learned on-center cannot rescue matched
 cells. Next test one source-bounded interaction endpoint by crossing combined
 receptor simultaneity with the maximal archived-bound selected-row headroom
 already fixed in Artifacts 439--441. No grid or interpolation is authorized.
+
+Registration 454 fixes the sole endpoint cross before execution: the actual
+fresh Figure 6 selected row is scaled by the previously measured maximal
+common factor 3.6531686628985414, then the same unit arrival is initialized at
+all six on-center/off-surround records at sensory onset. This asks whether
+stronger bounded learned support can rescue only matched two-against-one cells
+from the verified early off-surround. No intermediate headroom, prime change,
+or additional parameter dimension may follow from this endpoint.

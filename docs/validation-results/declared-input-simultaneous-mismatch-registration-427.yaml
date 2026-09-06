@@ -1,0 +1,52 @@
+schema_version: 1
+id: declared-input-simultaneous-mismatch-registration-427
+date: '2026-09-06'
+status: registered-after-match-failure-before-mismatch-execution
+classification: post-failure-causal-localization-not-holdout
+source_timing_assessment: docs/validation-results/declared-input-simultaneous-match-assessment-426.yaml
+training_profile: configs/calibration/figure6_declared_interneuron_input_v1.yaml
+training_result: docs/validation-results/figure6-declared-interneuron-input-414.yaml
+match_result: docs/validation-results/declared-input-simultaneous-match-425.yaml
+match_result_sha256: 7be21686356d546eb8846b7602ba70caf805c8d32f650be149777505f6aedf47
+runtime_fingerprint: e016bc9f3d0557e2b23ad00e7d956509df9cf44de42db6f66c6a484a42d1f7a0
+result: docs/validation-results/declared-input-simultaneous-pair-428.yaml
+prior_observation:
+  match_pass: false
+  passed_upstream_gates:
+    - exact horizontal relay set with four events per cell
+    - nonzero TRN output with complete sampled detector cycles
+    - strong declared-input interneuron to relay transfer
+  failed_gate: five nonspecific events rather than the official four
+  startup_event_ms: 0.74
+purpose: >-
+  Localize whether the declared-interneuron-input and simultaneous-onset source
+  corrections recover the qualitative mismatch mechanism without a comparator,
+  despite the already known match-rate failure.
+unchanged:
+  - Actual fresh Figure 6 learned arrays with no headroom expansion; factor 1.
+  - Declared voltage-driven Relay_INT image input.
+  - TRN-to-relay scales 0.01, 0.01, and 0.03.
+  - Top-down current 800 pA, terminated by selected cell 40's first event.
+  - No comparator, calcium ablation, equilibration, or disabled projection.
+protocol:
+  condition: mismatch
+  top_down_current_pA: 800.0
+  top_down_current_mode: until_cued_cell_first_event
+  top_down_cue_lead_ms: 0.0
+  duration_ms: 100.0
+  dt_ms: 0.01
+  equilibration_ms: 0.0
+execution: {figure6_learning_runs: 1, mismatch_runs: 1, parameter_search: false}
+diagnostic_questions:
+  - Is mismatch relay output nonempty and restricted to overlap cell 40?
+  - Does match recruit more relay cells and more TRN events than mismatch?
+  - Does mismatch increase nonspecific output, and does it reach seven events?
+  - Is the 0.74-ms startup event shared across conditions?
+interpretation_boundary: >-
+  This mismatch is opened after observing a failed match and is not an
+  independent holdout. It cannot promote or freeze the baseline even if its
+  qualitative mechanism or 70-Hz count passes. Report the fixed result without
+  changing timing, current, weights, detector thresholds, input sensitivity,
+  inhibition, or event-count scoring.
+baseline_promoted: false
+

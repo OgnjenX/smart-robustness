@@ -6441,3 +6441,22 @@ def test_declared_input_simultaneous_match_retains_startup_failure_and_transfer(
     ] < -700
     assert not assessment["assessment"]["original_smart_reproduced"]
     assert not assessment["assessment"]["baseline_promoted"]
+
+
+def test_declared_input_simultaneous_mismatch_is_only_a_localization_run() -> None:
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/declared-input-simultaneous-mismatch-registration-427.yaml"
+        ).read_text()
+    )
+    assert registration["prior_observation"]["match_pass"] is False
+    assert registration["protocol"]["condition"] == "mismatch"
+    assert registration["protocol"]["top_down_cue_lead_ms"] == 0.0
+    assert registration["execution"] == {
+        "figure6_learning_runs": 1,
+        "mismatch_runs": 1,
+        "parameter_search": False,
+    }
+    assert "not an independent holdout" in registration["interpretation_boundary"]
+    assert registration["baseline_promoted"] is False

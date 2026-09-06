@@ -417,6 +417,16 @@ parameters:
     status: source-ambiguity-unresolved-lifecycle-audit-required
     source: KInNeSS expanded Equations 5-6, SMART.nml connectFromAll records, and the archived 9x9 stimulus images
     note: Artifact 385 preserves Figure 6 and 15/635 upstream match counts but yields six nonspecific match events. Audit 386 identifies source counts of one before stimulation, 81 during stimulation, and one after clearing. Persistent 81-location topology was not tested. This failed configuration cannot establish which source interpretation is faithful
+  model.external_input.relay_interneuron_mixed_gate:
+    value: declared_external_input retained as current source-supported candidate
+    status: official-source-interpretation-passes-figure6-and-partial-match
+    source: archived Relay_INT Dendrite0 input record, KInNeSS Equations 5-6, Grossberg and Versace Figure 7, and Artifacts 412--426
+    note: The archived mixed metadata contains both a nested Layer4 projection and a declared voltage-driven image input. Under the declared-input interpretation, fresh Figure 6 passes and simultaneous comparator-free match activates exactly relay cells 38--42 four times each with 605 fresh-cycle TRN events. Five Relay_INT cells emit at 2.96 ms and projection 002 transfers strongly (about -814 pA peak in a direct compiled assay; about -759 to -760 pA at the first relay events). Match still fails because nonspecific output is five rather than four events. This source interpretation is not yet a frozen behavioral baseline.
+  protocol.match_mismatch.figure7_onset_timing:
+    value: simultaneous bottom-up and top-down onset retained as primary-paper timing
+    status: primary-paper-supported-partial-match
+    source: Grossberg and Versace 2008 Figure 7 text and Artifacts 423--426
+    note: Replacing the earlier 7.85-ms top-down lead by simultaneous onset, with actual unexpanded Figure 6 weights and no comparator, restores the exact horizontal relay set and four events per cell. The nonspecific cell emits five events, including a 0.74-ms startup event before any recognition-path response, so exact 40-Hz match remains failed and mismatch is not authorized by Registration 424.
   benchmark.population_sizes:
     value: see configs/*.yaml
     status: exploratory

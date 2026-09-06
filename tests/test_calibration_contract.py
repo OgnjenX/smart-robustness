@@ -6410,3 +6410,34 @@ def test_annular_candidate_fails_fixed_official_mismatch() -> None:
     )
     assert len(mismatch["trn_spike_times_ms"]) == 708
     assert len(mismatch["nonspecific_spike_times_ms"]) == 3
+
+
+def test_declared_input_simultaneous_match_retains_startup_failure_and_transfer() -> None:
+    result_path = ROOT / "docs/validation-results/declared-input-simultaneous-match-425.yaml"
+    assessment_path = (
+        ROOT
+        / "docs/validation-results/declared-input-simultaneous-match-assessment-426.yaml"
+    )
+    artifact = yaml.safe_load(result_path.read_text())
+    assessment = yaml.safe_load(assessment_path.read_text())
+    result = artifact["match_result"]
+
+    assert artifact["training_repeat_verified"]
+    assert sorted(set(result["relay_spike_indices"])) == [38, 39, 40, 41, 42]
+    assert all(result["relay_spike_indices"].count(index) == 4 for index in range(38, 43))
+    assert result["interneuron_spike_indices"] == [38, 39, 40, 41, 42]
+    assert len(result["trn_spike_times_ms"]) == 605
+    assert result["nonspecific_spike_times_ms"] == pytest.approx(
+        [0.74, 50.36, 56.04, 73.81, 94.08]
+    )
+    assert not artifact["match_prerequisites_pass"]
+    assert not artifact["gates"]["nonspecific_40_hz"]
+
+    transfer = assessment["interneuron_to_relay_transfer_audit"]
+    assert transfer["compiled_direct_assay"]["center_postsynaptic_gate_peak"] > 1.8
+    assert transfer["compiled_direct_assay"]["center_postsynaptic_current_min_pA"] < -800
+    assert transfer["match_event_samples"][
+        "outer_active_cells_38_42_current_pA_at_6_03_ms"
+    ] < -700
+    assert not assessment["assessment"]["original_smart_reproduced"]
+    assert not assessment["assessment"]["baseline_promoted"]

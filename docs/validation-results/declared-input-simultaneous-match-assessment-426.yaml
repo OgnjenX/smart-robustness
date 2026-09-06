@@ -1,0 +1,94 @@
+schema_version: 1
+id: declared-input-simultaneous-match-assessment-426
+date: '2026-09-06'
+status: retained-match-failure-with-corrected-pathway-interpretation
+registration: docs/validation-results/declared-input-simultaneous-match-registration-424.yaml
+result: docs/validation-results/declared-input-simultaneous-match-425.yaml
+result_sha256: 7be21686356d546eb8846b7602ba70caf805c8d32f650be149777505f6aedf47
+classification: source-timed-calibration-evidence-not-independent-validation
+fixed_change:
+  top_down_cue_lead_ms: {from: 7.85, to: 0.0}
+  source_basis: >-
+    Grossberg and Versace Figure 7 describes sufficiently large simultaneous
+    bottom-up and top-down excitation during a match.
+unchanged:
+  runtime_fingerprint: e016bc9f3d0557e2b23ad00e7d956509df9cf44de42db6f66c6a484a42d1f7a0
+  learned_weight_handoff: actual fresh Figure 6 arrays
+  learned_weight_expansion_factor: 1.0
+  comparator: none
+  relay_calcium_ablation: false
+  equilibration_ms: 0.0
+fresh_figure6_prerequisite:
+  exactly_repeated_artifact: docs/validation-results/figure6-declared-interneuron-input-414.yaml
+  passed: true
+match_observation:
+  category_selected_first_event_ms: 5.85
+  top_down_current_termination_ms: 5.85
+  interneuron:
+    event_indices: [38, 39, 40, 41, 42]
+    event_times_ms: [2.96, 2.96, 2.96, 2.96, 2.96]
+  relay:
+    active_indices: [38, 39, 40, 41, 42]
+    event_count: 20
+    events_per_active_index: 4
+    first_volley_ms: [6.03, 6.03, 6.05, 6.05, 6.05]
+  trn:
+    event_count: 605
+    sampled_detector_cycles_complete: true
+  nonspecific:
+    event_count: 5
+    rate_hz: 50.0
+    event_times_ms: [0.74, 50.36, 56.04, 73.81, 94.08]
+    official_target_event_count: 4
+    official_target_rate_hz: 40.0
+gates:
+  simultaneous_source_timing: true
+  actual_unexpanded_learned_weights: true
+  horizontal_relay_set_exact: true
+  minimum_three_relay_events_per_active_cell: true
+  trn_nonzero_with_fresh_sampled_cycles: true
+  selected_category_terminates_cue_current: true
+  no_reconstructed_comparator: true
+  no_relay_calcium_ablation: true
+  exact_nonspecific_match_rate: false
+  complete_match_pass: false
+interneuron_to_relay_transfer_audit:
+  source_record: modeldb112923.projection.002
+  source_tuple:
+    receptor: GABA_A
+    target_compartment: proximal_dendrite
+    conductance_density_mS_cm2: 2.0
+    weight: 1.8
+    delay_ms: 0.1
+    rise_ms: 1.0
+    fall_ms: 2.0
+  source_population_has_transmitter_depletion: false
+  compiled_direct_assay:
+    connected_synapse_count: 405
+    center_to_center_weight: 1.8
+    first_arrival_ms: 3.06
+    center_postsynaptic_gate_peak: 1.8607612068552553
+    center_postsynaptic_current_min_pA: -813.7296248322215
+  match_event_samples:
+    outer_active_cells_38_42_current_pA_at_6_03_ms: -759.0063443792372
+    inner_active_cells_39_41_current_pA_at_6_05_ms: -760.3713285915452
+  corrected_interpretation: >-
+    The near-zero projection-002 current in relay_driven_current_range is not a
+    transfer failure. That summary deliberately starts at 40 ms, after the
+    single 2.96-ms interneuron volley and its 1/2-ms gate have decayed. Direct
+    compilation and the event-time samples in Artifact 425 show strong,
+    correctly delayed inhibition during the first relay volley.
+assessment:
+  original_smart_reproduced: false
+  mismatch_authorized_by_registration_424: false
+  baseline_promoted: false
+  remaining_match_failure: >-
+    The nonspecific cell emits one excess event. The 0.74-ms event precedes the
+    interneuron volley, selected category event, and relay response, so it is a
+    startup-state event rather than evidence of match resonance.
+  next_source_question: >-
+    Resolve whether the legacy runtime began Figure 7 from a persistent or
+    otherwise initialized state that suppresses the startup event. Do not drop
+    the event from scoring, add equilibration, or tune a threshold merely to
+    reach four events.
+

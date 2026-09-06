@@ -871,3 +871,24 @@ Source interpretations must be assessed against source evidence; failure to
 recover a target under a calibrated configuration cannot falsify the source
 interpretation itself. Future registrations must disclose prior exploratory
 observations, including those preceding the resting-state audit registration.
+
+Artifacts 413--426 resolve the mixed `Relay_INT` input route and restore the
+paper's simultaneous Figure 7 timing without a reconstructed comparator.
+Treating archived projection 042 as the declared voltage-driven image input
+passes the complete Figure 6 prerequisite. With the actual learned arrays,
+unit headroom, simultaneous bottom-up/top-down onset, and no calcium ablation,
+match activates exactly horizontal relay cells 38--42 four times each and
+produces 605 genuine-cycle TRN events. The declared image also makes exactly
+those five interneurons emit once at 2.96 ms. Their projection-002 GABA transfer
+is intact: the direct compiled assay peaks at gate 1.861 and about -814 pA, and
+the first relay events sample about -759 to -760 pA. The apparent near-zero
+late range was measured only after 40 ms, after this fast gate decayed.
+
+The simultaneous candidate still fails the official match target because the
+nonspecific cell emits five events at 0.74, 50.36, 56.04, 73.81, and 94.08 ms,
+not four. The 0.74-ms event precedes all recognition-path events and is a
+startup-state response. Retain it in the score: do not silently discard it or
+select an equilibration interval from Figure 7. Registration 424 therefore
+does not authorize mismatch, and the classic behavioral baseline remains
+unfrozen. The next admissible work is source-grounded recovery of the legacy
+protocol/initial-state lifecycle, not another fitted conductance or threshold.

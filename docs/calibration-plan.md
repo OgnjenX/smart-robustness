@@ -943,3 +943,14 @@ the source-facing protocol while auditing the unavailable legacy initial-state
 lifecycle. If primary runtime evidence remains unavailable, separate any
 multi-figure behavioral calibration explicitly from the source-constrained
 classic reconstruction.
+
+Artifacts 436--438 open the first explicitly behavioral mechanism screen after
+the source-facing timing and initialization routes are closed. A uniform relay
+image gain of 1.0 repeats the five-cell horizontal versus five-cell vertical
+escape with identical 194-event TRN output during 25-ms trials. Gains 0.75,
+0.5, and 0.25 silence relay output in both conditions; each leaves the five
+image-aligned Relay_INT events intact and yields identical 243-event TRN
+output. No gain passes, so the registered coarse input-gain family is closed
+without refinement. Next test one source-bounded learned-feedback endpoint
+under declared-interneuron input; do not combine it with input scaling or a
+reconstructed comparator.

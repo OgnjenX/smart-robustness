@@ -432,6 +432,11 @@ parameters:
     status: rejected-post-failure-causal-localization
     source: Grossberg and Versace 2008 Figure 7 mechanism; archived 2-ms layer-6II-to-relay delays; Artifacts 430--435
     note: The fixed match and mismatch each emit 10 relay events across all five driven cells and five nonspecific events; TRN emits 564 versus 568. The mismatch is not overlap-only and no official pair gate is recovered. The lead also places sensory onset after an intrinsic 81-cell TRN volley at 5.68 ms and suppresses the Relay_INT image events observed under simultaneous command onset. Arrival alignment is state-changing under this initialization, the timing/current-duration combination is rejected, and neither an intermediate cue lead nor duration may be fitted from Figure 7.
+  calibration.figure7.uniform_relay_input_gain:
+    value: gains 1.0, 0.75, 0.5, and 0.25 at simultaneous command onset
+    status: rejected-behavioral-mechanism-screen
+    source: archived source value 1.0 plus bounded calibrated sensitivities in Artifacts 436--438
+    note: Gain 1.0 activates all five driven relay cells in both 25-ms conditions with identical 194-event TRN output. Every lower gain silences both relay sets while preserving image-aligned Relay_INT events and identical 243-event TRN output. No endogenous comparison interval appears on the preregistered grid; close uniform input scaling without interpolation or refinement.
   benchmark.population_sizes:
     value: see configs/*.yaml
     status: exploratory

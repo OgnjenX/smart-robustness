@@ -6624,3 +6624,56 @@ def test_uniform_relay_input_gain_screen_is_bounded_and_not_a_comparator() -> No
     }
     assert "not recovered SMART parameters" in registration["interpretation_boundary"]
     assert registration["baseline_promoted"] is False
+
+
+def test_uniform_relay_input_gain_screen_has_no_survivor() -> None:
+    result = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-uniform-relay-input-gain-screen-437.yaml"
+        ).read_text()
+    )
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-uniform-relay-input-gain-screen-assessment-438.yaml"
+        ).read_text()
+    )
+
+    assert result["training_repeat_verified"]
+    assert result["surviving_gains"] == []
+    assert result["selected_gain"] is None
+    by_gain = {item["uniform_relay_input_gain"]: item for item in result["outcomes"]}
+    assert sorted(set(by_gain[1.0]["match"]["relay_spike_indices"])) == [38, 39, 40, 41, 42]
+    assert sorted(set(by_gain[1.0]["mismatch"]["relay_spike_indices"])) == [22, 31, 40, 49, 58]
+    for gain in (0.75, 0.5, 0.25):
+        assert by_gain[gain]["match"]["relay_spike_indices"] == []
+        assert by_gain[gain]["mismatch"]["relay_spike_indices"] == []
+        assert len(by_gain[gain]["match"]["trn_spike_indices"]) == 243
+        assert len(by_gain[gain]["mismatch"]["trn_spike_indices"]) == 243
+    assert assessment["assessment"]["uniform_relay_input_gain_family_closed"]
+    assert not assessment["assessment"]["baseline_promoted"]
+
+
+def test_declared_input_headroom_endpoint_is_single_and_source_bounded() -> None:
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-declared-input-headroom-endpoint-registration-439.yaml"
+        ).read_text()
+    )
+    profile = yaml.safe_load((ROOT / registration["profile"]).read_text())
+
+    assert profile["learned_state"] == {"source_index": 40, "headroom_fraction": 1.0}
+    assert profile["protocol"]["uniform_relay_input_gain"] == 1.0
+    assert profile["protocol"]["top_down_cue_lead_ms"] == 0.0
+    assert registration["execution"] == {
+        "figure6_learning_runs": 1,
+        "short_match_runs": 1,
+        "short_mismatch_runs": 1,
+    }
+    assert registration["candidate"]["selection"] == (
+        "sole archived-bound endpoint; no grid or interpolation"
+    )
+    assert "not the actual Figure 6 learned state" in registration["interpretation_boundary"]
+    assert registration["baseline_promoted"] is False

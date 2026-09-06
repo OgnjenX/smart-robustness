@@ -6501,3 +6501,23 @@ def test_declared_input_zero_lead_pair_precedes_feedback_arrival() -> None:
     assert timing["first_relay_events_ms"] == pytest.approx([6.03, 6.05])
     assert timing["top_down_excitation_current_pA_at_first_relay_events"] == 0.0
     assert not assessment["assessment"]["baseline_promoted"]
+
+
+def test_arrival_aligned_sustained_match_is_registered_before_execution() -> None:
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/declared-input-arrival-aligned-sustained-match-registration-430.yaml"
+        ).read_text()
+    )
+    assert registration["source_constraints"]["derived_command_lead_ms"] == 7.85
+    assert registration["single_protocol_change_from_417"] == {
+        "top_down_current_mode": {
+            "from": "until_cued_cell_first_event",
+            "to": "sustained_epoch",
+        }
+    }
+    assert registration["protocol"]["top_down_cue_lead_ms"] == 7.85
+    assert registration["protocol"]["top_down_current_mode"] == "sustained_epoch"
+    assert registration["execution"]["mismatch_runs"] == 0
+    assert registration["baseline_promoted"] is False

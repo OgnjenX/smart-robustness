@@ -45,15 +45,8 @@ def score_match(result, *, cue_lead_ms=7.85):
     releases = dict(result.trn_detector_release_transitions_by_index)
     cycles = bool(arms) and any(result.trn_spike_indices.count(i) for i in arms) and all(
         result.trn_spike_indices.count(i) == up.get(i) == arms[i] == releases.get(i) for i in arms)
-    return {
+    gates = {
         "selected_category_event_available": bool(source_events),
-        "no_off_source_category_events_before_termination": (
-            termination is not None
-            and all(index == 40 for index, time in category_events if time <= termination)
-        ),
-        "current_terminated_on_first_selected_event": (
-            bool(source_events) and termination == source_events[0]
-        ),
         "no_relay_events_during_lead": not result.cue_lead_relay_spike_times_ms,
         "relay_active_indices": set(result.relay_spike_indices) == expected,
         "minimum_relay_events_per_active_index": all(n >= 3 for n in counts.values()),
@@ -65,6 +58,22 @@ def score_match(result, *, cue_lead_ms=7.85):
         "no_reconstructed_comparator": result.comparator_transform in (None, "none") and result.comparator_relay_floor is None and result.comparator_target_count is None,
         "no_calcium_ablation": not result.relay_calcium_ablated_at_stimulus,
     }
+    if result.top_down_current_mode == TopDownCurrentMode.SUSTAINED_EPOCH:
+        gates["current_sustained_for_complete_epoch"] = termination is None
+        gates["no_off_source_category_events_during_lead"] = all(
+            index == 40
+            for index, time in category_events
+            if time <= cue_lead_ms
+        )
+    else:
+        gates["no_off_source_category_events_before_termination"] = (
+            termination is not None
+            and all(index == 40 for index, time in category_events if time <= termination)
+        )
+        gates["current_terminated_on_first_selected_event"] = (
+            bool(source_events) and termination == source_events[0]
+        )
+    return gates
 
 
 def verify_match_event_trains(result, previous):

@@ -1,0 +1,55 @@
+schema_version: 1
+id: declared-input-arrival-aligned-sustained-match-registration-430
+date: '2026-09-06'
+status: registered-before-execution
+classification: source-mechanism-constrained-protocol-discriminator
+predecessor: docs/validation-results/declared-input-simultaneous-pair-assessment-429.yaml
+training_profile: configs/calibration/figure6_declared_interneuron_input_v1.yaml
+training_result: docs/validation-results/figure6-declared-interneuron-input-414.yaml
+runtime_fingerprint: e016bc9f3d0557e2b23ad00e7d956509df9cf44de42db6f66c6a484a42d1f7a0
+result: docs/validation-results/declared-input-arrival-aligned-sustained-match-431.yaml
+source_constraints:
+  paper_mechanism: >-
+    Matched relay cells overcome TRN inhibition when bottom-up and top-down
+    excitation are simultaneously present at the relay comparison.
+  derived_command_lead_ms: 7.85
+  lead_derivation: >-
+    Observed selected-category latency 5.85 ms plus the archived 2-ms delays on
+    all four learned layer-6II-to-relay projections.
+  current_duration_ambiguity: >-
+    Methods 4.9 specifies somatic current injection when top-down input is
+    indicated but does not report its duration. The one-event mode came from a
+    related Figure 9 protocol; sustained expectation is tested here as the
+    direct Figure 7 interpretation.
+single_protocol_change_from_417:
+  top_down_current_mode: {from: until_cued_cell_first_event, to: sustained_epoch}
+unchanged_from_417:
+  - Top-down cue lead 7.85 ms and current amplitude 800 pA.
+  - Actual fresh Figure 6 learned arrays with no headroom expansion; factor 1.
+  - Declared voltage-driven Relay_INT image input and all runtime conventions.
+  - TRN-to-relay scales 0.01, 0.01, and 0.03.
+  - No comparator, calcium ablation, equilibration, or disabled projection.
+protocol:
+  condition: match
+  top_down_current_pA: 800.0
+  top_down_current_mode: sustained_epoch
+  top_down_cue_lead_ms: 7.85
+  duration_ms: 100.0
+  dt_ms: 0.01
+  equilibration_ms: 0.0
+execution: {figure6_learning_runs: 1, match_runs: 1, mismatch_runs: 0, parameter_search: false}
+gates:
+  - Fresh Figure 6 monitored event trains and all learned maps exactly equal Artifact 414.
+  - Selected category cell 40 emits during the lead and no relay cell emits during the lead.
+  - Top-down current remains active for the complete cue plus comparison epoch.
+  - Relay active indices are exactly 38--42 with at least three events each.
+  - Nonzero TRN activity with exact sampled detector cycles.
+  - Exactly four nonspecific events in 100 ms.
+  - No comparator or calcium ablation.
+stopping_rule: >-
+  Report this one match without changing timing, current, weights, detector
+  thresholds, input sensitivity, inhibition, or scoring. Do not run mismatch
+  unless every match gate passes. A pass would remain a calibrated protocol
+  reconstruction pending independent repeat and mismatch.
+baseline_promoted: false
+

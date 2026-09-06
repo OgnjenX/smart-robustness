@@ -423,10 +423,10 @@ parameters:
     source: archived Relay_INT Dendrite0 input record, KInNeSS Equations 5-6, Grossberg and Versace Figure 7, and Artifacts 412--426
     note: The archived mixed metadata contains both a nested Layer4 projection and a declared voltage-driven image input. Under the declared-input interpretation, fresh Figure 6 passes and simultaneous comparator-free match activates exactly relay cells 38--42 four times each with 605 fresh-cycle TRN events. Five Relay_INT cells emit at 2.96 ms and projection 002 transfers strongly (about -814 pA peak in a direct compiled assay; about -759 to -760 pA at the first relay events). Match still fails because nonspecific output is five rather than four events. This source interpretation is not yet a frozen behavioral baseline.
   protocol.match_mismatch.figure7_onset_timing:
-    value: simultaneous bottom-up and top-down onset retained as primary-paper timing
-    status: primary-paper-supported-partial-match
-    source: Grossberg and Versace 2008 Figure 7 text and Artifacts 423--426
-    note: Replacing the earlier 7.85-ms top-down lead by simultaneous onset, with actual unexpanded Figure 6 weights and no comparator, restores the exact horizontal relay set and four events per cell. The nonspecific cell emits five events, including a 0.74-ms startup event before any recognition-path response, so exact 40-Hz match remains failed and mismatch is not authorized by Registration 424.
+    value: simultaneous receptor drive required; 7.85-ms command lead retained as derived alignment candidate
+    status: primary-mechanism-constrained-command-timing-underidentified
+    source: Grossberg and Versace 2008 Figure 7 text, ModelDB projection delays, and Artifacts 423--429
+    note: Zero-lead command onset restores the horizontal match set but does not deliver learned feedback before the first relay volley. The selected category event occurs at 5.85 ms, all learned layer-6II-to-relay records have 2-ms delays, and first relay events occur at 6.03--6.05 ms with zero top-down current. The fixed mismatch therefore activates all five vertical cells before feedback arrival and fails spatial selection. The paper constrains simultaneous bottom-up/top-down excitation at LGN, not an exact external-command lead. A 7.85-ms lead aligns the first learned feedback arrival to sensory onset but remains a derived protocol reconstruction.
   benchmark.population_sizes:
     value: see configs/*.yaml
     status: exploratory

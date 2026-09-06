@@ -892,3 +892,22 @@ select an equilibration interval from Figure 7. Registration 424 therefore
 does not authorize mismatch, and the classic behavioral baseline remains
 unfrozen. The next admissible work is source-grounded recovery of the legacy
 protocol/initial-state lifecycle, not another fitted conductance or threshold.
+
+Artifacts 427--429 then run one unchanged vertical condition solely to localize
+the failed simultaneous-onset match. Match and mismatch each activate all five
+directly driven bar cells four times; TRN output is 605 versus 603 events and
+nonspecific output is five versus five. Thus only the weak correct-sign TRN
+ordering survives. Overlap-only relay selection, fewer active mismatch relay
+cells, disinhibition, and the exact 40/70-Hz pair all fail without a comparator.
+
+The event-time audit exposes a protocol distinction. The selected layer-6II
+cell emits at 5.85 ms and all four archived learned-feedback projections have
+2-ms delays, so their earliest relay arrival is 7.85 ms. Yet the first relay
+volley occurs at 6.03--6.05 ms with exactly zero top-down excitation current.
+Consequently simultaneous *command onset* does not implement the paper's
+simultaneous bottom-up/top-down excitation at LGN. It lets all mismatch image
+cells fire before the two-against-one circuit can compare them. The earlier
+7.85-ms lead remains a derived receptor-arrival alignment, not a published
+protocol number. Next test that alignment with a sustained Figure 7 expectation
+as one discrete current-duration interpretation; run match before mismatch and
+do not alter model parameters or scoring.

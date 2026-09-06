@@ -6460,3 +6460,44 @@ def test_declared_input_simultaneous_mismatch_is_only_a_localization_run() -> No
     }
     assert "not an independent holdout" in registration["interpretation_boundary"]
     assert registration["baseline_promoted"] is False
+
+
+def test_declared_input_zero_lead_pair_precedes_feedback_arrival() -> None:
+    pair = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/declared-input-simultaneous-pair-428.yaml"
+        ).read_text()
+    )
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/declared-input-simultaneous-pair-assessment-429.yaml"
+        ).read_text()
+    )
+    mismatch = pair["mismatch_result"]
+
+    assert sorted(set(mismatch["relay_spike_indices"])) == [22, 31, 40, 49, 58]
+    assert all(
+        mismatch["relay_spike_indices"].count(index) == 4
+        for index in [22, 31, 40, 49, 58]
+    )
+    assert len(mismatch["trn_spike_times_ms"]) == 603
+    assert mismatch["nonspecific_spike_times_ms"] == pytest.approx(
+        [0.74, 50.23, 55.94, 74.11, 94.09]
+    )
+    assert pair["gates"]["match_more_trn_events"]
+    for gate in (
+        "mismatch_overlap_relay_set",
+        "match_more_active_relay_cells",
+        "match_nonspecific_40_hz",
+        "mismatch_more_nonspecific_events",
+        "mismatch_nonspecific_70_hz",
+    ):
+        assert not pair["gates"][gate]
+
+    timing = assessment["timing_audit"]
+    assert timing["earliest_learned_feedback_arrival_ms"] == pytest.approx(7.85)
+    assert timing["first_relay_events_ms"] == pytest.approx([6.03, 6.05])
+    assert timing["top_down_excitation_current_pA_at_first_relay_events"] == 0.0
+    assert not assessment["assessment"]["baseline_promoted"]

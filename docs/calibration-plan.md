@@ -986,3 +986,15 @@ bounded 600- and 1000-pA endpoints under simultaneous command onset. Do not
 rerun 800 pA, interpolate, extend the bounds, or combine this timing test with
 another parameter change. A 25-ms survivor is only eligible for a fresh
 100-ms pair.
+
+Artifacts 445--447 close that one-time current endpoint recheck. At 600 pA,
+the category event occurs at 8.92 ms and learned feedback arrives at 10.92 ms,
+after the 6.03-ms relay volley. At 1000 pA, the category event advances to
+4.49 ms but its 2-ms-delayed feedback still arrives at 6.49 ms, 0.46 ms after
+relay escape. Both endpoints preserve the full driven bar in match and
+mismatch and produce equal 194-event TRN output. Together with the fixed
+800-pA control, the bounded amplitude family has no survivor and is closed
+without interpolation or expansion. Next test receptor-level simultaneity as
+a protocol-semantics diagnostic: initialize the archived learned feedback
+arrival at sensory onset without integrating a top-down-only cue interval or
+altering source delays and weights.

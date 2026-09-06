@@ -447,6 +447,11 @@ parameters:
     status: rejected-behavioral-mechanism-screen
     source: archived projection 002 pathway plus Artifacts 442--444
     note: Gains 1 and 2 preserve all five image-driven relay cells in both match and mismatch, while gains 4 and 8 silence all relay cells in both conditions. Relay_INT recruitment remains image aligned and TRN counts are equal within every pair. No match-selective interval appears on the preregistered finite grid; close scalar projection-002 gain without interpolation or extension.
+  protocol.match_mismatch.corrected_input_top_down_current_recheck:
+    value: previously bounded 600- and 1000-pA endpoints with fixed 800-pA control
+    status: rejected-source-bounded-protocol-recheck
+    source: Methods 4.9 unreported somatic-current amplitude and Artifacts 443--447
+    note: Under corrected declared Relay_INT input, learned feedback first arrives at 10.92, 7.85, and 6.49 ms for 600, 800, and 1000 pA, respectively, while the relay first volley begins at 6.03 ms. Every bounded current is therefore causally late and both tested endpoint pairs retain all five image-driven cells with equal TRN output. Close this amplitude family without interpolation or expansion.
   benchmark.population_sizes:
     value: see configs/*.yaml
     status: exploratory

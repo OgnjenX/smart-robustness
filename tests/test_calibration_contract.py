@@ -6817,3 +6817,63 @@ def test_declared_input_current_recheck_is_bounded_and_single_factor() -> None:
     }
     assert "Do not interpolate" in registration["interpretation_boundary"]
     assert registration["baseline_promoted"] is False
+
+
+def test_declared_input_current_recheck_closes_every_bounded_endpoint() -> None:
+    result_path = (
+        ROOT
+        / "docs/validation-results/figure7-declared-input-top-down-current-recheck-446.yaml"
+    )
+    result = yaml.safe_load(result_path.read_text())
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-declared-input-top-down-current-recheck-assessment-447.yaml"
+        ).read_text()
+    )
+
+    assert result["surviving_currents_pA"] == []
+    assert result["selected_current_pA"] is None
+    outcomes = {item["top_down_current_pA"]: item for item in result["outcomes"]}
+    assert outcomes[600.0]["timing_ms"] == {
+        "match_category_first_event": 8.92,
+        "match_feedback_first_arrival": 10.92,
+        "match_relay_first_event": 6.03,
+        "mismatch_category_first_event": 8.92,
+        "mismatch_feedback_first_arrival": 10.92,
+        "mismatch_relay_first_event": 6.03,
+    }
+    assert outcomes[1000.0]["timing_ms"] == {
+        "match_category_first_event": 4.49,
+        "match_feedback_first_arrival": 6.49,
+        "match_relay_first_event": 6.03,
+        "mismatch_category_first_event": 4.49,
+        "mismatch_feedback_first_arrival": 6.49,
+        "mismatch_relay_first_event": 6.03,
+    }
+    for item in outcomes.values():
+        assert not item["gates"][
+            "learned_feedback_arrives_before_first_relay_event"
+        ]
+        assert sorted(set(item["match"]["relay_spike_indices"])) == [
+            38,
+            39,
+            40,
+            41,
+            42,
+        ]
+        assert sorted(set(item["mismatch"]["relay_spike_indices"])) == [
+            22,
+            31,
+            40,
+            49,
+            58,
+        ]
+        assert len(item["match"]["trn_spike_indices"]) == 194
+        assert len(item["mismatch"]["trn_spike_indices"]) == 194
+        assert not item["pass"]
+    assert assessment["result_sha256"] == (
+        "c0aa1a38b1f262cff71aebd3eadfd707f26ebea5288512b2798a561049abd961"
+    )
+    assert assessment["assessment"]["source_bounded_current_family_closed"]
+    assert not assessment["assessment"]["baseline_promoted"]

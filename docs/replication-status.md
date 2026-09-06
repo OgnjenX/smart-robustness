@@ -2,6 +2,15 @@
 
 ## Current interpretation (2026-09-07)
 
+Artifacts 445--447 close the paper's unreported top-down-current amplitude as
+a bounded explanation under the corrected Relay_INT circuit. Feedback arrives
+at 10.92, 7.85, and 6.49 ms for 600, 800, and 1000 pA, while relay escape begins
+at 6.03 ms. Even the strongest registered endpoint is 0.46 ms late; both newly
+tested endpoint pairs retain the complete sensory bars and equal 194-event TRN
+output. No interpolation or larger current is authorized. The next diagnostic
+must represent the paper's simultaneous bottom-up/top-down excitation at the
+LGN receptor level without a state-changing cue-only interval.
+
 Artifacts 442--444 reject scalar strengthening of the Relay_INT-to-relay GABA
 pathway as a standalone repair for Figure 7. At gains 1 and 2, match and
 mismatch each retain their complete five-cell sensory bar and equal TRN output;

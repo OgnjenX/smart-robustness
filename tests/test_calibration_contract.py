@@ -6980,3 +6980,42 @@ def test_receptor_prime_decomposition_has_two_fixed_disjoint_arms() -> None:
     }
     assert "Do not tune" in registration["interpretation_boundary"]
     assert registration["baseline_promoted"] is False
+
+
+def test_receptor_prime_decomposition_localizes_dominant_off_surround() -> None:
+    result_path = (
+        ROOT / "docs/validation-results/figure7-receptor-prime-decomposition-452.yaml"
+    )
+    result = yaml.safe_load(result_path.read_text())
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-receptor-prime-decomposition-assessment-453.yaml"
+        ).read_text()
+    )
+    outcomes = {item["arm"]: item for item in result["outcomes"]}
+    relay = outcomes["relay_on_center_only"]
+    off_surround = outcomes["trn_off_surround_only"]
+
+    assert result["passing_arms"] == []
+    assert sorted(set(relay["match"]["relay_spike_indices"])) == [38, 39, 40, 41, 42]
+    assert sorted(set(relay["mismatch"]["relay_spike_indices"])) == [
+        22,
+        31,
+        40,
+        49,
+        58,
+    ]
+    assert len(relay["match"]["trn_spike_indices"]) == 194
+    assert len(relay["mismatch"]["trn_spike_indices"]) == 194
+    assert off_surround["match"]["relay_spike_indices"] == []
+    assert off_surround["mismatch"]["relay_spike_indices"] == []
+    assert len(off_surround["match"]["trn_spike_indices"]) == 200
+    assert len(off_surround["mismatch"]["trn_spike_indices"]) == 200
+    assert relay["gates"]["exact_arm_primed"]
+    assert off_surround["gates"]["exact_arm_primed"]
+    assert assessment["result_sha256"] == (
+        "b4d5c00f05fa7dbe6d50f7273bead385468267ceb7a1de13d61d5dce969e7b7e"
+    )
+    assert assessment["assessment"]["causal_imbalance_localized"]
+    assert not assessment["assessment"]["baseline_promoted"]

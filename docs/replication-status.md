@@ -2,6 +2,14 @@
 
 ## Current interpretation (2026-09-07)
 
+Artifacts 451--453 decompose the failed receptor prime. Priming only direct
+layer-6II-to-relay on-center records leaves the no-prime full-bar, 194/194-TRN
+phenotype unchanged. Priming only layer-6II-to-TRN off-surround records fully
+silences both relay conditions and yields 200/200 TRN events, just like the
+combined prime. The early off-surround therefore dominates while the actual
+learned on-center cannot rescue matched cells. A single maximal archived-bound
+headroom x combined-prime endpoint is the next bounded interaction test.
+
 Artifacts 448--450 test the paper's simultaneous receptor-level condition
 directly by priming one category-40 arrival at all four layer-6II-to-relay and
 both layer-6II-to-TRN records at sensory onset. The intervention is verified on

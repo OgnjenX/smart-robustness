@@ -1025,3 +1025,13 @@ same source-40 unit arrival at sensory onset. The relay arm primes records
 controls are imported rather than rerun. This experiment localizes causal
 dominance only: neither arm is source recovery, and no amplitude, timing,
 weight, delay, or protocol dimension may be adjusted from its outcome.
+
+Artifacts 451--453 show an asymmetric decomposition. Relay on-center-only
+priming is indistinguishable from no prime: match and mismatch retain their
+complete driven bars and equal 194-event TRN trains. TRN off-surround-only
+priming is indistinguishable from the combined prime: both conditions lose all
+relay output and produce 200 TRN events. Thus early off-surround recruitment
+dominates while the actual Figure 6 learned on-center cannot rescue matched
+cells. Next test one source-bounded interaction endpoint by crossing combined
+receptor simultaneity with the maximal archived-bound selected-row headroom
+already fixed in Artifacts 439--441. No grid or interpolation is authorized.

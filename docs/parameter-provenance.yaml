@@ -457,6 +457,11 @@ parameters:
     status: rejected-causal-protocol-semantics-diagnostic
     source: Figure 7 simultaneous bottom-up/top-down LGN mechanism, archived corticothalamic records, and Artifacts 448--450
     note: All six expectation records are verifiably primed, but both match and mismatch lose all relay output and produce equal 200-event TRN trains in 25 ms. The prime collapses first-arrival delay differences and is not recovered runtime state. Receptor timing alone is insufficient; close combined priming without amplitude or timing fitting.
+  protocol.match_mismatch.receptor_prime_pathway_decomposition:
+    value: fixed source-40 unit arrival split into relay records 003/005/006/007 versus TRN records 009/012
+    status: causal-imbalance-localized-not-source-recovery
+    source: archived corticothalamic records and Artifacts 451--453
+    note: Relay-only priming leaves the no-prime full-bar 194/194-TRN phenotype unchanged. TRN-only priming independently silences both conditions with 200/200 TRN events, matching the combined prime. This localizes dominant early off-surround and insufficient actual learned on-center support; neither arm is promotable.
   benchmark.population_sizes:
     value: see configs/*.yaml
     status: exploratory

@@ -1,0 +1,49 @@
+schema_version: 1
+id: figure7-receptor-prime-decomposition-assessment-453
+date: '2026-09-07'
+status: no-arm-survivor-on-center-off-surround-imbalance-localized
+registration: docs/validation-results/figure7-receptor-prime-decomposition-registration-451.yaml
+result: docs/validation-results/figure7-receptor-prime-decomposition-452.yaml
+result_sha256: b4d5c00f05fa7dbe6d50f7273bead385468267ceb7a1de13d61d5dce969e7b7e
+classification: causal-pathway-decomposition-not-source-recovery
+training_repeat_verified: true
+controls:
+  no_prime:
+    relay_pair: full_horizontal_vs_full_vertical
+    trn_event_counts: [194, 194]
+  combined_prime:
+    relay_pair: [[], []]
+    trn_event_counts: [200, 200]
+arms:
+  relay_on_center_only:
+    primed_projection_ids: [003, 005, 006, 007]
+    primed_edge_counts: [61, 69, 5, 5]
+    match_relay_active_indices: [38, 39, 40, 41, 42]
+    mismatch_relay_active_indices: [22, 31, 40, 49, 58]
+    trn_event_counts: [194, 194]
+    pass: false
+  trn_off_surround_only:
+    primed_projection_ids: [009, 012]
+    primed_edge_counts: [48, 80]
+    match_relay_active_indices: []
+    mismatch_relay_active_indices: []
+    trn_event_counts: [200, 200]
+    pass: false
+assessment:
+  original_smart_reproduced: false
+  baseline_promoted: false
+  causal_imbalance_localized: true
+  conclusion: >-
+    Early direct on-center priming is behaviorally indistinguishable from the
+    no-prime control, whereas early TRN off-surround priming alone is
+    indistinguishable from the combined-prime suppression. The first-volley
+    imbalance is therefore asymmetric: the early off-surround dominates, and
+    the actual Figure 6 learned on-center is too weak to rescue matched cells.
+    Neither arm passes and neither is promotable.
+  next_step: >-
+    Test one preregistered source-bounded interaction endpoint: combined
+    receptor simultaneity plus the maximal archived-bound selected-row learned
+    on-center headroom already fixed in Artifacts 439--441. This directly asks
+    whether stronger learned support can rescue only two-against-one matched
+    cells from the verified early off-surround. Do not introduce a grid,
+    interpolate, or change any other timing or transfer value.

@@ -1018,3 +1018,10 @@ points to an imbalance between direct learned on-center excitation and the
 TRN-mediated off-surround. Next decompose the same fixed prime into relay-only
 and TRN-only arms, compared against the existing no-prime and combined-prime
 controls.
+
+Registration 451 fixes that decomposition before execution. Both arms use the
+same source-40 unit arrival at sensory onset. The relay arm primes records
+003/005/006/007; the TRN arm primes records 009/012. The no-prime and combined
+controls are imported rather than rerun. This experiment localizes causal
+dominance only: neither arm is source recovery, and no amplitude, timing,
+weight, delay, or protocol dimension may be adjusted from its outcome.

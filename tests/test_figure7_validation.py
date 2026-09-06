@@ -124,6 +124,28 @@ def test_receptor_prime_targets_one_category_row_on_every_expectation_path() -> 
         amplitudes = np.asarray(projection.last_amplitude[:], dtype=float)
         assert np.all(amplitudes[source_indices == 40] == 1.0)
         assert np.all(amplitudes[source_indices != 40] == 0.0)
+
+
+def test_receptor_prime_can_isolate_the_direct_on_center() -> None:
+    brian.start_scope()
+    sector = build_first_order_connected_sector(
+        conventions=figure6_runtime_conventions(), brian=brian
+    )
+    counts = dict(
+        prime_figure7_top_down_expectation_arrivals(
+            sector.projections,
+            source_index=40,
+            arrival_time=sector.network.t,
+            projection_ids=FIGURE7_TOP_DOWN_RELAY_PROJECTION_IDS,
+        )
+    )
+
+    assert set(counts) == set(FIGURE7_TOP_DOWN_RELAY_PROJECTION_IDS)
+    for projection_id in ("modeldb112923.projection.009", "modeldb112923.projection.012"):
+        assert np.all(
+            np.asarray(sector.projections[projection_id].last_amplitude[:], dtype=float)
+            == 0.0
+        )
     sector.network.run(0 * brian.ms)
 
 
@@ -496,6 +518,13 @@ def test_figure7_runner_rejects_invalid_projection_discriminators() -> None:
             use_paper_constrained_reference=True,
             top_down_cue_lead_ms=1.0,
             prime_top_down_receptors_at_stimulus=True,
+        )
+    with pytest.raises(ValueError, match="require receptor priming"):
+        run_figure7_condition(
+            condition=MatchCondition.MATCH,
+            top_down_current_pA=100.0,
+            use_paper_constrained_reference=True,
+            top_down_receptor_prime_projection_ids=FIGURE7_TOP_DOWN_RELAY_PROJECTION_IDS,
         )
 
     with pytest.raises(ValueError, match="requires exactly one"):

@@ -365,6 +365,7 @@ def prime_figure7_top_down_expectation_arrivals(
     *,
     source_index: int,
     arrival_time,
+    projection_ids: tuple[str, ...] = FIGURE7_TOP_DOWN_EXPECTATION_PROJECTION_IDS,
 ) -> tuple[tuple[str, int], ...]:
     """Prime one category event at all corticothalamic receptor gates.
 
@@ -376,11 +377,16 @@ def prime_figure7_top_down_expectation_arrivals(
 
     if not 0 <= source_index < 81:
         raise ValueError("top-down expectation source must address the 9x9 sheet")
-    unknown = set(FIGURE7_TOP_DOWN_EXPECTATION_PROJECTION_IDS) - set(projections)
+    if not projection_ids or len(set(projection_ids)) != len(projection_ids):
+        raise ValueError("top-down expectation projection IDs must be unique and nonempty")
+    invalid = set(projection_ids) - set(FIGURE7_TOP_DOWN_EXPECTATION_PROJECTION_IDS)
+    if invalid:
+        raise ValueError(f"invalid top-down expectation projections: {sorted(invalid)}")
+    unknown = set(projection_ids) - set(projections)
     if unknown:
         raise ValueError(f"missing top-down expectation projections: {sorted(unknown)}")
     counts = []
-    for projection_id in FIGURE7_TOP_DOWN_EXPECTATION_PROJECTION_IDS:
+    for projection_id in projection_ids:
         projection = projections[projection_id]
         if hasattr(projection, "blocks"):
             block_sources = zip(
@@ -787,6 +793,7 @@ def run_figure7_condition(
     disabled_projection_ids: tuple[str, ...] = (),
     top_down_relay_source_indices: frozenset[int] | None = None,
     prime_top_down_receptors_at_stimulus: bool = False,
+    top_down_receptor_prime_projection_ids: tuple[str, ...] | None = None,
     comparator_relay_floor: float | None = None,
     comparator_half_max_gate: bool = False,
     comparator_top_k_targets: int | None = None,
@@ -851,6 +858,11 @@ def run_figure7_condition(
         raise ValueError("receptor priming cannot be combined with a cue lead")
     if prime_top_down_receptors_at_stimulus and cpp_standalone_directory is not None:
         raise ValueError("receptor priming is a numpy protocol diagnostic")
+    if (
+        top_down_receptor_prime_projection_ids is not None
+        and not prime_top_down_receptors_at_stimulus
+    ):
+        raise ValueError("receptor-prime projection IDs require receptor priming")
     if not np.isfinite(uniform_relay_input_gain) or not (
         0.0 < uniform_relay_input_gain <= 1.0
     ):
@@ -1276,6 +1288,11 @@ def run_figure7_condition(
                 sector.projections,
                 source_index=40,
                 arrival_time=sector.network.t,
+                projection_ids=(
+                    FIGURE7_TOP_DOWN_EXPECTATION_PROJECTION_IDS
+                    if top_down_receptor_prime_projection_ids is None
+                    else top_down_receptor_prime_projection_ids
+                ),
             )
         )
     cue = ClassicMatchMismatchCue(

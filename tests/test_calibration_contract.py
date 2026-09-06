@@ -6944,3 +6944,39 @@ def test_receptor_simultaneity_prime_silences_both_conditions() -> None:
     )
     assert assessment["assessment"]["combined_prime_closed_without_tuning"]
     assert not assessment["assessment"]["baseline_promoted"]
+
+
+def test_receptor_prime_decomposition_has_two_fixed_disjoint_arms() -> None:
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-receptor-prime-decomposition-registration-451.yaml"
+        ).read_text()
+    )
+    profile = yaml.safe_load((ROOT / registration["profile"]).read_text())
+    relay_ids = profile["arms"]["relay_on_center_only"]["projection_ids"]
+    trn_ids = profile["arms"]["trn_off_surround_only"]["projection_ids"]
+
+    assert relay_ids == [
+        "modeldb112923.projection.003",
+        "modeldb112923.projection.005",
+        "modeldb112923.projection.006",
+        "modeldb112923.projection.007",
+    ]
+    assert trn_ids == [
+        "modeldb112923.projection.009",
+        "modeldb112923.projection.012",
+    ]
+    assert not set(relay_ids) & set(trn_ids)
+    assert profile["fixed_prime"] == {
+        "source_index": 40,
+        "arrival_time_ms_from_stimulus_onset": 0.0,
+        "amplitude": 1.0,
+    }
+    assert registration["execution"] == {
+        "figure6_learning_runs": 1,
+        "short_match_runs": 2,
+        "short_mismatch_runs": 2,
+    }
+    assert "Do not tune" in registration["interpretation_boundary"]
+    assert registration["baseline_promoted"] is False

@@ -975,3 +975,14 @@ transfer-strength test rather than loss of interneuron recruitment. No gain
 passes. Close this grid without interpolation or extension. Before another
 behavioral screen, audit the source-record timing of relay excitation,
 Relay_INT inhibition, and learned feedback at the first relay volley.
+
+Registration 445 resolves that timing order from the archived records and the
+fixed 800-pA control: Relay_INT inhibition arrives at 3.06 ms, relay events
+begin at 6.03--6.05 ms, and the selected layer-6II event at 5.85 ms cannot
+deliver learned feedback through its 2-ms delay until 7.85 ms. The current
+amplitude remains unreported in Methods 4.9. Because the declared Relay_INT
+input is a later upstream source-semantic correction, reopen only the already
+bounded 600- and 1000-pA endpoints under simultaneous command onset. Do not
+rerun 800 pA, interpolate, extend the bounds, or combine this timing test with
+another parameter change. A 25-ms survivor is only eligible for a fresh
+100-ms pair.

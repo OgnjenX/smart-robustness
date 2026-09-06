@@ -6777,3 +6777,43 @@ def test_interneuron_gaba_gain_screen_has_no_match_selective_survivor() -> None:
     )
     assert assessment["assessment"]["projection_002_gain_grid_closed"]
     assert not assessment["assessment"]["baseline_promoted"]
+
+
+def test_declared_input_current_recheck_is_bounded_and_single_factor() -> None:
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-declared-input-top-down-current-recheck-registration-445.yaml"
+        ).read_text()
+    )
+    profile = yaml.safe_load((ROOT / registration["profile"]).read_text())
+
+    assert profile["dimension"] == {
+        "name": "top_down_current_pA",
+        "source_status": "not_identifiable",
+        "previously_registered_bounds_pA": [600.0, 1000.0],
+        "fixed_control_pA": 800.0,
+        "endpoints_to_recheck_pA": [600.0, 1000.0],
+    }
+    assert profile["protocol"] == {
+        "duration_ms": 25.0,
+        "dt_ms": 0.01,
+        "top_down_current_mode": "until_cued_cell_first_event",
+        "top_down_cue_lead_ms": 0.0,
+        "uniform_relay_input_gain": 1.0,
+        "projection_002_gain": 1.0,
+        "learned_feedback_delay_ms": 2.0,
+    }
+    assert registration["screen"]["fixed_control_observation"] == {
+        "category_first_event_ms": 5.85,
+        "learned_feedback_first_arrival_ms": 7.85,
+        "relay_first_event_ms": 6.03,
+        "spatial_pair_pass": False,
+    }
+    assert registration["execution"] == {
+        "figure6_learning_runs": 1,
+        "short_match_runs": 2,
+        "short_mismatch_runs": 2,
+    }
+    assert "Do not interpolate" in registration["interpretation_boundary"]
+    assert registration["baseline_promoted"] is False

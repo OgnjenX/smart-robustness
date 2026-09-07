@@ -1,0 +1,30 @@
+schema_version: 1
+id: figure6-declared-interneuron-input-gain0p8-registration-464
+date: '2026-09-07'
+status: registered-before-execution
+classification: persistent-behavior-calibration-prerequisite-not-source-recovery
+predecessor: docs/validation-results/figure7-receptor-prime-max-headroom-interneuron-subunit-gain-assessment-463.yaml
+profile: configs/calibration/figure6_declared_interneuron_input_gain0p8_v1.yaml
+reference_profile: configs/calibration/figure6_declared_interneuron_input_v1.yaml
+reference_result: docs/validation-results/figure6-declared-interneuron-input-414.yaml
+screen_result: docs/validation-results/figure7-receptor-prime-max-headroom-interneuron-subunit-gain-462.yaml
+screen_result_sha256: 407a61207cc2207dfad6f7d54f3b2c7fe35eb8759d0a423397ae3a990631f5be
+result: docs/validation-results/figure6-declared-interneuron-input-gain0p8-465.yaml
+change:
+  projection_id: modeldb112923.projection.002
+  effective_gain: 0.8
+  lifecycle: persistent_during_learning_and_recognition
+fixed_gates:
+  relay_active_indices: [38, 39, 40, 41, 42]
+  events_per_active_relay: 4
+  total_relay_events: 20
+  cortical_chain_complete: true
+  causal_learning_pair: true
+  horizontal_combined_map_contrast: '>0'
+execution: {figure6_learning_runs: 1, match_runs: 0, mismatch_runs: 0, parameter_search: false}
+interpretation_boundary: >-
+  This run changes no parameter after observing Figure 6. A pass is only a
+  prerequisite for an independently registered complete Figure 7 pair; it is
+  not original SMART reproduction. Failure rejects persistent gain 0.8 and
+  does not authorize a nearby value or a relaxed Figure 6 gate.
+baseline_promoted: false

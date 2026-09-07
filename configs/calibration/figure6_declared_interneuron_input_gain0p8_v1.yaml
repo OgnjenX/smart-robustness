@@ -1,0 +1,39 @@
+schema_version: 1
+name: figure6-declared-interneuron-input-gain0p8-v1
+status: registered-before-execution
+classification: persistent-behavior-calibration-prerequisite-not-source-recovery
+registration_artifact: docs/validation-results/figure6-declared-interneuron-input-gain0p8-registration-464.yaml
+base_profile: configs/calibration/figure6_kinness_equation27_transition_v1.yaml
+baseline_profile: configs/calibration/figure6_declared_interneuron_input_v1.yaml
+runtime_overrides:
+  projection_source_convention: paper_supplement_cross_checked
+  trn_spike_event_coordinate: absolute_physical
+  trn_spike_event_threshold_mV: -20.0
+  trn_spike_event_release_mV: -30.0
+  trn_spike_event_proximal_blend_fraction: null
+  mixed_input_gate_convention: declared_external_input
+trn_to_relay_gaba:
+  scales:
+    modeldb112923.projection.000: 0.01
+    modeldb112923.projection.001: 0.01
+    modeldb112923.projection.002: 0.8
+    modeldb112923.projection.004: 0.03
+source_conflict:
+  audit: docs/validation-results/relay-interneuron-mixed-gate-resolution-460.yaml
+  calibration_screen: docs/validation-results/figure7-receptor-prime-max-headroom-interneuron-subunit-gain-462.yaml
+  candidate: Persistent 0.8 effective scale on projection 002; not a recovered source value.
+  limitation: Must pass Figure 6 before any complete recognition test.
+monitored_populations:
+  - thalamic_relay
+  - thalamic_interneuron
+  - trn
+  - layer4_excitatory_v1
+  - layer23_excitatory_v1
+  - layer5_excitatory_v1
+  - layer6i_excitatory_v1
+  - layer6ii_excitatory_v1
+next_gate: >-
+  If every fixed Figure 6 prerequisite passes, preregister one fresh 100-ms
+  Figure 7 pair using the resulting learned arrays, maximal archived-bound
+  headroom, all-six receptor prime, and persistent gain 0.8. Failure rejects
+  persistence without altering the gain or Figure 6 gates.

@@ -1085,3 +1085,13 @@ and reject a newly invented combined route. Because exact legacy gain handling
 is unavailable, a subsequent finite projection-002 scaling screen is permitted
 only as transparent behavior calibration, with the source value retained as
 control and a mandatory persistent Figure 6 prerequisite for any survivor.
+
+Artifacts 461--463 test the finite trace-derived gains 0.9, 0.8, 0.7, and 0.6
+with the source gain 1.0 imported as the hash-pinned rejected control. Gain 0.8
+is the sole short-window survivor: all five matched cells fire, mismatch is
+confined to overlap cell 40, and match has more TRN events (183 versus 165).
+The neighboring values fail on opposite sides, so this is a narrow effective
+regime rather than evidence for a robust or recovered source constant.
+Registration 464 applies exactly 0.8 persistently during Figure 6. Every
+existing learning prerequisite remains fixed; only a complete pass may unlock
+one independently registered 100-ms Figure 7 pair.

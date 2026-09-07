@@ -28,6 +28,17 @@ input interpretation therefore remains active, but exact legacy precedence is
 still unavailable and no combined route is authorized. Any subsequent change
 to projection 002 must be labeled behavior calibration, not source recovery.
 
+Artifacts 461--463 execute the trace-derived 0.9/0.8/0.7/0.6 effective
+projection-002 gain screen under the fixed maximal-headroom receptor-prime
+endpoint. Gain 0.8 is the sole short-window survivor: match emits once in all
+five horizontal cells, mismatch emits only overlap cell 40, and TRN output is
+183 versus 165. Gain 0.9 suppresses match center and all mismatch output;
+gains 0.7 and 0.6 admit mismatch cells 22 and 58 and reverse TRN ordering.
+This is the first registered endogenous short-window two-against-one geometry,
+but it is a narrow behavior-calibrated regime, not recovered source SMART.
+Registration 464 now requires the 0.8 gain to pass a fresh persistent Figure 6
+episode before any 100-ms recognition pair is allowed.
+
 Artifacts 454--456 cross the early combined receptor prime with the maximal
 archived-bound learned row. It partially counteracts inhibition, but only outer
 match cells 38 and 42 fire, mismatch is fully silent, and TRN direction is

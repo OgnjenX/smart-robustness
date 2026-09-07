@@ -7210,3 +7210,57 @@ def test_subunit_interneuron_gain_screen_is_finite_and_post_source() -> None:
     assert "post-source behavior calibration" in registration["interpretation_boundary"]
     assert "without interpolation or extension" in registration["interpretation_boundary"]
     assert registration["baseline_promoted"] is False
+
+
+def test_subunit_interneuron_gain_screen_has_sole_0p8_survivor() -> None:
+    result_path = (
+        ROOT
+        / "docs/validation-results/figure7-receptor-prime-max-headroom-interneuron-subunit-gain-462.yaml"
+    )
+    result = yaml.safe_load(result_path.read_text())
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-receptor-prime-max-headroom-interneuron-subunit-gain-assessment-463.yaml"
+        ).read_text()
+    )
+
+    assert result["surviving_gains"] == [0.8]
+    assert result["selected_gain"] == pytest.approx(0.8)
+    survivor = next(item for item in result["outcomes"] if item["projection_002_gain"] == 0.8)
+    assert survivor["pass"]
+    assert set(survivor["match"]["relay_spike_indices"]) == {38, 39, 40, 41, 42}
+    assert survivor["mismatch"]["relay_spike_indices"] == [40]
+    assert len(survivor["match"]["trn_spike_indices"]) == 183
+    assert len(survivor["mismatch"]["trn_spike_indices"]) == 165
+    assert assessment["result_sha256"] == (
+        "407a61207cc2207dfad6f7d54f3b2c7fe35eb8759d0a423397ae3a990631f5be"
+    )
+    assert not assessment["assessment"]["original_smart_reproduced"]
+    assert not assessment["assessment"]["baseline_promoted"]
+    assert not assessment["assessment"]["source_parameter_recovered"]
+
+
+def test_persistent_gain0p8_figure6_prerequisite_is_fixed() -> None:
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure6-declared-interneuron-input-gain0p8-registration-464.yaml"
+        ).read_text()
+    )
+    profile = yaml.safe_load((ROOT / registration["profile"]).read_text())
+
+    assert profile["trn_to_relay_gaba"]["scales"] == {
+        "modeldb112923.projection.000": 0.01,
+        "modeldb112923.projection.001": 0.01,
+        "modeldb112923.projection.002": 0.8,
+        "modeldb112923.projection.004": 0.03,
+    }
+    assert registration["change"] == {
+        "projection_id": "modeldb112923.projection.002",
+        "effective_gain": 0.8,
+        "lifecycle": "persistent_during_learning_and_recognition",
+    }
+    assert registration["execution"]["parameter_search"] is False
+    assert "does not authorize a nearby value" in registration["interpretation_boundary"]
+    assert registration["baseline_promoted"] is False

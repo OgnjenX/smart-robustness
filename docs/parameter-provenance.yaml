@@ -472,6 +472,11 @@ parameters:
     status: causal-localization-no-parameter-selected
     source: Artifacts 457--459
     note: The first 25 ms exactly reproduce Artifact 455. Match later recruits all five horizontal cells near 40 ms, but mismatch remains silent and TRN direction is wrong at 377 versus 443 events. Match and mismatch overlap cell 40 are identical in all registered current and voltage samples through 15 ms. At 4 ms, Relay_INT GABA changes the overlap's direct plus top-down minus TRN balance from approximately +511 pA to a four-path net of -259 pA. Audit the mixed gate's source semantics before another behavioral intervention.
+  calibration.figure7.relay_interneuron_effective_subunit_gain:
+    value: 0.8 sole survivor from finite gains 0.9, 0.8, 0.7, 0.6
+    status: short-mechanism-survivor-persistent-figure6-pending
+    source: trace-derived behavior calibration in Artifacts 459--463; archived source control remains 1.0
+    note: Gain 0.8 produces all five matched relay cells, overlap-only mismatch, and 183/165 match/mismatch TRN events in 25 ms. Adjacent registered values fail. The value is not a recovered SMART parameter and cannot advance until the same scale passes Figure 6 persistently; no interpolation is authorized.
   benchmark.population_sizes:
     value: see configs/*.yaml
     status: exploratory

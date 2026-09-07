@@ -66,6 +66,13 @@ The paper does not identify a numerical boundary between initial selection and
 later rebound. No observed candidate transition may be reused as a post-hoc
 time cutoff; event classification must use physiology and morphology fixed
 before the run. Artifact 468 remains failed under its earlier preregistration.
+Artifacts 471--473 apply that rule to an identity-locked calcium trace: the
+first nonoverlap escapes have no preceding hyperpolarization or T-channel
+availability recovery, and the output consists of isolated peaks rather than a
+transient burst. The failed endpoint is therefore not a hidden reproduction of
+the paper's later rebound mode. The next admissible step is readout-only
+localization of the waning inhibitory balance in the same trace, followed by an
+explicit revision of the remaining source uncertainty—not calcium fitting.
 
 ### D — locked holdout evaluation
 

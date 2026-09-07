@@ -1,0 +1,639 @@
+schema_version: 1
+id: figure7-persistent-gain0p8-preescape-balance-475
+date: '2026-09-07'
+status: preescape-balance-localized-source-uncertainty-remains
+classification: readout-only-current-balance-localization-no-parameter-search
+registration: docs/validation-results/figure7-persistent-gain0p8-preescape-balance-registration-474.yaml
+source_result_sha256: e1b06ab9253c7507dc617d270a54b6262d850d5fc8bbf34b64790eda3bce9a26
+trace_sha256: 6085eb6dbdeea1cf4238c8aef2d57303e0a43fa42014cad3cbf7e7047f1db7c3
+per_cell:
+  '22':
+    first_event_ms: 49.75
+    epochs:
+      fixed_early_inhibition:
+        start_ms: 3.0
+        end_ms_exclusive: 15.0
+        sample_count: 1200
+        current_groups:
+          direct_image_input:
+            mean_pA: 404.22815755721973
+            minimum_pA: 225.89676983761993
+            maximum_pA: 580.600019492386
+            time_integral_pA_ms: 4848.14533368069
+          top_down_excitation:
+            mean_pA: 11.751981683041318
+            minimum_pA: 7.335271264488718
+            maximum_pA: 22.17753537078202
+            time_integral_pA_ms: 140.87621616331947
+          trn_gaba:
+            mean_pA: -245.55910347879123
+            minimum_pA: -471.2217669959335
+            maximum_pA: -102.76692061398892
+            time_integral_pA_ms: -2944.2954046430395
+          interneuron_gaba:
+            mean_pA: -261.83695190129606
+            minimum_pA: -703.447937472605
+            maximum_pA: 0.0
+            time_integral_pA_ms: -3141.973619004384
+        net_external_plus_synaptic:
+          mean_pA: -91.41591613982631
+          minimum_pA: -421.7541202008214
+          maximum_pA: 145.63184091773496
+          time_integral_pA_ms: -1097.2474738034146
+          fraction_samples_positive: 0.3325
+        intrinsic_and_axial_ranges_pA:
+          i_ca_soma:
+            minimum: 11.824194908304845
+            maximum: 16.542088279608638
+          i_na_soma:
+            minimum: 31.899051099059843
+            maximum: 159.37909711076705
+          i_k_soma:
+            minimum: -40.55107023654165
+            maximum: -4.771624978448829
+          i_axial_inward_soma:
+            minimum: 1.9788286740165295
+            maximum: 162.41792421919212
+      maintenance:
+        start_ms: 15.0
+        end_ms_exclusive: 49.25
+        sample_count: 3425
+        current_groups:
+          direct_image_input:
+            mean_pA: 270.52510255301223
+            minimum_pA: 229.64506934733424
+            maximum_pA: 292.24166387105555
+            time_integral_pA_ms: 9262.875328774579
+          top_down_excitation:
+            mean_pA: 2.7510166737261827
+            minimum_pA: 0.3922915260322288
+            maximum_pA: 7.327304040317224
+            time_integral_pA_ms: 94.17544827618332
+          trn_gaba:
+            mean_pA: -286.7119865604152
+            minimum_pA: -421.81707874046754
+            maximum_pA: -203.79825696809704
+            time_integral_pA_ms: -9816.021254480009
+          interneuron_gaba:
+            mean_pA: -0.8293014891958961
+            minimum_pA: -13.892634628134536
+            maximum_pA: -5.742555722505528e-07
+            time_integral_pA_ms: -28.33411282894751
+        net_external_plus_synaptic:
+          mean_pA: -14.265168822872702
+          minimum_pA: -161.6571034097243
+          maximum_pA: 57.40036581540942
+          time_integral_pA_ms: -487.3045902581954
+          fraction_samples_positive: 0.4586861313868613
+        intrinsic_and_axial_ranges_pA:
+          i_ca_soma:
+            minimum: 12.486602698341192
+            maximum: 16.43787647010256
+          i_na_soma:
+            minimum: 8.631621367657464
+            maximum: 4016.1768470053644
+          i_k_soma:
+            minimum: -171.96156892437827
+            maximum: -2.6176007550084748
+          i_axial_inward_soma:
+            minimum: 90.68878314455527
+            maximum: 158.43942044056965
+      final_preescape:
+        start_ms: 44.75
+        end_ms_exclusive: 49.25
+        sample_count: 450
+        current_groups:
+          direct_image_input:
+            mean_pA: 245.57326519806668
+            minimum_pA: 229.64506934733424
+            maximum_pA: 253.50485845234104
+            time_integral_pA_ms: 1102.6639437523004
+          top_down_excitation:
+            mean_pA: 2.6158859284746185
+            minimum_pA: 2.0472557473751287
+            maximum_pA: 3.2720348249988604
+            time_integral_pA_ms: 11.744890225273899
+          trn_gaba:
+            mean_pA: -247.15468506002557
+            minimum_pA: -393.3494279301781
+            maximum_pA: -212.88852376017786
+            time_integral_pA_ms: -1109.1648930116621
+          interneuron_gaba:
+            mean_pA: -2.0876375966560102e-06
+            minimum_pA: -5.1951120219599525e-06
+            maximum_pA: -5.742555722505528e-07
+            time_integral_pA_ms: -9.365522346980974e-06
+        net_external_plus_synaptic:
+          mean_pA: 1.034463978878158
+          minimum_pA: -161.6571034097243
+          maximum_pA: 43.88836432205004
+          time_integral_pA_ms: 5.243931600390049
+          fraction_samples_positive: 0.7711111111111111
+        intrinsic_and_axial_ranges_pA:
+          i_ca_soma:
+            minimum: 12.56377919616265
+            maximum: 13.863287441109268
+          i_na_soma:
+            minimum: 45.09379965353066
+            maximum: 4016.1768470053644
+          i_k_soma:
+            minimum: -171.96156892437827
+            maximum: -8.819888376476191
+          i_axial_inward_soma:
+            minimum: 90.68878314455527
+            maximum: 152.77474681839155
+  '31':
+    first_event_ms: 49.31
+    epochs:
+      fixed_early_inhibition:
+        start_ms: 3.0
+        end_ms_exclusive: 15.0
+        sample_count: 1200
+        current_groups:
+          direct_image_input:
+            mean_pA: 407.8057612561426
+            minimum_pA: 220.8903953274016
+            maximum_pA: 581.3933188762425
+            time_integral_pA_ms: 4891.077793655893
+          top_down_excitation:
+            mean_pA: 27.6485217203697
+            minimum_pA: 17.87964224888686
+            maximum_pA: 49.63007429728861
+            time_integral_pA_ms: 331.44471206170556
+          trn_gaba:
+            mean_pA: -249.88836322252334
+            minimum_pA: -428.02491683184803
+            maximum_pA: -123.74087340873386
+            time_integral_pA_ms: -2996.2817019189133
+          interneuron_gaba:
+            mean_pA: -264.8292315090327
+            minimum_pA: -715.755809708524
+            maximum_pA: 0.0
+            time_integral_pA_ms: -3177.8804829962432
+        net_external_plus_synaptic:
+          mean_pA: -79.26331175504369
+          minimum_pA: -438.2984476563116
+          maximum_pA: 147.07585992752922
+          time_integral_pA_ms: -951.6396791975576
+          fraction_samples_positive: 0.325
+        intrinsic_and_axial_ranges_pA:
+          i_ca_soma:
+            minimum: 11.827159038941472
+            maximum: 15.198575707626349
+          i_na_soma:
+            minimum: 11.212629643993141
+            maximum: 88.09752310980437
+          i_k_soma:
+            minimum: -17.079416000096554
+            maximum: -4.795564098005084
+          i_axial_inward_soma:
+            minimum: 3.203957740571903
+            maximum: 164.62078350085915
+      maintenance:
+        start_ms: 15.0
+        end_ms_exclusive: 48.81
+        sample_count: 3381
+        current_groups:
+          direct_image_input:
+            mean_pA: 272.51494903847504
+            minimum_pA: 236.57586645634794
+            maximum_pA: 297.021742228091
+            time_integral_pA_ms: 9211.062438947421
+          top_down_excitation:
+            mean_pA: 6.780336349012951
+            minimum_pA: 0.9738075863954889
+            maximum_pA: 17.860417233066578
+            time_integral_pA_ms: 229.12745401209185
+          trn_gaba:
+            mean_pA: -282.84535792567056
+            minimum_pA: -414.9512745803015
+            maximum_pA: -201.7874862948879
+            time_integral_pA_ms: -9559.497559357871
+          interneuron_gaba:
+            mean_pA: -2.847432345866161
+            minimum_pA: -24.025272057888692
+            maximum_pA: -4.2542415727491374e-06
+            time_integral_pA_ms: -96.13280988873295
+        net_external_plus_synaptic:
+          mean_pA: -6.397504884048686
+          minimum_pA: -129.63851252591144
+          maximum_pA: 60.09000760541839
+          time_integral_pA_ms: -215.44047628709072
+          fraction_samples_positive: 0.4797397219757468
+        intrinsic_and_axial_ranges_pA:
+          i_ca_soma:
+            minimum: 12.509884163294092
+            maximum: 14.925272176595984
+          i_na_soma:
+            minimum: 7.040278863261894
+            maximum: 4046.6235933267226
+          i_k_soma:
+            minimum: -173.8333989688245
+            maximum: -2.0632782574137374
+          i_axial_inward_soma:
+            minimum: 87.30433864898473
+            maximum: 159.5719105433128
+      final_preescape:
+        start_ms: 44.31
+        end_ms_exclusive: 48.81
+        sample_count: 450
+        current_groups:
+          direct_image_input:
+            mean_pA: 251.9200216454006
+            minimum_pA: 236.57586645634794
+            maximum_pA: 258.19120919310524
+            time_integral_pA_ms: 1131.1978638222408
+          top_down_excitation:
+            mean_pA: 6.723669185247186
+            minimum_pA: 5.283172374144661
+            maximum_pA: 8.347111868715984
+            time_integral_pA_ms: 30.18835991239804
+          trn_gaba:
+            mean_pA: -245.37016007550488
+            minimum_pA: -349.20244743438354
+            maximum_pA: -203.05307435166247
+            time_integral_pA_ms: -1101.4044427308422
+          interneuron_gaba:
+            mean_pA: -15.020479183796112
+            minimum_pA: -24.025272057888692
+            maximum_pA: -4.2542415727491374e-06
+            time_integral_pA_ms: -67.52323228497181
+        net_external_plus_synaptic:
+          mean_pA: -1.7469484286532295
+          minimum_pA: -121.12821042545514
+          maximum_pA: 57.164880872600556
+          time_integral_pA_ms: -7.5414512811753625
+          fraction_samples_positive: 0.38666666666666666
+        intrinsic_and_axial_ranges_pA:
+          i_ca_soma:
+            minimum: 12.877648769186035
+            maximum: 14.400163620303923
+          i_na_soma:
+            minimum: 45.78732770993167
+            maximum: 4046.6235933267226
+          i_k_soma:
+            minimum: -173.8333989688245
+            maximum: -8.99900123795143
+          i_axial_inward_soma:
+            minimum: 87.30433864898473
+            maximum: 153.2877879084442
+  '49':
+    first_event_ms: 49.31
+    epochs:
+      fixed_early_inhibition:
+        start_ms: 3.0
+        end_ms_exclusive: 15.0
+        sample_count: 1200
+        current_groups:
+          direct_image_input:
+            mean_pA: 407.8057612561426
+            minimum_pA: 220.8903953274016
+            maximum_pA: 581.3933188762425
+            time_integral_pA_ms: 4891.077793655893
+          top_down_excitation:
+            mean_pA: 27.6485217203697
+            minimum_pA: 17.87964224888686
+            maximum_pA: 49.63007429728861
+            time_integral_pA_ms: 331.44471206170556
+          trn_gaba:
+            mean_pA: -249.88836322252337
+            minimum_pA: -428.0249168318481
+            maximum_pA: -123.74087340873386
+            time_integral_pA_ms: -2996.2817019189133
+          interneuron_gaba:
+            mean_pA: -264.8292315090327
+            minimum_pA: -715.755809708524
+            maximum_pA: 0.0
+            time_integral_pA_ms: -3177.8804829962432
+        net_external_plus_synaptic:
+          mean_pA: -79.26331175504373
+          minimum_pA: -438.2984476563116
+          maximum_pA: 147.07585992752922
+          time_integral_pA_ms: -951.6396791975583
+          fraction_samples_positive: 0.325
+        intrinsic_and_axial_ranges_pA:
+          i_ca_soma:
+            minimum: 11.827159038941472
+            maximum: 15.198575707626345
+          i_na_soma:
+            minimum: 11.212629643993141
+            maximum: 88.09752310980437
+          i_k_soma:
+            minimum: -17.079416000096554
+            maximum: -4.795564098005084
+          i_axial_inward_soma:
+            minimum: 3.203957740571903
+            maximum: 164.62078350085915
+      maintenance:
+        start_ms: 15.0
+        end_ms_exclusive: 48.81
+        sample_count: 3381
+        current_groups:
+          direct_image_input:
+            mean_pA: 272.5149490384751
+            minimum_pA: 236.57586645634794
+            maximum_pA: 297.021742228091
+            time_integral_pA_ms: 9211.062438947421
+          top_down_excitation:
+            mean_pA: 6.780336349012951
+            minimum_pA: 0.9738075863954889
+            maximum_pA: 17.860417233066578
+            time_integral_pA_ms: 229.12745401209185
+          trn_gaba:
+            mean_pA: -282.84535792567056
+            minimum_pA: -414.95127458030174
+            maximum_pA: -201.787486294888
+            time_integral_pA_ms: -9559.497559357871
+          interneuron_gaba:
+            mean_pA: -2.847432345866161
+            minimum_pA: -24.025272057888692
+            maximum_pA: -4.2542415727491374e-06
+            time_integral_pA_ms: -96.13280988873295
+        net_external_plus_synaptic:
+          mean_pA: -6.3975048840486775
+          minimum_pA: -129.63851252591172
+          maximum_pA: 60.090007605418336
+          time_integral_pA_ms: -215.44047628709035
+          fraction_samples_positive: 0.4797397219757468
+        intrinsic_and_axial_ranges_pA:
+          i_ca_soma:
+            minimum: 12.50988416329409
+            maximum: 14.925272176595984
+          i_na_soma:
+            minimum: 7.040278863261894
+            maximum: 4046.6235933267226
+          i_k_soma:
+            minimum: -173.8333989688245
+            maximum: -2.0632782574137374
+          i_axial_inward_soma:
+            minimum: 87.30433864898473
+            maximum: 159.5719105433128
+      final_preescape:
+        start_ms: 44.31
+        end_ms_exclusive: 48.81
+        sample_count: 450
+        current_groups:
+          direct_image_input:
+            mean_pA: 251.9200216454006
+            minimum_pA: 236.57586645634794
+            maximum_pA: 258.19120919310524
+            time_integral_pA_ms: 1131.1978638222408
+          top_down_excitation:
+            mean_pA: 6.723669185247186
+            minimum_pA: 5.283172374144661
+            maximum_pA: 8.347111868715984
+            time_integral_pA_ms: 30.18835991239804
+          trn_gaba:
+            mean_pA: -245.37016007550488
+            minimum_pA: -349.20244743438354
+            maximum_pA: -203.05307435166256
+            time_integral_pA_ms: -1101.4044427308424
+          interneuron_gaba:
+            mean_pA: -15.020479183796116
+            minimum_pA: -24.025272057888692
+            maximum_pA: -4.2542415727491374e-06
+            time_integral_pA_ms: -67.52323228497181
+        net_external_plus_synaptic:
+          mean_pA: -1.7469484286532446
+          minimum_pA: -121.12821042545514
+          maximum_pA: 57.16488087260047
+          time_integral_pA_ms: -7.541451281175426
+          fraction_samples_positive: 0.38666666666666666
+        intrinsic_and_axial_ranges_pA:
+          i_ca_soma:
+            minimum: 12.877648769186024
+            maximum: 14.400163620303921
+          i_na_soma:
+            minimum: 45.78732770993167
+            maximum: 4046.6235933267226
+          i_k_soma:
+            minimum: -173.8333989688245
+            maximum: -8.999001237951402
+          i_axial_inward_soma:
+            minimum: 87.30433864898473
+            maximum: 153.2877879084442
+  '58':
+    first_event_ms: 49.75
+    epochs:
+      fixed_early_inhibition:
+        start_ms: 3.0
+        end_ms_exclusive: 15.0
+        sample_count: 1200
+        current_groups:
+          direct_image_input:
+            mean_pA: 404.22815755721973
+            minimum_pA: 225.89676983761993
+            maximum_pA: 580.600019492386
+            time_integral_pA_ms: 4848.14533368069
+          top_down_excitation:
+            mean_pA: 11.751981683041317
+            minimum_pA: 7.335271264488719
+            maximum_pA: 22.17753537078202
+            time_integral_pA_ms: 140.87621616331947
+          trn_gaba:
+            mean_pA: -245.55910347879126
+            minimum_pA: -471.2217669959338
+            maximum_pA: -102.76692061398893
+            time_integral_pA_ms: -2944.2954046430395
+          interneuron_gaba:
+            mean_pA: -261.83695190129606
+            minimum_pA: -703.447937472605
+            maximum_pA: 0.0
+            time_integral_pA_ms: -3141.973619004384
+        net_external_plus_synaptic:
+          mean_pA: -91.41591613982632
+          minimum_pA: -421.7541202008214
+          maximum_pA: 145.63184091773496
+          time_integral_pA_ms: -1097.2474738034146
+          fraction_samples_positive: 0.3325
+        intrinsic_and_axial_ranges_pA:
+          i_ca_soma:
+            minimum: 11.824194908304845
+            maximum: 16.542088279608638
+          i_na_soma:
+            minimum: 31.899051099059843
+            maximum: 159.37909711076705
+          i_k_soma:
+            minimum: -40.55107023654165
+            maximum: -4.771624978448829
+          i_axial_inward_soma:
+            minimum: 1.9788286740165295
+            maximum: 162.41792421919212
+      maintenance:
+        start_ms: 15.0
+        end_ms_exclusive: 49.25
+        sample_count: 3425
+        current_groups:
+          direct_image_input:
+            mean_pA: 270.52510255301223
+            minimum_pA: 229.6450693473339
+            maximum_pA: 292.24166387105555
+            time_integral_pA_ms: 9262.875328774579
+          top_down_excitation:
+            mean_pA: 2.7510166737261827
+            minimum_pA: 0.39229152603222883
+            maximum_pA: 7.327304040317225
+            time_integral_pA_ms: 94.17544827618332
+          trn_gaba:
+            mean_pA: -286.71198656041526
+            minimum_pA: -421.81707874046754
+            maximum_pA: -203.79825696809718
+            time_integral_pA_ms: -9816.02125448001
+          interneuron_gaba:
+            mean_pA: -0.8293014891958961
+            minimum_pA: -13.892634628134536
+            maximum_pA: -5.742555722505531e-07
+            time_integral_pA_ms: -28.33411282894751
+        net_external_plus_synaptic:
+          mean_pA: -14.26516882287275
+          minimum_pA: -161.65710340972726
+          maximum_pA: 57.40036581540942
+          time_integral_pA_ms: -487.304590258197
+          fraction_samples_positive: 0.4586861313868613
+        intrinsic_and_axial_ranges_pA:
+          i_ca_soma:
+            minimum: 12.4866026983412
+            maximum: 16.43787647010256
+          i_na_soma:
+            minimum: 8.631621367657464
+            maximum: 4016.1768470055645
+          i_k_soma:
+            minimum: -171.96156892438194
+            maximum: -2.6176007550084734
+          i_axial_inward_soma:
+            minimum: 90.688783144554
+            maximum: 158.43942044056965
+      final_preescape:
+        start_ms: 44.75
+        end_ms_exclusive: 49.25
+        sample_count: 450
+        current_groups:
+          direct_image_input:
+            mean_pA: 245.57326519806665
+            minimum_pA: 229.6450693473339
+            maximum_pA: 253.50485845234104
+            time_integral_pA_ms: 1102.6639437523004
+          top_down_excitation:
+            mean_pA: 2.6158859284746185
+            minimum_pA: 2.0472557473751287
+            maximum_pA: 3.2720348249988604
+            time_integral_pA_ms: 11.744890225273899
+          trn_gaba:
+            mean_pA: -247.15468506002574
+            minimum_pA: -393.3494279301807
+            maximum_pA: -212.88852376017786
+            time_integral_pA_ms: -1109.1648930116628
+          interneuron_gaba:
+            mean_pA: -2.087637596656011e-06
+            minimum_pA: -5.1951120219599525e-06
+            maximum_pA: -5.742555722505531e-07
+            time_integral_pA_ms: -9.365522346980974e-06
+        net_external_plus_synaptic:
+          mean_pA: 1.0344639788779175
+          minimum_pA: -161.65710340972726
+          maximum_pA: 43.88836432205004
+          time_integral_pA_ms: 5.243931600388976
+          fraction_samples_positive: 0.7711111111111111
+        intrinsic_and_axial_ranges_pA:
+          i_ca_soma:
+            minimum: 12.563779196162656
+            maximum: 13.863287441109273
+          i_na_soma:
+            minimum: 45.09379965353087
+            maximum: 4016.1768470055645
+          i_k_soma:
+            minimum: -171.96156892438194
+            maximum: -8.819888376476221
+          i_axial_inward_soma:
+            minimum: 90.688783144554
+            maximum: 152.7747468183915
+aggregate:
+  fixed_early_inhibition:
+    direct_image_input:
+      mean_across_cells_pA: 406.01695940668117
+      range_of_cell_means_pA:
+      - 404.22815755721973
+      - 407.8057612561426
+    top_down_excitation:
+      mean_across_cells_pA: 19.70025170170551
+      range_of_cell_means_pA:
+      - 11.751981683041317
+      - 27.6485217203697
+    trn_gaba:
+      mean_across_cells_pA: -247.7237333506573
+      range_of_cell_means_pA:
+      - -249.88836322252337
+      - -245.55910347879123
+    interneuron_gaba:
+      mean_across_cells_pA: -263.3330917051644
+      range_of_cell_means_pA:
+      - -264.8292315090327
+      - -261.83695190129606
+    net_positive_fraction_across_cells:
+      mean: 0.32875
+      range:
+      - 0.325
+      - 0.3325
+  maintenance:
+    direct_image_input:
+      mean_across_cells_pA: 271.52002579574366
+      range_of_cell_means_pA:
+      - 270.52510255301223
+      - 272.5149490384751
+    top_down_excitation:
+      mean_across_cells_pA: 4.765676511369567
+      range_of_cell_means_pA:
+      - 2.7510166737261827
+      - 6.780336349012951
+    trn_gaba:
+      mean_across_cells_pA: -284.7786722430429
+      range_of_cell_means_pA:
+      - -286.71198656041526
+      - -282.84535792567056
+    interneuron_gaba:
+      mean_across_cells_pA: -1.8383669175310287
+      range_of_cell_means_pA:
+      - -2.847432345866161
+      - -0.8293014891958961
+    net_positive_fraction_across_cells:
+      mean: 0.4692129266813041
+      range:
+      - 0.4586861313868613
+      - 0.4797397219757468
+  final_preescape:
+    direct_image_input:
+      mean_across_cells_pA: 248.74664342173364
+      range_of_cell_means_pA:
+      - 245.57326519806665
+      - 251.9200216454006
+    top_down_excitation:
+      mean_across_cells_pA: 4.669777556860902
+      range_of_cell_means_pA:
+      - 2.6158859284746185
+      - 6.723669185247186
+    trn_gaba:
+      mean_across_cells_pA: -246.26242256776527
+      range_of_cell_means_pA:
+      - -247.15468506002574
+      - -245.37016007550488
+    interneuron_gaba:
+      mean_across_cells_pA: -7.510240635716856
+      range_of_cell_means_pA:
+      - -15.020479183796116
+      - -2.0876375966560102e-06
+    net_positive_fraction_across_cells:
+      mean: 0.5788888888888889
+      range:
+      - 0.38666666666666666
+      - 0.7711111111111111
+derived_localization:
+  early_to_final_interneuron_mean_magnitude_ratio: 35.0632029622083
+  final_direct_to_trn_mean_magnitude_ratio: 1.0100876976197404
+  interneuron_inhibition_wanes_before_escape: true
+  trn_inhibition_remains_active_before_escape: true
+  persistent_direct_excitation_remains_active_before_escape: true
+assessment:
+  calcium_localized_as_primary_cause: false
+  source_parameter_selected: false
+  original_smart_reproduced: false
+  baseline_promoted: false

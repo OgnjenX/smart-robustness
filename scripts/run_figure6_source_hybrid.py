@@ -61,14 +61,20 @@ def main() -> None:
 
     brian.prefs.codegen.target = "numpy"
     profile = yaml.safe_load(Path(args.profile).read_text())
-    conventions = runtime_conventions_for_candidate(profile["candidate"])
+    if "candidate" in profile:
+        candidate_profile = profile
+    else:
+        candidate_profile = yaml.safe_load(Path(profile["base_profile"]).read_text())
+    conventions = runtime_conventions_for_candidate(candidate_profile["candidate"])
     if profile.get("runtime_overrides"):
         conventions = replace(conventions, **profile["runtime_overrides"])
     projection_weight_scales = {
         str(key): float(value)
         for key, value in profile.get("projection_weight_scales", {}).items()
     }
-    protocol = Figure6LearningProtocol(monitored_populations=MONITORED)
+    protocol = Figure6LearningProtocol(
+        monitored_populations=tuple(profile.get("monitored_populations", MONITORED))
+    )
     run = run_figure6_learning(
         conventions=conventions,
         protocol=protocol,
@@ -108,7 +114,8 @@ def main() -> None:
         "id": Path(args.output).stem,
         "date": datetime.now(tz=UTC).date().isoformat(),
         "profile": args.profile,
-        "candidate_fingerprint": profile["candidate_fingerprint"],
+        "registration_artifact": profile.get("registration_artifact"),
+        "candidate_fingerprint": candidate_profile["candidate_fingerprint"],
         "runtime_fingerprint": conventions.fingerprint,
         "runtime_overrides": profile.get("runtime_overrides", {}),
         "projection_weight_scales": projection_weight_scales,

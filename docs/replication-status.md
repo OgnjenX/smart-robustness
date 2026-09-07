@@ -2,6 +2,21 @@
 
 ## Current interpretation (2026-09-07)
 
+Artifacts 471--473 complete the identity-locked mismatch calcium replay of the
+failed gain-0.8 candidate. The fresh event train exactly matches Artifact 468,
+and its 10,000-sample trace contains soma/dendrite voltages, T-type currents,
+and activation/inactivation gates for all nine registered relay cells. The
+first nonoverlap events at 49.31--49.75 ms are not rebound events: soma and both
+dendrites never fall below their -60-mV initial state beforehand, and `h_ca`
+decreases rather than recovering. Each nonoverlap cell has one somatic peak
+above +30 mV per emitted event, separated by approximately 21--25 ms, not a
+transient multi-peak burst. T-type current is present, but the paper's required
+hyperpolarization-to-rebound sequence is absent. Later deep minima follow the
+already-invalid first action potentials and cannot rescue the candidate. No
+parameter is selected; original SMART remains unreproduced and unfrozen. The
+next diagnostic uses the same trace to localize which source-constrained
+inhibitory/event-handling mechanism fails before the first escape.
+
 Artifacts 467--469 close the locked 100-ms persistent-gain-0.8 Figure 7 pair.
 Match activates all five horizontal relay cells four times each, but emits five
 nonspecific events rather than four. Mismatch is initially overlap-only: cell

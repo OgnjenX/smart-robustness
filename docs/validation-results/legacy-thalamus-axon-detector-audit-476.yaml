@@ -1,0 +1,96 @@
+schema_version: 1
+id: legacy-thalamus-axon-detector-audit-476
+date: '2026-09-07'
+status: executable-benchmark-recovers-falling-minus20-detector
+classification: independent-legacy-kinness-output-audit
+archive:
+  name: KINENSS_tonic_burst
+  authors: Anatoli Gorchetchnikov and Massimiliano Versace
+  stated_years: 1998--2004
+  capture_timestamp: '20040718192212'
+  original_url: http://temporal.bu.edu/Docs/KInNeSS/examples/Thalamic%20Cell/thalamus.tgz
+  archive_url: https://web.archive.org/web/20040718192212id_/http://temporal.bu.edu/Docs/KInNeSS/examples/Thalamic%20Cell/thalamus.tgz
+  archive_sha256: 6c3047d281f4fe432c5144748171a05b2e2ef8bcc4cdd6361c3d7612962f352a
+files:
+  network:
+    path: tmp/legacy-thalamus-2004/KINENSS_tonic_burst/tonic_burst.xml
+    sha256: 3d4782503b74b818e4d94b29e72c5bb81f914b0c29d55a19cb99b088d1d14445
+  tonic_voltage:
+    path: tmp/legacy-thalamus-2004/KINENSS_tonic_burst/tonic_burst_data/Relay tonic.dat
+    sha256: 506e56c07e5ff13098a2ebb6f21db31e489d77efdffa65fc816c20d58f68c92f
+  tonic_axon:
+    path: tmp/legacy-thalamus-2004/KINENSS_tonic_burst/tonic_burst_data/Relay axon tonic.dat
+    sha256: 81dcdfe8670c78e02eb9c3e2012f1e9e6258b5ba116314f3a2f1a6d209644208
+  burst_voltage:
+    path: tmp/legacy-thalamus-2004/KINENSS_tonic_burst/tonic_burst_data/Relay burst.dat
+    sha256: 4a14dd2c40b69ddaee9c652f6e89a713efd5eb9ba75949619a79f3925832b76c
+  burst_axon:
+    path: tmp/legacy-thalamus-2004/KINENSS_tonic_burst/tonic_burst_data/Relay axon burst.dat
+    sha256: beef20f46bbeac4c35ba19b12434159cb5a02fef8b2b704c4a713ec09b172880
+  explanatory_pdf:
+    path: tmp/legacy-thalamus-2004/KINENSS_tonic_burst/burst_tonic.pdf
+    sha256: 66271db7aa958815f5365ce86066664d682308dcef089c6ac74e47e7922a8131
+serialized_and_observed:
+  relay_soma_leak_mV: -70.0
+  axonal_delay_ms: 2.0
+  trace_step_ms: 0.05
+  trace_duration_ms: 3000.0
+  tonic:
+    axon_event_count: 199
+    median_interevent_interval_ms: 15.05
+    reported_average_rate_hz: 66
+  burst:
+    axon_event_count: 6
+    axon_event_times_ms: [2187.9, 2191.8, 2196.15, 2201.2, 2207.5, 2217.0]
+    interevent_intervals_ms: [3.9, 4.35, 5.05, 6.3, 9.5]
+    morphology: accelerando-decelerando high-frequency transient
+detector_alignment:
+  method: >-
+    Convert the archived soma trace from the KInNeSS leak-relative display to
+    physical voltage using the serialized -70-mV leak value. For every binary
+    axon event, identify the preceding action-potential peak and its first
+    downward threshold crossing, then subtract that crossing time from the
+    axon event time.
+  event_count_checked: 205
+  falling_minus20_mV:
+    tonic_delay_counts_ms: {1.95: 119, 2.0: 80}
+    burst_delay_counts_ms: {1.95: 3, 2.0: 3}
+    maximum_absolute_error_from_serialized_delay_ms: 0.05
+  falling_zero_mV:
+    tonic_delay_range_ms: [2.05, 2.1]
+    burst_delay_range_ms: [2.05, 2.1]
+  falling_minus30_mV:
+    tonic_delay_range_ms: [1.9, 1.95]
+    burst_delay_range_ms: [1.9, 1.95]
+  falling_plus30_mV:
+    tonic_delay_range_ms: [2.2, 2.25]
+    burst_delay_range_ms: [2.2, 2.25]
+inference:
+  recovered_rule: >-
+    Emit one somatic event on a downward crossing of physical -20 mV, then
+    deliver the binary axon pulse after the serialized axonal delay.
+  distinct_from_existing_literal_rule: >-
+    The existing literal_previous_sample implementation combines a previous
+    sample above an arm threshold with a current sample below a separate
+    release threshold. Setting its arm to -20 mV and release to 0 mV creates an
+    overlap region and event storm. The executable benchmark instead uses -20
+    mV as the crossing level on both sides of the comparison.
+  source_scope: >-
+    This directly recovers behavior of an author-produced 2004 KInNeSS relay
+    example and independently agrees with the contemporaneous KInNeSS -20-mV
+    threshold. It is stronger than an unconstrained behavior fit but does not
+    prove that the unrecovered 2008 KInNeSS 0.3.4-RC2 handler was bit-identical.
+  paper_conflict: >-
+    Grossberg and Versace 2008 Equation 8 prints a +30-mV/0-mV temporal form.
+    Preserve that paper rule as a separately named convention; do not silently
+    replace it when evaluating source profiles.
+assessment:
+  falling_minus20_detector_implementation_authorized: true
+  source_parameter_fitted_from_figure7: false
+  original_smart_reproduced: false
+  baseline_promoted: false
+next_step: >-
+  Implement falling_threshold_crossing as a distinct detector rule and verify
+  it against unit crossing tests. Then register an isolated/network source
+  discriminator before consulting Figure 7. Do not combine it with the
+  calibrated -30-mV release level.

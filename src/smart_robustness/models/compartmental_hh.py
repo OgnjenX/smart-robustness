@@ -62,6 +62,7 @@ class SpikeEventRule(StrEnum):
     LATCHED_PEAK_THEN_ZERO = "latched_peak_then_zero"
     HYSTERETIC_THRESHOLD_THEN_ZERO = "hysteretic_threshold_then_zero"
     LITERAL_PREVIOUS_SAMPLE = "literal_previous_sample"
+    FALLING_THRESHOLD_CROSSING = "falling_threshold_crossing"
 
 
 @dataclass(slots=True)
@@ -394,11 +395,21 @@ def create_compartmental_hh_population(
             ),
             events=events,
         )
-    else:
+    elif spike_event_rule is SpikeEventRule.LITERAL_PREVIOUS_SAMPLE:
         equations += "\nprevious_spike_voltage : volt"
         group_kwargs["threshold"] = (
             f"spike_release_voltage < {spike_event_release_mV}*mV and "
             f"previous_spike_voltage > {spike_event_threshold_mV}*mV"
+        )
+    else:
+        # The author-produced 2004 KInNeSS thalamic benchmark aligns all 205
+        # saved axon events to the soma's falling -20-mV crossing, followed by
+        # its serialized 2-ms axonal delay, within one legacy 0.05-ms step.
+        equations += "\nprevious_spike_voltage : volt"
+        group_kwargs["threshold"] = (
+            "spike_detector_voltage < "
+            f"{spike_event_threshold_mV}*mV and previous_spike_voltage >= "
+            f"{spike_event_threshold_mV}*mV"
         )
     group = brian.NeuronGroup(size, equations, reset=spike_reset, **group_kwargs)
     group.clear_drive_on_spike = 0
@@ -419,8 +430,9 @@ def create_compartmental_hh_population(
             )
     else:
         # Equation 8 literally writes V(t-dt), not a remembered action-potential
-        # peak. Capture the current source-coordinate voltage after all events so
-        # the next threshold pass can evaluate that printed expression exactly.
+        # peak. The independently recovered KInNeSS crossing detector also needs
+        # the immediately preceding sample. Capture the current source-coordinate
+        # voltage after all events for both rules.
         group.run_regularly(
             "previous_spike_voltage = spike_detector_voltage", when="end", order=1
         )
@@ -440,7 +452,10 @@ def create_compartmental_hh_population(
     # coordinate is available only for separately labeled detector calibration.
     group.armed = 0
     group.last_spike_onset = -1 * brian.second
-    if spike_event_rule is SpikeEventRule.LITERAL_PREVIOUS_SAMPLE:
+    if spike_event_rule in {
+        SpikeEventRule.LITERAL_PREVIOUS_SAMPLE,
+        SpikeEventRule.FALLING_THRESHOLD_CROSSING,
+    }:
         default_soma_voltage = (
             0.0
             if membrane_initialization is MembraneInitializationConvention.KINNESS_INTERNAL_ZERO

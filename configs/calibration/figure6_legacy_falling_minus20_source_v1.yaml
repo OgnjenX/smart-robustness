@@ -1,0 +1,57 @@
+schema_version: 1
+name: figure6-legacy-falling-minus20-source-v1
+status: registered-before-execution-source-recovery
+registration_artifact: docs/validation-results/figure6-legacy-falling-minus20-source-registration-477.yaml
+base_profile: configs/calibration/figure6_kinness_equation27_transition_v1.yaml
+runtime_overrides:
+  spike_event_coordinate: absolute_physical
+  spike_event_threshold_mV: -20.0
+  spike_event_rule: falling_threshold_crossing
+  trn_spike_event_coordinate: null
+  trn_spike_event_threshold_mV: null
+  trn_spike_event_release_mV: null
+  trn_spike_event_voltage_offset_mV: null
+  trn_spike_event_proximal_blend_fraction: null
+  nonspecific_spike_event_threshold_mV: null
+  nonspecific_spike_event_release_mV: null
+  nonspecific_spike_event_rule: null
+  nonspecific_spike_event_proximal_blend_fraction: null
+  nonspecific_spike_event_release_proximal_blend_fraction: null
+  projection_source_convention: paper_supplement_cross_checked
+  nonspecific_distal_gaba_source_convention: paper_supplement_1p5_1_7
+  mixed_input_gate_convention: declared_external_input
+projection_weight_scales: {}
+source_basis:
+  detector_audit: docs/validation-results/legacy-thalamus-axon-detector-audit-476.yaml
+  event_rule: >-
+    The author-produced 2004 KInNeSS thalamic benchmark aligns every serialized
+    axonal event with a preceding falling crossing of physical -20 mV plus the
+    declared 2-ms axonal delay, to within one 0.05-ms output sample.
+  projection_strengths: >-
+    No effective transfer factors are applied. All projections retain their
+    source-selected serialized strengths so this run cannot inherit the
+    Figure 7 behavior-calibrated 0.01/0.03/0.8 factors.
+  boundary: >-
+    The recovered 2004 detector is independent source evidence, but it does
+    not establish that the unavailable 2008 RC2 executable used identical
+    event code. Figure 7, Figure 10, and spectral holdouts remain locked.
+monitored_populations:
+  - thalamic_relay
+  - thalamic_interneuron
+  - trn
+  - thalamic_nonspecific
+  - layer4_excitatory_v1
+  - layer4_inhibitory_v1
+  - layer23_excitatory_v1
+  - layer23_inhibitory_v1
+  - layer5_excitatory_v1
+  - layer5_inhibitory_v1
+  - layer6i_excitatory_v1
+  - layer6i_inhibitory_v1
+  - layer6ii_excitatory_v1
+  - layer6ii_inhibitory_v1
+next_gate: >-
+  Assess the single registered Figure 6 run against the fixed relay,
+  feedforward-chain, causal-learning, and orientation gates. Do not adjust
+  projection strengths from this result and do not consult Figure 7 unless
+  all Figure 6 gates pass.

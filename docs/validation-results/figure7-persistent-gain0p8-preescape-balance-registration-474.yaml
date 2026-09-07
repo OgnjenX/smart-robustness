@@ -1,0 +1,47 @@
+schema_version: 1
+id: figure7-persistent-gain0p8-preescape-balance-registration-474
+date: '2026-09-07'
+status: analysis-contract-fixed-after-preliminary-spot-check
+classification: readout-only-current-balance-localization-no-parameter-search
+predecessor: docs/validation-results/figure7-persistent-gain0p8-mismatch-calcium-trace-assessment-473.yaml
+source_result: docs/validation-results/figure7-persistent-gain0p8-mismatch-calcium-trace-472.yaml
+source_result_sha256: e1b06ab9253c7507dc617d270a54b6262d850d5fc8bbf34b64790eda3bce9a26
+trace: tmp/figure7-persistent-gain0p8-mismatch-calcium-trace-472.npz
+trace_sha256: 6085eb6dbdeea1cf4238c8aef2d57303e0a43fa42014cad3cbf7e7047f1db7c3
+disclosure: >-
+  A preliminary manual spot check of cells 22, 31, and 40 at selected times
+  preceded this aggregate analysis. The spot check suggested waning
+  interneuron inhibition and a near-balanced direct/TRN competition. This
+  registration therefore fixes reproducible summaries but is not represented
+  as a fully prospective test.
+analysis_contract:
+  target_nonoverlap_cells: [22, 31, 49, 58]
+  current_groups:
+    direct_image_input: [i_external_001]
+    top_down_excitation: [i_port_003, i_port_005, i_port_006, i_port_007]
+    trn_gaba: [i_port_000, i_port_001, i_port_004]
+    interneuron_gaba: [i_port_002]
+  fixed_epoch_ms: [3.0, 15.0]
+  event_anchored_epochs_ms_before_first_event:
+    maintenance: [15.0, 0.5]
+    final_preescape: [5.0, 0.5]
+  summaries:
+    - mean_pA
+    - minimum_pA
+    - maximum_pA
+    - time_integral_pA_ms
+    - fraction_samples_net_synaptic_current_positive
+  exclusions:
+    - The final 0.5 ms before an emitted event is excluded to avoid action-potential-driven conductance changes.
+    - Intrinsic and axial currents are reported separately from the external-plus-synaptic balance.
+questions:
+  - Does early Relay_INT inhibition persist until the first nonoverlap escape?
+  - Does TRN inhibition remain active but fail to dominate persistent retinal excitation?
+  - Is the first escape better localized to calcium, missing inhibition, or an unresolved event/transfer convention?
+boundaries:
+  - Read only the pinned trace; run no new simulation.
+  - Select no parameter, cutoff, weight, conductance, or candidate.
+  - Do not infer source fidelity from behavior alone.
+  - Preserve Artifact 468's failure and Artifact 473's rejection of the rebound interpretation.
+result: docs/validation-results/figure7-persistent-gain0p8-preescape-balance-475.yaml
+baseline_promoted: false

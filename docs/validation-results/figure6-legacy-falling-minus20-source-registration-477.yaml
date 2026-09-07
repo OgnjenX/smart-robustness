@@ -1,0 +1,49 @@
+schema_version: 1
+id: figure6-legacy-falling-minus20-source-registration-477
+date: '2026-09-07'
+status: registered-before-execution
+classification: independent-source-recovery-discriminator
+profile: configs/calibration/figure6_legacy_falling_minus20_source_v1.yaml
+source_audit: docs/validation-results/legacy-thalamus-axon-detector-audit-476.yaml
+result: docs/validation-results/figure6-legacy-falling-minus20-source-478.yaml
+hypothesis: >-
+  The event storm and detector ambiguity may be consequences of translating
+  the KInNeSS spike output rule incorrectly. Applying one falling physical
+  -20-mV crossing event to every population may restore the intended source
+  event interface without behavior-fitted detector latches.
+fixed_candidate:
+  spike_event_coordinate: absolute_physical
+  spike_event_threshold_mV: -20.0
+  spike_event_rule: falling_threshold_crossing
+  axonal_delay_interpretation: source_serialized
+  projection_weight_scales: {}
+  mixed_input_gate_convention: declared_external_input
+fixed_gates:
+  relay_active_indices: [38, 39, 40, 41, 42]
+  events_per_active_relay: 4
+  total_relay_events: 20
+  cortical_chain_complete: true
+  causal_learning_pair: true
+  bottom_up_horizontal_contrast: '>0'
+  top_down_horizontal_contrast: '>0'
+execution:
+  figure6_learning_runs: 1
+  figure7_runs: 0
+  parameter_search: false
+stopping_rule: >-
+  Run one complete, fully monitored Figure 6 episode and classify it against
+  every fixed gate. A failure closes this exact source-coherent candidate; it
+  does not authorize nearby thresholds, added hysteresis, scaled projection
+  strengths, or inspection of recognition holdouts.
+interpretation_boundary: >-
+  Passing Figure 6 would authorize a separately registered Figure 7 pair, not
+  establish original SMART reproduction. The 2004 benchmark strongly informs
+  the KInNeSS event interface but is not proof that the unavailable 2008 RC2
+  source is bit-identical.
+locked_holdouts:
+  - figure7_match
+  - figure7_mismatch
+  - figure10_reset
+  - figure14_spectra
+  - figure15_local_synchrony
+  - figure16_long_range_synchrony

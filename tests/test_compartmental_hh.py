@@ -486,6 +486,8 @@ def test_kinness_minus_20_mv_event_threshold_is_explicit() -> None:
     population.group.v_soma = -1 * brian.mV
     network.run(0.01 * brian.ms)
     assert spike_monitor.count[0] == 1
+    network.run(0.01 * brian.ms)
+    assert spike_monitor.count[0] == 1
 
 
 def test_explicit_spike_release_voltage_preserves_falling_phase_detector() -> None:
@@ -538,8 +540,34 @@ def test_literal_previous_sample_rule_uses_only_the_immediately_preceding_voltag
     population.group.v_soma = -1 * brian.mV
     network.run(0.01 * brian.ms)
     assert spike_monitor.count[0] == 1
+
+
+def test_falling_threshold_crossing_emits_once_per_minus20_downcrossing() -> None:
+    brian.start_scope()
+    brian.defaultclock.dt = 0.01 * brian.ms
+    params = _params()
+    params["spike_event_rule"] = "falling_threshold_crossing"
+    params["spike_event_threshold_mV"] = -20.0
+    params["voltage_clamps_mV"] = {"soma": 40.0}
+    population = create_compartmental_hh_population(
+        name="falling_minus20_crossing", size=1, params=params, brian=brian
+    )
+    spike_monitor = brian.SpikeMonitor(population.group)
+    network = brian.Network(population.group, spike_monitor)
+
+    network.run(0.01 * brian.ms)
+    assert spike_monitor.count[0] == 0
+    population.group.v_soma = -21 * brian.mV
     network.run(0.01 * brian.ms)
     assert spike_monitor.count[0] == 1
+    population.group.v_soma = -40 * brian.mV
+    network.run(0.01 * brian.ms)
+    assert spike_monitor.count[0] == 1
+    population.group.v_soma = 10 * brian.mV
+    network.run(0.01 * brian.ms)
+    population.group.v_soma = -21 * brian.mV
+    network.run(0.01 * brian.ms)
+    assert spike_monitor.count[0] == 2
 
 
 def test_literal_previous_sample_initializes_fixed_shift_coordinate() -> None:

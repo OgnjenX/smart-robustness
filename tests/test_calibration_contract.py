@@ -7399,3 +7399,114 @@ def test_gain0p8_calcium_trace_is_readout_only_and_identity_locked() -> None:
     assert "exactly match Artifact 468" in registration["identity_requirement"]
     assert "cannot alter Artifact 468" in registration["interpretation_boundary"]
     assert registration["baseline_promoted"] is False
+
+
+def test_gain0p8_calcium_trace_preserves_events_and_rejects_rebound() -> None:
+    result = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-persistent-gain0p8-mismatch-calcium-trace-472.yaml"
+        ).read_text()
+    )
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-persistent-gain0p8-mismatch-calcium-trace-assessment-473.yaml"
+        ).read_text()
+    )
+
+    assert result["event_train_identity_verified"]
+    assert result["trace"]["sha256"] == (
+        "6085eb6dbdeea1cf4238c8aef2d57303e0a43fa42014cad3cbf7e7047f1db7c3"
+    )
+    assert result["trace"]["sample_count"] == 10000
+    assert result["trace"]["required_variables_present"]
+    assert assessment["result_sha256"] == (
+        "e1b06ab9253c7507dc617d270a54b6262d850d5fc8bbf34b64790eda3bce9a26"
+    )
+    tests = assessment["classification_tests"]
+    assert tests[
+        "every_first_nonoverlap_escape_lacks_preceding_hyperpolarization"
+    ]
+    assert tests[
+        "every_first_nonoverlap_escape_lacks_t_channel_availability_recovery"
+    ]
+    assert tests[
+        "each_nonoverlap_interevent_interval_contains_one_positive_soma_peak"
+    ]
+    assert not tests["late_nonoverlap_t_type_rebound_supported"]
+    for cell in ("22", "31", "49", "58"):
+        first = assessment["first_nonoverlap_events"][cell]
+        assert not first["voltage_below_initial_before_first_event"]
+        assert not first["h_ca_increased_before_first_event"]
+        assert len(first["positive_soma_peaks_before_first_event"]) == 1
+        for compartment in ("soma", "proximal_dendrite", "distal_dendrite"):
+            values = first["compartments"][compartment]
+            assert values["initial_voltage_mV"] == -60.0
+            assert values["minimum_voltage_before_first_event"] == {
+                "value": -60.0,
+                "time_ms": 0.0,
+            }
+            assert values["h_ca_immediately_before_first_event"] < values[
+                "initial_h_ca"
+            ]
+    assert assessment["assessment"]["artifact_468_failure_unchanged"]
+    assert not assessment["assessment"]["parameter_selected"]
+    assert not assessment["assessment"]["original_smart_reproduced"]
+    assert not assessment["assessment"]["baseline_promoted"]
+
+
+def test_legacy_thalamus_benchmark_recovers_falling_minus20_detector() -> None:
+    audit = yaml.safe_load(
+        (
+            ROOT / "docs/validation-results/legacy-thalamus-axon-detector-audit-476.yaml"
+        ).read_text()
+    )
+
+    assert audit["archive"]["archive_sha256"] == (
+        "6c3047d281f4fe432c5144748171a05b2e2ef8bcc4cdd6361c3d7612962f352a"
+    )
+    assert audit["serialized_and_observed"]["trace_step_ms"] == 0.05
+    assert audit["serialized_and_observed"]["axonal_delay_ms"] == 2.0
+    assert audit["serialized_and_observed"]["tonic"]["axon_event_count"] == 199
+    assert audit["serialized_and_observed"]["burst"]["axon_event_count"] == 6
+    assert audit["detector_alignment"]["event_count_checked"] == 205
+    assert audit["detector_alignment"]["falling_minus20_mV"][
+        "maximum_absolute_error_from_serialized_delay_ms"
+    ] == 0.05
+    assert audit["assessment"]["falling_minus20_detector_implementation_authorized"]
+    assert not audit["assessment"]["source_parameter_fitted_from_figure7"]
+    assert not audit["assessment"]["original_smart_reproduced"]
+    assert not audit["assessment"]["baseline_promoted"]
+
+
+def test_legacy_falling_minus20_figure6_is_preregistered_and_source_coherent() -> None:
+    profile = yaml.safe_load(
+        (
+            ROOT
+            / "configs/calibration/figure6_legacy_falling_minus20_source_v1.yaml"
+        ).read_text()
+    )
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure6-legacy-falling-minus20-source-registration-477.yaml"
+        ).read_text()
+    )
+
+    overrides = profile["runtime_overrides"]
+    assert overrides["spike_event_coordinate"] == "absolute_physical"
+    assert overrides["spike_event_threshold_mV"] == -20.0
+    assert overrides["spike_event_rule"] == "falling_threshold_crossing"
+    assert overrides["trn_spike_event_threshold_mV"] is None
+    assert overrides["nonspecific_spike_event_rule"] is None
+    assert profile["projection_weight_scales"] == {}
+    assert registration["execution"] == {
+        "figure6_learning_runs": 1,
+        "figure7_runs": 0,
+        "parameter_search": False,
+    }
+    assert registration["stopping_rule"].startswith(
+        "Run one complete, fully monitored Figure 6"
+    )
+    assert "figure7_match" in registration["locked_holdouts"]

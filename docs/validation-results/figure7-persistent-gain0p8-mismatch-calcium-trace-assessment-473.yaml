@@ -1,0 +1,1580 @@
+schema_version: 1
+id: figure7-persistent-gain0p8-mismatch-calcium-trace-assessment-473
+date: '2026-09-07'
+status: late-nonoverlap-rebound-hypothesis-rejected
+classification: readout-only-calcium-mechanism-assessment
+registration: docs/validation-results/figure7-persistent-gain0p8-mismatch-calcium-trace-registration-471.yaml
+result: docs/validation-results/figure7-persistent-gain0p8-mismatch-calcium-trace-472.yaml
+result_sha256: e1b06ab9253c7507dc617d270a54b6262d850d5fc8bbf34b64790eda3bce9a26
+trace:
+  path: tmp/figure7-persistent-gain0p8-mismatch-calcium-trace-472.npz
+  sha256: 6085eb6dbdeea1cf4238c8aef2d57303e0a43fa42014cad3cbf7e7047f1db7c3
+  sample_count: 10000
+  recorded_relay_indices:
+  - 22
+  - 31
+  - 38
+  - 39
+  - 40
+  - 41
+  - 42
+  - 49
+  - 58
+  variable_names:
+  - h_ca_distal_dendrite
+  - h_ca_inf_distal_dendrite
+  - h_ca_inf_proximal_dendrite
+  - h_ca_inf_soma
+  - h_ca_proximal_dendrite
+  - h_ca_soma
+  - i_axial_inward_soma
+  - i_ca_distal_dendrite
+  - i_ca_proximal_dendrite
+  - i_ca_soma
+  - i_external_001
+  - i_k_soma
+  - i_na_soma
+  - i_port_000
+  - i_port_001
+  - i_port_002
+  - i_port_003
+  - i_port_004
+  - i_port_005
+  - i_port_006
+  - i_port_007
+  - m_ca_distal_dendrite
+  - m_ca_inf_distal_dendrite
+  - m_ca_inf_proximal_dendrite
+  - m_ca_inf_soma
+  - m_ca_proximal_dendrite
+  - m_ca_soma
+  - port_000_gate
+  - port_001_gate
+  - port_003_gate
+  - port_004_gate
+  - port_005_gate
+  - port_006_gate
+  - port_007_gate
+  - v_distal_dendrite
+  - v_proximal_dendrite
+  - v_soma
+  required_variables_present: true
+integrity:
+  event_train_identity_verified: true
+  required_variables_present: true
+  sample_count: 10000
+first_nonoverlap_events:
+  '22':
+    first_event_ms: 49.75
+    compartments:
+      soma:
+        initial_voltage_mV: -60.0
+        minimum_voltage_before_first_event:
+          value: -60.0
+          time_ms: 0.0
+        initial_h_ca: 0.023427035937057025
+        h_ca_immediately_before_first_event: 0.01592579318358939
+        maximum_calcium_current_before_first_event_pA:
+          value: 16.542088279608638
+          time_ms: 13.98
+      proximal_dendrite:
+        initial_voltage_mV: -60.0
+        minimum_voltage_before_first_event:
+          value: -60.0
+          time_ms: 0.0
+        initial_h_ca: 0.023427035937057025
+        h_ca_immediately_before_first_event: 0.002825198738961285
+        maximum_calcium_current_before_first_event_pA:
+          value: 3.536755146523405
+          time_ms: 4.0600000000000005
+      distal_dendrite:
+        initial_voltage_mV: -60.0
+        minimum_voltage_before_first_event:
+          value: -60.0
+          time_ms: 0.0
+        initial_h_ca: 0.023427035937057025
+        h_ca_immediately_before_first_event: 0.014861429824356107
+        maximum_calcium_current_before_first_event_pA:
+          value: 2.0311246375350174
+          time_ms: 6.15
+    voltage_below_initial_before_first_event: false
+    h_ca_increased_before_first_event: false
+    positive_soma_peaks_before_first_event:
+    - time_ms: 49.53
+      voltage_mV: 44.99390252916184
+  '31':
+    first_event_ms: 49.31
+    compartments:
+      soma:
+        initial_voltage_mV: -60.0
+        minimum_voltage_before_first_event:
+          value: -60.0
+          time_ms: 0.0
+        initial_h_ca: 0.023427035937057025
+        h_ca_immediately_before_first_event: 0.016731547137778906
+        maximum_calcium_current_before_first_event_pA:
+          value: 15.198575707626349
+          time_ms: 13.01
+      proximal_dendrite:
+        initial_voltage_mV: -60.0
+        minimum_voltage_before_first_event:
+          value: -60.0
+          time_ms: 0.0
+        initial_h_ca: 0.023427035937057025
+        h_ca_immediately_before_first_event: 0.0028980863234236765
+        maximum_calcium_current_before_first_event_pA:
+          value: 3.5448253402207097
+          time_ms: 4.0600000000000005
+      distal_dendrite:
+        initial_voltage_mV: -60.0
+        minimum_voltage_before_first_event:
+          value: -60.0
+          time_ms: 0.0
+        initial_h_ca: 0.023427035937057025
+        h_ca_immediately_before_first_event: 0.01373240951995032
+        maximum_calcium_current_before_first_event_pA:
+          value: 2.372282329533202
+          time_ms: 6.390000000000001
+    voltage_below_initial_before_first_event: false
+    h_ca_increased_before_first_event: false
+    positive_soma_peaks_before_first_event:
+    - time_ms: 49.080000000000005
+      voltage_mV: 45.01109012655021
+  '49':
+    first_event_ms: 49.31
+    compartments:
+      soma:
+        initial_voltage_mV: -60.0
+        minimum_voltage_before_first_event:
+          value: -60.0
+          time_ms: 0.0
+        initial_h_ca: 0.023427035937057025
+        h_ca_immediately_before_first_event: 0.016731547137778902
+        maximum_calcium_current_before_first_event_pA:
+          value: 15.198575707626345
+          time_ms: 13.01
+      proximal_dendrite:
+        initial_voltage_mV: -60.0
+        minimum_voltage_before_first_event:
+          value: -60.0
+          time_ms: 0.0
+        initial_h_ca: 0.023427035937057025
+        h_ca_immediately_before_first_event: 0.0028980863234236765
+        maximum_calcium_current_before_first_event_pA:
+          value: 3.5448253402207097
+          time_ms: 4.0600000000000005
+      distal_dendrite:
+        initial_voltage_mV: -60.0
+        minimum_voltage_before_first_event:
+          value: -60.0
+          time_ms: 0.0
+        initial_h_ca: 0.023427035937057025
+        h_ca_immediately_before_first_event: 0.013732409519950313
+        maximum_calcium_current_before_first_event_pA:
+          value: 2.372282329533202
+          time_ms: 6.390000000000001
+    voltage_below_initial_before_first_event: false
+    h_ca_increased_before_first_event: false
+    positive_soma_peaks_before_first_event:
+    - time_ms: 49.080000000000005
+      voltage_mV: 45.01109012655021
+  '58':
+    first_event_ms: 49.75
+    compartments:
+      soma:
+        initial_voltage_mV: -60.0
+        minimum_voltage_before_first_event:
+          value: -60.0
+          time_ms: 0.0
+        initial_h_ca: 0.023427035937057025
+        h_ca_immediately_before_first_event: 0.01592579318358939
+        maximum_calcium_current_before_first_event_pA:
+          value: 16.542088279608638
+          time_ms: 13.98
+      proximal_dendrite:
+        initial_voltage_mV: -60.0
+        minimum_voltage_before_first_event:
+          value: -60.0
+          time_ms: 0.0
+        initial_h_ca: 0.023427035937057025
+        h_ca_immediately_before_first_event: 0.002825198738961285
+        maximum_calcium_current_before_first_event_pA:
+          value: 3.536755146523405
+          time_ms: 4.0600000000000005
+      distal_dendrite:
+        initial_voltage_mV: -60.0
+        minimum_voltage_before_first_event:
+          value: -60.0
+          time_ms: 0.0
+        initial_h_ca: 0.023427035937057025
+        h_ca_immediately_before_first_event: 0.01486142982435611
+        maximum_calcium_current_before_first_event_pA:
+          value: 2.0311246375350174
+          time_ms: 6.15
+    voltage_below_initial_before_first_event: false
+    h_ca_increased_before_first_event: false
+    positive_soma_peaks_before_first_event:
+    - time_ms: 49.53
+      voltage_mV: 44.99390252916172
+all_target_event_metrics:
+  '22':
+    event_times_ms:
+    - 49.75
+    - 74.29
+    - 95.27000000000001
+    positive_soma_peaks_ms:
+    - 49.53
+    - 74.06
+    - 95.04
+    event_metrics:
+    - event_number: 1
+      event_time_ms: 49.75
+      interval_from_previous_event_ms: null
+      positive_soma_peaks_since_previous_event:
+      - time_ms: 49.53
+        voltage_mV: 44.99390252916184
+      pre_event_windows:
+        1_ms:
+          voltage_minimum_mV:
+            soma:
+              value: -49.938838868775136
+              time_ms: 48.75
+            proximal_dendrite:
+              value: -29.099147240329398
+              time_ms: 48.75
+            distal_dendrite:
+              value: -52.35670079956026
+              time_ms: 49.49
+          calcium_current_maximum_pA:
+            soma:
+              value: 13.863287441109268
+              time_ms: 49.2
+            proximal_dendrite:
+              value: 0.74389741121568
+              time_ms: 48.75
+            distal_dendrite:
+              value: 1.5200998234447851
+              time_ms: 49.74
+        5_ms:
+          voltage_minimum_mV:
+            soma:
+              value: -55.42449228745948
+              time_ms: 44.75000000000001
+            proximal_dendrite:
+              value: -30.33934150931877
+              time_ms: 44.75000000000001
+            distal_dendrite:
+              value: -53.09502576106188
+              time_ms: 44.75000000000001
+          calcium_current_maximum_pA:
+            soma:
+              value: 13.863287441109268
+              time_ms: 49.2
+            proximal_dendrite:
+              value: 0.8900808365522184
+              time_ms: 44.75000000000001
+            distal_dendrite:
+              value: 1.5200998234447851
+              time_ms: 49.74
+        10_ms:
+          voltage_minimum_mV:
+            soma:
+              value: -57.22050809984777
+              time_ms: 40.400000000000006
+            proximal_dendrite:
+              value: -32.13971884466026
+              time_ms: 39.75
+            distal_dendrite:
+              value: -56.736783086997185
+              time_ms: 39.75
+          calcium_current_maximum_pA:
+            soma:
+              value: 13.863287441109268
+              time_ms: 49.2
+            proximal_dendrite:
+              value: 1.1160522855236126
+              time_ms: 39.75
+            distal_dendrite:
+              value: 1.5200998234447851
+              time_ms: 49.74
+      at_event:
+        soma:
+          voltage_mV: 1.328207086048581
+          calcium_current_pA: 12.827862222332692
+          m_ca: 0.7821992681423909
+          h_ca: 0.015917503281758724
+        proximal_dendrite:
+          voltage_mV: -19.249119647173373
+          calcium_current_pA: 0.6794897073655773
+          m_ca: 0.9868437367170825
+          h_ca: 0.0028237837853623423
+        distal_dendrite:
+          voltage_mV: -52.138454274441486
+          calcium_current_pA: 1.520163349071681
+          m_ca: 0.7596535163405514
+          h_ca: 0.014859242172790872
+    - event_number: 2
+      event_time_ms: 74.29
+      interval_from_previous_event_ms: 24.540000000000006
+      positive_soma_peaks_since_previous_event:
+      - time_ms: 74.06
+        voltage_mV: 45.347548332528675
+      pre_event_windows:
+        1_ms:
+          voltage_minimum_mV:
+            soma:
+              value: -50.12840220458518
+              time_ms: 73.29
+            proximal_dendrite:
+              value: -28.074923737650995
+              time_ms: 73.29
+            distal_dendrite:
+              value: -47.524641549936945
+              time_ms: 74.03000000000002
+          calcium_current_maximum_pA:
+            soma:
+              value: 15.366668262660486
+              time_ms: 73.79
+            proximal_dendrite:
+              value: 0.2946191932412947
+              time_ms: 73.29
+            distal_dendrite:
+              value: 1.4977872121968878
+              time_ms: 74.28000000000002
+        5_ms:
+          voltage_minimum_mV:
+            soma:
+              value: -57.09242010323864
+              time_ms: 69.29
+            proximal_dendrite:
+              value: -30.694204384679562
+              time_ms: 69.29
+            distal_dendrite:
+              value: -52.61657469579108
+              time_ms: 69.29
+          calcium_current_maximum_pA:
+            soma:
+              value: 15.366668262660486
+              time_ms: 73.79
+            proximal_dendrite:
+              value: 0.34685343921006256
+              time_ms: 69.29
+            distal_dendrite:
+              value: 1.4977872121968878
+              time_ms: 74.28000000000002
+        10_ms:
+          voltage_minimum_mV:
+            soma:
+              value: -60.68152218506457
+              time_ms: 64.30000000000001
+            proximal_dendrite:
+              value: -33.32845050768967
+              time_ms: 64.30000000000001
+            distal_dendrite:
+              value: -57.8747335112639
+              time_ms: 64.30000000000001
+          calcium_current_maximum_pA:
+            soma:
+              value: 15.366668262660486
+              time_ms: 73.79
+            proximal_dendrite:
+              value: 0.41920211383529515
+              time_ms: 64.30000000000001
+            distal_dendrite:
+              value: 1.4977872121968878
+              time_ms: 74.28000000000002
+      at_event:
+        soma:
+          voltage_mV: 0.44014873933646576
+          calcium_current_pA: 14.81761281352385
+          m_ca: 0.7522566600764803
+          h_ca: 0.020568364201528973
+        proximal_dendrite:
+          voltage_mV: -18.013532609448582
+          calcium_current_pA: 0.269638732930846
+          m_ca: 0.9874014012146404
+          h_ca: 0.0011256317236649053
+        distal_dendrite:
+          voltage_mV: -47.160089090150336
+          calcium_current_pA: 1.4981704763628696
+          m_ca: 0.8031479745223946
+          h_ca: 0.012663176138657299
+    - event_number: 3
+      event_time_ms: 95.27000000000001
+      interval_from_previous_event_ms: 20.980000000000004
+      positive_soma_peaks_since_previous_event:
+      - time_ms: 95.04
+        voltage_mV: 45.34169193417954
+      pre_event_windows:
+        1_ms:
+          voltage_minimum_mV:
+            soma:
+              value: -50.165376540212534
+              time_ms: 94.27000000000001
+            proximal_dendrite:
+              value: -27.091819113457575
+              time_ms: 94.27000000000001
+            distal_dendrite:
+              value: -35.36317290406557
+              time_ms: 94.62
+          calcium_current_maximum_pA:
+            soma:
+              value: 18.129325324028958
+              time_ms: 94.76
+            proximal_dendrite:
+              value: 0.15659587131045777
+              time_ms: 94.27000000000001
+            distal_dendrite:
+              value: 1.3361407333802888
+              time_ms: 94.27000000000001
+        5_ms:
+          voltage_minimum_mV:
+            soma:
+              value: -56.352268751719414
+              time_ms: 90.28000000000002
+            proximal_dendrite:
+              value: -28.71144025396569
+              time_ms: 90.28000000000002
+            distal_dendrite:
+              value: -35.36317290406557
+              time_ms: 94.62
+          calcium_current_maximum_pA:
+            soma:
+              value: 18.129325324028958
+              time_ms: 94.76
+            proximal_dendrite:
+              value: 0.18182850238110046
+              time_ms: 90.28000000000002
+            distal_dendrite:
+              value: 1.500961182633626
+              time_ms: 90.28000000000002
+        10_ms:
+          voltage_minimum_mV:
+            soma:
+              value: -61.800506784086465
+              time_ms: 85.27000000000001
+            proximal_dendrite:
+              value: -31.582140332002925
+              time_ms: 85.27000000000001
+            distal_dendrite:
+              value: -42.00028509257321
+              time_ms: 85.27000000000001
+          calcium_current_maximum_pA:
+            soma:
+              value: 18.129325324028958
+              time_ms: 94.76
+            proximal_dendrite:
+              value: 0.2155716714617332
+              time_ms: 85.27000000000001
+            distal_dendrite:
+              value: 1.5100936004062837
+              time_ms: 89.39000000000001
+      at_event:
+        soma:
+          voltage_mV: 0.7213422984713932
+          calcium_current_pA: 17.30347290791052
+          m_ca: 0.7590602806590468
+          h_ca: 0.02341557128032942
+        proximal_dendrite:
+          voltage_mV: -16.475822366671792
+          calcium_current_pA: 0.143078308869115
+          m_ca: 0.9894490129466037
+          h_ca: 0.0005982387774199296
+        distal_dendrite:
+          voltage_mV: -34.865781351096885
+          calcium_current_pA: 1.2828135611917741
+          m_ca: 0.9690371708343983
+          h_ca: 0.006526421603546731
+  '31':
+    event_times_ms:
+    - 49.31
+    - 74.19
+    - 95.5
+    positive_soma_peaks_ms:
+    - 49.080000000000005
+    - 73.97000000000001
+    - 95.27000000000001
+    event_metrics:
+    - event_number: 1
+      event_time_ms: 49.31
+      interval_from_previous_event_ms: null
+      positive_soma_peaks_since_previous_event:
+      - time_ms: 49.080000000000005
+        voltage_mV: 45.01109012655021
+      pre_event_windows:
+        1_ms:
+          voltage_minimum_mV:
+            soma:
+              value: -49.966713006594304
+              time_ms: 48.31
+            proximal_dendrite:
+              value: -29.826383986006842
+              time_ms: 48.31
+            distal_dendrite:
+              value: -51.644581920591925
+              time_ms: 48.31
+          calcium_current_maximum_pA:
+            soma:
+              value: 14.400163620303923
+              time_ms: 48.760000000000005
+            proximal_dendrite:
+              value: 0.7637147509068435
+              time_ms: 48.31
+            distal_dendrite:
+              value: 1.4853186223898998
+              time_ms: 49.300000000000004
+        5_ms:
+          voltage_minimum_mV:
+            soma:
+              value: -55.3905227493316
+              time_ms: 44.31
+            proximal_dendrite:
+              value: -30.678366911798314
+              time_ms: 46.7
+            distal_dendrite:
+              value: -52.1844764404567
+              time_ms: 44.31
+          calcium_current_maximum_pA:
+            soma:
+              value: 14.400163620303923
+              time_ms: 48.760000000000005
+            proximal_dendrite:
+              value: 0.9115696659367922
+              time_ms: 44.31
+            distal_dendrite:
+              value: 1.4853186223898998
+              time_ms: 49.300000000000004
+        10_ms:
+          voltage_minimum_mV:
+            soma:
+              value: -57.12715080249242
+              time_ms: 40.03
+            proximal_dendrite:
+              value: -32.00038768868054
+              time_ms: 39.31
+            distal_dendrite:
+              value: -56.13236137807279
+              time_ms: 39.31
+          calcium_current_maximum_pA:
+            soma:
+              value: 14.400163620303923
+              time_ms: 48.760000000000005
+            proximal_dendrite:
+              value: 1.1437005768997996
+              time_ms: 39.31
+            distal_dendrite:
+              value: 1.4853186223898998
+              time_ms: 49.300000000000004
+      at_event:
+        soma:
+          voltage_mV: 0.9144700330269385
+          calcium_current_pA: 13.395606066953881
+          m_ca: 0.7800221084453729
+          h_ca: 0.016722838935738733
+        proximal_dendrite:
+          voltage_mV: -19.5911969954943
+          calcium_current_pA: 0.696634884184067
+          m_ca: 0.9860977555325051
+          h_ca: 0.002896636910686146
+        distal_dendrite:
+          voltage_mV: -51.33143724429906
+          calcium_current_pA: 1.485364190568473
+          m_ca: 0.7748309513362771
+          h_ca: 0.013730222038375813
+    - event_number: 2
+      event_time_ms: 74.19
+      interval_from_previous_event_ms: 24.879999999999995
+      positive_soma_peaks_since_previous_event:
+      - time_ms: 73.97000000000001
+        voltage_mV: 45.283237733612864
+      pre_event_windows:
+        1_ms:
+          voltage_minimum_mV:
+            soma:
+              value: -50.156322763875075
+              time_ms: 73.19
+            proximal_dendrite:
+              value: -27.741122854929884
+              time_ms: 73.19
+            distal_dendrite:
+              value: -44.200995725851826
+              time_ms: 73.97000000000001
+          calcium_current_maximum_pA:
+            soma:
+              value: 15.749758064536309
+              time_ms: 73.69
+            proximal_dendrite:
+              value: 0.2964093108330752
+              time_ms: 73.19
+            distal_dendrite:
+              value: 1.5158140926817212
+              time_ms: 74.18
+        5_ms:
+          voltage_minimum_mV:
+            soma:
+              value: -57.09432272826356
+              time_ms: 69.19
+            proximal_dendrite:
+              value: -30.63555781881644
+              time_ms: 69.19
+            distal_dendrite:
+              value: -51.19882367118698
+              time_ms: 69.19
+          calcium_current_maximum_pA:
+            soma:
+              value: 15.749758064536309
+              time_ms: 73.69
+            proximal_dendrite:
+              value: 0.34966671826367685
+              time_ms: 69.19
+            distal_dendrite:
+              value: 1.5158140926817212
+              time_ms: 74.18
+        10_ms:
+          voltage_minimum_mV:
+            soma:
+              value: -60.53503873807426
+              time_ms: 64.19000000000001
+            proximal_dendrite:
+              value: -33.30426569820454
+              time_ms: 64.19000000000001
+            distal_dendrite:
+              value: -57.637814022731995
+              time_ms: 64.19000000000001
+          calcium_current_maximum_pA:
+            soma:
+              value: 15.749758064536309
+              time_ms: 73.69
+            proximal_dendrite:
+              value: 0.42336000068282087
+              time_ms: 64.19000000000001
+            distal_dendrite:
+              value: 1.5158140926817212
+              time_ms: 74.18
+      at_event:
+        soma:
+          voltage_mV: 1.5802283467776985
+          calcium_current_pA: 15.072449526095147
+          m_ca: 0.7514897564344047
+          h_ca: 0.021120322055566694
+        proximal_dendrite:
+          voltage_mV: -17.779197465174946
+          calcium_current_pA: 0.2713014502396037
+          m_ca: 0.9877210008548468
+          h_ca: 0.0011328144431279681
+        distal_dendrite:
+          voltage_mV: -43.980768398945216
+          calcium_current_pA: 1.5162095390044703
+          m_ca: 0.8422805936053481
+          h_ca: 0.011268815275884041
+    - event_number: 3
+      event_time_ms: 95.5
+      interval_from_previous_event_ms: 21.310000000000002
+      positive_soma_peaks_since_previous_event:
+      - time_ms: 95.27000000000001
+        voltage_mV: 45.33037302008277
+      pre_event_windows:
+        1_ms:
+          voltage_minimum_mV:
+            soma:
+              value: -50.162021447223026
+              time_ms: 94.50000000000001
+            proximal_dendrite:
+              value: -27.191106001742117
+              time_ms: 94.50000000000001
+            distal_dendrite:
+              value: -36.133359660568956
+              time_ms: 94.65
+          calcium_current_maximum_pA:
+            soma:
+              value: 18.442312236719527
+              time_ms: 94.99000000000001
+            proximal_dendrite:
+              value: 0.1552359131170746
+              time_ms: 94.50000000000001
+            distal_dendrite:
+              value: 1.162147467830452
+              time_ms: 94.50000000000001
+        5_ms:
+          voltage_minimum_mV:
+            soma:
+              value: -56.278914184737054
+              time_ms: 90.50000000000001
+            proximal_dendrite:
+              value: -28.873458148074693
+              time_ms: 90.50000000000001
+            distal_dendrite:
+              value: -36.133359660568956
+              time_ms: 94.65
+          calcium_current_maximum_pA:
+            soma:
+              value: 18.442312236719527
+              time_ms: 94.99000000000001
+            proximal_dendrite:
+              value: 0.18020845991216589
+              time_ms: 90.50000000000001
+            distal_dendrite:
+              value: 1.3169568954895692
+              time_ms: 90.50000000000001
+        10_ms:
+          voltage_minimum_mV:
+            soma:
+              value: -61.41305649129346
+              time_ms: 85.5
+            proximal_dendrite:
+              value: -31.392708990696356
+              time_ms: 85.5
+            distal_dendrite:
+              value: -41.58421921846159
+              time_ms: 85.5
+          calcium_current_maximum_pA:
+            soma:
+              value: 18.442312236719527
+              time_ms: 94.99000000000001
+            proximal_dendrite:
+              value: 0.21358293040088402
+              time_ms: 85.5
+            distal_dendrite:
+              value: 1.3346830942322043
+              time_ms: 89.08
+      at_event:
+        soma:
+          voltage_mV: 0.7616549517489462
+          calcium_current_pA: 17.584722454736166
+          m_ca: 0.7596399289098191
+          h_ca: 0.02374707435032414
+        proximal_dendrite:
+          voltage_mV: -16.57260473156753
+          calcium_current_pA: 0.1418689761639665
+          m_ca: 0.9893450201989968
+          h_ca: 0.0005930772453465217
+        distal_dendrite:
+          voltage_mV: -35.58952377060989
+          calcium_current_pA: 1.115936314856993
+          m_ca: 0.9671148228068464
+          h_ca: 0.005692169020774978
+  '40':
+    event_times_ms:
+    - 11.750000000000002
+    - 72.8
+    - 95.39
+    positive_soma_peaks_ms:
+    - 11.53
+    - 72.57000000000001
+    - 95.16000000000001
+    event_metrics:
+    - event_number: 1
+      event_time_ms: 11.750000000000002
+      interval_from_previous_event_ms: null
+      positive_soma_peaks_since_previous_event:
+      - time_ms: 11.53
+        voltage_mV: 44.78649778455793
+      pre_event_windows:
+        1_ms:
+          voltage_minimum_mV:
+            soma:
+              value: -49.8497614037057
+              time_ms: 10.76
+            proximal_dendrite:
+              value: -32.573150078828846
+              time_ms: 10.76
+            distal_dendrite:
+              value: -27.014379163730606
+              time_ms: 11.74
+          calcium_current_maximum_pA:
+            soma:
+              value: 17.050338741098113
+              time_ms: 11.200000000000001
+            proximal_dendrite:
+              value: 3.3303214950430053
+              time_ms: 11.030000000000001
+            distal_dendrite:
+              value: 2.7392614369904322
+              time_ms: 10.76
+        5_ms:
+          voltage_minimum_mV:
+            soma:
+              value: -53.89897063013214
+              time_ms: 6.7700000000000005
+            proximal_dendrite:
+              value: -47.548645967089456
+              time_ms: 6.760000000000001
+            distal_dendrite:
+              value: -27.014379163730606
+              time_ms: 11.74
+          calcium_current_maximum_pA:
+            soma:
+              value: 17.050338741098113
+              time_ms: 11.200000000000001
+            proximal_dendrite:
+              value: 3.3303214950430053
+              time_ms: 11.030000000000001
+            distal_dendrite:
+              value: 3.0721197380404472
+              time_ms: 6.98
+        10_ms:
+          voltage_minimum_mV:
+            soma:
+              value: -57.27210590225675
+              time_ms: 1.76
+            proximal_dendrite:
+              value: -52.68105599031654
+              time_ms: 4.760000000000001
+            distal_dendrite:
+              value: -27.014379163730606
+              time_ms: 11.74
+          calcium_current_maximum_pA:
+            soma:
+              value: 17.050338741098113
+              time_ms: 11.200000000000001
+            proximal_dendrite:
+              value: 3.6436069984162396
+              time_ms: 4.1000000000000005
+            distal_dendrite:
+              value: 3.0721197380404472
+              time_ms: 6.98
+      at_event:
+        soma:
+          voltage_mV: 1.9994949730628182
+          calcium_current_pA: 15.697360188348366
+          m_ca: 0.781953979423637
+          h_ca: 0.01956999340329454
+        proximal_dendrite:
+          voltage_mV: -21.44645421451671
+          calcium_current_pA: 3.201977948778751
+          m_ca: 0.9392245329804557
+          h_ca: 0.015266537931784376
+        distal_dendrite:
+          voltage_mV: -27.05065006743386
+          calcium_current_pA: 2.6529771219236786
+          m_ca: 0.987433347575894
+          h_ca: 0.013238344701485057
+    - event_number: 2
+      event_time_ms: 72.8
+      interval_from_previous_event_ms: 61.05
+      positive_soma_peaks_since_previous_event:
+      - time_ms: 72.57000000000001
+        voltage_mV: 45.30762907125215
+      pre_event_windows:
+        1_ms:
+          voltage_minimum_mV:
+            soma:
+              value: -50.189475441609545
+              time_ms: 71.8
+            proximal_dendrite:
+              value: -28.087184806100836
+              time_ms: 71.8
+            distal_dendrite:
+              value: -46.0511316228603
+              time_ms: 71.8
+          calcium_current_maximum_pA:
+            soma:
+              value: 14.718553904022212
+              time_ms: 72.24000000000001
+            proximal_dendrite:
+              value: 0.37553175304805486
+              time_ms: 71.8
+            distal_dendrite:
+              value: 0.8175073949851541
+              time_ms: 72.79
+        5_ms:
+          voltage_minimum_mV:
+            soma:
+              value: -56.301125479431036
+              time_ms: 67.8
+            proximal_dendrite:
+              value: -30.876183680357865
+              time_ms: 67.8
+            distal_dendrite:
+              value: -53.652781637960885
+              time_ms: 67.8
+          calcium_current_maximum_pA:
+            soma:
+              value: 14.718553904022212
+              time_ms: 72.24000000000001
+            proximal_dendrite:
+              value: 0.4458241479704984
+              time_ms: 67.8
+            distal_dendrite:
+              value: 0.8175073949851541
+              time_ms: 72.79
+        10_ms:
+          voltage_minimum_mV:
+            soma:
+              value: -57.3656221223616
+              time_ms: 64.60000000000001
+            proximal_dendrite:
+              value: -32.54584755460309
+              time_ms: 62.800000000000004
+            distal_dendrite:
+              value: -56.83329399581587
+              time_ms: 63.07
+          calcium_current_maximum_pA:
+            soma:
+              value: 15.160210916975187
+              time_ms: 62.800000000000004
+            proximal_dendrite:
+              value: 0.5465857916232622
+              time_ms: 62.800000000000004
+            distal_dendrite:
+              value: 0.8175073949851541
+              time_ms: 72.79
+      at_event:
+        soma:
+          voltage_mV: 1.2436322764623335
+          calcium_current_pA: 13.627317236280128
+          m_ca: 0.7823496739097693
+          h_ca: 0.016891763791181458
+        proximal_dendrite:
+          voltage_mV: -17.335705414318188
+          calcium_current_pA: 0.3421852298988043
+          m_ca: 0.9874323809296018
+          h_ca: 0.0014332555372422898
+        distal_dendrite:
+          voltage_mV: -43.67604892702706
+          calcium_current_pA: 0.8177732409363808
+          m_ca: 0.8264912287623292
+          h_ca: 0.006441675079847762
+    - event_number: 3
+      event_time_ms: 95.39
+      interval_from_previous_event_ms: 22.590000000000003
+      positive_soma_peaks_since_previous_event:
+      - time_ms: 95.16000000000001
+        voltage_mV: 45.30201261575537
+      pre_event_windows:
+        1_ms:
+          voltage_minimum_mV:
+            soma:
+              value: -50.12569428963681
+              time_ms: 94.39
+            proximal_dendrite:
+              value: -27.60099970818584
+              time_ms: 94.39
+            distal_dendrite:
+              value: -39.74766308208115
+              time_ms: 94.39
+          calcium_current_maximum_pA:
+            soma:
+              value: 16.66013775512766
+              time_ms: 94.86000000000001
+            proximal_dendrite:
+              value: 0.17518467254202516
+              time_ms: 94.39
+            distal_dendrite:
+              value: 0.6302311278291625
+              time_ms: 94.39
+        5_ms:
+          voltage_minimum_mV:
+            soma:
+              value: -55.99401276517308
+              time_ms: 90.39000000000001
+            proximal_dendrite:
+              value: -29.19260786836185
+              time_ms: 90.39000000000001
+            distal_dendrite:
+              value: -39.79976255333057
+              time_ms: 93.73
+          calcium_current_maximum_pA:
+            soma:
+              value: 16.66013775512766
+              time_ms: 94.86000000000001
+            proximal_dendrite:
+              value: 0.20405588705047376
+              time_ms: 90.39000000000001
+            distal_dendrite:
+              value: 0.7119917089752735
+              time_ms: 90.39000000000001
+        10_ms:
+          voltage_minimum_mV:
+            soma:
+              value: -60.67879267194001
+              time_ms: 85.39
+            proximal_dendrite:
+              value: -31.086848285657613
+              time_ms: 85.39
+            distal_dendrite:
+              value: -41.25443355738336
+              time_ms: 85.39
+          calcium_current_maximum_pA:
+            soma:
+              value: 16.66013775512766
+              time_ms: 94.86000000000001
+            proximal_dendrite:
+              value: 0.24394337979987823
+              time_ms: 85.39
+            distal_dendrite:
+              value: 0.7798329661578285
+              time_ms: 85.39
+      at_event:
+        soma:
+          voltage_mV: 0.19563821781394455
+          calcium_current_pA: 15.839121648969277
+          m_ca: 0.7656868391105887
+          h_ca: 0.020821221150297713
+        proximal_dendrite:
+          voltage_mV: -16.97192793392557
+          calcium_current_pA: 0.1600560572413367
+          m_ca: 0.9889388945613613
+          h_ca: 0.0006685740888377075
+        distal_dendrite:
+          voltage_mV: -38.99041935683628
+          calcium_current_pA: 0.6090533485298777
+          m_ca: 0.9537336269352873
+          h_ca: 0.003188960081880107
+  '49':
+    event_times_ms:
+    - 49.31
+    - 74.19
+    - 95.5
+    positive_soma_peaks_ms:
+    - 49.080000000000005
+    - 73.97000000000001
+    - 95.27000000000001
+    event_metrics:
+    - event_number: 1
+      event_time_ms: 49.31
+      interval_from_previous_event_ms: null
+      positive_soma_peaks_since_previous_event:
+      - time_ms: 49.080000000000005
+        voltage_mV: 45.01109012655021
+      pre_event_windows:
+        1_ms:
+          voltage_minimum_mV:
+            soma:
+              value: -49.966713006594304
+              time_ms: 48.31
+            proximal_dendrite:
+              value: -29.826383986006842
+              time_ms: 48.31
+            distal_dendrite:
+              value: -51.64458192059193
+              time_ms: 48.31
+          calcium_current_maximum_pA:
+            soma:
+              value: 14.400163620303921
+              time_ms: 48.760000000000005
+            proximal_dendrite:
+              value: 0.7637147509068435
+              time_ms: 48.31
+            distal_dendrite:
+              value: 1.4853186223898989
+              time_ms: 49.300000000000004
+        5_ms:
+          voltage_minimum_mV:
+            soma:
+              value: -55.3905227493316
+              time_ms: 44.31
+            proximal_dendrite:
+              value: -30.678366911798314
+              time_ms: 46.7
+            distal_dendrite:
+              value: -52.1844764404567
+              time_ms: 44.31
+          calcium_current_maximum_pA:
+            soma:
+              value: 14.400163620303921
+              time_ms: 48.760000000000005
+            proximal_dendrite:
+              value: 0.9115696659367922
+              time_ms: 44.31
+            distal_dendrite:
+              value: 1.4853186223898989
+              time_ms: 49.300000000000004
+        10_ms:
+          voltage_minimum_mV:
+            soma:
+              value: -57.12715080249243
+              time_ms: 40.03
+            proximal_dendrite:
+              value: -32.00038768868054
+              time_ms: 39.31
+            distal_dendrite:
+              value: -56.13236137807279
+              time_ms: 39.31
+          calcium_current_maximum_pA:
+            soma:
+              value: 14.400163620303921
+              time_ms: 48.760000000000005
+            proximal_dendrite:
+              value: 1.1437005768997996
+              time_ms: 39.31
+            distal_dendrite:
+              value: 1.4853186223898989
+              time_ms: 49.300000000000004
+      at_event:
+        soma:
+          voltage_mV: 0.9144700330269385
+          calcium_current_pA: 13.39560606695388
+          m_ca: 0.7800221084453729
+          h_ca: 0.01672283893573873
+        proximal_dendrite:
+          voltage_mV: -19.5911969954943
+          calcium_current_pA: 0.696634884184067
+          m_ca: 0.9860977555325051
+          h_ca: 0.002896636910686146
+        distal_dendrite:
+          voltage_mV: -51.33143724429906
+          calcium_current_pA: 1.4853641905684722
+          m_ca: 0.7748309513362771
+          h_ca: 0.013730222038375806
+    - event_number: 2
+      event_time_ms: 74.19
+      interval_from_previous_event_ms: 24.879999999999995
+      positive_soma_peaks_since_previous_event:
+      - time_ms: 73.97000000000001
+        voltage_mV: 45.283237733612864
+      pre_event_windows:
+        1_ms:
+          voltage_minimum_mV:
+            soma:
+              value: -50.156322763875075
+              time_ms: 73.19
+            proximal_dendrite:
+              value: -27.741122854929884
+              time_ms: 73.19
+            distal_dendrite:
+              value: -44.200995725851826
+              time_ms: 73.97000000000001
+          calcium_current_maximum_pA:
+            soma:
+              value: 15.749758064536305
+              time_ms: 73.69
+            proximal_dendrite:
+              value: 0.2964093108330752
+              time_ms: 73.19
+            distal_dendrite:
+              value: 1.515814092681721
+              time_ms: 74.18
+        5_ms:
+          voltage_minimum_mV:
+            soma:
+              value: -57.09432272826356
+              time_ms: 69.19
+            proximal_dendrite:
+              value: -30.63555781881644
+              time_ms: 69.19
+            distal_dendrite:
+              value: -51.19882367118698
+              time_ms: 69.19
+          calcium_current_maximum_pA:
+            soma:
+              value: 15.749758064536305
+              time_ms: 73.69
+            proximal_dendrite:
+              value: 0.34966671826367685
+              time_ms: 69.19
+            distal_dendrite:
+              value: 1.515814092681721
+              time_ms: 74.18
+        10_ms:
+          voltage_minimum_mV:
+            soma:
+              value: -60.53503873807427
+              time_ms: 64.19000000000001
+            proximal_dendrite:
+              value: -33.30426569820454
+              time_ms: 64.19000000000001
+            distal_dendrite:
+              value: -57.637814022731995
+              time_ms: 64.19000000000001
+          calcium_current_maximum_pA:
+            soma:
+              value: 15.749758064536305
+              time_ms: 73.69
+            proximal_dendrite:
+              value: 0.42336000068282087
+              time_ms: 64.19000000000001
+            distal_dendrite:
+              value: 1.515814092681721
+              time_ms: 74.18
+      at_event:
+        soma:
+          voltage_mV: 1.5802283467776985
+          calcium_current_pA: 15.072449526095143
+          m_ca: 0.7514897564344047
+          h_ca: 0.02112032205556669
+        proximal_dendrite:
+          voltage_mV: -17.779197465174946
+          calcium_current_pA: 0.2713014502396037
+          m_ca: 0.9877210008548468
+          h_ca: 0.0011328144431279681
+        distal_dendrite:
+          voltage_mV: -43.980768398945216
+          calcium_current_pA: 1.5162095390044703
+          m_ca: 0.8422805936053481
+          h_ca: 0.01126881527588404
+    - event_number: 3
+      event_time_ms: 95.5
+      interval_from_previous_event_ms: 21.310000000000002
+      positive_soma_peaks_since_previous_event:
+      - time_ms: 95.27000000000001
+        voltage_mV: 45.330373020082774
+      pre_event_windows:
+        1_ms:
+          voltage_minimum_mV:
+            soma:
+              value: -50.16202144722302
+              time_ms: 94.50000000000001
+            proximal_dendrite:
+              value: -27.191106001742117
+              time_ms: 94.50000000000001
+            distal_dendrite:
+              value: -36.13335966056896
+              time_ms: 94.65
+          calcium_current_maximum_pA:
+            soma:
+              value: 18.44231223671952
+              time_ms: 94.99000000000001
+            proximal_dendrite:
+              value: 0.1552359131170746
+              time_ms: 94.50000000000001
+            distal_dendrite:
+              value: 1.162147467830452
+              time_ms: 94.50000000000001
+        5_ms:
+          voltage_minimum_mV:
+            soma:
+              value: -56.27891418473705
+              time_ms: 90.50000000000001
+            proximal_dendrite:
+              value: -28.873458148074693
+              time_ms: 90.50000000000001
+            distal_dendrite:
+              value: -36.13335966056896
+              time_ms: 94.65
+          calcium_current_maximum_pA:
+            soma:
+              value: 18.44231223671952
+              time_ms: 94.99000000000001
+            proximal_dendrite:
+              value: 0.18020845991216589
+              time_ms: 90.50000000000001
+            distal_dendrite:
+              value: 1.316956895489569
+              time_ms: 90.50000000000001
+        10_ms:
+          voltage_minimum_mV:
+            soma:
+              value: -61.41305649129346
+              time_ms: 85.5
+            proximal_dendrite:
+              value: -31.392708990696363
+              time_ms: 85.5
+            distal_dendrite:
+              value: -41.584219218461584
+              time_ms: 85.5
+          calcium_current_maximum_pA:
+            soma:
+              value: 18.44231223671952
+              time_ms: 94.99000000000001
+            proximal_dendrite:
+              value: 0.21358293040088402
+              time_ms: 85.5
+            distal_dendrite:
+              value: 1.334683094232204
+              time_ms: 89.08
+      at_event:
+        soma:
+          voltage_mV: 0.7616549517487823
+          calcium_current_pA: 17.584722454736177
+          m_ca: 0.7596399289098191
+          h_ca: 0.023747074350324134
+        proximal_dendrite:
+          voltage_mV: -16.572604731567534
+          calcium_current_pA: 0.1418689761639665
+          m_ca: 0.9893450201989968
+          h_ca: 0.0005930772453465217
+        distal_dendrite:
+          voltage_mV: -35.58952377060989
+          calcium_current_pA: 1.1159363148569925
+          m_ca: 0.9671148228068464
+          h_ca: 0.005692169020774976
+  '58':
+    event_times_ms:
+    - 49.75
+    - 74.29
+    - 95.27000000000001
+    positive_soma_peaks_ms:
+    - 49.53
+    - 74.06
+    - 95.04
+    event_metrics:
+    - event_number: 1
+      event_time_ms: 49.75
+      interval_from_previous_event_ms: null
+      positive_soma_peaks_since_previous_event:
+      - time_ms: 49.53
+        voltage_mV: 44.99390252916172
+      pre_event_windows:
+        1_ms:
+          voltage_minimum_mV:
+            soma:
+              value: -49.9388388687751
+              time_ms: 48.75
+            proximal_dendrite:
+              value: -29.09914724032939
+              time_ms: 48.75
+            distal_dendrite:
+              value: -52.356700799560244
+              time_ms: 49.49
+          calcium_current_maximum_pA:
+            soma:
+              value: 13.863287441109273
+              time_ms: 49.2
+            proximal_dendrite:
+              value: 0.74389741121568
+              time_ms: 48.75
+            distal_dendrite:
+              value: 1.5200998234447853
+              time_ms: 49.74
+        5_ms:
+          voltage_minimum_mV:
+            soma:
+              value: -55.42449228745947
+              time_ms: 44.75000000000001
+            proximal_dendrite:
+              value: -30.33934150931877
+              time_ms: 44.75000000000001
+            distal_dendrite:
+              value: -53.09502576106189
+              time_ms: 44.75000000000001
+          calcium_current_maximum_pA:
+            soma:
+              value: 13.863287441109273
+              time_ms: 49.2
+            proximal_dendrite:
+              value: 0.8900808365522184
+              time_ms: 44.75000000000001
+            distal_dendrite:
+              value: 1.5200998234447853
+              time_ms: 49.74
+        10_ms:
+          voltage_minimum_mV:
+            soma:
+              value: -57.22050809984777
+              time_ms: 40.400000000000006
+            proximal_dendrite:
+              value: -32.13971884466025
+              time_ms: 39.75
+            distal_dendrite:
+              value: -56.73678308699718
+              time_ms: 39.75
+          calcium_current_maximum_pA:
+            soma:
+              value: 13.863287441109273
+              time_ms: 49.2
+            proximal_dendrite:
+              value: 1.1160522855236124
+              time_ms: 39.75
+            distal_dendrite:
+              value: 1.5200998234447853
+              time_ms: 49.74
+      at_event:
+        soma:
+          voltage_mV: 1.3282070860470414
+          calcium_current_pA: 12.827862222332842
+          m_ca: 0.7821992681423917
+          h_ca: 0.015917503281758724
+        proximal_dendrite:
+          voltage_mV: -19.249119647173327
+          calcium_current_pA: 0.6794897073655771
+          m_ca: 0.9868437367170825
+          h_ca: 0.0028237837853623423
+        distal_dendrite:
+          voltage_mV: -52.13845427444147
+          calcium_current_pA: 1.5201633490716815
+          m_ca: 0.7596535163405514
+          h_ca: 0.014859242172790875
+    - event_number: 2
+      event_time_ms: 74.29
+      interval_from_previous_event_ms: 24.540000000000006
+      positive_soma_peaks_since_previous_event:
+      - time_ms: 74.06
+        voltage_mV: 45.34754833252872
+      pre_event_windows:
+        1_ms:
+          voltage_minimum_mV:
+            soma:
+              value: -50.1284022045851
+              time_ms: 73.29
+            proximal_dendrite:
+              value: -28.074923737650984
+              time_ms: 73.29
+            distal_dendrite:
+              value: -47.524641549936916
+              time_ms: 74.03000000000002
+          calcium_current_maximum_pA:
+            soma:
+              value: 15.366668262660463
+              time_ms: 73.79
+            proximal_dendrite:
+              value: 0.29461919324129454
+              time_ms: 73.29
+            distal_dendrite:
+              value: 1.497787212196888
+              time_ms: 74.28000000000002
+        5_ms:
+          voltage_minimum_mV:
+            soma:
+              value: -57.092420103238624
+              time_ms: 69.29
+            proximal_dendrite:
+              value: -30.694204384679555
+              time_ms: 69.29
+            distal_dendrite:
+              value: -52.61657469579107
+              time_ms: 69.29
+          calcium_current_maximum_pA:
+            soma:
+              value: 15.366668262660463
+              time_ms: 73.79
+            proximal_dendrite:
+              value: 0.34685343921006245
+              time_ms: 69.29
+            distal_dendrite:
+              value: 1.497787212196888
+              time_ms: 74.28000000000002
+        10_ms:
+          voltage_minimum_mV:
+            soma:
+              value: -60.68152218506456
+              time_ms: 64.30000000000001
+            proximal_dendrite:
+              value: -33.328450507689666
+              time_ms: 64.30000000000001
+            distal_dendrite:
+              value: -57.8747335112639
+              time_ms: 64.30000000000001
+          calcium_current_maximum_pA:
+            soma:
+              value: 15.366668262660463
+              time_ms: 73.79
+            proximal_dendrite:
+              value: 0.4192021138352951
+              time_ms: 64.30000000000001
+            distal_dendrite:
+              value: 1.497787212196888
+              time_ms: 74.28000000000002
+      at_event:
+        soma:
+          voltage_mV: 0.44014873933160853
+          calcium_current_pA: 14.81761281352432
+          m_ca: 0.7522566600764817
+          h_ca: 0.02056836420152895
+        proximal_dendrite:
+          voltage_mV: -18.01353260944846
+          calcium_current_pA: 0.26963873293084584
+          m_ca: 0.9874014012146405
+          h_ca: 0.001125631723664905
+        distal_dendrite:
+          voltage_mV: -47.160089090150294
+          calcium_current_pA: 1.4981704763628696
+          m_ca: 0.8031479745223946
+          h_ca: 0.012663176138657303
+    - event_number: 3
+      event_time_ms: 95.27000000000001
+      interval_from_previous_event_ms: 20.980000000000004
+      positive_soma_peaks_since_previous_event:
+      - time_ms: 95.04
+        voltage_mV: 45.341691934179494
+      pre_event_windows:
+        1_ms:
+          voltage_minimum_mV:
+            soma:
+              value: -50.16537654021254
+              time_ms: 94.27000000000001
+            proximal_dendrite:
+              value: -27.091819113457575
+              time_ms: 94.27000000000001
+            distal_dendrite:
+              value: -35.36317290406557
+              time_ms: 94.62
+          calcium_current_maximum_pA:
+            soma:
+              value: 18.12932532402893
+              time_ms: 94.76
+            proximal_dendrite:
+              value: 0.1565958713104577
+              time_ms: 94.27000000000001
+            distal_dendrite:
+              value: 1.3361407333802893
+              time_ms: 94.27000000000001
+        5_ms:
+          voltage_minimum_mV:
+            soma:
+              value: -56.35226875171942
+              time_ms: 90.28000000000002
+            proximal_dendrite:
+              value: -28.711440253965694
+              time_ms: 90.28000000000002
+            distal_dendrite:
+              value: -35.36317290406557
+              time_ms: 94.62
+          calcium_current_maximum_pA:
+            soma:
+              value: 18.12932532402893
+              time_ms: 94.76
+            proximal_dendrite:
+              value: 0.1818285023811004
+              time_ms: 90.28000000000002
+            distal_dendrite:
+              value: 1.5009611826336267
+              time_ms: 90.28000000000002
+        10_ms:
+          voltage_minimum_mV:
+            soma:
+              value: -61.80050678408648
+              time_ms: 85.27000000000001
+            proximal_dendrite:
+              value: -31.582140332002925
+              time_ms: 85.27000000000001
+            distal_dendrite:
+              value: -42.00028509257321
+              time_ms: 85.27000000000001
+          calcium_current_maximum_pA:
+            soma:
+              value: 18.12932532402893
+              time_ms: 94.76
+            proximal_dendrite:
+              value: 0.21557167146173314
+              time_ms: 85.27000000000001
+            distal_dendrite:
+              value: 1.5100936004062844
+              time_ms: 89.39000000000001
+      at_event:
+        soma:
+          voltage_mV: 0.7213422984726908
+          calcium_current_pA: 17.303472907910365
+          m_ca: 0.759060280659046
+          h_ca: 0.023415571280329454
+        proximal_dendrite:
+          voltage_mV: -16.47582236667182
+          calcium_current_pA: 0.14307830886911502
+          m_ca: 0.9894490129466037
+          h_ca: 0.0005982387774199294
+        distal_dendrite:
+          voltage_mV: -34.86578135109689
+          calcium_current_pA: 1.2828135611917748
+          m_ca: 0.9690371708343983
+          h_ca: 0.0065264216035467336
+classification_tests:
+  every_first_nonoverlap_escape_lacks_preceding_hyperpolarization: true
+  every_first_nonoverlap_escape_lacks_t_channel_availability_recovery: true
+  each_nonoverlap_interevent_interval_contains_one_positive_soma_peak: true
+  late_nonoverlap_t_type_rebound_supported: false
+assessment:
+  artifact_468_failure_unchanged: true
+  parameter_selected: false
+  original_smart_reproduced: false
+  baseline_promoted: false
+  conclusion: 'The first nonoverlap events at 49.31--49.75 ms do not follow hyperpolarization
+    in soma or either dendrite: every compartment starts at -60 mV and never falls
+    below that value before its first escape. T-channel inactivation availability
+    h_ca decreases rather than recovering. Each nonoverlap cell has one >+30-mV somatic
+    peak per emitted event, with isolated events separated by about 21--25 ms rather
+    than a transient multi-peak burst. T-type current is present but the paper''s
+    hyperpolarization-to-rebound sequence is absent. Deep later minima occur only
+    after the already-invalid first action potentials and cannot rescue the candidate.'
+  next_step: Use the same pinned trace to localize the loss of inhibition before the
+    first nonoverlap escape, then return to a source-constrained synaptic/event-handling
+    uncertainty. Do not tune calcium or adopt the observed 49-ms transition as a cutoff.

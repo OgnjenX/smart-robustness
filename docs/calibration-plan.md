@@ -74,6 +74,17 @@ the paper's later rebound mode. The next admissible step is readout-only
 localization of the waning inhibitory balance in the same trace, followed by an
 explicit revision of the remaining source uncertainty—not calcium fitting.
 
+Source audit 476 replaces part of that uncertainty with an executable 2004
+KInNeSS benchmark: 205/205 archived axonal events align to a falling physical
+-20-mV soma crossing plus the declared 2-ms delay within one saved 0.05-ms
+sample. Artifacts 477--479 test the recovered rule without any effective
+projection scaling. Spatial selection and the cortical chain survive, but the
+relay produces only one five-cell volley and therefore cannot form a causal
+post-teaching pair. That complete source-coherent candidate is closed before
+Figure 7. One cross with the already established Figure 6 projection-transfer
+convention is admissible as a separately labeled unit-semantics discriminator;
+no new threshold or scale may be inferred from the failed run.
+
 ### D — locked holdout evaluation
 
 Without changing the candidate, evaluate:

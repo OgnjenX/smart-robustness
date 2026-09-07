@@ -7510,3 +7510,69 @@ def test_legacy_falling_minus20_figure6_is_preregistered_and_source_coherent() -
         "Run one complete, fully monitored Figure 6"
     )
     assert "figure7_match" in registration["locked_holdouts"]
+
+
+def test_legacy_detector_calibrated_transfer_cross_is_fixed_before_execution() -> None:
+    profile = yaml.safe_load(
+        (
+            ROOT
+            / "configs/calibration/figure6_legacy_falling_minus20_calibrated_transfer_v1.yaml"
+        ).read_text()
+    )
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure6-legacy-falling-minus20-calibrated-transfer-registration-480.yaml"
+        ).read_text()
+    )
+
+    assert profile["runtime_overrides"]["spike_event_rule"] == (
+        "falling_threshold_crossing"
+    )
+    assert profile["runtime_overrides"]["spike_event_threshold_mV"] == -20.0
+    assert profile["projection_weight_scales"] == {
+        "modeldb112923.projection.000": 0.01,
+        "modeldb112923.projection.001": 0.01,
+        "modeldb112923.projection.004": 0.03,
+    }
+    assert registration["execution"]["parameter_search"] is False
+    assert registration["execution"]["figure7_runs"] == 0
+    assert registration["stopping_rule"].startswith(
+        "Run one fresh complete Figure 6"
+    )
+    assert registration["interpretation_boundary"].startswith(
+        "A pass would show compatibility"
+    )
+
+
+def test_unscaled_legacy_detector_cross_fails_before_recognition() -> None:
+    result = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure6-legacy-falling-minus20-source-478.yaml"
+        ).read_text()
+    )
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure6-legacy-falling-minus20-source-assessment-479.yaml"
+        ).read_text()
+    )
+
+    assert result["runtime_fingerprint"] == (
+        "4ccdcc18e9bc1dc61192c9ccce42c6ccbcdf13bd74960edd7ff8a7e01e95069f"
+    )
+    assert result["projection_weight_scales"] == {}
+    assert not result["holdouts_consulted"]
+    assert result["relay_recruitment"]["active_indices"] == [38, 39, 40, 41, 42]
+    assert result["population_spikes"]["thalamic_relay"] == 5
+    assert result["population_spikes"]["trn"] == 411
+    assert result["top_down_timing"]["following_relay_spike_ms"] is None
+    assert assessment["result_sha256"] == (
+        "5166736467e091e1da87be537f47a1833facb120ddec63ebabc62dd194b7bb83"
+    )
+    assert not assessment["assessment"]["preregistered_figure6_contract_passed"]
+    assert assessment["assessment"]["exact_candidate_closed"]
+    assert not assessment["assessment"]["advance_to_figure7"]
+    assert not assessment["assessment"]["original_smart_reproduced"]
+    assert not assessment["assessment"]["baseline_promoted"]

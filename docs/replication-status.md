@@ -2,6 +2,24 @@
 
 ## Current interpretation (2026-09-07)
 
+Source audit 476 recovers an executable KInNeSS event-interface benchmark that
+was missing from the earlier source search. Across 199 tonic and six burst
+events in an author-produced 2004 thalamic example, each axonal event follows
+the soma's falling crossing of physical -20 mV by the serialized 2-ms delay,
+within one 0.05-ms output sample. This supports a separately named
+`falling_threshold_crossing` rule; it does not prove that the unavailable 2008
+RC2 build is bit-identical.
+
+Artifacts 477--479 apply that rule to one preregistered, otherwise unscaled
+source-coherent Figure 6 episode. Exactly the five horizontal relay cells are
+selected, but they emit only once each rather than four times. The cortical
+chain completes and both map contrasts are positive, yet teaching feedback at
+10.20 ms follows the sole relay volley at 5.91--5.92 ms, leaving no causal
+learning pair. The exact combination is rejected before Figure 7. The event
+rule remains independently source-supported; the next admissible discriminator
+crosses it with the already established Figure 6 projection-unit transfer
+convention rather than fitting a new value from this result.
+
 Artifacts 471--473 complete the identity-locked mismatch calcium replay of the
 failed gain-0.8 candidate. The fresh event train exactly matches Artifact 468,
 and its 10,000-sample trace contains soma/dendrite voltages, T-type currents,

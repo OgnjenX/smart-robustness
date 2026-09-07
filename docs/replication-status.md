@@ -3471,3 +3471,15 @@ explicit mesoscopic coincidence reconstruction and combines it once with the
 independently selected 0.1875 nonspecific T scale. All Figure 6 and Figure 7
 gates are fixed in advance. No outcome can be called recovered original SMART;
 a complete pass would authorize only calibrated downstream behavior tests.
+
+Artifacts 544--546 produce the closest Figure 7 reconstruction to date but do
+not pass the complete contract. The fresh learning handoff passes every Figure
+6 gate. The learned coincidence field then keeps all five horizontal match
+cells (20 relay events) while reducing mismatch to three events in overlap cell
+40. Nonspecific thalamus exactly reproduces the rendered 40/70-Hz traces with
+four versus seven events. The remaining failure is mechanistic rather than
+numeric: total TRN output is 549 during match and 584 during mismatch, opposite
+to the paper's required ordering despite 17 more matched relay events. The
+cross is closed without retuning and cannot be called original SMART. An
+unchanged diagnostic repeat must now separate relay-collateral and direct
+corticoreticular drive from recurrent TRN event generation.

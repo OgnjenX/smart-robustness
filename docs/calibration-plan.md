@@ -1308,3 +1308,14 @@ that transform once, without a grid, with independently match-selected
 nonspecific T scale 0.1875. The fresh Figure 6 handoff and the complete 4/7-Hz,
 relay-subset, and TRN-order contract are fixed. Failure closes the interaction;
 success would be calibrated behavioral reproduction, not recovered 2008 source.
+
+Artifacts 544--546 complete the fixed cross. Fresh Figure 6 passes, match
+retains all five horizontal relay cells with 20 events, and mismatch is reduced
+to three events in overlap cell 40 alone. The nonspecific output exactly
+matches the rendered Figure 7c traces at 4 versus 7 events (40/70 Hz). One
+predeclared mechanistic gate fails: TRN output is 549 in match versus 584 in
+mismatch, despite the much larger matched relay train. The interaction is
+closed without retuning. Next perform an unchanged source-decomposition repeat
+that preserves full TRN event trains and separates relay-collateral drive from
+direct layer-6II drive; only after locating the inversion may a new source- or
+mechanism-justified candidate be registered.

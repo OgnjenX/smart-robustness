@@ -8529,3 +8529,33 @@ def test_learned_coincidence_effective_t_cross_is_fixed_before_execution() -> No
         "translation_boundary"
     ]
     assert "not recovered original" in registration["classification_boundary"]
+
+
+def test_learned_coincidence_effective_t_cross_closes_on_trn_order() -> None:
+    result_path = (
+        ROOT
+        / "docs/validation-results/figure7-learned-coincidence-effective-t-pair-545.yaml"
+    )
+    result = yaml.safe_load(result_path.read_text())
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-learned-coincidence-effective-t-pair-assessment-546.yaml"
+        ).read_text()
+    )
+
+    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment[
+        "result_sha256"
+    ]
+    assert all(result["figure6_gates"].values())
+    assert result["match"]["relay_active_indices"] == [38, 39, 40, 41, 42]
+    assert result["mismatch"]["relay_active_indices"] == [40]
+    assert result["match"]["nonspecific_event_count"] == 4
+    assert result["mismatch"]["nonspecific_event_count"] == 7
+    assert result["match"]["trn_event_count"] == 549
+    assert result["mismatch"]["trn_event_count"] == 584
+    assert not result["gates"]["match_more_trn_events"]
+    assert not result["behavioral_targets_pass"]
+    assert assessment["assessment"]["all_gates_except_trn_order_pass"]
+    assert assessment["assessment"]["candidate_closed"]
+    assert not assessment["assessment"]["original_smart_reproduced"]

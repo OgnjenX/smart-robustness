@@ -1,0 +1,45 @@
+schema_version: 1
+id: figure6-legacy-detector-paper-nonspecific-paper-kinetics-assessment-518
+date: '2026-09-07'
+status: complete-source-supported-figure6-prerequisite-passed
+registration: docs/validation-results/figure6-legacy-detector-paper-nonspecific-paper-kinetics-registration-516.yaml
+result: docs/validation-results/figure6-legacy-detector-paper-nonspecific-paper-kinetics-517.yaml
+result_sha256: 5d6d66da5ca9b9bee1ab3bb64cf903233101243a61fa23f4a539bd0275370052
+candidate:
+  nonspecific_intrinsic_cell_convention: paper_table3
+  nonspecific_axial_convention: paper_literal
+  nonspecific_calcium_kinetics_convention: paper_2008
+  detector: falling_threshold_crossing_at_physical_minus20_mV
+result_summary:
+  relay_active_indices: [38, 39, 40, 41, 42]
+  relay_events_per_active_index: 4
+  relay_event_count: 20
+  trn_event_count: 597
+  nonspecific_event_count: 23
+  cortical_chain_complete: true
+  teaching_arrival_ms: 82.37
+  following_relay_event_ms: 85.37
+  bottom_up_horizontal_contrast: 1.6221826025962545
+  top_down_horizontal_contrast: 0.5787770082271204
+  top_down_combined_maximum: 0.823530957357867
+gates:
+  relay_active_indices: true
+  relay_events_per_active_index: true
+  relay_events: true
+  cortical_chain_complete: true
+  causal_learning_pair: true
+  bottom_up_horizontal_contrast: true
+  top_down_horizontal_contrast: true
+assessment:
+  preregistered_figure6_contract_passed: true
+  recognition_match_authorized: true
+  figure6_nonspecific_count_used_for_selection: false
+  original_smart_reproduced: false
+  baseline_promoted: false
+  conclusion: >-
+    The paper-coherent nonspecific intrinsic, axial, and calcium equations
+    preserve every Figure 6 gate. The 23-event learning output is reported but
+    does not score recognition. One fresh exact-rate match is authorized.
+gate_resolution: >-
+  Artifact 517's embedded amplitude flag is obsolete; Registration 516's
+  source-supported map-shape gate passes.

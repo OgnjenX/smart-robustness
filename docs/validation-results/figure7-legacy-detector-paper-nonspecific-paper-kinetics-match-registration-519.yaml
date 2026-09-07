@@ -1,0 +1,50 @@
+schema_version: 1
+id: figure7-legacy-detector-paper-nonspecific-paper-kinetics-match-registration-519
+date: '2026-09-07'
+status: registered-before-execution
+classification: paper-coherent-nonspecific-cell-match
+profile: configs/calibration/figure7_legacy_detector_paper_nonspecific_paper_kinetics_match_v1.yaml
+predecessor: docs/validation-results/figure6-legacy-detector-paper-nonspecific-paper-kinetics-assessment-518.yaml
+training_result_sha256: 5d6d66da5ca9b9bee1ab3bb64cf903233101243a61fa23f4a539bd0275370052
+runtime_fingerprint: 37cf90faf61129d5619e90c02374201db01f48fd7dfdf50c2a19d6989db2aa24
+result: docs/validation-results/figure7-legacy-detector-paper-nonspecific-paper-kinetics-match-520.yaml
+fixed_candidate:
+  nonspecific_intrinsic_cell_convention: paper_table3
+  nonspecific_axial_convention: paper_literal
+  nonspecific_calcium_kinetics_convention: paper_2008
+  spike_event_rule: falling_threshold_crossing
+  spike_event_threshold_mV: -20.0
+  projection_weight_scales:
+    modeldb112923.projection.000: 0.01
+    modeldb112923.projection.001: 0.01
+    modeldb112923.projection.004: 0.03
+  learned_weight_expansion: 1.0
+  receptor_prime: none
+  comparator: none
+  top_down_current_pA: 800.0
+fixed_gates:
+  relay_active_indices: [38, 39, 40, 41, 42]
+  minimum_relay_events_per_active_index: 3
+  nonspecific_events: 4
+  nonspecific_rate_hz: 40.0
+  current_terminated_on_first_selected_event: true
+  no_reconstructed_comparator: true
+  no_calcium_ablation: true
+execution:
+  figure6_repeat_runs: 1
+  match_runs: 1
+  mismatch_runs: 0
+  parameter_search: false
+stopping_rule: >-
+  Repeat Artifact 517 exactly, then run one 100-ms match. Failure closes this
+  paper-coherent cellular endpoint before mismatch without parameter fitting.
+  A pass authorizes one unchanged mismatch.
+interpretation_boundary: >-
+  The detector, transfer factors, and current amplitude retain disclosed
+  limitations. Passing match would not be complete original SMART reproduction.
+locked_until_match_passes:
+  - figure7_mismatch
+  - figure10_reset
+  - figure14_spectra
+  - figure15_local_synchrony
+  - figure16_long_range_synchrony

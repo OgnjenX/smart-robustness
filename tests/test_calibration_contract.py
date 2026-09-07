@@ -8168,3 +8168,43 @@ def test_paper_cell_paper_kinetics_cross_is_preregistered_at_figure6() -> None:
     assert registration["stopping_rule"].startswith(
         "Run one fresh complete Figure 6"
     )
+
+
+def test_paper_coherent_cell_passes_figure6_and_registers_match() -> None:
+    result = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure6-legacy-detector-paper-nonspecific-paper-kinetics-517.yaml"
+        ).read_text()
+    )
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure6-legacy-detector-paper-nonspecific-paper-kinetics-assessment-518.yaml"
+        ).read_text()
+    )
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-legacy-detector-paper-nonspecific-paper-kinetics-match-registration-519.yaml"
+        ).read_text()
+    )
+
+    assert result["runtime_fingerprint"] == (
+        "37cf90faf61129d5619e90c02374201db01f48fd7dfdf50c2a19d6989db2aa24"
+    )
+    assert result["population_spikes"]["thalamic_relay"] == 20
+    assert result["population_spikes"]["thalamic_nonspecific"] == 23
+    assert result["recruitment"]["feedforward_chain_complete"]
+    assert result["top_down_timing"]["causal_pair_in_learning_window"]
+    assert assessment["result_sha256"] == (
+        "5d6d66da5ca9b9bee1ab3bb64cf903233101243a61fa23f4a539bd0275370052"
+    )
+    assert assessment["assessment"]["preregistered_figure6_contract_passed"]
+    assert not assessment["assessment"]["figure6_nonspecific_count_used_for_selection"]
+    assert registration["execution"] == {
+        "figure6_repeat_runs": 1,
+        "match_runs": 1,
+        "mismatch_runs": 0,
+        "parameter_search": False,
+    }

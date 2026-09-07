@@ -112,6 +112,11 @@ events; none reaches four, so no interpolation is authorized. Registration 516
 returns to the paper Table-3 nonspecific cell and pairs it with paper calcium
 kinetics, beginning at Figure 6 as a separate source-coherence cross.
 
+Artifacts 516--518 pass the paper-coherent nonspecific cell/axial/calcium
+bundle through Figure 6 with exact relay, cortical, teaching, and map-shape
+gates. Its 23 nonspecific learning events are not used to predict recognition.
+Registration 519 fixes one fresh match against the unchanged four-event target.
+
 Artifacts 471--473 complete the identity-locked mismatch calcium replay of the
 failed gain-0.8 candidate. The fresh event train exactly matches Artifact 468,
 and its 10,000-sample trace contains soma/dendrite voltages, T-type currents,

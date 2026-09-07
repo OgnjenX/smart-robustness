@@ -156,6 +156,10 @@ four-event survivor. Registration 516 tests the paper-coherent nonspecific
 cell/axial/calcium combination at Figure 6, while retaining the recovered
 detector and clearly labeling calibrated network conventions.
 
+Artifacts 516--518 pass the paper-coherent nonspecific cellular bundle through
+Figure 6. Registration 519 requires one independent match; its four-event gate
+cannot be altered by the 23-event learning-condition observation.
+
 ### D — locked holdout evaluation
 
 Without changing the candidate, evaluate:

@@ -1326,3 +1326,14 @@ event summaries, and source-separated relay-collateral, corticoreticular, and
 recurrent TRN readouts. The failed candidate remains closed. The diagnostic
 will determine whether the 549-versus-584 inversion originates in afferent
 drive or in recurrent TRN dynamics before any further mechanism is proposed.
+
+Artifacts 547--549 localize the inversion to recurrent spatial TRN dynamics.
+The exact 20/3 relay, 549/584 TRN, and 4/7 nonspecific pair repeats with added
+readouts. Across nine cells spanning the learned and mismatching fields, the
+match/mismatch integral ratios are 5.76 for relay-collateral AMPA, 3.06 for
+layer-6II AMPA, and 2.96 for layer-6II NMDA. Those cells emit 79 versus 72
+events, in the correct direction. The remaining 72 TRN cells emit 470 versus
+512; mismatch organizes repeated near-whole-sheet volleys despite weaker
+afferent drive. Next use one recognition-only dual ablation of recurrent TRN
+GABA records 008/011 as a causal diagnostic. Keep gap junctions and every
+afferent path intact; do not promote the ablation or infer a replacement gain.

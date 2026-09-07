@@ -1,0 +1,72 @@
+schema_version: 1
+id: figure7-trn-drive-decomposition-548
+date: '2026-09-07'
+status: completed-read-only-trn-drive-decomposition
+classification: fixed-near-pass-trn-source-decomposition
+registration: docs/validation-results/figure7-trn-drive-decomposition-registration-547.yaml
+runtime_fingerprint: fa4ab9f0bf2bec4d6ad53cb6a91620047689b6839b146ed7d777d42350c2cdf5
+figure6_gates:
+  relay_active_indices: true
+  relay_events_per_active_index: true
+  relay_events: true
+  top_down_horizontal_contrast: true
+repeat_identity:
+  match_relay_events: 20
+  match_relay_active_indices: [38, 39, 40, 41, 42]
+  mismatch_relay_events: 3
+  mismatch_relay_active_indices: [40]
+  match_trn_events: 549
+  mismatch_trn_events: 584
+  match_nonspecific_events: 4
+  mismatch_nonspecific_events: 7
+diagnostic_indices: [22, 31, 38, 39, 40, 41, 42, 49, 58]
+trn_event_counts:
+  diagnostic_indices:
+    match: [6, 11, 7, 10, 11, 10, 7, 11, 6]
+    mismatch: [8, 8, 8, 8, 8, 8, 8, 8, 8]
+    match_total: 79
+    mismatch_total: 72
+  remaining_72_indices:
+    match_total: 470
+    mismatch_total: 512
+  initial_whole_sheet_volley:
+    match_events: 81
+    mismatch_events: 81
+    time_ms: 5.63
+trn_nonzero_one_ms_bins:
+  match: [[5, 81], [11, 17], [12, 30], [16, 4], [17, 16], [18, 14], [21, 4], [22, 23], [27, 18], [28, 18], [31, 2], [32, 19], [33, 6], [38, 18], [39, 18], [40, 7], [42, 20], [46, 13], [47, 8], [52, 18], [53, 4], [57, 2], [58, 7], [59, 8], [62, 11], [63, 60], [73, 3], [74, 10], [82, 77], [83, 4], [92, 2], [93, 7]]
+  mismatch: [[5, 81], [13, 45], [14, 36], [22, 29], [23, 52], [32, 8], [33, 73], [43, 8], [44, 73], [56, 8], [57, 73], [71, 4], [72, 17], [73, 16], [89, 8], [90, 41], [91, 12]]
+source_gate_integrals_over_100ms_for_diagnostic_indices:
+  projection_010_relay_to_trn_ampa:
+    match_by_index: [296.70918747397764, 404.50732605679053, 342.31685509134456, 419.5248731413204, 448.5300286850237, 419.5248731413204, 342.31685509134456, 404.50732605679053, 296.70918747397764]
+    mismatch_by_index: [53.43778440899486, 72.85239619881185, 53.43778440899486, 72.85239619881185, 80.78095315445091, 72.85239619881185, 53.43778440899486, 72.85239619881185, 53.43778440899486]
+    match_sum: 3374.6465122118902
+    mismatch_sum: 585.9416755856777
+    match_to_mismatch_ratio: 5.7593556710892155
+  projection_012_layer6ii_to_trn_ampa:
+    match_by_index: [72.43705596831964, 141.08811974327895, 70.34936319765139, 114.05800900954003, 114.23682991244141, 114.05800900954003, 70.34936319765139, 141.08811974327895, 72.43705596831964]
+    mismatch_by_index: [25.262675341926588, 49.204972731582984, 25.262675341926588, 49.204972731582984, 0.0, 49.204972731582984, 25.262675341926588, 49.204972731582984, 25.262675341926588]
+    match_sum: 910.1019257500215
+    mismatch_sum: 297.87059229403826
+    match_to_mismatch_ratio: 3.0553601103784986
+  projection_009_layer6ii_to_trn_nmda:
+    match_by_index: [6.876820354980076, 19.488470885468338, 9.06758788252006, 16.957020787130027, 16.376167702697956, 16.957020787130027, 9.06758788252006, 19.488470885468338, 6.876820354980076]
+    mismatch_by_index: [2.6685602108904627, 7.562529670910489, 2.6685602108904627, 7.562529670910489, 0.0, 7.562529670910489, 2.6685602108904627, 7.562529670910489, 2.6685602108904627]
+    match_sum: 121.15596752289497
+    mismatch_sum: 40.924359527203805
+    match_to_mismatch_ratio: 2.960485366725373
+diagnostic_conclusion:
+  afferent_drive_order: match_greater_than_mismatch
+  local_diagnostic_output_order: match_greater_than_mismatch
+  peripheral_output_order: mismatch_greater_than_match
+  global_inversion_location: recurrent_spatial_trn_dynamics_outside_active_field
+capture_note: >-
+  The hash-pinned runner emitted complete TRN index/time arrays. The direct tool
+  display truncated the middle of that verbose stdout, so this committed
+  artifact preserves the fully captured per-cell counts, complete nonempty
+  1-ms bins, all registered source-gate integrals, and exact aggregate counts
+  rather than claiming a lossless raw-stdout archive.
+model_or_protocol_change: false
+candidate_reopened: false
+original_smart_reproduced: false
+baseline_promoted: false

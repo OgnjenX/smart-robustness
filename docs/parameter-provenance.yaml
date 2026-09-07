@@ -539,9 +539,9 @@ parameters:
     note: Fresh Figure 6 passes; match/mismatch relay sets are exactly 38--42 versus overlap cell 40, and nonspecific output exactly reproduces four versus seven events. Total TRN output is inverted at 549 match versus 584 mismatch, however, so the source-stated relay-to-TRN mechanism fails. Close without retuning; preserve as the nearest calibrated Figure 7 reconstruction, not recovered original SMART.
   validation.figure7.trn_drive_decomposition:
     value: unchanged Artifact-545 pair with full TRN events and source-specific gate integrals
-    status: preregistered-read-only-diagnostic-awaiting-execution
-    source: Registration 547
-    note: Separates projection-010 relay collateral drive, projections-009/012 direct layer-6II drive, and recurrent TRN output without changing the failed candidate. It cannot select a parameter or reopen the candidate.
+    status: recurrent-spatial-trn-inversion-localized
+    source: Artifacts 547--549
+    note: Match exceeds mismatch at every measured afferent gate and among the nine field-centered TRN cells (79 versus 72 events), but the remaining 72 cells reverse the total with 470 versus 512 events through repeated mismatch-wide volleys. The inversion arises inside the spatially recurrent TRN network, not from reversed relay or layer-6II drive. The failed candidate remains closed.
   benchmark.population_sizes:
     value: see configs/*.yaml
     status: exploratory

@@ -3483,3 +3483,15 @@ to the paper's required ordering despite 17 more matched relay events. The
 cross is closed without retuning and cannot be called original SMART. An
 unchanged diagnostic repeat must now separate relay-collateral and direct
 corticoreticular drive from recurrent TRN event generation.
+
+Artifacts 547--549 repeat that exact pair with source-resolved TRN readouts and
+localize the last failed gate. Across the nine monitored cells covering the
+learned and mismatch axes, relay-collateral AMPA integral is 5.76 times larger
+in match; layer-6II AMPA and NMDA integrals are 3.06 and 2.96 times larger.
+Those cells emit 79 match versus 72 mismatch events. The global order reverses
+only in the remaining 72 cells (470 versus 512), where mismatch produces
+repeated near-whole-sheet synchronized volleys. The source-stated afferent
+ordering is therefore intact, but recurrent spatial TRN dynamics invert the
+whole-population event count. A dual recurrent-GABA ablation of records 008
+and 011 is now the next causal diagnostic; it cannot itself become the classic
+baseline.

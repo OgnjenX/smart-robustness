@@ -1,0 +1,42 @@
+schema_version: 1
+id: figure7-trn-drive-decomposition-assessment-549
+date: '2026-09-07'
+status: assessed-global-trn-inversion-localized
+registration: docs/validation-results/figure7-trn-drive-decomposition-registration-547.yaml
+result: docs/validation-results/figure7-trn-drive-decomposition-548.yaml
+result_sha256: 89bd6bd0ecca405f7848e430052713cee881b645dfed88acaa46e28c20132341
+runtime_fingerprint: fa4ab9f0bf2bec4d6ad53cb6a91620047689b6839b146ed7d777d42350c2cdf5
+assessment:
+  fixed_pair_reproduced: true
+  model_or_protocol_change: false
+  match_greater_relay_gate_integral_at_all_diagnostic_cells: true
+  match_greater_layer6ii_ampa_integral_sum: true
+  match_greater_layer6ii_nmda_integral_sum: true
+  match_greater_diagnostic_cell_trn_events: true
+  mismatch_greater_peripheral_trn_events: true
+  global_event_order_inverted_by_afferent_drive: false
+  global_event_order_inverted_inside_trn_network: true
+  candidate_reopened: false
+  original_smart_reproduced: false
+quantitative_summary:
+  relay_ampa_integral_match_to_mismatch: 5.7593556710892155
+  layer6ii_ampa_integral_match_to_mismatch: 3.0553601103784986
+  layer6ii_nmda_integral_match_to_mismatch: 2.960485366725373
+  diagnostic_trn_events_match_mismatch: [79, 72]
+  remaining_trn_events_match_mismatch: [470, 512]
+  whole_population_trn_events_match_mismatch: [549, 584]
+interpretation: >-
+  The paper-predicted afferent ordering is present: every measured relay and
+  corticoreticular gate integral is larger in match, often by factors of three
+  to six. TRN cells in and around the stimulus field also emit more match
+  events. The 35-event global reversal is produced exclusively by the other 72
+  TRN cells, where mismatch organizes repeated near-whole-sheet volleys. The
+  unresolved mechanism is therefore recurrent spatial TRN synchronization,
+  not projection-010 strength or reversed category feedback.
+next_gate: >-
+  Preregister one recognition-only causal ablation of both recurrent chemical
+  TRN projections 008 and 011 while retaining TRN gap junctions, all afferent
+  projections, the fixed learned coincidence field, and effective T scale.
+  Compare the fixed match/mismatch pair only to determine whether recurrent
+  GABA creates the global inversion. This is a diagnostic, not a candidate and
+  may not select a replacement weight.

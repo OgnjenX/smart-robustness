@@ -8588,3 +8588,32 @@ def test_trn_drive_decomposition_is_hash_pinned_and_read_only() -> None:
     assert "complete TRN event indices and times" in registration[
         "added_readouts_only"
     ]
+
+
+def test_trn_drive_decomposition_localizes_peripheral_recurrent_inversion() -> None:
+    result_path = (
+        ROOT / "docs/validation-results/figure7-trn-drive-decomposition-548.yaml"
+    )
+    result = yaml.safe_load(result_path.read_text())
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-trn-drive-decomposition-assessment-549.yaml"
+        ).read_text()
+    )
+
+    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment[
+        "result_sha256"
+    ]
+    assert result["repeat_identity"]["match_trn_events"] == 549
+    assert result["repeat_identity"]["mismatch_trn_events"] == 584
+    assert result["trn_event_counts"]["diagnostic_indices"]["match_total"] == 79
+    assert result["trn_event_counts"]["diagnostic_indices"]["mismatch_total"] == 72
+    assert result["trn_event_counts"]["remaining_72_indices"]["match_total"] == 470
+    assert result["trn_event_counts"]["remaining_72_indices"]["mismatch_total"] == 512
+    for projection in result[
+        "source_gate_integrals_over_100ms_for_diagnostic_indices"
+    ].values():
+        assert projection["match_sum"] > projection["mismatch_sum"]
+    assert assessment["assessment"]["global_event_order_inverted_inside_trn_network"]
+    assert not assessment["assessment"]["candidate_reopened"]

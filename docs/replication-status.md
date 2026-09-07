@@ -20,6 +20,18 @@ rule remains independently source-supported; the next admissible discriminator
 crosses it with the already established Figure 6 projection-unit transfer
 convention rather than fitting a new value from this result.
 
+Artifacts 480--482 make that single predeclared cross. With the recovered
+detector and the prior Figure 6 0.01/0.01/0.03 inhibitory transfer convention,
+each horizontal relay cell emits exactly four times, the full cortical chain
+is recruited, teaching feedback precedes a later relay event, and bottom-up
+and combined top-down horizontal contrasts are 1.60974 and 0.579262. This
+passes every source-supported Figure 6 gate. Artifact 481's legacy embedded
+failure flag uses the already retracted, non-identifiable combined-map peak
+threshold of 2.0 and is superseded by the registered assessment. A
+comparator-free, unexpanded Figure 7 match is now admissible. Original SMART
+is not yet reproduced or frozen because recognition and the calibrated
+transfer-unit interpretation remain unresolved.
+
 Artifacts 471--473 complete the identity-locked mismatch calcium replay of the
 failed gain-0.8 candidate. The fresh event train exactly matches Artifact 468,
 and its 10,000-sample trace contains soma/dendrite voltages, T-type currents,

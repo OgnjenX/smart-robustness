@@ -7576,3 +7576,40 @@ def test_unscaled_legacy_detector_cross_fails_before_recognition() -> None:
     assert not assessment["assessment"]["advance_to_figure7"]
     assert not assessment["assessment"]["original_smart_reproduced"]
     assert not assessment["assessment"]["baseline_promoted"]
+
+
+def test_legacy_detector_figure7_match_is_locked_to_fresh_weights() -> None:
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure6-legacy-falling-minus20-calibrated-transfer-assessment-482.yaml"
+        ).read_text()
+    )
+    profile = yaml.safe_load(
+        (ROOT / "configs/calibration/figure7_legacy_falling_minus20_match_v1.yaml").read_text()
+    )
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-legacy-falling-minus20-match-registration-483.yaml"
+        ).read_text()
+    )
+    runner = (ROOT / "scripts/run_figure7_legacy_detector_match.py").read_text()
+
+    assert assessment["assessment"]["preregistered_figure6_contract_passed"]
+    assert assessment["result_sha256"] == registration["training_result_sha256"]
+    assert profile["weight_handoff"] == "actual_fresh_figure6_weights_no_expansion"
+    assert profile["protocol"]["condition"] == "match"
+    assert profile["protocol"]["top_down_cue_lead_ms"] == 0.0
+    assert not profile["protocol"]["prime_top_down_receptors_at_stimulus"]
+    assert profile["protocol"]["comparator"] == "none"
+    assert registration["execution"] == {
+        "figure6_repeat_runs": 1,
+        "match_runs": 1,
+        "mismatch_runs": 0,
+        "parameter_search": False,
+    }
+    assert "learned_weights=training.learned_weights" in runner
+    assert "persistent_projection_weight_scales=scales" in runner
+    assert "condition=MatchCondition.MATCH" in runner
+    assert "MatchCondition.MISMATCH" not in runner

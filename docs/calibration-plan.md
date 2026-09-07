@@ -85,6 +85,14 @@ Figure 7. One cross with the already established Figure 6 projection-transfer
 convention is admissible as a separately labeled unit-semantics discriminator;
 no new threshold or scale may be inferred from the failed run.
 
+Artifacts 480--482 complete that predeclared cross with the prior Figure 6
+0.01/0.01/0.03 transfer convention. The recovered detector now yields exactly
+four events in each horizontal relay cell, a complete cortical chain, a causal
+teaching pair, and positive horizontal bottom-up/top-down map contrasts. It
+passes Stage B under the source-supported shape gate. The transfer factors
+remain calibrated rather than recovered, so the next step is one
+comparator-free, unexpanded 100-ms match before mismatch is opened.
+
 ### D — locked holdout evaluation
 
 Without changing the candidate, evaluate:

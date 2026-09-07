@@ -1,0 +1,50 @@
+schema_version: 1
+id: figure7-legacy-falling-minus20-match-registration-483
+date: '2026-09-07'
+status: registered-before-execution
+classification: recovered-detector-calibrated-network-match
+profile: configs/calibration/figure7_legacy_falling_minus20_match_v1.yaml
+predecessor: docs/validation-results/figure6-legacy-falling-minus20-calibrated-transfer-assessment-482.yaml
+training_result_sha256: 1af9cbd07187ba67465b11023ddec49b07e1e6925b0f7b0cea5ea285cc0b7f56
+runtime_fingerprint: 8df29b9d72089fccd7f2d9ef0e8767830e737bce555811051171b3f20a1639fa
+result: docs/validation-results/figure7-legacy-falling-minus20-match-484.yaml
+fixed_candidate:
+  spike_event_rule: falling_threshold_crossing
+  spike_event_threshold_mV: -20.0
+  projection_weight_scales:
+    modeldb112923.projection.000: 0.01
+    modeldb112923.projection.001: 0.01
+    modeldb112923.projection.004: 0.03
+  learned_weight_expansion: 1.0
+  receptor_prime: none
+  comparator: none
+  top_down_current_pA: 800.0
+  top_down_current_mode: until_cued_cell_first_event
+  top_down_cue_lead_ms: 0.0
+fixed_gates:
+  relay_active_indices: [38, 39, 40, 41, 42]
+  minimum_relay_events_per_active_index: 3
+  nonspecific_events: 4
+  nonspecific_rate_hz: 40.0
+  current_terminated_on_first_selected_event: true
+  no_reconstructed_comparator: true
+  no_calcium_ablation: true
+execution:
+  figure6_repeat_runs: 1
+  match_runs: 1
+  mismatch_runs: 0
+  parameter_search: false
+stopping_rule: >-
+  Repeat the exact Figure 6 event/map state, then run one 100-ms match. Failure
+  closes this exact recognition candidate without running mismatch, changing
+  the current, expanding learned weights, priming receptors, or adding a
+  comparator. A pass authorizes one separately registered unchanged mismatch.
+interpretation_boundary: >-
+  The match uses a previously behavior-selected 800-pA current and calibrated
+  inhibitory transfer factors. Even a pass is not original SMART reproduction.
+locked_until_match_passes:
+  - figure7_mismatch
+  - figure10_reset
+  - figure14_spectra
+  - figure15_local_synchrony
+  - figure16_long_range_synchrony

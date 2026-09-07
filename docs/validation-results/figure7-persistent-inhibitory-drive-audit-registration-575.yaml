@@ -1,0 +1,43 @@
+schema_version: 1
+id: figure7-persistent-inhibitory-drive-audit-registration-575
+date: '2026-09-08'
+status: registered-before-execution-readout-only-repeat
+classification: fixed-persistent-trn-to-nonspecific-drive-audit
+profile: configs/calibration/figure7_learned_coincidence_effective_t_pair_v1.yaml
+profile_sha256: 4b6aa0bdf4fb844e428fb330f34970900cc8bc741183b2d8e6e73789cba0b30f
+script: scripts/run_figure7_persistent_inhibitory_drive_audit.py
+script_sha256: fc42bad2deadd9d9bdd8b3133a63520d12ed887b64e6be6dfc2b9f7765f12c3f
+runtime_fingerprint: fa4ab9f0bf2bec4d6ad53cb6a91620047689b6839b146ed7d777d42350c2cdf5
+authorization: docs/validation-results/figure7-persistent-gaba0875-mismatch-assessment-574.yaml
+control_pair:
+  match: docs/validation-results/figure7-persistent-gaba0875-consistency-570.yaml
+  mismatch: docs/validation-results/figure7-persistent-gaba0875-mismatch-573.yaml
+result_id: figure7-persistent-inhibitory-drive-audit-576
+result: docs/validation-results/figure7-persistent-inhibitory-drive-audit-576.yaml
+assessment: docs/validation-results/figure7-persistent-inhibitory-drive-audit-assessment-577.yaml
+persistent_projection_scale:
+  projection_id: modeldb112923.projection.008
+  scale: 0.875
+nonspecific_t_scale: 0.1875
+added_readouts_only:
+  - summed TRN-to-nonspecific GABA gate peak
+  - summed TRN-to-nonspecific GABA gate integral over 100 ms
+  - post-startup summed GABA gate peak
+  - total TRN-to-nonspecific inhibitory-current range
+decision_questions:
+  repeat_identity: >-
+    Does the run exactly reproduce the archived 20/3 relay, 576/595 TRN, and
+    4/7 nonspecific event totals?
+  effective_inhibition_order: >-
+    Is integrated or post-startup TRN inhibitory drive to the nonspecific cell
+    larger in match despite the smaller raw whole-sheet event count?
+interpretation_rule: >-
+  Match-greater direct inhibition would show that raw event total and effective
+  convergent inhibition disagree under event timing, normalized receptor
+  kinetics, and bounded gate summation. Mismatch-greater direct inhibition
+  would confirm the mechanistic direction is wrong as well as the count. Either
+  result is diagnostic only and cannot change the preregistered failed gate.
+boundary: >-
+  No model, protocol, parameter, learned state, or scoring rule changes. The
+  closed candidate cannot be reopened or promoted from this diagnostic, and
+  original SMART remains unreproduced.

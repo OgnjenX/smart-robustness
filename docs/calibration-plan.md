@@ -1480,3 +1480,10 @@ unchanged readout-only pair that records the actual summed TRN-to-nonspecific
 GABA gate and current. This tests whether raw sheet-wide event count is a valid
 proxy for the convergent inhibition named in Figure 7; it cannot alter the
 failed gate or promote the candidate.
+
+Registration 575 fixes that unchanged readout repeat. It adds only summed
+TRN-to-nonspecific GABA peak/integral, post-startup peak, and inhibitory-current
+range to the exact persistent pair. The 20/3 relay, 576/595 TRN, and 4/7
+nonspecific totals must repeat. The result can determine whether raw population
+event count disagrees with effective convergent inhibition under nonlinear
+synaptic timing, but it cannot alter the failed gate or reopen the candidate.

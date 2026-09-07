@@ -9134,3 +9134,29 @@ def test_persistent_gaba0875_mismatch_closes_on_trn_order_only() -> None:
     assert assessment["assessment"]["candidate_closed"]
     assert not assessment["assessment"]["repeat_or_adjustment_authorized"]
     assert not assessment["assessment"]["baseline_promoted"]
+
+
+def test_persistent_inhibitory_drive_audit_is_readout_only() -> None:
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-persistent-inhibitory-drive-audit-registration-575.yaml"
+        ).read_text()
+    )
+    profile_path = ROOT / registration["profile"]
+    script_path = ROOT / registration["script"]
+
+    assert hashlib.sha256(profile_path.read_bytes()).hexdigest() == registration[
+        "profile_sha256"
+    ]
+    assert hashlib.sha256(script_path.read_bytes()).hexdigest() == registration[
+        "script_sha256"
+    ]
+    assert registration["persistent_projection_scale"] == {
+        "projection_id": "modeldb112923.projection.008",
+        "scale": 0.875,
+    }
+    assert registration["nonspecific_t_scale"] == 0.1875
+    assert len(registration["added_readouts_only"]) == 4
+    assert "No model, protocol, parameter" in registration["boundary"]
+    assert "cannot be reopened or promoted" in registration["boundary"]

@@ -181,6 +181,7 @@ class NonspecificReplayResult:
     trace_sha256: str
     runtime_fingerprint: str
     calcium_ablated: bool
+    calcium_conductance_scale: float
     source_spike_times_ms: tuple[float, ...]
     replay_spike_times_ms: tuple[float, ...]
     exact_spike_train: bool
@@ -201,12 +202,21 @@ def run_nonspecific_replay(
     *,
     conventions,
     ablate_calcium: bool = False,
+    calcium_conductance_scale: float = 1.0,
     brian=None,
 ) -> NonspecificReplayResult:
     """Replay one captured gate history into an isolated nonspecific cell."""
 
     if not isinstance(ablate_calcium, bool):
         raise TypeError("nonspecific replay calcium ablation must be boolean")
+    if (
+        isinstance(calcium_conductance_scale, bool)
+        or not np.isfinite(calcium_conductance_scale)
+        or calcium_conductance_scale < 0
+    ):
+        raise ValueError("nonspecific replay calcium scale must be finite and nonnegative")
+    if ablate_calcium and calcium_conductance_scale != 1.0:
+        raise ValueError("calcium ablation and a separate calcium scale cannot be combined")
     if brian is None:
         import brian2 as brian
 
@@ -270,9 +280,15 @@ def run_nonspecific_replay(
     for name, value in initial_state.items():
         unit, _ = _unit_for(name, brian)
         setattr(group, name, value * unit)
-    if ablate_calcium:
-        group.g_ca_proximal_dendrite = 0 * brian.nsiemens
-        group.g_ca_distal_dendrite = 0 * brian.nsiemens
+    applied_calcium_scale = 0.0 if ablate_calcium else float(
+        calcium_conductance_scale
+    )
+    group.g_ca_proximal_dendrite = (
+        group.g_ca_proximal_dendrite[:] * applied_calcium_scale
+    )
+    group.g_ca_distal_dendrite = (
+        group.g_ca_distal_dendrite[:] * applied_calcium_scale
+    )
 
     assignments: list[str] = []
     for name in NONSPECIFIC_REPLAY_FORCED_VARIABLES:
@@ -315,6 +331,7 @@ def run_nonspecific_replay(
         trace_sha256=digest,
         runtime_fingerprint=fingerprint,
         calcium_ablated=ablate_calcium,
+        calcium_conductance_scale=applied_calcium_scale,
         source_spike_times_ms=tuple(float(value) for value in source_spike_times),
         replay_spike_times_ms=tuple(float(value) for value in replay_spike_times),
         exact_spike_train=bool(np.array_equal(source_spike_times, replay_spike_times)),

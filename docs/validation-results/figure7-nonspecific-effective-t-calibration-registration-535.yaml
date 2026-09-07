@@ -1,0 +1,56 @@
+schema_version: 1
+id: figure7-nonspecific-effective-t-calibration-registration-535
+date: '2026-09-07'
+status: registered-before-execution-behavior-calibration
+classification: match-only-effective-nonspecific-t-conductance-calibration
+predecessor: docs/validation-results/figure7-nonspecific-isolated-replay-assessment-534.yaml
+source_trace:
+  path: tmp/figure7-nonspecific-isolated-replay-source-533.npz
+  sha256: e6da065c5f41cde54f122a91f998d7ff2d1acc9f91d3e1b85602983de2bbbe7f
+  runtime_fingerprint: 37cf90faf61129d5619e90c02374201db01f48fd7dfdf50c2a19d6989db2aa24
+  condition: match
+paper_source_density_mS_cm2: 250.0
+common_proximal_distal_scale_grid:
+  - 0.0
+  - 0.0625
+  - 0.125
+  - 0.1875
+  - 0.25
+  - 0.3125
+  - 0.375
+  - 0.4375
+  - 0.5
+  - 0.5625
+  - 0.625
+  - 0.6875
+  - 0.75
+  - 0.8125
+  - 0.875
+  - 0.9375
+  - 1.0
+target:
+  nonspecific_event_count: 4
+  nonspecific_rate_hz: 40.0
+selection_rule: >-
+  A survivor must be finite and emit exactly four events in the 100-ms fixed
+  match replay. If multiple registered scales survive, select the largest,
+  which is closest to the paper's source density. Do not interpolate or extend
+  the grid after seeing results.
+result_id: figure7-nonspecific-effective-t-calibration-536
+result: docs/validation-results/figure7-nonspecific-effective-t-calibration-536.yaml
+classification_boundary: >-
+  Any selected value is an effective behavior-calibration candidate, not a
+  recovered Grossberg-Versace or KInNeSS parameter. The source ledger retains
+  250 mS/cm2. This isolated screen cannot promote a baseline; its selection
+  requires a fresh connected Figure 6-plus-match verification before mismatch.
+locked_holdouts:
+  - figure7_mismatch
+  - figure10_reset
+  - figure14_spectra
+  - figure15_local_synchrony
+  - figure16_long_range_synchrony
+stopping_rule: >-
+  Execute every registered scale once on the same hash-pinned trace. Select by
+  the fixed rule or report no survivor. Do not rerun the connected network,
+  inspect mismatch, alter T kinetics, detector thresholds, gates, synapses,
+  delays, or any other parameter in this screen.

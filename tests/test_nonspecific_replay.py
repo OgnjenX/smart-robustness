@@ -106,6 +106,7 @@ def test_nonspecific_gate_trace_replays_isolated_cell_losslessly(tmp_path):
     result = run_nonspecific_replay(path, conventions=conventions, brian=brian)
 
     assert result.exact_spike_train
+    assert result.calcium_conductance_scale == 1.0
     assert result.finite
     assert result.max_voltage_error_mV < 1e-12
     assert max(error for _, error in result.max_abs_error_by_variable) < 1e-12
@@ -125,5 +126,20 @@ def test_nonspecific_replay_rejects_calcium_flag_type(tmp_path):
             tmp_path / "unused.npz",
             conventions=_conventions(),
             ablate_calcium=1,  # type: ignore[arg-type]
+            brian=brian,
+        )
+    with pytest.raises(ValueError, match="finite and nonnegative"):
+        run_nonspecific_replay(
+            tmp_path / "unused.npz",
+            conventions=_conventions(),
+            calcium_conductance_scale=-0.1,
+            brian=brian,
+        )
+    with pytest.raises(ValueError, match="cannot be combined"):
+        run_nonspecific_replay(
+            tmp_path / "unused.npz",
+            conventions=_conventions(),
+            ablate_calcium=True,
+            calcium_conductance_scale=0.5,
             brian=brian,
         )

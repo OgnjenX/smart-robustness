@@ -45,11 +45,8 @@ monitored_populations:
   - layer23_excitatory_v1
   - layer23_inhibitory_v1
   - layer5_excitatory_v1
-  - layer5_inhibitory_v1
   - layer6i_excitatory_v1
-  - layer6i_inhibitory_v1
   - layer6ii_excitatory_v1
-  - layer6ii_inhibitory_v1
 next_gate: >-
   Assess the single registered Figure 6 run against the fixed relay,
   feedforward-chain, causal-learning, and orientation gates. Do not adjust

@@ -30,6 +30,17 @@ execution:
   figure6_learning_runs: 1
   figure7_runs: 0
   parameter_search: false
+preflight_correction:
+  outcome_consulted: false
+  simulation_started: false
+  error: >-
+    The initial launch rejected three requested monitor names before Brian2
+    integration because layer-5, layer-6I, and layer-6II inhibitory populations
+    are not present in the recovered first-order network.
+  correction: >-
+    Remove only those nonexistent monitor names. All model parameters,
+    projection strengths, protocol values, scientific gates, and valid
+    population monitors remain unchanged.
 stopping_rule: >-
   Run one complete, fully monitored Figure 6 episode and classify it against
   every fixed gate. A failure closes this exact source-coherent candidate; it

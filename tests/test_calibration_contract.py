@@ -7878,3 +7878,42 @@ def test_supplement_distal_gaba_factorial_is_preregistered_at_figure6() -> None:
     assert registration["stopping_rule"].startswith(
         "Run one fresh complete Figure 6"
     )
+
+
+def test_supplement_distal_gaba_passes_figure6_and_registers_match() -> None:
+    result = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure6-legacy-detector-modeldb-nonspecific-paper-axial-supplement-gaba-499.yaml"
+        ).read_text()
+    )
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure6-legacy-detector-modeldb-nonspecific-paper-axial-supplement-gaba-assessment-500.yaml"
+        ).read_text()
+    )
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-legacy-detector-modeldb-nonspecific-paper-axial-supplement-gaba-match-registration-501.yaml"
+        ).read_text()
+    )
+
+    assert result["runtime_fingerprint"] == (
+        "a4e88775f99579f2147fa298b44fc3f8b6d51d7eb06f5d222dc7d48f8db09496"
+    )
+    assert result["population_spikes"]["thalamic_relay"] == 20
+    assert result["population_spikes"]["thalamic_nonspecific"] == 22
+    assert assessment["result_sha256"] == (
+        "92649496d6d7c38779bc341f9f21edf2e15d661af78009976f5bdaf7838dc93b"
+    )
+    assert all(assessment["figure6_control_identity"].values())
+    assert assessment["assessment"]["preregistered_figure6_contract_passed"]
+    assert registration["execution"] == {
+        "figure6_repeat_runs": 1,
+        "match_runs": 1,
+        "mismatch_runs": 0,
+        "parameter_search": False,
+    }
+    assert registration["stopping_rule"].startswith("Repeat Artifact 499 exactly")

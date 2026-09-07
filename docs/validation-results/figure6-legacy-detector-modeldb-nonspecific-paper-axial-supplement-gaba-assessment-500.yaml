@@ -1,0 +1,50 @@
+schema_version: 1
+id: figure6-legacy-detector-modeldb-nonspecific-paper-axial-supplement-gaba-assessment-500
+date: '2026-09-07'
+status: complete-source-supported-figure6-prerequisite-passed
+registration: docs/validation-results/figure6-legacy-detector-modeldb-nonspecific-paper-axial-supplement-gaba-registration-498.yaml
+result: docs/validation-results/figure6-legacy-detector-modeldb-nonspecific-paper-axial-supplement-gaba-499.yaml
+result_sha256: 92649496d6d7c38779bc341f9f21edf2e15d661af78009976f5bdaf7838dc93b
+control: docs/validation-results/figure6-legacy-detector-modeldb-nonspecific-paper-axial-493.yaml
+candidate:
+  nonspecific_distal_gaba_source_convention: paper_supplement_1p5_1_7
+  detector: falling_threshold_crossing_at_physical_minus20_mV
+result_summary:
+  relay_active_indices: [38, 39, 40, 41, 42]
+  relay_events_per_active_index: 4
+  relay_event_count: 20
+  trn_event_count: 597
+  nonspecific_event_count: 22
+  cortical_chain_complete: true
+  teaching_arrival_ms: 82.37
+  following_relay_event_ms: 85.34
+  bottom_up_horizontal_contrast: 1.621722227270677
+  top_down_horizontal_contrast: 0.5793784595476776
+figure6_control_identity:
+  population_spikes_identical: true
+  relay_event_trains_identical: true
+  recruitment_identical: true
+  timing_identical: true
+  map_metrics_identical: true
+gates:
+  relay_active_indices: true
+  relay_events_per_active_index: true
+  relay_events: true
+  cortical_chain_complete: true
+  causal_learning_pair: true
+  bottom_up_horizontal_contrast: true
+  top_down_horizontal_contrast: true
+assessment:
+  preregistered_figure6_contract_passed: true
+  recognition_match_authorized: true
+  parameter_selected: false
+  original_smart_reproduced: false
+  baseline_promoted: false
+  conclusion: >-
+    The paper-supplement distal GABA tuple preserves every Figure 6 gate and
+    all registered learning readouts are identical to the archived-GABA
+    control. One fresh match can therefore isolate the projection-049 source
+    tuple without a changed learned state.
+gate_resolution: >-
+  Artifact 499's embedded legacy map-amplitude flag is not the registered
+  source-supported shape gate, which passes.

@@ -125,6 +125,11 @@ the next source-only factorial: the paper supplement's longer/stronger distal
 TRN GABA record, with no fitted conductance or kinetics and Figure 6 required
 before recognition.
 
+Artifacts 498--500 pass the supplement-GABA endpoint through Figure 6 with
+registered learning readouts identical to the archived-GABA control.
+Registration 501 fixes one recognition match that changes only the official
+projection-049 tuple; mismatch remains locked until exact 40 Hz is obtained.
+
 ### D — locked holdout evaluation
 
 Without changing the candidate, evaluate:

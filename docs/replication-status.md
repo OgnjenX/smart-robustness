@@ -74,6 +74,11 @@ Registration 498 tests the next discrete source conflict: the paper
 supplement's 1.5-mS/cm2, 1/7-ms distal TRN GABA tuple versus the archived
 1.461-mS/cm2, 1/4-ms record, beginning again at Figure 6.
 
+Artifacts 498--500 show that the supplement tuple passes Figure 6 and leaves
+every registered population count, relay train, teaching time, and map metric
+identical to the archived-GABA control. Registration 501 therefore isolates
+its effect in one fresh recognition match with an unchanged learned state.
+
 Artifacts 471--473 complete the identity-locked mismatch calcium replay of the
 failed gain-0.8 candidate. The fresh event train exactly matches Artifact 468,
 and its 10,000-sample trace contains soma/dendrite voltages, T-type currents,

@@ -3507,3 +3507,14 @@ calibrated arousal trace, not sufficient to explain the ordering error. The
 next causal diagnostic removes only projection 013 gap junctions while keeping
 both GABA records; the original SMART baseline remains unreproduced and
 unfrozen.
+
+Artifacts 553--555 reject within-TRN electrical coupling as the source of the
+remaining inversion. Removing projection 013 while retaining both recurrent
+GABA records increases TRN output from 549/584 to 551/608 and widens the wrong
+mismatch excess from 35 to 57 events. The field-centered nine cells account for
+only one event of that difference; the other 72 cells account for 56. The
+mismatch relay cell gains a late fourth event and nonspecific output becomes
+4/8, so the ablation is not a behavioral candidate. Gap junctions are acting
+against the erroneous mismatch-wide regime. The next diagnostic separates the
+somatic and proximal recurrent GABA paths to test for opposing effects hidden
+by the dual ablation. Original SMART remains unreproduced and unfrozen.

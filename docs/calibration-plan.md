@@ -1363,3 +1363,12 @@ and output paths, the learned coincidence transform, and the effective T scale
 remain unchanged. The result can identify whether electrical coupling is
 necessary for the peripheral inversion, but it cannot select a conductance or
 become a baseline candidate.
+
+Artifacts 553--555 show that projection 013 counteracts rather than generates
+the failed global ordering. Its removal changes TRN output from 549/584 to
+551/608, increasing the mismatch excess from 35 to 57; 56 of those 57 events
+are peripheral. It also adds a fourth mismatch relay event and changes the
+nonspecific pair from 4/7 to 4/8. Electrical coupling is therefore not the
+source of the inversion. The next fixed diagnostic must remove records 008 and
+011 separately, with the other recurrent paths retained, to determine whether
+their combined ablation concealed opposing somatic and proximal effects.

@@ -8704,3 +8704,37 @@ def test_trn_gap_junction_ablation_is_recognition_only_and_nonpromotable() -> No
         "retained"
     ]
     assert "cannot be promoted" in registration["boundary"]
+
+
+def test_trn_gap_junction_ablation_worsens_failed_inversion() -> None:
+    result_path = (
+        ROOT
+        / "docs/validation-results/figure7-trn-gap-junction-ablation-554.yaml"
+    )
+    result = yaml.safe_load(result_path.read_text())
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-trn-gap-junction-ablation-assessment-555.yaml"
+        ).read_text()
+    )
+
+    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment[
+        "result_sha256"
+    ]
+    assert all(result["figure6_gates"].values())
+    assert result["match"]["trn_event_count"] == 551
+    assert result["mismatch"]["trn_event_count"] == 608
+    assert result["match"]["trn_diagnostic_index_event_count"] == 79
+    assert result["mismatch"]["trn_diagnostic_index_event_count"] == 80
+    assert result["match"]["trn_remaining_index_event_count"] == 472
+    assert result["mismatch"]["trn_remaining_index_event_count"] == 528
+    assert result["match"]["nonspecific_event_count"] == 4
+    assert result["mismatch"]["nonspecific_event_count"] == 8
+    assert assessment["assessment"][
+        "mismatch_excess_increased_relative_to_control"
+    ]
+    assert assessment["assessment"][
+        "electrical_coupling_counteracts_global_inversion"
+    ]
+    assert not assessment["assessment"]["baseline_promoted"]

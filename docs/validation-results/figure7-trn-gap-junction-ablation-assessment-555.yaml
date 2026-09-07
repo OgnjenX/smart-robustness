@@ -1,0 +1,45 @@
+schema_version: 1
+id: figure7-trn-gap-junction-ablation-assessment-555
+date: '2026-09-07'
+status: assessed-gap-junctions-counteract-inversion
+registration: docs/validation-results/figure7-trn-gap-junction-ablation-registration-553.yaml
+result: docs/validation-results/figure7-trn-gap-junction-ablation-554.yaml
+result_sha256: 6c4da539cffc867d6cf3a24cab2871f8d32b7b2d7513625fc423eed7d48ae74c
+runtime_fingerprint: fa4ab9f0bf2bec4d6ad53cb6a91620047689b6839b146ed7d777d42350c2cdf5
+assessment:
+  fixed_figure6_prerequisite_passed: true
+  declared_gap_junction_ablation_executed: true
+  recurrent_gaba_retained: true
+  match_greater_than_mismatch_trn_order_restored: false
+  peripheral_mismatch_excess_removed: false
+  mismatch_excess_increased_relative_to_control: true
+  electrical_coupling_is_sole_cause_of_global_inversion: false
+  electrical_coupling_counteracts_global_inversion: true
+  model_candidate: false
+  original_smart_reproduced: false
+  baseline_promoted: false
+quantitative_summary:
+  control_relay_events_match_mismatch: [20, 3]
+  ablation_relay_events_match_mismatch: [20, 4]
+  control_trn_events_match_mismatch: [549, 584]
+  ablation_trn_events_match_mismatch: [551, 608]
+  control_trn_mismatch_excess: 35
+  ablation_trn_mismatch_excess: 57
+  ablation_diagnostic_trn_events_match_mismatch: [79, 80]
+  ablation_remaining_trn_events_match_mismatch: [472, 528]
+  control_nonspecific_events_match_mismatch: [4, 7]
+  ablation_nonspecific_events_match_mismatch: [4, 8]
+interpretation: >-
+  Removing projection 013 does not suppress the peripheral mismatch-wide
+  activity. Instead it adds two match and 24 mismatch TRN events, increasing
+  the incorrect mismatch excess from 35 to 57. Fifty-six of the ablated
+  network's 57-event difference lies outside the nine field-centered cells.
+  The mismatch relay cell also gains one late event and nonspecific output
+  changes from 4/7 to 4/8. Gap-junction coupling therefore restrains the
+  erroneous mismatch regime in this reconstruction; it does not generate it.
+next_gate: >-
+  Preregister one two-arm recognition-only decomposition that removes
+  projection 008 (somatic recurrent GABA) or projection 011 (proximal recurrent
+  GABA) separately while retaining projection 013 and the other chemical path.
+  This tests whether the two chemical paths have opposing causal effects hidden
+  by their dual ablation. No arm may be promoted or used to select a weight.

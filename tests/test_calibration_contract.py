@@ -7675,3 +7675,45 @@ def test_modeldb_nonspecific_recovered_detector_cross_starts_at_figure6() -> Non
         "Run one fresh complete Figure 6"
     )
     assert "figure7_match" in registration["locked_holdouts"]
+
+
+def test_modeldb_nonspecific_detector_cross_passes_figure6_and_locks_match() -> None:
+    result = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure6-legacy-detector-modeldb-nonspecific-487.yaml"
+        ).read_text()
+    )
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure6-legacy-detector-modeldb-nonspecific-assessment-488.yaml"
+        ).read_text()
+    )
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-legacy-detector-modeldb-nonspecific-match-registration-489.yaml"
+        ).read_text()
+    )
+
+    assert result["runtime_fingerprint"] == (
+        "b48bb584d1799767f18a9633399de37c944d60a9031fcc817a37ef40054e7610"
+    )
+    assert result["relay_recruitment"]["confined_to_horizontal_bar_at_40_hz"]
+    assert result["population_spikes"]["thalamic_relay"] == 20
+    assert result["population_spikes"]["thalamic_nonspecific"] == 2
+    assert result["recruitment"]["feedforward_chain_complete"]
+    assert result["top_down_timing"]["causal_pair_in_learning_window"]
+    assert assessment["result_sha256"] == (
+        "238cd0dbbba4d3a5714738c65e9545f2c71bc7d9e942d85593b0b6ac57cf6a13"
+    )
+    assert assessment["assessment"]["preregistered_figure6_contract_passed"]
+    assert assessment["assessment"]["recognition_match_authorized"]
+    assert registration["execution"] == {
+        "figure6_repeat_runs": 1,
+        "match_runs": 1,
+        "mismatch_runs": 0,
+        "parameter_search": False,
+    }
+    assert registration["stopping_rule"].startswith("Repeat Artifact 487 exactly")

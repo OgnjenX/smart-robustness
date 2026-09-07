@@ -101,6 +101,12 @@ the discrete complete SMART.nml nonspecific-cell/serialized-axial alternative;
 no channel hybrid, detector threshold, or inhibitory gain may be inferred from
 the 330-Hz failure.
 
+Artifacts 486--488 pass that complete official-cell cross through Stage B:
+relay confinement/count, cortical recruitment, causal teaching, and both map
+shape gates all pass. Registration 489 fixes one fresh 100-ms match with actual
+learned weights, no expansion, no prime, and no comparator. Mismatch remains
+locked until exact 40-Hz match output is demonstrated.
+
 ### D — locked holdout evaluation
 
 Without changing the candidate, evaluate:

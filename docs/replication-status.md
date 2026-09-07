@@ -42,6 +42,14 @@ output rather than spatial relay matching. The next admissible source test is
 the complete archived SMART.nml nonspecific cell plus its serialized axial
 edges and the recovered detector, beginning again at Figure 6.
 
+Artifacts 486--488 complete that official-source cross at Figure 6. Replacing
+only nonspecific thalamus with the complete SMART.nml cell and serialized axial
+edges preserves exactly 20 horizontal relay events, the cortical chain, causal
+teaching, and 1.70834/0.545671 bottom-up/top-down contrasts. Nonspecific output
+during learning falls from 34 to two events, but this is not used as a Figure 7
+selection target. One fresh comparator-free match is now registered; original
+SMART remains unreproduced and unfrozen.
+
 Artifacts 471--473 complete the identity-locked mismatch calcium replay of the
 failed gain-0.8 candidate. The fresh event train exactly matches Artifact 468,
 and its 10,000-sample trace contains soma/dendrite voltages, T-type currents,

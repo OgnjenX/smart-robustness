@@ -1,0 +1,53 @@
+schema_version: 1
+id: figure7-legacy-detector-modeldb-nonspecific-paper-axial-match-assessment-497
+date: '2026-09-07'
+status: match-failed-nonspecific-overproduction-mismatch-locked
+registration: docs/validation-results/figure7-legacy-detector-modeldb-nonspecific-paper-axial-match-registration-495.yaml
+result: docs/validation-results/figure7-legacy-detector-modeldb-nonspecific-paper-axial-match-496.yaml
+result_sha256: 81dcea2a815cc1205cfc5e7a450a8e27512c9aaf2259de4f6618b5b51ace3e45
+candidate:
+  nonspecific_intrinsic_cell_convention: modeldb_112923
+  nonspecific_axial_convention: paper_literal
+  detector: falling_threshold_crossing_at_physical_minus20_mV
+result_summary:
+  training_repeat_verified: true
+  relay_active_indices: [38, 39, 40, 41, 42]
+  relay_events_per_active_index: 4
+  relay_event_count: 20
+  trn_event_count: 550
+  nonspecific_event_count: 24
+  nonspecific_rate_hz: 240.0
+  first_nonspecific_event_ms: 1.05
+  last_nonspecific_event_ms: 99.31
+  first_selected_category_event_ms: 5.95
+  top_down_current_termination_ms: 5.95
+gates:
+  relay_active_indices: true
+  minimum_relay_events_per_active_index: true
+  selected_category_event_available: true
+  top_down_current_terminated_on_first_selected_event: true
+  trn_events_present: true
+  nonspecific_events: false
+  nonspecific_rate_hz: false
+  figure7_target_duration: true
+  no_reconstructed_comparator: true
+  no_calcium_ablation: true
+assessment:
+  preregistered_match_contract_passed: false
+  exact_candidate_closed: true
+  mismatch_run_authorized: false
+  both_official_axial_endpoints_closed: true
+  axial_interpolation_authorized: false
+  parameter_selected: false
+  original_smart_reproduced: false
+  baseline_promoted: false
+  conclusion: >-
+    Paper Equation 2 changes the executable-cell nonspecific output from two to
+    24 events while retaining the exact horizontal relay match. It does not
+    reproduce the four-event target, so mismatch remains locked. Neither an
+    interpolated axial coefficient nor a channel hybrid is authorized.
+next_step: >-
+  Test the paper supplement's discrete TRN-to-nonspecific distal GABA tuple
+  (1.5 mS/cm2, 1/7-ms rise/fall) on the paper-axial endpoint, beginning with
+  the full Figure 6 prerequisite. The archived 1.461, 1/4-ms tuple is the
+  closed control.

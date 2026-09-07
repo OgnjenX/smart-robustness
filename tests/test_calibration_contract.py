@@ -7818,3 +7818,63 @@ def test_paper_axial_nonspecific_cross_passes_figure6_and_registers_match() -> N
         "parameter_search": False,
     }
     assert registration["stopping_rule"].startswith("Repeat Artifact 493 exactly")
+
+
+def test_paper_axial_match_fails_without_axial_interpolation() -> None:
+    result = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-legacy-detector-modeldb-nonspecific-paper-axial-match-496.yaml"
+        ).read_text()
+    )
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-legacy-detector-modeldb-nonspecific-paper-axial-match-assessment-497.yaml"
+        ).read_text()
+    )
+
+    match = result["match_result"]
+    assert result["training_repeat_verified"]
+    assert sorted(set(match["relay_spike_indices"])) == [38, 39, 40, 41, 42]
+    assert {match["relay_spike_indices"].count(index) for index in range(38, 43)} == {4}
+    assert len(match["trn_spike_times_ms"]) == 550
+    assert len(match["nonspecific_spike_times_ms"]) == 24
+    assert not result["mismatch_run_authorized"]
+    assert assessment["result_sha256"] == (
+        "81dcea2a815cc1205cfc5e7a450a8e27512c9aaf2259de4f6618b5b51ace3e45"
+    )
+    assert assessment["assessment"]["both_official_axial_endpoints_closed"]
+    assert not assessment["assessment"]["axial_interpolation_authorized"]
+    assert not assessment["assessment"]["original_smart_reproduced"]
+
+
+def test_supplement_distal_gaba_factorial_is_preregistered_at_figure6() -> None:
+    profile = yaml.safe_load(
+        (
+            ROOT
+            / "configs/calibration/figure6_legacy_detector_modeldb_nonspecific_paper_axial_supplement_gaba_v1.yaml"
+        ).read_text()
+    )
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure6-legacy-detector-modeldb-nonspecific-paper-axial-supplement-gaba-registration-498.yaml"
+        ).read_text()
+    )
+
+    overrides = profile["runtime_overrides"]
+    assert overrides["nonspecific_intrinsic_cell_convention"] == "modeldb_112923"
+    assert overrides["nonspecific_axial_convention"] == "paper_literal"
+    assert overrides["nonspecific_distal_gaba_source_convention"] == (
+        "paper_supplement_1p5_1_7"
+    )
+    assert overrides["spike_event_rule"] == "falling_threshold_crossing"
+    assert registration["execution"] == {
+        "figure6_learning_runs": 1,
+        "figure7_runs": 0,
+        "parameter_search": False,
+    }
+    assert registration["stopping_rule"].startswith(
+        "Run one fresh complete Figure 6"
+    )

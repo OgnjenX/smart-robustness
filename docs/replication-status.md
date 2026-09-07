@@ -66,6 +66,14 @@ events during learning, but that different condition is not a registered
 recognition score. Registration 495 therefore fixes one fresh match without
 using that observation to alter any parameter or gate.
 
+Artifacts 495--497 close the paper-axial match endpoint. It retains four relay
+events in each horizontal cell, 550 TRN events, and correct category-current
+termination, but nonspecific thalamus emits 24 events across the trial rather
+than four. Both official axial endpoints are now closed without interpolation.
+Registration 498 tests the next discrete source conflict: the paper
+supplement's 1.5-mS/cm2, 1/7-ms distal TRN GABA tuple versus the archived
+1.461-mS/cm2, 1/4-ms record, beginning again at Figure 6.
+
 Artifacts 471--473 complete the identity-locked mismatch calcium replay of the
 failed gain-0.8 candidate. The fresh event train exactly matches Artifact 468,
 and its 10,000-sample trace contains soma/dendrite voltages, T-type currents,

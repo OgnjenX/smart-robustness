@@ -119,6 +119,12 @@ Artifacts 492--494 pass the paper-axial endpoint through Figure 6. The reported
 Figure 7 match gate. Registration 495 requires one unchanged match with exact
 fresh learned weights and the pre-existing four-event target.
 
+Artifacts 495--497 fail that match at 24 nonspecific events while preserving
+the exact relay match. Both axial endpoints are closed. Registration 498 fixes
+the next source-only factorial: the paper supplement's longer/stronger distal
+TRN GABA record, with no fitted conductance or kinetics and Figure 6 required
+before recognition.
+
 ### D — locked holdout evaluation
 
 Without changing the candidate, evaluate:

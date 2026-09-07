@@ -1,0 +1,52 @@
+schema_version: 1
+id: figure7-peripheral-trn-summary-registration-584
+date: '2026-09-08'
+status: registered-before-execution-reduced-output-full-sheet-repeat
+classification: fixed-persistent-full-sheet-trn-source-summary
+profile: configs/calibration/figure7_learned_coincidence_effective_t_pair_v1.yaml
+profile_sha256: 4b6aa0bdf4fb844e428fb330f34970900cc8bc741183b2d8e6e73789cba0b30f
+script: scripts/run_figure7_peripheral_trn_summary.py
+script_sha256: ccdbaf6a0709587bce5eb2639dc7d8f58e16acc990f6d3c67a3c05c9b29cc4bc
+runtime_fingerprint: fa4ab9f0bf2bec4d6ad53cb6a91620047689b6839b146ed7d777d42350c2cdf5
+authorization: docs/validation-results/figure7-peripheral-trn-localization-assessment-583.yaml
+result_id: figure7-peripheral-trn-summary-585
+result: docs/validation-results/figure7-peripheral-trn-summary-585.yaml
+assessment: docs/validation-results/figure7-peripheral-trn-summary-assessment-586.yaml
+persistent_projection_scale:
+  projection_id: modeldb112923.projection.008
+  scale: 0.875
+nonspecific_t_scale: 0.1875
+execution_identity: >-
+  Identical model and full-sheet StateMonitor scope to Registration 581. Only
+  stdout serialization changes: emit bounded summaries instead of all raw
+  per-cell current ranges and gate arrays.
+registered_summaries:
+  regions:
+    central: [22, 31, 38, 39, 40, 41, 42, 49, 58]
+    peripheral: the other 72 cells
+    whole: all 81 cells
+  per_region:
+    - TRN event count
+    - projection-010 relay AMPA gate-integral sum
+    - projection-012 layer-6II AMPA gate-integral sum
+    - projection-009 layer-6II NMDA gate-integral sum
+  per_cell_order_counts:
+    - TRN events
+    - relay AMPA gate integral
+    - layer-6II AMPA gate integral
+    - layer-6II NMDA gate integral
+  ranked_detail: 15 largest peripheral mismatch-minus-match event deltas with all afferent-gate deltas
+required_event_identity:
+  match: {relay_events: 20, trn_events: 576, nonspecific_events: 4}
+  mismatch: {relay_events: 3, trn_events: 595, nonspecific_events: 7}
+decision_rule: >-
+  Interpret only if fresh Figure 6 and exact event identity pass and all regional
+  values are finite. If each peripheral excitatory-gate sum is match-greater or
+  equal while peripheral events are mismatch-greater, confirm recurrent TRN
+  inversion. If any peripheral excitatory-gate sum is mismatch-greater, label
+  the mechanism mixed or afferent and register a projection-specific causal
+  decomposition. Do not select weights from this diagnostic.
+boundary: >-
+  No equation, parameter, connectivity, learned state, stimulus, timing,
+  protocol, diagnostic scope, or score changes. The candidate remains closed
+  and cannot be promoted regardless of the result.

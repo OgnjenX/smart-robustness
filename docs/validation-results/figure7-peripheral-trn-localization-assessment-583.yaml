@@ -1,0 +1,27 @@
+schema_version: 1
+id: figure7-peripheral-trn-localization-assessment-583
+date: '2026-09-08'
+status: assessed-inconclusive-output-capture-failure
+registration: docs/validation-results/figure7-peripheral-trn-localization-registration-581.yaml
+result: docs/validation-results/figure7-peripheral-trn-localization-582.yaml
+result_sha256: d89a89d51622ca496b570e73e5de1d91f63e76a4792875c9813195239837397a
+assessment:
+  simulation_completed: true
+  fixed_pair_identity_visible: true
+  full_sheet_source_arrays_archived: false
+  all_registered_readouts_assessable: false
+  regional_source_order_identifiable: false
+  candidate_reopened: false
+  original_smart_reproduced: false
+  baseline_promoted: false
+interpretation: >-
+  This is a transport/capture failure, not a simulator or biological result.
+  The full-sheet StateMonitors ran and visible event totals repeat the fixed
+  pair, but the emitted YAML was too large to preserve through the result
+  channel. The missing middle cannot support a peripheral source comparison.
+next_gate: >-
+  Register one identical full-sheet execution whose runner emits only
+  preregistered central, peripheral, and whole-sheet sums; per-cell direction
+  counts; and the largest peripheral spike-count deltas with corresponding
+  afferent-gate deltas. Require exact event identity and finite summaries. No
+  model, parameter, protocol, or scoring change is permitted.

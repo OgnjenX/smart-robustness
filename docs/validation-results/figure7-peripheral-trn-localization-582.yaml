@@ -1,0 +1,38 @@
+schema_version: 1
+id: figure7-peripheral-trn-localization-582
+date: '2026-09-08'
+status: completed-simulation-output-capture-truncated
+classification: fixed-persistent-full-sheet-trn-source-localization
+registration: docs/validation-results/figure7-peripheral-trn-localization-registration-581.yaml
+runtime_fingerprint: fa4ab9f0bf2bec4d6ad53cb6a91620047689b6839b146ed7d777d42350c2cdf5
+execution:
+  exit_code: 0
+  original_output_tokens: 30806
+  output_capture: middle-truncated-by-result-channel
+  diagnostic_indices_requested: 81
+visible_identity:
+  figure6_gates_all_pass: true
+  match:
+    relay_events: 20
+    trn_events: 576
+    nonspecific_events: 4
+  mismatch:
+    relay_events: 3
+    trn_events: 595
+    nonspecific_events: 7
+  direct_gaba_integral_ms:
+    match: 1110.2716079690626
+    mismatch: 1154.9256487298926
+full_sheet_source_arrays_archived: false
+regional_source_order_identifiable: false
+model_or_protocol_change: false
+instrumentation_change_only: true
+candidate_reopened: false
+original_smart_reproduced: false
+baseline_promoted: false
+capture_note: >-
+  The hash-pinned process completed successfully and emitted all registered
+  arrays, but the 30,806-token YAML exceeded the tool-result transport limit.
+  The middle of stdout, including part of the source-resolved arrays, is not
+  available for lossless archival. Missing values are not reconstructed from
+  symmetry or prior trials and no source-order conclusion is drawn.

@@ -3614,3 +3614,10 @@ corticoreticular gate integrals plus source-separated current ranges for every
 TRN cell in the unchanged fresh-learning pair. This will test whether the
 peripheral excess is already present in external drive or emerges within the
 recurrent TRN sheet.
+
+Artifacts 581--583 show that the full-sheet simulation is feasible and repeats
+the visible fixed event totals, but its 30,806-token YAML exceeds the result
+transport limit. The missing middle is not reconstructed. Registration 584
+therefore repeats the identical model and all-cell monitors while emitting only
+predefined central/peripheral/whole sums, per-cell direction counts, and the 15
+largest peripheral event deltas with their afferent-drive deltas.

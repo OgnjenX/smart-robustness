@@ -1519,3 +1519,11 @@ source-resolved gates and currents for all 81 cells while repeating fresh
 learning, match, mismatch, and the direct nonspecific GABA integral. No model or
 score changes. Only a finite, exact-identity run may distinguish broad afferent
 recruitment from propagation inside recurrent TRN circuitry.
+
+Artifacts 581--583 complete the simulation but not the evidence capture: the
+30,806-token all-cell YAML exceeds the result transport limit and loses its
+middle. Visible event identity repeats, but missing source arrays are not
+reconstructed or interpreted. Registration 584 fixes one identical full-sheet
+repeat that changes only stdout serialization. It emits bounded regional sums,
+per-cell order counts, and ranked peripheral deltas; all model and diagnostic
+state remain fixed.

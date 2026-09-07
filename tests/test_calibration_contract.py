@@ -9292,3 +9292,49 @@ def test_peripheral_trn_localization_is_full_sheet_and_read_only() -> None:
     assert registration["required_event_identity"]["mismatch"]["trn_events"] == 595
     assert "stronger than the direct evidence" in registration["evidence_correction"]
     assert "cannot" in registration["boundary"]
+
+
+def test_peripheral_trn_full_output_failure_is_not_interpreted() -> None:
+    result_path = (
+        ROOT / "docs/validation-results/figure7-peripheral-trn-localization-582.yaml"
+    )
+    result = yaml.safe_load(result_path.read_text())
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-peripheral-trn-localization-assessment-583.yaml"
+        ).read_text()
+    )
+
+    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment[
+        "result_sha256"
+    ]
+    assert result["execution"]["exit_code"] == 0
+    assert result["execution"]["original_output_tokens"] == 30806
+    assert not result["full_sheet_source_arrays_archived"]
+    assert not result["regional_source_order_identifiable"]
+    assert not assessment["assessment"]["all_registered_readouts_assessable"]
+    assert not assessment["assessment"]["candidate_reopened"]
+
+
+def test_peripheral_trn_summary_repeat_changes_serialization_only() -> None:
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-peripheral-trn-summary-registration-584.yaml"
+        ).read_text()
+    )
+    profile_path = ROOT / registration["profile"]
+    script_path = ROOT / registration["script"]
+
+    assert hashlib.sha256(profile_path.read_bytes()).hexdigest() == registration[
+        "profile_sha256"
+    ]
+    assert hashlib.sha256(script_path.read_bytes()).hexdigest() == registration[
+        "script_sha256"
+    ]
+    assert "Only stdout serialization changes" in registration["execution_identity"]
+    assert len(registration["registered_summaries"]["regions"]["central"]) == 9
+    assert registration["required_event_identity"]["match"]["trn_events"] == 576
+    assert registration["required_event_identity"]["mismatch"]["trn_events"] == 595
+    assert "cannot be promoted" in registration["boundary"]

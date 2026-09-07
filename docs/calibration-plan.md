@@ -1434,3 +1434,11 @@ calibration may combine only scale 0.75—the registered endpoint with 20 match
 relay events, 621 TRN events, and one excess nonspecific event—with lower
 nonspecific T scales 0.125, 0.15625, and the 0.1875 control. Match must be
 screened before any mismatch trial.
+
+Registration 566 fixes that persistent two-factor match screen. Projection 008
+scale 0.75 is crossed with nonspecific T scales 0.125, 0.15625, and 0.1875.
+Both dimensions apply during each candidate's fresh Figure 6 learning episode
+and subsequent recognition trial. Any Figure 6 failure blocks match. Every
+complete match survivor—not a TRN-ranked subset—may advance to separately
+registered mismatch. No recognition-only parameter, interpolation, or extra
+endpoint is allowed.

@@ -8963,3 +8963,32 @@ def test_trn_somatic_gaba_mismatch_closes_one_dimensional_family() -> None:
     ]
     assert assessment["assessment"]["complete_survivor_scales"] == []
     assert not assessment["assessment"]["baseline_promoted"]
+
+
+def test_persistent_gaba_t_cross_is_bounded_and_applies_before_learning() -> None:
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-persistent-gaba-t-match-cross-registration-566.yaml"
+        ).read_text()
+    )
+    profile_path = ROOT / registration["profile"]
+    script_path = ROOT / registration["script"]
+
+    assert hashlib.sha256(profile_path.read_bytes()).hexdigest() == registration[
+        "profile_sha256"
+    ]
+    assert hashlib.sha256(script_path.read_bytes()).hexdigest() == registration[
+        "script_sha256"
+    ]
+    assert registration["persistent_projection_scale"] == {
+        "projection_id": "modeldb112923.projection.008",
+        "scale": 0.75,
+        "effective_serialized_weight": 0.225,
+    }
+    assert registration["nonspecific_t_scale_grid"] == [0.125, 0.15625, 0.1875]
+    assert "fresh Figure 6" in registration["persistence_rule"]
+    assert "Do not rank by TRN count" in registration["selection_rule"]
+    assert "make either parameter recognition-only" in registration[
+        "selection_rule"
+    ]

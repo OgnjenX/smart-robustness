@@ -1,0 +1,51 @@
+schema_version: 1
+id: figure7-persistent-gaba-t-match-cross-registration-566
+date: '2026-09-07'
+status: registered-before-execution-persistent-two-factor-match-screen
+classification: calibrated-persistent-projection008-by-nonspecific-t-cross
+profile: configs/calibration/figure7_learned_coincidence_effective_t_pair_v1.yaml
+profile_sha256: 4b6aa0bdf4fb844e428fb330f34970900cc8bc741183b2d8e6e73789cba0b30f
+script: scripts/run_figure7_persistent_gaba_t_match_cross.py
+script_sha256: 9e9461d7fb2b349c9d4d9a3c52e5f85fc3ca1d71850007c7f086b58d57b347b2
+base_runtime_fingerprint: fa4ab9f0bf2bec4d6ad53cb6a91620047689b6839b146ed7d777d42350c2cdf5
+authorization: docs/validation-results/figure7-trn-somatic-gaba-mismatch-assessment-565.yaml
+predecessor_match_screen: docs/validation-results/figure7-trn-somatic-gaba-match-screen-561.yaml
+result_id: figure7-persistent-gaba-t-match-cross-567
+result: docs/validation-results/figure7-persistent-gaba-t-match-cross-567.yaml
+assessment: docs/validation-results/figure7-persistent-gaba-t-match-cross-assessment-568.yaml
+persistent_projection_scale:
+  projection_id: modeldb112923.projection.008
+  scale: 0.75
+  effective_serialized_weight: 0.225
+nonspecific_t_scale_grid: [0.125, 0.15625, 0.1875]
+effective_t_density_mS_cm2: [31.25, 39.0625, 46.875]
+grid_rationale: >-
+  Projection scale 0.75 is the only already registered endpoint with exact
+  five-cell/20-event match relay activity, increased matched TRN output (621),
+  and a single excess nonspecific event. T scale 0.1875 is its prior control;
+  0.125 is the adjacent lower coarse endpoint from the isolated T calibration,
+  and 0.15625 is their exact midpoint. No other value is authorized.
+persistence_rule: >-
+  Both the projection-008 scale and each T-current scale apply during a fresh
+  Figure 6 learning episode and its corresponding recognition trial. A
+  candidate that fails any Figure 6 gate does not advance to match.
+fixed_figure6_gates:
+  - relay active indices 38--42
+  - four relay events per active index and 20 total
+  - ordered cortical feedforward recruitment
+  - causal learning pair in the learning window
+  - positive learned horizontal contrast
+fixed_match_gates:
+  relay_active_indices: [38, 39, 40, 41, 42]
+  relay_events: 20
+  nonspecific_events: 4
+selection_rule: >-
+  Execute all three persistent candidates without consulting mismatch. Every
+  candidate passing every Figure 6 and match gate advances to a separately
+  preregistered mismatch. Do not rank by TRN count, interpolate, add endpoints,
+  or make either parameter recognition-only.
+boundary: >-
+  This is an explicit two-factor effective calibration motivated by two causal
+  localizations. A survivor is not a recovered KInNeSS ring stencil, T-current
+  density, or original SMART parameter and cannot yet be frozen as the classic
+  baseline.

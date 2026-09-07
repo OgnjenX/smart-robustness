@@ -9021,3 +9021,26 @@ def test_persistent_gaba_t_cross_has_no_match_survivor() -> None:
     assert assessment["assessment"]["survivor_t_scales"] == []
     assert not assessment["assessment"]["grid_extension_authorized"]
     assert not assessment["assessment"]["baseline_promoted"]
+
+
+def test_persistent_gaba0875_consistency_introduces_no_new_value() -> None:
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-persistent-gaba0875-consistency-registration-569.yaml"
+        ).read_text()
+    )
+    profile_path = ROOT / registration["profile"]
+    script_path = ROOT / registration["script"]
+
+    assert hashlib.sha256(profile_path.read_bytes()).hexdigest() == registration[
+        "profile_sha256"
+    ]
+    assert hashlib.sha256(script_path.read_bytes()).hexdigest() == registration[
+        "script_sha256"
+    ]
+    assert registration["persistent_projection_scale"]["scale"] == 0.875
+    assert registration["nonspecific_t_scale_grid"] == [0.1875]
+    assert not registration["novel_parameter_values_introduced"]
+    assert "one fixed consistency check" in registration["selection_rule"]
+    assert "do not alter either value" in registration["selection_rule"]

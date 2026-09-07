@@ -1,0 +1,38 @@
+schema_version: 1
+id: figure7-persistent-gaba0875-consistency-registration-569
+date: '2026-09-08'
+status: registered-before-execution-persistent-consistency-check
+classification: calibrated-persistent-projection008-0875-consistency
+profile: configs/calibration/figure7_learned_coincidence_effective_t_pair_v1.yaml
+profile_sha256: 4b6aa0bdf4fb844e428fb330f34970900cc8bc741183b2d8e6e73789cba0b30f
+script: scripts/run_figure7_persistent_gaba_t_match_cross.py
+script_sha256: 9e9461d7fb2b349c9d4d9a3c52e5f85fc3ca1d71850007c7f086b58d57b347b2
+base_runtime_fingerprint: fa4ab9f0bf2bec4d6ad53cb6a91620047689b6839b146ed7d777d42350c2cdf5
+authorization: docs/validation-results/figure7-persistent-gaba-t-match-cross-assessment-568.yaml
+recognition_only_predecessor: docs/validation-results/figure7-trn-somatic-gaba-match-screen-561.yaml
+result_id: figure7-persistent-gaba0875-consistency-570
+result: docs/validation-results/figure7-persistent-gaba0875-consistency-570.yaml
+assessment: docs/validation-results/figure7-persistent-gaba0875-consistency-assessment-571.yaml
+persistent_projection_scale:
+  projection_id: modeldb112923.projection.008
+  scale: 0.875
+  effective_serialized_weight: 0.2625
+nonspecific_t_scale_grid: [0.1875]
+effective_t_density_mS_cm2: [46.875]
+novel_parameter_values_introduced: false
+persistence_rule: >-
+  Projection-008 scale 0.875 and T scale 0.1875 apply throughout one fresh
+  Figure 6 learning episode and its matched recognition trial. Any Figure 6
+  failure blocks match.
+fixed_match_gates:
+  relay_active_indices: [38, 39, 40, 41, 42]
+  relay_events: 20
+  nonspecific_events: 4
+selection_rule: >-
+  This is one fixed consistency check, not a screen. A complete Figure 6 and
+  match pass may authorize one separately registered persistent mismatch. Any
+  failure closes the candidate; do not alter either value or add an endpoint.
+boundary: >-
+  A pass establishes only a persistent calibrated match candidate. It does not
+  recover original KInNeSS semantics or authorize a frozen original SMART
+  baseline.

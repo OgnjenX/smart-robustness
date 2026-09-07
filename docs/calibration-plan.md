@@ -1451,3 +1451,9 @@ the same GABA scale is present during learning. Mismatch remains unconsulted and
 the T grid is not extended. The remaining exact recognition-only match
 survivor, projection-008 scale 0.875 at T scale 0.1875, now requires one
 persistent-consistency test with no new parameter values.
+
+Registration 569 fixes that single consistency check. Projection-008 scale
+0.875 and T scale 0.1875 apply throughout fresh Figure 6 and match. Both values
+were already selected in prior match-only work; no new parameter is introduced.
+A complete pass may authorize one persistent mismatch. Any failure closes the
+candidate without adjustment.

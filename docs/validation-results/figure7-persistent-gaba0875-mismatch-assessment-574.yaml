@@ -1,0 +1,35 @@
+schema_version: 1
+id: figure7-persistent-gaba0875-mismatch-assessment-574
+date: '2026-09-08'
+status: assessed-single-trn-gate-failure-candidate-closed
+registration: docs/validation-results/figure7-persistent-gaba0875-mismatch-registration-572.yaml
+result: docs/validation-results/figure7-persistent-gaba0875-mismatch-573.yaml
+result_sha256: a606f02d3ee9e31c0beaadd1d87eae5240ac3128226468d6cbc1637fb690208c
+assessment:
+  fresh_figure6_all_gates_passed: true
+  mismatch_relay_overlap_only: true
+  match_more_active_relay_cells: true
+  mismatch_nonspecific_70_hz: true
+  match_more_trn_events: false
+  candidate_closed: true
+  repeat_or_adjustment_authorized: false
+  original_smart_reproduced: false
+  baseline_promoted: false
+quantitative_summary:
+  match_mismatch_relay_events: [20, 3]
+  match_mismatch_trn_events: [576, 595]
+  match_mismatch_nonspecific_events: [4, 7]
+  trn_mismatch_excess: 19
+interpretation: >-
+  The exact persistent model reproduces the spatial comparison and 40/70-Hz
+  nonspecific output but retains a 19-event whole-TRN mismatch excess. The
+  candidate therefore fails its preregistered mechanistic gate and closes. Its
+  equality with the recognition-only mismatch confirms that persistence does
+  not repair the remaining ordering.
+next_gate: >-
+  Preregister an unchanged readout-only repeat of the persistent pair that
+  records the summed TRN-to-nonspecific GABA gate integral, post-startup peak,
+  and inhibitory current in each condition. Compare these direct convergent
+  inhibition measures without changing the failed raw-event gate. This can
+  determine whether raw whole-sheet event count is an inadequate proxy under
+  synchronized saturating synapses; it cannot reopen or promote the candidate.

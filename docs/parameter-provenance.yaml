@@ -584,9 +584,9 @@ parameters:
     note: Both values persist through fresh Figure 6 and match. Every learning gate passes; match yields 20 relay, 576 TRN, and four nonspecific events. One persistent mismatch is authorized. This is calibrated, not recovered source or frozen baseline.
   calibration.figure7.persistent_gaba0875_mismatch:
     value: one fixed persistent mismatch at projection-008 scale 0.875 and T scale 0.1875
-    status: preregistered-awaiting-execution
-    source: Registration 572, authorized by Artifacts 569--571
-    note: Match TRN total 576 is fixed. The candidate must pass fresh Figure 6, overlap-only mismatch relay, match-greater TRN, and seven-event nonspecific output together. No repeat or adjustment is authorized.
+    status: completed-single-trn-gate-failure-candidate-closed
+    source: Artifacts 572--574, authorized by Artifacts 569--571
+    note: Fresh Figure 6, overlap-only mismatch, and 4/7 nonspecific output pass, but whole-TRN events remain 576 match versus 595 mismatch. The candidate closes without adjustment. An unchanged direct inhibitory-gate audit is authorized only to assess the event-count proxy.
   benchmark.population_sizes:
     value: see configs/*.yaml
     status: exploratory

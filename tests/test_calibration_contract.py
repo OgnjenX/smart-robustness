@@ -9103,3 +9103,34 @@ def test_persistent_gaba0875_mismatch_is_single_fixed_trial() -> None:
         "nonspecific_events": 7,
     }
     assert "one fresh Figure 6 and one mismatch" in registration["selection_rule"]
+
+
+def test_persistent_gaba0875_mismatch_closes_on_trn_order_only() -> None:
+    result_path = (
+        ROOT
+        / "docs/validation-results/figure7-persistent-gaba0875-mismatch-573.yaml"
+    )
+    result = yaml.safe_load(result_path.read_text())
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-persistent-gaba0875-mismatch-assessment-574.yaml"
+        ).read_text()
+    )
+
+    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment[
+        "result_sha256"
+    ]
+    assert all(result["figure6_gates"].values())
+    gates = result["mismatch"]["mismatch_gates"]
+    assert gates == {
+        "relay_active_indices": True,
+        "match_more_active_relay_cells": True,
+        "match_more_trn_events": False,
+        "nonspecific_events": True,
+    }
+    assert result["mismatch"]["trn_event_count"] == 595
+    assert result["mismatch"]["nonspecific_event_count"] == 7
+    assert assessment["assessment"]["candidate_closed"]
+    assert not assessment["assessment"]["repeat_or_adjustment_authorized"]
+    assert not assessment["assessment"]["baseline_promoted"]

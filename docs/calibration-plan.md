@@ -1470,3 +1470,13 @@ Figure 6 with persistent projection-008 scale 0.875 and T scale 0.1875, then
 runs vertical mismatch. The archived match TRN total 576 is fixed. Overlap-only
 relay activity, fewer active cells than match, fewer than 576 TRN events, and
 seven nonspecific events must all pass; no adjustment or repeat is allowed.
+
+Artifacts 572--574 close the persistent candidate on its single remaining
+gate. Fresh Figure 6 passes, mismatch remains overlap-only with three relay
+events, and nonspecific output is exactly seven against match's four. Whole-TRN
+output is still inverted at 576 match versus 595 mismatch. No adjustment or
+repeat is authorized. Before another mechanism is proposed, perform one
+unchanged readout-only pair that records the actual summed TRN-to-nonspecific
+GABA gate and current. This tests whether raw sheet-wide event count is a valid
+proxy for the convergent inhibition named in Figure 7; it cannot alter the
+failed gate or promote the candidate.

@@ -3575,3 +3575,12 @@ present throughout fresh learning and match, every Figure 6 gate passes and
 match emits 20 relay, 576 TRN, and four nonspecific events. Mismatch has not
 been consulted. One fixed persistent mismatch is now authorized; the candidate
 remains calibrated rather than source-recovered and is not frozen.
+
+Artifacts 572--574 close that persistent candidate after its one fixed
+mismatch. Fresh Figure 6 passes; mismatch is overlap-only with three relay
+events and gives the exact 4/7 nonspecific pair. The sole failure remains
+whole-sheet TRN ordering: 576 match versus 595 mismatch. No parameter change or
+repeat is allowed. An unchanged readout audit may now measure the actual
+TRN-to-nonspecific inhibitory gate/current, because synchronized nonlinear
+synapses can make raw event count a poor proxy for convergent inhibition. This
+diagnostic cannot retroactively pass or promote the closed candidate.

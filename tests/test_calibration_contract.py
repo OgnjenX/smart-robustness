@@ -9071,3 +9071,35 @@ def test_persistent_gaba0875_consistency_passes_learning_and_match() -> None:
     assert not result["mismatch_consulted"]
     assert assessment["assessment"]["persistent_mismatch_authorized"]
     assert not assessment["assessment"]["baseline_promoted"]
+
+
+def test_persistent_gaba0875_mismatch_is_single_fixed_trial() -> None:
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-persistent-gaba0875-mismatch-registration-572.yaml"
+        ).read_text()
+    )
+    profile_path = ROOT / registration["profile"]
+    script_path = ROOT / registration["script"]
+    match_path = ROOT / registration["match_result"]
+
+    assert hashlib.sha256(profile_path.read_bytes()).hexdigest() == registration[
+        "profile_sha256"
+    ]
+    assert hashlib.sha256(script_path.read_bytes()).hexdigest() == registration[
+        "script_sha256"
+    ]
+    assert hashlib.sha256(match_path.read_bytes()).hexdigest() == registration[
+        "match_result_sha256"
+    ]
+    assert registration["persistent_projection_scale"]["scale"] == 0.875
+    assert registration["nonspecific_t_scale"] == 0.1875
+    assert registration["fixed_match_trn_events"] == 576
+    assert registration["fixed_mismatch_gates"] == {
+        "relay_active_indices": [40],
+        "match_more_active_relay_cells": True,
+        "match_more_trn_events": True,
+        "nonspecific_events": 7,
+    }
+    assert "one fresh Figure 6 and one mismatch" in registration["selection_rule"]

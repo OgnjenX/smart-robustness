@@ -1464,3 +1464,9 @@ every Figure 6 gate passes and match yields the exact five active relay cells,
 20 relay events, 576 TRN events, and four nonspecific events. Mismatch remains
 unconsulted. Register one fixed persistent mismatch with match TRN total 576
 locked in advance; any failed gate closes the candidate.
+
+Registration 572 fixes that one mismatch before execution. It repeats fresh
+Figure 6 with persistent projection-008 scale 0.875 and T scale 0.1875, then
+runs vertical mismatch. The archived match TRN total 576 is fixed. Overlap-only
+relay activity, fewer active cells than match, fewer than 576 TRN events, and
+seven nonspecific events must all pass; no adjustment or repeat is allowed.

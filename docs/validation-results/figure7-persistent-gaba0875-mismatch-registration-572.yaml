@@ -1,0 +1,37 @@
+schema_version: 1
+id: figure7-persistent-gaba0875-mismatch-registration-572
+date: '2026-09-08'
+status: registered-before-execution-persistent-fixed-mismatch
+classification: calibrated-persistent-projection008-0875-mismatch
+profile: configs/calibration/figure7_learned_coincidence_effective_t_pair_v1.yaml
+profile_sha256: 4b6aa0bdf4fb844e428fb330f34970900cc8bc741183b2d8e6e73789cba0b30f
+script: scripts/run_figure7_persistent_gaba0875_mismatch.py
+script_sha256: 489736d762d4de2156b74d4d812c677231dd48b101721a5aa657962c386c29fa
+runtime_fingerprint: fa4ab9f0bf2bec4d6ad53cb6a91620047689b6839b146ed7d777d42350c2cdf5
+authorization: docs/validation-results/figure7-persistent-gaba0875-consistency-assessment-571.yaml
+match_result: docs/validation-results/figure7-persistent-gaba0875-consistency-570.yaml
+match_result_sha256: 601f83b2a754dc35a7ce48499560e166ed9a6a0644e4d86a60367bd5d9ad1a01
+result_id: figure7-persistent-gaba0875-mismatch-573
+result: docs/validation-results/figure7-persistent-gaba0875-mismatch-573.yaml
+assessment: docs/validation-results/figure7-persistent-gaba0875-mismatch-assessment-574.yaml
+persistent_projection_scale:
+  projection_id: modeldb112923.projection.008
+  scale: 0.875
+  effective_serialized_weight: 0.2625
+nonspecific_t_scale: 0.1875
+fixed_match_trn_events: 576
+fixed_mismatch_gates:
+  relay_active_indices: [40]
+  match_more_active_relay_cells: true
+  match_more_trn_events: true
+  nonspecific_events: 7
+selection_rule: >-
+  Execute one fresh Figure 6 and one mismatch with the exact persistent model.
+  The candidate advances only if every Figure 6 and mismatch gate passes.
+  Otherwise close it without parameter changes, interpolation, or another
+  mismatch trial.
+boundary: >-
+  Even a pass would establish calibrated Figure 7 behavior under explicit
+  learned-coincidence, effective T-current, and effective recurrent-GABA
+  assumptions. It would not recover original 2008 parameters or by itself
+  authorize a frozen classic baseline.

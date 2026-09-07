@@ -8617,3 +8617,29 @@ def test_trn_drive_decomposition_localizes_peripheral_recurrent_inversion() -> N
         assert projection["match_sum"] > projection["mismatch_sum"]
     assert assessment["assessment"]["global_event_order_inverted_inside_trn_network"]
     assert not assessment["assessment"]["candidate_reopened"]
+
+
+def test_trn_recurrent_gaba_ablation_is_recognition_only_and_nonpromotable() -> None:
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-trn-recurrent-gaba-ablation-registration-550.yaml"
+        ).read_text()
+    )
+    profile_path = ROOT / registration["profile"]
+    script_path = ROOT / registration["script"]
+
+    assert hashlib.sha256(profile_path.read_bytes()).hexdigest() == registration[
+        "profile_sha256"
+    ]
+    assert hashlib.sha256(script_path.read_bytes()).hexdigest() == registration[
+        "script_sha256"
+    ]
+    assert registration["recognition_only_ablation"]["projection_ids"] == [
+        "modeldb112923.projection.008",
+        "modeldb112923.projection.011",
+    ]
+    assert "projection 013 within-TRN distal gap junctions" in registration[
+        "retained"
+    ]
+    assert "cannot be promoted" in registration["boundary"]

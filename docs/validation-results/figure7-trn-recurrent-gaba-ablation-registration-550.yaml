@@ -1,0 +1,37 @@
+schema_version: 1
+id: figure7-trn-recurrent-gaba-ablation-registration-550
+date: '2026-09-07'
+status: registered-before-execution-recognition-only-causal-ablation
+classification: recurrent-trn-gaba-necessity-diagnostic
+profile: configs/calibration/figure7_learned_coincidence_effective_t_pair_v1.yaml
+profile_sha256: 4b6aa0bdf4fb844e428fb330f34970900cc8bc741183b2d8e6e73789cba0b30f
+script: scripts/run_figure7_trn_recurrent_gaba_ablation.py
+script_sha256: 76717818780f282b9dd886def07f092e99e89465f1d2612d32c86240d99cb943
+runtime_fingerprint: fa4ab9f0bf2bec4d6ad53cb6a91620047689b6839b146ed7d777d42350c2cdf5
+authorization: docs/validation-results/figure7-trn-drive-decomposition-assessment-549.yaml
+control: docs/validation-results/figure7-trn-drive-decomposition-548.yaml
+result_id: figure7-trn-recurrent-gaba-ablation-551
+result: docs/validation-results/figure7-trn-recurrent-gaba-ablation-551.yaml
+assessment: docs/validation-results/figure7-trn-recurrent-gaba-ablation-assessment-552.yaml
+recognition_only_ablation:
+  projection_ids:
+    - modeldb112923.projection.008
+    - modeldb112923.projection.011
+  pathway: recurrent TRN-to-TRN chemical GABA at soma and proximal dendrite
+retained:
+  - unmodified fresh Figure 6 learning handoff
+  - projection 010 relay-to-TRN AMPA
+  - projections 009/012 layer-6II-to-TRN excitation
+  - projection 013 within-TRN distal gap junctions
+  - every TRN-to-relay and TRN-to-nonspecific output
+  - learned five-target coincidence transform
+  - nonspecific effective T scale 0.1875
+decision_rule: >-
+  Recurrent chemical GABA is necessary for the global count inversion if the
+  ablation removes or reverses the control's mismatch-greater-than-match TRN
+  order and suppresses its repeated near-whole-sheet peripheral volleys. Report
+  all relay and nonspecific consequences; no behavioral pass is required.
+boundary: >-
+  This is a recognition-only causal ablation, not a source-faithful SMART
+  candidate. It cannot be promoted, cannot select a replacement recurrent
+  weight, and cannot reopen the closed Artifact-545 reconstruction.

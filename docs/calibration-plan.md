@@ -1337,3 +1337,11 @@ events, in the correct direction. The remaining 72 TRN cells emit 470 versus
 afferent drive. Next use one recognition-only dual ablation of recurrent TRN
 GABA records 008/011 as a causal diagnostic. Keep gap junctions and every
 afferent path intact; do not promote the ablation or infer a replacement gain.
+
+Registration 550 fixes that causal ablation before execution. Both chemical
+TRN-to-TRN GABA records (008 soma and 011 proximal) are removed only during the
+fresh recognition pair. Relay and layer-6II afferents, within-TRN gap junctions,
+all TRN outputs, the learned coincidence transform, and effective T scale are
+unchanged. The diagnostic asks only whether recurrent GABA is necessary for
+the peripheral mismatch-wide volleys; it cannot become a baseline candidate or
+select a replacement strength.

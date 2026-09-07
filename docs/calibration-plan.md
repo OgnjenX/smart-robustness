@@ -150,6 +150,12 @@ Artifacts 510--512 pass that final combination through Figure 6. Registration
 513 requires its independent four-event recognition match; failure closes the
 two-by-two axial/kinetics source factorial without interpolation.
 
+Artifacts 513--515 close the executable-cell factorial at one event for the
+last endpoint; the complete match matrix is 2/24/18/1 events and contains no
+four-event survivor. Registration 516 tests the paper-coherent nonspecific
+cell/axial/calcium combination at Figure 6, while retaining the recovered
+detector and clearly labeling calibrated network conventions.
+
 ### D — locked holdout evaluation
 
 Without changing the candidate, evaluate:

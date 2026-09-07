@@ -8109,3 +8109,62 @@ def test_kinness_axial_paper_kinetics_passes_figure6_and_registers_match() -> No
         "mismatch_runs": 0,
         "parameter_search": False,
     }
+
+
+def test_final_executable_cell_factorial_closes_without_interpolation() -> None:
+    result = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-legacy-detector-modeldb-nonspecific-kinness-axial-paper-kinetics-match-514.yaml"
+        ).read_text()
+    )
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-legacy-detector-modeldb-nonspecific-kinness-axial-paper-kinetics-match-assessment-515.yaml"
+        ).read_text()
+    )
+
+    match = result["match_result"]
+    assert len(match["relay_spike_times_ms"]) == 20
+    assert len(match["trn_spike_times_ms"]) == 549
+    assert match["nonspecific_spike_times_ms"] == [2.72]
+    assert assessment["result_sha256"] == (
+        "0b5f5e1fe79f92b483e4dffd80d39c03d03aed54e35c668ab108193c7b7bc529"
+    )
+    assert [
+        endpoint["nonspecific_events"]
+        for endpoint in assessment["completed_executable_cell_factorial"].values()
+    ] == [2, 24, 18, 1]
+    assert assessment["assessment"]["executable_cell_axial_kinetics_factorial_closed"]
+    assert not assessment["assessment"]["continuous_interpolation_authorized"]
+    assert not assessment["assessment"]["mismatch_run_authorized"]
+
+
+def test_paper_cell_paper_kinetics_cross_is_preregistered_at_figure6() -> None:
+    profile = yaml.safe_load(
+        (
+            ROOT
+            / "configs/calibration/figure6_legacy_detector_paper_nonspecific_paper_kinetics_v1.yaml"
+        ).read_text()
+    )
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure6-legacy-detector-paper-nonspecific-paper-kinetics-registration-516.yaml"
+        ).read_text()
+    )
+
+    overrides = profile["runtime_overrides"]
+    assert overrides["nonspecific_intrinsic_cell_convention"] == "paper_table3"
+    assert overrides["nonspecific_axial_convention"] == "paper_literal"
+    assert overrides["nonspecific_calcium_kinetics_convention"] == "paper_2008"
+    assert overrides["spike_event_rule"] == "falling_threshold_crossing"
+    assert registration["execution"] == {
+        "figure6_learning_runs": 1,
+        "figure7_runs": 0,
+        "parameter_search": False,
+    }
+    assert registration["stopping_rule"].startswith(
+        "Run one fresh complete Figure 6"
+    )

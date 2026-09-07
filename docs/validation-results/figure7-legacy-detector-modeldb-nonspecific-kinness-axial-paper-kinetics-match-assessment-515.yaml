@@ -1,0 +1,61 @@
+schema_version: 1
+id: figure7-legacy-detector-modeldb-nonspecific-kinness-axial-paper-kinetics-match-assessment-515
+date: '2026-09-07'
+status: match-failed-official-axial-kinetics-factorial-closed
+registration: docs/validation-results/figure7-legacy-detector-modeldb-nonspecific-kinness-axial-paper-kinetics-match-registration-513.yaml
+result: docs/validation-results/figure7-legacy-detector-modeldb-nonspecific-kinness-axial-paper-kinetics-match-514.yaml
+result_sha256: 0b5f5e1fe79f92b483e4dffd80d39c03d03aed54e35c668ab108193c7b7bc529
+result_summary:
+  training_repeat_verified: true
+  relay_active_indices: [38, 39, 40, 41, 42]
+  relay_events_per_active_index: 4
+  relay_event_count: 20
+  trn_event_count: 549
+  nonspecific_event_count: 1
+  nonspecific_event_times_ms: [2.72]
+  nonspecific_rate_hz: 10.0
+  top_down_current_termination_ms: 5.95
+completed_executable_cell_factorial:
+  modeldb_axial_modeldb_kinetics:
+    result: docs/validation-results/figure7-legacy-detector-modeldb-nonspecific-match-490.yaml
+    nonspecific_events: 2
+  paper_axial_modeldb_kinetics:
+    result: docs/validation-results/figure7-legacy-detector-modeldb-nonspecific-paper-axial-match-496.yaml
+    nonspecific_events: 24
+  paper_axial_paper_kinetics:
+    result: docs/validation-results/figure7-legacy-detector-modeldb-nonspecific-paper-kinetics-match-508.yaml
+    nonspecific_events: 18
+  modeldb_axial_paper_kinetics:
+    result: docs/validation-results/figure7-legacy-detector-modeldb-nonspecific-kinness-axial-paper-kinetics-match-514.yaml
+    nonspecific_events: 1
+gates:
+  relay_active_indices: true
+  minimum_relay_events_per_active_index: true
+  selected_category_event_available: true
+  top_down_current_terminated_on_first_selected_event: true
+  trn_events_present: true
+  nonspecific_events: false
+  nonspecific_rate_hz: false
+  figure7_target_duration: true
+  no_reconstructed_comparator: true
+  no_calcium_ablation: true
+assessment:
+  preregistered_match_contract_passed: false
+  exact_candidate_closed: true
+  mismatch_run_authorized: false
+  executable_cell_axial_kinetics_factorial_closed: true
+  continuous_interpolation_authorized: false
+  parameter_selected: false
+  original_smart_reproduced: false
+  baseline_promoted: false
+  conclusion: >-
+    The last official axial-by-kinetics combination retains the exact relay
+    match but emits one nonspecific event. Across the complete two-by-two
+    executable-cell factorial, output is 2, 24, 18, and 1 events; no endpoint
+    reaches four. The finite source space is closed before mismatch and does
+    not authorize continuous parameter interpolation.
+next_step: >-
+  Return to the paper Table-3 nonspecific intrinsic cell and cross it with the
+  paper's own calcium kinetics while retaining paper axial dynamics. This is a
+  discrete source-coherence test relative to Artifact 484's 33-event
+  Table-3-cell/ModelDB-kinetics control and must begin at Figure 6.

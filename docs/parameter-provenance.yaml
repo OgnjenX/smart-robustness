@@ -376,7 +376,7 @@ parameters:
     value: modeldb_112923 retained; paper_2008 tested and rejected for the calibrated baseline
     status: conflicting-official-source-tested
     source: ModelDB 112923 SMART.nml compared with Grossberg and Versace 2008 Equations 21--27
-    note: Artifacts 349--350 apply the paper equations only to nonspecific thalamus after compartment-specific causal localization. Figure 6 remains exact, but Figure 7 match rises from four to eight nonspecific events and fails before mismatch. No kinetic interpolation is authorized
+    note: Artifacts 349--350 apply the paper equations only to nonspecific thalamus after compartment-specific causal localization. Figure 6 remains exact, but that earlier calibrated Figure 7 match rises from four to eight events and fails before mismatch. Under the recovered falling -20-mV detector, Artifacts 489--515 complete the official executable-cell axial-by-kinetics factorial: all four endpoints preserve exact horizontal relay match, while nonspecific counts are 2, 24, 18, and 1 rather than four. No axial or kinetic interpolation is authorized; the paper Table-3 cell plus paper kinetics remains a separately registered source-coherence test
   calibration.figure7.nonspecific_somatic_gaba_transfer:
     value: source control 1.0 retained; preregistered factor-2 sensitivity rejected
     status: calibrated-reconstruction-sensitivity-tested

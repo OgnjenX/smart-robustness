@@ -105,6 +105,13 @@ top-down map contrast. One nonspecific event occurs during learning, but this
 does not score recognition. Registration 513 fixes the final match required to
 complete the finite official-source factorial.
 
+Artifacts 513--515 close that factorial. The final serialized-axial/paper-
+kinetics endpoint preserves the exact relay match but emits one nonspecific
+event. The complete executable-cell two-by-two matrix yields 2, 24, 18, and 1
+events; none reaches four, so no interpolation is authorized. Registration 516
+returns to the paper Table-3 nonspecific cell and pairs it with paper calcium
+kinetics, beginning at Figure 6 as a separate source-coherence cross.
+
 Artifacts 471--473 complete the identity-locked mismatch calcium replay of the
 failed gain-0.8 candidate. The fresh event train exactly matches Artifact 468,
 and its 10,000-sample trace contains soma/dendrite voltages, T-type currents,

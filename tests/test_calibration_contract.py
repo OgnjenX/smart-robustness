@@ -8930,3 +8930,36 @@ def test_trn_somatic_gaba_mismatch_is_limited_to_match_survivors() -> None:
         "nonspecific_events": 7,
     }
     assert "Do not interpolate" in registration["selection_rule"]
+
+
+def test_trn_somatic_gaba_mismatch_closes_one_dimensional_family() -> None:
+    result_path = (
+        ROOT
+        / "docs/validation-results/figure7-trn-somatic-gaba-mismatch-564.yaml"
+    )
+    result = yaml.safe_load(result_path.read_text())
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-trn-somatic-gaba-mismatch-assessment-565.yaml"
+        ).read_text()
+    )
+
+    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment[
+        "result_sha256"
+    ]
+    assert all(result["figure6_gates"].values())
+    outcomes = {item["effective_scale"]: item["mismatch"] for item in result["outcomes"]}
+    assert outcomes[0.875]["relay_active_indices"] == [40]
+    assert outcomes[1.0]["relay_active_indices"] == [40]
+    assert outcomes[0.875]["nonspecific_event_count"] == 7
+    assert outcomes[1.0]["nonspecific_event_count"] == 7
+    assert outcomes[0.875]["trn_event_count"] == 595
+    assert outcomes[1.0]["trn_event_count"] == 584
+    assert not outcomes[0.875]["mismatch_gates"]["match_more_trn_events"]
+    assert not outcomes[1.0]["mismatch_gates"]["match_more_trn_events"]
+    assert assessment["assessment"][
+        "projection008_one_dimensional_family_closed"
+    ]
+    assert assessment["assessment"]["complete_survivor_scales"] == []
+    assert not assessment["assessment"]["baseline_promoted"]

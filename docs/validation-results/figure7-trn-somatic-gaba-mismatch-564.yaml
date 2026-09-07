@@ -1,0 +1,65 @@
+schema_version: 1
+id: figure7-trn-somatic-gaba-mismatch-564
+date: '2026-09-07'
+status: completed-calibrated-mismatch-survivor-test
+classification: calibrated-projection008-fixed-mismatch-comparison
+registration: docs/validation-results/figure7-trn-somatic-gaba-mismatch-registration-563.yaml
+runtime_fingerprint: fa4ab9f0bf2bec4d6ad53cb6a91620047689b6839b146ed7d777d42350c2cdf5
+figure6_gates:
+  relay_active_indices: true
+  relay_events_per_active_index: true
+  relay_events: true
+  top_down_horizontal_contrast: true
+calibrated_projection_id: modeldb112923.projection.008
+fixed_match_trn_events_by_scale:
+  0.875: 576
+  1.0: 549
+outcomes:
+  - effective_scale: 0.875
+    mismatch:
+      relay_event_count: 3
+      relay_active_indices: [40]
+      relay_spike_times_ms: [5.94, 70.88, 89.19]
+      category_event_count: 3
+      trn_event_count: 595
+      trn_diagnostic_index_event_count: 75
+      trn_remaining_index_event_count: 520
+      nonspecific_event_count: 7
+      nonspecific_spike_times_ms:
+        - 1.35
+        - 3.21
+        - 4.99
+        - 70.21
+        - 84.69
+        - 87.43
+        - 89.71
+      mismatch_gates:
+        relay_active_indices: true
+        match_more_active_relay_cells: true
+        match_more_trn_events: false
+        nonspecific_events: true
+  - effective_scale: 1.0
+    mismatch:
+      relay_event_count: 3
+      relay_active_indices: [40]
+      relay_spike_times_ms: [5.94, 71.27, 88.94]
+      category_event_count: 3
+      trn_event_count: 584
+      trn_diagnostic_index_event_count: 72
+      trn_remaining_index_event_count: 512
+      nonspecific_event_count: 7
+      nonspecific_spike_times_ms:
+        - 1.35
+        - 3.21
+        - 4.99
+        - 71.49
+        - 83.63
+        - 86.36
+        - 88.64
+      mismatch_gates:
+        relay_active_indices: true
+        match_more_active_relay_cells: true
+        match_more_trn_events: false
+        nonspecific_events: true
+original_smart_reproduced: false
+baseline_promoted: false

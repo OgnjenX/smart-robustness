@@ -3549,3 +3549,12 @@ horizontal cells, 20 relay events, and four nonspecific events. The other three
 fail, and the response is non-monotonic. Mismatch has not been consulted. Only
 the two exact survivors may advance to fixed mismatch trials; no interpolation
 or recovered-source claim is allowed.
+
+Artifacts 563--565 test those two mismatch survivors and close the
+one-dimensional projection-008 scale family. Both scales preserve overlap-only
+relay output and the exact 4/7 nonspecific pair. Scale 0.875 reduces the wrong
+TRN mismatch excess to 19 events (576/595) from the source control's repeated
+35 (549/584), but neither reverses it. The non-monotonic match response forbids
+interpolation. A next match-only calibration may cross the already observed
+scale-0.75 TRN headroom with a bounded lower nonspecific T-current grid; this
+would remain an effective reconstruction, not original-source recovery.

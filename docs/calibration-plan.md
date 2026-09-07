@@ -1424,3 +1424,13 @@ mismatch must remain overlap-only, have fewer active relay cells than match,
 produce fewer TRN events than its paired match, and emit exactly seven
 nonspecific events. All gates are conjunctive; no partial ranking, new scale,
 or interpolation is allowed.
+
+Artifacts 563--565 close the one-dimensional projection-008 scale family.
+Both survivors preserve overlap-only mismatch relay activity and exactly seven
+nonspecific events. Scale 0.875 improves the TRN inversion to 576/595 from the
+source control's repeated 549/584, but both fail match-greater TRN ordering.
+The family is non-monotonic and no interpolation is allowed. A next bounded
+calibration may combine only scale 0.75—the registered endpoint with 20 match
+relay events, 621 TRN events, and one excess nonspecific event—with lower
+nonspecific T scales 0.125, 0.15625, and the 0.1875 control. Match must be
+screened before any mismatch trial.

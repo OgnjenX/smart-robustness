@@ -1,0 +1,42 @@
+schema_version: 1
+id: figure7-trn-somatic-gaba-mismatch-assessment-565
+date: '2026-09-07'
+status: assessed-no-survivor-family-closed
+registration: docs/validation-results/figure7-trn-somatic-gaba-mismatch-registration-563.yaml
+result: docs/validation-results/figure7-trn-somatic-gaba-mismatch-564.yaml
+result_sha256: fec26a796cff1e2ca18b35e55c5e66a4d86886ba9186b8152202d49b530c2b54
+runtime_fingerprint: fa4ab9f0bf2bec4d6ad53cb6a91620047689b6839b146ed7d777d42350c2cdf5
+assessment:
+  fresh_figure6_passed: true
+  both_registered_survivors_executed: true
+  scale_0_875_spatial_and_arousal_gates_pass: true
+  scale_0_875_trn_order_gate_pass: false
+  scale_1_0_spatial_and_arousal_gates_pass: true
+  scale_1_0_trn_order_gate_pass: false
+  complete_survivor_scales: []
+  interpolation_or_extension_authorized: false
+  projection008_one_dimensional_family_closed: true
+  original_smart_reproduced: false
+  baseline_promoted: false
+quantitative_summary:
+  scale_0_875_match_mismatch_trn: [576, 595]
+  scale_0_875_mismatch_excess: 19
+  scale_0_875_match_mismatch_nonspecific: [4, 7]
+  scale_1_0_match_mismatch_trn: [549, 584]
+  scale_1_0_mismatch_excess: 35
+  scale_1_0_match_mismatch_nonspecific: [4, 7]
+interpretation: >-
+  Both endpoints retain the exact spatial comparison and 40/70-Hz nonspecific
+  output, but neither reproduces the paper's lower TRN firing during mismatch.
+  Scale 0.875 improves the mismatch excess from 35 to 19 events without
+  reversing it. Because the match response was non-monotonic and all endpoints
+  were fixed in advance, no interpolation or new one-dimensional scale is
+  justified. This calibrated family is closed.
+next_gate: >-
+  A bounded two-factor calibration may cross only projection-008 scale 0.75,
+  the preregistered endpoint that preserved 20 matched relay events and raised
+  matched TRN output to 621 but emitted five nonspecific events, with lower
+  effective nonspecific T-current scales 0.125, 0.15625, and control 0.1875.
+  Run match only first. This tests whether the already causally localized
+  arousal-gain dimension can remove the sole match failure while preserving TRN
+  headroom. No interpolation or original-source claim is permitted.

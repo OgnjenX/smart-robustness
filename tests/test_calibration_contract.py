@@ -7613,3 +7613,65 @@ def test_legacy_detector_figure7_match_is_locked_to_fresh_weights() -> None:
     assert "persistent_projection_weight_scales=scales" in runner
     assert "condition=MatchCondition.MATCH" in runner
     assert "MatchCondition.MISMATCH" not in runner
+
+
+def test_legacy_detector_match_failure_keeps_mismatch_locked() -> None:
+    result = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-legacy-falling-minus20-match-484.yaml"
+        ).read_text()
+    )
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-legacy-falling-minus20-match-assessment-485.yaml"
+        ).read_text()
+    )
+
+    match = result["match_result"]
+    assert result["training_repeat_verified"]
+    assert sorted(set(match["relay_spike_indices"])) == [38, 39, 40, 41, 42]
+    assert {match["relay_spike_indices"].count(index) for index in range(38, 43)} == {4}
+    assert len(match["trn_spike_times_ms"]) == 550
+    assert len(match["nonspecific_spike_times_ms"]) == 33
+    assert match["top_down_current_termination_time_ms"] == 5.95
+    assert not result["match_prerequisites_pass"]
+    assert not result["mismatch_run_authorized"]
+    assert assessment["result_sha256"] == (
+        "de1eff19700668fc70e8caf02fca825b8f9977a1e7f0052e036fae79f78278c8"
+    )
+    assert assessment["assessment"]["failure_localized_to_nonspecific_output"]
+    assert not assessment["assessment"]["mismatch_run_authorized"]
+    assert not assessment["assessment"]["original_smart_reproduced"]
+
+
+def test_modeldb_nonspecific_recovered_detector_cross_starts_at_figure6() -> None:
+    profile = yaml.safe_load(
+        (
+            ROOT
+            / "configs/calibration/figure6_legacy_detector_modeldb_nonspecific_v1.yaml"
+        ).read_text()
+    )
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure6-legacy-detector-modeldb-nonspecific-registration-486.yaml"
+        ).read_text()
+    )
+
+    overrides = profile["runtime_overrides"]
+    assert overrides["nonspecific_intrinsic_cell_convention"] == "modeldb_112923"
+    assert overrides["nonspecific_axial_convention"] == "kinness_serialized_edge"
+    assert overrides["nonspecific_calcium_kinetics_convention"] == "modeldb_112923"
+    assert overrides["spike_event_rule"] == "falling_threshold_crossing"
+    assert overrides["nonspecific_spike_event_rule"] is None
+    assert registration["execution"] == {
+        "figure6_learning_runs": 1,
+        "figure7_runs": 0,
+        "parameter_search": False,
+    }
+    assert registration["stopping_rule"].startswith(
+        "Run one fresh complete Figure 6"
+    )
+    assert "figure7_match" in registration["locked_holdouts"]

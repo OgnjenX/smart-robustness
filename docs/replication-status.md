@@ -32,6 +32,16 @@ comparator-free, unexpanded Figure 7 match is now admissible. Original SMART
 is not yet reproduced or frozen because recognition and the calibrated
 transfer-unit interpretation remain unresolved.
 
+Artifacts 483--485 test the resulting comparator-free, unexpanded 100-ms
+match. Fresh Figure 6 replay is exact; recognition produces four volleys in
+exactly horizontal relay cells 38--42, 550 TRN events, and correct 5.95-ms
+one-event category-current termination. Nonspecific thalamus emits 33 falling
+-20-mV crossings (330 Hz), however, rather than four (40 Hz). The match fails
+and mismatch remains locked. This localizes the failure to nonspecific-cell
+output rather than spatial relay matching. The next admissible source test is
+the complete archived SMART.nml nonspecific cell plus its serialized axial
+edges and the recovered detector, beginning again at Figure 6.
+
 Artifacts 471--473 complete the identity-locked mismatch calcium replay of the
 failed gain-0.8 candidate. The fresh event train exactly matches Artifact 468,
 and its 10,000-sample trace contains soma/dendrite voltages, T-type currents,

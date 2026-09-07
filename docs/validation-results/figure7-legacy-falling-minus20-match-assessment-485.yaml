@@ -1,0 +1,76 @@
+schema_version: 1
+id: figure7-legacy-falling-minus20-match-assessment-485
+date: '2026-09-07'
+status: match-failed-nonspecific-overproduction-mismatch-locked
+registration: docs/validation-results/figure7-legacy-falling-minus20-match-registration-483.yaml
+result: docs/validation-results/figure7-legacy-falling-minus20-match-484.yaml
+result_sha256: de1eff19700668fc70e8caf02fca825b8f9977a1e7f0052e036fae79f78278c8
+candidate:
+  detector: falling_threshold_crossing_at_physical_minus20_mV
+  weight_handoff: actual_fresh_figure6_weights_no_expansion
+  receptor_prime: none
+  comparator: none
+result_summary:
+  training_repeat_verified: true
+  relay_active_indices: [38, 39, 40, 41, 42]
+  relay_events_per_active_index: 4
+  relay_event_count: 20
+  relay_event_times_ms:
+    - 5.93
+    - 5.93
+    - 5.94
+    - 5.94
+    - 5.94
+    - 40.72
+    - 40.72
+    - 40.75
+    - 40.75
+    - 41.02
+    - 62.13
+    - 62.13
+    - 62.31
+    - 62.31
+    - 62.45
+    - 81.43
+    - 81.43
+    - 81.74
+    - 81.74
+    - 81.94
+  trn_event_count: 550
+  nonspecific_event_count: 33
+  nonspecific_rate_hz: 330.0
+  first_selected_category_event_ms: 5.95
+  top_down_current_termination_ms: 5.95
+  nonspecific_detector_falling_minus20_crossings: 33
+gates:
+  relay_active_indices: true
+  minimum_relay_events_per_active_index: true
+  selected_category_event_available: true
+  top_down_current_terminated_on_first_selected_event: true
+  trn_events_present: true
+  nonspecific_events: false
+  nonspecific_rate_hz: false
+  figure7_target_duration: true
+  no_reconstructed_comparator: true
+  no_calcium_ablation: true
+assessment:
+  preregistered_match_contract_passed: false
+  exact_candidate_closed: true
+  mismatch_run_authorized: false
+  relay_match_mechanism_preserved: true
+  failure_localized_to_nonspecific_output: true
+  parameter_selected: false
+  original_smart_reproduced: false
+  baseline_promoted: false
+  conclusion: >-
+    The recovered detector preserves a clean, exact four-volley horizontal
+    relay match and correctly terminates the category current on cell 40's
+    first event. The Table-3 nonspecific cell nevertheless generates 33
+    genuine falling -20-mV crossings in 100 ms, far above Figure 7c's four.
+    The mismatch is therefore not run. No detector threshold or inhibitory
+    gain is fitted from this failure.
+next_step: >-
+  Test the discrete official-executable alternative: the complete archived
+  ModelDB nonspecific cell with its serialized axial convention and the same
+  recovered crossing detector. It must first pass a fresh Figure 6 episode;
+  its Figure 7 match remains locked until then.

@@ -93,6 +93,14 @@ passes Stage B under the source-supported shape gate. The transfer factors
 remain calibrated rather than recovered, so the next step is one
 comparator-free, unexpanded 100-ms match before mismatch is opened.
 
+Artifacts 483--485 show that this exact match preserves all five horizontal
+relay cells with four events each and correctly terminates the selected
+category current, but the paper Table-3 nonspecific cell emits 33 events rather
+than four. Mismatch remains locked. Registration 486 returns to Stage B with
+the discrete complete SMART.nml nonspecific-cell/serialized-axial alternative;
+no channel hybrid, detector threshold, or inhibitory gain may be inferred from
+the 330-Hz failure.
+
 ### D — locked holdout evaluation
 
 Without changing the candidate, evaluate:

@@ -1,0 +1,73 @@
+schema_version: 1
+id: figure7-specific-thalamus-temporal-gate-audit-470
+date: '2026-09-07'
+status: future-validation-rule-corrected-before-calcium-trace
+classification: primary-manuscript-visual-and-mechanism-audit
+primary_source:
+  citation: Grossberg and Versace (2008), Brain Research 1218:278-312
+  doi: 10.1016/j.brainres.2008.04.024
+  pdf: https://sites.bu.edu/steveg/files/2016/06/GroVer2008BR.pdf
+  pdf_sha256: c56c337624959d8c0bdf51aa79b0dbc82f31264af2b2cd675790879a6410d7ed
+  inspected_pdf_pages: [20, 21]
+  inspected_sections: [2.3]
+  inspected_figures: [7, 8]
+source_supported:
+  initial_comparison:
+    - Figure 7 depicts a bright subset at the horizontal/vertical overlap during mismatch.
+    - The text describes top-down-only relay cells as inhibited and cells receiving both bottom-up and top-down excitation as firing.
+    - Matched specific-thalamic cells are described as tonic.
+  later_mismatch_dynamics:
+    - A sufficiently large mismatch is described as hyperpolarizing LGN cells through the layer-6II-to-TRN-to-LGN pathway.
+    - The paper then attributes burst firing to voltage-dependent T-type calcium current.
+  arousal_output:
+    - Figure 7c shows four nonspecific-thalamic spikes in 100 ms for match and seven for mismatch.
+    - The corresponding exact plotted rates are 40 Hz and 70 Hz.
+not_identified:
+  - Exact relay-cell raster times for Figure 7b.
+  - A numerical time boundary between the initial comparison and later rebound.
+  - Exact specific-relay or TRN event counts.
+  - A rule that every nonoverlap relay cell must remain silent for the complete 100-ms window.
+correction:
+  superseded_future_rule: >-
+    Require the complete 100-ms mismatch relay active set to equal only the
+    horizontal/vertical overlap.
+  future_rule:
+    initial_spatial_selection: >-
+      During the initial bottom-up/top-down comparison, overlap cells may
+      respond while nonoverlap image-driven cells are suppressed by the
+      layer-6II--TRN--relay balance.
+    later_mismatch_output: >-
+      Later nonoverlap output is source-consistent only when a registered
+      continuous trace demonstrates the stated sequence: relay
+      hyperpolarization, recovery of T-type-calcium availability, inward
+      calcium current, and burst-mode voltage/spike output. Ordinary tonic or
+      recurrent escape remains a failure.
+    mode_contrast: >-
+      Match must exhibit tonic specific-thalamic output, whereas mismatch must
+      exhibit the paper's hyperpolarization-dependent burst mode.
+    fixed_numeric_output: >-
+      Nonspecific thalamus must still emit exactly four match and seven
+      mismatch events over the plotted 100-ms window, and mismatch output must
+      exceed match output.
+    trn_mechanism: >-
+      The TRN pathway must be active in the direction required to produce the
+      mismatch hyperpolarization; a fitted spatial mask cannot substitute for
+      it.
+anti_posthoc_boundaries:
+  - Do not use 49.31 ms from Artifact 468 as a new scoring cutoff.
+  - Classify late output by preregistered physiology and event morphology, not by a time chosen after observing the candidate.
+  - Preserve Artifact 467's original all-window gate when scoring Artifact 468.
+assessment:
+  all_window_overlap_only_was_source_proven: false
+  source_requires_initial_overlap_selection: true
+  source_allows_later_t_type_burst_output: true
+  exact_temporal_cutoff_identifiable: false
+  artifact_468_reclassified_as_pass: false
+  original_smart_reproduced: false
+  baseline_promoted: false
+next_step: >-
+  Register and execute one readout-only mismatch replay of Artifact 468 with
+  complete relay voltage, input-current, somatic/dendritic T-current, and
+  activation/inactivation-gate traces. Require exact event-train identity and
+  make no parameter change. The result can classify the late events but cannot
+  promote the failed candidate.

@@ -7309,3 +7309,93 @@ def test_persistent_gain0p8_passes_figure6_and_locks_complete_pair() -> None:
     }
     assert registration["execution"]["parameter_search"] is False
     assert registration["baseline_promoted"] is False
+
+
+def test_persistent_gain0p8_complete_pair_is_closed_without_promotion() -> None:
+    result = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-persistent-gain0p8-complete-pair-468.yaml"
+        ).read_text()
+    )
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-persistent-gain0p8-complete-pair-assessment-469.yaml"
+        ).read_text()
+    )
+
+    assert sorted(set(result["match"]["relay_spike_indices"])) == [38, 39, 40, 41, 42]
+    assert len(result["match"]["relay_spike_indices"]) == 20
+    assert sorted(set(result["mismatch"]["relay_spike_indices"])) == [22, 31, 40, 49, 58]
+    assert result["mismatch"]["relay_spike_indices"][0] == 40
+    assert result["mismatch"]["relay_spike_times_ms"][0] == pytest.approx(11.75)
+    assert result["mismatch"]["relay_spike_times_ms"][1] == pytest.approx(49.31)
+    assert len(result["match"]["trn_spike_indices"]) == 581
+    assert len(result["mismatch"]["trn_spike_indices"]) == 625
+    assert len(result["match"]["nonspecific_spike_times_ms"]) == 5
+    assert len(result["mismatch"]["nonspecific_spike_times_ms"]) == 4
+    assert assessment["result_sha256"] == (
+        "d4480a74e480035d769829d5f99ea906152fa2690646f44ab0b8aa193e3bc7b5"
+    )
+    assert not assessment["assessment"]["preregistered_contract_passed"]
+    assert assessment["assessment"]["candidate_closed_without_interpolation"]
+    assert not assessment["assessment"]["parameter_selected"]
+    assert not assessment["assessment"]["original_smart_reproduced"]
+    assert not assessment["assessment"]["baseline_promoted"]
+
+
+def test_figure7_temporal_gate_audit_requires_mechanism_not_posthoc_time() -> None:
+    audit = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-specific-thalamus-temporal-gate-audit-470.yaml"
+        ).read_text()
+    )
+
+    assert audit["assessment"]["source_requires_initial_overlap_selection"]
+    assert audit["assessment"]["source_allows_later_t_type_burst_output"]
+    assert not audit["assessment"]["exact_temporal_cutoff_identifiable"]
+    assert not audit["assessment"]["artifact_468_reclassified_as_pass"]
+    assert "Do not use 49.31 ms" in audit["anti_posthoc_boundaries"][0]
+    future = audit["correction"]["future_rule"]
+    assert "hyperpolarization" in future["later_mismatch_output"]
+    assert "T-type-calcium" in future["later_mismatch_output"]
+    assert "exactly four match and seven" in future["fixed_numeric_output"]
+    assert not audit["assessment"]["original_smart_reproduced"]
+    assert not audit["assessment"]["baseline_promoted"]
+
+
+def test_gain0p8_calcium_trace_is_readout_only_and_identity_locked() -> None:
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-persistent-gain0p8-mismatch-calcium-trace-registration-471.yaml"
+        ).read_text()
+    )
+    profile = yaml.safe_load((ROOT / registration["profile"]).read_text())
+
+    assert profile["condition"] == "mismatch"
+    assert profile["trace"]["recorded_relay_indices"] == [
+        22, 31, 38, 39, 40, 41, 42, 49, 58
+    ]
+    assert {
+        "i_ca_distal_dendrite",
+        "i_ca_proximal_dendrite",
+        "i_ca_soma",
+        "m_ca_soma",
+        "h_ca_soma",
+    } <= set(profile["trace"]["required_variables"])
+    assert registration["reference_pair_sha256"] == (
+        "d4480a74e480035d769829d5f99ea906152fa2690646f44ab0b8aa193e3bc7b5"
+    )
+    assert registration["execution"] == {
+        "figure6_learning_runs": 1,
+        "mismatch_runs": 1,
+        "parameter_search": False,
+        "intervention": "none",
+        "added_observation": "lossless_relay_state_trace",
+    }
+    assert "exactly match Artifact 468" in registration["identity_requirement"]
+    assert "cannot alter Artifact 468" in registration["interpretation_boundary"]
+    assert registration["baseline_promoted"] is False

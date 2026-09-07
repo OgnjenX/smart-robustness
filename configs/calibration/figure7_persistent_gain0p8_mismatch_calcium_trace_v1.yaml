@@ -1,0 +1,43 @@
+schema_version: 1
+name: figure7-persistent-gain0p8-mismatch-calcium-trace-v1
+classification: readout-only-calcium-mechanism-diagnostic-no-parameter-search
+base_profile: configs/calibration/figure7_persistent_gain0p8_complete_pair_v1.yaml
+condition: mismatch
+trace:
+  output: tmp/figure7-persistent-gain0p8-mismatch-calcium-trace-472.npz
+  recorded_relay_indices: [22, 31, 38, 39, 40, 41, 42, 49, 58]
+  required_variables:
+    - v_distal_dendrite
+    - v_proximal_dendrite
+    - v_soma
+    - i_ca_distal_dendrite
+    - i_ca_proximal_dendrite
+    - i_ca_soma
+    - m_ca_distal_dendrite
+    - h_ca_distal_dendrite
+    - m_ca_proximal_dendrite
+    - h_ca_proximal_dendrite
+    - m_ca_soma
+    - h_ca_soma
+analysis_contract:
+  target_cells: [22, 31, 40, 49, 58]
+  pre_event_windows_ms: [1.0, 5.0, 10.0]
+  published_voltage_peak_threshold_mV: 30.0
+  report_for_each_event:
+    - preceding_voltage_minimum_by_compartment
+    - calcium_activation_and_inactivation_at_voltage_minimum
+    - preceding_calcium_current_maximum_by_compartment
+    - calcium_current_and_gates_at_event
+    - positive_soma_voltage_maxima_since_previous_emitted_event
+  classification_rule: >-
+    A late event may be described as compatible with the paper's rebound
+    mechanism only if the continuous trace shows temporal precedence from
+    hyperpolarization through increased T-channel availability to inward
+    calcium current and transient multi-peak somatic output. If the source does
+    not identify a numerical threshold needed for a binary decision, report
+    the result as unresolved rather than fitting one from this trace.
+boundaries:
+  - Every model and protocol parameter is inherited unchanged from the failed Artifact 468 candidate.
+  - The entire fresh mismatch event train must exactly equal Artifact 468 before trace interpretation.
+  - The trace adds state observations only and cannot promote, rescore, or rescue Artifact 468.
+  - No time cutoff, calcium threshold, conductance, current, or weight may be selected from this run.

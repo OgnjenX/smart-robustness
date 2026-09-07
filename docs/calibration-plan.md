@@ -51,10 +51,21 @@ Candidates failing an isolated causal gate do not enter network calibration.
 ### C — match/mismatch mechanism
 
 - all five horizontal relay cells active during match;
-- mismatch relay output confined to the horizontal/vertical overlap;
-- more post-startup TRN output in match;
+- during the initial mismatch comparison, relay output confined to the
+  horizontal/vertical overlap while nonoverlap cells are inhibited;
+- later mismatch relay output accepted only when preregistered continuous
+  traces demonstrate the paper's hyperpolarization-to-T-type-calcium burst
+  sequence; ordinary tonic or recurrent escape fails;
+- match specific-thalamic output tonic and mismatch output burst-mode;
+- TRN output and relay hyperpolarization consistent with the stated inhibitory
+  mismatch mechanism;
 - over the plotted 100-ms Figure 7c window, nonspecific thalamus fires four
   times (40 Hz) during match and seven times (70 Hz) during mismatch.
+
+The paper does not identify a numerical boundary between initial selection and
+later rebound. No observed candidate transition may be reused as a post-hoc
+time cutoff; event classification must use physiology and morphology fixed
+before the run. Artifact 468 remains failed under its earlier preregistration.
 
 ### D — locked holdout evaluation
 

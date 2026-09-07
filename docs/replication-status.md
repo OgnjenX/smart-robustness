@@ -2,6 +2,29 @@
 
 ## Current interpretation (2026-09-07)
 
+Artifacts 467--469 close the locked 100-ms persistent-gain-0.8 Figure 7 pair.
+Match activates all five horizontal relay cells four times each, but emits five
+nonspecific events rather than four. Mismatch is initially overlap-only: cell
+40 emits at 11.75 ms and the nonoverlap cells remain silent until 49.31--49.75
+ms. All five vertical cells then recur, TRN output is 581 match versus 625
+mismatch, and nonspecific output is 5 versus 4 rather than the required 4
+versus 7. The preregistered candidate therefore fails and is closed without
+interpolation. Original SMART remains unreproduced and the baseline is not
+promoted.
+
+Source audit 470 corrects the validation rule for future candidates without
+rescoring Artifact 468. Figure 7 supports an initial overlap-selection phase,
+but the following text explicitly attributes later mismatch firing to
+hyperpolarization-dependent T-type calcium bursting. A whole-window
+overlap-only active-set rule is therefore stricter than the source. No exact
+transition time is reported, so the 49-ms transition observed in the failed
+candidate cannot become a post-hoc cutoff. Future scoring must instead require
+a registered physiological sequence—hyperpolarization, recovered T-current
+availability, inward calcium current, and burst-mode output—while retaining
+the exact 40/70-Hz nonspecific targets and the TRN mechanism. A fixed-parameter
+calcium trace of the failed mismatch is next; it is a classification diagnostic,
+not a candidate rescue or parameter search.
+
 Artifacts 457--459 complete the fixed 55-ms pathway trace of the rejected
 maximal-headroom receptor-prime endpoint. Its first 25 ms exactly reproduce
 Artifact 455. Over the longer observation, match eventually recruits all five

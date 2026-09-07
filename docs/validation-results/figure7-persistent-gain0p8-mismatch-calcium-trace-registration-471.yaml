@@ -1,0 +1,41 @@
+schema_version: 1
+id: figure7-persistent-gain0p8-mismatch-calcium-trace-registration-471
+date: '2026-09-07'
+status: registered-before-execution
+classification: readout-only-calcium-mechanism-diagnostic-no-parameter-search
+predecessors:
+  - docs/validation-results/figure7-persistent-gain0p8-complete-pair-assessment-469.yaml
+  - docs/validation-results/figure7-specific-thalamus-temporal-gate-audit-470.yaml
+profile: configs/calibration/figure7_persistent_gain0p8_mismatch_calcium_trace_v1.yaml
+training_profile: configs/calibration/figure6_declared_interneuron_input_gain0p8_v1.yaml
+training_result: docs/validation-results/figure6-declared-interneuron-input-gain0p8-465.yaml
+training_result_sha256: 45540020e4a125a7b00e846640221cabf8f2b2ccd424ae2f85867fbf335e34a6
+reference_pair: docs/validation-results/figure7-persistent-gain0p8-complete-pair-468.yaml
+reference_pair_sha256: d4480a74e480035d769829d5f99ea906152fa2690646f44ab0b8aa193e3bc7b5
+runtime_fingerprint: e016bc9f3d0557e2b23ad00e7d956509df9cf44de42db6f66c6a484a42d1f7a0
+result: docs/validation-results/figure7-persistent-gain0p8-mismatch-calcium-trace-472.yaml
+trace: tmp/figure7-persistent-gain0p8-mismatch-calcium-trace-472.npz
+fixed_candidate:
+  condition: mismatch
+  persistent_projection_002_gain: 0.8
+  learned_headroom_fraction: 1.0
+  expected_common_weight_factor: 3.6651418062578482
+  receptor_prime: combined_on_center_and_off_surround_unit_arrival
+  duration_ms: 100.0
+execution:
+  figure6_learning_runs: 1
+  mismatch_runs: 1
+  parameter_search: false
+  intervention: none
+  added_observation: lossless_relay_state_trace
+identity_requirement: >-
+  All mismatch spike-index and spike-time fields, the current termination time,
+  and receptor-prime edge counts must exactly match Artifact 468. Abort before
+  interpretation on any difference.
+interpretation_boundary: >-
+  This diagnostic can classify whether the already observed late relay events
+  are compatible with hyperpolarization-dependent T-type calcium rebound. It
+  cannot alter Artifact 468's preregistered failure, select a temporal cutoff,
+  fit a physiological threshold, recover a source parameter, reproduce
+  original SMART, or promote the baseline.
+baseline_promoted: false

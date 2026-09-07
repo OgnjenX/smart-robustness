@@ -1487,3 +1487,11 @@ range to the exact persistent pair. The 20/3 relay, 576/595 TRN, and 4/7
 nonspecific totals must repeat. The result can determine whether raw population
 event count disagrees with effective convergent inhibition under nonlinear
 synaptic timing, but it cannot alter the failed gate or reopen the candidate.
+
+Artifacts 575--577 reproduce every event total exactly but fail the diagnostic
+instrumentation contract. All four added fields are null because the runner
+omitted `record_relay_diagnostics=true`, which is the existing switch that
+constructs the nonspecific-pathway state monitor. The nulls are not interpreted.
+One corrected, separately hash-pinned unchanged rerun is required; it must
+preserve exact event identity and return finite readouts before any mechanistic
+conclusion.

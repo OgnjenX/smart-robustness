@@ -1,0 +1,27 @@
+schema_version: 1
+id: figure7-persistent-inhibitory-drive-audit-assessment-577
+date: '2026-09-08'
+status: assessed-inconclusive-instrumentation-failure
+registration: docs/validation-results/figure7-persistent-inhibitory-drive-audit-registration-575.yaml
+result: docs/validation-results/figure7-persistent-inhibitory-drive-audit-576.yaml
+result_sha256: 27f66397d3f03d068abec0b543b38a21810597ef47b88911429e4cd49fbedf6c
+assessment:
+  fixed_pair_identity_reproduced: true
+  model_or_protocol_changed: false
+  all_registered_added_readouts_present: false
+  effective_inhibition_order_identifiable: false
+  candidate_reopened: false
+  original_smart_reproduced: false
+  baseline_promoted: false
+interpretation: >-
+  The run exactly repeats 20/3 relay, 576/595 TRN, and 4/7 nonspecific events,
+  but all four direct-inhibition fields are null. Inspection shows that the
+  runner omitted record_relay_diagnostics=true, the existing flag that creates
+  the nonspecific pathway StateMonitor. Null values carry no mechanistic
+  meaning. This is an instrumentation failure, not evidence for either drive
+  order.
+next_gate: >-
+  Register one corrected unchanged rerun whose hash-pinned script passes
+  record_relay_diagnostics=true to both conditions. Require non-null finite
+  values for all four readouts and exact event identity before interpretation.
+  No model, parameter, protocol, or failed-gate status may change.

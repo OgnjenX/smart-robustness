@@ -3584,3 +3584,10 @@ repeat is allowed. An unchanged readout audit may now measure the actual
 TRN-to-nonspecific inhibitory gate/current, because synchronized nonlinear
 synapses can make raw event count a poor proxy for convergent inhibition. This
 diagnostic cannot retroactively pass or promote the closed candidate.
+
+Artifacts 575--577 attempt that unchanged readout audit and exactly reproduce
+20/3 relay, 576/595 TRN, and 4/7 nonspecific events. The requested direct-drive
+fields are all null, however, because the runner failed to enable the existing
+state-monitor switch. The execution is therefore an identity repeat but an
+inconclusive diagnostic. Nulls are not evidence. One corrected hash-pinned
+rerun may enable the monitor only; the candidate remains closed and unfrozen.

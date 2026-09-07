@@ -9160,3 +9160,31 @@ def test_persistent_inhibitory_drive_audit_is_readout_only() -> None:
     assert len(registration["added_readouts_only"]) == 4
     assert "No model, protocol, parameter" in registration["boundary"]
     assert "cannot be reopened or promoted" in registration["boundary"]
+
+
+def test_persistent_inhibitory_drive_audit_records_instrumentation_failure() -> None:
+    result_path = (
+        ROOT
+        / "docs/validation-results/figure7-persistent-inhibitory-drive-audit-576.yaml"
+    )
+    result = yaml.safe_load(result_path.read_text())
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-persistent-inhibitory-drive-audit-assessment-577.yaml"
+        ).read_text()
+    )
+
+    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment[
+        "result_sha256"
+    ]
+    assert result["match"]["trn_event_count"] == 576
+    assert result["mismatch"]["trn_event_count"] == 595
+    for condition in ("match", "mismatch"):
+        assert result[condition]["nonspecific_trn_gaba_peak"] is None
+        assert result[condition]["nonspecific_trn_gaba_integral_ms"] is None
+        assert result[condition]["nonspecific_post_startup_trn_gaba_peak"] is None
+        assert result[condition]["nonspecific_trn_current_range_pA"] is None
+    assert not assessment["assessment"]["all_registered_added_readouts_present"]
+    assert not assessment["assessment"]["effective_inhibition_order_identifiable"]
+    assert not assessment["assessment"]["candidate_reopened"]

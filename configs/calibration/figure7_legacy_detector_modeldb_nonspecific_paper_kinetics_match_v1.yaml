@@ -1,0 +1,31 @@
+schema_version: 1
+name: figure7-legacy-detector-modeldb-nonspecific-paper-kinetics-match-v1
+status: registered-before-execution
+training_profile: configs/calibration/figure6_legacy_detector_modeldb_nonspecific_paper_kinetics_v1.yaml
+training_result: docs/validation-results/figure6-legacy-detector-modeldb-nonspecific-paper-kinetics-505.yaml
+training_assessment: docs/validation-results/figure6-legacy-detector-modeldb-nonspecific-paper-kinetics-assessment-506.yaml
+weight_handoff: actual_fresh_figure6_weights_no_expansion
+protocol:
+  condition: match
+  duration_ms: 100.0
+  dt_ms: 0.01
+  equilibration_ms: 0.0
+  top_down_current_pA: 800.0
+  top_down_current_mode: until_cued_cell_first_event
+  top_down_cue_lead_ms: 0.0
+  prime_top_down_receptors_at_stimulus: false
+  comparator: none
+  uniform_relay_input_gain: 1.0
+required_gates:
+  relay_active_indices: [38, 39, 40, 41, 42]
+  minimum_relay_events_per_active_index: 3
+  selected_category_event_available: true
+  top_down_current_terminated_on_first_selected_event: true
+  nonspecific_events: 4
+  nonspecific_rate_hz: 40.0
+  no_reconstructed_comparator: true
+  no_calcium_ablation: true
+boundary: >-
+  This differs from the prior official-source endpoint only in the printed
+  nonspecific calcium kinetics. Density, detector, learned state, and protocol
+  remain fixed; no calcium parameter may be tuned from the result.

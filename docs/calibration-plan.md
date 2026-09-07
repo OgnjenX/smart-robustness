@@ -136,6 +136,11 @@ paper-versus-executable nonspecific calcium-kinetics equation swap. Calcium
 density and all other factors remain fixed; no kinetic interpolation is
 allowed.
 
+Artifacts 504--506 pass the paper nonspecific calcium kinetics through Figure
+6 at fixed Table-3 density. Registration 507 requires one fresh match against
+the unchanged four-event target; no learning-condition rate or calcium value
+may be reused to tune it.
+
 ### D — locked holdout evaluation
 
 Without changing the candidate, evaluate:

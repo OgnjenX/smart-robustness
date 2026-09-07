@@ -7975,3 +7975,44 @@ def test_paper_nonspecific_calcium_kinetics_factorial_is_preregistered() -> None
         "figure7_runs": 0,
         "parameter_search": False,
     }
+
+
+def test_paper_calcium_kinetics_passes_figure6_and_registers_match() -> None:
+    result = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure6-legacy-detector-modeldb-nonspecific-paper-kinetics-505.yaml"
+        ).read_text()
+    )
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure6-legacy-detector-modeldb-nonspecific-paper-kinetics-assessment-506.yaml"
+        ).read_text()
+    )
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-legacy-detector-modeldb-nonspecific-paper-kinetics-match-registration-507.yaml"
+        ).read_text()
+    )
+
+    assert result["runtime_fingerprint"] == (
+        "2d0584e8b06185fb78ec9ef28c15716ef41d0b71f9caf3690a28e9fae9307c72"
+    )
+    assert result["population_spikes"]["thalamic_relay"] == 20
+    assert result["population_spikes"]["thalamic_nonspecific"] == 16
+    assert result["recruitment"]["feedforward_chain_complete"]
+    assert result["top_down_timing"]["causal_pair_in_learning_window"]
+    assert assessment["result_sha256"] == (
+        "1e8c88a5d741d28a0047f5753ed13424b5f65d4417dad861bdca510931ca5912"
+    )
+    assert assessment["assessment"]["preregistered_figure6_contract_passed"]
+    assert not assessment["assessment"]["calcium_parameter_fitted"]
+    assert registration["execution"] == {
+        "figure6_repeat_runs": 1,
+        "match_runs": 1,
+        "mismatch_runs": 0,
+        "parameter_search": False,
+    }
+    assert registration["stopping_rule"].startswith("Repeat Artifact 505 exactly")

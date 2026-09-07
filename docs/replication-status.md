@@ -86,6 +86,12 @@ Registration 504 begins the next discrete official-source factorial at Figure
 6, replacing only nonspecific ModelDB T-type kinetics with the paper's printed
 Equations 21--27.
 
+Artifacts 504--506 pass the paper-calcium-kinetics endpoint through Figure 6:
+20 confined relay events, complete cortical recruitment, causal teaching, and
+1.71029/0.541048 map contrasts. Its 16 nonspecific learning events are not used
+as a recognition score. Registration 507 fixes one fresh exact-rate match with
+no calcium fitting.
+
 Artifacts 471--473 complete the identity-locked mismatch calcium replay of the
 failed gain-0.8 candidate. The fresh event train exactly matches Artifact 468,
 and its 10,000-sample trace contains soma/dendrite voltages, T-type currents,

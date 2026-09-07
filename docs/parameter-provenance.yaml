@@ -544,9 +544,9 @@ parameters:
     note: Match exceeds mismatch at every measured afferent gate and among the nine field-centered TRN cells (79 versus 72 events), but the remaining 72 cells reverse the total with 470 versus 512 events through repeated mismatch-wide volleys. The inversion arises inside the spatially recurrent TRN network, not from reversed relay or layer-6II drive. The failed candidate remains closed.
   validation.figure7.trn_recurrent_gaba_ablation:
     value: recognition-only removal of recurrent chemical TRN projections 008 and 011
-    status: preregistered-causal-diagnostic-awaiting-execution
-    source: Registration 550, authorized by Artifacts 547--549
-    note: Retains projection 013 gap junctions and every afferent/output pathway. This can establish necessity for the global TRN inversion but cannot select a replacement weight or become the baseline.
+    status: completed-essential-for-stability-not-sole-inversion-source
+    source: Artifacts 550--552, authorized by Artifacts 547--549
+    note: Removing both paths raises TRN output to 2008 match versus 2028 mismatch and nonspecific output to 22/22. Recurrent GABA is required for stable/calibrated behavior, but the global inversion persists and therefore is not caused solely by chemical recurrent inhibition. The ablation is non-promotable and selects no weight.
   benchmark.population_sizes:
     value: see configs/*.yaml
     status: exploratory

@@ -1,0 +1,42 @@
+schema_version: 1
+id: figure7-trn-recurrent-gaba-ablation-assessment-552
+date: '2026-09-07'
+status: assessed-recurrent-gaba-essential-but-not-inversion-source
+registration: docs/validation-results/figure7-trn-recurrent-gaba-ablation-registration-550.yaml
+result: docs/validation-results/figure7-trn-recurrent-gaba-ablation-551.yaml
+result_sha256: d41d25b90fd46feff526d617dfa158ab6b3e336ab0bdbf8b8436542d277790f4
+runtime_fingerprint: fa4ab9f0bf2bec4d6ad53cb6a91620047689b6839b146ed7d777d42350c2cdf5
+assessment:
+  fixed_figure6_prerequisite_passed: true
+  declared_dual_ablation_executed: true
+  match_greater_than_mismatch_trn_order_restored: false
+  peripheral_mismatch_excess_removed: false
+  control_nonspecific_40_70_hz_preserved: false
+  recurrent_gaba_required_for_trn_stability: true
+  recurrent_gaba_required_for_calibrated_nonspecific_pattern: true
+  recurrent_gaba_is_sole_cause_of_global_inversion: false
+  model_candidate: false
+  original_smart_reproduced: false
+  baseline_promoted: false
+quantitative_summary:
+  control_trn_events_match_mismatch: [549, 584]
+  ablation_trn_events_match_mismatch: [2008, 2028]
+  ablation_diagnostic_trn_events_match_mismatch: [228, 228]
+  ablation_remaining_trn_events_match_mismatch: [1780, 1800]
+  control_nonspecific_events_match_mismatch: [4, 7]
+  ablation_nonspecific_events_match_mismatch: [22, 22]
+interpretation: >-
+  Removing both recurrent chemical TRN GABA pathways releases nearly uniform,
+  high-rate firing across the 9-by-9 TRN sheet and destroys the calibrated
+  4-versus-7 nonspecific result. It reduces the global inversion from 35 to 20
+  events but does not reverse it: mismatch still exceeds match at 2028 versus
+  2008, and the remaining 72 cells retain all of that difference. Recurrent
+  GABA is therefore essential for network stability and the calibrated output,
+  but it is not the sole generator of the incorrect global ordering.
+next_gate: >-
+  Preregister one recognition-only ablation of projection 013 TRN distal gap
+  junctions while retaining recurrent GABA projections 008/011, every afferent
+  and output pathway, and the fixed learned-coincidence/effective-T pair. This
+  tests whether electrical spatial coupling organizes the residual peripheral
+  mismatch-wide volleys. It cannot select a replacement coupling or become a
+  baseline candidate.

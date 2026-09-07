@@ -8643,3 +8643,39 @@ def test_trn_recurrent_gaba_ablation_is_recognition_only_and_nonpromotable() -> 
         "retained"
     ]
     assert "cannot be promoted" in registration["boundary"]
+
+
+def test_trn_recurrent_gaba_ablation_preserves_failed_inversion() -> None:
+    result_path = (
+        ROOT
+        / "docs/validation-results/figure7-trn-recurrent-gaba-ablation-551.yaml"
+    )
+    result = yaml.safe_load(result_path.read_text())
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-trn-recurrent-gaba-ablation-assessment-552.yaml"
+        ).read_text()
+    )
+
+    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment[
+        "result_sha256"
+    ]
+    assert result["figure6_gates"] == {
+        "relay_active_indices": True,
+        "relay_events_per_active_index": True,
+        "relay_events": True,
+        "top_down_horizontal_contrast": True,
+    }
+    assert result["match"]["trn_event_count"] == 2008
+    assert result["mismatch"]["trn_event_count"] == 2028
+    assert result["match"]["nonspecific_event_count"] == 22
+    assert result["mismatch"]["nonspecific_event_count"] == 22
+    assert not assessment["assessment"][
+        "match_greater_than_mismatch_trn_order_restored"
+    ]
+    assert assessment["assessment"]["recurrent_gaba_required_for_trn_stability"]
+    assert not assessment["assessment"][
+        "recurrent_gaba_is_sole_cause_of_global_inversion"
+    ]
+    assert not assessment["assessment"]["baseline_promoted"]

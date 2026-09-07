@@ -3495,3 +3495,15 @@ ordering is therefore intact, but recurrent spatial TRN dynamics invert the
 whole-population event count. A dual recurrent-GABA ablation of records 008
 and 011 is now the next causal diagnostic; it cannot itself become the classic
 baseline.
+
+Artifacts 550--552 reject recurrent chemical inhibition as the sole cause of
+that inversion. With both TRN-to-TRN GABA records removed, fresh Figure 6 still
+passes and recognition preserves the intended 15-versus-3 relay distinction,
+but the TRN sheet enters a nearly uniform high-rate regime: 2008 match events
+versus 2028 mismatch events. Nonspecific output becomes 22/22 rather than 4/7.
+The mismatch excess shrinks from 35 to 20 events but remains entirely in the
+72 peripheral cells. Recurrent GABA is thus necessary for stability and the
+calibrated arousal trace, not sufficient to explain the ordering error. The
+next causal diagnostic removes only projection 013 gap junctions while keeping
+both GABA records; the original SMART baseline remains unreproduced and
+unfrozen.

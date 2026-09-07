@@ -1345,3 +1345,13 @@ all TRN outputs, the learned coincidence transform, and effective T scale are
 unchanged. The diagnostic asks only whether recurrent GABA is necessary for
 the peripheral mismatch-wide volleys; it cannot become a baseline candidate or
 select a replacement strength.
+
+Artifacts 550--552 show that recurrent chemical GABA is essential for a stable
+TRN regime but is not the sole source of the count inversion. Removing records
+008/011 raises TRN output from 549/584 to 2008/2028 events and makes nearly all
+81 cells emit 24--26 events. It also destroys the exact 4/7 nonspecific result,
+yielding 22/22. The mismatch-greater-than-match order nevertheless persists by
+20 events, entirely outside the nine field-centered diagnostic cells. Next
+preregister a recognition-only ablation of projection 013 gap junctions while
+retaining both recurrent GABA records. Do not tune an electrical-coupling gain
+or promote an ablated network.

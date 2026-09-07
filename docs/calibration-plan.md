@@ -1053,3 +1053,10 @@ support interacts with early inhibition, but not with the paper's spatial
 geometry. Close the endpoint without interpolation. Next repeat the exact
 candidate for 55 ms with pathway readouts only, to localize direct on-center,
 TRN GABA, Relay_INT GABA, bottom-up current, and compartment-voltage balances.
+
+Registration 457 adds only fixed-time pathway readouts to that rejected
+candidate. The run is extended to 55 ms solely to satisfy the established
+diagnostic window, and its first 25-ms relay, TRN, and nonspecific event trains
+must exactly reproduce Artifact 455. Samples at 0, 1, 2, 3, 4, 5, 6, 8, 10,
+11, 11.9, 12, and 15 ms cover all nine diagnostic relay cells, including
+silent cells. No correction may be selected from the observed currents.

@@ -486,6 +486,12 @@ class Figure7ConditionResult:
     relay_event_current_samples_pA: tuple[
         tuple[int, float, str, float], ...
     ] = ()
+    relay_fixed_time_current_samples_pA: tuple[
+        tuple[int, float, str, float], ...
+    ] = ()
+    relay_fixed_time_voltage_samples_mV: tuple[
+        tuple[int, float, str, float], ...
+    ] = ()
     relay_pre_event_current_samples_pA: tuple[
         tuple[int, float, float, str, float], ...
     ] = ()
@@ -787,6 +793,7 @@ def run_figure7_condition(
     include_higher_order_loop: bool = False,
     record_relay_diagnostics: bool = False,
     relay_pre_event_offsets_ms: tuple[float, ...] = (),
+    relay_fixed_sample_times_ms: tuple[float, ...] = (),
     record_v1_cortical_spikes: bool = False,
     projection_weight_scales: Mapping[str, float] | None = None,
     persistent_projection_weight_scales: Mapping[str, float] | None = None,
@@ -904,11 +911,23 @@ def run_figure7_condition(
         raise ValueError("Figure 7 pathway diagnostics require duration_ms > 45")
     if relay_pre_event_offsets_ms and not record_relay_diagnostics:
         raise ValueError("pre-event samples require relay diagnostics")
+    if relay_fixed_sample_times_ms and not record_relay_diagnostics:
+        raise ValueError("fixed-time samples require relay diagnostics")
     if (
         any(not np.isfinite(offset) or offset <= 0 for offset in relay_pre_event_offsets_ms)
         or len(set(relay_pre_event_offsets_ms)) != len(relay_pre_event_offsets_ms)
     ):
         raise ValueError("pre-event offsets must be unique, finite, and positive")
+    if (
+        any(
+            not np.isfinite(time_ms) or not 0 <= time_ms <= duration_ms
+            for time_ms in relay_fixed_sample_times_ms
+        )
+        or len(set(relay_fixed_sample_times_ms)) != len(relay_fixed_sample_times_ms)
+    ):
+        raise ValueError(
+            "fixed sample times must be unique, finite, and within the trial"
+        )
     overlapping_scales = set(projection_weight_scales or ()) & set(
         persistent_projection_weight_scales or ()
     )
@@ -1370,6 +1389,12 @@ def run_figure7_condition(
     relay_trn_gaba_integral: tuple[tuple[int, float], ...] = ()
     relay_driven_current_range: tuple[tuple[int, str, float, float], ...] = ()
     relay_event_current_samples: tuple[tuple[int, float, str, float], ...] = ()
+    relay_fixed_time_current_samples: tuple[
+        tuple[int, float, str, float], ...
+    ] = ()
+    relay_fixed_time_voltage_samples: tuple[
+        tuple[int, float, str, float], ...
+    ] = ()
     relay_pre_event_current_samples: tuple[
         tuple[int, float, float, str, float], ...
     ] = ()
@@ -1561,6 +1586,30 @@ def run_figure7_condition(
             "proximal_dendrite": proximal_voltage_mV,
             "soma": soma_voltage_mV,
         }
+        relay_fixed_time_current_samples = tuple(
+            (
+                index,
+                float(requested_time_ms),
+                source,
+                float(traces[row, sample]),
+            )
+            for row, index in enumerate(FIGURE7_RELAY_DIAGNOSTIC_INDICES)
+            for requested_time_ms in relay_fixed_sample_times_ms
+            for sample in [int(np.argmin(np.abs(times_ms - requested_time_ms)))]
+            for source, traces in relay_current_sources_pA.items()
+        )
+        relay_fixed_time_voltage_samples = tuple(
+            (
+                index,
+                float(requested_time_ms),
+                source,
+                float(traces[row, sample]),
+            )
+            for row, index in enumerate(FIGURE7_RELAY_DIAGNOSTIC_INDICES)
+            for requested_time_ms in relay_fixed_sample_times_ms
+            for sample in [int(np.argmin(np.abs(times_ms - requested_time_ms)))]
+            for source, traces in relay_voltage_sources_mV.items()
+        )
         relay_pre_event_current_samples = tuple(
             (
                 event_index,
@@ -2258,6 +2307,8 @@ def run_figure7_condition(
             relay_driven_current_range
         ),
         relay_event_current_samples_pA=relay_event_current_samples,
+        relay_fixed_time_current_samples_pA=relay_fixed_time_current_samples,
+        relay_fixed_time_voltage_samples_mV=relay_fixed_time_voltage_samples,
         relay_pre_event_current_samples_pA=relay_pre_event_current_samples,
         relay_pre_event_voltage_samples_mV=relay_pre_event_voltage_samples,
         relay_pre_event_trn_gaba_gate_samples=(

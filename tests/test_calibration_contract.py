@@ -7090,3 +7090,44 @@ def test_receptor_prime_max_headroom_has_partial_wrong_geometry() -> None:
     )
     assert assessment["assessment"]["maximal_interaction_endpoint_closed"]
     assert not assessment["assessment"]["baseline_promoted"]
+
+
+def test_max_headroom_prime_trace_is_readout_only_with_fixed_prefix() -> None:
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-receptor-prime-max-headroom-trace-registration-457.yaml"
+        ).read_text()
+    )
+    profile = yaml.safe_load((ROOT / registration["profile"]).read_text())
+
+    assert profile["base_profile"] == (
+        "configs/calibration/figure7_receptor_prime_max_headroom_endpoint_v1.yaml"
+    )
+    assert profile["protocol"] == {
+        "duration_ms": 55.0,
+        "dt_ms": 0.01,
+        "prefix_identity_window_ms": 25.0,
+    }
+    assert profile["readout"]["fixed_sample_times_ms"] == [
+        0.0,
+        1.0,
+        2.0,
+        3.0,
+        4.0,
+        5.0,
+        6.0,
+        8.0,
+        10.0,
+        11.0,
+        11.9,
+        12.0,
+        15.0,
+    ]
+    assert registration["execution"] == {
+        "figure6_learning_runs": 1,
+        "diagnostic_match_runs": 1,
+        "diagnostic_mismatch_runs": 1,
+    }
+    assert "adds observations only" in registration["interpretation_boundary"]
+    assert registration["baseline_promoted"] is False

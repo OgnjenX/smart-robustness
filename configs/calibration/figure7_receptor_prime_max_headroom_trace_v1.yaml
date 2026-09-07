@@ -1,0 +1,28 @@
+schema_version: 1
+name: figure7_receptor_prime_max_headroom_trace_v1
+classification: fixed-candidate-pathway-readout-not-calibration
+base_profile: configs/calibration/figure7_receptor_prime_max_headroom_endpoint_v1.yaml
+protocol:
+  duration_ms: 55.0
+  dt_ms: 0.01
+  prefix_identity_window_ms: 25.0
+readout:
+  relay_indices: [22, 31, 38, 39, 40, 41, 42, 49, 58]
+  fixed_sample_times_ms: [0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 8.0, 10.0, 11.0, 11.9, 12.0, 15.0]
+  current_sources:
+    - direct_image_input
+    - top_down_excitation
+    - trn_gaba
+    - interneuron_gaba
+    - distal_calcium
+    - proximal_calcium
+    - soma_axial
+    - soma_sodium
+    - soma_potassium
+  voltage_compartments: [distal_dendrite, proximal_dendrite, soma]
+boundaries:
+  - The first 25 ms must reproduce Artifact 455 exactly before traces are interpreted.
+  - The 55-ms duration only satisfies the existing diagnostic observation window and is not a new behavioral trial.
+  - No parameter, state, prime, learned map, timing, or protocol value changes from Artifact 455 except recording duration.
+  - Fixed-time samples include silent relay cells and are descriptive, not candidate selectors.
+  - No follow-up parameter may be selected directly from the current or voltage values.

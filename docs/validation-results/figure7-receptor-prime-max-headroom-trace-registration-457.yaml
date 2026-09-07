@@ -1,0 +1,34 @@
+schema_version: 1
+id: figure7-receptor-prime-max-headroom-trace-registration-457
+date: '2026-09-07'
+status: registered-before-execution
+classification: fixed-candidate-pathway-readout-not-calibration
+predecessor: docs/validation-results/figure7-receptor-prime-max-headroom-assessment-456.yaml
+profile: configs/calibration/figure7_receptor_prime_max_headroom_trace_v1.yaml
+candidate_profile: configs/calibration/figure7_receptor_prime_max_headroom_endpoint_v1.yaml
+candidate_result: docs/validation-results/figure7-receptor-prime-max-headroom-endpoint-455.yaml
+training_profile: configs/calibration/figure6_declared_interneuron_input_v1.yaml
+training_result: docs/validation-results/figure6-declared-interneuron-input-414.yaml
+runtime_fingerprint: e016bc9f3d0557e2b23ad00e7d956509df9cf44de42db6f66c6a484a42d1f7a0
+result: docs/validation-results/figure7-receptor-prime-max-headroom-trace-458.yaml
+question: >-
+  Why do maximal bounded learned support and early off-surround rescue only
+  outer matched cells 38 and 42 while suppressing inner/center matched cells
+  and every mismatch cell?
+fixed:
+  - The exact learned transform, receptor prime, and protocol from Artifact 455.
+  - Actual fresh Figure 6 handoff and factor equality check.
+  - Every weight, current, delay, kinetic, state rule, and input interpretation.
+  - Fixed sample times chosen before execution for active and silent cells.
+readout:
+  duration_ms: 55.0
+  prefix_identity_window_ms: 25.0
+  fixed_sample_times_ms: [0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 8.0, 10.0, 11.0, 11.9, 12.0, 15.0]
+  conditions: [match, mismatch]
+execution: {figure6_learning_runs: 1, diagnostic_match_runs: 1, diagnostic_mismatch_runs: 1}
+interpretation_boundary: >-
+  This run adds observations only. The first 25-ms event prefix must exactly
+  reproduce Artifact 455. The trace may localize which current/compartment
+  separates outer, inner, and center cells, but cannot identify a fitted
+  correction or promote the baseline.
+baseline_promoted: false

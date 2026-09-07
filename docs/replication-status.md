@@ -2773,6 +2773,15 @@ The unresolved mechanism is bottom-up-driven relay escape through the temporal
 profile of reticular inhibition. No official gate changes, and Figure 10 and
 spectral holdouts remain locked.
 
+Artifacts 535--537 perform the permitted match-only effective T-conductance
+screen on that fixed replay trace. The full preregistered grid from zero to the
+paper density is finite and was executed without interpolation. Scale 0.1875,
+or 46.875 mS/cm2 in both nonspecific dendrites, is the unique four-event
+survivor; the source value 250 mS/cm2 produces 24 events. The survivor is a
+behavior-calibration candidate with low historical-source confidence, not a
+recovered parameter. Its connected Figure 6-plus-match verification is now
+required; mismatch and downstream holdouts remain locked.
+
 Artifact 249 preregisters a second unchanged rerun because emitted-event
 currents are measured after spike initiation. The pre-event audit in
 `figure7-mismatch-pre-event-trace-audit-250.yaml` again reproduces exactly

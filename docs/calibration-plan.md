@@ -1269,3 +1269,13 @@ The next permitted step is a separately labeled, match-only one-dimensional
 effective T-conductance calibration on the fixed replay trace, followed by one
 fresh connected verification. Mismatch and all spectral/reset holdouts remain
 locked.
+
+Artifacts 535--537 execute the complete fixed 17-point match-only scale grid.
+Event count rises from one at scale zero to 24 at the paper value. The unique
+four-event point is scale 0.1875 (46.875 mS/cm2), selected without interpolation
+by the preregistered closest-to-source rule. Because this is an 81.25-percent
+reduction and the isolated train consists of three startup events plus one late
+event, it remains a low-source-confidence effective candidate. Add it as an
+explicit fingerprinted convention and run one fresh connected Figure 6 and
+match with no other change. Do not open mismatch unless both prerequisites
+pass exactly.

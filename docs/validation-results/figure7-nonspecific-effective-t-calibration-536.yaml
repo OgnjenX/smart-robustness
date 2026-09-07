@@ -1,0 +1,45 @@
+schema_version: 1
+id: figure7-nonspecific-effective-t-calibration-536
+date: '2026-09-07'
+status: match-only-survivor-selected
+classification: match-only-effective-nonspecific-t-conductance-calibration
+registration: docs/validation-results/figure7-nonspecific-effective-t-calibration-registration-535.yaml
+source_trace_sha256: e6da065c5f41cde54f122a91f998d7ff2d1acc9f91d3e1b85602983de2bbbe7f
+runtime_fingerprint: 37cf90faf61129d5619e90c02374201db01f48fd7dfdf50c2a19d6989db2aa24
+paper_source_density_mS_cm2: 250.0
+outcomes:
+  - {scale: 0.0, effective_density_mS_cm2: 0.0, event_count: 1, finite: true, survives: false}
+  - {scale: 0.0625, effective_density_mS_cm2: 15.625, event_count: 2, finite: true, survives: false}
+  - {scale: 0.125, effective_density_mS_cm2: 31.25, event_count: 3, finite: true, survives: false}
+  - {scale: 0.1875, effective_density_mS_cm2: 46.875, event_count: 4, finite: true, survives: true}
+  - {scale: 0.25, effective_density_mS_cm2: 62.5, event_count: 6, finite: true, survives: false}
+  - {scale: 0.3125, effective_density_mS_cm2: 78.125, event_count: 8, finite: true, survives: false}
+  - {scale: 0.375, effective_density_mS_cm2: 93.75, event_count: 10, finite: true, survives: false}
+  - {scale: 0.4375, effective_density_mS_cm2: 109.375, event_count: 12, finite: true, survives: false}
+  - {scale: 0.5, effective_density_mS_cm2: 125.0, event_count: 13, finite: true, survives: false}
+  - {scale: 0.5625, effective_density_mS_cm2: 140.625, event_count: 15, finite: true, survives: false}
+  - {scale: 0.625, effective_density_mS_cm2: 156.25, event_count: 16, finite: true, survives: false}
+  - {scale: 0.6875, effective_density_mS_cm2: 171.875, event_count: 18, finite: true, survives: false}
+  - {scale: 0.75, effective_density_mS_cm2: 187.5, event_count: 21, finite: true, survives: false}
+  - {scale: 0.8125, effective_density_mS_cm2: 203.125, event_count: 21, finite: true, survives: false}
+  - {scale: 0.875, effective_density_mS_cm2: 218.75, event_count: 22, finite: true, survives: false}
+  - {scale: 0.9375, effective_density_mS_cm2: 234.375, event_count: 24, finite: true, survives: false}
+  - {scale: 1.0, effective_density_mS_cm2: 250.0, event_count: 24, finite: true, survives: false}
+survivor_scales: [0.1875]
+selected:
+  scale: 0.1875
+  effective_density_mS_cm2: 46.875
+  event_count: 4
+  event_times_ms: [1.35, 3.21, 4.99, 82.85000000000001]
+  finite: true
+  survives: true
+connected_verification_required: true
+promotable: false
+original_smart_reproduced: false
+baseline_promoted: false
+locked_holdouts: [figure7_mismatch, figure10_reset, figure14_spectra,
+  figure15_local_synchrony, figure16_long_range_synchrony]
+classification_boundary: >-
+  The selected value is an effective behavior-calibration candidate, not a
+  recovered Grossberg-Versace or KInNeSS parameter. The source ledger retains
+  250 mS/cm2. Connected verification is mandatory before mismatch.

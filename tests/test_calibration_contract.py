@@ -8396,3 +8396,36 @@ def test_nonspecific_isolated_replay_proves_t_current_necessity() -> None:
     )
     assert not assessment["original_smart_reproduced"]
     assert not assessment["baseline_promoted"]
+
+
+def test_effective_nonspecific_t_grid_selects_only_registered_match_survivor() -> None:
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-nonspecific-effective-t-calibration-registration-535.yaml"
+        ).read_text()
+    )
+    result = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-nonspecific-effective-t-calibration-536.yaml"
+        ).read_text()
+    )
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-nonspecific-effective-t-calibration-assessment-537.yaml"
+        ).read_text()
+    )
+
+    assert len(registration["common_proximal_distal_scale_grid"]) == 17
+    assert len(result["outcomes"]) == 17
+    assert result["survivor_scales"] == [0.1875]
+    assert result["selected"]["event_count"] == 4
+    assert result["selected"]["effective_density_mS_cm2"] == 46.875
+    assert assessment["result_sha256"] == (
+        "c87144e2ba847da9cb31392b1d33e36c0e5f03566d63b93ef076b7644a69ec70"
+    )
+    assert not assessment["interpolation_or_extension_used"]
+    assert not assessment["mismatch_authorized"]
+    assert not assessment["original_smart_reproduced"]

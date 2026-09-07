@@ -517,6 +517,11 @@ parameters:
     status: cell-autonomous-t-current-necessity-supported-no-source-parameter-selected
     source: Artifacts 532--534
     note: The intact isolated replay reproduces all 24 source events and every recorded state sample with zero error. With bit-identical inputs and only the two dendritic T conductances set to zero, one early event remains and all 21 post-TRN events disappear. This removes the connected-feedback confound and establishes intrinsic T-current necessity for the candidate's excess late activity. It does not identify the missing KInNeSS effective conductance semantics, reproduce Figure 7, or authorize mismatch access.
+  calibration.figure7.nonspecific_effective_t_density:
+    value: 46.875 mS/cm2 in both nonspecific dendrites (common scale 0.1875 of paper Table 3)
+    status: isolated-match-survivor-connected-verification-required
+    source: fixed-trace behavior calibration in Artifacts 535--537; historical source value remains 250 mS/cm2
+    note: Scale 0.1875 is the unique four-event survivor on the preregistered 17-point grid. No interpolation or extension was used. The large reduction and startup-heavy event timing make this a low-source-confidence effective candidate, not recovered source. It cannot be promoted or used for mismatch until a fresh connected Figure 6-plus-match verification passes.
   benchmark.population_sizes:
     value: see configs/*.yaml
     status: exploratory

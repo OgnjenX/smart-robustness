@@ -1,0 +1,43 @@
+schema_version: 1
+id: figure7-legacy-detector-modeldb-nonspecific-paper-kinetics-match-assessment-509
+date: '2026-09-07'
+status: match-failed-nonspecific-overproduction-mismatch-locked
+registration: docs/validation-results/figure7-legacy-detector-modeldb-nonspecific-paper-kinetics-match-registration-507.yaml
+result: docs/validation-results/figure7-legacy-detector-modeldb-nonspecific-paper-kinetics-match-508.yaml
+result_sha256: 18adfc7efacd3ce00668932e30ed4d242dc01552c532157240288e04215d0c59
+result_summary:
+  training_repeat_verified: true
+  relay_active_indices: [38, 39, 40, 41, 42]
+  relay_events_per_active_index: 4
+  relay_event_count: 20
+  trn_event_count: 549
+  nonspecific_event_count: 18
+  nonspecific_rate_hz: 180.0
+  top_down_current_termination_ms: 5.95
+gates:
+  relay_active_indices: true
+  minimum_relay_events_per_active_index: true
+  selected_category_event_available: true
+  top_down_current_terminated_on_first_selected_event: true
+  trn_events_present: true
+  nonspecific_events: false
+  nonspecific_rate_hz: false
+  figure7_target_duration: true
+  no_reconstructed_comparator: true
+  no_calcium_ablation: true
+assessment:
+  preregistered_match_contract_passed: false
+  exact_candidate_closed: true
+  mismatch_run_authorized: false
+  calcium_kinetics_interpolation_authorized: false
+  parameter_selected: false
+  original_smart_reproduced: false
+  baseline_promoted: false
+  conclusion: >-
+    Paper T-type kinetics reduce nonspecific output from 24 to 18 events under
+    paper axial dynamics, but do not reproduce four events. The endpoint is
+    closed before mismatch and no kinetic parameter is fitted.
+next_step: >-
+  Complete the discrete axial-by-kinetics factorial for the official SMART.nml
+  nonspecific cell: pair paper calcium kinetics with serialized KInNeSS axial
+  edges. Begin at Figure 6 and retain the archived distal GABA control.

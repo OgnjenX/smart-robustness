@@ -141,6 +141,11 @@ Artifacts 504--506 pass the paper nonspecific calcium kinetics through Figure
 the unchanged four-event target; no learning-condition rate or calcium value
 may be reused to tune it.
 
+Artifacts 507--509 fail the paper-kinetics match at 18 nonspecific events.
+Registration 510 fixes the remaining executable-cell axial-by-kinetics
+combination at Figure 6: serialized KInNeSS axial edges plus paper calcium
+kinetics. No continuous interpolation is allowed.
+
 ### D — locked holdout evaluation
 
 Without changing the candidate, evaluate:

@@ -146,6 +146,10 @@ Registration 510 fixes the remaining executable-cell axial-by-kinetics
 combination at Figure 6: serialized KInNeSS axial edges plus paper calcium
 kinetics. No continuous interpolation is allowed.
 
+Artifacts 510--512 pass that final combination through Figure 6. Registration
+513 requires its independent four-event recognition match; failure closes the
+two-by-two axial/kinetics source factorial without interpolation.
+
 ### D — locked holdout evaluation
 
 Without changing the candidate, evaluate:

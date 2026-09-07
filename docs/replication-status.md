@@ -99,6 +99,12 @@ Registration 510 completes the official axial-by-kinetics factorial by pairing
 paper T-current kinetics with serialized KInNeSS axial edges, starting at
 Figure 6.
 
+Artifacts 510--512 pass the final executable-cell axial-by-kinetics combination
+through Figure 6 with exact relay/cortical/teaching gates and a 0.547092
+top-down map contrast. One nonspecific event occurs during learning, but this
+does not score recognition. Registration 513 fixes the final match required to
+complete the finite official-source factorial.
+
 Artifacts 471--473 complete the identity-locked mismatch calcium replay of the
 failed gain-0.8 candidate. The fresh event train exactly matches Artifact 468,
 and its 10,000-sample trace contains soma/dendrite voltages, T-type currents,

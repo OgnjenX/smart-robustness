@@ -8069,3 +8069,43 @@ def test_kinness_axial_paper_kinetics_factorial_is_preregistered() -> None:
         "figure7_runs": 0,
         "parameter_search": False,
     }
+
+
+def test_kinness_axial_paper_kinetics_passes_figure6_and_registers_match() -> None:
+    result = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure6-legacy-detector-modeldb-nonspecific-kinness-axial-paper-kinetics-511.yaml"
+        ).read_text()
+    )
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure6-legacy-detector-modeldb-nonspecific-kinness-axial-paper-kinetics-assessment-512.yaml"
+        ).read_text()
+    )
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-legacy-detector-modeldb-nonspecific-kinness-axial-paper-kinetics-match-registration-513.yaml"
+        ).read_text()
+    )
+
+    assert result["runtime_fingerprint"] == (
+        "d6ecb849964c78cfbfe64a61db5aac10f32e9e0d99b1dfca26ef1b3991568933"
+    )
+    assert result["population_spikes"]["thalamic_relay"] == 20
+    assert result["population_spikes"]["thalamic_nonspecific"] == 1
+    assert result["recruitment"]["feedforward_chain_complete"]
+    assert result["top_down_timing"]["causal_pair_in_learning_window"]
+    assert assessment["result_sha256"] == (
+        "24bdc580ae393a6693a2d23437b0a29ef61a4abbdd19e20e7a5d506be91a1eaf"
+    )
+    assert assessment["assessment"]["preregistered_figure6_contract_passed"]
+    assert assessment["assessment"]["source_factorial_complete_after_match"]
+    assert registration["execution"] == {
+        "figure6_repeat_runs": 1,
+        "match_runs": 1,
+        "mismatch_runs": 0,
+        "parameter_search": False,
+    }

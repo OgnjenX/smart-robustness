@@ -1,0 +1,50 @@
+schema_version: 1
+name: figure7_receptor_prime_max_headroom_interneuron_subunit_gain_v1
+classification: behavior-calibration-effective-transfer-screen-not-source-recovery
+base_profile: configs/calibration/figure7_receptor_prime_max_headroom_endpoint_v1.yaml
+pathway:
+  projection_id: modeldb112923.projection.002
+  source_weight_control: 1.0
+  gains_in_execution_order: [0.9, 0.8, 0.7, 0.6]
+  selection_order: largest_gain_closest_to_source_control
+trace_derived_bounds:
+  source: docs/validation-results/figure7-receptor-prime-max-headroom-trace-assessment-459.yaml
+  rationale: >-
+    At 4--6 ms, the effective Relay_INT gain at which the registered four-path
+    current balance changes sign lies between approximately 0.60 and 0.84
+    across overlap and nonoverlap cells. The finite 0.6--0.9 screen brackets
+    those observed crossings at 0.1 resolution and includes no interpolation.
+protocol:
+  duration_ms: 25.0
+  dt_ms: 0.01
+  top_down_current_pA: 800.0
+  top_down_current_mode: until_cued_cell_first_event
+  top_down_cue_lead_ms: 0.0
+  uniform_relay_input_gain: 1.0
+learned_state:
+  source_index: 40
+  headroom_fraction: 1.0
+  expected_common_weight_factor: 3.6531686628985414
+receptor_prime:
+  projection_ids:
+    - modeldb112923.projection.003
+    - modeldb112923.projection.005
+    - modeldb112923.projection.006
+    - modeldb112923.projection.007
+    - modeldb112923.projection.009
+    - modeldb112923.projection.012
+selection:
+  required_gates:
+    - match_horizontal_relay_set
+    - mismatch_overlap_only
+    - match_more_active_relay_cells
+    - match_more_trn_events
+    - no_reconstructed_comparator
+    - no_calcium_ablation
+    - all_six_expectation_records_primed
+boundaries:
+  - Gain 1.0 is the archived source-weight control already rejected in Artifact 455.
+  - Every sub-unit gain is behavior calibration of an effective legacy transfer, not a recovered SMART parameter.
+  - The grid is finite and trace-derived; no interpolation, extension below 0.6, or extension above 0.9 follows failure.
+  - The scale is recognition-only. A survivor merely authorizes a fresh persistent-scale Figure 6 prerequisite.
+  - No current, delay, receptor-prime amplitude, learned headroom, TRN scale, intrinsic parameter, or scoring gate may change.

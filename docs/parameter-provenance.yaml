@@ -421,7 +421,7 @@ parameters:
     value: declared_external_input retained as current source-supported candidate
     status: official-source-interpretation-passes-figure6-and-partial-match
     source: archived Relay_INT Dendrite0 input record, KInNeSS Equations 5-6, Grossberg and Versace Figure 7, and Artifacts 412--426
-    note: The archived mixed metadata contains both a nested Layer4 projection and a declared voltage-driven image input. Under the declared-input interpretation, fresh Figure 6 passes and simultaneous comparator-free match activates exactly relay cells 38--42 four times each with 605 fresh-cycle TRN events. Five Relay_INT cells emit at 2.96 ms and projection 002 transfers strongly (about -814 pA peak in a direct compiled assay; about -759 to -760 pA at the first relay events). Match still fails because nonspecific output is five rather than four events. This source interpretation is not yet a frozen behavioral baseline.
+    note: The archived mixed metadata contains both a nested Layer4 projection and a declared voltage-driven image input. Under the declared-input interpretation, fresh Figure 6 passes and simultaneous comparator-free match activates exactly relay cells 38--42 four times each with 605 fresh-cycle TRN events. Five Relay_INT cells emit at 2.96 ms and projection 002 transfers strongly (about -814 pA peak in a direct compiled assay; about -759 to -760 pA at the first relay events). Audit 460 confirms that KInNeSS Equations 5--6 define dependency=input as the external four-color route; no recovered equation authorizes an additive ligand-plus-input gate. The declared interpretation remains active but exact legacy precedence and behavior remain unverified.
   protocol.match_mismatch.figure7_onset_timing:
     value: simultaneous receptor drive required; 7.85-ms command lead retained as derived alignment candidate
     status: primary-mechanism-constrained-command-timing-underidentified
@@ -467,6 +467,11 @@ parameters:
     status: rejected-source-bounded-behavioral-interaction
     source: archived adaptive maxima and Artifacts 439--441, 448--455
     note: The sole endpoint cross rescues only outer matched cells 38 and 42 at 11.91 ms, suppresses mismatch completely, and reverses the required TRN direction at 189 versus 200 events. It is not source recovery and does not reproduce two-against-one geometry. Close without interpolation; a fixed-parameter pathway trace may localize the spatial imbalance.
+  diagnostics.figure7.receptor_prime_maximal_headroom_trace:
+    value: fixed 55-ms replay with registered relay current and compartment-voltage samples
+    status: causal-localization-no-parameter-selected
+    source: Artifacts 457--459
+    note: The first 25 ms exactly reproduce Artifact 455. Match later recruits all five horizontal cells near 40 ms, but mismatch remains silent and TRN direction is wrong at 377 versus 443 events. Match and mismatch overlap cell 40 are identical in all registered current and voltage samples through 15 ms. At 4 ms, Relay_INT GABA changes the overlap's direct plus top-down minus TRN balance from approximately +511 pA to a four-path net of -259 pA. Audit the mixed gate's source semantics before another behavioral intervention.
   benchmark.population_sizes:
     value: see configs/*.yaml
     status: exploratory

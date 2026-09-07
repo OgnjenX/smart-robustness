@@ -1060,3 +1060,28 @@ diagnostic window, and its first 25-ms relay, TRN, and nonspecific event trains
 must exactly reproduce Artifact 455. Samples at 0, 1, 2, 3, 4, 5, 6, 8, 10,
 11, 11.9, 12, and 15 ms cover all nine diagnostic relay cells, including
 silent cells. No correction may be selected from the observed currents.
+
+Artifacts 457--459 preserve that prefix exactly and expose delayed, incomplete
+condition separation. Match expands from outer cells 38/42 at 11.91 ms to all
+five horizontal cells near 40 ms, while mismatch remains fully silent through
+55 ms. This is not Figure 7: the overlap cell is absent and TRN output is lower
+in match (377 versus 443). All 117 registered current samples and all 39
+voltage samples for overlap cell 40 are identical between conditions through
+15 ms. At 4 ms, direct input plus top-down excitation minus TRN inhibition is
+about +511 pA, but the declared image-driven Relay_INT contribution is about
+-770 pA, reversing the net four-path balance to about -259 pA. Before any
+further calibration, return to the archived mixed Relay_INT gate and determine
+which of its direct-input and nested-projection metadata can coexist under the
+KInNeSS input equations. No projection-002 gain or timing value is inferred
+from this trace.
+
+Audit 460 resolves the next source decision conservatively. The KInNeSS
+framework defines `dependency=input` through Equations 5--6 as an external
+four-color voltage-driven channel, matching the gate's green sensitivity and
+direct `connectFromOne` method. Its nested Layer-4 metadata cannot instead be
+compiled as an ordinary ligand gate without violating that definition, and no
+surviving source specifies an additive hybrid. Retain `declared_external_input`
+and reject a newly invented combined route. Because exact legacy gain handling
+is unavailable, a subsequent finite projection-002 scaling screen is permitted
+only as transparent behavior calibration, with the source value retained as
+control and a mandatory persistent Figure 6 prerequisite for any survivor.

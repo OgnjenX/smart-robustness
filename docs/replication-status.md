@@ -2,6 +2,32 @@
 
 ## Current interpretation (2026-09-07)
 
+Artifacts 457--459 complete the fixed 55-ms pathway trace of the rejected
+maximal-headroom receptor-prime endpoint. Its first 25 ms exactly reproduce
+Artifact 455. Over the longer observation, match eventually recruits all five
+horizontal relay cells: outer cells 38/42 fire at 11.91 ms, inner cells 39/41
+at 39.91 ms, center 40 at 40.09 ms, and the outer cells again at 41.51 ms.
+Mismatch remains fully silent, however, and TRN output has the wrong direction
+at 377 match versus 443 mismatch events. Center cell 40 has bit-identical
+fixed-time current and voltage samples in match and mismatch through 15 ms, so
+the later separation depends on activity outside the overlap and recurrent
+network state. At 4 ms the overlap's direct plus top-down excitation minus TRN
+inhibition is approximately +511 pA, but image-driven Relay_INT inhibition is
+approximately -770 pA and reverses the four-path balance to -259 pA. This is a
+localization, not a parameter estimate: original SMART remains unreproduced
+and the baseline is not promoted. The next step is a source audit of the mixed
+Relay_INT gate before any new behavioral intervention.
+
+Source audit 460 closes that immediate question without adding a model variant.
+KInNeSS Section 4.1 defines `dependency=input` as a four-color external
+voltage-driven gate, which supports the current declared image-input route.
+The nested Layer-4 projection metadata cannot be interpreted as an ordinary
+ligand synapse without discarding the gate type and sensitivities, and no
+recovered equation defines an additive external-plus-ligand gate. The direct
+input interpretation therefore remains active, but exact legacy precedence is
+still unavailable and no combined route is authorized. Any subsequent change
+to projection 002 must be labeled behavior calibration, not source recovery.
+
 Artifacts 454--456 cross the early combined receptor prime with the maximal
 archived-bound learned row. It partially counteracts inhibition, but only outer
 match cells 38 and 42 fire, mismatch is fully silent, and TRN direction is

@@ -1,0 +1,95 @@
+schema_version: 1
+id: figure7-receptor-prime-max-headroom-trace-assessment-459
+date: '2026-09-07'
+status: fixed-trace-complete-late-match-cooperation-mismatch-fails
+registration: docs/validation-results/figure7-receptor-prime-max-headroom-trace-registration-457.yaml
+result: docs/validation-results/figure7-receptor-prime-max-headroom-trace-458.yaml
+result_sha256: ceed70520cf4852229fd4f3c9970f26a2f24d41eccaab65daf2966e1bb9779d0
+classification: fixed-candidate-pathway-readout-not-calibration
+integrity:
+  training_repeat_verified: true
+  prefix_identity_window_ms: 25.0
+  prefix_identity_verified: true
+  applied_common_weight_factor: 3.6531686628985414
+events:
+  match:
+    first_25_ms:
+      relay_indices: [38, 42]
+      relay_times_ms: [11.91, 11.91]
+    after_25_ms:
+      relay_indices: [39, 41, 40, 38, 42]
+      relay_times_ms: [39.91, 39.91, 40.09, 41.51, 41.51]
+    active_indices_over_55_ms: [38, 39, 40, 41, 42]
+    trn_event_count: 377
+    nonspecific_event_times_ms: [0.74, 50.01]
+  mismatch:
+    relay_indices: []
+    trn_event_count: 443
+    nonspecific_event_times_ms: [0.74, 34.98, 47.69]
+fixed_time_localization:
+  match_cells_at_6_ms:
+    outer_38:
+      soma_mV: -53.982179
+      direct_image_pA: 561.275215
+      top_down_pA: 95.991478
+      trn_gaba_pA: -224.217281
+      relay_interneuron_gaba_pA: -568.750498
+      four_path_net_pA: -135.701086
+      soma_sodium_pA: 103.351276
+    inner_39:
+      soma_mV: -54.310685
+      direct_image_pA: 560.332842
+      top_down_pA: 135.809880
+      trn_gaba_pA: -269.350426
+      relay_interneuron_gaba_pA: -580.457544
+      four_path_net_pA: -153.665248
+      soma_sodium_pA: 87.901673
+    center_40:
+      soma_mV: -54.566021
+      direct_image_pA: 560.429067
+      top_down_pA: 143.435678
+      trn_gaba_pA: -280.523603
+      relay_interneuron_gaba_pA: -580.226168
+      four_path_net_pA: -156.885026
+      soma_sodium_pA: 77.110066
+  match_cells_at_11_ms:
+    outer_38: {soma_mV: -49.365374, four_path_net_pA: -20.812046, soma_sodium_pA: 760.361638}
+    inner_39: {soma_mV: -53.721232, four_path_net_pA: 23.211993, soma_sodium_pA: 112.573637}
+    center_40: {soma_mV: -54.588726, four_path_net_pA: 30.802985, soma_sodium_pA: 71.948622}
+  overlap_identity_through_15_ms:
+    match_cell: 40
+    mismatch_cell: 40
+    compared_current_samples: 117
+    compared_voltage_samples: 39
+    maximum_absolute_current_difference_pA: 0.0
+    maximum_absolute_voltage_difference_mV: 0.0
+  overlap_balance_at_4_ms:
+    direct_plus_top_down_minus_trn_pA: 511.232326
+    relay_interneuron_gaba_pA: -769.799185
+    four_path_net_pA: -258.566860
+assessment:
+  original_smart_reproduced: false
+  baseline_promoted: false
+  parameter_selected: false
+  late_match_completion_observed: true
+  mismatch_overlap_survives: false
+  match_more_trn_events: false
+  conclusion: >-
+    The longer fixed-candidate observation reveals a delayed cooperative match
+    response: the outer cells fire at 11.91 ms, then the inner and center cells
+    fire near 40 ms. This does not rescue Figure 7. The mismatch overlap cell
+    never fires, and TRN output remains in the wrong direction (377 match
+    versus 443 mismatch). Through every registered sample up to 15 ms, center
+    cell 40 has exactly identical currents and voltages in match and mismatch;
+    condition separation can therefore arise only after activity outside the
+    overlap changes the recurrent network. In the early overlap balance, the
+    local relay-interneuron GABA current reverses the positive direct plus
+    top-down minus TRN balance. Small outer-to-center differences are then
+    nonlinearly amplified by somatic sodium current, explaining the first
+    outer-cell escape without identifying a fitted correction.
+  next_step: >-
+    Audit the archived mixed Relay_INT input record against the KInNeSS input
+    equations and the paper's two-against-one account. Determine whether the
+    direct image route, nested Layer-4 route, or any combined interpretation is
+    actually source-admissible before registering another behavioral run. Do
+    not tune projection 002 or promote the 55-ms partial geometry.

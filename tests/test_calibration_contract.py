@@ -7131,3 +7131,82 @@ def test_max_headroom_prime_trace_is_readout_only_with_fixed_prefix() -> None:
     }
     assert "adds observations only" in registration["interpretation_boundary"]
     assert registration["baseline_promoted"] is False
+
+
+def test_max_headroom_prime_trace_localizes_late_match_without_promotion() -> None:
+    result_path = (
+        ROOT
+        / "docs/validation-results/figure7-receptor-prime-max-headroom-trace-458.yaml"
+    )
+    result = yaml.safe_load(result_path.read_text())
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-receptor-prime-max-headroom-trace-assessment-459.yaml"
+        ).read_text()
+    )
+
+    assert result["prefix_identity_verified"]
+    assert sorted(set(result["match"]["relay_spike_indices"])) == [38, 39, 40, 41, 42]
+    assert result["mismatch"]["relay_spike_indices"] == []
+    assert len(result["match"]["trn_spike_indices"]) == 377
+    assert len(result["mismatch"]["trn_spike_indices"]) == 443
+    assert assessment["result_sha256"] == (
+        "ceed70520cf4852229fd4f3c9970f26a2f24d41eccaab65daf2966e1bb9779d0"
+    )
+    identity = assessment["fixed_time_localization"]["overlap_identity_through_15_ms"]
+    assert identity["compared_current_samples"] == 117
+    assert identity["compared_voltage_samples"] == 39
+    assert identity["maximum_absolute_current_difference_pA"] == 0.0
+    assert identity["maximum_absolute_voltage_difference_mV"] == 0.0
+    balance = assessment["fixed_time_localization"]["overlap_balance_at_4_ms"]
+    assert balance["direct_plus_top_down_minus_trn_pA"] > 0
+    assert balance["four_path_net_pA"] < 0
+    assert not assessment["assessment"]["original_smart_reproduced"]
+    assert not assessment["assessment"]["baseline_promoted"]
+    assert not assessment["assessment"]["parameter_selected"]
+
+
+def test_relay_interneuron_mixed_gate_audit_rejects_invented_combination() -> None:
+    audit = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/relay-interneuron-mixed-gate-resolution-460.yaml"
+        ).read_text()
+    )
+
+    assert audit["archived_gate"]["gate"]["dependency"] == "input"
+    assert audit["archived_gate"]["gate"]["sensitivities"]["green"] == pytest.approx(0.37)
+    assert audit["archived_gate"]["direct_method"] == "connectFromOne"
+    assert audit["archived_gate"]["nested_projection"]["source"] == "Layer_4"
+    assert audit["assessment"]["current_declared_external_input_retained"]
+    assert not audit["assessment"]["combined_interpretation_authorized"]
+    assert not audit["assessment"]["exact_legacy_precedence_recovered"]
+    assert not audit["assessment"]["original_smart_reproduced"]
+    assert not audit["assessment"]["baseline_promoted"]
+
+
+def test_subunit_interneuron_gain_screen_is_finite_and_post_source() -> None:
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-receptor-prime-max-headroom-interneuron-subunit-gain-registration-461.yaml"
+        ).read_text()
+    )
+    profile = yaml.safe_load((ROOT / registration["profile"]).read_text())
+
+    assert profile["pathway"]["projection_id"] == "modeldb112923.projection.002"
+    assert profile["pathway"]["source_weight_control"] == 1.0
+    assert profile["pathway"]["gains_in_execution_order"] == [0.9, 0.8, 0.7, 0.6]
+    assert profile["learned_state"]["expected_common_weight_factor"] == pytest.approx(
+        3.6531686628985414
+    )
+    assert len(profile["receptor_prime"]["projection_ids"]) == 6
+    assert registration["execution"] == {
+        "figure6_learning_runs": 1,
+        "short_match_runs": 4,
+        "short_mismatch_runs": 4,
+    }
+    assert "post-source behavior calibration" in registration["interpretation_boundary"]
+    assert "without interpolation or extension" in registration["interpretation_boundary"]
+    assert registration["baseline_promoted"] is False

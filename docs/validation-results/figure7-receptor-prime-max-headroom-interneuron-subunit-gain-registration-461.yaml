@@ -1,0 +1,42 @@
+schema_version: 1
+id: figure7-receptor-prime-max-headroom-interneuron-subunit-gain-registration-461
+date: '2026-09-07'
+status: registered-before-execution
+classification: behavior-calibration-effective-transfer-screen-not-source-recovery
+predecessor: docs/validation-results/relay-interneuron-mixed-gate-resolution-460.yaml
+profile: configs/calibration/figure7_receptor_prime_max_headroom_interneuron_subunit_gain_v1.yaml
+training_profile: configs/calibration/figure6_declared_interneuron_input_v1.yaml
+training_result: docs/validation-results/figure6-declared-interneuron-input-414.yaml
+source_control_result: docs/validation-results/figure7-receptor-prime-max-headroom-endpoint-455.yaml
+source_control_sha256: 1fda1cf3aad48a71cf561d5975d081a8361d3f58540f4befcf9b12811125e649
+trace_assessment: docs/validation-results/figure7-receptor-prime-max-headroom-trace-assessment-459.yaml
+runtime_fingerprint: e016bc9f3d0557e2b23ad00e7d956509df9cf44de42db6f66c6a484a42d1f7a0
+result: docs/validation-results/figure7-receptor-prime-max-headroom-interneuron-subunit-gain-462.yaml
+hypothesis: >-
+  The registered current trace shows that local Relay_INT inhibition reverses
+  an otherwise positive early overlap balance. A bounded reduction in its
+  effective transfer may expose a regime in which bottom-up plus learned
+  support preserves match and overlap while bottom-up-only mismatch cells stay
+  below threshold.
+fixed:
+  - Actual fresh Figure 6 learned arrays, expanded by the sole maximal archived-bound common factor.
+  - Unit receptor prime at sensory onset on all six expectation records.
+  - Declared image-driven Relay_INT input and archived projection-002 kinetics, delay, topology, reversal, and source weight before the explicit scale.
+  - Simultaneous image and category-current command onset with the fixed 800-pA one-event current.
+  - Existing calibrated TRN-to-relay scales and every intrinsic/event convention.
+  - No comparator, calcium ablation, input scaling, cue lead, or equilibration.
+screen:
+  duration_ms: 25.0
+  source_control_gain: 1.0
+  source_control_imported_from_artifact: 455
+  gains_in_execution_order: [0.9, 0.8, 0.7, 0.6]
+  conditions_per_gain: [match, mismatch]
+  selection_rule: largest gain nearest 1.0 passing every registered gate
+execution: {figure6_learning_runs: 1, short_match_runs: 4, short_mismatch_runs: 4}
+interpretation_boundary: >-
+  This is explicitly post-source behavior calibration. A short-screen survivor
+  is not original SMART reproduction and cannot be promoted directly; it must
+  be applied persistently and pass a fresh Figure 6 prerequisite before a
+  complete 100-ms Figure 7 pair. Failure closes the trace-derived range without
+  interpolation or extension.
+baseline_promoted: false

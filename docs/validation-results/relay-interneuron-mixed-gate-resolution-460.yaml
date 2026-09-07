@@ -1,0 +1,92 @@
+schema_version: 1
+id: relay-interneuron-mixed-gate-resolution-460
+date: '2026-09-07'
+status: source-audit-complete-direct-input-retained-combination-not-authorized
+question: >-
+  Does the mixed Relay_INT gate authorize replacing, omitting, or combining the
+  current image-driven input with its nested Layer-4 metadata?
+sources:
+  smart_nml:
+    path: tmp/modeldb-112923/versaceGrossberg2008/SMART.nml
+    sha256: 16fc196f2ed68d1c02a39395fa83bb0ffab8fcf8edffe6fd11022bb6c6e299e1
+    location: lines 877--924
+  kinness_framework:
+    path: tmp/kinness-framework-expanded.pdf
+    sha256: 15a7f9166e301c9740e7cff4258810d315bd95b196ea5dff3419c5cc2879f177
+    location: Section 4.1, Equations 5--7
+  smart_paper:
+    citation: Grossberg and Versace 2008
+    location: Figure 7 and Sections 2.3, 4.1--4.2
+archived_gate:
+  population: Relay_INT
+  compartment: Dendrite 0
+  channel: {name: Input, g_bar_mS_cm2: 0.21, reversal_mV: 0.0}
+  gate:
+    dependency: input
+    rise_ms: 2.0
+    fall_ms: 2.0
+    sensitivities: {red: 0.0, green: 0.37, blue: 0.0, alpha: 0.0}
+  direct_method: connectFromOne
+  nested_projection:
+    source: Layer_4
+    method: connectFromMany
+    weight: 1.0
+    sigma_x: 0.3
+    sigma_y: 0.3
+framework_constraints:
+  - >-
+    KInNeSS defines dependency=input as an external voltage-driven gate whose
+    driving potential is resting voltage plus the four color sensitivities.
+  - >-
+    KInNeSS defines ligand gates, rather than input gates, for chemical
+    projection kinetics. The surviving framework text supplies no equation for
+    adding a ligand projection to an input gate or for converting Layer-4
+    events into a color-vector input.
+  - >-
+    The paper includes local thalamic interneurons in the complete model but
+    Figure 7's two-against-one explanation names the layer-6II-to-TRN-to-relay
+    path as the inhibitory off-surround. It does not specify how this malformed
+    mixed XML gate was executed.
+candidate_assessment:
+  historical_nested_projection:
+    source_status: xml-metadata-present-framework-equation-incompatible
+    conclusion: >-
+      Treating the record as an ordinary dual-exponential chemical projection
+      discards its declared input dependency, color sensitivities, and direct
+      connectFromOne method. It is retained only as historical software
+      behavior, not as the best source interpretation.
+  declared_external_input:
+    source_status: framework-defined-source-adjacent-current-candidate
+    conclusion: >-
+      This interpretation preserves the declared gate type, Equation 6 color
+      sensitivity, and direct input method. It remains the active source-backed
+      interpretation, although unavailable KInNeSS execution prevents claiming
+      exact legacy precedence.
+  additive_combined_route:
+    source_status: unsupported-new-semantics
+    conclusion: >-
+      No recovered equation defines an additive external-input plus chemical
+      projection gate. Implementing it would invent a third mechanism, so it is
+      not admitted as a source-recovery candidate.
+trace_connection:
+  trace: docs/validation-results/figure7-receptor-prime-max-headroom-trace-458.yaml
+  overlap_at_4_ms:
+    direct_plus_top_down_minus_trn_pA: 511.232326
+    relay_interneuron_gaba_pA: -769.799185
+    four_path_net_pA: -258.566860
+  interpretation: >-
+    The trace makes the active direct-input interpretation behaviorally
+    consequential, but behavior cannot override the framework's gate
+    definition or establish a missing legacy precedence rule.
+assessment:
+  current_declared_external_input_retained: true
+  combined_interpretation_authorized: false
+  exact_legacy_precedence_recovered: false
+  original_smart_reproduced: false
+  baseline_promoted: false
+  next_step: >-
+    Keep the declared input semantics fixed. If behavior calibration continues,
+    test a finite, explicitly non-source scaling of projection 002 derived from
+    the observed overlap/nonoverlap current-balance crossings. This may locate
+    an effective legacy transfer regime but cannot be called a recovered SMART
+    parameter and must pass Figure 6 persistently before promotion.

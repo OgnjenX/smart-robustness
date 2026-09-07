@@ -1297,3 +1297,14 @@ nonspecific conditions remain at 40 Hz. Close scale 0.1875 without retuning.
 The next work must address the source-described two-against-one relay/TRN
 comparison as a separately labeled reconstruction; intrinsic event-gain
 calibration alone cannot reproduce Figure 7.
+
+Registration 544 fixes that next reconstruction before execution. The primary
+paper constrains simultaneous bottom-up and learned top-down excitation *at the
+LGN cell*, whereas the public protocol reconstruction's first relay volley
+precedes learned-feedback arrival. Earlier timing and receptor-priming families
+are closed, so the registered cross uses the previously tested five-target
+learned-field transform as an explicit mesoscopic coincidence gate. It combines
+that transform once, without a grid, with independently match-selected
+nonspecific T scale 0.1875. The fresh Figure 6 handoff and the complete 4/7-Hz,
+relay-subset, and TRN-order contract are fixed. Failure closes the interaction;
+success would be calibrated behavioral reproduction, not recovered 2008 source.

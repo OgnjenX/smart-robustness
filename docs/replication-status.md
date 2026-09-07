@@ -3458,3 +3458,16 @@ candidate, not a consequence of feedback divergence. This is causal
 localization, not original-SMART reproduction: the unavailable KInNeSS detail
 that yields the paper's four-event match remains unresolved, and mismatch and
 spectral holdouts remain locked.
+
+Registration 544 starts the next calibrated comparison step after Artifacts
+541--543 closed effective T density as a standalone Figure 7 repair. Direct
+review of the rendered primary-paper Figure 7 confirms that simultaneity is a
+cell-level requirement: matched LGN cells must receive both bottom-up and
+learned top-down excitation while the TRN supplies inhibition. In the public
+protocol reconstruction, the first relay volley precedes learned-feedback
+arrival, and all previously registered timing/priming repairs are closed. The
+new fixed cross therefore labels the five-target learned-field transform as an
+explicit mesoscopic coincidence reconstruction and combines it once with the
+independently selected 0.1875 nonspecific T scale. All Figure 6 and Figure 7
+gates are fixed in advance. No outcome can be called recovered original SMART;
+a complete pass would authorize only calibrated downstream behavior tests.

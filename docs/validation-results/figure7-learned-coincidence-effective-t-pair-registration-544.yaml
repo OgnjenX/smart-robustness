@@ -1,0 +1,55 @@
+schema_version: 1
+id: figure7-learned-coincidence-effective-t-pair-registration-544
+date: '2026-09-07'
+status: registered-before-execution-fixed-cross
+classification: calibrated-mesoscopic-comparison-cross
+profile: configs/calibration/figure7_learned_coincidence_effective_t_pair_v1.yaml
+profile_sha256: 4b6aa0bdf4fb844e428fb330f34970900cc8bc741183b2d8e6e73789cba0b30f
+runtime_fingerprint: fa4ab9f0bf2bec4d6ad53cb6a91620047689b6839b146ed7d777d42350c2cdf5
+result_id: figure7-learned-coincidence-effective-t-pair-545
+result: docs/validation-results/figure7-learned-coincidence-effective-t-pair-545.yaml
+assessment: docs/validation-results/figure7-learned-coincidence-effective-t-pair-assessment-546.yaml
+predecessors:
+  source_facing_pair: docs/validation-results/figure7-nonspecific-effective-t-pair-assessment-543.yaml
+  learned_comparison_pair: docs/validation-results/figure7-top5-comparator-pair-321.yaml
+fixed_cross:
+  comparator_transform: top_k_binary
+  comparator_source_index: 40
+  comparator_target_count: 5
+  nonspecific_dendritic_calcium_density_scale: 0.1875
+  effective_nonspecific_t_density_mS_cm2: 46.875
+  top_down_cue_lead_ms: 0.0
+  top_down_current_pA: 800.0
+  top_down_current_mode: until_cued_cell_first_event
+  duration_ms: 100.0
+  dt_ms: 0.01
+source_evidence:
+  paper: Grossberg and Versace 2008, Figure 7 and Section 2.3
+  constraint: >-
+    The comparison requires sufficiently large simultaneous bottom-up and
+    learned top-down excitation at matched LGN cells against TRN inhibition.
+  underidentification: >-
+    The public NML and supplement specify projection records but not a complete
+    executable protocol state that makes the learned vote causal before the
+    first sensory relay event; exact KInNeSS ring semantics also remain absent.
+prior_evidence_disclosed: >-
+  Artifact 321 showed that the same five-target learned-field transform gives
+  the correct qualitative relay/TRN ordering but 4/5 rather than 4/7 output in
+  an earlier runtime. Artifacts 535--543 independently selected effective T
+  scale 0.1875 from match and then showed that it cannot create spatial
+  comparison without a comparator. The present cross is therefore confirmatory
+  only with respect to their interaction, not an independent holdout.
+acceptance_rule: >-
+  The fresh Figure 6 handoff must pass all fixed gates. Match must activate
+  exactly relay cells 38--42 for 20 events and emit four nonspecific events.
+  Mismatch must activate only overlap cell 40, produce fewer relay and TRN
+  events than match, and emit exactly seven nonspecific events. Every condition
+  uses the identical registered runtime and transform.
+failure_rule: >-
+  Any failed gate closes this cross. Do not interpolate T density, alter the
+  comparator cardinality, change event thresholds, or retune from mismatch.
+classification_boundary: >-
+  A pass is calibrated Figure 7 behavioral reproduction under an explicit
+  mesoscopic learned-coincidence reconstruction. It is not recovered original
+  SMART source, does not authorize the original-baseline label, and only
+  permits separately preregistered downstream behavior tests.

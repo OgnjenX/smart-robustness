@@ -532,6 +532,11 @@ parameters:
     status: figure7-failed-candidate-closed
     source: Artifacts 541--543
     note: Match passes at 20 relay and four nonspecific events, but mismatch retains all five vertical relay cells and 20 relay events, reverses TRN direction at 608 versus 549, and remains at four nonspecific events rather than seven. The effective density fixes event-count gain only and cannot be retuned from mismatch. Source-described upstream comparison remains unresolved.
+  calibration.figure7.learned_coincidence_effective_t_cross:
+    value: five-target learned-field coincidence transform crossed with fixed nonspecific T scale 0.1875
+    status: preregistered-calibrated-reconstruction-awaiting-execution
+    source: Registration 544; Grossberg and Versace 2008 Figure 7 and Section 2.3; predecessor Artifacts 321 and 535--543
+    note: The public source constrains simultaneous bottom-up and top-down excitation at matched LGN cells but does not recover the legacy runtime state that implements it before the first relay volley. This one-shot interaction is explicitly mesoscopic and cannot establish a bit-faithful original-SMART implementation even if all behavioral gates pass.
   benchmark.population_sizes:
     value: see configs/*.yaml
     status: exploratory

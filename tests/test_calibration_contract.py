@@ -8492,3 +8492,40 @@ def test_effective_nonspecific_t_pair_fails_upstream_comparison() -> None:
     )
     assert assessment["assessment"]["candidate_closed"]
     assert not assessment["assessment"]["mismatch_driven_retuning_authorized"]
+
+
+def test_learned_coincidence_effective_t_cross_is_fixed_before_execution() -> None:
+    profile_path = (
+        ROOT
+        / "configs/calibration/figure7_learned_coincidence_effective_t_pair_v1.yaml"
+    )
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-learned-coincidence-effective-t-pair-registration-544.yaml"
+        ).read_text()
+    )
+    profile = yaml.safe_load(profile_path.read_text())
+
+    assert hashlib.sha256(profile_path.read_bytes()).hexdigest() == registration[
+        "profile_sha256"
+    ]
+    assert registration["runtime_fingerprint"] == (
+        "fa4ab9f0bf2bec4d6ad53cb6a91620047689b6839b146ed7d777d42350c2cdf5"
+    )
+    assert profile["runtime_overrides"] == {
+        "nonspecific_dendritic_calcium_density_scale": 0.1875
+    }
+    assert profile["comparator"] == {
+        "transform": "top_k_binary",
+        "source_index": 40,
+        "target_count": 5,
+        "justification": profile["comparator"]["justification"],
+    }
+    assert profile["protocol"]["top_down_cue_lead_ms"] == 0.0
+    assert profile["figure7_gates"]["match_nonspecific_events"] == 4
+    assert profile["figure7_gates"]["mismatch_nonspecific_events"] == 7
+    assert "not a recovered SMART source" in profile["source_audit"][
+        "translation_boundary"
+    ]
+    assert "not recovered original" in registration["classification_boundary"]

@@ -1502,3 +1502,12 @@ learned state, stimuli, timing, and score gates remain fixed. Interpretation
 requires both exact 20/3 relay, 576/595 TRN, and 4/7 nonspecific identity and
 finite values for every registered direct-inhibition readout. The result remains
 diagnostic and cannot reopen or promote the closed candidate.
+
+Artifacts 578--580 pass the corrected instrumentation and identity contracts.
+Both conditions reach the same bounded GABA peak, but mismatch has the larger
+integrated TRN-to-nonspecific gate (1154.93 versus 1110.27 gate-ms), alongside
+595 versus 576 whole-TRN events. The direction failure is therefore mechanistic,
+not merely a raw-event-count proxy failure. Keep the candidate closed. The next
+gate must address the upstream excess of peripheral mismatch TRN activity from a
+source-justified mechanism and must preregister fresh learning, both conditions,
+and direct-drive readouts together.

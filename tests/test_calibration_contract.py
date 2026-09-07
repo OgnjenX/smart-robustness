@@ -9223,3 +9223,47 @@ def test_recorded_inhibitory_drive_audit_changes_instrumentation_only() -> None:
     }
     assert len(registration["required_finite_readouts"]) == 4
     assert "cannot reopen" in registration["boundary"]
+
+
+def test_recorded_inhibitory_drive_audit_is_valid_and_confirms_order() -> None:
+    result_path = (
+        ROOT
+        / "docs/validation-results/figure7-persistent-inhibitory-drive-recorded-579.yaml"
+    )
+    result = yaml.safe_load(result_path.read_text())
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-persistent-inhibitory-drive-recorded-assessment-580.yaml"
+        ).read_text()
+    )
+
+    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment[
+        "result_sha256"
+    ]
+    assert all(result["figure6_gates"].values())
+    assert (result["match"]["relay_event_count"], result["match"]["trn_event_count"]) == (
+        20,
+        576,
+    )
+    assert (
+        result["mismatch"]["relay_event_count"],
+        result["mismatch"]["trn_event_count"],
+    ) == (3, 595)
+    for condition in ("match", "mismatch"):
+        values = [
+            result[condition]["nonspecific_trn_gaba_peak"],
+            result[condition]["nonspecific_trn_gaba_integral_ms"],
+            result[condition]["nonspecific_post_startup_trn_gaba_peak"],
+            *result[condition]["nonspecific_trn_current_range_pA"],
+        ]
+        assert all(isinstance(value, (int, float)) for value in values)
+    assert (
+        result["mismatch"]["nonspecific_trn_gaba_integral_ms"]
+        > result["match"]["nonspecific_trn_gaba_integral_ms"]
+    )
+    assert assessment["assessment"]["effective_inhibition_order_identifiable"]
+    assert assessment["assessment"]["raw_event_and_effective_drive_direction_agree"]
+    assert assessment["assessment"]["candidate_closed"]
+    assert not assessment["assessment"]["candidate_reopened"]
+    assert not assessment["assessment"]["baseline_promoted"]

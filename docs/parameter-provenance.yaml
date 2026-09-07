@@ -589,9 +589,9 @@ parameters:
     note: Fresh Figure 6, overlap-only mismatch, and 4/7 nonspecific output pass, but whole-TRN events remain 576 match versus 595 mismatch. The candidate closes without adjustment. An unchanged direct inhibitory-gate audit is authorized only to assess the event-count proxy.
   validation.figure7.persistent_inhibitory_drive_audit:
     value: unchanged persistent pair with direct TRN-to-nonspecific gate and current readouts
-    status: corrected-instrumentation-only-rerun-preregistered
-    source: Artifacts 575--578, authorized by Artifacts 572--574
-    note: Event identity repeated exactly in the failed audit, but every added readout was null because the runner omitted the existing state-monitor switch. Registration 578 fixes one unchanged rerun that enables only that monitor. It cannot reopen the closed candidate or promote a baseline.
+    status: completed-valid-readout-confirms-wrong-effective-drive-order
+    source: Artifacts 575--580, authorized by Artifacts 572--574
+    note: The corrected monitor preserves exact event identity and returns finite values. Peak gate/current range are equal because the bounded gate saturates, while mismatch integrated GABA is 1154.93 versus match 1110.27 gate-ms. The mechanistic inhibition direction is wrong as well as the event-count order. Candidate remains closed and unfrozen.
   benchmark.population_sizes:
     value: see configs/*.yaml
     status: exploratory

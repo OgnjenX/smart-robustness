@@ -3597,3 +3597,12 @@ enabled. It permits no biological or protocol change and requires both exact
 event identity and finite non-null direct-drive values before interpretation.
 Whatever the readout order, the failed TRN event-count gate remains failed and
 the candidate remains closed and unfrozen.
+
+Artifacts 578--580 complete the corrected audit. Every Figure 6 gate and every
+archived Figure 7 event total repeats exactly, and all direct-drive values are
+finite. Both trials saturate at the same GABA peak and inhibitory-current range,
+but mismatch has greater integrated TRN-to-nonspecific inhibition (1154.93
+versus 1110.27 gate-ms). Thus the wrong event-count order reflects a wrong
+effective inhibitory-drive order too. The closed candidate cannot be rescued by
+reinterpreting the proxy. Upstream peripheral TRN recruitment during mismatch is
+the next mechanism that requires source-constrained diagnosis.

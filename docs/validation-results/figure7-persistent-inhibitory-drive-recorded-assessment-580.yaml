@@ -1,0 +1,56 @@
+schema_version: 1
+id: figure7-persistent-inhibitory-drive-recorded-assessment-580
+date: '2026-09-08'
+status: assessed-valid-readout-confirms-wrong-effective-drive-order
+registration: docs/validation-results/figure7-persistent-inhibitory-drive-recorded-registration-578.yaml
+result: docs/validation-results/figure7-persistent-inhibitory-drive-recorded-579.yaml
+result_sha256: fc93162ae8fe7711473c07fedb825849a2a64e4e04372280d8de282bd27799c9
+assessment:
+  fixed_pair_identity_reproduced: true
+  model_or_protocol_changed: false
+  instrumentation_change_only: true
+  all_registered_added_readouts_present: true
+  all_registered_added_readouts_finite: true
+  gaba_peak_order: equal
+  post_startup_gaba_peak_order: equal
+  integrated_gaba_order: mismatch_greater
+  inhibitory_current_range_order: equal
+  effective_inhibition_order_identifiable: true
+  raw_event_and_effective_drive_direction_agree: true
+  candidate_closed: true
+  candidate_reopened: false
+  original_smart_reproduced: false
+  baseline_promoted: false
+measurements:
+  match:
+    trn_events: 576
+    nonspecific_events: 4
+    gaba_peak: 26.729991371603948
+    gaba_integral_ms: 1110.2716079690626
+    post_startup_gaba_peak: 26.729991371603948
+    inhibitory_current_range_pA:
+    - -25498.840212358533
+    - 0.0
+  mismatch:
+    trn_events: 595
+    nonspecific_events: 7
+    gaba_peak: 26.729991371603948
+    gaba_integral_ms: 1154.9256487298926
+    post_startup_gaba_peak: 26.729991371603948
+    inhibitory_current_range_pA:
+    - -25498.840212358533
+    - 0.0
+interpretation: >-
+  The corrected monitor returns finite values and every archived event total
+  repeats exactly. The bounded synaptic gate reaches the same peak and current
+  range in both conditions, but its 100 ms integral is larger in mismatch by
+  44.65404076083 gate-ms. Thus mismatch has both more whole-TRN events and more
+  effective integrated TRN inhibition of the nonspecific cell. The failed
+  Figure 7 direction is mechanistic, not an artifact of using population event
+  count as a proxy.
+next_gate: >-
+  Keep this candidate closed. Do not tune the nonspecific pathway or reinterpret
+  the score. Return upstream to a source-justified explanation of why peripheral
+  TRN activity is excessive during mismatch while diagnostic-sector activity is
+  already lower. Register any new mechanism before execution and require fresh
+  Figure 6, match, mismatch, and the direct-drive readout together.

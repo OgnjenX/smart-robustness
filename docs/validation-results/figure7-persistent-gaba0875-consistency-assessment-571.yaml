@@ -1,0 +1,32 @@
+schema_version: 1
+id: figure7-persistent-gaba0875-consistency-assessment-571
+date: '2026-09-08'
+status: assessed-persistent-match-pass-mismatch-authorized
+registration: docs/validation-results/figure7-persistent-gaba0875-consistency-registration-569.yaml
+result: docs/validation-results/figure7-persistent-gaba0875-consistency-570.yaml
+result_sha256: 601f83b2a754dc35a7ce48499560e166ed9a6a0644e4d86a60367bd5d9ad1a01
+assessment:
+  fresh_figure6_all_gates_passed: true
+  persistent_match_all_gates_passed: true
+  mismatch_consulted: false
+  persistent_mismatch_authorized: true
+  original_smart_reproduced: false
+  baseline_promoted: false
+quantitative_summary:
+  projection008_scale: 0.875
+  nonspecific_t_scale: 0.1875
+  match_relay_events: 20
+  match_trn_events: 576
+  match_nonspecific_events: 4
+interpretation: >-
+  Projection-008 scale 0.875 and nonspecific T scale 0.1875 preserve every
+  Figure 6 learning gate and every fixed match gate when applied as one
+  persistent model. This removes the protocol-specificity concern for the match
+  condition. Mismatch remains unconsulted, so Figure 7 and original SMART are
+  not yet reproduced.
+next_gate: >-
+  Preregister one mismatch run that repeats fresh Figure 6 with persistent
+  projection-008 scale 0.875 and T scale 0.1875, then evaluates the same learned
+  state under vertical mismatch. Require overlap-only relay activity, fewer
+  active relay cells than match, fewer than 576 TRN events, and exactly seven
+  nonspecific events. Any failure closes the candidate without adjustment.

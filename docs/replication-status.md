@@ -3568,3 +3568,10 @@ The recognition-only result therefore does not generalize to persistent
 parameters. The cross is closed without mismatch or grid extension. The only
 remaining already selected value requiring persistent consistency is
 projection-008 scale 0.875 at T scale 0.1875.
+
+Artifacts 569--571 show that the remaining scale-0.875 candidate does survive
+as one persistent model. With that recurrent-GABA scale and T scale 0.1875
+present throughout fresh learning and match, every Figure 6 gate passes and
+match emits 20 relay, 576 TRN, and four nonspecific events. Mismatch has not
+been consulted. One fixed persistent mismatch is now authorized; the candidate
+remains calibrated rather than source-recovered and is not frozen.

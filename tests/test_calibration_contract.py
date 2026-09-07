@@ -9044,3 +9044,30 @@ def test_persistent_gaba0875_consistency_introduces_no_new_value() -> None:
     assert not registration["novel_parameter_values_introduced"]
     assert "one fixed consistency check" in registration["selection_rule"]
     assert "do not alter either value" in registration["selection_rule"]
+
+
+def test_persistent_gaba0875_consistency_passes_learning_and_match() -> None:
+    result_path = (
+        ROOT
+        / "docs/validation-results/figure7-persistent-gaba0875-consistency-570.yaml"
+    )
+    result = yaml.safe_load(result_path.read_text())
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-persistent-gaba0875-consistency-assessment-571.yaml"
+        ).read_text()
+    )
+
+    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment[
+        "result_sha256"
+    ]
+    outcome = result["outcomes"][0]
+    assert all(outcome["figure6_gates"].values())
+    assert all(outcome["match"]["match_gates"].values())
+    assert outcome["match"]["relay_event_count"] == 20
+    assert outcome["match"]["trn_event_count"] == 576
+    assert outcome["match"]["nonspecific_event_count"] == 4
+    assert not result["mismatch_consulted"]
+    assert assessment["assessment"]["persistent_mismatch_authorized"]
+    assert not assessment["assessment"]["baseline_promoted"]

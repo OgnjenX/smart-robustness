@@ -1457,3 +1457,10 @@ Registration 569 fixes that single consistency check. Projection-008 scale
 were already selected in prior match-only work; no new parameter is introduced.
 A complete pass may authorize one persistent mismatch. Any failure closes the
 candidate without adjustment.
+
+Artifacts 569--571 pass the persistent consistency check. With projection 008
+scale 0.875 and T scale 0.1875 present throughout learning and recognition,
+every Figure 6 gate passes and match yields the exact five active relay cells,
+20 relay events, 576 TRN events, and four nonspecific events. Mismatch remains
+unconsulted. Register one fixed persistent mismatch with match TRN total 576
+locked in advance; any failed gate closes the candidate.

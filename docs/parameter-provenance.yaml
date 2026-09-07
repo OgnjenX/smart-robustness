@@ -579,9 +579,9 @@ parameters:
     note: All candidates pass Figure 6 and preserve 20 match relay plus 621 TRN events, but each emits only three startup nonspecific events. The recognition-only result does not transfer to a fixed model. Mismatch was not consulted and no grid extension is authorized.
   calibration.figure7.persistent_gaba0875_consistency:
     value: persistent projection-008 scale 0.875 with nonspecific T scale 0.1875
-    status: preregistered-single-consistency-check-awaiting-execution
-    source: Registration 569, authorized by Artifacts 566--568 and prior match Artifact 561
-    note: Both values are pre-existing match selections and apply through fresh Figure 6 and match. No new endpoint or adjustment is allowed. A pass is calibrated, not recovered source.
+    status: persistent-match-pass-mismatch-authorized
+    source: Artifacts 569--571, authorized by Artifacts 566--568 and prior match Artifact 561
+    note: Both values persist through fresh Figure 6 and match. Every learning gate passes; match yields 20 relay, 576 TRN, and four nonspecific events. One persistent mismatch is authorized. This is calibrated, not recovered source or frozen baseline.
   benchmark.population_sizes:
     value: see configs/*.yaml
     status: exploratory

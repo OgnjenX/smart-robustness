@@ -269,6 +269,24 @@ def test_modeldb_topology_applies_wrap_and_ring_metadata() -> None:
     assert not np.any((pre == 40) & (post == 40))
 
 
+def test_somatic_recurrent_trn_gaba_translation_is_all_peer_and_self_excluded() -> None:
+    record = MODELDB_FIRST_ORDER.by_id("modeldb112923.projection.008")
+    pre, post, factor = modeldb_topology_pairs(
+        record, source_shape=(9, 9), target_shape=(9, 9)
+    )
+    center = pre == 40
+
+    assert len(pre) == 6480
+    assert np.count_nonzero(center) == 80
+    assert not np.any(center & (post == 40))
+    assert factor[center].min() == pytest.approx(0.01831563888873418)
+    assert factor[center].max() == pytest.approx(0.8824969025845955)
+    assert factor[center].sum() == pytest.approx(22.99070401112175)
+    assert (factor[center] * float(record.weight)).sum() == pytest.approx(
+        6.897211203336525
+    )
+
+
 @pytest.mark.parametrize(
     ("projection_id", "expected_pairs", "near_factor", "far_factor"),
     (

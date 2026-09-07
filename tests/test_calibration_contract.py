@@ -8809,3 +8809,23 @@ def test_trn_recurrent_gaba_path_decomposition_localizes_somatic_path() -> None:
     ]
     assert not assessment["assessment"]["either_arm_is_behavioral_candidate"]
     assert not assessment["assessment"]["baseline_promoted"]
+
+
+def test_trn_somatic_ring_audit_preserves_source_limit() -> None:
+    audit = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-trn-somatic-ring-semantics-audit-559.yaml"
+        ).read_text()
+    )
+
+    assert audit["source_record_008"]["ring"]
+    assert audit["source_record_008"]["border_effect"] == "wrap"
+    assert audit["current_executable_translation"]["targets_per_source"] == 80
+    assert audit["current_executable_translation"]["total_connections"] == 6480
+    assert not audit["current_executable_translation"]["self_connections"]
+    assert not audit["assessment"]["new_source_justified_geometry_found"]
+    assert not audit["assessment"][
+        "current_center_excluded_geometry_officially_verified"
+    ]
+    assert not audit["assessment"]["baseline_promoted"]

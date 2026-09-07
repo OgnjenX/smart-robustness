@@ -1,0 +1,82 @@
+schema_version: 1
+id: figure7-trn-somatic-ring-semantics-audit-559
+date: '2026-09-07'
+status: completed-source-limit-confirmed
+question: >-
+  Does the causal localization to somatic recurrent-GABA projection 008 reveal
+  a discrete, source-justified correction to its spatial-kernel semantics?
+inputs:
+  causal_assessment: docs/validation-results/figure7-trn-recurrent-gaba-path-decomposition-assessment-558.yaml
+  prior_source_recovery: docs/validation-results/kinness-ring-source-recovery-220.yaml
+  prior_source_recovery_sha256: 7efaf424c6e212ac895e916e662338bc7abb7feabe702da87d54130692ea1e1d
+  official_smart_nml: tmp/official_SMART.nml
+  official_smart_nml_sha256: 16fc196f2ed68d1c02a39395fa83bb0ffab8fcf8edffe6fd11022bb6c6e299e1
+  executable_topology: src/smart_robustness/synapses.py
+  executable_topology_sha256: 4a4a16f66462741280b467fb77c3993db1263a25d07c469956501c2c47ee6365
+source_record_008:
+  source_population: trn
+  target_population: trn
+  target_compartment: soma
+  channel_conductance_mS_cm2: 2.461
+  reversal_mV: -70.0
+  rise_fall_ms: [1.0, 4.0]
+  delay_ms: 0.1
+  method: connectFromMany
+  weight: 0.3
+  asymptotic_weight: 0.3
+  sigma_x_y: [2.0, 2.0]
+  ring: true
+  border_effect: wrap
+current_executable_translation:
+  gaussian_weight_convention: source_peak
+  gaussian_spread_convention: standard_deviation
+  ring_kernel_convention: center_excluded_gaussian
+  resulting_weight_cutoff: 0.001
+  self_connections: false
+  targets_per_source: 80
+  total_connections: 6480
+  minimum_spatial_factor: 0.01831563888873418
+  maximum_spatial_factor: 0.8824969025845955
+  factor_sum_per_source: 22.99070401112175
+  minimum_effective_weight: 0.005494691666620253
+  maximum_effective_weight: 0.2647490707753786
+  effective_weight_sum_per_source: 6.897211203336525
+source_findings:
+  verified:
+    - SMART.nml serializes every source_record_008 field listed above.
+    - The archived KInNeSS manual defines Weight as the Gaussian peak.
+    - The archived KInNeSS manual removes resulting weights below 0.001.
+  unresolved:
+    - exact executable meaning of Kernel ring=true
+    - whether ring=true removes the center, creates an annulus, or has another stencil
+  prior_sensitivity:
+    radial_annulus: >-
+      A parameter-free global ring interpretation was preregistered in Artifact
+      221 and rejected at fresh Figure 6 in Artifact 222. It cannot be reopened
+      or made projection-specific solely because the new behavior points to
+      record 008.
+  unauthorized_post_hoc_alternatives:
+    - include the center while otherwise ignoring ring=true
+    - alter wrap or cutoff despite their explicit source/manual support
+    - choose a fitted annular radius
+    - apply a different ring meaning only to projection 008
+assessment:
+  new_source_justified_geometry_found: false
+  current_center_excluded_geometry_officially_verified: false
+  exact_original_smart_geometry_recoverable: false
+  behavioral_result_authorizes_source_rewrite: false
+  original_smart_reproduced: false
+  baseline_promoted: false
+interpretation: >-
+  The present all-peer topology follows the project's explicit historical
+  center-excluded convention plus source-supported wrapping and cutoff. It is
+  reproducible but is not verified KInNeSS behavior. The causal result makes
+  projection 008 the appropriate calibrated control dimension; it does not
+  reveal the missing legacy ring stencil. Any next behavioral adjustment must
+  be labeled an effective calibration and kept separate from source recovery.
+next_gate: >-
+  Preregister a bounded, recognition-only effective scale screen on projection
+  008 with source scale 1.0 retained as control. Use a fresh Figure 6 handoff,
+  match-only filtering before mismatch execution, fixed Figure 7 gates, and no
+  interpolation. A survivor would be a calibrated reconstruction, never a
+  recovered 2008 parameter or frozen original SMART baseline.

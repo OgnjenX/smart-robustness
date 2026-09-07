@@ -3530,3 +3530,14 @@ match relay events and 5/7 nonspecific events, while the proximal arm gives
 of the unresolved `ring=true`/`connectFromMany` spatial semantics for record
 008, not behavioral weight fitting. Original SMART remains unreproduced and
 unfrozen.
+
+Artifact 559 confirms that causal localization does not resolve the missing
+legacy spatial semantics. SMART.nml fixes projection 008's weight, sigma,
+delay, `ring=true`, and wrapping; the archived manual fixes peak scaling and
+the 0.001 cutoff but never defines the ring flag. Under the reproducible
+historical convention, each TRN cell inhibits all 80 peers and excludes itself.
+The already preregistered parameter-free annulus failed Figure 6, and no source
+evidence supports a third or projection-specific geometry. Further work may
+screen projection 008 only as an explicitly calibrated effective transfer.
+Such a survivor could support downstream behavioral reproduction but could not
+be called the recovered or frozen original SMART implementation.

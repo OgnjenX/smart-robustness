@@ -557,6 +557,11 @@ parameters:
     status: completed-somatic-path-dominates-inversion
     source: Artifacts 556--558, authorized by Artifacts 553--555
     note: Removing somatic record 008 reverses the TRN order to 1055 match versus 818 mismatch; removing proximal record 011 leaves 566 versus 571. Neither arm preserves the full behavioral contract. The result authorizes a source audit of ring=true/connectFromMany semantics, not weight tuning or baseline promotion.
+  validation.figure7.trn_somatic_ring_semantics_audit:
+    value: source-to-executable audit of projection 008 topology after causal localization
+    status: completed-no-new-source-justified-geometry
+    source: Artifact 559; SMART.nml; archived KInNeSS manual; Artifact 220
+    note: The current convention connects every TRN cell to all 80 peers and excludes self. Wrapping, source-peak scaling, and the 0.001 cutoff are source-supported; exact ring=true geometry is not recoverable. The audit permits a separately labeled effective-scale calibration, not a source rewrite or original-baseline claim.
   benchmark.population_sizes:
     value: see configs/*.yaml
     status: exploratory

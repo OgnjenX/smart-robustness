@@ -1391,3 +1391,14 @@ output to 5/7, while proximal removal produces 22/22. Next audit the unrecovered
 KInNeSS `ring=true`/`connectFromMany` semantics behind projection 008 before
 considering any discrete source-justified alternative. Do not tune its weight
 from these outcomes.
+
+Artifact 559 completes the required source audit. SMART.nml explicitly fixes
+record 008's weight 0.3, sigma 2/2, 0.1-ms delay, `ring=true`, and wrapped
+border. The archived manual fixes peak-weight scaling and the 0.001 cutoff but
+does not define `ring=true`; prior source recovery reached the same limit. The
+current center-excluded Gaussian connects each cell to all 80 peers on the 9×9
+torus, with no self-edge. No newly recovered evidence authorizes a different
+stencil, a fitted radius, or a projection-specific ring meaning. A next screen
+may vary only the effective record-008 transfer as explicitly calibrated
+recognition behavior, with source scale 1.0 as control and no claim of original
+parameter recovery.

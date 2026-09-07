@@ -209,6 +209,10 @@ def test_runtime_convention_fingerprint_is_stable_and_sensitive() -> None:
         nonspecific_distal_gaba_source_convention="paper_supplement_1p5_1_7"
     )
     assert paper_nonspecific_distal_gaba.fingerprint != classic.fingerprint
+    calibrated_nonspecific_t = FirstOrderRuntimeConventions(
+        nonspecific_dendritic_calcium_density_scale=0.1875
+    )
+    assert calibrated_nonspecific_t.fingerprint != classic.fingerprint
 
 
 def test_corticoreticular_ring_override_is_projection_specific() -> None:
@@ -751,6 +755,33 @@ def test_nonspecific_intrinsic_source_can_be_selected_without_changing_trn() -> 
     assert trn.name == "trn"
     assert trn.soma.g_na_mS_cm2 == 100.0
     assert trn.soma.g_k_mS_cm2 == 100.0
+
+
+def test_nonspecific_calcium_density_scale_changes_only_nonspecific_dendrites() -> None:
+    facts = {fact.canonical_name: fact for fact in first_order_population_facts()}
+    conventions = FirstOrderRuntimeConventions(
+        intrinsic_cell_convention=IntrinsicCellConvention.PAPER_TABLE3.value,
+        nonspecific_dendritic_calcium_density_scale=0.1875,
+    )
+
+    nonspecific = first_order_population_parameters(
+        facts["thalamic_nonspecific"], conventions=conventions
+    )["cell_spec"]
+    relay = first_order_population_parameters(
+        facts["thalamic_relay"], conventions=conventions
+    )["cell_spec"]
+
+    assert nonspecific.compartment("proximal_dendrite").g_ca_mS_cm2 == 46.875
+    assert nonspecific.compartment("distal_dendrite").g_ca_mS_cm2 == 46.875
+    assert nonspecific.soma.g_ca_mS_cm2 is None
+    assert relay.compartment("proximal_dendrite").g_ca_mS_cm2 == 10.0
+    with pytest.raises(ValueError, match="finite and nonnegative"):
+        first_order_population_parameters(
+            facts["thalamic_nonspecific"],
+            conventions=FirstOrderRuntimeConventions(
+                nonspecific_dendritic_calcium_density_scale=-0.1
+            ),
+        )
 
 
 def test_nonspecific_event_threshold_can_be_selected_without_changing_trn() -> None:

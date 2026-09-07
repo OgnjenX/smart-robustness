@@ -127,6 +127,7 @@ class FirstOrderRuntimeConventions:
     nak_rate_convention: str = "standard_traub_miles"
     calcium_kinetics_convention: str = "modeldb_112923"
     nonspecific_calcium_kinetics_convention: str | None = None
+    nonspecific_dendritic_calcium_density_scale: float = 1.0
     calcium_gate_convention: str = "modeldb_112923"
     calcium_voltage_coordinate: str = "integrated_voltage"
     gate_initialization_convention: str = "steady_state_at_initial_voltage"
@@ -192,6 +193,8 @@ class FirstOrderRuntimeConventions:
             values.pop("trn_spike_event_coordinate")
         if values["nonspecific_calcium_kinetics_convention"] is None:
             values.pop("nonspecific_calcium_kinetics_convention")
+        if values["nonspecific_dendritic_calcium_density_scale"] == 1.0:
+            values.pop("nonspecific_dendritic_calcium_density_scale")
         if values["trn_spike_event_threshold_mV"] is None:
             values.pop("trn_spike_event_threshold_mV")
         if values["trn_spike_event_release_mV"] is None:
@@ -438,6 +441,31 @@ def resolved_intrinsic_cell(
                 "TRN dendritic calcium source convention and calibrated density "
                 "cannot both override the selected cell"
             )
+    if facts.canonical_name == "thalamic_nonspecific":
+        scale = conventions.nonspecific_dendritic_calcium_density_scale
+        if isinstance(scale, bool) or not math.isfinite(scale) or scale < 0:
+            raise ValueError(
+                "nonspecific dendritic calcium density scale must be finite and "
+                "nonnegative"
+            )
+        if scale != 1.0:
+            compartments = tuple(
+                replace(
+                    item,
+                    g_ca_mS_cm2=(
+                        None
+                        if item.g_ca_mS_cm2 is None
+                        else item.g_ca_mS_cm2 * scale
+                    ),
+                )
+                for item in cell.compartments
+            )
+            return replace(
+                cell,
+                name=f"{cell.name}_calibrated_dendritic_calcium_{scale:g}",
+                compartments=compartments,
+            )
+        return cell
     if facts.canonical_name != "trn":
         return cell
     compartments = list(cell.compartments)

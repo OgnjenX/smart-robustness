@@ -1,0 +1,40 @@
+schema_version: 1
+name: figure7-nonspecific-effective-t-connected-match-v1
+status: registered-before-execution-connected-verification
+training_profile: configs/calibration/figure6_legacy_detector_paper_nonspecific_paper_kinetics_v1.yaml
+selection_artifact: docs/validation-results/figure7-nonspecific-effective-t-calibration-536.yaml
+runtime_overrides:
+  nonspecific_dendritic_calcium_density_scale: 0.1875
+effective_density_mS_cm2: 46.875
+source_density_mS_cm2: 250.0
+protocol:
+  condition: match
+  duration_ms: 100.0
+  dt_ms: 0.01
+  equilibration_ms: 0.0
+  top_down_current_pA: 800.0
+  top_down_current_mode: until_cued_cell_first_event
+  top_down_cue_lead_ms: 0.0
+  comparator: none
+  receptor_prime: none
+figure6_gates:
+  relay_active_indices: [38, 39, 40, 41, 42]
+  relay_events_per_active_index: 4
+  relay_events: 20
+  cortical_chain_complete: true
+  causal_learning_pair: true
+  top_down_horizontal_contrast: '>0'
+match_gates:
+  relay_active_indices: [38, 39, 40, 41, 42]
+  relay_events: 20
+  selected_category_event_available: true
+  top_down_current_terminated_on_first_selected_event: true
+  nonspecific_events: 4
+  nonspecific_rate_hz: 40.0
+  no_reconstructed_comparator: true
+  no_other_parameter_change: true
+boundary: >-
+  This is connected verification of a match-fitted effective parameter. It is
+  not recovered source and cannot be frozen as original SMART. A complete pass
+  authorizes only one separately registered mismatch with the identical fixed
+  runtime; a failure closes this isolated-trace candidate.

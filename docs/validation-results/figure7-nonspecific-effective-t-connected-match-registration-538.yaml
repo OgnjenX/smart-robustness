@@ -1,0 +1,30 @@
+schema_version: 1
+id: figure7-nonspecific-effective-t-connected-match-registration-538
+date: '2026-09-07'
+status: registered-before-execution-connected-verification
+classification: effective-nonspecific-t-connected-match-verification
+predecessor: docs/validation-results/figure7-nonspecific-effective-t-calibration-assessment-537.yaml
+profile: configs/calibration/figure7_nonspecific_effective_t_connected_match_v1.yaml
+profile_sha256: 307a124ceeaf1ee5c844f3a2aa69f72faa633b307f91bca6981809df6859f7dc
+runtime_fingerprint: fa4ab9f0bf2bec4d6ad53cb6a91620047689b6839b146ed7d777d42350c2cdf5
+selected_scale: 0.1875
+selected_effective_density_mS_cm2: 46.875
+paper_source_density_mS_cm2: 250.0
+result_id: figure7-nonspecific-effective-t-connected-match-539
+result: docs/validation-results/figure7-nonspecific-effective-t-connected-match-539.yaml
+execution:
+  fresh_figure6_runs: 1
+  connected_match_runs: 1
+  mismatch_runs: 0
+  parameter_search: false
+pass_rule: >-
+  Every Figure 6 gate and every connected-match gate in the profile must pass.
+  No partial pass authorizes mismatch. The selected density and all other
+  runtime/protocol values are immutable during this verification.
+failure_rule: >-
+  A failure closes scale 0.1875 as a connected candidate. Do not interpolate,
+  return to the isolated grid, change another parameter, or inspect mismatch.
+classification_boundary: >-
+  A pass establishes a calibrated connected match candidate only. It does not
+  recover the unavailable KInNeSS conductance semantics, reproduce full Figure
+  7, validate gamma/beta/reset, or freeze original SMART.

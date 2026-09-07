@@ -95,6 +95,14 @@ def main() -> None:
         == set(FIGURE7_TOP_DOWN_EXPECTATION_PROJECTION_IDS)
         for result in (match, mismatch)
     )
+    if "official_rate_gates" in profile:
+        rate_gates = profile["official_rate_gates"]
+        gates["match_nonspecific_40_hz"] = len(match.nonspecific_spike_times_ms) == int(
+            rate_gates["match_nonspecific_events"]
+        )
+        gates["mismatch_nonspecific_70_hz"] = len(
+            mismatch.nonspecific_spike_times_ms
+        ) == int(rate_gates["mismatch_nonspecific_events"])
     passed = all(gates.values())
     artifact = {
         "schema_version": 1,
@@ -111,6 +119,9 @@ def main() -> None:
         "mismatch": asdict(mismatch),
         "gates": gates,
         "mechanism_screen_pass": passed,
+        "official_behavior_targets_passed": (
+            passed if "official_rate_gates" in profile else False
+        ),
         "figure7_reproduced": False,
         "baseline_promoted": False,
     }

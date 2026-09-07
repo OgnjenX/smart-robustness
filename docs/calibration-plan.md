@@ -1095,3 +1095,12 @@ regime rather than evidence for a robust or recovered source constant.
 Registration 464 applies exactly 0.8 persistently during Figure 6. Every
 existing learning prerequisite remains fixed; only a complete pass may unlock
 one independently registered 100-ms Figure 7 pair.
+
+Artifacts 464--466 pass the persistent Figure 6 prerequisite at gain 0.8:
+20 relay events remain divided four per horizontal cell, the cortical chain
+and causal pair are complete, and top-down contrast is 0.563306. The changed
+learned state fixes a new maximal archived-bound common factor of
+3.6651418062578482. Registration 467 locks one 100-ms match/mismatch pair with
+that factor, the same all-six unit receptor prime, and exact 4/7 nonspecific
+event targets. The pair cannot tune any parameter; a pass only unlocks holdout
+evaluation, while a failure closes this candidate.

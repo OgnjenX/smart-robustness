@@ -1,0 +1,49 @@
+schema_version: 1
+id: figure6-declared-interneuron-input-gain0p8-assessment-466
+date: '2026-09-07'
+status: persistent-figure6-prerequisite-passed-complete-figure7-pair-authorized
+registration: docs/validation-results/figure6-declared-interneuron-input-gain0p8-registration-464.yaml
+result: docs/validation-results/figure6-declared-interneuron-input-gain0p8-465.yaml
+result_sha256: 45540020e4a125a7b00e846640221cabf8f2b2ccd424ae2f85867fbf335e34a6
+classification: persistent-behavior-calibration-prerequisite-not-source-recovery
+candidate:
+  projection_id: modeldb112923.projection.002
+  effective_gain: 0.8
+  lifecycle: persistent_during_learning_and_recognition
+result_summary:
+  relay_active_indices: [38, 39, 40, 41, 42]
+  relay_events_per_active_index: 4
+  relay_event_count: 20
+  trn_event_count: 590
+  layer4_event_count: 35
+  layer23_event_count: 22
+  layer5_event_count: 13
+  layer6i_event_count: 42
+  layer6ii_event_count: 12
+  category_first_event_ms: 60.11
+  teaching_arrival_ms: 62.11
+  following_relay_event_ms: 63.42
+  top_down_horizontal_contrast: 0.5633059300212587
+  learned_wide_maximum: 0.4092611089259646
+  learned_narrow_maximum: 0.4092611089259646
+  maximal_archived_bound_common_factor: 3.6651418062578482
+gates:
+  relay_active_indices: true
+  relay_events_per_active_index: true
+  relay_events: true
+  cortical_chain_complete: true
+  causal_learning_pair: true
+  top_down_horizontal_contrast: true
+assessment:
+  figure6_prerequisite_passed: true
+  complete_figure7_pair_authorized: true
+  original_smart_reproduced: false
+  baseline_promoted: false
+  source_parameter_recovered: false
+  conclusion: >-
+    The 0.8 effective Relay_INT transfer survives persistence through the full
+    learning episode without relaxing any Figure 6 gate. The changed learned
+    state has a maximal archived-bound expansion factor of
+    3.6651418062578482. This authorizes one independently rebuilt 100-ms
+    Figure 7 pair with exact 4/7 nonspecific-event gates. It does not validate
+    the receptor prime, headroom expansion, or effective gain as source SMART.

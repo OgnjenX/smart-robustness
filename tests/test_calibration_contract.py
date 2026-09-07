@@ -7264,3 +7264,48 @@ def test_persistent_gain0p8_figure6_prerequisite_is_fixed() -> None:
     assert registration["execution"]["parameter_search"] is False
     assert "does not authorize a nearby value" in registration["interpretation_boundary"]
     assert registration["baseline_promoted"] is False
+
+
+def test_persistent_gain0p8_passes_figure6_and_locks_complete_pair() -> None:
+    result_path = (
+        ROOT / "docs/validation-results/figure6-declared-interneuron-input-gain0p8-465.yaml"
+    )
+    result = yaml.safe_load(result_path.read_text())
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure6-declared-interneuron-input-gain0p8-assessment-466.yaml"
+        ).read_text()
+    )
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-persistent-gain0p8-complete-pair-registration-467.yaml"
+        ).read_text()
+    )
+    profile = yaml.safe_load((ROOT / registration["profile"]).read_text())
+
+    assert result["pass"]
+    assert all(result["gates"].values())
+    assert result["relay_event_counts_by_index"] == {
+        "38": 4,
+        "39": 4,
+        "40": 4,
+        "41": 4,
+        "42": 4,
+    }
+    assert assessment["result_sha256"] == (
+        "45540020e4a125a7b00e846640221cabf8f2b2ccd424ae2f85867fbf335e34a6"
+    )
+    assert assessment["result_summary"]["maximal_archived_bound_common_factor"] == pytest.approx(
+        3.6651418062578482
+    )
+    assert profile["protocol"]["duration_ms"] == 100.0
+    assert profile["official_rate_gates"] == {
+        "match_nonspecific_events": 4,
+        "match_rate_hz": 40.0,
+        "mismatch_nonspecific_events": 7,
+        "mismatch_rate_hz": 70.0,
+    }
+    assert registration["execution"]["parameter_search"] is False
+    assert registration["baseline_promoted"] is False

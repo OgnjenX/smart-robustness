@@ -39,6 +39,15 @@ but it is a narrow behavior-calibrated regime, not recovered source SMART.
 Registration 464 now requires the 0.8 gain to pass a fresh persistent Figure 6
 episode before any 100-ms recognition pair is allowed.
 
+Artifacts 464--466 complete that prerequisite successfully. Persistent gain
+0.8 preserves exactly four events in each horizontal relay cell, the complete
+cortical chain, causal teaching timing, and positive top-down contrast
+0.563306. The newly learned wide and narrow fields each peak at 0.409261, so
+their fixed maximal archived-bound common factor is 3.6651418062578482.
+Registration 467 now locks one independently rebuilt 100-ms pair with exact
+match/mismatch geometry, TRN ordering, and four/seven nonspecific-event gates.
+No further adjustment is permitted from that pair.
+
 Artifacts 454--456 cross the early combined receptor prime with the maximal
 archived-bound learned row. It partially counteracts inhibition, but only outer
 match cells 38 and 42 fire, mismatch is fully silent, and TRN direction is

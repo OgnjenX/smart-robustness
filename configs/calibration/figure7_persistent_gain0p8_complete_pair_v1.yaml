@@ -1,0 +1,46 @@
+schema_version: 1
+name: figure7-persistent-gain0p8-complete-pair-v1
+classification: behavior-calibrated-complete-figure7-pair-not-source-recovery
+base_profile: configs/calibration/figure6_declared_interneuron_input_gain0p8_v1.yaml
+learned_state:
+  source_index: 40
+  headroom_fraction: 1.0
+  expected_common_weight_factor: 3.6651418062578482
+receptor_prime:
+  source_index: 40
+  arrival_time_ms_from_stimulus_onset: 0.0
+  amplitude: 1.0
+  projection_ids:
+    - modeldb112923.projection.003
+    - modeldb112923.projection.005
+    - modeldb112923.projection.006
+    - modeldb112923.projection.007
+    - modeldb112923.projection.009
+    - modeldb112923.projection.012
+protocol:
+  duration_ms: 100.0
+  dt_ms: 0.01
+  top_down_current_pA: 800.0
+  top_down_current_mode: until_cued_cell_first_event
+  top_down_cue_lead_ms: 0.0
+  uniform_relay_input_gain: 1.0
+  projection_002_gain: 0.8
+official_rate_gates:
+  match_nonspecific_events: 4
+  match_rate_hz: 40.0
+  mismatch_nonspecific_events: 7
+  mismatch_rate_hz: 70.0
+required_gates:
+  - match_horizontal_relay_set
+  - mismatch_overlap_only
+  - match_more_active_relay_cells
+  - match_more_trn_events
+  - all_six_expectation_records_primed
+  - match_nonspecific_40_hz
+  - mismatch_nonspecific_70_hz
+boundaries:
+  - One fresh Figure 6 run with persistent gain 0.8 must exactly reproduce Artifact 465 before recognition.
+  - The newly learned source row is expanded only to its archived adaptive maxima using the fixed factor 3.6651418062578482.
+  - The all-six unit receptor prime and every protocol value are unchanged from the short survivor.
+  - Match and mismatch are independently rebuilt 100-ms conditions; both are calibration targets, not holdouts.
+  - No parameter may be adjusted from either condition. Failure closes this complete pair; success still remains a calibrated reconstruction requiring later holdouts.

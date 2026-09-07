@@ -1,0 +1,32 @@
+schema_version: 1
+id: figure7-persistent-gain0p8-complete-pair-registration-467
+date: '2026-09-07'
+status: registered-before-execution
+classification: behavior-calibrated-complete-figure7-pair-not-source-recovery
+predecessor: docs/validation-results/figure6-declared-interneuron-input-gain0p8-assessment-466.yaml
+profile: configs/calibration/figure7_persistent_gain0p8_complete_pair_v1.yaml
+training_profile: configs/calibration/figure6_declared_interneuron_input_gain0p8_v1.yaml
+training_result: docs/validation-results/figure6-declared-interneuron-input-gain0p8-465.yaml
+training_result_sha256: 45540020e4a125a7b00e846640221cabf8f2b2ccd424ae2f85867fbf335e34a6
+runtime_fingerprint: e016bc9f3d0557e2b23ad00e7d956509df9cf44de42db6f66c6a484a42d1f7a0
+result: docs/validation-results/figure7-persistent-gain0p8-complete-pair-468.yaml
+candidate:
+  persistent_projection_002_gain: 0.8
+  learned_headroom_fraction: 1.0
+  expected_common_weight_factor: 3.6651418062578482
+  receptor_prime: combined_on_center_and_off_surround_unit_arrival
+  duration_ms: 100.0
+official_gates:
+  match_relay_indices: [38, 39, 40, 41, 42]
+  mismatch_relay_indices: [40]
+  match_more_trn_events: true
+  match_nonspecific_events: 4
+  mismatch_nonspecific_events: 7
+execution: {figure6_learning_runs: 1, match_runs: 1, mismatch_runs: 1, parameter_search: false}
+interpretation_boundary: >-
+  This is a locked complete behavior-calibration pair. No parameter or scoring
+  rule may change after either condition. Passing all targets would authorize
+  locked Figure 10 and spectral holdouts, but would not convert the effective
+  gain or receptor prime into recovered source values. Failure closes the
+  candidate without interpolation.
+baseline_promoted: false

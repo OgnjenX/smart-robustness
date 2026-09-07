@@ -8460,3 +8460,35 @@ def test_effective_nonspecific_t_connected_match_passes_before_mismatch() -> Non
     )
     assert assessment["assessment"]["mismatch_authorized"]
     assert not assessment["assessment"]["original_smart_reproduced"]
+
+
+def test_effective_nonspecific_t_pair_fails_upstream_comparison() -> None:
+    result = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-nonspecific-effective-t-pair-542.yaml"
+        ).read_text()
+    )
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-nonspecific-effective-t-pair-assessment-543.yaml"
+        ).read_text()
+    )
+
+    assert all(result["figure6_gates"].values())
+    assert result["match"]["relay_active_indices"] == [38, 39, 40, 41, 42]
+    assert result["mismatch"]["relay_active_indices"] == [22, 31, 40, 49, 58]
+    assert result["match"]["trn_event_count"] == 549
+    assert result["mismatch"]["trn_event_count"] == 608
+    assert result["match"]["nonspecific_event_count"] == 4
+    assert result["mismatch"]["nonspecific_event_count"] == 4
+    assert not result["gates"]["mismatch_relay_overlap_only"]
+    assert not result["gates"]["match_more_trn_events"]
+    assert not result["gates"]["mismatch_nonspecific_70_hz"]
+    assert not result["reproduced"]
+    assert assessment["result_sha256"] == (
+        "ea796987c3eb0e30e34eca6ff1f8aca5f6e247dc998fa9434a4502129c01bdb5"
+    )
+    assert assessment["assessment"]["candidate_closed"]
+    assert not assessment["assessment"]["mismatch_driven_retuning_authorized"]

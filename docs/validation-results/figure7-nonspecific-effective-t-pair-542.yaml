@@ -1,0 +1,83 @@
+schema_version: 1
+id: figure7-nonspecific-effective-t-pair-542
+date: '2026-09-07'
+status: figure7-failed
+classification: calibrated-effective-t-figure7-pair
+registration: docs/validation-results/figure7-nonspecific-effective-t-pair-registration-541.yaml
+runtime_fingerprint: fa4ab9f0bf2bec4d6ad53cb6a91620047689b6839b146ed7d777d42350c2cdf5
+nonspecific_dendritic_calcium_density_scale: 0.1875
+figure6_population_spikes:
+  thalamic_relay: 20
+  thalamic_interneuron: 5
+  trn: 608
+  thalamic_nonspecific: 4
+  layer4_excitatory_v1: 45
+  layer4_inhibitory_v1: 175
+  layer23_excitatory_v1: 33
+  layer23_inhibitory_v1: 20
+  layer5_excitatory_v1: 63
+  layer6i_excitatory_v1: 43
+  layer6ii_excitatory_v1: 14
+figure6_gates:
+  relay_active_indices: true
+  relay_events_per_active_index: true
+  relay_events: true
+  cortical_chain_complete: true
+  causal_learning_pair: true
+  top_down_horizontal_contrast: true
+match:
+  relay_event_count: 20
+  relay_active_indices: [38, 39, 40, 41, 42]
+  relay_spike_indices: [38, 42, 39, 40, 41, 39, 41, 38, 42, 40,
+    40, 39, 41, 38, 42, 39, 41, 38, 42, 40]
+  relay_spike_times_ms: [5.930000000000001, 5.930000000000001, 5.94,
+    5.94, 5.94, 40.300000000000004, 40.300000000000004, 40.38,
+    40.38, 40.699999999999996, 61.370000000000005, 61.42, 61.42,
+    62.07000000000001, 62.07000000000001, 81.26, 81.26, 81.34,
+    81.34, 81.37]
+  trn_event_count: 549
+  nonspecific_event_count: 4
+  nonspecific_rate_hz: 40.0
+  nonspecific_spike_times_ms: [1.35, 3.21, 4.99, 81.78]
+  category_event_count: 13
+  top_down_current_termination_time_ms: 5.95
+  comparator_transform: null
+  relay_calcium_ablated: false
+  nonspecific_calcium_ablated: false
+mismatch:
+  relay_event_count: 20
+  relay_active_indices: [22, 31, 40, 49, 58]
+  relay_spike_indices: [22, 58, 31, 40, 49, 40, 22, 58, 31, 49,
+    22, 58, 31, 49, 40, 22, 58, 31, 49, 40]
+  relay_spike_times_ms: [5.930000000000001, 5.930000000000001, 5.94,
+    5.94, 5.94, 42.21, 42.39, 42.39, 42.43, 42.43, 66.86, 66.86,
+    67.35000000000001, 67.35000000000001, 67.54, 86.64, 86.64,
+    86.87, 86.87, 86.88000000000001]
+  trn_event_count: 608
+  nonspecific_event_count: 4
+  nonspecific_rate_hz: 40.0
+  nonspecific_spike_times_ms: [1.35, 3.21, 4.99, 86.03]
+  category_event_count: 13
+  top_down_current_termination_time_ms: 5.95
+  comparator_transform: null
+  relay_calcium_ablated: false
+  nonspecific_calcium_ablated: false
+gates:
+  figure6_all_existing_gates: true
+  match_relay_spatial_set: true
+  mismatch_relay_overlap_only: false
+  match_more_active_relay_cells: false
+  match_more_trn_events: false
+  match_nonspecific_40_hz: true
+  mismatch_more_nonspecific_events: false
+  mismatch_nonspecific_70_hz: false
+  figure7_target_duration: true
+  no_reconstructed_comparator: true
+  no_calcium_ablation: true
+reproduced: false
+original_smart_reproduced: false
+baseline_promoted: false
+classification_boundary: >-
+  The effective T scale repairs only the match event count. It does not recover
+  SMART's spatial comparison, TRN direction, or mismatch disinhibition and is
+  closed without mismatch-driven retuning.

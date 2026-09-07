@@ -1,0 +1,32 @@
+schema_version: 1
+id: figure7-nonspecific-effective-t-pair-assessment-543
+date: '2026-09-07'
+status: assessed-figure7-failed-candidate-closed
+registration: docs/validation-results/figure7-nonspecific-effective-t-pair-registration-541.yaml
+result: docs/validation-results/figure7-nonspecific-effective-t-pair-542.yaml
+result_sha256: ea796987c3eb0e30e34eca6ff1f8aca5f6e247dc998fa9434a4502129c01bdb5
+runtime_fingerprint: fa4ab9f0bf2bec4d6ad53cb6a91620047689b6839b146ed7d777d42350c2cdf5
+assessment:
+  figure6_all_gates_pass: true
+  match_nonspecific_40_hz: true
+  mismatch_relay_overlap_only: false
+  match_more_active_relay_cells: false
+  match_more_trn_events: false
+  mismatch_more_nonspecific_events: false
+  mismatch_nonspecific_70_hz: false
+  candidate_closed: true
+  mismatch_driven_retuning_authorized: false
+  original_smart_reproduced: false
+  baseline_promoted: false
+conclusion: >-
+  The common nonspecific T-density reduction is sufficient for the connected
+  match count but not for Figure 7. Both conditions retain all five driven
+  relay cells and 20 relay events, mismatch recruits more rather than fewer TRN
+  events (608 versus 549), and both nonspecific outputs remain at 40 Hz. The
+  missing mechanism is upstream comparison/selectivity, not merely the
+  nonspecific cell's event-count gain.
+next_gate: >-
+  Do not tune scale 0.1875 or another intrinsic parameter from this mismatch.
+  Return to a separately preregistered reconstruction of the source-described
+  two-against-one relay/TRN comparison. Preserve the effective-T result as a
+  mechanistic sensitivity, not a candidate baseline.

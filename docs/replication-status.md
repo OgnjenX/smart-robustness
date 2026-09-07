@@ -2782,6 +2782,15 @@ comparator. The effective candidate therefore passes connected match and
 authorizes one fixed mismatch. Full Figure 7, gamma/beta/reset, and original
 SMART remain unreproduced and unfrozen until that holdout passes.
 
+Artifacts 541--543 close the effective-T candidate on its fixed mismatch. Fresh
+Figure 6 and the independent match repeat pass, but mismatch activates all five
+vertical relay cells rather than only overlap cell 40. Both conditions emit 20
+relay events and four nonspecific events; TRN direction is reversed at 549
+match versus 608 mismatch events. Thus the reduced T density repairs the match
+count only. It does not reconstruct the upstream two-against-one comparison or
+70-Hz mismatch disinhibition, and no mismatch-driven retuning is authorized.
+Original SMART remains unreproduced and unfrozen.
+
 Artifacts 535--537 perform the permitted match-only effective T-conductance
 screen on that fixed replay trace. The full preregistered grid from zero to the
 paper density is finite and was executed without interpolation. Scale 0.1875,

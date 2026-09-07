@@ -1288,3 +1288,12 @@ and nonspecific thalamus emits four events in 100 ms. One vertical mismatch is
 now authorized under the identical fingerprint. No mismatch-driven retuning is
 permitted; failure closes this candidate, while a pass advances to the
 preregistered spectral/reset holdouts.
+
+Artifacts 541--543 execute the fixed independent pair and reject the candidate.
+The match repeats its five-cell, 20-relay-event, four-nonspecific-event result,
+but mismatch also activates all five driven cells with 20 relay events. TRN
+output increases in mismatch (608 versus 549) instead of decreasing, and both
+nonspecific conditions remain at 40 Hz. Close scale 0.1875 without retuning.
+The next work must address the source-described two-against-one relay/TRN
+comparison as a separately labeled reconstruction; intrinsic event-gain
+calibration alone cannot reproduce Figure 7.

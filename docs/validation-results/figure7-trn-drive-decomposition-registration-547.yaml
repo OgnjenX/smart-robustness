@@ -1,0 +1,49 @@
+schema_version: 1
+id: figure7-trn-drive-decomposition-registration-547
+date: '2026-09-07'
+status: registered-before-execution-read-only-diagnostic-repeat
+classification: fixed-near-pass-trn-source-decomposition
+profile: configs/calibration/figure7_learned_coincidence_effective_t_pair_v1.yaml
+profile_sha256: 4b6aa0bdf4fb844e428fb330f34970900cc8bc741183b2d8e6e73789cba0b30f
+script: scripts/run_figure7_trn_drive_decomposition.py
+script_sha256: b90d5ac3bd8eb53af0d01ae67dabe2b1b8ab486b2467490d9ef5a82828a5fc05
+runtime_fingerprint: fa4ab9f0bf2bec4d6ad53cb6a91620047689b6839b146ed7d777d42350c2cdf5
+predecessor: docs/validation-results/figure7-learned-coincidence-effective-t-pair-assessment-546.yaml
+result_id: figure7-trn-drive-decomposition-548
+result: docs/validation-results/figure7-trn-drive-decomposition-548.yaml
+assessment: docs/validation-results/figure7-trn-drive-decomposition-assessment-549.yaml
+fixed_candidate:
+  comparator_transform: top_k_binary
+  comparator_source_index: 40
+  comparator_target_count: 5
+  nonspecific_dendritic_calcium_density_scale: 0.1875
+  top_down_current_pA: 800.0
+  top_down_current_mode: until_cued_cell_first_event
+  top_down_cue_lead_ms: 0.0
+  duration_ms: 100.0
+  dt_ms: 0.01
+added_readouts_only:
+  - complete TRN event indices and times
+  - per-cell TRN event counts
+  - nonempty one-millisecond TRN event bins
+  - projection-010 relay-to-TRN AMPA gate peaks and integrals
+  - projection-009 layer-6II-to-TRN NMDA gate peaks and integrals
+  - projection-012 layer-6II-to-TRN AMPA gate peaks and integrals
+  - source-separated TRN current ranges after 45 ms
+  - detector threshold and release transition counts
+decision_questions:
+  relay_drive_order: >-
+    Are projection-010 gate integrals larger during match at diagnostic cells,
+    as predicted from the 20-versus-3 relay event trains?
+  cortical_drive_order: >-
+    Do projections 009/012 invert the aggregate input order because category
+    feedback differs across conditions?
+  recurrent_inversion: >-
+    If excitatory drive is match-greater but output is mismatch-greater, does
+    the temporal/per-cell pattern support an inversion generated inside the
+    recurrent TRN network?
+constraints: >-
+  No weight, topology, threshold, initialization, stimulus, learned state,
+  comparator, calcium scale, or scoring rule may change. This diagnostic does
+  not reopen the failed candidate and cannot authorize parameter selection by
+  itself.

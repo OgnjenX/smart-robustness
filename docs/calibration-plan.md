@@ -1319,3 +1319,10 @@ closed without retuning. Next perform an unchanged source-decomposition repeat
 that preserves full TRN event trains and separates relay-collateral drive from
 direct layer-6II drive; only after locating the inversion may a new source- or
 mechanism-justified candidate be registered.
+
+Registration 547 fixes that diagnostic repeat with an unchanged profile and
+hash-pinned script. It adds only complete TRN event trains, per-cell and 1-ms
+event summaries, and source-separated relay-collateral, corticoreticular, and
+recurrent TRN readouts. The failed candidate remains closed. The diagnostic
+will determine whether the 549-versus-584 inversion originates in afferent
+drive or in recurrent TRN dynamics before any further mechanism is proposed.

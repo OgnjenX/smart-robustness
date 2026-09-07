@@ -508,6 +508,9 @@ class Figure7ConditionResult:
     trn_layer6ii_ampa_peak_by_index: tuple[tuple[int, float], ...] = ()
     trn_layer6ii_nmda_peak_by_index: tuple[tuple[int, float], ...] = ()
     trn_relay_ampa_peak_by_index: tuple[tuple[int, float], ...] = ()
+    trn_layer6ii_ampa_integral_ms_by_index: tuple[tuple[int, float], ...] = ()
+    trn_layer6ii_nmda_integral_ms_by_index: tuple[tuple[int, float], ...] = ()
+    trn_relay_ampa_integral_ms_by_index: tuple[tuple[int, float], ...] = ()
     trn_proximal_voltage_range_mV_by_index: tuple[tuple[int, float, float], ...] = ()
     trn_soma_voltage_range_mV_by_index: tuple[tuple[int, float, float], ...] = ()
     trn_post_startup_soma_voltage_range_mV_by_index: tuple[
@@ -1463,6 +1466,9 @@ def run_figure7_condition(
     trn_layer6ii_ampa_peak: tuple[tuple[int, float], ...] = ()
     trn_layer6ii_nmda_peak: tuple[tuple[int, float], ...] = ()
     trn_relay_ampa_peak: tuple[tuple[int, float], ...] = ()
+    trn_layer6ii_ampa_integral: tuple[tuple[int, float], ...] = ()
+    trn_layer6ii_nmda_integral: tuple[tuple[int, float], ...] = ()
+    trn_relay_ampa_integral: tuple[tuple[int, float], ...] = ()
     trn_voltage_range: tuple[tuple[int, float, float], ...] = ()
     trn_soma_voltage_range: tuple[tuple[int, float, float], ...] = ()
     trn_post_startup_soma_voltage_range: tuple[tuple[int, float, float], ...] = ()
@@ -1725,11 +1731,14 @@ def run_figure7_condition(
             ]
         )
     if trn_state is not None:
+        trn_ampa_gate = np.asarray(trn_state.port_004_gate)[:, diagnostic_window]
+        trn_nmda_gate = np.asarray(trn_state.port_001_gate)[:, diagnostic_window]
+        trn_relay_gate = np.asarray(trn_state.port_002_gate)[:, diagnostic_window]
         trn_layer6ii_ampa_peak = tuple(
             (index, float(np.max(values)))
             for index, values in zip(
                 FIGURE7_RELAY_DIAGNOSTIC_INDICES,
-                np.asarray(trn_state.port_004_gate)[:, diagnostic_window],
+                trn_ampa_gate,
                 strict=True,
             )
         )
@@ -1737,7 +1746,7 @@ def run_figure7_condition(
             (index, float(np.max(values)))
             for index, values in zip(
                 FIGURE7_RELAY_DIAGNOSTIC_INDICES,
-                np.asarray(trn_state.port_001_gate)[:, diagnostic_window],
+                trn_nmda_gate,
                 strict=True,
             )
         )
@@ -1745,8 +1754,26 @@ def run_figure7_condition(
             (index, float(np.max(values)))
             for index, values in zip(
                 FIGURE7_RELAY_DIAGNOSTIC_INDICES,
-                np.asarray(trn_state.port_002_gate)[:, diagnostic_window],
+                trn_relay_gate,
                 strict=True,
+            )
+        )
+        trn_layer6ii_ampa_integral = tuple(
+            (index, float(np.trapz(values, times_ms)))
+            for index, values in zip(
+                FIGURE7_RELAY_DIAGNOSTIC_INDICES, trn_ampa_gate, strict=True
+            )
+        )
+        trn_layer6ii_nmda_integral = tuple(
+            (index, float(np.trapz(values, times_ms)))
+            for index, values in zip(
+                FIGURE7_RELAY_DIAGNOSTIC_INDICES, trn_nmda_gate, strict=True
+            )
+        )
+        trn_relay_ampa_integral = tuple(
+            (index, float(np.trapz(values, times_ms)))
+            for index, values in zip(
+                FIGURE7_RELAY_DIAGNOSTIC_INDICES, trn_relay_gate, strict=True
             )
         )
         trn_voltage_mV = np.asarray(trn_state.v_proximal_dendrite / brian.mV)[
@@ -2404,6 +2431,9 @@ def run_figure7_condition(
         trn_layer6ii_ampa_peak_by_index=trn_layer6ii_ampa_peak,
         trn_layer6ii_nmda_peak_by_index=trn_layer6ii_nmda_peak,
         trn_relay_ampa_peak_by_index=trn_relay_ampa_peak,
+        trn_layer6ii_ampa_integral_ms_by_index=trn_layer6ii_ampa_integral,
+        trn_layer6ii_nmda_integral_ms_by_index=trn_layer6ii_nmda_integral,
+        trn_relay_ampa_integral_ms_by_index=trn_relay_ampa_integral,
         trn_proximal_voltage_range_mV_by_index=trn_voltage_range,
         trn_soma_voltage_range_mV_by_index=trn_soma_voltage_range,
         trn_post_startup_soma_voltage_range_mV_by_index=(

@@ -8559,3 +8559,32 @@ def test_learned_coincidence_effective_t_cross_closes_on_trn_order() -> None:
     assert assessment["assessment"]["all_gates_except_trn_order_pass"]
     assert assessment["assessment"]["candidate_closed"]
     assert not assessment["assessment"]["original_smart_reproduced"]
+
+
+def test_trn_drive_decomposition_is_hash_pinned_and_read_only() -> None:
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-trn-drive-decomposition-registration-547.yaml"
+        ).read_text()
+    )
+    profile_path = ROOT / registration["profile"]
+    script_path = ROOT / registration["script"]
+
+    assert hashlib.sha256(profile_path.read_bytes()).hexdigest() == registration[
+        "profile_sha256"
+    ]
+    assert hashlib.sha256(script_path.read_bytes()).hexdigest() == registration[
+        "script_sha256"
+    ]
+    assert registration["runtime_fingerprint"] == (
+        "fa4ab9f0bf2bec4d6ad53cb6a91620047689b6839b146ed7d777d42350c2cdf5"
+    )
+    assert registration["fixed_candidate"]["comparator_target_count"] == 5
+    assert registration["fixed_candidate"][
+        "nonspecific_dendritic_calcium_density_scale"
+    ] == 0.1875
+    assert "No weight" in registration["constraints"]
+    assert "complete TRN event indices and times" in registration[
+        "added_readouts_only"
+    ]

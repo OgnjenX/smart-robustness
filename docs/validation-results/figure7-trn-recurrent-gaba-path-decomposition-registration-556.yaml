@@ -1,0 +1,42 @@
+schema_version: 1
+id: figure7-trn-recurrent-gaba-path-decomposition-registration-556
+date: '2026-09-07'
+status: registered-before-execution-recognition-only-causal-decomposition
+classification: recurrent-trn-gaba-compartment-path-decomposition
+profile: configs/calibration/figure7_learned_coincidence_effective_t_pair_v1.yaml
+profile_sha256: 4b6aa0bdf4fb844e428fb330f34970900cc8bc741183b2d8e6e73789cba0b30f
+script: scripts/run_figure7_trn_recurrent_gaba_path_decomposition.py
+script_sha256: df09ee77d827ff84a2e6d98205c327cabc39da9161a52864d259c7e0f268249a
+runtime_fingerprint: fa4ab9f0bf2bec4d6ad53cb6a91620047689b6839b146ed7d777d42350c2cdf5
+authorization: docs/validation-results/figure7-trn-gap-junction-ablation-assessment-555.yaml
+control: docs/validation-results/figure7-trn-drive-decomposition-548.yaml
+dual_ablation: docs/validation-results/figure7-trn-recurrent-gaba-ablation-551.yaml
+result_id: figure7-trn-recurrent-gaba-path-decomposition-557
+result: docs/validation-results/figure7-trn-recurrent-gaba-path-decomposition-557.yaml
+assessment: docs/validation-results/figure7-trn-recurrent-gaba-path-decomposition-assessment-558.yaml
+recognition_only_ablation_arms:
+  - name: soma_gaba_removed
+    projection_ids:
+      - modeldb112923.projection.008
+    retained_recurrent_paths:
+      - modeldb112923.projection.011
+      - modeldb112923.projection.013
+  - name: proximal_gaba_removed
+    projection_ids:
+      - modeldb112923.projection.011
+    retained_recurrent_paths:
+      - modeldb112923.projection.008
+      - modeldb112923.projection.013
+fixed_control_trn_events_match_mismatch: [549, 584]
+fixed_control_mismatch_excess: 35
+decision_rule: >-
+  For each path, compare the match/mismatch TRN order and peripheral event
+  difference with the fixed control. A path is necessary for the inversion only
+  if removing it eliminates or reverses mismatch-greater-than-match ordering.
+  The paths have opposing effects if one removal increases and the other
+  decreases the 35-event control excess. Report every relay and nonspecific
+  consequence; no behavioral pass is required.
+boundary: >-
+  These are recognition-only causal ablations, not source-faithful SMART
+  candidates. Neither arm can be promoted, select a replacement weight or
+  compartment, or reopen the closed Artifact-545 reconstruction.

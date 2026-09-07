@@ -8738,3 +8738,32 @@ def test_trn_gap_junction_ablation_worsens_failed_inversion() -> None:
         "electrical_coupling_counteracts_global_inversion"
     ]
     assert not assessment["assessment"]["baseline_promoted"]
+
+
+def test_trn_recurrent_gaba_path_decomposition_is_fixed_and_nonpromotable() -> None:
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-trn-recurrent-gaba-path-decomposition-registration-556.yaml"
+        ).read_text()
+    )
+    profile_path = ROOT / registration["profile"]
+    script_path = ROOT / registration["script"]
+
+    assert hashlib.sha256(profile_path.read_bytes()).hexdigest() == registration[
+        "profile_sha256"
+    ]
+    assert hashlib.sha256(script_path.read_bytes()).hexdigest() == registration[
+        "script_sha256"
+    ]
+    arms = registration["recognition_only_ablation_arms"]
+    assert [arm["name"] for arm in arms] == [
+        "soma_gaba_removed",
+        "proximal_gaba_removed",
+    ]
+    assert [arm["projection_ids"] for arm in arms] == [
+        ["modeldb112923.projection.008"],
+        ["modeldb112923.projection.011"],
+    ]
+    assert registration["fixed_control_trn_events_match_mismatch"] == [549, 584]
+    assert "Neither arm can be promoted" in registration["boundary"]

@@ -1372,3 +1372,10 @@ nonspecific pair from 4/7 to 4/8. Electrical coupling is therefore not the
 source of the inversion. The next fixed diagnostic must remove records 008 and
 011 separately, with the other recurrent paths retained, to determine whether
 their combined ablation concealed opposing somatic and proximal effects.
+
+Registration 556 fixes a two-arm compartment decomposition before execution.
+One arm removes only somatic recurrent-GABA record 008; the other removes only
+proximal record 011. Each retains the other chemical path, projection 013 gap
+junctions, all afferent/output paths, and the unchanged calibrated pair. The
+fixed 549/584 control supplies the reference. Neither arm can be tuned,
+promoted, or interpreted as recovered original SMART.

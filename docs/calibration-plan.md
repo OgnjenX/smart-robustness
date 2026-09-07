@@ -114,6 +114,11 @@ Registration 492 instead fixes the one-factor official-source axial comparison:
 the complete executable nonspecific cell under paper Equation 2, starting at
 the full Figure 6 prerequisite.
 
+Artifacts 492--494 pass the paper-axial endpoint through Figure 6. The reported
+22-event nonspecific learning output cannot substitute for the independent
+Figure 7 match gate. Registration 495 requires one unchanged match with exact
+fresh learned weights and the pre-existing four-event target.
+
 ### D — locked holdout evaluation
 
 Without changing the candidate, evaluate:

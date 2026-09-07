@@ -59,6 +59,13 @@ instead isolates the remaining discrete official-source conflict by retaining
 the executable cell and changing only nonspecific axial dynamics from
 serialized KInNeSS edges to paper Equation 2, beginning at Figure 6.
 
+Artifacts 492--494 show that the paper-axial endpoint also passes Stage B:
+exactly four relay events per horizontal cell, complete cortical recruitment,
+causal teaching, and 1.62172/0.579378 map contrasts. It emits 22 nonspecific
+events during learning, but that different condition is not a registered
+recognition score. Registration 495 therefore fixes one fresh match without
+using that observation to alter any parameter or gate.
+
 Artifacts 471--473 complete the identity-locked mismatch calcium replay of the
 failed gain-0.8 candidate. The fresh event train exactly matches Artifact 468,
 and its 10,000-sample trace contains soma/dendrite voltages, T-type currents,

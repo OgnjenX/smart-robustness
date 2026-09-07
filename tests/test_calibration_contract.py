@@ -7776,3 +7776,45 @@ def test_paper_axial_official_nonspecific_factorial_is_preregistered() -> None:
     assert registration["stopping_rule"].startswith(
         "Run one fresh complete Figure 6"
     )
+
+
+def test_paper_axial_nonspecific_cross_passes_figure6_and_registers_match() -> None:
+    result = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure6-legacy-detector-modeldb-nonspecific-paper-axial-493.yaml"
+        ).read_text()
+    )
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure6-legacy-detector-modeldb-nonspecific-paper-axial-assessment-494.yaml"
+        ).read_text()
+    )
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-legacy-detector-modeldb-nonspecific-paper-axial-match-registration-495.yaml"
+        ).read_text()
+    )
+
+    assert result["runtime_fingerprint"] == (
+        "a09c953ac9f24ee709de3ededf80990c6dfb609ba6eece2c7e4c1c2c12a5a8fd"
+    )
+    assert result["relay_recruitment"]["confined_to_horizontal_bar_at_40_hz"]
+    assert result["population_spikes"]["thalamic_relay"] == 20
+    assert result["population_spikes"]["thalamic_nonspecific"] == 22
+    assert result["recruitment"]["feedforward_chain_complete"]
+    assert result["top_down_timing"]["causal_pair_in_learning_window"]
+    assert assessment["result_sha256"] == (
+        "6132cd1398ffdd7a9bbc8428b9afcb3e2a200f378011456d15d05390dbfda2ea"
+    )
+    assert assessment["assessment"]["preregistered_figure6_contract_passed"]
+    assert not assessment["assessment"]["figure6_nonspecific_count_used_for_selection"]
+    assert registration["execution"] == {
+        "figure6_repeat_runs": 1,
+        "match_runs": 1,
+        "mismatch_runs": 0,
+        "parameter_search": False,
+    }
+    assert registration["stopping_rule"].startswith("Repeat Artifact 493 exactly")

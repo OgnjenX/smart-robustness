@@ -567,6 +567,11 @@ parameters:
     status: match-screen-completed-two-survivors
     source: Artifacts 560--562, authorized by Artifact 559 and causal Artifacts 556--558
     note: Scales 0.875 and 1.0 pass all match gates; 0.75, 0.9375, and 0.96875 fail. Mismatch was not consulted and is authorized only for the two exact survivors. The response is non-monotonic, so no interpolation or additional endpoint is permitted. No scale is a recovered SMART parameter or frozen baseline.
+  calibration.figure7.trn_somatic_gaba_mismatch_survivors:
+    value: fixed mismatch trials at effective projection-008 scales 0.875 and 1.0
+    status: preregistered-awaiting-execution
+    source: Registration 563, authorized by Artifacts 560--562
+    note: Paired match TRN totals 576 and 549 are fixed before execution. A survivor must pass overlap-only relay, match-greater TRN, and seven-event nonspecific gates together. No new or interpolated scale is authorized.
   benchmark.population_sizes:
     value: see configs/*.yaml
     status: exploratory

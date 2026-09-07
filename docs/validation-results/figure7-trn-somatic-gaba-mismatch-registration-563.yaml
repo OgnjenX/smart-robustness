@@ -1,0 +1,42 @@
+schema_version: 1
+id: figure7-trn-somatic-gaba-mismatch-registration-563
+date: '2026-09-07'
+status: registered-before-execution-calibrated-mismatch-survivors
+classification: calibrated-projection008-fixed-mismatch-comparison
+profile: configs/calibration/figure7_learned_coincidence_effective_t_pair_v1.yaml
+profile_sha256: 4b6aa0bdf4fb844e428fb330f34970900cc8bc741183b2d8e6e73789cba0b30f
+script: scripts/run_figure7_trn_somatic_gaba_mismatch_survivors.py
+script_sha256: 25b4fcba3d0efc2b7b64083ebaca9d130fa5ae2c146e71a379e33e0f4c447bfd
+runtime_fingerprint: fa4ab9f0bf2bec4d6ad53cb6a91620047689b6839b146ed7d777d42350c2cdf5
+authorization: docs/validation-results/figure7-trn-somatic-gaba-match-screen-assessment-562.yaml
+match_result: docs/validation-results/figure7-trn-somatic-gaba-match-screen-561.yaml
+match_result_sha256: 11b790dcfc9c6bb5d9cbd0e84f9a20f81b282ff00e618dff10f85f11683c0cac
+result_id: figure7-trn-somatic-gaba-mismatch-564
+result: docs/validation-results/figure7-trn-somatic-gaba-mismatch-564.yaml
+assessment: docs/validation-results/figure7-trn-somatic-gaba-mismatch-assessment-565.yaml
+calibrated_projection_id: modeldb112923.projection.008
+survivor_scales: [0.875, 1.0]
+fixed_match_trn_events_by_scale:
+  '0.875': 576
+  '1.0': 549
+fixed_mismatch_gates:
+  relay_active_indices: [40]
+  match_more_active_relay_cells: true
+  match_more_trn_events: true
+  nonspecific_events: 7
+selection_rule: >-
+  Execute one fresh mismatch trial for both and only the two match survivors.
+  An endpoint survives only if every fixed mismatch gate passes when paired
+  with its already archived match result. Do not interpolate, add scales, rank
+  a partial pass, or alter another parameter after seeing the outcomes.
+locked_until_assessment:
+  - Figure 10 reset
+  - Figure 14 spectra
+  - Figure 15 local synchrony
+  - Figure 16 long-range synchrony
+boundary: >-
+  A survivor establishes a calibrated Figure 7 reconstruction under both the
+  explicit learned-coincidence transform and an effective projection-008
+  scale. It is not recovered original SMART and cannot be frozen as the classic
+  source baseline without downstream validation and a permanent provenance
+  boundary.

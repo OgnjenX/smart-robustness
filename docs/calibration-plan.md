@@ -1417,3 +1417,10 @@ gives five nonspecific events, 0.9375 gives three, and 0.96875 gives only 17
 relay and three nonspecific events. The response is non-monotonic, so no
 interpolation is authorized. Register one fresh mismatch for each of exactly
 the two survivors and no other scale.
+
+Registration 563 unlocks mismatch for exactly scales 0.875 and 1.0. Their
+archived match TRN totals, 576 and 549, are fixed before execution. Each fresh
+mismatch must remain overlap-only, have fewer active relay cells than match,
+produce fewer TRN events than its paired match, and emit exactly seven
+nonspecific events. All gates are conjunctive; no partial ranking, new scale,
+or interpolation is allowed.

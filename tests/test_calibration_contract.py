@@ -8896,3 +8896,37 @@ def test_trn_somatic_gaba_match_screen_selects_only_exact_gate_survivors() -> No
     assert not assessment["assessment"]["response_monotonic"]
     assert not assessment["assessment"]["interpolation_authorized"]
     assert not assessment["assessment"]["baseline_promoted"]
+
+
+def test_trn_somatic_gaba_mismatch_is_limited_to_match_survivors() -> None:
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-trn-somatic-gaba-mismatch-registration-563.yaml"
+        ).read_text()
+    )
+    profile_path = ROOT / registration["profile"]
+    script_path = ROOT / registration["script"]
+    match_path = ROOT / registration["match_result"]
+
+    assert hashlib.sha256(profile_path.read_bytes()).hexdigest() == registration[
+        "profile_sha256"
+    ]
+    assert hashlib.sha256(script_path.read_bytes()).hexdigest() == registration[
+        "script_sha256"
+    ]
+    assert hashlib.sha256(match_path.read_bytes()).hexdigest() == registration[
+        "match_result_sha256"
+    ]
+    assert registration["survivor_scales"] == [0.875, 1.0]
+    assert registration["fixed_match_trn_events_by_scale"] == {
+        "0.875": 576,
+        "1.0": 549,
+    }
+    assert registration["fixed_mismatch_gates"] == {
+        "relay_active_indices": [40],
+        "match_more_active_relay_cells": True,
+        "match_more_trn_events": True,
+        "nonspecific_events": 7,
+    }
+    assert "Do not interpolate" in registration["selection_rule"]

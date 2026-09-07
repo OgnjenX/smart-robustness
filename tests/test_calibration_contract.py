@@ -8679,3 +8679,28 @@ def test_trn_recurrent_gaba_ablation_preserves_failed_inversion() -> None:
         "recurrent_gaba_is_sole_cause_of_global_inversion"
     ]
     assert not assessment["assessment"]["baseline_promoted"]
+
+
+def test_trn_gap_junction_ablation_is_recognition_only_and_nonpromotable() -> None:
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-trn-gap-junction-ablation-registration-553.yaml"
+        ).read_text()
+    )
+    profile_path = ROOT / registration["profile"]
+    script_path = ROOT / registration["script"]
+
+    assert hashlib.sha256(profile_path.read_bytes()).hexdigest() == registration[
+        "profile_sha256"
+    ]
+    assert hashlib.sha256(script_path.read_bytes()).hexdigest() == registration[
+        "script_sha256"
+    ]
+    assert registration["recognition_only_ablation"]["projection_ids"] == [
+        "modeldb112923.projection.013"
+    ]
+    assert "projections 008 and 011 recurrent TRN chemical GABA" in registration[
+        "retained"
+    ]
+    assert "cannot be promoted" in registration["boundary"]

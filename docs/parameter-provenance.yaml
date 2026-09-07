@@ -547,6 +547,11 @@ parameters:
     status: completed-essential-for-stability-not-sole-inversion-source
     source: Artifacts 550--552, authorized by Artifacts 547--549
     note: Removing both paths raises TRN output to 2008 match versus 2028 mismatch and nonspecific output to 22/22. Recurrent GABA is required for stable/calibrated behavior, but the global inversion persists and therefore is not caused solely by chemical recurrent inhibition. The ablation is non-promotable and selects no weight.
+  validation.figure7.trn_gap_junction_ablation:
+    value: recognition-only removal of within-TRN distal gap-junction projection 013
+    status: preregistered-causal-diagnostic-awaiting-execution
+    source: Registration 553, authorized by Artifacts 550--552
+    note: Retains recurrent GABA projections 008/011 and every afferent/output pathway. This tests electrical-coupling necessity for the peripheral inversion; it cannot select a replacement conductance/topology or become the baseline.
   benchmark.population_sizes:
     value: see configs/*.yaml
     status: exploratory

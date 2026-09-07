@@ -1355,3 +1355,11 @@ yielding 22/22. The mismatch-greater-than-match order nevertheless persists by
 preregister a recognition-only ablation of projection 013 gap junctions while
 retaining both recurrent GABA records. Do not tune an electrical-coupling gain
 or promote an ablated network.
+
+Registration 553 fixes that electrical-coupling diagnostic before execution.
+Only projection 013, the distal-dendritic within-TRN gap-junction record, is
+removed in the fresh recognition pair. Chemical recurrent GABA, all afferent
+and output paths, the learned coincidence transform, and the effective T scale
+remain unchanged. The result can identify whether electrical coupling is
+necessary for the peripheral inversion, but it cannot select a conductance or
+become a baseline candidate.

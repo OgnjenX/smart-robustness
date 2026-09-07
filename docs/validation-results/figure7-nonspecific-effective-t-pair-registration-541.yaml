@@ -1,0 +1,44 @@
+schema_version: 1
+id: figure7-nonspecific-effective-t-pair-registration-541
+date: '2026-09-07'
+status: registered-before-execution-fixed-pair
+classification: calibrated-effective-t-figure7-pair
+authorization: docs/validation-results/figure7-nonspecific-effective-t-connected-match-assessment-540.yaml
+profile: configs/calibration/figure7_nonspecific_effective_t_connected_match_v1.yaml
+runtime_fingerprint: fa4ab9f0bf2bec4d6ad53cb6a91620047689b6839b146ed7d777d42350c2cdf5
+fixed_candidate:
+  nonspecific_dendritic_calcium_density_scale: 0.1875
+  effective_density_mS_cm2: 46.875
+  source_density_mS_cm2: 250.0
+  comparator: none
+  receptor_prime: none
+execution:
+  fresh_figure6_runs: 1
+  independently_rebuilt_match_runs: 1
+  independently_rebuilt_mismatch_runs: 1
+  parameter_search: false
+official_pass_requirements:
+  figure6_all_existing_gates: true
+  duration_ms: 100.0
+  match_relay_indices: [38, 39, 40, 41, 42]
+  mismatch_relay_nonempty_subset_of: [40]
+  match_more_active_relay_cells: true
+  match_more_trn_events: true
+  match_nonspecific_events: 4
+  mismatch_nonspecific_events: 7
+  match_nonspecific_rate_hz: 40.0
+  mismatch_nonspecific_rate_hz: 70.0
+  no_reconstructed_comparator: true
+  no_calcium_ablation: true
+result_id: figure7-nonspecific-effective-t-pair-542
+result: docs/validation-results/figure7-nonspecific-effective-t-pair-542.yaml
+stopping_rule: >-
+  Execute the fixed pair once after fresh Figure 6 learning. Record complete
+  relay and nonspecific event trains plus aggregate TRN counts. Do not tune or
+  rerun any parameter from mismatch output. A failed gate closes this
+  candidate; a complete pass advances unchanged to separate Figure 10 and
+  spectral holdouts.
+classification_boundary: >-
+  A complete pass reproduces the registered Figure 7 behavior in a calibrated
+  reconstruction. It does not recover the historical T density, validate the
+  remaining SMART figures, or freeze an original-SMART baseline.

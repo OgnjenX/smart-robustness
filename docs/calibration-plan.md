@@ -1442,3 +1442,12 @@ and subsequent recognition trial. Any Figure 6 failure blocks match. Every
 complete match survivor—not a TRN-ranked subset—may advance to separately
 registered mismatch. No recognition-only parameter, interpolation, or extra
 endpoint is allowed.
+
+Artifacts 566--568 close the persistent scale-0.75/T-current cross. Every
+candidate passes all Figure 6 gates and preserves 20 matched relay plus 621 TRN
+events, but all three T scales emit only the three startup nonspecific events.
+The late fourth event from the recognition-only scale-0.75 run disappears when
+the same GABA scale is present during learning. Mismatch remains unconsulted and
+the T grid is not extended. The remaining exact recognition-only match
+survivor, projection-008 scale 0.875 at T scale 0.1875, now requires one
+persistent-consistency test with no new parameter values.

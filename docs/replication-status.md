@@ -3558,3 +3558,13 @@ TRN mismatch excess to 19 events (576/595) from the source control's repeated
 interpolation. A next match-only calibration may cross the already observed
 scale-0.75 TRN headroom with a bounded lower nonspecific T-current grid; this
 would remain an effective reconstruction, not original-source recovery.
+
+Artifacts 566--568 test whether the scale-0.75/TRN-headroom idea survives as a
+single persistent model. Projection-008 scale 0.75 and T scales 0.125, 0.15625,
+and 0.1875 are each applied through fresh learning and match. Every Figure 6
+gate and all 20 matched relay events pass, with 621 TRN events in each case,
+but nonspecific output is only the three startup events for all candidates.
+The recognition-only result therefore does not generalize to persistent
+parameters. The cross is closed without mismatch or grid extension. The only
+remaining already selected value requiring persistent consistency is
+projection-008 scale 0.875 at T scale 0.1875.

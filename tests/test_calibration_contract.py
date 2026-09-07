@@ -8992,3 +8992,32 @@ def test_persistent_gaba_t_cross_is_bounded_and_applies_before_learning() -> Non
     assert "make either parameter recognition-only" in registration[
         "selection_rule"
     ]
+
+
+def test_persistent_gaba_t_cross_has_no_match_survivor() -> None:
+    result_path = (
+        ROOT
+        / "docs/validation-results/figure7-persistent-gaba-t-match-cross-567.yaml"
+    )
+    result = yaml.safe_load(result_path.read_text())
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-persistent-gaba-t-match-cross-assessment-568.yaml"
+        ).read_text()
+    )
+
+    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment[
+        "result_sha256"
+    ]
+    assert not result["mismatch_consulted"]
+    assert len(result["outcomes"]) == 3
+    for outcome in result["outcomes"]:
+        assert all(outcome["figure6_gates"].values())
+        assert outcome["match"]["relay_event_count"] == 20
+        assert outcome["match"]["trn_event_count"] == 621
+        assert outcome["match"]["nonspecific_event_count"] == 3
+        assert not all(outcome["match"]["match_gates"].values())
+    assert assessment["assessment"]["survivor_t_scales"] == []
+    assert not assessment["assessment"]["grid_extension_authorized"]
+    assert not assessment["assessment"]["baseline_promoted"]

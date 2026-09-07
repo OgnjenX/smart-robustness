@@ -574,9 +574,9 @@ parameters:
     note: Both scales preserve overlap-only mismatch and 4/7 nonspecific output but fail TRN ordering. Scale 0.875 narrows the inversion to 576 match versus 595 mismatch; source control repeats 549 versus 584. No interpolation or further one-dimensional scale is authorized.
   calibration.figure7.persistent_gaba_t_cross:
     value: persistent projection-008 scale 0.75 crossed with nonspecific T scales 0.125, 0.15625, and 0.1875
-    status: preregistered-match-only-awaiting-execution
-    source: Registration 566, authorized by Artifacts 563--565 and prior T-current localization
-    note: Both calibrated dimensions apply in fresh Figure 6 and recognition. Figure 6 must pass before match, and mismatch remains locked. This is an effective two-factor reconstruction, not recovered source or a frozen baseline.
+    status: completed-no-survivor-family-closed
+    source: Artifacts 566--568, authorized by Artifacts 563--565 and prior T-current localization
+    note: All candidates pass Figure 6 and preserve 20 match relay plus 621 TRN events, but each emits only three startup nonspecific events. The recognition-only result does not transfer to a fixed model. Mismatch was not consulted and no grid extension is authorized.
   benchmark.population_sizes:
     value: see configs/*.yaml
     status: exploratory

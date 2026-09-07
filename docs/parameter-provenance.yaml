@@ -592,6 +592,11 @@ parameters:
     status: completed-valid-readout-confirms-wrong-effective-drive-order
     source: Artifacts 575--580, authorized by Artifacts 572--574
     note: The corrected monitor preserves exact event identity and returns finite values. Peak gate/current range are equal because the bounded gate saturates, while mismatch integrated GABA is 1154.93 versus match 1110.27 gate-ms. The mechanistic inhibition direction is wrong as well as the event-count order. Candidate remains closed and unfrozen.
+  validation.figure7.peripheral_trn_localization:
+    value: unchanged persistent pair with source-resolved diagnostics on all 81 TRN cells
+    status: preregistered-read-only-awaiting-execution
+    source: Registration 581, authorized by Artifact 580
+    note: Artifact 549 directly measured afferent drive only in nine central cells. This full-sheet audit tests whether the 72-cell mismatch excess reflects broad afferent drive or recurrent TRN propagation. It changes no model or score and cannot reopen the candidate.
   benchmark.population_sizes:
     value: see configs/*.yaml
     status: exploratory

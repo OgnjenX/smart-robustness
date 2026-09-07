@@ -1511,3 +1511,11 @@ not merely a raw-event-count proxy failure. Keep the candidate closed. The next
 gate must address the upstream excess of peripheral mismatch TRN activity from a
 source-justified mechanism and must preregister fresh learning, both conditions,
 and direct-drive readouts together.
+
+Registration 581 first corrects an evidence gap in that localization. Artifact
+549 measured afferent gates for nine central TRN cells, not the 72 peripheral
+cells that create the inversion. The fixed read-only audit records the same
+source-resolved gates and currents for all 81 cells while repeating fresh
+learning, match, mismatch, and the direct nonspecific GABA integral. No model or
+score changes. Only a finite, exact-identity run may distinguish broad afferent
+recruitment from propagation inside recurrent TRN circuitry.

@@ -9267,3 +9267,28 @@ def test_recorded_inhibitory_drive_audit_is_valid_and_confirms_order() -> None:
     assert assessment["assessment"]["candidate_closed"]
     assert not assessment["assessment"]["candidate_reopened"]
     assert not assessment["assessment"]["baseline_promoted"]
+
+
+def test_peripheral_trn_localization_is_full_sheet_and_read_only() -> None:
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-peripheral-trn-localization-registration-581.yaml"
+        ).read_text()
+    )
+    profile_path = ROOT / registration["profile"]
+    script_path = ROOT / registration["script"]
+
+    assert hashlib.sha256(profile_path.read_bytes()).hexdigest() == registration[
+        "profile_sha256"
+    ]
+    assert hashlib.sha256(script_path.read_bytes()).hexdigest() == registration[
+        "script_sha256"
+    ]
+    assert registration["diagnostic_scope"]["recorded_indices"] == "all 81 TRN cells"
+    assert len(registration["diagnostic_scope"]["central_indices"]) == 9
+    assert len(registration["added_readouts_only"]) == 6
+    assert registration["required_event_identity"]["match"]["trn_events"] == 576
+    assert registration["required_event_identity"]["mismatch"]["trn_events"] == 595
+    assert "stronger than the direct evidence" in registration["evidence_correction"]
+    assert "cannot" in registration["boundary"]

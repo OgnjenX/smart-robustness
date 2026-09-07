@@ -1,0 +1,55 @@
+schema_version: 1
+id: figure7-peripheral-trn-localization-registration-581
+date: '2026-09-08'
+status: registered-before-execution-read-only-full-sheet-diagnostic
+classification: fixed-persistent-full-sheet-trn-source-localization
+profile: configs/calibration/figure7_learned_coincidence_effective_t_pair_v1.yaml
+profile_sha256: 4b6aa0bdf4fb844e428fb330f34970900cc8bc741183b2d8e6e73789cba0b30f
+script: scripts/run_figure7_peripheral_trn_localization.py
+script_sha256: 16f61d703a025249633fb636a86e93f9f7d59c8967ceb6e1c0bf64a120446e4a
+runtime_fingerprint: fa4ab9f0bf2bec4d6ad53cb6a91620047689b6839b146ed7d777d42350c2cdf5
+authorization: docs/validation-results/figure7-persistent-inhibitory-drive-recorded-assessment-580.yaml
+result_id: figure7-peripheral-trn-localization-582
+result: docs/validation-results/figure7-peripheral-trn-localization-582.yaml
+assessment: docs/validation-results/figure7-peripheral-trn-localization-assessment-583.yaml
+persistent_projection_scale:
+  projection_id: modeldb112923.projection.008
+  scale: 0.875
+nonspecific_t_scale: 0.1875
+diagnostic_scope:
+  central_indices: [22, 31, 38, 39, 40, 41, 42, 49, 58]
+  peripheral_indices: all other indices in the 9x9 TRN sheet
+  recorded_indices: all 81 TRN cells
+added_readouts_only:
+  - per-cell TRN event counts for all 81 cells
+  - per-cell projection-010 relay AMPA gate integrals for all 81 cells
+  - per-cell projection-012 layer-6II AMPA gate integrals for all 81 cells
+  - per-cell projection-009 layer-6II NMDA gate integrals for all 81 cells
+  - source-separated current ranges for all 81 TRN cells
+  - repeated direct TRN-to-nonspecific integrated GABA readout
+required_event_identity:
+  match:
+    relay_events: 20
+    trn_events: 576
+    nonspecific_events: 4
+  mismatch:
+    relay_events: 3
+    trn_events: 595
+    nonspecific_events: 7
+decision_rule: >-
+  Interpret only if fresh Figure 6 passes, every archived event total repeats,
+  and each source-gate series contains all 81 finite values. If peripheral
+  mismatch excitatory-gate integrals exceed match, localize the excess partly
+  to broad afferent recruitment. If peripheral match integrals are greater or
+  equal while peripheral mismatch emits more, localize the inversion inside
+  recurrent TRN dynamics. Mixed projection orders remain unresolved and require
+  a separately registered causal decomposition.
+evidence_correction: >-
+  Artifact 549 measured source gates for only nine central cells, so its claim
+  that the other 72-cell inversion arose exclusively inside TRN was stronger
+  than the direct evidence. This audit tests that inference without changing the
+  model.
+boundary: >-
+  No equation, parameter, connectivity, learned state, stimulus, timing,
+  protocol, or score changes. Full-sheet monitoring is read-only and cannot
+  reopen the closed candidate, pass the failed gate, or promote a baseline.

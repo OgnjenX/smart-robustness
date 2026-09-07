@@ -3606,3 +3606,11 @@ versus 1110.27 gate-ms). Thus the wrong event-count order reflects a wrong
 effective inhibitory-drive order too. The closed candidate cannot be rescued by
 reinterpreting the proxy. Upstream peripheral TRN recruitment during mismatch is
 the next mechanism that requires source-constrained diagnosis.
+
+Registration 581 narrows that diagnosis without changing the model. The prior
+afferent decomposition sampled only nine central TRN cells, whereas the global
+inversion comes from the other 72. The new hash-pinned audit records relay and
+corticoreticular gate integrals plus source-separated current ranges for every
+TRN cell in the unchanged fresh-learning pair. This will test whether the
+peripheral excess is already present in external drive or emerges within the
+recurrent TRN sheet.

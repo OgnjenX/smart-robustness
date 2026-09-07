@@ -130,6 +130,12 @@ registered learning readouts identical to the archived-GABA control.
 Registration 501 fixes one recognition match that changes only the official
 projection-049 tuple; mismatch remains locked until exact 40 Hz is obtained.
 
+Artifacts 501--503 reject the supplement tuple at the same 24-event match
+output as its control. Registration 504 returns to Figure 6 for the remaining
+paper-versus-executable nonspecific calcium-kinetics equation swap. Calcium
+density and all other factors remain fixed; no kinetic interpolation is
+allowed.
+
 ### D — locked holdout evaluation
 
 Without changing the candidate, evaluate:

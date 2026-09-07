@@ -1,0 +1,52 @@
+schema_version: 1
+id: figure7-legacy-detector-modeldb-nonspecific-paper-axial-supplement-gaba-match-assessment-503
+date: '2026-09-07'
+status: match-failed-source-gaba-tuple-no-effect-mismatch-locked
+registration: docs/validation-results/figure7-legacy-detector-modeldb-nonspecific-paper-axial-supplement-gaba-match-registration-501.yaml
+result: docs/validation-results/figure7-legacy-detector-modeldb-nonspecific-paper-axial-supplement-gaba-match-502.yaml
+result_sha256: 42435916e7b9f39a7e965410d2c6881087ae660549b709f870dfb69a788a4cc5
+control: docs/validation-results/figure7-legacy-detector-modeldb-nonspecific-paper-axial-match-496.yaml
+result_summary:
+  training_repeat_verified: true
+  relay_active_indices: [38, 39, 40, 41, 42]
+  relay_events_per_active_index: 4
+  relay_event_count: 20
+  trn_event_count: 550
+  nonspecific_event_count: 24
+  nonspecific_rate_hz: 240.0
+  top_down_current_termination_ms: 5.95
+control_identity:
+  relay_event_train_identical: true
+  trn_event_train_count_identical: true
+  nonspecific_event_train_identical: true
+  category_termination_identical: true
+gates:
+  relay_active_indices: true
+  minimum_relay_events_per_active_index: true
+  selected_category_event_available: true
+  top_down_current_terminated_on_first_selected_event: true
+  trn_events_present: true
+  nonspecific_events: false
+  nonspecific_rate_hz: false
+  figure7_target_duration: true
+  no_reconstructed_comparator: true
+  no_calcium_ablation: true
+assessment:
+  preregistered_match_contract_passed: false
+  exact_candidate_closed: true
+  mismatch_run_authorized: false
+  official_distal_gaba_conflict_resolves_rate: false
+  gaba_interpolation_authorized: false
+  parameter_selected: false
+  original_smart_reproduced: false
+  baseline_promoted: false
+  conclusion: >-
+    The paper-supplement projection-049 tuple leaves every scored recognition
+    event count unchanged from the archived tuple, including 24 nonspecific
+    events. It does not explain the four-event target and is closed without
+    conductance or time-constant interpolation.
+next_step: >-
+  Test the remaining discrete nonspecific T-current source conflict by
+  replacing ModelDB kinetics with the paper's printed Equations 21--27 while
+  retaining the latest fixed network. Begin at Figure 6 and do not tune calcium
+  parameters from recognition output.

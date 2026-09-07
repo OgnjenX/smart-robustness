@@ -79,6 +79,13 @@ every registered population count, relay train, teaching time, and map metric
 identical to the archived-GABA control. Registration 501 therefore isolates
 its effect in one fresh recognition match with an unchanged learned state.
 
+Artifacts 501--503 show that the supplement GABA tuple leaves recognition
+counts unchanged from the archived tuple: 20 horizontal relay events, 550 TRN
+events, and 24 nonspecific events. It is closed without interpolation.
+Registration 504 begins the next discrete official-source factorial at Figure
+6, replacing only nonspecific ModelDB T-type kinetics with the paper's printed
+Equations 21--27.
+
 Artifacts 471--473 complete the identity-locked mismatch calcium replay of the
 failed gain-0.8 candidate. The fresh event train exactly matches Artifact 468,
 and its 10,000-sample trace contains soma/dendrite voltages, T-type currents,

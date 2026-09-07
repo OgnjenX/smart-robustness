@@ -7917,3 +7917,61 @@ def test_supplement_distal_gaba_passes_figure6_and_registers_match() -> None:
         "parameter_search": False,
     }
     assert registration["stopping_rule"].startswith("Repeat Artifact 499 exactly")
+
+
+def test_supplement_gaba_match_is_identical_and_closed() -> None:
+    result = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-legacy-detector-modeldb-nonspecific-paper-axial-supplement-gaba-match-502.yaml"
+        ).read_text()
+    )
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-legacy-detector-modeldb-nonspecific-paper-axial-supplement-gaba-match-assessment-503.yaml"
+        ).read_text()
+    )
+
+    match = result["match_result"]
+    assert len(match["relay_spike_times_ms"]) == 20
+    assert len(match["trn_spike_times_ms"]) == 550
+    assert len(match["nonspecific_spike_times_ms"]) == 24
+    assert assessment["result_sha256"] == (
+        "42435916e7b9f39a7e965410d2c6881087ae660549b709f870dfb69a788a4cc5"
+    )
+    assert all(assessment["control_identity"].values())
+    assert not assessment["assessment"]["official_distal_gaba_conflict_resolves_rate"]
+    assert not assessment["assessment"]["gaba_interpolation_authorized"]
+    assert not assessment["assessment"]["mismatch_run_authorized"]
+
+
+def test_paper_nonspecific_calcium_kinetics_factorial_is_preregistered() -> None:
+    profile = yaml.safe_load(
+        (
+            ROOT
+            / "configs/calibration/figure6_legacy_detector_modeldb_nonspecific_paper_kinetics_v1.yaml"
+        ).read_text()
+    )
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure6-legacy-detector-modeldb-nonspecific-paper-kinetics-registration-504.yaml"
+        ).read_text()
+    )
+
+    overrides = profile["runtime_overrides"]
+    assert overrides["nonspecific_intrinsic_cell_convention"] == "modeldb_112923"
+    assert overrides["nonspecific_axial_convention"] == "paper_literal"
+    assert overrides["nonspecific_calcium_kinetics_convention"] == "paper_2008"
+    assert overrides["nonspecific_distal_gaba_source_convention"] == (
+        "paper_supplement_1p5_1_7"
+    )
+    assert profile["factorial_boundary"]["sole_change"] == (
+        "nonspecific calcium kinetics from modeldb_112923 to paper_2008"
+    )
+    assert registration["execution"] == {
+        "figure6_learning_runs": 1,
+        "figure7_runs": 0,
+        "parameter_search": False,
+    }

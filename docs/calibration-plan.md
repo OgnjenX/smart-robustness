@@ -1409,3 +1409,11 @@ control 1.0. Fresh Figure 6 must pass first. Every endpoint is evaluated before
 mismatch is consulted; only endpoints preserving the exact five-cell/20-relay
 and four-event nonspecific match gates may advance. No endpoint is selected by
 TRN count, and no interpolation or source-recovery claim is allowed.
+
+Artifacts 560--562 complete the match-only screen without consulting mismatch.
+Only scales 0.875 and 1.0 preserve the exact 20-relay/five-cell/four-event
+nonspecific match gates, with 576 and 549 TRN events respectively. Scale 0.75
+gives five nonspecific events, 0.9375 gives three, and 0.96875 gives only 17
+relay and three nonspecific events. The response is non-monotonic, so no
+interpolation is authorized. Register one fresh mismatch for each of exactly
+the two survivors and no other scale.

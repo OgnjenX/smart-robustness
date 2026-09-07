@@ -3541,3 +3541,11 @@ evidence supports a third or projection-specific geometry. Further work may
 screen projection 008 only as an explicitly calibrated effective transfer.
 Such a survivor could support downstream behavioral reproduction but could not
 be called the recovered or frozen original SMART implementation.
+
+Artifacts 560--562 open and complete a bounded, explicitly calibrated
+projection-008 match screen. Fresh Figure 6 passes. Of scales 0.75, 0.875,
+0.9375, 0.96875, and 1.0, only 0.875 and source control 1.0 retain all five
+horizontal cells, 20 relay events, and four nonspecific events. The other three
+fail, and the response is non-monotonic. Mismatch has not been consulted. Only
+the two exact survivors may advance to fixed mismatch trials; no interpolation
+or recovered-source claim is allowed.

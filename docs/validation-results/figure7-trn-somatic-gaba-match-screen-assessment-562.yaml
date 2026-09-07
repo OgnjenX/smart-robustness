@@ -1,0 +1,34 @@
+schema_version: 1
+id: figure7-trn-somatic-gaba-match-screen-assessment-562
+date: '2026-09-07'
+status: assessed-two-match-survivors-mismatch-authorized
+registration: docs/validation-results/figure7-trn-somatic-gaba-match-screen-registration-560.yaml
+result: docs/validation-results/figure7-trn-somatic-gaba-match-screen-561.yaml
+result_sha256: 11b790dcfc9c6bb5d9cbd0e84f9a20f81b282ff00e618dff10f85f11683c0cac
+runtime_fingerprint: fa4ab9f0bf2bec4d6ad53cb6a91620047689b6839b146ed7d777d42350c2cdf5
+assessment:
+  fresh_figure6_passed: true
+  all_registered_match_endpoints_executed: true
+  mismatch_consulted: false
+  match_survivor_scales: [0.875, 1.0]
+  response_monotonic: false
+  interpolation_authorized: false
+  original_smart_reproduced: false
+  baseline_promoted: false
+quantitative_summary:
+  scale_0_75_relay_trn_nonspecific: [20, 621, 5]
+  scale_0_875_relay_trn_nonspecific: [20, 576, 4]
+  scale_0_9375_relay_trn_nonspecific: [20, 632, 3]
+  scale_0_96875_relay_trn_nonspecific: [17, 617, 3]
+  scale_1_0_relay_trn_nonspecific: [20, 549, 4]
+interpretation: >-
+  Only effective scale 0.875 and source control 1.0 preserve all fixed match
+  gates. Nearby scales fail in different, non-monotonic ways, so the observed
+  screen supplies no valid interpolation rule. The result is still match-only;
+  it does not establish Figure 7 reproduction or recover a source parameter.
+next_gate: >-
+  Preregister and execute one fresh mismatch trial for each of the exact two
+  match survivors, 0.875 and 1.0, with every other profile field unchanged.
+  Require overlap-only relay activity, fewer match-active relay cells, match
+  greater than mismatch TRN events, and exactly seven nonspecific events. Close
+  both endpoints if they fail; do not add or interpolate scales.

@@ -564,9 +564,9 @@ parameters:
     note: The current convention connects every TRN cell to all 80 peers and excludes self. Wrapping, source-peak scaling, and the 0.001 cutoff are source-supported; exact ring=true geometry is not recoverable. The audit permits a separately labeled effective-scale calibration, not a source rewrite or original-baseline claim.
   calibration.figure7.trn_somatic_gaba_effective_scale:
     value: match-only finite grid 0.75, 0.875, 0.9375, 0.96875, and source control 1.0 on projection 008
-    status: preregistered-calibrated-screen-awaiting-execution
-    source: Registration 560, authorized by Artifact 559 and causal Artifacts 556--558
-    note: This is an effective behavioral calibration for missing ring semantics. All match endpoints run before mismatch; survivors must preserve exact relay and nonspecific match gates. No scale is a recovered SMART parameter or frozen baseline.
+    status: match-screen-completed-two-survivors
+    source: Artifacts 560--562, authorized by Artifact 559 and causal Artifacts 556--558
+    note: Scales 0.875 and 1.0 pass all match gates; 0.75, 0.9375, and 0.96875 fail. Mismatch was not consulted and is authorized only for the two exact survivors. The response is non-monotonic, so no interpolation or additional endpoint is permitted. No scale is a recovered SMART parameter or frozen baseline.
   benchmark.population_sizes:
     value: see configs/*.yaml
     status: exploratory

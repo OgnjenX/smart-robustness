@@ -8866,3 +8866,33 @@ def test_trn_somatic_gaba_match_screen_is_bounded_and_mismatch_locked() -> None:
         "locked_until_assessment"
     ]
     assert "Do not interpolate" in registration["selection_rule"]
+
+
+def test_trn_somatic_gaba_match_screen_selects_only_exact_gate_survivors() -> None:
+    result_path = (
+        ROOT
+        / "docs/validation-results/figure7-trn-somatic-gaba-match-screen-561.yaml"
+    )
+    result = yaml.safe_load(result_path.read_text())
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-trn-somatic-gaba-match-screen-assessment-562.yaml"
+        ).read_text()
+    )
+
+    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment[
+        "result_sha256"
+    ]
+    assert all(result["figure6_gates"].values())
+    assert not result["mismatch_consulted"]
+    survivors = [
+        outcome["effective_scale"]
+        for outcome in result["outcomes"]
+        if all(outcome["match"]["match_gates"].values())
+    ]
+    assert survivors == [0.875, 1.0]
+    assert assessment["assessment"]["match_survivor_scales"] == survivors
+    assert not assessment["assessment"]["response_monotonic"]
+    assert not assessment["assessment"]["interpolation_authorized"]
+    assert not assessment["assessment"]["baseline_promoted"]

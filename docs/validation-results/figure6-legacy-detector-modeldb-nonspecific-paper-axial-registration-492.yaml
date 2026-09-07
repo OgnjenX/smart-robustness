@@ -1,0 +1,49 @@
+schema_version: 1
+id: figure6-legacy-detector-modeldb-nonspecific-paper-axial-registration-492
+date: '2026-09-07'
+status: registered-before-execution
+classification: official-source-nonspecific-axial-factorial
+profile: configs/calibration/figure6_legacy_detector_modeldb_nonspecific_paper_axial_v1.yaml
+predecessor: docs/validation-results/figure7-legacy-detector-modeldb-nonspecific-match-assessment-491.yaml
+result: docs/validation-results/figure6-legacy-detector-modeldb-nonspecific-paper-axial-493.yaml
+hypothesis: >-
+  The two-event match endpoint may be specific to the archived serialized axial
+  transfer. Paper Equation 2 is the remaining discrete official alternative
+  for the same complete nonspecific cell and recovered detector.
+fixed_candidate:
+  nonspecific_intrinsic_cell_convention: modeldb_112923
+  nonspecific_axial_convention: paper_literal
+  nonspecific_calcium_kinetics_convention: modeldb_112923
+  spike_event_rule: falling_threshold_crossing
+  spike_event_threshold_mV: -20.0
+  projection_weight_scales:
+    modeldb112923.projection.000: 0.01
+    modeldb112923.projection.001: 0.01
+    modeldb112923.projection.004: 0.03
+fixed_gates:
+  relay_active_indices: [38, 39, 40, 41, 42]
+  events_per_active_relay: 4
+  total_relay_events: 20
+  cortical_chain_complete: true
+  causal_learning_pair: true
+  bottom_up_horizontal_contrast: '>0'
+  top_down_horizontal_contrast: '>0'
+execution:
+  figure6_learning_runs: 1
+  figure7_runs: 0
+  parameter_search: false
+stopping_rule: >-
+  Run one fresh complete Figure 6 episode and classify every fixed gate. Do not
+  inspect match unless all gates pass; do not fit an axial scale or interpolate
+  between the two official equations.
+interpretation_boundary: >-
+  This resolves a discrete paper-versus-executable source conflict. Transfer
+  factors and category-current amplitude remain calibrated, so a pass is not
+  original SMART reproduction.
+locked_holdouts:
+  - figure7_match
+  - figure7_mismatch
+  - figure10_reset
+  - figure14_spectra
+  - figure15_local_synchrony
+  - figure16_long_range_synchrony

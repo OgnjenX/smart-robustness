@@ -107,6 +107,13 @@ shape gates all pass. Registration 489 fixes one fresh 100-ms match with actual
 learned weights, no expansion, no prime, and no comparator. Mismatch remains
 locked until exact 40-Hz match output is demonstrated.
 
+Artifacts 489--491 fail that exact match at two nonspecific events while
+retaining the complete four-volley horizontal relay pattern. Do not interpolate
+between the 33-event paper-cell and two-event executable-cell endpoints.
+Registration 492 instead fixes the one-factor official-source axial comparison:
+the complete executable nonspecific cell under paper Equation 2, starting at
+the full Figure 6 prerequisite.
+
 ### D — locked holdout evaluation
 
 Without changing the candidate, evaluate:

@@ -1,0 +1,53 @@
+schema_version: 1
+id: figure7-legacy-detector-modeldb-nonspecific-match-assessment-491
+date: '2026-09-07'
+status: match-failed-nonspecific-underproduction-mismatch-locked
+registration: docs/validation-results/figure7-legacy-detector-modeldb-nonspecific-match-registration-489.yaml
+result: docs/validation-results/figure7-legacy-detector-modeldb-nonspecific-match-490.yaml
+result_sha256: 10a4ec871829c541f65c15b2c449d11cc1560cf44a2c2bb0579c9432fd41b2d5
+candidate:
+  nonspecific_intrinsic_cell_convention: modeldb_112923
+  nonspecific_axial_convention: kinness_serialized_edge
+  detector: falling_threshold_crossing_at_physical_minus20_mV
+result_summary:
+  training_repeat_verified: true
+  relay_active_indices: [38, 39, 40, 41, 42]
+  relay_events_per_active_index: 4
+  relay_event_count: 20
+  trn_event_count: 549
+  nonspecific_event_count: 2
+  nonspecific_event_times_ms: [2.06, 4.9]
+  nonspecific_rate_hz: 20.0
+  first_selected_category_event_ms: 5.95
+  top_down_current_termination_ms: 5.95
+gates:
+  relay_active_indices: true
+  minimum_relay_events_per_active_index: true
+  selected_category_event_available: true
+  top_down_current_terminated_on_first_selected_event: true
+  trn_events_present: true
+  nonspecific_events: false
+  nonspecific_rate_hz: false
+  figure7_target_duration: true
+  no_reconstructed_comparator: true
+  no_calcium_ablation: true
+assessment:
+  preregistered_match_contract_passed: false
+  exact_candidate_closed: true
+  mismatch_run_authorized: false
+  relay_match_mechanism_preserved: true
+  failure_localized_to_nonspecific_output: true
+  interpolation_between_cell_sources_authorized: false
+  parameter_selected: false
+  original_smart_reproduced: false
+  baseline_promoted: false
+  conclusion: >-
+    The complete SMART.nml nonspecific cell and serialized axial edges retain
+    the exact four-volley horizontal relay match and correct category-current
+    termination, but emit only two nonspecific events rather than four. This
+    endpoint fails and mismatch is not run. The 33-versus-2 source endpoints
+    do not authorize interpolation of channel or axial parameters.
+next_step: >-
+  Isolate the remaining official-source axial conflict: retain the complete
+  SMART.nml nonspecific intrinsic cell and recovered detector while replacing
+  only its serialized axial edges with paper Equation 2. Begin at Figure 6.

@@ -50,6 +50,15 @@ during learning falls from 34 to two events, but this is not used as a Figure 7
 selection target. One fresh comparator-free match is now registered; original
 SMART remains unreproduced and unfrozen.
 
+Artifacts 489--491 evaluate that fresh match. The four-volley horizontal relay
+pattern and 5.95-ms category-current termination survive, with 549 TRN events,
+but the complete SMART.nml nonspecific cell emits only at 2.06 and 4.90 ms:
+20 Hz rather than 40 Hz. Mismatch remains locked. The prior paper-cell endpoint
+gave 330 Hz, but these endpoints do not license interpolation. Registration 492
+instead isolates the remaining discrete official-source conflict by retaining
+the executable cell and changing only nonspecific axial dynamics from
+serialized KInNeSS edges to paper Equation 2, beginning at Figure 6.
+
 Artifacts 471--473 complete the identity-locked mismatch calcium replay of the
 failed gain-0.8 candidate. The fresh event train exactly matches Artifact 468,
 and its 10,000-sample trace contains soma/dendrite voltages, T-type currents,

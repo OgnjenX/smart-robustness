@@ -1279,3 +1279,12 @@ event, it remains a low-source-confidence effective candidate. Add it as an
 explicit fingerprinted convention and run one fresh connected Figure 6 and
 match with no other change. Do not open mismatch unless both prerequisites
 pass exactly.
+
+Artifacts 538--540 verify scale 0.1875 in the complete feedback network. The
+fresh Figure 6 prerequisite passes every gate, including 20 relay events split
+four per trained horizontal cell and the complete cortical learning chain. The
+connected match also passes every fixed gate: cells 38--42 emit 20 relay events
+and nonspecific thalamus emits four events in 100 ms. One vertical mismatch is
+now authorized under the identical fingerprint. No mismatch-driven retuning is
+permitted; failure closes this candidate, while a pass advances to the
+preregistered spectral/reset holdouts.

@@ -2773,6 +2773,15 @@ The unresolved mechanism is bottom-up-driven relay escape through the temporal
 profile of reticular inhibition. No official gate changes, and Figure 10 and
 spectral holdouts remain locked.
 
+Artifacts 538--540 restore the selected scale to the complete connected
+network. Fresh Figure 6 retains exactly 20 relay events, four per horizontal
+cell, the full cortical chain, causal learning pair, and positive top-down
+orientation contrast. The fixed match then retains relay cells 38--42 with 20
+events and emits exactly four nonspecific events (40 Hz), with no reconstructed
+comparator. The effective candidate therefore passes connected match and
+authorizes one fixed mismatch. Full Figure 7, gamma/beta/reset, and original
+SMART remain unreproduced and unfrozen until that holdout passes.
+
 Artifacts 535--537 perform the permitted match-only effective T-conductance
 screen on that fixed replay trace. The full preregistered grid from zero to the
 paper density is finite and was executed without interpolation. Scale 0.1875,

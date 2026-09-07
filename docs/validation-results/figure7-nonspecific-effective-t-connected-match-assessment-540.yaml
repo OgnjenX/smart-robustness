@@ -1,0 +1,28 @@
+schema_version: 1
+id: figure7-nonspecific-effective-t-connected-match-assessment-540
+date: '2026-09-07'
+status: assessed-connected-match-pass
+registration: docs/validation-results/figure7-nonspecific-effective-t-connected-match-registration-538.yaml
+result: docs/validation-results/figure7-nonspecific-effective-t-connected-match-539.yaml
+result_sha256: bc53521a1728e207b5c1addf0982297016ced3a146d96d6442901180c8015bd4
+runtime_fingerprint: fa4ab9f0bf2bec4d6ad53cb6a91620047689b6839b146ed7d777d42350c2cdf5
+assessment:
+  figure6_all_gates_pass: true
+  connected_match_all_gates_pass: true
+  match_nonspecific_event_count: 4
+  match_nonspecific_rate_hz: 40.0
+  no_other_parameter_change: true
+  connected_candidate_survives: true
+  mismatch_authorized: true
+  original_smart_reproduced: false
+  baseline_promoted: false
+interpretation: >-
+  Scale 0.1875 survives restoration of the complete feedback network and fresh
+  learning. It is now a calibrated match candidate rather than merely an
+  isolated-trace candidate. Its historical-source confidence remains low
+  because it reduces the printed Table-3 density from 250 to 46.875 mS/cm2.
+next_gate: >-
+  Preregister and run exactly one vertical mismatch using the same runtime,
+  fresh Figure 6 weights, and fixed protocol. Require the source-described
+  relay/TRN direction and exactly seven nonspecific events (70 Hz). Do not
+  retune this or any other parameter from mismatch output.

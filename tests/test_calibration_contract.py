@@ -8429,3 +8429,34 @@ def test_effective_nonspecific_t_grid_selects_only_registered_match_survivor() -
     assert not assessment["interpolation_or_extension_used"]
     assert not assessment["mismatch_authorized"]
     assert not assessment["original_smart_reproduced"]
+
+
+def test_effective_nonspecific_t_connected_match_passes_before_mismatch() -> None:
+    result = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-nonspecific-effective-t-connected-match-539.yaml"
+        ).read_text()
+    )
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-nonspecific-effective-t-connected-match-assessment-540.yaml"
+        ).read_text()
+    )
+
+    assert result["runtime_fingerprint"] == (
+        "fa4ab9f0bf2bec4d6ad53cb6a91620047689b6839b146ed7d777d42350c2cdf5"
+    )
+    assert result["figure6"]["population_spikes"]["thalamic_relay"] == 20
+    assert all(result["figure6"]["gates"].values())
+    assert result["match"]["relay_active_indices"] == [38, 39, 40, 41, 42]
+    assert result["match"]["relay_event_count"] == 20
+    assert result["match"]["nonspecific_event_count"] == 4
+    assert all(result["match"]["gates"].values())
+    assert not result["mismatch_consulted"]
+    assert assessment["result_sha256"] == (
+        "bc53521a1728e207b5c1addf0982297016ced3a146d96d6442901180c8015bd4"
+    )
+    assert assessment["assessment"]["mismatch_authorized"]
+    assert not assessment["assessment"]["original_smart_reproduced"]

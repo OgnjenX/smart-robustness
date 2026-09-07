@@ -8767,3 +8767,45 @@ def test_trn_recurrent_gaba_path_decomposition_is_fixed_and_nonpromotable() -> N
     ]
     assert registration["fixed_control_trn_events_match_mismatch"] == [549, 584]
     assert "Neither arm can be promoted" in registration["boundary"]
+
+
+def test_trn_recurrent_gaba_path_decomposition_localizes_somatic_path() -> None:
+    result_path = (
+        ROOT
+        / "docs/validation-results/figure7-trn-recurrent-gaba-path-decomposition-557.yaml"
+    )
+    result = yaml.safe_load(result_path.read_text())
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-trn-recurrent-gaba-path-decomposition-assessment-558.yaml"
+        ).read_text()
+    )
+
+    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment[
+        "result_sha256"
+    ]
+    assert all(result["figure6_gates"].values())
+    outcomes = {outcome["arm"]: outcome for outcome in result["outcomes"]}
+    soma = outcomes["soma_gaba_removed"]
+    proximal = outcomes["proximal_gaba_removed"]
+    assert [soma[key]["trn_event_count"] for key in ("match", "mismatch")] == [
+        1055,
+        818,
+    ]
+    assert [
+        proximal[key]["trn_event_count"] for key in ("match", "mismatch")
+    ] == [566, 571]
+    assert [
+        soma[key]["nonspecific_event_count"] for key in ("match", "mismatch")
+    ] == [5, 7]
+    assert [
+        proximal[key]["nonspecific_event_count"]
+        for key in ("match", "mismatch")
+    ] == [22, 22]
+    assert assessment["assessment"]["soma_path_removal_reverses_trn_order"]
+    assert not assessment["assessment"][
+        "proximal_path_removal_reverses_trn_order"
+    ]
+    assert not assessment["assessment"]["either_arm_is_behavioral_candidate"]
+    assert not assessment["assessment"]["baseline_promoted"]

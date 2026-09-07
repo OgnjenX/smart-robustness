@@ -1,0 +1,154 @@
+schema_version: 1
+id: figure7-trn-recurrent-gaba-path-decomposition-557
+date: '2026-09-07'
+status: completed-recognition-only-path-decomposition
+classification: recurrent-trn-gaba-compartment-path-decomposition
+registration: docs/validation-results/figure7-trn-recurrent-gaba-path-decomposition-registration-556.yaml
+runtime_fingerprint: fa4ab9f0bf2bec4d6ad53cb6a91620047689b6839b146ed7d777d42350c2cdf5
+figure6_gates:
+  relay_active_indices: true
+  relay_events_per_active_index: true
+  relay_events: true
+  top_down_horizontal_contrast: true
+trn_gap_junction_retained: true
+outcomes:
+  - arm: soma_gaba_removed
+    disabled_projection_ids:
+      - modeldb112923.projection.008
+    match:
+      relay_event_count: 15
+      relay_active_indices: [38, 39, 40, 41, 42]
+      relay_spike_times_ms:
+        - 5.93
+        - 5.93
+        - 5.94
+        - 5.94
+        - 5.94
+        - 65.50
+        - 65.50
+        - 66.25
+        - 66.25
+        - 66.72
+        - 88.01
+        - 88.01
+        - 88.31
+        - 88.31
+        - 88.49
+      category_event_count: 11
+      trn_event_count: 1055
+      trn_diagnostic_index_event_count: 161
+      trn_remaining_index_event_count: 894
+      trn_per_cell_event_count_range: [9, 20]
+      nonspecific_event_count: 5
+      nonspecific_spike_times_ms: [1.35, 3.21, 4.99, 85.19, 87.94]
+    mismatch:
+      relay_event_count: 3
+      relay_active_indices: [40]
+      relay_spike_times_ms: [5.94, 71.87, 91.23]
+      category_event_count: 3
+      trn_event_count: 818
+      trn_diagnostic_index_event_count: 106
+      trn_remaining_index_event_count: 712
+      trn_per_cell_event_count_range: [8, 12]
+      nonspecific_event_count: 7
+      nonspecific_spike_times_ms:
+        - 1.35
+        - 3.21
+        - 4.99
+        - 70.49
+        - 87.55
+        - 90.29
+        - 92.57
+  - arm: proximal_gaba_removed
+    disabled_projection_ids:
+      - modeldb112923.projection.011
+    match:
+      relay_event_count: 15
+      relay_active_indices: [38, 39, 40, 41, 42]
+      relay_spike_times_ms:
+        - 5.93
+        - 5.93
+        - 5.94
+        - 5.94
+        - 5.94
+        - 27.37
+        - 27.39
+        - 27.39
+        - 27.55
+        - 27.55
+        - 49.96
+        - 49.96
+        - 50.10
+        - 50.11
+        - 50.11
+      category_event_count: 11
+      trn_event_count: 566
+      trn_diagnostic_index_event_count: 80
+      trn_remaining_index_event_count: 486
+      trn_per_cell_event_count_range: [6, 9]
+      nonspecific_event_count: 22
+      nonspecific_spike_times_ms:
+        - 1.35
+        - 3.21
+        - 4.99
+        - 24.27
+        - 27.03
+        - 29.31
+        - 31.38
+        - 33.33
+        - 35.20
+        - 37.03
+        - 38.83
+        - 40.61
+        - 42.39
+        - 44.17
+        - 45.94
+        - 47.71
+        - 49.48
+        - 51.24
+        - 53.00
+        - 54.75
+        - 56.50
+        - 58.25
+    mismatch:
+      relay_event_count: 3
+      relay_active_indices: [40]
+      relay_spike_times_ms: [5.94, 26.76, 49.86]
+      category_event_count: 4
+      trn_event_count: 571
+      trn_diagnostic_index_event_count: 71
+      trn_remaining_index_event_count: 500
+      trn_per_cell_event_count_range: [6, 8]
+      nonspecific_event_count: 22
+      nonspecific_spike_times_ms:
+        - 1.35
+        - 3.21
+        - 4.99
+        - 23.67
+        - 26.42
+        - 28.71
+        - 30.78
+        - 32.73
+        - 34.60
+        - 36.42
+        - 38.21
+        - 39.98
+        - 41.74
+        - 43.50
+        - 45.25
+        - 46.99
+        - 48.73
+        - 50.47
+        - 52.20
+        - 53.94
+        - 55.67
+        - 57.40
+capture_note: >-
+  This compact archival record preserves every population total, relay event,
+  nonspecific event, field/periphery total, and observed per-cell range needed
+  for the registered causal decision. The runner additionally emitted all 81
+  per-cell TRN counts and nonzero one-millisecond bins for each condition; the
+  hash-pinned script reproduces those verbose arrays on demand.
+model_candidate: false
+original_smart_reproduced: false
+baseline_promoted: false

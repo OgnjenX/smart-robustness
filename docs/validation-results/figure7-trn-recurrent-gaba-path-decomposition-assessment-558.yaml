@@ -1,0 +1,50 @@
+schema_version: 1
+id: figure7-trn-recurrent-gaba-path-decomposition-assessment-558
+date: '2026-09-07'
+status: assessed-somatic-recurrent-gaba-dominates-inversion
+registration: docs/validation-results/figure7-trn-recurrent-gaba-path-decomposition-registration-556.yaml
+result: docs/validation-results/figure7-trn-recurrent-gaba-path-decomposition-557.yaml
+result_sha256: eb58f8bc50388f3cc7c36194f1feb7c9a3dac2a21e530f46e973714239f0f277
+runtime_fingerprint: fa4ab9f0bf2bec4d6ad53cb6a91620047689b6839b146ed7d777d42350c2cdf5
+assessment:
+  fixed_figure6_prerequisite_passed: true
+  both_declared_single_path_ablations_executed: true
+  soma_path_removal_reverses_trn_order: true
+  proximal_path_removal_reverses_trn_order: false
+  soma_path_is_necessary_for_control_inversion_under_ablation_test: true
+  proximal_path_is_necessary_for_control_inversion_under_ablation_test: false
+  both_path_removals_reduce_control_mismatch_excess: true
+  simple_opposing_effects_detected: false
+  nonlinear_combined_effects_present: true
+  either_arm_is_behavioral_candidate: false
+  original_smart_reproduced: false
+  baseline_promoted: false
+quantitative_summary:
+  control_trn_events_match_mismatch: [549, 584]
+  control_mismatch_excess: 35
+  soma_removed_trn_events_match_mismatch: [1055, 818]
+  soma_removed_mismatch_excess: -237
+  soma_removed_nonspecific_events_match_mismatch: [5, 7]
+  proximal_removed_trn_events_match_mismatch: [566, 571]
+  proximal_removed_mismatch_excess: 5
+  proximal_removed_nonspecific_events_match_mismatch: [22, 22]
+  dual_removed_trn_events_match_mismatch: [2008, 2028]
+  dual_removed_mismatch_excess: 20
+interpretation: >-
+  Somatic projection 008 is the dominant causal path for the wrong ordering in
+  the current reconstruction: removing it releases match much more strongly
+  than mismatch and reverses the TRN order by 237 events. Proximal projection
+  011 removal reduces but does not eliminate the mismatch excess. Both single
+  removals reduce the control excess, so the preregistered simple-opposition
+  criterion is not met; the dual-ablation result instead demonstrates strong
+  nonlinear interaction. Neither ablation is a solution. Somatic removal
+  changes match relay output from 20 to 15 and nonspecific output from 4 to 5;
+  proximal removal produces pathological 22/22 nonspecific events.
+next_gate: >-
+  Audit the exact executable spatial-kernel construction for ring=true
+  connectFromMany projections against every recoverable KInNeSS source and
+  archived record, focusing on projection 008 normalization, self-connections,
+  border handling, and whether ring denotes annular rather than wrapped
+  Gaussian geometry. Do not tune projection 008 from this behavioral result.
+  Register a new candidate only if the audit yields a discrete source-justified
+  alternative; otherwise record the source-semantics limit.

@@ -554,9 +554,9 @@ parameters:
     note: Removing projection 013 raises the mismatch excess from 35 to 57 TRN events (551 match, 608 mismatch), with 56 events of the difference outside the field-centered cells. Gap junctions restrain rather than generate the failed mismatch regime. The ablation is non-promotable and selects no conductance or topology.
   validation.figure7.trn_recurrent_gaba_path_decomposition:
     value: separate recognition-only removal of somatic record 008 and proximal record 011
-    status: preregistered-causal-decomposition-awaiting-execution
-    source: Registration 556, authorized by Artifacts 553--555
-    note: Both arms retain the other chemical recurrent path and projection 013. The fixed comparison asks whether the two compartment paths have opposing effects hidden by their dual ablation. Neither arm can become the baseline or select a replacement weight.
+    status: completed-somatic-path-dominates-inversion
+    source: Artifacts 556--558, authorized by Artifacts 553--555
+    note: Removing somatic record 008 reverses the TRN order to 1055 match versus 818 mismatch; removing proximal record 011 leaves 566 versus 571. Neither arm preserves the full behavioral contract. The result authorizes a source audit of ring=true/connectFromMany semantics, not weight tuning or baseline promotion.
   benchmark.population_sizes:
     value: see configs/*.yaml
     status: exploratory

@@ -3518,3 +3518,15 @@ mismatch relay cell gains a late fourth event and nonspecific output becomes
 against the erroneous mismatch-wide regime. The next diagnostic separates the
 somatic and proximal recurrent GABA paths to test for opposing effects hidden
 by the dual ablation. Original SMART remains unreproduced and unfrozen.
+
+Artifacts 556--558 isolate the dominant inversion mechanism to somatic
+recurrent-GABA projection 008 in the present reconstruction. Removing only 008
+reverses the TRN order to 1055 match versus 818 mismatch; removing only proximal
+record 011 leaves a much smaller 566-versus-571 inversion. Both removals reduce
+the control's 35-event mismatch excess, but the combined 2008/2028 result is
+non-additive. Neither ablation reproduces Figure 7: the somatic arm gives 15
+match relay events and 5/7 nonspecific events, while the proximal arm gives
+15/3 relay events and 22/22 nonspecific events. The next step is a source audit
+of the unresolved `ring=true`/`connectFromMany` spatial semantics for record
+008, not behavioral weight fitting. Original SMART remains unreproduced and
+unfrozen.

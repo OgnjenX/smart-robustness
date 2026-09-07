@@ -1379,3 +1379,15 @@ proximal record 011. Each retains the other chemical path, projection 013 gap
 junctions, all afferent/output paths, and the unchanged calibrated pair. The
 fixed 549/584 control supplies the reference. Neither arm can be tuned,
 promoted, or interpreted as recovered original SMART.
+
+Artifacts 556--558 identify somatic recurrent-GABA projection 008 as the
+dominant causal path for the inversion in this reconstruction. Removing 008
+reverses the TRN order to 1055/818, whereas removing proximal record 011 leaves
+a reduced 566/571 inversion. Both removals reduce the fixed 35-event mismatch
+excess, so the preregistered simple-opposition criterion fails; the 2008/2028
+dual-ablation outcome instead shows strong nonlinearity. Neither arm is a
+candidate: somatic removal changes match relay output to 15 and nonspecific
+output to 5/7, while proximal removal produces 22/22. Next audit the unrecovered
+KInNeSS `ring=true`/`connectFromMany` semantics behind projection 008 before
+considering any discrete source-justified alternative. Do not tune its weight
+from these outcomes.

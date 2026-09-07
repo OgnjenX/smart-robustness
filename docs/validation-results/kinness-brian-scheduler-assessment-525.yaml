@@ -1,0 +1,48 @@
+schema_version: 1
+id: kinness-brian-scheduler-assessment-525
+date: '2026-09-07'
+status: scheduling-ambiguity-closed-no-extra-offset
+classification: source-runtime-semantics-assessment
+registration: docs/validation-results/kinness-brian-scheduler-registration-523.yaml
+result: docs/validation-results/kinness-brian-scheduler-audit-524.yaml
+result_sha256: df78bb5523c90890b8d4771a4265caab0796657038628379db12d996e50810ff
+source_support:
+  kinness_framework_url: https://open.bu.edu/items/0e83be53-0aa9-4e52-90a0-d4c071205d62
+  brian_2_9_schedule_url: https://brian2.readthedocs.io/en/2.9.0/reference/brian2.core.html
+  kinness_runtime_semantics:
+    synchronous_time_driven: true
+    synchronized_data_exchange: true
+    fourth_order_runge_kutta: true
+  exact_sanndra_substep_source_available: false
+observed:
+  brian_schedule: [start, groups, thresholds, synapses, resets, end]
+  serialized_projection_047_delay_ms: 0.1
+  gate_at_serialized_arrival: 0.0
+  first_gate_visibility_ms: 0.11
+  integration_dt_ms: 0.01
+  early_nonspecific_events_ms: [0.89, 2.21, 3.49]
+  first_upstream_circuit_event_ms: 5.630000000000001
+assessment:
+  all_preregistered_scheduler_gates_pass: true
+  brian_translation_already_has_next_step_gate_visibility: true
+  add_global_one_step_delay_authorized: false
+  early_nonspecific_events_explained_by_synaptic_feedback: false
+  exact_sanndra_substep_parity_proven: false
+  original_smart_reproduced: false
+  baseline_promoted: false
+conclusion: >-
+  The registered Brian2 translation already enforces a synchronous visibility
+  boundary: a source event with the archived 0.1-ms delay updates the summed
+  ligand gate at 0.11 ms, not at 0.10 ms. Adding another global time-step
+  offset would double-count that boundary and has no surviving source basis.
+  Moreover, three of the 24 nonspecific events occur before any TRN, relay, or
+  category event, so they cannot be caused by recurrent event scheduling.
+  Scheduling is therefore closed as the next correction; the remaining failure
+  must be localized in stimulus/startup and later inhibition-calcium dynamics.
+next_step: >-
+  Register one causal, non-promotable match assay on the unchanged paper-source
+  bundle: import the intact result as control, remove all three archived
+  TRN-to-nonspecific GABA projections in one arm, and remove both
+  layer-6II-to-nonspecific excitation projections in another. Use event counts
+  only to localize whether the 21 late events require inhibitory rebound or
+  corticointralaminar drive; do not select a gain, detector, or parameter.

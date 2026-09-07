@@ -1,0 +1,53 @@
+schema_version: 1
+id: kinness-brian-scheduler-audit-524
+date: '2026-09-07'
+status: scheduler-contract-verified
+classification: source-runtime-semantics-audit
+registration: docs/validation-results/kinness-brian-scheduler-registration-523.yaml
+runtime_fingerprint: 37cf90faf61129d5619e90c02374201db01f48fd7dfdf50c2a19d6989db2aa24
+runtime:
+  brian_version: 2.9.0
+  dt_ms: 0.01
+  network_schedule: [start, groups, thresholds, synapses, resets, end]
+  representative_trn_to_nonspecific_projection:
+    projection_id: modeldb112923.projection.047
+    serialized_delay_ms: 0.1
+    summed_gate_updater: {when: groups, order: -1}
+    presynaptic_event_pathway: {when: synapses, order: -1}
+  nonspecific_cell:
+    state_updater: {when: groups, order: 0}
+    spike_thresholder: {when: thresholds, order: 0}
+    spike_resetter: {when: resets, order: 0}
+    previous_voltage_capture: {when: end, order: 1}
+delivery_microprobe:
+  dt_ms: 0.01
+  serialized_delay_ms: 0.1
+  event_time_ms: 0.0
+  gate_at_serialized_arrival: 0.0
+  first_positive_gate_time_ms: 0.11
+  expected_next_step_time_ms: 0.11
+  next_step_delivery_pass: true
+figure7_event_localization:
+  match_result: docs/validation-results/figure7-legacy-detector-paper-nonspecific-paper-kinetics-match-520.yaml
+  nonspecific_event_count: 24
+  first_trn_event_ms: 5.630000000000001
+  first_relay_event_ms: 5.930000000000001
+  first_category_event_ms: 5.95
+  first_upstream_circuit_event_ms: 5.630000000000001
+  nonspecific_events_before_first_upstream_event_ms: [0.89, 2.21, 3.49]
+  pre_upstream_nonspecific_event_count: 3
+  post_upstream_nonspecific_event_count: 21
+gates:
+  registered_runtime_reconstructed: true
+  default_schedule_order: true
+  summed_gate_precedes_cell_integration: true
+  event_pathway_follows_threshold_detection: true
+  previous_voltage_captured_after_event_processing: true
+  delayed_gate_visible_on_next_integration_step: true
+  early_nonspecific_events_precede_network_feedback: true
+interpretation_boundary: >-
+  Matching synchronous update structure does not prove every unavailable
+  SANNDRA substep implementation. It tests whether the Brian2 translation
+  already has a one-step postsynaptic visibility boundary and whether an extra
+  delay is source-justified. It cannot validate the nonspecific cell equations
+  or promote the classic baseline.

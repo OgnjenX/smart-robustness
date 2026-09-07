@@ -1,0 +1,56 @@
+schema_version: 1
+id: figure7-nonspecific-pathway-ablation-registration-526
+date: '2026-09-07'
+status: registered-before-execution-causal-localization
+classification: source-bundle-causal-ablation
+predecessor: docs/validation-results/kinness-brian-scheduler-assessment-525.yaml
+profile: configs/calibration/figure7_legacy_detector_paper_nonspecific_paper_kinetics_match_v1.yaml
+runtime_fingerprint: 37cf90faf61129d5619e90c02374201db01f48fd7dfdf50c2a19d6989db2aa24
+result_id: figure7-nonspecific-pathway-ablation-527
+result: docs/validation-results/figure7-nonspecific-pathway-ablation-527.yaml
+imported_control:
+  artifact: docs/validation-results/figure7-legacy-detector-paper-nonspecific-paper-kinetics-match-520.yaml
+  sha256: 855cc4144557a5ebb347ca1e1d63f23cc7bb5fbf68d98d36fff7599bd6acba39
+  nonspecific_event_count: 24
+  pre_upstream_nonspecific_event_count: 3
+  post_upstream_nonspecific_event_count: 21
+ablation_arms:
+  - label: without_all_trn_to_nonspecific_gaba
+    disabled_projection_ids:
+      - modeldb112923.projection.047
+      - modeldb112923.projection.048
+      - modeldb112923.projection.049
+  - label: without_all_layer6ii_to_nonspecific_excitation
+    disabled_projection_ids:
+      - modeldb112923.projection.050
+      - modeldb112923.projection.051
+fixed:
+  condition: match
+  duration_ms: 100.0
+  dt_ms: 0.01
+  top_down_current_pA: 800.0
+  top_down_current_mode: until_cued_cell_first_event
+  top_down_cue_lead_ms: 0.0
+  equilibration_ms: 0.0
+  learned_state: actual_fresh_figure6_weights_no_expansion
+  comparator: none
+  receptor_prime: none
+  calcium_ablation: none
+  event_detector: common_recovered_falling_minus20_mV
+  parameter_search: false
+classification_rule: >-
+  Compare each ablation with the hash-pinned intact control. Loss of late events
+  after removing all TRN GABA localizes those events to inhibition-dependent
+  rebound or another GABA-mediated mechanism. Loss after removing both layer-6II
+  projections localizes them to corticointralaminar excitation. Persistence in
+  both arms requires a direct-input/intrinsic explanation. The three events
+  before the first upstream event are scored and reported unchanged; they are
+  never discarded as burn-in.
+stopping_rule: >-
+  Run one fresh Figure 6 prerequisite and exactly the two registered match
+  ablations. Do not run mismatch, tune a gain, alter a detector, or promote an
+  ablated network regardless of event counts.
+interpretation_boundary: >-
+  Projection removal is a causal diagnostic, not a reconstruction of the 2008
+  model and not a baseline candidate. It can localize the current discrepancy
+  but cannot establish that the removed pathway was absent from original SMART.

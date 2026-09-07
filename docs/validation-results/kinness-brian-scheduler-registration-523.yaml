@@ -1,0 +1,40 @@
+schema_version: 1
+id: kinness-brian-scheduler-registration-523
+date: '2026-09-07'
+status: registered-before-execution-source-runtime-audit
+classification: source-runtime-semantics-audit
+profile: configs/calibration/figure7_legacy_detector_paper_nonspecific_paper_kinetics_match_v1.yaml
+match_result: docs/validation-results/figure7-legacy-detector-paper-nonspecific-paper-kinetics-match-520.yaml
+match_result_sha256: 855cc4144557a5ebb347ca1e1d63f23cc7bb5fbf68d98d36fff7599bd6acba39
+runtime_fingerprint: 37cf90faf61129d5619e90c02374201db01f48fd7dfdf50c2a19d6989db2aa24
+result_id: kinness-brian-scheduler-audit-524
+result: docs/validation-results/kinness-brian-scheduler-audit-524.yaml
+sources:
+  kinness_framework: >-
+    Versace et al. 2008 KInNeSS framework manuscript, Section 2.1: SANNDRA is
+    synchronous and time-driven, synchronizes elements for data exchange, and
+    integrates differential equations with fourth-order Runge-Kutta.
+  brian_runtime: >-
+    Brian2 2.9.0 default schedule and the executable object schedule generated
+    by the registered SMART profile.
+fixed_checks:
+  expected_schedule: [start, groups, thresholds, synapses, resets, end]
+  representative_projection_id: modeldb112923.projection.047
+  representative_serialized_delay_ms: 0.1
+  integration_dt_ms: 0.01
+  expected_gate_visibility_ms_after_source_event: 0.11
+  expected_early_events: 3
+  parameter_changes: none
+stopping_rule: >-
+  Reconstruct the exact registered runtime without simulating Figure 7 again.
+  Inspect its executable scheduler and run one synthetic delayed-gate
+  microprobe. If the gate becomes visible only on the integration step after
+  its serialized arrival and the three early nonspecific events precede every
+  relay, TRN, and category event, do not add another scheduling delay. If any
+  check fails, correct scheduling before another behavioral assay.
+interpretation_boundary: >-
+  Matching synchronous update structure does not prove every unavailable
+  SANNDRA substep implementation. It tests whether the Brian2 translation
+  already has a one-step postsynaptic visibility boundary and whether an extra
+  delay is source-justified. It cannot validate the nonspecific cell equations
+  or promote the classic baseline.

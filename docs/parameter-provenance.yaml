@@ -397,6 +397,11 @@ parameters:
     status: official-threshold-handler-combination-tested
     source: Versace et al. 2008 KInNeSS Equation 14; SANNDRA spikeevents revision history; Artifacts 361--362
     note: the recovered nonspecific cell with the KInNeSS arm emits 287 match events because the -20-to-0-mV arm and release regions overlap under the simple latch. Consecutive events begin 0.02 ms apart. Mismatch is not consulted; threshold interpolation is prohibited, while the separately named hysteretic handler remains a source-adjacent discriminator
+  model.classic_hh.nonspecific_falling_minus20_detector_transfer:
+    value: relay-benchmark rule applied uniformly; population-specific applicability unresolved
+    status: source-transfer-hypothesis-no-match-survivor
+    source: 2004 KInNeSS relay tonic/burst benchmark Audit 476; Artifacts 483--521
+    note: The recovered falling -20-mV rule gives exact four-volley horizontal relay matching across every tested nonspecific-cell variant. Nonspecific match counts are 33 for the Table-3 cell with ModelDB kinetics; 24 for the paper-coherent Table-3 bundle; and 2, 24, 18, and 1 across the complete SMART.nml-cell axial-by-kinetics factorial. The paper-supplement distal GABA tuple leaves its 24-event control unchanged. No endpoint yields four and no interpolation is authorized. Direct intralaminar/nonspecific benchmark or event-handler evidence is required before another behavioral detector change
   model.classic_hh.nonspecific_kinness_hysteretic_handler:
     value: hysteretic_threshold_then_zero rejected with recovered cell and -20 mV arm
     status: legacy-handler-discriminator-tested
@@ -487,6 +492,26 @@ parameters:
     status: late-nonoverlap-rebound-hypothesis-rejected
     source: Artifacts 468 and 471--473; Grossberg and Versace 2008 Section 2.3 and Figures 7--8
     note: The fresh mismatch exactly reproduces all registered Artifact 468 event fields. Before the first nonoverlap events at 49.31--49.75 ms, soma and both dendrites remain at or above their -60-mV initial voltage and h_ca decreases rather than recovering. Every nonoverlap interevent interval contains one somatic peak above +30 mV, with isolated events about 21--25 ms apart. T-type current is nonzero but the source-described hyperpolarization-to-transient-burst sequence is absent. Later after-spike hyperpolarization cannot explain the first escape. No calcium parameter, temporal cutoff, or candidate is selected.
+  source_recovery.smart_era_event_handler:
+    value: exact KInNeSS 0.3.4 RC2 release identified; spikeevents.h implementation unavailable
+    status: primary-source-archive-exhausted-exact-algorithm-unresolved
+    source: archived official KInNeSS downloads page, Soma editor, SANNDRA revision history, SMART.nml, and Artifact 522
+    note: The official manual documents axonal conversion of somatic potential to binary spike timing and SMART.nml exposes no population-specific detector field. The surviving examples contain only the recovered relay tonic/burst package. The exact RC2 source archive and spikeevents.h body were not preserved. Do not fit a nonspecific-only threshold; audit integration and update-order semantics next.
+  runtime.classic_smart.scheduler_visibility:
+    value: serialized event arrival becomes a summed ligand gate on the following 0.01-ms integration step
+    status: source-runtime-contract-verified-no-extra-delay
+    source: KInNeSS framework synchronous data-exchange description, Brian2 2.9.0 executable schedule, and Artifacts 523--525
+    note: The registered schedule is groups, thresholds, synapses, resets. A 0-ms source event with projection 047's archived 0.1-ms delay leaves the gate at zero at 0.10 ms and first exposes it at 0.11 ms. This is already a synchronous visibility boundary; adding a second global one-step offset is not authorized. Exact unavailable SANNDRA substep parity is not claimed.
+  diagnostics.figure7.paper_nonspecific_pathway_ablation:
+    value: intact 24 events; without TRN GABA 3; without layer-6II excitation 24
+    status: late-events-localized-to-gaba-dependent-process
+    source: Artifacts 526--528
+    note: All three events before the first upstream circuit event survive both arms. All 21 late events disappear only when projections 047--049 are removed; removing projections 050--051 changes no count. This supports an inhibition-dependent rebound hypothesis but does not yet prove T-type calcium necessity. Ablated networks are non-promotable and no parameter was selected.
+  diagnostics.figure7.paper_nonspecific_t_current_ablation:
+    value: proximal and distal nonspecific T conductances set to zero at sensory onset
+    status: connected-network-necessity-supported-isolated-replay-required
+    source: Artifacts 529--531
+    note: Nonspecific output falls from 24 events to one, the exact 20-event relay sequence is preserved, and TRN retains 550 events. Precise TRN and category sequences diverge through nonspecific-to-layer-5 feedback, so exact cell-autonomous rebound is not yet proven. The ablation is default-off and non-promotable; no calcium density was selected.
   benchmark.population_sizes:
     value: see configs/*.yaml
     status: exploratory

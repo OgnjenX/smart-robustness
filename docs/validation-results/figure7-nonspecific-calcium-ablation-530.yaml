@@ -1,0 +1,59 @@
+schema_version: 1
+id: figure7-nonspecific-calcium-ablation-530
+date: '2026-09-07'
+status: causal-ablation-complete-not-candidate
+classification: nonspecific-t-current-causal-ablation
+registration: docs/validation-results/figure7-nonspecific-calcium-ablation-registration-529.yaml
+runtime_fingerprint: 37cf90faf61129d5619e90c02374201db01f48fd7dfdf50c2a19d6989db2aa24
+fresh_figure6_repeat_verified: true
+intervention:
+  nonspecific_calcium_ablated_at_stimulus: true
+  scope: dendrites_only
+control:
+  artifact: docs/validation-results/figure7-legacy-detector-paper-nonspecific-paper-kinetics-match-520.yaml
+  nonspecific_event_count: 24
+  nonspecific_event_times_ms:
+    - 0.89
+    - 2.21
+    - 3.49
+    - 27.22
+    - 33.24
+    - 37.75000000000001
+    - 48.010000000000005
+    - 53.83
+    - 56.17
+    - 58.800000000000004
+    - 60.96000000000001
+    - 63.80000000000001
+    - 71.09
+    - 73.42
+    - 75.31
+    - 77.80000000000001
+    - 79.86
+    - 81.67
+    - 83.30000000000001
+    - 90.82000000000001
+    - 93.12
+    - 95.19000000000001
+    - 97.29
+    - 99.12
+ablation:
+  nonspecific_event_count: 1
+  nonspecific_rate_hz: 10.0
+  nonspecific_event_times_ms: [3.8200000000000003]
+  relay_event_count: 20
+  relay_active_indices: [38, 39, 40, 41, 42]
+  trn_event_count: 550
+  category_event_count: 13
+upstream_identity:
+  relay_exact_sequence: true
+  trn_exact_sequence: false
+  category_exact_sequence: false
+promotable: false
+original_smart_reproduced: false
+baseline_promoted: false
+interpretation_boundary: >-
+  This intervention tests necessity in the connected reconstruction. It is not
+  a candidate original SMART model. Because nonspecific output feeds layer 5,
+  any later upstream divergence can confound a full-epoch comparison and must
+  trigger isolated event-train replay before a cell-autonomous claim.

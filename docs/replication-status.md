@@ -117,6 +117,63 @@ bundle through Figure 6 with exact relay, cortical, teaching, and map-shape
 gates. Its 23 nonspecific learning events are not used to predict recognition.
 Registration 519 fixes one fresh match against the unchanged four-event target.
 
+Artifacts 519--521 reject that match at 24 nonspecific events while preserving
+exactly four relay events in each horizontal cell, 550 TRN events, and correct
+category-current termination. Neither the complete executable-cell factorial
+nor the paper-coherent cellular bundle produces the four-event match target.
+Mismatch remains locked. Further behavioral parameter fitting is paused in
+favor of source recovery for an intralaminar/nonspecific KInNeSS benchmark or
+event-handler implementation that can test whether the relay-derived falling
+-20-mV rule is universal.
+
+Artifact 522 completes that archive search without inventing a new detector.
+The relocated official KInNeSS site identifies the exact SMART-era release as
+KInNeSS 0.3.4 RC2 (June 10, 2008) and the contemporary engine snapshot as
+SANNDRA 1.2.0 RC2. The archived downloads page survives, but neither source
+archive is available from the Wayback inventory. The complete preserved
+official examples subtree contains only the already recovered relay tonic/burst
+package; there is no intralaminar/nonspecific benchmark. The archived Soma
+editor documents a common axonal conversion of somatic voltage into binary
+spike timing, and `SMART.nml` contains no population-specific detector field.
+SANNDRA's surviving revision history names `spikeevents.h` and a March 2005
+"proper spike detecting" fix, but not the implementation body. This evidence
+makes a fitted nonspecific-only threshold less defensible, while still falling
+short of proving that the relay-derived falling -20-mV rule was universal.
+The next source-constrained work is a scheduling/initialization/update-order
+translation audit, not another Figure 7 parameter search.
+
+Artifacts 523--525 complete the scheduling part of that audit. The registered
+Brian2 network uses the documented `groups -> thresholds -> synapses -> resets`
+ordering; each summed receptor gate is evaluated before its target cell's state
+update, while a delayed presynaptic event is processed later in the `synapses`
+slot. A fixed microprobe therefore leaves the gate at zero at the archived
+0.1-ms arrival and first exposes it at 0.11 ms, the next 0.01-ms integration
+step. The translation already has a synchronous visibility boundary, so an
+extra global delay would double-count it and is not source-authorized. Three
+of the 24 nonspecific match events (0.89, 2.21, and 3.49 ms) also precede the
+first TRN, relay, or category event at 5.63 ms; recurrent scheduling cannot
+cause them.
+
+Artifacts 526--528 then localize the remaining 21 events with two fixed,
+non-promotable pathway removals. Removing all three archived
+TRN-to-nonspecific GABA projections leaves only the three early events and
+eliminates every late event. Removing both layer-6II-to-nonspecific excitatory
+projections leaves all 24 events. The excess match train is therefore generated
+by a TRN-GABA-dependent process, consistent with post-inhibitory rebound, not
+direct corticointralaminar excitation. T-type calcium necessity remains to be
+tested explicitly; original SMART is still not reproduced or frozen.
+
+Artifacts 529--531 perform that connected-network necessity test. Setting only
+the nonspecific cell's proximal and distal T conductances to zero at sensory
+onset reduces its output from 24 events to one. The exact 20-event horizontal
+relay train is unchanged and TRN still emits 550 events, but precise TRN and
+category sequences differ because nonspecific output feeds layer 5. This is
+strong evidence that dendritic T current is necessary for the excess train in
+the connected reconstruction, but it is not yet exact cell-autonomous proof.
+The next step is a lossless isolated replay of the intact external and synaptic
+input waveforms, with T current intact versus absent. No calcium value is fit,
+mismatch remains locked, and the baseline remains unfrozen.
+
 Artifacts 471--473 complete the identity-locked mismatch calcium replay of the
 failed gain-0.8 candidate. The fresh event train exactly matches Artifact 468,
 and its 10,000-sample trace contains soma/dendrite voltages, T-type currents,

@@ -1,0 +1,51 @@
+schema_version: 1
+id: figure7-nonspecific-calcium-ablation-registration-529
+date: '2026-09-07'
+status: registered-before-execution-causal-localization
+classification: nonspecific-t-current-causal-ablation
+predecessor: docs/validation-results/figure7-nonspecific-pathway-ablation-assessment-528.yaml
+profile: configs/calibration/figure7_legacy_detector_paper_nonspecific_paper_kinetics_match_v1.yaml
+runtime_fingerprint: 37cf90faf61129d5619e90c02374201db01f48fd7dfdf50c2a19d6989db2aa24
+control_result: docs/validation-results/figure7-legacy-detector-paper-nonspecific-paper-kinetics-match-520.yaml
+control_result_sha256: 855cc4144557a5ebb347ca1e1d63f23cc7bb5fbf68d98d36fff7599bd6acba39
+result_id: figure7-nonspecific-calcium-ablation-530
+result: docs/validation-results/figure7-nonspecific-calcium-ablation-530.yaml
+intervention:
+  time: sensory_stimulus_onset
+  population: thalamic_nonspecific
+  variables:
+    - g_ca_proximal_dendrite
+    - g_ca_distal_dendrite
+  value: 0 nS
+  soma_calcium_present: false
+  all_synapses_and_upstream_cell_parameters_unchanged: true
+fixed:
+  condition: match
+  duration_ms: 100.0
+  dt_ms: 0.01
+  top_down_current_pA: 800.0
+  top_down_current_mode: until_cued_cell_first_event
+  top_down_cue_lead_ms: 0.0
+  equilibration_ms: 0.0
+  learned_state: actual_fresh_figure6_weights_no_expansion
+  comparator: none
+  receptor_prime: none
+  event_detector: common_recovered_falling_minus20_mV
+  parameter_search: false
+classification_rule: >-
+  Compare the ablated nonspecific event train with the hash-pinned intact
+  control. Complete loss of the 21 GABA-dependent late events supports T-current
+  necessity only if the upstream relay and TRN event trains remain identical
+  through the relevant causal interval. Any upstream divergence must be
+  reported as a feedback confound and followed by an isolated replay; it must
+  not be hidden or interpreted as exact cell-autonomous proof.
+stopping_rule: >-
+  Run one fresh Figure 6 prerequisite and one match with only the two
+  nonspecific dendritic T conductances set to zero at sensory onset. Do not run
+  mismatch, fit calcium density, alter detector thresholds, or promote this
+  ablated network.
+interpretation_boundary: >-
+  This intervention tests necessity in the connected reconstruction. It is not
+  a candidate original SMART model. Because nonspecific output feeds layer 5,
+  any later upstream divergence can confound a full-epoch comparison and must
+  trigger isolated event-train replay before a cell-autonomous claim.

@@ -1,0 +1,43 @@
+schema_version: 1
+id: figure7-nonspecific-calcium-ablation-assessment-531
+date: '2026-09-07'
+status: connected-network-necessity-supported-isolated-replay-required
+classification: nonspecific-t-current-causal-assessment
+registration: docs/validation-results/figure7-nonspecific-calcium-ablation-registration-529.yaml
+result: docs/validation-results/figure7-nonspecific-calcium-ablation-530.yaml
+result_sha256: 8935f775ac94a9a619477784448cb2c4b647950bc8384019ef9044f6dd47d814
+observed:
+  intact_nonspecific_events: 24
+  calcium_ablated_nonspecific_events: 1
+  events_removed: 23
+  intact_relay_events: 20
+  calcium_ablated_relay_events: 20
+  relay_exact_sequence_preserved: true
+  intact_trn_events: 550
+  calcium_ablated_trn_events: 550
+  trn_exact_sequence_preserved: false
+  category_exact_sequence_preserved: false
+assessment:
+  fresh_figure6_repeat_verified: true
+  nonspecific_dendritic_t_current_necessary_in_connected_model: true
+  exact_upstream_full_epoch_identity: false
+  cell_autonomous_rebound_proven: false
+  isolated_replay_required: true
+  ablated_network_promotable: false
+  original_smart_reproduced: false
+  baseline_promoted: false
+conclusion: >-
+  Removing both nonspecific dendritic T conductances at sensory onset reduces
+  the failed match from 24 events to one while preserving the exact relay train
+  and the total 550-event TRN output. This establishes strong connected-network
+  necessity of the nonspecific T current. It does not establish exact
+  cell-autonomous causality because precise TRN and category event sequences
+  change through the nonspecific-to-layer-5 feedback loop. The intervention is
+  diagnostic and cannot be promoted as original SMART.
+next_step: >-
+  Record the intact nonspecific cell's complete external-input waveform and the
+  arrival times/amplitudes of projections 047--051. Replay those fixed inputs
+  into an isolated paper-coherent nonspecific cell twice, with T conductances
+  intact and zero. Require the intact replay to reproduce the source run before
+  interpreting the ablation. This isolates cellular rebound from network
+  feedback without fitting any parameter or opening mismatch.

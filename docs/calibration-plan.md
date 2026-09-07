@@ -160,6 +160,46 @@ Artifacts 516--518 pass the paper-coherent nonspecific cellular bundle through
 Figure 6. Registration 519 requires one independent match; its four-event gate
 cannot be altered by the 23-event learning-condition observation.
 
+Artifacts 519--521 fail the paper-coherent match at 24 nonspecific events while
+retaining exact relay matching. No available cellular source bundle now
+survives the match gate. Before another behavioral run, recover direct evidence
+for nonspecific/intralaminar event handling from a legacy benchmark, manual, or
+source body; do not fit a population-specific threshold from these outcomes.
+
+Artifact 522 identifies the exact SMART-era KInNeSS 0.3.4 RC2 and SANNDRA
+1.2.0 RC2 releases, but the linked source archives are not preserved. The
+official examples inventory contains no nonspecific benchmark. The surviving
+manual documents one axonal soma-to-binary conversion and SMART.nml exposes no
+population-specific detector parameter; the SANNDRA history names
+`spikeevents.h` but does not preserve its body. Consequently, a
+nonspecific-only threshold is not authorized. The next preregistered work must
+audit RK4 scheduling, initialization, and axon/synapse update order against the
+surviving executable relay benchmark before reopening Figure 7.
+
+Artifacts 523--525 verify that the registered Brian2 translation already
+implements a next-step postsynaptic visibility boundary. With a 0.01-ms clock
+and the archived 0.1-ms projection delay, a fixed impulse leaves the summed
+gate zero at 0.10 ms and exposes it at 0.11 ms. Do not add another global delay.
+The same audit partitions the failed match into three nonspecific events before
+any upstream circuit event and 21 later events.
+
+Artifacts 526--528 causally localize all 21 later events to the intact
+TRN-to-nonspecific GABA route: removing projections 047--049 deletes them,
+whereas removing layer-6II projections 050--051 changes no event count. These
+ablations are diagnostics and cannot be selected as models. Next add a
+default-off nonspecific dendritic T-current ablation and verify default identity
+before one registered match-only causal run. Do not tune calcium density, alter
+the common detector, or open mismatch from this diagnostic.
+
+Artifacts 529--531 add the default-off nonspecific T-current ablation and run
+the one registered connected match. Nonspecific output falls from 24 events to
+one, while the exact relay sequence and TRN event count are preserved. Precise
+TRN and category sequences are not identical, so feedback prevents a strict
+cell-autonomous conclusion. Next record and replay the intact external and
+projection-047--051 inputs into an isolated nonspecific cell; require an exact
+intact replay before comparing the zero-T-current arm. Do not fit a current,
+conductance, delay, or detector from that replay.
+
 ### D — locked holdout evaluation
 
 Without changing the candidate, evaluate:

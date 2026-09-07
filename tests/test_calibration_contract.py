@@ -8208,3 +8208,150 @@ def test_paper_coherent_cell_passes_figure6_and_registers_match() -> None:
         "mismatch_runs": 0,
         "parameter_search": False,
     }
+
+
+def test_paper_coherent_match_fails_and_requires_source_recovery() -> None:
+    result = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-legacy-detector-paper-nonspecific-paper-kinetics-match-520.yaml"
+        ).read_text()
+    )
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-legacy-detector-paper-nonspecific-paper-kinetics-match-assessment-521.yaml"
+        ).read_text()
+    )
+
+    match = result["match_result"]
+    assert len(match["relay_spike_times_ms"]) == 20
+    assert sorted(set(match["relay_spike_indices"])) == [38, 39, 40, 41, 42]
+    assert len(match["trn_spike_times_ms"]) == 550
+    assert len(match["nonspecific_spike_times_ms"]) == 24
+    assert assessment["result_sha256"] == (
+        "855cc4144557a5ebb347ca1e1d63f23cc7bb5fbf68d98d36fff7599bd6acba39"
+    )
+    assert not assessment["assessment"]["paper_cellular_source_bundle_survives_match"]
+    assert assessment["assessment"]["source_recovery_required_before_next_behavioral_run"]
+    assert not assessment["assessment"]["parameter_interpolation_authorized"]
+    assert not assessment["assessment"]["mismatch_run_authorized"]
+    assert not assessment["assessment"]["original_smart_reproduced"]
+
+
+def test_smart_era_event_source_audit_forbids_population_threshold_fit() -> None:
+    audit = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/kinness-smart-era-event-source-audit-522.yaml"
+        ).read_text()
+    )
+
+    assert audit["smart_era_release"]["kinness_release_name"] == "KInNeSS 0.3.4 RC2"
+    assert audit["smart_era_release"]["kinness_cvs_tag"] == "KINNESS_0_3_4_RC2"
+    assert not audit["smart_era_release"]["archive_availability"][
+        "kinness_rc2_snapshot_available"
+    ]
+    assert audit["sanndra_history"]["spikeevents_file"] == "spikeevents.h"
+    assert not audit["sanndra_history"]["source_body_available_in_preserved_doxygen"]
+    assert audit["inference"]["universal_axon_conversion_supported"]
+    assert not audit["inference"]["exact_crossing_algorithm_recovered_for_nonspecific"]
+    assert not audit["assessment"]["population_specific_event_tuning_authorized"]
+    assert not audit["assessment"]["original_smart_reproduced"]
+
+
+def test_scheduler_audit_closes_extra_global_delay() -> None:
+    result = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/kinness-brian-scheduler-audit-524.yaml"
+        ).read_text()
+    )
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/kinness-brian-scheduler-assessment-525.yaml"
+        ).read_text()
+    )
+
+    assert result["runtime"]["network_schedule"] == [
+        "start",
+        "groups",
+        "thresholds",
+        "synapses",
+        "resets",
+        "end",
+    ]
+    assert result["delivery_microprobe"]["gate_at_serialized_arrival"] == 0.0
+    assert result["delivery_microprobe"]["first_positive_gate_time_ms"] == 0.11
+    assert all(result["gates"].values())
+    assert assessment["result_sha256"] == (
+        "df78bb5523c90890b8d4771a4265caab0796657038628379db12d996e50810ff"
+    )
+    assert not assessment["assessment"]["add_global_one_step_delay_authorized"]
+    assert not assessment["assessment"]["original_smart_reproduced"]
+
+
+def test_nonspecific_pathway_ablation_localizes_late_events_to_trn_gaba() -> None:
+    result = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-nonspecific-pathway-ablation-527.yaml"
+        ).read_text()
+    )
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-nonspecific-pathway-ablation-assessment-528.yaml"
+        ).read_text()
+    )
+
+    outcomes = {item["label"]: item["summary"] for item in result["outcomes"]}
+    without_gaba = outcomes["without_all_trn_to_nonspecific_gaba"]
+    without_cortical = outcomes["without_all_layer6ii_to_nonspecific_excitation"]
+    assert without_gaba["pre_upstream_nonspecific_event_count"] == 3
+    assert without_gaba["post_upstream_nonspecific_event_count"] == 0
+    assert without_cortical["pre_upstream_nonspecific_event_count"] == 3
+    assert without_cortical["post_upstream_nonspecific_event_count"] == 21
+    assert assessment["result_sha256"] == (
+        "37c5fa55bccf5ea79bd680d2dec67bd00a3c9baac54fe86cf4029967027ca666"
+    )
+    assert assessment["assessment"]["all_late_events_require_trn_gaba_pathway"]
+    assert not assessment["assessment"][
+        "late_events_require_layer6ii_direct_excitation"
+    ]
+    assert not assessment["assessment"]["t_type_calcium_necessity_proven"]
+    assert not assessment["assessment"]["original_smart_reproduced"]
+
+
+def test_nonspecific_calcium_ablation_requires_isolated_replay() -> None:
+    result = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-nonspecific-calcium-ablation-530.yaml"
+        ).read_text()
+    )
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-nonspecific-calcium-ablation-assessment-531.yaml"
+        ).read_text()
+    )
+
+    assert result["intervention"] == {
+        "nonspecific_calcium_ablated_at_stimulus": True,
+        "scope": "dendrites_only",
+    }
+    assert result["control"]["nonspecific_event_count"] == 24
+    assert result["ablation"]["nonspecific_event_count"] == 1
+    assert result["upstream_identity"]["relay_exact_sequence"]
+    assert not result["upstream_identity"]["trn_exact_sequence"]
+    assert assessment["result_sha256"] == (
+        "8935f775ac94a9a619477784448cb2c4b647950bc8384019ef9044f6dd47d814"
+    )
+    assert assessment["assessment"][
+        "nonspecific_dendritic_t_current_necessary_in_connected_model"
+    ]
+    assert not assessment["assessment"]["cell_autonomous_rebound_proven"]
+    assert assessment["assessment"]["isolated_replay_required"]
+    assert not assessment["assessment"]["original_smart_reproduced"]

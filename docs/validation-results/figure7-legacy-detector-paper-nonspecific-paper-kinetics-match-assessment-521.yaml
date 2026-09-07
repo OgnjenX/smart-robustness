@@ -1,0 +1,47 @@
+schema_version: 1
+id: figure7-legacy-detector-paper-nonspecific-paper-kinetics-match-assessment-521
+date: '2026-09-07'
+status: match-failed-paper-cellular-source-bundle-closed
+registration: docs/validation-results/figure7-legacy-detector-paper-nonspecific-paper-kinetics-match-registration-519.yaml
+result: docs/validation-results/figure7-legacy-detector-paper-nonspecific-paper-kinetics-match-520.yaml
+result_sha256: 855cc4144557a5ebb347ca1e1d63f23cc7bb5fbf68d98d36fff7599bd6acba39
+result_summary:
+  training_repeat_verified: true
+  relay_active_indices: [38, 39, 40, 41, 42]
+  relay_events_per_active_index: 4
+  relay_event_count: 20
+  trn_event_count: 550
+  nonspecific_event_count: 24
+  nonspecific_rate_hz: 240.0
+  top_down_current_termination_ms: 5.95
+gates:
+  relay_active_indices: true
+  minimum_relay_events_per_active_index: true
+  selected_category_event_available: true
+  top_down_current_terminated_on_first_selected_event: true
+  trn_events_present: true
+  nonspecific_events: false
+  nonspecific_rate_hz: false
+  figure7_target_duration: true
+  no_reconstructed_comparator: true
+  no_calcium_ablation: true
+assessment:
+  preregistered_match_contract_passed: false
+  exact_candidate_closed: true
+  mismatch_run_authorized: false
+  paper_cellular_source_bundle_survives_match: false
+  parameter_interpolation_authorized: false
+  source_recovery_required_before_next_behavioral_run: true
+  parameter_selected: false
+  original_smart_reproduced: false
+  baseline_promoted: false
+  conclusion: >-
+    The paper-coherent nonspecific intrinsic, axial, and calcium equations
+    preserve the exact relay match but emit 24 nonspecific events rather than
+    four. Along with the completed executable-cell factorial, the available
+    cellular source bundles contain no match survivor. Mismatch remains locked.
+next_step: >-
+  Do not add another fitted cellular value. Search archived KInNeSS examples,
+  simulator documentation, and event-handler source for an intralaminar or
+  nonspecific-thalamic benchmark that can determine whether the recovered
+  relay falling -20-mV detector is universal or population-specific.

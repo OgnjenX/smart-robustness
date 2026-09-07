@@ -449,6 +449,13 @@ def test_figure7_runner_requires_exactly_one_learned_state_source() -> None:
 
 
 def test_figure7_runner_rejects_invalid_projection_discriminators() -> None:
+    with pytest.raises(TypeError, match="nonspecific calcium ablation"):
+        run_figure7_condition(
+            condition=MatchCondition.MATCH,
+            top_down_current_pA=100.0,
+            use_paper_constrained_reference=True,
+            ablate_nonspecific_calcium_at_stimulus=1,  # type: ignore[arg-type]
+        )
     with pytest.raises(ValueError, match="pre-event samples require"):
         run_figure7_condition(
             condition=MatchCondition.MATCH,
@@ -676,3 +683,5 @@ def test_figure7_result_accepts_relay_pathway_diagnostics() -> None:
     assert result.nonspecific_detector_final_armed is None
     assert result.disabled_projection_ids == ()
     assert result.v1_cortical_spike_times_ms == ()
+    assert not result.nonspecific_calcium_ablated_at_stimulus
+    assert result.nonspecific_calcium_ablation_scope == "none"

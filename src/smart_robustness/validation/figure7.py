@@ -470,6 +470,8 @@ class Figure7ConditionResult:
     cue_lead_interneuron_spike_times_ms: tuple[float, ...] = ()
     relay_calcium_ablated_at_stimulus: bool = False
     relay_calcium_ablation_scope: str = "none"
+    nonspecific_calcium_ablated_at_stimulus: bool = False
+    nonspecific_calcium_ablation_scope: str = "none"
     network_scope: str = "first_order"
     disabled_projection_ids: tuple[str, ...] = ()
     relay_top_down_ampa_peak_by_index: tuple[tuple[int, float], ...] = ()
@@ -818,6 +820,7 @@ def run_figure7_condition(
     record_interneuron_spikes: bool = False,
     ablate_relay_calcium_at_stimulus: bool = False,
     ablate_all_relay_calcium_at_stimulus: bool = False,
+    ablate_nonspecific_calcium_at_stimulus: bool = False,
     cpp_standalone_directory: str | Path | None = None,
     brian=None,
 ) -> Figure7ConditionResult:
@@ -843,6 +846,8 @@ def run_figure7_condition(
         raise TypeError("interneuron spike recording flag must be boolean")
     if not isinstance(ablate_all_relay_calcium_at_stimulus, bool):
         raise TypeError("whole-relay calcium ablation must be boolean")
+    if not isinstance(ablate_nonspecific_calcium_at_stimulus, bool):
+        raise TypeError("nonspecific calcium ablation must be boolean")
     if ablate_relay_calcium_at_stimulus and ablate_all_relay_calcium_at_stimulus:
         raise ValueError("choose dendritic-only or whole-relay calcium ablation")
     if relay_trace_output is not None:
@@ -1346,6 +1351,13 @@ def run_figure7_condition(
         relay_group.g_ca_proximal_dendrite = 0 * brian.nsiemens
         if ablate_all_relay_calcium_at_stimulus:
             relay_group.g_ca_soma = 0 * brian.nsiemens
+    if ablate_nonspecific_calcium_at_stimulus:
+        # Causal diagnostic only: the SMART nonspecific cell has T channels in
+        # both dendritic compartments and none in its soma. Keep every
+        # synaptic pathway and upstream population unchanged.
+        nonspecific_group = sector.populations["thalamic_nonspecific"].group
+        nonspecific_group.g_ca_proximal_dendrite = 0 * brian.nsiemens
+        nonspecific_group.g_ca_distal_dendrite = 0 * brian.nsiemens
     if top_down_cue_lead_ms > 0:
         apply_bar_stimulus(
             sector,
@@ -2215,6 +2227,12 @@ def run_figure7_condition(
         relay_calcium_ablation_scope=(
             "all_relay_compartments" if ablate_all_relay_calcium_at_stimulus
             else "dendrites_only" if ablate_relay_calcium_at_stimulus else "none"
+        ),
+        nonspecific_calcium_ablated_at_stimulus=(
+            ablate_nonspecific_calcium_at_stimulus
+        ),
+        nonspecific_calcium_ablation_scope=(
+            "dendrites_only" if ablate_nonspecific_calcium_at_stimulus else "none"
         ),
         duration_ms=duration_ms,
         nonspecific_spike_times_ms=stimulus_times(nonspecific),

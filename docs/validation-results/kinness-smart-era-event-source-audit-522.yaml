@@ -1,0 +1,92 @@
+schema_version: 1
+id: kinness-smart-era-event-source-audit-522
+date: '2026-09-07'
+status: exact-release-identified-source-body-not-preserved
+classification: independent-primary-source-archive-audit
+official_site_history:
+  original_examples_prefix: http://temporal.bu.edu/Docs/KInNeSS/examples/
+  original_examples_cdx_sha256: 89df7f6e14ced47e4a4c15380fe2582bf6092399d8d61481b659835ffb75c4fd
+  examples_records:
+    - http://temporal.bu.edu:80/Docs/KInNeSS/examples/Thalamic%20Cell/index.html
+    - http://temporal.bu.edu:80/Docs/KInNeSS/examples/Thalamic%20Cell/thalamus.tgz
+  examples_inventory_conclusion: >-
+    The preserved official examples subtree contains only the already recovered
+    relay-cell tonic/burst page and package. It contains no intralaminar or
+    nonspecific-thalamic benchmark.
+  relocated_site: http://symphony.bu.edu/
+  relocated_site_cdx_sha256: c34ca20c5aa0c33eedece81fdc8ccfef63175875ceef7ef4c3c6e62e6e19cec6
+smart_era_release:
+  downloads_page_capture_timestamp: '20080724182610'
+  downloads_page_original_url: http://symphony.bu.edu/downloads.html
+  downloads_page_archive_url: https://web.archive.org/web/20080724182610id_/http://symphony.bu.edu/downloads.html
+  downloads_page_sha256: 8259bd902929cb8b4bcdbfd3411907f01dec6631e089da28299b6c03b77d6225
+  kinness_release_name: KInNeSS 0.3.4 RC2
+  kinness_release_date: '2008-06-10'
+  kinness_release_url: http://symphony.bu.edu/Snapshots/KInNeSS-0.3.4-RC2.tar.gz
+  kinness_cvs_tag: KINNESS_0_3_4_RC2
+  sanndra_release_name: SANNDRA 1.2.0 RC2
+  sanndra_release_date: '2008-01-26'
+  sanndra_release_url: http://symphony.bu.edu/Snapshots/SANNDRA-1.2.0-RC2.tar.gz
+  archive_availability:
+    kinness_rc2_snapshot_available: false
+    kinness_rc2_availability_response_sha256: 288103c82b6a36f59f4d2d2e3351c2e761cde448d459e5a0d62a643eaf42b681
+    adjacent_snapshot_checks_available: false
+    direct_kinness_rc2_retrieval_status: 404
+event_interface_documentation:
+  soma_editor_capture_timestamp: '20080821043529'
+  soma_editor_original_url: http://symphony.bu.edu:80/Docs/KInNeSS/manual/neteditor.html
+  soma_editor_archive_url: https://web.archive.org/web/20080821043529id_/http://symphony.bu.edu:80/Docs/KInNeSS/manual/neteditor.html
+  soma_editor_sha256: 6bf71e0aee1720694ca4c0942068fc7b73258c92f3a29cf7e5a4d6757c77afcd
+  documented_semantics:
+    - Chemical synapses receive binary spike timing converted from somatic potential in the axon.
+    - Axons are required for cells that provide chemical-synapse input.
+    - Spike-file times denote action-potential initiation at the axon hillock.
+    - Connection-specific propagation delay is applied at the receiving end.
+  smart_xml_population_specific_detector_parameter_present: false
+sanndra_history:
+  doxygen_capture_timestamp: '20080828055305'
+  doxygen_original_url: http://symphony.bu.edu/Docs/SANNDRA/html/index.html
+  doxygen_sha256: b626e72b4c6683536e2dec9814cf3bf483bdd6c7accbe2aa9c878c78329a5597
+  changelog_capture_timestamp: '20080724182658'
+  changelog_original_url: http://symphony.bu.edu/ChangeLogs/SANNDRA/sanndra__rf.html
+  changelog_sha256: a283f4de28b74d3d0b1ea2ba35236f9bc2d71aeed30ae52001ba5d88db6afd1a
+  spikeevents_file: spikeevents.h
+  relevant_revisions:
+    - revision: '1.1'
+      date: '2005-03-06'
+      note: Synaptic-communication rewrite introduced connection-specific delays.
+    - revision: '1.2'
+      date: '2005-03-07'
+      note: Fixed proper spike detecting.
+    - revision: '1.3'
+      date: '2005-03-08'
+      note: Completed new-synapse features.
+    - revision: '1.7'
+      date: '2006-03-18'
+      note: Compiler-compatibility update; no detector-semantic change is logged.
+  source_body_available_in_preserved_doxygen: false
+inference:
+  population_specific_detector_supported: false
+  universal_axon_conversion_supported: true
+  exact_crossing_algorithm_recovered_for_relay_only: true
+  exact_crossing_algorithm_recovered_for_nonspecific: false
+  conclusion: >-
+    The primary documentation makes an invented population-specific
+    nonspecific detector less plausible: SMART.nml serializes no such
+    population-level setting, and KInNeSS documents one axonal conversion from
+    somatic potential to binary events. However, the exact SMART-era RC2 source
+    archives and the spikeevents.h body were not preserved, so universality of
+    the relay-derived falling -20-mV crossing cannot be claimed as proven.
+assessment:
+  exact_smart_era_release_identified: true
+  exact_smart_era_source_recovered: false
+  nonspecific_benchmark_recovered: false
+  population_specific_event_tuning_authorized: false
+  original_smart_reproduced: false
+  baseline_promoted: false
+next_step: >-
+  Keep the relay-derived falling -20-mV detector as the strongest common
+  source candidate. Do not fit a nonspecific-only threshold. Audit the Brian2
+  translation against documented KInNeSS RK4 scheduling, initialization, and
+  axon-to-synapse update order, beginning with the nonspecific waveform and
+  the four published Figure 7 match events.

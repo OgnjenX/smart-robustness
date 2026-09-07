@@ -5,7 +5,7 @@ from pathlib import Path
 import pytest
 
 from smart_robustness.protocols import MatchCondition
-from smart_robustness.validation.figure7 import Figure7ConditionResult
+from smart_robustness.validation.figure7 import Figure7ConditionResult, TopDownCurrentMode
 
 
 @pytest.fixture
@@ -26,6 +26,7 @@ def test_match_gates_reject_changed_rate_comparator_and_missing_cycles(runner):
         trn_detector_arm_transitions_by_index=((40, 1),),
         trn_detector_release_transitions_by_index=((40, 1),),
         cue_lead_category_spike_indices=(40,), cue_lead_category_spike_times_ms=(2,),
+        top_down_current_mode=TopDownCurrentMode.UNTIL_CUED_CELL_FIRST_EVENT,
         top_down_current_termination_time_ms=2,
     )
     score = runner["score_match"]
@@ -53,6 +54,7 @@ def test_match_gates_support_simultaneous_current_termination(runner):
         trn_detector_release_transitions_by_index=((40, 1),),
         category_spike_indices=(40, 38),
         category_spike_times_ms=(5.85, 80),
+        top_down_current_mode=TopDownCurrentMode.UNTIL_CUED_CELL_FIRST_EVENT,
         top_down_current_termination_time_ms=5.85,
     )
     assert all(runner["score_match"](result, cue_lead_ms=0).values())

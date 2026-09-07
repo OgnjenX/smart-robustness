@@ -8829,3 +8829,40 @@ def test_trn_somatic_ring_audit_preserves_source_limit() -> None:
         "current_center_excluded_geometry_officially_verified"
     ]
     assert not audit["assessment"]["baseline_promoted"]
+
+
+def test_trn_somatic_gaba_match_screen_is_bounded_and_mismatch_locked() -> None:
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-trn-somatic-gaba-match-screen-registration-560.yaml"
+        ).read_text()
+    )
+    profile_path = ROOT / registration["profile"]
+    script_path = ROOT / registration["script"]
+
+    assert hashlib.sha256(profile_path.read_bytes()).hexdigest() == registration[
+        "profile_sha256"
+    ]
+    assert hashlib.sha256(script_path.read_bytes()).hexdigest() == registration[
+        "script_sha256"
+    ]
+    assert registration["calibrated_projection_id"] == (
+        "modeldb112923.projection.008"
+    )
+    assert registration["effective_scale_grid"] == [
+        0.75,
+        0.875,
+        0.9375,
+        0.96875,
+        1.0,
+    ]
+    assert registration["fixed_match_gates"] == {
+        "relay_active_indices": [38, 39, 40, 41, 42],
+        "relay_events": 20,
+        "nonspecific_events": 4,
+    }
+    assert "mismatch outcomes at screened scales" in registration[
+        "locked_until_assessment"
+    ]
+    assert "Do not interpolate" in registration["selection_rule"]

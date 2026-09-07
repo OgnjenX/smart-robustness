@@ -1,0 +1,45 @@
+schema_version: 1
+id: figure7-trn-somatic-gaba-match-screen-registration-560
+date: '2026-09-07'
+status: registered-before-execution-calibrated-match-only-screen
+classification: calibrated-projection008-effective-transfer-screen
+profile: configs/calibration/figure7_learned_coincidence_effective_t_pair_v1.yaml
+profile_sha256: 4b6aa0bdf4fb844e428fb330f34970900cc8bc741183b2d8e6e73789cba0b30f
+script: scripts/run_figure7_trn_somatic_gaba_match_screen.py
+script_sha256: 4aae5b7b00c878292b921c6e0352db3bd233f41cf5fb07951dc15c4cb8b328d1
+runtime_fingerprint: fa4ab9f0bf2bec4d6ad53cb6a91620047689b6839b146ed7d777d42350c2cdf5
+authorization: docs/validation-results/figure7-trn-somatic-ring-semantics-audit-559.yaml
+source_control: docs/validation-results/figure7-trn-drive-decomposition-548.yaml
+result_id: figure7-trn-somatic-gaba-match-screen-561
+result: docs/validation-results/figure7-trn-somatic-gaba-match-screen-561.yaml
+assessment: docs/validation-results/figure7-trn-somatic-gaba-match-screen-assessment-562.yaml
+calibrated_projection_id: modeldb112923.projection.008
+source_scale: 1.0
+effective_scale_grid: [0.75, 0.875, 0.9375, 0.96875, 1.0]
+grid_rationale: >-
+  This finite dyadic sequence approaches the serialized source scale from a
+  bounded 25-percent reduction. It is a deliberately labeled effective
+  calibration after causal localization, not an estimate of the unavailable
+  ring stencil or of a 2008 parameter.
+fixed_prerequisite:
+  fresh_figure6: all existing profile gates must pass before screening
+fixed_match_gates:
+  relay_active_indices: [38, 39, 40, 41, 42]
+  relay_events: 20
+  nonspecific_events: 4
+selection_rule: >-
+  Execute every listed match scale without consulting mismatch. Every scale
+  passing all fixed match gates advances to a separately preregistered mismatch
+  comparison; do not rank survivors by TRN count. If no scale survives, close
+  the family. Do not interpolate, add endpoints, or alter any other parameter.
+locked_until_assessment:
+  - mismatch outcomes at screened scales
+  - Figure 10 reset
+  - Figure 14 spectra
+  - Figure 15 local synchrony
+  - Figure 16 long-range synchrony
+boundary: >-
+  A complete downstream survivor would be a calibrated behavioral
+  reconstruction under an effective projection-008 transfer. It cannot recover
+  the missing KInNeSS ring semantics, replace the source parameter in the
+  classic source model, or by itself authorize a frozen original SMART label.

@@ -1402,3 +1402,10 @@ stencil, a fitted radius, or a projection-specific ring meaning. A next screen
 may vary only the effective record-008 transfer as explicitly calibrated
 recognition behavior, with source scale 1.0 as control and no claim of original
 parameter recovery.
+
+Registration 560 opens that calibrated phase with a finite dyadic match-only
+screen of projection 008 scales 0.75, 0.875, 0.9375, 0.96875, and the source
+control 1.0. Fresh Figure 6 must pass first. Every endpoint is evaluated before
+mismatch is consulted; only endpoints preserving the exact five-cell/20-relay
+and four-event nonspecific match gates may advance. No endpoint is selected by
+TRN count, and no interpolation or source-recovery claim is allowed.

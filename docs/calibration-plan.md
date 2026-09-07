@@ -1248,3 +1248,24 @@ learned state fixes a new maximal archived-bound common factor of
 that factor, the same all-six unit receptor prime, and exact 4/7 nonspecific
 event targets. The pair cannot tune any parameter; a pass only unlocks holdout
 evaluation, while a failure closes this candidate.
+
+Artifacts 523--525 close the scheduler alternative: Brian's summed receptor
+gate becomes visible on the next integration step, matching KInNeSS's
+synchronous data-exchange contract, so no additional global step delay is
+authorized. Artifacts 526--528 then show that all 21 late nonspecific events in
+the paper-coherent candidate require TRN GABA, whereas removing direct
+layer-6II excitation leaves all 24 events unchanged. The connected T-current
+ablation in Artifacts 529--531 reduces output to one event but changes later
+TRN and category sequences through feedback, requiring an isolated replay.
+
+Artifacts 532--534 complete that replay without fitting. The connected source
+exactly repeats Artifact 520. An isolated intact cell driven by the recorded
+five receptor gates and external inputs reproduces all 24 event times and all
+state samples with zero error. Under the same fixed inputs, zeroing only the
+two dendritic T conductances leaves one early event and no late events. This
+establishes cell-autonomous T-current necessity for the excess late activity,
+but it does not recover the unavailable source detail or reproduce Figure 7.
+The next permitted step is a separately labeled, match-only one-dimensional
+effective T-conductance calibration on the fixed replay trace, followed by one
+fresh connected verification. Mismatch and all spectral/reset holdouts remain
+locked.

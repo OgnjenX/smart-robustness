@@ -8355,3 +8355,44 @@ def test_nonspecific_calcium_ablation_requires_isolated_replay() -> None:
     assert not assessment["assessment"]["cell_autonomous_rebound_proven"]
     assert assessment["assessment"]["isolated_replay_required"]
     assert not assessment["assessment"]["original_smart_reproduced"]
+
+
+def test_nonspecific_isolated_replay_proves_t_current_necessity() -> None:
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-nonspecific-isolated-replay-registration-532.yaml"
+        ).read_text()
+    )
+    result = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-nonspecific-isolated-replay-533.yaml"
+        ).read_text()
+    )
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-nonspecific-isolated-replay-assessment-534.yaml"
+        ).read_text()
+    )
+
+    assert registration["trace"]["incoming_projection_ids"] == [
+        "modeldb112923.projection.047",
+        "modeldb112923.projection.048",
+        "modeldb112923.projection.049",
+        "modeldb112923.projection.050",
+        "modeldb112923.projection.051",
+    ]
+    assert not registration["trace"]["precomputed_synaptic_currents_replayed"]
+    assert all(result["connected_source_repeat"].values())
+    assert result["intact_replay"]["exact_spike_train"]
+    assert result["intact_replay"]["maximum_error_by_state"] == 0.0
+    assert result["source_late_event_count"] == 21
+    assert result["ablated_late_event_count"] == 0
+    assert result["cell_autonomous_t_current_support"]
+    assert assessment["result_sha256"] == (
+        "6d32095641e0661ca02906a3bad2f86fb584a50737a343b490939846f8e7c0c6"
+    )
+    assert not assessment["original_smart_reproduced"]
+    assert not assessment["baseline_promoted"]

@@ -512,6 +512,11 @@ parameters:
     status: connected-network-necessity-supported-isolated-replay-required
     source: Artifacts 529--531
     note: Nonspecific output falls from 24 events to one, the exact 20-event relay sequence is preserved, and TRN retains 550 events. Precise TRN and category sequences diverge through nonspecific-to-layer-5 feedback, so exact cell-autonomous rebound is not yet proven. The ablation is default-off and non-promotable; no calcium density was selected.
+  diagnostics.figure7.paper_nonspecific_isolated_gate_replay:
+    value: exact stimulus-onset state plus projections 047--051 receptor-gate waveforms and declared external inputs
+    status: cell-autonomous-t-current-necessity-supported-no-source-parameter-selected
+    source: Artifacts 532--534
+    note: The intact isolated replay reproduces all 24 source events and every recorded state sample with zero error. With bit-identical inputs and only the two dendritic T conductances set to zero, one early event remains and all 21 post-TRN events disappear. This removes the connected-feedback confound and establishes intrinsic T-current necessity for the candidate's excess late activity. It does not identify the missing KInNeSS effective conductance semantics, reproduce Figure 7, or authorize mismatch access.
   benchmark.population_sizes:
     value: see configs/*.yaml
     status: exploratory

@@ -1,0 +1,59 @@
+schema_version: 1
+id: figure7-nonspecific-isolated-replay-533
+date: '2026-09-07'
+status: isolated-causal-support-not-candidate
+classification: nonspecific-t-current-isolated-input-replay
+registration: docs/validation-results/figure7-nonspecific-isolated-replay-registration-532.yaml
+runtime_fingerprint: 37cf90faf61129d5619e90c02374201db01f48fd7dfdf50c2a19d6989db2aa24
+fresh_figure6_repeat_verified: true
+connected_source_repeat:
+  relay: true
+  trn: true
+  category: true
+  nonspecific_times: true
+trace:
+  path: tmp/figure7-nonspecific-isolated-replay-source-533.npz
+  sha256: e6da065c5f41cde54f122a91f998d7ff2d1acc9f91d3e1b85602983de2bbbe7f
+  source_event_count: 24
+  source_event_times_ms: [0.89, 2.21, 3.49, 27.22, 33.24, 37.75000000000001,
+    48.010000000000005, 53.83, 56.17, 58.800000000000004,
+    60.96000000000001, 63.80000000000001, 71.09, 73.42, 75.31,
+    77.80000000000001, 79.86, 81.67, 83.30000000000001,
+    90.82000000000001, 93.12, 95.19000000000001, 97.29, 99.12]
+intact_replay:
+  trace_sha256: e6da065c5f41cde54f122a91f998d7ff2d1acc9f91d3e1b85602983de2bbbe7f
+  calcium_ablated: false
+  replay_spike_times_ms: [0.89, 2.21, 3.49, 27.22, 33.24,
+    37.75000000000001, 48.010000000000005, 53.83, 56.17,
+    58.800000000000004, 60.96000000000001, 63.80000000000001,
+    71.09, 73.42, 75.31, 77.80000000000001, 79.86, 81.67,
+    83.30000000000001, 90.82000000000001, 93.12, 95.19000000000001,
+    97.29, 99.12]
+  exact_spike_train: true
+  maximum_error_by_state: 0.0
+  maximum_voltage_error_mV: 0.0
+  finite: true
+  gate_pass: true
+calcium_ablated_replay:
+  trace_sha256: e6da065c5f41cde54f122a91f998d7ff2d1acc9f91d3e1b85602983de2bbbe7f
+  calcium_ablated: true
+  replay_spike_times_ms: [3.8200000000000003]
+  finite: true
+late_event_boundary_ms: 5.630000000000001
+source_late_event_count: 21
+source_late_event_times_ms: [27.22, 33.24, 37.75000000000001,
+  48.010000000000005, 53.83, 56.17, 58.800000000000004,
+  60.96000000000001, 63.80000000000001, 71.09, 73.42, 75.31,
+  77.80000000000001, 79.86, 81.67, 83.30000000000001,
+  90.82000000000001, 93.12, 95.19000000000001, 97.29, 99.12]
+ablated_late_event_count: 0
+ablated_late_event_times_ms: []
+cell_autonomous_t_current_support: true
+promotable: false
+original_smart_reproduced: false
+baseline_promoted: false
+interpretation_boundary: >-
+  The lossless intact replay and fixed-input T-zero replay establish that all
+  21 late excess events require intrinsic nonspecific-cell dendritic T current
+  under this captured Figure 7 input history. This diagnoses the failed
+  candidate; it does not show that the candidate is original SMART.

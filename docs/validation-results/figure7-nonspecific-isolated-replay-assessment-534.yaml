@@ -1,0 +1,42 @@
+schema_version: 1
+id: figure7-nonspecific-isolated-replay-assessment-534
+date: '2026-09-07'
+status: assessed-causal-localization-complete-baseline-open
+registration: docs/validation-results/figure7-nonspecific-isolated-replay-registration-532.yaml
+result: docs/validation-results/figure7-nonspecific-isolated-replay-533.yaml
+result_sha256: 6d32095641e0661ca02906a3bad2f86fb584a50737a343b490939846f8e7c0c6
+trace_sha256: e6da065c5f41cde54f122a91f998d7ff2d1acc9f91d3e1b85602983de2bbbe7f
+preregistered_gates:
+  fresh_figure6_repeat: pass
+  connected_artifact_520_exact_repeat: pass
+  intact_replay_exact_spike_train: pass
+  intact_replay_maximum_state_error_at_most_1e-12: pass
+  t_zero_replay_permitted: true
+result:
+  connected_source_events: 24
+  intact_replay_events: 24
+  intact_replay_maximum_state_error: 0.0
+  t_zero_replay_events: 1
+  connected_late_events_after_first_trn_event: 21
+  t_zero_late_events_after_first_trn_event: 0
+conclusion: >-
+  The excess late nonspecific events in candidate 520 are intrinsic T-current
+  responses to the captured input history. This conclusion is no longer
+  confounded by nonspecific-to-layer-5 feedback because the isolated intact
+  replay reproduces the connected cell exactly and both isolated conditions
+  receive bit-identical receptor-gate and direct-input histories.
+boundary: >-
+  This does not identify which unavailable KInNeSS implementation detail made
+  the published network emit four nonspecific events. It does not justify
+  changing the paper's T-current density in the historical source ledger.
+  Any density calibration must be separately labeled, preregistered against
+  match only, and independently validated in the connected network before
+  mismatch is opened.
+original_smart_reproduced: false
+baseline_promoted: false
+next_gate: >-
+  Preregister a one-dimensional, match-only effective T-conductance calibration
+  using the fixed replay trace to locate the four-event regime. Treat the
+  result as a calibrated reconstruction parameter, not recovered source. Then
+  run one fresh connected Figure 6-plus-match verification at the selected
+  value before opening any mismatch or spectral holdout.

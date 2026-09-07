@@ -3417,3 +3417,17 @@ A milestone may be marked complete only when:
 3. target figure protocols and readouts are documented before tuning;
 4. expected and negative-control outcomes are both reported;
 5. generated data and summaries include the exact configuration fingerprint.
+
+Artifacts 532--534 remove the feedback confound from the paper-coherent
+nonspecific-cell diagnosis. A fresh Figure 6 and connected match exactly repeat
+Artifact 520, after which a hash-pinned trace preserves the nonspecific cell's
+stimulus-onset state, all five incoming receptor gates, and both declared
+external-input records. The isolated intact replay reproduces all 24 event
+times and every recorded state sample with zero numerical error. With that
+identical input history, setting only the proximal and distal T conductances to
+zero leaves one early event and removes all 21 events after the first TRN
+event. The late excess is therefore an intrinsic T-current response in this
+candidate, not a consequence of feedback divergence. This is causal
+localization, not original-SMART reproduction: the unavailable KInNeSS detail
+that yields the paper's four-event match remains unresolved, and mismatch and
+spectral holdouts remain locked.

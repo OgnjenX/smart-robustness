@@ -3591,3 +3591,9 @@ fields are all null, however, because the runner failed to enable the existing
 state-monitor switch. The execution is therefore an identity repeat but an
 inconclusive diagnostic. Nulls are not evidence. One corrected hash-pinned
 rerun may enable the monitor only; the candidate remains closed and unfrozen.
+
+Registration 578 preregisters that corrected rerun with the monitoring switch
+enabled. It permits no biological or protocol change and requires both exact
+event identity and finite non-null direct-drive values before interpretation.
+Whatever the readout order, the failed TRN event-count gate remains failed and
+the candidate remains closed and unfrozen.

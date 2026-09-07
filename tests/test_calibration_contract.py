@@ -9188,3 +9188,38 @@ def test_persistent_inhibitory_drive_audit_records_instrumentation_failure() -> 
     assert not assessment["assessment"]["all_registered_added_readouts_present"]
     assert not assessment["assessment"]["effective_inhibition_order_identifiable"]
     assert not assessment["assessment"]["candidate_reopened"]
+
+
+def test_recorded_inhibitory_drive_audit_changes_instrumentation_only() -> None:
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-persistent-inhibitory-drive-recorded-registration-578.yaml"
+        ).read_text()
+    )
+    profile_path = ROOT / registration["profile"]
+    script_path = ROOT / registration["script"]
+
+    assert hashlib.sha256(profile_path.read_bytes()).hexdigest() == registration[
+        "profile_sha256"
+    ]
+    assert hashlib.sha256(script_path.read_bytes()).hexdigest() == registration[
+        "script_sha256"
+    ]
+    assert registration["sole_execution_change"] == {
+        "value": "record_relay_diagnostics=true",
+        "purpose": "construct the existing nonspecific-pathway state monitor",
+        "model_or_protocol_effect": "none",
+    }
+    assert registration["required_event_identity"]["match"] == {
+        "relay_events": 20,
+        "trn_events": 576,
+        "nonspecific_events": 4,
+    }
+    assert registration["required_event_identity"]["mismatch"] == {
+        "relay_events": 3,
+        "trn_events": 595,
+        "nonspecific_events": 7,
+    }
+    assert len(registration["required_finite_readouts"]) == 4
+    assert "cannot reopen" in registration["boundary"]

@@ -589,9 +589,9 @@ parameters:
     note: Fresh Figure 6, overlap-only mismatch, and 4/7 nonspecific output pass, but whole-TRN events remain 576 match versus 595 mismatch. The candidate closes without adjustment. An unchanged direct inhibitory-gate audit is authorized only to assess the event-count proxy.
   validation.figure7.persistent_inhibitory_drive_audit:
     value: unchanged persistent pair with direct TRN-to-nonspecific gate and current readouts
-    status: inconclusive-instrumentation-failure-corrected-rerun-required
-    source: Artifacts 575--577, authorized by Artifacts 572--574
-    note: Event identity repeated exactly, but every added readout is null because the runner omitted the existing state-monitor switch. Nulls have no mechanistic interpretation. One corrected unchanged rerun may enable only that monitor; it cannot reopen the closed candidate or promote a baseline.
+    status: corrected-instrumentation-only-rerun-preregistered
+    source: Artifacts 575--578, authorized by Artifacts 572--574
+    note: Event identity repeated exactly in the failed audit, but every added readout was null because the runner omitted the existing state-monitor switch. Registration 578 fixes one unchanged rerun that enables only that monitor. It cannot reopen the closed candidate or promote a baseline.
   benchmark.population_sizes:
     value: see configs/*.yaml
     status: exploratory

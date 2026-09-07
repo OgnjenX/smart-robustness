@@ -1,0 +1,57 @@
+schema_version: 1
+id: figure7-persistent-inhibitory-drive-recorded-registration-578
+date: '2026-09-08'
+status: registered-before-execution-corrected-instrumentation-only-repeat
+classification: fixed-persistent-trn-to-nonspecific-drive-recorded-audit
+profile: configs/calibration/figure7_learned_coincidence_effective_t_pair_v1.yaml
+profile_sha256: 4b6aa0bdf4fb844e428fb330f34970900cc8bc741183b2d8e6e73789cba0b30f
+script: scripts/run_figure7_persistent_inhibitory_drive_audit_recorded.py
+script_sha256: 1ebfc1286484d7e2f8866df52b7c2eedcbca9cd5cfcc5ebc52e999e9b75a9361
+runtime_fingerprint: fa4ab9f0bf2bec4d6ad53cb6a91620047689b6839b146ed7d777d42350c2cdf5
+authorization: docs/validation-results/figure7-persistent-inhibitory-drive-audit-assessment-577.yaml
+failed_instrumentation_control: docs/validation-results/figure7-persistent-inhibitory-drive-audit-576.yaml
+control_pair:
+  match: docs/validation-results/figure7-persistent-gaba0875-consistency-570.yaml
+  mismatch: docs/validation-results/figure7-persistent-gaba0875-mismatch-573.yaml
+result_id: figure7-persistent-inhibitory-drive-recorded-579
+result: docs/validation-results/figure7-persistent-inhibitory-drive-recorded-579.yaml
+assessment: docs/validation-results/figure7-persistent-inhibitory-drive-recorded-assessment-580.yaml
+persistent_projection_scale:
+  projection_id: modeldb112923.projection.008
+  scale: 0.875
+nonspecific_t_scale: 0.1875
+sole_execution_change:
+  value: record_relay_diagnostics=true
+  purpose: construct the existing nonspecific-pathway state monitor
+  model_or_protocol_effect: none
+required_event_identity:
+  match:
+    relay_events: 20
+    trn_events: 576
+    nonspecific_events: 4
+  mismatch:
+    relay_events: 3
+    trn_events: 595
+    nonspecific_events: 7
+required_finite_readouts:
+  - nonspecific_trn_gaba_peak
+  - nonspecific_trn_gaba_integral_ms
+  - nonspecific_post_startup_trn_gaba_peak
+  - nonspecific_trn_current_range_pA
+decision_questions:
+  instrumentation_valid: >-
+    Does every direct-inhibition readout contain a finite non-null value while
+    all archived event totals repeat exactly?
+  effective_inhibition_order: >-
+    Is integrated or post-startup TRN inhibitory drive to the nonspecific cell
+    larger in match despite the smaller raw whole-sheet event count?
+interpretation_rule: >-
+  Interpret the drive order only if instrumentation validity and exact event
+  identity both pass. Match-greater direct inhibition would show that raw event
+  total and effective convergent inhibition disagree. Mismatch-greater direct
+  inhibition would confirm that the mechanistic direction is wrong as well as
+  the count. Either result is diagnostic only.
+boundary: >-
+  No model equation, parameter, connectivity, learned state, stimulus, timing,
+  protocol, or scoring rule changes. Enabling an existing monitor cannot reopen
+  the closed candidate, retroactively pass the TRN gate, or promote a baseline.

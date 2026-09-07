@@ -1495,3 +1495,10 @@ constructs the nonspecific-pathway state monitor. The nulls are not interpreted.
 One corrected, separately hash-pinned unchanged rerun is required; it must
 preserve exact event identity and return finite readouts before any mechanistic
 conclusion.
+
+Registration 578 fixes that corrected rerun. The sole execution change is
+enabling the existing state monitor; equations, parameters, connectivity,
+learned state, stimuli, timing, and score gates remain fixed. Interpretation
+requires both exact 20/3 relay, 576/595 TRN, and 4/7 nonspecific identity and
+finite values for every registered direct-inhibition readout. The result remains
+diagnostic and cannot reopen or promote the closed candidate.

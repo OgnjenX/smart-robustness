@@ -1,0 +1,67 @@
+schema_version: 1
+id: figure7-nonspecific-isolated-replay-registration-532
+date: '2026-09-07'
+status: registered-before-execution-causal-localization
+classification: nonspecific-t-current-isolated-input-replay
+predecessor: docs/validation-results/figure7-nonspecific-calcium-ablation-assessment-531.yaml
+profile: configs/calibration/figure7_legacy_detector_paper_nonspecific_paper_kinetics_match_v1.yaml
+profile_sha256: 7812d7ecb2dc22ae61cc5fef93658d1231b59904836a685b85335d35674eff77
+runtime_fingerprint: 37cf90faf61129d5619e90c02374201db01f48fd7dfdf50c2a19d6989db2aa24
+control_result: docs/validation-results/figure7-legacy-detector-paper-nonspecific-paper-kinetics-match-520.yaml
+control_result_sha256: 855cc4144557a5ebb347ca1e1d63f23cc7bb5fbf68d98d36fff7599bd6acba39
+result_id: figure7-nonspecific-isolated-replay-533
+result: docs/validation-results/figure7-nonspecific-isolated-replay-533.yaml
+trace:
+  population: thalamic_nonspecific
+  cell_index: 0
+  duration_ms: 100.0
+  dt_ms: 0.01
+  capture_schedule: thresholds
+  initial_state_time: sensory_stimulus_onset_before_bottom_up_application
+  incoming_projection_ids:
+    - modeldb112923.projection.047
+    - modeldb112923.projection.048
+    - modeldb112923.projection.049
+    - modeldb112923.projection.050
+    - modeldb112923.projection.051
+  replay_quantity: receptor_gate_waveforms
+  direct_external_inputs: replayed_as_declared_source_values_and_source_counts
+  precomputed_synaptic_currents_replayed: false
+  reason: >-
+    Receptor gates preserve each conductance's dependence on the isolated
+    cell's voltage, including the archived NMDA voltage block. Replaying
+    currents would erase that dependence and would not be a faithful ablation.
+fixed:
+  condition: match
+  learned_state: actual_fresh_figure6_weights_no_expansion
+  connected_source_model: artifact-520-runtime
+  connected_source_must_repeat_artifact_520: true
+  isolated_cell_model: same_runtime_fingerprint_as_connected_source
+  detector: common_recovered_falling_minus20_mV
+  parameter_search: false
+intact_replay_gate:
+  source_and_replay_spike_times_exact: true
+  maximum_voltage_error_mV: 1.0e-12
+  maximum_dimensionless_state_error: 1.0e-12
+  action_on_failure: >-
+    Stop without running or interpreting the calcium ablation. Repair replay
+    fidelity under the same source trace and registration.
+calcium_ablation:
+  permitted_only_after_intact_replay_gate: true
+  variables:
+    - g_ca_proximal_dendrite
+    - g_ca_distal_dendrite
+  value: 0 nS
+  all_recorded_receptor_gates_and_external_inputs_identical_to_intact_replay: true
+classification_rule: >-
+  If intact replay is lossless and zeroing only the isolated cell's two
+  dendritic T-type conductances removes the source trace's late events, classify
+  those events as requiring intrinsic nonspecific-cell T current under the
+  captured Figure 7 input history. This is a mechanistic diagnosis of the
+  failed candidate, not promotion of that candidate as original SMART.
+stopping_rule: >-
+  Run one fresh Figure 6 prerequisite and one intact connected match to create
+  one hash-pinned input trace. Run the intact isolated replay first. Run one
+  T-zero isolated replay only if the intact replay gate passes. Do not run
+  mismatch, fit any parameter, alter gates, thresholds, delays, or gains, or
+  promote a baseline from this experiment.

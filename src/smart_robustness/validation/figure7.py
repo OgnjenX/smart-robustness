@@ -462,6 +462,8 @@ class Figure7ConditionResult:
     comparator_target_count: int | None = None
     relay_trace_path: str | None = None
     relay_trace_sha256: str | None = None
+    nonspecific_replay_trace_path: str | None = None
+    nonspecific_replay_trace_sha256: str | None = None
     interneuron_trace_path: str | None = None
     interneuron_trace_sha256: str | None = None
     interneuron_spike_indices: tuple[int, ...] = ()
@@ -816,6 +818,7 @@ def run_figure7_condition(
     equilibration_ms: float = 0.0,
     convergent_external_source_scope: str = "nonzero_pixels",
     relay_trace_output: str | Path | None = None,
+    nonspecific_replay_trace_output: str | Path | None = None,
     interneuron_trace_output: str | Path | None = None,
     record_interneuron_spikes: bool = False,
     ablate_relay_calcium_at_stimulus: bool = False,
@@ -857,6 +860,13 @@ def run_figure7_condition(
             raise FileExistsError(relay_trace_output)
         if not Path(relay_trace_output).parent.is_dir():
             raise ValueError("relay trace output parent directory must exist")
+    if nonspecific_replay_trace_output is not None:
+        if cpp_standalone_directory is not None:
+            raise ValueError("nonspecific replay capture is a numpy diagnostic")
+        if Path(nonspecific_replay_trace_output).exists():
+            raise FileExistsError(nonspecific_replay_trace_output)
+        if not Path(nonspecific_replay_trace_output).parent.is_dir():
+            raise ValueError("nonspecific replay trace parent directory must exist")
     if interneuron_trace_output is not None:
         if Path(interneuron_trace_output).exists():
             raise FileExistsError(interneuron_trace_output)
@@ -864,6 +874,17 @@ def run_figure7_condition(
             raise ValueError("interneuron trace output parent directory must exist")
         if relay_trace_output is not None and Path(interneuron_trace_output).resolve() == Path(relay_trace_output).resolve():
             raise ValueError("relay and interneuron traces require distinct paths")
+    trace_paths = tuple(
+        Path(path).resolve()
+        for path in (
+            relay_trace_output,
+            nonspecific_replay_trace_output,
+            interneuron_trace_output,
+        )
+        if path is not None
+    )
+    if len(set(trace_paths)) != len(trace_paths):
+        raise ValueError("all diagnostic traces require distinct paths")
     if top_down_cue_lead_ms < 0:
         raise ValueError("top_down_cue_lead_ms cannot be negative")
     if prime_top_down_receptors_at_stimulus and top_down_cue_lead_ms > 0:
@@ -1182,6 +1203,9 @@ def run_figure7_condition(
     trn_state = None
     trn_calcium_variables: tuple[str, ...] = ()
     nonspecific_state = None
+    nonspecific_replay_state = None
+    nonspecific_replay_initial_state = None
+    nonspecific_replay_stimulus_start_ms = None
     if record_relay_diagnostics:
         relay_state = brian.StateMonitor(
             sector.populations["thalamic_relay"].group,
@@ -1358,6 +1382,26 @@ def run_figure7_condition(
         nonspecific_group = sector.populations["thalamic_nonspecific"].group
         nonspecific_group.g_ca_proximal_dendrite = 0 * brian.nsiemens
         nonspecific_group.g_ca_distal_dendrite = 0 * brian.nsiemens
+    if nonspecific_replay_trace_output is not None:
+        from .nonspecific_replay import (
+            NONSPECIFIC_REPLAY_MONITOR_VARIABLES,
+            capture_nonspecific_initial_state,
+        )
+
+        nonspecific_group = sector.populations["thalamic_nonspecific"].group
+        nonspecific_replay_initial_state = capture_nonspecific_initial_state(
+            nonspecific_group, brian=brian
+        )
+        nonspecific_replay_stimulus_start_ms = float(sector.network.t / brian.ms)
+        nonspecific_replay_state = brian.StateMonitor(
+            nonspecific_group,
+            NONSPECIFIC_REPLAY_MONITOR_VARIABLES,
+            record=True,
+            when="thresholds",
+            order=0,
+            name=f"figure7_{condition.value}_nonspecific_replay_state",
+        )
+        sector.network.add(nonspecific_replay_state)
     if top_down_cue_lead_ms > 0:
         apply_bar_stimulus(
             sector,
@@ -2188,6 +2232,25 @@ def run_figure7_condition(
             fingerprint=conventions.fingerprint,
             brian=brian,
         )
+    nonspecific_replay_trace_sha256 = None
+    if nonspecific_replay_trace_output is not None:
+        from .nonspecific_replay import write_nonspecific_replay_trace
+
+        assert nonspecific_replay_state is not None
+        assert nonspecific_replay_initial_state is not None
+        assert nonspecific_replay_stimulus_start_ms is not None
+        nonspecific_replay_trace_sha256 = write_nonspecific_replay_trace(
+            nonspecific_replay_state,
+            nonspecific,
+            nonspecific_replay_trace_output,
+            initial_state=nonspecific_replay_initial_state,
+            stimulus_start_ms=nonspecific_replay_stimulus_start_ms,
+            duration_ms=duration_ms,
+            dt_ms=dt_ms,
+            condition=condition,
+            fingerprint=conventions.fingerprint,
+            brian=brian,
+        )
     interneuron_trace_sha256 = None
     if interneuron_trace_output is not None:
         from .relay_trace import write_relay_trace
@@ -2207,6 +2270,12 @@ def run_figure7_condition(
         condition=condition,
         relay_trace_path=str(relay_trace_output) if relay_trace_output is not None else None,
         relay_trace_sha256=relay_trace_sha256,
+        nonspecific_replay_trace_path=(
+            str(nonspecific_replay_trace_output)
+            if nonspecific_replay_trace_output is not None
+            else None
+        ),
+        nonspecific_replay_trace_sha256=nonspecific_replay_trace_sha256,
         interneuron_trace_path=(
             str(interneuron_trace_output)
             if interneuron_trace_output is not None

@@ -10,6 +10,9 @@ from smart_robustness.classic_sector import FirstOrderRuntimeConventions
 from smart_robustness.protocols import MatchCondition
 from smart_robustness.validation.figure7 import run_figure7_condition
 from smart_robustness.validation.relay_trace import write_relay_trace
+from smart_robustness.validation.nonspecific_replay import (
+    NONSPECIFIC_REPLAY_MONITOR_VARIABLES,
+)
 
 
 def test_trace_preserves_units_cell_order_and_pre_stimulus_samples(tmp_path):
@@ -51,6 +54,62 @@ def test_trace_requires_diagnostics_before_network_construction(tmp_path):
             condition=MatchCondition.MATCH, top_down_current_pA=600,
             use_paper_constrained_reference=True,
             relay_trace_output=tmp_path / "trace.npz",
+        )
+
+
+def test_nonspecific_replay_trace_monitor_uses_integrator_visible_gates(
+    tmp_path, monkeypatch
+):
+    class MonitorChecked(Exception):
+        pass
+
+    def inspect_monitor(network, *args, **kwargs):
+        monitor = next(
+            obj
+            for obj in network.objects
+            if obj.name == "figure7_match_nonspecific_replay_state"
+        )
+        assert tuple(monitor.record_variables) == NONSPECIFIC_REPLAY_MONITOR_VARIABLES
+        assert monitor.when == "thresholds"
+        assert monitor.order == 0
+        np.testing.assert_array_equal(monitor.record, [0])
+        raise MonitorChecked
+
+    monkeypatch.setattr(brian.Network, "run", inspect_monitor)
+    with pytest.raises(MonitorChecked):
+        run_figure7_condition(
+            condition=MatchCondition.MATCH,
+            top_down_current_pA=600,
+            use_paper_constrained_reference=True,
+            conventions=replace(
+                FirstOrderRuntimeConventions(),
+                spike_event_rule="falling_threshold_crossing",
+            ),
+            duration_ms=0.01,
+            nonspecific_replay_trace_output=tmp_path / "nonspecific.npz",
+        )
+
+
+def test_nonspecific_replay_trace_never_overwrites_or_shares_a_path(tmp_path):
+    existing = tmp_path / "existing.npz"
+    existing.write_bytes(b"owned")
+    with pytest.raises(FileExistsError):
+        run_figure7_condition(
+            condition=MatchCondition.MATCH,
+            top_down_current_pA=600,
+            use_paper_constrained_reference=True,
+            duration_ms=0.01,
+            nonspecific_replay_trace_output=existing,
+        )
+    with pytest.raises(ValueError, match="distinct paths"):
+        run_figure7_condition(
+            condition=MatchCondition.MATCH,
+            top_down_current_pA=600,
+            use_paper_constrained_reference=True,
+            duration_ms=0.01,
+            record_relay_diagnostics=True,
+            relay_trace_output=tmp_path / "same.npz",
+            nonspecific_replay_trace_output=tmp_path / "same.npz",
         )
 
 

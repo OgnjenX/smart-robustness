@@ -702,6 +702,11 @@ parameters:
     status: completed-projection037-feedback-not-initiator
     source: Artifacts 662--667
     note: Exact source identity repeats. Both control alternatives spike at 77.33 ms and projection 037 first becomes active at 77.45 ms, so recurrent excitation follows the event by 0.12 ms and is feedback amplification, not initiation. A native-sample projection-035/036 gate and voltage audit is required next. No parameter changes.
+  diagnostics.figure10.layer4_gate_voltage_timing:
+    value: read-only projection-035/036 gate means, currents, and somatic-voltage bounds in 0.1-ms bins from 74--78 ms at alternative cell 31
+    status: implemented-and-preregistered-before-execution
+    source: Artifacts 666--669
+    note: The first arm difference in voltage maximum of at least 0.1 mV and its preceding gate means are fixed as the decision rule. Exact source identity is required; no parameter or reset score changes.
   benchmark.population_sizes:
     value: see configs/*.yaml
     status: exploratory

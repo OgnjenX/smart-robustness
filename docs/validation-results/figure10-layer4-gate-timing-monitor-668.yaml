@@ -1,0 +1,30 @@
+schema_version: 1
+id: figure10-layer4-gate-timing-monitor-668
+date: '2026-09-08'
+status: implementation-ready-read-only-gate-voltage-tests-pass
+classification: target-resolved-layer4-gate-voltage-audit
+authorization: docs/validation-results/figure10-layer4-subbin-timing-assessment-667.yaml
+harness: src/smart_robustness/validation/figure10.py
+harness_sha256: 2ad42f286a91adbb556cdddca8f7fb88b16118bcfa443e498fff81f890483746
+runner: scripts/run_figure10_calibrated_reset_pair.py
+runner_sha256: 836b050b9c3ecfd1e8c27d719bb093c0b8ea10966ed6a76355db37719c4d10f9
+implementation:
+  selected_cell: 31
+  window_from_mismatch_ms: [74.0, 78.0]
+  bin_width_ms: 0.1
+  native_state_sample_ms: 0.01
+  recorded_gate_means:
+  - projection035_relay_gate
+  - projection036_inhibition_gate
+  retained_current_integrals: [projection035, projection036, projection037, projection038]
+  retained_voltage_bounds: [soma_min, soma_max]
+  default_behavior_changed: false
+verification:
+  gate_reducer_test: pass
+  live_short_sector_integration_test: pass
+  focused_tests: 2-passed
+  lint: pass
+boundary: >-
+  Gate recording and reduction are default-off and post hoc. No equation,
+  current, connection, event, schedule, stimulus, parameter, protocol, reset
+  score, or previously recorded result is altered.

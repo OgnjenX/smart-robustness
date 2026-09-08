@@ -1992,3 +1992,11 @@ control somatic action potential is already present in the 76--77-ms voltage
 bin. Because shunting current magnitudes depend on membrane voltage, the next
 diagnostic must inspect projection-035 and projection-036 gate variables with
 native-sample voltage over 74--78 ms before any parameter is opened.
+
+Artifacts 668--669 implement and preregister that gate/voltage audit. It
+records projection-035 and projection-036 gate means, the four existing
+current summaries, and somatic-voltage bounds for cell 31 in 0.1-ms bins from
+74--78 ms. Interpretation begins at the first bin whose arm difference in
+maximum voltage reaches 0.1 mV and compares both gate means in that and the
+preceding bin. Exact source identity is mandatory and no parameter may be
+selected or fitted.

@@ -3797,3 +3797,8 @@ projection-037 current onset at 77.45 ms. Recurrent layer-4 excitation is thus
 a post-spike amplifier, not the missing initial release drive. The initiating
 relay-versus-inhibition gate difference remains unresolved because current is
 voltage-dependent. Original SMART remains unreproduced and unfrozen.
+
+Artifacts 668--669 now add and preregister a 0.1-ms projection-035/036 gate and
+somatic-voltage audit over 74--78 ms at representative alternative cell 31.
+The registered pair has not yet run. Original SMART remains unreproduced and
+unfrozen.

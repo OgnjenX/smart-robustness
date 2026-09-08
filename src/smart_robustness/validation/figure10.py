@@ -118,6 +118,8 @@ class Figure10Layer4TargetTimingSummary:
     projection036_inhibition_integral_pA_ms: tuple[float, ...]
     projection037_recurrent_excitation_integral_pA_ms: tuple[float, ...]
     projection038_excitation_integral_pA_ms: tuple[float, ...]
+    projection035_relay_gate_mean: tuple[float, ...]
+    projection036_inhibition_gate_mean: tuple[float, ...]
     soma_voltage_min_mV: tuple[float, ...]
     soma_voltage_max_mV: tuple[float, ...]
     layer4_spike_times_from_mismatch_ms: tuple[float, ...]
@@ -617,6 +619,8 @@ def summarize_layer4_target_timing(
     projection036_current_pA_by_index: np.ndarray,
     projection037_current_pA_by_index: np.ndarray,
     projection038_current_pA_by_index: np.ndarray,
+    projection035_gate_by_index: np.ndarray,
+    projection036_gate_by_index: np.ndarray,
     layer4_spike_indices: np.ndarray,
     layer4_spike_times_ms: np.ndarray,
 ) -> tuple[Figure10Layer4TargetTimingSummary, ...]:
@@ -639,9 +643,11 @@ def summarize_layer4_target_timing(
             projection036_current_pA_by_index,
             projection037_current_pA_by_index,
             projection038_current_pA_by_index,
+            projection035_gate_by_index,
+            projection036_gate_by_index,
         )
     )
-    voltage, current035, current036, current037, current038 = matrices
+    voltage, current035, current036, current037, current038, gate035, gate036 = matrices
     if times.ndim != 1 or voltage.ndim != 2 or any(
         value.shape != voltage.shape for value in matrices
     ):
@@ -671,6 +677,8 @@ def summarize_layer4_target_timing(
         integrals = [[] for _ in current_series]
         voltage_min: list[float] = []
         voltage_max: list[float] = []
+        gate035_mean: list[float] = []
+        gate036_mean: list[float] = []
         for start, end in pairwise(edges):
             window = (
                 (times >= mismatch_start_ms + start)
@@ -682,6 +690,8 @@ def summarize_layer4_target_timing(
                 output.append(float(np.sum(values[window]) * dt_ms))
             voltage_min.append(float(np.min(voltage[index, window])))
             voltage_max.append(float(np.max(voltage[index, window])))
+            gate035_mean.append(float(np.mean(gate035[index, window])))
+            gate036_mean.append(float(np.mean(gate036[index, window])))
         active = np.flatnonzero(
             np.abs(current037[index, trace_window]) > current_activity_threshold_pA
         )
@@ -700,6 +710,8 @@ def summarize_layer4_target_timing(
                 projection036_inhibition_integral_pA_ms=tuple(integrals[1]),
                 projection037_recurrent_excitation_integral_pA_ms=tuple(integrals[2]),
                 projection038_excitation_integral_pA_ms=tuple(integrals[3]),
+                projection035_relay_gate_mean=tuple(gate035_mean),
+                projection036_inhibition_gate_mean=tuple(gate036_mean),
                 soma_voltage_min_mV=tuple(voltage_min),
                 soma_voltage_max_mV=tuple(voltage_max),
                 layer4_spike_times_from_mismatch_ms=tuple(
@@ -946,7 +958,9 @@ def run_figure10_condition(
         if record_layer4_target_balance_indices:
             layer4e_variables.extend(("i_port_000", "i_port_002"))
         if record_layer4_target_timing_indices:
-            layer4e_variables.extend(("i_port_000", "i_port_002", "v_soma"))
+            layer4e_variables.extend(
+                ("port_000_gate", "i_port_000", "i_port_002", "v_soma")
+            )
         layer4e_variables = list(dict.fromkeys(layer4e_variables))
         layer4e_inhibitory_state = brian.StateMonitor(
             sector.populations["layer4_excitatory_v1"].group,
@@ -1271,6 +1285,12 @@ def run_figure10_condition(
                 ),
                 projection038_current_pA_by_index=np.asarray(
                     layer4e_inhibitory_state.i_port_003 / brian.pA
+                ),
+                projection035_gate_by_index=np.asarray(
+                    layer4e_inhibitory_state.port_000_gate
+                ),
+                projection036_gate_by_index=np.asarray(
+                    layer4e_inhibitory_state.port_001_gate
                 ),
                 layer4_spike_indices=np.asarray(layer4.i),
                 layer4_spike_times_ms=np.asarray(layer4.t / brian.ms),

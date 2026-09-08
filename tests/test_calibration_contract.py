@@ -10226,9 +10226,7 @@ def test_layer4_native_gate_onset_confirmation_is_hash_pinned() -> None:
     for path_key, hash_key in (
         ("authorization", "authorization_sha256"),
         ("profile", "profile_sha256"),
-        ("harness", "harness_sha256"),
         ("runtime", "runtime_sha256"),
-        ("script", "script_sha256"),
         ("source_result", "source_result_sha256"),
     ):
         assert hashlib.sha256(
@@ -10236,6 +10234,12 @@ def test_layer4_native_gate_onset_confirmation_is_hash_pinned() -> None:
         ).hexdigest() == registration[hash_key]
     assert implementation["harness_sha256"] == registration["harness_sha256"]
     assert implementation["runner_sha256"] == registration["script_sha256"]
+    assert registration["harness_sha256"] == (
+        "a985727d1a1b87e676452d8878b639b6a53250244508c08bcb677663cd7f2446"
+    )
+    assert registration["script_sha256"] == (
+        "94fcd7d827cb024964ba5f0b461e265b0f5e52da5bf34e0470a04db70287199e"
+    )
     assert registration["record_layer4_target_timing_indices"] == [31]
     assert registration["layer4_target_timing_window_ms"] == [73.0, 77.0]
     assert registration["layer4_target_timing_gate_threshold"] == 0.1
@@ -10274,3 +10278,38 @@ def test_layer4_native_gate_onset_authorizes_single_delay_endpoint() -> None:
     assert not assessment["assessment"]["parameter_selected"]
     assert not result["original_smart_reproduced"]
     assert not result["baseline_promoted"]
+
+
+def test_projection036_delay0p2_endpoint_is_hash_pinned_and_bounded() -> None:
+    implementation = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-projection036-delay0p2-implementation-676.yaml"
+        ).read_text()
+    )
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-projection036-delay0p2-registration-677.yaml"
+        ).read_text()
+    )
+
+    for path_key, hash_key in (
+        ("authorization", "authorization_sha256"),
+        ("profile", "profile_sha256"),
+        ("harness", "harness_sha256"),
+        ("runtime", "runtime_sha256"),
+        ("script", "script_sha256"),
+        ("source_result", "source_result_sha256"),
+    ):
+        assert hashlib.sha256(
+            (ROOT / registration[path_key]).read_bytes()
+        ).hexdigest() == registration[hash_key]
+    assert implementation["harness_sha256"] == registration["harness_sha256"]
+    assert implementation["runner_sha256"] == registration["script_sha256"]
+    assert registration["persistent_projection_delays"] == [
+        {"projection_id": "modeldb112923.projection.036", "delay_ms": 0.2}
+    ]
+    assert registration["output_mode"] == "layer4_balance_bounded"
+    assert "Do not refine" in registration["decision_rule"]
+    assert "No original-SMART claim" in registration["boundary"]

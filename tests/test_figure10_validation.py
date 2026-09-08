@@ -185,6 +185,14 @@ def test_figure10_runner_requires_explicit_positive_protocol_values() -> None:
             mismatch_duration_ms=100,
             reset_pathway_enabled=True,
         )
+    with pytest.raises(ValueError, match="projection delays"):
+        run_figure10_condition(
+            top_down_current_pA=600,
+            pre_match_duration_ms=100,
+            mismatch_duration_ms=100,
+            reset_pathway_enabled=True,
+            persistent_projection_delays_ms={"modeldb112923.projection.036": 0.0},
+        )
 
 
 def test_figure10_condition_smoke_runs_persistent_two_phase_network() -> None:
@@ -255,6 +263,7 @@ def test_figure10_condition_records_layer4_balance_diagnostics() -> None:
         record_layer4_target_timing_indices=(31,),
         layer4_target_timing_window_ms=(0.0, 0.02),
         layer4_target_timing_bin_width_ms=0.01,
+        persistent_projection_delays_ms={"modeldb112923.projection.036": 0.2},
         brian=brian,
     )
 
@@ -270,6 +279,9 @@ def test_figure10_condition_records_layer4_balance_diagnostics() -> None:
     assert len(result.layer4_target_timing_summaries) == 1
     assert result.layer4_target_timing_summaries[0].index == 31
     assert len(result.layer4_target_timing_summaries[0].soma_voltage_max_mV) == 2
+    assert result.projection_delay_overrides_ms == (
+        ("modeldb112923.projection.036", 0.2),
+    )
 
 
 def test_selected_layer6i_trace_summary_preserves_peak_timing_and_threshold_gap() -> None:

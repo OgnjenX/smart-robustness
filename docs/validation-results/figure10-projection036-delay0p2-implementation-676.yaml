@@ -1,0 +1,27 @@
+schema_version: 1
+id: figure10-projection036-delay0p2-implementation-676
+date: '2026-09-08'
+status: implementation-ready-projection-specific-delay-override-tests-pass
+classification: bounded-effective-projection036-arrival-endpoint
+authorization: docs/validation-results/figure10-layer4-native-gate-onset-assessment-675.yaml
+harness: src/smart_robustness/validation/figure10.py
+harness_sha256: 82af92d2da5c5ccdba24ee049a1ea07794c3726a167d2fca9b5f8d389b640b26
+runner: scripts/run_figure10_calibrated_reset_pair.py
+runner_sha256: 1df663f30a4d16e6a860d795a266a68482ee01fbb371038ce243b81ed79195c1
+implementation:
+  projection_id: modeldb112923.projection.036
+  serialized_delay_ms: 0.1
+  endpoint_delay_ms: 0.2
+  override_scope: projection-specific-runtime-only
+  recorded_in_result: true
+  default_behavior_changed: false
+verification:
+  invalid_delay_rejected: pass
+  live_projection_specific_override: pass
+  focused_tests: 2-passed
+  lint: pass
+boundary: >-
+  The override changes only projection 036 for explicitly registered Figure-10
+  runs. It is an effective simulator-transfer calibration, not a recovered or
+  corrected source parameter. The default classic model remains at the
+  serialized 0.1-ms delay.

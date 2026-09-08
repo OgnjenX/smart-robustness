@@ -712,6 +712,11 @@ parameters:
     status: completed-inhibitory-arrival-confirmed-delay-0p2-endpoint-authorized
     source: Artifacts 670--675
     note: Exact identity repeats. Projection 035 is left-censored at 73 ms in both arms. Projection 036 crosses 0.1 intact during 75.4--75.5 ms and control at 75.55 ms, before the 75.5--75.6-ms voltage reversal. One effective delay endpoint at 0.2 ms is authorized; none is yet executed or selected.
+  calibration.figure10.projection036_effective_delay0p2:
+    value: projection-036 runtime delay 0.2 ms versus serialized/default 0.1 ms
+    status: implemented-and-preregistered-before-execution
+    source: Artifact 675 authorization and Artifacts 676--677
+    note: This is a single projection-specific simulator-transfer endpoint. Selection requires alternative release without losing source gates or worsening the baseline winner difference of +2 events. No refinement is authorized.
   benchmark.population_sizes:
     value: see configs/*.yaml
     status: exploratory

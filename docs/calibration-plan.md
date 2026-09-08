@@ -2028,3 +2028,11 @@ so its supported interval—not an invented timestamp—is archived. The orderin
 test passes and authorizes one effective projection-036 delay endpoint at 0.2
 ms, one 0.1-ms increment above the serialized delay. It remains unexecuted and
 unselected.
+
+Artifacts 676--677 implement and preregister the sole authorized effective-
+arrival endpoint: projection 036 delay 0.2 ms, one source-delay increment above
+the serialized/default 0.1 ms. The override is projection-specific, recorded in
+the result, and default-off. Selection requires fresh Figure-6 gates, preserved
+pre-reset winner and reset chain, successful alternative release, and no
+worsening of the baseline +2 intact-minus-control winner-event difference. No
+delay refinement or interpolation is allowed.

@@ -146,6 +146,7 @@ class Figure10ConditionResult:
     layer4_inhibitory_spike_times_ms: tuple[float, ...] = ()
     convention_fingerprint: str | None = None
     learned_state_provenance: str | None = None
+    projection_delay_overrides_ms: tuple[tuple[str, float], ...] = ()
     comparator_target_count: int | None = None
     top_down_current_mode: str = TopDownCurrentMode.SUSTAINED_EPOCH.value
     layer6i_mismatch_gate_integral_ms_by_projection: tuple[tuple[str, float], ...] = ()
@@ -759,6 +760,7 @@ def run_figure10_condition(
     reset_pathway_enabled: bool,
     learned_weights: Mapping[str, tuple[float, ...] | np.ndarray] | None = None,
     persistent_projection_weight_scales: Mapping[str, float] | None = None,
+    persistent_projection_delays_ms: Mapping[str, float] | None = None,
     comparator_top_k_targets: int | None = None,
     comparator_source_index: int = 40,
     top_down_current_mode: TopDownCurrentMode | str = (TopDownCurrentMode.SUSTAINED_EPOCH),
@@ -890,6 +892,16 @@ def run_figure10_condition(
         projection = sector.projections[projection_id]
         for block in getattr(projection, "blocks", (projection,)):
             block.w = f"w*({float(scale)!r})"
+    delays = persistent_projection_delays_ms or {}
+    unknown_delays = set(delays) - set(sector.projections)
+    if unknown_delays:
+        raise ValueError(f"unknown projection delay IDs: {sorted(unknown_delays)}")
+    for projection_id, delay_ms in delays.items():
+        if not np.isfinite(delay_ms) or delay_ms <= 0:
+            raise ValueError("projection delays must be finite and positive")
+        projection = sector.projections[projection_id]
+        for block in getattr(projection, "blocks", (projection,)):
+            block.delay = float(delay_ms) * brian.ms
 
     if learned_weights is None:
         learned = paper_constrained_figure6_expectation(
@@ -1349,6 +1361,10 @@ def run_figure10_condition(
         ),
         convention_fingerprint=conventions.fingerprint,
         learned_state_provenance=learned_state_provenance,
+        projection_delay_overrides_ms=tuple(
+            (str(projection_id), float(delay_ms))
+            for projection_id, delay_ms in sorted(delays.items())
+        ),
         comparator_target_count=comparator_top_k_targets,
         top_down_current_mode=current_mode.value,
         layer6i_mismatch_gate_integral_ms_by_projection=gate_integrals,

@@ -255,6 +255,10 @@ def main() -> None:
         if projection_id in scales:
             raise ValueError(f"{projection_id} overlaps an existing scale")
         scales[projection_id] = float(item["scale"])
+    delays = {
+        str(item["projection_id"]): float(item["delay_ms"])
+        for item in registration.get("persistent_projection_delays", ())
+    }
     training = run_figure6_learning(
         conventions=conventions,
         protocol=Figure6LearningProtocol(
@@ -288,6 +292,7 @@ def main() -> None:
         "mismatch_duration_ms": float(protocol["mismatch_duration_ms"]),
         "learned_weights": training.learned_weights,
         "persistent_projection_weight_scales": scales,
+        "persistent_projection_delays_ms": delays,
         "comparator_top_k_targets": int(profile["comparator"]["target_count"]),
         "comparator_source_index": int(profile["comparator"]["source_index"]),
         "top_down_current_mode": profile["protocol"]["top_down_current_mode"],
@@ -356,6 +361,7 @@ def main() -> None:
                 "registration": args.registration,
                 "runtime_fingerprint": conventions.fingerprint,
                 "persistent_projection_weight_scales": scales,
+                "persistent_projection_delays_ms": delays,
                 "figure6_gates": figure6_gates,
                 "intact": intact_summary,
                 "disconnected_control": control_summary,

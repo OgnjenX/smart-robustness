@@ -1,0 +1,64 @@
+schema_version: 1
+id: figure10-projection036-delay0p2-registration-677
+date: '2026-09-08'
+status: registered-before-execution-single-delay-endpoint
+classification: figure10-projection036-effective-delay0p2-pair
+authorization: docs/validation-results/figure10-layer4-native-gate-onset-assessment-675.yaml
+authorization_sha256: aa83b4d75e449c15aec155c089d9d169e242654369f59b43991f21cba56b0b04
+implementation: docs/validation-results/figure10-projection036-delay0p2-implementation-676.yaml
+profile: configs/calibration/figure7_learned_coincidence_effective_t_pair_v1.yaml
+profile_sha256: 4b6aa0bdf4fb844e428fb330f34970900cc8bc741183b2d8e6e73789cba0b30f
+harness: src/smart_robustness/validation/figure10.py
+harness_sha256: 82af92d2da5c5ccdba24ee049a1ea07794c3726a167d2fca9b5f8d389b640b26
+runtime: src/smart_robustness/classic_sector.py
+runtime_sha256: ebdf48f0138803ab50b1dec2ef87817b4c537e4da490a088b9df6bdcb9d119a1
+script: scripts/run_figure10_calibrated_reset_pair.py
+script_sha256: 1df663f30a4d16e6a860d795a266a68482ee01fbb371038ce243b81ed79195c1
+source_result: docs/validation-results/figure10-layer4-native-gate-onset-pair-674.yaml
+source_result_sha256: 8441f2967eab3798ffb3f4266f728d664af9a15cd139062a50841da2435ddef3
+runtime_fingerprint: fa4ab9f0bf2bec4d6ad53cb6a91620047689b6839b146ed7d777d42350c2cdf5
+result_id: figure10-projection036-delay0p2-pair-678
+result: docs/validation-results/figure10-projection036-delay0p2-pair-678.yaml
+assessment: docs/validation-results/figure10-projection036-delay0p2-assessment-679.yaml
+persistent_projection_scales:
+- {projection_id: modeldb112923.projection.008, scale: 0.75}
+- {projection_id: modeldb112923.projection.011, scale: 0.9375}
+- {projection_id: modeldb112923.projection.025, scale: 8.0}
+persistent_projection_delays:
+- {projection_id: modeldb112923.projection.036, delay_ms: 0.2}
+nonspecific_t_scale: 0.1875
+record_layer6i_diagnostics: false
+record_reset_chain_diagnostics: true
+record_layer4_balance_diagnostics: true
+output_mode: layer4_balance_bounded
+protocol:
+  pre_match_duration_ms: 100.0
+  mismatch_duration_ms: 200.0
+  total_duration_ms: 300.0
+  dt_ms: 0.01
+  top_down_current_pA: 800.0
+  top_down_current_mode: until_cued_cell_first_event
+  comparator: {transform: top_k_binary, source_index: 40, target_count: 5}
+baseline_reference:
+  result: docs/validation-results/figure10-layer4-subbin-timing-pair-666.yaml
+  intact_control_layer4_pre_events: [39, 39]
+  intact_control_layer4_post_events: [78, 92]
+  intact_control_winner_post_events: [78, 76]
+  intact_control_released_alternatives: [0, 2]
+  reset_gates:
+    pre_reset_winner: true
+    reset_chain: true
+    winner_suppression: false
+    alternative_release: false
+decision_rule: >-
+  Require all fresh Figure-6 gates. Select 0.2 ms only if the pre-reset winner
+  and reset-chain gates pass, alternative release passes, and winner suppression
+  is not worsened relative to the baseline intact-minus-control event difference
+  of +2. Otherwise reject 0.2 ms and close the single-step delay endpoint. Do
+  not refine, interpolate, or test another delay from this result.
+boundary: >-
+  Execute exactly one complete intact/control pair at projection-036 effective
+  delay 0.2 ms. No other delay, topology, weight, kinetics, intrinsic parameter,
+  event rule, protocol, comparator, duration, or score changes. No
+  original-SMART claim, promotion, or freeze is authorized unless all reset
+  gates pass.

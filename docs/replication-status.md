@@ -2801,6 +2801,10 @@ reversal, while relay onset is the same in both arms. A single effective-delay
 endpoint at 0.2 ms is now authorized but not run or selected. Original SMART
 remains unreproduced and unfrozen.
 
+Artifacts 676--677 now implement and preregister one projection-036 effective-
+delay endpoint at 0.2 ms. It has not yet run; the classic default remains the
+serialized 0.1 ms. Original SMART remains unreproduced and unfrozen.
+
 Artifacts 535--537 perform the permitted match-only effective T-conductance
 screen on that fixed replay trace. The full preregistered grid from zero to the
 paper density is finite and was executed without interpolation. Scale 0.1875,

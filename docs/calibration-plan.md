@@ -2036,3 +2036,14 @@ the result, and default-off. Selection requires fresh Figure-6 gates, preserved
 pre-reset winner and reset chain, successful alternative release, and no
 worsening of the baseline +2 intact-minus-control winner-event difference. No
 delay refinement or interpolation is allowed.
+
+Artifacts 678--679 execute and reject that endpoint. All fresh Figure-6 gates,
+the pre-reset assembly, and the upstream reset chain pass, with 81 active
+layer-6I cells intact versus five control. Layer-4 inhibitory output is exactly
+218 events in both arms, however, and neither arm releases an alternative cell.
+The winner emits 79 versus 76 events, worsening the registered intact-minus-
+control difference from +2 to +3. The control's two source-delay alternatives
+also disappear, demonstrating trajectory sensitivity without causal reset.
+Restore the serialized/default 0.1-ms delay and close the family without
+refinement, interpolation, another delay, or a condition-specific override.
+Original SMART remains unreproduced and unfrozen.

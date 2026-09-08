@@ -1,0 +1,87 @@
+schema_version: 1
+id: figure10-projection036-delay0p2-pair-678
+date: '2026-09-08'
+status: completed-calibrated-figure10-reset-pair
+classification: figure10-projection036-effective-delay0p2-pair
+registration: docs/validation-results/figure10-projection036-delay0p2-registration-677.yaml
+runtime_fingerprint: fa4ab9f0bf2bec4d6ad53cb6a91620047689b6839b146ed7d777d42350c2cdf5
+persistent_projection_weight_scales:
+  modeldb112923.projection.000: 0.01
+  modeldb112923.projection.001: 0.01
+  modeldb112923.projection.004: 0.03
+  modeldb112923.projection.008: 0.75
+  modeldb112923.projection.011: 0.9375
+  modeldb112923.projection.025: 8.0
+persistent_projection_delays_ms:
+  modeldb112923.projection.036: 0.2
+figure6_gates:
+  relay_active_indices: true
+  relay_events_per_active_index: true
+  relay_events: true
+  cortical_chain_complete: true
+  causal_learning_pair: true
+  top_down_horizontal_contrast: true
+source_identity:
+  layer4_pre_events_intact_control: [39, 39]
+  layer4_pre_active_indices_intact_control:
+    - [38, 39, 40, 41, 42]
+    - [38, 39, 40, 41, 42]
+  layer4_post_events_intact_control: [79, 76]
+  layer4_post_active_indices_intact_control:
+    - [38, 39, 40, 41, 42]
+    - [38, 39, 40, 41, 42]
+  nonspecific_pre_events_intact_control: [4, 4]
+  nonspecific_post_events_intact_control: [19, 20]
+  layer5_pre_events_intact_control: [44, 44]
+  layer5_post_events_intact_control: [289, 116]
+  layer5_active_cells_intact_control: [81, 5]
+  layer6i_pre_events_intact_control: [37, 37]
+  layer6i_post_events_intact_control: [217, 63]
+  layer6i_active_cells_intact_control: [81, 5]
+  layer4_inhibitory_post_events_intact_control: [218, 218]
+aggregate_pathway_readouts:
+  projection026_gate_integral_ms_intact_control: [22.452277485673584,
+    6.673818069392213]
+  projection026_current_integral_pA_ms_intact_control: [3323.223605156355,
+    961.3740584939105]
+  projection026_current_peak_pA_intact_control: [142.34470708890507,
+    12.37750891662098]
+  projection036_gate_integral_ms_intact_control: [12954.10777154729,
+    13054.032196074384]
+  projection036_current_integral_pA_ms_intact_control: [-1831387.3351583458,
+    -1821484.813066597]
+  projection036_current_trough_pA_intact_control: [-83695.05877150923,
+    -83695.05877150923]
+  projection038_gate_integral_ms_intact_control: [9.56300888995425,
+    2.809206218657881]
+  projection038_current_integral_pA_ms_intact_control: [4462.374794394472,
+    1151.305331955449]
+  projection038_current_peak_pA_intact_control: [210.3988242900781,
+    15.100005542992237]
+reset_assessment:
+  pre_reset_winner_index: 38
+  pre_reset_winner_indices: [38, 39, 40, 41, 42]
+  pre_reset_winner_spikes: 39
+  intact_winner_post_spikes: 79
+  control_winner_post_spikes: 76
+  intact_released_alternatives: 0
+  control_released_alternatives: 0
+  intact_nonspecific_spikes: 19
+  intact_layer5_spikes: 289
+  intact_layer6i_spikes: 217
+baseline_comparison:
+  baseline_winner_events_intact_control: [78, 76]
+  endpoint_winner_events_intact_control: [79, 76]
+  baseline_intact_minus_control_winner_events: 2
+  endpoint_intact_minus_control_winner_events: 3
+  baseline_released_alternatives_intact_control: [0, 2]
+  endpoint_released_alternatives_intact_control: [0, 0]
+reset_gates:
+  pre_reset_winner: true
+  reset_chain: true
+  winner_suppression: false
+  alternative_release: false
+reproduced_reset: false
+figure7_known_discrepancy_locked: true
+original_smart_reproduced: false
+baseline_promoted: false

@@ -1,0 +1,52 @@
+schema_version: 1
+id: figure10-projection036-delay0p2-assessment-679
+date: '2026-09-08'
+status: assessed-reset-failed-delay-endpoint-rejected-closed
+registration: docs/validation-results/figure10-projection036-delay0p2-registration-677.yaml
+result: docs/validation-results/figure10-projection036-delay0p2-pair-678.yaml
+result_sha256: 2aff567e84fe062dc9ef10e69ca399fb7751b1be9a205e7f3cefb565b9a0d2b4
+assessment:
+  all_fresh_figure6_gates_pass: true
+  pre_reset_winner_pass: true
+  reset_chain_pass: true
+  winner_suppression_pass: false
+  alternative_release_pass: false
+  winner_difference_not_worsened: false
+  control_alternative_release_preserved: false
+  projection036_delay0p2_endpoint_selected: false
+  projection036_delay0p2_endpoint_closed: true
+  delay_refinement_or_interpolation_authorized: false
+  parameter_selected: false
+  official_figure10_reset_reproduced: false
+  original_smart_reproduced: false
+  baseline_promoted: false
+decision_evidence:
+  winner_events_intact_control: [79, 76]
+  winner_intact_minus_control: 3
+  baseline_winner_intact_minus_control: 2
+  released_alternatives_intact_control: [0, 0]
+  baseline_released_alternatives_intact_control: [0, 2]
+  layer6i_active_cells_intact_control: [81, 5]
+  layer4_inhibitory_events_intact_control: [218, 218]
+  projection026_current_integral_pA_ms_intact_control: [3323.223605156355,
+    961.3740584939105]
+  projection036_current_integral_pA_ms_intact_control: [-1831387.3351583458,
+    -1821484.813066597]
+  projection038_current_integral_pA_ms_intact_control: [4462.374794394472,
+    1151.305331955449]
+interpretation: >-
+  Every fresh Figure-6 gate, the five-cell pre-reset representation, and the
+  upstream reset-chain gate pass. The 0.2-ms projection-036 delay nevertheless
+  releases no alternative cell in either arm. It also increases the intact
+  winner count to 79 while control remains at 76, worsening the registered
+  intact-minus-control difference from +2 to +3 events. The control's two
+  source-delay alternatives disappear, so the shared delay change moves the
+  recurrent layer-4 network into a different trajectory without supplying the
+  required causal reset. The endpoint therefore fails both decisive selection
+  conditions. It is not a recovered simulator convention or SMART parameter.
+closure: >-
+  Reject projection-036 delay 0.2 ms, restore the serialized/default 0.1 ms,
+  and close this single-step effective-arrival family. Do not refine,
+  interpolate, test another projection-036 delay, or apply a condition-specific
+  delay from this result. Any next experiment must belong to a separately
+  justified source-constrained mechanism and be preregistered before execution.

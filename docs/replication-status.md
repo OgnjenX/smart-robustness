@@ -2791,19 +2791,17 @@ count only. It does not reconstruct the upstream two-against-one comparison or
 70-Hz mismatch disinhibition, and no mismatch-driven retuning is authorized.
 Original SMART remains unreproduced and unfrozen.
 
-Artifacts 672--673 now add and preregister native 0.01-ms gate-threshold timing
-for projection 035 and 036 over a wider 73--77-ms window. The confirmation pair
-has not yet run. Original SMART remains unreproduced and unfrozen.
-
-Artifacts 674--675 confirm the candidate with exact identity: projection-036
-inhibition crosses threshold earlier intact than control and before the voltage
-reversal, while relay onset is the same in both arms. A single effective-delay
-endpoint at 0.2 ms is now authorized but not run or selected. Original SMART
-remains unreproduced and unfrozen.
-
-Artifacts 676--677 now implement and preregister one projection-036 effective-
-delay endpoint at 0.2 ms. It has not yet run; the classic default remains the
-serialized 0.1 ms. Original SMART remains unreproduced and unfrozen.
+Artifacts 672--675 confirm at native resolution that projection-036 inhibition
+arrives earlier in the intact alternative cell and authorize one bounded
+effective-delay endpoint. Artifacts 676--679 implement, preregister, execute,
+and reject that endpoint at 0.2 ms. Fresh Figure 6 and the upstream reset chain
+pass, including 81 active layer-6I cells intact versus five control, but both
+arms release zero alternatives and emit exactly 218 layer-4 inhibitory events.
+Winner output is 79 versus 76, worsening the registered baseline difference
+from +2 to +3, while the control's two source-delay alternatives disappear.
+The endpoint is closed without refinement and the serialized/default 0.1-ms
+delay remains active. Figure 10, complete original SMART reproduction, and
+baseline freezing remain failed.
 
 Artifacts 535--537 perform the permitted match-only effective T-conductance
 screen on that fixed replay trace. The full preregistered grid from zero to the

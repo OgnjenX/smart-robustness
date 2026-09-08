@@ -10313,3 +10313,50 @@ def test_projection036_delay0p2_endpoint_is_hash_pinned_and_bounded() -> None:
     assert registration["output_mode"] == "layer4_balance_bounded"
     assert "Do not refine" in registration["decision_rule"]
     assert "No original-SMART claim" in registration["boundary"]
+
+
+def test_projection036_delay0p2_fails_reset_and_closes_endpoint() -> None:
+    result_path = (
+        ROOT
+        / "docs/validation-results/figure10-projection036-delay0p2-pair-678.yaml"
+    )
+    result = yaml.safe_load(result_path.read_text())
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-projection036-delay0p2-assessment-679.yaml"
+        ).read_text()
+    )
+
+    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment[
+        "result_sha256"
+    ]
+    assert all(result["figure6_gates"].values())
+    assert result["persistent_projection_delays_ms"] == {
+        "modeldb112923.projection.036": 0.2
+    }
+    assert result["source_identity"]["layer4_post_events_intact_control"] == [79, 76]
+    assert result["source_identity"]["layer6i_active_cells_intact_control"] == [81, 5]
+    assert result["source_identity"]["layer4_inhibitory_post_events_intact_control"] == [
+        218,
+        218,
+    ]
+    assert result["baseline_comparison"]["endpoint_intact_minus_control_winner_events"] == 3
+    assert result["baseline_comparison"]["endpoint_released_alternatives_intact_control"] == [
+        0,
+        0,
+    ]
+    assert result["reset_gates"] == {
+        "pre_reset_winner": True,
+        "reset_chain": True,
+        "winner_suppression": False,
+        "alternative_release": False,
+    }
+    verdict = assessment["assessment"]
+    assert not verdict["winner_difference_not_worsened"]
+    assert not verdict["control_alternative_release_preserved"]
+    assert not verdict["projection036_delay0p2_endpoint_selected"]
+    assert verdict["projection036_delay0p2_endpoint_closed"]
+    assert not verdict["delay_refinement_or_interpolation_authorized"]
+    assert not result["original_smart_reproduced"]
+    assert not result["baseline_promoted"]

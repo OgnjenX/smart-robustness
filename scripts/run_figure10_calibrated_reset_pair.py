@@ -174,6 +174,9 @@ def _condition_summary(result):
         "layer4_target_timing_summaries": [
             asdict(item) for item in result.layer4_target_timing_summaries
         ],
+        "projection036_target_arrival_summaries": [
+            asdict(item) for item in result.projection036_target_arrival_summaries
+        ],
     }
 
 
@@ -214,6 +217,7 @@ def _bounded_layer4_balance_summary(summary):
         "layer4_balance_bins",
         "layer4_target_balance_bins",
         "layer4_target_timing_summaries",
+        "projection036_target_arrival_summaries",
     )
     bounded = {key: summary[key] for key in keys}
     bounded["layer5_post_active_count"] = len(summary["layer5_post_active_indices"])
@@ -328,6 +332,18 @@ def main() -> None:
         ),
         "layer4_target_timing_gate_threshold": float(
             registration.get("layer4_target_timing_gate_threshold", 0.1)
+        ),
+        "record_projection036_arrival_target_indices": tuple(
+            int(index)
+            for index in registration.get(
+                "record_projection036_arrival_target_indices", ()
+            )
+        ),
+        "projection036_arrival_window_ms": tuple(
+            float(value)
+            for value in registration.get(
+                "projection036_arrival_window_ms", (75.0, 76.0)
+            )
         ),
         "brian": brian,
     }

@@ -2069,3 +2069,12 @@ does not initiate their early divergence. Close the p026 delay conflict without
 interpolation and retain recovered `SMART.nml` 1.0 ms as executable default.
 Next localize the exact layer-4-inhibitory source events that generate the
 p036 surge at alternative cell 31 under unchanged source timing.
+
+Artifacts 684--685 implement and preregister that passive audit. For each
+projection-036 edge into cell 31, the reducer retains the connected inhibitory
+source index, compiled weight, source spike time, and 0.1-ms-delayed arrival in
+the fixed 75.2--75.8-ms window. The unchanged source-control pair must exactly
+repeat every Artifact-674 population identity before attribution. The result
+may distinguish a single-source timing difference from a synchronized or
+topology-weighted event set, but it cannot select a parameter or change a reset
+gate.

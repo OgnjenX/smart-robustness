@@ -10298,7 +10298,6 @@ def test_projection036_delay0p2_endpoint_is_hash_pinned_and_bounded() -> None:
         ("authorization", "authorization_sha256"),
         ("profile", "profile_sha256"),
         ("runtime", "runtime_sha256"),
-        ("script", "script_sha256"),
         ("source_result", "source_result_sha256"),
     ):
         assert hashlib.sha256(
@@ -10308,6 +10307,9 @@ def test_projection036_delay0p2_endpoint_is_hash_pinned_and_bounded() -> None:
     assert implementation["runner_sha256"] == registration["script_sha256"]
     assert registration["harness_sha256"] == (
         "82af92d2da5c5ccdba24ee049a1ea07794c3726a167d2fca9b5f8d389b640b26"
+    )
+    assert registration["script_sha256"] == (
+        "1df663f30a4d16e6a860d795a266a68482ee01fbb371038ce243b81ed79195c1"
     )
     assert registration["persistent_projection_delays"] == [
         {"projection_id": "modeldb112923.projection.036", "delay_ms": 0.2}
@@ -10380,9 +10382,7 @@ def test_projection026_supplement_delay_endpoint_is_source_pinned_and_bounded() 
 
     for path_key, hash_key in (
         ("profile", "profile_sha256"),
-        ("harness", "harness_sha256"),
         ("runtime", "runtime_sha256"),
-        ("script", "script_sha256"),
         ("supplementary_catalog", "supplementary_catalog_sha256"),
         ("executable_catalog", "executable_catalog_sha256"),
         ("prior_assessment", "prior_assessment_sha256"),
@@ -10390,6 +10390,12 @@ def test_projection026_supplement_delay_endpoint_is_source_pinned_and_bounded() 
         assert hashlib.sha256(
             (ROOT / registration[path_key]).read_bytes()
         ).hexdigest() == registration[hash_key]
+    assert registration["harness_sha256"] == (
+        "4c4e7effe3157a25e24dac9724054a346c91b79eac325ff28eb70d7e12fcbb9a"
+    )
+    assert registration["script_sha256"] == (
+        "1df663f30a4d16e6a860d795a266a68482ee01fbb371038ce243b81ed79195c1"
+    )
     conflict = implementation["source_conflict"]
     assert conflict["supplementary_delay_ms"] == 0.1
     assert conflict["executable_delay_ms"] == 1.0
@@ -10447,3 +10453,39 @@ def test_projection026_supplement_delay_fails_reset_and_closes_conflict() -> Non
     assert not verdict["global_classic_convention_authorized"]
     assert not result["original_smart_reproduced"]
     assert not result["baseline_promoted"]
+
+
+def test_projection036_source_arrival_audit_is_hash_pinned_and_passive() -> None:
+    implementation = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-projection036-source-arrival-monitor-684.yaml"
+        ).read_text()
+    )
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-projection036-source-arrival-registration-685.yaml"
+        ).read_text()
+    )
+
+    for path_key, hash_key in (
+        ("profile", "profile_sha256"),
+        ("harness", "harness_sha256"),
+        ("runtime", "runtime_sha256"),
+        ("script", "script_sha256"),
+        ("source_result", "source_result_sha256"),
+        ("prior_assessment", "prior_assessment_sha256"),
+    ):
+        assert hashlib.sha256(
+            (ROOT / registration[path_key]).read_bytes()
+        ).hexdigest() == registration[hash_key]
+    assert implementation["implementation"]["behavior_change"] == "none"
+    assert registration["persistent_projection_delays"] == []
+    assert registration["record_projection036_arrival_target_indices"] == [31]
+    assert registration["projection036_arrival_window_ms"] == [75.2, 75.8]
+    assert registration["required_source_identity"][
+        "layer4_post_events_intact_control"
+    ] == [78, 92]
+    assert "Do not select a parameter" in registration["decision_rule"]
+    assert "No original-SMART claim" in registration["boundary"]

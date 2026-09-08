@@ -1,0 +1,32 @@
+schema_version: 1
+id: figure10-projection036-source-arrival-monitor-684
+date: '2026-09-08'
+status: implementation-ready-read-only-source-arrival-tests-pass
+classification: figure10-projection036-source-resolved-arrival-audit
+authorization: docs/validation-results/figure10-projection026-supplement-delay-assessment-683.yaml
+authorization_sha256: 886883664ccf83942e46f455f665385054fbd81efe73b539c7b1ae6be4bb4601
+harness: src/smart_robustness/validation/figure10.py
+harness_sha256: 03e5d2a256ba55f450a1a21a87d991e65d634a199bec63d6b16c4395a36f9cee
+runner: scripts/run_figure10_calibrated_reset_pair.py
+runner_sha256: 757beafe9436d6fe714a173d57b28a0e828f89d0979704a82a092820e2b75ac9
+runtime: src/smart_robustness/classic_sector.py
+runtime_sha256: ebdf48f0138803ab50b1dec2ef87817b4c537e4da490a088b9df6bdcb9d119a1
+implementation:
+  summary_type: Figure10Projection036TargetArrivalSummary
+  retained_edge_fields: [source_index, target_index, weight, delay_ms]
+  retained_event_fields:
+    - source_index
+    - source_spike_time_from_mismatch_ms
+    - arrival_time_from_mismatch_ms
+    - edge_weight
+  sort_order: [arrival_time_from_mismatch_ms, source_index]
+  behavior_change: none
+tests:
+  command: .venv/bin/pytest -q tests/test_figure10_validation.py
+  result: 14-passed
+boundary: >-
+  This reducer combines observed layer-4-inhibitory spike times with the exact
+  compiled projection-036 edge map, edge weights, and effective delays. It does
+  not alter a neuron, synapse, connection, event, scheduler, protocol, or score.
+  Source attribution can localize the first inhibitory arrival but cannot by
+  itself authorize a numerical or topology change.

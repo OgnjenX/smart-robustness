@@ -722,6 +722,11 @@ parameters:
     status: completed-reset-failed-source-conflict-rejected-closed
     source: Supplementary record l4_i.proximal_dendrite.from_l6i.unknown_depletable, SMART.nml projection 026, and Artifacts 679--683
     note: Fresh Figure 6 and the upstream reset chain pass, but the winner emits 81/80 events intact/control and alternatives remain 0/2. The endpoint fails both causal layer-4 gates. Supplementary 0.1 ms is unselected, the conflict closes without interpolation, and SMART.nml 1.0 ms remains executable default.
+  diagnostics.figure10.projection036_source_resolved_arrivals:
+    value: connected source indices, compiled edge weights, source spikes, and delayed arrivals into layer-4 alternative cell 31 over 75.2--75.8 ms
+    status: implemented-and-preregistered-before-execution-read-only
+    source: Artifact 683 authorization and Artifacts 684--685
+    note: The unchanged source-control pair must reproduce Artifact-674 identities. This passive attribution can localize the first projection-036 inhibitory arrival but cannot select a parameter, alter the reset score, or reopen either closed delay family.
   benchmark.population_sizes:
     value: see configs/*.yaml
     status: exploratory

@@ -16,6 +16,7 @@ from smart_robustness.validation.figure10 import (
     summarize_layer4_target_balance_bins,
     summarize_layer4_target_timing,
     summarize_layer6i_selected_traces,
+    summarize_projection036_target_arrivals,
 )
 from smart_robustness.validation.layer6i_replay import run_layer6i_replay
 
@@ -476,3 +477,28 @@ def test_layer4_target_timing_preserves_current_onset_before_exact_spike() -> No
     assert summary.projection036_first_gate_threshold_time_from_mismatch_ms == 1.0
     assert summary.projection038_first_gate_threshold_time_from_mismatch_ms == 3.0
     assert summary.soma_voltage_max_mV == (-68.0, -60.0, -50.0, -45.0)
+
+
+def test_projection036_target_arrivals_preserve_source_edge_and_delay() -> None:
+    summaries = summarize_projection036_target_arrivals(
+        target_indices=(31,),
+        mismatch_start_ms=100.0,
+        window_start_from_mismatch_ms=75.0,
+        window_end_from_mismatch_ms=76.0,
+        edge_source_indices=brian.asarray([20, 21, 22, 20]),
+        edge_target_indices=brian.asarray([31, 31, 31, 40]),
+        edge_weights=brian.asarray([0.2, 0.5, 0.1, 0.9]),
+        edge_delays_ms=brian.asarray([0.1, 0.1, 0.2, 0.1]),
+        source_spike_indices=brian.asarray([20, 21, 22, 20]),
+        source_spike_times_ms=brian.asarray([174.95, 175.2, 175.7, 176.0]),
+    )
+
+    assert len(summaries) == 1
+    summary = summaries[0]
+    assert summary.connected_source_indices == (20, 21, 22)
+    assert summary.connected_edge_weights == (0.2, 0.5, 0.1)
+    assert [arrival.source_index for arrival in summary.arrivals] == [20, 21, 22]
+    assert [arrival.arrival_time_from_mismatch_ms for arrival in summary.arrivals] == (
+        pytest.approx([75.05, 75.3, 75.9])
+    )
+    assert [arrival.edge_weight for arrival in summary.arrivals] == [0.2, 0.5, 0.1]

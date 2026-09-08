@@ -2819,6 +2819,12 @@ delay is unselected and the conflict is closed without interpolation;
 recovered `SMART.nml` 1.0 ms remains the executable default. Figure 10,
 complete original SMART reproduction, and baseline freezing remain failed.
 
+Artifacts 684--685 now add and preregister a passive, source-resolved
+projection-036 arrival audit at alternative cell 31 over 75.2--75.8 ms. It
+combines observed layer-4-inhibitory spikes with exact compiled source edges,
+weights, and delays without changing the model. The pair has not yet run, and
+original SMART remains unreproduced and unfrozen.
+
 Artifacts 535--537 perform the permitted match-only effective T-conductance
 screen on that fixed replay trace. The full preregistered grid from zero to the
 paper density is finite and was executed without interpolation. Scale 0.1875,

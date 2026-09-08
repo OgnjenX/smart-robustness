@@ -131,6 +131,28 @@ class Figure10Layer4TargetTimingSummary:
 
 
 @dataclass(frozen=True, slots=True)
+class Figure10Projection036Arrival:
+    """One source event delivered through projection 036 to a focal target."""
+
+    source_index: int
+    source_spike_time_from_mismatch_ms: float
+    arrival_time_from_mismatch_ms: float
+    edge_weight: float
+
+
+@dataclass(frozen=True, slots=True)
+class Figure10Projection036TargetArrivalSummary:
+    """Connected sources and delivered events for one layer-4 target."""
+
+    target_index: int
+    window_start_from_mismatch_ms: float
+    window_end_from_mismatch_ms: float
+    connected_source_indices: tuple[int, ...]
+    connected_edge_weights: tuple[float, ...]
+    arrivals: tuple[Figure10Projection036Arrival, ...]
+
+
+@dataclass(frozen=True, slots=True)
 class Figure10ConditionResult:
     """Spike evidence from one persistent pre-reset then mismatch episode."""
 
@@ -178,6 +200,9 @@ class Figure10ConditionResult:
     layer4_target_balance_bins: tuple[Figure10Layer4TargetBalanceBin, ...] = ()
     layer4_target_timing_summaries: tuple[
         Figure10Layer4TargetTimingSummary, ...
+    ] = ()
+    projection036_target_arrival_summaries: tuple[
+        Figure10Projection036TargetArrivalSummary, ...
     ] = ()
 
     def __post_init__(self) -> None:
@@ -776,6 +801,79 @@ def summarize_layer4_target_timing(
     return tuple(summaries)
 
 
+def summarize_projection036_target_arrivals(
+    *,
+    target_indices: tuple[int, ...],
+    mismatch_start_ms: float,
+    window_start_from_mismatch_ms: float,
+    window_end_from_mismatch_ms: float,
+    edge_source_indices: np.ndarray,
+    edge_target_indices: np.ndarray,
+    edge_weights: np.ndarray,
+    edge_delays_ms: np.ndarray,
+    source_spike_indices: np.ndarray,
+    source_spike_times_ms: np.ndarray,
+) -> tuple[Figure10Projection036TargetArrivalSummary, ...]:
+    """Attribute focal projection-036 arrivals to source spikes and edges."""
+
+    if not target_indices or len(set(target_indices)) != len(target_indices):
+        raise ValueError("projection-036 arrival targets must be nonempty and unique")
+    if window_start_from_mismatch_ms < 0 or (
+        window_end_from_mismatch_ms <= window_start_from_mismatch_ms
+    ):
+        raise ValueError("projection-036 arrival window is invalid")
+    sources = np.asarray(edge_source_indices, dtype=int)
+    targets = np.asarray(edge_target_indices, dtype=int)
+    weights = np.asarray(edge_weights, dtype=float)
+    delays = np.asarray(edge_delays_ms, dtype=float)
+    if not (sources.shape == targets.shape == weights.shape == delays.shape):
+        raise ValueError("projection-036 edge arrays must have identical shapes")
+    if sources.ndim != 1 or np.any(delays < 0) or not np.all(np.isfinite(delays)):
+        raise ValueError("projection-036 edge delays must be finite and nonnegative")
+    spike_indices = np.asarray(source_spike_indices, dtype=int)
+    spike_times = np.asarray(source_spike_times_ms, dtype=float)
+    if spike_indices.shape != spike_times.shape or spike_indices.ndim != 1:
+        raise ValueError("projection-036 source spike arrays must match")
+
+    absolute_start = mismatch_start_ms + window_start_from_mismatch_ms
+    absolute_end = mismatch_start_ms + window_end_from_mismatch_ms
+    summaries: list[Figure10Projection036TargetArrivalSummary] = []
+    for target_index in target_indices:
+        selected_edges = np.flatnonzero(targets == target_index)
+        edge_order = selected_edges[np.argsort(sources[selected_edges], kind="stable")]
+        arrivals: list[Figure10Projection036Arrival] = []
+        for edge_index in edge_order:
+            source_index = int(sources[edge_index])
+            source_times = spike_times[spike_indices == source_index]
+            for spike_time in source_times:
+                arrival_time = float(spike_time + delays[edge_index])
+                if absolute_start <= arrival_time < absolute_end:
+                    arrivals.append(
+                        Figure10Projection036Arrival(
+                            source_index=source_index,
+                            source_spike_time_from_mismatch_ms=float(
+                                spike_time - mismatch_start_ms
+                            ),
+                            arrival_time_from_mismatch_ms=float(
+                                arrival_time - mismatch_start_ms
+                            ),
+                            edge_weight=float(weights[edge_index]),
+                        )
+                    )
+        arrivals.sort(key=lambda item: (item.arrival_time_from_mismatch_ms, item.source_index))
+        summaries.append(
+            Figure10Projection036TargetArrivalSummary(
+                target_index=target_index,
+                window_start_from_mismatch_ms=window_start_from_mismatch_ms,
+                window_end_from_mismatch_ms=window_end_from_mismatch_ms,
+                connected_source_indices=tuple(int(sources[index]) for index in edge_order),
+                connected_edge_weights=tuple(float(weights[index]) for index in edge_order),
+                arrivals=tuple(arrivals),
+            )
+        )
+    return tuple(summaries)
+
+
 def run_figure10_condition(
     *,
     top_down_current_pA: float,
@@ -800,6 +898,8 @@ def run_figure10_condition(
     layer4_target_timing_bin_width_ms: float = 1.0,
     layer4_target_timing_current_threshold_pA: float = 1e-9,
     layer4_target_timing_gate_threshold: float = 0.1,
+    record_projection036_arrival_target_indices: tuple[int, ...] = (),
+    projection036_arrival_window_ms: tuple[float, float] = (75.0, 76.0),
     conventions=None,
     dt_ms: float = 0.01,
     cpp_standalone_directory: str | Path | None = None,
@@ -886,6 +986,30 @@ def run_figure10_condition(
         raise ValueError("layer-4 target timing current threshold cannot be negative")
     if layer4_target_timing_gate_threshold < 0:
         raise ValueError("layer-4 target timing gate threshold cannot be negative")
+    if not isinstance(record_projection036_arrival_target_indices, tuple) or any(
+        isinstance(index, bool) or not isinstance(index, int)
+        for index in record_projection036_arrival_target_indices
+    ):
+        raise TypeError("projection-036 arrival targets must be a tuple of integers")
+    if len(set(record_projection036_arrival_target_indices)) != len(
+        record_projection036_arrival_target_indices
+    ):
+        raise ValueError("projection-036 arrival targets must be unique")
+    if any(
+        index < 0 or index >= 81
+        for index in record_projection036_arrival_target_indices
+    ):
+        raise ValueError("projection-036 arrival target must be between 0 and 80")
+    if record_projection036_arrival_target_indices and not record_reset_chain_diagnostics:
+        raise ValueError("projection-036 arrival audit requires reset-chain diagnostics")
+    if record_projection036_arrival_target_indices and (
+        not isinstance(projection036_arrival_window_ms, tuple)
+        or len(projection036_arrival_window_ms) != 2
+        or projection036_arrival_window_ms[0] < 0
+        or projection036_arrival_window_ms[1] <= projection036_arrival_window_ms[0]
+        or projection036_arrival_window_ms[1] > mismatch_duration_ms
+    ):
+        raise ValueError("projection-036 arrival window must lie within mismatch")
     current_mode = TopDownCurrentMode(top_down_current_mode)
     if current_mode is TopDownCurrentMode.UNTIL_CUED_CELL_EVENT_LIMIT:
         raise ValueError("Figure 10 does not define an event-count-limited cue")
@@ -1263,6 +1387,9 @@ def run_figure10_condition(
     layer4_balance_bins: tuple[Figure10Layer4BalanceBin, ...] = ()
     layer4_target_balance_bins: tuple[Figure10Layer4TargetBalanceBin, ...] = ()
     layer4_target_timing_summaries: tuple[Figure10Layer4TargetTimingSummary, ...] = ()
+    projection036_target_arrival_summaries: tuple[
+        Figure10Projection036TargetArrivalSummary, ...
+    ] = ()
     if record_layer4_balance_diagnostics:
         projection038_gate, projection038_current, projection038_trace = (
             _single_projection_summary(layer4e_inhibitory_state, "port_003")
@@ -1362,6 +1489,42 @@ def run_figure10_condition(
                 layer4_spike_indices=np.asarray(layer4.i),
                 layer4_spike_times_ms=np.asarray(layer4.t / brian.ms),
             )
+        if record_projection036_arrival_target_indices:
+            assert layer4_inhibitory is not None
+            projection036 = sector.projections["modeldb112923.projection.036"]
+            if hasattr(projection036, "blocks"):
+                edge_sources = np.asarray(projection036.i, dtype=int)
+                edge_targets = np.asarray(projection036.j, dtype=int)
+                edge_weights = np.asarray(projection036.read("w"), dtype=float)
+                edge_delays = np.concatenate(
+                    [
+                        np.asarray(block.delay[:] / brian.ms, dtype=float)
+                        for block in projection036.blocks
+                    ]
+                )
+            else:
+                edge_sources = np.asarray(projection036.i[:], dtype=int)
+                edge_targets = np.asarray(projection036.j[:], dtype=int)
+                edge_weights = np.asarray(projection036.w[:], dtype=float)
+                edge_delays = np.asarray(projection036.delay[:] / brian.ms, dtype=float)
+            projection036_target_arrival_summaries = (
+                summarize_projection036_target_arrivals(
+                    target_indices=record_projection036_arrival_target_indices,
+                    mismatch_start_ms=pre_match_duration_ms,
+                    window_start_from_mismatch_ms=float(
+                        projection036_arrival_window_ms[0]
+                    ),
+                    window_end_from_mismatch_ms=float(
+                        projection036_arrival_window_ms[1]
+                    ),
+                    edge_source_indices=edge_sources,
+                    edge_target_indices=edge_targets,
+                    edge_weights=edge_weights,
+                    edge_delays_ms=edge_delays,
+                    source_spike_indices=np.asarray(layer4_inhibitory.i),
+                    source_spike_times_ms=np.asarray(layer4_inhibitory.t / brian.ms),
+                )
+            )
 
     return Figure10ConditionResult(
         pre_match_duration_ms=pre_match_duration_ms,
@@ -1430,4 +1593,7 @@ def run_figure10_condition(
         layer4_balance_bins=layer4_balance_bins,
         layer4_target_balance_bins=layer4_target_balance_bins,
         layer4_target_timing_summaries=layer4_target_timing_summaries,
+        projection036_target_arrival_summaries=(
+            projection036_target_arrival_summaries
+        ),
     )

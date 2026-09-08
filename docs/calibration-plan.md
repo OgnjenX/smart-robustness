@@ -1560,3 +1560,12 @@ Mismatch must remain overlap-only, produce fewer TRN events than match, and
 yield exactly seven nonspecific events against match's four. Full-sheet afferent
 and direct-inhibition summaries are mandatory. No adjustment or repeat follows
 a failed gate.
+
+Artifacts 590--592 repair the former TRN mechanism but close on one remaining
+numeric gate. Fresh learning and match repeat; mismatch is overlap-only. Match
+now exceeds mismatch in whole TRN events (697 versus 608), central and peripheral
+TRN events, and integrated TRN-to-nonspecific inhibition (1189.70 versus
+1175.66 gate-ms). Match remains exactly four nonspecific events, but mismatch is
+six rather than seven. Do not retune the closed pair. Next compare read-only
+nonspecific timing/current traces against the prior seven-event control to
+localize the missing event before defining any new parameter family.

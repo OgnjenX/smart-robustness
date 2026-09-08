@@ -604,9 +604,9 @@ parameters:
     note: Scale 0.9375 is the sole exact match survivor with all Figure 6 gates, 20 relay, 697 TRN, and four nonspecific events. Scale 0.875 fails Figure 6 and 1.0 fails the nonspecific match gate. One fixed diagnostic mismatch pair is authorized; no interpolation or extension.
   validation.figure7.persistent_recurrent_gaba_pair:
     value: projection-008 scale 0.75 and projection-011 scale 0.9375 at fixed T scale 0.1875
-    status: preregistered-fixed-pair-awaiting-execution
-    source: Registration 590, authorized by Artifacts 587--589
-    note: One fresh-learning match/mismatch pair must pass overlap, TRN-order, and exact 4/7 nonspecific gates with full-sheet and direct-drive diagnostics. Any failure closes the calibrated survivor without adjustment.
+    status: completed-single-rate-gate-failure-candidate-closed
+    source: Artifacts 590--592, authorized by Artifacts 587--589
+    note: The pair repairs TRN event and effective-inhibition ordering while preserving relay selectivity and four-event match. Mismatch emits six rather than seven nonspecific events, so the sole survivor closes without adjustment and is not frozen.
   benchmark.population_sizes:
     value: see configs/*.yaml
     status: exploratory

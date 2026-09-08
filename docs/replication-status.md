@@ -3652,3 +3652,11 @@ must be confined to relay cell 40, have fewer TRN events than match, and produce
 seven nonspecific events. The runner records full-sheet afferent/TRN summaries
 and direct inhibition in the same process. No post-result adjustment or repeat
 is authorized.
+
+Artifacts 590--592 show that the calibrated recurrent balance repairs the
+former mechanistic failure: match has 697 versus 608 TRN events and greater
+integrated TRN inhibition, while relay selectivity and the exact four-event
+match persist. The sole failed gate is mismatch nonspecific rate, with six
+events rather than seven in 100 ms. The candidate therefore closes unfrozen.
+The next admissible step is read-only timing/current comparison against the
+prior seven-event mismatch control, not post-hoc retuning.

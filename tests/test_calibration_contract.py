@@ -9475,3 +9475,45 @@ def test_persistent_recurrent_gaba_pair_is_single_fixed_verification() -> None:
     assert len(registration["registered_diagnostics"]) == 5
     assert "Do not adjust, repeat" in registration["selection_rule"]
     assert "not recover original" in registration["boundary"]
+
+
+def test_persistent_recurrent_gaba_pair_closes_on_one_rate_gate() -> None:
+    result_path = (
+        ROOT
+        / "docs/validation-results/figure7-persistent-recurrent-gaba-pair-591.yaml"
+    )
+    result = yaml.safe_load(result_path.read_text())
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-persistent-recurrent-gaba-pair-assessment-592.yaml"
+        ).read_text()
+    )
+
+    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment[
+        "result_sha256"
+    ]
+    assert all(result["figure6_gates"].values())
+    gates = result["fixed_figure7_gates"]
+    assert sum(not passed for passed in gates.values()) == 1
+    assert not gates["mismatch_nonspecific_events"]
+    assert result["event_identity"]["match"] == {
+        "relay_events": 20,
+        "relay_active_indices": [38, 39, 40, 41, 42],
+        "trn_events": 697,
+        "nonspecific_events": 4,
+    }
+    assert result["event_identity"]["mismatch"] == {
+        "relay_events": 3,
+        "relay_active_indices": [40],
+        "trn_events": 608,
+        "nonspecific_events": 6,
+    }
+    assert (
+        result["nonspecific_trn_gaba_integral_ms"]["match"]
+        > result["nonspecific_trn_gaba_integral_ms"]["mismatch"]
+    )
+    assert assessment["assessment"]["failed_gate_count"] == 1
+    assert assessment["assessment"]["candidate_closed"]
+    assert not assessment["assessment"]["repeat_or_adjustment_authorized"]
+    assert not assessment["assessment"]["baseline_promoted"]

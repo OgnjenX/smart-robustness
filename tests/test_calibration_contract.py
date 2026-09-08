@@ -10489,3 +10489,49 @@ def test_projection036_source_arrival_audit_is_hash_pinned_and_passive() -> None
     ] == [78, 92]
     assert "Do not select a parameter" in registration["decision_rule"]
     assert "No original-SMART claim" in registration["boundary"]
+
+
+def test_projection036_source_arrival_result_localizes_phase_not_topology() -> None:
+    result_path = (
+        ROOT
+        / "docs/validation-results/figure10-projection036-source-arrival-pair-686.yaml"
+    )
+    result = yaml.safe_load(result_path.read_text())
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-projection036-source-arrival-assessment-687.yaml"
+        ).read_text()
+    )
+
+    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment[
+        "result_sha256"
+    ]
+    assert all(result["figure6_gates"].values())
+    assert result["persistent_projection_delays_ms"] == {}
+    assert result["arrival_contract"]["target_index"] == 31
+    assert result["arrival_contract"]["connected_source_count"] == 80
+    assert result["arrival_contract"]["excluded_self_source_index"] == 31
+    derived = result["derived_arrival_identity"]
+    assert derived["source_set_both_arms"] == [38, 39, 40, 41, 42]
+    assert derived["total_edge_weight_both_arms"] == pytest.approx(
+        5.482968310784057
+    )
+    assert derived["intact_first_source_set"] == [38, 42]
+    assert derived["control_first_source_set"] == [40]
+    assert derived["intact_lead_ms"] == pytest.approx(0.15)
+    assert {row[0] for row in result["intact_arrivals"]} == {
+        row[0] for row in result["control_arrivals"]
+    }
+    assert {row[0]: row[3] for row in result["intact_arrivals"]} == {
+        row[0]: row[3] for row in result["control_arrivals"]
+    }
+    verdict = assessment["assessment"]
+    assert verdict["exact_registered_source_identity"]
+    assert verdict["identical_connected_source_set"]
+    assert verdict["identical_compiled_edge_weights"]
+    assert verdict["temporal_source_phase_difference_localized"]
+    assert not verdict["topology_or_weight_arm_difference_detected"]
+    assert not verdict["parameter_selected"]
+    assert not result["original_smart_reproduced"]
+    assert not result["baseline_promoted"]

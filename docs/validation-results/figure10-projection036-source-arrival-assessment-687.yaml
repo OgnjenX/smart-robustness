@@ -1,0 +1,50 @@
+schema_version: 1
+id: figure10-projection036-source-arrival-assessment-687
+date: '2026-09-08'
+status: assessed-source-spike-phase-difference-localized
+registration: docs/validation-results/figure10-projection036-source-arrival-registration-685.yaml
+result: docs/validation-results/figure10-projection036-source-arrival-pair-686.yaml
+result_sha256: 6b34aa83274cfff7b8ef8d10a0e2297647ca80875fa1211e9124aaa68d94a7c0
+assessment:
+  exact_registered_source_identity: true
+  identical_connected_source_set: true
+  identical_compiled_edge_weights: true
+  intact_first_arrival_precedes_control: true
+  temporal_source_phase_difference_localized: true
+  topology_or_weight_arm_difference_detected: false
+  parameter_selected: false
+  official_figure10_reset_reproduced: false
+  original_smart_reproduced: false
+  baseline_promoted: false
+decision_evidence:
+  source_set_both_arms: [38, 39, 40, 41, 42]
+  total_edge_weight_both_arms: 5.482968310784057
+  intact_first_arrival_ms: 75.38000000000002
+  control_first_arrival_ms: 75.53
+  intact_lead_ms: 0.14999999999997726
+  intact_first_source_set: [38, 42]
+  control_first_source_set: [40]
+  winner_events_intact_control: [78, 92]
+  reset_gates: {pre_reset_winner: true, reset_chain: true,
+    winner_suppression: false, alternative_release: false}
+interpretation: >-
+  The unchanged source-control run exactly repeats every registered population
+  identity. Projection 036 into alternative cell 31 has the same five active
+  inhibitory sources, the same compiled edge weights, and the same total
+  delivered weight in both arms. The intact arm's first arrivals precede
+  control by 0.15 ms because flank sources 38 and 42 spike before central
+  source 40; control reverses that order. The early intact inhibitory surge is
+  therefore a source-cell phase difference, not a connectivity or weight
+  asymmetry. This passive result neither repairs Figure 10 nor selects a
+  parameter.
+closure: >-
+  Accept the source attribution and close topology/compiled-weight asymmetry as
+  the explanation for this first projection-036 divergence. Keep both rejected
+  delay families closed and retain all executable defaults.
+next_gate: >-
+  Add a passive native-sample audit of the complete synaptic input ports,
+  somatic voltage, and emitted events of layer-4 inhibitory source cells 38,
+  40, and 42 over 75.0--75.6 ms. Require exact repetition of Artifact 686 and
+  identify which input or intrinsic state advances flank cells 38/42 in the
+  intact arm before considering any parameter. The diagnostic cannot alter a
+  model quantity, reset score, or baseline status.

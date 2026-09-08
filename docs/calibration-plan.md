@@ -2078,3 +2078,13 @@ repeat every Artifact-674 population identity before attribution. The result
 may distinguish a single-source timing difference from a synchronized or
 topology-weighted event set, but it cannot select a parameter or change a reset
 gate.
+
+Artifacts 686--687 complete the audit with exact source identity. Both arms
+deliver the same five projection-036 sources and the same total compiled weight
+to alternative cell 31. Intact arrivals begin 0.15 ms earlier because flank
+sources 38 and 42 spike before central source 40; control reverses that order.
+The first inhibitory divergence is therefore a source-cell phase difference,
+not a topology or edge-weight difference. Keep both delay families closed. The
+next permissible step is a passive native-sample audit of every synaptic port,
+somatic voltage, and output event for inhibitory cells 38, 40, and 42 over
+75.0--75.6 ms; it must select no parameter.

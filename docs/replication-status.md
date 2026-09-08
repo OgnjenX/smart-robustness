@@ -2825,6 +2825,16 @@ combines observed layer-4-inhibitory spikes with exact compiled source edges,
 weights, and delays without changing the model. The pair has not yet run, and
 original SMART remains unreproduced and unfrozen.
 
+Artifacts 686--687 complete that audit with exact identity. The same five
+inhibitory cells and exactly the same total compiled edge weight reach cell 31
+in both arms. The intact gate leads by 0.15 ms because cells 38 and 42 emit
+before cell 40, while control has cell 40 emit first. The discrepancy is now
+localized upstream to layer-4-inhibitory source-cell phase rather than
+projection-036 topology or weights. Figure 10, complete original SMART
+reproduction, and baseline freezing remain failed. A passive input/voltage
+audit of inhibitory cells 38, 40, and 42 is required before any new parameter
+family is considered.
+
 Artifacts 535--537 perform the permitted match-only effective T-conductance
 screen on that fixed replay trace. The full preregistered grid from zero to the
 paper density is finite and was executed without interpolation. Scale 0.1875,

@@ -9873,9 +9873,7 @@ def test_layer4_target_balance_audit_is_hash_pinned_and_read_only() -> None:
     for path_key, hash_key in (
         ("authorization", "authorization_sha256"),
         ("profile", "profile_sha256"),
-        ("harness", "harness_sha256"),
         ("runtime", "runtime_sha256"),
-        ("script", "script_sha256"),
         ("source_result", "source_result_sha256"),
     ):
         assert hashlib.sha256(
@@ -9883,6 +9881,12 @@ def test_layer4_target_balance_audit_is_hash_pinned_and_read_only() -> None:
         ).hexdigest() == registration[hash_key]
     assert implementation["harness_sha256"] == registration["harness_sha256"]
     assert implementation["runner_sha256"] == registration["script_sha256"]
+    assert registration["harness_sha256"] == (
+        "927dd94a24a5d6a8f25aa1d04160f35ffcbb341bd16a94547675949b8fb19aca"
+    )
+    assert registration["script_sha256"] == (
+        "1d837d92be8824256dbc3f99e5ee12acacd406fe121ea994fa492960145abea1"
+    )
     assert registration["record_layer4_target_balance_indices"] == [
         31,
         38,
@@ -9946,3 +9950,50 @@ def test_layer4_target_balance_localizes_complete_input_gap() -> None:
     assert not assessment["assessment"]["official_figure10_reset_reproduced"]
     assert not result["original_smart_reproduced"]
     assert not result["baseline_promoted"]
+
+
+def test_layer4_complete_input_audit_is_hash_pinned_and_read_only() -> None:
+    implementation = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-layer4-complete-input-monitor-660.yaml"
+        ).read_text()
+    )
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-layer4-complete-input-registration-661.yaml"
+        ).read_text()
+    )
+
+    for path_key, hash_key in (
+        ("authorization", "authorization_sha256"),
+        ("profile", "profile_sha256"),
+        ("harness", "harness_sha256"),
+        ("runtime", "runtime_sha256"),
+        ("script", "script_sha256"),
+        ("source_result", "source_result_sha256"),
+    ):
+        assert hashlib.sha256(
+            (ROOT / registration[path_key]).read_bytes()
+        ).hexdigest() == registration[hash_key]
+    assert implementation["harness_sha256"] == registration["harness_sha256"]
+    assert implementation["runner_sha256"] == registration["script_sha256"]
+    assert [item["projection_id"] for item in implementation["target_inputs"]] == [
+        "modeldb112923.projection.035",
+        "modeldb112923.projection.036",
+        "modeldb112923.projection.037",
+        "modeldb112923.projection.038",
+    ]
+    assert registration["output_mode"] == "layer4_complete_target_bounded"
+    assert registration["record_layer4_target_balance_indices"] == [
+        31,
+        38,
+        39,
+        40,
+        41,
+        42,
+        49,
+    ]
+    assert registration.get("runtime_overrides") is None
+    assert "No parameter selection" in registration["boundary"]

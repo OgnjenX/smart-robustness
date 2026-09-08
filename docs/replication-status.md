@@ -3770,3 +3770,9 @@ alternatives also fire before receiving any projection-038 current. Thus the
 two measured paths cannot explain alternative release in isolation. A passive
 complete-port audit of relay projection 035 and recurrent projection 037 is
 required next. Original SMART remains unreproduced and unfrozen.
+
+Artifacts 660--661 now extend that passive audit to every layer-4 excitatory
+synaptic port: relay AMPA 035, off-surround GABA 036, recurrent AMPA 037, and
+layer-6I AMPA 038. The complete result will be compacted only after simulation
+and scoring. It has not yet run, and original SMART remains unreproduced and
+unfrozen.

@@ -17,6 +17,7 @@ from smart_robustness.validation.figure6 import (
 )
 from smart_robustness.validation.figure10 import (
     assess_figure10_reset,
+    compact_layer4_target_balance_summary,
     run_figure10_condition,
 )
 
@@ -310,9 +311,15 @@ def main() -> None:
     intact_summary = _condition_summary(intact)
     control_summary = _condition_summary(control)
     output_mode = registration.get("output_mode", "full")
-    if output_mode == "layer4_balance_bounded":
+    if output_mode in {
+        "layer4_balance_bounded",
+        "layer4_complete_target_bounded",
+    }:
         intact_summary = _bounded_layer4_balance_summary(intact_summary)
         control_summary = _bounded_layer4_balance_summary(control_summary)
+        if output_mode == "layer4_complete_target_bounded":
+            intact_summary = compact_layer4_target_balance_summary(intact_summary)
+            control_summary = compact_layer4_target_balance_summary(control_summary)
     elif output_mode != "full":
         raise ValueError(f"unknown Figure 10 output mode: {output_mode}")
 

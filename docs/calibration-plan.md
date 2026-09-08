@@ -1956,3 +1956,11 @@ emit four early events while that current is zero. Therefore neither measured
 path alone explains release. Next add the omitted projection-035 relay and
 projection-037 recurrent AMPA currents to the same passive target audit before
 opening any numerical calibration.
+
+Artifacts 660--661 implement and preregister that complete-port audit. The
+existing target monitor now includes relay projection 035 and recurrent
+projection 037 alongside projections 036/038. A new bounded output mode stores
+all exact 10-ms arrays without repeated row metadata, but only after the full
+result and reset score exist. The unchanged source-control model must repeat
+every Artifact-658 identity before the first complete-input divergence is
+interpreted. No parameter changes.

@@ -1,0 +1,69 @@
+schema_version: 1
+id: figure10-layer4-complete-input-registration-661
+date: '2026-09-08'
+status: registered-before-execution-read-only-complete-input-pair
+classification: figure10-source-control-complete-layer4-target-input-audit
+authorization: docs/validation-results/figure10-layer4-target-balance-assessment-659.yaml
+authorization_sha256: 59376015b9995b9edfe649d479174b933fb2f1926b345386b927feefde344f04
+implementation: docs/validation-results/figure10-layer4-complete-input-monitor-660.yaml
+profile: configs/calibration/figure7_learned_coincidence_effective_t_pair_v1.yaml
+profile_sha256: 4b6aa0bdf4fb844e428fb330f34970900cc8bc741183b2d8e6e73789cba0b30f
+harness: src/smart_robustness/validation/figure10.py
+harness_sha256: eaba419ebab808f8540a17928882cd070eca376e8664ca75b7a28716cd3eb093
+runtime: src/smart_robustness/classic_sector.py
+runtime_sha256: ebdf48f0138803ab50b1dec2ef87817b4c537e4da490a088b9df6bdcb9d119a1
+script: scripts/run_figure10_calibrated_reset_pair.py
+script_sha256: f59d35c19f56cba6df148f4f2cb35a5b071e6daea3ab7c216bf4895da0218e52
+source_result: docs/validation-results/figure10-layer4-target-balance-pair-658.yaml
+source_result_sha256: 2164271b610c919228fbd2509538e4677c954449060bb84211638e465ee5ac3d
+runtime_fingerprint: fa4ab9f0bf2bec4d6ad53cb6a91620047689b6839b146ed7d777d42350c2cdf5
+result_id: figure10-layer4-complete-input-pair-662
+result: docs/validation-results/figure10-layer4-complete-input-pair-662.yaml
+assessment: docs/validation-results/figure10-layer4-complete-input-assessment-663.yaml
+persistent_projection_scales:
+- {projection_id: modeldb112923.projection.008, scale: 0.75}
+- {projection_id: modeldb112923.projection.011, scale: 0.9375}
+- {projection_id: modeldb112923.projection.025, scale: 8.0}
+nonspecific_t_scale: 0.1875
+record_layer6i_diagnostics: false
+record_reset_chain_diagnostics: true
+record_layer4_balance_diagnostics: true
+record_layer4_target_balance_indices: [31, 38, 39, 40, 41, 42, 49]
+target_groups:
+  pre_reset_winner: [38, 39, 40, 41, 42]
+  prior_control_alternatives: [31, 49]
+output_mode: layer4_complete_target_bounded
+balance_bin_width_ms: 10.0
+protocol:
+  pre_match_duration_ms: 100.0
+  mismatch_duration_ms: 200.0
+  total_duration_ms: 300.0
+  dt_ms: 0.01
+  top_down_current_pA: 800.0
+  top_down_current_mode: until_cued_cell_first_event
+  comparator: {transform: top_k_binary, source_index: 40, target_count: 5}
+required_source_identity:
+  figure6_all_gates: true
+  intact_control_layer4_pre_events: [39, 39]
+  intact_control_layer4_post_events: [78, 92]
+  intact_control_nonspecific_post_events: [18, 13]
+  intact_control_layer5_post_events: [285, 140]
+  intact_control_layer6i_post_events: [153, 76]
+  intact_control_layer4_inhibitory_post_events: [218, 232]
+  reset_gates:
+    pre_reset_winner: true
+    reset_chain: true
+    winner_suppression: false
+    alternative_release: false
+decision_rule: >-
+  Interpret only after exact source-identity and fresh Figure-6 repetition.
+  Report all 20 bins for projections 035--038 and output events at every fixed
+  target. For winners and alternatives separately, identify the earliest
+  complete-input difference consistent with the observed output divergence.
+  Do not alter the reset score or select a parameter.
+boundary: >-
+  Execute one unchanged source-control scale-8 intact/control pair with passive
+  complete-port readouts and compact post-simulation serialization. Do not
+  change or fit topology, weights, kinetics, intrinsic parameters, event rule,
+  protocol, comparator, duration, or score. No parameter selection, original-
+  SMART claim, baseline promotion, or freeze is authorized.

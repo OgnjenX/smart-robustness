@@ -98,7 +98,9 @@ class Figure10Layer4TargetBalanceBin:
     index: int
     start_from_mismatch_ms: float
     end_from_mismatch_ms: float
+    projection035_relay_excitation_integral_pA_ms: float
     projection036_inhibition_integral_pA_ms: float
+    projection037_recurrent_excitation_integral_pA_ms: float
     projection038_excitation_integral_pA_ms: float
     layer4_events: int
 
@@ -474,7 +476,9 @@ def summarize_layer4_target_balance_bins(
     dt_ms: float,
     bin_width_ms: float,
     state_times_ms: np.ndarray,
+    projection035_current_pA_by_index: np.ndarray,
     projection036_current_pA_by_index: np.ndarray,
+    projection037_current_pA_by_index: np.ndarray,
     projection038_current_pA_by_index: np.ndarray,
     layer4_spike_indices: np.ndarray,
     layer4_spike_times_ms: np.ndarray,
@@ -486,9 +490,19 @@ def summarize_layer4_target_balance_bins(
     if len(set(target_indices)) != len(target_indices):
         raise ValueError("layer-4 target balance indices must be unique")
     times = np.asarray(state_times_ms, dtype=float)
-    current036 = np.asarray(projection036_current_pA_by_index, dtype=float)
-    current038 = np.asarray(projection038_current_pA_by_index, dtype=float)
-    if times.ndim != 1 or current036.ndim != 2 or current038.shape != current036.shape:
+    currents = tuple(
+        np.asarray(current, dtype=float)
+        for current in (
+            projection035_current_pA_by_index,
+            projection036_current_pA_by_index,
+            projection037_current_pA_by_index,
+            projection038_current_pA_by_index,
+        )
+    )
+    current035, current036, current037, current038 = currents
+    if times.ndim != 1 or current036.ndim != 2 or any(
+        current.shape != current036.shape for current in currents
+    ):
         raise ValueError("layer-4 target current arrays must be matching matrices")
     if current036.shape[1] != times.size:
         raise ValueError("layer-4 target currents must match the time grid")
@@ -513,8 +527,14 @@ def summarize_layer4_target_balance_bins(
                     index=index,
                     start_from_mismatch_ms=start,
                     end_from_mismatch_ms=end,
+                    projection035_relay_excitation_integral_pA_ms=float(
+                        np.sum(current035[index, state_window]) * dt_ms
+                    ),
                     projection036_inhibition_integral_pA_ms=float(
                         np.sum(current036[index, state_window]) * dt_ms
+                    ),
+                    projection037_recurrent_excitation_integral_pA_ms=float(
+                        np.sum(current037[index, state_window]) * dt_ms
                     ),
                     projection038_excitation_integral_pA_ms=float(
                         np.sum(current038[index, state_window]) * dt_ms
@@ -526,6 +546,38 @@ def summarize_layer4_target_balance_bins(
             )
         start = end
     return tuple(summaries)
+
+
+def compact_layer4_target_balance_summary(summary: dict) -> dict:
+    """Store complete per-target bins as exact arrays instead of repeated rows."""
+
+    rows = summary.pop("layer4_target_balance_bins")
+    if not rows:
+        summary["layer4_target_balance_bin_edges_ms"] = []
+        summary["layer4_target_balance_series"] = {}
+        return summary
+    fields = (
+        "projection035_relay_excitation_integral_pA_ms",
+        "projection036_inhibition_integral_pA_ms",
+        "projection037_recurrent_excitation_integral_pA_ms",
+        "projection038_excitation_integral_pA_ms",
+        "layer4_events",
+    )
+    indices = sorted({int(row["index"]) for row in rows})
+    first_index_rows = [row for row in rows if int(row["index"]) == indices[0]]
+    summary["layer4_target_balance_bin_edges_ms"] = [
+        float(first_index_rows[0]["start_from_mismatch_ms"]),
+        *(float(row["end_from_mismatch_ms"]) for row in first_index_rows),
+    ]
+    summary["layer4_target_balance_series_columns"] = list(fields)
+    summary["layer4_target_balance_series"] = {
+        str(index): [
+            [row[field] for row in rows if int(row["index"]) == index]
+            for field in fields
+        ]
+        for index in indices
+    }
+    return summary
 
 
 def run_figure10_condition(
@@ -724,13 +776,14 @@ def run_figure10_condition(
                 else "figure10_control_layer4i_projection026"
             ),
         )
+        layer4e_variables = ["port_001_gate", "i_port_001"]
+        if record_layer4_balance_diagnostics:
+            layer4e_variables.extend(("port_003_gate", "i_port_003"))
+        if record_layer4_target_balance_indices:
+            layer4e_variables.extend(("i_port_000", "i_port_002"))
         layer4e_inhibitory_state = brian.StateMonitor(
             sector.populations["layer4_excitatory_v1"].group,
-            (
-                "port_001_gate",
-                "i_port_001",
-                *(("port_003_gate", "i_port_003") if record_layer4_balance_diagnostics else ()),
-            ),
+            tuple(layer4e_variables),
             record=True,
             name=(
                 "figure10_intact_layer4e_projection036"
@@ -1008,8 +1061,14 @@ def run_figure10_condition(
                 dt_ms=dt_ms,
                 bin_width_ms=10.0,
                 state_times_ms=state_times_ms[mismatch_window],
+                projection035_current_pA_by_index=np.asarray(
+                    layer4e_inhibitory_state.i_port_000 / brian.pA
+                )[:, mismatch_window],
                 projection036_current_pA_by_index=np.asarray(
                     layer4e_inhibitory_state.i_port_001 / brian.pA
+                )[:, mismatch_window],
+                projection037_current_pA_by_index=np.asarray(
+                    layer4e_inhibitory_state.i_port_002 / brian.pA
                 )[:, mismatch_window],
                 projection038_current_pA_by_index=np.asarray(
                     layer4e_inhibitory_state.i_port_003 / brian.pA

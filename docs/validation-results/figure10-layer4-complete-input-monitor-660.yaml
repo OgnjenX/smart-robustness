@@ -1,0 +1,36 @@
+schema_version: 1
+id: figure10-layer4-complete-input-monitor-660
+date: '2026-09-08'
+status: implementation-ready-read-only-complete-port-tests-pass
+classification: target-resolved-complete-layer4-excitatory-input-audit
+authorization: docs/validation-results/figure10-layer4-target-balance-assessment-659.yaml
+harness: src/smart_robustness/validation/figure10.py
+harness_sha256: eaba419ebab808f8540a17928882cd070eca376e8664ca75b7a28716cd3eb093
+runner: scripts/run_figure10_calibrated_reset_pair.py
+runner_sha256: f59d35c19f56cba6df148f4f2cb35a5b071e6daea3ab7c216bf4895da0218e52
+target_inputs:
+- {projection_id: modeldb112923.projection.035, role: relay-AMPA,
+   port: port_000}
+- {projection_id: modeldb112923.projection.036, role: off-surround-GABA,
+   port: port_001}
+- {projection_id: modeldb112923.projection.037, role: recurrent-AMPA,
+   port: port_002}
+- {projection_id: modeldb112923.projection.038, role: layer6I-AMPA,
+   port: port_003}
+implementation:
+  selected_cells_only: true
+  bin_width_ms: 10.0
+  full_result_constructed_before_reduction: true
+  output_mode: layer4_complete_target_bounded
+  default_behavior_changed: false
+verification:
+  complete_target_bin_reducer_test: pass
+  compact_exact_array_serializer_test: pass
+  live_short_sector_integration_test: pass
+  focused_tests: 12-passed
+  lint: pass
+boundary: >-
+  The two new currents come from state variables already present in every
+  layer-4 excitatory cell. Recording and compact serialization are default-off
+  and post hoc. No equation, current, connection, event, schedule, stimulus,
+  model parameter, protocol, or reset score is altered.

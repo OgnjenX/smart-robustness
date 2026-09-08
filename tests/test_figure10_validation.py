@@ -10,6 +10,7 @@ from smart_robustness.classic_sector import figure6_runtime_conventions
 from smart_robustness.validation.figure10 import (
     Figure10ConditionResult,
     assess_figure10_reset,
+    compact_layer4_target_balance_summary,
     run_figure10_condition,
     summarize_layer4_balance_bins,
     summarize_layer4_target_balance_bins,
@@ -348,9 +349,17 @@ def test_layer4_target_balance_summary_preserves_cells_and_bins() -> None:
         dt_ms=5.0,
         bin_width_ms=10.0,
         state_times_ms=brian.asarray([100.0, 105.0, 110.0, 115.0]),
+        projection035_current_pA_by_index=brian.asarray(
+            [[1.0, 1.0, 1.0, 1.0], [2.0, 4.0, 6.0, 8.0],
+             [1.0, 1.0, 1.0, 1.0], [3.0, 5.0, 7.0, 9.0]]
+        ),
         projection036_current_pA_by_index=brian.asarray(
             [[-1.0, -1.0, -1.0, -1.0], [-2.0, -4.0, -6.0, -8.0],
              [-1.0, -1.0, -1.0, -1.0], [-3.0, -5.0, -7.0, -9.0]]
+        ),
+        projection037_current_pA_by_index=brian.asarray(
+            [[1.0, 1.0, 1.0, 1.0], [2.0, 4.0, 6.0, 8.0],
+             [1.0, 1.0, 1.0, 1.0], [3.0, 5.0, 7.0, 9.0]]
         ),
         projection038_current_pA_by_index=brian.asarray(
             [[1.0, 1.0, 1.0, 1.0], [2.0, 4.0, 6.0, 8.0],
@@ -367,8 +376,43 @@ def test_layer4_target_balance_summary_preserves_cells_and_bins() -> None:
         (10.0, 3),
     ]
     assert summaries[0].projection036_inhibition_integral_pA_ms == pytest.approx(-30.0)
+    assert summaries[0].projection035_relay_excitation_integral_pA_ms == pytest.approx(30.0)
+    assert summaries[1].projection037_recurrent_excitation_integral_pA_ms == pytest.approx(
+        40.0
+    )
     assert summaries[1].projection038_excitation_integral_pA_ms == pytest.approx(40.0)
     assert summaries[0].layer4_events == 1
     assert summaries[1].layer4_events == 1
     assert summaries[2].layer4_events == 1
     assert summaries[3].layer4_events == 0
+
+
+def test_compact_layer4_target_balance_summary_preserves_exact_arrays() -> None:
+    rows = [
+        {
+            "index": index,
+            "start_from_mismatch_ms": start,
+            "end_from_mismatch_ms": start + 10.0,
+            "projection035_relay_excitation_integral_pA_ms": index + start,
+            "projection036_inhibition_integral_pA_ms": -(index + start),
+            "projection037_recurrent_excitation_integral_pA_ms": index + 2 * start,
+            "projection038_excitation_integral_pA_ms": index + 3 * start,
+            "layer4_events": int(start / 10),
+        }
+        for start in (0.0, 10.0)
+        for index in (31, 40)
+    ]
+
+    compact = compact_layer4_target_balance_summary(
+        {"layer4_target_balance_bins": rows}
+    )
+
+    assert compact["layer4_target_balance_bin_edges_ms"] == [0.0, 10.0, 20.0]
+    assert compact["layer4_target_balance_series_columns"][-1] == "layer4_events"
+    assert compact["layer4_target_balance_series"]["31"] == [
+        [31.0, 41.0],
+        [-31.0, -41.0],
+        [31.0, 51.0],
+        [31.0, 61.0],
+        [0, 1],
+    ]

@@ -1,0 +1,79 @@
+schema_version: 1
+id: figure10-layer6i-axial-source-audit-628
+date: '2026-09-08'
+status: audited-one-layer6i-axial-source-endpoint-selected
+classification: figure10-layer6i-intrinsic-and-axial-source-audit
+authorization: docs/validation-results/figure10-projection025-spread-assessment-627.yaml
+sources:
+  smart_nml:
+    path: tmp/modeldb-112923/versaceGrossberg2008/SMART.nml
+    sha256: 16fc196f2ed68d1c02a39395fa83bb0ffab8fcf8edffe6fd11022bb6c6e299e1
+  paper:
+    path: tmp/pdfs/GrossbergVersace2008.pdf
+    sha256: c56c337624959d8c0bdf51aa79b0dbc82f31264af2b2cd675790879a6410d7ed
+    relevant_equation: 2
+  kinness_framework:
+    path: tmp/kinness-framework-expanded.pdf
+    sha256: 15a7f9166e301c9740e7cff4258810d315bd95b196ea5dff3419c5cc2879f177
+    relevant_equation: 9
+layer6i_intrinsic_cross_check:
+  source_agreement: true
+  compartments: 2
+  soma:
+    diameter_mm: 0.08
+    length_mm: 0.1
+    axial_resistance_kohm_cm: 80.0
+    leak_reversal_mV: -70.0
+    leak_conductance_mS_cm2: 0.15
+    sodium_conductance_mS_cm2: 50.0
+    sodium_reversal_mV: 50.0
+    potassium_conductance_mS_cm2: 30.0
+    potassium_reversal_mV: -90.0
+  proximal_dendrite:
+    diameter_mm: 0.05
+    length_mm: 0.1
+    child_edge_resistance_kohm_cm: 80.0
+    leak_reversal_mV: -70.0
+    leak_conductance_mS_cm2: 0.9
+  absent_intrinsic_channels: [T-type-calcium, AHP]
+  conclusion: >-
+    SMART.nml and Table 3 agree on all executable layer-6I cell values. There
+    is no discrete intrinsic conductance, geometry, reversal, or channel-family
+    conflict to test.
+projection025_target_cross_check:
+  target_compartment: proximal_dendrite
+  source_conflict: false
+  conclusion: SMART.nml explicitly targets the proximal dendrite; no official source supplies a somatic alternative.
+axial_equation_conflict:
+  active_paper_literal:
+    source: Grossberg and Versace 2008 Equation 2
+    conductance_into_soma_nS: 62.831853071795855
+    conductance_into_proximal_nS: 24.543692606170264
+    total_current_conserving: false
+  kinness_serialized_edge:
+    source: KInNeSS Equation 9 with the child-edge 80-kOhm-cm SMART.nml value
+    conductance_into_soma_nS: 35.298793860559485
+    conductance_into_proximal_nS: 35.29879386055947
+    total_current_conserving: true
+  consequence: >-
+    The KInNeSS equation reduces proximal-to-soma coupling but increases
+    soma-to-proximal coupling relative to the paper-literal directional terms;
+    its net effect on spike recruitment cannot be inferred from a scalar gain.
+selected_endpoint:
+  global_axial_convention: modeldb_relay_kinness_paper_others
+  layer6i_axial_convention: kinness_serialized_edge
+  endpoint_count: 1
+  justification: >-
+    This swaps only the localized failing cell from the paper equation to the
+    archived simulator equation using the unchanged serialized edge value. It
+    is a discrete source interpretation, not a fitted axial scale.
+claims_boundary: >-
+  A simulator-wide KInNeSS axial interpretation is more internally consistent
+  with the executable framework but previously prevents the cortical chain.
+  This layer-6I-only cross is therefore a source-discrete mixed reconstruction,
+  not proof of the original simulator's complete convention profile.
+stopping_rule: >-
+  Execute this endpoint once with fresh Figure 6 and the fixed 300-ms causal
+  pair. Close the layer-6I axial family after the result. Do not alter axial
+  resistance, add a scale, move projection 025, change intrinsic conductances,
+  use the failed variance stencil, change duration, or revise reset scoring.

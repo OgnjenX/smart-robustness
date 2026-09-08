@@ -9197,3 +9197,50 @@ def test_projection025_variance_increases_current_but_not_reset() -> None:
     assert not result["reproduced_reset"]
     assert not result["original_smart_reproduced"]
     assert not result["baseline_promoted"]
+
+
+def test_layer6i_axial_candidate_is_one_source_discrete_endpoint() -> None:
+    audit = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-layer6i-axial-source-audit-628.yaml"
+        ).read_text()
+    )
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-layer6i-axial-registration-629.yaml"
+        ).read_text()
+    )
+
+    assert audit["layer6i_intrinsic_cross_check"]["source_agreement"]
+    assert audit["projection025_target_cross_check"]["target_compartment"] == (
+        "proximal_dendrite"
+    )
+    paper = audit["axial_equation_conflict"]["active_paper_literal"]
+    kinness = audit["axial_equation_conflict"]["kinness_serialized_edge"]
+    assert paper["conductance_into_soma_nS"] == pytest.approx(62.831853071795855)
+    assert paper["conductance_into_proximal_nS"] == pytest.approx(24.543692606170264)
+    assert kinness["conductance_into_soma_nS"] == pytest.approx(35.298793860559485)
+    assert kinness["conductance_into_proximal_nS"] == pytest.approx(35.29879386055947)
+    assert audit["selected_endpoint"]["endpoint_count"] == 1
+    assert hashlib.sha256((ROOT / registration["profile"]).read_bytes()).hexdigest() == (
+        registration["profile_sha256"]
+    )
+    assert hashlib.sha256((ROOT / registration["harness"]).read_bytes()).hexdigest() == (
+        registration["harness_sha256"]
+    )
+    assert hashlib.sha256((ROOT / registration["runtime"]).read_bytes()).hexdigest() == (
+        registration["runtime_sha256"]
+    )
+    assert hashlib.sha256((ROOT / registration["script"]).read_bytes()).hexdigest() == (
+        registration["script_sha256"]
+    )
+    assert hashlib.sha256((ROOT / registration["source_control"]).read_bytes()).hexdigest() == (
+        registration["source_control_sha256"]
+    )
+    assert registration["runtime_overrides"] == {
+        "layer6i_axial_convention": "kinness_serialized_edge"
+    }
+    assert registration["required_prerequisites"]["projection025_connections"] == 81
+    assert "No resistance or conductance scale" in registration["boundary"]

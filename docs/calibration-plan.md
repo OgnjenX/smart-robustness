@@ -1764,3 +1764,15 @@ and projection-025 target-compartment facts against every official source. If
 that exposes no discrete source conflict, use a read-only isolated replay of
 the measured input envelopes to quantify the excitability gap before defining
 any effective calibration family.
+
+Artifact 628 finds complete agreement between SMART.nml and Table 3 for the
+layer-6I cell: two compartments, 0.08x0.1-mm soma and 0.05x0.1-mm proximal
+dendrite, 80-kOhm-cm edge, -70-mV leaks, 0.15/0.9-mS/cm2 leak densities,
+50/30-mS/cm2 somatic Na/K, and no T current or AHP. SMART.nml also explicitly
+targets projection 025 to the proximal dendrite. The sole discrete conflict is
+axial: the active paper-literal Equation 2 yields 62.83/24.54-nS directional
+terms, whereas KInNeSS Equation 9 with the same serialized edge yields
+35.30/35.30 nS. Registration 629 selects only the latter for layer 6I, retains
+the source-control one-to-one projection 025, and requires fresh Figure 6
+before one 300-ms causal pair. This is a mixed source-equation reconstruction,
+not an axial scale fit or a recovered global simulator convention.

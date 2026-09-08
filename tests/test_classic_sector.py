@@ -731,6 +731,24 @@ def test_nonspecific_axial_source_can_be_selected_without_changing_trn() -> None
     assert layer4["axial_convention"] == "paper_literal"
 
 
+def test_layer6i_axial_source_can_be_selected_without_changing_other_cortex() -> None:
+    facts = {fact.canonical_name: fact for fact in first_order_population_facts()}
+    conventions = FirstOrderRuntimeConventions(
+        axial_convention="modeldb_relay_kinness_paper_others",
+        layer6i_axial_convention="kinness_serialized_edge",
+    )
+
+    layer6i = first_order_population_parameters(
+        facts["layer6i_excitatory_v1"], conventions=conventions
+    )
+    layer4 = first_order_population_parameters(
+        facts["layer4_excitatory_v1"], conventions=conventions
+    )
+
+    assert layer6i["axial_convention"] == "kinness_serialized_edge"
+    assert layer4["axial_convention"] == "paper_literal"
+
+
 def test_nonspecific_intrinsic_source_can_be_selected_without_changing_trn() -> None:
     facts = {fact.canonical_name: fact for fact in first_order_population_facts()}
     conventions = FirstOrderRuntimeConventions(
@@ -866,6 +884,7 @@ def test_figure6_profile_names_the_source_constrained_runtime() -> None:
     assert conventions.gaussian_weight_convention == "source_peak"
     assert conventions.gaussian_spread_convention == "standard_deviation"
     assert conventions.projection025_gaussian_spread_convention is None
+    assert conventions.layer6i_axial_convention is None
     assert conventions.modifiable_weight_initialization == "figure6_pathway_specific"
     assert conventions.gaussian_learning_bounds_convention == "figure6_pathway_specific"
     assert conventions.projection_source_convention == "modeldb_as_serialized"

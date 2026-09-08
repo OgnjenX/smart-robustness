@@ -120,6 +120,7 @@ class FirstOrderRuntimeConventions:
 
     axial_convention: str = "kinness_serialized_edge"
     nonspecific_axial_convention: str | None = None
+    layer6i_axial_convention: str | None = None
     intrinsic_cell_convention: str = "modeldb_112923"
     nonspecific_intrinsic_cell_convention: str | None = None
     leak_convention: str = "table3_reversal"
@@ -183,6 +184,8 @@ class FirstOrderRuntimeConventions:
         values = asdict(self)
         if values["nonspecific_axial_convention"] is None:
             values.pop("nonspecific_axial_convention")
+        if values["layer6i_axial_convention"] is None:
+            values.pop("layer6i_axial_convention")
         if values["nonspecific_intrinsic_cell_convention"] is None:
             values.pop("nonspecific_intrinsic_cell_convention")
         if values["postsynaptic_depression_scale_convention"] == "local_learning_bounds":
@@ -599,6 +602,11 @@ def first_order_population_parameters(
         and conventions.nonspecific_axial_convention is not None
     ):
         axial_convention = conventions.nonspecific_axial_convention
+    if (
+        facts.canonical_name == "layer6i_excitatory_v1"
+        and conventions.layer6i_axial_convention is not None
+    ):
+        axial_convention = conventions.layer6i_axial_convention
     calcium_kinetics = CalciumKineticsConvention(conventions.calcium_kinetics_convention)
     if (
         facts.canonical_name == "thalamic_nonspecific"

@@ -652,6 +652,11 @@ parameters:
     status: completed-current-increased-reset-failed-family-closed
     source: SMART.nml projection 025, KInNeSS Section 4.9, Grossberg and Versace 2008 Table 2 and Section 2.7; Artifacts 622--627
     note: The fixed 3x3 stencil passes Figure 6 and raises intact projection-025 current integral from 309,566 to 419,180 pA-ms, but both arms retain the same 72 post-mismatch layer-6I events from the same seven cells and the same 92 layer-4 events. It produces neither winner suppression nor extra alternative release. The mixed-source family is rejected and closed; no parameter is selected.
+  calibration.figure10.layer6i_axial_source_cross:
+    value: layer-6I-only kinness_serialized_edge axial convention with unchanged 80-kOhm-cm child edge
+    status: preregistered-one-source-discrete-endpoint-awaiting-execution
+    source: SMART.nml layer 6I, Grossberg and Versace 2008 Equation 2 and Table 3, KInNeSS Equation 9; Artifacts 627--629
+    note: SMART.nml and Table 3 agree on all layer-6I intrinsic and compartment values, and projection 025 is explicitly proximal. Paper-literal axial terms are 62.83/24.54 nS, while KInNeSS Equation 9 gives 35.30/35.30 nS from the same edge. The single layer-6I source cross is not a fitted resistance or global-simulator recovery.
   benchmark.population_sizes:
     value: see configs/*.yaml
     status: exploratory

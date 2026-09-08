@@ -10582,15 +10582,19 @@ def test_layer4i_source_phase_file_rerun_is_hash_pinned_and_passive() -> None:
 
     for path_key, hash_key in (
         ("profile", "profile_sha256"),
-        ("harness", "harness_sha256"),
         ("runtime", "runtime_sha256"),
-        ("script", "script_sha256"),
         ("source_result", "source_result_sha256"),
         ("prior_assessment", "prior_assessment_sha256"),
     ):
         assert hashlib.sha256(
             (ROOT / registration[path_key]).read_bytes()
         ).hexdigest() == registration[hash_key]
+    assert registration["harness_sha256"] == (
+        "788fe02a64f8c524c5df8e23ef1c54dbbf2593abab57ae1ef87999b0ba52d1cb"
+    )
+    assert registration["script_sha256"] == (
+        "d288c991c6f2daf34eed452be48a0156c1934265b9c5e755887dce94c9e05f8e"
+    )
     assert implementation["implementation"]["behavior_change"] == "none"
     assert implementation["implementation"]["state_monitor_rows"] == [38, 40, 42]
     assert registration["output_mode"] == "layer4_source_trace_files"
@@ -10651,15 +10655,19 @@ def test_layer4i_source_phase_wide_trace_is_hash_pinned_and_passive() -> None:
 
     for path_key, hash_key in (
         ("profile", "profile_sha256"),
-        ("harness", "harness_sha256"),
         ("runtime", "runtime_sha256"),
-        ("script", "script_sha256"),
         ("source_result", "source_result_sha256"),
         ("prior_assessment", "prior_assessment_sha256"),
     ):
         assert hashlib.sha256(
             (ROOT / registration[path_key]).read_bytes()
         ).hexdigest() == registration[hash_key]
+    assert registration["harness_sha256"] == (
+        "788fe02a64f8c524c5df8e23ef1c54dbbf2593abab57ae1ef87999b0ba52d1cb"
+    )
+    assert registration["script_sha256"] == (
+        "d288c991c6f2daf34eed452be48a0156c1934265b9c5e755887dce94c9e05f8e"
+    )
     assert registration["record_layer4_inhibitory_trace_indices"] == [38, 40, 42]
     assert registration["layer4_inhibitory_trace_window_ms"] == [73.5, 75.6]
     assert registration["persistent_projection_delays"] == []
@@ -10679,15 +10687,19 @@ def test_layer4i_source_phase_from_onset_is_hash_pinned_and_passive() -> None:
 
     for path_key, hash_key in (
         ("profile", "profile_sha256"),
-        ("harness", "harness_sha256"),
         ("runtime", "runtime_sha256"),
-        ("script", "script_sha256"),
         ("source_result", "source_result_sha256"),
         ("prior_assessment", "prior_assessment_sha256"),
     ):
         assert hashlib.sha256(
             (ROOT / registration[path_key]).read_bytes()
         ).hexdigest() == registration[hash_key]
+    assert registration["harness_sha256"] == (
+        "788fe02a64f8c524c5df8e23ef1c54dbbf2593abab57ae1ef87999b0ba52d1cb"
+    )
+    assert registration["script_sha256"] == (
+        "d288c991c6f2daf34eed452be48a0156c1934265b9c5e755887dce94c9e05f8e"
+    )
     assert registration["record_layer4_inhibitory_trace_indices"] == [38, 40, 42]
     assert registration["layer4_inhibitory_trace_window_ms"] == [0.0, 75.6]
     assert registration["persistent_projection_delays"] == []
@@ -10736,6 +10748,83 @@ def test_layer4i_source_phase_wide_pair_is_exact_and_gate_left_censored() -> Non
     assert not assessment["assessment"]["parameter_selected"]
     assert not result["original_smart_reproduced"]
     assert not result["baseline_promoted"]
+
+
+def test_layer4i_source_phase_from_onset_localizes_projection026() -> None:
+    result_path = (
+        ROOT
+        / "docs/validation-results/figure10-layer4i-source-phase-from-onset-pair-700.yaml"
+    )
+    result = yaml.safe_load(result_path.read_text())
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-layer4i-source-phase-from-onset-assessment-701.yaml"
+        ).read_text()
+    )
+
+    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment[
+        "result_sha256"
+    ]
+    assert all(result["figure6_gates"].values())
+    assert result["trace_contract"][
+        "all_retained_variables_equal_at_mismatch_onset_within_1e_minus_12"
+    ]
+    assert result["trace_contract"]["samples_per_source"] == 7561
+    first = result["first_arm_difference_by_variable_ms"]
+    assert first["projection026_gate"] == pytest.approx(23.45)
+    assert first["projection030_gate"] == pytest.approx(72.88)
+    assert first["projection027_gate"] == pytest.approx(73.85)
+    assert first["projection028_gate"] == pytest.approx(75.40)
+    verdict = assessment["assessment"]
+    assert verdict["projection026_is_first_measured_presynaptic_gate_difference"]
+    assert verdict["projection026_diagnostic_target_localized"]
+    assert not verdict["initiating_projection_parameter_identified"]
+    assert not verdict["parameter_selected"]
+    assert not verdict["official_figure10_reset_reproduced"]
+    assert not result["original_smart_reproduced"]
+    assert not result["baseline_promoted"]
+
+
+def test_projection026_source_arrival_audit_is_hash_pinned_and_passive() -> None:
+    implementation = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-projection026-source-arrival-monitor-702.yaml"
+        ).read_text()
+    )
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-projection026-source-arrival-registration-703.yaml"
+        ).read_text()
+    )
+
+    for path_key, hash_key in (
+        ("profile", "profile_sha256"),
+        ("harness", "harness_sha256"),
+        ("runtime", "runtime_sha256"),
+        ("script", "script_sha256"),
+        ("source_result", "source_result_sha256"),
+        ("prior_assessment", "prior_assessment_sha256"),
+    ):
+        assert hashlib.sha256(
+            (ROOT / registration[path_key]).read_bytes()
+        ).hexdigest() == registration[hash_key]
+    assert implementation["implementation"]["behavior_change"] == "none"
+    assert implementation["implementation"]["source_population"] == (
+        "layer6i_excitatory_v1"
+    )
+    assert registration["persistent_projection_delays"] == []
+    assert registration["record_projection026_arrival_target_indices"] == [
+        38,
+        40,
+        42,
+    ]
+    assert registration["projection026_arrival_window_ms"] == [23.3, 23.6]
+    assert registration["required_prior_trace_identity"]["samples_per_source"] == 7561
+    assert "Do not fit or select" in registration["decision_rule"]
+    assert "No original-SMART claim" in registration["boundary"]
 
 
 def test_projection036_source_arrival_result_localizes_phase_not_topology() -> None:

@@ -17,6 +17,7 @@ from smart_robustness.validation.figure10 import (
     summarize_layer4_target_balance_bins,
     summarize_layer4_target_timing,
     summarize_layer6i_selected_traces,
+    summarize_projection026_target_arrivals,
     summarize_projection036_target_arrivals,
 )
 from smart_robustness.validation.layer6i_replay import run_layer6i_replay
@@ -504,6 +505,37 @@ def test_projection036_target_arrivals_preserve_source_edge_and_delay() -> None:
         pytest.approx([75.05, 75.3, 75.9])
     )
     assert [arrival.edge_weight for arrival in summary.arrivals] == [0.2, 0.5, 0.1]
+
+
+def test_projection026_target_arrivals_preserve_source_edge_and_delay() -> None:
+    summaries = summarize_projection026_target_arrivals(
+        target_indices=(38, 40, 42),
+        mismatch_start_ms=100.0,
+        window_start_from_mismatch_ms=23.3,
+        window_end_from_mismatch_ms=23.6,
+        edge_source_indices=brian.asarray([10, 11, 12, 10]),
+        edge_target_indices=brian.asarray([38, 40, 42, 40]),
+        edge_weights=brian.asarray([0.2, 0.5, 0.1, 0.9]),
+        edge_delays_ms=brian.asarray([1.0, 1.0, 1.0, 1.0]),
+        source_spike_indices=brian.asarray([10, 11, 12, 10]),
+        source_spike_times_ms=brian.asarray([122.35, 122.45, 122.55, 123.0]),
+    )
+
+    assert [summary.target_index for summary in summaries] == [38, 40, 42]
+    assert summaries[0].connected_source_indices == (10,)
+    assert summaries[1].connected_source_indices == (10, 11)
+    assert summaries[1].connected_edge_weights == (0.9, 0.5)
+    assert [arrival.source_index for arrival in summaries[1].arrivals] == [10, 11]
+    assert [
+        arrival.arrival_time_from_mismatch_ms
+        for arrival in summaries[1].arrivals
+    ] == pytest.approx(
+        [23.35, 23.45]
+    )
+    assert [arrival.source_index for arrival in summaries[2].arrivals] == [12]
+    assert summaries[2].arrivals[0].arrival_time_from_mismatch_ms == pytest.approx(
+        23.55
+    )
 
 
 def test_layer4_inhibitory_source_trace_preserves_native_inputs_and_state() -> None:

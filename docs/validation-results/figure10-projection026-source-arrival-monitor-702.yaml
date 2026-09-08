@@ -1,0 +1,36 @@
+schema_version: 1
+id: figure10-projection026-source-arrival-monitor-702
+date: '2026-09-08'
+status: implementation-ready-read-only-source-arrival-tests-pass
+classification: figure10-projection026-source-resolved-arrival-audit
+authorization: docs/validation-results/figure10-layer4i-source-phase-from-onset-assessment-701.yaml
+authorization_sha256: a284f284d28b22073046a2f2e17172c35bc7c260aeccf7dd734f04ce02101a23
+harness: src/smart_robustness/validation/figure10.py
+harness_sha256: 9dc58c1236b1de7add8815dbe26f15ffd9373d943143bd6656f0590f581ac89a
+runner: scripts/run_figure10_calibrated_reset_pair.py
+runner_sha256: df9fa6ccbae6ef996eccc6b62e3caba32f2a7559489e0300a0e0d1542764a28d
+runtime: src/smart_robustness/classic_sector.py
+runtime_sha256: ebdf48f0138803ab50b1dec2ef87817b4c537e4da490a088b9df6bdcb9d119a1
+implementation:
+  summary_type: Figure10Projection026TargetArrivalSummary
+  source_population: layer6i_excitatory_v1
+  target_population: layer4_inhibitory_v1
+  retained_edge_fields: [source_index, target_index, weight, delay_ms]
+  retained_event_fields:
+    - source_index
+    - source_spike_time_from_mismatch_ms
+    - arrival_time_from_mismatch_ms
+    - edge_weight
+  sort_order: [arrival_time_from_mismatch_ms, source_index]
+  behavior_change: none
+tests:
+  command: >-
+    .venv/bin/pytest -q tests/test_figure10_validation.py
+    tests/test_calibration_contract.py
+  result: 400-passed-before-monitor-contract-addition
+boundary: >-
+  This reducer combines observed layer-6I spike times with the exact compiled
+  projection-026 edge map, weights, and effective delays. It does not alter a
+  neuron, synapse, connection, event, scheduler, cue, protocol, or score.
+  Source attribution may localize the first gate contrast but cannot select or
+  recover a numerical parameter.

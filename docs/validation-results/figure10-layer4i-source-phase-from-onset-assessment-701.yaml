@@ -1,0 +1,43 @@
+schema_version: 1
+id: figure10-layer4i-source-phase-from-onset-assessment-701
+date: '2026-09-08'
+status: assessed-projection026-first-presynaptic-divergence-source-arrival-audit-required
+registration: docs/validation-results/figure10-layer4i-source-phase-from-onset-registration-699.yaml
+result: docs/validation-results/figure10-layer4i-source-phase-from-onset-pair-700.yaml
+result_sha256: e7cdee21b82a0dfc95af4cd3ef5b1af149081a5010274d6253fef4c53eb7b7e5
+assessment:
+  all_fresh_figure6_gates_pass: true
+  exact_registered_population_identity: true
+  exact_registered_arrival_identity: true
+  intact_trace_hash_verified: true
+  control_trace_hash_verified: true
+  all_retained_variables_equal_at_mismatch_onset: true
+  projection026_is_first_measured_presynaptic_gate_difference: true
+  projection026_diagnostic_target_localized: true
+  initiating_projection_parameter_identified: false
+  parameter_selected: false
+  official_figure10_reset_reproduced: false
+  original_smart_reproduced: false
+  baseline_promoted: false
+interpretation: >-
+  The exact pair starts from a common retained state and localizes the first
+  focal presynaptic-gate difference to projection 026 at 23.45 ms after
+  mismatch onset. Projection 030 first differs at 72.88 ms, projection 027 at
+  73.85 ms, and projection 028 at 75.40 ms. The projection-026 difference is
+  simultaneous with the first membrane and fast activation-state differences
+  at the sampled 0.01-ms resolution and precedes the later local and relay
+  gates. This establishes propagation through the intended
+  nonspecific-thalamus to layer-5 to layer-6I to layer-4-inhibitory route, but
+  it does not show that any projection-026 parameter is wrong.
+closure: >-
+  Accept projection 026 as the next causal diagnostic target only. Do not
+  select a weight, delay, spread, kinetics, depletion, intrinsic parameter, or
+  topology convention; all previously closed parameter families remain closed.
+next_gate: >-
+  Run one preregistered passive source-resolved projection-026 arrival audit
+  into layer-4 inhibitory cells 38, 40, and 42 over 23.3--23.6 ms. Retain exact
+  connected layer-6I source indices, compiled edge weights and delays, source
+  spike times, and delayed arrival times in both arms. Require exact Figure-6,
+  population, projection-036-arrival, and trace-hash identities before
+  interpreting whether source timing, source selection, or spatial weighting
+  creates the first projection-026 gate contrast.

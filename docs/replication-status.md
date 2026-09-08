@@ -3887,3 +3887,17 @@ projection-036 inhibitory surge one 0.1-ms bin before control; the voltage
 advantage reverses in the following bin, whereas relay-gate differences remain
 small. This candidate timing mechanism still needs native-sample confirmation.
 Original SMART remains unreproduced and unfrozen.
+
+Artifacts 672--701 progressively confirm the projection-036 arrival timing,
+attribute it to layer-4 inhibitory source-cell phase rather than edge topology,
+and trace that phase difference back to mismatch onset. The exact final pair
+starts from identical retained states and finds projection 026 as the first
+presynaptic gate to differ at 23.45 ms, well before projections 030, 027, and
+028. The intended reset path therefore reaches layer-4 inhibitory cells, but
+the failed winner-suppression and alternative-release gates remain unchanged.
+No parameter is selected, original SMART remains unreproduced, and the baseline
+is not frozen. A source-resolved projection-026 arrival audit is next.
+
+Artifacts 702--703 now implement and preregister that audit on the unchanged
+source-control model. The paired result has not yet run. Original SMART remains
+unreproduced and unfrozen.

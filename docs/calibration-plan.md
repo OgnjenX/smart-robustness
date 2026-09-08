@@ -2126,3 +2126,18 @@ and projection 028 at 75.40 ms, so neither initiates the inherited split. The
 gate cause remains left-censored. Registration 699 therefore avoids further
 incremental windows and retains the same passive traces from mismatch onset to
 75.6 ms, with an explicit 1e-12 initial-equality and first-divergence rule.
+
+Artifacts 700--701 complete that mismatch-onset audit with exact source and
+arrival identity and verified trace hashes. Every retained variable is equal
+at mismatch onset. Projection 026 is the first presynaptic gate to differ at
+23.45 ms; projection 030 follows at 72.88 ms, projection 027 at 73.85 ms, and
+projection 028 at 75.40 ms. This proves that the intended reset-path signal has
+reached layer-4 inhibitory cells, but it neither identifies a faulty
+projection-026 parameter nor repairs reset. The next admissible action is a
+passive source-resolved projection-026 arrival audit at cells 38, 40, and 42
+over 23.3--23.6 ms.
+
+Artifacts 702--703 implement and preregister that passive audit. It retains the
+compiled projection-026 source/target map, weights, effective delays, observed
+layer-6I source spikes, and delayed arrivals for the three focal targets. The
+model and reset score are unchanged, and the result cannot select a parameter.

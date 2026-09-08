@@ -1864,3 +1864,17 @@ all other parameters are unchanged. Fresh Figure 6 is mandatory. A reset pass
 requires the existing pre-reset-winner, reset-chain, winner-suppression, and
 alternative-release gates; increased layer-6I activity alone is insufficient.
 No refinement, parameter selection, or baseline promotion is authorized.
+
+Artifacts 645--646 execute the endpoint twice, with the unchanged repeat using
+only a bounded final serialization filter after the first output exceeded
+terminal retention. Both runs agree on the visible counts and all reset gates.
+Scale 8 restores the broad intact wave: all 81 layer-5 and layer-6I cells are
+active, and layer-6I output rises to 153 versus 76 control events. Projection
+026 then carries 2.12 times the integrated and 8.59 times the peak excitation
+to layer-4 inhibitory cells. The downstream sign is nevertheless wrong: those
+cells emit 218 versus 232 events, projection-036 inhibitory-current magnitude
+is 10.2% lower intact, winner events are 78 versus 76, and released
+alternatives are zero versus two. Close scale 8 without selection. Before
+changing another value, add time-resolved readouts for projections 026 and 036
+and the currently omitted direct layer-6I-to-layer-4-excitatory projection 038
+around the 208.36-ms broad wave. Do not refine projection 025 yet.

@@ -9583,3 +9583,49 @@ def test_layer6i_scale8_connected_pair_is_hash_pinned_and_single_endpoint() -> N
     assert registration["record_layer6i_trace_indices"] == [0, 31, 40]
     assert "Execute one connected intact/control pair" in registration["boundary"]
     assert "No baseline promotion" in registration["boundary"]
+
+
+def test_layer6i_scale8_restores_broad_wave_but_fails_reset_sign() -> None:
+    result_path = (
+        ROOT / "docs/validation-results/figure10-layer6i-scale8-pair-645.yaml"
+    )
+    result = yaml.safe_load(result_path.read_text())
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-layer6i-scale8-assessment-646.yaml"
+        ).read_text()
+    )
+
+    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment[
+        "result_sha256"
+    ]
+    assert all(result["figure6_gates"].values())
+    assert result["intact"]["layer6i_mismatch_active_count"] == 81
+    assert result["disconnected_control"]["layer6i_mismatch_active_count"] == 11
+    assert result["intact"]["layer6i_post_events"] == 153
+    assert result["disconnected_control"]["layer6i_post_events"] == 76
+    assert result["intact"]["layer4_inhibitory_post_events"] == 218
+    assert result["disconnected_control"]["layer4_inhibitory_post_events"] == 232
+    assert abs(
+        result["intact"]["layer4e_mismatch_projection036_current_integral_pA_ms"]
+    ) < abs(
+        result["disconnected_control"][
+            "layer4e_mismatch_projection036_current_integral_pA_ms"
+        ]
+    )
+    assert result["reset_gates"] == {
+        "pre_reset_winner": True,
+        "reset_chain": True,
+        "winner_suppression": False,
+        "alternative_release": False,
+    }
+    assert result["reset_assessment"]["intact_winner_post_spikes"] == 78
+    assert result["reset_assessment"]["control_winner_post_spikes"] == 76
+    assert result["reset_assessment"]["intact_released_alternatives"] == 0
+    assert result["reset_assessment"]["control_released_alternatives"] == 2
+    assert assessment["assessment"]["scale8_endpoint_closed"]
+    assert not assessment["assessment"]["parameter_selected"]
+    assert not result["reproduced_reset"]
+    assert not result["original_smart_reproduced"]
+    assert not result["baseline_promoted"]

@@ -1,0 +1,76 @@
+schema_version: 1
+id: figure10-layer6i-scale8-assessment-646
+date: '2026-09-08'
+status: assessed-broad-layer6i-restored-downstream-reset-sign-reversed
+registration: docs/validation-results/figure10-layer6i-scale8-registration-644.yaml
+result: docs/validation-results/figure10-layer6i-scale8-pair-645.yaml
+result_sha256: f8d6b1d0e64c3070528a645aae52d3e00ade0b4e8484a746760b86cd1783d35b
+assessment:
+  fresh_figure6_passed: true
+  pre_reset_winner_passed: true
+  broad_layer5_recruitment_intact: true
+  broad_layer6i_recruitment_intact: true
+  layer6i_intact_greater_than_control: true
+  projection026_drive_intact_greater_than_control: true
+  layer4_inhibitory_events_intact_greater_than_control: false
+  projection036_inhibition_intact_greater_than_control: false
+  winner_suppression_passed: false
+  alternative_release_passed: false
+  complete_reset_passed: false
+  scale8_endpoint_closed: true
+  parameter_selected: false
+  recovered_smart_parameter: false
+  official_figure10_reset_reproduced: false
+  original_smart_reproduced: false
+  baseline_promoted: false
+quantitative_summary:
+  layer5_post_events_intact_control: [285, 140]
+  layer5_active_cells_intact_control: [81, 11]
+  layer6i_post_events_intact_control: [153, 76]
+  layer6i_active_cells_intact_control: [81, 11]
+  layer6i_event_ratio_intact_control: 2.013157894736842
+  projection025_current_integral_pA_ms_intact_control:
+  - 2984224.1128511517
+  - 492842.2116923987
+  projection025_current_integral_ratio: 6.055130916248947
+  projection026_current_integral_pA_ms_intact_control:
+  - 2416.5098402587823
+  - 1140.7148533028535
+  projection026_current_integral_ratio: 2.118417090179865
+  projection026_current_peak_pA_intact_control:
+  - 139.18038609419446
+  - 16.19615898956186
+  projection026_current_peak_ratio: 8.593419352322597
+  layer4_inhibitory_post_events_intact_control: [218, 232]
+  layer4_inhibitory_event_ratio_intact_control: 0.9396551724137931
+  projection036_current_integral_pA_ms_intact_control:
+  - -1846977.7504301972
+  - -2056784.1993506206
+  projection036_inhibitory_magnitude_ratio_intact_control: 0.89799296932237
+  layer4_post_events_intact_control: [78, 92]
+  winner_post_events_intact_control: [78, 76]
+  released_alternatives_intact_control: [0, 2]
+interpretation: >-
+  Two executions of the registered endpoint agree on every visible population
+  count and reset gate; the second used only a bounded serialization filter
+  after simulation because the first complete output exceeded terminal
+  retention. Scale 8 repairs the previously missing broad wave: all 81 layer-5
+  and all 81 layer-6I cells participate in the intact mismatch, versus 11 in
+  each control population. Layer-6I emits 153 versus 76 events and projection
+  026 delivers 2.12 times the integrated and 8.59 times the peak excitation to
+  layer-4 inhibitory cells. Nevertheless those inhibitory cells emit fewer
+  events intact (218 versus 232), and projection-036 inhibitory-current
+  magnitude onto layer-4 excitatory cells is 10.2% lower. The intact winner
+  increases to 78 versus 76 control events and releases zero alternatives
+  versus two. Projection-025 amplitude was therefore sufficient to restore
+  broad layer-6I recruitment but not the required downstream reset sign. Scale
+  8 closes as a diagnostic endpoint; it is not selected or source-recovered.
+next_gate: >-
+  Audit the layer-6I-to-layer-4 on-center/off-surround path under the unchanged
+  scale-8 endpoint before changing another parameter. Add default-off,
+  time-resolved readouts for projection 026 excitation of layer-4 inhibitory
+  cells, projection 036 inhibition of layer-4 excitatory cells, and the omitted
+  projection 038 direct layer-6I-to-layer-4-excitatory AMPA path. Resolve event
+  and current timing around the 208.36-ms broad layer-6I wave and compare intact
+  with control. Select no weight, spread, depletion, or intrinsic parameter from
+  the aggregate result alone, and do not refine projection 025 yet.

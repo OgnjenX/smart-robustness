@@ -10242,3 +10242,35 @@ def test_layer4_native_gate_onset_confirmation_is_hash_pinned() -> None:
     assert registration["protocol"]["dt_ms"] == 0.01
     assert registration.get("runtime_overrides") is None
     assert "do not execute or select" in registration["decision_rule"]
+
+
+def test_layer4_native_gate_onset_authorizes_single_delay_endpoint() -> None:
+    result_path = (
+        ROOT
+        / "docs/validation-results/figure10-layer4-native-gate-onset-pair-674.yaml"
+    )
+    result = yaml.safe_load(result_path.read_text())
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-layer4-native-gate-onset-assessment-675.yaml"
+        ).read_text()
+    )
+
+    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment[
+        "result_sha256"
+    ]
+    assert all(result["figure6_gates"].values())
+    assert result["source_identity"]["layer4_post_events"] == [78, 92]
+    inhibition = result["native_gate_onsets_from_mismatch_ms"][
+        "projection036_inhibition"
+    ]
+    assert inhibition["intact_strictly_precedes_control"]
+    assert inhibition["minimum_supported_lead_ms"] > 0.05
+    assert assessment["assessment"]["inhibitory_arrival_candidate_confirmed"]
+    assert assessment["assessment"]["projection036_delay_family_authorized"]
+    assert not assessment["assessment"]["projection036_delay_family_executed"]
+    assert "projection-036 delay 0.2 ms" in assessment["authorization"]
+    assert not assessment["assessment"]["parameter_selected"]
+    assert not result["original_smart_reproduced"]
+    assert not result["baseline_promoted"]

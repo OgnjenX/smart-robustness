@@ -2018,3 +2018,13 @@ times are extracted on the 0.01-ms integration grid at a fixed gate value of
 intact projection-036 onset before the voltage sign reversal without a matching
 directional explanation from projection 035. The result can authorize, but not
 execute or select, a bounded arrival/delay family.
+
+Artifacts 674--675 complete the confirmation with exact source identity. Relay
+gate 035 is already above threshold at 73 ms in both arms and has no
+directional onset difference. Projection 036 crosses 0.1 intact during
+75.4--75.5 ms and in control at 75.55 ms, strictly before the voltage advantage
+reverses in 75.5--75.6 ms. The console compacted the exact intact native field,
+so its supported interval—not an invented timestamp—is archived. The ordering
+test passes and authorizes one effective projection-036 delay endpoint at 0.2
+ms, one 0.1-ms increment above the serialized delay. It remains unexecuted and
+unselected.

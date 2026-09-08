@@ -1,0 +1,39 @@
+schema_version: 1
+id: figure10-layer4-native-gate-onset-assessment-675
+date: '2026-09-08'
+status: assessed-inhibitory-arrival-confirmed-bounded-delay-family-authorized
+registration: docs/validation-results/figure10-layer4-native-gate-onset-registration-673.yaml
+result: docs/validation-results/figure10-layer4-native-gate-onset-pair-674.yaml
+result_sha256: 8441f2967eab3798ffb3f4266f728d664af9a15cd139062a50841da2435ddef3
+assessment:
+  exact_source_identity_reproduced: true
+  projection036_onset_earlier_intact: true
+  projection036_onset_precedes_voltage_sign_reversal: true
+  projection035_provides_same_directional_explanation: false
+  inhibitory_arrival_candidate_confirmed: true
+  projection036_delay_family_authorized: true
+  projection036_delay_family_executed: false
+  parameter_selected: false
+  official_figure10_reset_reproduced: false
+  original_smart_reproduced: false
+  baseline_promoted: false
+interpretation: >-
+  Exact source identity repeats. Projection 035 is already above threshold at
+  the 73-ms window boundary in both arms, so it supplies no arm-specific onset
+  explanation. The intact projection-036 gate crosses 0.1 during 75.4--75.5 ms,
+  whereas control crosses at 75.55 ms. The inhibitory onset therefore strictly
+  precedes control by at least 0.05 ms and occurs before the voltage advantage
+  reverses in 75.5--75.6 ms. Control subsequently enters an action potential
+  before recurrent current starts. This confirms earlier projection-036
+  inhibitory arrival as the proximate block on intact alternative release.
+  The exact intact hundredth-millisecond field was compacted from console
+  presentation, so only its supported interval is archived. That interval is
+  sufficient for the registered ordering test but not for claiming an exact
+  legacy scheduler value.
+authorization: >-
+  Open one bounded effective-delay endpoint at projection-036 delay 0.2 ms,
+  exactly one 0.1-ms source-delay increment above the serialized 0.1 ms. Run a
+  complete Figure-6-gated intact/control Figure-10 pair. Select the endpoint
+  only if alternative release passes without losing pre-reset winner or reset-
+  chain gates and without worsening winner suppression. Otherwise reject 0.2
+  ms and close this single-step arrival correction before another family.

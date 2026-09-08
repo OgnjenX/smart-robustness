@@ -1,0 +1,52 @@
+schema_version: 1
+id: figure10-layer4-native-gate-onset-pair-674
+date: '2026-09-08'
+status: completed-unchanged-native-gate-onset-confirmation
+classification: figure10-source-control-native-gate-onset-confirmation
+registration: docs/validation-results/figure10-layer4-native-gate-onset-registration-673.yaml
+runtime_fingerprint: fa4ab9f0bf2bec4d6ad53cb6a91620047689b6839b146ed7d777d42350c2cdf5
+figure6_gates:
+  relay_active_indices: true
+  relay_events_per_active_index: true
+  relay_events: true
+  cortical_chain_complete: true
+  causal_learning_pair: true
+  top_down_horizontal_contrast: true
+source_identity:
+  layer4_pre_events: [39, 39]
+  layer4_post_events: [78, 92]
+  nonspecific_post_events: [18, 13]
+  layer5_post_events: [285, 140]
+  layer6i_post_events: [153, 76]
+  layer4_inhibitory_post_events: [218, 232]
+  layer5_active_cells: [81, 11]
+  layer6i_active_cells: [81, 11]
+native_gate_threshold_contract:
+  target_index: 31
+  window_from_mismatch_ms: [73.0, 77.0]
+  native_state_sample_ms: 0.01
+  gate_threshold: 0.1
+native_gate_onsets_from_mismatch_ms:
+  projection035_relay:
+    intact: {value_or_interval: 73.0, left_censored: true}
+    disconnected_control: {value_or_interval: 73.0, left_censored: true}
+    directional_explanation: false
+  projection036_inhibition:
+    intact: {value_or_interval: '[75.4, 75.5)', console_field_compacted: true}
+    disconnected_control: {value_or_interval: 75.55000000000001,
+      console_field_compacted: false}
+    intact_strictly_precedes_control: true
+    minimum_supported_lead_ms: 0.05000000000001137
+voltage_sequence:
+  intact_advantage_last_bin_ms: [75.4, 75.5]
+  intact_minus_control_soma_voltage_max_mV: 0.2726740282093896
+  control_advantage_first_bin_ms: [75.5, 75.6]
+  intact_minus_control_soma_voltage_max_mV_after_reversal: -0.3613515892709753
+  control_first_positive_soma_bin_ms: [76.8, 76.9]
+  control_detected_spike_ms: 77.33000000000001
+  control_projection037_onset_ms: 77.45000000000002
+reset_gates: {pre_reset_winner: true, reset_chain: true,
+  winner_suppression: false, alternative_release: false}
+reproduced_reset: false
+original_smart_reproduced: false
+baseline_promoted: false

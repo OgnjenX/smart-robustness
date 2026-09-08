@@ -2795,6 +2795,12 @@ Artifacts 672--673 now add and preregister native 0.01-ms gate-threshold timing
 for projection 035 and 036 over a wider 73--77-ms window. The confirmation pair
 has not yet run. Original SMART remains unreproduced and unfrozen.
 
+Artifacts 674--675 confirm the candidate with exact identity: projection-036
+inhibition crosses threshold earlier intact than control and before the voltage
+reversal, while relay onset is the same in both arms. A single effective-delay
+endpoint at 0.2 ms is now authorized but not run or selected. Original SMART
+remains unreproduced and unfrozen.
+
 Artifacts 535--537 perform the permitted match-only effective T-conductance
 screen on that fixed replay trace. The full preregistered grid from zero to the
 paper density is finite and was executed without interpolation. Scale 0.1875,

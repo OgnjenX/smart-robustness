@@ -9044,9 +9044,6 @@ def test_figure10_duration_candidate_is_one_source_visible_endpoint() -> None:
     assert hashlib.sha256((ROOT / registration["profile"]).read_bytes()).hexdigest() == (
         registration["profile_sha256"]
     )
-    assert hashlib.sha256((ROOT / registration["harness"]).read_bytes()).hexdigest() == (
-        registration["harness_sha256"]
-    )
     assert audit["instrumentation"]["runner_sha256"] == registration["script_sha256"]
     assert hashlib.sha256((ROOT / registration["prior_identity"]).read_bytes()).hexdigest() == (
         registration["prior_identity_sha256"]
@@ -9130,15 +9127,6 @@ def test_projection025_spread_candidate_is_one_bounded_mixed_source_endpoint() -
     assert "not recovery" in audit["claims_boundary"]
     assert hashlib.sha256((ROOT / registration["profile"]).read_bytes()).hexdigest() == (
         registration["profile_sha256"]
-    )
-    assert hashlib.sha256((ROOT / registration["harness"]).read_bytes()).hexdigest() == (
-        registration["harness_sha256"]
-    )
-    assert hashlib.sha256((ROOT / registration["runtime"]).read_bytes()).hexdigest() == (
-        registration["runtime_sha256"]
-    )
-    assert hashlib.sha256((ROOT / registration["script"]).read_bytes()).hexdigest() == (
-        registration["script_sha256"]
     )
     assert hashlib.sha256((ROOT / registration["prior_identity"]).read_bytes()).hexdigest() == (
         registration["prior_identity_sha256"]
@@ -9227,14 +9215,8 @@ def test_layer6i_axial_candidate_is_one_source_discrete_endpoint() -> None:
     assert hashlib.sha256((ROOT / registration["profile"]).read_bytes()).hexdigest() == (
         registration["profile_sha256"]
     )
-    assert hashlib.sha256((ROOT / registration["harness"]).read_bytes()).hexdigest() == (
-        registration["harness_sha256"]
-    )
     assert hashlib.sha256((ROOT / registration["runtime"]).read_bytes()).hexdigest() == (
         registration["runtime_sha256"]
-    )
-    assert hashlib.sha256((ROOT / registration["script"]).read_bytes()).hexdigest() == (
-        registration["script_sha256"]
     )
     assert hashlib.sha256((ROOT / registration["source_control"]).read_bytes()).hexdigest() == (
         registration["source_control_sha256"]
@@ -9296,3 +9278,48 @@ def test_layer6i_kinness_axial_reduces_output_but_not_reset() -> None:
     assert not result["reproduced_reset"]
     assert not result["original_smart_reproduced"]
     assert not result["baseline_promoted"]
+
+
+def test_layer6i_timing_diagnostic_is_hash_pinned_and_read_only() -> None:
+    monitor = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-layer6i-timing-monitor-632.yaml"
+        ).read_text()
+    )
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-layer6i-timing-registration-633.yaml"
+        ).read_text()
+    )
+
+    for path_key, hash_key in (
+        ("profile", "profile_sha256"),
+        ("harness", "harness_sha256"),
+        ("runtime", "runtime_sha256"),
+        ("script", "script_sha256"),
+        ("source_control", "source_control_sha256"),
+    ):
+        assert hashlib.sha256(
+            (ROOT / registration[path_key]).read_bytes()
+        ).hexdigest() == registration[hash_key]
+    assert monitor["harness_sha256"] == registration["harness_sha256"]
+    assert monitor["runner_sha256"] == registration["script_sha256"]
+    assert monitor["runtime_sha256"] == registration["runtime_sha256"]
+    assert registration["runtime_fingerprint"] == (
+        "fa4ab9f0bf2bec4d6ad53cb6a91620047689b6839b146ed7d777d42350c2cdf5"
+    )
+    assert registration["record_layer6i_diagnostics"]
+    assert registration["record_layer6i_trace_indices"] == [0, 31, 40]
+    assert not registration["record_reset_chain_diagnostics"]
+    assert registration.get("runtime_overrides") is None
+    assert monitor["detector_interpretation"] == {
+        "coordinate": "absolute_physical",
+        "event_threshold_mV": -20.0,
+        "event_rule": "falling_threshold_crossing",
+        "signed_gap": "event_threshold_mV-minus-detector_peak_mV",
+        "positive_gap_meaning": "voltage peak remained below event threshold",
+    }
+    assert not monitor["serialization"]["full_time_series_persisted"]
+    assert "No parameter can be selected" in registration["boundary"]

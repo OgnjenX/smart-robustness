@@ -1,0 +1,42 @@
+schema_version: 1
+id: figure10-layer6i-timing-monitor-632
+date: '2026-09-08'
+status: implementation-ready-tests-pass
+classification: read-only-selected-layer6i-input-voltage-timing
+authorization: docs/validation-results/figure10-layer6i-axial-assessment-631.yaml
+harness: src/smart_robustness/validation/figure10.py
+harness_sha256: c58787a58a27d25a5651699ab7ae1a6531f3de7a8c9a47836f791e0d960673b9
+runner: scripts/run_figure10_calibrated_reset_pair.py
+runner_sha256: 27829c7fdfef9aa23995790eb465d4604a1bacff6b5d358f54f0d73bb8ab026e
+runtime: src/smart_robustness/classic_sector.py
+runtime_sha256: 3e9bedd47822a785c0735afb4ab25bfa03e099b3258875fd434964255d102a85
+selected_cells:
+- {index: 0, role: common-peripheral-projection025-driven-nonspiking}
+- {index: 31, role: edge-of-active-layer6i-pattern}
+- {index: 40, role: central-winner-aligned-layer6i-cell}
+detector_interpretation:
+  coordinate: absolute_physical
+  event_threshold_mV: -20.0
+  event_rule: falling_threshold_crossing
+  signed_gap: event_threshold_mV-minus-detector_peak_mV
+  positive_gap_meaning: voltage peak remained below event threshold
+added_readouts_only:
+- mismatch event times for each selected cell
+- soma, proximal-dendrite, and spike-detector voltage peaks with episode times
+- signed detector-threshold gap
+- projection-023, -024, and -025 gate and current integrals per selected cell
+- gate and current peak values and times per projection
+- all three projection gates and currents at soma, proximal, and detector voltage peaks
+serialization:
+  mode: bounded-peak-summaries-only
+  full_time_series_persisted: false
+verification:
+  command: .venv/bin/pytest -q tests/test_figure10_validation.py tests/test_calibration_contract.py -k 'figure10 or projection025 or layer6i_axial or kinness_axial'
+  result: 27-passed
+  lint: pass
+boundary: >-
+  The monitor is default-off and changes no neuron equation, synaptic equation,
+  projection, parameter, runtime convention, timestep, protocol, event rule,
+  comparator, or reset score. It adds one already-defined read-only detector
+  subexpression to the existing layer-6I StateMonitor and serializes bounded
+  summaries after simulation. It cannot select an effective calibration value.

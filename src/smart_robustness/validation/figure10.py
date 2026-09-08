@@ -34,6 +34,49 @@ FIGURE10_RESET_INPUT_PROJECTIONS = (
 
 
 @dataclass(frozen=True, slots=True)
+class Figure10Layer6iProjectionTraceSummary:
+    """Selected-cell timing summary for one layer-6I synaptic projection."""
+
+    projection_id: str
+    gate_integral_ms: float
+    current_integral_pA_ms: float
+    current_peak_pA: float
+    current_peak_time_ms: float
+    gate_at_current_peak: float
+    gate_peak: float
+    gate_peak_time_ms: float
+    current_at_gate_peak_pA: float
+    soma_voltage_at_current_peak_mV: float
+    proximal_voltage_at_current_peak_mV: float
+    spike_detector_voltage_at_current_peak_mV: float
+    gate_at_soma_peak: float
+    current_at_soma_peak_pA: float
+    gate_at_proximal_peak: float
+    current_at_proximal_peak_pA: float
+    gate_at_detector_peak: float
+    current_at_detector_peak_pA: float
+
+
+@dataclass(frozen=True, slots=True)
+class Figure10Layer6iTraceSummary:
+    """Threshold and input timing for one preregistered layer-6I cell."""
+
+    index: int
+    mismatch_event_times_ms: tuple[float, ...]
+    spike_detector_threshold_mV: float
+    spike_detector_peak_mV: float
+    spike_detector_peak_time_ms: float
+    threshold_minus_detector_peak_mV: float
+    soma_voltage_peak_mV: float
+    soma_voltage_peak_time_ms: float
+    proximal_voltage_peak_mV: float
+    proximal_voltage_peak_time_ms: float
+    soma_voltage_at_detector_peak_mV: float
+    proximal_voltage_at_detector_peak_mV: float
+    projections: tuple[Figure10Layer6iProjectionTraceSummary, ...]
+
+
+@dataclass(frozen=True, slots=True)
 class Figure10ConditionResult:
     """Spike evidence from one persistent pre-reset then mismatch episode."""
 
@@ -64,6 +107,7 @@ class Figure10ConditionResult:
     layer6i_mismatch_projection025_current_peak_pA_by_index: tuple[tuple[int, float], ...] = ()
     layer6i_mismatch_soma_voltage_peak_mV_by_index: tuple[tuple[int, float], ...] = ()
     layer6i_mismatch_proximal_voltage_peak_mV_by_index: tuple[tuple[int, float], ...] = ()
+    layer6i_selected_trace_summaries: tuple[Figure10Layer6iTraceSummary, ...] = ()
     layer4i_mismatch_projection026_gate_integral_ms: float | None = None
     layer4i_mismatch_projection026_current_integral_pA_ms: float | None = None
     layer4i_mismatch_projection026_current_peak_pA: float | None = None
@@ -191,6 +235,127 @@ def assess_figure10_reset(
     )
 
 
+def summarize_layer6i_selected_traces(
+    *,
+    selected_indices: tuple[int, ...],
+    times_ms: np.ndarray,
+    mismatch_start_ms: float,
+    spike_detector_threshold_mV: float,
+    soma_voltage_mV: np.ndarray,
+    proximal_voltage_mV: np.ndarray,
+    spike_detector_voltage_mV: np.ndarray,
+    gate_by_projection: Mapping[str, np.ndarray],
+    current_pA_by_projection: Mapping[str, np.ndarray],
+    spike_indices: np.ndarray,
+    spike_times_ms: np.ndarray,
+) -> tuple[Figure10Layer6iTraceSummary, ...]:
+    """Reduce selected layer-6I traces without changing the simulated model."""
+
+    times = np.asarray(times_ms, dtype=float)
+    if times.ndim != 1:
+        raise ValueError("layer-6I trace times must be one-dimensional")
+    window = times >= mismatch_start_ms
+    mismatch_times = times[window]
+    if mismatch_times.size == 0:
+        raise ValueError("layer-6I traces do not contain the mismatch window")
+    voltage_arrays = {
+        "soma": np.asarray(soma_voltage_mV, dtype=float),
+        "proximal": np.asarray(proximal_voltage_mV, dtype=float),
+        "detector": np.asarray(spike_detector_voltage_mV, dtype=float),
+    }
+    projection_ids = tuple(gate_by_projection)
+    if set(projection_ids) != set(current_pA_by_projection):
+        raise ValueError("layer-6I gate and current projection IDs must match")
+    trace_arrays = (
+        tuple(voltage_arrays.values())
+        + tuple(
+            np.asarray(gate_by_projection[projection_id], dtype=float)
+            for projection_id in projection_ids
+        )
+        + tuple(
+            np.asarray(current_pA_by_projection[projection_id], dtype=float)
+            for projection_id in projection_ids
+        )
+    )
+    expected_shape = voltage_arrays["soma"].shape
+    if len(expected_shape) != 2 or expected_shape[1] != times.size:
+        raise ValueError("layer-6I traces must have shape (cells, times)")
+    if any(values.shape != expected_shape for values in trace_arrays):
+        raise ValueError("all layer-6I traces must have the same shape")
+    if len(set(selected_indices)) != len(selected_indices):
+        raise ValueError("selected layer-6I trace indices must be unique")
+    if any(index < 0 or index >= expected_shape[0] for index in selected_indices):
+        raise ValueError("selected layer-6I trace index is out of range")
+
+    event_indices = np.asarray(spike_indices, dtype=int)
+    event_times = np.asarray(spike_times_ms, dtype=float)
+    if event_indices.shape != event_times.shape:
+        raise ValueError("layer-6I spike indices and times must have equal shape")
+
+    summaries: list[Figure10Layer6iTraceSummary] = []
+    for index in selected_indices:
+        soma = voltage_arrays["soma"][index, window]
+        proximal = voltage_arrays["proximal"][index, window]
+        detector = voltage_arrays["detector"][index, window]
+        soma_peak_position = int(np.argmax(soma))
+        proximal_peak_position = int(np.argmax(proximal))
+        detector_peak_position = int(np.argmax(detector))
+        projections: list[Figure10Layer6iProjectionTraceSummary] = []
+        for projection_id in projection_ids:
+            gate = np.asarray(gate_by_projection[projection_id], dtype=float)[index, window]
+            current = np.asarray(current_pA_by_projection[projection_id], dtype=float)[
+                index, window
+            ]
+            current_peak_position = int(np.argmax(current))
+            gate_peak_position = int(np.argmax(gate))
+            projections.append(
+                Figure10Layer6iProjectionTraceSummary(
+                    projection_id=projection_id,
+                    gate_integral_ms=float(np.trapz(gate, mismatch_times)),
+                    current_integral_pA_ms=float(np.trapz(current, mismatch_times)),
+                    current_peak_pA=float(current[current_peak_position]),
+                    current_peak_time_ms=float(mismatch_times[current_peak_position]),
+                    gate_at_current_peak=float(gate[current_peak_position]),
+                    gate_peak=float(gate[gate_peak_position]),
+                    gate_peak_time_ms=float(mismatch_times[gate_peak_position]),
+                    current_at_gate_peak_pA=float(current[gate_peak_position]),
+                    soma_voltage_at_current_peak_mV=float(soma[current_peak_position]),
+                    proximal_voltage_at_current_peak_mV=float(proximal[current_peak_position]),
+                    spike_detector_voltage_at_current_peak_mV=float(
+                        detector[current_peak_position]
+                    ),
+                    gate_at_soma_peak=float(gate[soma_peak_position]),
+                    current_at_soma_peak_pA=float(current[soma_peak_position]),
+                    gate_at_proximal_peak=float(gate[proximal_peak_position]),
+                    current_at_proximal_peak_pA=float(current[proximal_peak_position]),
+                    gate_at_detector_peak=float(gate[detector_peak_position]),
+                    current_at_detector_peak_pA=float(current[detector_peak_position]),
+                )
+            )
+        selected_events = (event_indices == index) & (event_times >= mismatch_start_ms)
+        detector_peak = float(detector[detector_peak_position])
+        summaries.append(
+            Figure10Layer6iTraceSummary(
+                index=index,
+                mismatch_event_times_ms=tuple(
+                    float(value) for value in event_times[selected_events]
+                ),
+                spike_detector_threshold_mV=float(spike_detector_threshold_mV),
+                spike_detector_peak_mV=detector_peak,
+                spike_detector_peak_time_ms=float(mismatch_times[detector_peak_position]),
+                threshold_minus_detector_peak_mV=float(spike_detector_threshold_mV - detector_peak),
+                soma_voltage_peak_mV=float(soma[soma_peak_position]),
+                soma_voltage_peak_time_ms=float(mismatch_times[soma_peak_position]),
+                proximal_voltage_peak_mV=float(proximal[proximal_peak_position]),
+                proximal_voltage_peak_time_ms=float(mismatch_times[proximal_peak_position]),
+                soma_voltage_at_detector_peak_mV=float(soma[detector_peak_position]),
+                proximal_voltage_at_detector_peak_mV=float(proximal[detector_peak_position]),
+                projections=tuple(projections),
+            )
+        )
+    return tuple(summaries)
+
+
 def run_figure10_condition(
     *,
     top_down_current_pA: float,
@@ -203,6 +368,7 @@ def run_figure10_condition(
     comparator_source_index: int = 40,
     top_down_current_mode: TopDownCurrentMode | str = (TopDownCurrentMode.SUSTAINED_EPOCH),
     record_layer6i_diagnostics: bool = False,
+    record_layer6i_trace_indices: tuple[int, ...] = (),
     record_reset_chain_diagnostics: bool = False,
     conventions=None,
     dt_ms: float = 0.01,
@@ -221,6 +387,17 @@ def run_figure10_condition(
         raise ValueError("top_down_current_pA must be positive")
     if not isinstance(record_layer6i_diagnostics, bool):
         raise TypeError("layer-6I diagnostics flag must be boolean")
+    if not isinstance(record_layer6i_trace_indices, tuple) or any(
+        isinstance(index, bool) or not isinstance(index, int)
+        for index in record_layer6i_trace_indices
+    ):
+        raise TypeError("layer-6I trace indices must be a tuple of integers")
+    if len(set(record_layer6i_trace_indices)) != len(record_layer6i_trace_indices):
+        raise ValueError("layer-6I trace indices must be unique")
+    if any(index < 0 or index >= 81 for index in record_layer6i_trace_indices):
+        raise ValueError("layer-6I trace index must be between 0 and 80")
+    if record_layer6i_trace_indices and not record_layer6i_diagnostics:
+        raise ValueError("selected layer-6I traces require layer-6I diagnostics")
     if not isinstance(record_reset_chain_diagnostics, bool):
         raise TypeError("reset-chain diagnostics flag must be boolean")
     current_mode = TopDownCurrentMode(top_down_current_mode)
@@ -306,6 +483,7 @@ def run_figure10_condition(
                 "i_port_002",
                 "v_soma",
                 "v_proximal_dendrite",
+                "spike_detector_voltage",
             ),
             record=True,
             name=(
@@ -395,6 +573,7 @@ def run_figure10_condition(
     projection025_current_peak_by_index: tuple[tuple[int, float], ...] = ()
     soma_voltage_peak_by_index: tuple[tuple[int, float], ...] = ()
     proximal_voltage_peak_by_index: tuple[tuple[int, float], ...] = ()
+    selected_trace_summaries: tuple[Figure10Layer6iTraceSummary, ...] = ()
     if layer6i_state is not None:
         times_ms = np.asarray(layer6i_state.t / brian.ms)
         mismatch_window = times_ms >= pre_match_duration_ms
@@ -460,6 +639,28 @@ def run_figure10_condition(
                 np.asarray(layer6i_state.v_proximal_dendrite / brian.mV)[:, mismatch_window]
             )
         )
+        if record_layer6i_trace_indices:
+            selected_trace_summaries = summarize_layer6i_selected_traces(
+                selected_indices=record_layer6i_trace_indices,
+                times_ms=times_ms,
+                mismatch_start_ms=pre_match_duration_ms,
+                spike_detector_threshold_mV=conventions.spike_event_threshold_mV,
+                soma_voltage_mV=np.asarray(layer6i_state.v_soma / brian.mV),
+                proximal_voltage_mV=np.asarray(layer6i_state.v_proximal_dendrite / brian.mV),
+                spike_detector_voltage_mV=np.asarray(
+                    layer6i_state.spike_detector_voltage / brian.mV
+                ),
+                gate_by_projection={
+                    projection_id: np.asarray(getattr(layer6i_state, f"{port}_gate"))
+                    for projection_id, port in projection_ports
+                },
+                current_pA_by_projection={
+                    projection_id: np.asarray(getattr(layer6i_state, f"i_{port}") / brian.pA)
+                    for projection_id, port in projection_ports
+                },
+                spike_indices=np.asarray(layer6i.i),
+                spike_times_ms=np.asarray(layer6i.t / brian.ms),
+            )
 
     transmitter_samples: tuple[tuple[int, float, float], ...] = ()
     if layer6i_transmitter_state is not None:
@@ -543,6 +744,7 @@ def run_figure10_condition(
         ),
         layer6i_mismatch_soma_voltage_peak_mV_by_index=soma_voltage_peak_by_index,
         layer6i_mismatch_proximal_voltage_peak_mV_by_index=(proximal_voltage_peak_by_index),
+        layer6i_selected_trace_summaries=selected_trace_summaries,
         layer4i_mismatch_projection026_gate_integral_ms=projection026_gate,
         layer4i_mismatch_projection026_current_integral_pA_ms=projection026_current,
         layer4i_mismatch_projection026_current_peak_pA=(

@@ -136,6 +136,9 @@ def _condition_summary(result):
         "layer6i_mismatch_proximal_voltage_peak_mV_by_index": dict(
             result.layer6i_mismatch_proximal_voltage_peak_mV_by_index
         ),
+        "layer6i_selected_trace_summaries": [
+            asdict(summary) for summary in result.layer6i_selected_trace_summaries
+        ],
         "layer4i_mismatch_projection026_gate_integral_ms": (
             result.layer4i_mismatch_projection026_gate_integral_ms
         ),
@@ -225,6 +228,9 @@ def main() -> None:
         "conventions": conventions,
         "dt_ms": float(protocol["dt_ms"]),
         "record_layer6i_diagnostics": bool(registration.get("record_layer6i_diagnostics", False)),
+        "record_layer6i_trace_indices": tuple(
+            int(index) for index in registration.get("record_layer6i_trace_indices", ())
+        ),
         "record_reset_chain_diagnostics": bool(
             registration.get("record_reset_chain_diagnostics", False)
         ),

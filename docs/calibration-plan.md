@@ -1789,3 +1789,14 @@ the family: every source-discrete layer-6I intrinsic, target-compartment,
 spread, and axial alternative is now exhausted. Next return to paper axial and
 the one-to-one projection-025 source control for a preregistered read-only
 selected-cell timing assay before defining any effective calibration family.
+
+Artifacts 632--633 implement and preregister that timing assay. The source
+control remains paper-axial with one-to-one projection 025 and the fixed
+300-ms protocol. The existing default-off layer-6I state monitor now also
+observes the already-defined spike-detector coordinate and reduces cells 0,
+31, and 40 to bounded summaries: event times; soma, proximal, and detector
+peaks; the signed -20-mV detector-threshold gap; and projection-023, -024, and
+-025 gate/current timing at synaptic and voltage peaks. Full traces are not
+persisted. Interpret the assay only if every Figure-6 gate and all registered
+Artifact-622 event counts repeat exactly. The result may define a later
+isolated replay, but cannot select or change a parameter.

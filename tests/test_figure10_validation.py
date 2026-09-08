@@ -8,6 +8,7 @@ from smart_robustness.validation.figure10 import (
     Figure10ConditionResult,
     assess_figure10_reset,
     run_figure10_condition,
+    summarize_layer6i_selected_traces,
 )
 
 
@@ -119,6 +120,32 @@ def test_figure10_runner_requires_explicit_positive_protocol_values() -> None:
             reset_pathway_enabled=True,
             record_reset_chain_diagnostics=1,
         )
+    with pytest.raises(ValueError, match="require layer-6I diagnostics"):
+        run_figure10_condition(
+            top_down_current_pA=600,
+            pre_match_duration_ms=100,
+            mismatch_duration_ms=100,
+            reset_pathway_enabled=True,
+            record_layer6i_trace_indices=(0,),
+        )
+    with pytest.raises(ValueError, match="unique"):
+        run_figure10_condition(
+            top_down_current_pA=600,
+            pre_match_duration_ms=100,
+            mismatch_duration_ms=100,
+            reset_pathway_enabled=True,
+            record_layer6i_diagnostics=True,
+            record_layer6i_trace_indices=(0, 0),
+        )
+    with pytest.raises(ValueError, match="between 0 and 80"):
+        run_figure10_condition(
+            top_down_current_pA=600,
+            pre_match_duration_ms=100,
+            mismatch_duration_ms=100,
+            reset_pathway_enabled=True,
+            record_layer6i_diagnostics=True,
+            record_layer6i_trace_indices=(81,),
+        )
     with pytest.raises(ValueError, match="top_down_current"):
         run_figure10_condition(
             top_down_current_pA=0,
@@ -146,4 +173,55 @@ def test_figure10_condition_smoke_runs_persistent_two_phase_network() -> None:
     assert result.layer6i_mismatch_event_transmitter_samples == ()
     assert result.layer6i_mismatch_projection025_gate_integral_ms_by_index == ()
     assert result.layer6i_mismatch_soma_voltage_peak_mV_by_index == ()
+    assert result.layer6i_selected_trace_summaries == ()
     assert result.layer4i_mismatch_projection026_gate_integral_ms is None
+
+
+def test_selected_layer6i_trace_summary_preserves_peak_timing_and_threshold_gap() -> None:
+    times_ms = brian.asarray([0.0, 1.0, 2.0, 3.0])
+    soma = brian.asarray([[-70.0, -60.0, -45.0, -50.0]])
+    proximal = brian.asarray([[-70.0, -55.0, -40.0, -48.0]])
+    detector = brian.asarray([[0.0, 10.0, 25.0, 20.0]])
+    gates = {
+        "p023": brian.asarray([[0.0, 0.1, 0.2, 0.1]]),
+        "p024": brian.asarray([[0.0, 0.0, 0.3, 0.2]]),
+        "p025": brian.asarray([[0.0, 0.4, 0.5, 0.1]]),
+    }
+    currents = {
+        "p023": brian.asarray([[0.0, 1.0, 3.0, 2.0]]),
+        "p024": brian.asarray([[0.0, 2.0, 4.0, 1.0]]),
+        "p025": brian.asarray([[0.0, 5.0, 7.0, 2.0]]),
+    }
+
+    summary = summarize_layer6i_selected_traces(
+        selected_indices=(0,),
+        times_ms=times_ms,
+        mismatch_start_ms=1.0,
+        spike_detector_threshold_mV=30.0,
+        soma_voltage_mV=soma,
+        proximal_voltage_mV=proximal,
+        spike_detector_voltage_mV=detector,
+        gate_by_projection=gates,
+        current_pA_by_projection=currents,
+        spike_indices=brian.asarray([], dtype=int),
+        spike_times_ms=brian.asarray([]),
+    )[0]
+
+    assert summary.index == 0
+    assert summary.mismatch_event_times_ms == ()
+    assert summary.spike_detector_peak_mV == pytest.approx(25.0)
+    assert summary.spike_detector_peak_time_ms == pytest.approx(2.0)
+    assert summary.threshold_minus_detector_peak_mV == pytest.approx(5.0)
+    assert summary.soma_voltage_peak_mV == pytest.approx(-45.0)
+    assert summary.proximal_voltage_peak_mV == pytest.approx(-40.0)
+    projection025 = {item.projection_id: item for item in summary.projections}["p025"]
+    assert projection025.current_integral_pA_ms == pytest.approx(10.5)
+    assert projection025.current_peak_pA == pytest.approx(7.0)
+    assert projection025.current_peak_time_ms == pytest.approx(2.0)
+    assert projection025.gate_at_current_peak == pytest.approx(0.5)
+    assert projection025.soma_voltage_at_current_peak_mV == pytest.approx(-45.0)
+    assert projection025.gate_peak == pytest.approx(0.5)
+    assert projection025.gate_peak_time_ms == pytest.approx(2.0)
+    assert projection025.current_at_soma_peak_pA == pytest.approx(7.0)
+    assert projection025.current_at_proximal_peak_pA == pytest.approx(7.0)
+    assert projection025.current_at_detector_peak_pA == pytest.approx(7.0)

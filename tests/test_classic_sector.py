@@ -865,9 +865,23 @@ def test_figure6_profile_names_the_source_constrained_runtime() -> None:
     assert conventions.specific_capacitance_uF_cm2 == 1.0
     assert conventions.gaussian_weight_convention == "source_peak"
     assert conventions.gaussian_spread_convention == "standard_deviation"
+    assert conventions.projection025_gaussian_spread_convention is None
     assert conventions.modifiable_weight_initialization == "figure6_pathway_specific"
     assert conventions.gaussian_learning_bounds_convention == "figure6_pathway_specific"
     assert conventions.projection_source_convention == "modeldb_as_serialized"
+
+
+def test_projection025_spread_override_changes_only_layer5_to_layer6i() -> None:
+    brian.start_scope()
+    sector = build_first_order_chemical_sector(
+        conventions=FirstOrderRuntimeConventions(
+            projection025_gaussian_spread_convention="variance"
+        ),
+        brian=brian,
+    )
+
+    assert len(sector.projections["modeldb112923.projection.025"]) == 729
+    assert len(sector.projections["modeldb112923.projection.023"]) == 405
 
 
 def test_cross_checked_profile_resolves_ampa_23_source_without_mutating_catalog() -> None:

@@ -1737,3 +1737,16 @@ audit whether projection 025's serialized 0.2 `connectFromMany` spread is a
 standard deviation or variance: the field name and archived manual conflict,
 and the active standard-deviation convention makes this pathway effectively
 one-to-one after the documented cutoff.
+
+Artifact 624 completes that audit. SMART.nml fixes projection 025 as wrapped
+`connectFromMany`, weight 1, spread 0.2/0.2, and calls the fields
+`sigma_x/sigma_y`; the archived KInNeSS manual calls Spread X/Y variances.
+With source-peak scaling and the 0.001 cutoff, standard deviation retains only
+81 one-to-one contacts, while variance yields a fixed 729-contact wrapped 3x3
+stencil with center/axial/diagonal factors 1/0.0821/0.00674. The supplement
+omits this archived layer-5 input from its layer-6I table. Registration 625
+selects the variance interpretation only for projection 025 as one effective
+mixed-source sensitivity, leaving every archived number unchanged. This is not
+claimed as recovered original simulator semantics: the simulator-wide variance
+candidate already failed Figure 6. Run fresh Figure 6 and one 300-ms causal
+pair, then close the family without another spread, weight, or threshold.

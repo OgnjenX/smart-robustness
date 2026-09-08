@@ -647,6 +647,11 @@ parameters:
     status: completed-layer5-wave-restored-reset-failed-family-closed
     source: Grossberg and Versace 2008 Figure 10e and Sections 2.5--2.7; Artifacts 618--623
     note: The sole 300-ms endpoint passes Figure 6 and exactly repeats the first 100-ms mismatch prefix. The intact late phase recruits all 81 layer-5 cells and transfers projection-025 input to all 81 layer-6I targets, with 4.68 times the control current integral. Both arms nevertheless emit the same 42 late layer-6I events from the same seven cells and the same 49 late layer-4 events. Duration restores the broad layer-5 wave but not reset; the family is closed and no parameter is selected.
+  calibration.figure10.projection025_spread_sensitivity:
+    value: projection-025-only variance interpretation of archived spread 0.2, with global standard-deviation convention retained
+    status: preregistered-one-effective-endpoint-awaiting-execution
+    source: SMART.nml projection 025, KInNeSS Section 4.9, Grossberg and Versace 2008 Table 2 and Section 2.7; Artifacts 622--625
+    note: Standard deviation plus the documented cutoff makes projection 025 exactly one-to-one; variance gives a fixed wrapped 3x3 stencil with nine inputs per target. The endpoint changes no archived number and directly tests the localized layer-5-to-layer-6I convergence failure. Because KInNeSS semantics would apply globally and global variance already failed Figure 6, this mixed interpretation is an effective calibration sensitivity, not recovered original SMART.
   benchmark.population_sizes:
     value: see configs/*.yaml
     status: exploratory

@@ -165,6 +165,7 @@ class FirstOrderRuntimeConventions:
     gaussian_weight_convention: str = "source_peak"
     mixed_input_gate_convention: str = "historical_nested_projection"
     gaussian_spread_convention: str = "standard_deviation"
+    projection025_gaussian_spread_convention: str | None = None
     ring_kernel_convention: str = "center_excluded_gaussian"
     corticoreticular_ring_kernel_convention: str | None = None
     corticoreticular_ring_peak_radius_scale: float | None = None
@@ -245,6 +246,8 @@ class FirstOrderRuntimeConventions:
             values.pop("ring_kernel_convention")
         if values["mixed_input_gate_convention"] == "historical_nested_projection":
             values.pop("mixed_input_gate_convention")
+        if values["projection025_gaussian_spread_convention"] is None:
+            values.pop("projection025_gaussian_spread_convention")
         if values["corticoreticular_ring_kernel_convention"] is None:
             values.pop("corticoreticular_ring_kernel_convention")
         if values["corticoreticular_ring_peak_radius_scale"] is None:
@@ -344,6 +347,17 @@ def _ring_kernel_convention_for_record(
     ):
         return conventions.corticoreticular_ring_kernel_convention
     return conventions.ring_kernel_convention
+
+
+def _gaussian_spread_convention_for_record(
+    record_id: str, *, conventions: FirstOrderRuntimeConventions
+) -> str:
+    if (
+        record_id == "modeldb112923.projection.025"
+        and conventions.projection025_gaussian_spread_convention is not None
+    ):
+        return conventions.projection025_gaussian_spread_convention
+    return conventions.gaussian_spread_convention
 
 
 def _ring_peak_radius_scale_for_record(
@@ -865,7 +879,9 @@ def build_full_smart_network(
                 **kwargs,
                 modifiable_weight_initialization=conventions.modifiable_weight_initialization,
                 gaussian_weight_convention=conventions.gaussian_weight_convention,
-                gaussian_spread_convention=conventions.gaussian_spread_convention,
+                gaussian_spread_convention=_gaussian_spread_convention_for_record(
+                    record.id, conventions=conventions
+                ),
                 ring_kernel_convention=_ring_kernel_convention_for_record(
                     record.id, conventions=conventions
                 ),
@@ -897,7 +913,9 @@ def build_full_smart_network(
             projection = connect_modeldb_gap_junction(
                 **kwargs,
                 gaussian_weight_convention=conventions.gaussian_weight_convention,
-                gaussian_spread_convention=conventions.gaussian_spread_convention,
+                gaussian_spread_convention=_gaussian_spread_convention_for_record(
+                    record.id, conventions=conventions
+                ),
                 ring_kernel_convention=conventions.ring_kernel_convention,
             )
         projections[record.id] = projection
@@ -990,7 +1008,9 @@ def build_first_order_chemical_sector(
                 resolved_conventions.modifiable_weight_initialization
             ),
             gaussian_weight_convention=resolved_conventions.gaussian_weight_convention,
-            gaussian_spread_convention=resolved_conventions.gaussian_spread_convention,
+            gaussian_spread_convention=_gaussian_spread_convention_for_record(
+                record.id, conventions=resolved_conventions
+            ),
             ring_kernel_convention=_ring_kernel_convention_for_record(
                 record.id, conventions=resolved_conventions
             ),
@@ -1116,7 +1136,9 @@ def build_first_order_connected_sector(
             source_shape=facts_by_name[record.source_population].shape,
             target_shape=facts_by_name[record.target_population].shape,
             gaussian_weight_convention=resolved_conventions.gaussian_weight_convention,
-            gaussian_spread_convention=resolved_conventions.gaussian_spread_convention,
+            gaussian_spread_convention=_gaussian_spread_convention_for_record(
+                record.id, conventions=resolved_conventions
+            ),
             ring_kernel_convention=resolved_conventions.ring_kernel_convention,
             brian=brian,
         )

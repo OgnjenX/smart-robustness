@@ -1,0 +1,86 @@
+schema_version: 1
+id: figure10-projection025-spread-audit-624
+date: '2026-09-08'
+status: audited-one-projection-specific-effective-semantics-endpoint-selected
+classification: figure10-layer5-layer6i-spatial-convergence-source-ambiguity
+authorization: docs/validation-results/figure10-duration-assessment-623.yaml
+sources:
+  smart_nml:
+    path: tmp/modeldb-112923/versaceGrossberg2008/SMART.nml
+    sha256: 16fc196f2ed68d1c02a39395fa83bb0ffab8fcf8edffe6fd11022bb6c6e299e1
+    projection_id: modeldb112923.projection.025
+    route: layer5_excitatory_v1-to-layer6i_excitatory_v1-proximal-AMPA
+    method: connectFromMany
+    weight: 1.0
+    spread_x_y: [0.2, 0.2]
+    xml_field_names: [sigma_x, sigma_y]
+    border_effect: wrap
+    ring: false
+    delay_ms: 0.1
+    rise_fall_ms: [2.0, 2.0]
+  kinness_manual:
+    path: tmp/kinness-framework-expanded.pdf
+    sha256: 15a7f9166e301c9740e7cff4258810d315bd95b196ea5dff3419c5cc2879f177
+    section: '4.9 Connectivity'
+    evidence: >-
+      The manual says connectFromMany weights follow a Gaussian centered on
+      the selected cell, with variances set by Spread X and Spread Y. Its
+      weight discussion also fixes source-peak scaling and removes resulting
+      weights below 0.001.
+  paper:
+    path: tmp/pdfs/GrossbergVersace2008.pdf
+    sha256: c56c337624959d8c0bdf51aa79b0dbc82f31264af2b2cd675790879a6410d7ed
+    evidence:
+    - Table 2 calls the layer-5-to-layer-6I pathway driving.
+    - Section 2.7 says a layer-5-mediated reset wave later hits layer 6I.
+  supplement:
+    path: tmp/pdfs/GroVer2008BR-supplement.docx
+    sha256: 297c69db41e3e3ad6df176d2d9b5593606751e26be994c6447751e817f9b5c1c
+    evidence_gap: >-
+      The printed layer-6I input table lists relay, layer 2/3, layer 4, and
+      layer 6II columns but does not tabulate the archived layer-5 projection,
+      so it cannot resolve this spread value or its semantics.
+executable_topology:
+  standard_deviation:
+    variance_used: 0.04
+    connections: 81
+    inputs_per_target: 1
+    retained_factors: [1.0]
+    consequence: exactly one-to-one after the 0.001 resulting-weight cutoff
+  variance:
+    variance_used: 0.2
+    connections: 729
+    inputs_per_target: 9
+    retained_factors:
+    - {offset: [0, 0], factor: 1.0}
+    - {offset: axial-neighbor, factor: 0.0820849986238988}
+    - {offset: diagonal-neighbor, factor: 0.006737946999085467}
+    consequence: fixed wrapped 3-by-3 convergent stencil with no fitted value
+prior_evidence:
+  global_variance_candidate: docs/validation-results/calibration-network-gaussian-variance-123.yaml
+  global_candidate_status: rejected-at-figure6
+  new_interaction_evidence: >-
+    Artifact 622 shows that a complete 81-cell layer-5 wave reaches all 81
+    layer-6I targets, but the active standard-deviation topology supplies no
+    neighbor convergence and only seven layer-6I cells spike.
+selected_endpoint:
+  global_gaussian_spread_convention: standard_deviation
+  projection025_gaussian_spread_convention: variance
+  endpoint_count: 1
+  justification: >-
+    This is the only discrete alternative implied by the source conflict and
+    it directly tests the localized layer-5-to-layer-6I conversion failure.
+    It uses the archived 0.2 value unchanged and introduces no spread grid,
+    weight scale, or threshold fit.
+claims_boundary: >-
+  A simulator-wide variance interpretation would be more internally
+  consistent with the KInNeSS manual, but that registered interpretation has
+  already failed Figure 6. Applying variance only to projection 025 is
+  therefore an explicitly behaviorally motivated mixed-source sensitivity,
+  not recovery of the original KInNeSS implementation. Even if it reproduces
+  Figure 10, it cannot by itself establish a faithful original SMART baseline.
+stopping_rule: >-
+  Execute this endpoint once. Require all fresh Figure-6 gates before
+  interpreting the 300-ms causal pair. Close the projection-specific spread
+  family after the result; do not vary spread, cutoff, weight, delay, receptor
+  kinetics, layer-6I intrinsic parameters, duration, or reset scoring.

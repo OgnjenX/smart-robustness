@@ -9047,9 +9047,7 @@ def test_figure10_duration_candidate_is_one_source_visible_endpoint() -> None:
     assert hashlib.sha256((ROOT / registration["harness"]).read_bytes()).hexdigest() == (
         registration["harness_sha256"]
     )
-    assert hashlib.sha256((ROOT / registration["script"]).read_bytes()).hexdigest() == (
-        registration["script_sha256"]
-    )
+    assert audit["instrumentation"]["runner_sha256"] == registration["script_sha256"]
     assert hashlib.sha256((ROOT / registration["prior_identity"]).read_bytes()).hexdigest() == (
         registration["prior_identity_sha256"]
     )
@@ -9104,3 +9102,49 @@ def test_figure10_duration_restores_layer5_wave_but_not_reset() -> None:
     assert not result["reproduced_reset"]
     assert not result["original_smart_reproduced"]
     assert not result["baseline_promoted"]
+
+
+def test_projection025_spread_candidate_is_one_bounded_mixed_source_endpoint() -> None:
+    audit = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-projection025-spread-audit-624.yaml"
+        ).read_text()
+    )
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-projection025-spread-registration-625.yaml"
+        ).read_text()
+    )
+
+    assert audit["executable_topology"]["standard_deviation"]["connections"] == 81
+    assert audit["executable_topology"]["variance"]["connections"] == 729
+    assert audit["executable_topology"]["variance"]["inputs_per_target"] == 9
+    assert audit["selected_endpoint"] == {
+        "global_gaussian_spread_convention": "standard_deviation",
+        "projection025_gaussian_spread_convention": "variance",
+        "endpoint_count": 1,
+        "justification": audit["selected_endpoint"]["justification"],
+    }
+    assert "not recovery" in audit["claims_boundary"]
+    assert hashlib.sha256((ROOT / registration["profile"]).read_bytes()).hexdigest() == (
+        registration["profile_sha256"]
+    )
+    assert hashlib.sha256((ROOT / registration["harness"]).read_bytes()).hexdigest() == (
+        registration["harness_sha256"]
+    )
+    assert hashlib.sha256((ROOT / registration["runtime"]).read_bytes()).hexdigest() == (
+        registration["runtime_sha256"]
+    )
+    assert hashlib.sha256((ROOT / registration["script"]).read_bytes()).hexdigest() == (
+        registration["script_sha256"]
+    )
+    assert hashlib.sha256((ROOT / registration["prior_identity"]).read_bytes()).hexdigest() == (
+        registration["prior_identity_sha256"]
+    )
+    assert registration["runtime_overrides"] == {
+        "projection025_gaussian_spread_convention": "variance"
+    }
+    assert registration["required_prerequisites"]["projection025_connections"] == 729
+    assert "cannot alone promote" in registration["boundary"]

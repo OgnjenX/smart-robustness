@@ -1,0 +1,57 @@
+schema_version: 1
+id: figure10-projection025-spread-registration-625
+date: '2026-09-08'
+status: registered-before-execution-one-projection-specific-spread-endpoint
+classification: effective-projection025-variance-300ms-causal-reset
+authorization: docs/validation-results/figure10-projection025-spread-audit-624.yaml
+profile: configs/calibration/figure7_learned_coincidence_effective_t_pair_v1.yaml
+profile_sha256: 4b6aa0bdf4fb844e428fb330f34970900cc8bc741183b2d8e6e73789cba0b30f
+harness: src/smart_robustness/validation/figure10.py
+harness_sha256: 67419aed44e5cc25a0ff0173f6e5ebf989c828605d894d57d1e90f2da8b42624
+runtime: src/smart_robustness/classic_sector.py
+runtime_sha256: 5ab462f22343f0f3769aa97c5ebd7a0d5eb7d063d6b02eb52d0f561111d441d2
+script: scripts/run_figure10_calibrated_reset_pair.py
+script_sha256: 819ef0b9bc85e82b8472744f645fec38c958bfae26ce28bf3e6a433ab060469b
+prior_identity: docs/validation-results/figure10-duration-pair-622.yaml
+prior_identity_sha256: dccdf94c3c4abb2155b71049ed85ae5af6fad61fdb2e21c421ed90e7d24d5bc5
+runtime_overrides:
+  projection025_gaussian_spread_convention: variance
+runtime_fingerprint: e86c3fe598353809dac13de11ad150e3a939bf50f498035768821d6090fc0c57
+result_id: figure10-projection025-spread-pair-626
+result: docs/validation-results/figure10-projection025-spread-pair-626.yaml
+assessment: docs/validation-results/figure10-projection025-spread-assessment-627.yaml
+persistent_projection_scales:
+- {projection_id: modeldb112923.projection.008, scale: 0.75}
+- {projection_id: modeldb112923.projection.011, scale: 0.9375}
+nonspecific_t_scale: 0.1875
+record_layer6i_diagnostics: true
+record_reset_chain_diagnostics: false
+protocol:
+  pre_match_duration_ms: 100.0
+  mismatch_duration_ms: 200.0
+  total_duration_ms: 300.0
+  dt_ms: 0.01
+  top_down_current_pA: 800.0
+  top_down_current_mode: until_cued_cell_first_event
+  comparator: {transform: top_k_binary, source_index: 40, target_count: 5}
+required_prerequisites:
+  figure6_all_gates: true
+  projection025_connections: 729
+  first_100ms_source_control_identity_reference:
+    layer4_events_each_arm: 43
+    nonspecific_events_each_arm: 7
+    layer5_events_intact_control: [70, 55]
+decision_rule: >-
+  Fresh Figure 6 is a hard prerequisite. The projection-specific topology is
+  allowed to change layer-6I and downstream Figure-10 identity, so the prior
+  layer-6I prefix is a reference rather than a prerequisite. A reset pass
+  still requires causal winner suppression and greater alternative release in
+  the intact arm. Report layer-6I spatial recruitment and layer-4 output
+  without changing the score after seeing the result.
+boundary: >-
+  This is one mixed-source effective calibration sensitivity, not recovered
+  original KInNeSS semantics. No parameter grid, interpolation, second spread
+  value, global variance retry, weight adjustment, duration adjustment,
+  threshold adjustment, intrinsic-cell change, or score change is authorized.
+  A successful Figure 10 result cannot alone promote or freeze the original
+  SMART baseline.

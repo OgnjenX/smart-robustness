@@ -169,6 +169,7 @@ def main() -> None:
         runtime_conventions_for_candidate(base_profile["candidate"]),
         **training_profile["runtime_overrides"],
         **profile["runtime_overrides"],
+        **registration.get("runtime_overrides", {}),
     )
     if conventions.fingerprint != registration["runtime_fingerprint"]:
         raise ValueError("registration runtime differs from executable profile")

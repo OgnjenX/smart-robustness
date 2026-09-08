@@ -10091,3 +10091,41 @@ def test_layer4_subbin_timing_audit_is_hash_pinned_and_read_only() -> None:
     assert registration.get("runtime_overrides") is None
     assert "Do not select a parameter" in registration["decision_rule"]
     assert "No parameter selection" in registration["boundary"]
+
+
+def test_layer4_subbin_timing_classifies_recurrence_as_feedback() -> None:
+    result_path = (
+        ROOT
+        / "docs/validation-results/figure10-layer4-subbin-timing-pair-666.yaml"
+    )
+    result = yaml.safe_load(result_path.read_text())
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-layer4-subbin-timing-assessment-667.yaml"
+        ).read_text()
+    )
+
+    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment[
+        "result_sha256"
+    ]
+    assert all(result["figure6_gates"].values())
+    assert result["source_identity"]["layer4_post_events"] == [78, 92]
+    assert result["source_identity"]["layer6i_post_events"] == [153, 76]
+    for index in ("31", "49"):
+        intact = result["causal_order_by_target"]["intact"][index]
+        control = result["causal_order_by_target"]["disconnected_control"][index]
+        assert intact["spike_times_from_mismatch_ms"] == []
+        assert intact["projection037_first_active_time_from_mismatch_ms"] is None
+        assert control["spike_times_from_mismatch_ms"] == [77.33000000000001]
+        assert control["projection037_first_active_time_from_mismatch_ms"] == (
+            77.45000000000002
+        )
+    assert assessment["assessment"]["projection037_is_initial_release_drive"] is False
+    assert assessment["assessment"]["projection037_is_post_spike_feedback_amplifier"]
+    assert assessment["causal_order"]["projection037_lag_after_spike_ms"] == pytest.approx(
+        0.12
+    )
+    assert not assessment["assessment"]["parameter_selected"]
+    assert not result["original_smart_reproduced"]
+    assert not result["baseline_promoted"]

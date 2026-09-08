@@ -1,0 +1,74 @@
+schema_version: 1
+id: figure10-layer4-subbin-timing-pair-666
+date: '2026-09-08'
+status: completed-unchanged-read-only-causal-order-pair
+classification: figure10-source-control-layer4-subbin-timing-audit
+registration: docs/validation-results/figure10-layer4-subbin-timing-registration-665.yaml
+runtime_fingerprint: fa4ab9f0bf2bec4d6ad53cb6a91620047689b6839b146ed7d777d42350c2cdf5
+figure6_gates:
+  relay_active_indices: true
+  relay_events_per_active_index: true
+  relay_events: true
+  cortical_chain_complete: true
+  causal_learning_pair: true
+  top_down_horizontal_contrast: true
+source_identity:
+  layer4_pre_events: [39, 39]
+  layer4_post_events: [78, 92]
+  nonspecific_post_events: [18, 13]
+  layer5_post_events: [285, 140]
+  layer6i_post_events: [153, 76]
+  layer4_inhibitory_post_events: [218, 232]
+  layer5_active_cells: [81, 11]
+  layer6i_active_cells: [81, 11]
+timing_contract:
+  target_indices: [31, 49]
+  window_from_mismatch_ms: [65.0, 85.0]
+  bin_width_ms: 1.0
+  native_state_sample_ms: 0.01
+  projection037_activity_threshold_pA: 1.0e-9
+  target_symmetry_within_1e_12: true
+critical_bins_from_mismatch_ms: [74.0, 75.0, 76.0, 77.0, 78.0]
+critical_series_columns:
+- projection035_relay_excitation_integral_pA_ms
+- projection036_inhibition_integral_pA_ms
+- projection037_recurrent_excitation_integral_pA_ms
+- projection038_excitation_integral_pA_ms
+- soma_voltage_min_mV
+- soma_voltage_max_mV
+critical_series_representative_target_31:
+  intact:
+  - [570.7969472292702, 871.5547570032841, 1073.8807719762951,
+      1004.3709869983973]
+  - [-36.25275350553395, -2061.91066088051, -1114.5897962862412,
+      -990.9489479524641]
+  - [0.0, 0.0, 0.0, 0.0]
+  - [0.03211348573833081, 0.021499990154915077, 0.017457616381680714,
+      0.011649585576761039]
+  - [-60.54011282299579, -56.96318670855285, -64.6736943478122,
+      -67.90251810074683]
+  - [-57.02566774412828, -52.349037061008524, -55.17639281985903,
+      -64.73204547523278]
+  disconnected_control:
+  - [567.8848542945258, 837.061697720285, 1074.051184616569,
+      1149.4211937595082]
+  - [-36.98990882066988, -1982.5317081133971, -1142.5107766356625,
+      -1161.1286137597695]
+  - [0.0, 0.0, 0.0, 12.748853832904883]
+  - [0.0, 0.0, 0.0, 0.0]
+  - [-60.73242813463268, -57.22448063693365, -50.65315279351128,
+      -80.12467982584242]
+  - [-57.28577462045766, -50.66102563108032, 37.327860050955074,
+      37.1987445374546]
+causal_order_by_target:
+  intact:
+    '31': {spike_times_from_mismatch_ms: [], projection037_first_active_time_from_mismatch_ms: null}
+    '49': {spike_times_from_mismatch_ms: [], projection037_first_active_time_from_mismatch_ms: null}
+  disconnected_control:
+    '31': {spike_times_from_mismatch_ms: [77.33000000000001], projection037_first_active_time_from_mismatch_ms: 77.45000000000002}
+    '49': {spike_times_from_mismatch_ms: [77.33000000000001], projection037_first_active_time_from_mismatch_ms: 77.45000000000002}
+reset_gates: {pre_reset_winner: true, reset_chain: true,
+  winner_suppression: false, alternative_release: false}
+reproduced_reset: false
+original_smart_reproduced: false
+baseline_promoted: false

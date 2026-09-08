@@ -3790,3 +3790,10 @@ Artifacts 664--665 now provide and preregister that passive timing audit. It
 preserves exact alternative spike times and native-sample recurrent-current
 onset, plus one-ms voltage and all four input-current summaries. The registered
 pair has not yet run. Original SMART remains unreproduced and unfrozen.
+
+Artifacts 666--667 complete the timing pair and exactly repeat all source
+identities. In both control alternatives, the first event at 77.33 ms precedes
+projection-037 current onset at 77.45 ms. Recurrent layer-4 excitation is thus
+a post-spike amplifier, not the missing initial release drive. The initiating
+relay-versus-inhibition gate difference remains unresolved because current is
+voltage-dependent. Original SMART remains unreproduced and unfrozen.

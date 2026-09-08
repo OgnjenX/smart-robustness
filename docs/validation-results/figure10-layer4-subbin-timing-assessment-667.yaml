@@ -1,0 +1,41 @@
+schema_version: 1
+id: figure10-layer4-subbin-timing-assessment-667
+date: '2026-09-08'
+status: assessed-projection037-feedback-not-initiator-gate-audit-required
+registration: docs/validation-results/figure10-layer4-subbin-timing-registration-665.yaml
+result: docs/validation-results/figure10-layer4-subbin-timing-pair-666.yaml
+result_sha256: 662cbd15d4cd40d34e56379f6351d32cf613078f5f118ab8619ec1c6f7f3e8a3
+assessment:
+  exact_source_identity_reproduced: true
+  both_alternatives_have_same_causal_order: true
+  projection037_precedes_first_alternative_spike: false
+  projection037_is_initial_release_drive: false
+  projection037_is_post_spike_feedback_amplifier: true
+  current_integrals_identify_initial_conductance_difference: false
+  synaptic_gate_audit_required: true
+  parameter_selected: false
+  official_figure10_reset_reproduced: false
+  original_smart_reproduced: false
+  baseline_promoted: false
+causal_order:
+  control_first_alternative_spike_ms: 77.33000000000001
+  control_projection037_first_active_ms: 77.45000000000002
+  projection037_lag_after_spike_ms: 0.12000000000000455
+  intact_alternative_spikes_in_window: 0
+  intact_projection037_active_in_window: false
+interpretation: >-
+  Every registered population identity and fresh Figure-6 gate repeats exactly.
+  Both symmetric control alternatives emit their first event at 77.33 ms after
+  mismatch; projection 037 first exceeds the preregistered threshold at 77.45
+  ms, 0.12 ms later. It therefore cannot initiate their first release event and
+  is classified as post-spike positive feedback. The control somatic action
+  potential is already visible in the 76--77-ms voltage bin, before recurrent
+  current appears. Projection-current magnitudes remain voltage-dependent and
+  cannot by themselves identify whether relay conductance or inhibitory gate
+  history creates the earlier voltage divergence. No parameter is selected.
+next_gate: >-
+  Add a default-off, native-sample 74--78-ms audit for target 31 of projection-
+  035 and projection-036 gate variables together with somatic voltage. Report
+  the first voltage-divergence time and the preceding gate difference under one
+  unchanged source-control pair. Do not open a parameter family until the
+  initiating conductance direction is identified.

@@ -1983,3 +1983,12 @@ bounds, exact spike times, and projection-037 onset measured on the native
 must repeat every Artifact-662 identity. The result may classify recurrent
 excitation as initiation or feedback amplification but cannot authorize or
 select a parameter.
+
+Artifacts 666--667 complete the pair with exact identity. Cells 31 and 49 both
+spike at 77.33 ms in control, while their projection-037 current first exceeds
+the preregistered threshold at 77.45 ms. Recurrent excitation therefore follows
+the first event by 0.12 ms: it amplifies release but does not initiate it. The
+control somatic action potential is already present in the 76--77-ms voltage
+bin. Because shunting current magnitudes depend on membrane voltage, the next
+diagnostic must inspect projection-035 and projection-036 gate variables with
+native-sample voltage over 74--78 ms before any parameter is opened.

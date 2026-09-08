@@ -727,6 +727,11 @@ parameters:
     status: completed-source-cell-phase-difference-localized
     source: Artifact 683 authorization and Artifacts 684--687
     note: Exact identity repeats. Both arms deliver sources 38--42 with identical compiled weights and total weight 5.482968310784057. Intact first arrival is 75.38 ms versus 75.53 ms control because sources 38/42 lead source 40; control reverses that order. Topology and edge weights are excluded. No parameter is selected, both delay families stay closed, and a passive source-cell input/voltage audit is required next.
+  diagnostics.figure10.layer4_inhibitory_source_phase_inputs:
+    value: native 0.01-ms complete-input and membrane/intrinsic traces for layer-4 inhibitory cells 38, 40, and 42 over 75.0--75.6 ms
+    status: implemented-and-preregistered-before-execution-read-only
+    source: Artifact 687 authorization and Artifacts 688--689
+    note: The passive trace includes projections 026--030 (including projection-029 gap current), soma/proximal/detector voltage, Na/K gates, and emitted events. Exact Artifact-686 source and arrival identities are required. No parameter, reset score, or baseline status can change.
   benchmark.population_sizes:
     value: see configs/*.yaml
     status: exploratory

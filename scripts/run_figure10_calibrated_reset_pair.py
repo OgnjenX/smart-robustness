@@ -177,6 +177,9 @@ def _condition_summary(result):
         "projection036_target_arrival_summaries": [
             asdict(item) for item in result.projection036_target_arrival_summaries
         ],
+        "layer4_inhibitory_source_traces": [
+            asdict(item) for item in result.layer4_inhibitory_source_traces
+        ],
     }
 
 
@@ -218,6 +221,7 @@ def _bounded_layer4_balance_summary(summary):
         "layer4_target_balance_bins",
         "layer4_target_timing_summaries",
         "projection036_target_arrival_summaries",
+        "layer4_inhibitory_source_traces",
     )
     bounded = {key: summary[key] for key in keys}
     bounded["layer5_post_active_count"] = len(summary["layer5_post_active_indices"])
@@ -343,6 +347,18 @@ def main() -> None:
             float(value)
             for value in registration.get(
                 "projection036_arrival_window_ms", (75.0, 76.0)
+            )
+        ),
+        "record_layer4_inhibitory_trace_indices": tuple(
+            int(index)
+            for index in registration.get(
+                "record_layer4_inhibitory_trace_indices", ()
+            )
+        ),
+        "layer4_inhibitory_trace_window_ms": tuple(
+            float(value)
+            for value in registration.get(
+                "layer4_inhibitory_trace_window_ms", (75.0, 75.6)
             )
         ),
         "brian": brian,

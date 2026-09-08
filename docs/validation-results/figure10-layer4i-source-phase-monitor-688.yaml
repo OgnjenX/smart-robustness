@@ -1,0 +1,42 @@
+schema_version: 1
+id: figure10-layer4i-source-phase-monitor-688
+date: '2026-09-08'
+status: implemented-passive-native-source-cell-trace
+classification: figure10-layer4-inhibitory-source-phase-input-audit
+implementation:
+  harness: src/smart_robustness/validation/figure10.py
+  runner: scripts/run_figure10_calibrated_reset_pair.py
+  behavior_change: none
+  observed_population: layer4_inhibitory_v1
+  observed_source_indices: [38, 40, 42]
+  window_from_mismatch_ms: [75.0, 75.6]
+  endpoint_policy: inclusive-with-1e-9-ms-floating-point-tolerance
+  native_dt_ms: 0.01
+  retained_variables:
+    - v_soma
+    - v_proximal_dendrite
+    - spike_detector_voltage
+    - m_soma
+    - h_soma
+    - n_soma
+    - port_000_gate
+    - i_port_000
+    - port_001_gate
+    - i_port_001
+    - port_002_gate
+    - i_port_002
+    - i_gap_000
+    - port_003_gate
+    - i_port_003
+    - emitted_event_times
+port_identity:
+  port_000: modeldb112923.projection.026
+  port_001: modeldb112923.projection.027
+  port_002: modeldb112923.projection.028
+  gap_000: modeldb112923.projection.029
+  port_003: modeldb112923.projection.030
+scientific_boundary: >-
+  This is a read-only observation of the unchanged source-control model. It
+  cannot alter a conductance, weight, delay, geometry, kinetic constant,
+  intrinsic state, protocol, reset score, or baseline status.
+

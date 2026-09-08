@@ -2088,3 +2088,11 @@ not a topology or edge-weight difference. Keep both delay families closed. The
 next permissible step is a passive native-sample audit of every synaptic port,
 somatic voltage, and output event for inhibitory cells 38, 40, and 42 over
 75.0--75.6 ms; it must select no parameter.
+
+Artifacts 688--689 implement and preregister that source-cell audit. Native
+0.01-ms traces retain all four chemical input gates/currents (projections
+026--028 and 030), projection-029 gap current, soma/proximal/detector voltage,
+Na/K gate state, and emitted events for inhibitory cells 38, 40, and 42 over
+75.0--75.6 ms. Interpretation requires exact repetition of Artifact 686 and
+must identify a temporally preceding input/state difference without fitting.
+The monitor is passive and cannot select a parameter.

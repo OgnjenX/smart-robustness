@@ -2835,6 +2835,12 @@ reproduction, and baseline freezing remain failed. A passive input/voltage
 audit of inhibitory cells 38, 40, and 42 is required before any new parameter
 family is considered.
 
+Artifacts 688--689 now add and preregister that passive audit. It records every
+chemical input, gap-junction current, membrane/detector voltage, Na/K gate
+state, and event time for inhibitory cells 38, 40, and 42 on the native 0.01-ms
+grid over 75.0--75.6 ms. The pair has not yet run. Original SMART remains
+unreproduced and unfrozen, and no parameter family is open.
+
 Artifacts 535--537 perform the permitted match-only effective T-conductance
 screen on that fixed replay trace. The full preregistered grid from zero to the
 paper density is finite and was executed without interpolation. Scale 0.1875,

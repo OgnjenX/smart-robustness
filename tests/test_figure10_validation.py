@@ -13,6 +13,7 @@ from smart_robustness.validation.figure10 import (
     compact_layer4_target_balance_summary,
     run_figure10_condition,
     summarize_layer4_balance_bins,
+    summarize_layer4_inhibitory_source_traces,
     summarize_layer4_target_balance_bins,
     summarize_layer4_target_timing,
     summarize_layer6i_selected_traces,
@@ -218,6 +219,7 @@ def test_figure10_condition_smoke_runs_persistent_two_phase_network() -> None:
     assert result.layer6i_replay_trace_path is None
     assert result.layer6i_replay_trace_sha256 is None
     assert result.layer4i_mismatch_projection026_gate_integral_ms is None
+    assert result.layer4_inhibitory_source_traces == ()
     assert result.layer4e_mismatch_projection038_gate_integral_ms is None
     assert result.layer4_balance_bins == ()
     assert result.layer4_target_balance_bins == ()
@@ -502,3 +504,63 @@ def test_projection036_target_arrivals_preserve_source_edge_and_delay() -> None:
         pytest.approx([75.05, 75.3, 75.9])
     )
     assert [arrival.edge_weight for arrival in summary.arrivals] == [0.2, 0.5, 0.1]
+
+
+def test_layer4_inhibitory_source_trace_preserves_native_inputs_and_state() -> None:
+    base = brian.asarray([[float(index + step) for step in range(5)] for index in range(81)])
+    summaries = summarize_layer4_inhibitory_source_traces(
+        source_indices=(38, 40, 42),
+        mismatch_start_ms=100.0,
+        window_start_from_mismatch_ms=75.0,
+        window_end_from_mismatch_ms=75.02,
+        state_times_ms=brian.asarray([174.99, 175.0, 175.01, 175.02, 175.03]),
+        soma_voltage_mV_by_index=brian.asarray(
+            [[float(index + step) for step in range(5)] for index in range(81)]
+        ),
+        proximal_voltage_mV_by_index=base[:, :],
+        spike_detector_voltage_mV_by_index=base[:, :],
+        sodium_activation_by_index=base[:, :],
+        sodium_inactivation_by_index=base[:, :],
+        potassium_activation_by_index=base[:, :],
+        projection026_gate_by_index=base[:, :],
+        projection026_current_pA_by_index=base[:, :],
+        projection027_gate_by_index=base[:, :],
+        projection027_current_pA_by_index=base[:, :],
+        projection028_gate_by_index=base[:, :],
+        projection028_current_pA_by_index=base[:, :],
+        projection029_gap_current_pA_by_index=base[:, :],
+        projection030_gate_by_index=base[:, :],
+        projection030_current_pA_by_index=base[:, :],
+        spike_indices=brian.asarray([38, 40, 42, 40]),
+        spike_times_ms=brian.asarray([175.0, 175.01, 175.02, 175.03]),
+    )
+
+    assert [item.source_index for item in summaries] == [38, 40, 42]
+    assert summaries[1].times_from_mismatch_ms == pytest.approx(
+        (75.0, 75.01, 75.02)
+    )
+    assert summaries[1].soma_voltage_mV == (41.0, 42.0, 43.0)
+    assert summaries[1].projection026_gate == (41.0, 42.0, 43.0)
+    assert summaries[1].projection029_gap_current_pA == (41.0, 42.0, 43.0)
+    assert summaries[1].spike_times_from_mismatch_ms == pytest.approx((75.01,))
+
+
+def test_figure10_condition_smoke_records_layer4_inhibitory_source_trace() -> None:
+    result = run_figure10_condition(
+        top_down_current_pA=600,
+        pre_match_duration_ms=0.01,
+        mismatch_duration_ms=0.02,
+        reset_pathway_enabled=True,
+        dt_ms=0.01,
+        record_reset_chain_diagnostics=True,
+        record_layer4_inhibitory_trace_indices=(40,),
+        layer4_inhibitory_trace_window_ms=(0.0, 0.01),
+        brian=brian,
+    )
+
+    assert len(result.layer4_inhibitory_source_traces) == 1
+    trace = result.layer4_inhibitory_source_traces[0]
+    assert trace.source_index == 40
+    assert trace.times_from_mismatch_ms == pytest.approx((0.0, 0.01))
+    assert len(trace.soma_voltage_mV) == 2
+    assert len(trace.projection030_current_pA) == 2

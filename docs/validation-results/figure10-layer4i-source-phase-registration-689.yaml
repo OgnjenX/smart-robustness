@@ -1,0 +1,82 @@
+schema_version: 1
+id: figure10-layer4i-source-phase-registration-689
+date: '2026-09-08'
+status: registered-before-execution-native-source-phase-audit
+classification: figure10-layer4-inhibitory-source-phase-input-audit
+implementation: docs/validation-results/figure10-layer4i-source-phase-monitor-688.yaml
+profile: configs/calibration/figure7_learned_coincidence_effective_t_pair_v1.yaml
+profile_sha256: 4b6aa0bdf4fb844e428fb330f34970900cc8bc741183b2d8e6e73789cba0b30f
+harness: src/smart_robustness/validation/figure10.py
+harness_sha256: f9e0ce7d772881f776475184bab7fa440537c7c62ce9dec05614ae12fff24fbf
+runtime: src/smart_robustness/classic_sector.py
+runtime_sha256: ebdf48f0138803ab50b1dec2ef87817b4c537e4da490a088b9df6bdcb9d119a1
+script: scripts/run_figure10_calibrated_reset_pair.py
+script_sha256: 03089bf8c8f12fed34bf499a68864b509b072279a7d0947eff9dc4077d24a19f
+source_result: docs/validation-results/figure10-projection036-source-arrival-pair-686.yaml
+source_result_sha256: 6b34aa83274cfff7b8ef8d10a0e2297647ca80875fa1211e9124aaa68d94a7c0
+prior_assessment: docs/validation-results/figure10-projection036-source-arrival-assessment-687.yaml
+prior_assessment_sha256: 5011f829e6a43b57770dd4784bcf87254c240ca5fc7f6e0984eeed257181092c
+runtime_fingerprint: fa4ab9f0bf2bec4d6ad53cb6a91620047689b6839b146ed7d777d42350c2cdf5
+result_id: figure10-layer4i-source-phase-pair-690
+result: docs/validation-results/figure10-layer4i-source-phase-pair-690.yaml
+assessment: docs/validation-results/figure10-layer4i-source-phase-assessment-691.yaml
+persistent_projection_scales:
+  - {projection_id: modeldb112923.projection.008, scale: 0.75}
+  - {projection_id: modeldb112923.projection.011, scale: 0.9375}
+  - {projection_id: modeldb112923.projection.025, scale: 8.0}
+persistent_projection_delays: []
+nonspecific_t_scale: 0.1875
+record_layer6i_diagnostics: false
+record_reset_chain_diagnostics: true
+record_layer4_balance_diagnostics: true
+record_projection036_arrival_target_indices: [31]
+projection036_arrival_window_ms: [75.2, 75.8]
+record_layer4_inhibitory_trace_indices: [38, 40, 42]
+layer4_inhibitory_trace_window_ms: [75.0, 75.6]
+output_mode: layer4_balance_bounded
+protocol:
+  pre_match_duration_ms: 100.0
+  mismatch_duration_ms: 200.0
+  total_duration_ms: 300.0
+  dt_ms: 0.01
+  top_down_current_pA: 800.0
+  top_down_current_mode: until_cued_cell_first_event
+  comparator: {transform: top_k_binary, source_index: 40, target_count: 5}
+required_source_identity:
+  layer4_pre_events_intact_control: [39, 39]
+  layer4_post_events_intact_control: [78, 92]
+  nonspecific_post_events_intact_control: [18, 13]
+  layer5_post_events_intact_control: [285, 140]
+  layer6i_post_events_intact_control: [153, 76]
+  layer4_inhibitory_post_events_intact_control: [218, 232]
+  layer5_active_cells_intact_control: [81, 11]
+  layer6i_active_cells_intact_control: [81, 11]
+required_arrival_identity:
+  target_index: 31
+  source_set_both_arms: [38, 39, 40, 41, 42]
+  total_edge_weight_both_arms: 5.482968310784057
+  intact_first_source_set: [38, 42]
+  control_first_source_set: [40]
+  intact_first_arrival_ms: 75.38000000000002
+  control_first_arrival_ms: 75.53
+diagnostic_question: >-
+  Which of projection 026 (layer 6I excitation), projection 027 (relay
+  excitation), projection 028 (recurrent inhibition), projection 029 (gap
+  current), projection 030 (layer-4-excitatory excitation), or prior intrinsic
+  state first explains why intact flank inhibitory cells 38/42 spike before
+  central cell 40 while control reverses that order?
+decision_rule: >-
+  Require every fresh Figure-6 gate, every registered population identity, and
+  exact repetition of Artifact-686 arrival identity before interpretation.
+  Compare the native traces without fitting. Identify the earliest input or
+  state variable whose arm/cell ordering precedes the source spikes; if the
+  window is left-censored or multiple variables remain inseparable, report
+  that limitation and extend only through a separately preregistered passive
+  audit. Do not select a parameter.
+boundary: >-
+  Use all unchanged executable defaults and retained calibrated candidates.
+  No delay, weight, conductance, geometry, kinetics, intrinsic, event,
+  scheduler, comparator, duration, protocol, or score changes. No
+  original-SMART claim, promotion, freeze, or reopening of a closed family is
+  authorized.
+

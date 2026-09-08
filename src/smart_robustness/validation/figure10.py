@@ -153,6 +153,32 @@ class Figure10Projection036TargetArrivalSummary:
 
 
 @dataclass(frozen=True, slots=True)
+class Figure10Layer4InhibitorySourceTrace:
+    """Native-sample inputs and membrane state of one projection-036 source."""
+
+    source_index: int
+    window_start_from_mismatch_ms: float
+    window_end_from_mismatch_ms: float
+    times_from_mismatch_ms: tuple[float, ...]
+    soma_voltage_mV: tuple[float, ...]
+    proximal_voltage_mV: tuple[float, ...]
+    spike_detector_voltage_mV: tuple[float, ...]
+    sodium_activation: tuple[float, ...]
+    sodium_inactivation: tuple[float, ...]
+    potassium_activation: tuple[float, ...]
+    projection026_gate: tuple[float, ...]
+    projection026_current_pA: tuple[float, ...]
+    projection027_gate: tuple[float, ...]
+    projection027_current_pA: tuple[float, ...]
+    projection028_gate: tuple[float, ...]
+    projection028_current_pA: tuple[float, ...]
+    projection029_gap_current_pA: tuple[float, ...]
+    projection030_gate: tuple[float, ...]
+    projection030_current_pA: tuple[float, ...]
+    spike_times_from_mismatch_ms: tuple[float, ...]
+
+
+@dataclass(frozen=True, slots=True)
 class Figure10ConditionResult:
     """Spike evidence from one persistent pre-reset then mismatch episode."""
 
@@ -203,6 +229,9 @@ class Figure10ConditionResult:
     ] = ()
     projection036_target_arrival_summaries: tuple[
         Figure10Projection036TargetArrivalSummary, ...
+    ] = ()
+    layer4_inhibitory_source_traces: tuple[
+        Figure10Layer4InhibitorySourceTrace, ...
     ] = ()
 
     def __post_init__(self) -> None:
@@ -801,6 +830,120 @@ def summarize_layer4_target_timing(
     return tuple(summaries)
 
 
+def summarize_layer4_inhibitory_source_traces(
+    *,
+    source_indices: tuple[int, ...],
+    mismatch_start_ms: float,
+    window_start_from_mismatch_ms: float,
+    window_end_from_mismatch_ms: float,
+    state_times_ms: np.ndarray,
+    soma_voltage_mV_by_index: np.ndarray,
+    proximal_voltage_mV_by_index: np.ndarray,
+    spike_detector_voltage_mV_by_index: np.ndarray,
+    sodium_activation_by_index: np.ndarray,
+    sodium_inactivation_by_index: np.ndarray,
+    potassium_activation_by_index: np.ndarray,
+    projection026_gate_by_index: np.ndarray,
+    projection026_current_pA_by_index: np.ndarray,
+    projection027_gate_by_index: np.ndarray,
+    projection027_current_pA_by_index: np.ndarray,
+    projection028_gate_by_index: np.ndarray,
+    projection028_current_pA_by_index: np.ndarray,
+    projection029_gap_current_pA_by_index: np.ndarray,
+    projection030_gate_by_index: np.ndarray,
+    projection030_current_pA_by_index: np.ndarray,
+    spike_indices: np.ndarray,
+    spike_times_ms: np.ndarray,
+) -> tuple[Figure10Layer4InhibitorySourceTrace, ...]:
+    """Retain a bounded native-grid trace for focal projection-036 sources."""
+
+    if not source_indices or len(set(source_indices)) != len(source_indices):
+        raise ValueError("layer-4 inhibitory trace indices must be nonempty and unique")
+    if any(index < 0 or index >= 81 for index in source_indices):
+        raise ValueError("layer-4 inhibitory trace index must be between 0 and 80")
+    if window_start_from_mismatch_ms < 0 or (
+        window_end_from_mismatch_ms <= window_start_from_mismatch_ms
+    ):
+        raise ValueError("layer-4 inhibitory trace window is invalid")
+
+    times = np.asarray(state_times_ms, dtype=float)
+    if times.ndim != 1 or not np.all(np.isfinite(times)):
+        raise ValueError("layer-4 inhibitory state times must be finite and one-dimensional")
+    traces = (
+        soma_voltage_mV_by_index,
+        proximal_voltage_mV_by_index,
+        spike_detector_voltage_mV_by_index,
+        sodium_activation_by_index,
+        sodium_inactivation_by_index,
+        potassium_activation_by_index,
+        projection026_gate_by_index,
+        projection026_current_pA_by_index,
+        projection027_gate_by_index,
+        projection027_current_pA_by_index,
+        projection028_gate_by_index,
+        projection028_current_pA_by_index,
+        projection029_gap_current_pA_by_index,
+        projection030_gate_by_index,
+        projection030_current_pA_by_index,
+    )
+    arrays = tuple(np.asarray(trace, dtype=float) for trace in traces)
+    expected_shape = (81, times.size)
+    if any(trace.shape != expected_shape for trace in arrays):
+        raise ValueError(
+            "layer-4 inhibitory state traces must have shape (81, state_times)"
+        )
+    event_indices = np.asarray(spike_indices, dtype=int)
+    event_times = np.asarray(spike_times_ms, dtype=float)
+    if event_indices.shape != event_times.shape or event_indices.ndim != 1:
+        raise ValueError("layer-4 inhibitory spike arrays must match")
+
+    absolute_start = mismatch_start_ms + window_start_from_mismatch_ms
+    absolute_end = mismatch_start_ms + window_end_from_mismatch_ms
+    endpoint_tolerance_ms = 1e-9
+    window = (times >= absolute_start - endpoint_tolerance_ms) & (
+        times <= absolute_end + endpoint_tolerance_ms
+    )
+    selected_times = times[window] - mismatch_start_ms
+    if selected_times.size == 0:
+        raise ValueError("layer-4 inhibitory trace window contains no state samples")
+
+    summaries: list[Figure10Layer4InhibitorySourceTrace] = []
+    for source_index in source_indices:
+        values = tuple(tuple(float(value) for value in trace[source_index, window]) for trace in arrays)
+        source_spikes = event_times[event_indices == source_index]
+        source_spikes = source_spikes[
+            (source_spikes >= absolute_start - endpoint_tolerance_ms)
+            & (source_spikes <= absolute_end + endpoint_tolerance_ms)
+        ]
+        summaries.append(
+            Figure10Layer4InhibitorySourceTrace(
+                source_index=source_index,
+                window_start_from_mismatch_ms=window_start_from_mismatch_ms,
+                window_end_from_mismatch_ms=window_end_from_mismatch_ms,
+                times_from_mismatch_ms=tuple(float(value) for value in selected_times),
+                soma_voltage_mV=values[0],
+                proximal_voltage_mV=values[1],
+                spike_detector_voltage_mV=values[2],
+                sodium_activation=values[3],
+                sodium_inactivation=values[4],
+                potassium_activation=values[5],
+                projection026_gate=values[6],
+                projection026_current_pA=values[7],
+                projection027_gate=values[8],
+                projection027_current_pA=values[9],
+                projection028_gate=values[10],
+                projection028_current_pA=values[11],
+                projection029_gap_current_pA=values[12],
+                projection030_gate=values[13],
+                projection030_current_pA=values[14],
+                spike_times_from_mismatch_ms=tuple(
+                    float(value - mismatch_start_ms) for value in source_spikes
+                ),
+            )
+        )
+    return tuple(summaries)
+
+
 def summarize_projection036_target_arrivals(
     *,
     target_indices: tuple[int, ...],
@@ -900,6 +1043,8 @@ def run_figure10_condition(
     layer4_target_timing_gate_threshold: float = 0.1,
     record_projection036_arrival_target_indices: tuple[int, ...] = (),
     projection036_arrival_window_ms: tuple[float, float] = (75.0, 76.0),
+    record_layer4_inhibitory_trace_indices: tuple[int, ...] = (),
+    layer4_inhibitory_trace_window_ms: tuple[float, float] = (75.0, 75.6),
     conventions=None,
     dt_ms: float = 0.01,
     cpp_standalone_directory: str | Path | None = None,
@@ -1010,6 +1155,28 @@ def run_figure10_condition(
         or projection036_arrival_window_ms[1] > mismatch_duration_ms
     ):
         raise ValueError("projection-036 arrival window must lie within mismatch")
+    if not isinstance(record_layer4_inhibitory_trace_indices, tuple) or any(
+        isinstance(index, bool) or not isinstance(index, int)
+        for index in record_layer4_inhibitory_trace_indices
+    ):
+        raise TypeError("layer-4 inhibitory trace indices must be a tuple of integers")
+    if len(set(record_layer4_inhibitory_trace_indices)) != len(
+        record_layer4_inhibitory_trace_indices
+    ):
+        raise ValueError("layer-4 inhibitory trace indices must be unique")
+    if any(index < 0 or index >= 81 for index in record_layer4_inhibitory_trace_indices):
+        raise ValueError("layer-4 inhibitory trace index must be between 0 and 80")
+    if record_layer4_inhibitory_trace_indices and not record_reset_chain_diagnostics:
+        raise ValueError("layer-4 inhibitory traces require reset-chain diagnostics")
+    if record_layer4_inhibitory_trace_indices and (
+        not isinstance(layer4_inhibitory_trace_window_ms, tuple)
+        or len(layer4_inhibitory_trace_window_ms) != 2
+        or layer4_inhibitory_trace_window_ms[0] < 0
+        or layer4_inhibitory_trace_window_ms[1]
+        <= layer4_inhibitory_trace_window_ms[0]
+        or layer4_inhibitory_trace_window_ms[1] > mismatch_duration_ms
+    ):
+        raise ValueError("layer-4 inhibitory trace window must lie within mismatch")
     current_mode = TopDownCurrentMode(top_down_current_mode)
     if current_mode is TopDownCurrentMode.UNTIL_CUED_CELL_EVENT_LIMIT:
         raise ValueError("Figure 10 does not define an event-count-limited cue")
@@ -1129,9 +1296,28 @@ def run_figure10_condition(
                 else "figure10_control_layer6i_transmitter"
             ),
         )
+        layer4i_variables = ["port_000_gate", "i_port_000"]
+        if record_layer4_inhibitory_trace_indices:
+            layer4i_variables.extend(
+                (
+                    "v_soma",
+                    "v_proximal_dendrite",
+                    "spike_detector_voltage",
+                    "m_soma",
+                    "h_soma",
+                    "n_soma",
+                    "port_001_gate",
+                    "i_port_001",
+                    "port_002_gate",
+                    "i_port_002",
+                    "i_gap_000",
+                    "port_003_gate",
+                    "i_port_003",
+                )
+            )
         layer4i_state = brian.StateMonitor(
             sector.populations["layer4_inhibitory_v1"].group,
-            ("port_000_gate", "i_port_000"),
+            tuple(layer4i_variables),
             record=True,
             name=(
                 "figure10_intact_layer4i_projection026"
@@ -1390,6 +1576,9 @@ def run_figure10_condition(
     projection036_target_arrival_summaries: tuple[
         Figure10Projection036TargetArrivalSummary, ...
     ] = ()
+    layer4_inhibitory_source_traces: tuple[
+        Figure10Layer4InhibitorySourceTrace, ...
+    ] = ()
     if record_layer4_balance_diagnostics:
         projection038_gate, projection038_current, projection038_trace = (
             _single_projection_summary(layer4e_inhibitory_state, "port_003")
@@ -1526,6 +1715,50 @@ def run_figure10_condition(
                 )
             )
 
+    if record_layer4_inhibitory_trace_indices:
+        assert layer4i_state is not None
+        assert layer4_inhibitory is not None
+        layer4_inhibitory_source_traces = summarize_layer4_inhibitory_source_traces(
+            source_indices=record_layer4_inhibitory_trace_indices,
+            mismatch_start_ms=pre_match_duration_ms,
+            window_start_from_mismatch_ms=float(
+                layer4_inhibitory_trace_window_ms[0]
+            ),
+            window_end_from_mismatch_ms=float(layer4_inhibitory_trace_window_ms[1]),
+            state_times_ms=np.asarray(layer4i_state.t / brian.ms),
+            soma_voltage_mV_by_index=np.asarray(layer4i_state.v_soma / brian.mV),
+            proximal_voltage_mV_by_index=np.asarray(
+                layer4i_state.v_proximal_dendrite / brian.mV
+            ),
+            spike_detector_voltage_mV_by_index=np.asarray(
+                layer4i_state.spike_detector_voltage / brian.mV
+            ),
+            sodium_activation_by_index=np.asarray(layer4i_state.m_soma),
+            sodium_inactivation_by_index=np.asarray(layer4i_state.h_soma),
+            potassium_activation_by_index=np.asarray(layer4i_state.n_soma),
+            projection026_gate_by_index=np.asarray(layer4i_state.port_000_gate),
+            projection026_current_pA_by_index=np.asarray(
+                layer4i_state.i_port_000 / brian.pA
+            ),
+            projection027_gate_by_index=np.asarray(layer4i_state.port_001_gate),
+            projection027_current_pA_by_index=np.asarray(
+                layer4i_state.i_port_001 / brian.pA
+            ),
+            projection028_gate_by_index=np.asarray(layer4i_state.port_002_gate),
+            projection028_current_pA_by_index=np.asarray(
+                layer4i_state.i_port_002 / brian.pA
+            ),
+            projection029_gap_current_pA_by_index=np.asarray(
+                layer4i_state.i_gap_000 / brian.pA
+            ),
+            projection030_gate_by_index=np.asarray(layer4i_state.port_003_gate),
+            projection030_current_pA_by_index=np.asarray(
+                layer4i_state.i_port_003 / brian.pA
+            ),
+            spike_indices=np.asarray(layer4_inhibitory.i),
+            spike_times_ms=np.asarray(layer4_inhibitory.t / brian.ms),
+        )
+
     return Figure10ConditionResult(
         pre_match_duration_ms=pre_match_duration_ms,
         mismatch_duration_ms=mismatch_duration_ms,
@@ -1596,4 +1829,5 @@ def run_figure10_condition(
         projection036_target_arrival_summaries=(
             projection036_target_arrival_summaries
         ),
+        layer4_inhibitory_source_traces=layer4_inhibitory_source_traces,
     )

@@ -10471,6 +10471,46 @@ def test_projection036_source_arrival_audit_is_hash_pinned_and_passive() -> None
 
     for path_key, hash_key in (
         ("profile", "profile_sha256"),
+        ("runtime", "runtime_sha256"),
+        ("source_result", "source_result_sha256"),
+        ("prior_assessment", "prior_assessment_sha256"),
+    ):
+        assert hashlib.sha256(
+            (ROOT / registration[path_key]).read_bytes()
+        ).hexdigest() == registration[hash_key]
+    assert registration["harness_sha256"] == (
+        "03e5d2a256ba55f450a1a21a87d991e65d634a199bec63d6b16c4395a36f9cee"
+    )
+    assert registration["script_sha256"] == (
+        "757beafe9436d6fe714a173d57b28a0e828f89d0979704a82a092820e2b75ac9"
+    )
+    assert implementation["implementation"]["behavior_change"] == "none"
+    assert registration["persistent_projection_delays"] == []
+    assert registration["record_projection036_arrival_target_indices"] == [31]
+    assert registration["projection036_arrival_window_ms"] == [75.2, 75.8]
+    assert registration["required_source_identity"][
+        "layer4_post_events_intact_control"
+    ] == [78, 92]
+    assert "Do not select a parameter" in registration["decision_rule"]
+    assert "No original-SMART claim" in registration["boundary"]
+
+
+def test_layer4i_source_phase_audit_is_hash_pinned_complete_and_passive() -> None:
+    implementation = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-layer4i-source-phase-monitor-688.yaml"
+        ).read_text()
+    )
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-layer4i-source-phase-registration-689.yaml"
+        ).read_text()
+    )
+
+    for path_key, hash_key in (
+        ("profile", "profile_sha256"),
         ("harness", "harness_sha256"),
         ("runtime", "runtime_sha256"),
         ("script", "script_sha256"),
@@ -10481,12 +10521,19 @@ def test_projection036_source_arrival_audit_is_hash_pinned_and_passive() -> None
             (ROOT / registration[path_key]).read_bytes()
         ).hexdigest() == registration[hash_key]
     assert implementation["implementation"]["behavior_change"] == "none"
+    assert set(implementation["port_identity"].values()) == {
+        f"modeldb112923.projection.{index:03d}" for index in range(26, 31)
+    }
     assert registration["persistent_projection_delays"] == []
-    assert registration["record_projection036_arrival_target_indices"] == [31]
-    assert registration["projection036_arrival_window_ms"] == [75.2, 75.8]
-    assert registration["required_source_identity"][
-        "layer4_post_events_intact_control"
-    ] == [78, 92]
+    assert registration["record_layer4_inhibitory_trace_indices"] == [38, 40, 42]
+    assert registration["layer4_inhibitory_trace_window_ms"] == [75.0, 75.6]
+    assert registration["required_arrival_identity"]["source_set_both_arms"] == [
+        38,
+        39,
+        40,
+        41,
+        42,
+    ]
     assert "Do not select a parameter" in registration["decision_rule"]
     assert "No original-SMART claim" in registration["boundary"]
 

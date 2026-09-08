@@ -170,6 +170,7 @@ class FirstOrderRuntimeConventions:
     ring_kernel_convention: str = "center_excluded_gaussian"
     corticoreticular_ring_kernel_convention: str | None = None
     corticoreticular_ring_peak_radius_scale: float | None = None
+    projection036_ring_kernel_convention: str | None = None
     corticoreticular_ampa_delay_ms: float | None = None
     gaussian_learning_bounds_convention: str = "projection_level"
     postsynaptic_depression_scale_convention: str = "local_learning_bounds"
@@ -255,6 +256,8 @@ class FirstOrderRuntimeConventions:
             values.pop("corticoreticular_ring_kernel_convention")
         if values["corticoreticular_ring_peak_radius_scale"] is None:
             values.pop("corticoreticular_ring_peak_radius_scale")
+        if values["projection036_ring_kernel_convention"] is None:
+            values.pop("projection036_ring_kernel_convention")
         if values["corticoreticular_ampa_delay_ms"] is None:
             values.pop("corticoreticular_ampa_delay_ms")
         if values["nonspecific_distal_gaba_source_convention"] == (
@@ -349,6 +352,11 @@ def _ring_kernel_convention_for_record(
         and conventions.corticoreticular_ring_kernel_convention is not None
     ):
         return conventions.corticoreticular_ring_kernel_convention
+    if (
+        record_id == "modeldb112923.projection.036"
+        and conventions.projection036_ring_kernel_convention is not None
+    ):
+        return conventions.projection036_ring_kernel_convention
     return conventions.ring_kernel_convention
 
 

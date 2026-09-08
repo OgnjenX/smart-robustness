@@ -3735,3 +3735,11 @@ cells, and projection 036 into layer-4 excitatory cells. Registration 609
 requires exact repetition of Artifact 606 before identifying the first stage
 that loses the intact/control difference. Layer-6I epsilon-1 depletion and
 400-ms recovery are measured as fixed source values, not calibration knobs.
+
+The current registered endpoint is Artifact 653. It tests the sole remaining
+parameter-free interpretation of projection 036's unresolved `ring=true`
+geometry: a radial annulus whose peak radius is fixed by the serialized sigma.
+The implementation is projection-specific and default-off, so no other ring or
+default SMART convention changes. The connected result has not yet been run;
+Figure 10, complete original SMART reproduction, and baseline freezing remain
+failed pending the preregistered intact/control pair.

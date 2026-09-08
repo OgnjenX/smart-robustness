@@ -239,6 +239,37 @@ def test_corticoreticular_ring_override_is_projection_specific() -> None:
     )
 
 
+def test_projection036_ring_override_is_projection_specific() -> None:
+    conventions = FirstOrderRuntimeConventions(
+        projection036_ring_kernel_convention="radial_annulus"
+    )
+    assert (
+        _ring_kernel_convention_for_record(
+            "modeldb112923.projection.036", conventions=conventions
+        )
+        == "radial_annulus"
+    )
+    for projection_id in (
+        "modeldb112923.projection.008",
+        "modeldb112923.projection.009",
+        "modeldb112923.projection.012",
+    ):
+        assert (
+            _ring_kernel_convention_for_record(
+                projection_id, conventions=conventions
+            )
+            == "center_excluded_gaussian"
+        )
+
+
+def test_projection036_ring_override_changes_runtime_fingerprint() -> None:
+    classic = FirstOrderRuntimeConventions()
+    radial = FirstOrderRuntimeConventions(
+        projection036_ring_kernel_convention="radial_annulus"
+    )
+    assert radial.fingerprint != classic.fingerprint
+
+
 def test_corticoreticular_ring_radius_override_is_projection_specific() -> None:
     conventions = FirstOrderRuntimeConventions(
         corticoreticular_ring_kernel_convention="radial_annulus",

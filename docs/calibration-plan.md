@@ -1913,3 +1913,14 @@ peak radius, retains the same 80 edges, and has sum 37.35. It is the sole
 discrete alternative authorized for a projection-036-only endpoint; all other
 rings must remain unchanged. Implement and preregister one scale-8 causal pair
 with fresh Figure 6. Do not tune radius or weight from its result.
+
+Artifacts 652--653 implement and preregister that endpoint. The new runtime
+field is default-off and dispatches the radial-annulus kernel only for
+projection 036; tests verify that projections 008, 009, and 012 remain under
+the center-excluded Gaussian convention. The annulus radius remains exactly
+one serialized sigma and neither edge count nor any numerical model parameter
+changes. Registration 653 pins one 300-ms scale-8 intact/control pair, fresh
+Figure 6, the unchanged four-gate reset score, and bounded layer-4 balance
+readouts. Any failed reset gate closes this topology route; a complete pass is
+only a mixed-source calibrated candidate pending confirmation and spectral
+validation, never recovered original simulator semantics by itself.

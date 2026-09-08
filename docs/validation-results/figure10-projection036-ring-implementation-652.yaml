@@ -1,0 +1,33 @@
+schema_version: 1
+id: figure10-projection036-ring-implementation-652
+date: '2026-09-08'
+status: implementation-ready-projection-specific-override-tests-pass
+classification: projection036-parameter-free-ring-topology-sensitivity
+authorization: docs/validation-results/figure10-projection036-ring-source-audit-651.yaml
+runtime: src/smart_robustness/classic_sector.py
+runtime_sha256: ebdf48f0138803ab50b1dec2ef87817b4c537e4da490a088b9df6bdcb9d119a1
+implementation:
+  runtime_field: projection036_ring_kernel_convention
+  selected_value: radial_annulus
+  affected_projection: modeldb112923.projection.036
+  unaffected_ring_projections:
+  - modeldb112923.projection.008
+  - modeldb112923.projection.009
+  - modeldb112923.projection.012
+  default_behavior_changed: false
+  radius_scale: 1.0
+  radius_source: serialized_sigma
+  weight_changed: false
+  edge_count_changed: false
+verification:
+  projection_specificity_test: pass
+  runtime_fingerprint_test: pass
+  focused_tests: 2-passed
+  lint: pass
+boundary: >-
+  The new convention is default-off and can affect only projection 036. It
+  selects the already implemented parameter-free radial-annulus kernel whose
+  peak radius is fixed by the serialized sigma. It does not alter weight,
+  sigma, edge count, receptor kinetics, delay, target compartment, any other
+  ring projection, or the default reconstruction. This is an effective
+  mixed-source sensitivity, not recovered legacy KInNeSS semantics.

@@ -1,0 +1,60 @@
+schema_version: 1
+id: figure10-projection036-ring-registration-653
+date: '2026-09-08'
+status: registered-before-execution-one-projection036-radial-annulus-pair
+classification: figure10-projection036-parameter-free-ring-topology-endpoint
+authorization: docs/validation-results/figure10-projection036-ring-source-audit-651.yaml
+authorization_sha256: d8b81c73d351b8311baaf53ee78948c1279f149d1ecbdd85ef4883cc4f23cd4f
+implementation: docs/validation-results/figure10-projection036-ring-implementation-652.yaml
+profile: configs/calibration/figure7_learned_coincidence_effective_t_pair_v1.yaml
+profile_sha256: 4b6aa0bdf4fb844e428fb330f34970900cc8bc741183b2d8e6e73789cba0b30f
+harness: src/smart_robustness/validation/figure10.py
+harness_sha256: 1e061546e8d928cd7c7d959cb6fe11218c7c9165d7d3ce2d8536898fac1bb367
+runtime: src/smart_robustness/classic_sector.py
+runtime_sha256: ebdf48f0138803ab50b1dec2ef87817b4c537e4da490a088b9df6bdcb9d119a1
+script: scripts/run_figure10_calibrated_reset_pair.py
+script_sha256: 71bc3db5bbc989baf1e1157791b57f6dbc18008f4eaf19950868870eff775390
+runtime_fingerprint: 3606253c47ccd0e628030179889f6fa3f01ca7b8438a174ad6ea785596d64c5c
+result_id: figure10-projection036-ring-pair-654
+result: docs/validation-results/figure10-projection036-ring-pair-654.yaml
+assessment: docs/validation-results/figure10-projection036-ring-assessment-655.yaml
+runtime_overrides:
+  projection036_ring_kernel_convention: radial_annulus
+persistent_projection_scales:
+- {projection_id: modeldb112923.projection.008, scale: 0.75}
+- {projection_id: modeldb112923.projection.011, scale: 0.9375}
+- {projection_id: modeldb112923.projection.025, scale: 8.0}
+nonspecific_t_scale: 0.1875
+record_layer6i_diagnostics: false
+record_reset_chain_diagnostics: true
+record_layer4_balance_diagnostics: true
+output_mode: layer4_balance_bounded
+balance_bin_width_ms: 10.0
+protocol:
+  pre_match_duration_ms: 100.0
+  mismatch_duration_ms: 200.0
+  total_duration_ms: 300.0
+  dt_ms: 0.01
+  top_down_current_pA: 800.0
+  top_down_current_mode: until_cued_cell_first_event
+  comparator: {transform: top_k_binary, source_index: 40, target_count: 5}
+required_prerequisites:
+  figure6_all_gates: true
+  projection025_scale: 8.0
+  projection036_kernel: radial_annulus
+  reset_control: disconnect-projections-017-and-018-at-mismatch-onset
+decision_rule: >-
+  Fresh Figure 6 is a hard prerequisite. Report the complete existing Figure-10
+  reset assessment and the 10-ms layer-4 balance series. A reset reproduction
+  requires all four preregistered gates: pre-reset winner, reset chain, winner
+  suppression, and alternative release. Do not alter the score after inspecting
+  the output. If any gate fails, close this topology endpoint. If all gates pass,
+  retain the result only as a mixed-source calibrated candidate requiring an
+  unchanged confirmation and later spectral validation.
+boundary: >-
+  Execute one 300-ms intact/control pair at the sole parameter-free projection-
+  036 radial-annulus endpoint. Do not tune or refine radius, weight, sigma,
+  projection-025 scale, projection-038 strength, kinetics, intrinsic parameters,
+  event rule, protocol, comparator, duration, or score. Every other ring remains
+  center-excluded Gaussian. No source-recovery claim, original-SMART claim,
+  baseline promotion, or freeze is authorized by this endpoint alone.

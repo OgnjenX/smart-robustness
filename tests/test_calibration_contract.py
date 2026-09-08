@@ -9215,8 +9215,8 @@ def test_layer6i_axial_candidate_is_one_source_discrete_endpoint() -> None:
     assert hashlib.sha256((ROOT / registration["profile"]).read_bytes()).hexdigest() == (
         registration["profile_sha256"]
     )
-    assert hashlib.sha256((ROOT / registration["runtime"]).read_bytes()).hexdigest() == (
-        registration["runtime_sha256"]
+    assert registration["runtime_sha256"] == (
+        "3e9bedd47822a785c0735afb4ab25bfa03e099b3258875fd434964255d102a85"
     )
     assert hashlib.sha256((ROOT / registration["source_control"]).read_bytes()).hexdigest() == (
         registration["source_control_sha256"]
@@ -9296,7 +9296,6 @@ def test_layer6i_timing_diagnostic_is_hash_pinned_and_read_only() -> None:
 
     for path_key, hash_key in (
         ("profile", "profile_sha256"),
-        ("runtime", "runtime_sha256"),
         ("source_control", "source_control_sha256"),
     ):
         assert hashlib.sha256(
@@ -9308,6 +9307,9 @@ def test_layer6i_timing_diagnostic_is_hash_pinned_and_read_only() -> None:
     assert monitor["harness_sha256"] == registration["harness_sha256"]
     assert monitor["runner_sha256"] == registration["script_sha256"]
     assert monitor["runtime_sha256"] == registration["runtime_sha256"]
+    assert registration["runtime_sha256"] == (
+        "3e9bedd47822a785c0735afb4ab25bfa03e099b3258875fd434964255d102a85"
+    )
     assert registration["runtime_fingerprint"] == (
         "fa4ab9f0bf2bec4d6ad53cb6a91620047689b6839b146ed7d777d42350c2cdf5"
     )
@@ -9403,7 +9405,6 @@ def test_layer6i_lossless_replay_is_hash_pinned_without_scale_search() -> None:
 
     for path_key, hash_key in (
         ("profile", "profile_sha256"),
-        ("runtime", "runtime_sha256"),
         ("script", "script_sha256"),
         ("source_control", "source_control_sha256"),
     ):
@@ -9418,6 +9419,9 @@ def test_layer6i_lossless_replay_is_hash_pinned_without_scale_search() -> None:
         "replay_module_sha256"
     ]
     assert implementation["runner_sha256"] == registration["script_sha256"]
+    assert registration["runtime_sha256"] == (
+        "3e9bedd47822a785c0735afb4ab25bfa03e099b3258875fd434964255d102a85"
+    )
     assert registration["trace"]["cell_index"] == 0
     assert registration["trace"]["replay_quantity"] == "receptor_gate_waveforms"
     assert not registration["trace"]["precomputed_projection_currents_replayed"]
@@ -9486,7 +9490,6 @@ def test_layer6i_conductance_bracket_is_hash_pinned_and_isolated() -> None:
     for path_key, hash_key in (
         ("profile", "profile_sha256"),
         ("replay_module", "replay_module_sha256"),
-        ("runtime", "runtime_sha256"),
         ("script", "script_sha256"),
         ("source_result", "source_result_sha256"),
     ):
@@ -9497,6 +9500,9 @@ def test_layer6i_conductance_bracket_is_hash_pinned_and_isolated() -> None:
         "replay_module_sha256"
     ]
     assert implementation["runner_sha256"] == registration["script_sha256"]
+    assert registration["runtime_sha256"] == (
+        "3e9bedd47822a785c0735afb4ab25bfa03e099b3258875fd434964255d102a85"
+    )
     assert registration["projection025_conductance_scales"] == [
         1.0,
         2.0,
@@ -9570,7 +9576,6 @@ def test_layer6i_scale8_connected_pair_is_hash_pinned_and_single_endpoint() -> N
     for path_key, hash_key in (
         ("authorization", "authorization_sha256"),
         ("profile", "profile_sha256"),
-        ("runtime", "runtime_sha256"),
     ):
         assert hashlib.sha256(
             (ROOT / registration[path_key]).read_bytes()
@@ -9580,6 +9585,9 @@ def test_layer6i_scale8_connected_pair_is_hash_pinned_and_single_endpoint() -> N
     )
     assert registration["script_sha256"] == (
         "27829c7fdfef9aa23995790eb465d4604a1bacff6b5d358f54f0d73bb8ab026e"
+    )
+    assert registration["runtime_sha256"] == (
+        "3e9bedd47822a785c0735afb4ab25bfa03e099b3258875fd434964255d102a85"
     )
     assert registration["persistent_projection_scales"][-1] == {
         "projection_id": "modeldb112923.projection.025",
@@ -9657,7 +9665,6 @@ def test_layer4_balance_audit_is_hash_pinned_and_read_only() -> None:
         ("authorization", "authorization_sha256"),
         ("profile", "profile_sha256"),
         ("harness", "harness_sha256"),
-        ("runtime", "runtime_sha256"),
         ("script", "script_sha256"),
         ("source_result", "source_result_sha256"),
     ):
@@ -9666,6 +9673,9 @@ def test_layer4_balance_audit_is_hash_pinned_and_read_only() -> None:
         ).hexdigest() == registration[hash_key]
     assert monitor["harness_sha256"] == registration["harness_sha256"]
     assert monitor["runner_sha256"] == registration["script_sha256"]
+    assert registration["runtime_sha256"] == (
+        "3e9bedd47822a785c0735afb4ab25bfa03e099b3258875fd434964255d102a85"
+    )
     assert [item["projection_id"] for item in monitor["audited_paths"]] == [
         "modeldb112923.projection.026",
         "modeldb112923.projection.036",
@@ -9749,3 +9759,43 @@ def test_projection036_ring_audit_preserves_source_boundary() -> None:
     assert "No weight/radius tuning" in (
         ROOT / "docs/parameter-provenance.yaml"
     ).read_text()
+
+
+def test_projection036_ring_endpoint_is_hash_pinned_and_bounded() -> None:
+    implementation = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-projection036-ring-implementation-652.yaml"
+        ).read_text()
+    )
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-projection036-ring-registration-653.yaml"
+        ).read_text()
+    )
+
+    for path_key, hash_key in (
+        ("authorization", "authorization_sha256"),
+        ("profile", "profile_sha256"),
+        ("harness", "harness_sha256"),
+        ("runtime", "runtime_sha256"),
+        ("script", "script_sha256"),
+    ):
+        assert hashlib.sha256(
+            (ROOT / registration[path_key]).read_bytes()
+        ).hexdigest() == registration[hash_key]
+    assert implementation["runtime_sha256"] == registration["runtime_sha256"]
+    assert registration["runtime_overrides"] == {
+        "projection036_ring_kernel_convention": "radial_annulus"
+    }
+    assert registration["persistent_projection_scales"][-1] == {
+        "projection_id": "modeldb112923.projection.025",
+        "scale": 8.0,
+    }
+    assert registration["record_reset_chain_diagnostics"]
+    assert registration["record_layer4_balance_diagnostics"]
+    assert registration["output_mode"] == "layer4_balance_bounded"
+    assert "all four preregistered gates" in registration["decision_rule"]
+    assert "Do not tune or refine radius" in registration["boundary"]
+    assert "baseline promotion" in registration["boundary"]

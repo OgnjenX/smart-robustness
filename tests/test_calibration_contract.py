@@ -25,12 +25,8 @@ GAUSSIAN_VARIANCE_PROFILE_PATH = (
 FIGURE8_VOLTAGE_AUDIT_PATH = (
     ROOT / "docs/validation-results/figure8-voltage-observable-audit-124.yaml"
 )
-FIGURE6_RELAY_BALANCE_PATH = (
-    ROOT / "docs/validation-results/figure6-relay-current-balance-125.yaml"
-)
-FIGURE6_RELAY_SCREEN_PATH = (
-    ROOT / "docs/validation-results/figure6-relay-survivor-screen-126.yaml"
-)
+FIGURE6_RELAY_BALANCE_PATH = ROOT / "docs/validation-results/figure6-relay-current-balance-125.yaml"
+FIGURE6_RELAY_SCREEN_PATH = ROOT / "docs/validation-results/figure6-relay-survivor-screen-126.yaml"
 FIGURE6_RELAY_EQUILIBRATION_PATH = (
     ROOT / "docs/validation-results/figure6-relay-equilibration-127.yaml"
 )
@@ -121,16 +117,12 @@ FIGURE7_TRN_POTASSIUM_SCREEN_PATH = (
 FIGURE7_TRN_CALCIUM_SCREEN_PATH = (
     ROOT / "docs/validation-results/figure7-trn-calcium-source-screen-167.yaml"
 )
-FIGURE7_TRN_CALCIUM_PROFILE_PATH = (
-    ROOT / "configs/calibration/figure7_trn_calcium_reversal_v1.yaml"
-)
+FIGURE7_TRN_CALCIUM_PROFILE_PATH = ROOT / "configs/calibration/figure7_trn_calcium_reversal_v1.yaml"
 FIGURE7_TRN_CALCIUM_PAIR_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-trn-calcium-reversal-simultaneous-pair-168.yaml"
+    ROOT / "docs/validation-results/figure7-trn-calcium-reversal-simultaneous-pair-168.yaml"
 )
 FIGURE7_TRN_DENDRITIC_CALCIUM_SCREEN_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-trn-dendritic-calcium-source-screen-169.yaml"
+    ROOT / "docs/validation-results/figure7-trn-dendritic-calcium-source-screen-169.yaml"
 )
 FIGURE7_TRN_DENSITY_GRID_PROFILE_PATH = (
     ROOT / "configs/calibration/trn_dendritic_density_behavior_grid_v1.yaml"
@@ -166,8 +158,7 @@ FIGURE7_TRN_DENSITY_EVENT_OFFSET_PROFILE_PATH = (
     ROOT / "configs/calibration/trn_density_event_offset_cross_v1.yaml"
 )
 FIGURE7_TRN_DENSITY_EVENT_OFFSET_CUE_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-trn-density-event-offset-cue-grid-177.yaml"
+    ROOT / "docs/validation-results/figure7-trn-density-event-offset-cue-grid-177.yaml"
 )
 FIGURE7_TRN_EVENT_BLEND_PROFILE_PATH = (
     ROOT / "configs/calibration/trn_soma_proximal_event_blend_v1.yaml"
@@ -206,8 +197,7 @@ FIGURE7_NONSPECIFIC_EVENT_BLEND_MISMATCH_PATH = (
     ROOT / "docs/validation-results/figure7-nonspecific-blend-mismatch-grid-186.yaml"
 )
 FIGURE7_NONSPECIFIC_EVENT_BLEND_COMPARISON_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-nonspecific-blend-match-comparison-187.yaml"
+    ROOT / "docs/validation-results/figure7-nonspecific-blend-match-comparison-187.yaml"
 )
 FIGURE7_FEEDBACK_ARRIVAL_AUDIT_PATH = (
     ROOT / "docs/validation-results/figure7-feedback-arrival-order-audit-188.yaml"
@@ -216,12 +206,10 @@ FIGURE7_FEEDBACK_ARRIVAL_GRID_PATH = (
     ROOT / "docs/validation-results/figure7-feedback-arrival-alignment-grid-189.yaml"
 )
 FIGURE7_TRN_BLEND_ARRIVAL_MATCH_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-trn-event-blend-arrival-match-grid-190.yaml"
+    ROOT / "docs/validation-results/figure7-trn-event-blend-arrival-match-grid-190.yaml"
 )
 FIGURE7_TRN_BLEND_ARRIVAL_MISMATCH_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-trn-event-blend-arrival-mismatch-191.yaml"
+    ROOT / "docs/validation-results/figure7-trn-event-blend-arrival-mismatch-191.yaml"
 )
 FIGURE7_INHIBITORY_ARRIVAL_PATH = (
     ROOT / "docs/validation-results/figure7-inhibitory-arrival-alignment-192.yaml"
@@ -260,8 +248,7 @@ FIGURE7_TRN_DETECTOR_HYSTERESIS_STAGE1_PATH = (
     ROOT / "docs/validation-results/figure7-trn-detector-hysteresis-stage1-200.yaml"
 )
 FIGURE6_TRN_DETECTOR_HYSTERESIS_PREREQUISITE_PATH = (
-    ROOT
-    / "docs/validation-results/figure6-trn-detector-hysteresis-prerequisite-201.yaml"
+    ROOT / "docs/validation-results/figure6-trn-detector-hysteresis-prerequisite-201.yaml"
 )
 FIGURE6_TRN_GABA_TRANSFER_GRID_PATH = (
     ROOT / "docs/validation-results/figure6-trn-gaba-transfer-grid-202.yaml"
@@ -273,32 +260,25 @@ FIGURE7_TRN_GABA_TRANSFER_PAIR_PATH = (
     ROOT / "docs/validation-results/figure7-trn-gaba-transfer-pair-204.yaml"
 )
 FIGURE6_TRN_GABA_COMPARTMENT_SOURCE_PATH = (
-    ROOT
-    / "docs/validation-results/figure6-trn-gaba-compartment-source-endpoint-205.yaml"
+    ROOT / "docs/validation-results/figure6-trn-gaba-compartment-source-endpoint-205.yaml"
 )
 FIGURE6_TRN_GABA_COMPARTMENT_INTERMEDIATE_PATH = (
-    ROOT
-    / "docs/validation-results/figure6-trn-gaba-compartment-intermediate-grid-206.yaml"
+    ROOT / "docs/validation-results/figure6-trn-gaba-compartment-intermediate-grid-206.yaml"
 )
 FIGURE7_TRN_GABA_COMPARTMENT_MATCH_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-trn-gaba-compartment-match-207.yaml"
+    ROOT / "docs/validation-results/figure7-trn-gaba-compartment-match-207.yaml"
 )
 FIGURE7_TRN_GABA_COMPARTMENT_PAIR_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-trn-gaba-compartment-pair-208.yaml"
+    ROOT / "docs/validation-results/figure7-trn-gaba-compartment-pair-208.yaml"
 )
 FIGURE6_PROJECTION022_SOURCE_RESOLUTION_PATH = (
-    ROOT
-    / "docs/validation-results/figure6-projection022-source-resolution-209.yaml"
+    ROOT / "docs/validation-results/figure6-projection022-source-resolution-209.yaml"
 )
 FIGURE7_PROJECTION022_SOURCE_RESOLUTION_MATCH_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-projection022-source-resolution-match-210.yaml"
+    ROOT / "docs/validation-results/figure7-projection022-source-resolution-match-210.yaml"
 )
 FIGURE7_PROJECTION022_SOURCE_RESOLUTION_PAIR_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-projection022-source-resolution-pair-211.yaml"
+    ROOT / "docs/validation-results/figure7-projection022-source-resolution-pair-211.yaml"
 )
 FIGURE6_PROJECTION022_DISTAL002_PATH = (
     ROOT / "docs/validation-results/figure6-projection022-distal002-212.yaml"
@@ -310,23 +290,19 @@ FIGURE7_PROJECTION022_DISTAL002_PAIR_PATH = (
     ROOT / "docs/validation-results/figure7-projection022-distal002-pair-214.yaml"
 )
 FIGURE7_PROJECTION022_DISTAL002_FRESH_MATCH_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-projection022-distal002-fresh-match-215.yaml"
+    ROOT / "docs/validation-results/figure7-projection022-distal002-fresh-match-215.yaml"
 )
 FIGURE7_PROJECTION022_DISTAL002_FRESH_PAIR_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-projection022-distal002-fresh-pair-216.yaml"
+    ROOT / "docs/validation-results/figure7-projection022-distal002-fresh-pair-216.yaml"
 )
 FIGURE6_PROJECTION022_DISTAL003_PATH = (
     ROOT / "docs/validation-results/figure6-projection022-distal003-217.yaml"
 )
 FIGURE7_PROJECTION022_DISTAL003_FRESH_MATCH_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-projection022-distal003-fresh-match-218.yaml"
+    ROOT / "docs/validation-results/figure7-projection022-distal003-fresh-match-218.yaml"
 )
 FIGURE7_PROJECTION022_DISTAL003_FRESH_PAIR_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-projection022-distal003-fresh-pair-219.yaml"
+    ROOT / "docs/validation-results/figure7-projection022-distal003-fresh-pair-219.yaml"
 )
 KINNESS_RING_SOURCE_RECOVERY_PATH = (
     ROOT / "docs/validation-results/kinness-ring-source-recovery-220.yaml"
@@ -344,8 +320,7 @@ FIGURE7_RENDERED_TARGET_CORRECTION_PATH = (
     ROOT / "docs/validation-results/figure7-rendered-target-correction-223.yaml"
 )
 FIGURE7_TOP_DOWN_CURRENT_REGISTRATION_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-top-down-current-reopen-registration-224.yaml"
+    ROOT / "docs/validation-results/figure7-top-down-current-reopen-registration-224.yaml"
 )
 FIGURE7_TOP_DOWN_CURRENT_MATCH_PROFILE_PATH = (
     ROOT / "configs/calibration/figure7_top_down_current_match_reopen_v1.yaml"
@@ -354,8 +329,7 @@ FIGURE7_TOP_DOWN_CURRENT_MATCH_RESULT_PATH = (
     ROOT / "docs/validation-results/figure7-top-down-current-match-reopen-225.yaml"
 )
 FIGURE7_TOP_DOWN_CURRENT_MISMATCH_REGISTRATION_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-top-down-current-800-mismatch-registration-226.yaml"
+    ROOT / "docs/validation-results/figure7-top-down-current-800-mismatch-registration-226.yaml"
 )
 FIGURE7_TOP_DOWN_CURRENT_PAIR_PROFILE_PATH = (
     ROOT / "configs/calibration/figure7_top_down_current_800_fresh_pair_v1.yaml"
@@ -373,8 +347,7 @@ FIGURE7_ONE_EVENT_CURRENT_MATCH_RESULT_PATH = (
     ROOT / "docs/validation-results/figure7-one-event-current-match-229.yaml"
 )
 FIGURE7_ONE_EVENT_CURRENT_MISMATCH_REGISTRATION_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-one-event-current-mismatch-registration-230.yaml"
+    ROOT / "docs/validation-results/figure7-one-event-current-mismatch-registration-230.yaml"
 )
 FIGURE7_ONE_EVENT_CURRENT_PAIR_PROFILE_PATH = (
     ROOT / "configs/calibration/figure7_one_event_current_fresh_pair_v1.yaml"
@@ -389,20 +362,17 @@ FIGURE7_SELECTED_CATEGORY_MATCH_PROFILE_PATH = (
     ROOT / "configs/calibration/figure7_selected_category_routing_match_v1.yaml"
 )
 FIGURE7_SELECTED_CATEGORY_MATCH_RESULT_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-selected-category-routing-match-233.yaml"
+    ROOT / "docs/validation-results/figure7-selected-category-routing-match-233.yaml"
 )
 FIGURE7_SELECTED_CATEGORY_MISMATCH_REGISTRATION_PATH = (
     ROOT
     / "docs/validation-results/figure7-selected-category-routing-mismatch-registration-234.yaml"
 )
 FIGURE7_SELECTED_CATEGORY_PAIR_PROFILE_PATH = (
-    ROOT
-    / "configs/calibration/figure7_selected_category_routing_fresh_pair_v1.yaml"
+    ROOT / "configs/calibration/figure7_selected_category_routing_fresh_pair_v1.yaml"
 )
 FIGURE7_SELECTED_CATEGORY_PAIR_RESULT_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-selected-category-routing-fresh-pair-235.yaml"
+    ROOT / "docs/validation-results/figure7-selected-category-routing-fresh-pair-235.yaml"
 )
 SPIKE_EVENT_EQUATION_VISUAL_AUDIT_PATH = (
     ROOT / "docs/validation-results/spike-event-equation-visual-audit-236.yaml"
@@ -411,54 +381,44 @@ FIGURE7_RECEPTOR_ALIGNMENT_PROFILE_PATH = (
     ROOT / "configs/calibration/figure7_receptor_arrival_aligned_match_v1.yaml"
 )
 FIGURE7_RECEPTOR_ALIGNMENT_REGISTRATION_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-receptor-arrival-alignment-registration-237.yaml"
+    ROOT / "docs/validation-results/figure7-receptor-arrival-alignment-registration-237.yaml"
 )
 FIGURE7_RECEPTOR_ALIGNMENT_RESULT_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-receptor-arrival-aligned-match-238.yaml"
+    ROOT / "docs/validation-results/figure7-receptor-arrival-aligned-match-238.yaml"
 )
 FIGURE7_ALIGNED_HEADROOM_PROFILE_PATH = (
     ROOT / "configs/calibration/figure7_aligned_on_center_headroom_v1.yaml"
 )
 FIGURE7_ALIGNED_HEADROOM_REGISTRATION_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-aligned-on-center-headroom-registration-239.yaml"
+    ROOT / "docs/validation-results/figure7-aligned-on-center-headroom-registration-239.yaml"
 )
 FIGURE7_ALIGNED_HEADROOM_SCREEN_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-aligned-on-center-headroom-screen-240.yaml"
+    ROOT / "docs/validation-results/figure7-aligned-on-center-headroom-screen-240.yaml"
 )
 FIGURE7_RECEPTOR_PEAK_PROFILE_PATH = (
-    ROOT
-    / "configs/calibration/figure7_receptor_peak_aligned_headroom_match_v1.yaml"
+    ROOT / "configs/calibration/figure7_receptor_peak_aligned_headroom_match_v1.yaml"
 )
 FIGURE7_RECEPTOR_PEAK_REGISTRATION_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-receptor-peak-aligned-headroom-registration-296.yaml"
+    ROOT / "docs/validation-results/figure7-receptor-peak-aligned-headroom-registration-296.yaml"
 )
 FIGURE7_RECEPTOR_PEAK_SCREEN_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-receptor-peak-aligned-headroom-match-297.yaml"
+    ROOT / "docs/validation-results/figure7-receptor-peak-aligned-headroom-match-297.yaml"
 )
 FIGURE7_RECEPTOR_PEAK_VERIFICATION_PROFILE_PATH = (
-    ROOT
-    / "configs/calibration/figure7_receptor_peak_aligned_headroom_verification_v1.yaml"
+    ROOT / "configs/calibration/figure7_receptor_peak_aligned_headroom_verification_v1.yaml"
 )
 FIGURE7_RECEPTOR_PEAK_VERIFICATION_REGISTRATION_PATH = (
     ROOT
     / "docs/validation-results/figure7-receptor-peak-aligned-verification-registration-298.yaml"
 )
 FIGURE7_RECEPTOR_PEAK_VERIFICATION_RESULT_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-receptor-peak-aligned-verification-299.yaml"
+    ROOT / "docs/validation-results/figure7-receptor-peak-aligned-verification-299.yaml"
 )
 FIGURE7_RECEPTOR_PEAK_MISMATCH_PROFILE_PATH = (
     ROOT / "configs/calibration/figure7_receptor_peak_aligned_mismatch_v1.yaml"
 )
 FIGURE7_RECEPTOR_PEAK_MISMATCH_REGISTRATION_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-receptor-peak-aligned-mismatch-registration-300.yaml"
+    ROOT / "docs/validation-results/figure7-receptor-peak-aligned-mismatch-registration-300.yaml"
 )
 FIGURE7_RECEPTOR_PEAK_PAIR_RESULT_PATH = (
     ROOT / "docs/validation-results/figure7-receptor-peak-aligned-pair-301.yaml"
@@ -467,77 +427,62 @@ FIGURE7_RECEPTOR_PEAK_GABA_PROFILE_PATH = (
     ROOT / "configs/calibration/figure7_receptor_peak_gaba_gain_match_v1.yaml"
 )
 FIGURE7_RECEPTOR_PEAK_GABA_REGISTRATION_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-receptor-peak-gaba-gain-registration-302.yaml"
+    ROOT / "docs/validation-results/figure7-receptor-peak-gaba-gain-registration-302.yaml"
 )
 FIGURE7_RECEPTOR_PEAK_GABA_SCREEN_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-receptor-peak-gaba-gain-match-303.yaml"
+    ROOT / "docs/validation-results/figure7-receptor-peak-gaba-gain-match-303.yaml"
 )
 FIGURE7_RECEPTOR_PEAK_GABA_VERIFICATION_PROFILE_PATH = (
-    ROOT
-    / "configs/calibration/figure7_receptor_peak_gaba_gain_verification_v1.yaml"
+    ROOT / "configs/calibration/figure7_receptor_peak_gaba_gain_verification_v1.yaml"
 )
 FIGURE7_RECEPTOR_PEAK_GABA_VERIFICATION_REGISTRATION_PATH = (
     ROOT
     / "docs/validation-results/figure7-receptor-peak-gaba-gain-verification-registration-304.yaml"
 )
 FIGURE7_RECEPTOR_PEAK_GABA_VERIFICATION_RESULT_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-receptor-peak-gaba-gain-verification-305.yaml"
+    ROOT / "docs/validation-results/figure7-receptor-peak-gaba-gain-verification-305.yaml"
 )
 FIGURE7_RECEPTOR_PEAK_GABA_MISMATCH_PROFILE_PATH = (
     ROOT / "configs/calibration/figure7_receptor_peak_gaba_gain_mismatch_v1.yaml"
 )
 FIGURE7_RECEPTOR_PEAK_GABA_MISMATCH_REGISTRATION_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-receptor-peak-gaba-gain-mismatch-registration-306.yaml"
+    ROOT / "docs/validation-results/figure7-receptor-peak-gaba-gain-mismatch-registration-306.yaml"
 )
 FIGURE7_RECEPTOR_PEAK_GABA_PAIR_RESULT_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-receptor-peak-gaba-gain-pair-307.yaml"
+    ROOT / "docs/validation-results/figure7-receptor-peak-gaba-gain-pair-307.yaml"
 )
 FIGURE7_RECEPTOR_PEAK_ANNULUS_PROFILE_PATH = (
-    ROOT
-    / "configs/calibration/figure7_receptor_peak_radial_annulus_match_v1.yaml"
+    ROOT / "configs/calibration/figure7_receptor_peak_radial_annulus_match_v1.yaml"
 )
 FIGURE7_RECEPTOR_PEAK_ANNULUS_REGISTRATION_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-receptor-peak-radial-annulus-registration-308.yaml"
+    ROOT / "docs/validation-results/figure7-receptor-peak-radial-annulus-registration-308.yaml"
 )
 FIGURE7_RECEPTOR_PEAK_ANNULUS_RESULT_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-receptor-peak-radial-annulus-match-309.yaml"
+    ROOT / "docs/validation-results/figure7-receptor-peak-radial-annulus-match-309.yaml"
 )
 FIGURE7_RECEPTOR_PEAK_ADJACENT_ANNULUS_PROFILE_PATH = (
-    ROOT
-    / "configs/calibration/figure7_receptor_peak_adjacent_annulus_match_v1.yaml"
+    ROOT / "configs/calibration/figure7_receptor_peak_adjacent_annulus_match_v1.yaml"
 )
 FIGURE7_RECEPTOR_PEAK_ADJACENT_ANNULUS_REGISTRATION_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-receptor-peak-adjacent-annulus-registration-310.yaml"
+    ROOT / "docs/validation-results/figure7-receptor-peak-adjacent-annulus-registration-310.yaml"
 )
 FIGURE7_RECEPTOR_PEAK_ADJACENT_ANNULUS_RESULT_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-receptor-peak-adjacent-annulus-match-311.yaml"
+    ROOT / "docs/validation-results/figure7-receptor-peak-adjacent-annulus-match-311.yaml"
 )
 FIGURE7_LEARNED_COMPARATOR_PROFILE_PATH = (
     ROOT / "configs/calibration/figure7_learned_comparator_floor_match_v1.yaml"
 )
 FIGURE7_LEARNED_COMPARATOR_REGISTRATION_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-learned-comparator-floor-registration-312.yaml"
+    ROOT / "docs/validation-results/figure7-learned-comparator-floor-registration-312.yaml"
 )
 FIGURE7_LEARNED_COMPARATOR_RESULT_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-learned-comparator-floor-match-313.yaml"
+    ROOT / "docs/validation-results/figure7-learned-comparator-floor-match-313.yaml"
 )
 FIGURE7_HALF_MAX_COMPARATOR_PROFILE_PATH = (
     ROOT / "configs/calibration/figure7_half_max_comparator_match_v1.yaml"
 )
 FIGURE7_HALF_MAX_COMPARATOR_REGISTRATION_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-half-max-comparator-registration-314.yaml"
+    ROOT / "docs/validation-results/figure7-half-max-comparator-registration-314.yaml"
 )
 FIGURE7_HALF_MAX_COMPARATOR_RESULT_PATH = (
     ROOT / "docs/validation-results/figure7-half-max-comparator-match-315.yaml"
@@ -555,8 +500,7 @@ FIGURE7_TOP5_COMPARATOR_VERIFICATION_PROFILE_PATH = (
     ROOT / "configs/calibration/figure7_top5_comparator_verification_v1.yaml"
 )
 FIGURE7_TOP5_COMPARATOR_VERIFICATION_REGISTRATION_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-top5-comparator-verification-registration-318.yaml"
+    ROOT / "docs/validation-results/figure7-top5-comparator-verification-registration-318.yaml"
 )
 FIGURE7_TOP5_COMPARATOR_VERIFICATION_RESULT_PATH = (
     ROOT / "docs/validation-results/figure7-top5-comparator-verification-319.yaml"
@@ -565,8 +509,7 @@ FIGURE7_TOP5_COMPARATOR_MISMATCH_PROFILE_PATH = (
     ROOT / "configs/calibration/figure7_top5_comparator_mismatch_v1.yaml"
 )
 FIGURE7_TOP5_COMPARATOR_MISMATCH_REGISTRATION_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-top5-comparator-mismatch-registration-320.yaml"
+    ROOT / "docs/validation-results/figure7-top5-comparator-mismatch-registration-320.yaml"
 )
 FIGURE7_TOP5_COMPARATOR_PAIR_RESULT_PATH = (
     ROOT / "docs/validation-results/figure7-top5-comparator-pair-321.yaml"
@@ -575,19 +518,16 @@ FIGURE7_TOP5_NONSPECIFIC_BLEND_PROFILE_PATH = (
     ROOT / "configs/calibration/figure7_top5_nonspecific_blend_match_v1.yaml"
 )
 FIGURE7_TOP5_NONSPECIFIC_BLEND_REGISTRATION_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-top5-nonspecific-blend-registration-322.yaml"
+    ROOT / "docs/validation-results/figure7-top5-nonspecific-blend-registration-322.yaml"
 )
 FIGURE7_TOP5_NONSPECIFIC_BLEND_RESULT_PATH = (
     ROOT / "docs/validation-results/figure7-top5-nonspecific-blend-match-323.yaml"
 )
 FIGURE7_TOP5_NONSPECIFIC_SPLIT_PROFILE_PATH = (
-    ROOT
-    / "configs/calibration/figure7_top5_nonspecific_split_detector_match_v1.yaml"
+    ROOT / "configs/calibration/figure7_top5_nonspecific_split_detector_match_v1.yaml"
 )
 FIGURE7_TOP5_NONSPECIFIC_SPLIT_REGISTRATION_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-top5-nonspecific-split-registration-324.yaml"
+    ROOT / "docs/validation-results/figure7-top5-nonspecific-split-registration-324.yaml"
 )
 FIGURE7_TOP5_NONSPECIFIC_SPLIT_RESULT_PATH = (
     ROOT / "docs/validation-results/figure7-top5-nonspecific-split-match-325.yaml"
@@ -596,92 +536,77 @@ FIGURE6_NONSPECIFIC_DISTAL_GABA_PROFILE_PATH = (
     ROOT / "configs/calibration/figure6_nonspecific_distal_gaba_supplement_v1.yaml"
 )
 FIGURE6_NONSPECIFIC_DISTAL_GABA_REGISTRATION_PATH = (
-    ROOT
-    / "docs/validation-results/figure6-nonspecific-distal-gaba-source-registration-326.yaml"
+    ROOT / "docs/validation-results/figure6-nonspecific-distal-gaba-source-registration-326.yaml"
 )
 FIGURE6_NONSPECIFIC_DISTAL_GABA_RESULT_PATH = (
     ROOT / "docs/validation-results/figure6-nonspecific-distal-gaba-source-327.yaml"
 )
 FIGURE7_TOP5_NONSPECIFIC_GABA_TRANSFER_PROFILE_PATH = (
-    ROOT
-    / "configs/calibration/figure7_top5_nonspecific_gaba_transfer_match_v1.yaml"
+    ROOT / "configs/calibration/figure7_top5_nonspecific_gaba_transfer_match_v1.yaml"
 )
 FIGURE7_TOP5_NONSPECIFIC_GABA_TRANSFER_REGISTRATION_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-top5-nonspecific-gaba-transfer-registration-328.yaml"
+    ROOT / "docs/validation-results/figure7-top5-nonspecific-gaba-transfer-registration-328.yaml"
 )
 FIGURE7_TOP5_NONSPECIFIC_GABA_TRANSFER_SUPERSEDED_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-top5-nonspecific-gaba-transfer-match-329.yaml"
+    ROOT / "docs/validation-results/figure7-top5-nonspecific-gaba-transfer-match-329.yaml"
 )
 FIGURE7_TOP5_NONSPECIFIC_GABA_TRANSFER_RESULT_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-top5-nonspecific-gaba-transfer-match-330.yaml"
+    ROOT / "docs/validation-results/figure7-top5-nonspecific-gaba-transfer-match-330.yaml"
 )
 FIGURE7_TOP5_NONSPECIFIC_GABA_TRANSFER_VERIFICATION_PROFILE_PATH = (
-    ROOT
-    / "configs/calibration/figure7_top5_nonspecific_gaba_transfer_verification_v1.yaml"
+    ROOT / "configs/calibration/figure7_top5_nonspecific_gaba_transfer_verification_v1.yaml"
 )
 FIGURE7_TOP5_NONSPECIFIC_GABA_TRANSFER_VERIFICATION_REGISTRATION_PATH = (
     ROOT
     / "docs/validation-results/figure7-top5-nonspecific-gaba-transfer-verification-registration-331.yaml"
 )
 FIGURE7_TOP5_NONSPECIFIC_GABA_TRANSFER_VERIFICATION_RESULT_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-top5-nonspecific-gaba-transfer-verification-332.yaml"
+    ROOT / "docs/validation-results/figure7-top5-nonspecific-gaba-transfer-verification-332.yaml"
 )
 FIGURE7_TOP5_NONSPECIFIC_GABA_TRANSFER_MISMATCH_PROFILE_PATH = (
-    ROOT
-    / "configs/calibration/figure7_top5_nonspecific_gaba_transfer_mismatch_v1.yaml"
+    ROOT / "configs/calibration/figure7_top5_nonspecific_gaba_transfer_mismatch_v1.yaml"
 )
 FIGURE7_TOP5_NONSPECIFIC_GABA_TRANSFER_MISMATCH_REGISTRATION_PATH = (
     ROOT
     / "docs/validation-results/figure7-top5-nonspecific-gaba-transfer-mismatch-registration-333.yaml"
 )
 FIGURE7_TOP5_NONSPECIFIC_GABA_TRANSFER_PAIR_RESULT_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-top5-nonspecific-gaba-transfer-pair-334.yaml"
+    ROOT / "docs/validation-results/figure7-top5-nonspecific-gaba-transfer-pair-334.yaml"
 )
 FIGURE6_METHODS_GLOBAL_CALCIUM_PROFILE_PATH = (
     ROOT / "configs/calibration/figure6_methods_global_calcium_v1.yaml"
 )
 FIGURE6_METHODS_GLOBAL_CALCIUM_REGISTRATION_PATH = (
-    ROOT
-    / "docs/validation-results/figure6-methods-global-calcium-registration-335.yaml"
+    ROOT / "docs/validation-results/figure6-methods-global-calcium-registration-335.yaml"
 )
 FIGURE6_METHODS_GLOBAL_CALCIUM_RESULT_PATH = (
     ROOT / "docs/validation-results/figure6-methods-global-calcium-336.yaml"
 )
 FIGURE7_NONSPECIFIC_VOLTAGE_AUDIT_PROFILE_PATH = (
-    ROOT
-    / "configs/calibration/figure7_top5_nonspecific_voltage_peak_audit_v1.yaml"
+    ROOT / "configs/calibration/figure7_top5_nonspecific_voltage_peak_audit_v1.yaml"
 )
 FIGURE7_NONSPECIFIC_VOLTAGE_AUDIT_REGISTRATION_PATH = (
     ROOT
     / "docs/validation-results/figure7-top5-nonspecific-voltage-peak-audit-registration-337.yaml"
 )
 FIGURE7_NONSPECIFIC_VOLTAGE_AUDIT_RESULT_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-top5-nonspecific-voltage-peak-audit-338.yaml"
+    ROOT / "docs/validation-results/figure7-top5-nonspecific-voltage-peak-audit-338.yaml"
 )
 FIGURE7_NONSPECIFIC_PEAK_CURRENT_AUDIT_PROFILE_PATH = (
-    ROOT
-    / "configs/calibration/figure7_top5_nonspecific_peak_current_audit_v1.yaml"
+    ROOT / "configs/calibration/figure7_top5_nonspecific_peak_current_audit_v1.yaml"
 )
 FIGURE7_NONSPECIFIC_PEAK_CURRENT_AUDIT_REGISTRATION_PATH = (
     ROOT
     / "docs/validation-results/figure7-top5-nonspecific-peak-current-audit-registration-365.yaml"
 )
 FIGURE7_NONSPECIFIC_PEAK_CURRENT_AUDIT_RESULT_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-top5-nonspecific-peak-current-audit-366.yaml"
+    ROOT / "docs/validation-results/figure7-top5-nonspecific-peak-current-audit-366.yaml"
 )
 FIGURE7_TOP5_TRN_VOLLEY_AUDIT_PROFILE_PATH = (
     ROOT / "configs/calibration/figure7_top5_trn_volley_audit_v1.yaml"
 )
 FIGURE7_TOP5_TRN_VOLLEY_AUDIT_REGISTRATION_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-top5-trn-volley-audit-registration-367.yaml"
+    ROOT / "docs/validation-results/figure7-top5-trn-volley-audit-registration-367.yaml"
 )
 FIGURE7_TOP5_TRN_VOLLEY_AUDIT_RESULT_PATH = (
     ROOT / "docs/validation-results/figure7-top5-trn-volley-audit-368.yaml"
@@ -690,133 +615,107 @@ FIGURE7_TOP5_ARRIVAL_MATCH_PROFILE_PATH = (
     ROOT / "configs/calibration/figure7_top5_arrival_aligned_match_v1.yaml"
 )
 FIGURE7_TOP5_ARRIVAL_MATCH_REGISTRATION_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-top5-arrival-aligned-registration-339.yaml"
+    ROOT / "docs/validation-results/figure7-top5-arrival-aligned-registration-339.yaml"
 )
 FIGURE7_TOP5_ARRIVAL_MATCH_RESULT_PATH = (
     ROOT / "docs/validation-results/figure7-top5-arrival-aligned-match-340.yaml"
 )
 FIGURE7_TOP5_ARRIVAL_VERIFICATION_PROFILE_PATH = (
-    ROOT
-    / "configs/calibration/figure7_top5_arrival_aligned_verification_v1.yaml"
+    ROOT / "configs/calibration/figure7_top5_arrival_aligned_verification_v1.yaml"
 )
 FIGURE7_TOP5_ARRIVAL_VERIFICATION_REGISTRATION_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-top5-arrival-aligned-verification-registration-341.yaml"
+    ROOT / "docs/validation-results/figure7-top5-arrival-aligned-verification-registration-341.yaml"
 )
 FIGURE7_TOP5_ARRIVAL_VERIFICATION_RESULT_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-top5-arrival-aligned-verification-342.yaml"
+    ROOT / "docs/validation-results/figure7-top5-arrival-aligned-verification-342.yaml"
 )
 FIGURE7_TOP5_ARRIVAL_MISMATCH_PROFILE_PATH = (
     ROOT / "configs/calibration/figure7_top5_arrival_aligned_mismatch_v1.yaml"
 )
 FIGURE7_TOP5_ARRIVAL_MISMATCH_REGISTRATION_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-top5-arrival-aligned-mismatch-registration-343.yaml"
+    ROOT / "docs/validation-results/figure7-top5-arrival-aligned-mismatch-registration-343.yaml"
 )
 FIGURE7_TOP5_ARRIVAL_PAIR_RESULT_PATH = (
     ROOT / "docs/validation-results/figure7-top5-arrival-aligned-pair-344.yaml"
 )
 FIGURE7_CORTICOINTRALAMINAR_ABLATION_PROFILE_PATH = (
-    ROOT
-    / "configs/calibration/figure7_top5_corticointralaminar_ablation_v1.yaml"
+    ROOT / "configs/calibration/figure7_top5_corticointralaminar_ablation_v1.yaml"
 )
 FIGURE7_CORTICOINTRALAMINAR_ABLATION_REGISTRATION_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-top5-corticointralaminar-ablation-registration-345.yaml"
+    ROOT / "docs/validation-results/figure7-top5-corticointralaminar-ablation-registration-345.yaml"
 )
 FIGURE7_CORTICOINTRALAMINAR_ABLATION_RESULT_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-top5-corticointralaminar-ablation-346.yaml"
+    ROOT / "docs/validation-results/figure7-top5-corticointralaminar-ablation-346.yaml"
 )
 FIGURE7_NONSPECIFIC_GABA_COMPARTMENT_ABLATION_PROFILE_PATH = (
-    ROOT
-    / "configs/calibration/figure7_top5_nonspecific_gaba_compartment_ablation_v1.yaml"
+    ROOT / "configs/calibration/figure7_top5_nonspecific_gaba_compartment_ablation_v1.yaml"
 )
 FIGURE7_NONSPECIFIC_GABA_COMPARTMENT_ABLATION_REGISTRATION_PATH = (
     ROOT
     / "docs/validation-results/figure7-top5-nonspecific-gaba-compartment-ablation-registration-347.yaml"
 )
 FIGURE7_NONSPECIFIC_GABA_COMPARTMENT_ABLATION_RESULT_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-top5-nonspecific-gaba-compartment-ablation-348.yaml"
+    ROOT / "docs/validation-results/figure7-top5-nonspecific-gaba-compartment-ablation-348.yaml"
 )
 FIGURE7_NONSPECIFIC_PAPER_TTYPE_PROFILE_PATH = (
-    ROOT
-    / "configs/calibration/figure7_top5_nonspecific_paper_ttype_match_v1.yaml"
+    ROOT / "configs/calibration/figure7_top5_nonspecific_paper_ttype_match_v1.yaml"
 )
 FIGURE7_NONSPECIFIC_PAPER_TTYPE_REGISTRATION_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-top5-nonspecific-paper-ttype-registration-349.yaml"
+    ROOT / "docs/validation-results/figure7-top5-nonspecific-paper-ttype-registration-349.yaml"
 )
 FIGURE7_NONSPECIFIC_PAPER_TTYPE_RESULT_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-top5-nonspecific-paper-ttype-match-350.yaml"
+    ROOT / "docs/validation-results/figure7-top5-nonspecific-paper-ttype-match-350.yaml"
 )
 FIGURE7_NONSPECIFIC_SOMATIC_GABA_PROFILE_PATH = (
-    ROOT
-    / "configs/calibration/figure7_top5_nonspecific_somatic_gaba_match_v1.yaml"
+    ROOT / "configs/calibration/figure7_top5_nonspecific_somatic_gaba_match_v1.yaml"
 )
 FIGURE7_NONSPECIFIC_SOMATIC_GABA_REGISTRATION_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-top5-nonspecific-somatic-gaba-registration-351.yaml"
+    ROOT / "docs/validation-results/figure7-top5-nonspecific-somatic-gaba-registration-351.yaml"
 )
 FIGURE7_NONSPECIFIC_SOMATIC_GABA_RESULT_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-top5-nonspecific-somatic-gaba-match-352.yaml"
+    ROOT / "docs/validation-results/figure7-top5-nonspecific-somatic-gaba-match-352.yaml"
 )
 FIGURE7_NONSPECIFIC_SOMATIC_GABA_VERIFICATION_PROFILE_PATH = (
-    ROOT
-    / "configs/calibration/figure7_top5_nonspecific_somatic_gaba_verification_v1.yaml"
+    ROOT / "configs/calibration/figure7_top5_nonspecific_somatic_gaba_verification_v1.yaml"
 )
 FIGURE7_NONSPECIFIC_SOMATIC_GABA_VERIFICATION_REGISTRATION_PATH = (
     ROOT
     / "docs/validation-results/figure7-top5-nonspecific-somatic-gaba-verification-registration-353.yaml"
 )
 FIGURE7_NONSPECIFIC_SOMATIC_GABA_VERIFICATION_RESULT_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-top5-nonspecific-somatic-gaba-verification-354.yaml"
+    ROOT / "docs/validation-results/figure7-top5-nonspecific-somatic-gaba-verification-354.yaml"
 )
 FIGURE7_NONSPECIFIC_SOMATIC_GABA_MISMATCH_PROFILE_PATH = (
-    ROOT
-    / "configs/calibration/figure7_top5_nonspecific_somatic_gaba_mismatch_v1.yaml"
+    ROOT / "configs/calibration/figure7_top5_nonspecific_somatic_gaba_mismatch_v1.yaml"
 )
 FIGURE7_NONSPECIFIC_SOMATIC_GABA_MISMATCH_REGISTRATION_PATH = (
     ROOT
     / "docs/validation-results/figure7-top5-nonspecific-somatic-gaba-mismatch-registration-355.yaml"
 )
 FIGURE7_NONSPECIFIC_SOMATIC_GABA_PAIR_RESULT_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-top5-nonspecific-somatic-gaba-pair-356.yaml"
+    ROOT / "docs/validation-results/figure7-top5-nonspecific-somatic-gaba-pair-356.yaml"
 )
 FIGURE7_NONSPECIFIC_KINNESS_AXIAL_PROFILE_PATH = (
-    ROOT
-    / "configs/calibration/figure7_top5_nonspecific_kinness_axial_match_v1.yaml"
+    ROOT / "configs/calibration/figure7_top5_nonspecific_kinness_axial_match_v1.yaml"
 )
 FIGURE7_NONSPECIFIC_KINNESS_AXIAL_REGISTRATION_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-top5-nonspecific-kinness-axial-registration-357.yaml"
+    ROOT / "docs/validation-results/figure7-top5-nonspecific-kinness-axial-registration-357.yaml"
 )
 FIGURE7_NONSPECIFIC_KINNESS_AXIAL_RESULT_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-top5-nonspecific-kinness-axial-match-358.yaml"
+    ROOT / "docs/validation-results/figure7-top5-nonspecific-kinness-axial-match-358.yaml"
 )
 FIGURE7_NONSPECIFIC_MODELDB_INTRINSIC_PROFILE_PATH = (
-    ROOT
-    / "configs/calibration/figure7_top5_nonspecific_modeldb_intrinsic_match_v1.yaml"
+    ROOT / "configs/calibration/figure7_top5_nonspecific_modeldb_intrinsic_match_v1.yaml"
 )
 FIGURE7_NONSPECIFIC_MODELDB_INTRINSIC_REGISTRATION_PATH = (
     ROOT
     / "docs/validation-results/figure7-top5-nonspecific-modeldb-intrinsic-registration-359.yaml"
 )
 FIGURE7_NONSPECIFIC_MODELDB_INTRINSIC_RESULT_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-top5-nonspecific-modeldb-intrinsic-match-360.yaml"
+    ROOT / "docs/validation-results/figure7-top5-nonspecific-modeldb-intrinsic-match-360.yaml"
 )
 FIGURE7_NONSPECIFIC_MODELDB_KINNESS_DETECTOR_PROFILE_PATH = (
-    ROOT
-    / "configs/calibration/figure7_top5_nonspecific_modeldb_kinness_detector_match_v1.yaml"
+    ROOT / "configs/calibration/figure7_top5_nonspecific_modeldb_kinness_detector_match_v1.yaml"
 )
 FIGURE7_NONSPECIFIC_MODELDB_KINNESS_DETECTOR_REGISTRATION_PATH = (
     ROOT
@@ -827,8 +726,7 @@ FIGURE7_NONSPECIFIC_MODELDB_KINNESS_DETECTOR_RESULT_PATH = (
     / "docs/validation-results/figure7-top5-nonspecific-modeldb-kinness-detector-match-362.yaml"
 )
 FIGURE7_NONSPECIFIC_MODELDB_KINNESS_HYSTERESIS_PROFILE_PATH = (
-    ROOT
-    / "configs/calibration/figure7_top5_nonspecific_modeldb_kinness_hysteresis_match_v1.yaml"
+    ROOT / "configs/calibration/figure7_top5_nonspecific_modeldb_kinness_hysteresis_match_v1.yaml"
 )
 FIGURE7_NONSPECIFIC_MODELDB_KINNESS_HYSTERESIS_REGISTRATION_PATH = (
     ROOT
@@ -839,95 +737,80 @@ FIGURE7_NONSPECIFIC_MODELDB_KINNESS_HYSTERESIS_RESULT_PATH = (
     / "docs/validation-results/figure7-top5-nonspecific-modeldb-kinness-hysteresis-match-364.yaml"
 )
 FIGURE7_NONSPECIFIC_MODELDB_UNIFORM_HANDLER_PROFILE_PATH = (
-    ROOT
-    / "configs/calibration/figure7_top5_nonspecific_modeldb_uniform_handler_match_v1.yaml"
+    ROOT / "configs/calibration/figure7_top5_nonspecific_modeldb_uniform_handler_match_v1.yaml"
 )
 FIGURE7_NONSPECIFIC_MODELDB_UNIFORM_HANDLER_REGISTRATION_PATH = (
     ROOT
     / "docs/validation-results/figure7-top5-nonspecific-modeldb-uniform-handler-registration-369.yaml"
 )
 FIGURE7_NONSPECIFIC_MODELDB_UNIFORM_HANDLER_RESULT_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-top5-nonspecific-modeldb-uniform-handler-match-370.yaml"
+    ROOT / "docs/validation-results/figure7-top5-nonspecific-modeldb-uniform-handler-match-370.yaml"
 )
 FIGURE7_NONSPECIFIC_MODELDB_CALIBRATED20_MATCH_PROFILE_PATH = (
-    ROOT
-    / "configs/calibration/figure7_top5_nonspecific_modeldb_calibrated20_match_v1.yaml"
+    ROOT / "configs/calibration/figure7_top5_nonspecific_modeldb_calibrated20_match_v1.yaml"
 )
 FIGURE7_NONSPECIFIC_MODELDB_CALIBRATED20_MATCH_REGISTRATION_PATH = (
     ROOT
     / "docs/validation-results/figure7-top5-nonspecific-modeldb-calibrated20-registration-371.yaml"
 )
 FIGURE7_NONSPECIFIC_MODELDB_CALIBRATED20_MATCH_RESULT_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-top5-nonspecific-modeldb-calibrated20-match-372.yaml"
+    ROOT / "docs/validation-results/figure7-top5-nonspecific-modeldb-calibrated20-match-372.yaml"
 )
 FIGURE7_NONSPECIFIC_MODELDB_CALIBRATED20_VERIFICATION_RESULT_PATH = (
     ROOT
     / "docs/validation-results/figure7-top5-nonspecific-modeldb-calibrated20-verification-374.yaml"
 )
 FIGURE7_NONSPECIFIC_MODELDB_CALIBRATED20_PAIR_RESULT_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-top5-nonspecific-modeldb-calibrated20-pair-376.yaml"
+    ROOT / "docs/validation-results/figure7-top5-nonspecific-modeldb-calibrated20-pair-376.yaml"
 )
 ISOLATED_NONSPECIFIC_REST_AUDIT_PROFILE_PATH = (
     ROOT / "configs/calibration/isolated_nonspecific_rest_audit_v1.yaml"
 )
 ISOLATED_NONSPECIFIC_REST_AUDIT_REGISTRATION_PATH = (
-    ROOT
-    / "docs/validation-results/isolated-nonspecific-rest-audit-registration-377.yaml"
+    ROOT / "docs/validation-results/isolated-nonspecific-rest-audit-registration-377.yaml"
 )
 ISOLATED_NONSPECIFIC_REST_AUDIT_RESULT_PATH = (
     ROOT / "docs/validation-results/isolated-nonspecific-rest-audit-378.yaml"
 )
 ISOLATED_NONSPECIFIC_FIXED_POINT_DERIVATION_PATH = (
-    ROOT
-    / "docs/validation-results/isolated-nonspecific-fixed-point-derivation-379.yaml"
+    ROOT / "docs/validation-results/isolated-nonspecific-fixed-point-derivation-379.yaml"
 )
 ISOLATED_NONSPECIFIC_FIXED_POINT_VERIFICATION_PATH = (
-    ROOT
-    / "docs/validation-results/isolated-nonspecific-fixed-point-verification-381.yaml"
+    ROOT / "docs/validation-results/isolated-nonspecific-fixed-point-verification-381.yaml"
 )
 ISOLATED_NONSPECIFIC_FIXED_POINT_PERTURBATION_PROFILE_PATH = (
-    ROOT
-    / "configs/calibration/isolated_nonspecific_fixed_point_soma_perturbation_v1.yaml"
+    ROOT / "configs/calibration/isolated_nonspecific_fixed_point_soma_perturbation_v1.yaml"
 )
 ISOLATED_NONSPECIFIC_FIXED_POINT_PERTURBATION_REGISTRATION_PATH = (
     ROOT
     / "docs/validation-results/isolated-nonspecific-fixed-point-soma-perturbation-registration-382.yaml"
 )
 ISOLATED_NONSPECIFIC_FIXED_POINT_PERTURBATION_RESULT_PATH = (
-    ROOT
-    / "docs/validation-results/isolated-nonspecific-fixed-point-soma-perturbation-383.yaml"
+    ROOT / "docs/validation-results/isolated-nonspecific-fixed-point-soma-perturbation-383.yaml"
 )
 FIGURE7_FULL_GRID_CONNECTFROMALL_PROFILE_PATH = (
     ROOT / "configs/calibration/figure7_top5_full_grid_connectfromall_match_v1.yaml"
 )
 FIGURE7_FULL_GRID_CONNECTFROMALL_REGISTRATION_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-top5-full-grid-connectfromall-registration-384.yaml"
+    ROOT / "docs/validation-results/figure7-top5-full-grid-connectfromall-registration-384.yaml"
 )
 FIGURE7_FULL_GRID_CONNECTFROMALL_RESULT_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-top5-full-grid-connectfromall-match-385.yaml"
+    ROOT / "docs/validation-results/figure7-top5-full-grid-connectfromall-match-385.yaml"
 )
 FIGURE7_ALIGNED_VERIFICATION_PROFILE_PATH = (
     ROOT / "configs/calibration/figure7_aligned_on_center_verification_v1.yaml"
 )
 FIGURE7_ALIGNED_VERIFICATION_REGISTRATION_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-aligned-on-center-verification-registration-241.yaml"
+    ROOT / "docs/validation-results/figure7-aligned-on-center-verification-registration-241.yaml"
 )
 FIGURE7_ALIGNED_VERIFICATION_RESULT_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-aligned-on-center-verification-242.yaml"
+    ROOT / "docs/validation-results/figure7-aligned-on-center-verification-242.yaml"
 )
 FIGURE7_ALIGNED_MISMATCH_PROFILE_PATH = (
     ROOT / "configs/calibration/figure7_aligned_on_center_mismatch_v1.yaml"
 )
 FIGURE7_ALIGNED_MISMATCH_REGISTRATION_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-aligned-on-center-mismatch-registration-243.yaml"
+    ROOT / "docs/validation-results/figure7-aligned-on-center-mismatch-registration-243.yaml"
 )
 FIGURE7_ALIGNED_PAIR_RESULT_PATH = (
     ROOT / "docs/validation-results/figure7-aligned-on-center-pair-244.yaml"
@@ -936,33 +819,28 @@ FIGURE7_ALIGNED_SUSTAINED_PROFILE_PATH = (
     ROOT / "configs/calibration/figure7_aligned_sustained_match_v1.yaml"
 )
 FIGURE7_ALIGNED_SUSTAINED_REGISTRATION_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-aligned-sustained-registration-245.yaml"
+    ROOT / "docs/validation-results/figure7-aligned-sustained-registration-245.yaml"
 )
 FIGURE7_ALIGNED_SUSTAINED_RESULT_PATH = (
     ROOT / "docs/validation-results/figure7-aligned-sustained-match-246.yaml"
 )
 FIGURE7_EVENT_CURRENT_REGISTRATION_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-mismatch-event-current-registration-247.yaml"
+    ROOT / "docs/validation-results/figure7-mismatch-event-current-registration-247.yaml"
 )
 FIGURE7_EVENT_CURRENT_AUDIT_PATH = (
     ROOT / "docs/validation-results/figure7-mismatch-event-current-audit-248.yaml"
 )
 FIGURE7_PRE_EVENT_TRACE_REGISTRATION_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-mismatch-pre-event-trace-registration-249.yaml"
+    ROOT / "docs/validation-results/figure7-mismatch-pre-event-trace-registration-249.yaml"
 )
 FIGURE7_PRE_EVENT_TRACE_AUDIT_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-mismatch-pre-event-trace-audit-250.yaml"
+    ROOT / "docs/validation-results/figure7-mismatch-pre-event-trace-audit-250.yaml"
 )
 FIGURE7_GABA_CAPACITY_PROFILE_PATH = (
     ROOT / "configs/calibration/figure7_mismatch_gaba_capacity_v1.yaml"
 )
 FIGURE7_GABA_CAPACITY_REGISTRATION_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-mismatch-gaba-capacity-registration-251.yaml"
+    ROOT / "docs/validation-results/figure7-mismatch-gaba-capacity-registration-251.yaml"
 )
 FIGURE7_GABA_CAPACITY_RESULT_PATH = (
     ROOT / "docs/validation-results/figure7-mismatch-gaba-capacity-252.yaml"
@@ -971,19 +849,16 @@ RADIAL_ANNULUS_GABA_GAIN_PROFILE_PATH = (
     ROOT / "configs/calibration/radial_annulus_gaba_gain_figure6_v1.yaml"
 )
 RADIAL_ANNULUS_GABA_GAIN_REGISTRATION_PATH = (
-    ROOT
-    / "docs/validation-results/radial-annulus-gaba-gain-registration-253.yaml"
+    ROOT / "docs/validation-results/radial-annulus-gaba-gain-registration-253.yaml"
 )
 RADIAL_ANNULUS_GABA_GAIN_RESULT_PATH = (
-    ROOT
-    / "docs/validation-results/radial-annulus-gaba-gain-figure6-254.yaml"
+    ROOT / "docs/validation-results/radial-annulus-gaba-gain-figure6-254.yaml"
 )
 FIGURE7_TWO_EVENT_MATCH_PROFILE_PATH = (
     ROOT / "configs/calibration/figure7_aligned_two_event_match_v1.yaml"
 )
 FIGURE7_TWO_EVENT_MATCH_REGISTRATION_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-aligned-two-event-registration-255.yaml"
+    ROOT / "docs/validation-results/figure7-aligned-two-event-registration-255.yaml"
 )
 FIGURE7_TWO_EVENT_MATCH_RESULT_PATH = (
     ROOT / "docs/validation-results/figure7-aligned-two-event-match-256.yaml"
@@ -992,8 +867,7 @@ FIGURE7_TRN_ARRIVAL_MATCH_PROFILE_PATH = (
     ROOT / "configs/calibration/figure7_trn_arrival_aligned_match_v1.yaml"
 )
 FIGURE7_TRN_ARRIVAL_MATCH_REGISTRATION_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-trn-arrival-aligned-registration-257.yaml"
+    ROOT / "docs/validation-results/figure7-trn-arrival-aligned-registration-257.yaml"
 )
 FIGURE7_TRN_ARRIVAL_MATCH_RESULT_PATH = (
     ROOT / "docs/validation-results/figure7-trn-arrival-aligned-match-258.yaml"
@@ -1002,61 +876,49 @@ FIGURE7_CORTICORETICULAR_GAIN_PROFILE_PATH = (
     ROOT / "configs/calibration/figure7_corticoreticular_gain_match_v1.yaml"
 )
 FIGURE7_CORTICORETICULAR_GAIN_REGISTRATION_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-corticoreticular-gain-registration-259.yaml"
+    ROOT / "docs/validation-results/figure7-corticoreticular-gain-registration-259.yaml"
 )
 FIGURE7_CORTICORETICULAR_GAIN_RESULT_PATH = (
     ROOT / "docs/validation-results/figure7-corticoreticular-gain-match-260.yaml"
 )
 FIGURE7_CORTICORETICULAR_VERIFICATION_PROFILE_PATH = (
-    ROOT
-    / "configs/calibration/figure7_corticoreticular_gain_verification_v1.yaml"
+    ROOT / "configs/calibration/figure7_corticoreticular_gain_verification_v1.yaml"
 )
 FIGURE7_CORTICORETICULAR_VERIFICATION_REGISTRATION_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-corticoreticular-verification-registration-261.yaml"
+    ROOT / "docs/validation-results/figure7-corticoreticular-verification-registration-261.yaml"
 )
 FIGURE7_CORTICORETICULAR_VERIFICATION_RESULT_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-corticoreticular-gain-verification-262.yaml"
+    ROOT / "docs/validation-results/figure7-corticoreticular-gain-verification-262.yaml"
 )
 FIGURE7_CORTICORETICULAR_MISMATCH_PROFILE_PATH = (
     ROOT / "configs/calibration/figure7_corticoreticular_gain_mismatch_v1.yaml"
 )
 FIGURE7_CORTICORETICULAR_MISMATCH_REGISTRATION_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-corticoreticular-mismatch-registration-263.yaml"
+    ROOT / "docs/validation-results/figure7-corticoreticular-mismatch-registration-263.yaml"
 )
 FIGURE7_CORTICORETICULAR_MISMATCH_RESULT_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-corticoreticular-gain-mismatch-264.yaml"
+    ROOT / "docs/validation-results/figure7-corticoreticular-gain-mismatch-264.yaml"
 )
 FIGURE7_CORTICORETICULAR_MARGIN_REGISTRATION_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-corticoreticular-mismatch-margin-registration-265.yaml"
+    ROOT / "docs/validation-results/figure7-corticoreticular-mismatch-margin-registration-265.yaml"
 )
 FIGURE7_CORTICORETICULAR_MARGIN_RESULT_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-corticoreticular-mismatch-margin-audit-266.yaml"
+    ROOT / "docs/validation-results/figure7-corticoreticular-mismatch-margin-audit-266.yaml"
 )
 FIGURE7_TARGETED_ANNULAR_PROFILE_PATH = (
-    ROOT
-    / "configs/calibration/figure7_targeted_annular_corticoreticular_match_v1.yaml"
+    ROOT / "configs/calibration/figure7_targeted_annular_corticoreticular_match_v1.yaml"
 )
 FIGURE7_TARGETED_ANNULAR_REGISTRATION_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-targeted-annular-corticoreticular-registration-267.yaml"
+    ROOT / "docs/validation-results/figure7-targeted-annular-corticoreticular-registration-267.yaml"
 )
 FIGURE7_TARGETED_ANNULAR_RESULT_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-targeted-annular-corticoreticular-match-268.yaml"
+    ROOT / "docs/validation-results/figure7-targeted-annular-corticoreticular-match-268.yaml"
 )
 FIGURE7_GAIN8_AMPA_ARRIVAL_PROFILE_PATH = (
     ROOT / "configs/calibration/figure7_gain8_ampa_arrival_match_v1.yaml"
 )
 FIGURE7_GAIN8_AMPA_ARRIVAL_REGISTRATION_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-gain8-ampa-arrival-registration-269.yaml"
+    ROOT / "docs/validation-results/figure7-gain8-ampa-arrival-registration-269.yaml"
 )
 FIGURE7_GAIN8_AMPA_ARRIVAL_RESULT_PATH = (
     ROOT / "docs/validation-results/figure7-gain8-ampa-arrival-match-270.yaml"
@@ -1065,64 +927,54 @@ FIGURE6_CORTICORETICULAR_AMPA_DELAY_PROFILE_PATH = (
     ROOT / "configs/calibration/figure6_corticoreticular_ampa_delay2_v1.yaml"
 )
 FIGURE6_CORTICORETICULAR_AMPA_DELAY_REGISTRATION_PATH = (
-    ROOT
-    / "docs/validation-results/figure6-corticoreticular-ampa-delay-registration-271.yaml"
+    ROOT / "docs/validation-results/figure6-corticoreticular-ampa-delay-registration-271.yaml"
 )
 FIGURE6_CORTICORETICULAR_AMPA_DELAY_RESULT_PATH = (
-    ROOT
-    / "docs/validation-results/figure6-corticoreticular-ampa-delay2-272.yaml"
+    ROOT / "docs/validation-results/figure6-corticoreticular-ampa-delay2-272.yaml"
 )
 FIGURE6_CORTICORETICULAR_AMPA_DELAY3_PROFILE_PATH = (
     ROOT / "configs/calibration/figure6_corticoreticular_ampa_delay3_v1.yaml"
 )
 FIGURE6_CORTICORETICULAR_AMPA_DELAY3_REGISTRATION_PATH = (
-    ROOT
-    / "docs/validation-results/figure6-corticoreticular-ampa-delay3-registration-273.yaml"
+    ROOT / "docs/validation-results/figure6-corticoreticular-ampa-delay3-registration-273.yaml"
 )
 FIGURE6_CORTICORETICULAR_AMPA_DELAY3_RESULT_PATH = (
-    ROOT
-    / "docs/validation-results/figure6-corticoreticular-ampa-delay3-274.yaml"
+    ROOT / "docs/validation-results/figure6-corticoreticular-ampa-delay3-274.yaml"
 )
 FIGURE6_CORTICORETICULAR_AMPA_DELAY2_CORRECTED_PROFILE_PATH = (
-    ROOT
-    / "configs/calibration/figure6_corticoreticular_ampa_delay2_corrected_v1.yaml"
+    ROOT / "configs/calibration/figure6_corticoreticular_ampa_delay2_corrected_v1.yaml"
 )
 FIGURE6_CORTICORETICULAR_AMPA_DELAY2_CORRECTED_REGISTRATION_PATH = (
     ROOT
     / "docs/validation-results/figure6-corticoreticular-ampa-delay2-corrected-registration-275.yaml"
 )
 FIGURE6_CORTICORETICULAR_AMPA_DELAY2_CORRECTED_RESULT_PATH = (
-    ROOT
-    / "docs/validation-results/figure6-corticoreticular-ampa-delay2-corrected-276.yaml"
+    ROOT / "docs/validation-results/figure6-corticoreticular-ampa-delay2-corrected-276.yaml"
 )
 FIGURE7_DELAY2_GAIN8_MATCH_PROFILE_PATH = (
     ROOT / "configs/calibration/figure7_delay2_gain8_match_v1.yaml"
 )
 FIGURE7_DELAY2_GAIN8_MATCH_REGISTRATION_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-delay2-gain8-match-registration-277.yaml"
+    ROOT / "docs/validation-results/figure7-delay2-gain8-match-registration-277.yaml"
 )
 FIGURE7_DELAY2_GAIN8_MATCH_RESULT_PATH = (
     ROOT / "docs/validation-results/figure7-delay2-gain8-match-278.yaml"
 )
 FIGURE6_CORTICORETICULAR_AMPA_DELAY3_CORRECTED_PROFILE_PATH = (
-    ROOT
-    / "configs/calibration/figure6_corticoreticular_ampa_delay3_corrected_v1.yaml"
+    ROOT / "configs/calibration/figure6_corticoreticular_ampa_delay3_corrected_v1.yaml"
 )
 FIGURE6_CORTICORETICULAR_AMPA_DELAY3_CORRECTED_REGISTRATION_PATH = (
     ROOT
     / "docs/validation-results/figure6-corticoreticular-ampa-delay3-corrected-registration-279.yaml"
 )
 FIGURE6_CORTICORETICULAR_AMPA_DELAY3_CORRECTED_RESULT_PATH = (
-    ROOT
-    / "docs/validation-results/figure6-corticoreticular-ampa-delay3-corrected-280.yaml"
+    ROOT / "docs/validation-results/figure6-corticoreticular-ampa-delay3-corrected-280.yaml"
 )
 FIGURE7_DELAY3_GAIN8_MATCH_PROFILE_PATH = (
     ROOT / "configs/calibration/figure7_delay3_gain8_match_v1.yaml"
 )
 FIGURE7_DELAY3_GAIN8_MATCH_REGISTRATION_PATH = (
-    ROOT
-    / "docs/validation-results/figure7-delay3-gain8-match-registration-281.yaml"
+    ROOT / "docs/validation-results/figure7-delay3-gain8-match-registration-281.yaml"
 )
 FIGURE7_DELAY3_GAIN8_MATCH_RESULT_PATH = (
     ROOT / "docs/validation-results/figure7-delay3-gain8-match-282.yaml"
@@ -1171,9 +1023,7 @@ def test_contract_enumerates_complete_and_projected_spaces_deterministically() -
     )
     projected = list(contract.iter_candidates(stage_a_dimensions))
     assert len(projected) == 768
-    assert {item["gaussian_spread_convention"] for item in projected} == {
-        "standard_deviation"
-    }
+    assert {item["gaussian_spread_convention"] for item in projected} == {"standard_deviation"}
     assert {item["relay_input_interpretation"] for item in projected} == {
         "archived_finite_conductance"
     }
@@ -1237,9 +1087,9 @@ def test_frozen_trn_survivor_matches_current_contract_and_runtime() -> None:
     candidate = survivor["candidate"]
     assert survivor["contract_fingerprint"] == contract.fingerprint
     assert survivor["candidate_fingerprint"] == contract.candidate_fingerprint(candidate)
-    assert survivor["runtime_fingerprint"] == runtime_conventions_for_candidate(
-        candidate
-    ).fingerprint
+    assert (
+        survivor["runtime_fingerprint"] == runtime_conventions_for_candidate(candidate).fingerprint
+    )
     assert survivor["result"]["control_post_drive_spikes"] == 0
     assert survivor["result"]["driven_post_drive_spikes"] > 0
 
@@ -1263,19 +1113,18 @@ def test_gaussian_variance_discriminator_is_a_registered_complete_candidate() ->
     assert candidate["gaussian_spread_convention"] == "variance"
     assert profile["contract_fingerprint"] == contract.fingerprint
     assert profile["candidate_fingerprint"] == contract.candidate_fingerprint(candidate)
-    assert profile["runtime_fingerprint"] == runtime_conventions_for_candidate(
-        candidate
-    ).fingerprint
+    assert (
+        profile["runtime_fingerprint"] == runtime_conventions_for_candidate(candidate).fingerprint
+    )
 
 
 def test_figure8_voltage_audit_rejects_release_events_as_the_observable() -> None:
     artifact = yaml.safe_load(FIGURE8_VOLTAGE_AUDIT_PATH.read_text())
-    assert artifact["observable_correction"]["old"] == (
-        "SMART Equation-8 axonal release events"
+    assert artifact["observable_correction"]["old"] == ("SMART Equation-8 axonal release events")
+    assert (
+        artifact["literal_250_result"]["tonic_voltage_peaks"]
+        > artifact["literal_250_result"]["tonic_release_events"]
     )
-    assert artifact["literal_250_result"]["tonic_voltage_peaks"] > artifact[
-        "literal_250_result"
-    ]["tonic_release_events"]
     assert artifact["calcium_unit_grid_mS_cm2"]["best_tonic_peak_times_ms"] == [
         48.13,
         112.96,
@@ -1308,9 +1157,7 @@ def test_all_registered_trn_survivors_fail_intact_relay_repetition() -> None:
     assert artifact["holdouts_consulted"] is False
     assert artifact["candidate_count"] == 6
     assert artifact["relay_repetition_survivor_count"] == 0
-    assert {len(item["result"]["relay_event_times_ms"]) for item in artifact["outcomes"]} == {
-        1
-    }
+    assert {len(item["result"]["relay_event_times_ms"]) for item in artifact["outcomes"]} == {1}
     assert {item["result"]["relay_event_times_ms"][0] for item in artifact["outcomes"]} == {
         1.8900000000000001
     }
@@ -1333,9 +1180,9 @@ def test_figure6_source_hybrid_is_reproducible_but_not_promoted() -> None:
     artifact = yaml.safe_load(FIGURE6_SOURCE_HYBRID_RESULT_PATH.read_text())
 
     assert profile["candidate_fingerprint"] == fingerprint
-    assert profile["runtime_fingerprint"] == runtime_conventions_for_candidate(
-        candidate
-    ).fingerprint
+    assert (
+        profile["runtime_fingerprint"] == runtime_conventions_for_candidate(candidate).fingerprint
+    )
     assert artifact["candidate_fingerprint"] == fingerprint
     assert artifact["population_spikes"]["thalamic_relay"] == 5
     assert artifact["population_spikes"]["layer4_excitatory_v1"] == 5
@@ -1354,9 +1201,9 @@ def test_leading_figure6_hybrid_keeps_the_top_down_gate_fixed() -> None:
     artifact = yaml.safe_load(FIGURE6_RELAY_AXIAL_HYBRID_RESULT_PATH.read_text())
 
     assert profile["candidate_fingerprint"] == fingerprint
-    assert profile["runtime_fingerprint"] == runtime_conventions_for_candidate(
-        candidate
-    ).fingerprint
+    assert (
+        profile["runtime_fingerprint"] == runtime_conventions_for_candidate(candidate).fingerprint
+    )
     assert artifact["recruitment"]["feedforward_chain_complete"]
     assert artifact["top_down_timing"]["causal_pair_in_learning_window"]
     assert artifact["maps"]["bottom_up_oriented"]
@@ -1371,9 +1218,10 @@ def test_leading_figure6_hybrid_keeps_the_top_down_gate_fixed() -> None:
 def test_leading_figure6_map_shortfall_is_wide_field_phase_specific() -> None:
     artifact = yaml.safe_load(FIGURE6_RELAY_AXIAL_DECOMPOSITION_PATH.read_text())
     maps = artifact["maps"]
-    assert maps["top_down_narrow"]["horizontal_orientation_contrast"] > maps[
-        "top_down_wide"
-    ]["horizontal_orientation_contrast"]
+    assert (
+        maps["top_down_narrow"]["horizontal_orientation_contrast"]
+        > maps["top_down_wide"]["horizontal_orientation_contrast"]
+    )
     assert maps["top_down_wide"]["horizontal_arm_delta"][1] < 0
     assert maps["top_down_wide"]["horizontal_arm_delta"][0] > 0
     assert maps["top_down_wide"]["vertical_arm_delta"] == [0.0] * 4
@@ -1421,9 +1269,7 @@ def test_figure6_learning_phase_exactly_localizes_wide_field_depression() -> Non
     wide_far = by_projection_target[("modeldb112923.projection.005", 38)]
     narrow_near = by_projection_target[("modeldb112923.projection.007", 39)]
     assert wide_near["measured_delta"] < 0 < wide_far["measured_delta"]
-    assert wide_near["negative_correlation_delta"] < -wide_near[
-        "positive_correlation_delta"
-    ]
+    assert wide_near["negative_correlation_delta"] < -wide_near["positive_correlation_delta"]
     assert narrow_near["measured_delta"] > 0
     assert artifact["result"]["relay_event_times_ms"][31] == []
 
@@ -1444,10 +1290,7 @@ def test_projection_level_learning_bounds_are_source_literal_but_fail_figure6c()
     assert artifact["top_down_timing"]["causal_pair_in_learning_window"]
     assert artifact["maps"]["bottom_up_oriented"]
     assert artifact["maps"]["top_down_horizontal_orientation_contrast"] < 0
-    assert any(
-        delta > 0
-        for delta in artifact["maps"]["top_down_wide"]["vertical_arm_delta"]
-    )
+    assert any(delta > 0 for delta in artifact["maps"]["top_down_wide"]["vertical_arm_delta"])
     assert not artifact["assessment"]["figure6_reproduced"]
     assert not artifact["assessment"]["promoted"]
 
@@ -1462,9 +1305,7 @@ def test_projection_level_depression_scale_is_incompatible_with_local_baseline()
     artifact = yaml.safe_load(FIGURE6_PROJECTION_D_RESULT_PATH.read_text())
     assert profile["candidate_fingerprint"] == fingerprint
     assert profile["runtime_fingerprint"] == conventions.fingerprint
-    assert conventions.postsynaptic_depression_scale_convention == (
-        "serialized_projection_bounds"
-    )
+    assert conventions.postsynaptic_depression_scale_convention == ("serialized_projection_bounds")
     assert artifact["recruitment"]["feedforward_chain_complete"]
     assert artifact["top_down_timing"]["causal_pair_in_learning_window"]
     assert artifact["maps"]["bottom_up_oriented"]
@@ -1501,9 +1342,7 @@ def test_population_resolved_axial_profile_is_retracted_by_amplitude_audit() -> 
     ).hexdigest()
     conventions = runtime_conventions_for_candidate(candidate)
     historical = yaml.safe_load(FIGURE6_POPULATION_AXIAL_RESULT_PATH.read_text())
-    artifact = yaml.safe_load(
-        FIGURE6_POPULATION_AXIAL_AMPLITUDE_AUDIT_PATH.read_text()
-    )
+    artifact = yaml.safe_load(FIGURE6_POPULATION_AXIAL_AMPLITUDE_AUDIT_PATH.read_text())
     assert profile["candidate_fingerprint"] == fingerprint
     assert profile["runtime_fingerprint"] == conventions.fingerprint
     assert profile["status"] == "retracted-shape-pass-amplitude-fail"
@@ -1511,8 +1350,7 @@ def test_population_resolved_axial_profile_is_retracted_by_amplitude_audit() -> 
     assert artifact["status"] == "partial-figure6b-pass-figure6c-fail"
     assert artifact["population_spikes"]["thalamic_relay"] == 20
     assert all(
-        len(times) == 4
-        for times in artifact["active_cell_times_ms"]["relay_horizontal"].values()
+        len(times) == 4 for times in artifact["active_cell_times_ms"]["relay_horizontal"].values()
     )
     assert artifact["recruitment"]["feedforward_chain_complete"]
     assert artifact["top_down_timing"]["causal_pair_in_learning_window"]
@@ -1534,12 +1372,12 @@ def test_shape_only_figure6_profile_fails_first_genuine_figure7_holdout() -> Non
     assert artifact["assessment"]["figure6_reproduced"]
     profile = yaml.safe_load(FIGURE6_POPULATION_AXIAL_PROFILE_PATH.read_text())
     assert profile["status"] == "retracted-shape-pass-amplitude-fail"
-    assert artifact["figure7"]["conditions"]["match"][
-        "nonspecific_spike_times_ms"
-    ] == [pytest.approx(0.74)]
-    assert artifact["figure7"]["conditions"]["mismatch"][
-        "nonspecific_spike_times_ms"
-    ] == [pytest.approx(0.74)]
+    assert artifact["figure7"]["conditions"]["match"]["nonspecific_spike_times_ms"] == [
+        pytest.approx(0.74)
+    ]
+    assert artifact["figure7"]["conditions"]["mismatch"]["nonspecific_spike_times_ms"] == [
+        pytest.approx(0.74)
+    ]
     assessment = artifact["figure7"]["assessment"]
     assert assessment["arousal"]["match_rate_hz"] == 10.0
     assert assessment["arousal"]["mismatch_rate_hz"] == 10.0
@@ -1632,9 +1470,7 @@ def test_upward_learning_timestamp_preserves_spikes_but_reduces_peak() -> None:
     artifact = yaml.safe_load(FIGURE6_UPWARD_TIMESTAMP_PATH.read_text())
     assert artifact["population_spikes"]["thalamic_relay"] == 20
     assert artifact["relay_recruitment"]["confined_to_horizontal_bar_at_40_hz"]
-    assert artifact["maps"]["top_down_combined"]["maximum_after"] == pytest.approx(
-        0.1074981615
-    )
+    assert artifact["maps"]["top_down_combined"]["maximum_after"] == pytest.approx(0.1074981615)
     assert not artifact["assessment"]["figure6_reproduced"]
     assert not artifact["assessment"]["promoted"]
 
@@ -1675,9 +1511,9 @@ def test_post_holdout_trn_source_candidates_fail_figure6_prerequisite(
     profile = yaml.safe_load(profile_path.read_text())
     candidate = profile["candidate"]
     artifact = yaml.safe_load(result_path.read_text())
-    assert profile["runtime_fingerprint"] == runtime_conventions_for_candidate(
-        candidate
-    ).fingerprint
+    assert (
+        profile["runtime_fingerprint"] == runtime_conventions_for_candidate(candidate).fingerprint
+    )
     assert artifact["population_spikes"]["thalamic_relay"] == relay_spikes
     assert artifact["population_spikes"]["trn"] == trn_spikes
     assert not artifact["assessment"]["figure6_reproduced"]
@@ -1689,9 +1525,7 @@ def test_trn_potassium_source_matrix_has_no_connected_survivor() -> None:
     assert artifact["status"] == "no-connected-causal-survivor"
     assert artifact["assessment"]["connected_causal_survivors"] == 0
     assert all(item["post_bottom_up_trn_events"] == 0 for item in artifact["outcomes"])
-    assert artifact["assessment"]["best_sampled_soma_peak_mV"] == pytest.approx(
-        -12.1097056947
-    )
+    assert artifact["assessment"]["best_sampled_soma_peak_mV"] == pytest.approx(-12.1097056947)
     assert artifact["assessment"]["gap_to_published_arm_threshold_mV"] > 42.0
 
 
@@ -1765,9 +1599,7 @@ def test_increased_trn_soma_sodium_has_no_detector_cycle_survivor() -> None:
     assert assessment["all_controls_post_drive_quiet"]
     assert assessment["finite_driven_trial_count"] == 36
     assert assessment["total_driven_trial_count"] == 36
-    assert assessment["best_finite_driven_soma_peak_mV"] == pytest.approx(
-        14.6526694610
-    )
+    assert assessment["best_finite_driven_soma_peak_mV"] == pytest.approx(14.6526694610)
     assert not assessment["sodium_density_sufficient_in_registered_assay"]
     assert not assessment["advance_to_connected_match"]
     assert all(not item["stage_1_pass"] for item in artifact["outcomes"])
@@ -1782,9 +1614,7 @@ def test_trn_detector_hysteresis_grid_separates_source_and_calibration_pairs() -
         "release_mV": 0.0,
         "status": "published",
     }
-    assert profile["dimension"]["source_status"] == (
-        "behavior_calibration_except_paper_30_to_0"
-    )
+    assert profile["dimension"]["source_status"] == ("behavior_calibration_except_paper_30_to_0")
     assert profile["stage_1_protocol"]["drive_multipliers"] == [
         0.05,
         0.1,
@@ -1796,9 +1626,7 @@ def test_trn_detector_hysteresis_grid_separates_source_and_calibration_pairs() -
 
 
 def test_trn_detector_hysteresis_has_four_isolated_fresh_cycle_survivors() -> None:
-    artifact = yaml.safe_load(
-        FIGURE7_TRN_DETECTOR_HYSTERESIS_STAGE1_PATH.read_text()
-    )
+    artifact = yaml.safe_load(FIGURE7_TRN_DETECTOR_HYSTERESIS_STAGE1_PATH.read_text())
     assert artifact["status"] == "stage-1-survivors-found"
     assert artifact["stage_1_survivor_labels"] == [
         "arm_n35_release_n45",
@@ -1820,9 +1648,7 @@ def test_trn_detector_hysteresis_has_four_isolated_fresh_cycle_survivors() -> No
         for item in outcomes["paper_30_to_0"]["driven_outcomes"]
     )
     sparse = outcomes["arm_n20_release_n30"]
-    passing = [
-        item for item in sparse["driven_outcomes"] if item["fresh_detector_cycle_pass"]
-    ]
+    passing = [item for item in sparse["driven_outcomes"] if item["fresh_detector_cycle_pass"]]
     assert len(passing) == 1
     assert passing[0]["drive_multiplier"] == 0.4
     result = passing[0]["result"]
@@ -1843,9 +1669,7 @@ def test_trn_detector_hysteresis_has_four_isolated_fresh_cycle_survivors() -> No
 
 
 def test_trn_detector_hysteresis_has_no_figure6_survivor() -> None:
-    artifact = yaml.safe_load(
-        FIGURE6_TRN_DETECTOR_HYSTERESIS_PREREQUISITE_PATH.read_text()
-    )
+    artifact = yaml.safe_load(FIGURE6_TRN_DETECTOR_HYSTERESIS_PREREQUISITE_PATH.read_text())
     assert artifact["status"] == "figure6-prerequisite-complete"
     assert not artifact["holdouts_consulted"]
     assert artifact["figure6_survivor_labels"] == []
@@ -1854,9 +1678,12 @@ def test_trn_detector_hysteresis_has_no_figure6_survivor() -> None:
     assert assessment["registered_candidate_count"] == 4
     assert assessment["figure6_survivor_count"] == 0
     assert not assessment["advance_to_same_network_match"]
-    assert [
-        item["population_spikes"]["trn"] for item in artifact["outcomes"]
-    ] == [506, 525, 489, 511]
+    assert [item["population_spikes"]["trn"] for item in artifact["outcomes"]] == [
+        506,
+        525,
+        489,
+        511,
+    ]
     for item in artifact["outcomes"]:
         assert item["population_spikes"]["thalamic_relay"] == 5
         assert item["relay_spike_indices"] == [38, 39, 40, 41, 42]
@@ -1890,15 +1717,9 @@ def test_trn_gaba_transfer_grid_has_one_calibrated_figure6_survivor() -> None:
     assert survivor["population_spikes"]["thalamic_relay"] == 20
     assert survivor["population_spikes"]["trn"] == 728
     assert set(survivor["relay_event_counts_by_index"].values()) == {4}
-    assert set(
-        survivor["relay_detector_threshold_upcrossings_by_index"].values()
-    ) == {4}
-    assert set(survivor["relay_detector_arm_transitions_by_index"].values()) == {
-        4
-    }
-    assert set(
-        survivor["relay_detector_release_transitions_by_index"].values()
-    ) == {4}
+    assert set(survivor["relay_detector_threshold_upcrossings_by_index"].values()) == {4}
+    assert set(survivor["relay_detector_arm_transitions_by_index"].values()) == {4}
+    assert set(survivor["relay_detector_release_transitions_by_index"].values()) == {4}
     assert all(survivor["gates"].values())
     assert survivor["pass"]
 
@@ -1914,15 +1735,18 @@ def test_calibrated_trn_transfer_passes_same_network_match_gate() -> None:
     assert len(result["trn_spike_indices"]) == 538
     assert len(result["nonspecific_spike_times_ms"]) == 6
     assert set(artifact["relay_event_counts_by_index"].values()) == {5}
-    assert artifact["sampled_trn_event_counts_by_index"] == artifact[
-        "sampled_trn_threshold_upcrossings_by_index"
-    ]
-    assert artifact["sampled_trn_event_counts_by_index"] == artifact[
-        "sampled_trn_arm_transitions_by_index"
-    ]
-    assert artifact["sampled_trn_event_counts_by_index"] == artifact[
-        "sampled_trn_release_transitions_by_index"
-    ]
+    assert (
+        artifact["sampled_trn_event_counts_by_index"]
+        == artifact["sampled_trn_threshold_upcrossings_by_index"]
+    )
+    assert (
+        artifact["sampled_trn_event_counts_by_index"]
+        == artifact["sampled_trn_arm_transitions_by_index"]
+    )
+    assert (
+        artifact["sampled_trn_event_counts_by_index"]
+        == artifact["sampled_trn_release_transitions_by_index"]
+    )
     assert all(artifact["gates"].values())
     assert artifact["assessment"] == {
         "same_network_match_pass": True,
@@ -1988,9 +1812,7 @@ def test_each_compartment_source_endpoint_fails_figure6_repeat_gate() -> None:
 
 
 def test_distal_intermediate_grid_has_one_figure6_survivor() -> None:
-    artifact = yaml.safe_load(
-        FIGURE6_TRN_GABA_COMPARTMENT_INTERMEDIATE_PATH.read_text()
-    )
+    artifact = yaml.safe_load(FIGURE6_TRN_GABA_COMPARTMENT_INTERMEDIATE_PATH.read_text())
     assert artifact["status"] == "complete"
     assert not artifact["holdouts_consulted"]
     assert artifact["stage_1_survivor_labels"] == [
@@ -2006,9 +1828,7 @@ def test_distal_intermediate_grid_has_one_figure6_survivor() -> None:
         "advance_to_figure7": True,
     }
 
-    outcomes = {
-        item["label"]: item for item in artifact["stage_2_outcomes"]
-    }
+    outcomes = {item["label"]: item for item in artifact["stage_2_outcomes"]}
     survivor = outcomes["distal_0_015"]
     assert survivor["scales"] == {
         "modeldb112923.projection.000": 0.01,
@@ -2050,15 +1870,18 @@ def test_distal_transfer_survivor_passes_same_network_match() -> None:
         "41": 4,
         "42": 5,
     }
-    assert artifact["sampled_trn_event_counts_by_index"] == artifact[
-        "sampled_trn_threshold_upcrossings_by_index"
-    ]
-    assert artifact["sampled_trn_event_counts_by_index"] == artifact[
-        "sampled_trn_arm_transitions_by_index"
-    ]
-    assert artifact["sampled_trn_event_counts_by_index"] == artifact[
-        "sampled_trn_release_transitions_by_index"
-    ]
+    assert (
+        artifact["sampled_trn_event_counts_by_index"]
+        == artifact["sampled_trn_threshold_upcrossings_by_index"]
+    )
+    assert (
+        artifact["sampled_trn_event_counts_by_index"]
+        == artifact["sampled_trn_arm_transitions_by_index"]
+    )
+    assert (
+        artifact["sampled_trn_event_counts_by_index"]
+        == artifact["sampled_trn_release_transitions_by_index"]
+    )
     assert all(artifact["gates"].values())
     assert artifact["assessment"] == {
         "same_network_match_pass": True,
@@ -2104,12 +1927,8 @@ def test_projection022_source_resolution_preserves_complete_figure6() -> None:
     artifact = yaml.safe_load(FIGURE6_PROJECTION022_SOURCE_RESOLUTION_PATH.read_text())
     assert artifact["status"] == "complete"
     assert not artifact["holdouts_consulted"]
-    assert artifact["stage_1_survivor_labels"] == [
-        "paper_supplement_projection022"
-    ]
-    assert artifact["stage_2_survivor_labels"] == [
-        "paper_supplement_projection022"
-    ]
+    assert artifact["stage_1_survivor_labels"] == ["paper_supplement_projection022"]
+    assert artifact["stage_2_survivor_labels"] == ["paper_supplement_projection022"]
     assert artifact["assessment"] == {
         "registered_profile_count": 1,
         "stage_1_completed_count": 1,
@@ -2129,9 +1948,7 @@ def test_projection022_source_resolution_preserves_complete_figure6() -> None:
 
 
 def test_projection022_source_resolution_passes_same_network_match() -> None:
-    artifact = yaml.safe_load(
-        FIGURE7_PROJECTION022_SOURCE_RESOLUTION_MATCH_PATH.read_text()
-    )
+    artifact = yaml.safe_load(FIGURE7_PROJECTION022_SOURCE_RESOLUTION_MATCH_PATH.read_text())
     assert artifact["status"] == "match-pass"
     assert artifact["holdouts_consulted"] == ["figure7_match"]
     result = artifact["result"]
@@ -2140,23 +1957,24 @@ def test_projection022_source_resolution_passes_same_network_match() -> None:
     assert len(result["trn_spike_indices"]) == 547
     assert len(result["nonspecific_spike_times_ms"]) == 5
     assert set(artifact["relay_event_counts_by_index"].values()) == {6}
-    assert artifact["sampled_trn_event_counts_by_index"] == artifact[
-        "sampled_trn_threshold_upcrossings_by_index"
-    ]
-    assert artifact["sampled_trn_event_counts_by_index"] == artifact[
-        "sampled_trn_arm_transitions_by_index"
-    ]
-    assert artifact["sampled_trn_event_counts_by_index"] == artifact[
-        "sampled_trn_release_transitions_by_index"
-    ]
+    assert (
+        artifact["sampled_trn_event_counts_by_index"]
+        == artifact["sampled_trn_threshold_upcrossings_by_index"]
+    )
+    assert (
+        artifact["sampled_trn_event_counts_by_index"]
+        == artifact["sampled_trn_arm_transitions_by_index"]
+    )
+    assert (
+        artifact["sampled_trn_event_counts_by_index"]
+        == artifact["sampled_trn_release_transitions_by_index"]
+    )
     assert all(artifact["gates"].values())
     assert artifact["assessment"]["advance_to_mismatch"]
 
 
 def test_projection022_source_resolution_fixes_only_trn_direction() -> None:
-    artifact = yaml.safe_load(
-        FIGURE7_PROJECTION022_SOURCE_RESOLUTION_PAIR_PATH.read_text()
-    )
+    artifact = yaml.safe_load(FIGURE7_PROJECTION022_SOURCE_RESOLUTION_PAIR_PATH.read_text())
     assert artifact["status"] == "figure7-failed"
     assert not artifact["reproduced"]
     assessment = artifact["official_assessment"]
@@ -2194,9 +2012,7 @@ def test_source_resolved_distal002_preserves_complete_figure6() -> None:
     artifact = yaml.safe_load(FIGURE6_PROJECTION022_DISTAL002_PATH.read_text())
     assert artifact["status"] == "complete"
     assert not artifact["holdouts_consulted"]
-    assert artifact["stage_2_survivor_labels"] == [
-        "paper_supplement_projection022_distal_0_02"
-    ]
+    assert artifact["stage_2_survivor_labels"] == ["paper_supplement_projection022_distal_0_02"]
     assert artifact["assessment"]["advance_to_figure7"]
     outcome = artifact["stage_2_outcomes"][0]
     assert outcome["scales"]["modeldb112923.projection.004"] == 0.02
@@ -2220,15 +2036,18 @@ def test_source_resolved_distal002_passes_same_network_match() -> None:
     assert len(result["trn_spike_indices"]) == 522
     assert len(result["nonspecific_spike_times_ms"]) == 5
     assert set(artifact["relay_event_counts_by_index"].values()) == {6}
-    assert artifact["sampled_trn_event_counts_by_index"] == artifact[
-        "sampled_trn_threshold_upcrossings_by_index"
-    ]
-    assert artifact["sampled_trn_event_counts_by_index"] == artifact[
-        "sampled_trn_arm_transitions_by_index"
-    ]
-    assert artifact["sampled_trn_event_counts_by_index"] == artifact[
-        "sampled_trn_release_transitions_by_index"
-    ]
+    assert (
+        artifact["sampled_trn_event_counts_by_index"]
+        == artifact["sampled_trn_threshold_upcrossings_by_index"]
+    )
+    assert (
+        artifact["sampled_trn_event_counts_by_index"]
+        == artifact["sampled_trn_arm_transitions_by_index"]
+    )
+    assert (
+        artifact["sampled_trn_event_counts_by_index"]
+        == artifact["sampled_trn_release_transitions_by_index"]
+    )
     assert all(artifact["gates"].values())
     assert artifact["assessment"]["advance_to_mismatch"]
 
@@ -2269,13 +2088,9 @@ def test_source_resolved_distal002_pair_remains_nonselective() -> None:
 
 
 def test_fresh_network_learned_weight_handoff_passes_match() -> None:
-    artifact = yaml.safe_load(
-        FIGURE7_PROJECTION022_DISTAL002_FRESH_MATCH_PATH.read_text()
-    )
+    artifact = yaml.safe_load(FIGURE7_PROJECTION022_DISTAL002_FRESH_MATCH_PATH.read_text())
     assert artifact["status"] == "match-pass"
-    assert artifact["learned_state_handoff"] == (
-        "fresh_network_from_figure6_weights"
-    )
+    assert artifact["learned_state_handoff"] == ("fresh_network_from_figure6_weights")
     assert artifact["handoff_figure6_population_spikes"]["thalamic_relay"] == 20
     result = artifact["result"]
     assert result["learned_state_provenance"] == "simulated-learned-weight-snapshot"
@@ -2284,27 +2099,26 @@ def test_fresh_network_learned_weight_handoff_passes_match() -> None:
     assert len(result["trn_spike_indices"]) == 559
     assert len(result["nonspecific_spike_times_ms"]) == 7
     assert set(artifact["relay_event_counts_by_index"].values()) == {4}
-    assert artifact["sampled_trn_event_counts_by_index"] == artifact[
-        "sampled_trn_threshold_upcrossings_by_index"
-    ]
-    assert artifact["sampled_trn_event_counts_by_index"] == artifact[
-        "sampled_trn_arm_transitions_by_index"
-    ]
-    assert artifact["sampled_trn_event_counts_by_index"] == artifact[
-        "sampled_trn_release_transitions_by_index"
-    ]
+    assert (
+        artifact["sampled_trn_event_counts_by_index"]
+        == artifact["sampled_trn_threshold_upcrossings_by_index"]
+    )
+    assert (
+        artifact["sampled_trn_event_counts_by_index"]
+        == artifact["sampled_trn_arm_transitions_by_index"]
+    )
+    assert (
+        artifact["sampled_trn_event_counts_by_index"]
+        == artifact["sampled_trn_release_transitions_by_index"]
+    )
     assert all(artifact["gates"].values())
     assert artifact["assessment"]["advance_to_mismatch"]
 
 
 def test_fresh_network_handoff_localizes_bottom_up_only_failure() -> None:
-    artifact = yaml.safe_load(
-        FIGURE7_PROJECTION022_DISTAL002_FRESH_PAIR_PATH.read_text()
-    )
+    artifact = yaml.safe_load(FIGURE7_PROJECTION022_DISTAL002_FRESH_PAIR_PATH.read_text())
     assert artifact["status"] == "figure7-failed"
-    assert artifact["learned_state_handoff"] == (
-        "fresh_network_from_figure6_weights"
-    )
+    assert artifact["learned_state_handoff"] == ("fresh_network_from_figure6_weights")
     assert not artifact["reproduced"]
     assessment = artifact["official_assessment"]
     assert assessment["arousal"] == {
@@ -2325,8 +2139,7 @@ def test_fresh_network_handoff_localizes_bottom_up_only_failure() -> None:
     }
     mismatch = artifact["mismatch_result"]
     assert {
-        index: mismatch["relay_spike_indices"].count(index)
-        for index in (22, 31, 40, 49, 58)
+        index: mismatch["relay_spike_indices"].count(index) for index in (22, 31, 40, 49, 58)
     } == {22: 4, 31: 4, 40: 4, 49: 4, 58: 4}
     assert artifact["gates"] == {
         "match_relay_spatial_pattern": True,
@@ -2342,9 +2155,7 @@ def test_final_preregistered_distal_endpoint_preserves_figure6() -> None:
     artifact = yaml.safe_load(FIGURE6_PROJECTION022_DISTAL003_PATH.read_text())
     assert artifact["status"] == "complete"
     assert not artifact["holdouts_consulted"]
-    assert artifact["stage_2_survivor_labels"] == [
-        "paper_supplement_projection022_distal_0_03"
-    ]
+    assert artifact["stage_2_survivor_labels"] == ["paper_supplement_projection022_distal_0_03"]
     outcome = artifact["stage_2_outcomes"][0]
     assert outcome["population_spikes"]["thalamic_relay"] == 20
     assert outcome["population_spikes"]["trn"] == 554
@@ -2358,40 +2169,35 @@ def test_final_preregistered_distal_endpoint_preserves_figure6() -> None:
 
 
 def test_final_distal_endpoint_passes_clean_match() -> None:
-    artifact = yaml.safe_load(
-        FIGURE7_PROJECTION022_DISTAL003_FRESH_MATCH_PATH.read_text()
-    )
+    artifact = yaml.safe_load(FIGURE7_PROJECTION022_DISTAL003_FRESH_MATCH_PATH.read_text())
     assert artifact["status"] == "match-pass"
-    assert artifact["learned_state_handoff"] == (
-        "fresh_network_from_figure6_weights"
-    )
+    assert artifact["learned_state_handoff"] == ("fresh_network_from_figure6_weights")
     result = artifact["result"]
     assert len(result["relay_spike_indices"]) == 20
     assert set(result["relay_spike_indices"]) == {38, 39, 40, 41, 42}
     assert len(result["trn_spike_indices"]) == 558
     assert len(result["nonspecific_spike_times_ms"]) == 6
     assert set(artifact["relay_event_counts_by_index"].values()) == {4}
-    assert artifact["sampled_trn_event_counts_by_index"] == artifact[
-        "sampled_trn_threshold_upcrossings_by_index"
-    ]
-    assert artifact["sampled_trn_event_counts_by_index"] == artifact[
-        "sampled_trn_arm_transitions_by_index"
-    ]
-    assert artifact["sampled_trn_event_counts_by_index"] == artifact[
-        "sampled_trn_release_transitions_by_index"
-    ]
+    assert (
+        artifact["sampled_trn_event_counts_by_index"]
+        == artifact["sampled_trn_threshold_upcrossings_by_index"]
+    )
+    assert (
+        artifact["sampled_trn_event_counts_by_index"]
+        == artifact["sampled_trn_arm_transitions_by_index"]
+    )
+    assert (
+        artifact["sampled_trn_event_counts_by_index"]
+        == artifact["sampled_trn_release_transitions_by_index"]
+    )
     assert all(artifact["gates"].values())
     assert artifact["assessment"]["advance_to_mismatch"]
 
 
 def test_final_distal_endpoint_fails_complete_clean_figure7() -> None:
-    artifact = yaml.safe_load(
-        FIGURE7_PROJECTION022_DISTAL003_FRESH_PAIR_PATH.read_text()
-    )
+    artifact = yaml.safe_load(FIGURE7_PROJECTION022_DISTAL003_FRESH_PAIR_PATH.read_text())
     assert artifact["status"] == "figure7-failed"
-    assert artifact["learned_state_handoff"] == (
-        "fresh_network_from_figure6_weights"
-    )
+    assert artifact["learned_state_handoff"] == ("fresh_network_from_figure6_weights")
     assert not artifact["reproduced"]
     assessment = artifact["official_assessment"]
     assert assessment["arousal"] == {
@@ -2412,8 +2218,7 @@ def test_final_distal_endpoint_fails_complete_clean_figure7() -> None:
     }
     mismatch = artifact["mismatch_result"]
     assert {
-        index: mismatch["relay_spike_indices"].count(index)
-        for index in (22, 31, 40, 49, 58)
+        index: mismatch["relay_spike_indices"].count(index) for index in (22, 31, 40, 49, 58)
     } == {22: 4, 31: 4, 40: 4, 49: 4, 58: 4}
     assert artifact["gates"] == {
         "match_relay_spatial_pattern": True,
@@ -2441,9 +2246,7 @@ def test_ring_source_recovery_preserves_identifiability_boundary() -> None:
 
 
 def test_ring_sensitivity_is_bounded_and_registered_before_figure7() -> None:
-    registration = yaml.safe_load(
-        RING_KERNEL_SENSITIVITY_REGISTRATION_PATH.read_text()
-    )
+    registration = yaml.safe_load(RING_KERNEL_SENSITIVITY_REGISTRATION_PATH.read_text())
     profile = yaml.safe_load(RING_KERNEL_RADIAL_ANNULUS_PROFILE_PATH.read_text())
     assert registration["status"] == "registered-before-execution"
     assert registration["identifiability"] == "source-unresolved"
@@ -2463,9 +2266,7 @@ def test_radial_annulus_is_rejected_before_figure7() -> None:
         "0b636a062deb0df8502bde5a941350b17e55d3dece22212163f3113c8cb2637e"
     )
     assert artifact["holdouts_consulted"] is False
-    assert artifact["stage_1_survivor_labels"] == [
-        "radial_annulus_projection022_distal_0_03"
-    ]
+    assert artifact["stage_1_survivor_labels"] == ["radial_annulus_projection022_distal_0_03"]
     assert artifact["stage_2_survivor_labels"] == []
     outcome = artifact["stage_2_outcomes"][0]
     assert outcome["population_spikes"]["thalamic_relay"] == 25
@@ -2505,9 +2306,7 @@ def test_rendered_figure7_restores_exact_numeric_target() -> None:
 
 
 def test_top_down_current_reopen_preserves_original_grid_and_locks_mismatch() -> None:
-    registration = yaml.safe_load(
-        FIGURE7_TOP_DOWN_CURRENT_REGISTRATION_PATH.read_text()
-    )
+    registration = yaml.safe_load(FIGURE7_TOP_DOWN_CURRENT_REGISTRATION_PATH.read_text())
     profile = yaml.safe_load(FIGURE7_TOP_DOWN_CURRENT_MATCH_PROFILE_PATH.read_text())
     assert registration["status"] == "registered-before-execution"
     grid = registration["current_grid_pA"]
@@ -2533,9 +2332,7 @@ def test_top_down_current_match_screen_selects_only_800_pa() -> None:
 
 
 def test_800_pa_mismatch_is_registered_with_every_pair_gate_locked() -> None:
-    registration = yaml.safe_load(
-        FIGURE7_TOP_DOWN_CURRENT_MISMATCH_REGISTRATION_PATH.read_text()
-    )
+    registration = yaml.safe_load(FIGURE7_TOP_DOWN_CURRENT_MISMATCH_REGISTRATION_PATH.read_text())
     profile = yaml.safe_load(FIGURE7_TOP_DOWN_CURRENT_PAIR_PROFILE_PATH.read_text())
     assert registration["status"] == "registered-before-execution"
     assert registration["selected_current_pA"] == 800.0
@@ -2559,9 +2356,13 @@ def test_800_pa_pair_is_rejected_without_reopening_current_grid() -> None:
     }
     assert artifact["official_assessment"]["pathway"]["match_trn_spikes"] == 559
     assert artifact["official_assessment"]["pathway"]["mismatch_trn_spikes"] == 559
-    assert set(
-        artifact["official_assessment"]["pathway"]["mismatch_active_relay_indices"]
-    ) == {22, 31, 40, 49, 58}
+    assert set(artifact["official_assessment"]["pathway"]["mismatch_active_relay_indices"]) == {
+        22,
+        31,
+        40,
+        49,
+        58,
+    }
     assert not artifact["gates"]["mismatch_relay_overlap_only"]
     assert not artifact["gates"]["match_more_trn_events"]
     assert not artifact["gates"]["mismatch_nonspecific_70_hz"]
@@ -2570,9 +2371,7 @@ def test_800_pa_pair_is_rejected_without_reopening_current_grid() -> None:
 
 
 def test_one_event_current_sensitivity_is_bounded_before_match() -> None:
-    registration = yaml.safe_load(
-        FIGURE7_CURRENT_TERMINATION_REGISTRATION_PATH.read_text()
-    )
+    registration = yaml.safe_load(FIGURE7_CURRENT_TERMINATION_REGISTRATION_PATH.read_text())
     profile = yaml.safe_load(FIGURE7_ONE_EVENT_CURRENT_MATCH_PROFILE_PATH.read_text())
     assert registration["status"] == "registered-before-execution"
     assert registration["sole_new_candidate"] == {
@@ -2580,19 +2379,14 @@ def test_one_event_current_sensitivity_is_bounded_before_match() -> None:
         "free_numeric_parameters": 0,
     }
     assert profile["protocol"]["top_down_currents_pA"] == [800.0]
-    assert (
-        profile["protocol"]["top_down_current_mode"]
-        == "until_cued_cell_first_event"
-    )
+    assert profile["protocol"]["top_down_current_mode"] == "until_cued_cell_first_event"
     assert profile["protocol"]["top_down_cue_lead_ms"] == 0.0
     assert registration["locked_holdouts"][0].startswith("figure7_mismatch")
 
 
 def test_one_event_current_match_passes_and_unlocks_only_fixed_mismatch() -> None:
     artifact = yaml.safe_load(FIGURE7_ONE_EVENT_CURRENT_MATCH_RESULT_PATH.read_text())
-    registration = yaml.safe_load(
-        FIGURE7_ONE_EVENT_CURRENT_MISMATCH_REGISTRATION_PATH.read_text()
-    )
+    registration = yaml.safe_load(FIGURE7_ONE_EVENT_CURRENT_MISMATCH_REGISTRATION_PATH.read_text())
     profile = yaml.safe_load(FIGURE7_ONE_EVENT_CURRENT_PAIR_PROFILE_PATH.read_text())
     outcome = artifact["outcomes"][0]
     result = outcome["result"]
@@ -2611,10 +2405,7 @@ def test_one_event_current_match_passes_and_unlocks_only_fixed_mismatch() -> Non
         "top_down_current_mode": "until_cued_cell_first_event",
     }
     assert profile["selected_current_pA"] == 800.0
-    assert (
-        profile["protocol"]["top_down_current_mode"]
-        == "until_cued_cell_first_event"
-    )
+    assert profile["protocol"]["top_down_current_mode"] == "until_cued_cell_first_event"
 
 
 def test_one_event_current_pair_is_rejected_on_spatial_and_arousal_gates() -> None:
@@ -2653,9 +2444,7 @@ def test_selected_category_routing_is_preregistered_as_diagnostic_only() -> None
 
 def test_selected_category_match_passes_and_unlocks_only_diagnostic_mismatch() -> None:
     artifact = yaml.safe_load(FIGURE7_SELECTED_CATEGORY_MATCH_RESULT_PATH.read_text())
-    registration = yaml.safe_load(
-        FIGURE7_SELECTED_CATEGORY_MISMATCH_REGISTRATION_PATH.read_text()
-    )
+    registration = yaml.safe_load(FIGURE7_SELECTED_CATEGORY_MISMATCH_REGISTRATION_PATH.read_text())
     profile = yaml.safe_load(FIGURE7_SELECTED_CATEGORY_PAIR_PROFILE_PATH.read_text())
     outcome = artifact["outcomes"][0]
     result = outcome["result"]
@@ -2667,9 +2456,7 @@ def test_selected_category_match_passes_and_unlocks_only_diagnostic_mismatch() -
     assert len(result["nonspecific_spike_times_ms"]) == 4
     assert outcome["pass"]
     assert registration["status"] == "registered-before-execution-diagnostic"
-    assert registration["interpretation_boundary"].startswith(
-        "This is a causal intervention"
-    )
+    assert registration["interpretation_boundary"].startswith("This is a causal intervention")
     assert profile["diagnostic_only"] is True
     assert profile["protocol"]["top_down_relay_source_indices"] == [40]
     assert profile["locked_holdouts"][0] == "figure10_reset"
@@ -2699,9 +2486,7 @@ def test_selected_category_routing_diagnostic_is_rejected() -> None:
 
 def test_trn_calcium_reversal_restores_wrong_cue_lead_mechanism() -> None:
     artifact = yaml.safe_load(FIGURE7_TRN_CALCIUM_SCREEN_PATH.read_text())
-    outcomes = {
-        item["trn_calcium_source_convention"]: item for item in artifact["outcomes"]
-    }
+    outcomes = {item["trn_calcium_source_convention"]: item for item in artifact["outcomes"]}
     reversal = outcomes["modeldb_reversal"]
     assert reversal["post_bottom_up_trn_events"] == 112
     assert len(reversal["connected_match"]["cue_lead_trn_spike_times_ms"]) == 81
@@ -2712,9 +2497,10 @@ def test_trn_calcium_reversal_restores_wrong_cue_lead_mechanism() -> None:
 
 def test_trn_calcium_reversal_simultaneous_pair_is_condition_invariant() -> None:
     profile = yaml.safe_load(FIGURE7_TRN_CALCIUM_PROFILE_PATH.read_text())
-    assert profile["runtime_fingerprint"] == runtime_conventions_for_candidate(
-        profile["candidate"]
-    ).fingerprint
+    assert (
+        profile["runtime_fingerprint"]
+        == runtime_conventions_for_candidate(profile["candidate"]).fingerprint
+    )
     artifact = yaml.safe_load(FIGURE7_TRN_CALCIUM_PAIR_PATH.read_text())
     assert artifact["protocol"]["top_down_cue_lead_ms"] == 0.0
     assert not artifact["reproduced"]
@@ -2732,9 +2518,7 @@ def test_trn_calcium_reversal_simultaneous_pair_is_condition_invariant() -> None
 
 def test_archived_trn_dendritic_calcium_density_closes_source_cube() -> None:
     artifact = yaml.safe_load(FIGURE7_TRN_DENDRITIC_CALCIUM_SCREEN_PATH.read_text())
-    assert artifact["protocol"]["trn_dendritic_calcium_density_convention"] == (
-        "modeldb_100"
-    )
+    assert artifact["protocol"]["trn_dendritic_calcium_density_convention"] == ("modeldb_100")
     assert artifact["assessment"]["connected_causal_survivors"] == 0
     assert all(item["post_bottom_up_trn_events"] == 0 for item in artifact["outcomes"])
     assert all(item["sampled_trn_proximal_peak_mV"] > 85.0 for item in artifact["outcomes"])
@@ -2754,15 +2538,10 @@ def test_behavior_density_grid_rejects_low_endpoint_and_promotes_cue_safe_values
         80.0,
         100.0,
     ]
-    outcomes = {
-        item["trn_dendritic_calcium_density_mS_cm2"]: item
-        for item in cue["outcomes"]
-    }
+    outcomes = {item["trn_dendritic_calcium_density_mS_cm2"]: item for item in cue["outcomes"]}
     assert outcomes[10.0]["cue_lead_trn_events"] == 81
     assert not outcomes[10.0]["stage_1_pass"]
-    assert cue["stage_1_survivor_densities_mS_cm2"] == profile["dimension"][
-        "grid"
-    ][1:]
+    assert cue["stage_1_survivor_densities_mS_cm2"] == profile["dimension"]["grid"][1:]
 
 
 def test_behavior_density_grid_has_no_simultaneous_match_survivor() -> None:
@@ -2827,9 +2606,7 @@ def test_local_trn_axial_grid_loses_relay_selectivity_before_recruiting_trn() ->
         assert outcome["active_relay_indices"] == expected_relay
         assert outcome["trn_events"] == 0
         assert not outcome["stage_2a_pass"]
-    assert max(
-        item["sampled_trn_soma_peak_mV"] for item in artifact["outcomes"]
-    ) < -23.7
+    assert max(item["sampled_trn_soma_peak_mV"] for item in artifact["outcomes"]) < -23.7
 
 
 def test_trn_event_offset_grid_has_a_nonmonotonic_cue_safety_boundary() -> None:
@@ -2856,9 +2633,7 @@ def test_trn_event_offset_grid_has_a_nonmonotonic_cue_safety_boundary() -> None:
         67.0,
         69.0,
     ]
-    outcomes = {
-        item["trn_spike_event_voltage_offset_mV"]: item for item in cue["outcomes"]
-    }
+    outcomes = {item["trn_spike_event_voltage_offset_mV"]: item for item in cue["outcomes"]}
     for offset in (0.0, 10.0, 20.0, 30.0, 40.0):
         assert len(outcomes[offset]["result"]["equilibration_trn_spike_times_ms"]) == 81
         assert outcomes[offset]["equilibration_tail_output_events"] == 0
@@ -2920,9 +2695,7 @@ def test_trn_event_blend_grid_is_cue_safe_and_has_one_match_survivor() -> None:
     assert cue["stage_1_survivor_blend_fractions"] == expected_grid
     assert match["stage_2a_survivor_blend_fractions"] == [0.5]
     survivor = next(
-        item
-        for item in match["outcomes"]
-        if item["trn_spike_event_proximal_blend_fraction"] == 0.5
+        item for item in match["outcomes"] if item["trn_spike_event_proximal_blend_fraction"] == 0.5
     )
     assert survivor["active_relay_indices"] == [38, 39, 40, 41, 42]
     assert survivor["relay_events"] == 5
@@ -2966,8 +2739,7 @@ def test_event_blend_top_down_current_grid_is_cue_safe_and_matches_early() -> No
     assert cue["stage_1_survivor_currents_pA"] == profile["dimension"]["grid"]
     assert match["stage_2a_survivor_currents_pA"] == profile["dimension"]["grid"]
     assert [
-        item["result"]["cue_lead_category_spike_times_ms"][0]
-        for item in cue["outcomes"]
+        item["result"]["cue_lead_category_spike_times_ms"][0] for item in cue["outcomes"]
     ] == pytest.approx([8.89, 5.83, 4.47])
     assert all(item["cue_lead_trn_events"] == 0 for item in cue["outcomes"])
     assert all(item["cue_lead_relay_events"] == 0 for item in cue["outcomes"])
@@ -3009,9 +2781,7 @@ def test_event_blend_top_down_current_grid_has_no_300ms_pair_survivor() -> None:
 def test_nonspecific_event_blend_grid_is_cue_safe_and_restores_output() -> None:
     profile = yaml.safe_load(FIGURE7_NONSPECIFIC_EVENT_BLEND_PROFILE_PATH.read_text())
     cue = yaml.safe_load(FIGURE7_NONSPECIFIC_EVENT_BLEND_CUE_PATH.read_text())
-    mismatch = yaml.safe_load(
-        FIGURE7_NONSPECIFIC_EVENT_BLEND_MISMATCH_PATH.read_text()
-    )
+    mismatch = yaml.safe_load(FIGURE7_NONSPECIFIC_EVENT_BLEND_MISMATCH_PATH.read_text())
     assert profile["dimension"]["grid"] == [0.0, 0.1, 0.2, 0.3, 0.5, 0.7, 1.0]
     assert cue["stage_1_survivor_blend_fractions"] == profile["dimension"]["grid"]
     assert mismatch["stage_2a_survivor_blend_fractions"] == [0.3, 0.5, 0.7, 1.0]
@@ -3026,9 +2796,7 @@ def test_nonspecific_event_blend_grid_is_cue_safe_and_restores_output() -> None:
 
 
 def test_nonspecific_event_blend_has_no_match_mismatch_survivor() -> None:
-    artifact = yaml.safe_load(
-        FIGURE7_NONSPECIFIC_EVENT_BLEND_COMPARISON_PATH.read_text()
-    )
+    artifact = yaml.safe_load(FIGURE7_NONSPECIFIC_EVENT_BLEND_COMPARISON_PATH.read_text())
     assert artifact["status"] == "no-stage-2b-survivor"
     assert artifact["stage_2b_survivor_blend_fractions"] == []
     expected_nonspecific_events = {0.3: 1, 0.5: 1, 0.7: 2, 1.0: 2}
@@ -3040,12 +2808,8 @@ def test_nonspecific_event_blend_has_no_match_mismatch_survivor() -> None:
         assert len(mismatch["relay_spike_times_ms"]) == 20
         assert len(match["trn_spike_times_ms"]) == 81
         assert len(mismatch["trn_spike_times_ms"]) == 81
-        assert len(match["nonspecific_spike_times_ms"]) == expected_nonspecific_events[
-            blend
-        ]
-        assert len(mismatch["nonspecific_spike_times_ms"]) == (
-            expected_nonspecific_events[blend]
-        )
+        assert len(match["nonspecific_spike_times_ms"]) == expected_nonspecific_events[blend]
+        assert len(mismatch["nonspecific_spike_times_ms"]) == (expected_nonspecific_events[blend])
         assert not item["stage_2b_pass"]
 
 
@@ -3141,9 +2905,7 @@ def test_figure6_source_strength_reassessment_promotes_only_verifiable_claims() 
     assert correction["absolute_map_amplitude"] == "not-identifiable"
     assert correction["historical_2_0_peak_gate"] == "retracted-unsupported"
     assert all(artifact["gates"].values())
-    assert artifact["observed"]["combined_adaptive_final_peak"] == pytest.approx(
-        0.893
-    )
+    assert artifact["observed"]["combined_adaptive_final_peak"] == pytest.approx(0.893)
     assert assessment["qualitative_figure6_reproduced"] is True
     assert assessment["exact_absolute_amplitude_reproduced"] is None
     assert assessment["figure7_eligible_as_source_strength_prerequisite"] is True
@@ -3152,21 +2914,17 @@ def test_figure6_source_strength_reassessment_promotes_only_verifiable_claims() 
 def test_cold_network_trn_volley_releases_a_pre_stimulus_latch() -> None:
     artifact = yaml.safe_load(FIGURE7_TRN_DETECTOR_CYCLE_PATH.read_text())
     observed = artifact["observed"]
-    assert artifact["interpretation"] == (
-        "pre_stimulus_latched_arm_released_by_stimulus"
-    )
+    assert artifact["interpretation"] == ("pre_stimulus_latched_arm_released_by_stimulus")
     assert observed["active_relay_indices"] == [38, 39, 40, 41, 42]
     assert observed["trn_events"] == 81
     assert observed["pre_stimulus_latched_release_inferred"] is True
     assert set(observed["threshold_upcrossings_by_index"].values()) == {0}
     assert set(observed["release_transitions_by_index"].values()) == {1}
     assert set(observed["emitted_events_by_index"].values()) == {1}
-    assert max(
-        item[2]
-        for item in observed[
-            "post_first_event_detector_voltage_range_mV_by_index"
-        ]
-    ) < 8.0
+    assert (
+        max(item[2] for item in observed["post_first_event_detector_voltage_range_mV_by_index"])
+        < 8.0
+    )
 
 
 def test_same_network_candidate_has_no_evoked_trn_and_global_relay_output() -> None:
@@ -3180,9 +2938,7 @@ def test_same_network_candidate_has_no_evoked_trn_and_global_relay_output() -> N
     assert set(observed["threshold_upcrossings_by_index"].values()) == {0}
     assert set(observed["arm_transitions_by_index"].values()) == {0}
     assert set(observed["release_transitions_by_index"].values()) == {0}
-    assert max(
-        item[2] for item in observed["detector_voltage_range_mV_by_index"]
-    ) < -9.0
+    assert max(item[2] for item in observed["detector_voltage_range_mV_by_index"]) < -9.0
 
 
 def test_figure6_relay_train_has_four_genuine_detector_cycles_per_cell() -> None:
@@ -3212,9 +2968,7 @@ def test_figure6_relay_train_has_four_genuine_detector_cycles_per_cell() -> None
 
 def test_visual_spike_equation_audit_fixes_temporal_order_without_promotion() -> None:
     artifact = yaml.safe_load(SPIKE_EVENT_EQUATION_VISUAL_AUDIT_PATH.read_text())
-    assert artifact["status"] == (
-        "printed-equations-visually-verified_no-detector-promotion"
-    )
+    assert artifact["status"] == ("printed-equations-visually-verified_no-detector-promotion")
     assert artifact["printed_rules"] == {
         "common_temporal_form": (
             "delta(t)=1 when V(t)<0 and V(t-delta_t)>V_theta; otherwise delta(t)=0"
@@ -3235,23 +2989,17 @@ def test_visual_spike_equation_audit_fixes_temporal_order_without_promotion() ->
 
 def test_receptor_arrival_alignment_is_single_value_preregistered() -> None:
     profile = yaml.safe_load(FIGURE7_RECEPTOR_ALIGNMENT_PROFILE_PATH.read_text())
-    registration = yaml.safe_load(
-        FIGURE7_RECEPTOR_ALIGNMENT_REGISTRATION_PATH.read_text()
-    )
+    registration = yaml.safe_load(FIGURE7_RECEPTOR_ALIGNMENT_REGISTRATION_PATH.read_text())
     assert profile["status"] == "registered-before-execution"
     assert profile["protocol"]["top_down_cue_lead_ms"] == pytest.approx(7.85)
-    assert profile["protocol"]["top_down_current_mode"] == (
-        "until_cued_cell_first_event"
-    )
+    assert profile["protocol"]["top_down_current_mode"] == ("until_cued_cell_first_event")
     assert registration["dimension"]["registered_values"] == [7.85]
     assert registration["dimension"]["derivation"] == (
         "5.85-ms selected-category latency plus the archived 2-ms relay-NMDA delay"
     )
     assert registration["fixed_choices"]["source_delays_unchanged"]
     assert registration["mismatch_lock"].startswith("Do not run mismatch")
-    assert not registration["official_status_before_execution"][
-        "figure7_reproduced"
-    ]
+    assert not registration["official_status_before_execution"]["figure7_reproduced"]
 
 
 def test_receptor_arrival_alignment_fails_match_and_keeps_mismatch_locked() -> None:
@@ -3277,9 +3025,7 @@ def test_receptor_arrival_alignment_fails_match_and_keeps_mismatch_locked() -> N
 
 def test_aligned_on_center_headroom_grid_is_preregistered_and_bounded() -> None:
     profile = yaml.safe_load(FIGURE7_ALIGNED_HEADROOM_PROFILE_PATH.read_text())
-    registration = yaml.safe_load(
-        FIGURE7_ALIGNED_HEADROOM_REGISTRATION_PATH.read_text()
-    )
+    registration = yaml.safe_load(FIGURE7_ALIGNED_HEADROOM_REGISTRATION_PATH.read_text())
     assert profile["status"] == "registered-before-execution"
     assert profile["dimension"]["grid"] == [0.25, 0.5, 0.75, 1.0]
     assert profile["selection_rule"].startswith("lowest headroom fraction")
@@ -3292,9 +3038,7 @@ def test_aligned_on_center_headroom_grid_is_preregistered_and_bounded() -> None:
     assert registration["fixed_choices"]["trn_to_relay_gaba_unchanged"]
     assert registration["stage_1"]["consults"] == "figure7_match_only"
     assert registration["stage_2"]["mismatch_locked"]
-    assert not registration["official_status_before_execution"][
-        "figure7_reproduced"
-    ]
+    assert not registration["official_status_before_execution"]["figure7_reproduced"]
 
 
 def test_aligned_on_center_screen_selects_only_the_hard_bound() -> None:
@@ -3302,9 +3046,7 @@ def test_aligned_on_center_screen_selects_only_the_hard_bound() -> None:
     assert artifact["status"] == "complete"
     assert artifact["stage_1_survivor_headroom_fractions"] == [1.0]
     assert artifact["selected_headroom_fraction"] == 1.0
-    assert [
-        item["applied_common_weight_factor"] for item in artifact["outcomes"]
-    ] == pytest.approx(
+    assert [item["applied_common_weight_factor"] for item in artifact["outcomes"]] == pytest.approx(
         [
             1.5915980313491906,
             2.1831960626983813,
@@ -3312,10 +3054,12 @@ def test_aligned_on_center_screen_selects_only_the_hard_bound() -> None:
             3.366392125396763,
         ]
     )
-    assert [
-        len(item["result"]["nonspecific_spike_times_ms"])
-        for item in artifact["outcomes"]
-    ] == [6, 6, 6, 4]
+    assert [len(item["result"]["nonspecific_spike_times_ms"]) for item in artifact["outcomes"]] == [
+        6,
+        6,
+        6,
+        4,
+    ]
     selected = artifact["outcomes"][-1]
     assert set(selected["relay_event_counts_by_index"].values()) == {3}
     assert len(selected["result"]["trn_spike_times_ms"]) == 633
@@ -3326,42 +3070,30 @@ def test_aligned_on_center_screen_selects_only_the_hard_bound() -> None:
 
 def test_receptor_peak_alignment_is_single_value_and_source_derived() -> None:
     profile = yaml.safe_load(FIGURE7_RECEPTOR_PEAK_PROFILE_PATH.read_text())
-    registration = yaml.safe_load(
-        FIGURE7_RECEPTOR_PEAK_REGISTRATION_PATH.read_text()
-    )
+    registration = yaml.safe_load(FIGURE7_RECEPTOR_PEAK_REGISTRATION_PATH.read_text())
     peak_ms = biexponential_peak_time_ms(2.0, 7.0)
     expected_lead_ms = 5.85 + 2.0 + peak_ms
-    assert profile["status"] == (
-        "registered-before-execution-source-derived-timing-diagnostic"
-    )
+    assert profile["status"] == ("registered-before-execution-source-derived-timing-diagnostic")
     assert profile["dimension"]["grid"] == [1.0]
-    assert profile["protocol"]["top_down_cue_lead_ms"] == pytest.approx(
+    assert profile["protocol"]["top_down_cue_lead_ms"] == pytest.approx(expected_lead_ms)
+    assert profile["protocol"]["record_relay_diagnostics"]
+    assert registration["source_derivation"]["receptor_peak_after_arrival_ms"] == pytest.approx(
+        peak_ms
+    )
+    assert registration["source_derivation"]["registered_top_down_cue_lead_ms"] == pytest.approx(
         expected_lead_ms
     )
-    assert profile["protocol"]["record_relay_diagnostics"]
-    assert registration["source_derivation"][
-        "receptor_peak_after_arrival_ms"
-    ] == pytest.approx(peak_ms)
-    assert registration["source_derivation"][
-        "registered_top_down_cue_lead_ms"
-    ] == pytest.approx(expected_lead_ms)
     assert registration["fixed"]["source_delays_unchanged"]
     assert registration["fixed"]["receptor_kinetics_unchanged"]
     assert registration["fixed"]["weights_fixed_before_timing_test"]
     assert registration["stopping_rule"].startswith("Run the sole match candidate")
-    assert not registration["official_status_before_execution"][
-        "figure7_reproduced"
-    ]
+    assert not registration["official_status_before_execution"]["figure7_reproduced"]
 
 
 def test_receptor_peak_match_passes_and_verification_is_locked_to_it() -> None:
     screen = yaml.safe_load(FIGURE7_RECEPTOR_PEAK_SCREEN_PATH.read_text())
-    profile = yaml.safe_load(
-        FIGURE7_RECEPTOR_PEAK_VERIFICATION_PROFILE_PATH.read_text()
-    )
-    registration = yaml.safe_load(
-        FIGURE7_RECEPTOR_PEAK_VERIFICATION_REGISTRATION_PATH.read_text()
-    )
+    profile = yaml.safe_load(FIGURE7_RECEPTOR_PEAK_VERIFICATION_PROFILE_PATH.read_text())
+    registration = yaml.safe_load(FIGURE7_RECEPTOR_PEAK_VERIFICATION_REGISTRATION_PATH.read_text())
     outcome = screen["outcomes"][0]
     result = outcome["result"]
     assert screen["stage_1_survivor_headroom_fractions"] == [1.0]
@@ -3381,13 +3113,9 @@ def test_receptor_peak_match_passes_and_verification_is_locked_to_it() -> None:
 
 
 def test_receptor_peak_verification_unlocks_only_fixed_mismatch() -> None:
-    verification = yaml.safe_load(
-        FIGURE7_RECEPTOR_PEAK_VERIFICATION_RESULT_PATH.read_text()
-    )
+    verification = yaml.safe_load(FIGURE7_RECEPTOR_PEAK_VERIFICATION_RESULT_PATH.read_text())
     profile = yaml.safe_load(FIGURE7_RECEPTOR_PEAK_MISMATCH_PROFILE_PATH.read_text())
-    registration = yaml.safe_load(
-        FIGURE7_RECEPTOR_PEAK_MISMATCH_REGISTRATION_PATH.read_text()
-    )
+    registration = yaml.safe_load(FIGURE7_RECEPTOR_PEAK_MISMATCH_REGISTRATION_PATH.read_text())
     outcome = verification["outcomes"][0]
     result = outcome["result"]
     assert verification["assessment"]["advance_to_mismatch"]
@@ -3399,14 +3127,10 @@ def test_receptor_peak_verification_unlocks_only_fixed_mismatch() -> None:
     assert profile["match_verification_artifact"] == str(
         FIGURE7_RECEPTOR_PEAK_VERIFICATION_RESULT_PATH.relative_to(ROOT)
     )
-    assert profile["protocol"]["top_down_cue_lead_ms"] == pytest.approx(
-        11.35773631178703
-    )
+    assert profile["protocol"]["top_down_cue_lead_ms"] == pytest.approx(11.35773631178703)
     assert registration["execution_limit"].startswith("exactly one mismatch")
     assert registration["registered_holdout"]["receptor_peak_timing_fixed"]
-    assert not registration["official_status_before_execution"][
-        "figure7_reproduced"
-    ]
+    assert not registration["official_status_before_execution"]["figure7_reproduced"]
 
 
 def test_receptor_peak_pair_repairs_match_but_fails_mismatch_separation() -> None:
@@ -3417,14 +3141,9 @@ def test_receptor_peak_pair_repairs_match_but_fails_mismatch_separation() -> Non
     assert not artifact["reproduced"]
     assert len(artifact["match_scoring_summary"]["relay_spike_times_ms"]) == 15
     assert len(artifact["match_scoring_summary"]["trn_spike_times_ms"]) == 635
-    assert len(
-        artifact["match_scoring_summary"]["nonspecific_spike_times_ms"]
-    ) == 4
+    assert len(artifact["match_scoring_summary"]["nonspecific_spike_times_ms"]) == 4
     assert set(mismatch["relay_spike_indices"]) == {22, 31, 40, 49, 58}
-    assert all(
-        mismatch["relay_spike_indices"].count(index) == 3
-        for index in (22, 31, 40, 49, 58)
-    )
+    assert all(mismatch["relay_spike_indices"].count(index) == 3 for index in (22, 31, 40, 49, 58))
     assert len(mismatch["trn_spike_times_ms"]) == 653
     assert len(mismatch["nonspecific_spike_times_ms"]) == 4
     assert gates["match_relay_spatial_pattern"]
@@ -3439,38 +3158,26 @@ def test_receptor_peak_pair_repairs_match_but_fails_mismatch_separation() -> Non
 
 def test_receptor_peak_gaba_interaction_reuses_closed_capacity_grid() -> None:
     profile = yaml.safe_load(FIGURE7_RECEPTOR_PEAK_GABA_PROFILE_PATH.read_text())
-    registration = yaml.safe_load(
-        FIGURE7_RECEPTOR_PEAK_GABA_REGISTRATION_PATH.read_text()
-    )
+    registration = yaml.safe_load(FIGURE7_RECEPTOR_PEAK_GABA_REGISTRATION_PATH.read_text())
     assert profile["status"] == "registered-before-execution-finite-interaction"
     assert profile["protocol"]["condition"] == "match"
-    assert profile["protocol"]["top_down_cue_lead_ms"] == pytest.approx(
-        11.35773631178703
-    )
+    assert profile["protocol"]["top_down_cue_lead_ms"] == pytest.approx(11.35773631178703)
     assert profile["dimension"]["grid"] == [1.125, 1.25, 1.5, 2.0, 3.0]
-    assert registration["registered_dimension"]["common_gains"] == profile[
-        "dimension"
-    ]["grid"]
+    assert registration["registered_dimension"]["common_gains"] == profile["dimension"]["grid"]
     assert registration["registered_dimension"]["candidate_count"] == 5
     assert registration["stopping_rule"].startswith("Run all five matches")
-    assert not registration["official_status_before_execution"][
-        "figure7_reproduced"
-    ]
+    assert not registration["official_status_before_execution"]["figure7_reproduced"]
 
 
 def test_receptor_peak_gaba_screen_selects_lowest_exact_match_survivor() -> None:
     screen = yaml.safe_load(FIGURE7_RECEPTOR_PEAK_GABA_SCREEN_PATH.read_text())
-    profile = yaml.safe_load(
-        FIGURE7_RECEPTOR_PEAK_GABA_VERIFICATION_PROFILE_PATH.read_text()
-    )
+    profile = yaml.safe_load(FIGURE7_RECEPTOR_PEAK_GABA_VERIFICATION_PROFILE_PATH.read_text())
     registration = yaml.safe_load(
         FIGURE7_RECEPTOR_PEAK_GABA_VERIFICATION_REGISTRATION_PATH.read_text()
     )
     assert screen["match_survivor_gains"] == [1.5, 2.0, 3.0]
     assert screen["selected_gain"] == 1.5
-    selected = next(
-        outcome for outcome in screen["outcomes"] if outcome["common_gain"] == 1.5
-    )
+    selected = next(outcome for outcome in screen["outcomes"] if outcome["common_gain"] == 1.5)
     assert selected["pass"]
     assert selected["relay_active_indices"] == [38, 39, 40, 41, 42]
     assert selected["relay_events"] == 10
@@ -3483,15 +3190,9 @@ def test_receptor_peak_gaba_screen_selects_lowest_exact_match_survivor() -> None
 
 
 def test_receptor_peak_gaba_verification_unlocks_only_gain_1_5_mismatch() -> None:
-    verification = yaml.safe_load(
-        FIGURE7_RECEPTOR_PEAK_GABA_VERIFICATION_RESULT_PATH.read_text()
-    )
-    profile = yaml.safe_load(
-        FIGURE7_RECEPTOR_PEAK_GABA_MISMATCH_PROFILE_PATH.read_text()
-    )
-    registration = yaml.safe_load(
-        FIGURE7_RECEPTOR_PEAK_GABA_MISMATCH_REGISTRATION_PATH.read_text()
-    )
+    verification = yaml.safe_load(FIGURE7_RECEPTOR_PEAK_GABA_VERIFICATION_RESULT_PATH.read_text())
+    profile = yaml.safe_load(FIGURE7_RECEPTOR_PEAK_GABA_MISMATCH_PROFILE_PATH.read_text())
+    registration = yaml.safe_load(FIGURE7_RECEPTOR_PEAK_GABA_MISMATCH_REGISTRATION_PATH.read_text())
     outcome = verification["outcomes"][0]
     assert outcome["pass"]
     assert outcome["common_gain"] == 1.5
@@ -3501,38 +3202,25 @@ def test_receptor_peak_gaba_verification_unlocks_only_gain_1_5_mismatch() -> Non
     assert outcome["gates"]["sampled_trn_events_have_fresh_cycles"]
     assert verification["assessment"]["advance_to_mismatch"]
     assert profile["recognition_trn_to_relay_common_gain"]["value"] == 1.5
-    assert profile["recognition_trn_to_relay_common_gain"][
-        "training_scales_unchanged"
-    ]
+    assert profile["recognition_trn_to_relay_common_gain"]["training_scales_unchanged"]
     assert registration["execution_limit"] == "exactly one mismatch at gain 1.5"
-    assert not registration["official_status_before_execution"][
-        "figure7_reproduced"
-    ]
+    assert not registration["official_status_before_execution"]["figure7_reproduced"]
 
 
 def test_receptor_peak_gaba_pair_is_condition_invariant_and_closes_family() -> None:
-    artifact = yaml.safe_load(
-        FIGURE7_RECEPTOR_PEAK_GABA_PAIR_RESULT_PATH.read_text()
-    )
+    artifact = yaml.safe_load(FIGURE7_RECEPTOR_PEAK_GABA_PAIR_RESULT_PATH.read_text())
     match = artifact["match_scoring_summary"]
     mismatch = artifact["mismatch_result"]
     gates = artifact["gates"]
     assert artifact["status"] == "figure7-failed"
     assert not artifact["reproduced"]
-    assert len(match["relay_spike_times_ms"]) == len(
-        mismatch["relay_spike_times_ms"]
-    ) == 10
-    assert len(match["trn_spike_times_ms"]) == len(
-        mismatch["trn_spike_times_ms"]
-    ) == 584
-    assert len(match["nonspecific_spike_times_ms"]) == len(
-        mismatch["nonspecific_spike_times_ms"]
-    ) == 4
-    assert set(mismatch["relay_spike_indices"]) == {22, 31, 40, 49, 58}
-    assert all(
-        mismatch["relay_spike_indices"].count(index) == 2
-        for index in (22, 31, 40, 49, 58)
+    assert len(match["relay_spike_times_ms"]) == len(mismatch["relay_spike_times_ms"]) == 10
+    assert len(match["trn_spike_times_ms"]) == len(mismatch["trn_spike_times_ms"]) == 584
+    assert (
+        len(match["nonspecific_spike_times_ms"]) == len(mismatch["nonspecific_spike_times_ms"]) == 4
     )
+    assert set(mismatch["relay_spike_indices"]) == {22, 31, 40, 49, 58}
+    assert all(mismatch["relay_spike_indices"].count(index) == 2 for index in (22, 31, 40, 49, 58))
     assert gates["sampled_mismatch_trn_events_have_fresh_cycles"]
     assert not gates["mismatch_relay_overlap_only"]
     assert not gates["match_more_active_relay_cells"]
@@ -3543,17 +3231,13 @@ def test_receptor_peak_gaba_pair_is_condition_invariant_and_closes_family() -> N
 
 def test_receptor_peak_annulus_is_one_parameter_free_match_endpoint() -> None:
     profile = yaml.safe_load(FIGURE7_RECEPTOR_PEAK_ANNULUS_PROFILE_PATH.read_text())
-    registration = yaml.safe_load(
-        FIGURE7_RECEPTOR_PEAK_ANNULUS_REGISTRATION_PATH.read_text()
+    registration = yaml.safe_load(FIGURE7_RECEPTOR_PEAK_ANNULUS_REGISTRATION_PATH.read_text())
+    assert (
+        profile["runtime_overrides"]["corticoreticular_ring_kernel_convention"] == "radial_annulus"
     )
-    assert profile["runtime_overrides"][
-        "corticoreticular_ring_kernel_convention"
-    ] == "radial_annulus"
     assert profile["learned_state"]["selected_headroom_fraction"] == 1.0
     assert profile["dimension"]["grid"] == [1.0]
-    assert profile["protocol"]["top_down_cue_lead_ms"] == pytest.approx(
-        11.35773631178703
-    )
+    assert profile["protocol"]["top_down_cue_lead_ms"] == pytest.approx(11.35773631178703)
     assert profile["protocol"]["record_relay_diagnostics"]
     assert registration["fixed"]["corticoreticular_common_gain"] == 1.0
     assert registration["source_boundary"].startswith(
@@ -3580,32 +3264,26 @@ def test_receptor_peak_annulus_fails_match_rate_and_locks_mismatch() -> None:
 
 
 def test_adjacent_annulus_radius_is_geometry_derived_and_single_value() -> None:
-    profile = yaml.safe_load(
-        FIGURE7_RECEPTOR_PEAK_ADJACENT_ANNULUS_PROFILE_PATH.read_text()
-    )
+    profile = yaml.safe_load(FIGURE7_RECEPTOR_PEAK_ADJACENT_ANNULUS_PROFILE_PATH.read_text())
     registration = yaml.safe_load(
         FIGURE7_RECEPTOR_PEAK_ADJACENT_ANNULUS_REGISTRATION_PATH.read_text()
     )
     expected_scale = 1 / (2**0.5 * 1.5)
-    assert profile["runtime_overrides"][
-        "corticoreticular_ring_kernel_convention"
-    ] == "radial_annulus"
-    assert profile["runtime_overrides"][
-        "corticoreticular_ring_peak_radius_scale"
-    ] == pytest.approx(expected_scale)
-    assert profile["dimension"]["grid"] == [1.0]
-    assert registration["fixed"]["target_peak_lattice_distance"] == 1.0
-    assert registration["fixed"]["ring_peak_radius_scale"] == pytest.approx(
+    assert (
+        profile["runtime_overrides"]["corticoreticular_ring_kernel_convention"] == "radial_annulus"
+    )
+    assert profile["runtime_overrides"]["corticoreticular_ring_peak_radius_scale"] == pytest.approx(
         expected_scale
     )
+    assert profile["dimension"]["grid"] == [1.0]
+    assert registration["fixed"]["target_peak_lattice_distance"] == 1.0
+    assert registration["fixed"]["ring_peak_radius_scale"] == pytest.approx(expected_scale)
     assert registration["fixed"]["sensory_input_unchanged"]
     assert registration["stopping_rule"].startswith("Run one full-detector match")
 
 
 def test_adjacent_annulus_fails_figure6_before_holdout_consultation() -> None:
-    artifact = yaml.safe_load(
-        FIGURE7_RECEPTOR_PEAK_ADJACENT_ANNULUS_RESULT_PATH.read_text()
-    )
+    artifact = yaml.safe_load(FIGURE7_RECEPTOR_PEAK_ADJACENT_ANNULUS_RESULT_PATH.read_text())
     assert artifact["status"] == "figure6-prerequisite-failed"
     assert artifact["holdouts_consulted"] == ["figure6_prerequisite"]
     assert not artifact["mismatch_consulted"]
@@ -3623,12 +3301,8 @@ def test_adjacent_annulus_fails_figure6_before_holdout_consultation() -> None:
 
 def test_learned_comparator_floor_is_preregistered_as_reconstruction() -> None:
     profile = yaml.safe_load(FIGURE7_LEARNED_COMPARATOR_PROFILE_PATH.read_text())
-    registration = yaml.safe_load(
-        FIGURE7_LEARNED_COMPARATOR_REGISTRATION_PATH.read_text()
-    )
-    assert profile["status"] == (
-        "registered-before-execution-calibrated-reconstruction"
-    )
+    registration = yaml.safe_load(FIGURE7_LEARNED_COMPARATOR_REGISTRATION_PATH.read_text())
+    assert profile["status"] == ("registered-before-execution-calibrated-reconstruction")
     assert profile["dimension"]["grid"] == [0.0, 0.25, 0.5, 0.75]
     assert profile["dimension"]["control_floor"] == 1.0
     assert profile["dimension"]["selection_rule"].startswith("highest")
@@ -3636,12 +3310,11 @@ def test_learned_comparator_floor_is_preregistered_as_reconstruction() -> None:
     assert registration["scope_boundary"]["classification"] == (
         "calibrated-reconstruction-not-recovered-source"
     )
-    assert registration["scope_boundary"]["affects"].startswith(
-        "active bottom-up relay pixels"
+    assert registration["scope_boundary"]["affects"].startswith("active bottom-up relay pixels")
+    assert (
+        "Figure 6 training inputs and dynamics"
+        in registration["scope_boundary"]["leaves_unchanged"]
     )
-    assert "Figure 6 training inputs and dynamics" in registration[
-        "scope_boundary"
-    ]["leaves_unchanged"]
     assert registration["stopping_rule"].startswith("Run all four match-only")
     assert registration["locked_holdouts"][0] == "figure7_mismatch"
 
@@ -3649,9 +3322,7 @@ def test_learned_comparator_floor_is_preregistered_as_reconstruction() -> None:
 def test_smooth_learned_comparator_floor_fails_match_before_mismatch() -> None:
     artifact = yaml.safe_load(FIGURE7_LEARNED_COMPARATOR_RESULT_PATH.read_text())
     assert artifact["status"] == "complete"
-    assert artifact["classification"] == (
-        "calibrated-reconstruction-not-recovered-source"
-    )
+    assert artifact["classification"] == ("calibrated-reconstruction-not-recovered-source")
     assert artifact["holdouts_consulted"] == ["figure7_match"]
     assert not artifact["mismatch_consulted"]
     assert artifact["handoff_figure6_population_spikes"]["thalamic_relay"] == 20
@@ -3673,18 +3344,14 @@ def test_smooth_learned_comparator_floor_fails_match_before_mismatch() -> None:
         assert len(result["trn_spike_times_ms"]) == trn_count
         assert len(result["nonspecific_spike_times_ms"]) == nonspecific_count
         assert not outcome["pass"]
-    assert not artifact["assessment"][
-        "advance_to_independent_match_verification"
-    ]
+    assert not artifact["assessment"]["advance_to_independent_match_verification"]
     assert not artifact["assessment"]["advance_to_mismatch"]
     assert artifact["assessment"]["mismatch_remains_locked"]
 
 
 def test_half_max_comparator_is_one_parameter_free_registered_candidate() -> None:
     profile = yaml.safe_load(FIGURE7_HALF_MAX_COMPARATOR_PROFILE_PATH.read_text())
-    registration = yaml.safe_load(
-        FIGURE7_HALF_MAX_COMPARATOR_REGISTRATION_PATH.read_text()
-    )
+    registration = yaml.safe_load(FIGURE7_HALF_MAX_COMPARATOR_REGISTRATION_PATH.read_text())
     assert profile["dimension"] == {
         "name": "learned_expectation_half_max_saturated_gate",
         "kind": "half_max_binary",
@@ -3711,9 +3378,7 @@ def test_half_max_comparator_fails_match_without_threshold_fitting() -> None:
     outcome = artifact["outcomes"][0]
     result = outcome["result"]
     assert artifact["status"] == "complete"
-    assert artifact["classification"] == (
-        "calibrated-reconstruction-not-recovered-source"
-    )
+    assert artifact["classification"] == ("calibrated-reconstruction-not-recovered-source")
     assert artifact["holdouts_consulted"] == ["figure7_match"]
     assert not artifact["mismatch_consulted"]
     assert outcome["support_threshold"] == 0.5
@@ -3738,9 +3403,7 @@ def test_half_max_comparator_fails_match_without_threshold_fitting() -> None:
 
 def test_top5_comparator_cardinality_is_derived_before_execution() -> None:
     profile = yaml.safe_load(FIGURE7_TOP5_COMPARATOR_PROFILE_PATH.read_text())
-    registration = yaml.safe_load(
-        FIGURE7_TOP5_COMPARATOR_REGISTRATION_PATH.read_text()
-    )
+    registration = yaml.safe_load(FIGURE7_TOP5_COMPARATOR_REGISTRATION_PATH.read_text())
     assert profile["dimension"]["kind"] == "top_k_binary"
     assert profile["dimension"]["grid"] == [5]
     assert profile["dimension"]["candidate_count"] == 1
@@ -3766,9 +3429,7 @@ def test_top5_comparator_is_an_exact_match_screen_survivor() -> None:
     artifact = yaml.safe_load(FIGURE7_TOP5_COMPARATOR_RESULT_PATH.read_text())
     outcome = artifact["outcomes"][0]
     result = outcome["result"]
-    assert artifact["classification"] == (
-        "calibrated-reconstruction-not-recovered-source"
-    )
+    assert artifact["classification"] == ("calibrated-reconstruction-not-recovered-source")
     assert artifact["match_survivor_target_counts"] == [5]
     assert artifact["selected_target_count"] == 5
     assert outcome["target_count"] == 5
@@ -3785,9 +3446,7 @@ def test_top5_comparator_is_an_exact_match_screen_survivor() -> None:
 
 
 def test_top5_verification_registers_only_the_screen_survivor() -> None:
-    profile = yaml.safe_load(
-        FIGURE7_TOP5_COMPARATOR_VERIFICATION_PROFILE_PATH.read_text()
-    )
+    profile = yaml.safe_load(FIGURE7_TOP5_COMPARATOR_VERIFICATION_PROFILE_PATH.read_text())
     registration = yaml.safe_load(
         FIGURE7_TOP5_COMPARATOR_VERIFICATION_REGISTRATION_PATH.read_text()
     )
@@ -3809,9 +3468,7 @@ def test_top5_verification_registers_only_the_screen_survivor() -> None:
 
 
 def test_top5_match_verifies_with_complete_sampled_detector_cycles() -> None:
-    artifact = yaml.safe_load(
-        FIGURE7_TOP5_COMPARATOR_VERIFICATION_RESULT_PATH.read_text()
-    )
+    artifact = yaml.safe_load(FIGURE7_TOP5_COMPARATOR_VERIFICATION_RESULT_PATH.read_text())
     outcome = artifact["outcomes"][0]
     result = outcome["result"]
     assert outcome["pass"]
@@ -3820,24 +3477,25 @@ def test_top5_match_verifies_with_complete_sampled_detector_cycles() -> None:
     assert len(result["nonspecific_spike_times_ms"]) == 4
     assert set(outcome["relay_event_counts_by_index"].values()) == {3}
     assert outcome["gates"]["sampled_trn_events_have_fresh_cycles"]
-    assert outcome["sampled_trn_event_counts_by_index"] == outcome[
-        "sampled_trn_threshold_upcrossings_by_index"
-    ]
-    assert outcome["sampled_trn_event_counts_by_index"] == outcome[
-        "sampled_trn_arm_transitions_by_index"
-    ]
-    assert outcome["sampled_trn_event_counts_by_index"] == outcome[
-        "sampled_trn_release_transitions_by_index"
-    ]
+    assert (
+        outcome["sampled_trn_event_counts_by_index"]
+        == outcome["sampled_trn_threshold_upcrossings_by_index"]
+    )
+    assert (
+        outcome["sampled_trn_event_counts_by_index"]
+        == outcome["sampled_trn_arm_transitions_by_index"]
+    )
+    assert (
+        outcome["sampled_trn_event_counts_by_index"]
+        == outcome["sampled_trn_release_transitions_by_index"]
+    )
     assert artifact["assessment"]["advance_to_mismatch"]
     assert not artifact["assessment"]["mismatch_remains_locked"]
 
 
 def test_top5_mismatch_is_fixed_only_after_verified_match() -> None:
     profile = yaml.safe_load(FIGURE7_TOP5_COMPARATOR_MISMATCH_PROFILE_PATH.read_text())
-    registration = yaml.safe_load(
-        FIGURE7_TOP5_COMPARATOR_MISMATCH_REGISTRATION_PATH.read_text()
-    )
+    registration = yaml.safe_load(FIGURE7_TOP5_COMPARATOR_MISMATCH_REGISTRATION_PATH.read_text())
     assert profile["comparator"] == {
         "transform": "top_k_binary",
         "target_count": 5,
@@ -3848,9 +3506,7 @@ def test_top5_mismatch_is_fixed_only_after_verified_match() -> None:
         "trn_events": 635,
         "nonspecific_events": 4,
     }
-    assert registration["authorization"][
-        "sampled_match_trn_detector_cycles_complete"
-    ]
+    assert registration["authorization"]["sampled_match_trn_detector_cycles_complete"]
     assert registration["execution"]["condition"] == "mismatch"
     assert registration["execution"]["run_count"] == 1
     assert registration["stopping_rule"].startswith("Run one fixed vertical")
@@ -3860,9 +3516,7 @@ def test_top5_pair_recovers_pathway_but_not_70hz_arousal() -> None:
     artifact = yaml.safe_load(FIGURE7_TOP5_COMPARATOR_PAIR_RESULT_PATH.read_text())
     mismatch = artifact["mismatch_result"]
     assert artifact["status"] == "figure7-failed"
-    assert artifact["classification"] == (
-        "calibrated-reconstruction-not-recovered-source"
-    )
+    assert artifact["classification"] == ("calibrated-reconstruction-not-recovered-source")
     assert not artifact["reproduced"]
     assert set(mismatch["relay_spike_indices"]) == {40}
     assert len(mismatch["relay_spike_times_ms"]) == 3
@@ -3881,25 +3535,24 @@ def test_top5_pair_recovers_pathway_but_not_70hz_arousal() -> None:
     ):
         assert artifact["gates"][passed_gate]
     assert not artifact["gates"]["mismatch_nonspecific_70_hz"]
-    assert artifact["sampled_mismatch_trn_event_counts_by_index"] == artifact[
-        "sampled_mismatch_trn_threshold_upcrossings_by_index"
-    ]
-    assert artifact["sampled_mismatch_trn_event_counts_by_index"] == artifact[
-        "sampled_mismatch_trn_arm_transitions_by_index"
-    ]
-    assert artifact["sampled_mismatch_trn_event_counts_by_index"] == artifact[
-        "sampled_mismatch_trn_release_transitions_by_index"
-    ]
+    assert (
+        artifact["sampled_mismatch_trn_event_counts_by_index"]
+        == artifact["sampled_mismatch_trn_threshold_upcrossings_by_index"]
+    )
+    assert (
+        artifact["sampled_mismatch_trn_event_counts_by_index"]
+        == artifact["sampled_mismatch_trn_arm_transitions_by_index"]
+    )
+    assert (
+        artifact["sampled_mismatch_trn_event_counts_by_index"]
+        == artifact["sampled_mismatch_trn_release_transitions_by_index"]
+    )
 
 
 def test_top5_nonspecific_transfer_reuses_predeclared_finite_grid() -> None:
     profile = yaml.safe_load(FIGURE7_TOP5_NONSPECIFIC_BLEND_PROFILE_PATH.read_text())
-    registration = yaml.safe_load(
-        FIGURE7_TOP5_NONSPECIFIC_BLEND_REGISTRATION_PATH.read_text()
-    )
-    prior = yaml.safe_load(
-        (ROOT / profile["prior_transfer_profile"]).read_text()
-    )
+    registration = yaml.safe_load(FIGURE7_TOP5_NONSPECIFIC_BLEND_REGISTRATION_PATH.read_text())
+    prior = yaml.safe_load((ROOT / profile["prior_transfer_profile"]).read_text())
     assert profile["dimension"]["grid"] == [0.1, 0.2, 0.3, 0.5, 0.7, 1.0]
     assert profile["dimension"]["baseline_control"] == 0.0
     assert [0.0, *profile["dimension"]["grid"]] == prior["dimension"]["grid"]
@@ -3911,9 +3564,7 @@ def test_top5_nonspecific_transfer_reuses_predeclared_finite_grid() -> None:
         "nonspecific output event coordinate"
     )
     assert registration["stopping_rule"].startswith("Run all six positive")
-    assert registration["locked_holdouts"][0] == (
-        "figure7_mismatch_with_output_transfer"
-    )
+    assert registration["locked_holdouts"][0] == ("figure7_mismatch_with_output_transfer")
 
 
 def test_shared_arm_release_blend_has_no_exact_match_survivor() -> None:
@@ -3935,9 +3586,10 @@ def test_shared_arm_release_blend_has_no_exact_match_survivor() -> None:
         result = outcome["result"]
         assert len(result["relay_spike_times_ms"]) == 15
         assert len(result["trn_spike_times_ms"]) == 635
-        assert len(result["nonspecific_spike_times_ms"]) == expected_nonspecific[
-            outcome["nonspecific_event_blend_fraction"]
-        ]
+        assert (
+            len(result["nonspecific_spike_times_ms"])
+            == expected_nonspecific[outcome["nonspecific_event_blend_fraction"]]
+        )
         assert outcome["gates"]["relay_events"]
         assert outcome["gates"]["trn_events"]
         assert not outcome["gates"]["nonspecific_events"]
@@ -3948,9 +3600,7 @@ def test_shared_arm_release_blend_has_no_exact_match_survivor() -> None:
 
 def test_split_nonspecific_detector_reuses_arm_grid_and_somatic_release() -> None:
     profile = yaml.safe_load(FIGURE7_TOP5_NONSPECIFIC_SPLIT_PROFILE_PATH.read_text())
-    registration = yaml.safe_load(
-        FIGURE7_TOP5_NONSPECIFIC_SPLIT_REGISTRATION_PATH.read_text()
-    )
+    registration = yaml.safe_load(FIGURE7_TOP5_NONSPECIFIC_SPLIT_REGISTRATION_PATH.read_text())
     assert profile["dimension"]["grid"] == [0.1, 0.2, 0.3, 0.5, 0.7, 1.0]
     assert profile["dimension"]["release_proximal_blend_fraction"] == 0.0
     assert profile["dimension"]["selection_rule"].startswith("highest")
@@ -3964,9 +3614,7 @@ def test_split_nonspecific_detector_reuses_arm_grid_and_somatic_release() -> Non
     assert registration["scope_boundary"]["changes"].startswith(
         "nonspecific event arming coordinate"
     )
-    assert registration["scope_boundary"]["preserves"] == (
-        "somatic release/rearming coordinate"
-    )
+    assert registration["scope_boundary"]["preserves"] == ("somatic release/rearming coordinate")
     assert registration["stopping_rule"].startswith("Run all six registered")
 
 
@@ -3990,9 +3638,10 @@ def test_split_nonspecific_detector_has_no_exact_match_survivor() -> None:
         result = outcome["result"]
         assert len(result["relay_spike_times_ms"]) == 15
         assert len(result["trn_spike_times_ms"]) == 635
-        assert len(result["nonspecific_spike_times_ms"]) == expected_nonspecific[
-            outcome["nonspecific_event_blend_fraction"]
-        ]
+        assert (
+            len(result["nonspecific_spike_times_ms"])
+            == expected_nonspecific[outcome["nonspecific_event_blend_fraction"]]
+        )
         assert outcome["gates"]["relay_events"]
         assert outcome["gates"]["trn_events"]
         assert not outcome["gates"]["nonspecific_events"]
@@ -4003,12 +3652,8 @@ def test_split_nonspecific_detector_has_no_exact_match_survivor() -> None:
 
 def test_projection049_supplement_tuple_is_registered_as_discrete_source_choice() -> None:
     profile = yaml.safe_load(FIGURE6_NONSPECIFIC_DISTAL_GABA_PROFILE_PATH.read_text())
-    registration = yaml.safe_load(
-        FIGURE6_NONSPECIFIC_DISTAL_GABA_REGISTRATION_PATH.read_text()
-    )
-    assert profile["source_conflict"]["projection_id"] == (
-        "modeldb112923.projection.049"
-    )
+    registration = yaml.safe_load(FIGURE6_NONSPECIFIC_DISTAL_GABA_REGISTRATION_PATH.read_text())
+    assert profile["source_conflict"]["projection_id"] == ("modeldb112923.projection.049")
     assert profile["source_conflict"]["modeldb_serialized"] == {
         "channel_conductance_mS_cm2": 1.461,
         "rise_fall_ms": [1.0, 4.0],
@@ -4017,9 +3662,10 @@ def test_projection049_supplement_tuple_is_registered_as_discrete_source_choice(
         "channel_conductance_mS_cm2": 1.5,
         "rise_fall_ms": [1.0, 7.0],
     }
-    assert profile["runtime_overrides"][
-        "nonspecific_distal_gaba_source_convention"
-    ] == "paper_supplement_1p5_1_7"
+    assert (
+        profile["runtime_overrides"]["nonspecific_distal_gaba_source_convention"]
+        == "paper_supplement_1p5_1_7"
+    )
     assert registration["resolution_policy"]["historical_default_unchanged"]
     assert registration["resolution_policy"]["new_runtime_fingerprint_required"]
     assert registration["resolution_policy"]["changes_only_projection_049"]
@@ -4027,14 +3673,10 @@ def test_projection049_supplement_tuple_is_registered_as_discrete_source_choice(
 
 
 def test_projection049_supplement_tuple_fails_figure6_prerequisite() -> None:
-    artifact = yaml.safe_load(
-        FIGURE6_NONSPECIFIC_DISTAL_GABA_RESULT_PATH.read_text()
-    )
+    artifact = yaml.safe_load(FIGURE6_NONSPECIFIC_DISTAL_GABA_RESULT_PATH.read_text())
     assert artifact["status"] == "figure6-failed"
     assert not artifact["pass"]
-    assert artifact["runtime_fingerprint"] == artifact["result"][
-        "convention_fingerprint"
-    ]
+    assert artifact["runtime_fingerprint"] == artifact["result"]["convention_fingerprint"]
     assert artifact["result"]["population_spikes"] == {
         "thalamic_relay": 104,
         "layer6ii_excitatory_v1": 12,
@@ -4051,9 +3693,7 @@ def test_projection049_supplement_tuple_fails_figure6_prerequisite() -> None:
     assert not artifact["gates"]["relay_events_per_active_index"]
     assert not artifact["gates"]["relay_events"]
     assert not artifact["assessment"]["cortical_chain_gate_valid"]
-    assert artifact["assessment"]["decisive_failure"].startswith(
-        "relay recruitment"
-    )
+    assert artifact["assessment"]["decisive_failure"].startswith("relay recruitment")
     assert artifact["gates"]["causal_learning_pair"]
     assert artifact["gates"]["top_down_horizontal_contrast"]
     assert not artifact["assessment"]["advance_to_figure7_match"]
@@ -4061,9 +3701,7 @@ def test_projection049_supplement_tuple_fails_figure6_prerequisite() -> None:
 
 
 def test_top5_nonspecific_gaba_transfer_is_preregistered_match_first() -> None:
-    profile = yaml.safe_load(
-        FIGURE7_TOP5_NONSPECIFIC_GABA_TRANSFER_PROFILE_PATH.read_text()
-    )
+    profile = yaml.safe_load(FIGURE7_TOP5_NONSPECIFIC_GABA_TRANSFER_PROFILE_PATH.read_text())
     registration = yaml.safe_load(
         FIGURE7_TOP5_NONSPECIFIC_GABA_TRANSFER_REGISTRATION_PATH.read_text()
     )
@@ -4079,9 +3717,7 @@ def test_top5_nonspecific_gaba_transfer_is_preregistered_match_first() -> None:
         0.75,
         1.0,
     ]
-    assert profile["nonspecific_gaba_transfer"]["selection_rule"].startswith(
-        "weakest"
-    )
+    assert profile["nonspecific_gaba_transfer"]["selection_rule"].startswith("weakest")
     assert registration["registered_dimension"]["projection_ids"] == expected_ids
     assert registration["registered_dimension"]["common_scales"] == [
         0.25,
@@ -4098,12 +3734,8 @@ def test_top5_nonspecific_gaba_transfer_is_preregistered_match_first() -> None:
 
 
 def test_top5_nonspecific_gaba_transfer_selects_weakest_match_survivor() -> None:
-    superseded = yaml.safe_load(
-        FIGURE7_TOP5_NONSPECIFIC_GABA_TRANSFER_SUPERSEDED_PATH.read_text()
-    )
-    artifact = yaml.safe_load(
-        FIGURE7_TOP5_NONSPECIFIC_GABA_TRANSFER_RESULT_PATH.read_text()
-    )
+    superseded = yaml.safe_load(FIGURE7_TOP5_NONSPECIFIC_GABA_TRANSFER_SUPERSEDED_PATH.read_text())
+    artifact = yaml.safe_load(FIGURE7_TOP5_NONSPECIFIC_GABA_TRANSFER_RESULT_PATH.read_text())
     assert superseded["status"] == "superseded-runner-monitor-omission"
     assert superseded["superseded_by"] == str(
         FIGURE7_TOP5_NONSPECIFIC_GABA_TRANSFER_RESULT_PATH.relative_to(ROOT)
@@ -4119,12 +3751,11 @@ def test_top5_nonspecific_gaba_transfer_selects_weakest_match_survivor() -> None
         result = outcome["match_result"]
         assert len(result["relay_spike_times_ms"]) == 15
         assert len(result["trn_spike_times_ms"]) == 635
-        assert len(result["nonspecific_spike_times_ms"]) == (
-            expected_nonspecific[outcome["common_scale"]]
+        assert (
+            len(result["nonspecific_spike_times_ms"])
+            == (expected_nonspecific[outcome["common_scale"]])
         )
-        assert outcome["match_gates"][
-            "sampled_trn_events_have_fresh_cycles"
-        ]
+        assert outcome["match_gates"]["sampled_trn_events_have_fresh_cycles"]
         assert outcome["pass"] == (outcome["common_scale"] >= 0.75)
     assert artifact["assessment"]["advance_to_independent_match_verification"]
     assert not artifact["assessment"]["advance_to_mismatch"]
@@ -4145,9 +3776,7 @@ def test_top5_nonspecific_gaba_transfer_verification_is_fixed_to_screen() -> Non
     assert registration["screen_result"]["selected_common_scale"] == 0.75
     assert registration["fixed_candidate"]["common_scale"] == 0.75
     assert registration["verification"]["candidate_count"] == 1
-    assert registration["verification"][
-        "complete_figure6_cortical_monitoring"
-    ]
+    assert registration["verification"]["complete_figure6_cortical_monitoring"]
     assert registration["stopping_rule"].startswith("Run one fresh Figure 6")
 
 
@@ -4168,18 +3797,10 @@ def test_top5_nonspecific_gaba_transfer_verification_reproduces_match() -> None:
     assert len(result["relay_spike_times_ms"]) == 15
     assert len(result["trn_spike_times_ms"]) == 635
     assert len(result["nonspecific_spike_times_ms"]) == 4
-    for index, event_count in outcome[
-        "sampled_match_trn_event_counts_by_index"
-    ].items():
-        assert event_count == outcome[
-            "sampled_match_trn_threshold_upcrossings_by_index"
-        ][index]
-        assert event_count == outcome[
-            "sampled_match_trn_arm_transitions_by_index"
-        ][index]
-        assert event_count == outcome[
-            "sampled_match_trn_release_transitions_by_index"
-        ][index]
+    for index, event_count in outcome["sampled_match_trn_event_counts_by_index"].items():
+        assert event_count == outcome["sampled_match_trn_threshold_upcrossings_by_index"][index]
+        assert event_count == outcome["sampled_match_trn_arm_transitions_by_index"][index]
+        assert event_count == outcome["sampled_match_trn_release_transitions_by_index"][index]
     assert artifact["assessment"]["advance_to_mismatch"]
     assert not artifact["assessment"]["mismatch_remains_locked"]
 
@@ -4192,24 +3813,18 @@ def test_top5_nonspecific_gaba_transfer_mismatch_is_fixed_to_verification() -> N
         FIGURE7_TOP5_NONSPECIFIC_GABA_TRANSFER_MISMATCH_REGISTRATION_PATH.read_text()
     )
     assert profile["match_verification_artifact"] == str(
-        FIGURE7_TOP5_NONSPECIFIC_GABA_TRANSFER_VERIFICATION_RESULT_PATH.relative_to(
-            ROOT
-        )
+        FIGURE7_TOP5_NONSPECIFIC_GABA_TRANSFER_VERIFICATION_RESULT_PATH.relative_to(ROOT)
     )
     assert profile["nonspecific_gaba_transfer"]["common_scale"] == 0.75
     assert profile["official_gates"]["mismatch_nonspecific_events"] == 7
     assert registration["authorization"]["selected_common_scale"] == 0.75
     assert registration["execution"]["run_count"] == 1
     assert registration["execution"]["fresh_complete_figure6_handoff"]
-    assert registration["stopping_rule"].startswith(
-        "Run exactly one fresh vertical mismatch"
-    )
+    assert registration["stopping_rule"].startswith("Run exactly one fresh vertical mismatch")
 
 
 def test_top5_nonspecific_gaba_transfer_pair_fails_arousal_only() -> None:
-    artifact = yaml.safe_load(
-        FIGURE7_TOP5_NONSPECIFIC_GABA_TRANSFER_PAIR_RESULT_PATH.read_text()
-    )
+    artifact = yaml.safe_load(FIGURE7_TOP5_NONSPECIFIC_GABA_TRANSFER_PAIR_RESULT_PATH.read_text())
     assert artifact["status"] == "figure7-failed"
     assert artifact["nonspecific_gaba_common_scale"] == 0.75
     assert all(artifact["figure6_gates"].values())
@@ -4226,46 +3841,30 @@ def test_top5_nonspecific_gaba_transfer_pair_fails_arousal_only() -> None:
     assert not artifact["gates"]["mismatch_more_nonspecific_events"]
     assert not artifact["gates"]["mismatch_nonspecific_70_hz"]
     assert artifact["gates"]["sampled_mismatch_trn_events_have_fresh_cycles"]
-    for index, event_count in artifact[
-        "sampled_mismatch_trn_event_counts_by_index"
-    ].items():
-        assert event_count == artifact[
-            "sampled_mismatch_trn_threshold_upcrossings_by_index"
-        ][index]
-        assert event_count == artifact[
-            "sampled_mismatch_trn_arm_transitions_by_index"
-        ][index]
-        assert event_count == artifact[
-            "sampled_mismatch_trn_release_transitions_by_index"
-        ][index]
+    for index, event_count in artifact["sampled_mismatch_trn_event_counts_by_index"].items():
+        assert event_count == artifact["sampled_mismatch_trn_threshold_upcrossings_by_index"][index]
+        assert event_count == artifact["sampled_mismatch_trn_arm_transitions_by_index"][index]
+        assert event_count == artifact["sampled_mismatch_trn_release_transitions_by_index"][index]
     assert not artifact["reproduced"]
 
 
 def test_methods_global_calcium_is_registered_as_literal_source_choice() -> None:
     profile = yaml.safe_load(FIGURE6_METHODS_GLOBAL_CALCIUM_PROFILE_PATH.read_text())
-    registration = yaml.safe_load(
-        FIGURE6_METHODS_GLOBAL_CALCIUM_REGISTRATION_PATH.read_text()
-    )
-    assert profile["runtime_overrides"]["calcium_density_convention"] == (
-        "methods_global_250"
-    )
+    registration = yaml.safe_load(FIGURE6_METHODS_GLOBAL_CALCIUM_REGISTRATION_PATH.read_text())
+    assert profile["runtime_overrides"]["calcium_density_convention"] == ("methods_global_250")
     assert profile["protocol"]["complete_cortical_monitoring"]
     assert registration["resolution_policy"]["literal_global_application"]
     assert registration["resolution_policy"]["add_no_new_calcium_channels"]
     assert registration["resolution_policy"]["historical_default_unchanged"]
     assert registration["fixed"]["all_projection_and_protocol_parameters_unchanged"]
-    assert registration["stopping_rule"].startswith(
-        "Run one complete, fully monitored Figure 6"
-    )
+    assert registration["stopping_rule"].startswith("Run one complete, fully monitored Figure 6")
 
 
 def test_methods_global_calcium_fails_figure6_selectivity() -> None:
     artifact = yaml.safe_load(FIGURE6_METHODS_GLOBAL_CALCIUM_RESULT_PATH.read_text())
     assert artifact["status"] == "figure6-failed"
     assert not artifact["pass"]
-    assert artifact["runtime_fingerprint"] == artifact["result"][
-        "convention_fingerprint"
-    ]
+    assert artifact["runtime_fingerprint"] == artifact["result"]["convention_fingerprint"]
     assert artifact["result"]["population_spikes"] == {
         "thalamic_relay": 81,
         "layer5_excitatory_v1": 162,
@@ -4287,12 +3886,8 @@ def test_methods_global_calcium_fails_figure6_selectivity() -> None:
 
 
 def test_nonspecific_voltage_audit_is_registered_as_read_only() -> None:
-    profile = yaml.safe_load(
-        FIGURE7_NONSPECIFIC_VOLTAGE_AUDIT_PROFILE_PATH.read_text()
-    )
-    registration = yaml.safe_load(
-        FIGURE7_NONSPECIFIC_VOLTAGE_AUDIT_REGISTRATION_PATH.read_text()
-    )
+    profile = yaml.safe_load(FIGURE7_NONSPECIFIC_VOLTAGE_AUDIT_PROFILE_PATH.read_text())
+    registration = yaml.safe_load(FIGURE7_NONSPECIFIC_VOLTAGE_AUDIT_REGISTRATION_PATH.read_text())
     assert profile["diagnostic"]["parameter_changes"] == "none"
     assert profile["protocol"]["conditions"] == ["match", "mismatch"]
     assert profile["diagnostic"]["positive_local_maximum_floor_mV"] == 0.0
@@ -4306,9 +3901,7 @@ def test_nonspecific_voltage_audit_is_registered_as_read_only() -> None:
 
 
 def test_nonspecific_voltage_audit_closes_shared_detector_threshold() -> None:
-    artifact = yaml.safe_load(
-        FIGURE7_NONSPECIFIC_VOLTAGE_AUDIT_RESULT_PATH.read_text()
-    )
+    artifact = yaml.safe_load(FIGURE7_NONSPECIFIC_VOLTAGE_AUDIT_RESULT_PATH.read_text())
     match = artifact["match_diagnostic"]
     mismatch = artifact["mismatch_diagnostic"]
     assert artifact["status"] == "complete-read-only-diagnostic"
@@ -4318,15 +3911,9 @@ def test_nonspecific_voltage_audit_closes_shared_detector_threshold() -> None:
     assert match["positive_soma_local_maximum_count"] == 22
     assert mismatch["positive_soma_local_maximum_count"] == 23
     for condition in (match, mismatch):
-        assert condition["nonspecific_event_count"] == condition[
-            "detector_threshold_upcrossings"
-        ]
-        assert condition["nonspecific_event_count"] == condition[
-            "detector_arm_transitions"
-        ]
-        assert condition["nonspecific_event_count"] == condition[
-            "detector_release_transitions"
-        ]
+        assert condition["nonspecific_event_count"] == condition["detector_threshold_upcrossings"]
+        assert condition["nonspecific_event_count"] == condition["detector_arm_transitions"]
+        assert condition["nonspecific_event_count"] == condition["detector_release_transitions"]
         assert condition["detector_final_armed"] == 0.0
     threshold = artifact["derived_shared_soma_threshold_analysis"]
     assert threshold["current_threshold_peak_counts"] == {
@@ -4339,15 +3926,11 @@ def test_nonspecific_voltage_audit_closes_shared_detector_threshold() -> None:
 
 
 def test_nonspecific_peak_current_audit_is_read_only_and_complete() -> None:
-    profile = yaml.safe_load(
-        FIGURE7_NONSPECIFIC_PEAK_CURRENT_AUDIT_PROFILE_PATH.read_text()
-    )
+    profile = yaml.safe_load(FIGURE7_NONSPECIFIC_PEAK_CURRENT_AUDIT_PROFILE_PATH.read_text())
     registration = yaml.safe_load(
         FIGURE7_NONSPECIFIC_PEAK_CURRENT_AUDIT_REGISTRATION_PATH.read_text()
     )
-    artifact = yaml.safe_load(
-        FIGURE7_NONSPECIFIC_PEAK_CURRENT_AUDIT_RESULT_PATH.read_text()
-    )
+    artifact = yaml.safe_load(FIGURE7_NONSPECIFIC_PEAK_CURRENT_AUDIT_RESULT_PATH.read_text())
     assert profile["diagnostic"]["parameter_changes"] == "none"
     assert registration["execution"]["parameter_changes"] == "none"
     assert registration["execution"]["run_count_per_condition"] == 1
@@ -4372,17 +3955,13 @@ def test_nonspecific_peak_current_audit_is_read_only_and_complete() -> None:
         assert len(condition["nonspecific_peak_current_samples_pA"]) == (
             peak_count * current_source_count
         )
-        assert len(condition["nonspecific_peak_gate_samples"]) == (
-            peak_count * gate_source_count
-        )
+        assert len(condition["nonspecific_peak_gate_samples"]) == (peak_count * gate_source_count)
     assert not artifact["reproduced"]
 
 
 def test_top5_trn_volley_audit_localizes_downstream_transfer_loss() -> None:
     profile = yaml.safe_load(FIGURE7_TOP5_TRN_VOLLEY_AUDIT_PROFILE_PATH.read_text())
-    registration = yaml.safe_load(
-        FIGURE7_TOP5_TRN_VOLLEY_AUDIT_REGISTRATION_PATH.read_text()
-    )
+    registration = yaml.safe_load(FIGURE7_TOP5_TRN_VOLLEY_AUDIT_REGISTRATION_PATH.read_text())
     artifact = yaml.safe_load(FIGURE7_TOP5_TRN_VOLLEY_AUDIT_RESULT_PATH.read_text())
     assert profile["active_bin_minimum_event_count_rule"] == (
         "ceiling_fraction_times_population_size"
@@ -4412,29 +3991,22 @@ def test_top5_trn_volley_audit_localizes_downstream_transfer_loss() -> None:
     ]
     assert not mismatch["volleys"][0]["nonspecific_response_times_ms"]
     assert not mismatch["volleys"][1]["nonspecific_response_times_ms"]
-    assert all(
-        volley["nonspecific_response_times_ms"]
-        for volley in mismatch["volleys"][2:]
-    )
+    assert all(volley["nonspecific_response_times_ms"] for volley in mismatch["volleys"][2:])
     assert not artifact["reproduced"]
 
 
 def test_top5_arrival_interaction_is_one_match_only_candidate() -> None:
     profile = yaml.safe_load(FIGURE7_TOP5_ARRIVAL_MATCH_PROFILE_PATH.read_text())
-    registration = yaml.safe_load(
-        FIGURE7_TOP5_ARRIVAL_MATCH_REGISTRATION_PATH.read_text()
-    )
+    registration = yaml.safe_load(FIGURE7_TOP5_ARRIVAL_MATCH_REGISTRATION_PATH.read_text())
     assert profile["dimension"]["grid"] == [5]
     assert profile["protocol"]["top_down_cue_lead_ms"] == 7.85
     assert profile["protocol"]["record_relay_diagnostics"]
     assert registration["execution"]["condition"] == "match"
     assert registration["execution"]["candidate_count"] == 1
-    assert registration["rationale"]["arrival_aligned_evidence"][
-        "mismatch_counts"
-    ]["nonspecific"] == 7
-    assert registration["rationale"]["top5_evidence"]["mismatch_counts"][
-        "relay"
-    ] == 3
+    assert (
+        registration["rationale"]["arrival_aligned_evidence"]["mismatch_counts"]["nonspecific"] == 7
+    )
+    assert registration["rationale"]["top5_evidence"]["mismatch_counts"]["relay"] == 3
     assert registration["mismatch_lock"].startswith("Do not inspect mismatch")
 
 
@@ -4454,12 +4026,8 @@ def test_top5_arrival_interaction_passes_match_before_verification() -> None:
 
 
 def test_top5_arrival_verification_registers_exact_screen_survivor() -> None:
-    profile = yaml.safe_load(
-        FIGURE7_TOP5_ARRIVAL_VERIFICATION_PROFILE_PATH.read_text()
-    )
-    registration = yaml.safe_load(
-        FIGURE7_TOP5_ARRIVAL_VERIFICATION_REGISTRATION_PATH.read_text()
-    )
+    profile = yaml.safe_load(FIGURE7_TOP5_ARRIVAL_VERIFICATION_PROFILE_PATH.read_text())
+    registration = yaml.safe_load(FIGURE7_TOP5_ARRIVAL_VERIFICATION_REGISTRATION_PATH.read_text())
     assert profile["dimension"]["grid"] == [5]
     assert profile["protocol"]["top_down_cue_lead_ms"] == 7.85
     assert registration["screen_result"]["relay_events"] == 15
@@ -4472,9 +4040,7 @@ def test_top5_arrival_verification_registers_exact_screen_survivor() -> None:
 
 
 def test_top5_arrival_match_verifies_before_mismatch_registration() -> None:
-    artifact = yaml.safe_load(
-        FIGURE7_TOP5_ARRIVAL_VERIFICATION_RESULT_PATH.read_text()
-    )
+    artifact = yaml.safe_load(FIGURE7_TOP5_ARRIVAL_VERIFICATION_RESULT_PATH.read_text())
     outcome = artifact["outcomes"][0]
     result = outcome["result"]
     assert outcome["pass"]
@@ -4487,12 +4053,8 @@ def test_top5_arrival_match_verifies_before_mismatch_registration() -> None:
 
 
 def test_top5_arrival_mismatch_is_fixed_after_verified_match() -> None:
-    profile = yaml.safe_load(
-        FIGURE7_TOP5_ARRIVAL_MISMATCH_PROFILE_PATH.read_text()
-    )
-    registration = yaml.safe_load(
-        FIGURE7_TOP5_ARRIVAL_MISMATCH_REGISTRATION_PATH.read_text()
-    )
+    profile = yaml.safe_load(FIGURE7_TOP5_ARRIVAL_MISMATCH_PROFILE_PATH.read_text())
+    registration = yaml.safe_load(FIGURE7_TOP5_ARRIVAL_MISMATCH_REGISTRATION_PATH.read_text())
     assert profile["comparator"]["target_count"] == 5
     assert profile["protocol"]["top_down_cue_lead_ms"] == 7.85
     assert registration["authorization"]["match_counts"] == {
@@ -4500,14 +4062,10 @@ def test_top5_arrival_mismatch_is_fixed_after_verified_match() -> None:
         "trn": 633,
         "nonspecific": 4,
     }
-    assert registration["authorization"][
-        "sampled_match_trn_detector_cycles_complete"
-    ]
+    assert registration["authorization"]["sampled_match_trn_detector_cycles_complete"]
     assert registration["execution"]["condition"] == "vertical_mismatch"
     assert registration["execution"]["run_count"] == 1
-    assert registration["stopping_rule"].startswith(
-        "Run exactly one fresh vertical mismatch"
-    )
+    assert registration["stopping_rule"].startswith("Run exactly one fresh vertical mismatch")
 
 
 def test_top5_arrival_pair_preserves_spatial_path_but_loses_arousal() -> None:
@@ -4535,21 +4093,22 @@ def test_top5_arrival_pair_preserves_spatial_path_but_loses_arousal() -> None:
         assert artifact["gates"][passed_gate]
     assert not artifact["gates"]["mismatch_more_nonspecific_events"]
     assert not artifact["gates"]["mismatch_nonspecific_70_hz"]
-    assert artifact["sampled_mismatch_trn_event_counts_by_index"] == artifact[
-        "sampled_mismatch_trn_threshold_upcrossings_by_index"
-    ]
-    assert artifact["sampled_mismatch_trn_event_counts_by_index"] == artifact[
-        "sampled_mismatch_trn_arm_transitions_by_index"
-    ]
-    assert artifact["sampled_mismatch_trn_event_counts_by_index"] == artifact[
-        "sampled_mismatch_trn_release_transitions_by_index"
-    ]
+    assert (
+        artifact["sampled_mismatch_trn_event_counts_by_index"]
+        == artifact["sampled_mismatch_trn_threshold_upcrossings_by_index"]
+    )
+    assert (
+        artifact["sampled_mismatch_trn_event_counts_by_index"]
+        == artifact["sampled_mismatch_trn_arm_transitions_by_index"]
+    )
+    assert (
+        artifact["sampled_mismatch_trn_event_counts_by_index"]
+        == artifact["sampled_mismatch_trn_release_transitions_by_index"]
+    )
 
 
 def test_corticointralaminar_ablation_is_diagnostic_not_candidate() -> None:
-    profile = yaml.safe_load(
-        FIGURE7_CORTICOINTRALAMINAR_ABLATION_PROFILE_PATH.read_text()
-    )
+    profile = yaml.safe_load(FIGURE7_CORTICOINTRALAMINAR_ABLATION_PROFILE_PATH.read_text())
     registration = yaml.safe_load(
         FIGURE7_CORTICOINTRALAMINAR_ABLATION_REGISTRATION_PATH.read_text()
     )
@@ -4558,21 +4117,15 @@ def test_corticointralaminar_ablation_is_diagnostic_not_candidate() -> None:
         "modeldb112923.projection.051",
     ]
     assert profile["causal_ablation"]["disabled_projection_ids"] == expected
-    assert profile["causal_ablation"]["stage"] == (
-        "recognition_only_after_fresh_figure6_handoff"
-    )
+    assert profile["causal_ablation"]["stage"] == ("recognition_only_after_fresh_figure6_handoff")
     assert profile["protocol"]["conditions"] == ["match", "mismatch"]
     assert registration["causal_intervention"]["disabled_projection_ids"] == expected
     assert registration["execution"]["run_count_per_condition"] == 1
-    assert registration["classification_rule"].endswith(
-        "Do not promote an ablated network."
-    )
+    assert registration["classification_rule"].endswith("Do not promote an ablated network.")
 
 
 def test_corticointralaminar_ablation_is_rate_neutral_and_exposes_one_event() -> None:
-    artifact = yaml.safe_load(
-        FIGURE7_CORTICOINTRALAMINAR_ABLATION_RESULT_PATH.read_text()
-    )
+    artifact = yaml.safe_load(FIGURE7_CORTICOINTRALAMINAR_ABLATION_RESULT_PATH.read_text())
     readout = artifact["causal_readout"]
     match = artifact["match_result"]
     mismatch = artifact["mismatch_result"]
@@ -4595,18 +4148,12 @@ def test_corticointralaminar_ablation_is_rate_neutral_and_exposes_one_event() ->
     assert readout["event_count_delta_mismatch_minus_match"] == 1
     assert readout["match_trn_events"] == 635
     assert readout["mismatch_trn_events"] == 560
-    assert readout["match_trn_gaba_integral_ms"] > readout[
-        "mismatch_trn_gaba_integral_ms"
-    ]
-    assert readout["classification"] == (
-        "latent_trn_disinhibition_has_correct_sign"
-    )
+    assert readout["match_trn_gaba_integral_ms"] > readout["mismatch_trn_gaba_integral_ms"]
+    assert readout["classification"] == ("latent_trn_disinhibition_has_correct_sign")
 
 
 def test_nonspecific_gaba_compartment_ablation_is_fixed_and_nonpromotable() -> None:
-    profile = yaml.safe_load(
-        FIGURE7_NONSPECIFIC_GABA_COMPARTMENT_ABLATION_PROFILE_PATH.read_text()
-    )
+    profile = yaml.safe_load(FIGURE7_NONSPECIFIC_GABA_COMPARTMENT_ABLATION_PROFILE_PATH.read_text())
     registration = yaml.safe_load(
         FIGURE7_NONSPECIFIC_GABA_COMPARTMENT_ABLATION_REGISTRATION_PATH.read_text()
     )
@@ -4623,22 +4170,14 @@ def test_nonspecific_gaba_compartment_ablation_is_fixed_and_nonpromotable() -> N
     ]
     assert not registration["scope_boundary"]["promotable"]
     assert registration["scope_boundary"]["no_weight_or_cell_parameter_calibration"]
-    assert registration["stopping_rule"].startswith(
-        "Execute all four fixed ablations"
-    )
+    assert registration["stopping_rule"].startswith("Execute all four fixed ablations")
 
 
 def test_nonspecific_gaba_compartment_ablation_localizes_rebound_roles() -> None:
-    artifact = yaml.safe_load(
-        FIGURE7_NONSPECIFIC_GABA_COMPARTMENT_ABLATION_RESULT_PATH.read_text()
-    )
-    assert artifact["id"] == (
-        "figure7-top5-nonspecific-gaba-compartment-ablation-348"
-    )
+    artifact = yaml.safe_load(FIGURE7_NONSPECIFIC_GABA_COMPARTMENT_ABLATION_RESULT_PATH.read_text())
+    assert artifact["id"] == ("figure7-top5-nonspecific-gaba-compartment-ablation-348")
     assert artifact["status"] == "complete-causal-localization-not-candidate"
-    assert artifact["classification"] == (
-        "calibrated-reconstruction-causal-ablation"
-    )
+    assert artifact["classification"] == ("calibrated-reconstruction-causal-ablation")
     assert not artifact["promotable"]
     assert not artifact["reproduced"]
 
@@ -4679,53 +4218,31 @@ def test_nonspecific_gaba_compartment_ablation_localizes_rebound_roles() -> None
     no_proximal = outcomes["without_proximal_gaba"]["causal_readout"]
     no_distal = outcomes["without_distal_gaba"]["causal_readout"]
     no_gaba = outcomes["without_all_trn_gaba"]["causal_readout"]
-    assert no_soma["match_trn_gaba_integral_ms"] > no_soma[
-        "mismatch_trn_gaba_integral_ms"
-    ]
-    assert no_proximal["match_trn_gaba_integral_ms"] > no_proximal[
-        "mismatch_trn_gaba_integral_ms"
-    ]
-    assert no_distal["match_trn_gaba_integral_ms"] > no_distal[
-        "mismatch_trn_gaba_integral_ms"
-    ]
+    assert no_soma["match_trn_gaba_integral_ms"] > no_soma["mismatch_trn_gaba_integral_ms"]
+    assert no_proximal["match_trn_gaba_integral_ms"] > no_proximal["mismatch_trn_gaba_integral_ms"]
+    assert no_distal["match_trn_gaba_integral_ms"] > no_distal["mismatch_trn_gaba_integral_ms"]
     assert no_gaba["match_trn_gaba_integral_ms"] == 0.0
     assert no_gaba["mismatch_trn_gaba_integral_ms"] == 0.0
 
 
 def test_nonspecific_paper_ttype_discriminator_is_preregistered_and_locked() -> None:
     profile = yaml.safe_load(FIGURE7_NONSPECIFIC_PAPER_TTYPE_PROFILE_PATH.read_text())
-    registration = yaml.safe_load(
-        FIGURE7_NONSPECIFIC_PAPER_TTYPE_REGISTRATION_PATH.read_text()
-    )
-    assert profile["runtime_overrides"][
-        "nonspecific_calcium_kinetics_convention"
-    ] == "paper_2008"
+    registration = yaml.safe_load(FIGURE7_NONSPECIFIC_PAPER_TTYPE_REGISTRATION_PATH.read_text())
+    assert profile["runtime_overrides"]["nonspecific_calcium_kinetics_convention"] == "paper_2008"
     assert registration["registered_dimension"]["candidate_count"] == 1
-    assert registration["fixed"]["trn_calcium_kinetics"] == (
-        "modeldb_reticular_112923"
-    )
+    assert registration["fixed"]["trn_calcium_kinetics"] == ("modeldb_reticular_112923")
     assert registration["fixed"]["relay_calcium_kinetics"] == "modeldb_112923"
-    assert registration["fixed"][
-        "nonspecific_gaba_weights_and_kinetics_unchanged"
-    ]
-    assert registration["scope_boundary"]["changes"] == (
-        "nonspecific T-type gate equations only"
-    )
-    assert registration["stopping_rule"].startswith(
-        "Run one fresh complete Figure 6"
-    )
+    assert registration["fixed"]["nonspecific_gaba_weights_and_kinetics_unchanged"]
+    assert registration["scope_boundary"]["changes"] == ("nonspecific T-type gate equations only")
+    assert registration["stopping_rule"].startswith("Run one fresh complete Figure 6")
     assert "figure7_mismatch" in registration["locked_holdouts"]
 
 
 def test_nonspecific_paper_ttype_fails_exact_match_before_mismatch() -> None:
-    artifact = yaml.safe_load(
-        FIGURE7_NONSPECIFIC_PAPER_TTYPE_RESULT_PATH.read_text()
-    )
+    artifact = yaml.safe_load(FIGURE7_NONSPECIFIC_PAPER_TTYPE_RESULT_PATH.read_text())
     assert artifact["id"] == "figure7-top5-nonspecific-paper-ttype-match-350"
     assert artifact["status"] == "match-failed"
-    assert artifact["classification"] == (
-        "official-source-discriminator-not-yet-baseline"
-    )
+    assert artifact["classification"] == ("official-source-discriminator-not-yet-baseline")
     assert artifact["nonspecific_calcium_kinetics_convention"] == "paper_2008"
     assert artifact["figure6_pass"]
     assert all(artifact["figure6_gates"].values())
@@ -4750,12 +4267,8 @@ def test_nonspecific_paper_ttype_fails_exact_match_before_mismatch() -> None:
 
 
 def test_nonspecific_somatic_gaba_sensitivity_is_single_and_locked() -> None:
-    profile = yaml.safe_load(
-        FIGURE7_NONSPECIFIC_SOMATIC_GABA_PROFILE_PATH.read_text()
-    )
-    registration = yaml.safe_load(
-        FIGURE7_NONSPECIFIC_SOMATIC_GABA_REGISTRATION_PATH.read_text()
-    )
+    profile = yaml.safe_load(FIGURE7_NONSPECIFIC_SOMATIC_GABA_PROFILE_PATH.read_text())
+    registration = yaml.safe_load(FIGURE7_NONSPECIFIC_SOMATIC_GABA_REGISTRATION_PATH.read_text())
     transfer = profile["nonspecific_gaba_transfer"]
     assert transfer["projection_ids"] == ["modeldb112923.projection.047"]
     assert transfer["common_scale_grid"] == [2.0]
@@ -4773,21 +4286,15 @@ def test_nonspecific_somatic_gaba_sensitivity_is_single_and_locked() -> None:
     assert registration["scope_boundary"]["classification"] == (
         "calibrated-reconstruction-not-recovered-source"
     )
-    assert registration["stopping_rule"].startswith(
-        "Run one fresh complete Figure 6"
-    )
+    assert registration["stopping_rule"].startswith("Run one fresh complete Figure 6")
     assert "figure7_mismatch" in registration["locked_holdouts"]
 
 
 def test_nonspecific_somatic_gaba_sensitivity_passes_figure6_and_match() -> None:
-    artifact = yaml.safe_load(
-        FIGURE7_NONSPECIFIC_SOMATIC_GABA_RESULT_PATH.read_text()
-    )
+    artifact = yaml.safe_load(FIGURE7_NONSPECIFIC_SOMATIC_GABA_RESULT_PATH.read_text())
     assert artifact["id"] == "figure7-top5-nonspecific-somatic-gaba-match-352"
     assert artifact["status"] == "complete"
-    assert artifact["classification"] == (
-        "calibrated-reconstruction-not-recovered-source"
-    )
+    assert artifact["classification"] == ("calibrated-reconstruction-not-recovered-source")
     assert artifact["match_survivor_common_scales"] == [2.0]
     assert artifact["selected_common_scale"] == 2.0
     assert not artifact["mismatch_consulted"]
@@ -4796,9 +4303,7 @@ def test_nonspecific_somatic_gaba_sensitivity_passes_figure6_and_match() -> None
     assert artifact["assessment"]["mismatch_remains_locked"]
 
     outcome = artifact["outcomes"][0]
-    assert outcome["projection_weight_scales"][
-        "modeldb112923.projection.047"
-    ] == 2.0
+    assert outcome["projection_weight_scales"]["modeldb112923.projection.047"] == 2.0
     assert outcome["figure6_pass"]
     assert all(outcome["figure6_gates"].values())
     assert outcome["match_pass"]
@@ -4809,9 +4314,7 @@ def test_nonspecific_somatic_gaba_sensitivity_passes_figure6_and_match() -> None
 
 
 def test_nonspecific_somatic_gaba_verification_is_fixed_and_locked() -> None:
-    profile = yaml.safe_load(
-        FIGURE7_NONSPECIFIC_SOMATIC_GABA_VERIFICATION_PROFILE_PATH.read_text()
-    )
+    profile = yaml.safe_load(FIGURE7_NONSPECIFIC_SOMATIC_GABA_VERIFICATION_PROFILE_PATH.read_text())
     registration = yaml.safe_load(
         FIGURE7_NONSPECIFIC_SOMATIC_GABA_VERIFICATION_REGISTRATION_PATH.read_text()
     )
@@ -4826,12 +4329,8 @@ def test_nonspecific_somatic_gaba_verification_is_fixed_and_locked() -> None:
 
 
 def test_nonspecific_somatic_gaba_verification_repeats_exact_match() -> None:
-    artifact = yaml.safe_load(
-        FIGURE7_NONSPECIFIC_SOMATIC_GABA_VERIFICATION_RESULT_PATH.read_text()
-    )
-    assert artifact["id"] == (
-        "figure7-top5-nonspecific-somatic-gaba-verification-354"
-    )
+    artifact = yaml.safe_load(FIGURE7_NONSPECIFIC_SOMATIC_GABA_VERIFICATION_RESULT_PATH.read_text())
+    assert artifact["id"] == ("figure7-top5-nonspecific-somatic-gaba-verification-354")
     assert artifact["status"] == "complete"
     assert artifact["selected_common_scale"] == 2.0
     assert not artifact["mismatch_consulted"]
@@ -4848,9 +4347,7 @@ def test_nonspecific_somatic_gaba_verification_repeats_exact_match() -> None:
 
 
 def test_nonspecific_somatic_gaba_mismatch_is_fixed_before_execution() -> None:
-    profile = yaml.safe_load(
-        FIGURE7_NONSPECIFIC_SOMATIC_GABA_MISMATCH_PROFILE_PATH.read_text()
-    )
+    profile = yaml.safe_load(FIGURE7_NONSPECIFIC_SOMATIC_GABA_MISMATCH_PROFILE_PATH.read_text())
     registration = yaml.safe_load(
         FIGURE7_NONSPECIFIC_SOMATIC_GABA_MISMATCH_REGISTRATION_PATH.read_text()
     )
@@ -4869,18 +4366,12 @@ def test_nonspecific_somatic_gaba_mismatch_is_fixed_before_execution() -> None:
 
 
 def test_nonspecific_somatic_gaba_pair_preserves_path_but_misses_70_hz() -> None:
-    artifact = yaml.safe_load(
-        FIGURE7_NONSPECIFIC_SOMATIC_GABA_PAIR_RESULT_PATH.read_text()
-    )
+    artifact = yaml.safe_load(FIGURE7_NONSPECIFIC_SOMATIC_GABA_PAIR_RESULT_PATH.read_text())
     assert artifact["id"] == "figure7-top5-nonspecific-somatic-gaba-pair-356"
     assert artifact["status"] == "figure7-failed"
-    assert artifact["classification"] == (
-        "calibrated-reconstruction-not-recovered-source"
-    )
+    assert artifact["classification"] == ("calibrated-reconstruction-not-recovered-source")
     assert artifact["nonspecific_gaba_common_scale"] == 2.0
-    assert artifact["projection_weight_scales"][
-        "modeldb112923.projection.047"
-    ] == 2.0
+    assert artifact["projection_weight_scales"]["modeldb112923.projection.047"] == 2.0
     assert not artifact["reproduced"]
     assert all(artifact["figure6_gates"].values())
 
@@ -4901,12 +4392,8 @@ def test_nonspecific_somatic_gaba_pair_preserves_path_but_misses_70_hz() -> None
 
 
 def test_nonspecific_kinness_axial_source_discriminator_is_isolated() -> None:
-    profile = yaml.safe_load(
-        FIGURE7_NONSPECIFIC_KINNESS_AXIAL_PROFILE_PATH.read_text()
-    )
-    registration = yaml.safe_load(
-        FIGURE7_NONSPECIFIC_KINNESS_AXIAL_REGISTRATION_PATH.read_text()
-    )
+    profile = yaml.safe_load(FIGURE7_NONSPECIFIC_KINNESS_AXIAL_PROFILE_PATH.read_text())
+    registration = yaml.safe_load(FIGURE7_NONSPECIFIC_KINNESS_AXIAL_REGISTRATION_PATH.read_text())
     assert profile["runtime_overrides"]["nonspecific_axial_convention"] == (
         "kinness_serialized_edge"
     )
@@ -4914,29 +4401,21 @@ def test_nonspecific_kinness_axial_source_discriminator_is_isolated() -> None:
         "nonspecific_axial_convention": "kinness_serialized_edge"
     }
     assert registration["registered_dimension"]["candidate_count"] == 1
-    assert registration["fixed"]["relay_axial_convention"] == (
-        "kinness_serialized_edge"
-    )
+    assert registration["fixed"]["relay_axial_convention"] == ("kinness_serialized_edge")
     assert registration["fixed"]["trn_axial_convention"] == "paper_literal"
     assert registration["fixed"]["cortical_axial_convention"] == "paper_literal"
     assert registration["scope_boundary"]["changes"] == (
         "nonspecific axial equation/conductance interpretation only"
     )
-    assert registration["stopping_rule"].startswith(
-        "Run one fresh complete Figure 6"
-    )
+    assert registration["stopping_rule"].startswith("Run one fresh complete Figure 6")
     assert "figure7_mismatch" in registration["locked_holdouts"]
 
 
 def test_nonspecific_kinness_axial_source_fails_match_before_mismatch() -> None:
-    artifact = yaml.safe_load(
-        FIGURE7_NONSPECIFIC_KINNESS_AXIAL_RESULT_PATH.read_text()
-    )
+    artifact = yaml.safe_load(FIGURE7_NONSPECIFIC_KINNESS_AXIAL_RESULT_PATH.read_text())
     assert artifact["id"] == "figure7-top5-nonspecific-kinness-axial-match-358"
     assert artifact["status"] == "match-failed"
-    assert artifact["classification"] == (
-        "official-source-discriminator-not-yet-baseline"
-    )
+    assert artifact["classification"] == ("official-source-discriminator-not-yet-baseline")
     assert artifact["runtime_discriminator"] == {
         "nonspecific_axial_convention": "kinness_serialized_edge"
     }
@@ -4961,23 +4440,17 @@ def test_nonspecific_kinness_axial_source_fails_match_before_mismatch() -> None:
     )
     soma_range = {
         name: (minimum, maximum)
-        for name, minimum, maximum in match[
-            "nonspecific_voltage_range_mV_by_compartment"
-        ]
+        for name, minimum, maximum in match["nonspecific_voltage_range_mV_by_compartment"]
     }["soma"]
     assert soma_range[1] < -50.0
 
 
 def test_nonspecific_modeldb_intrinsic_source_is_complete_and_isolated() -> None:
-    profile = yaml.safe_load(
-        FIGURE7_NONSPECIFIC_MODELDB_INTRINSIC_PROFILE_PATH.read_text()
-    )
+    profile = yaml.safe_load(FIGURE7_NONSPECIFIC_MODELDB_INTRINSIC_PROFILE_PATH.read_text())
     registration = yaml.safe_load(
         FIGURE7_NONSPECIFIC_MODELDB_INTRINSIC_REGISTRATION_PATH.read_text()
     )
-    assert profile["runtime_overrides"][
-        "nonspecific_intrinsic_cell_convention"
-    ] == "modeldb_112923"
+    assert profile["runtime_overrides"]["nonspecific_intrinsic_cell_convention"] == "modeldb_112923"
     assert profile["runtime_expectations"] == {
         "nonspecific_intrinsic_cell_convention": "modeldb_112923"
     }
@@ -4990,29 +4463,19 @@ def test_nonspecific_modeldb_intrinsic_source_is_complete_and_isolated() -> None
         "sodium": 50.0,
         "potassium": 30.0,
     }
-    assert registration["fixed"]["nonspecific_axial_convention"] == (
-        "paper_literal"
-    )
+    assert registration["fixed"]["nonspecific_axial_convention"] == ("paper_literal")
     assert registration["scope_boundary"]["changes"] == (
         "complete nonspecific intrinsic cell record only"
     )
-    assert registration["stopping_rule"].startswith(
-        "Run one fresh complete Figure 6"
-    )
+    assert registration["stopping_rule"].startswith("Run one fresh complete Figure 6")
     assert "figure7_mismatch" in registration["locked_holdouts"]
 
 
 def test_nonspecific_modeldb_intrinsic_source_fails_match_before_mismatch() -> None:
-    artifact = yaml.safe_load(
-        FIGURE7_NONSPECIFIC_MODELDB_INTRINSIC_RESULT_PATH.read_text()
-    )
-    assert artifact["id"] == (
-        "figure7-top5-nonspecific-modeldb-intrinsic-match-360"
-    )
+    artifact = yaml.safe_load(FIGURE7_NONSPECIFIC_MODELDB_INTRINSIC_RESULT_PATH.read_text())
+    assert artifact["id"] == ("figure7-top5-nonspecific-modeldb-intrinsic-match-360")
     assert artifact["status"] == "match-failed"
-    assert artifact["classification"] == (
-        "official-source-discriminator-not-yet-baseline"
-    )
+    assert artifact["classification"] == ("official-source-discriminator-not-yet-baseline")
     assert artifact["runtime_discriminator"] == {
         "nonspecific_intrinsic_cell_convention": "modeldb_112923"
     }
@@ -5037,17 +4500,13 @@ def test_nonspecific_modeldb_intrinsic_source_fails_match_before_mismatch() -> N
     )
     soma_maximum = {
         name: maximum
-        for name, _minimum, maximum in match[
-            "nonspecific_voltage_range_mV_by_compartment"
-        ]
+        for name, _minimum, maximum in match["nonspecific_voltage_range_mV_by_compartment"]
     }["soma"]
     assert 28.0 < soma_maximum < 30.0
 
 
 def test_nonspecific_modeldb_kinness_detector_pair_is_source_fixed() -> None:
-    profile = yaml.safe_load(
-        FIGURE7_NONSPECIFIC_MODELDB_KINNESS_DETECTOR_PROFILE_PATH.read_text()
-    )
+    profile = yaml.safe_load(FIGURE7_NONSPECIFIC_MODELDB_KINNESS_DETECTOR_PROFILE_PATH.read_text())
     registration = yaml.safe_load(
         FIGURE7_NONSPECIFIC_MODELDB_KINNESS_DETECTOR_REGISTRATION_PATH.read_text()
     )
@@ -5062,19 +4521,13 @@ def test_nonspecific_modeldb_kinness_detector_pair_is_source_fixed() -> None:
     assert dimensions["event_release_mV"] == 0.0
     assert dimensions["candidate_count"] == 1
     assert registration["fixed"]["all_trn_and_relay_event_detectors_unchanged"]
-    assert registration["stopping_rule"].startswith(
-        "Run one fresh complete Figure 6"
-    )
+    assert registration["stopping_rule"].startswith("Run one fresh complete Figure 6")
     assert "figure7_mismatch" in registration["locked_holdouts"]
 
 
 def test_nonspecific_modeldb_kinness_detector_pair_rearms_pathologically() -> None:
-    artifact = yaml.safe_load(
-        FIGURE7_NONSPECIFIC_MODELDB_KINNESS_DETECTOR_RESULT_PATH.read_text()
-    )
-    assert artifact["id"] == (
-        "figure7-top5-nonspecific-modeldb-kinness-detector-match-362"
-    )
+    artifact = yaml.safe_load(FIGURE7_NONSPECIFIC_MODELDB_KINNESS_DETECTOR_RESULT_PATH.read_text())
+    assert artifact["id"] == ("figure7-top5-nonspecific-modeldb-kinness-detector-match-362")
     assert artifact["status"] == "match-failed"
     assert artifact["runtime_discriminator"] == {
         "nonspecific_intrinsic_cell_convention": "modeldb_112923",
@@ -5087,10 +4540,7 @@ def test_nonspecific_modeldb_kinness_detector_pair_rearms_pathologically() -> No
     assert len(match["relay_spike_times_ms"]) == 15
     assert len(match["trn_spike_times_ms"]) == 635
     assert len(match["nonspecific_spike_times_ms"]) == 287
-    first_interval = (
-        match["nonspecific_spike_times_ms"][1]
-        - match["nonspecific_spike_times_ms"][0]
-    )
+    first_interval = match["nonspecific_spike_times_ms"][1] - match["nonspecific_spike_times_ms"][0]
     assert first_interval == pytest.approx(0.02)
     assert not artifact["promotable"]
     assert not artifact["reproduced"]
@@ -5114,9 +4564,7 @@ def test_nonspecific_modeldb_kinness_hysteresis_is_fixed_and_isolated() -> None:
     assert dimensions["event_rule"] == "hysteretic_threshold_then_zero"
     assert dimensions["candidate_count"] == 1
     assert registration["fixed"]["all_trn_and_relay_event_detectors_unchanged"]
-    assert registration["stopping_rule"].startswith(
-        "Run one fresh complete Figure 6"
-    )
+    assert registration["stopping_rule"].startswith("Run one fresh complete Figure 6")
     assert "figure7_mismatch" in registration["locked_holdouts"]
 
 
@@ -5124,9 +4572,7 @@ def test_nonspecific_modeldb_kinness_hysteresis_still_overfires_match() -> None:
     artifact = yaml.safe_load(
         FIGURE7_NONSPECIFIC_MODELDB_KINNESS_HYSTERESIS_RESULT_PATH.read_text()
     )
-    assert artifact["id"] == (
-        "figure7-top5-nonspecific-modeldb-kinness-hysteresis-match-364"
-    )
+    assert artifact["id"] == ("figure7-top5-nonspecific-modeldb-kinness-hysteresis-match-364")
     assert artifact["status"] == "match-failed"
     assert artifact["runtime_discriminator"] == {
         "nonspecific_intrinsic_cell_convention": "modeldb_112923",
@@ -5146,17 +4592,12 @@ def test_nonspecific_modeldb_kinness_hysteresis_still_overfires_match() -> None:
     assert not artifact["match_gates"]["nonspecific_events"]
     assert not artifact["match_gates"]["nonspecific_40_hz"]
     times = match["nonspecific_spike_times_ms"]
-    intervals = [
-        later - earlier
-        for earlier, later in pairwise(times)
-    ]
+    intervals = [later - earlier for earlier, later in pairwise(times)]
     assert min(intervals) > 1.0
 
 
 def test_nonspecific_modeldb_uniform_handler_is_fixed_and_isolated() -> None:
-    profile = yaml.safe_load(
-        FIGURE7_NONSPECIFIC_MODELDB_UNIFORM_HANDLER_PROFILE_PATH.read_text()
-    )
+    profile = yaml.safe_load(FIGURE7_NONSPECIFIC_MODELDB_UNIFORM_HANDLER_PROFILE_PATH.read_text())
     registration = yaml.safe_load(
         FIGURE7_NONSPECIFIC_MODELDB_UNIFORM_HANDLER_REGISTRATION_PATH.read_text()
     )
@@ -5174,19 +4615,13 @@ def test_nonspecific_modeldb_uniform_handler_is_fixed_and_isolated() -> None:
         "arm_mV": -20.0,
         "release_mV": -30.0,
     }
-    assert registration["stopping_rule"].startswith(
-        "Run one fresh complete Figure 6"
-    )
+    assert registration["stopping_rule"].startswith("Run one fresh complete Figure 6")
     assert "figure7_mismatch" in registration["locked_holdouts"]
 
 
 def test_nonspecific_modeldb_uniform_handler_still_overfires_match() -> None:
-    artifact = yaml.safe_load(
-        FIGURE7_NONSPECIFIC_MODELDB_UNIFORM_HANDLER_RESULT_PATH.read_text()
-    )
-    assert artifact["id"] == (
-        "figure7-top5-nonspecific-modeldb-uniform-handler-match-370"
-    )
+    artifact = yaml.safe_load(FIGURE7_NONSPECIFIC_MODELDB_UNIFORM_HANDLER_RESULT_PATH.read_text())
+    assert artifact["id"] == ("figure7-top5-nonspecific-modeldb-uniform-handler-match-370")
     assert artifact["status"] == "match-failed"
     assert artifact["runtime_discriminator"] == {
         "nonspecific_intrinsic_cell_convention": "modeldb_112923",
@@ -5221,18 +4656,14 @@ def test_nonspecific_modeldb_calibrated20_is_match_only_and_fixed() -> None:
         "nonspecific_spike_event_release_mV": 0.0,
         "nonspecific_spike_event_rule": "latched_peak_then_zero",
     }
-    assert registration["classification"] == (
-        "calibrated-reconstruction-not-recovered-source"
-    )
+    assert registration["classification"] == ("calibrated-reconstruction-not-recovered-source")
     assert registration["registered_dimension"]["candidate_count"] == 1
     assert registration["execution"]["mismatch_runs"] == 0
     assert "figure7_mismatch" in registration["locked_holdouts"]
 
 
 def test_nonspecific_modeldb_calibrated20_repeats_exact_match() -> None:
-    screen = yaml.safe_load(
-        FIGURE7_NONSPECIFIC_MODELDB_CALIBRATED20_MATCH_RESULT_PATH.read_text()
-    )
+    screen = yaml.safe_load(FIGURE7_NONSPECIFIC_MODELDB_CALIBRATED20_MATCH_RESULT_PATH.read_text())
     verification = yaml.safe_load(
         FIGURE7_NONSPECIFIC_MODELDB_CALIBRATED20_VERIFICATION_RESULT_PATH.read_text()
     )
@@ -5253,9 +4684,7 @@ def test_nonspecific_modeldb_calibrated20_repeats_exact_match() -> None:
 
 
 def test_nonspecific_modeldb_calibrated20_fails_mismatch_holdout() -> None:
-    artifact = yaml.safe_load(
-        FIGURE7_NONSPECIFIC_MODELDB_CALIBRATED20_PAIR_RESULT_PATH.read_text()
-    )
+    artifact = yaml.safe_load(FIGURE7_NONSPECIFIC_MODELDB_CALIBRATED20_PAIR_RESULT_PATH.read_text())
     assert artifact["status"] == "figure7-failed"
     assert artifact["runtime_fingerprint"] == (
         "7c164995390f7d2df9a618f529d375519114163fd254125d8829bd6642cc8c93"
@@ -5271,9 +4700,7 @@ def test_nonspecific_modeldb_calibrated20_fails_mismatch_holdout() -> None:
     assert len(mismatch["trn_spike_times_ms"]) == 560
     assert len(mismatch["nonspecific_spike_times_ms"]) == 5
     assert all(
-        value
-        for gate, value in artifact["gates"].items()
-        if gate != "mismatch_nonspecific_70_hz"
+        value for gate, value in artifact["gates"].items() if gate != "mismatch_nonspecific_70_hz"
     )
     assert not artifact["gates"]["mismatch_nonspecific_70_hz"]
     assert len(mismatch["nonspecific_positive_soma_local_maxima_ms_mV"]) == 6
@@ -5282,9 +4709,7 @@ def test_nonspecific_modeldb_calibrated20_fails_mismatch_holdout() -> None:
 
 def test_recovered_nonspecific_cell_does_not_relax_to_quiescent_rest() -> None:
     profile = yaml.safe_load(ISOLATED_NONSPECIFIC_REST_AUDIT_PROFILE_PATH.read_text())
-    registration = yaml.safe_load(
-        ISOLATED_NONSPECIFIC_REST_AUDIT_REGISTRATION_PATH.read_text()
-    )
+    registration = yaml.safe_load(ISOLATED_NONSPECIFIC_REST_AUDIT_REGISTRATION_PATH.read_text())
     artifact = yaml.safe_load(ISOLATED_NONSPECIFIC_REST_AUDIT_RESULT_PATH.read_text())
     assert profile["protocol"] == {
         "duration_ms": 500.0,
@@ -5299,22 +4724,17 @@ def test_recovered_nonspecific_cell_does_not_relax_to_quiescent_rest() -> None:
     assert artifact["status"] == "quiescent-rest-not-supported"
     assert artifact["all_state_samples_finite"]
     assert artifact["terminal_detector_event_count"] == 0
-    assert artifact["maximum_terminal_peak_to_peak_mV"] == pytest.approx(
-        51.39470959905637
+    assert artifact["maximum_terminal_peak_to_peak_mV"] == pytest.approx(51.39470959905637)
+    assert (
+        artifact["compartments"]["soma"]["terminal_peak_to_peak_mV"]
+        > profile["operational_gate"]["terminal_peak_to_peak_at_most_mV"]
     )
-    assert artifact["compartments"]["soma"][
-        "terminal_peak_to_peak_mV"
-    ] > profile["operational_gate"]["terminal_peak_to_peak_at_most_mV"]
     assert not artifact["quiescent_rest_supported"]
 
 
 def test_recovered_nonspecific_cell_has_one_stationary_fixed_point() -> None:
-    derivation = yaml.safe_load(
-        ISOLATED_NONSPECIFIC_FIXED_POINT_DERIVATION_PATH.read_text()
-    )
-    verification = yaml.safe_load(
-        ISOLATED_NONSPECIFIC_FIXED_POINT_VERIFICATION_PATH.read_text()
-    )
+    derivation = yaml.safe_load(ISOLATED_NONSPECIFIC_FIXED_POINT_DERIVATION_PATH.read_text())
+    verification = yaml.safe_load(ISOLATED_NONSPECIFIC_FIXED_POINT_VERIFICATION_PATH.read_text())
     assert derivation["attempt_count"] == 125
     assert derivation["converged_attempt_count"] == 54
     assert derivation["unique_root_count"] == 1
@@ -5328,15 +4748,11 @@ def test_recovered_nonspecific_cell_has_one_stationary_fixed_point() -> None:
 
 
 def test_nonspecific_fixed_point_fails_registered_somatic_perturbation() -> None:
-    profile = yaml.safe_load(
-        ISOLATED_NONSPECIFIC_FIXED_POINT_PERTURBATION_PROFILE_PATH.read_text()
-    )
+    profile = yaml.safe_load(ISOLATED_NONSPECIFIC_FIXED_POINT_PERTURBATION_PROFILE_PATH.read_text())
     registration = yaml.safe_load(
         ISOLATED_NONSPECIFIC_FIXED_POINT_PERTURBATION_REGISTRATION_PATH.read_text()
     )
-    artifact = yaml.safe_load(
-        ISOLATED_NONSPECIFIC_FIXED_POINT_PERTURBATION_RESULT_PATH.read_text()
-    )
+    artifact = yaml.safe_load(ISOLATED_NONSPECIFIC_FIXED_POINT_PERTURBATION_RESULT_PATH.read_text())
     assert profile["stationarity_probe"]["initial_voltage_perturbation_mV"] == [
         0.000001,
         0.0,
@@ -5353,21 +4769,17 @@ def test_nonspecific_fixed_point_fails_registered_somatic_perturbation() -> None
         0.0,
         0.0,
     ]
-    assert artifact["stationarity_result"][
-        "maximum_peak_to_peak_mV"
-    ] == pytest.approx(56.31728131527776)
+    assert artifact["stationarity_result"]["maximum_peak_to_peak_mV"] == pytest.approx(
+        56.31728131527776
+    )
     assert not artifact["stationarity_result"]["stationary_by_registered_probe"]
 
 
 def test_full_grid_connectfromall_fails_match_before_mismatch() -> None:
     profile = yaml.safe_load(FIGURE7_FULL_GRID_CONNECTFROMALL_PROFILE_PATH.read_text())
-    registration = yaml.safe_load(
-        FIGURE7_FULL_GRID_CONNECTFROMALL_REGISTRATION_PATH.read_text()
-    )
+    registration = yaml.safe_load(FIGURE7_FULL_GRID_CONNECTFROMALL_REGISTRATION_PATH.read_text())
     artifact = yaml.safe_load(FIGURE7_FULL_GRID_CONNECTFROMALL_RESULT_PATH.read_text())
-    assert profile["protocol"]["convergent_external_source_scope"] == (
-        "full_input_grid"
-    )
+    assert profile["protocol"]["convergent_external_source_scope"] == ("full_input_grid")
     assert registration["fixed_discriminator"] == {
         "previous_source_count": 5,
         "candidate_source_count": 81,
@@ -5390,9 +4802,7 @@ def test_full_grid_connectfromall_fails_match_before_mismatch() -> None:
 
 def test_aligned_on_center_verification_registers_only_screen_survivor() -> None:
     profile = yaml.safe_load(FIGURE7_ALIGNED_VERIFICATION_PROFILE_PATH.read_text())
-    registration = yaml.safe_load(
-        FIGURE7_ALIGNED_VERIFICATION_REGISTRATION_PATH.read_text()
-    )
+    registration = yaml.safe_load(FIGURE7_ALIGNED_VERIFICATION_REGISTRATION_PATH.read_text())
     assert profile["status"] == "registered-before-execution"
     assert profile["dimension"]["grid"] == [1.0]
     assert profile["protocol"]["record_relay_diagnostics"]
@@ -5412,34 +4822,24 @@ def test_aligned_on_center_verification_has_fresh_trn_cycles() -> None:
     assert len(outcome["result"]["trn_spike_times_ms"]) == 633
     assert len(outcome["result"]["nonspecific_spike_times_ms"]) == 4
     assert outcome["gates"]["sampled_trn_events_have_fresh_cycles"]
-    for index, event_count in outcome[
-        "sampled_trn_event_counts_by_index"
-    ].items():
-        assert event_count == outcome[
-            "sampled_trn_threshold_upcrossings_by_index"
-        ][index]
+    for index, event_count in outcome["sampled_trn_event_counts_by_index"].items():
+        assert event_count == outcome["sampled_trn_threshold_upcrossings_by_index"][index]
         assert event_count == outcome["sampled_trn_arm_transitions_by_index"][index]
-        assert event_count == outcome[
-            "sampled_trn_release_transitions_by_index"
-        ][index]
+        assert event_count == outcome["sampled_trn_release_transitions_by_index"][index]
     assert artifact["assessment"]["advance_to_mismatch"]
     assert not artifact["assessment"]["mismatch_remains_locked"]
 
 
 def test_aligned_on_center_mismatch_is_single_locked_holdout() -> None:
     profile = yaml.safe_load(FIGURE7_ALIGNED_MISMATCH_PROFILE_PATH.read_text())
-    registration = yaml.safe_load(
-        FIGURE7_ALIGNED_MISMATCH_REGISTRATION_PATH.read_text()
-    )
+    registration = yaml.safe_load(FIGURE7_ALIGNED_MISMATCH_REGISTRATION_PATH.read_text())
     assert profile["status"] == "registered-before-execution"
     assert profile["learned_state"]["selected_headroom_fraction"] == 1.0
     assert registration["registered_holdout"]["conditions"] == ["mismatch"]
     assert registration["registered_holdout"]["independent_network_rebuild"]
     assert registration["execution_limit"].startswith("exactly one mismatch")
     assert registration["official_gates"]["mismatch_nonspecific_events"] == 7
-    assert not registration["official_status_before_execution"][
-        "figure7_reproduced"
-    ]
+    assert not registration["official_status_before_execution"]["figure7_reproduced"]
 
 
 def test_aligned_on_center_pair_hits_rates_but_fails_spatial_subset() -> None:
@@ -5468,17 +4868,13 @@ def test_aligned_on_center_pair_hits_rates_but_fails_spatial_subset() -> None:
 
 def test_aligned_sustained_current_is_single_preregistered_waveform() -> None:
     profile = yaml.safe_load(FIGURE7_ALIGNED_SUSTAINED_PROFILE_PATH.read_text())
-    registration = yaml.safe_load(
-        FIGURE7_ALIGNED_SUSTAINED_REGISTRATION_PATH.read_text()
-    )
+    registration = yaml.safe_load(FIGURE7_ALIGNED_SUSTAINED_REGISTRATION_PATH.read_text())
     assert profile["status"] == "registered-before-execution"
     assert profile["protocol"]["top_down_current_mode"] == "sustained_epoch"
     assert profile["dimension"]["grid"] == [1.0]
     assert registration["dimension"]["registered_values"] == ["sustained_epoch"]
     assert registration["source_basis"]["duration_reported_for_figure7"] is False
-    assert registration["fixed_choices"]["top_down_cue_lead_ms"] == pytest.approx(
-        7.85
-    )
+    assert registration["fixed_choices"]["top_down_cue_lead_ms"] == pytest.approx(7.85)
     assert registration["fixed_choices"]["learned_headroom_fraction"] == 1.0
     assert registration["mismatch_lock"].startswith("Do not run mismatch")
 
@@ -5506,9 +4902,7 @@ def test_mismatch_event_current_audit_changes_readout_only() -> None:
     assert registration["rerun_contract"]["condition"] == "mismatch"
     assert registration["rerun_contract"]["all_randomness_and_parameters_unchanged"]
     assert len(registration["new_readout"]["currents_pA"]) == 9
-    assert not registration["official_status_before_execution"][
-        "figure7_reproduced"
-    ]
+    assert not registration["official_status_before_execution"]["figure7_reproduced"]
 
 
 def test_mismatch_event_current_audit_localizes_first_nonoverlap_events() -> None:
@@ -5544,14 +4938,10 @@ def test_mismatch_event_current_audit_localizes_first_nonoverlap_events() -> Non
 
 
 def test_mismatch_pre_event_trace_audit_is_readout_only_and_preregistered() -> None:
-    registration = yaml.safe_load(
-        FIGURE7_PRE_EVENT_TRACE_REGISTRATION_PATH.read_text()
-    )
+    registration = yaml.safe_load(FIGURE7_PRE_EVENT_TRACE_REGISTRATION_PATH.read_text())
     assert registration["status"] == "registered-before-execution"
     assert registration["candidate_changes"] == "none"
-    assert registration["rerun_contract"][
-        "all_randomness_and_parameters_unchanged"
-    ]
+    assert registration["rerun_contract"]["all_randomness_and_parameters_unchanged"]
     assert registration["pre_event_offsets_ms"] == [2.0, 1.0, 0.5, 0.2]
     assert len(registration["new_readouts"]["currents_pA"]) == 9
     assert registration["new_readouts"]["voltages_mV"] == [
@@ -5559,12 +4949,8 @@ def test_mismatch_pre_event_trace_audit_is_readout_only_and_preregistered() -> N
         "proximal_dendrite",
         "soma",
     ]
-    assert registration["new_readouts"]["dimensionless_gates"] == [
-        "trn_gaba_combined"
-    ]
-    assert not registration["official_status_before_execution"][
-        "figure7_reproduced"
-    ]
+    assert registration["new_readouts"]["dimensionless_gates"] == ["trn_gaba_combined"]
+    assert not registration["official_status_before_execution"]["figure7_reproduced"]
 
 
 def test_mismatch_pre_event_trace_audit_excludes_common_inhibition_trough() -> None:
@@ -5597,12 +4983,8 @@ def test_mismatch_pre_event_trace_audit_excludes_common_inhibition_trough() -> N
         ]
         if event_time_ms == first_event_by_index[index]
     }
-    assert gate_by_index_and_offset[(31, 0.2)] < gate_by_index_and_offset[
-        (31, 2.0)
-    ]
-    assert gate_by_index_and_offset[(22, 0.2)] > gate_by_index_and_offset[
-        (22, 2.0)
-    ]
+    assert gate_by_index_and_offset[(31, 0.2)] < gate_by_index_and_offset[(31, 2.0)]
+    assert gate_by_index_and_offset[(22, 0.2)] > gate_by_index_and_offset[(22, 2.0)]
 
     soma_by_index_and_offset = {
         (index, offset_ms): value
@@ -5619,27 +5001,15 @@ def test_mismatch_pre_event_trace_audit_excludes_common_inhibition_trough() -> N
 
 def test_mismatch_gaba_capacity_screen_is_finite_and_diagnostic_only() -> None:
     profile = yaml.safe_load(FIGURE7_GABA_CAPACITY_PROFILE_PATH.read_text())
-    registration = yaml.safe_load(
-        FIGURE7_GABA_CAPACITY_REGISTRATION_PATH.read_text()
-    )
+    registration = yaml.safe_load(FIGURE7_GABA_CAPACITY_REGISTRATION_PATH.read_text())
     assert profile["status"] == "registered-before-execution-diagnostic"
     assert profile["dimension"]["control_gain"] == 1.0
     assert profile["dimension"]["grid"] == [1.125, 1.25, 1.5, 2.0, 3.0]
-    assert registration["dimension"]["registered_common_gains"] == profile[
-        "dimension"
-    ]["grid"]
-    assert registration["dimension"]["source_status"] == (
-        "post_holdout_causal_capacity_diagnostic"
-    )
-    assert registration["capacity_criterion"]["overlap_only_active_indices"] == [
-        40
-    ]
-    assert registration["execution_contract"][-1].startswith(
-        "Do not select or promote"
-    )
-    assert not registration["official_status_before_execution"][
-        "figure7_reproduced"
-    ]
+    assert registration["dimension"]["registered_common_gains"] == profile["dimension"]["grid"]
+    assert registration["dimension"]["source_status"] == ("post_holdout_causal_capacity_diagnostic")
+    assert registration["capacity_criterion"]["overlap_only_active_indices"] == [40]
+    assert registration["execution_contract"][-1].startswith("Do not select or promote")
+    assert not registration["official_status_before_execution"]["figure7_reproduced"]
 
 
 def test_mismatch_gaba_capacity_screen_has_no_overlap_only_window() -> None:
@@ -5658,35 +5028,20 @@ def test_mismatch_gaba_capacity_screen_has_no_overlap_only_window() -> None:
         2.0,
         3.0,
     ]
-    assert all(
-        outcome["relay_active_indices"] == [22, 31, 40, 49, 58]
-        for outcome in outcomes
-    )
+    assert all(outcome["relay_active_indices"] == [22, 31, 40, 49, 58] for outcome in outcomes)
     assert [outcome["relay_events"] for outcome in outcomes] == [10, 10, 10, 10, 5]
     assert [outcome["nonspecific_events"] for outcome in outcomes] == [5, 4, 4, 4, 4]
 
 
 def test_radial_annulus_gain_calibration_is_figure6_first_and_explicitly_exploratory() -> None:
     profile = yaml.safe_load(RADIAL_ANNULUS_GABA_GAIN_PROFILE_PATH.read_text())
-    registration = yaml.safe_load(
-        RADIAL_ANNULUS_GABA_GAIN_REGISTRATION_PATH.read_text()
-    )
-    assert profile["runtime_overrides"]["ring_kernel_convention"] == (
-        "radial_annulus"
-    )
+    registration = yaml.safe_load(RADIAL_ANNULUS_GABA_GAIN_REGISTRATION_PATH.read_text())
+    assert profile["runtime_overrides"]["ring_kernel_convention"] == ("radial_annulus")
     assert profile["dimension"]["grid"] == [1.125, 1.25, 1.5, 2.0, 3.0]
-    assert registration["dimension"]["source_status"] == (
-        "exploratory_behavior_calibration"
-    )
-    assert registration["execution_order"][-1].endswith(
-        "without consulting Figure 7."
-    )
-    assert "post-hoc exploratory" in registration[
-        "relationship_to_prior_registration"
-    ]
-    assert not registration["official_status_before_execution"][
-        "figure7_reproduced"
-    ]
+    assert registration["dimension"]["source_status"] == ("exploratory_behavior_calibration")
+    assert registration["execution_order"][-1].endswith("without consulting Figure 7.")
+    assert "post-hoc exploratory" in registration["relationship_to_prior_registration"]
+    assert not registration["official_status_before_execution"]["figure7_reproduced"]
 
 
 def test_radial_annulus_gain_family_fails_before_figure7() -> None:
@@ -5712,20 +5067,14 @@ def test_radial_annulus_gain_family_fails_before_figure7() -> None:
 
 def test_two_event_current_match_is_the_sole_discrete_duration_intermediate() -> None:
     profile = yaml.safe_load(FIGURE7_TWO_EVENT_MATCH_PROFILE_PATH.read_text())
-    registration = yaml.safe_load(
-        FIGURE7_TWO_EVENT_MATCH_REGISTRATION_PATH.read_text()
-    )
-    assert profile["protocol"]["top_down_current_mode"] == (
-        "until_cued_cell_event_limit"
-    )
+    registration = yaml.safe_load(FIGURE7_TWO_EVENT_MATCH_REGISTRATION_PATH.read_text())
+    assert profile["protocol"]["top_down_current_mode"] == ("until_cued_cell_event_limit")
     assert profile["protocol"]["top_down_current_event_limit"] == 2
     assert profile["dimension"]["grid"] == [1.0]
     assert registration["dimension"]["candidates"] == 1
     assert registration["dimension"]["current_termination_event_limit"] == 2
     assert registration["execution_order"][-1].startswith("Keep mismatch locked")
-    assert not registration["official_status_before_execution"][
-        "figure7_reproduced"
-    ]
+    assert not registration["official_status_before_execution"]["figure7_reproduced"]
 
 
 def test_two_event_current_fails_exact_match_and_locks_mismatch() -> None:
@@ -5749,13 +5098,9 @@ def test_two_event_current_fails_exact_match_and_locks_mismatch() -> None:
 
 def test_trn_arrival_alignment_is_source_derived_and_match_only() -> None:
     profile = yaml.safe_load(FIGURE7_TRN_ARRIVAL_MATCH_PROFILE_PATH.read_text())
-    registration = yaml.safe_load(
-        FIGURE7_TRN_ARRIVAL_MATCH_REGISTRATION_PATH.read_text()
-    )
+    registration = yaml.safe_load(FIGURE7_TRN_ARRIVAL_MATCH_REGISTRATION_PATH.read_text())
     assert profile["protocol"]["top_down_cue_lead_ms"] == pytest.approx(9.85)
-    assert profile["protocol"]["top_down_current_mode"] == (
-        "until_cued_cell_first_event"
-    )
+    assert profile["protocol"]["top_down_current_mode"] == ("until_cued_cell_first_event")
     source = registration["source_basis"]
     assert set(source["category_to_relay_delays_ms"].values()) == {2.0}
     assert source["category_to_trn_delays_ms"] == {
@@ -5766,9 +5111,7 @@ def test_trn_arrival_alignment_is_source_derived_and_match_only() -> None:
         source["selected_category_first_event_ms"] + 4.0
     )
     assert registration["execution_order"][-1].startswith("Keep mismatch locked")
-    assert not registration["official_status_before_execution"][
-        "figure7_reproduced"
-    ]
+    assert not registration["official_status_before_execution"]["figure7_reproduced"]
 
 
 def test_trn_arrival_alignment_fails_exact_match_and_locks_mismatch() -> None:
@@ -5793,9 +5136,7 @@ def test_trn_arrival_alignment_fails_exact_match_and_locks_mismatch() -> None:
 
 def test_corticoreticular_gain_screen_is_finite_match_only_calibration() -> None:
     profile = yaml.safe_load(FIGURE7_CORTICORETICULAR_GAIN_PROFILE_PATH.read_text())
-    registration = yaml.safe_load(
-        FIGURE7_CORTICORETICULAR_GAIN_REGISTRATION_PATH.read_text()
-    )
+    registration = yaml.safe_load(FIGURE7_CORTICORETICULAR_GAIN_REGISTRATION_PATH.read_text())
     assert profile["dimension"]["projection_ids"] == [
         "modeldb112923.projection.009",
         "modeldb112923.projection.012",
@@ -5804,13 +5145,9 @@ def test_corticoreticular_gain_screen_is_finite_match_only_calibration() -> None
     assert registration["dimension"]["source_status"] == (
         "post_holdout_exploratory_behavior_calibration"
     )
-    assert registration["execution_order"][-1] == (
-        "Do not inspect mismatch during this screen."
-    )
+    assert registration["execution_order"][-1] == ("Do not inspect mismatch during this screen.")
     assert registration["fixed_choices"]["relay_to_trn_projection_010_unchanged"]
-    assert not registration["official_status_before_execution"][
-        "figure7_reproduced"
-    ]
+    assert not registration["official_status_before_execution"]["figure7_reproduced"]
 
 
 def test_corticoreticular_gain_screen_selects_only_eightfold_match() -> None:
@@ -5846,9 +5183,7 @@ def test_corticoreticular_gain_screen_selects_only_eightfold_match() -> None:
 
 
 def test_corticoreticular_verification_registers_only_screen_survivor() -> None:
-    profile = yaml.safe_load(
-        FIGURE7_CORTICORETICULAR_VERIFICATION_PROFILE_PATH.read_text()
-    )
+    profile = yaml.safe_load(FIGURE7_CORTICORETICULAR_VERIFICATION_PROFILE_PATH.read_text())
     registration = yaml.safe_load(
         FIGURE7_CORTICORETICULAR_VERIFICATION_REGISTRATION_PATH.read_text()
     )
@@ -5856,16 +5191,12 @@ def test_corticoreticular_verification_registers_only_screen_survivor() -> None:
     assert profile["protocol"]["record_relay_diagnostics"]
     assert registration["screen_result"]["survivor_gains"] == [8.0]
     assert registration["fixed_candidate"]["independent_network_rebuild"]
-    assert registration["diagnostic_gate"][
-        "require_event_count_equals_release_transitions"
-    ]
+    assert registration["diagnostic_gate"]["require_event_count_equals_release_transitions"]
     assert registration["mismatch_lock"].startswith("Do not run mismatch")
 
 
 def test_corticoreticular_verification_authorizes_one_mismatch() -> None:
-    artifact = yaml.safe_load(
-        FIGURE7_CORTICORETICULAR_VERIFICATION_RESULT_PATH.read_text()
-    )
+    artifact = yaml.safe_load(FIGURE7_CORTICORETICULAR_VERIFICATION_RESULT_PATH.read_text())
     outcome = artifact["outcomes"][0]
     assert artifact["verification_screen_artifact"] == str(
         FIGURE7_CORTICORETICULAR_GAIN_RESULT_PATH.relative_to(ROOT)
@@ -5879,9 +5210,7 @@ def test_corticoreticular_verification_authorizes_one_mismatch() -> None:
 
 def test_corticoreticular_mismatch_is_fixed_to_verified_endpoint() -> None:
     profile = yaml.safe_load(FIGURE7_CORTICORETICULAR_MISMATCH_PROFILE_PATH.read_text())
-    registration = yaml.safe_load(
-        FIGURE7_CORTICORETICULAR_MISMATCH_REGISTRATION_PATH.read_text()
-    )
+    registration = yaml.safe_load(FIGURE7_CORTICORETICULAR_MISMATCH_REGISTRATION_PATH.read_text())
     assert profile["match_verification_artifact"] == str(
         FIGURE7_CORTICORETICULAR_VERIFICATION_RESULT_PATH.relative_to(ROOT)
     )
@@ -5905,9 +5234,7 @@ def test_mismatch_runner_keeps_recognition_gain_out_of_figure6() -> None:
 
 
 def test_corticoreticular_gain_endpoint_fails_mismatch_holdout() -> None:
-    artifact = yaml.safe_load(
-        FIGURE7_CORTICORETICULAR_MISMATCH_RESULT_PATH.read_text()
-    )
+    artifact = yaml.safe_load(FIGURE7_CORTICORETICULAR_MISMATCH_RESULT_PATH.read_text())
     mismatch = artifact["mismatch_result"]
     assert artifact["status"] == "figure7-failed"
     assert not artifact["reproduced"]
@@ -5923,9 +5250,7 @@ def test_corticoreticular_gain_endpoint_fails_mismatch_holdout() -> None:
 
 
 def test_corticoreticular_margin_audit_is_readout_only() -> None:
-    registration = yaml.safe_load(
-        FIGURE7_CORTICORETICULAR_MARGIN_REGISTRATION_PATH.read_text()
-    )
+    registration = yaml.safe_load(FIGURE7_CORTICORETICULAR_MARGIN_REGISTRATION_PATH.read_text())
     assert registration["source_holdout_artifact"] == str(
         FIGURE7_CORTICORETICULAR_MISMATCH_RESULT_PATH.relative_to(ROOT)
     )
@@ -5965,8 +5290,7 @@ def test_corticoreticular_margin_audit_localizes_late_inhibition() -> None:
     }
     for index in (22, 31, 49, 58):
         early_depolarizing = (
-            current[index, 2.0, "direct_image_input"]
-            + current[index, 2.0, "soma_axial"]
+            current[index, 2.0, "direct_image_input"] + current[index, 2.0, "soma_axial"]
         )
         assert early_depolarizing > abs(current[index, 2.0, "trn_gaba"])
         assert current[index, 0.5, "soma_sodium"] > 4_000.0
@@ -5975,16 +5299,12 @@ def test_corticoreticular_margin_audit_localizes_late_inhibition() -> None:
 
 def test_targeted_annular_screen_changes_only_corticoreticular_ring_geometry() -> None:
     profile = yaml.safe_load(FIGURE7_TARGETED_ANNULAR_PROFILE_PATH.read_text())
-    registration = yaml.safe_load(
-        FIGURE7_TARGETED_ANNULAR_REGISTRATION_PATH.read_text()
+    registration = yaml.safe_load(FIGURE7_TARGETED_ANNULAR_REGISTRATION_PATH.read_text())
+    assert (
+        profile["runtime_overrides"]["corticoreticular_ring_kernel_convention"] == "radial_annulus"
     )
-    assert profile["runtime_overrides"][
-        "corticoreticular_ring_kernel_convention"
-    ] == "radial_annulus"
     assert profile["dimension"]["grid"] == [1.0, 8.0]
-    assert registration["fixed_topology_change"][
-        "unrelated_ring_projections_unchanged"
-    ]
+    assert registration["fixed_topology_change"]["unrelated_ring_projections_unchanged"]
     assert registration["conditions_consulted"] == ["figure7_match"]
     assert registration["mismatch_lock"].startswith("do not inspect mismatch")
 
@@ -6004,16 +5324,12 @@ def test_targeted_annular_screen_closes_without_mismatch() -> None:
         597,
         692,
     ]
-    assert [
-        len(item["result"]["nonspecific_spike_times_ms"]) for item in outcomes
-    ] == [5, 3]
+    assert [len(item["result"]["nonspecific_spike_times_ms"]) for item in outcomes] == [5, 3]
 
 
 def test_gain8_ampa_arrival_interaction_is_single_match_only_endpoint() -> None:
     profile = yaml.safe_load(FIGURE7_GAIN8_AMPA_ARRIVAL_PROFILE_PATH.read_text())
-    registration = yaml.safe_load(
-        FIGURE7_GAIN8_AMPA_ARRIVAL_REGISTRATION_PATH.read_text()
-    )
+    registration = yaml.safe_load(FIGURE7_GAIN8_AMPA_ARRIVAL_REGISTRATION_PATH.read_text())
     assert profile["dimension"]["grid"] == [8.0]
     assert profile["protocol"]["top_down_cue_lead_ms"] == 9.85
     assert profile["protocol"]["record_relay_diagnostics"]
@@ -6040,12 +5356,8 @@ def test_gain8_ampa_arrival_interaction_fails_without_mismatch() -> None:
 
 
 def test_corticoreticular_ampa_delay_requires_complete_figure6_first() -> None:
-    profile = yaml.safe_load(
-        FIGURE6_CORTICORETICULAR_AMPA_DELAY_PROFILE_PATH.read_text()
-    )
-    registration = yaml.safe_load(
-        FIGURE6_CORTICORETICULAR_AMPA_DELAY_REGISTRATION_PATH.read_text()
-    )
+    profile = yaml.safe_load(FIGURE6_CORTICORETICULAR_AMPA_DELAY_PROFILE_PATH.read_text())
+    registration = yaml.safe_load(FIGURE6_CORTICORETICULAR_AMPA_DELAY_REGISTRATION_PATH.read_text())
     assert profile["runtime_overrides"]["corticoreticular_ampa_delay_ms"] == 2.0
     assert registration["timing_alternative"]["projection_id"].endswith(".012")
     assert registration["timing_alternative"]["unchanged_delays"] == {
@@ -6057,30 +5369,22 @@ def test_corticoreticular_ampa_delay_requires_complete_figure6_first() -> None:
 
 
 def test_corticoreticular_ampa_delay2_first_run_is_detector_mismatched() -> None:
-    artifact = yaml.safe_load(
-        FIGURE6_CORTICORETICULAR_AMPA_DELAY_RESULT_PATH.read_text()
-    )
+    artifact = yaml.safe_load(FIGURE6_CORTICORETICULAR_AMPA_DELAY_RESULT_PATH.read_text())
     assert artifact["status"] == "partial-figure6b-pass-figure6c-fail"
     assert artifact["population_spikes"]["thalamic_relay"] == 104
     assert artifact["relay_recruitment"]["active_indices"] == list(range(81))
-    assert not artifact["relay_recruitment"][
-        "confined_to_horizontal_bar_at_40_hz"
-    ]
+    assert not artifact["relay_recruitment"]["confined_to_horizontal_bar_at_40_hz"]
     assert artifact["recruitment"]["feedforward_chain_complete"]
     assert artifact["top_down_timing"]["causal_pair_in_learning_window"]
     assert artifact["maps"]["bottom_up_oriented"]
     assert not artifact["maps"]["top_down_oriented"]
     assert not artifact["assessment"]["promoted"]
-    profile = yaml.safe_load(
-        FIGURE6_CORTICORETICULAR_AMPA_DELAY_PROFILE_PATH.read_text()
-    )
+    profile = yaml.safe_load(FIGURE6_CORTICORETICULAR_AMPA_DELAY_PROFILE_PATH.read_text())
     assert "detector" not in profile
 
 
 def test_corticoreticular_ampa_delay3_is_final_integer_intermediate() -> None:
-    profile = yaml.safe_load(
-        FIGURE6_CORTICORETICULAR_AMPA_DELAY3_PROFILE_PATH.read_text()
-    )
+    profile = yaml.safe_load(FIGURE6_CORTICORETICULAR_AMPA_DELAY3_PROFILE_PATH.read_text())
     registration = yaml.safe_load(
         FIGURE6_CORTICORETICULAR_AMPA_DELAY3_REGISTRATION_PATH.read_text()
     )
@@ -6092,12 +5396,8 @@ def test_corticoreticular_ampa_delay3_is_final_integer_intermediate() -> None:
 
 
 def test_delay2_and_delay3_first_runs_share_invalid_default_detector_trace() -> None:
-    delay2 = yaml.safe_load(
-        FIGURE6_CORTICORETICULAR_AMPA_DELAY_RESULT_PATH.read_text()
-    )
-    delay3 = yaml.safe_load(
-        FIGURE6_CORTICORETICULAR_AMPA_DELAY3_RESULT_PATH.read_text()
-    )
+    delay2 = yaml.safe_load(FIGURE6_CORTICORETICULAR_AMPA_DELAY_RESULT_PATH.read_text())
+    delay3 = yaml.safe_load(FIGURE6_CORTICORETICULAR_AMPA_DELAY3_RESULT_PATH.read_text())
     assert delay2["population_spikes"] == delay3["population_spikes"]
     assert delay2["relay_recruitment"] == delay3["relay_recruitment"]
     assert delay2["runtime_fingerprint"] != delay3["runtime_fingerprint"]
@@ -6137,9 +5437,7 @@ def test_corrected_delay2_passes_complete_figure6() -> None:
 
 def test_delay2_gain8_match_is_fixed_to_complete_figure6_survivor() -> None:
     profile = yaml.safe_load(FIGURE7_DELAY2_GAIN8_MATCH_PROFILE_PATH.read_text())
-    registration = yaml.safe_load(
-        FIGURE7_DELAY2_GAIN8_MATCH_REGISTRATION_PATH.read_text()
-    )
+    registration = yaml.safe_load(FIGURE7_DELAY2_GAIN8_MATCH_REGISTRATION_PATH.read_text())
     assert profile["figure6_artifact"] == str(
         FIGURE6_CORTICORETICULAR_AMPA_DELAY2_CORRECTED_RESULT_PATH.relative_to(ROOT)
     )
@@ -6198,9 +5496,7 @@ def test_corrected_delay3_passes_complete_figure6() -> None:
 
 def test_delay3_gain8_match_is_final_integer_endpoint() -> None:
     profile = yaml.safe_load(FIGURE7_DELAY3_GAIN8_MATCH_PROFILE_PATH.read_text())
-    registration = yaml.safe_load(
-        FIGURE7_DELAY3_GAIN8_MATCH_REGISTRATION_PATH.read_text()
-    )
+    registration = yaml.safe_load(FIGURE7_DELAY3_GAIN8_MATCH_REGISTRATION_PATH.read_text())
     assert profile["figure6_artifact"] == str(
         FIGURE6_CORTICORETICULAR_AMPA_DELAY3_CORRECTED_RESULT_PATH.relative_to(ROOT)
     )
@@ -6247,7 +5543,9 @@ def test_contract_rejects_published_free_parameter(tmp_path: Path) -> None:
 
 def test_projection012_kinetics_are_closed_by_source_semantics() -> None:
     artifact = yaml.safe_load(
-        (ROOT / "docs/validation-results/kinness-projection012-kinetics-semantics-283.yaml").read_text()
+        (
+            ROOT / "docs/validation-results/kinness-projection012-kinetics-semantics-283.yaml"
+        ).read_text()
     )
     assert artifact["status"] == "source-semantics-resolved-no-calibration-authorized"
     assert artifact["implementation_audit"] == {
@@ -6261,13 +5559,14 @@ def test_projection012_kinetics_are_closed_by_source_semantics() -> None:
 
 def test_headroom_corticoreticular_surface_has_one_exact_match_survivor() -> None:
     artifact = yaml.safe_load(
-        (ROOT / "docs/validation-results/figure7-headroom-corticoreticular-interaction-match-285.yaml").read_text()
+        (
+            ROOT
+            / "docs/validation-results/figure7-headroom-corticoreticular-interaction-match-285.yaml"
+        ).read_text()
     )
     assert artifact["assessment"]["registered_candidate_count"] == 15
     assert artifact["assessment"]["completed_candidate_count"] == 15
-    assert artifact["match_survivors"] == [
-        {"headroom_fraction": 0.75, "common_gain": 4.0}
-    ]
+    assert artifact["match_survivors"] == [{"headroom_fraction": 0.75, "common_gain": 4.0}]
     survivor = next(item for item in artifact["outcomes"] if item["pass"])
     assert len(survivor["result"]["relay_spike_times_ms"]) == 15
     assert len(survivor["result"]["trn_spike_times_ms"]) == 528
@@ -6277,7 +5576,9 @@ def test_headroom_corticoreticular_surface_has_one_exact_match_survivor() -> Non
 
 def test_headroom_corticoreticular_match_verification_has_fresh_cycles() -> None:
     artifact = yaml.safe_load(
-        (ROOT / "docs/validation-results/figure7-headroom-corticoreticular-verification-287.yaml").read_text()
+        (
+            ROOT / "docs/validation-results/figure7-headroom-corticoreticular-verification-287.yaml"
+        ).read_text()
     )
     outcome = artifact["outcomes"][0]
     assert outcome["pass"]
@@ -6289,7 +5590,9 @@ def test_headroom_corticoreticular_match_verification_has_fresh_cycles() -> None
 
 def test_headroom_corticoreticular_pair_fails_official_mismatch() -> None:
     artifact = yaml.safe_load(
-        (ROOT / "docs/validation-results/figure7-headroom-corticoreticular-pair-289.yaml").read_text()
+        (
+            ROOT / "docs/validation-results/figure7-headroom-corticoreticular-pair-289.yaml"
+        ).read_text()
     )
     assert artifact["status"] == "figure7-failed"
     assert not artifact["reproduced"]
@@ -6311,14 +5614,20 @@ def test_headroom_corticoreticular_pair_fails_official_mismatch() -> None:
 
 def test_annular_headroom_gain_interaction_is_bounded_before_execution() -> None:
     profile = yaml.safe_load(
-        (ROOT / "configs/calibration/figure7_annular_headroom_corticoreticular_interaction_match_v1.yaml").read_text()
+        (
+            ROOT
+            / "configs/calibration/figure7_annular_headroom_corticoreticular_interaction_match_v1.yaml"
+        ).read_text()
     )
     registration = yaml.safe_load(
-        (ROOT / "docs/validation-results/figure7-annular-headroom-corticoreticular-interaction-registration-290.yaml").read_text()
+        (
+            ROOT
+            / "docs/validation-results/figure7-annular-headroom-corticoreticular-interaction-registration-290.yaml"
+        ).read_text()
     )
-    assert profile["runtime_overrides"][
-        "corticoreticular_ring_kernel_convention"
-    ] == "radial_annulus"
+    assert (
+        profile["runtime_overrides"]["corticoreticular_ring_kernel_convention"] == "radial_annulus"
+    )
     assert profile["learned_state"]["headroom_grid"] == [0.25, 0.5, 0.75]
     assert profile["dimension"]["grid"] == [1.25, 1.5, 2.0, 4.0, 8.0]
     assert registration["registered_surface"]["candidate_count"] == 15
@@ -6331,16 +5640,20 @@ def test_annular_headroom_gain_interaction_is_bounded_before_execution() -> None
 
 def test_annular_headroom_gain_surface_selects_one_verification_candidate() -> None:
     artifact = yaml.safe_load(
-        (ROOT / "docs/validation-results/figure7-annular-headroom-corticoreticular-interaction-match-291.yaml").read_text()
+        (
+            ROOT
+            / "docs/validation-results/figure7-annular-headroom-corticoreticular-interaction-match-291.yaml"
+        ).read_text()
     )
     verification = yaml.safe_load(
-        (ROOT / "docs/validation-results/figure7-annular-headroom-corticoreticular-verification-registration-292.yaml").read_text()
+        (
+            ROOT
+            / "docs/validation-results/figure7-annular-headroom-corticoreticular-verification-registration-292.yaml"
+        ).read_text()
     )
     assert artifact["assessment"]["registered_candidate_count"] == 15
     assert artifact["assessment"]["completed_candidate_count"] == 15
-    assert artifact["match_survivors"] == [
-        {"headroom_fraction": 0.75, "common_gain": 8.0}
-    ]
+    assert artifact["match_survivors"] == [{"headroom_fraction": 0.75, "common_gain": 8.0}]
     survivor = next(item for item in artifact["outcomes"] if item["pass"])
     assert len(survivor["result"]["relay_spike_times_ms"]) == 10
     assert sorted(set(survivor["result"]["relay_spike_indices"])) == [38, 39, 40, 41, 42]
@@ -6355,10 +5668,16 @@ def test_annular_headroom_gain_surface_selects_one_verification_candidate() -> N
 
 def test_annular_candidate_verifies_before_single_mismatch() -> None:
     artifact = yaml.safe_load(
-        (ROOT / "docs/validation-results/figure7-annular-headroom-corticoreticular-verification-293.yaml").read_text()
+        (
+            ROOT
+            / "docs/validation-results/figure7-annular-headroom-corticoreticular-verification-293.yaml"
+        ).read_text()
     )
     registration = yaml.safe_load(
-        (ROOT / "docs/validation-results/figure7-annular-headroom-corticoreticular-mismatch-registration-294.yaml").read_text()
+        (
+            ROOT
+            / "docs/validation-results/figure7-annular-headroom-corticoreticular-mismatch-registration-294.yaml"
+        ).read_text()
     )
     outcome = artifact["outcomes"][0]
     assert outcome["pass"]
@@ -6385,7 +5704,9 @@ def test_annular_candidate_verifies_before_single_mismatch() -> None:
 
 def test_annular_candidate_fails_fixed_official_mismatch() -> None:
     artifact = yaml.safe_load(
-        (ROOT / "docs/validation-results/figure7-annular-headroom-corticoreticular-pair-295.yaml").read_text()
+        (
+            ROOT / "docs/validation-results/figure7-annular-headroom-corticoreticular-pair-295.yaml"
+        ).read_text()
     )
     assert artifact["status"] == "figure7-failed"
     assert not artifact["reproduced"]
@@ -6404,10 +5725,7 @@ def test_annular_candidate_fails_fixed_official_mismatch() -> None:
     assert len(match["trn_spike_times_ms"]) == 708
     assert len(match["nonspecific_spike_times_ms"]) == 4
     assert sorted(set(mismatch["relay_spike_indices"])) == [22, 31, 40, 49, 58]
-    assert all(
-        mismatch["relay_spike_indices"].count(index) == 2
-        for index in [22, 31, 40, 49, 58]
-    )
+    assert all(mismatch["relay_spike_indices"].count(index) == 2 for index in [22, 31, 40, 49, 58])
     assert len(mismatch["trn_spike_times_ms"]) == 708
     assert len(mismatch["nonspecific_spike_times_ms"]) == 3
 
@@ -6415,8 +5733,7 @@ def test_annular_candidate_fails_fixed_official_mismatch() -> None:
 def test_declared_input_simultaneous_match_retains_startup_failure_and_transfer() -> None:
     result_path = ROOT / "docs/validation-results/declared-input-simultaneous-match-425.yaml"
     assessment_path = (
-        ROOT
-        / "docs/validation-results/declared-input-simultaneous-match-assessment-426.yaml"
+        ROOT / "docs/validation-results/declared-input-simultaneous-match-assessment-426.yaml"
     )
     artifact = yaml.safe_load(result_path.read_text())
     assessment = yaml.safe_load(assessment_path.read_text())
@@ -6427,18 +5744,14 @@ def test_declared_input_simultaneous_match_retains_startup_failure_and_transfer(
     assert all(result["relay_spike_indices"].count(index) == 4 for index in range(38, 43))
     assert result["interneuron_spike_indices"] == [38, 39, 40, 41, 42]
     assert len(result["trn_spike_times_ms"]) == 605
-    assert result["nonspecific_spike_times_ms"] == pytest.approx(
-        [0.74, 50.36, 56.04, 73.81, 94.08]
-    )
+    assert result["nonspecific_spike_times_ms"] == pytest.approx([0.74, 50.36, 56.04, 73.81, 94.08])
     assert not artifact["match_prerequisites_pass"]
     assert not artifact["gates"]["nonspecific_40_hz"]
 
     transfer = assessment["interneuron_to_relay_transfer_audit"]
     assert transfer["compiled_direct_assay"]["center_postsynaptic_gate_peak"] > 1.8
     assert transfer["compiled_direct_assay"]["center_postsynaptic_current_min_pA"] < -800
-    assert transfer["match_event_samples"][
-        "outer_active_cells_38_42_current_pA_at_6_03_ms"
-    ] < -700
+    assert transfer["match_event_samples"]["outer_active_cells_38_42_current_pA_at_6_03_ms"] < -700
     assert not assessment["assessment"]["original_smart_reproduced"]
     assert not assessment["assessment"]["baseline_promoted"]
 
@@ -6464,24 +5777,17 @@ def test_declared_input_simultaneous_mismatch_is_only_a_localization_run() -> No
 
 def test_declared_input_zero_lead_pair_precedes_feedback_arrival() -> None:
     pair = yaml.safe_load(
-        (
-            ROOT
-            / "docs/validation-results/declared-input-simultaneous-pair-428.yaml"
-        ).read_text()
+        (ROOT / "docs/validation-results/declared-input-simultaneous-pair-428.yaml").read_text()
     )
     assessment = yaml.safe_load(
         (
-            ROOT
-            / "docs/validation-results/declared-input-simultaneous-pair-assessment-429.yaml"
+            ROOT / "docs/validation-results/declared-input-simultaneous-pair-assessment-429.yaml"
         ).read_text()
     )
     mismatch = pair["mismatch_result"]
 
     assert sorted(set(mismatch["relay_spike_indices"])) == [22, 31, 40, 49, 58]
-    assert all(
-        mismatch["relay_spike_indices"].count(index) == 4
-        for index in [22, 31, 40, 49, 58]
-    )
+    assert all(mismatch["relay_spike_indices"].count(index) == 4 for index in [22, 31, 40, 49, 58])
     assert len(mismatch["trn_spike_times_ms"]) == 603
     assert mismatch["nonspecific_spike_times_ms"] == pytest.approx(
         [0.74, 50.23, 55.94, 74.11, 94.09]
@@ -6526,8 +5832,7 @@ def test_arrival_aligned_sustained_match_is_registered_before_execution() -> Non
 def test_arrival_aligned_sustained_match_fails_and_localization_is_bounded() -> None:
     match = yaml.safe_load(
         (
-            ROOT
-            / "docs/validation-results/declared-input-arrival-aligned-sustained-match-431.yaml"
+            ROOT / "docs/validation-results/declared-input-arrival-aligned-sustained-match-431.yaml"
         ).read_text()
     )
     assessment = yaml.safe_load(
@@ -6562,8 +5867,7 @@ def test_arrival_aligned_sustained_match_fails_and_localization_is_bounded() -> 
 def test_arrival_aligned_sustained_pair_rejects_overlap_hypothesis() -> None:
     pair = yaml.safe_load(
         (
-            ROOT
-            / "docs/validation-results/declared-input-arrival-aligned-sustained-pair-434.yaml"
+            ROOT / "docs/validation-results/declared-input-arrival-aligned-sustained-pair-434.yaml"
         ).read_text()
     )
     assessment = yaml.safe_load(
@@ -6576,10 +5880,7 @@ def test_arrival_aligned_sustained_pair_rejects_overlap_hypothesis() -> None:
 
     assert pair["training_repeat_verified"]
     assert sorted(set(mismatch["relay_spike_indices"])) == [22, 31, 40, 49, 58]
-    assert all(
-        mismatch["relay_spike_indices"].count(index) == 2
-        for index in [22, 31, 40, 49, 58]
-    )
+    assert all(mismatch["relay_spike_indices"].count(index) == 2 for index in [22, 31, 40, 49, 58])
     assert len(mismatch["trn_spike_times_ms"]) == 568
     assert mismatch["nonspecific_spike_times_ms"] == pytest.approx(
         [32.39, 45.18, 58.24, 72.25, 92.24]
@@ -6629,8 +5930,7 @@ def test_uniform_relay_input_gain_screen_is_bounded_and_not_a_comparator() -> No
 def test_uniform_relay_input_gain_screen_has_no_survivor() -> None:
     result = yaml.safe_load(
         (
-            ROOT
-            / "docs/validation-results/figure7-uniform-relay-input-gain-screen-437.yaml"
+            ROOT / "docs/validation-results/figure7-uniform-relay-input-gain-screen-437.yaml"
         ).read_text()
     )
     assessment = yaml.safe_load(
@@ -6682,8 +5982,7 @@ def test_declared_input_headroom_endpoint_is_single_and_source_bounded() -> None
 def test_declared_input_headroom_endpoint_fails_before_feedback_arrival() -> None:
     result = yaml.safe_load(
         (
-            ROOT
-            / "docs/validation-results/figure7-declared-input-headroom-endpoint-440.yaml"
+            ROOT / "docs/validation-results/figure7-declared-input-headroom-endpoint-440.yaml"
         ).read_text()
     )
     assessment = yaml.safe_load(
@@ -6696,9 +5995,7 @@ def test_declared_input_headroom_endpoint_fails_before_feedback_arrival() -> Non
     assert result["applied_common_weight_factor"] == pytest.approx(3.6531686628985414)
     assert sorted(set(result["match"]["relay_spike_indices"])) == [38, 39, 40, 41, 42]
     assert sorted(set(result["mismatch"]["relay_spike_indices"])) == [22, 31, 40, 49, 58]
-    assert result["match"]["relay_spike_times_ms"] == pytest.approx(
-        [6.03, 6.03, 6.05, 6.05, 6.05]
-    )
+    assert result["match"]["relay_spike_times_ms"] == pytest.approx([6.03, 6.03, 6.05, 6.05, 6.05])
     assert result["mismatch"]["relay_spike_times_ms"] == pytest.approx(
         [6.03, 6.03, 6.05, 6.05, 6.05]
     )
@@ -6732,10 +6029,7 @@ def test_interneuron_gaba_gain_screen_is_finite_and_recognition_only() -> None:
 
 
 def test_interneuron_gaba_gain_screen_has_no_match_selective_survivor() -> None:
-    result_path = (
-        ROOT
-        / "docs/validation-results/figure7-interneuron-gaba-gain-screen-443.yaml"
-    )
+    result_path = ROOT / "docs/validation-results/figure7-interneuron-gaba-gain-screen-443.yaml"
     result = yaml.safe_load(result_path.read_text())
     assessment = yaml.safe_load(
         (
@@ -6766,9 +6060,7 @@ def test_interneuron_gaba_gain_screen_has_no_match_selective_survivor() -> None:
         assert by_gain[gain]["match"]["relay_spike_indices"] == []
         assert by_gain[gain]["mismatch"]["relay_spike_indices"] == []
     for item in result["outcomes"]:
-        assert len(item["match"]["trn_spike_indices"]) == len(
-            item["mismatch"]["trn_spike_indices"]
-        )
+        assert len(item["match"]["trn_spike_indices"]) == len(item["mismatch"]["trn_spike_indices"])
         assert item["match"]["interneuron_spike_indices"]
         assert item["mismatch"]["interneuron_spike_indices"]
         assert not item["pass"]
@@ -6821,8 +6113,7 @@ def test_declared_input_current_recheck_is_bounded_and_single_factor() -> None:
 
 def test_declared_input_current_recheck_closes_every_bounded_endpoint() -> None:
     result_path = (
-        ROOT
-        / "docs/validation-results/figure7-declared-input-top-down-current-recheck-446.yaml"
+        ROOT / "docs/validation-results/figure7-declared-input-top-down-current-recheck-446.yaml"
     )
     result = yaml.safe_load(result_path.read_text())
     assessment = yaml.safe_load(
@@ -6852,9 +6143,7 @@ def test_declared_input_current_recheck_closes_every_bounded_endpoint() -> None:
         "mismatch_relay_first_event": 6.03,
     }
     for item in outcomes.values():
-        assert not item["gates"][
-            "learned_feedback_arrives_before_first_relay_event"
-        ]
+        assert not item["gates"]["learned_feedback_arrives_before_first_relay_event"]
         assert sorted(set(item["match"]["relay_spike_indices"])) == [
             38,
             39,
@@ -6882,8 +6171,7 @@ def test_declared_input_current_recheck_closes_every_bounded_endpoint() -> None:
 def test_receptor_simultaneity_diagnostic_is_one_factor_and_nonpromotable() -> None:
     registration = yaml.safe_load(
         (
-            ROOT
-            / "docs/validation-results/figure7-receptor-simultaneity-registration-448.yaml"
+            ROOT / "docs/validation-results/figure7-receptor-simultaneity-registration-448.yaml"
         ).read_text()
     )
     profile = yaml.safe_load((ROOT / registration["profile"]).read_text())
@@ -6919,15 +6207,11 @@ def test_receptor_simultaneity_diagnostic_is_one_factor_and_nonpromotable() -> N
 
 
 def test_receptor_simultaneity_prime_silences_both_conditions() -> None:
-    result_path = (
-        ROOT
-        / "docs/validation-results/figure7-receptor-simultaneity-diagnostic-449.yaml"
-    )
+    result_path = ROOT / "docs/validation-results/figure7-receptor-simultaneity-diagnostic-449.yaml"
     result = yaml.safe_load(result_path.read_text())
     assessment = yaml.safe_load(
         (
-            ROOT
-            / "docs/validation-results/figure7-receptor-simultaneity-assessment-450.yaml"
+            ROOT / "docs/validation-results/figure7-receptor-simultaneity-assessment-450.yaml"
         ).read_text()
     )
 
@@ -6983,9 +6267,7 @@ def test_receptor_prime_decomposition_has_two_fixed_disjoint_arms() -> None:
 
 
 def test_receptor_prime_decomposition_localizes_dominant_off_surround() -> None:
-    result_path = (
-        ROOT / "docs/validation-results/figure7-receptor-prime-decomposition-452.yaml"
-    )
+    result_path = ROOT / "docs/validation-results/figure7-receptor-prime-decomposition-452.yaml"
     result = yaml.safe_load(result_path.read_text())
     assessment = yaml.safe_load(
         (
@@ -7060,20 +6342,16 @@ def test_receptor_prime_max_headroom_is_one_fixed_endpoint_cross() -> None:
 
 def test_receptor_prime_max_headroom_has_partial_wrong_geometry() -> None:
     result_path = (
-        ROOT
-        / "docs/validation-results/figure7-receptor-prime-max-headroom-endpoint-455.yaml"
+        ROOT / "docs/validation-results/figure7-receptor-prime-max-headroom-endpoint-455.yaml"
     )
     result = yaml.safe_load(result_path.read_text())
     assessment = yaml.safe_load(
         (
-            ROOT
-            / "docs/validation-results/figure7-receptor-prime-max-headroom-assessment-456.yaml"
+            ROOT / "docs/validation-results/figure7-receptor-prime-max-headroom-assessment-456.yaml"
         ).read_text()
     )
 
-    assert result["applied_common_weight_factor"] == pytest.approx(
-        3.6531686628985414
-    )
+    assert result["applied_common_weight_factor"] == pytest.approx(3.6531686628985414)
     assert result["match"]["relay_spike_indices"] == [38, 42]
     assert result["match"]["relay_spike_times_ms"] == pytest.approx([11.91, 11.91])
     assert result["mismatch"]["relay_spike_indices"] == []
@@ -7135,8 +6413,7 @@ def test_max_headroom_prime_trace_is_readout_only_with_fixed_prefix() -> None:
 
 def test_max_headroom_prime_trace_localizes_late_match_without_promotion() -> None:
     result_path = (
-        ROOT
-        / "docs/validation-results/figure7-receptor-prime-max-headroom-trace-458.yaml"
+        ROOT / "docs/validation-results/figure7-receptor-prime-max-headroom-trace-458.yaml"
     )
     result = yaml.safe_load(result_path.read_text())
     assessment = yaml.safe_load(
@@ -7170,8 +6447,7 @@ def test_max_headroom_prime_trace_localizes_late_match_without_promotion() -> No
 def test_relay_interneuron_mixed_gate_audit_rejects_invented_combination() -> None:
     audit = yaml.safe_load(
         (
-            ROOT
-            / "docs/validation-results/relay-interneuron-mixed-gate-resolution-460.yaml"
+            ROOT / "docs/validation-results/relay-interneuron-mixed-gate-resolution-460.yaml"
         ).read_text()
     )
 
@@ -7314,8 +6590,7 @@ def test_persistent_gain0p8_passes_figure6_and_locks_complete_pair() -> None:
 def test_persistent_gain0p8_complete_pair_is_closed_without_promotion() -> None:
     result = yaml.safe_load(
         (
-            ROOT
-            / "docs/validation-results/figure7-persistent-gain0p8-complete-pair-468.yaml"
+            ROOT / "docs/validation-results/figure7-persistent-gain0p8-complete-pair-468.yaml"
         ).read_text()
     )
     assessment = yaml.safe_load(
@@ -7348,8 +6623,7 @@ def test_persistent_gain0p8_complete_pair_is_closed_without_promotion() -> None:
 def test_figure7_temporal_gate_audit_requires_mechanism_not_posthoc_time() -> None:
     audit = yaml.safe_load(
         (
-            ROOT
-            / "docs/validation-results/figure7-specific-thalamus-temporal-gate-audit-470.yaml"
+            ROOT / "docs/validation-results/figure7-specific-thalamus-temporal-gate-audit-470.yaml"
         ).read_text()
     )
 
@@ -7376,9 +6650,7 @@ def test_gain0p8_calcium_trace_is_readout_only_and_identity_locked() -> None:
     profile = yaml.safe_load((ROOT / registration["profile"]).read_text())
 
     assert profile["condition"] == "mismatch"
-    assert profile["trace"]["recorded_relay_indices"] == [
-        22, 31, 38, 39, 40, 41, 42, 49, 58
-    ]
+    assert profile["trace"]["recorded_relay_indices"] == [22, 31, 38, 39, 40, 41, 42, 49, 58]
     assert {
         "i_ca_distal_dendrite",
         "i_ca_proximal_dendrite",
@@ -7425,15 +6697,9 @@ def test_gain0p8_calcium_trace_preserves_events_and_rejects_rebound() -> None:
         "e1b06ab9253c7507dc617d270a54b6262d850d5fc8bbf34b64790eda3bce9a26"
     )
     tests = assessment["classification_tests"]
-    assert tests[
-        "every_first_nonoverlap_escape_lacks_preceding_hyperpolarization"
-    ]
-    assert tests[
-        "every_first_nonoverlap_escape_lacks_t_channel_availability_recovery"
-    ]
-    assert tests[
-        "each_nonoverlap_interevent_interval_contains_one_positive_soma_peak"
-    ]
+    assert tests["every_first_nonoverlap_escape_lacks_preceding_hyperpolarization"]
+    assert tests["every_first_nonoverlap_escape_lacks_t_channel_availability_recovery"]
+    assert tests["each_nonoverlap_interevent_interval_contains_one_positive_soma_peak"]
     assert not tests["late_nonoverlap_t_type_rebound_supported"]
     for cell in ("22", "31", "49", "58"):
         first = assessment["first_nonoverlap_events"][cell]
@@ -7447,9 +6713,7 @@ def test_gain0p8_calcium_trace_preserves_events_and_rejects_rebound() -> None:
                 "value": -60.0,
                 "time_ms": 0.0,
             }
-            assert values["h_ca_immediately_before_first_event"] < values[
-                "initial_h_ca"
-            ]
+            assert values["h_ca_immediately_before_first_event"] < values["initial_h_ca"]
     assert assessment["assessment"]["artifact_468_failure_unchanged"]
     assert not assessment["assessment"]["parameter_selected"]
     assert not assessment["assessment"]["original_smart_reproduced"]
@@ -7458,9 +6722,7 @@ def test_gain0p8_calcium_trace_preserves_events_and_rejects_rebound() -> None:
 
 def test_legacy_thalamus_benchmark_recovers_falling_minus20_detector() -> None:
     audit = yaml.safe_load(
-        (
-            ROOT / "docs/validation-results/legacy-thalamus-axon-detector-audit-476.yaml"
-        ).read_text()
+        (ROOT / "docs/validation-results/legacy-thalamus-axon-detector-audit-476.yaml").read_text()
     )
 
     assert audit["archive"]["archive_sha256"] == (
@@ -7471,9 +6733,12 @@ def test_legacy_thalamus_benchmark_recovers_falling_minus20_detector() -> None:
     assert audit["serialized_and_observed"]["tonic"]["axon_event_count"] == 199
     assert audit["serialized_and_observed"]["burst"]["axon_event_count"] == 6
     assert audit["detector_alignment"]["event_count_checked"] == 205
-    assert audit["detector_alignment"]["falling_minus20_mV"][
-        "maximum_absolute_error_from_serialized_delay_ms"
-    ] == 0.05
+    assert (
+        audit["detector_alignment"]["falling_minus20_mV"][
+            "maximum_absolute_error_from_serialized_delay_ms"
+        ]
+        == 0.05
+    )
     assert audit["assessment"]["falling_minus20_detector_implementation_authorized"]
     assert not audit["assessment"]["source_parameter_fitted_from_figure7"]
     assert not audit["assessment"]["original_smart_reproduced"]
@@ -7482,10 +6747,7 @@ def test_legacy_thalamus_benchmark_recovers_falling_minus20_detector() -> None:
 
 def test_legacy_falling_minus20_figure6_is_preregistered_and_source_coherent() -> None:
     profile = yaml.safe_load(
-        (
-            ROOT
-            / "configs/calibration/figure6_legacy_falling_minus20_source_v1.yaml"
-        ).read_text()
+        (ROOT / "configs/calibration/figure6_legacy_falling_minus20_source_v1.yaml").read_text()
     )
     registration = yaml.safe_load(
         (
@@ -7506,17 +6768,14 @@ def test_legacy_falling_minus20_figure6_is_preregistered_and_source_coherent() -
         "figure7_runs": 0,
         "parameter_search": False,
     }
-    assert registration["stopping_rule"].startswith(
-        "Run one complete, fully monitored Figure 6"
-    )
+    assert registration["stopping_rule"].startswith("Run one complete, fully monitored Figure 6")
     assert "figure7_match" in registration["locked_holdouts"]
 
 
 def test_legacy_detector_calibrated_transfer_cross_is_fixed_before_execution() -> None:
     profile = yaml.safe_load(
         (
-            ROOT
-            / "configs/calibration/figure6_legacy_falling_minus20_calibrated_transfer_v1.yaml"
+            ROOT / "configs/calibration/figure6_legacy_falling_minus20_calibrated_transfer_v1.yaml"
         ).read_text()
     )
     registration = yaml.safe_load(
@@ -7526,9 +6785,7 @@ def test_legacy_detector_calibrated_transfer_cross_is_fixed_before_execution() -
         ).read_text()
     )
 
-    assert profile["runtime_overrides"]["spike_event_rule"] == (
-        "falling_threshold_crossing"
-    )
+    assert profile["runtime_overrides"]["spike_event_rule"] == ("falling_threshold_crossing")
     assert profile["runtime_overrides"]["spike_event_threshold_mV"] == -20.0
     assert profile["projection_weight_scales"] == {
         "modeldb112923.projection.000": 0.01,
@@ -7537,19 +6794,14 @@ def test_legacy_detector_calibrated_transfer_cross_is_fixed_before_execution() -
     }
     assert registration["execution"]["parameter_search"] is False
     assert registration["execution"]["figure7_runs"] == 0
-    assert registration["stopping_rule"].startswith(
-        "Run one fresh complete Figure 6"
-    )
-    assert registration["interpretation_boundary"].startswith(
-        "A pass would show compatibility"
-    )
+    assert registration["stopping_rule"].startswith("Run one fresh complete Figure 6")
+    assert registration["interpretation_boundary"].startswith("A pass would show compatibility")
 
 
 def test_unscaled_legacy_detector_cross_fails_before_recognition() -> None:
     result = yaml.safe_load(
         (
-            ROOT
-            / "docs/validation-results/figure6-legacy-falling-minus20-source-478.yaml"
+            ROOT / "docs/validation-results/figure6-legacy-falling-minus20-source-478.yaml"
         ).read_text()
     )
     assessment = yaml.safe_load(
@@ -7617,10 +6869,7 @@ def test_legacy_detector_figure7_match_is_locked_to_fresh_weights() -> None:
 
 def test_legacy_detector_match_failure_keeps_mismatch_locked() -> None:
     result = yaml.safe_load(
-        (
-            ROOT
-            / "docs/validation-results/figure7-legacy-falling-minus20-match-484.yaml"
-        ).read_text()
+        (ROOT / "docs/validation-results/figure7-legacy-falling-minus20-match-484.yaml").read_text()
     )
     assessment = yaml.safe_load(
         (
@@ -7649,8 +6898,7 @@ def test_legacy_detector_match_failure_keeps_mismatch_locked() -> None:
 def test_modeldb_nonspecific_recovered_detector_cross_starts_at_figure6() -> None:
     profile = yaml.safe_load(
         (
-            ROOT
-            / "configs/calibration/figure6_legacy_detector_modeldb_nonspecific_v1.yaml"
+            ROOT / "configs/calibration/figure6_legacy_detector_modeldb_nonspecific_v1.yaml"
         ).read_text()
     )
     registration = yaml.safe_load(
@@ -7671,17 +6919,14 @@ def test_modeldb_nonspecific_recovered_detector_cross_starts_at_figure6() -> Non
         "figure7_runs": 0,
         "parameter_search": False,
     }
-    assert registration["stopping_rule"].startswith(
-        "Run one fresh complete Figure 6"
-    )
+    assert registration["stopping_rule"].startswith("Run one fresh complete Figure 6")
     assert "figure7_match" in registration["locked_holdouts"]
 
 
 def test_modeldb_nonspecific_detector_cross_passes_figure6_and_locks_match() -> None:
     result = yaml.safe_load(
         (
-            ROOT
-            / "docs/validation-results/figure6-legacy-detector-modeldb-nonspecific-487.yaml"
+            ROOT / "docs/validation-results/figure6-legacy-detector-modeldb-nonspecific-487.yaml"
         ).read_text()
     )
     assessment = yaml.safe_load(
@@ -7773,9 +7018,7 @@ def test_paper_axial_official_nonspecific_factorial_is_preregistered() -> None:
         "figure7_runs": 0,
         "parameter_search": False,
     }
-    assert registration["stopping_rule"].startswith(
-        "Run one fresh complete Figure 6"
-    )
+    assert registration["stopping_rule"].startswith("Run one fresh complete Figure 6")
 
 
 def test_paper_axial_nonspecific_cross_passes_figure6_and_registers_match() -> None:
@@ -7866,18 +7109,14 @@ def test_supplement_distal_gaba_factorial_is_preregistered_at_figure6() -> None:
     overrides = profile["runtime_overrides"]
     assert overrides["nonspecific_intrinsic_cell_convention"] == "modeldb_112923"
     assert overrides["nonspecific_axial_convention"] == "paper_literal"
-    assert overrides["nonspecific_distal_gaba_source_convention"] == (
-        "paper_supplement_1p5_1_7"
-    )
+    assert overrides["nonspecific_distal_gaba_source_convention"] == ("paper_supplement_1p5_1_7")
     assert overrides["spike_event_rule"] == "falling_threshold_crossing"
     assert registration["execution"] == {
         "figure6_learning_runs": 1,
         "figure7_runs": 0,
         "parameter_search": False,
     }
-    assert registration["stopping_rule"].startswith(
-        "Run one fresh complete Figure 6"
-    )
+    assert registration["stopping_rule"].startswith("Run one fresh complete Figure 6")
 
 
 def test_supplement_distal_gaba_passes_figure6_and_registers_match() -> None:
@@ -7964,9 +7203,7 @@ def test_paper_nonspecific_calcium_kinetics_factorial_is_preregistered() -> None
     assert overrides["nonspecific_intrinsic_cell_convention"] == "modeldb_112923"
     assert overrides["nonspecific_axial_convention"] == "paper_literal"
     assert overrides["nonspecific_calcium_kinetics_convention"] == "paper_2008"
-    assert overrides["nonspecific_distal_gaba_source_convention"] == (
-        "paper_supplement_1p5_1_7"
-    )
+    assert overrides["nonspecific_distal_gaba_source_convention"] == ("paper_supplement_1p5_1_7")
     assert profile["factorial_boundary"]["sole_change"] == (
         "nonspecific calcium kinetics from modeldb_112923 to paper_2008"
     )
@@ -8165,9 +7402,7 @@ def test_paper_cell_paper_kinetics_cross_is_preregistered_at_figure6() -> None:
         "figure7_runs": 0,
         "parameter_search": False,
     }
-    assert registration["stopping_rule"].startswith(
-        "Run one fresh complete Figure 6"
-    )
+    assert registration["stopping_rule"].startswith("Run one fresh complete Figure 6")
 
 
 def test_paper_coherent_cell_passes_figure6_and_registers_match() -> None:
@@ -8241,17 +7476,12 @@ def test_paper_coherent_match_fails_and_requires_source_recovery() -> None:
 
 def test_smart_era_event_source_audit_forbids_population_threshold_fit() -> None:
     audit = yaml.safe_load(
-        (
-            ROOT
-            / "docs/validation-results/kinness-smart-era-event-source-audit-522.yaml"
-        ).read_text()
+        (ROOT / "docs/validation-results/kinness-smart-era-event-source-audit-522.yaml").read_text()
     )
 
     assert audit["smart_era_release"]["kinness_release_name"] == "KInNeSS 0.3.4 RC2"
     assert audit["smart_era_release"]["kinness_cvs_tag"] == "KINNESS_0_3_4_RC2"
-    assert not audit["smart_era_release"]["archive_availability"][
-        "kinness_rc2_snapshot_available"
-    ]
+    assert not audit["smart_era_release"]["archive_availability"]["kinness_rc2_snapshot_available"]
     assert audit["sanndra_history"]["spikeevents_file"] == "spikeevents.h"
     assert not audit["sanndra_history"]["source_body_available_in_preserved_doxygen"]
     assert audit["inference"]["universal_axon_conversion_supported"]
@@ -8262,16 +7492,10 @@ def test_smart_era_event_source_audit_forbids_population_threshold_fit() -> None
 
 def test_scheduler_audit_closes_extra_global_delay() -> None:
     result = yaml.safe_load(
-        (
-            ROOT
-            / "docs/validation-results/kinness-brian-scheduler-audit-524.yaml"
-        ).read_text()
+        (ROOT / "docs/validation-results/kinness-brian-scheduler-audit-524.yaml").read_text()
     )
     assessment = yaml.safe_load(
-        (
-            ROOT
-            / "docs/validation-results/kinness-brian-scheduler-assessment-525.yaml"
-        ).read_text()
+        (ROOT / "docs/validation-results/kinness-brian-scheduler-assessment-525.yaml").read_text()
     )
 
     assert result["runtime"]["network_schedule"] == [
@@ -8294,10 +7518,7 @@ def test_scheduler_audit_closes_extra_global_delay() -> None:
 
 def test_nonspecific_pathway_ablation_localizes_late_events_to_trn_gaba() -> None:
     result = yaml.safe_load(
-        (
-            ROOT
-            / "docs/validation-results/figure7-nonspecific-pathway-ablation-527.yaml"
-        ).read_text()
+        (ROOT / "docs/validation-results/figure7-nonspecific-pathway-ablation-527.yaml").read_text()
     )
     assessment = yaml.safe_load(
         (
@@ -8317,19 +7538,14 @@ def test_nonspecific_pathway_ablation_localizes_late_events_to_trn_gaba() -> Non
         "37c5fa55bccf5ea79bd680d2dec67bd00a3c9baac54fe86cf4029967027ca666"
     )
     assert assessment["assessment"]["all_late_events_require_trn_gaba_pathway"]
-    assert not assessment["assessment"][
-        "late_events_require_layer6ii_direct_excitation"
-    ]
+    assert not assessment["assessment"]["late_events_require_layer6ii_direct_excitation"]
     assert not assessment["assessment"]["t_type_calcium_necessity_proven"]
     assert not assessment["assessment"]["original_smart_reproduced"]
 
 
 def test_nonspecific_calcium_ablation_requires_isolated_replay() -> None:
     result = yaml.safe_load(
-        (
-            ROOT
-            / "docs/validation-results/figure7-nonspecific-calcium-ablation-530.yaml"
-        ).read_text()
+        (ROOT / "docs/validation-results/figure7-nonspecific-calcium-ablation-530.yaml").read_text()
     )
     assessment = yaml.safe_load(
         (
@@ -8349,9 +7565,7 @@ def test_nonspecific_calcium_ablation_requires_isolated_replay() -> None:
     assert assessment["result_sha256"] == (
         "8935f775ac94a9a619477784448cb2c4b647950bc8384019ef9044f6dd47d814"
     )
-    assert assessment["assessment"][
-        "nonspecific_dendritic_t_current_necessary_in_connected_model"
-    ]
+    assert assessment["assessment"]["nonspecific_dendritic_t_current_necessary_in_connected_model"]
     assert not assessment["assessment"]["cell_autonomous_rebound_proven"]
     assert assessment["assessment"]["isolated_replay_required"]
     assert not assessment["assessment"]["original_smart_reproduced"]
@@ -8365,15 +7579,11 @@ def test_nonspecific_isolated_replay_proves_t_current_necessity() -> None:
         ).read_text()
     )
     result = yaml.safe_load(
-        (
-            ROOT
-            / "docs/validation-results/figure7-nonspecific-isolated-replay-533.yaml"
-        ).read_text()
+        (ROOT / "docs/validation-results/figure7-nonspecific-isolated-replay-533.yaml").read_text()
     )
     assessment = yaml.safe_load(
         (
-            ROOT
-            / "docs/validation-results/figure7-nonspecific-isolated-replay-assessment-534.yaml"
+            ROOT / "docs/validation-results/figure7-nonspecific-isolated-replay-assessment-534.yaml"
         ).read_text()
     )
 
@@ -8407,8 +7617,7 @@ def test_effective_nonspecific_t_grid_selects_only_registered_match_survivor() -
     )
     result = yaml.safe_load(
         (
-            ROOT
-            / "docs/validation-results/figure7-nonspecific-effective-t-calibration-536.yaml"
+            ROOT / "docs/validation-results/figure7-nonspecific-effective-t-calibration-536.yaml"
         ).read_text()
     )
     assessment = yaml.safe_load(
@@ -8464,10 +7673,7 @@ def test_effective_nonspecific_t_connected_match_passes_before_mismatch() -> Non
 
 def test_effective_nonspecific_t_pair_fails_upstream_comparison() -> None:
     result = yaml.safe_load(
-        (
-            ROOT
-            / "docs/validation-results/figure7-nonspecific-effective-t-pair-542.yaml"
-        ).read_text()
+        (ROOT / "docs/validation-results/figure7-nonspecific-effective-t-pair-542.yaml").read_text()
     )
     assessment = yaml.safe_load(
         (
@@ -8495,10 +7701,7 @@ def test_effective_nonspecific_t_pair_fails_upstream_comparison() -> None:
 
 
 def test_learned_coincidence_effective_t_cross_is_fixed_before_execution() -> None:
-    profile_path = (
-        ROOT
-        / "configs/calibration/figure7_learned_coincidence_effective_t_pair_v1.yaml"
-    )
+    profile_path = ROOT / "configs/calibration/figure7_learned_coincidence_effective_t_pair_v1.yaml"
     registration = yaml.safe_load(
         (
             ROOT
@@ -8507,15 +7710,11 @@ def test_learned_coincidence_effective_t_cross_is_fixed_before_execution() -> No
     )
     profile = yaml.safe_load(profile_path.read_text())
 
-    assert hashlib.sha256(profile_path.read_bytes()).hexdigest() == registration[
-        "profile_sha256"
-    ]
+    assert hashlib.sha256(profile_path.read_bytes()).hexdigest() == registration["profile_sha256"]
     assert registration["runtime_fingerprint"] == (
         "fa4ab9f0bf2bec4d6ad53cb6a91620047689b6839b146ed7d777d42350c2cdf5"
     )
-    assert profile["runtime_overrides"] == {
-        "nonspecific_dendritic_calcium_density_scale": 0.1875
-    }
+    assert profile["runtime_overrides"] == {"nonspecific_dendritic_calcium_density_scale": 0.1875}
     assert profile["comparator"] == {
         "transform": "top_k_binary",
         "source_index": 40,
@@ -8525,16 +7724,13 @@ def test_learned_coincidence_effective_t_cross_is_fixed_before_execution() -> No
     assert profile["protocol"]["top_down_cue_lead_ms"] == 0.0
     assert profile["figure7_gates"]["match_nonspecific_events"] == 4
     assert profile["figure7_gates"]["mismatch_nonspecific_events"] == 7
-    assert "not a recovered SMART source" in profile["source_audit"][
-        "translation_boundary"
-    ]
+    assert "not a recovered SMART source" in profile["source_audit"]["translation_boundary"]
     assert "not recovered original" in registration["classification_boundary"]
 
 
 def test_learned_coincidence_effective_t_cross_closes_on_trn_order() -> None:
     result_path = (
-        ROOT
-        / "docs/validation-results/figure7-learned-coincidence-effective-t-pair-545.yaml"
+        ROOT / "docs/validation-results/figure7-learned-coincidence-effective-t-pair-545.yaml"
     )
     result = yaml.safe_load(result_path.read_text())
     assessment = yaml.safe_load(
@@ -8544,9 +7740,7 @@ def test_learned_coincidence_effective_t_cross_closes_on_trn_order() -> None:
         ).read_text()
     )
 
-    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment[
-        "result_sha256"
-    ]
+    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment["result_sha256"]
     assert all(result["figure6_gates"].values())
     assert result["match"]["relay_active_indices"] == [38, 39, 40, 41, 42]
     assert result["mismatch"]["relay_active_indices"] == [40]
@@ -8564,56 +7758,40 @@ def test_learned_coincidence_effective_t_cross_closes_on_trn_order() -> None:
 def test_trn_drive_decomposition_is_hash_pinned_and_read_only() -> None:
     registration = yaml.safe_load(
         (
-            ROOT
-            / "docs/validation-results/figure7-trn-drive-decomposition-registration-547.yaml"
+            ROOT / "docs/validation-results/figure7-trn-drive-decomposition-registration-547.yaml"
         ).read_text()
     )
     profile_path = ROOT / registration["profile"]
     script_path = ROOT / registration["script"]
 
-    assert hashlib.sha256(profile_path.read_bytes()).hexdigest() == registration[
-        "profile_sha256"
-    ]
-    assert hashlib.sha256(script_path.read_bytes()).hexdigest() == registration[
-        "script_sha256"
-    ]
+    assert hashlib.sha256(profile_path.read_bytes()).hexdigest() == registration["profile_sha256"]
+    assert hashlib.sha256(script_path.read_bytes()).hexdigest() == registration["script_sha256"]
     assert registration["runtime_fingerprint"] == (
         "fa4ab9f0bf2bec4d6ad53cb6a91620047689b6839b146ed7d777d42350c2cdf5"
     )
     assert registration["fixed_candidate"]["comparator_target_count"] == 5
-    assert registration["fixed_candidate"][
-        "nonspecific_dendritic_calcium_density_scale"
-    ] == 0.1875
+    assert registration["fixed_candidate"]["nonspecific_dendritic_calcium_density_scale"] == 0.1875
     assert "No weight" in registration["constraints"]
-    assert "complete TRN event indices and times" in registration[
-        "added_readouts_only"
-    ]
+    assert "complete TRN event indices and times" in registration["added_readouts_only"]
 
 
 def test_trn_drive_decomposition_localizes_peripheral_recurrent_inversion() -> None:
-    result_path = (
-        ROOT / "docs/validation-results/figure7-trn-drive-decomposition-548.yaml"
-    )
+    result_path = ROOT / "docs/validation-results/figure7-trn-drive-decomposition-548.yaml"
     result = yaml.safe_load(result_path.read_text())
     assessment = yaml.safe_load(
         (
-            ROOT
-            / "docs/validation-results/figure7-trn-drive-decomposition-assessment-549.yaml"
+            ROOT / "docs/validation-results/figure7-trn-drive-decomposition-assessment-549.yaml"
         ).read_text()
     )
 
-    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment[
-        "result_sha256"
-    ]
+    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment["result_sha256"]
     assert result["repeat_identity"]["match_trn_events"] == 549
     assert result["repeat_identity"]["mismatch_trn_events"] == 584
     assert result["trn_event_counts"]["diagnostic_indices"]["match_total"] == 79
     assert result["trn_event_counts"]["diagnostic_indices"]["mismatch_total"] == 72
     assert result["trn_event_counts"]["remaining_72_indices"]["match_total"] == 470
     assert result["trn_event_counts"]["remaining_72_indices"]["mismatch_total"] == 512
-    for projection in result[
-        "source_gate_integrals_over_100ms_for_diagnostic_indices"
-    ].values():
+    for projection in result["source_gate_integrals_over_100ms_for_diagnostic_indices"].values():
         assert projection["match_sum"] > projection["mismatch_sum"]
     assert assessment["assessment"]["global_event_order_inverted_inside_trn_network"]
     assert not assessment["assessment"]["candidate_reopened"]
@@ -8629,38 +7807,26 @@ def test_trn_recurrent_gaba_ablation_is_recognition_only_and_nonpromotable() -> 
     profile_path = ROOT / registration["profile"]
     script_path = ROOT / registration["script"]
 
-    assert hashlib.sha256(profile_path.read_bytes()).hexdigest() == registration[
-        "profile_sha256"
-    ]
-    assert hashlib.sha256(script_path.read_bytes()).hexdigest() == registration[
-        "script_sha256"
-    ]
+    assert hashlib.sha256(profile_path.read_bytes()).hexdigest() == registration["profile_sha256"]
+    assert hashlib.sha256(script_path.read_bytes()).hexdigest() == registration["script_sha256"]
     assert registration["recognition_only_ablation"]["projection_ids"] == [
         "modeldb112923.projection.008",
         "modeldb112923.projection.011",
     ]
-    assert "projection 013 within-TRN distal gap junctions" in registration[
-        "retained"
-    ]
+    assert "projection 013 within-TRN distal gap junctions" in registration["retained"]
     assert "cannot be promoted" in registration["boundary"]
 
 
 def test_trn_recurrent_gaba_ablation_preserves_failed_inversion() -> None:
-    result_path = (
-        ROOT
-        / "docs/validation-results/figure7-trn-recurrent-gaba-ablation-551.yaml"
-    )
+    result_path = ROOT / "docs/validation-results/figure7-trn-recurrent-gaba-ablation-551.yaml"
     result = yaml.safe_load(result_path.read_text())
     assessment = yaml.safe_load(
         (
-            ROOT
-            / "docs/validation-results/figure7-trn-recurrent-gaba-ablation-assessment-552.yaml"
+            ROOT / "docs/validation-results/figure7-trn-recurrent-gaba-ablation-assessment-552.yaml"
         ).read_text()
     )
 
-    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment[
-        "result_sha256"
-    ]
+    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment["result_sha256"]
     assert result["figure6_gates"] == {
         "relay_active_indices": True,
         "relay_events_per_active_index": True,
@@ -8671,57 +7837,40 @@ def test_trn_recurrent_gaba_ablation_preserves_failed_inversion() -> None:
     assert result["mismatch"]["trn_event_count"] == 2028
     assert result["match"]["nonspecific_event_count"] == 22
     assert result["mismatch"]["nonspecific_event_count"] == 22
-    assert not assessment["assessment"][
-        "match_greater_than_mismatch_trn_order_restored"
-    ]
+    assert not assessment["assessment"]["match_greater_than_mismatch_trn_order_restored"]
     assert assessment["assessment"]["recurrent_gaba_required_for_trn_stability"]
-    assert not assessment["assessment"][
-        "recurrent_gaba_is_sole_cause_of_global_inversion"
-    ]
+    assert not assessment["assessment"]["recurrent_gaba_is_sole_cause_of_global_inversion"]
     assert not assessment["assessment"]["baseline_promoted"]
 
 
 def test_trn_gap_junction_ablation_is_recognition_only_and_nonpromotable() -> None:
     registration = yaml.safe_load(
         (
-            ROOT
-            / "docs/validation-results/figure7-trn-gap-junction-ablation-registration-553.yaml"
+            ROOT / "docs/validation-results/figure7-trn-gap-junction-ablation-registration-553.yaml"
         ).read_text()
     )
     profile_path = ROOT / registration["profile"]
     script_path = ROOT / registration["script"]
 
-    assert hashlib.sha256(profile_path.read_bytes()).hexdigest() == registration[
-        "profile_sha256"
-    ]
-    assert hashlib.sha256(script_path.read_bytes()).hexdigest() == registration[
-        "script_sha256"
-    ]
+    assert hashlib.sha256(profile_path.read_bytes()).hexdigest() == registration["profile_sha256"]
+    assert hashlib.sha256(script_path.read_bytes()).hexdigest() == registration["script_sha256"]
     assert registration["recognition_only_ablation"]["projection_ids"] == [
         "modeldb112923.projection.013"
     ]
-    assert "projections 008 and 011 recurrent TRN chemical GABA" in registration[
-        "retained"
-    ]
+    assert "projections 008 and 011 recurrent TRN chemical GABA" in registration["retained"]
     assert "cannot be promoted" in registration["boundary"]
 
 
 def test_trn_gap_junction_ablation_worsens_failed_inversion() -> None:
-    result_path = (
-        ROOT
-        / "docs/validation-results/figure7-trn-gap-junction-ablation-554.yaml"
-    )
+    result_path = ROOT / "docs/validation-results/figure7-trn-gap-junction-ablation-554.yaml"
     result = yaml.safe_load(result_path.read_text())
     assessment = yaml.safe_load(
         (
-            ROOT
-            / "docs/validation-results/figure7-trn-gap-junction-ablation-assessment-555.yaml"
+            ROOT / "docs/validation-results/figure7-trn-gap-junction-ablation-assessment-555.yaml"
         ).read_text()
     )
 
-    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment[
-        "result_sha256"
-    ]
+    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment["result_sha256"]
     assert all(result["figure6_gates"].values())
     assert result["match"]["trn_event_count"] == 551
     assert result["mismatch"]["trn_event_count"] == 608
@@ -8731,12 +7880,8 @@ def test_trn_gap_junction_ablation_worsens_failed_inversion() -> None:
     assert result["mismatch"]["trn_remaining_index_event_count"] == 528
     assert result["match"]["nonspecific_event_count"] == 4
     assert result["mismatch"]["nonspecific_event_count"] == 8
-    assert assessment["assessment"][
-        "mismatch_excess_increased_relative_to_control"
-    ]
-    assert assessment["assessment"][
-        "electrical_coupling_counteracts_global_inversion"
-    ]
+    assert assessment["assessment"]["mismatch_excess_increased_relative_to_control"]
+    assert assessment["assessment"]["electrical_coupling_counteracts_global_inversion"]
     assert not assessment["assessment"]["baseline_promoted"]
 
 
@@ -8750,12 +7895,8 @@ def test_trn_recurrent_gaba_path_decomposition_is_fixed_and_nonpromotable() -> N
     profile_path = ROOT / registration["profile"]
     script_path = ROOT / registration["script"]
 
-    assert hashlib.sha256(profile_path.read_bytes()).hexdigest() == registration[
-        "profile_sha256"
-    ]
-    assert hashlib.sha256(script_path.read_bytes()).hexdigest() == registration[
-        "script_sha256"
-    ]
+    assert hashlib.sha256(profile_path.read_bytes()).hexdigest() == registration["profile_sha256"]
+    assert hashlib.sha256(script_path.read_bytes()).hexdigest() == registration["script_sha256"]
     arms = registration["recognition_only_ablation_arms"]
     assert [arm["name"] for arm in arms] == [
         "soma_gaba_removed",
@@ -8771,8 +7912,7 @@ def test_trn_recurrent_gaba_path_decomposition_is_fixed_and_nonpromotable() -> N
 
 def test_trn_recurrent_gaba_path_decomposition_localizes_somatic_path() -> None:
     result_path = (
-        ROOT
-        / "docs/validation-results/figure7-trn-recurrent-gaba-path-decomposition-557.yaml"
+        ROOT / "docs/validation-results/figure7-trn-recurrent-gaba-path-decomposition-557.yaml"
     )
     result = yaml.safe_load(result_path.read_text())
     assessment = yaml.safe_load(
@@ -8782,9 +7922,7 @@ def test_trn_recurrent_gaba_path_decomposition_localizes_somatic_path() -> None:
         ).read_text()
     )
 
-    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment[
-        "result_sha256"
-    ]
+    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment["result_sha256"]
     assert all(result["figure6_gates"].values())
     outcomes = {outcome["arm"]: outcome for outcome in result["outcomes"]}
     soma = outcomes["soma_gaba_removed"]
@@ -8793,20 +7931,11 @@ def test_trn_recurrent_gaba_path_decomposition_localizes_somatic_path() -> None:
         1055,
         818,
     ]
-    assert [
-        proximal[key]["trn_event_count"] for key in ("match", "mismatch")
-    ] == [566, 571]
-    assert [
-        soma[key]["nonspecific_event_count"] for key in ("match", "mismatch")
-    ] == [5, 7]
-    assert [
-        proximal[key]["nonspecific_event_count"]
-        for key in ("match", "mismatch")
-    ] == [22, 22]
+    assert [proximal[key]["trn_event_count"] for key in ("match", "mismatch")] == [566, 571]
+    assert [soma[key]["nonspecific_event_count"] for key in ("match", "mismatch")] == [5, 7]
+    assert [proximal[key]["nonspecific_event_count"] for key in ("match", "mismatch")] == [22, 22]
     assert assessment["assessment"]["soma_path_removal_reverses_trn_order"]
-    assert not assessment["assessment"][
-        "proximal_path_removal_reverses_trn_order"
-    ]
+    assert not assessment["assessment"]["proximal_path_removal_reverses_trn_order"]
     assert not assessment["assessment"]["either_arm_is_behavioral_candidate"]
     assert not assessment["assessment"]["baseline_promoted"]
 
@@ -8814,8 +7943,7 @@ def test_trn_recurrent_gaba_path_decomposition_localizes_somatic_path() -> None:
 def test_trn_somatic_ring_audit_preserves_source_limit() -> None:
     audit = yaml.safe_load(
         (
-            ROOT
-            / "docs/validation-results/figure7-trn-somatic-ring-semantics-audit-559.yaml"
+            ROOT / "docs/validation-results/figure7-trn-somatic-ring-semantics-audit-559.yaml"
         ).read_text()
     )
 
@@ -8825,9 +7953,7 @@ def test_trn_somatic_ring_audit_preserves_source_limit() -> None:
     assert audit["current_executable_translation"]["total_connections"] == 6480
     assert not audit["current_executable_translation"]["self_connections"]
     assert not audit["assessment"]["new_source_justified_geometry_found"]
-    assert not audit["assessment"][
-        "current_center_excluded_geometry_officially_verified"
-    ]
+    assert not audit["assessment"]["current_center_excluded_geometry_officially_verified"]
     assert not audit["assessment"]["baseline_promoted"]
 
 
@@ -8841,15 +7967,9 @@ def test_trn_somatic_gaba_match_screen_is_bounded_and_mismatch_locked() -> None:
     profile_path = ROOT / registration["profile"]
     script_path = ROOT / registration["script"]
 
-    assert hashlib.sha256(profile_path.read_bytes()).hexdigest() == registration[
-        "profile_sha256"
-    ]
-    assert hashlib.sha256(script_path.read_bytes()).hexdigest() == registration[
-        "script_sha256"
-    ]
-    assert registration["calibrated_projection_id"] == (
-        "modeldb112923.projection.008"
-    )
+    assert hashlib.sha256(profile_path.read_bytes()).hexdigest() == registration["profile_sha256"]
+    assert hashlib.sha256(script_path.read_bytes()).hexdigest() == registration["script_sha256"]
+    assert registration["calibrated_projection_id"] == ("modeldb112923.projection.008")
     assert registration["effective_scale_grid"] == [
         0.75,
         0.875,
@@ -8862,17 +7982,12 @@ def test_trn_somatic_gaba_match_screen_is_bounded_and_mismatch_locked() -> None:
         "relay_events": 20,
         "nonspecific_events": 4,
     }
-    assert "mismatch outcomes at screened scales" in registration[
-        "locked_until_assessment"
-    ]
+    assert "mismatch outcomes at screened scales" in registration["locked_until_assessment"]
     assert "Do not interpolate" in registration["selection_rule"]
 
 
 def test_trn_somatic_gaba_match_screen_selects_only_exact_gate_survivors() -> None:
-    result_path = (
-        ROOT
-        / "docs/validation-results/figure7-trn-somatic-gaba-match-screen-561.yaml"
-    )
+    result_path = ROOT / "docs/validation-results/figure7-trn-somatic-gaba-match-screen-561.yaml"
     result = yaml.safe_load(result_path.read_text())
     assessment = yaml.safe_load(
         (
@@ -8881,9 +7996,7 @@ def test_trn_somatic_gaba_match_screen_selects_only_exact_gate_survivors() -> No
         ).read_text()
     )
 
-    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment[
-        "result_sha256"
-    ]
+    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment["result_sha256"]
     assert all(result["figure6_gates"].values())
     assert not result["mismatch_consulted"]
     survivors = [
@@ -8901,23 +8014,18 @@ def test_trn_somatic_gaba_match_screen_selects_only_exact_gate_survivors() -> No
 def test_trn_somatic_gaba_mismatch_is_limited_to_match_survivors() -> None:
     registration = yaml.safe_load(
         (
-            ROOT
-            / "docs/validation-results/figure7-trn-somatic-gaba-mismatch-registration-563.yaml"
+            ROOT / "docs/validation-results/figure7-trn-somatic-gaba-mismatch-registration-563.yaml"
         ).read_text()
     )
     profile_path = ROOT / registration["profile"]
     script_path = ROOT / registration["script"]
     match_path = ROOT / registration["match_result"]
 
-    assert hashlib.sha256(profile_path.read_bytes()).hexdigest() == registration[
-        "profile_sha256"
-    ]
-    assert hashlib.sha256(script_path.read_bytes()).hexdigest() == registration[
-        "script_sha256"
-    ]
-    assert hashlib.sha256(match_path.read_bytes()).hexdigest() == registration[
-        "match_result_sha256"
-    ]
+    assert hashlib.sha256(profile_path.read_bytes()).hexdigest() == registration["profile_sha256"]
+    assert hashlib.sha256(script_path.read_bytes()).hexdigest() == registration["script_sha256"]
+    assert (
+        hashlib.sha256(match_path.read_bytes()).hexdigest() == registration["match_result_sha256"]
+    )
     assert registration["survivor_scales"] == [0.875, 1.0]
     assert registration["fixed_match_trn_events_by_scale"] == {
         "0.875": 576,
@@ -8933,21 +8041,15 @@ def test_trn_somatic_gaba_mismatch_is_limited_to_match_survivors() -> None:
 
 
 def test_trn_somatic_gaba_mismatch_closes_one_dimensional_family() -> None:
-    result_path = (
-        ROOT
-        / "docs/validation-results/figure7-trn-somatic-gaba-mismatch-564.yaml"
-    )
+    result_path = ROOT / "docs/validation-results/figure7-trn-somatic-gaba-mismatch-564.yaml"
     result = yaml.safe_load(result_path.read_text())
     assessment = yaml.safe_load(
         (
-            ROOT
-            / "docs/validation-results/figure7-trn-somatic-gaba-mismatch-assessment-565.yaml"
+            ROOT / "docs/validation-results/figure7-trn-somatic-gaba-mismatch-assessment-565.yaml"
         ).read_text()
     )
 
-    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment[
-        "result_sha256"
-    ]
+    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment["result_sha256"]
     assert all(result["figure6_gates"].values())
     outcomes = {item["effective_scale"]: item["mismatch"] for item in result["outcomes"]}
     assert outcomes[0.875]["relay_active_indices"] == [40]
@@ -8958,9 +8060,7 @@ def test_trn_somatic_gaba_mismatch_closes_one_dimensional_family() -> None:
     assert outcomes[1.0]["trn_event_count"] == 584
     assert not outcomes[0.875]["mismatch_gates"]["match_more_trn_events"]
     assert not outcomes[1.0]["mismatch_gates"]["match_more_trn_events"]
-    assert assessment["assessment"][
-        "projection008_one_dimensional_family_closed"
-    ]
+    assert assessment["assessment"]["projection008_one_dimensional_family_closed"]
     assert assessment["assessment"]["complete_survivor_scales"] == []
     assert not assessment["assessment"]["baseline_promoted"]
 
@@ -8975,12 +8075,8 @@ def test_persistent_gaba_t_cross_is_bounded_and_applies_before_learning() -> Non
     profile_path = ROOT / registration["profile"]
     script_path = ROOT / registration["script"]
 
-    assert hashlib.sha256(profile_path.read_bytes()).hexdigest() == registration[
-        "profile_sha256"
-    ]
-    assert hashlib.sha256(script_path.read_bytes()).hexdigest() == registration[
-        "script_sha256"
-    ]
+    assert hashlib.sha256(profile_path.read_bytes()).hexdigest() == registration["profile_sha256"]
+    assert hashlib.sha256(script_path.read_bytes()).hexdigest() == registration["script_sha256"]
     assert registration["persistent_projection_scale"] == {
         "projection_id": "modeldb112923.projection.008",
         "scale": 0.75,
@@ -8989,16 +8085,11 @@ def test_persistent_gaba_t_cross_is_bounded_and_applies_before_learning() -> Non
     assert registration["nonspecific_t_scale_grid"] == [0.125, 0.15625, 0.1875]
     assert "fresh Figure 6" in registration["persistence_rule"]
     assert "Do not rank by TRN count" in registration["selection_rule"]
-    assert "make either parameter recognition-only" in registration[
-        "selection_rule"
-    ]
+    assert "make either parameter recognition-only" in registration["selection_rule"]
 
 
 def test_persistent_gaba_t_cross_has_no_match_survivor() -> None:
-    result_path = (
-        ROOT
-        / "docs/validation-results/figure7-persistent-gaba-t-match-cross-567.yaml"
-    )
+    result_path = ROOT / "docs/validation-results/figure7-persistent-gaba-t-match-cross-567.yaml"
     result = yaml.safe_load(result_path.read_text())
     assessment = yaml.safe_load(
         (
@@ -9007,9 +8098,7 @@ def test_persistent_gaba_t_cross_has_no_match_survivor() -> None:
         ).read_text()
     )
 
-    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment[
-        "result_sha256"
-    ]
+    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment["result_sha256"]
     assert not result["mismatch_consulted"]
     assert len(result["outcomes"]) == 3
     for outcome in result["outcomes"]:
@@ -9033,12 +8122,8 @@ def test_persistent_gaba0875_consistency_introduces_no_new_value() -> None:
     profile_path = ROOT / registration["profile"]
     script_path = ROOT / registration["script"]
 
-    assert hashlib.sha256(profile_path.read_bytes()).hexdigest() == registration[
-        "profile_sha256"
-    ]
-    assert hashlib.sha256(script_path.read_bytes()).hexdigest() == registration[
-        "script_sha256"
-    ]
+    assert hashlib.sha256(profile_path.read_bytes()).hexdigest() == registration["profile_sha256"]
+    assert hashlib.sha256(script_path.read_bytes()).hexdigest() == registration["script_sha256"]
     assert registration["persistent_projection_scale"]["scale"] == 0.875
     assert registration["nonspecific_t_scale_grid"] == [0.1875]
     assert not registration["novel_parameter_values_introduced"]
@@ -9047,10 +8132,7 @@ def test_persistent_gaba0875_consistency_introduces_no_new_value() -> None:
 
 
 def test_persistent_gaba0875_consistency_passes_learning_and_match() -> None:
-    result_path = (
-        ROOT
-        / "docs/validation-results/figure7-persistent-gaba0875-consistency-570.yaml"
-    )
+    result_path = ROOT / "docs/validation-results/figure7-persistent-gaba0875-consistency-570.yaml"
     result = yaml.safe_load(result_path.read_text())
     assessment = yaml.safe_load(
         (
@@ -9059,9 +8141,7 @@ def test_persistent_gaba0875_consistency_passes_learning_and_match() -> None:
         ).read_text()
     )
 
-    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment[
-        "result_sha256"
-    ]
+    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment["result_sha256"]
     outcome = result["outcomes"][0]
     assert all(outcome["figure6_gates"].values())
     assert all(outcome["match"]["match_gates"].values())
@@ -9084,15 +8164,11 @@ def test_persistent_gaba0875_mismatch_is_single_fixed_trial() -> None:
     script_path = ROOT / registration["script"]
     match_path = ROOT / registration["match_result"]
 
-    assert hashlib.sha256(profile_path.read_bytes()).hexdigest() == registration[
-        "profile_sha256"
-    ]
-    assert hashlib.sha256(script_path.read_bytes()).hexdigest() == registration[
-        "script_sha256"
-    ]
-    assert hashlib.sha256(match_path.read_bytes()).hexdigest() == registration[
-        "match_result_sha256"
-    ]
+    assert hashlib.sha256(profile_path.read_bytes()).hexdigest() == registration["profile_sha256"]
+    assert hashlib.sha256(script_path.read_bytes()).hexdigest() == registration["script_sha256"]
+    assert (
+        hashlib.sha256(match_path.read_bytes()).hexdigest() == registration["match_result_sha256"]
+    )
     assert registration["persistent_projection_scale"]["scale"] == 0.875
     assert registration["nonspecific_t_scale"] == 0.1875
     assert registration["fixed_match_trn_events"] == 576
@@ -9106,10 +8182,7 @@ def test_persistent_gaba0875_mismatch_is_single_fixed_trial() -> None:
 
 
 def test_persistent_gaba0875_mismatch_closes_on_trn_order_only() -> None:
-    result_path = (
-        ROOT
-        / "docs/validation-results/figure7-persistent-gaba0875-mismatch-573.yaml"
-    )
+    result_path = ROOT / "docs/validation-results/figure7-persistent-gaba0875-mismatch-573.yaml"
     result = yaml.safe_load(result_path.read_text())
     assessment = yaml.safe_load(
         (
@@ -9118,9 +8191,7 @@ def test_persistent_gaba0875_mismatch_closes_on_trn_order_only() -> None:
         ).read_text()
     )
 
-    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment[
-        "result_sha256"
-    ]
+    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment["result_sha256"]
     assert all(result["figure6_gates"].values())
     gates = result["mismatch"]["mismatch_gates"]
     assert gates == {
@@ -9146,12 +8217,8 @@ def test_persistent_inhibitory_drive_audit_is_readout_only() -> None:
     profile_path = ROOT / registration["profile"]
     script_path = ROOT / registration["script"]
 
-    assert hashlib.sha256(profile_path.read_bytes()).hexdigest() == registration[
-        "profile_sha256"
-    ]
-    assert hashlib.sha256(script_path.read_bytes()).hexdigest() == registration[
-        "script_sha256"
-    ]
+    assert hashlib.sha256(profile_path.read_bytes()).hexdigest() == registration["profile_sha256"]
+    assert hashlib.sha256(script_path.read_bytes()).hexdigest() == registration["script_sha256"]
     assert registration["persistent_projection_scale"] == {
         "projection_id": "modeldb112923.projection.008",
         "scale": 0.875,
@@ -9164,8 +8231,7 @@ def test_persistent_inhibitory_drive_audit_is_readout_only() -> None:
 
 def test_persistent_inhibitory_drive_audit_records_instrumentation_failure() -> None:
     result_path = (
-        ROOT
-        / "docs/validation-results/figure7-persistent-inhibitory-drive-audit-576.yaml"
+        ROOT / "docs/validation-results/figure7-persistent-inhibitory-drive-audit-576.yaml"
     )
     result = yaml.safe_load(result_path.read_text())
     assessment = yaml.safe_load(
@@ -9175,9 +8241,7 @@ def test_persistent_inhibitory_drive_audit_records_instrumentation_failure() -> 
         ).read_text()
     )
 
-    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment[
-        "result_sha256"
-    ]
+    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment["result_sha256"]
     assert result["match"]["trn_event_count"] == 576
     assert result["mismatch"]["trn_event_count"] == 595
     for condition in ("match", "mismatch"):
@@ -9200,12 +8264,8 @@ def test_recorded_inhibitory_drive_audit_changes_instrumentation_only() -> None:
     profile_path = ROOT / registration["profile"]
     script_path = ROOT / registration["script"]
 
-    assert hashlib.sha256(profile_path.read_bytes()).hexdigest() == registration[
-        "profile_sha256"
-    ]
-    assert hashlib.sha256(script_path.read_bytes()).hexdigest() == registration[
-        "script_sha256"
-    ]
+    assert hashlib.sha256(profile_path.read_bytes()).hexdigest() == registration["profile_sha256"]
+    assert hashlib.sha256(script_path.read_bytes()).hexdigest() == registration["script_sha256"]
     assert registration["sole_execution_change"] == {
         "value": "record_relay_diagnostics=true",
         "purpose": "construct the existing nonspecific-pathway state monitor",
@@ -9227,8 +8287,7 @@ def test_recorded_inhibitory_drive_audit_changes_instrumentation_only() -> None:
 
 def test_recorded_inhibitory_drive_audit_is_valid_and_confirms_order() -> None:
     result_path = (
-        ROOT
-        / "docs/validation-results/figure7-persistent-inhibitory-drive-recorded-579.yaml"
+        ROOT / "docs/validation-results/figure7-persistent-inhibitory-drive-recorded-579.yaml"
     )
     result = yaml.safe_load(result_path.read_text())
     assessment = yaml.safe_load(
@@ -9238,9 +8297,7 @@ def test_recorded_inhibitory_drive_audit_is_valid_and_confirms_order() -> None:
         ).read_text()
     )
 
-    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment[
-        "result_sha256"
-    ]
+    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment["result_sha256"]
     assert all(result["figure6_gates"].values())
     assert (result["match"]["relay_event_count"], result["match"]["trn_event_count"]) == (
         20,
@@ -9279,12 +8336,8 @@ def test_peripheral_trn_localization_is_full_sheet_and_read_only() -> None:
     profile_path = ROOT / registration["profile"]
     script_path = ROOT / registration["script"]
 
-    assert hashlib.sha256(profile_path.read_bytes()).hexdigest() == registration[
-        "profile_sha256"
-    ]
-    assert hashlib.sha256(script_path.read_bytes()).hexdigest() == registration[
-        "script_sha256"
-    ]
+    assert hashlib.sha256(profile_path.read_bytes()).hexdigest() == registration["profile_sha256"]
+    assert hashlib.sha256(script_path.read_bytes()).hexdigest() == registration["script_sha256"]
     assert registration["diagnostic_scope"]["recorded_indices"] == "all 81 TRN cells"
     assert len(registration["diagnostic_scope"]["central_indices"]) == 9
     assert len(registration["added_readouts_only"]) == 6
@@ -9295,20 +8348,15 @@ def test_peripheral_trn_localization_is_full_sheet_and_read_only() -> None:
 
 
 def test_peripheral_trn_full_output_failure_is_not_interpreted() -> None:
-    result_path = (
-        ROOT / "docs/validation-results/figure7-peripheral-trn-localization-582.yaml"
-    )
+    result_path = ROOT / "docs/validation-results/figure7-peripheral-trn-localization-582.yaml"
     result = yaml.safe_load(result_path.read_text())
     assessment = yaml.safe_load(
         (
-            ROOT
-            / "docs/validation-results/figure7-peripheral-trn-localization-assessment-583.yaml"
+            ROOT / "docs/validation-results/figure7-peripheral-trn-localization-assessment-583.yaml"
         ).read_text()
     )
 
-    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment[
-        "result_sha256"
-    ]
+    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment["result_sha256"]
     assert result["execution"]["exit_code"] == 0
     assert result["execution"]["original_output_tokens"] == 30806
     assert not result["full_sheet_source_arrays_archived"]
@@ -9320,19 +8368,14 @@ def test_peripheral_trn_full_output_failure_is_not_interpreted() -> None:
 def test_peripheral_trn_summary_repeat_changes_serialization_only() -> None:
     registration = yaml.safe_load(
         (
-            ROOT
-            / "docs/validation-results/figure7-peripheral-trn-summary-registration-584.yaml"
+            ROOT / "docs/validation-results/figure7-peripheral-trn-summary-registration-584.yaml"
         ).read_text()
     )
     profile_path = ROOT / registration["profile"]
     script_path = ROOT / registration["script"]
 
-    assert hashlib.sha256(profile_path.read_bytes()).hexdigest() == registration[
-        "profile_sha256"
-    ]
-    assert hashlib.sha256(script_path.read_bytes()).hexdigest() == registration[
-        "script_sha256"
-    ]
+    assert hashlib.sha256(profile_path.read_bytes()).hexdigest() == registration["profile_sha256"]
+    assert hashlib.sha256(script_path.read_bytes()).hexdigest() == registration["script_sha256"]
     assert "Only stdout serialization changes" in registration["execution_identity"]
     assert len(registration["registered_summaries"]["regions"]["central"]) == 9
     assert registration["required_event_identity"]["match"]["trn_events"] == 576
@@ -9341,20 +8384,15 @@ def test_peripheral_trn_summary_repeat_changes_serialization_only() -> None:
 
 
 def test_peripheral_trn_summary_confirms_recurrent_inversion() -> None:
-    result_path = (
-        ROOT / "docs/validation-results/figure7-peripheral-trn-summary-585.yaml"
-    )
+    result_path = ROOT / "docs/validation-results/figure7-peripheral-trn-summary-585.yaml"
     result = yaml.safe_load(result_path.read_text())
     assessment = yaml.safe_load(
         (
-            ROOT
-            / "docs/validation-results/figure7-peripheral-trn-summary-assessment-586.yaml"
+            ROOT / "docs/validation-results/figure7-peripheral-trn-summary-assessment-586.yaml"
         ).read_text()
     )
 
-    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment[
-        "result_sha256"
-    ]
+    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment["result_sha256"]
     assert all(result["figure6_gates"].values())
     assert result["event_identity"] == {
         "match": {"relay_events": 20, "trn_events": 576, "nonspecific_events": 4},
@@ -9369,9 +8407,7 @@ def test_peripheral_trn_summary_confirms_recurrent_inversion() -> None:
     ):
         assert peripheral["match"][field] > peripheral["mismatch"][field]
     for field in ("relay_ampa", "layer6ii_ampa", "layer6ii_nmda"):
-        assert result["peripheral_per_cell_order_counts"][field][
-            "mismatch_greater"
-        ] == 0
+        assert result["peripheral_per_cell_order_counts"][field]["mismatch_greater"] == 0
     assert assessment["assessment"]["recurrent_trn_inversion_confirmed"]
     assert assessment["assessment"]["broad_afferent_mismatch_excess_rejected"]
     assert assessment["assessment"]["candidate_closed"]
@@ -9388,12 +8424,8 @@ def test_persistent_recurrent_gaba_match_cross_is_bounded_and_match_only() -> No
     profile_path = ROOT / registration["profile"]
     script_path = ROOT / registration["script"]
 
-    assert hashlib.sha256(profile_path.read_bytes()).hexdigest() == registration[
-        "profile_sha256"
-    ]
-    assert hashlib.sha256(script_path.read_bytes()).hexdigest() == registration[
-        "script_sha256"
-    ]
+    assert hashlib.sha256(profile_path.read_bytes()).hexdigest() == registration["profile_sha256"]
+    assert hashlib.sha256(script_path.read_bytes()).hexdigest() == registration["script_sha256"]
     assert registration["persistent_somatic_projection_scale"] == {
         "projection_id": "modeldb112923.projection.008",
         "scale": 0.75,
@@ -9413,8 +8445,7 @@ def test_persistent_recurrent_gaba_match_cross_is_bounded_and_match_only() -> No
 
 def test_persistent_recurrent_gaba_match_cross_has_one_survivor() -> None:
     result_path = (
-        ROOT
-        / "docs/validation-results/figure7-persistent-recurrent-gaba-match-cross-588.yaml"
+        ROOT / "docs/validation-results/figure7-persistent-recurrent-gaba-match-cross-588.yaml"
     )
     result = yaml.safe_load(result_path.read_text())
     assessment = yaml.safe_load(
@@ -9424,15 +8455,10 @@ def test_persistent_recurrent_gaba_match_cross_has_one_survivor() -> None:
         ).read_text()
     )
 
-    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment[
-        "result_sha256"
-    ]
+    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment["result_sha256"]
     assert not result["mismatch_consulted"]
     assert len(result["outcomes"]) == 3
-    outcomes = {
-        outcome["proximal_projection_scale"]: outcome
-        for outcome in result["outcomes"]
-    }
+    outcomes = {outcome["proximal_projection_scale"]: outcome for outcome in result["outcomes"]}
     assert not all(outcomes[0.875]["figure6_gates"].values())
     assert all(outcomes[0.9375]["figure6_gates"].values())
     assert all(outcomes[0.9375]["match"]["match_gates"].values())
@@ -9455,12 +8481,8 @@ def test_persistent_recurrent_gaba_pair_is_single_fixed_verification() -> None:
     profile_path = ROOT / registration["profile"]
     script_path = ROOT / registration["script"]
 
-    assert hashlib.sha256(profile_path.read_bytes()).hexdigest() == registration[
-        "profile_sha256"
-    ]
-    assert hashlib.sha256(script_path.read_bytes()).hexdigest() == registration[
-        "script_sha256"
-    ]
+    assert hashlib.sha256(profile_path.read_bytes()).hexdigest() == registration["profile_sha256"]
+    assert hashlib.sha256(script_path.read_bytes()).hexdigest() == registration["script_sha256"]
     assert registration["persistent_projection_scales"] == [
         {"projection_id": "modeldb112923.projection.008", "scale": 0.75},
         {"projection_id": "modeldb112923.projection.011", "scale": 0.9375},
@@ -9478,10 +8500,7 @@ def test_persistent_recurrent_gaba_pair_is_single_fixed_verification() -> None:
 
 
 def test_persistent_recurrent_gaba_pair_closes_on_one_rate_gate() -> None:
-    result_path = (
-        ROOT
-        / "docs/validation-results/figure7-persistent-recurrent-gaba-pair-591.yaml"
-    )
+    result_path = ROOT / "docs/validation-results/figure7-persistent-recurrent-gaba-pair-591.yaml"
     result = yaml.safe_load(result_path.read_text())
     assessment = yaml.safe_load(
         (
@@ -9490,9 +8509,7 @@ def test_persistent_recurrent_gaba_pair_closes_on_one_rate_gate() -> None:
         ).read_text()
     )
 
-    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment[
-        "result_sha256"
-    ]
+    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment["result_sha256"]
     assert all(result["figure6_gates"].values())
     gates = result["fixed_figure7_gates"]
     assert sum(not passed for passed in gates.values()) == 1
@@ -9529,12 +8546,8 @@ def test_mismatch_nonspecific_trace_compare_is_read_only_and_fixed() -> None:
     profile_path = ROOT / registration["profile"]
     script_path = ROOT / registration["script"]
 
-    assert hashlib.sha256(profile_path.read_bytes()).hexdigest() == registration[
-        "profile_sha256"
-    ]
-    assert hashlib.sha256(script_path.read_bytes()).hexdigest() == registration[
-        "script_sha256"
-    ]
+    assert hashlib.sha256(profile_path.read_bytes()).hexdigest() == registration["profile_sha256"]
+    assert hashlib.sha256(script_path.read_bytes()).hexdigest() == registration["script_sha256"]
     assert len(registration["arms"]) == 2
     assert registration["arms"][0]["expected_mismatch"]["nonspecific_events"] == 7
     assert registration["arms"][1]["expected_mismatch"]["nonspecific_events"] == 6
@@ -9545,8 +8558,7 @@ def test_mismatch_nonspecific_trace_compare_is_read_only_and_fixed() -> None:
 
 def test_mismatch_nonspecific_trace_compare_localizes_missing_event() -> None:
     result_path = (
-        ROOT
-        / "docs/validation-results/figure7-mismatch-nonspecific-trace-compare-594.yaml"
+        ROOT / "docs/validation-results/figure7-mismatch-nonspecific-trace-compare-594.yaml"
     )
     result = yaml.safe_load(result_path.read_text())
     assessment = yaml.safe_load(
@@ -9556,9 +8568,7 @@ def test_mismatch_nonspecific_trace_compare_localizes_missing_event() -> None:
         ).read_text()
     )
 
-    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment[
-        "result_sha256"
-    ]
+    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment["result_sha256"]
     assert len(result["outcomes"]) == 2
     control, repaired = result["outcomes"]
     assert all(control["figure6_gates"].values())
@@ -9582,25 +8592,16 @@ def test_mismatch_nonspecific_trace_compare_localizes_missing_event() -> None:
     assert len(control["nonspecific_positive_detector_local_maxima_ms_mV"]) == 7
     assert len(repaired["nonspecific_positive_detector_local_maxima_ms_mV"]) == 6
     assert repaired["fourth_late_detector_peak"] is None
-    assert result["comparison"][
-        "missing_event_localized_to_stronger_inhibitory_envelope"
-    ]
-    assert result["comparison"][
-        "intrinsic_t_recovery_rejected_as_primary_difference"
-    ]
-    assert assessment["assessment"][
-        "missing_event_localized_to_inhibitory_envelope"
-    ]
+    assert result["comparison"]["missing_event_localized_to_stronger_inhibitory_envelope"]
+    assert result["comparison"]["intrinsic_t_recovery_rejected_as_primary_difference"]
+    assert assessment["assessment"]["missing_event_localized_to_inhibitory_envelope"]
     assert not assessment["assessment"]["parameter_selected"]
     assert not assessment["assessment"]["candidate_reopened"]
     assert not assessment["assessment"]["baseline_promoted"]
 
 
 def test_repaired_trn_output_gaba_interaction_is_narrow_and_preregistered() -> None:
-    audit_path = (
-        ROOT
-        / "docs/validation-results/figure7-trn-nonspecific-gaba-reopen-audit-596.yaml"
-    )
+    audit_path = ROOT / "docs/validation-results/figure7-trn-nonspecific-gaba-reopen-audit-596.yaml"
     audit = yaml.safe_load(audit_path.read_text())
     registration = yaml.safe_load(
         (
@@ -9609,15 +8610,17 @@ def test_repaired_trn_output_gaba_interaction_is_narrow_and_preregistered() -> N
         ).read_text()
     )
 
-    assert hashlib.sha256(audit_path.read_bytes()).hexdigest() == registration[
-        "authorization_sha256"
-    ]
-    assert hashlib.sha256((ROOT / registration["profile"]).read_bytes()).hexdigest() == registration[
-        "profile_sha256"
-    ]
-    assert hashlib.sha256((ROOT / registration["script"]).read_bytes()).hexdigest() == registration[
-        "script_sha256"
-    ]
+    assert (
+        hashlib.sha256(audit_path.read_bytes()).hexdigest() == registration["authorization_sha256"]
+    )
+    assert (
+        hashlib.sha256((ROOT / registration["profile"]).read_bytes()).hexdigest()
+        == registration["profile_sha256"]
+    )
+    assert (
+        hashlib.sha256((ROOT / registration["script"]).read_bytes()).hexdigest()
+        == registration["script_sha256"]
+    )
     assert audit["admissibility"]["sole_reopened_scale"] == 0.75
     assert not audit["admissibility"]["new_interpolation_allowed"]
     assert not audit["admissibility"]["new_grid_extension_allowed"]
@@ -9632,10 +8635,7 @@ def test_repaired_trn_output_gaba_interaction_is_narrow_and_preregistered() -> N
 
 
 def test_repaired_trn_output_gaba_interaction_closes_at_match() -> None:
-    result_path = (
-        ROOT
-        / "docs/validation-results/figure7-persistent-output-gaba-match-598.yaml"
-    )
+    result_path = ROOT / "docs/validation-results/figure7-persistent-output-gaba-match-598.yaml"
     result = yaml.safe_load(result_path.read_text())
     assessment = yaml.safe_load(
         (
@@ -9644,9 +8644,7 @@ def test_repaired_trn_output_gaba_interaction_closes_at_match() -> None:
         ).read_text()
     )
 
-    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment[
-        "result_sha256"
-    ]
+    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment["result_sha256"]
     assert all(result["figure6_gates"].values())
     assert result["match"]["relay_active_indices"] == [38, 39, 40, 41, 42]
     assert result["match"]["relay_event_count"] == 20
@@ -9657,3 +8655,35 @@ def test_repaired_trn_output_gaba_interaction_closes_at_match() -> None:
     assert not assessment["assessment"]["interpolation_or_grid_extension_authorized"]
     assert not assessment["assessment"]["repeat_or_adjustment_authorized"]
     assert not assessment["assessment"]["baseline_promoted"]
+
+
+def test_calibrated_figure10_reset_pair_is_hash_pinned_and_causal() -> None:
+    harness_evidence = yaml.safe_load(
+        (ROOT / "docs/validation-results/figure10-calibrated-harness-600.yaml").read_text()
+    )
+    registration = yaml.safe_load(
+        (
+            ROOT / "docs/validation-results/figure10-calibrated-reset-registration-601.yaml"
+        ).read_text()
+    )
+
+    assert (
+        hashlib.sha256((ROOT / registration["profile"]).read_bytes()).hexdigest()
+        == registration["profile_sha256"]
+    )
+    assert (
+        hashlib.sha256((ROOT / registration["harness"]).read_bytes()).hexdigest()
+        == registration["harness_sha256"]
+    )
+    assert (
+        hashlib.sha256((ROOT / registration["script"]).read_bytes()).hexdigest()
+        == registration["script_sha256"]
+    )
+    assert harness_evidence["implementation_sha256"] == registration["harness_sha256"]
+    assert registration["negative_control"]["disabled_only_at_mismatch"] == [
+        "modeldb112923.projection.017",
+        "modeldb112923.projection.018",
+    ]
+    assert len(registration["fixed_gates"]) == 6
+    assert "cannot erase" in registration["known_locked_discrepancy"]
+    assert not registration["baseline_freeze_authorized"]

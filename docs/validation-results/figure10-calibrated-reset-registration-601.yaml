@@ -1,0 +1,54 @@
+schema_version: 1
+id: figure10-calibrated-reset-registration-601
+date: '2026-09-08'
+status: registered-before-execution-calibrated-reset-pair
+classification: downstream-validation-with-locked-figure7-discrepancy
+profile: configs/calibration/figure7_learned_coincidence_effective_t_pair_v1.yaml
+profile_sha256: 4b6aa0bdf4fb844e428fb330f34970900cc8bc741183b2d8e6e73789cba0b30f
+harness: src/smart_robustness/validation/figure10.py
+harness_sha256: 44b49732338b634603600c1cb859aeb6f2c6e4cf8570d9eac88e66bd8ceedfb4
+script: scripts/run_figure10_calibrated_reset_pair.py
+script_sha256: bb1f306eb01b24178d3940beedca3c01a9bef30b362a0e60c6e6d287740d8b4d
+runtime_fingerprint: fa4ab9f0bf2bec4d6ad53cb6a91620047689b6839b146ed7d777d42350c2cdf5
+authorization: docs/validation-results/figure7-persistent-output-gaba-match-assessment-599.yaml
+implementation_evidence: docs/validation-results/figure10-calibrated-harness-600.yaml
+result_id: figure10-calibrated-reset-pair-602
+result: docs/validation-results/figure10-calibrated-reset-pair-602.yaml
+assessment: docs/validation-results/figure10-calibrated-reset-assessment-603.yaml
+persistent_projection_scales:
+- {projection_id: modeldb112923.projection.008, scale: 0.75}
+- {projection_id: modeldb112923.projection.011, scale: 0.9375}
+nonspecific_t_scale: 0.1875
+protocol:
+  pre_match_duration_ms: 100.0
+  mismatch_duration_ms: 100.0
+  dt_ms: 0.01
+  top_down_current_pA: 800.0
+  top_down_current_mode: until_cued_cell_first_event
+  comparator: {transform: top_k_binary, source_index: 40, target_count: 5}
+  learned_state: fresh Figure 6 snapshot shared by intact and control
+  phase_duration_status: source-unreported-declared-convention
+negative_control:
+  intervention_time_ms: 100.0
+  disabled_only_at_mismatch:
+  - modeldb112923.projection.017
+  - modeldb112923.projection.018
+fixed_gates:
+- fresh Figure 6 passes before either condition
+- intact and control pre-mismatch layer-4 event vectors are identical
+- a nonempty horizontal pre-reset layer-4 assembly exists
+- intact mismatch contains nonspecific, layer-5, and layer-6I events in the reset chain
+- intact suppresses the pre-reset assembly more than the disconnected control
+- intact releases more alternative layer-4 cells than the disconnected control
+decision_rule: >-
+  Report every gate independently and pass Figure 10 only if all fixed causal
+  gates pass. Do not tune a duration, current, projection, neuron parameter, or
+  score from the result. A failure is diagnostic of the locked candidate and
+  does not reopen Figure 7 calibration.
+known_locked_discrepancy: >-
+  The input model has exact Figure 7 spatial selection, TRN/effective-inhibition
+  ordering, and four-event match, but six rather than seven mismatch
+  nonspecific events. Figure 10 is evaluated to determine whether this local
+  numeric deficit coexists with or predicts a deeper reset failure. It cannot
+  erase that discrepancy.
+baseline_freeze_authorized: false

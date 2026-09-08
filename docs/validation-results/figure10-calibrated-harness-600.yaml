@@ -1,0 +1,25 @@
+schema_version: 1
+id: figure10-calibrated-harness-600
+date: '2026-09-08'
+status: implementation-ready-tests-pass
+classification: downstream-validation-harness-update
+implementation: src/smart_robustness/validation/figure10.py
+implementation_sha256: 44b49732338b634603600c1cb859aeb6f2c6e4cf8570d9eac88e66bd8ceedfb4
+new_supported_inputs:
+- simulated Figure 6 learned-weight snapshot
+- persistent projection-weight scales
+- learned top-k relay comparator
+- cue cleared on the selected category cell's first event
+preserved_contracts:
+- one persistent match-to-mismatch network per condition
+- reset projections 017 and 018 disconnected only at mismatch onset in control
+- intact and control must have identical pre-mismatch layer-4 state
+- legacy paper-constrained and sustained-current defaults remain available
+verification:
+  command: .venv/bin/pytest -q tests/test_figure10_validation.py
+  result: 6 passed
+  lint: pass
+scope_boundary: >-
+  This is a harness compatibility change, not a neuron, synapse, connectivity,
+  learning, stimulus, or validation-score change. It does not establish Figure
+  10 behavior and cannot promote the known one-spike Figure 7 discrepancy.

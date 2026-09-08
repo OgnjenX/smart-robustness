@@ -3695,3 +3695,12 @@ retuning. The source-control repaired-TRN model remains closest: all Figure 7
 spatial and mechanistic direction gates plus exact four-event match pass, while
 mismatch emits six instead of seven events. Original SMART is still not fully
 reproduced or frozen.
+
+Artifact 600 makes the Figure 10 runner compatible with the current calibrated
+state while preserving its original causal-control semantics. Registration 601
+locks a fresh-learning 100-ms match followed by 100-ms mismatch, comparing an
+intact reset pathway with projections 017/018 disconnected only at mismatch
+onset. The declared phase duration remains source-unreported. This downstream
+test cannot cure or hide the six-versus-seven Figure 7 deficit; it asks whether
+the published nonspecific→layer-5→layer-6I reset chain and winner release are
+nevertheless present in the same fixed model.

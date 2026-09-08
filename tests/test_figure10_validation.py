@@ -86,6 +86,22 @@ def test_figure10_runner_requires_explicit_positive_protocol_values() -> None:
             mismatch_duration_ms=100,
             reset_pathway_enabled=True,
         )
+    with pytest.raises(ValueError, match="requires learned weights"):
+        run_figure10_condition(
+            top_down_current_pA=600,
+            pre_match_duration_ms=100,
+            mismatch_duration_ms=100,
+            reset_pathway_enabled=True,
+            comparator_top_k_targets=5,
+        )
+    with pytest.raises(ValueError, match="event-count-limited"):
+        run_figure10_condition(
+            top_down_current_pA=600,
+            pre_match_duration_ms=100,
+            mismatch_duration_ms=100,
+            reset_pathway_enabled=True,
+            top_down_current_mode="until_cued_cell_event_limit",
+        )
     with pytest.raises(ValueError, match="top_down_current"):
         run_figure10_condition(
             top_down_current_pA=0,
@@ -107,3 +123,5 @@ def test_figure10_condition_smoke_runs_persistent_two_phase_network() -> None:
     assert not result.reset_pathway_enabled
     assert result.pre_match_duration_ms == pytest.approx(0.01)
     assert result.mismatch_duration_ms == pytest.approx(0.01)
+    assert result.learned_state_provenance == "paper-constrained-figure6c-reference"
+    assert result.top_down_current_mode == "sustained_epoch"

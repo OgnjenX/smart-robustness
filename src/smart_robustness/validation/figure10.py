@@ -8,6 +8,7 @@ unreported numerical trace.
 
 from __future__ import annotations
 
+from collections.abc import Mapping
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -19,7 +20,12 @@ from ..protocols import (
     apply_match_mismatch_cue,
     clear_match_mismatch_cue,
 )
-from .figure7 import apply_figure7_learned_state, paper_constrained_figure6_expectation
+from .figure7 import (
+    TopDownCurrentMode,
+    apply_figure7_learned_state,
+    paper_constrained_figure6_expectation,
+    top_k_comparator_relay_input_gains,
+)
 
 FIGURE10_RESET_INPUT_PROJECTIONS = (
     "modeldb112923.projection.017",  # nonspecific thalamus -> layer-5 AMPA
@@ -40,6 +46,9 @@ class Figure10ConditionResult:
     layer5_spike_times_ms: tuple[float, ...] = ()
     layer6i_spike_times_ms: tuple[float, ...] = ()
     convention_fingerprint: str | None = None
+    learned_state_provenance: str | None = None
+    comparator_target_count: int | None = None
+    top_down_current_mode: str = TopDownCurrentMode.SUSTAINED_EPOCH.value
 
     def __post_init__(self) -> None:
         if self.pre_match_duration_ms <= 0 or self.mismatch_duration_ms <= 0:
@@ -143,9 +152,7 @@ def assess_figure10_reset(
         control_winner_post_spikes=control_winner,
         intact_released_alternatives=intact_alternatives,
         control_released_alternatives=control_alternatives,
-        intact_nonspecific_spikes=intact.mismatch_spike_count(
-            intact.nonspecific_spike_times_ms
-        ),
+        intact_nonspecific_spikes=intact.mismatch_spike_count(intact.nonspecific_spike_times_ms),
         intact_layer5_spikes=intact.mismatch_spike_count(intact.layer5_spike_times_ms),
         intact_layer6i_spikes=intact.mismatch_spike_count(intact.layer6i_spike_times_ms),
     )
@@ -157,6 +164,11 @@ def run_figure10_condition(
     pre_match_duration_ms: float,
     mismatch_duration_ms: float,
     reset_pathway_enabled: bool,
+    learned_weights: Mapping[str, tuple[float, ...] | np.ndarray] | None = None,
+    persistent_projection_weight_scales: Mapping[str, float] | None = None,
+    comparator_top_k_targets: int | None = None,
+    comparator_source_index: int = 40,
+    top_down_current_mode: TopDownCurrentMode | str = (TopDownCurrentMode.SUSTAINED_EPOCH),
     conventions=None,
     dt_ms: float = 0.01,
     cpp_standalone_directory: str | Path | None = None,
@@ -172,6 +184,11 @@ def run_figure10_condition(
         raise ValueError("Figure 10 durations and dt_ms must be positive")
     if top_down_current_pA <= 0:
         raise ValueError("top_down_current_pA must be positive")
+    current_mode = TopDownCurrentMode(top_down_current_mode)
+    if current_mode is TopDownCurrentMode.UNTIL_CUED_CELL_EVENT_LIMIT:
+        raise ValueError("Figure 10 does not define an event-count-limited cue")
+    if comparator_top_k_targets is not None and learned_weights is None:
+        raise ValueError("the reconstructed comparator requires learned weights")
     if brian is None:
         import brian2 as brian
     if cpp_standalone_directory is not None:
@@ -187,13 +204,38 @@ def run_figure10_condition(
     brian.start_scope()
     brian.defaultclock.dt = dt_ms * brian.ms
     sector = build_first_order_connected_sector(conventions=conventions, brian=brian)
-    learned = paper_constrained_figure6_expectation(
-        sector.projections, derive_from_source=cpp_standalone_directory is not None
-    )
+    scales = persistent_projection_weight_scales or {}
+    unknown_scales = set(scales) - set(sector.projections)
+    if unknown_scales:
+        raise ValueError(f"unknown projection scale IDs: {sorted(unknown_scales)}")
+    for projection_id, scale in scales.items():
+        if not np.isfinite(scale) or scale <= 0:
+            raise ValueError("projection weight scales must be finite and positive")
+        projection = sector.projections[projection_id]
+        for block in getattr(projection, "blocks", (projection,)):
+            block.w = f"w*({float(scale)!r})"
+
+    if learned_weights is None:
+        learned = paper_constrained_figure6_expectation(
+            sector.projections, derive_from_source=cpp_standalone_directory is not None
+        )
+        learned_state_provenance = "paper-constrained-figure6c-reference"
+    else:
+        learned = learned_weights
+        learned_state_provenance = "simulated-learned-weight-snapshot"
     apply_figure7_learned_state(
         sector.projections,
         learned,
         verify_runtime_bounds=cpp_standalone_directory is None,
+    )
+    relay_input_gains = (
+        None
+        if comparator_top_k_targets is None
+        else top_k_comparator_relay_input_gains(
+            learned,
+            target_count=comparator_top_k_targets,
+            source_index=comparator_source_index,
+        )
     )
     layer4 = brian.SpikeMonitor(sector.populations["layer4_excitatory_v1"].group)
     nonspecific = brian.SpikeMonitor(sector.populations["thalamic_nonspecific"].group)
@@ -206,7 +248,11 @@ def run_figure10_condition(
         top_down_current_pA=top_down_current_pA,
         duration_ms=pre_match_duration_ms,
     )
-    apply_match_mismatch_cue(sector, match, brian=brian)
+    if current_mode is TopDownCurrentMode.UNTIL_CUED_CELL_FIRST_EVENT:
+        category_group = sector.populations[match.top_down_population].group
+        category_group.clear_drive_on_spike = 0
+        category_group.clear_drive_on_spike[match.top_down_cell_index] = 1
+    apply_match_mismatch_cue(sector, match, relay_input_gains=relay_input_gains, brian=brian)
     sector.network.run(pre_match_duration_ms * brian.ms)
     clear_match_mismatch_cue(sector, match, brian=brian)
     # Disconnect only at mismatch onset.  The intact and negative-control
@@ -220,7 +266,11 @@ def run_figure10_condition(
         top_down_current_pA=top_down_current_pA,
         duration_ms=mismatch_duration_ms,
     )
-    apply_match_mismatch_cue(sector, mismatch, brian=brian)
+    if current_mode is TopDownCurrentMode.UNTIL_CUED_CELL_FIRST_EVENT:
+        category_group = sector.populations[mismatch.top_down_population].group
+        category_group.clear_drive_on_spike = 0
+        category_group.clear_drive_on_spike[mismatch.top_down_cell_index] = 1
+    apply_match_mismatch_cue(sector, mismatch, relay_input_gains=relay_input_gains, brian=brian)
     sector.network.run(mismatch_duration_ms * brian.ms)
     clear_match_mismatch_cue(sector, mismatch, brian=brian)
     if cpp_standalone_directory is not None:
@@ -240,4 +290,7 @@ def run_figure10_condition(
         layer5_spike_times_ms=tuple(float(value) for value in np.asarray(layer5.t / brian.ms)),
         layer6i_spike_times_ms=tuple(float(value) for value in np.asarray(layer6i.t / brian.ms)),
         convention_fingerprint=conventions.fingerprint,
+        learned_state_provenance=learned_state_provenance,
+        comparator_target_count=comparator_top_k_targets,
+        top_down_current_mode=current_mode.value,
     )

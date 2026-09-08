@@ -1611,3 +1611,14 @@ Figure 7 reconstruction: exact pathway, correct TRN/effective-inhibition order,
 and exact match, but six rather than seven mismatch events. Further exact-rate
 work now requires an independently sourced condition-sensitive mechanism;
 otherwise downstream validation must lock and disclose this one-event deficit.
+
+Artifact 600 updates the existing Figure 10 harness to accept the actual
+calibrated-model contract: a fresh learned snapshot, persistent projection
+scales, the learned top-five comparator, and first-category-event cue clearing.
+Legacy defaults remain backward compatible, and targeted tests pass. This is
+instrumentation/protocol compatibility, not a model change. Registration 601
+now fixes one causal reset pair using the source-control repaired-TRN model.
+Both arms share one fresh Figure 6 snapshot; the negative control disconnects
+only nonspecific-thalamus-to-layer-5 projections 017/018 at mismatch onset.
+Every causal gate is conjunctive, no result-driven tuning is allowed, and the
+known six-versus-seven Figure 7 deficit remains explicitly locked.

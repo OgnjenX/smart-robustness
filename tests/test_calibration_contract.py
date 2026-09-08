@@ -9376,3 +9376,36 @@ def test_peripheral_trn_summary_confirms_recurrent_inversion() -> None:
     assert assessment["assessment"]["broad_afferent_mismatch_excess_rejected"]
     assert assessment["assessment"]["candidate_closed"]
     assert not assessment["assessment"]["baseline_promoted"]
+
+
+def test_persistent_recurrent_gaba_match_cross_is_bounded_and_match_only() -> None:
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-persistent-recurrent-gaba-match-cross-registration-587.yaml"
+        ).read_text()
+    )
+    profile_path = ROOT / registration["profile"]
+    script_path = ROOT / registration["script"]
+
+    assert hashlib.sha256(profile_path.read_bytes()).hexdigest() == registration[
+        "profile_sha256"
+    ]
+    assert hashlib.sha256(script_path.read_bytes()).hexdigest() == registration[
+        "script_sha256"
+    ]
+    assert registration["persistent_somatic_projection_scale"] == {
+        "projection_id": "modeldb112923.projection.008",
+        "scale": 0.75,
+        "effective_serialized_weight": 0.225,
+    }
+    assert registration["proximal_projection_id"] == "modeldb112923.projection.011"
+    assert registration["persistent_proximal_projection_scale_grid"] == [
+        0.875,
+        0.9375,
+        1.0,
+    ]
+    assert registration["nonspecific_t_scale"] == 0.1875
+    assert "without consulting mismatch" in registration["selection_rule"]
+    assert "Do not rank by TRN count" in registration["selection_rule"]
+    assert "does not recover" in registration["boundary"]

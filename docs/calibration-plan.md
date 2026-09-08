@@ -1538,3 +1538,10 @@ The next bounded effective reconstruction may cross the already tested
 persistent projection-008 scale 0.75 with modest projection-011 reductions at
 fixed T scale 0.1875, match-only first. This calibrates unresolved recurrent
 balance and is not source recovery.
+
+Registration 587 fixes that match-only cross. Projection 008 stays at the prior
+persistent endpoint 0.75; projection 011 uses only 0.875, 0.9375, and source
+control 1.0; nonspecific T scale stays 0.1875. Every value persists through a
+fresh Figure 6 episode. Only exact Figure 6 plus 20-relay/five-cell/four-event
+nonspecific match survivors may advance. TRN totals cannot rank candidates,
+mismatch remains hidden, and no interpolation or grid extension is authorized.

@@ -1,0 +1,47 @@
+schema_version: 1
+id: figure7-persistent-recurrent-gaba-match-cross-registration-587
+date: '2026-09-08'
+status: registered-before-execution-persistent-recurrent-gaba-match-screen
+classification: calibrated-persistent-projection008-by-projection011-cross
+profile: configs/calibration/figure7_learned_coincidence_effective_t_pair_v1.yaml
+profile_sha256: 4b6aa0bdf4fb844e428fb330f34970900cc8bc741183b2d8e6e73789cba0b30f
+script: scripts/run_figure7_persistent_recurrent_gaba_match_cross.py
+script_sha256: 006c6cdc53808049ffcecfd78cfba915ee193b664febbb2560077c98905ebf7c
+runtime_fingerprint: fa4ab9f0bf2bec4d6ad53cb6a91620047689b6839b146ed7d777d42350c2cdf5
+authorization: docs/validation-results/figure7-peripheral-trn-summary-assessment-586.yaml
+causal_predecessor: docs/validation-results/figure7-trn-recurrent-gaba-path-decomposition-assessment-558.yaml
+result_id: figure7-persistent-recurrent-gaba-match-cross-588
+result: docs/validation-results/figure7-persistent-recurrent-gaba-match-cross-588.yaml
+assessment: docs/validation-results/figure7-persistent-recurrent-gaba-match-cross-assessment-589.yaml
+persistent_somatic_projection_scale:
+  projection_id: modeldb112923.projection.008
+  scale: 0.75
+  effective_serialized_weight: 0.225
+proximal_projection_id: modeldb112923.projection.011
+persistent_proximal_projection_scale_grid: [0.875, 0.9375, 1.0]
+nonspecific_t_scale: 0.1875
+grid_rationale: >-
+  Projection-008 scale 0.75 is the already tested persistent endpoint with all
+  Figure 6 gates, exact five-cell/20-event match relay output, 621 TRN events,
+  and three rather than four nonspecific events. Projection-011 ablation caused
+  a large nonlinear increase to 22 nonspecific events and reduced the mismatch
+  TRN excess, while source control is 1.0. Test only two modest dyadic reductions
+  adjacent to control; do not include ablation, interpolate, or add endpoints.
+persistence_rule: >-
+  Both recurrent-GABA scales apply throughout each fresh Figure 6 episode and
+  its match trial. T scale remains fixed at 0.1875. A Figure 6 failure does not
+  advance to match.
+fixed_match_gates:
+  relay_active_indices: [38, 39, 40, 41, 42]
+  relay_events: 20
+  nonspecific_events: 4
+selection_rule: >-
+  Execute all three candidates without consulting mismatch. Every exact Figure
+  6 and match survivor advances once to a separately preregistered mismatch with
+  full-sheet and direct-inhibition diagnostics. Do not rank by TRN count, select
+  the nearest nonspecific count, interpolate, or add values.
+boundary: >-
+  This is a bounded effective calibration of recurrent balance motivated by
+  causal and full-sheet diagnostics. It does not recover the unavailable
+  KInNeSS ring=true implementation or original SMART parameters. No survivor is
+  a frozen baseline without the remaining behavioral validation.

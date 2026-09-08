@@ -3630,3 +3630,10 @@ events versus 492 in match, with 36 cells firing more. The inversion therefore
 emerges from recurrent/intrinsic TRN dynamics. Together with the projection-008
 and projection-011 ablations, this supports one bounded effective recurrent-GABA
 balance cross, explicitly labeled calibration rather than recovered SMART.
+
+Registration 587 opens that bounded cross without consulting mismatch.
+Projection 008 remains at its previously tested persistent 0.75 endpoint;
+projection 011 is tested only at 0.875, 0.9375, and source control 1.0, with the
+T-current scale fixed. Each candidate must repeat fresh Figure 6 and the exact
+five-cell, 20-relay-event, four-nonspecific-event match phenotype. TRN count is
+diagnostic only and cannot be used to rank or interpolate candidates.

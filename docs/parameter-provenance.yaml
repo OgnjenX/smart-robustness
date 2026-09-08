@@ -597,6 +597,11 @@ parameters:
     status: completed-recurrent-inversion-confirmed
     source: Artifacts 581--586, authorized by Artifact 580
     note: The reduced-output repeat preserves exact identity and shows match-greater peripheral drive through every afferent projection, with zero cells showing mismatch-greater afferent integrals, despite 520 versus 492 mismatch-greater peripheral events. The inversion is generated inside recurrent/intrinsic TRN dynamics. Candidate remains closed.
+  calibration.figure7.persistent_recurrent_gaba_cross:
+    value: persistent projection-008 scale 0.75 crossed with projection-011 scales 0.875, 0.9375, and 1.0 at fixed T scale 0.1875
+    status: preregistered-match-only-awaiting-execution
+    source: Registration 587, authorized by Artifacts 558 and 586
+    note: This bounded effective calibration tests a nonlinear interaction between the two source-defined recurrent-GABA paths. Mismatch stays hidden and TRN count cannot rank candidates. It is not recovery of legacy ring semantics or original parameters.
   benchmark.population_sizes:
     value: see configs/*.yaml
     status: exploratory

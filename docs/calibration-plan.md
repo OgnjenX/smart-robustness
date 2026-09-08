@@ -1682,3 +1682,14 @@ rejected. Registration 613 selects only the supplement-literal endpoint by
 scaling projection 024 from 4 to 1. It is an official-source-conflict
 sensitivity, not a fitted value. Figure 6 is a hard prerequisite and the family
 closes after this single endpoint without interpolation or another parameter.
+
+Artifacts 613--615 execute and close that endpoint. All fresh Figure 6 gates
+survive, and intact mismatch activity drives 136 rather than 56 layer-5 events.
+Projection-025 current reaches layer 6I with a 10.89-fold integral and
+56.68-fold peak intact/control contrast. Even so, both arms emit the same five
+layer-6I events, all from cell 40, and all downstream reset measures remain
+unchanged. Nonspecific mismatch output also shifts from seven to nine events.
+The supplement-literal projection-024 value is therefore rejected and the
+family closes. The next admissible work returns to the released-network value
+and audits spatial layer-5 and layer-6I recruitment, because Figure 10 requires
+a nonspecific layer-5 wave and broad layer-6I reset, not merely larger totals.

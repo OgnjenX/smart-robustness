@@ -1,0 +1,58 @@
+schema_version: 1
+id: figure10-layer23-layer6i-assessment-615
+date: '2026-09-08'
+status: assessed-supplement-literal-endpoint-failed-family-closed
+registration: docs/validation-results/figure10-layer23-layer6i-registration-613.yaml
+result: docs/validation-results/figure10-layer23-layer6i-pair-614.yaml
+result_sha256: 53177aac084f362c7c2de36aca4358f8d74bca34d2d45f56d75555d31178f6f2
+assessment:
+  fresh_figure6_passed: true
+  supplement_literal_endpoint_executed: true
+  layer5_reset_input_materially_changed: true
+  projection025_input_materially_changed: true
+  layer6i_event_count_changed_between_arms: false
+  layer6i_event_identity_changed_between_arms: false
+  layer6i_event_timing_materially_changed_between_arms: false
+  projection026_transfer_materially_changed_between_arms: false
+  layer4_inhibitory_output_changed_between_arms: false
+  projection036_inhibition_materially_changed_between_arms: false
+  layer4_output_changed_between_arms: false
+  winner_suppression_reproduced: false
+  alternative_release_reproduced: false
+  official_seven_event_mismatch_preserved: false
+  source_conflict_resolved: false
+  family_closed: true
+  parameter_selected: false
+  official_figure10_reset_reproduced: false
+  original_smart_reproduced: false
+  baseline_promoted: false
+quantitative_summary:
+  nonspecific_post_events_observed_expected: [9, 7]
+  layer5_post_events_intact_control: [136, 56]
+  projection025_current_integral_pA_ms_intact_control: [252376.92418369965, 23169.803759528637]
+  projection025_current_peak_pA_intact_control: [35044.19333043326, 618.3107347426094]
+  layer6i_pre_events_candidate_source_control: [20, 36]
+  layer6i_post_events_intact_control: [5, 5]
+  layer6i_post_active_indices_intact_control: [[40], [40]]
+  layer4_inhibitory_post_events_intact_control: [124, 124]
+  layer4_post_events_intact_control: [43, 43]
+interpretation: >-
+  Lowering the fixed layer-2/3-to-layer-6I weight from the released-network
+  value 4 to the supplement value 1 preserves every fresh Figure-6 gate and
+  exposes a very large mismatch-selective layer-5 drive: intact projection-025
+  current is 10.89 times the control integral and 56.68 times its peak. Yet
+  both arms emit the same five layer-6I events, all from cell 40, and all
+  downstream reset readouts remain unchanged. The endpoint also changes the
+  sequential nonspecific mismatch output from seven to nine events. It does
+  not resolve Figure 10 and is not selected for the baseline.
+stopping_rule_applied: >-
+  The single official-source-conflict endpoint has been executed and the
+  family is closed. Do not interpolate projection 024, test weight 2, or alter
+  projection 025/026/036, depletion, AHP/ACh, timing, comparator, or scores as
+  an extension of this family.
+next_gate: >-
+  Return to the released-network projection-024 weight and audit the spatial
+  reset wave required by Figure 10: exact mismatch-active layer-5 cells,
+  per-target projection-025 drive, and layer-6I voltage/event recruitment.
+  The paper requires synchronized dendritic spiking across layer-5 cells and a
+  broad layer-6I reset wave; aggregate event counts cannot establish either.

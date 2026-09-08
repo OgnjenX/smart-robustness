@@ -8915,3 +8915,42 @@ def test_figure10_layer23_layer6i_candidate_is_one_source_discrete_endpoint() ->
     assert hashlib.sha256((ROOT / registration["source_control"]).read_bytes()).hexdigest() == (
         registration["source_control_sha256"]
     )
+
+
+def test_figure10_layer23_layer6i_endpoint_fails_and_closes_family() -> None:
+    result_path = ROOT / "docs/validation-results/figure10-layer23-layer6i-pair-614.yaml"
+    result = yaml.safe_load(result_path.read_text())
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-layer23-layer6i-assessment-615.yaml"
+        ).read_text()
+    )
+
+    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment["result_sha256"]
+    assert all(result["figure6_gates"].values())
+    assert result["persistent_projection_weight_scales"]["modeldb112923.projection.024"] == 0.25
+    intact = result["intact"]
+    control = result["disconnected_control"]
+    projection025 = "modeldb112923.projection.025"
+    assert intact["layer5_post_events"] > control["layer5_post_events"]
+    assert intact["layer6i_mismatch_current_integral_pA_ms_by_projection"][projection025] > (
+        10.0
+        * control["layer6i_mismatch_current_integral_pA_ms_by_projection"][projection025]
+    )
+    assert intact["layer6i_post_events"] == control["layer6i_post_events"] == 5
+    assert {event[0] for event in intact["layer6i_mismatch_events"]} == {40}
+    assert [event[0] for event in intact["layer6i_mismatch_events"]] == [
+        event[0] for event in control["layer6i_mismatch_events"]
+    ]
+    assert intact["layer4_inhibitory_post_events"] == (
+        control["layer4_inhibitory_post_events"]
+    ) == 124
+    assert intact["layer4_post_events"] == control["layer4_post_events"] == 43
+    assert intact["nonspecific_post_events"] == 9
+    assert not result["reset_gates"]["winner_suppression"]
+    assert not result["reset_gates"]["alternative_release"]
+    assert assessment["assessment"]["family_closed"]
+    assert not assessment["assessment"]["parameter_selected"]
+    assert not result["original_smart_reproduced"]
+    assert not result["baseline_promoted"]

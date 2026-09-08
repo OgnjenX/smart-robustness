@@ -1825,3 +1825,14 @@ match every state to less than 1e-12. The full run must first repeat all fresh
 Figure-6 gates and Artifact-634 connected-source counts, then reproduce the
 empty cell-0 event train and every state within 1e-12. No scale or calibration
 is authorized until this identity gate passes.
+
+Artifacts 638--639 pass that gate exactly. Every fresh Figure-6 gate and all
+six registered connected-source count pairs repeat. The isolated cell
+reproduces the empty source event train and every one of ten dynamic-state
+traces with zero numerical error across 20,000 mismatch samples. The replay is
+therefore a lossless reduction suitable for isolated projection-025
+conductance sensitivity. It has not repaired Figure 10 or selected a value.
+Next add an isolated-only maximal-conductance multiplier, require scale 1 to
+remain exact, and preregister the finite powers-of-two bracket 1--64 for the
+first peripheral layer-6I event. Keep conductance and event-multiplicity
+interpretations distinct; do not alter the connected network yet.

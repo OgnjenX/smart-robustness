@@ -1,0 +1,56 @@
+schema_version: 1
+id: figure10-layer6i-replay-assessment-639
+date: '2026-09-08'
+status: assessed-lossless-replay-exact-effective-bracket-authorized
+registration: docs/validation-results/figure10-layer6i-replay-registration-637.yaml
+result: docs/validation-results/figure10-layer6i-replay-638.yaml
+result_sha256: c4dfd5b0ac965af9e0eda7a2d2cfe58224a5391b3e26f5a2783c624d018aba72
+trace: results/figure10-layer6i-cell0-replay-638.npz
+trace_sha256: baf621ae17efafaa9d62a2232ce8c07148d69aecd20eb261f56714327d674bda
+assessment:
+  fresh_figure6_passed: true
+  exact_connected_source_identity_reproduced: true
+  source_cell0_event_train_empty: true
+  isolated_cell0_event_train_empty: true
+  exact_event_train_reproduced: true
+  every_dynamic_state_exact: true
+  replay_system_validated_for_isolated_conductance_sensitivity: true
+  parameter_search_performed: false
+  parameter_selected: false
+  official_figure10_reset_reproduced: false
+  original_smart_reproduced: false
+  baseline_promoted: false
+quantitative_summary:
+  dt_ms: 0.01
+  mismatch_duration_ms: 200.0
+  trace_samples: 20000
+  source_replay_event_counts: [0, 0]
+  maximum_voltage_error_mV: 0.0
+  maximum_dimensionless_state_error: 0.0
+  maximum_error_any_dynamic_state: 0.0
+  connected_source_identity:
+    layer4_pre_post_events: [39, 92]
+    nonspecific_pre_post_events: [4, 13]
+    layer5_pre_post_events: [41, 231]
+    layer5_first100_late_mismatch_events: [70, 161]
+    layer6i_pre_post_events: [36, 72]
+    layer6i_first100_late_mismatch_events: [30, 42]
+interpretation: >-
+  The fresh Figure-6 gates and every preregistered connected Figure-10 source
+  count repeat exactly. Replaying peripheral layer-6I cell 0 from its captured
+  mismatch-onset intrinsic state with the exact projection-023, -024, and -025
+  receptor gates reproduces the empty event train and all ten dynamic-state
+  trajectories with zero numerical error at 0.01-ms resolution. The isolated
+  replay therefore preserves the connected source cell exactly and is valid
+  for a bounded projection-025 conductance sensitivity analysis. This result
+  validates the reduction only: it does not repair reset, identify an original
+  simulator convention, select a calibration value, reproduce original SMART,
+  or promote a baseline.
+next_gate: >-
+  Implement an isolated-only projection-025 maximal-conductance multiplier and
+  verify that scale 1 reproduces Artifact 638 exactly. Then preregister one
+  powers-of-two bracket at scales 1, 2, 4, 8, 16, 32, and 64 to locate the first
+  scale that elicits a peripheral layer-6I event. Hold the captured gates,
+  intrinsic state, all other conductances, event rule, and protocol fixed. Treat
+  this only as an effective conductance sensitivity; do not equate it with event
+  multiplicity, alter the connected network, or select a baseline parameter.

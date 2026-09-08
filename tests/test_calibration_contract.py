@@ -9425,3 +9425,42 @@ def test_layer6i_lossless_replay_is_hash_pinned_without_scale_search() -> None:
     }
     assert "Do not run the disconnected arm" in registration["boundary"]
     assert "authorizes no scale search" in implementation["boundary"]
+
+
+def test_layer6i_lossless_replay_passes_exact_identity_gate() -> None:
+    result_path = (
+        ROOT / "docs/validation-results/figure10-layer6i-replay-638.yaml"
+    )
+    result = yaml.safe_load(result_path.read_text())
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-layer6i-replay-assessment-639.yaml"
+        ).read_text()
+    )
+
+    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment[
+        "result_sha256"
+    ]
+    assert result["trace"]["path"] == (
+        "results/figure10-layer6i-cell0-replay-638.npz"
+    )
+    assert result["trace"]["sha256"] == assessment["trace_sha256"]
+    assert all(result["fresh_figure6_gates"].values())
+    assert result["connected_source_identity_pass"]
+    assert result["intact_replay"]["exact_spike_train"]
+    assert result["trace"]["source_event_times_from_mismatch_ms"] == []
+    assert result["intact_replay"]["source_spike_times_ms"] == []
+    assert result["intact_replay"]["replay_spike_times_ms"] == []
+    assert result["intact_replay_max_state_error"] == 0.0
+    assert all(
+        error == 0.0
+        for _, error in result["intact_replay"]["max_abs_error_by_variable"]
+    )
+    assert assessment["assessment"][
+        "replay_system_validated_for_isolated_conductance_sensitivity"
+    ]
+    assert not assessment["assessment"]["parameter_selected"]
+    assert not result["parameter_search_performed"]
+    assert not result["original_smart_reproduced"]
+    assert not result["baseline_promoted"]

@@ -1,0 +1,57 @@
+schema_version: 1
+id: figure10-layer6i-replay-638
+date: '2026-09-08'
+status: lossless-layer6i-replay-verified
+classification: figure10-peripheral-layer6i-cell0-lossless-replay
+registration: docs/validation-results/figure10-layer6i-replay-registration-637.yaml
+runtime_fingerprint: fa4ab9f0bf2bec4d6ad53cb6a91620047689b6839b146ed7d777d42350c2cdf5
+fresh_figure6_gates:
+  relay_active_indices: true
+  relay_events_per_active_index: true
+  relay_events: true
+  cortical_chain_complete: true
+  causal_learning_pair: true
+  top_down_horizontal_contrast: true
+connected_source_identity:
+  layer4_pre_post_events: [39, 92]
+  nonspecific_pre_post_events: [4, 13]
+  layer5_pre_post_events: [41, 231]
+  layer5_first100_late_mismatch_events: [70, 161]
+  layer6i_pre_post_events: [36, 72]
+  layer6i_first100_late_mismatch_events: [30, 42]
+connected_source_identity_pass: true
+trace:
+  path: results/figure10-layer6i-cell0-replay-638.npz
+  sha256: baf621ae17efafaa9d62a2232ce8c07148d69aecd20eb261f56714327d674bda
+  cell_index: 0
+  source_event_times_from_mismatch_ms: []
+intact_replay:
+  trace_path: results/figure10-layer6i-cell0-replay-638.npz
+  trace_sha256: baf621ae17efafaa9d62a2232ce8c07148d69aecd20eb261f56714327d674bda
+  runtime_fingerprint: fa4ab9f0bf2bec4d6ad53cb6a91620047689b6839b146ed7d777d42350c2cdf5
+  source_spike_times_ms: []
+  replay_spike_times_ms: []
+  exact_spike_train: true
+  max_abs_error_by_variable:
+  - [v_soma, 0.0]
+  - [v_proximal_dendrite, 0.0]
+  - [m_soma, 0.0]
+  - [h_soma, 0.0]
+  - [n_soma, 0.0]
+  - [previous_spike_voltage, 0.0]
+  - [armed, 0.0]
+  - [last_spike_onset, 0.0]
+  - [drive_spikes_until_clear, 0.0]
+  - [transmitter, 0.0]
+  finite: true
+intact_replay_max_state_error: 0.0
+intact_replay_gate_pass: true
+parameter_search_performed: false
+original_smart_reproduced: false
+baseline_promoted: false
+interpretation_boundary: >-
+  Execute one intact connected source capture and one unchanged isolated replay.
+  Do not run the disconnected arm, multiply any gate, change a weight, event
+  multiplicity, threshold, conductance, axial term, duration, input, comparator,
+  event rule, reset score, or connected-network parameter. No calibration value,
+  original-SMART claim, or baseline promotion is authorized.

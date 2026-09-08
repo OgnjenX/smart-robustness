@@ -664,9 +664,9 @@ parameters:
     note: The unchanged paper-axial, one-to-one projection-025 source control repeats every Figure-6 gate and Artifact-622 count. Intact peripheral cell 0 receives no projection-023/024 input and one 541-pA projection-025 envelope, which shifts its soma only 1.43 mV and leaves 48.52 mV to threshold. Active cells are dominated by projection 023/024 and keep identical event counts across arms. No parameter is selected; lossless isolated replay is required next.
   diagnostics.figure10.layer6i_cell0_lossless_replay:
     value: mismatch-onset intrinsic state plus integrator-visible projection-023/024/025 gate replay for intact peripheral layer-6I cell 0
-    status: preregistered-intact-identity-gate-awaiting-execution
-    source: Artifact 635 authorization and Artifacts 636--637 implementation/registration
-    note: The isolated cell recomputes voltage-dependent projection currents from captured receptor gates under the same runtime fingerprint. Fresh Figure 6, exact Artifact-634 connected-source identity, an exact empty event train, and less-than-1e-12 state error are mandatory. No scale search or parameter selection is authorized.
+    status: completed-lossless-identity-exact-effective-bracket-authorized
+    source: Artifact 635 authorization and Artifacts 636--639
+    note: Fresh Figure 6 and every registered connected-source count repeat. The isolated cell reproduces the empty peripheral event train and all ten dynamic-state traces with exactly zero error across 20,000 samples. This validates the reduction for an isolated projection-025 conductance bracket but does not select a parameter, repair reset, or promote a baseline.
   benchmark.population_sizes:
     value: see configs/*.yaml
     status: exploratory

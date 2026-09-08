@@ -1,0 +1,59 @@
+schema_version: 1
+id: figure10-reset-chain-assessment-611
+date: '2026-09-08'
+status: assessed-reset-signal-masked-at-layer6i-spike-generation
+registration: docs/validation-results/figure10-reset-chain-registration-609.yaml
+result: docs/validation-results/figure10-reset-chain-pair-610.yaml
+result_sha256: 2c06e44603a25188ab7b56a33657c96f56a9e9cb3bd03bf992933a0f7ffe5fc8
+assessment:
+  fresh_figure6_passed: true
+  prior_event_identity_reproduced: true
+  finite_complete_reset_chain_readouts: true
+  layer5_to_layer6i_input_materially_changed: true
+  layer6i_event_count_changed: false
+  layer6i_event_identity_changed: false
+  layer6i_event_timing_materially_changed: false
+  layer6i_transmitter_state_materially_changed: false
+  projection026_transfer_materially_changed: false
+  layer4_inhibitory_event_count_changed: false
+  layer4_inhibitory_event_identity_changed: false
+  projection036_inhibition_materially_changed: false
+  failure_localized_to_layer6i_spike_generation_masking: true
+  downstream_synaptic_transfer_failure_rejected: true
+  parameter_selected: false
+  candidate_reopened: false
+  official_figure10_reset_reproduced: false
+  original_smart_reproduced: false
+  baseline_promoted: false
+quantitative_summary:
+  projection025_current_integral_pA_ms_intact_control: [57936.75645487377, 21003.156141073836]
+  projection025_current_peak_pA_intact_control: [4501.529744115889, 502.7285515566416]
+  layer6i_post_events_intact_control: [30, 30]
+  layer6i_max_event_time_difference_ms: 0.030000000000001137
+  layer6i_transmitter_sample_ranges_intact_control:
+  - [0.014420021075087065, 0.0572932308429001]
+  - [0.014420021075087065, 0.05731679821753562]
+  projection026_gate_integral_ms_intact_control: [3.4246921079192747, 3.4246491726767667]
+  projection026_current_integral_pA_ms_intact_control: [476.22794568851987, 476.26304790495703]
+  projection026_current_peak_pA_intact_control: [12.280919577191513, 12.280919577191513]
+  layer4_inhibitory_post_events_intact_control: [124, 124]
+  projection036_gate_integral_ms_intact_control: [7340.256190241069, 7340.042666888017]
+  projection036_current_integral_pA_ms_intact_control: [-1125334.5698974133, -1124749.9656776604]
+  projection036_current_trough_pA_intact_control: [-87767.78515793024, -87767.78515793024]
+interpretation: >-
+  The intact reset arm delivers 2.76 times the projection-025 current integral
+  and 8.95 times its peak to layer 6I, but both arms emit the same 30 events
+  from the same five layer-6I cells. Their event times differ by no more than
+  0.03 ms and their transmitter samples are effectively identical. Projection
+  026 then transfers effectively identical excitation to layer-4 inhibitory
+  cells, which emit the same 124 events from the same cells; projection 036
+  therefore delivers effectively identical inhibition to layer-4 excitatory
+  cells. The earliest causal difference vanishes at layer-6I spike generation.
+  Neither the documented layer-6I transmitter depletion nor either downstream
+  synapse is the primary blocker in this protocol.
+next_gate: >-
+  Audit the archived layer-6I equations, Table-3 parameters, and the timing of
+  its three excitatory inputs against the ModelDB source. Register at most one
+  bounded source-justified interaction that gives projection 025 observable
+  control of layer-6I event output while retaining all Figure-6 gates. Do not
+  alter projection 026, projection 036, depletion, or reset scores first.

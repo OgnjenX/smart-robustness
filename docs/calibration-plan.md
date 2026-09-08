@@ -1661,3 +1661,14 @@ events, then projection-036 inhibition of layer-4 excitatory cells. Registration
 which their difference disappears. The archived layer-6I resource parameters
 (epsilon 1, 400-ms recovery) are observed but not altered. No weight, AHP/ACh,
 timing, comparator, or score may change.
+
+Artifacts 609--611 complete that trace. The intact arm still carries 2.76 times
+the integrated and 8.95 times the peak layer-5 current at layer 6I, but the same
+five layer-6I cells emit the same 30 events, with at most 0.03 ms timing drift
+and effectively identical transmitter samples. Projection 026, layer-4
+inhibitory output, and projection 036 are consequently unchanged. The causal
+difference is therefore masked at layer-6I spike generation, not by transmitter
+depletion or either downstream synapse. Before any calibration, compare the
+layer-6I input balance and fixed-weight semantics against SMART.nml, the
+supplement, and the archived KInNeSS manual. Any next executable candidate must
+be a bounded source-discrete interpretation and retain every Figure 6 gate.

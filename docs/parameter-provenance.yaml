@@ -629,9 +629,9 @@ parameters:
     note: Artifact-602 identity repeats. Projection-025 intact/control gate integrals are 57.65/22.89 and current integrals are 57,937/21,003 pA-ms, while relay and layer-2/3 drive are nearly unchanged. Layer-6I remains 30 events in both arms. No parameter is selected; exact layer-6I timing, transmitter, and projection-026 downstream transfer require read-only audit.
   diagnostics.figure10.complete_reset_chain:
     value: exact layer-6I events/resource plus projection-026, layer-4 inhibitory, and projection-036 readouts
-    status: preregistered-awaiting-execution
-    source: Layer-6I masking Artifact 607; archived projection records and transmitter resource; monitor Artifact 608; Registration 609
-    note: The unchanged pair must repeat Artifact-606 identity before the earliest disappearance of the intact/control difference is interpreted. Layer-6I epsilon 1 and 400-ms recovery are fixed observations, not tuned values.
+    status: completed-failure-localized-at-layer6i-spike-generation
+    source: Layer-6I masking Artifact 607; archived projection records and transmitter resource; Artifacts 608--611
+    note: The unchanged pair repeats Artifact-606 identity. A 2.76-fold integrated and 8.95-fold peak projection-025 current difference vanishes before layer-6I event output; both arms have the same 30 events from the same five cells, effectively identical resource samples, projection-026 transfer, 124 layer-4 inhibitory events, and projection-036 inhibition. The source resource and both downstream synapses are rejected as the primary blocker; no parameter was selected.
   benchmark.population_sizes:
     value: see configs/*.yaml
     status: exploratory

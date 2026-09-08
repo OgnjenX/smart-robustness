@@ -8829,3 +8829,48 @@ def test_figure10_complete_reset_chain_audit_is_hash_pinned_and_read_only() -> N
     ]
     assert "cannot select or alter a parameter" in registration["decision_rule"]
     assert "Neither Figure 7 nor Figure 10 is reopened" in registration["boundary"]
+
+
+def test_figure10_complete_reset_chain_localizes_layer6i_spike_masking() -> None:
+    result_path = ROOT / "docs/validation-results/figure10-reset-chain-pair-610.yaml"
+    result = yaml.safe_load(result_path.read_text())
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-reset-chain-assessment-611.yaml"
+        ).read_text()
+    )
+
+    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment["result_sha256"]
+    assert all(result["figure6_gates"].values())
+    intact = result["intact"]
+    control = result["disconnected_control"]
+    projection025 = "modeldb112923.projection.025"
+    assert intact["layer6i_mismatch_current_integral_pA_ms_by_projection"][projection025] > (
+        2.5
+        * control["layer6i_mismatch_current_integral_pA_ms_by_projection"][projection025]
+    )
+    assert intact["layer6i_mismatch_current_peak_pA_by_projection"][projection025] > (
+        8.0 * control["layer6i_mismatch_current_peak_pA_by_projection"][projection025]
+    )
+    assert intact["layer6i_post_events"] == control["layer6i_post_events"] == 30
+    assert [event[0] for event in intact["layer6i_mismatch_events"]] == [
+        event[0] for event in control["layer6i_mismatch_events"]
+    ]
+    assert intact["layer4_inhibitory_post_events"] == (
+        control["layer4_inhibitory_post_events"]
+    ) == 124
+    assert intact["layer4_inhibitory_post_active_indices"] == control[
+        "layer4_inhibitory_post_active_indices"
+    ]
+    assert intact["layer4i_mismatch_projection026_current_peak_pA"] == control[
+        "layer4i_mismatch_projection026_current_peak_pA"
+    ]
+    assert intact["layer4e_mismatch_projection036_current_trough_pA"] == control[
+        "layer4e_mismatch_projection036_current_trough_pA"
+    ]
+    assert assessment["assessment"]["failure_localized_to_layer6i_spike_generation_masking"]
+    assert assessment["assessment"]["downstream_synaptic_transfer_failure_rejected"]
+    assert not assessment["assessment"]["parameter_selected"]
+    assert not result["original_smart_reproduced"]
+    assert not result["baseline_promoted"]

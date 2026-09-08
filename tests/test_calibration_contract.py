@@ -9799,3 +9799,50 @@ def test_projection036_ring_endpoint_is_hash_pinned_and_bounded() -> None:
     assert "all four preregistered gates" in registration["decision_rule"]
     assert "Do not tune or refine radius" in registration["boundary"]
     assert "baseline promotion" in registration["boundary"]
+
+
+def test_projection036_radial_annulus_fails_reset_and_closes_endpoint() -> None:
+    result_path = (
+        ROOT
+        / "docs/validation-results/figure10-projection036-ring-pair-654.yaml"
+    )
+    result = yaml.safe_load(result_path.read_text())
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-projection036-ring-assessment-655.yaml"
+        ).read_text()
+    )
+
+    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment[
+        "result_sha256"
+    ]
+    assert all(result["figure6_gates"].values())
+    assert result["source_identity"]["layer6i_active_cells_intact_control"] == [
+        81,
+        17,
+    ]
+    assert result["reset_gates"] == {
+        "pre_reset_winner": True,
+        "reset_chain": True,
+        "winner_suppression": False,
+        "alternative_release": False,
+    }
+    assert result["reset_assessment"]["intact_winner_post_spikes"] == 72
+    assert result["reset_assessment"]["control_winner_post_spikes"] == 64
+    assert result["reset_assessment"]["intact_released_alternatives"] == 2
+    assert result["reset_assessment"]["control_released_alternatives"] == 2
+    assert len(result["intact_balance_bins"]) == 20
+    assert len(result["control_balance_bins"]) == 20
+    aggregate = assessment["aggregate_intact_control"]
+    assert aggregate["projection036_inhibitory_magnitude_ratio"] == pytest.approx(
+        1.0002094662547423
+    )
+    assert aggregate["projection038_ratio"] == pytest.approx(2.1091324757775265)
+    assert assessment["assessment"][
+        "projection036_radial_annulus_endpoint_closed"
+    ]
+    assert not assessment["assessment"]["radius_or_weight_refinement_authorized"]
+    assert not assessment["assessment"]["official_figure10_reset_reproduced"]
+    assert not result["original_smart_reproduced"]
+    assert not result["baseline_promoted"]

@@ -3743,3 +3743,13 @@ The implementation is projection-specific and default-off, so no other ring or
 default SMART convention changes. The connected result has not yet been run;
 Figure 10, complete original SMART reproduction, and baseline freezing remain
 failed pending the preregistered intact/control pair.
+
+Artifacts 654--655 complete that pair and reject the endpoint. Fresh Figure 6
+passes and the intact mismatch recruits all 81 layer-6I cells, but the stronger
+annular off-surround does not convert that wave into reset: winner events are
+72 intact versus 64 control, and each arm releases the same two alternatives.
+Aggregate projection-036 inhibitory magnitude is nearly identical between
+arms while direct projection-038 excitation doubles. The parameter-free ring
+route is closed without tuning. Original SMART remains unreproduced and
+unfrozen; the next admissible step is target-resolved, read-only 036/038 balance
+before any new effective parameter family.

@@ -1,0 +1,86 @@
+schema_version: 1
+id: figure10-projection036-ring-assessment-655
+date: '2026-09-08'
+status: assessed-reset-failed-topology-endpoint-closed
+registration: docs/validation-results/figure10-projection036-ring-registration-653.yaml
+result: docs/validation-results/figure10-projection036-ring-pair-654.yaml
+result_sha256: c9abde2c91bd056ee3c7f649ab129fd9a1f022adf21e351f661bcf683cf7914e
+assessment:
+  all_fresh_figure6_gates_pass: true
+  pre_reset_winner_pass: true
+  reset_chain_pass: true
+  winner_suppression_pass: false
+  alternative_release_pass: false
+  broad_layer6i_wave_present: true
+  projection036_aggregate_direction_supports_reset: true
+  projection036_aggregate_effect_material: false
+  direct_projection038_excitation_increased: true
+  projection036_radial_annulus_endpoint_closed: true
+  radius_or_weight_refinement_authorized: false
+  parameter_selected: false
+  official_figure10_reset_reproduced: false
+  original_smart_reproduced: false
+  baseline_promoted: false
+aggregate_intact_control:
+  layer5_events: [247, 163]
+  layer5_active_cells: [81, 17]
+  layer6i_events: [171, 89]
+  layer6i_active_cells: [81, 17]
+  layer4_inhibitory_events: [206, 204]
+  projection026_current_integral_pA_ms: [2653.2004416126115,
+    1276.2266464000263]
+  projection026_ratio: 2.0789414239992134
+  projection036_current_integral_pA_ms: [-2159203.164231019,
+    -2158750.9787485795]
+  projection036_inhibitory_magnitude_ratio: 1.0002094662547423
+  projection038_current_integral_pA_ms: [3552.6443315071474,
+    1684.410236107845]
+  projection038_ratio: 2.1091324757775265
+  winner_events: [72, 64]
+  released_alternatives: [2, 2]
+focal_100_110_ms:
+  projection026_current_pA_ms_intact_control: [81.40126419166097,
+    77.08415165144977]
+  projection026_ratio: 1.0560051897532947
+  layer4_inhibitory_events_intact_control: [0, 1]
+  projection036_current_pA_ms_intact_control: [-34288.51591022606,
+    -37917.907834932455]
+  projection036_inhibitory_magnitude_ratio: 0.904282906628019
+  projection038_current_pA_ms_intact_control: [74.23964225740166,
+    68.66912015450328]
+  projection038_ratio: 1.0811212098009249
+  winner_events_intact_control: [5, 5]
+  alternative_events_intact_control: [2, 2]
+subsequent_110_120_ms:
+  projection026_current_pA_ms_intact_control: [131.18334243997563,
+    114.9221736912569]
+  projection026_ratio: 1.1414972256999334
+  layer4_inhibitory_events_intact_control: [22, 21]
+  projection036_current_pA_ms_intact_control: [-165472.34533914196,
+    -161893.80017664877]
+  projection036_inhibitory_magnitude_ratio: 1.0221042755101708
+  projection038_current_pA_ms_intact_control: [200.130434212068,
+    206.61532195284462]
+  projection038_ratio: 0.9686137132547379
+  winner_events_intact_control: [3, 3]
+  alternative_events_intact_control: [2, 0]
+interpretation: >-
+  Every fresh Figure-6 gate passes, and the annulus preserves a five-cell
+  pre-reset winner. The intact mismatch recruits all 81 layer-6I cells versus
+  17 control cells and doubles projection-026 excitation. Nevertheless,
+  layer-4 inhibitory output rises by only two events and aggregate projection-
+  036 inhibitory-current magnitude is only 0.021% greater intact. Direct
+  projection-038 excitation rises 2.11-fold. The winner emits 72 intact versus
+  64 control events, and both arms release the same two alternatives. Thus the
+  strengthened off-surround topology changes the operating regime but does not
+  produce causal winner suppression or additional alternative release. The
+  sole parameter-free projection-036 ring alternative fails and closes without
+  radius or weight refinement.
+next_gate: >-
+  Add a default-off, target-resolved read-only monitor for projection 036 and
+  projection 038 currents at the five pre-reset winner cells and the two
+  released alternatives. Apply it first to archived full-result identities or
+  one explicitly preregistered diagnostic pair, without changing any model
+  quantity. Use the spatial balance to determine whether the remaining failure
+  is target selectivity, temporal saturation, or direct excitation before
+  opening any effective numerical calibration family.

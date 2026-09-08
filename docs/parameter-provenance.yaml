@@ -684,9 +684,9 @@ parameters:
     note: Exact scale-8 identity repeats. In 100--110 ms projection-026 drive and layer-4 inhibitory events rise intact, but projection-036 inhibitory magnitude falls 7.1% and projection-038 excitation rises 18.6%. In 110--120 ms projection 026 rises 25.35-fold and projection 038 18.71-fold while projection-036 magnitude is only 76.2% of control. The winner pauses transiently without alternative release. No parameter is selected; unresolved projection-036 ring geometry and target-resolved 036/038 balance are next.
   calibration.figure10.projection036_ring_source_cross:
     value: projection-036-only parameter-free radial annulus at serialized sigma radius 1.5, contrasted with active center-excluded Gaussian
-    status: implemented-and-preregistered-before-connected-execution
-    source: SMART.nml projection 036, archived KInNeSS manual, and Artifacts 651--653
-    note: Exact ring=true geometry is unrecovered. Both interpretations exclude the center and retain 80 inputs per target; radial annulus changes the incoming factor sum from 13.07 to 37.35 without a fitted radius. The default-off override affects only projection 036, and one projection-specific scale-8 causal endpoint is hash-pinned. No weight/radius tuning or source-recovery claim is allowed.
+    status: completed-reset-failed-family-closed
+    source: SMART.nml projection 036, archived KInNeSS manual, and Artifacts 651--655
+    note: Exact ring=true geometry is unrecovered. The default-off radial annulus affects only projection 036 and passes fresh Figure 6, but aggregate projection-036 inhibition is only 1.0002 times control while direct projection-038 excitation is 2.11 times control. Winner events rise to 72 versus 64 and both arms release the same two alternatives. The sole parameter-free alternative is rejected and closed. No weight/radius tuning or source-recovery claim is allowed.
   benchmark.population_sizes:
     value: see configs/*.yaml
     status: exploratory

@@ -1924,3 +1924,15 @@ Figure 6, the unchanged four-gate reset score, and bounded layer-4 balance
 readouts. Any failed reset gate closes this topology route; a complete pass is
 only a mixed-source calibrated candidate pending confirmation and spectral
 validation, never recovered original simulator semantics by itself.
+
+Artifacts 654--655 execute and close the endpoint. All fresh Figure-6 gates
+pass, and the intact mismatch recruits all 81 layer-6I cells versus 17 in the
+control. Projection-026 excitation is 2.08 times control, but layer-4
+inhibitory output rises by only two events and aggregate projection-036
+inhibitory magnitude is effectively unchanged at 1.0002 times control. Direct
+projection-038 excitation rises 2.11-fold. The winner emits 72 versus 64
+events intact/control, while both arms release the same two alternatives.
+Consequently winner suppression and alternative release both fail. Close the
+parameter-free ring-topology route without radius or weight refinement. Next
+add target-resolved, read-only projection-036/038 balance for winner and
+alternative cells before authorizing any effective numerical family.

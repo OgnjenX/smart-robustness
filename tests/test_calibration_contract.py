@@ -9517,3 +9517,27 @@ def test_persistent_recurrent_gaba_pair_closes_on_one_rate_gate() -> None:
     assert assessment["assessment"]["candidate_closed"]
     assert not assessment["assessment"]["repeat_or_adjustment_authorized"]
     assert not assessment["assessment"]["baseline_promoted"]
+
+
+def test_mismatch_nonspecific_trace_compare_is_read_only_and_fixed() -> None:
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-mismatch-nonspecific-trace-compare-registration-593.yaml"
+        ).read_text()
+    )
+    profile_path = ROOT / registration["profile"]
+    script_path = ROOT / registration["script"]
+
+    assert hashlib.sha256(profile_path.read_bytes()).hexdigest() == registration[
+        "profile_sha256"
+    ]
+    assert hashlib.sha256(script_path.read_bytes()).hexdigest() == registration[
+        "script_sha256"
+    ]
+    assert len(registration["arms"]) == 2
+    assert registration["arms"][0]["expected_mismatch"]["nonspecific_events"] == 7
+    assert registration["arms"][1]["expected_mismatch"]["nonspecific_events"] == 6
+    assert len(registration["added_readouts_only"]) == 6
+    assert "cannot select a parameter" in registration["decision_rule"]
+    assert "cannot reopen" in registration["boundary"]

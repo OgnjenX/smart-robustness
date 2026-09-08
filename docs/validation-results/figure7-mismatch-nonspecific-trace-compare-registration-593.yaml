@@ -1,0 +1,48 @@
+schema_version: 1
+id: figure7-mismatch-nonspecific-trace-compare-registration-593
+date: '2026-09-08'
+status: registered-before-execution-read-only-two-arm-trace
+classification: fixed-mismatch-nonspecific-current-balance-comparison
+profile: configs/calibration/figure7_learned_coincidence_effective_t_pair_v1.yaml
+profile_sha256: 4b6aa0bdf4fb844e428fb330f34970900cc8bc741183b2d8e6e73789cba0b30f
+script: scripts/run_figure7_mismatch_nonspecific_trace_compare.py
+script_sha256: 7a6f8029f48921dcb558b573e05eeeef30ebf394c65788f0b43a02c23a48aa82
+runtime_fingerprint: fa4ab9f0bf2bec4d6ad53cb6a91620047689b6839b146ed7d777d42350c2cdf5
+authorization: docs/validation-results/figure7-persistent-recurrent-gaba-pair-assessment-592.yaml
+result_id: figure7-mismatch-nonspecific-trace-compare-594
+result: docs/validation-results/figure7-mismatch-nonspecific-trace-compare-594.yaml
+assessment: docs/validation-results/figure7-mismatch-nonspecific-trace-compare-assessment-595.yaml
+arms:
+- name: seven_event_wrong_trn_order_control
+  persistent_projection_scales:
+  - {projection_id: modeldb112923.projection.008, scale: 0.875}
+  expected_mismatch: {relay_events: 3, trn_events: 595, nonspecific_events: 7}
+- name: six_event_repaired_trn_order
+  persistent_projection_scales:
+  - {projection_id: modeldb112923.projection.008, scale: 0.75}
+  - {projection_id: modeldb112923.projection.011, scale: 0.9375}
+  expected_mismatch: {relay_events: 3, trn_events: 608, nonspecific_events: 6}
+nonspecific_t_scale: 0.1875
+fixed_prior_match_controls:
+  seven_event_wrong_trn_order_control: docs/validation-results/figure7-persistent-gaba0875-consistency-570.yaml
+  six_event_repaired_trn_order: docs/validation-results/figure7-persistent-recurrent-gaba-match-cross-588.yaml
+added_readouts_only:
+  - nonspecific spike times and positive soma/detector local maxima
+  - detector threshold, release, zero-crossing, and arm-transition counts
+  - source-separated currents sampled at positive detector peaks
+  - receptor gates sampled at positive detector peaks
+  - direct-input, TRN, and layer-6II current ranges
+  - TRN GABA peak, post-startup peak, and integral
+decision_rule: >-
+  Interpret only if both fresh Figure 6 episodes pass and each arm exactly
+  repeats its archived mismatch identity. Compare the final emitted event and
+  subsequent positive detector maxima. A suppressed near-threshold maximum with
+  a materially different TRN gate/current localizes the missing event to the
+  inhibitory envelope; a similar inhibitory envelope with reduced calcium or
+  axial inward current supports intrinsic recovery limitation. If peak sampling
+  cannot distinguish them, record the result as unresolved. This diagnostic
+  cannot select a parameter.
+boundary: >-
+  No equation, parameter, connectivity, stimulus, timing, learning, protocol,
+  or score changes. Each arm uses its already archived fixed scales through a
+  fresh learning episode. The closed candidate cannot reopen or be promoted.

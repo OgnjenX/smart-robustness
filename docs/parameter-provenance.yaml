@@ -607,6 +607,11 @@ parameters:
     status: completed-single-rate-gate-failure-candidate-closed
     source: Artifacts 590--592, authorized by Artifacts 587--589
     note: The pair repairs TRN event and effective-inhibition ordering while preserving relay selectivity and four-event match. Mismatch emits six rather than seven nonspecific events, so the sole survivor closes without adjustment and is not frozen.
+  validation.figure7.mismatch_nonspecific_trace_compare:
+    value: read-only comparison of archived seven-event control and six-event repaired-TRN mismatch
+    status: preregistered-awaiting-execution
+    source: Registration 593, authorized by Artifact 592
+    note: The comparison records detector maxima/transitions and source-separated nonspecific currents/gates after independent fresh learning. It may localize the missing event but cannot select a parameter or reopen either closed candidate.
   benchmark.population_sizes:
     value: see configs/*.yaml
     status: exploratory

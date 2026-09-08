@@ -3660,3 +3660,10 @@ match persist. The sole failed gate is mismatch nonspecific rate, with six
 events rather than seven in 100 ms. The candidate therefore closes unfrozen.
 The next admissible step is read-only timing/current comparison against the
 prior seven-event mismatch control, not post-hoc retuning.
+
+Registration 593 preregisters that comparison as a two-arm read-only trace.
+Each archived parameter set receives its own fresh Figure 6 episode and must
+repeat its prior mismatch identity. Nonspecific local maxima, detector state
+transitions, source-separated currents/gates, and inhibitory integrals will test
+whether the missing seventh event is suppressed by the corrected TRN envelope
+or by intrinsic rebound timing. No parameter selection is permitted.

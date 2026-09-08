@@ -1569,3 +1569,11 @@ TRN events, and integrated TRN-to-nonspecific inhibition (1189.70 versus
 six rather than seven. Do not retune the closed pair. Next compare read-only
 nonspecific timing/current traces against the prior seven-event control to
 localize the missing event before defining any new parameter family.
+
+Registration 593 fixes that read-only comparison. It repeats the archived
+seven-event/wrong-TRN-order control and the six-event/repaired-TRN-order mismatch,
+each after its own fresh Figure 6 episode. It records nonspecific local maxima,
+detector transitions, source-separated peak currents and gates, current ranges,
+and TRN GABA integrals. Exact identity is required before interpretation. The
+diagnostic cannot change parameters, reopen either candidate, or promote a
+baseline.

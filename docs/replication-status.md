@@ -2841,6 +2841,14 @@ state, and event time for inhibitory cells 38, 40, and 42 on the native 0.01-ms
 grid over 75.0--75.6 ms. The pair has not yet run. Original SMART remains
 unreproduced and unfrozen, and no parameter family is open.
 
+Artifacts 690--691 preserve the completed run without overstating its
+transport-compacted output. Figure 6 and the failed reset score are visible,
+but the missing control identities/native samples prohibit mechanistic
+interpretation. Artifacts 692--693 now preregister the same passive audit with
+only the three focal cells monitored and each arm saved as a hashed compressed
+trace. The recovery pair has not yet run; original SMART remains unreproduced
+and unfrozen.
+
 Artifacts 535--537 perform the permitted match-only effective T-conductance
 screen on that fixed replay trace. The full preregistered grid from zero to the
 paper density is finite and was executed without interpolation. Scale 0.1875,

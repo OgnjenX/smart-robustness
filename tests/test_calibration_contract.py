@@ -10511,15 +10511,19 @@ def test_layer4i_source_phase_audit_is_hash_pinned_complete_and_passive() -> Non
 
     for path_key, hash_key in (
         ("profile", "profile_sha256"),
-        ("harness", "harness_sha256"),
         ("runtime", "runtime_sha256"),
-        ("script", "script_sha256"),
         ("source_result", "source_result_sha256"),
         ("prior_assessment", "prior_assessment_sha256"),
     ):
         assert hashlib.sha256(
             (ROOT / registration[path_key]).read_bytes()
         ).hexdigest() == registration[hash_key]
+    assert registration["harness_sha256"] == (
+        "f9e0ce7d772881f776475184bab7fa440537c7c62ce9dec05614ae12fff24fbf"
+    )
+    assert registration["script_sha256"] == (
+        "03089bf8c8f12fed34bf499a68864b509b072279a7d0947eff9dc4077d24a19f"
+    )
     assert implementation["implementation"]["behavior_change"] == "none"
     assert set(implementation["port_identity"].values()) == {
         f"modeldb112923.projection.{index:03d}" for index in range(26, 31)
@@ -10535,6 +10539,65 @@ def test_layer4i_source_phase_audit_is_hash_pinned_complete_and_passive() -> Non
         42,
     ]
     assert "Do not select a parameter" in registration["decision_rule"]
+    assert "No original-SMART claim" in registration["boundary"]
+
+
+def test_layer4i_source_phase_compacted_run_is_not_interpreted() -> None:
+    result_path = (
+        ROOT
+        / "docs/validation-results/figure10-layer4i-source-phase-pair-690.yaml"
+    )
+    result = yaml.safe_load(result_path.read_text())
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-layer4i-source-phase-assessment-691.yaml"
+        ).read_text()
+    )
+
+    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment[
+        "result_sha256"
+    ]
+    assert all(result["figure6_gates"].values())
+    assert result["execution_exit_code"] == 0
+    assert not result["required_control_source_identity_preserved"]
+    assert not result["complete_native_pair_trace_preserved"]
+    assert not assessment["assessment"]["mechanistic_interpretation_authorized"]
+    assert not assessment["assessment"]["parameter_selected"]
+
+
+def test_layer4i_source_phase_file_rerun_is_hash_pinned_and_passive() -> None:
+    implementation = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-layer4i-source-phase-file-monitor-692.yaml"
+        ).read_text()
+    )
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-layer4i-source-phase-file-registration-693.yaml"
+        ).read_text()
+    )
+
+    for path_key, hash_key in (
+        ("profile", "profile_sha256"),
+        ("harness", "harness_sha256"),
+        ("runtime", "runtime_sha256"),
+        ("script", "script_sha256"),
+        ("source_result", "source_result_sha256"),
+        ("prior_assessment", "prior_assessment_sha256"),
+    ):
+        assert hashlib.sha256(
+            (ROOT / registration[path_key]).read_bytes()
+        ).hexdigest() == registration[hash_key]
+    assert implementation["implementation"]["behavior_change"] == "none"
+    assert implementation["implementation"]["state_monitor_rows"] == [38, 40, 42]
+    assert registration["output_mode"] == "layer4_source_trace_files"
+    assert registration["record_layer4_inhibitory_trace_indices"] == [38, 40, 42]
+    assert registration["intact_layer4_inhibitory_trace_output"].endswith(".npz")
+    assert registration["control_layer4_inhibitory_trace_output"].endswith(".npz")
+    assert "left-censored" in registration["decision_rule"]
     assert "No original-SMART claim" in registration["boundary"]
 
 

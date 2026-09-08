@@ -1,0 +1,33 @@
+schema_version: 1
+id: figure10-layer4i-source-phase-file-monitor-692
+date: '2026-09-08'
+status: implemented-passive-focal-monitor-with-hashed-trace-files
+classification: figure10-layer4-inhibitory-source-phase-input-audit-recovery
+implementation:
+  harness: src/smart_robustness/validation/figure10.py
+  runner: scripts/run_figure10_calibrated_reset_pair.py
+  behavior_change: none
+  state_monitor_rows: [38, 40, 42]
+  state_monitor_columns:
+    - soma_voltage_mV
+    - proximal_voltage_mV
+    - spike_detector_voltage_mV
+    - sodium_activation
+    - sodium_inactivation
+    - potassium_activation
+    - projection026_gate
+    - projection026_current_pA
+    - projection027_gate
+    - projection027_current_pA
+    - projection028_gate
+    - projection028_current_pA
+    - projection029_gap_current_pA
+    - projection030_gate
+    - projection030_current_pA
+  storage: one compressed NumPy trace per causal arm with SHA-256 in result
+  console_output: compact identities, reset score, trace paths, and hashes only
+scientific_boundary: >-
+  This revision changes only evidence capture after Artifact 690 exceeded the
+  console transport limit. It does not change a model equation, initial state,
+  parameter, cue, duration, score, or causal-arm definition.
+

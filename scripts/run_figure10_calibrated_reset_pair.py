@@ -180,6 +180,12 @@ def _condition_summary(result):
         "layer4_inhibitory_source_traces": [
             asdict(item) for item in result.layer4_inhibitory_source_traces
         ],
+        "layer4_inhibitory_source_trace_path": (
+            result.layer4_inhibitory_source_trace_path
+        ),
+        "layer4_inhibitory_source_trace_sha256": (
+            result.layer4_inhibitory_source_trace_sha256
+        ),
     }
 
 
@@ -222,6 +228,8 @@ def _bounded_layer4_balance_summary(summary):
         "layer4_target_timing_summaries",
         "projection036_target_arrival_summaries",
         "layer4_inhibitory_source_traces",
+        "layer4_inhibitory_source_trace_path",
+        "layer4_inhibitory_source_trace_sha256",
     )
     bounded = {key: summary[key] for key in keys}
     bounded["layer5_post_active_count"] = len(summary["layer5_post_active_indices"])
@@ -363,8 +371,20 @@ def main() -> None:
         ),
         "brian": brian,
     }
-    intact = run_figure10_condition(reset_pathway_enabled=True, **common)
-    control = run_figure10_condition(reset_pathway_enabled=False, **common)
+    intact = run_figure10_condition(
+        reset_pathway_enabled=True,
+        layer4_inhibitory_trace_output=registration.get(
+            "intact_layer4_inhibitory_trace_output"
+        ),
+        **common,
+    )
+    control = run_figure10_condition(
+        reset_pathway_enabled=False,
+        layer4_inhibitory_trace_output=registration.get(
+            "control_layer4_inhibitory_trace_output"
+        ),
+        **common,
+    )
     assessment = assess_figure10_reset(intact, control)
     intact_summary = _condition_summary(intact)
     control_summary = _condition_summary(control)
@@ -373,12 +393,16 @@ def main() -> None:
         "layer4_balance_bounded",
         "layer4_complete_target_bounded",
         "layer4_target_timing_bounded",
+        "layer4_source_trace_files",
     }:
         intact_summary = _bounded_layer4_balance_summary(intact_summary)
         control_summary = _bounded_layer4_balance_summary(control_summary)
         if output_mode == "layer4_complete_target_bounded":
             intact_summary = compact_layer4_target_balance_summary(intact_summary)
             control_summary = compact_layer4_target_balance_summary(control_summary)
+        if output_mode == "layer4_source_trace_files":
+            intact_summary.pop("layer4_inhibitory_source_traces")
+            control_summary.pop("layer4_inhibitory_source_traces")
     elif output_mode != "full":
         raise ValueError(f"unknown Figure 10 output mode: {output_mode}")
 

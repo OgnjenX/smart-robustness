@@ -507,7 +507,9 @@ def test_projection036_target_arrivals_preserve_source_edge_and_delay() -> None:
 
 
 def test_layer4_inhibitory_source_trace_preserves_native_inputs_and_state() -> None:
-    base = brian.asarray([[float(index + step) for step in range(5)] for index in range(81)])
+    base = brian.asarray(
+        [[float(index + step) for step in range(5)] for index in (38, 40, 42)]
+    )
     summaries = summarize_layer4_inhibitory_source_traces(
         source_indices=(38, 40, 42),
         mismatch_start_ms=100.0,
@@ -515,7 +517,7 @@ def test_layer4_inhibitory_source_trace_preserves_native_inputs_and_state() -> N
         window_end_from_mismatch_ms=75.02,
         state_times_ms=brian.asarray([174.99, 175.0, 175.01, 175.02, 175.03]),
         soma_voltage_mV_by_index=brian.asarray(
-            [[float(index + step) for step in range(5)] for index in range(81)]
+            [[float(index + step) for step in range(5)] for index in (38, 40, 42)]
         ),
         proximal_voltage_mV_by_index=base[:, :],
         spike_detector_voltage_mV_by_index=base[:, :],
@@ -545,7 +547,10 @@ def test_layer4_inhibitory_source_trace_preserves_native_inputs_and_state() -> N
     assert summaries[1].spike_times_from_mismatch_ms == pytest.approx((75.01,))
 
 
-def test_figure10_condition_smoke_records_layer4_inhibitory_source_trace() -> None:
+def test_figure10_condition_smoke_records_layer4_inhibitory_source_trace(
+    tmp_path,
+) -> None:
+    trace_path = tmp_path / "layer4i_trace.npz"
     result = run_figure10_condition(
         top_down_current_pA=600,
         pre_match_duration_ms=0.01,
@@ -555,6 +560,7 @@ def test_figure10_condition_smoke_records_layer4_inhibitory_source_trace() -> No
         record_reset_chain_diagnostics=True,
         record_layer4_inhibitory_trace_indices=(40,),
         layer4_inhibitory_trace_window_ms=(0.0, 0.01),
+        layer4_inhibitory_trace_output=trace_path,
         brian=brian,
     )
 
@@ -564,3 +570,6 @@ def test_figure10_condition_smoke_records_layer4_inhibitory_source_trace() -> No
     assert trace.times_from_mismatch_ms == pytest.approx((0.0, 0.01))
     assert len(trace.soma_voltage_mV) == 2
     assert len(trace.projection030_current_pA) == 2
+    assert result.layer4_inhibitory_source_trace_path == str(trace_path)
+    assert len(result.layer4_inhibitory_source_trace_sha256) == 64
+    assert trace_path.is_file()

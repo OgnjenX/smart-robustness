@@ -1,0 +1,30 @@
+schema_version: 1
+id: figure10-layer4i-source-phase-assessment-691
+date: '2026-09-08'
+status: assessed-output-incomplete-compact-rerun-required
+registration: docs/validation-results/figure10-layer4i-source-phase-registration-689.yaml
+result: docs/validation-results/figure10-layer4i-source-phase-pair-690.yaml
+result_sha256: 4b43d22a8967ec4c73e7548bda9339b29b601f3c53af802ce54ef62eacc2a415
+assessment:
+  execution_completed: true
+  all_fresh_figure6_gates_pass: true
+  exact_required_population_identity_assessable: false
+  exact_required_arrival_identity_assessable: false
+  complete_native_pair_trace_available: false
+  mechanistic_interpretation_authorized: false
+  parameter_selected: false
+  official_figure10_reset_reproduced: false
+  original_smart_reproduced: false
+  baseline_promoted: false
+interpretation: >-
+  The model run completed and the preserved leading/trailing fields repeat the
+  intact counts and failed reset score. The console transport compacted the
+  middle of the 45,150-token result, including required control identities and
+  native samples. The registration therefore cannot be fully assessed and no
+  source-cell mechanism is inferred from incomplete evidence.
+next_gate: >-
+  Replace broad in-memory/all-cell trace recording with a separate monitor for
+  only cells 38, 40, and 42, save each arm's exact bounded trace to a
+  preregistered compressed data artifact, and emit only paths, hashes, and
+  compact identity fields to the console. Preregister that evidence-preserving
+  rerun before execution. Do not alter model dynamics or select a parameter.

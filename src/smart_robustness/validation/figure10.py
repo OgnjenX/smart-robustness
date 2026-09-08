@@ -8,6 +8,7 @@ unreported numerical trace.
 
 from __future__ import annotations
 
+import hashlib
 from collections.abc import Mapping
 from dataclasses import dataclass
 from itertools import pairwise
@@ -233,6 +234,8 @@ class Figure10ConditionResult:
     layer4_inhibitory_source_traces: tuple[
         Figure10Layer4InhibitorySourceTrace, ...
     ] = ()
+    layer4_inhibitory_source_trace_path: str | None = None
+    layer4_inhibitory_source_trace_sha256: str | None = None
 
     def __post_init__(self) -> None:
         if self.pre_match_duration_ms <= 0 or self.mismatch_duration_ms <= 0:
@@ -887,10 +890,10 @@ def summarize_layer4_inhibitory_source_traces(
         projection030_current_pA_by_index,
     )
     arrays = tuple(np.asarray(trace, dtype=float) for trace in traces)
-    expected_shape = (81, times.size)
+    expected_shape = (len(source_indices), times.size)
     if any(trace.shape != expected_shape for trace in arrays):
         raise ValueError(
-            "layer-4 inhibitory state traces must have shape (81, state_times)"
+            "layer-4 inhibitory state traces must match source rows and state times"
         )
     event_indices = np.asarray(spike_indices, dtype=int)
     event_times = np.asarray(spike_times_ms, dtype=float)
@@ -908,8 +911,10 @@ def summarize_layer4_inhibitory_source_traces(
         raise ValueError("layer-4 inhibitory trace window contains no state samples")
 
     summaries: list[Figure10Layer4InhibitorySourceTrace] = []
-    for source_index in source_indices:
-        values = tuple(tuple(float(value) for value in trace[source_index, window]) for trace in arrays)
+    for row, source_index in enumerate(source_indices):
+        values = tuple(
+            tuple(float(value) for value in trace[row, window]) for trace in arrays
+        )
         source_spikes = event_times[event_indices == source_index]
         source_spikes = source_spikes[
             (source_spikes >= absolute_start - endpoint_tolerance_ms)
@@ -1045,6 +1050,7 @@ def run_figure10_condition(
     projection036_arrival_window_ms: tuple[float, float] = (75.0, 76.0),
     record_layer4_inhibitory_trace_indices: tuple[int, ...] = (),
     layer4_inhibitory_trace_window_ms: tuple[float, float] = (75.0, 75.6),
+    layer4_inhibitory_trace_output: str | Path | None = None,
     conventions=None,
     dt_ms: float = 0.01,
     cpp_standalone_directory: str | Path | None = None,
@@ -1177,6 +1183,14 @@ def run_figure10_condition(
         or layer4_inhibitory_trace_window_ms[1] > mismatch_duration_ms
     ):
         raise ValueError("layer-4 inhibitory trace window must lie within mismatch")
+    if layer4_inhibitory_trace_output is not None:
+        if not record_layer4_inhibitory_trace_indices:
+            raise ValueError("layer-4 inhibitory trace output requires trace indices")
+        layer4i_trace_output = Path(layer4_inhibitory_trace_output)
+        if layer4i_trace_output.exists():
+            raise FileExistsError(layer4i_trace_output)
+        if not layer4i_trace_output.parent.is_dir():
+            raise ValueError("layer-4 inhibitory trace parent directory does not exist")
     current_mode = TopDownCurrentMode(top_down_current_mode)
     if current_mode is TopDownCurrentMode.UNTIL_CUED_CELL_EVENT_LIMIT:
         raise ValueError("Figure 10 does not define an event-count-limited cue")
@@ -1282,6 +1296,7 @@ def run_figure10_condition(
         sector.network.add(layer6i_state)
     layer6i_transmitter_state = None
     layer4i_state = None
+    layer4i_source_state = None
     layer4e_inhibitory_state = None
     if record_reset_chain_diagnostics:
         layer6i_transmitter_state = brian.StateMonitor(
@@ -1298,22 +1313,20 @@ def run_figure10_condition(
         )
         layer4i_variables = ["port_000_gate", "i_port_000"]
         if record_layer4_inhibitory_trace_indices:
-            layer4i_variables.extend(
+            layer4i_source_state = brian.StateMonitor(
+                sector.populations["layer4_inhibitory_v1"].group,
                 (
-                    "v_soma",
-                    "v_proximal_dendrite",
-                    "spike_detector_voltage",
-                    "m_soma",
-                    "h_soma",
-                    "n_soma",
-                    "port_001_gate",
-                    "i_port_001",
-                    "port_002_gate",
-                    "i_port_002",
-                    "i_gap_000",
-                    "port_003_gate",
-                    "i_port_003",
-                )
+                    "v_soma", "v_proximal_dendrite", "spike_detector_voltage",
+                    "m_soma", "h_soma", "n_soma", "port_000_gate", "i_port_000",
+                    "port_001_gate", "i_port_001", "port_002_gate", "i_port_002",
+                    "i_gap_000", "port_003_gate", "i_port_003",
+                ),
+                record=record_layer4_inhibitory_trace_indices,
+                name=(
+                    "figure10_intact_layer4i_source_state"
+                    if reset_pathway_enabled
+                    else "figure10_control_layer4i_source_state"
+                ),
             )
         layer4i_state = brian.StateMonitor(
             sector.populations["layer4_inhibitory_v1"].group,
@@ -1346,6 +1359,8 @@ def run_figure10_condition(
             ),
         )
         sector.network.add(layer6i_transmitter_state, layer4i_state, layer4e_inhibitory_state)
+        if layer4i_source_state is not None:
+            sector.network.add(layer4i_source_state)
     match = ClassicMatchMismatchCue(
         condition=MatchCondition.MATCH,
         top_down_current_pA=top_down_current_pA,
@@ -1579,6 +1594,8 @@ def run_figure10_condition(
     layer4_inhibitory_source_traces: tuple[
         Figure10Layer4InhibitorySourceTrace, ...
     ] = ()
+    layer4_inhibitory_source_trace_path = None
+    layer4_inhibitory_source_trace_sha256 = None
     if record_layer4_balance_diagnostics:
         projection038_gate, projection038_current, projection038_trace = (
             _single_projection_summary(layer4e_inhibitory_state, "port_003")
@@ -1716,7 +1733,7 @@ def run_figure10_condition(
             )
 
     if record_layer4_inhibitory_trace_indices:
-        assert layer4i_state is not None
+        assert layer4i_source_state is not None
         assert layer4_inhibitory is not None
         layer4_inhibitory_source_traces = summarize_layer4_inhibitory_source_traces(
             source_indices=record_layer4_inhibitory_trace_indices,
@@ -1725,39 +1742,104 @@ def run_figure10_condition(
                 layer4_inhibitory_trace_window_ms[0]
             ),
             window_end_from_mismatch_ms=float(layer4_inhibitory_trace_window_ms[1]),
-            state_times_ms=np.asarray(layer4i_state.t / brian.ms),
-            soma_voltage_mV_by_index=np.asarray(layer4i_state.v_soma / brian.mV),
+            state_times_ms=np.asarray(layer4i_source_state.t / brian.ms),
+            soma_voltage_mV_by_index=np.asarray(
+                layer4i_source_state.v_soma / brian.mV
+            ),
             proximal_voltage_mV_by_index=np.asarray(
-                layer4i_state.v_proximal_dendrite / brian.mV
+                layer4i_source_state.v_proximal_dendrite / brian.mV
             ),
             spike_detector_voltage_mV_by_index=np.asarray(
-                layer4i_state.spike_detector_voltage / brian.mV
+                layer4i_source_state.spike_detector_voltage / brian.mV
             ),
-            sodium_activation_by_index=np.asarray(layer4i_state.m_soma),
-            sodium_inactivation_by_index=np.asarray(layer4i_state.h_soma),
-            potassium_activation_by_index=np.asarray(layer4i_state.n_soma),
-            projection026_gate_by_index=np.asarray(layer4i_state.port_000_gate),
+            sodium_activation_by_index=np.asarray(layer4i_source_state.m_soma),
+            sodium_inactivation_by_index=np.asarray(layer4i_source_state.h_soma),
+            potassium_activation_by_index=np.asarray(layer4i_source_state.n_soma),
+            projection026_gate_by_index=np.asarray(
+                layer4i_source_state.port_000_gate
+            ),
             projection026_current_pA_by_index=np.asarray(
-                layer4i_state.i_port_000 / brian.pA
+                layer4i_source_state.i_port_000 / brian.pA
             ),
-            projection027_gate_by_index=np.asarray(layer4i_state.port_001_gate),
+            projection027_gate_by_index=np.asarray(
+                layer4i_source_state.port_001_gate
+            ),
             projection027_current_pA_by_index=np.asarray(
-                layer4i_state.i_port_001 / brian.pA
+                layer4i_source_state.i_port_001 / brian.pA
             ),
-            projection028_gate_by_index=np.asarray(layer4i_state.port_002_gate),
+            projection028_gate_by_index=np.asarray(
+                layer4i_source_state.port_002_gate
+            ),
             projection028_current_pA_by_index=np.asarray(
-                layer4i_state.i_port_002 / brian.pA
+                layer4i_source_state.i_port_002 / brian.pA
             ),
             projection029_gap_current_pA_by_index=np.asarray(
-                layer4i_state.i_gap_000 / brian.pA
+                layer4i_source_state.i_gap_000 / brian.pA
             ),
-            projection030_gate_by_index=np.asarray(layer4i_state.port_003_gate),
+            projection030_gate_by_index=np.asarray(
+                layer4i_source_state.port_003_gate
+            ),
             projection030_current_pA_by_index=np.asarray(
-                layer4i_state.i_port_003 / brian.pA
+                layer4i_source_state.i_port_003 / brian.pA
             ),
             spike_indices=np.asarray(layer4_inhibitory.i),
             spike_times_ms=np.asarray(layer4_inhibitory.t / brian.ms),
         )
+        if layer4_inhibitory_trace_output is not None:
+            trace_output = Path(layer4_inhibitory_trace_output)
+            np.savez_compressed(
+                trace_output,
+                source_indices=np.asarray(
+                    record_layer4_inhibitory_trace_indices, dtype=int
+                ),
+                times_from_mismatch_ms=np.asarray(
+                    layer4_inhibitory_source_traces[0].times_from_mismatch_ms,
+                    dtype=float,
+                ),
+                **{
+                    field: np.asarray(
+                        [getattr(trace, field) for trace in layer4_inhibitory_source_traces],
+                        dtype=float,
+                    )
+                    for field in (
+                        "soma_voltage_mV",
+                        "proximal_voltage_mV",
+                        "spike_detector_voltage_mV",
+                        "sodium_activation",
+                        "sodium_inactivation",
+                        "potassium_activation",
+                        "projection026_gate",
+                        "projection026_current_pA",
+                        "projection027_gate",
+                        "projection027_current_pA",
+                        "projection028_gate",
+                        "projection028_current_pA",
+                        "projection029_gap_current_pA",
+                        "projection030_gate",
+                        "projection030_current_pA",
+                    )
+                },
+                spike_source_indices=np.asarray(
+                    [
+                        trace.source_index
+                        for trace in layer4_inhibitory_source_traces
+                        for _ in trace.spike_times_from_mismatch_ms
+                    ],
+                    dtype=int,
+                ),
+                spike_times_from_mismatch_ms=np.asarray(
+                    [
+                        spike_time
+                        for trace in layer4_inhibitory_source_traces
+                        for spike_time in trace.spike_times_from_mismatch_ms
+                    ],
+                    dtype=float,
+                ),
+            )
+            layer4_inhibitory_source_trace_path = str(trace_output)
+            layer4_inhibitory_source_trace_sha256 = hashlib.sha256(
+                trace_output.read_bytes()
+            ).hexdigest()
 
     return Figure10ConditionResult(
         pre_match_duration_ms=pre_match_duration_ms,
@@ -1830,4 +1912,8 @@ def run_figure10_condition(
             projection036_target_arrival_summaries
         ),
         layer4_inhibitory_source_traces=layer4_inhibitory_source_traces,
+        layer4_inhibitory_source_trace_path=layer4_inhibitory_source_trace_path,
+        layer4_inhibitory_source_trace_sha256=(
+            layer4_inhibitory_source_trace_sha256
+        ),
     )

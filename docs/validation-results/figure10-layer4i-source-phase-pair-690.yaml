@@ -1,0 +1,55 @@
+schema_version: 1
+id: figure10-layer4i-source-phase-pair-690
+date: '2026-09-08'
+status: completed-output-transport-compacted-incomplete-evidence
+classification: figure10-layer4-inhibitory-source-phase-input-audit
+registration: docs/validation-results/figure10-layer4i-source-phase-registration-689.yaml
+runtime_fingerprint: fa4ab9f0bf2bec4d6ad53cb6a91620047689b6839b146ed7d777d42350c2cdf5
+execution_exit_code: 0
+reported_output_tokens: 45150
+persistent_projection_delays_ms: {}
+figure6_gates:
+  relay_active_indices: true
+  relay_events_per_active_index: true
+  relay_events: true
+  cortical_chain_complete: true
+  causal_learning_pair: true
+  top_down_horizontal_contrast: true
+preserved_intact_counts:
+  layer4_pre_events: 39
+  layer4_post_events: 78
+  nonspecific_post_events: 18
+  layer5_post_events: 285
+  layer6i_post_events: 153
+  layer4_inhibitory_post_events: 218
+preserved_intact_arrivals:
+  target_index: 31
+  arrivals:
+    - [38, 75.28000000000003, 75.38000000000002, 0.6583859756158111]
+    - [42, 75.28000000000003, 75.38000000000002, 0.6583859756158111]
+    - [40, 75.38, 75.47999999999999, 1.6014748058336161]
+    - [39, 75.46000000000001, 75.56, 1.2823607768599092]
+    - [41, 75.46000000000001, 75.56, 1.2823607768599092]
+preserved_reset_assessment:
+  pre_reset_winner_indices: [38, 39, 40, 41, 42]
+  pre_reset_winner_spikes: 39
+  intact_winner_post_spikes: 78
+  control_winner_post_spikes: 76
+  intact_released_alternatives: 0
+  control_released_alternatives: 2
+  intact_nonspecific_spikes: 18
+  intact_layer5_spikes: 285
+  intact_layer6i_spikes: 153
+reset_gates: {pre_reset_winner: true, reset_chain: true,
+  winner_suppression: false, alternative_release: false}
+reproduced_reset: false
+required_control_source_identity_preserved: false
+required_control_arrival_identity_preserved: false
+complete_native_pair_trace_preserved: false
+original_smart_reproduced: false
+baseline_promoted: false
+evidence_boundary: >-
+  The process completed with exit code zero, but the 45,150-token console result
+  exceeded the transport limit and its middle was compacted. Only fields shown
+  above were retained from the leading and trailing output. Missing control
+  identity and native trace values are not reconstructed or inferred.

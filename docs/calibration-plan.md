@@ -2096,3 +2096,12 @@ Na/K gate state, and emitted events for inhibitory cells 38, 40, and 42 over
 75.0--75.6 ms. Interpretation requires exact repetition of Artifact 686 and
 must identify a temporally preceding input/state difference without fitting.
 The monitor is passive and cannot select a parameter.
+
+Artifacts 690--691 record a successful execution whose 45,150-token console
+payload was transport-compacted. Preserved fields pass Figure 6 and repeat the
+failed reset score, but required control identities and native samples are
+missing; no mechanism is inferred. Artifacts 692--693 preregister an exact
+evidence-capture rerun using a focal three-row monitor, one hashed compressed
+trace per arm, and compact console metadata. Its additional decision boundary
+classifies the 75.0-ms start as left-censored if the focal cells are already on
+different action-potential trajectories there.

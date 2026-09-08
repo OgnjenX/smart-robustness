@@ -1,0 +1,51 @@
+schema_version: 1
+id: figure10-layer6i-conductance-assessment-643
+date: '2026-09-08'
+status: assessed-coarse-four-to-eightfold-effective-conductance-bracket
+registration: docs/validation-results/figure10-layer6i-conductance-registration-641.yaml
+result: docs/validation-results/figure10-layer6i-conductance-bracket-642.yaml
+result_sha256: e081332c2b24f299beb659ffa1f9a31722a5f55d7daa3df6bb10b4a8ce398b91
+assessment:
+  scale_one_identity_gate_passed: true
+  all_trials_finite: true
+  lower_endpoint_scale: 4.0
+  lower_endpoint_spikes: false
+  upper_endpoint_scale: 8.0
+  upper_endpoint_spikes: true
+  first_event_bracket_located: true
+  small_tuning_error_supported: false
+  connected_network_test_authorized: true
+  parameter_selected: false
+  recovered_smart_parameter: false
+  official_figure10_reset_reproduced: false
+  original_smart_reproduced: false
+  baseline_promoted: false
+quantitative_summary:
+  scales: [1.0, 2.0, 4.0, 8.0, 16.0, 32.0, 64.0]
+  event_counts: [0, 0, 0, 1, 1, 2, 2]
+  first_event_times_ms: [null, null, null, 108.35000000000001,
+    106.64000000000001, 105.81000000000002, 105.31000000000002]
+  soma_peaks_mV: [-68.51912051705573, -67.14792726855526,
+    -64.34600726113494, 41.52913374497845, 42.138784716972076,
+    42.53455287658985, 42.82958316319271]
+  proximal_peaks_mV: [-66.99519730951755, -64.21585112661398,
+    -59.22965184546746, -51.09628466315236, -37.199953706491954,
+    -24.319066761873422, -14.289980553637138]
+interpretation: >-
+  Scale 1 exactly repeats Artifact 638, and all seven isolated trials remain
+  finite. Scales 1, 2, and 4 produce no peripheral event; scale 8 produces one
+  event 108.35 ms after mismatch onset, and larger endpoints produce one or two.
+  The first-event boundary is therefore coarsely bracketed between greater than
+  4 and at most 8 times the reconstructed projection-025 maximal conductance.
+  This large factor agrees with Artifact 635's localization of a substantial
+  amplitude deficit rather than a near-threshold timing miss. It is an effective
+  reconstruction sensitivity, not evidence that the original SMART parameter
+  was eightfold larger, and no value is selected from the isolated cell alone.
+next_gate: >-
+  Preregister one connected Figure-10 causal pair using the first event-producing
+  coarse endpoint, projection-025 scale 8, under the unchanged 300-ms protocol.
+  Require fresh Figure 6 and exact upstream source identity. Compare intact and
+  mismatch-onset reset-path disconnection for layer-6I recruitment, layer-4
+  winner suppression, and alternative release. Treat scale 8 only as a diagnostic
+  endpoint; do not refine the isolated bracket, select a final calibration value,
+  or promote the baseline unless the complete official reset chain passes.

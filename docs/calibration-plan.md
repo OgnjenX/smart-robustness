@@ -1844,3 +1844,14 @@ and event multiplicity is unchanged. Scale 1 must remain lossless within
 1e-12 before scales 2, 4, 8, 16, 32, and 64 can be interpreted. Report only
 the first event-producing scale and its preceding tested endpoint; do not
 interpolate, refine, select a connected-network value, or promote a baseline.
+
+Artifacts 642--643 locate the first-event boundary. Scale 1 remains exactly
+lossless and every trial is finite. Scales 1, 2, and 4 are silent; scale 8
+elicits one event at 108.35 ms into mismatch; scales 16, 32, and 64 yield one,
+two, and two events. Thus the effective projection-025 conductance requirement
+is coarsely greater than 4 and at most 8 times the reconstructed value. This is
+a substantial transfer deficit, not a small timing adjustment, and it is not a
+recovered source parameter. Next preregister one connected causal pair at the
+first event-producing endpoint, scale 8. Require fresh Figure 6 and exact
+upstream identity, then test broad layer-6I recruitment, winner suppression,
+and alternative release before any refinement or parameter selection.

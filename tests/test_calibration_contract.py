@@ -9507,3 +9507,49 @@ def test_layer6i_conductance_bracket_is_hash_pinned_and_isolated() -> None:
     assert not implementation["implementation"]["event_multiplicity_changed"]
     assert not implementation["implementation"]["connected_network_changed"]
     assert "Do not interpolate" in registration["decision_rule"]
+
+
+def test_layer6i_conductance_bracket_locates_first_event_without_selection() -> None:
+    result_path = (
+        ROOT
+        / "docs/validation-results/figure10-layer6i-conductance-bracket-642.yaml"
+    )
+    result = yaml.safe_load(result_path.read_text())
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-layer6i-conductance-assessment-643.yaml"
+        ).read_text()
+    )
+
+    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment[
+        "result_sha256"
+    ]
+    assert result["scale_one_identity_gate_pass"]
+    assert result["all_trials_finite"]
+    assert [item["scale"] for item in result["scale_results"]] == [
+        1.0,
+        2.0,
+        4.0,
+        8.0,
+        16.0,
+        32.0,
+        64.0,
+    ]
+    assert [item["event_count"] for item in result["scale_results"]] == [
+        0,
+        0,
+        0,
+        1,
+        1,
+        2,
+        2,
+    ]
+    assert result["first_event_scale"] == 8.0
+    assert assessment["assessment"]["lower_endpoint_scale"] == 4.0
+    assert assessment["assessment"]["upper_endpoint_scale"] == 8.0
+    assert assessment["assessment"]["connected_network_test_authorized"]
+    assert not assessment["assessment"]["parameter_selected"]
+    assert not result["connected_network_changed"]
+    assert not result["original_smart_reproduced"]
+    assert not result["baseline_promoted"]

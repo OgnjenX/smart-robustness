@@ -1,0 +1,89 @@
+schema_version: 1
+id: figure10-layer6i-conductance-bracket-642
+date: '2026-09-08'
+status: isolated-first-event-bracket-located
+classification: figure10-peripheral-layer6i-cell0-projection025-conductance-bracket
+registration: docs/validation-results/figure10-layer6i-conductance-registration-641.yaml
+trace:
+  path: results/figure10-layer6i-cell0-replay-638.npz
+  sha256: baf621ae17efafaa9d62a2232ce8c07148d69aecd20eb261f56714327d674bda
+  cell_index: 0
+  source_event_times_ms: []
+runtime_fingerprint: fa4ab9f0bf2bec4d6ad53cb6a91620047689b6839b146ed7d777d42350c2cdf5
+scale_one_identity_gate_pass: true
+all_trials_finite: true
+scale_results:
+- scale: 1.0
+  finite: true
+  event_count: 0
+  spike_times_ms: []
+  first_event_ms: null
+  soma_peak_mV: -68.51912051705573
+  proximal_peak_mV: -66.99519730951755
+  exact_source_event_train: true
+  maximum_state_error_from_source: 0.0
+- scale: 2.0
+  finite: true
+  event_count: 0
+  spike_times_ms: []
+  first_event_ms: null
+  soma_peak_mV: -67.14792726855526
+  proximal_peak_mV: -64.21585112661398
+  exact_source_event_train: true
+  maximum_state_error_from_source: 2.779797934627311
+- scale: 4.0
+  finite: true
+  event_count: 0
+  spike_times_ms: []
+  first_event_ms: null
+  soma_peak_mV: -64.34600726113494
+  proximal_peak_mV: -59.22965184546746
+  exact_source_event_train: true
+  maximum_state_error_from_source: 7.768088562502058
+- scale: 8.0
+  finite: true
+  event_count: 1
+  spike_times_ms: [108.35000000000001]
+  first_event_ms: 108.35000000000001
+  soma_peak_mV: 41.52913374497845
+  proximal_peak_mV: -51.09628466315236
+  exact_source_event_train: false
+  maximum_state_error_from_source: 110.05543014715194
+- scale: 16.0
+  finite: true
+  event_count: 1
+  spike_times_ms: [106.64000000000001]
+  first_event_ms: 106.64000000000001
+  soma_peak_mV: 42.138784716972076
+  proximal_peak_mV: -37.199953706491954
+  exact_source_event_train: false
+  maximum_state_error_from_source: 110.95738380427838
+- scale: 32.0
+  finite: true
+  event_count: 2
+  spike_times_ms: [105.81000000000002, 111.28]
+  first_event_ms: 105.81000000000002
+  soma_peak_mV: 42.53455287658985
+  proximal_peak_mV: -24.319066761873422
+  exact_source_event_train: false
+  maximum_state_error_from_source: 111.66101074291052
+- scale: 64.0
+  finite: true
+  event_count: 2
+  spike_times_ms: [105.31000000000002, 109.56]
+  first_event_ms: 105.31000000000002
+  soma_peak_mV: 42.82958316319271
+  proximal_peak_mV: -14.289980553637138
+  exact_source_event_train: false
+  maximum_state_error_from_source: 112.17305770736533
+first_event_scale: 8.0
+connected_network_changed: false
+parameter_selected: false
+original_smart_reproduced: false
+baseline_promoted: false
+interpretation_boundary: >-
+  Execute only the seven fixed isolated replay scales. Do not alter the trace,
+  multiply receptor gates, add source events, change kinetics, intrinsic state,
+  any other conductance, event rule, duration, input, or connected-network
+  parameter. This bracket measures an effective conductance requirement; it is
+  not a recovered SMART parameter and cannot promote the baseline.

@@ -1672,3 +1672,13 @@ depletion or either downstream synapse. Before any calibration, compare the
 layer-6I input balance and fixed-weight semantics against SMART.nml, the
 supplement, and the archived KInNeSS manual. Any next executable candidate must
 be a bounded source-discrete interpretation and retain every Figure 6 gate.
+
+Artifact 612 audits the layer-2/3-to-layer-6I fixed input against all available
+official materials. SMART.nml serializes fixed weight 4 and an inapplicable
+plastic baseline of 2, while the paper supplement prints weight density 1 for
+the same one-to-one, 1-ms, 2/2-ms AMPA route. The archived manual does not
+support using 2 for a nonmodifiable projection, so that tempting midpoint is
+rejected. Registration 613 selects only the supplement-literal endpoint by
+scaling projection 024 from 4 to 1. It is an official-source-conflict
+sensitivity, not a fitted value. Figure 6 is a hard prerequisite and the family
+closes after this single endpoint without interpolation or another parameter.

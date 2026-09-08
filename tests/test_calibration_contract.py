@@ -8874,3 +8874,44 @@ def test_figure10_complete_reset_chain_localizes_layer6i_spike_masking() -> None
     assert not assessment["assessment"]["parameter_selected"]
     assert not result["original_smart_reproduced"]
     assert not result["baseline_promoted"]
+
+
+def test_figure10_layer23_layer6i_candidate_is_one_source_discrete_endpoint() -> None:
+    audit = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-layer23-layer6i-source-audit-612.yaml"
+        ).read_text()
+    )
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-layer23-layer6i-registration-613.yaml"
+        ).read_text()
+    )
+
+    assert audit["sources"]["released_network"]["modifiable"] is False
+    assert audit["sources"]["released_network"]["weight"] == 4.0
+    assert audit["sources"]["released_network"]["asymptotic_weight"] == 2.0
+    assert audit["sources"]["paper_supplement"]["weight_density_1e6_cm2"] == 1.0
+    assert audit["resolution"]["rejected_interpretation"]["value"] == 2.0
+    assert audit["resolution"]["selected_candidate"]["value"] == 1.0
+    assert "only" in audit["stopping_rule"].lower()
+    scales = {
+        item["projection_id"]: item["scale"]
+        for item in registration["persistent_projection_scales"]
+    }
+    assert scales["modeldb112923.projection.024"] == 0.25
+    assert "only endpoint" in registration["boundary"]
+    assert hashlib.sha256((ROOT / registration["profile"]).read_bytes()).hexdigest() == (
+        registration["profile_sha256"]
+    )
+    assert hashlib.sha256((ROOT / registration["harness"]).read_bytes()).hexdigest() == (
+        registration["harness_sha256"]
+    )
+    assert hashlib.sha256((ROOT / registration["script"]).read_bytes()).hexdigest() == (
+        registration["script_sha256"]
+    )
+    assert hashlib.sha256((ROOT / registration["source_control"]).read_bytes()).hexdigest() == (
+        registration["source_control_sha256"]
+    )

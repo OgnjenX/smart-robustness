@@ -632,6 +632,11 @@ parameters:
     status: completed-failure-localized-at-layer6i-spike-generation
     source: Layer-6I masking Artifact 607; archived projection records and transmitter resource; Artifacts 608--611
     note: The unchanged pair repeats Artifact-606 identity. A 2.76-fold integrated and 8.95-fold peak projection-025 current difference vanishes before layer-6I event output; both arms have the same 30 events from the same five cells, effectively identical resource samples, projection-026 transfer, 124 layer-4 inhibitory events, and projection-036 inhibition. The source resource and both downstream synapses are rejected as the primary blocker; no parameter was selected.
+  calibration.figure10.layer23_layer6i_source_conflict:
+    value: supplement-literal fixed weight 1.0 for projection 024, executable scale 0.25 from SMART.nml weight 4.0
+    status: preregistered-one-endpoint-awaiting-execution
+    source: SMART.nml, supplementary Table 3, archived KInNeSS manual, and Artifacts 610--613
+    note: SMART.nml prints nonmodifiable weight 4 and asymptoticWeight 2; the supplement prints weight 1 for the otherwise matching route. The manual does not support applying a plastic asymptote to a fixed projection, so 2 is rejected. Only 1 is admissible as a source-conflict sensitivity. It must retain every fresh Figure-6 gate, and no interpolation or extension is allowed.
   benchmark.population_sizes:
     value: see configs/*.yaml
     status: exploratory

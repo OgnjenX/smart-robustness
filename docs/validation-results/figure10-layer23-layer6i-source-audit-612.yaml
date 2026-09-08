@@ -1,0 +1,65 @@
+schema_version: 1
+id: figure10-layer23-layer6i-source-audit-612
+date: '2026-09-08'
+status: audited-one-source-discrete-candidate-selected
+classification: layer6i-fixed-input-source-conflict
+authorization: docs/validation-results/figure10-reset-chain-assessment-611.yaml
+sources:
+  released_network:
+    path: tmp/modeldb-112923/versaceGrossberg2008/SMART.nml
+    projection: Layer_2_3 to Layer_6_I Dendrite 0 channel 2/3
+    modifiable: false
+    weight: 4.0
+    asymptotic_weight: 2.0
+    topology: connectFromOne
+    delay_ms: 1.0
+    conductance_mS_cm2: 0.1
+    rise_fall_ms: [2.0, 2.0]
+  paper_supplement:
+    path: src/smart_robustness/data/supplementary_table3.yaml
+    record: l6i.proximal_dendrite.from_l23_e.ampa
+    weight_density_1e6_cm2: 1.0
+    topology: one_to_one
+    delay_ms: 1.0
+    conductance_pS: 0.1
+    rise_fall_ms: [2.0, 2.0]
+  kinness_manual:
+    path: tmp/kinness-framework-expanded.pdf
+    sections: [4.9, 4.10]
+    interpretation: >-
+      KInNeSS distinguishes fixed from plastic projections. The asymptotic
+      weight participates in the bounded learning rule as the decorrelated
+      baseline; the manual supplies no basis for substituting it for the
+      serialized weight of an explicitly nonmodifiable projection.
+observed_current_model:
+  evidence: docs/validation-results/figure10-reset-chain-pair-610.yaml
+  projection024_current_integral_pA_ms: 478093.5610642588
+  projection025_current_integral_pA_ms: 57936.75645487377
+  projection024_to_025_ratio: 8.252
+  causal_result: >-
+    The extra layer-5 reset current is large but does not change layer-6I event
+    identity or count, and every downstream reset readout remains unchanged.
+resolution:
+  rejected_interpretation:
+    value: 2.0
+    reason: >-
+      Treating asymptoticWeight as the effective fixed weight is not supported
+      by the archived fixed-versus-plastic semantics.
+  selected_candidate:
+    value: 1.0
+    executable_projection: modeldb112923.projection.024
+    executable_scale_from_released_network: 0.25
+    reason: >-
+      This is the only distinct literal value printed by an official paper
+      source for the otherwise matching receptor, topology, delay, and
+      kinetics. It is tested as a source-conflict sensitivity, not fitted.
+stopping_rule: >-
+  Execute only the supplement-literal 1.0 endpoint. It must preserve every
+  fresh Figure-6 gate before Figure 10 may be interpreted. Close the family
+  after that endpoint, whether it passes or fails; do not interpolate, add the
+  rejected 2.0 endpoint, or alter projections 025, 026, 036, depletion, AHP,
+  acetylcholine, phase timing, comparator, or reset scores.
+claims_boundary: >-
+  Success would identify a paper-versus-released-network source sensitivity
+  capable of restoring the reset. It would not erase the source conflict or
+  establish bit-faithful KInNeSS reproduction.

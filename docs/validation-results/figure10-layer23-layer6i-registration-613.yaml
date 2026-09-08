@@ -1,0 +1,43 @@
+schema_version: 1
+id: figure10-layer23-layer6i-registration-613
+date: '2026-09-08'
+status: registered-before-execution-one-source-discrete-endpoint
+classification: fixed-figure10-layer23-layer6i-supplement-literal
+profile: configs/calibration/figure7_learned_coincidence_effective_t_pair_v1.yaml
+profile_sha256: 4b6aa0bdf4fb844e428fb330f34970900cc8bc741183b2d8e6e73789cba0b30f
+harness: src/smart_robustness/validation/figure10.py
+harness_sha256: baa4c943652b752f04d1a451c3edb0ea068acf967f25b8f52f81b4a8f72900fb
+script: scripts/run_figure10_calibrated_reset_pair.py
+script_sha256: 74fe4b138a698e87976dcb0ed57faf2eea971d8cdd6dc9fb18586cffd09f598a
+runtime_fingerprint: fa4ab9f0bf2bec4d6ad53cb6a91620047689b6839b146ed7d777d42350c2cdf5
+authorization: docs/validation-results/figure10-layer23-layer6i-source-audit-612.yaml
+source_control: docs/validation-results/figure10-reset-chain-pair-610.yaml
+source_control_sha256: 2c06e44603a25188ab7b56a33657c96f56a9e9cb3bd03bf992933a0f7ffe5fc8
+result_id: figure10-layer23-layer6i-pair-614
+result: docs/validation-results/figure10-layer23-layer6i-pair-614.yaml
+assessment: docs/validation-results/figure10-layer23-layer6i-assessment-615.yaml
+persistent_projection_scales:
+- {projection_id: modeldb112923.projection.008, scale: 0.75}
+- {projection_id: modeldb112923.projection.011, scale: 0.9375}
+- {projection_id: modeldb112923.projection.024, scale: 0.25}
+nonspecific_t_scale: 0.1875
+record_layer6i_diagnostics: true
+record_reset_chain_diagnostics: true
+protocol:
+  pre_match_duration_ms: 100.0
+  mismatch_duration_ms: 100.0
+  dt_ms: 0.01
+  top_down_current_pA: 800.0
+  top_down_current_mode: until_cued_cell_first_event
+  comparator: {transform: top_k_binary, source_index: 40, target_count: 5}
+required_prerequisite:
+  figure6_all_gates: true
+decision_rule: >-
+  Stop without interpreting Figure 10 if any fresh Figure-6 gate fails. If all
+  pass, compare the intact and disconnected arms using the already fixed reset
+  gates and complete reset-chain diagnostics. A behavioral pass requires both
+  winner suppression and greater alternative release in the intact arm.
+boundary: >-
+  This is the only endpoint in the source-conflict family. No interpolation,
+  extension, timing change, second weight alternative, depletion change,
+  AHP/ACh change, comparator change, or result-driven retuning is allowed.

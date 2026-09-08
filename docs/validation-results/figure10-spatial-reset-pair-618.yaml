@@ -1,0 +1,220 @@
+schema_version: 1
+id: figure10-spatial-reset-pair-618
+date: '2026-09-08'
+status: completed-calibrated-figure10-reset-pair
+classification: fixed-figure10-spatial-reset-wave-localization
+registration: docs/validation-results/figure10-spatial-reset-registration-617.yaml
+serialization: bounded-sparse-lossless-for-spatial-readouts
+runtime_fingerprint: fa4ab9f0bf2bec4d6ad53cb6a91620047689b6839b146ed7d777d42350c2cdf5
+persistent_projection_weight_scales:
+  modeldb112923.projection.000: 0.01
+  modeldb112923.projection.001: 0.01
+  modeldb112923.projection.004: 0.03
+  modeldb112923.projection.008: 0.75
+  modeldb112923.projection.011: 0.9375
+figure6_gates:
+  relay_active_indices: true
+  relay_events_per_active_index: true
+  relay_events: true
+  cortical_chain_complete: true
+  causal_learning_pair: true
+  top_down_horizontal_contrast: true
+intact:
+  reset_pathway_enabled: true
+  layer4_pre_events: 39
+  layer4_pre_active_indices: [38, 39, 40, 41, 42]
+  layer4_post_events: 43
+  layer4_post_active_indices: [31, 38, 39, 40, 41, 42, 49]
+  nonspecific_pre_events: 4
+  nonspecific_post_events: 7
+  layer5_pre_events: 41
+  layer5_post_events: 70
+  layer5_post_active_indices: [29, 30, 31, 32, 33, 37, 38, 39, 40, 41, 42, 43, 47, 48, 49, 50, 51]
+  layer5_post_events_by_index:
+    29: 1
+    30: 1
+    31: 1
+    32: 1
+    33: 1
+    37: 1
+    38: 12
+    39: 11
+    40: 12
+    41: 11
+    42: 12
+    43: 1
+    47: 1
+    48: 1
+    49: 1
+    50: 1
+    51: 1
+  layer6i_pre_events: 36
+  layer6i_post_events: 30
+  layer6i_post_active_indices: [38, 39, 40, 41, 42]
+  layer6i_max_event_time_difference_from_control_ms: 0.03
+  layer6i_mismatch_gate_integral_ms_by_projection:
+    modeldb112923.projection.023: 45.435597610562944
+    modeldb112923.projection.024: 569.7818845660605
+    modeldb112923.projection.025: 57.64704413164281
+  layer6i_mismatch_current_integral_pA_ms_by_projection:
+    modeldb112923.projection.023: 238329.170622851
+    modeldb112923.projection.024: 478093.5610642588
+    modeldb112923.projection.025: 57936.75645487377
+  projection025_nonzero_target_indices: [29, 30, 31, 32, 33, 37, 38, 39, 40, 41, 42, 43, 47, 48, 49, 50, 51]
+  projection025_zero_target_indices: all-other-indices-in-0-through-80
+  projection025_gate_integral_ms_by_index:
+    29: 2.8261807521205693
+    30: 2.826180553508752
+    31: 2.8261807526647833
+    32: 2.826180553508752
+    33: 2.8261807521205693
+    37: 2.8261807521205693
+    38: 4.620331102284492
+    39: 4.841475767568894
+    40: 4.809262159848056
+    41: 4.841475767568894
+    42: 4.620331102284492
+    43: 2.8261807521205693
+    47: 2.8261807521205693
+    48: 2.826180553508752
+    49: 2.8261807526647833
+    50: 2.826180553508752
+    51: 2.8261807521205693
+  projection025_current_integral_pA_ms_by_index:
+    29: 3013.8323328582965
+    30: 3013.832114861131
+    31: 2995.8209255352917
+    32: 3013.832114861131
+    33: 3013.8323328582965
+    37: 3013.8323328582965
+    38: 4352.913065868806
+    39: 4538.88768708966
+    40: 4023.1906412919534
+    41: 4538.88768708966
+    42: 4352.913065868806
+    43: 3013.8323328582965
+    47: 3013.8323328582965
+    48: 3013.832114861131
+    49: 2995.8209255352917
+    50: 3013.832114861131
+    51: 3013.8323328582965
+  projection025_current_peak_pA_by_index:
+    peripheral_except_31_49: 541.036111
+    31: 540.9729560326643
+    38: 103.44228450957729
+    39: 113.74714121206183
+    40: 102.95428427989391
+    41: 113.74714121206183
+    42: 103.44228450957729
+    49: 540.9729560326643
+  layer6i_soma_voltage_peak_mV_by_index:
+    unconnected_default: -69.94890030740304
+    29: -68.51912049944534
+    30: -68.51912051642427
+    31: -67.99411560489936
+    32: -68.51912051642427
+    33: -68.51912049944534
+    37: -68.51912049944534
+    38: 41.49781231525868
+    39: 41.51730320096561
+    40: 42.52522656145227
+    41: 41.51730320096561
+    42: 41.49781231525868
+    43: -68.51912049944534
+    47: -68.51912049944534
+    48: -68.51912051642427
+    49: -67.99411560489936
+    50: -68.51912051642427
+    51: -68.51912049944534
+  layer6i_proximal_voltage_peak_mV_by_index:
+    unconnected_default: -69.99244087387684
+    peripheral_except_31_49: -66.99519731
+    31: -61.1752475894895
+    38: -39.61523557747887
+    39: -33.290030149144
+    40: -23.185679764287745
+    41: -33.290030149144
+    42: -39.61523557747887
+    49: -61.1752475894895
+  layer4_inhibitory_post_events: 124
+  layer4i_projection026_current_integral_pA_ms: 476.22794568851987
+  layer4e_projection036_current_integral_pA_ms: -1125334.5698974133
+disconnected_control:
+  reset_pathway_enabled: false
+  layer4_pre_events: 39
+  layer4_pre_active_indices: [38, 39, 40, 41, 42]
+  layer4_post_events: 43
+  layer4_post_active_indices: [31, 38, 39, 40, 41, 42, 49]
+  nonspecific_pre_events: 4
+  nonspecific_post_events: 7
+  layer5_pre_events: 41
+  layer5_post_events: 55
+  layer5_post_active_indices: [38, 39, 40, 41, 42]
+  layer5_post_events_by_index: {38: 11, 39: 11, 40: 11, 41: 11, 42: 11}
+  layer6i_pre_events: 36
+  layer6i_post_events: 30
+  layer6i_post_active_indices: [38, 39, 40, 41, 42]
+  layer6i_mismatch_gate_integral_ms_by_projection:
+    modeldb112923.projection.023: 45.43542105285045
+    modeldb112923.projection.024: 567.9055656426997
+    modeldb112923.projection.025: 22.89242778725304
+  layer6i_mismatch_current_integral_pA_ms_by_projection:
+    modeldb112923.projection.023: 238386.2997423449
+    modeldb112923.projection.024: 476459.82025795034
+    modeldb112923.projection.025: 21003.156141073836
+  projection025_nonzero_target_indices: [38, 39, 40, 41, 42]
+  projection025_zero_target_indices: all-other-indices-in-0-through-80
+  projection025_gate_integral_ms_by_index:
+    38: 4.574924905573951
+    39: 4.513637993320215
+    40: 4.715301989464707
+    41: 4.513637993320215
+    42: 4.574924905573951
+  projection025_current_integral_pA_ms_by_index:
+    38: 4297.610864790303
+    39: 4235.649468269878
+    40: 3936.635474953475
+    41: 4235.649468269878
+    42: 4297.610864790303
+  layer6i_soma_voltage_peak_mV_by_index:
+    unconnected_default: -69.94890030740304
+    29: -69.26883941103982
+    30: -69.26834172737246
+    31: -69.14028922111423
+    32: -69.26834172737246
+    33: -69.26883941103982
+    37: -69.26883941103982
+    38: 41.50708755113646
+    39: 41.4985005859289
+    40: 42.52522656145227
+    41: 41.4985005859289
+    42: 41.50708755113646
+    43: -69.26883941103982
+    47: -69.26883941103982
+    48: -69.26834172737246
+    49: -69.14028922111423
+    50: -69.26834172737246
+    51: -69.26883941103982
+  layer6i_proximal_voltage_peak_mV_by_index:
+    unconnected_default: -69.99244087387684
+    29_33_37_43_47_51: -68.87774887078189
+    30_32_48_50: -68.7325324265168
+    31: -62.059466219498205
+    38: -39.61523557747887
+    39: -33.290030149144
+    40: -23.168623883449662
+    41: -33.290030149144
+    42: -39.61523557747887
+    49: -62.059466219498205
+  layer4_inhibitory_post_events: 124
+  layer4i_projection026_current_integral_pA_ms: 476.26304790495703
+  layer4e_projection036_current_integral_pA_ms: -1124749.9656776604
+reset_gates:
+  pre_reset_winner: true
+  reset_chain: true
+  winner_suppression: false
+  alternative_release: false
+reproduced_reset: false
+figure7_known_discrepancy_locked: true
+original_smart_reproduced: false
+baseline_promoted: false

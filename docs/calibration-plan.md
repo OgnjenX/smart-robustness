@@ -1701,3 +1701,15 @@ to released-network projection-024 weight 4 and fixes one unchanged repetition
 of Artifact 610. Exact prior identity and all fresh Figure 6 gates are required
 before locating the earliest spatial collapse. This audit cannot select a
 parameter or reopen the failed supplement endpoint.
+
+Artifacts 617--619 reproduce every prior identity and localize the spatial
+failure. The intact mismatch activates 17 of 81 layer-5 cells versus five in
+the disconnected control; each of the twelve added peripheral cells emits only
+one event. Projection 025 transfers this support to exactly the same 17
+layer-6I targets, but peripheral dendrites peak only around -67 to -61 mV and
+somata around -69 to -68 mV. Only the original five winner-aligned layer-6I
+cells spike. Thus broad sustained layer-5 recruitment is the first missing
+Figure 10 phenomenon; sparse peripheral drive is then filtered below layer-6I
+spike threshold. Before changing a model parameter, audit the published 300-ms
+panel and approximately 175-ms reset onset against the current 200-ms total
+assay duration.

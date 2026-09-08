@@ -8982,3 +8982,45 @@ def test_figure10_spatial_reset_audit_is_hash_pinned_and_read_only() -> None:
         item["projection_id"] != "modeldb112923.projection.024"
         for item in registration["persistent_projection_scales"]
     )
+
+
+def test_figure10_spatial_reset_localizes_layer5_wave_coverage_failure() -> None:
+    result_path = ROOT / "docs/validation-results/figure10-spatial-reset-pair-618.yaml"
+    result = yaml.safe_load(result_path.read_text())
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-spatial-reset-assessment-619.yaml"
+        ).read_text()
+    )
+
+    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment["result_sha256"]
+    assert all(result["figure6_gates"].values())
+    intact = result["intact"]
+    control = result["disconnected_control"]
+    assert intact["nonspecific_post_events"] == control["nonspecific_post_events"] == 7
+    assert len(intact["layer5_post_active_indices"]) == 17
+    assert len(control["layer5_post_active_indices"]) == 5
+    added = set(intact["layer5_post_active_indices"]) - set(
+        control["layer5_post_active_indices"]
+    )
+    assert len(added) == 12
+    assert {intact["layer5_post_events_by_index"][index] for index in added} == {1}
+    assert set(intact["projection025_nonzero_target_indices"]) == set(
+        intact["layer5_post_active_indices"]
+    )
+    assert set(control["projection025_nonzero_target_indices"]) == set(
+        control["layer5_post_active_indices"]
+    )
+    assert set(intact["layer6i_post_active_indices"]) == set(
+        control["layer6i_post_active_indices"]
+    ) == {38, 39, 40, 41, 42}
+    assert max(
+        intact["layer6i_soma_voltage_peak_mV_by_index"][index] for index in added
+    ) < -60.0
+    assert assessment["assessment"]["earliest_spatial_failure_is_layer5_wave_coverage"]
+    assert assessment["assessment"]["secondary_failure_is_weak_peripheral_layer6i_recruitment"]
+    assert assessment["assessment"]["event_detector_miss_rejected"]
+    assert not assessment["assessment"]["parameter_selected"]
+    assert not result["original_smart_reproduced"]
+    assert not result["baseline_promoted"]

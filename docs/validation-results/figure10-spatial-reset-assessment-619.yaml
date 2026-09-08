@@ -1,0 +1,57 @@
+schema_version: 1
+id: figure10-spatial-reset-assessment-619
+date: '2026-09-08'
+status: assessed-spatial-reset-wave-collapses-first-in-layer5-coverage
+registration: docs/validation-results/figure10-spatial-reset-registration-617.yaml
+result: docs/validation-results/figure10-spatial-reset-pair-618.yaml
+result_sha256: 25bf6d51dbe7d945c339009ad66b4830767ca3f40ba93194c04411a57db84987
+assessment:
+  fresh_figure6_passed: true
+  prior_event_identity_reproduced: true
+  paper_requires_nonspecific_layer5_wave: true
+  intact_layer5_all_cells_recruited: false
+  intact_layer5_new_peripheral_cells_recruited: true
+  projection025_preserves_layer5_spatial_coverage: true
+  peripheral_projection025_drive_observed: true
+  peripheral_layer6i_dendritic_spikes_observed: false
+  peripheral_layer6i_somatic_spikes_observed: false
+  layer6i_output_remains_winner_aligned: true
+  earliest_spatial_failure_is_layer5_wave_coverage: true
+  secondary_failure_is_weak_peripheral_layer6i_recruitment: true
+  event_detector_miss_rejected: true
+  parameter_selected: false
+  official_figure10_reset_reproduced: false
+  original_smart_reproduced: false
+  baseline_promoted: false
+quantitative_summary:
+  layer5_post_active_cells_intact_control: [17, 5]
+  expected_nonspecific_layer5_active_cells: 81
+  newly_recruited_layer5_cells: [29, 30, 31, 32, 33, 37, 43, 47, 48, 49, 50, 51]
+  events_per_newly_recruited_layer5_cell: 1
+  projection025_nonzero_targets_intact_control: [17, 5]
+  peripheral_projection025_current_integral_pA_ms_range: [2995.8209255352917, 3013.8323328582965]
+  peripheral_projection025_current_peak_pA_range: [540.9729560326643, 541.036111060108]
+  peripheral_layer6i_proximal_voltage_peak_mV_range: [-66.99519730923292, -61.1752475894895]
+  peripheral_layer6i_soma_voltage_peak_mV_range: [-68.51912051642427, -67.99411560489936]
+  layer6i_spiking_active_indices_intact_control: [[38, 39, 40, 41, 42], [38, 39, 40, 41, 42]]
+  layer6i_post_events_intact_control: [30, 30]
+interpretation: >-
+  The registered source-control identity repeats exactly. Nonspecific-thalamic
+  input adds twelve peripheral layer-5 cells, but each emits only one event;
+  the intact mismatch recruits 17 of 81 layer-5 cells rather than the paper's
+  synchronized nonspecific wave. Projection 025 preserves this spatial support
+  exactly and delivers finite current to all twelve peripheral layer-6I
+  targets. Those dendrites remain between about -67 and -61 mV and their
+  somata near -69 to -68 mV, so they generate neither dendritic nor somatic
+  spikes. Only the five pre-existing winner-aligned layer-6I cells spike. This
+  is genuine subthreshold filtering, not a missed event-detector crossing.
+  The first missing spatial phenomenon is therefore broad sustained layer-5
+  recruitment, followed by failure of its sparse one-event periphery to recruit
+  layer 6I.
+next_gate: >-
+  Audit Figure 10's visible time axis and reset onset against the current
+  100-ms pre-match plus 100-ms mismatch protocol. The published panel follows
+  activity through 300 ms and depicts reset beginning around 175 ms, while the
+  current assay stops at 200 ms total. If source-supported, preregister one
+  longer source-control causal pair before changing any synaptic or intrinsic
+  parameter.

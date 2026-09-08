@@ -1,0 +1,39 @@
+schema_version: 1
+id: figure7-persistent-recurrent-gaba-match-cross-assessment-589
+date: '2026-09-08'
+status: assessed-one-exact-match-survivor
+registration: docs/validation-results/figure7-persistent-recurrent-gaba-match-cross-registration-587.yaml
+result: docs/validation-results/figure7-persistent-recurrent-gaba-match-cross-588.yaml
+result_sha256: 2adc3c214f199e576f23b51d4116d04d9991626537b0b7ba00748f269e695122
+assessment:
+  mismatch_consulted: false
+  candidates_executed: 3
+  exact_match_survivors: [0.9375]
+  projection011_scale_0p875_failed_figure6: true
+  projection011_scale_1p0_failed_match: true
+  grid_extension_authorized: false
+  persistent_mismatch_authorized: true
+  original_smart_reproduced: false
+  baseline_promoted: false
+survivor:
+  projection008_scale: 0.75
+  projection011_scale: 0.9375
+  nonspecific_t_scale: 0.1875
+  match_relay_events: 20
+  match_relay_active_indices: [38, 39, 40, 41, 42]
+  match_trn_events: 697
+  match_nonspecific_events: 4
+interpretation: >-
+  The bounded cross yields one exact match survivor without consulting mismatch.
+  A modest 6.25% reduction of proximal recurrent GABA moves the fixed scale-0.75
+  candidate from three to four nonspecific events while preserving every Figure
+  6 and relay gate. The adjacent larger reduction already disrupts Figure 6 and
+  source control remains at three nonspecific events. The response is nonlinear;
+  do not interpolate or extend the grid.
+next_gate: >-
+  Preregister exactly one fresh Figure 6 plus fixed match/mismatch pair at
+  projection-008 scale 0.75, projection-011 scale 0.9375, and T scale 0.1875.
+  Require overlap-only mismatch relay output, match-greater TRN events, and exact
+  4/7 nonspecific output. Record central/peripheral TRN totals, full-sheet
+  afferent summaries, and direct TRN-to-nonspecific GABA integral. Any failure
+  closes the survivor without adjustment.

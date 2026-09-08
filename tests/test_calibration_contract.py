@@ -9409,3 +9409,37 @@ def test_persistent_recurrent_gaba_match_cross_is_bounded_and_match_only() -> No
     assert "without consulting mismatch" in registration["selection_rule"]
     assert "Do not rank by TRN count" in registration["selection_rule"]
     assert "does not recover" in registration["boundary"]
+
+
+def test_persistent_recurrent_gaba_match_cross_has_one_survivor() -> None:
+    result_path = (
+        ROOT
+        / "docs/validation-results/figure7-persistent-recurrent-gaba-match-cross-588.yaml"
+    )
+    result = yaml.safe_load(result_path.read_text())
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-persistent-recurrent-gaba-match-cross-assessment-589.yaml"
+        ).read_text()
+    )
+
+    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment[
+        "result_sha256"
+    ]
+    assert not result["mismatch_consulted"]
+    assert len(result["outcomes"]) == 3
+    outcomes = {
+        outcome["proximal_projection_scale"]: outcome
+        for outcome in result["outcomes"]
+    }
+    assert not all(outcomes[0.875]["figure6_gates"].values())
+    assert all(outcomes[0.9375]["figure6_gates"].values())
+    assert all(outcomes[0.9375]["match"]["match_gates"].values())
+    assert outcomes[0.9375]["match"]["trn_event_count"] == 697
+    assert outcomes[0.9375]["match"]["nonspecific_event_count"] == 4
+    assert not all(outcomes[1.0]["match"]["match_gates"].values())
+    assert assessment["assessment"]["exact_match_survivors"] == [0.9375]
+    assert assessment["assessment"]["persistent_mismatch_authorized"]
+    assert not assessment["assessment"]["grid_extension_authorized"]
+    assert not assessment["assessment"]["baseline_promoted"]

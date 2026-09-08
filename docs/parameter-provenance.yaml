@@ -599,9 +599,9 @@ parameters:
     note: The reduced-output repeat preserves exact identity and shows match-greater peripheral drive through every afferent projection, with zero cells showing mismatch-greater afferent integrals, despite 520 versus 492 mismatch-greater peripheral events. The inversion is generated inside recurrent/intrinsic TRN dynamics. Candidate remains closed.
   calibration.figure7.persistent_recurrent_gaba_cross:
     value: persistent projection-008 scale 0.75 crossed with projection-011 scales 0.875, 0.9375, and 1.0 at fixed T scale 0.1875
-    status: preregistered-match-only-awaiting-execution
-    source: Registration 587, authorized by Artifacts 558 and 586
-    note: This bounded effective calibration tests a nonlinear interaction between the two source-defined recurrent-GABA paths. Mismatch stays hidden and TRN count cannot rank candidates. It is not recovery of legacy ring semantics or original parameters.
+    status: match-screen-completed-one-survivor-mismatch-authorized
+    source: Artifacts 587--589, authorized by Artifacts 558 and 586
+    note: Scale 0.9375 is the sole exact match survivor with all Figure 6 gates, 20 relay, 697 TRN, and four nonspecific events. Scale 0.875 fails Figure 6 and 1.0 fails the nonspecific match gate. One fixed diagnostic mismatch pair is authorized; no interpolation or extension.
   benchmark.population_sizes:
     value: see configs/*.yaml
     status: exploratory

@@ -3637,3 +3637,11 @@ projection 011 is tested only at 0.875, 0.9375, and source control 1.0, with the
 T-current scale fixed. Each candidate must repeat fresh Figure 6 and the exact
 five-cell, 20-relay-event, four-nonspecific-event match phenotype. TRN count is
 diagnostic only and cannot be used to rank or interpolate candidates.
+
+Artifacts 587--589 complete the screen with one exact match survivor:
+projection-008 scale 0.75 plus projection-011 scale 0.9375. It passes every fresh
+Figure 6 gate and produces the exact five-cell, 20-relay-event, four-event
+nonspecific match, with 697 TRN events. The 0.875 candidate fails Figure 6 and
+source-control 1.0 gives only three nonspecific events. Mismatch remains
+unconsulted. One fixed fresh-learning pair with full-sheet and direct-drive
+diagnostics is authorized; no grid extension is allowed.

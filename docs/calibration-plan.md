@@ -1545,3 +1545,11 @@ control 1.0; nonspecific T scale stays 0.1875. Every value persists through a
 fresh Figure 6 episode. Only exact Figure 6 plus 20-relay/five-cell/four-event
 nonspecific match survivors may advance. TRN totals cannot rank candidates,
 mismatch remains hidden, and no interpolation or grid extension is authorized.
+
+Artifacts 587--589 yield one exact survivor without consulting mismatch.
+Projection-011 scale 0.9375 preserves every fresh Figure 6 gate and produces the
+five-cell/20-relay/697-TRN/four-nonspecific match. Scale 0.875 fails Figure 6;
+source control 1.0 produces only three nonspecific events. The nonlinear grid is
+closed without interpolation. Register one fixed fresh-learning match/mismatch
+pair at projection-008 scale 0.75, projection-011 scale 0.9375, and T scale
+0.1875, with full-sheet and direct-drive diagnostics; any failure closes it.

@@ -1,0 +1,31 @@
+schema_version: 1
+id: figure10-layer6i-conductance-implementation-640
+date: '2026-09-08'
+status: implementation-ready-isolated-conductance-bracket-tests-pass
+classification: layer6i-cell0-projection025-maximal-conductance-sensitivity
+authorization: docs/validation-results/figure10-layer6i-replay-assessment-639.yaml
+replay_module: src/smart_robustness/validation/layer6i_replay.py
+replay_module_sha256: 728fa7ef50ae86d6689033ddee99233738992376c36fbe9c6f501792387c39a4
+runner: scripts/run_figure10_layer6i_conductance_bracket.py
+runner_sha256: ea95a4f8148c6b4719e96831d2f7adb0397b918cadf604c5c7484f8ee089ae84
+implementation:
+  varied_quantity: layer6i_excitatory_v1.g_port_002
+  projection_id: modeldb112923.projection.025
+  receptor: AMPA
+  target_compartment: proximal_dendrite
+  captured_gate_scaled: false
+  maximal_conductance_scaled: true
+  event_multiplicity_changed: false
+  connected_network_changed: false
+  default_scale: 1.0
+verification:
+  focused_tests: 10-passed
+  scale_one_lossless_test: pass
+  invalid_scale_validation: pass
+  lint: pass
+boundary: >-
+  This implementation changes only the isolated replay cell's projection-025
+  maximal conductance. It does not change the captured receptor gate, source
+  event multiplicity, kinetics, intrinsic state, other conductances, event rule,
+  protocol, or connected SMART network. It authorizes only the separately
+  preregistered coarse bracket and cannot select a calibration value.

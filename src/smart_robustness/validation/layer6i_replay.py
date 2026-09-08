@@ -10,6 +10,8 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from hashlib import sha256
+from math import isfinite
+from numbers import Real
 from pathlib import Path
 
 import numpy as np
@@ -168,6 +170,9 @@ class Layer6iReplayResult:
     exact_spike_train: bool
     max_abs_error_by_variable: tuple[tuple[str, float], ...]
     finite: bool
+    projection025_conductance_scale: float
+    soma_peak_mV: float
+    proximal_peak_mV: float
 
     @property
     def max_voltage_error_mV(self) -> float:
@@ -182,9 +187,24 @@ def run_layer6i_replay(
     trace_path: str | Path,
     *,
     conventions,
+    projection025_conductance_scale: float = 1.0,
     brian=None,
 ) -> Layer6iReplayResult:
-    """Replay a captured input history into one isolated layer-6I cell."""
+    """Replay a captured input history into one isolated layer-6I cell.
+
+    ``projection025_conductance_scale`` changes only the maximal conductance
+    of the layer-5 AMPA port.  The captured receptor gate is left unchanged,
+    keeping this sensitivity distinct from event-multiplicity alternatives.
+    """
+
+    if (
+        isinstance(projection025_conductance_scale, bool)
+        or not isinstance(projection025_conductance_scale, Real)
+        or not isfinite(float(projection025_conductance_scale))
+        or projection025_conductance_scale <= 0
+    ):
+        raise ValueError("projection-025 conductance scale must be finite and positive")
+    projection025_conductance_scale = float(projection025_conductance_scale)
 
     if brian is None:
         import brian2 as brian
@@ -243,6 +263,7 @@ def run_layer6i_replay(
         name="isolated_layer6i_replay", size=1, params=params, brian=brian
     )
     group = population.group
+    group.g_port_002 = group.g_port_002 * projection025_conductance_scale
     for name, value in initial_state.items():
         unit, _ = _unit_for(name, brian)
         setattr(group, name, value * unit)
@@ -281,6 +302,10 @@ def run_layer6i_replay(
         finite = finite and bool(np.all(np.isfinite(replay_values)))
         errors.append((name, float(np.max(np.abs(replay_values - source_values[name])))))
     replay_spike_times = np.asarray(spikes.t / brian.ms, dtype=float)
+    soma_values_mV = np.asarray(state.v_soma / brian.mV, dtype=float)
+    proximal_values_mV = np.asarray(
+        state.v_proximal_dendrite / brian.mV, dtype=float
+    )
     return Layer6iReplayResult(
         trace_path=str(path),
         trace_sha256=digest,
@@ -290,4 +315,7 @@ def run_layer6i_replay(
         exact_spike_train=bool(np.array_equal(source_spike_times, replay_spike_times)),
         max_abs_error_by_variable=tuple(errors),
         finite=finite,
+        projection025_conductance_scale=projection025_conductance_scale,
+        soma_peak_mV=float(np.max(soma_values_mV)),
+        proximal_peak_mV=float(np.max(proximal_values_mV)),
     )

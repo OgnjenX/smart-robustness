@@ -92,6 +92,7 @@ def test_layer6i_gate_trace_replays_isolated_cell_losslessly(tmp_path):
 
     assert result.exact_spike_train
     assert result.finite
+    assert result.projection025_conductance_scale == 1.0
     assert result.max_voltage_error_mV < 1e-12
     assert max(error for _, error in result.max_abs_error_by_variable) < 1e-12
     with np.load(path, allow_pickle=False) as archive:
@@ -107,3 +108,15 @@ def test_layer6i_replay_capture_rejects_invalid_cell_index():
         capture_layer6i_initial_state(group, cell_index=True, brian=brian)
     with pytest.raises(ValueError, match="out of range"):
         capture_layer6i_initial_state(group, cell_index=1, brian=brian)
+
+
+@pytest.mark.parametrize("scale", [True, 0.0, -1.0, float("inf"), float("nan")])
+def test_layer6i_replay_rejects_invalid_conductance_scale(tmp_path, scale):
+    missing_trace = tmp_path / "not-read.npz"
+    with pytest.raises(ValueError, match="finite and positive"):
+        run_layer6i_replay(
+            missing_trace,
+            conventions=_conventions(),
+            projection025_conductance_scale=scale,
+            brian=brian,
+        )

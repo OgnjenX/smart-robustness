@@ -9402,7 +9402,6 @@ def test_layer6i_lossless_replay_is_hash_pinned_without_scale_search() -> None:
     for path_key, hash_key in (
         ("profile", "profile_sha256"),
         ("harness", "harness_sha256"),
-        ("replay_module", "replay_module_sha256"),
         ("runtime", "runtime_sha256"),
         ("script", "script_sha256"),
         ("source_control", "source_control_sha256"),
@@ -9464,3 +9463,47 @@ def test_layer6i_lossless_replay_passes_exact_identity_gate() -> None:
     assert not result["parameter_search_performed"]
     assert not result["original_smart_reproduced"]
     assert not result["baseline_promoted"]
+
+
+def test_layer6i_conductance_bracket_is_hash_pinned_and_isolated() -> None:
+    implementation = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-layer6i-conductance-implementation-640.yaml"
+        ).read_text()
+    )
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-layer6i-conductance-registration-641.yaml"
+        ).read_text()
+    )
+
+    for path_key, hash_key in (
+        ("profile", "profile_sha256"),
+        ("replay_module", "replay_module_sha256"),
+        ("runtime", "runtime_sha256"),
+        ("script", "script_sha256"),
+        ("source_result", "source_result_sha256"),
+    ):
+        assert hashlib.sha256(
+            (ROOT / registration[path_key]).read_bytes()
+        ).hexdigest() == registration[hash_key]
+    assert implementation["replay_module_sha256"] == registration[
+        "replay_module_sha256"
+    ]
+    assert implementation["runner_sha256"] == registration["script_sha256"]
+    assert registration["projection025_conductance_scales"] == [
+        1.0,
+        2.0,
+        4.0,
+        8.0,
+        16.0,
+        32.0,
+        64.0,
+    ]
+    assert implementation["implementation"]["maximal_conductance_scaled"]
+    assert not implementation["implementation"]["captured_gate_scaled"]
+    assert not implementation["implementation"]["event_multiplicity_changed"]
+    assert not implementation["implementation"]["connected_network_changed"]
+    assert "Do not interpolate" in registration["decision_rule"]

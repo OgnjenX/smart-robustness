@@ -1,0 +1,42 @@
+schema_version: 1
+id: figure10-layer6i-conductance-registration-641
+date: '2026-09-08'
+status: registered-before-execution-isolated-conductance-bracket
+classification: figure10-peripheral-layer6i-cell0-projection025-conductance-bracket
+authorization: docs/validation-results/figure10-layer6i-replay-assessment-639.yaml
+implementation: docs/validation-results/figure10-layer6i-conductance-implementation-640.yaml
+profile: configs/calibration/figure7_learned_coincidence_effective_t_pair_v1.yaml
+profile_sha256: 4b6aa0bdf4fb844e428fb330f34970900cc8bc741183b2d8e6e73789cba0b30f
+replay_module: src/smart_robustness/validation/layer6i_replay.py
+replay_module_sha256: 728fa7ef50ae86d6689033ddee99233738992376c36fbe9c6f501792387c39a4
+runtime: src/smart_robustness/classic_sector.py
+runtime_sha256: 3e9bedd47822a785c0735afb4ab25bfa03e099b3258875fd434964255d102a85
+script: scripts/run_figure10_layer6i_conductance_bracket.py
+script_sha256: ea95a4f8148c6b4719e96831d2f7adb0397b918cadf604c5c7484f8ee089ae84
+source_result: docs/validation-results/figure10-layer6i-replay-638.yaml
+source_result_sha256: c4dfd5b0ac965af9e0eda7a2d2cfe58224a5391b3e26f5a2783c624d018aba72
+runtime_fingerprint: fa4ab9f0bf2bec4d6ad53cb6a91620047689b6839b146ed7d777d42350c2cdf5
+trace:
+  path: results/figure10-layer6i-cell0-replay-638.npz
+  sha256: baf621ae17efafaa9d62a2232ce8c07148d69aecd20eb261f56714327d674bda
+  cell_index: 0
+  source_event_times_ms: []
+projection025_conductance_scales: [1.0, 2.0, 4.0, 8.0, 16.0, 32.0, 64.0]
+scale_one_identity_gate:
+  exact_source_event_train: true
+  maximum_state_error: 1.0e-12
+decision_rule: >-
+  Require scale 1 to reproduce the empty source event train and all captured
+  dynamic states within 1e-12. Require every trial to remain finite. Report the
+  first preregistered scale with at least one event and the immediately lower
+  tested scale as a coarse effective-conductance bracket. If no scale emits an
+  event, leave the bracket open. Do not interpolate, refine, or select a value.
+result_id: figure10-layer6i-conductance-bracket-642
+result: docs/validation-results/figure10-layer6i-conductance-bracket-642.yaml
+assessment: docs/validation-results/figure10-layer6i-conductance-assessment-643.yaml
+boundary: >-
+  Execute only the seven fixed isolated replay scales. Do not alter the trace,
+  multiply receptor gates, add source events, change kinetics, intrinsic state,
+  any other conductance, event rule, duration, input, or connected-network
+  parameter. This bracket measures an effective conductance requirement; it is
+  not a recovered SMART parameter and cannot promote the baseline.

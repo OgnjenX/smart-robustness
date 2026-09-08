@@ -1836,3 +1836,11 @@ Next add an isolated-only maximal-conductance multiplier, require scale 1 to
 remain exact, and preregister the finite powers-of-two bracket 1--64 for the
 first peripheral layer-6I event. Keep conductance and event-multiplicity
 interpretations distinct; do not alter the connected network yet.
+
+Artifacts 640--641 implement and preregister that isolated bracket. The only
+varied quantity is the maximal conductance of layer-6I port 002, the proximal
+AMPA target of projection 025. The captured receptor gate is not multiplied,
+and event multiplicity is unchanged. Scale 1 must remain lossless within
+1e-12 before scales 2, 4, 8, 16, 32, and 64 can be interpreted. Report only
+the first event-producing scale and its preceding tested endpoint; do not
+interpolate, refine, select a connected-network value, or promote a baseline.

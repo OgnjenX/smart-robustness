@@ -157,7 +157,64 @@ def _condition_summary(result):
         "layer4e_mismatch_projection036_current_trough_pA": (
             result.layer4e_mismatch_projection036_current_trough_pA
         ),
+        "layer4e_mismatch_projection038_gate_integral_ms": (
+            result.layer4e_mismatch_projection038_gate_integral_ms
+        ),
+        "layer4e_mismatch_projection038_current_integral_pA_ms": (
+            result.layer4e_mismatch_projection038_current_integral_pA_ms
+        ),
+        "layer4e_mismatch_projection038_current_peak_pA": (
+            result.layer4e_mismatch_projection038_current_peak_pA
+        ),
+        "layer4_balance_bins": [asdict(item) for item in result.layer4_balance_bins],
     }
+
+
+def _bounded_layer4_balance_summary(summary):
+    """Remove event-level payloads while preserving the causal balance audit."""
+
+    keys = (
+        "reset_pathway_enabled",
+        "layer4_pre_events",
+        "layer4_pre_active_indices",
+        "layer4_post_events",
+        "layer4_post_active_indices",
+        "layer4_first_100ms_mismatch_events",
+        "layer4_late_mismatch_events",
+        "nonspecific_pre_events",
+        "nonspecific_post_events",
+        "nonspecific_first_100ms_mismatch_events",
+        "nonspecific_late_mismatch_events",
+        "layer5_pre_events",
+        "layer5_post_events",
+        "layer5_first_100ms_mismatch_events",
+        "layer5_late_mismatch_events",
+        "layer6i_pre_events",
+        "layer6i_post_events",
+        "layer6i_first_100ms_mismatch_events",
+        "layer6i_late_mismatch_events",
+        "layer4_inhibitory_post_events",
+        "layer4_inhibitory_post_active_indices",
+        "layer4i_mismatch_projection026_gate_integral_ms",
+        "layer4i_mismatch_projection026_current_integral_pA_ms",
+        "layer4i_mismatch_projection026_current_peak_pA",
+        "layer4e_mismatch_projection036_gate_integral_ms",
+        "layer4e_mismatch_projection036_current_integral_pA_ms",
+        "layer4e_mismatch_projection036_current_trough_pA",
+        "layer4e_mismatch_projection038_gate_integral_ms",
+        "layer4e_mismatch_projection038_current_integral_pA_ms",
+        "layer4e_mismatch_projection038_current_peak_pA",
+        "layer4_balance_bins",
+    )
+    bounded = {key: summary[key] for key in keys}
+    bounded["layer5_post_active_count"] = len(summary["layer5_post_active_indices"])
+    bounded["layer5_late_active_count"] = len(summary["layer5_late_active_indices"])
+    active_layer6i = sorted(
+        {int(index) for index, _ in summary["layer6i_mismatch_events"]}
+    )
+    bounded["layer6i_mismatch_active_count"] = len(active_layer6i)
+    bounded["layer6i_mismatch_active_indices"] = active_layer6i
+    return bounded
 
 
 def main() -> None:
@@ -234,11 +291,22 @@ def main() -> None:
         "record_reset_chain_diagnostics": bool(
             registration.get("record_reset_chain_diagnostics", False)
         ),
+        "record_layer4_balance_diagnostics": bool(
+            registration.get("record_layer4_balance_diagnostics", False)
+        ),
         "brian": brian,
     }
     intact = run_figure10_condition(reset_pathway_enabled=True, **common)
     control = run_figure10_condition(reset_pathway_enabled=False, **common)
     assessment = assess_figure10_reset(intact, control)
+    intact_summary = _condition_summary(intact)
+    control_summary = _condition_summary(control)
+    output_mode = registration.get("output_mode", "full")
+    if output_mode == "layer4_balance_bounded":
+        intact_summary = _bounded_layer4_balance_summary(intact_summary)
+        control_summary = _bounded_layer4_balance_summary(control_summary)
+    elif output_mode != "full":
+        raise ValueError(f"unknown Figure 10 output mode: {output_mode}")
 
     print(
         yaml.safe_dump(
@@ -252,8 +320,8 @@ def main() -> None:
                 "runtime_fingerprint": conventions.fingerprint,
                 "persistent_projection_weight_scales": scales,
                 "figure6_gates": figure6_gates,
-                "intact": _condition_summary(intact),
-                "disconnected_control": _condition_summary(control),
+                "intact": intact_summary,
+                "disconnected_control": control_summary,
                 "reset_assessment": asdict(assessment),
                 "reset_gates": {
                     "pre_reset_winner": assessment.pre_reset_winner_pass,

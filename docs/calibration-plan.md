@@ -1878,3 +1878,13 @@ alternatives are zero versus two. Close scale 8 without selection. Before
 changing another value, add time-resolved readouts for projections 026 and 036
 and the currently omitted direct layer-6I-to-layer-4-excitatory projection 038
 around the 208.36-ms broad wave. Do not refine projection 025 yet.
+
+Artifacts 647--648 implement and preregister that read-only balance audit. The
+source-backed port map is projection 026 to layer-4 inhibitory port 000,
+projection 036 to layer-4 excitatory GABA port 001, and direct projection 038
+to layer-4 excitatory AMPA port 003, all on proximal dendrites. The monitor
+reduces these currents, layer-4 inhibitory events, and layer-4
+winner/alternative events into fixed 10-ms bins after simulation. The focal
+bins are 100--110 ms after mismatch, containing the 108.36-ms broad layer-6I
+wave, and 110--120 ms immediately after it. Bounded serialization occurs only
+after full scoring. Require exact Artifact-645 identity; select no parameter.

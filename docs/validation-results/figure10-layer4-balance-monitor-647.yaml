@@ -1,0 +1,41 @@
+schema_version: 1
+id: figure10-layer4-balance-monitor-647
+date: '2026-09-08'
+status: implementation-ready-read-only-tests-pass
+classification: time-resolved-layer6i-layer4-on-center-off-surround-audit
+authorization: docs/validation-results/figure10-layer6i-scale8-assessment-646.yaml
+harness: src/smart_robustness/validation/figure10.py
+harness_sha256: 1e061546e8d928cd7c7d959cb6fe11218c7c9165d7d3ce2d8536898fac1bb367
+runner: scripts/run_figure10_calibrated_reset_pair.py
+runner_sha256: 71bc3db5bbc989baf1e1157791b57f6dbc18008f4eaf19950868870eff775390
+audited_paths:
+- projection_id: modeldb112923.projection.026
+  route: layer6I-to-layer4-inhibitory-AMPA
+  target_port: layer4_inhibitory_v1.port_000
+  target_compartment: proximal_dendrite
+- projection_id: modeldb112923.projection.036
+  route: layer4-inhibitory-to-layer4-excitatory-GABA
+  target_port: layer4_excitatory_v1.port_001
+  target_compartment: proximal_dendrite
+- projection_id: modeldb112923.projection.038
+  route: direct-layer6I-to-layer4-excitatory-AMPA
+  target_port: layer4_excitatory_v1.port_003
+  target_compartment: proximal_dendrite
+added_readouts:
+- projection-038 mismatch gate integral, current integral, and current peak
+- fixed 10-ms bins of projection-026 excitation
+- fixed 10-ms bins of layer-4 inhibitory events
+- fixed 10-ms bins of projection-036 inhibition
+- fixed 10-ms bins of projection-038 direct excitation
+- fixed 10-ms bins of layer-4 winner and alternative events
+output_mode: layer4_balance_bounded
+verification:
+  pure_bin_reducer_test: pass
+  live_short_sector_integration_test: pass
+  focused_tests: 4-passed
+  lint: pass
+boundary: >-
+  All added monitors are default-off and all binning occurs after simulation.
+  The bounded output mode removes event-level serialization only after the full
+  result and reset assessment exist. No equation, parameter, connectivity,
+  stimulus, event handling, simulation schedule, or reset score is changed.

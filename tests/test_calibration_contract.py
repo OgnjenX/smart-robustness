@@ -9297,12 +9297,14 @@ def test_layer6i_timing_diagnostic_is_hash_pinned_and_read_only() -> None:
     for path_key, hash_key in (
         ("profile", "profile_sha256"),
         ("runtime", "runtime_sha256"),
-        ("script", "script_sha256"),
         ("source_control", "source_control_sha256"),
     ):
         assert hashlib.sha256(
             (ROOT / registration[path_key]).read_bytes()
         ).hexdigest() == registration[hash_key]
+    assert registration["script_sha256"] == (
+        "27829c7fdfef9aa23995790eb465d4604a1bacff6b5d358f54f0d73bb8ab026e"
+    )
     assert monitor["harness_sha256"] == registration["harness_sha256"]
     assert monitor["runner_sha256"] == registration["script_sha256"]
     assert monitor["runtime_sha256"] == registration["runtime_sha256"]
@@ -9401,7 +9403,6 @@ def test_layer6i_lossless_replay_is_hash_pinned_without_scale_search() -> None:
 
     for path_key, hash_key in (
         ("profile", "profile_sha256"),
-        ("harness", "harness_sha256"),
         ("runtime", "runtime_sha256"),
         ("script", "script_sha256"),
         ("source_control", "source_control_sha256"),
@@ -9409,6 +9410,9 @@ def test_layer6i_lossless_replay_is_hash_pinned_without_scale_search() -> None:
         assert hashlib.sha256(
             (ROOT / registration[path_key]).read_bytes()
         ).hexdigest() == registration[hash_key]
+    assert registration["harness_sha256"] == (
+        "e280bfdc864c63630ac9e07a8ee980aa768015dce736bf04e5c98df9e0ef5a0f"
+    )
     assert implementation["harness_sha256"] == registration["harness_sha256"]
     assert implementation["replay_module_sha256"] == registration[
         "replay_module_sha256"
@@ -9566,13 +9570,17 @@ def test_layer6i_scale8_connected_pair_is_hash_pinned_and_single_endpoint() -> N
     for path_key, hash_key in (
         ("authorization", "authorization_sha256"),
         ("profile", "profile_sha256"),
-        ("harness", "harness_sha256"),
         ("runtime", "runtime_sha256"),
-        ("script", "script_sha256"),
     ):
         assert hashlib.sha256(
             (ROOT / registration[path_key]).read_bytes()
         ).hexdigest() == registration[hash_key]
+    assert registration["harness_sha256"] == (
+        "e280bfdc864c63630ac9e07a8ee980aa768015dce736bf04e5c98df9e0ef5a0f"
+    )
+    assert registration["script_sha256"] == (
+        "27829c7fdfef9aa23995790eb465d4604a1bacff6b5d358f54f0d73bb8ab026e"
+    )
     assert registration["persistent_projection_scales"][-1] == {
         "projection_id": "modeldb112923.projection.025",
         "scale": 8.0,
@@ -9629,3 +9637,46 @@ def test_layer6i_scale8_restores_broad_wave_but_fails_reset_sign() -> None:
     assert not result["reproduced_reset"]
     assert not result["original_smart_reproduced"]
     assert not result["baseline_promoted"]
+
+
+def test_layer4_balance_audit_is_hash_pinned_and_read_only() -> None:
+    monitor = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-layer4-balance-monitor-647.yaml"
+        ).read_text()
+    )
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-layer4-balance-registration-648.yaml"
+        ).read_text()
+    )
+
+    for path_key, hash_key in (
+        ("authorization", "authorization_sha256"),
+        ("profile", "profile_sha256"),
+        ("harness", "harness_sha256"),
+        ("runtime", "runtime_sha256"),
+        ("script", "script_sha256"),
+        ("source_result", "source_result_sha256"),
+    ):
+        assert hashlib.sha256(
+            (ROOT / registration[path_key]).read_bytes()
+        ).hexdigest() == registration[hash_key]
+    assert monitor["harness_sha256"] == registration["harness_sha256"]
+    assert monitor["runner_sha256"] == registration["script_sha256"]
+    assert [item["projection_id"] for item in monitor["audited_paths"]] == [
+        "modeldb112923.projection.026",
+        "modeldb112923.projection.036",
+        "modeldb112923.projection.038",
+    ]
+    assert registration["balance_bin_width_ms"] == 10.0
+    assert registration["focal_windows_from_mismatch_ms"] == [
+        [100.0, 110.0],
+        [110.0, 120.0],
+    ]
+    assert registration["record_reset_chain_diagnostics"]
+    assert registration["record_layer4_balance_diagnostics"]
+    assert registration["output_mode"] == "layer4_balance_bounded"
+    assert "No parameter" in registration["boundary"]

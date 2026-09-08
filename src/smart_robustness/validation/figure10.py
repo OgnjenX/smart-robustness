@@ -77,6 +77,21 @@ class Figure10Layer6iTraceSummary:
 
 
 @dataclass(frozen=True, slots=True)
+class Figure10Layer4BalanceBin:
+    """Time-binned layer-6I-to-layer-4 reset-path balance."""
+
+    start_from_mismatch_ms: float
+    end_from_mismatch_ms: float
+    projection026_excitation_integral_pA_ms: float
+    layer4_inhibitory_events: int
+    projection036_inhibition_integral_pA_ms: float
+    projection038_excitation_integral_pA_ms: float
+    layer4_winner_events: int
+    layer4_alternative_events: int
+    layer4_alternative_active_count: int
+
+
+@dataclass(frozen=True, slots=True)
 class Figure10ConditionResult:
     """Spike evidence from one persistent pre-reset then mismatch episode."""
 
@@ -116,6 +131,10 @@ class Figure10ConditionResult:
     layer4e_mismatch_projection036_gate_integral_ms: float | None = None
     layer4e_mismatch_projection036_current_integral_pA_ms: float | None = None
     layer4e_mismatch_projection036_current_trough_pA: float | None = None
+    layer4e_mismatch_projection038_gate_integral_ms: float | None = None
+    layer4e_mismatch_projection038_current_integral_pA_ms: float | None = None
+    layer4e_mismatch_projection038_current_peak_pA: float | None = None
+    layer4_balance_bins: tuple[Figure10Layer4BalanceBin, ...] = ()
 
     def __post_init__(self) -> None:
         if self.pre_match_duration_ms <= 0 or self.mismatch_duration_ms <= 0:
@@ -358,6 +377,82 @@ def summarize_layer6i_selected_traces(
     return tuple(summaries)
 
 
+def summarize_layer4_balance_bins(
+    *,
+    mismatch_start_ms: float,
+    mismatch_duration_ms: float,
+    dt_ms: float,
+    bin_width_ms: float,
+    state_times_ms: np.ndarray,
+    projection026_current_pA: np.ndarray,
+    projection036_current_pA: np.ndarray,
+    projection038_current_pA: np.ndarray,
+    layer4_inhibitory_spike_times_ms: np.ndarray,
+    layer4_spike_indices: np.ndarray,
+    layer4_spike_times_ms: np.ndarray,
+    winner_indices: tuple[int, ...],
+) -> tuple[Figure10Layer4BalanceBin, ...]:
+    """Reduce the reset-path currents and events into fixed causal time bins."""
+
+    if mismatch_duration_ms <= 0 or dt_ms <= 0 or bin_width_ms <= 0:
+        raise ValueError("layer-4 balance timing values must be positive")
+    times = np.asarray(state_times_ms, dtype=float)
+    current_traces = tuple(
+        np.asarray(trace, dtype=float)
+        for trace in (
+            projection026_current_pA,
+            projection036_current_pA,
+            projection038_current_pA,
+        )
+    )
+    if times.ndim != 1 or any(trace.shape != times.shape for trace in current_traces):
+        raise ValueError("layer-4 balance currents must match the one-dimensional time grid")
+    l4_indices = np.asarray(layer4_spike_indices, dtype=int)
+    l4_times = np.asarray(layer4_spike_times_ms, dtype=float)
+    if l4_indices.shape != l4_times.shape:
+        raise ValueError("layer-4 balance spike indices and times must match")
+    winner_set = np.asarray(winner_indices, dtype=int)
+    summaries: list[Figure10Layer4BalanceBin] = []
+    start = 0.0
+    while start < mismatch_duration_ms - dt_ms / 2:
+        end = min(start + bin_width_ms, mismatch_duration_ms)
+        absolute_start = mismatch_start_ms + start
+        absolute_end = mismatch_start_ms + end
+        state_window = (times >= absolute_start) & (times < absolute_end)
+        inhibitory_events = np.asarray(layer4_inhibitory_spike_times_ms, dtype=float)
+        inhibitory_count = int(
+            np.count_nonzero(
+                (inhibitory_events >= absolute_start)
+                & (inhibitory_events < absolute_end)
+            )
+        )
+        layer4_window = (l4_times >= absolute_start) & (l4_times < absolute_end)
+        layer4_bin_indices = l4_indices[layer4_window]
+        winner_mask = np.isin(layer4_bin_indices, winner_set)
+        alternative_indices = layer4_bin_indices[~winner_mask]
+        summaries.append(
+            Figure10Layer4BalanceBin(
+                start_from_mismatch_ms=start,
+                end_from_mismatch_ms=end,
+                projection026_excitation_integral_pA_ms=float(
+                    np.sum(current_traces[0][state_window]) * dt_ms
+                ),
+                layer4_inhibitory_events=inhibitory_count,
+                projection036_inhibition_integral_pA_ms=float(
+                    np.sum(current_traces[1][state_window]) * dt_ms
+                ),
+                projection038_excitation_integral_pA_ms=float(
+                    np.sum(current_traces[2][state_window]) * dt_ms
+                ),
+                layer4_winner_events=int(np.count_nonzero(winner_mask)),
+                layer4_alternative_events=int(alternative_indices.size),
+                layer4_alternative_active_count=int(np.unique(alternative_indices).size),
+            )
+        )
+        start = end
+    return tuple(summaries)
+
+
 def run_figure10_condition(
     *,
     top_down_current_pA: float,
@@ -374,6 +469,7 @@ def run_figure10_condition(
     layer6i_replay_trace_output: str | Path | None = None,
     layer6i_replay_cell_index: int = 0,
     record_reset_chain_diagnostics: bool = False,
+    record_layer4_balance_diagnostics: bool = False,
     conventions=None,
     dt_ms: float = 0.01,
     cpp_standalone_directory: str | Path | None = None,
@@ -416,6 +512,10 @@ def run_figure10_condition(
             raise ValueError("layer-6I replay trace parent directory does not exist")
     if not isinstance(record_reset_chain_diagnostics, bool):
         raise TypeError("reset-chain diagnostics flag must be boolean")
+    if not isinstance(record_layer4_balance_diagnostics, bool):
+        raise TypeError("layer-4 balance diagnostics flag must be boolean")
+    if record_layer4_balance_diagnostics and not record_reset_chain_diagnostics:
+        raise ValueError("layer-4 balance diagnostics require reset-chain diagnostics")
     current_mode = TopDownCurrentMode(top_down_current_mode)
     if current_mode is TopDownCurrentMode.UNTIL_CUED_CELL_EVENT_LIMIT:
         raise ValueError("Figure 10 does not define an event-count-limited cue")
@@ -537,7 +637,11 @@ def run_figure10_condition(
         )
         layer4e_inhibitory_state = brian.StateMonitor(
             sector.populations["layer4_excitatory_v1"].group,
-            ("port_001_gate", "i_port_001"),
+            (
+                "port_001_gate",
+                "i_port_001",
+                *(("port_003_gate", "i_port_003") if record_layer4_balance_diagnostics else ()),
+            ),
             record=True,
             name=(
                 "figure10_intact_layer4e_projection036"
@@ -769,6 +873,41 @@ def run_figure10_condition(
     projection036_gate, projection036_current, projection036_trace = _single_projection_summary(
         layer4e_inhibitory_state, "port_001"
     )
+    projection038_gate = projection038_current = projection038_trace = None
+    layer4_balance_bins: tuple[Figure10Layer4BalanceBin, ...] = ()
+    if record_layer4_balance_diagnostics:
+        projection038_gate, projection038_current, projection038_trace = (
+            _single_projection_summary(layer4e_inhibitory_state, "port_003")
+        )
+        assert layer4i_state is not None
+        assert layer4e_inhibitory_state is not None
+        assert layer4_inhibitory is not None
+        assert projection026_trace is not None
+        assert projection036_trace is not None
+        assert projection038_trace is not None
+        pre_layer4_indices = np.asarray(layer4.i, dtype=int)[
+            np.asarray(layer4.t / brian.ms, dtype=float) < pre_match_duration_ms
+        ]
+        winner_indices = tuple(int(value) for value in np.unique(pre_layer4_indices))
+        layer4i_times_ms = np.asarray(layer4i_state.t / brian.ms)
+        layer4_balance_bins = summarize_layer4_balance_bins(
+            mismatch_start_ms=pre_match_duration_ms,
+            mismatch_duration_ms=mismatch_duration_ms,
+            dt_ms=dt_ms,
+            bin_width_ms=10.0,
+            state_times_ms=layer4i_times_ms[
+                layer4i_times_ms >= pre_match_duration_ms
+            ],
+            projection026_current_pA=projection026_trace,
+            projection036_current_pA=projection036_trace,
+            projection038_current_pA=projection038_trace,
+            layer4_inhibitory_spike_times_ms=np.asarray(
+                layer4_inhibitory.t / brian.ms
+            ),
+            layer4_spike_indices=np.asarray(layer4.i),
+            layer4_spike_times_ms=np.asarray(layer4.t / brian.ms),
+            winner_indices=winner_indices,
+        )
 
     return Figure10ConditionResult(
         pre_match_duration_ms=pre_match_duration_ms,
@@ -825,4 +964,10 @@ def run_figure10_condition(
         layer4e_mismatch_projection036_current_trough_pA=(
             None if projection036_trace is None else float(np.min(projection036_trace))
         ),
+        layer4e_mismatch_projection038_gate_integral_ms=projection038_gate,
+        layer4e_mismatch_projection038_current_integral_pA_ms=projection038_current,
+        layer4e_mismatch_projection038_current_peak_pA=(
+            None if projection038_trace is None else float(np.max(projection038_trace))
+        ),
+        layer4_balance_bins=layer4_balance_bins,
     )

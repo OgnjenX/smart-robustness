@@ -694,9 +694,9 @@ parameters:
     note: Two executions exactly repeat every source identity. Winner late inhibition falls 4.9% while direct excitation rises 10.7% intact, both opposing reset. Alternatives are silent intact despite 44.8% less inhibition; control alternatives emit four early events with zero projection-038 current. Projection 035 relay and 037 recurrent AMPA are required next. No parameter or reset score is changed.
   diagnostics.figure10.layer4_complete_target_input_balance:
     value: 10-ms target-resolved currents for all four layer-4 excitatory synaptic ports, projections 035--038
-    status: implemented-and-preregistered-before-execution
-    source: Artifacts 659--661 and SMART.nml projection records 035--038
-    note: The passive source-control audit covers fixed winner cells 38--42 and alternatives 31/49. Compact output is post-simulation and exact. Every Artifact-658 identity must repeat before interpretation; no model quantity changes.
+    status: completed-first-divergence-localized-sub-bin-order-required
+    source: Artifacts 659--663 and SMART.nml projection records 035--038
+    note: Exact source identity repeats. Alternatives first diverge in the 70--80-ms bin, where each control alternative emits one event and projection 037 first becomes nonzero. Because both occur inside one coarse bin, causality is unresolved. Projection 037 amplifies later control release but may not initiate it. A passive 65--85-ms one-ms timing audit is required; no parameter or reset score changes.
   benchmark.population_sizes:
     value: see configs/*.yaml
     status: exploratory

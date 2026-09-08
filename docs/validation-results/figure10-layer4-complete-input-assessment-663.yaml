@@ -1,0 +1,79 @@
+schema_version: 1
+id: figure10-layer4-complete-input-assessment-663
+date: '2026-09-08'
+status: assessed-first-alternative-divergence-needs-sub-bin-causal-order
+registration: docs/validation-results/figure10-layer4-complete-input-registration-661.yaml
+new_input_result: docs/validation-results/figure10-layer4-complete-input-pair-662.yaml
+new_input_result_sha256: e7ea49852c1a84d530603089583c0689d3ea1feae4fe27c6814b3d948452cc7f
+prior_target_result: docs/validation-results/figure10-layer4-target-balance-pair-658.yaml
+prior_target_result_sha256: 2164271b610c919228fbd2509538e4677c954449060bb84211638e465ee5ac3d
+assessment:
+  exact_source_identity_reproduced: true
+  all_four_layer4_synaptic_ports_observed: true
+  all_twenty_bins_reported_for_each_target_and_arm: true
+  first_alternative_output_divergence_ms: [70, 80]
+  projection037_is_initial_release_drive: unresolved-with-ten-ms-bins
+  projection037_is_positive_feedback_after_release: supported
+  parameter_selected: false
+  official_figure10_reset_reproduced: false
+  original_smart_reproduced: false
+  baseline_promoted: false
+winner_group_38_42:
+  full_mismatch:
+    projection035_excitation_pA_ms_intact_control: [1379099.73, 1415296.42]
+    projection035_ratio: 0.9744246582203903
+    projection037_excitation_pA_ms_intact_control: [23293.9664, 23381.6736]
+    projection037_ratio: 0.9962488913466337
+    projection036_inhibitory_magnitude_ratio: 0.9748421467453489
+    projection038_excitation_ratio: 1.051002771283347
+    events_intact_control: [78, 76]
+  late_100_200_ms:
+    projection035_excitation_pA_ms_intact_control: [594569.745, 626318.806]
+    projection035_ratio: 0.949308465780808
+    projection037_excitation_pA_ms_intact_control: [11130.2926, 11276.9306]
+    projection037_ratio: 0.9869966446081618
+    projection036_inhibitory_magnitude_ratio: 0.9510632777019089
+    projection038_excitation_ratio: 1.1074690716568674
+    events_intact_control: [39, 37]
+alternative_group_31_49:
+  full_mismatch:
+    projection035_excitation_pA_ms_intact_control: [217839.873, 390629.346]
+    projection035_ratio: 0.557663869298263
+    projection037_excitation_pA_ms_intact_control: [0.0, 5615.92859]
+    projection037_ratio: 0.0
+    projection036_inhibitory_magnitude_ratio: 0.5524496270415391
+    projection038_excitation_ratio: 0.4274087657968744
+    events_intact_control: [0, 16]
+  preceding_60_70_ms:
+    projection035_excitation_pA_ms_intact_control: [10841.2913, 10847.1175]
+    projection035_ratio: 0.9994628799822275
+    projection037_excitation_pA_ms_intact_control: [0.0, 0.0]
+    projection036_inhibitory_magnitude_ratio: 0.9997729135300729
+    projection038_excitation_pA_ms_intact_control: [27.0843126, 0.0]
+    events_intact_control: [0, 0]
+  first_divergence_70_80_ms:
+    projection035_excitation_pA_ms_intact_control: [11863.7144, 13972.9621]
+    projection035_ratio: 0.8490479180864376
+    projection037_excitation_pA_ms_intact_control: [0.0, 290.147379]
+    projection037_ratio: 0.0
+    projection036_inhibitory_magnitude_ratio: 0.8419000826158717
+    projection038_excitation_pA_ms_intact_control: [1.0019259, 0.0]
+    events_intact_control: [0, 2]
+interpretation: >-
+  The unchanged recovery repeats every registered population count and all fresh
+  Figure-6 gates. Before 70 ms the alternatives have essentially identical
+  relay excitation and off-surround inhibition in both arms, no recurrent
+  projection-037 current, and no events. Their first output difference occurs
+  in the 70--80-ms bin: each control alternative emits one event while intact
+  alternatives remain silent. Projection 037 also first becomes nonzero in
+  that same coarse bin, so the ten-ms integrals cannot establish whether it
+  precedes the first control spike or is recruited by that spike. The complete
+  late totals show that recurrent excitation strongly amplifies control release
+  after it begins, whereas intact alternatives never recruit it. The winner
+  balance still opposes reset. No parameter is selected.
+next_gate: >-
+  Add a default-off, read-only one-ms trace around 65--85 ms for alternatives
+  31 and 49, recording membrane voltage, spike time, and projections 035--038.
+  Preregister one unchanged source-control pair and determine the causal order
+  of relay drive, inhibition, recurrent excitation, and the first alternative
+  spike before authorizing any effective calibration parameter.

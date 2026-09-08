@@ -9997,3 +9997,56 @@ def test_layer4_complete_input_audit_is_hash_pinned_and_read_only() -> None:
     ]
     assert registration.get("runtime_overrides") is None
     assert "No parameter selection" in registration["boundary"]
+
+
+def test_layer4_complete_input_result_localizes_first_divergence() -> None:
+    result_path = (
+        ROOT
+        / "docs/validation-results/figure10-layer4-complete-input-pair-662.yaml"
+    )
+    prior_path = (
+        ROOT
+        / "docs/validation-results/figure10-layer4-target-balance-pair-658.yaml"
+    )
+    result = yaml.safe_load(result_path.read_text())
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-layer4-complete-input-assessment-663.yaml"
+        ).read_text()
+    )
+
+    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment[
+        "new_input_result_sha256"
+    ]
+    assert hashlib.sha256(prior_path.read_bytes()).hexdigest() == assessment[
+        "prior_target_result_sha256"
+    ]
+    assert all(result["figure6_gates"].values())
+    assert result["source_identity"]["layer4_post_events"] == [78, 92]
+    assert result["source_identity"]["layer6i_post_events"] == [153, 76]
+    for arm in ("intact", "disconnected_control"):
+        assert set(result["new_input_series"][arm]) == {
+            "31",
+            "38",
+            "39",
+            "40",
+            "41",
+            "42",
+            "49",
+        }
+        for series in result["new_input_series"][arm].values():
+            assert len(series) == 2
+            assert all(len(values) == 20 for values in series)
+    first = assessment["alternative_group_31_49"]["first_divergence_70_80_ms"]
+    assert first["events_intact_control"] == [0, 2]
+    assert first["projection037_excitation_pA_ms_intact_control"] == [0.0, 290.147379]
+    assert assessment["assessment"]["projection037_is_initial_release_drive"] == (
+        "unresolved-with-ten-ms-bins"
+    )
+    assert assessment["assessment"]["projection037_is_positive_feedback_after_release"] == (
+        "supported"
+    )
+    assert not assessment["assessment"]["parameter_selected"]
+    assert not result["original_smart_reproduced"]
+    assert not result["baseline_promoted"]

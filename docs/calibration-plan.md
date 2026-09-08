@@ -1964,3 +1964,14 @@ all exact 10-ms arrays without repeated row metadata, but only after the full
 result and reset score exist. The unchanged source-control model must repeat
 every Artifact-658 identity before the first complete-input divergence is
 interpreted. No parameter changes.
+
+Artifacts 662--663 complete the unchanged recovery and localize the first
+alternative output difference to 70--80 ms. Before that interval, relay drive
+and off-surround inhibition are effectively identical across arms, recurrent
+projection 037 is zero, and neither alternative fires. In the divergence bin,
+each control alternative fires once and projection 037 becomes nonzero, while
+both intact alternatives remain silent. The ten-ms integral cannot determine
+whether recurrent current starts before or after the first spike, although its
+large later control-only total establishes positive-feedback amplification.
+Next preregister a read-only 65--85-ms, one-ms timing audit of voltage, events,
+and projections 035--038. No parameter is selected.

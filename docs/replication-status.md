@@ -3776,3 +3776,12 @@ synaptic port: relay AMPA 035, off-surround GABA 036, recurrent AMPA 037, and
 layer-6I AMPA 038. The complete result will be compacted only after simulation
 and scoring. It has not yet run, and original SMART remains unreproduced and
 unfrozen.
+
+Artifacts 662--663 complete the exact source-control repeat. The first
+alternative divergence occurs in 70--80 ms: control cells 31 and 49 each fire
+once while intact remains silent. Recurrent projection 037 also first appears
+in that bin and later strongly amplifies control activity, but the ten-ms bins
+cannot determine whether it initiates or follows the first event. A passive
+one-ms timing audit around 65--85 ms is therefore required before any new
+parameter family can be authorized. Original SMART remains unreproduced and
+unfrozen.

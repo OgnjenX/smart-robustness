@@ -2861,6 +2861,14 @@ Registration 696 preregisters that wider trace with no model change. The pair
 has not yet run; all source and arrival identities plus both file hashes remain
 mandatory, and original SMART remains unreproduced and unfrozen.
 
+Artifacts 697--698 complete the wider pair with exact identities and hashes.
+It captures the action-potential rise but remains causally left-censored:
+projection-026 and projection-030 gates already differ at 73.5 ms, whereas
+projection 027 diverges at 73.85 ms and projection 028 at 75.40 ms.
+Registration 699 now preregisters one passive trace from mismatch onset through
+75.6 ms to locate the first arm divergence. It has not yet run; Figure 10 and
+baseline freezing remain failed.
+
 Artifacts 535--537 perform the permitted match-only effective T-conductance
 screen on that fixed replay trace. The full preregistered grid from zero to the
 paper density is finite and was executed without interpolation. Scale 0.1875,

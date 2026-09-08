@@ -2118,3 +2118,11 @@ trace start to 73.5 ms, preserves the same three cells, variables, hashed-file
 capture, source-control dynamics, and identity gates, and gives presynaptic gate
 ordering priority over voltage-dependent currents. A difference already
 present at 73.5 ms remains left-censored and cannot select a parameter.
+
+Artifacts 697--698 complete the exact wider pair. The action-potential rise is
+captured, but projection-026 and projection-030 gate contrasts and membrane
+differences already exist at 73.5 ms. Projection 027 first differs at 73.85 ms
+and projection 028 at 75.40 ms, so neither initiates the inherited split. The
+gate cause remains left-censored. Registration 699 therefore avoids further
+incremental windows and retains the same passive traces from mismatch onset to
+75.6 ms, with an explicit 1e-12 initial-equality and first-divergence rule.

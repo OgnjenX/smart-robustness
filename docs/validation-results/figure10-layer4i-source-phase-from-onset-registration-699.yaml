@@ -1,0 +1,83 @@
+schema_version: 1
+id: figure10-layer4i-source-phase-from-onset-registration-699
+date: '2026-09-08'
+status: registered-before-execution-mismatch-onset-hashed-source-phase-trace
+classification: figure10-layer4-inhibitory-source-phase-from-mismatch-onset-audit
+implementation: docs/validation-results/figure10-layer4i-source-phase-file-monitor-692.yaml
+profile: configs/calibration/figure7_learned_coincidence_effective_t_pair_v1.yaml
+profile_sha256: 4b6aa0bdf4fb844e428fb330f34970900cc8bc741183b2d8e6e73789cba0b30f
+harness: src/smart_robustness/validation/figure10.py
+harness_sha256: 788fe02a64f8c524c5df8e23ef1c54dbbf2593abab57ae1ef87999b0ba52d1cb
+runtime: src/smart_robustness/classic_sector.py
+runtime_sha256: ebdf48f0138803ab50b1dec2ef87817b4c537e4da490a088b9df6bdcb9d119a1
+script: scripts/run_figure10_calibrated_reset_pair.py
+script_sha256: d288c991c6f2daf34eed452be48a0156c1934265b9c5e755887dce94c9e05f8e
+source_result: docs/validation-results/figure10-layer4i-source-phase-wide-pair-697.yaml
+source_result_sha256: ef757a0abfe12ee0a734db038397eafcd6360511ecac0ae5a7eedd440251fafb
+prior_assessment: docs/validation-results/figure10-layer4i-source-phase-wide-assessment-698.yaml
+prior_assessment_sha256: 538c2a9b783db20d3c045cff824d39e5b38208f8b751379e0c5c8758c093e804
+runtime_fingerprint: fa4ab9f0bf2bec4d6ad53cb6a91620047689b6839b146ed7d777d42350c2cdf5
+result_id: figure10-layer4i-source-phase-from-onset-pair-700
+result: docs/validation-results/figure10-layer4i-source-phase-from-onset-pair-700.yaml
+assessment: docs/validation-results/figure10-layer4i-source-phase-from-onset-assessment-701.yaml
+intact_layer4_inhibitory_trace_output: results/figure10-layer4i-source-phase-from-onset-intact-700.npz
+control_layer4_inhibitory_trace_output: results/figure10-layer4i-source-phase-from-onset-control-700.npz
+persistent_projection_scales:
+  - {projection_id: modeldb112923.projection.008, scale: 0.75}
+  - {projection_id: modeldb112923.projection.011, scale: 0.9375}
+  - {projection_id: modeldb112923.projection.025, scale: 8.0}
+persistent_projection_delays: []
+nonspecific_t_scale: 0.1875
+record_layer6i_diagnostics: false
+record_reset_chain_diagnostics: true
+record_layer4_balance_diagnostics: true
+record_projection036_arrival_target_indices: [31]
+projection036_arrival_window_ms: [75.2, 75.8]
+record_layer4_inhibitory_trace_indices: [38, 40, 42]
+layer4_inhibitory_trace_window_ms: [0.0, 75.6]
+output_mode: layer4_source_trace_files
+protocol:
+  pre_match_duration_ms: 100.0
+  mismatch_duration_ms: 200.0
+  total_duration_ms: 300.0
+  dt_ms: 0.01
+  top_down_current_pA: 800.0
+  top_down_current_mode: until_cued_cell_first_event
+  comparator: {transform: top_k_binary, source_index: 40, target_count: 5}
+required_source_identity:
+  layer4_pre_events_intact_control: [39, 39]
+  layer4_post_events_intact_control: [78, 92]
+  nonspecific_post_events_intact_control: [18, 13]
+  layer5_post_events_intact_control: [285, 140]
+  layer6i_post_events_intact_control: [153, 76]
+  layer4_inhibitory_post_events_intact_control: [218, 232]
+  layer5_active_cells_intact_control: [81, 11]
+  layer6i_active_cells_intact_control: [81, 11]
+required_arrival_identity:
+  target_index: 31
+  source_set_both_arms: [38, 39, 40, 41, 42]
+  total_edge_weight_both_arms: 5.482968310784057
+  intact_first_source_set: [38, 42]
+  control_first_source_set: [40]
+  intact_first_arrival_ms: 75.38000000000002
+  control_first_arrival_ms: 75.53
+diagnostic_question: >-
+  Starting from the common mismatch-onset state, which presynaptic gate first
+  differs between intact and reset-disconnected arms at inhibitory cells 38,
+  40, or 42, and does that event precede membrane, intrinsic-state, and later
+  action-potential phase divergence?
+decision_rule: >-
+  Require all Figure-6, population-identity, arrival-identity, and file-hash
+  gates. Verify equality of every retained variable at mismatch onset within
+  1e-12 absolute tolerance. For each gate, report the first native sample whose
+  intact/control difference exceeds 1e-12; compare those times with voltage and
+  intrinsic-state divergence. Treat chemical gates as presynaptic evidence;
+  do not rank voltage-dependent current or gap current ahead of gate onset.
+  Name a projection only as a causal diagnostic target, not as a calibrated or
+  recovered parameter.
+boundary: >-
+  Only passive trace retention expands to mismatch onset. Model equations,
+  states, parameters, cue, durations, causal arms, and reset score are
+  unchanged. No original-SMART claim, promotion, freeze, parameter selection,
+  or reopening of a closed family is authorized.
+

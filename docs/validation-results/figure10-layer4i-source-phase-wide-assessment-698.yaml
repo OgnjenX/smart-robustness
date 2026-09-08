@@ -1,0 +1,45 @@
+schema_version: 1
+id: figure10-layer4i-source-phase-wide-assessment-698
+date: '2026-09-08'
+status: assessed-action-potential-onset-visible-gate-cause-left-censored
+registration: docs/validation-results/figure10-layer4i-source-phase-wide-registration-696.yaml
+result: docs/validation-results/figure10-layer4i-source-phase-wide-pair-697.yaml
+result_sha256: ef757a0abfe12ee0a734db038397eafcd6360511ecac0ae5a7eedd440251fafb
+assessment:
+  all_fresh_figure6_gates_pass: true
+  exact_registered_population_identity: true
+  exact_registered_arrival_identity: true
+  intact_trace_hash_verified: true
+  control_trace_hash_verified: true
+  action_potential_rise_captured: true
+  projection026_gate_difference_present_at_window_start: true
+  projection030_gate_difference_present_at_window_start: true
+  projection027_gate_difference_present_at_window_start: false
+  projection028_gate_difference_present_at_window_start: false
+  initiating_gate_identified: false
+  causal_gate_onset_left_censored: true
+  parameter_selected: false
+  official_figure10_reset_reproduced: false
+  original_smart_reproduced: false
+  baseline_promoted: false
+interpretation: >-
+  The exact wider pair captures the focal action-potential rises: intact flank
+  cells cross 0 mV at 74.71 ms and control flanks at 74.88 ms, while central
+  cell 40 crosses at 74.79 and 74.84 ms. At 73.5 ms, however, arm-dependent
+  spatial contrasts already exist in both projection-026 and projection-030
+  gates and in membrane voltage. Projection 027 is identical at the left edge
+  and first differs at 73.85 ms; projection 028 first differs at 75.40 ms, so
+  neither can precede the inherited 026/030 split. Gap current is already
+  different but is voltage-dependent. The initiating upstream event remains
+  earlier than this window.
+closure: >-
+  Accept the action-potential timing localization but classify gate causality
+  as left-censored. Do not select any input or parameter and keep all prior
+  delay, geometry, and effective-weight families closed.
+next_gate: >-
+  Avoid further incremental windows. Run one preregistered passive trace from
+  mismatch onset 0.0 through 75.6 ms for the same cells and variables, saved as
+  hashed files. Require exact identities, establish identical initial state,
+  and locate the first nonzero intact/control gate difference. This may name a
+  causal upstream projection for a later isolated test but cannot itself open
+  or select a parameter family.

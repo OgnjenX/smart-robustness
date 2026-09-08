@@ -1,0 +1,90 @@
+schema_version: 1
+id: figure10-layer4i-source-phase-wide-pair-697
+date: '2026-09-08'
+status: completed-unchanged-wide-hashed-source-phase-trace-pair
+classification: figure10-layer4-inhibitory-source-phase-wide-input-audit
+registration: docs/validation-results/figure10-layer4i-source-phase-wide-registration-696.yaml
+runtime_fingerprint: fa4ab9f0bf2bec4d6ad53cb6a91620047689b6839b146ed7d777d42350c2cdf5
+persistent_projection_delays_ms: {}
+figure6_gates:
+  relay_active_indices: true
+  relay_events_per_active_index: true
+  relay_events: true
+  cortical_chain_complete: true
+  causal_learning_pair: true
+  top_down_horizontal_contrast: true
+source_identity:
+  layer4_pre_events: [39, 39]
+  layer4_post_events: [78, 92]
+  nonspecific_post_events: [18, 13]
+  layer5_post_events: [285, 140]
+  layer6i_post_events: [153, 76]
+  layer4_inhibitory_post_events: [218, 232]
+  layer5_active_cells: [81, 11]
+  layer6i_active_cells: [81, 11]
+arrival_identity:
+  target_index: 31
+  source_set_both_arms: [38, 39, 40, 41, 42]
+  total_edge_weight_both_arms: 5.482968310784057
+  intact_first_source_set: [38, 42]
+  control_first_source_set: [40]
+  intact_first_arrival_ms: 75.38000000000002
+  control_first_arrival_ms: 75.53
+trace_contract:
+  source_indices: [38, 40, 42]
+  samples_per_source: 211
+  inclusive_window_from_mismatch_ms: [73.5, 75.6]
+  intact:
+    path: results/figure10-layer4i-source-phase-wide-intact-697.npz
+    sha256: c8f0e61958e1c623355b6e1b363afbd8507e594baf7ec4be14dd351be584b1fe
+  disconnected_control:
+    path: results/figure10-layer4i-source-phase-wide-control-697.npz
+    sha256: 5b69edd41d9a4f982aed4c31fe049a75a4c21a24cf8ead8479c170e7767b378c
+action_potential_timing_ms:
+  intact:
+    cell38_above_minus20: 74.64000000000001
+    cell38_above_zero: 74.71000000000001
+    cell40_above_minus20: 74.72
+    cell40_above_zero: 74.78999999999999
+    cell42_above_minus20: 74.64000000000001
+    cell42_above_zero: 74.71000000000001
+  disconnected_control:
+    cell38_above_minus20: 74.81000000000003
+    cell38_above_zero: 74.88
+    cell40_above_minus20: 74.78
+    cell40_above_zero: 74.84000000000003
+    cell42_above_minus20: 74.81000000000003
+    cell42_above_zero: 74.88
+left_endpoint_evidence:
+  soma_voltage_mV:
+    intact_cells_38_40_42: [-47.28263526641598, -57.06202690975842,
+      -47.28263526641598]
+    control_cells_38_40_42: [-49.36193067463013, -57.249888021582834,
+      -49.36193067463013]
+    spatial_contrast_arm_difference: 1.8914342963897397
+  projection026_gate:
+    intact_cells_38_40_42: [0.004690671598835868, 0.0022520533119686943,
+      0.004690671598835868]
+    control_cells_38_40_42: [0.004427366239987287, 0.007106669709955541,
+      0.004427366239987287]
+    spatial_contrast_arm_difference: 0.005117921756835427
+  projection027_gate:
+    identical_at_start: true
+    first_nonzero_spatial_contrast_arm_difference_ms: 73.85
+  projection028_gate:
+    identical_at_start: true
+    first_nonzero_spatial_contrast_arm_difference_ms: 75.40000000000003
+  projection029_gap_current_pA:
+    spatial_contrast_arm_difference: -3.1066374767574114
+    voltage_dependent: true
+  projection030_gate:
+    intact_cells_38_40_42: [4.504788513806719, 3.6329008659603406,
+      4.504788513806719]
+    control_cells_38_40_42: [4.913605368702721, 0.022930596102640234,
+      4.913605368702721]
+    spatial_contrast_arm_difference: -4.018787124753702
+reset_gates: {pre_reset_winner: true, reset_chain: true,
+  winner_suppression: false, alternative_release: false}
+reproduced_reset: false
+original_smart_reproduced: false
+baseline_promoted: false

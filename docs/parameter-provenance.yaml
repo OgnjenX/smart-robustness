@@ -729,9 +729,9 @@ parameters:
     note: Exact identity repeats. Both arms deliver sources 38--42 with identical compiled weights and total weight 5.482968310784057. Intact first arrival is 75.38 ms versus 75.53 ms control because sources 38/42 lead source 40; control reverses that order. Topology and edge weights are excluded. No parameter is selected, both delay families stay closed, and a passive source-cell input/voltage audit is required next.
   diagnostics.figure10.layer4_inhibitory_source_phase_inputs:
     value: native 0.01-ms complete-input and membrane/intrinsic traces for layer-4 inhibitory cells 38, 40, and 42 over 75.0--75.6 ms
-    status: completed-exact-hashed-window-left-censored-wide-rerun-registered
-    source: Artifact 687 authorization and Artifacts 688--696
-    note: The exact recovery pair verifies both trace hashes and every registered identity. At 75.0 ms all focal somata are already positive at 30.07--43.43 mV and several gates already differ, so the causal onset precedes the window. No input or parameter is selected. Registration 696 moves only the passive start to 73.5 ms and remains unexecuted.
+    status: wide-trace-completed-gate-cause-left-censored-onset-rerun-registered
+    source: Artifact 687 authorization and Artifacts 688--699
+    note: The wider exact pair captures action-potential onset but projection-026 and projection-030 gate contrasts already exist at 73.5 ms; projection 027 first differs at 73.85 ms and projection 028 at 75.40 ms. No input or parameter is selected. Registration 699 expands passive retention to mismatch onset with a fixed 1e-12 first-divergence rule.
   benchmark.population_sizes:
     value: see configs/*.yaml
     status: exploratory

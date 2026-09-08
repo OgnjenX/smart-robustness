@@ -3686,3 +3686,12 @@ interaction context, but it supports only one narrow test: reuse the prior
 match-selected 0.75 common scale on projections 047--049. Registration 597
 locks that endpoint through fresh learning and match. No interpolation,
 T-current tuning, or mismatch access is permitted before an exact match pass.
+
+Artifacts 597--599 reject that one endpoint at the match holdout. Fresh Figure
+6 and the five-cell/20-event relay match remain exact, but common scale 0.75
+changes nonspecific match output from four to five events. Mismatch is not run.
+The interaction family closes without interpolation or compartment-specific
+retuning. The source-control repaired-TRN model remains closest: all Figure 7
+spatial and mechanistic direction gates plus exact four-event match pass, while
+mismatch emits six instead of seven events. Original SMART is still not fully
+reproduced or frozen.

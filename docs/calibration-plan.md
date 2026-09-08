@@ -1600,3 +1600,14 @@ verified 0.75 endpoint—no new midpoint or grid. Registration 597 fixes one
 persistent fresh-learning Figure 6-plus-match test at that endpoint. Mismatch
 is hidden unless all Figure 6 gates and the exact 20-relay/four-nonspecific
 match pass.
+
+Artifacts 597--599 close that sole interaction endpoint before mismatch. Common
+scale 0.75 preserves every fresh Figure 6 gate, relay cells 38--42, 20 relay
+events, and 697 TRN events, but reduces integrated TRN inhibition enough to add
+a fifth nonspecific match event. The official four-event match therefore fails.
+Do not interpolate, extend the grid, alter one compartment, or inspect mismatch.
+The source-control repaired-TRN pair remains the closest source-constrained
+Figure 7 reconstruction: exact pathway, correct TRN/effective-inhibition order,
+and exact match, but six rather than seven mismatch events. Further exact-rate
+work now requires an independently sourced condition-sensitive mechanism;
+otherwise downstream validation must lock and disclose this one-event deficit.

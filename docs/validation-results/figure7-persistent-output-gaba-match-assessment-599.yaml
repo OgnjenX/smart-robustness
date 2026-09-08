@@ -1,0 +1,46 @@
+schema_version: 1
+id: figure7-persistent-output-gaba-match-assessment-599
+date: '2026-09-08'
+status: assessed-match-rate-gate-failure-interaction-closed
+registration: docs/validation-results/figure7-persistent-output-gaba-match-registration-597.yaml
+result: docs/validation-results/figure7-persistent-output-gaba-match-598.yaml
+result_sha256: c584d817e630781ebe46b868c9802d39d6dbc6bc7f547d124c44ae78b31f4f2d
+assessment:
+  fresh_figure6_passed: true
+  match_relay_active_indices_passed: true
+  match_relay_events_passed: true
+  exact_match_nonspecific_events_passed: false
+  observed_match_nonspecific_events: 5
+  expected_match_nonspecific_events: 4
+  mismatch_consulted: false
+  candidate_closed: true
+  old_top5_family_reopened: false
+  interpolation_or_grid_extension_authorized: false
+  repeat_or_adjustment_authorized: false
+  original_smart_reproduced: false
+  baseline_promoted: false
+quantitative_summary:
+  relay_events: 20
+  relay_active_indices: [38, 39, 40, 41, 42]
+  trn_events: 697
+  nonspecific_events: 5
+  nonspecific_spike_times_ms: [1.35, 3.21, 4.99, 73.27, 92.71]
+  trn_to_nonspecific_gaba_integral_ms: 892.2667580945474
+  source_control_match_nonspecific_events: 4
+  source_control_trn_to_nonspecific_gaba_integral_ms: 1189.7041331873497
+interpretation: >-
+  The prior common 0.75 output-transfer endpoint remains compatible with every
+  fresh Figure 6 gate and with the exact five-cell, 20-event matched relay
+  pattern. It does not preserve the official four-event nonspecific match:
+  reduced integrated TRN inhibition adds a fifth event. Registration 597
+  therefore closes this distinct interaction endpoint before mismatch. The
+  result confirms that common output scaling cannot simply restore the missing
+  mismatch event without moving the already correct match rate.
+next_gate: >-
+  Do not interpolate, extend the common-scale family, alter one compartment
+  post hoc, or run mismatch for this candidate. Retain the source-control
+  repaired-TRN pair as the closest source-constrained Figure 7 reconstruction
+  (exact pathway, TRN ordering, and match; six rather than seven mismatch
+  events). The next work must either identify an independently sourced missing
+  condition-sensitive mechanism or explicitly proceed to downstream SMART
+  validation with this one-event discrepancy declared and locked.

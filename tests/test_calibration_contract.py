@@ -9629,3 +9629,31 @@ def test_repaired_trn_output_gaba_interaction_is_narrow_and_preregistered() -> N
     ]
     assert "consult mismatch" in registration["boundary"]
     assert "promote a baseline" in registration["boundary"]
+
+
+def test_repaired_trn_output_gaba_interaction_closes_at_match() -> None:
+    result_path = (
+        ROOT
+        / "docs/validation-results/figure7-persistent-output-gaba-match-598.yaml"
+    )
+    result = yaml.safe_load(result_path.read_text())
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-persistent-output-gaba-match-assessment-599.yaml"
+        ).read_text()
+    )
+
+    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment[
+        "result_sha256"
+    ]
+    assert all(result["figure6_gates"].values())
+    assert result["match"]["relay_active_indices"] == [38, 39, 40, 41, 42]
+    assert result["match"]["relay_event_count"] == 20
+    assert result["match"]["nonspecific_event_count"] == 5
+    assert not result["match"]["gates"]["nonspecific_events"]
+    assert not result["mismatch_consulted"]
+    assert assessment["assessment"]["candidate_closed"]
+    assert not assessment["assessment"]["interpolation_or_grid_extension_authorized"]
+    assert not assessment["assessment"]["repeat_or_adjustment_authorized"]
+    assert not assessment["assessment"]["baseline_promoted"]

@@ -1,0 +1,59 @@
+schema_version: 1
+id: figure10-projection036-ring-source-audit-651
+date: '2026-09-08'
+status: audited-ring-semantics-unresolved-one-parameter-free-alternative-authorized
+classification: projection036-source-topology-audit
+authorization: docs/validation-results/figure10-layer4-balance-assessment-650.yaml
+projection:
+  id: modeldb112923.projection.036
+  source: layer4_inhibitory_v1
+  target: layer4_excitatory_v1
+  target_compartment: proximal_dendrite
+  receptor: GABA_A
+  conductance_mS_cm2: 2.461
+  rise_ms: 0.1
+  fall_ms: 2.0
+  delay_ms: 0.1
+  method: connectFromMany
+  weight: 2.0
+  sigma_x_y: [1.5, 1.5]
+  ring: true
+  border_effect: wrap
+source_evidence:
+  smart_nml: fixes every serialized value above
+  archived_kinness_manual: >-
+    Fixes Gaussian peak-weight scaling and the 0.001 resulting-weight cutoff,
+    but does not define the separate ring=true flag.
+  exact_legacy_ring_geometry_recovered: false
+active_center_excluded_gaussian:
+  total_edges: 6480
+  incoming_edges_per_target: 80
+  center_edge_included: false
+  incoming_spatial_factor_sum: 13.073759414542963
+  maximum_spatial_factor: 0.8007374029168081
+  minimum_spatial_factor: 0.0008159878350721483
+parameter_free_radial_annulus:
+  formula: r_squared_times_exp_one_minus_r_squared
+  radius_scale: 1.0
+  radius_source: serialized_sigma
+  total_edges: 6480
+  incoming_edges_per_target: 80
+  center_edge_included: false
+  incoming_spatial_factor_sum: 37.34829779672274
+  maximum_spatial_factor: 0.9942659075715219
+  minimum_spatial_factor: 0.015773048208499604
+  factor_sum_ratio_to_active: 2.8567374243691
+decision: >-
+  The exact legacy ring geometry remains unidentifiable from recovered primary
+  material. The existing parameter-free radial-annulus convention is the sole
+  discrete alternative because its zero center and peak radius are fixed by
+  the serialized sigma without a fitted radius. Implement a projection-036-only
+  override so every other ring projection remains unchanged. Preregister at
+  most one scale-8 connected causal pair with fresh Figure 6 and the unchanged
+  reset score. A failure closes this topology endpoint without radius or weight
+  tuning; a success remains a mixed-source calibrated reconstruction.
+boundary: >-
+  This audit changes no executable convention or parameter and recovers no new
+  simulator source. It authorizes implementation and preregistration only, not
+  execution before hash pinning, parameter selection, original-SMART status, or
+  baseline promotion.

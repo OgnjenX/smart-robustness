@@ -9721,3 +9721,31 @@ def test_layer4_balance_localizes_first_wrong_sign_at_projection036() -> None:
     assert not result["reproduced_reset"]
     assert not result["original_smart_reproduced"]
     assert not result["baseline_promoted"]
+
+
+def test_projection036_ring_audit_preserves_source_boundary() -> None:
+    audit = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-projection036-ring-source-audit-651.yaml"
+        ).read_text()
+    )
+
+    assert audit["projection"]["id"] == "modeldb112923.projection.036"
+    assert audit["projection"]["ring"]
+    assert audit["projection"]["sigma_x_y"] == [1.5, 1.5]
+    assert not audit["source_evidence"]["exact_legacy_ring_geometry_recovered"]
+    active = audit["active_center_excluded_gaussian"]
+    annulus = audit["parameter_free_radial_annulus"]
+    assert active["incoming_edges_per_target"] == 80
+    assert annulus["incoming_edges_per_target"] == 80
+    assert not active["center_edge_included"]
+    assert not annulus["center_edge_included"]
+    assert annulus["radius_scale"] == 1.0
+    assert annulus["factor_sum_ratio_to_active"] == pytest.approx(
+        2.8567374243691
+    )
+    assert "projection-036-only" in audit["decision"]
+    assert "No weight/radius tuning" in (
+        ROOT / "docs/parameter-provenance.yaml"
+    ).read_text()

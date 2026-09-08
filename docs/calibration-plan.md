@@ -1902,3 +1902,14 @@ wrong-sign stage is projection-036 output, with direct projection 038 opposing
 reset. Next audit unresolved projection-036 `ring=true` geometry and obtain
 target-resolved 036/038 balance for winner and alternative cells before any
 new parameter experiment.
+
+Artifact 651 audits projection 036 before a topology change. SMART.nml fixes a
+wrapped `ring=true` Gaussian with sigma 1.5, weight 2, and 80 nonself inputs per
+target; the archived manual fixes peak scaling and the 0.001 cutoff but never
+defines `ring=true`. Exact legacy geometry remains unrecovered. The active
+center-excluded Gaussian has incoming spatial-factor sum 13.07. The existing
+parameter-free radial-annulus interpretation uses the serialized sigma as its
+peak radius, retains the same 80 edges, and has sum 37.35. It is the sole
+discrete alternative authorized for a projection-036-only endpoint; all other
+rings must remain unchanged. Implement and preregister one scale-8 causal pair
+with fresh Figure 6. Do not tune radius or weight from its result.

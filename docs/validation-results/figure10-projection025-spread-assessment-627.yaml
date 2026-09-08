@@ -1,0 +1,61 @@
+schema_version: 1
+id: figure10-projection025-spread-assessment-627
+date: '2026-09-08'
+status: assessed-projection025-variance-increases-current-not-reset-family-closed
+registration: docs/validation-results/figure10-projection025-spread-registration-625.yaml
+result: docs/validation-results/figure10-projection025-spread-pair-626.yaml
+result_sha256: 226b33696625b1a15b8f5a069cd727583912b6503ca972e66c44daaa20d92bd6
+assessment:
+  fresh_figure6_passed: true
+  source_control_upstream_identity_reproduced: true
+  projection025_variance_topology_executed: true
+  projection025_connections: 729
+  intact_projection025_current_increased_from_source_control: true
+  intact_control_projection025_current_integral_ratio: 4.565680455879373
+  broad_layer6i_recruitment_observed: false
+  layer6i_event_count_identical: true
+  layer6i_event_identity_identical: true
+  layer4_output_identical: true
+  winner_suppression: false
+  alternative_release: false
+  family_closed: true
+  parameter_selected: false
+  official_figure10_reset_reproduced: false
+  original_smart_reproduced: false
+  baseline_promoted: false
+quantitative_summary:
+  source_control_intact_projection025_current_integral_pA_ms: 309565.5704695583
+  variance_intact_projection025_current_integral_pA_ms: 419180.1836643157
+  variance_control_projection025_current_integral_pA_ms: 91811.1084897595
+  variance_projection025_nonzero_targets_intact_control: [81, 31]
+  layer6i_post_events_intact_control: [72, 72]
+  layer6i_late_events_intact_control: [42, 42]
+  layer6i_active_indices_intact_control:
+  - [31, 38, 39, 40, 41, 42, 49]
+  - [31, 38, 39, 40, 41, 42, 49]
+  nonspiking_intact_layer6i_soma_voltage_peak_mV_range: [-68.49027442629996, -68.02707805029966]
+  nonspiking_intact_layer6i_proximal_voltage_peak_mV_range: [-66.96406606552497, -65.98390074256076]
+  layer4_post_events_intact_control: [92, 92]
+  winner_post_events_intact_control: [76, 76]
+  released_alternatives_intact_control: [2, 2]
+interpretation: >-
+  The sole projection-specific variance endpoint passes every fresh Figure-6
+  gate and preserves the complete upstream Figure-10 identity. Its fixed 3x3
+  stencil raises intact projection-025 current integral from 309,566 to
+  419,180 pA-ms and supplies all 81 layer-6I targets; the intact/control
+  current ratio is 4.57. This added convergence still produces the same 72
+  post-mismatch layer-6I events from the same seven cells in both arms, the
+  same 92 layer-4 events, and no causal winner suppression or additional
+  alternative release. Nonspiking layer-6I somata remain near -68 mV and
+  proximal dendrites near -67 to -66 mV. Missing neighbor convergence is not
+  sufficient to explain the reset failure. The mixed-source family is closed,
+  no value is selected, and the result cannot support an original-SMART claim.
+next_gate: >-
+  Audit the complete layer-6I intrinsic cell and projection-025 target facts
+  across SMART.nml, Table 3, the supplement, and the KInNeSS membrane/axial
+  equations. In particular, verify compartment geometry, leak, Na/K channels,
+  axial resistance, initialization, and proximal targeting before exposing a
+  layer-6I excitability or transfer parameter. If no discrete source conflict
+  exists, preregister a read-only isolated layer-6I replay of the measured
+  source-control and variance projection-025 input envelopes to quantify the
+  threshold gap without tuning it.

@@ -1750,3 +1750,17 @@ mixed-source sensitivity, leaving every archived number unchanged. This is not
 claimed as recovered original simulator semantics: the simulator-wide variance
 candidate already failed Figure 6. Run fresh Figure 6 and one 300-ms causal
 pair, then close the family without another spread, weight, or threshold.
+
+Artifacts 625--627 execute and close that family. Every fresh Figure 6 gate and
+the complete upstream Figure-10 identity survive. The 3x3 stencil raises intact
+projection-025 current integral from 309,566 to 419,180 pA-ms and supplies all
+81 layer-6I targets, but both causal arms still emit the same 72 post-mismatch
+layer-6I events from the same seven cells and the same 92 layer-4 events.
+Nonspiking layer-6I somata remain near -68 mV and proximal dendrites near -67
+to -66 mV. There is no winner suppression or additional alternative release.
+Reject and close projection-specific variance; missing local convergence is not
+sufficient. Next audit the complete layer-6I intrinsic cell, axial transfer,
+and projection-025 target-compartment facts against every official source. If
+that exposes no discrete source conflict, use a read-only isolated replay of
+the measured input envelopes to quantify the excitability gap before defining
+any effective calibration family.

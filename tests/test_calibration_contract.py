@@ -9148,3 +9148,52 @@ def test_projection025_spread_candidate_is_one_bounded_mixed_source_endpoint() -
     }
     assert registration["required_prerequisites"]["projection025_connections"] == 729
     assert "cannot alone promote" in registration["boundary"]
+
+
+def test_projection025_variance_increases_current_but_not_reset() -> None:
+    result_path = (
+        ROOT
+        / "docs/validation-results/figure10-projection025-spread-pair-626.yaml"
+    )
+    result = yaml.safe_load(result_path.read_text())
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-projection025-spread-assessment-627.yaml"
+        ).read_text()
+    )
+
+    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment[
+        "result_sha256"
+    ]
+    assert all(result["figure6_gates"].values())
+    assert result["projection025_topology"] == {
+        "connection_count": 729,
+        "inputs_per_target": 9,
+    }
+    intact = result["intact"]
+    control = result["disconnected_control"]
+    projection025 = "modeldb112923.projection.025"
+    assert intact["projection025_nonzero_target_indices"] == "all-0-through-80"
+    assert control["projection025_nonzero_target_count"] == 31
+    assert intact["layer6i_mismatch_current_integral_pA_ms_by_projection"][
+        projection025
+    ] > 4.5 * control["layer6i_mismatch_current_integral_pA_ms_by_projection"][
+        projection025
+    ]
+    assert intact["layer6i_post_events"] == control["layer6i_post_events"] == 72
+    assert intact["layer6i_mismatch_active_indices"] == control[
+        "layer6i_mismatch_active_indices"
+    ]
+    assert intact["layer4_post_events"] == control["layer4_post_events"] == 92
+    assert result["reset_assessment"]["intact_winner_post_spikes"] == (
+        result["reset_assessment"]["control_winner_post_spikes"]
+    ) == 76
+    assert result["reset_assessment"]["intact_released_alternatives"] == (
+        result["reset_assessment"]["control_released_alternatives"]
+    ) == 2
+    assert assessment["assessment"]["family_closed"]
+    assert not assessment["assessment"]["parameter_selected"]
+    assert not result["reproduced_reset"]
+    assert not result["original_smart_reproduced"]
+    assert not result["baseline_promoted"]

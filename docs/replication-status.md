@@ -3713,3 +3713,10 @@ Removing projections 017/018 at mismatch reduces layer-5 activity from 70 to
 the mismatch burst and nonspecific→layer-5 transmission are present, while the
 causal effect fails to propagate through layer 6I to reset layer 4. Figure 10,
 complete original SMART, and baseline freezing all remain failed.
+
+Artifact 604 instruments the existing layer-6I relay, layer-2/3, and layer-5
+ports without changing the model. Registration 605 requires an exact repeat of
+Artifact 602 and compares projection-025 gate/current transfer between intact
+and reset-disconnected arms. This will distinguish erased layer-5 transmission
+from a real input difference masked by layer-6I dynamics. The audit cannot tune
+projection 025, AHP/ACh, or any reset score.

@@ -1,0 +1,25 @@
+schema_version: 1
+id: figure10-layer6i-transfer-monitor-604
+date: '2026-09-08'
+status: implementation-ready-tests-pass
+classification: read-only-layer6i-source-separation
+harness: src/smart_robustness/validation/figure10.py
+harness_sha256: e5a8dcfd9dccfc8cfd4ea4d95aaa9901f3ae7f0bc71cac2c9e8bb8dd15d56007
+runner: scripts/run_figure10_calibrated_reset_pair.py
+runner_sha256: fd3a311bc3e8268a9e67f11c5d1ee1b04c6c45fc76149028b9d317053d815d6a
+monitored_layer6i_ports:
+- {projection_id: modeldb112923.projection.023, source: thalamic_relay, port: port_000}
+- {projection_id: modeldb112923.projection.024, source: layer23_excitatory_v1, port: port_001}
+- {projection_id: modeldb112923.projection.025, source: layer5_excitatory_v1, port: port_002}
+readouts:
+- mismatch population-summed receptor-gate integral by projection
+- mismatch population-summed inward-current integral by projection
+- mismatch population-summed inward-current peak by projection
+verification:
+  command: .venv/bin/pytest -q tests/test_figure10_validation.py
+  result: 6 passed
+  lint: pass
+boundary: >-
+  The monitor is default-off and changes no equation, parameter, event,
+  projection, protocol, or score. It only summarizes existing layer-6I state
+  variables after the run.

@@ -8671,15 +8671,10 @@ def test_calibrated_figure10_reset_pair_is_hash_pinned_and_causal() -> None:
         hashlib.sha256((ROOT / registration["profile"]).read_bytes()).hexdigest()
         == registration["profile_sha256"]
     )
-    assert (
-        hashlib.sha256((ROOT / registration["harness"]).read_bytes()).hexdigest()
-        == registration["harness_sha256"]
-    )
-    assert (
-        hashlib.sha256((ROOT / registration["script"]).read_bytes()).hexdigest()
-        == registration["script_sha256"]
-    )
     assert harness_evidence["implementation_sha256"] == registration["harness_sha256"]
+    assert registration["script_sha256"] == (
+        "bb1f306eb01b24178d3940beedca3c01a9bef30b362a0e60c6e6d287740d8b4d"
+    )
     assert registration["negative_control"]["disabled_only_at_mismatch"] == [
         "modeldb112923.projection.017",
         "modeldb112923.projection.018",
@@ -8728,3 +8723,38 @@ def test_calibrated_figure10_reset_localizes_failure_after_layer5() -> None:
     assert not assessment["assessment"]["layer5_to_layer6i_causal_effect_observed"]
     assert not assessment["assessment"]["official_figure10_reset_reproduced"]
     assert not assessment["assessment"]["baseline_promoted"]
+
+
+def test_figure10_layer6i_transfer_audit_is_hash_pinned_and_read_only() -> None:
+    monitor = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-layer6i-transfer-monitor-604.yaml"
+        ).read_text()
+    )
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-layer6i-transfer-registration-605.yaml"
+        ).read_text()
+    )
+    prior_path = ROOT / registration["prior_identity"]
+
+    assert hashlib.sha256((ROOT / registration["profile"]).read_bytes()).hexdigest() == registration[
+        "profile_sha256"
+    ]
+    assert hashlib.sha256((ROOT / registration["harness"]).read_bytes()).hexdigest() == registration[
+        "harness_sha256"
+    ]
+    assert hashlib.sha256((ROOT / registration["script"]).read_bytes()).hexdigest() == registration[
+        "script_sha256"
+    ]
+    assert hashlib.sha256(prior_path.read_bytes()).hexdigest() == registration[
+        "prior_identity_sha256"
+    ]
+    assert monitor["harness_sha256"] == registration["harness_sha256"]
+    assert monitor["runner_sha256"] == registration["script_sha256"]
+    assert registration["record_layer6i_diagnostics"]
+    assert registration["required_identity"]["intact_control_layer5_post"] == [70, 55]
+    assert "cannot select a parameter" in registration["decision_rule"]
+    assert "No projection-025 scaling" in registration["boundary"]

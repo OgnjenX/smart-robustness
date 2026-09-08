@@ -41,6 +41,15 @@ def _condition_summary(result):
         "layer5_post_events": phase_count(result.layer5_spike_times_ms, post=True),
         "layer6i_pre_events": phase_count(result.layer6i_spike_times_ms, post=False),
         "layer6i_post_events": phase_count(result.layer6i_spike_times_ms, post=True),
+        "layer6i_mismatch_gate_integral_ms_by_projection": dict(
+            result.layer6i_mismatch_gate_integral_ms_by_projection
+        ),
+        "layer6i_mismatch_current_integral_pA_ms_by_projection": dict(
+            result.layer6i_mismatch_current_integral_pA_ms_by_projection
+        ),
+        "layer6i_mismatch_current_peak_pA_by_projection": dict(
+            result.layer6i_mismatch_current_peak_pA_by_projection
+        ),
     }
 
 
@@ -110,6 +119,7 @@ def main() -> None:
         "top_down_current_mode": profile["protocol"]["top_down_current_mode"],
         "conventions": conventions,
         "dt_ms": float(protocol["dt_ms"]),
+        "record_layer6i_diagnostics": bool(registration.get("record_layer6i_diagnostics", False)),
         "brian": brian,
     }
     intact = run_figure10_condition(reset_pathway_enabled=True, **common)

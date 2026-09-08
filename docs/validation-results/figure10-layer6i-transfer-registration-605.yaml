@@ -1,0 +1,50 @@
+schema_version: 1
+id: figure10-layer6i-transfer-registration-605
+date: '2026-09-08'
+status: registered-before-execution-read-only-layer6i-transfer-pair
+classification: fixed-figure10-layer6i-transfer-localization
+profile: configs/calibration/figure7_learned_coincidence_effective_t_pair_v1.yaml
+profile_sha256: 4b6aa0bdf4fb844e428fb330f34970900cc8bc741183b2d8e6e73789cba0b30f
+harness: src/smart_robustness/validation/figure10.py
+harness_sha256: e5a8dcfd9dccfc8cfd4ea4d95aaa9901f3ae7f0bc71cac2c9e8bb8dd15d56007
+script: scripts/run_figure10_calibrated_reset_pair.py
+script_sha256: fd3a311bc3e8268a9e67f11c5d1ee1b04c6c45fc76149028b9d317053d815d6a
+runtime_fingerprint: fa4ab9f0bf2bec4d6ad53cb6a91620047689b6839b146ed7d777d42350c2cdf5
+authorization: docs/validation-results/figure10-calibrated-reset-assessment-603.yaml
+monitor_evidence: docs/validation-results/figure10-layer6i-transfer-monitor-604.yaml
+prior_identity: docs/validation-results/figure10-calibrated-reset-pair-602.yaml
+prior_identity_sha256: 0eff1434907eeef6ac9bd039ba7441be43c2f68827204d417b11dc8efa89de1e
+result_id: figure10-layer6i-transfer-pair-606
+result: docs/validation-results/figure10-layer6i-transfer-pair-606.yaml
+assessment: docs/validation-results/figure10-layer6i-transfer-assessment-607.yaml
+persistent_projection_scales:
+- {projection_id: modeldb112923.projection.008, scale: 0.75}
+- {projection_id: modeldb112923.projection.011, scale: 0.9375}
+nonspecific_t_scale: 0.1875
+record_layer6i_diagnostics: true
+protocol:
+  pre_match_duration_ms: 100.0
+  mismatch_duration_ms: 100.0
+  dt_ms: 0.01
+  top_down_current_pA: 800.0
+  top_down_current_mode: until_cued_cell_first_event
+  comparator: {transform: top_k_binary, source_index: 40, target_count: 5}
+required_identity:
+  each_arm_pre_layer4_events: 39
+  each_arm_pre_layer4_indices: [38, 39, 40, 41, 42]
+  each_arm_nonspecific_pre_post: [4, 7]
+  intact_control_layer5_post: [70, 55]
+  intact_control_layer6i_post: [30, 30]
+  intact_control_layer4_post: [43, 43]
+decision_rule: >-
+  Interpret only if every fresh Figure 6 gate and the complete prior event
+  identity repeat. If projection-025 gate/current is greater in intact while
+  layer-6I output remains identical, localize the failure to masking or
+  insensitivity within layer 6I. If projection-025 gate/current is equal,
+  localize it to layer-5 event/transmitter transfer. If identity or readout
+  finiteness fails, record the audit as inconclusive. This diagnostic cannot
+  select a parameter.
+boundary: >-
+  No model, protocol, connectivity, learning, stimulus, timing, or score
+  changes. No projection-025 scaling, AHP/ACh change, candidate reopening, or
+  baseline promotion is authorized.

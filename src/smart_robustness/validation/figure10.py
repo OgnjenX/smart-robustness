@@ -49,6 +49,9 @@ class Figure10ConditionResult:
     learned_state_provenance: str | None = None
     comparator_target_count: int | None = None
     top_down_current_mode: str = TopDownCurrentMode.SUSTAINED_EPOCH.value
+    layer6i_mismatch_gate_integral_ms_by_projection: tuple[tuple[str, float], ...] = ()
+    layer6i_mismatch_current_integral_pA_ms_by_projection: tuple[tuple[str, float], ...] = ()
+    layer6i_mismatch_current_peak_pA_by_projection: tuple[tuple[str, float], ...] = ()
 
     def __post_init__(self) -> None:
         if self.pre_match_duration_ms <= 0 or self.mismatch_duration_ms <= 0:
@@ -169,6 +172,7 @@ def run_figure10_condition(
     comparator_top_k_targets: int | None = None,
     comparator_source_index: int = 40,
     top_down_current_mode: TopDownCurrentMode | str = (TopDownCurrentMode.SUSTAINED_EPOCH),
+    record_layer6i_diagnostics: bool = False,
     conventions=None,
     dt_ms: float = 0.01,
     cpp_standalone_directory: str | Path | None = None,
@@ -184,6 +188,8 @@ def run_figure10_condition(
         raise ValueError("Figure 10 durations and dt_ms must be positive")
     if top_down_current_pA <= 0:
         raise ValueError("top_down_current_pA must be positive")
+    if not isinstance(record_layer6i_diagnostics, bool):
+        raise TypeError("layer-6I diagnostics flag must be boolean")
     current_mode = TopDownCurrentMode(top_down_current_mode)
     if current_mode is TopDownCurrentMode.UNTIL_CUED_CELL_EVENT_LIMIT:
         raise ValueError("Figure 10 does not define an event-count-limited cue")
@@ -242,7 +248,26 @@ def run_figure10_condition(
     layer5 = brian.SpikeMonitor(sector.populations["layer5_excitatory_v1"].group)
     layer6i = brian.SpikeMonitor(sector.populations["layer6i_excitatory_v1"].group)
     sector.network.add(layer4, nonspecific, layer5, layer6i)
-
+    layer6i_state = None
+    if record_layer6i_diagnostics:
+        layer6i_state = brian.StateMonitor(
+            sector.populations["layer6i_excitatory_v1"].group,
+            (
+                "port_000_gate",
+                "port_001_gate",
+                "port_002_gate",
+                "i_port_000",
+                "i_port_001",
+                "i_port_002",
+            ),
+            record=True,
+            name=(
+                "figure10_intact_layer6i_state"
+                if reset_pathway_enabled
+                else "figure10_control_layer6i_state"
+            ),
+        )
+        sector.network.add(layer6i_state)
     match = ClassicMatchMismatchCue(
         condition=MatchCondition.MATCH,
         top_down_current_pA=top_down_current_pA,
@@ -278,6 +303,48 @@ def run_figure10_condition(
 
         build_and_run_cpp_standalone(brian, cpp_standalone_directory)
 
+    gate_integrals: tuple[tuple[str, float], ...] = ()
+    current_integrals: tuple[tuple[str, float], ...] = ()
+    current_peaks: tuple[tuple[str, float], ...] = ()
+    if layer6i_state is not None:
+        times_ms = np.asarray(layer6i_state.t / brian.ms)
+        mismatch_window = times_ms >= pre_match_duration_ms
+        mismatch_times_ms = times_ms[mismatch_window]
+        projection_ports = (
+            ("modeldb112923.projection.023", "port_000"),
+            ("modeldb112923.projection.024", "port_001"),
+            ("modeldb112923.projection.025", "port_002"),
+        )
+        gate_integrals = tuple(
+            (
+                projection_id,
+                float(
+                    np.trapz(
+                        np.sum(
+                            np.asarray(getattr(layer6i_state, f"{port}_gate"))[:, mismatch_window],
+                            axis=0,
+                        ),
+                        mismatch_times_ms,
+                    )
+                ),
+            )
+            for projection_id, port in projection_ports
+        )
+        current_traces = {
+            projection_id: np.sum(
+                np.asarray(getattr(layer6i_state, f"i_{port}") / brian.pA)[:, mismatch_window],
+                axis=0,
+            )
+            for projection_id, port in projection_ports
+        }
+        current_integrals = tuple(
+            (projection_id, float(np.trapz(trace, mismatch_times_ms)))
+            for projection_id, trace in current_traces.items()
+        )
+        current_peaks = tuple(
+            (projection_id, float(np.max(trace))) for projection_id, trace in current_traces.items()
+        )
+
     return Figure10ConditionResult(
         pre_match_duration_ms=pre_match_duration_ms,
         mismatch_duration_ms=mismatch_duration_ms,
@@ -293,4 +360,7 @@ def run_figure10_condition(
         learned_state_provenance=learned_state_provenance,
         comparator_target_count=comparator_top_k_targets,
         top_down_current_mode=current_mode.value,
+        layer6i_mismatch_gate_integral_ms_by_projection=gate_integrals,
+        layer6i_mismatch_current_integral_pA_ms_by_projection=current_integrals,
+        layer6i_mismatch_current_peak_pA_by_projection=current_peaks,
     )

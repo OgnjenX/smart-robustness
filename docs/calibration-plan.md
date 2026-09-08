@@ -1634,3 +1634,12 @@ release fail. Figure 10 is not reproduced. Next add read-only projection-025
 gate/current diagnostics to determine whether the causal difference is erased
 in layer-5 transmission or masked at layer 6I. No weight or AHP/ACh tuning is
 authorized before that localization.
+
+Artifact 604 adds default-off, read-only layer-6I source separation for the
+three serialized inputs: relay projection 023, layer-2/3 projection 024, and
+layer-5 projection 025. Registration 605 fixes one unchanged repeat of the
+calibrated reset pair and requires complete event identity before interpreting
+population-summed mismatch gate/current integrals and peaks. Greater intact
+projection-025 drive with identical layer-6I output will localize masking inside
+layer 6I; equal drive will localize event/transmitter loss before layer 6I.
+No parameter selection or AHP/ACh change is permitted.

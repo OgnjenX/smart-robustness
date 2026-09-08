@@ -637,6 +637,11 @@ parameters:
     status: completed-endpoint-failed-family-closed
     source: SMART.nml, supplementary Table 3, archived KInNeSS manual, and Artifacts 610--615
     note: The sole endpoint preserves Figure 6 and creates a 10.89-fold integrated, 56.68-fold peak layer-5-to-layer-6I current contrast, but both causal arms emit the same five layer-6I events from cell 40 and layer 4 remains unchanged. It also produces nine rather than seven nonspecific mismatch events. Weight 1 is rejected, weight 2 remains inadmissible, and the family closes without interpolation or promotion.
+  diagnostics.figure10.spatial_reset_wave:
+    value: layer-5 mismatch events and projection-025 input plus layer-6I voltage/event recruitment by target cell
+    status: preregistered-awaiting-execution
+    source: Grossberg and Versace 2008 Figure 10 and Sections 2.6--2.7; Artifacts 610 and 615--617
+    note: The paper requires a nonspecific synchronized layer-5 wave and broad layer-6I reset. One unchanged released-network pair will locate whether spatial coverage collapses in layer 5, projection-025 transfer, or layer-6I spike generation. No parameter or score may change.
   benchmark.population_sizes:
     value: see configs/*.yaml
     status: exploratory

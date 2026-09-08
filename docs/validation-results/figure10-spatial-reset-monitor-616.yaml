@@ -1,0 +1,28 @@
+schema_version: 1
+id: figure10-spatial-reset-monitor-616
+date: '2026-09-08'
+status: implementation-ready-tests-pass
+classification: read-only-spatial-reset-wave-localization
+harness: src/smart_robustness/validation/figure10.py
+harness_sha256: 67419aed44e5cc25a0ff0173f6e5ebf989c828605d894d57d1e90f2da8b42624
+runner: scripts/run_figure10_calibrated_reset_pair.py
+runner_sha256: 37e91c2e6729814d8f05c702c6e7e7974fe2680d6d66bee867001d8411141784
+added_readouts:
+- exact mismatch-active layer-5 indices and event count per index
+- per-target projection-025 gate integral
+- per-target projection-025 current integral and peak
+- per-target layer-6I somatic voltage peak
+- per-target layer-6I proximal-dendrite voltage peak
+scientific_requirement: >-
+  Grossberg and Versace 2008 Figure 10 and Section 2.6 describe a nonspecific
+  mismatch burst producing synchronized dendritic spiking across layer-5 cells,
+  followed by a broad layer-6I reset wave. Aggregate population counts do not
+  establish either spatial requirement.
+verification:
+  command: .venv/bin/pytest -q tests/test_figure10_validation.py
+  result: 6 passed
+  lint: pass
+boundary: >-
+  All added observations are default-off with the existing diagnostic flag.
+  They change no equations, parameters, connectivity, stimulus, event rule,
+  phase duration, comparator, learned state, or reset score.

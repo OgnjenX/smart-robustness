@@ -1693,3 +1693,11 @@ The supplement-literal projection-024 value is therefore rejected and the
 family closes. The next admissible work returns to the released-network value
 and audits spatial layer-5 and layer-6I recruitment, because Figure 10 requires
 a nonspecific layer-5 wave and broad layer-6I reset, not merely larger totals.
+
+Artifact 616 adds default-off spatial observations to test that requirement:
+mismatch layer-5 events by cell; projection-025 gate/current by layer-6I target;
+and layer-6I proximal/somatic voltage peaks by target. Registration 617 returns
+to released-network projection-024 weight 4 and fixes one unchanged repetition
+of Artifact 610. Exact prior identity and all fresh Figure 6 gates are required
+before locating the earliest spatial collapse. This audit cannot select a
+parameter or reopen the failed supplement endpoint.

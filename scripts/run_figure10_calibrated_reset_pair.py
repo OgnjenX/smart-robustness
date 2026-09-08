@@ -29,6 +29,14 @@ def _condition_summary(result):
 
     pre_layer4 = result.layer4_counts(after_mismatch=False)
     post_layer4 = result.layer4_counts(after_mismatch=True)
+    layer5_post_counts = {}
+    for index, time_ms in zip(
+        result.layer5_spike_indices,
+        result.layer5_spike_times_ms,
+        strict=True,
+    ):
+        if time_ms >= split:
+            layer5_post_counts[int(index)] = layer5_post_counts.get(int(index), 0) + 1
     layer4i_post_events = [
         [int(index), float(time_ms)]
         for index, time_ms in zip(
@@ -48,6 +56,8 @@ def _condition_summary(result):
         "nonspecific_post_events": phase_count(result.nonspecific_spike_times_ms, post=True),
         "layer5_pre_events": phase_count(result.layer5_spike_times_ms, post=False),
         "layer5_post_events": phase_count(result.layer5_spike_times_ms, post=True),
+        "layer5_post_active_indices": sorted(layer5_post_counts),
+        "layer5_post_events_by_index": layer5_post_counts,
         "layer6i_pre_events": phase_count(result.layer6i_spike_times_ms, post=False),
         "layer6i_post_events": phase_count(result.layer6i_spike_times_ms, post=True),
         "layer6i_mismatch_events": [
@@ -75,6 +85,21 @@ def _condition_summary(result):
         ),
         "layer6i_mismatch_current_peak_pA_by_projection": dict(
             result.layer6i_mismatch_current_peak_pA_by_projection
+        ),
+        "layer6i_mismatch_projection025_gate_integral_ms_by_index": dict(
+            result.layer6i_mismatch_projection025_gate_integral_ms_by_index
+        ),
+        "layer6i_mismatch_projection025_current_integral_pA_ms_by_index": dict(
+            result.layer6i_mismatch_projection025_current_integral_pA_ms_by_index
+        ),
+        "layer6i_mismatch_projection025_current_peak_pA_by_index": dict(
+            result.layer6i_mismatch_projection025_current_peak_pA_by_index
+        ),
+        "layer6i_mismatch_soma_voltage_peak_mV_by_index": dict(
+            result.layer6i_mismatch_soma_voltage_peak_mV_by_index
+        ),
+        "layer6i_mismatch_proximal_voltage_peak_mV_by_index": dict(
+            result.layer6i_mismatch_proximal_voltage_peak_mV_by_index
         ),
         "layer4i_mismatch_projection026_gate_integral_ms": (
             result.layer4i_mismatch_projection026_gate_integral_ms

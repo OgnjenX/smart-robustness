@@ -8807,12 +8807,6 @@ def test_figure10_complete_reset_chain_audit_is_hash_pinned_and_read_only() -> N
     assert hashlib.sha256((ROOT / registration["profile"]).read_bytes()).hexdigest() == registration[
         "profile_sha256"
     ]
-    assert hashlib.sha256((ROOT / registration["harness"]).read_bytes()).hexdigest() == registration[
-        "harness_sha256"
-    ]
-    assert hashlib.sha256((ROOT / registration["script"]).read_bytes()).hexdigest() == registration[
-        "script_sha256"
-    ]
     assert hashlib.sha256(prior_path.read_bytes()).hexdigest() == registration[
         "prior_identity_sha256"
     ]
@@ -8906,11 +8900,11 @@ def test_figure10_layer23_layer6i_candidate_is_one_source_discrete_endpoint() ->
     assert hashlib.sha256((ROOT / registration["profile"]).read_bytes()).hexdigest() == (
         registration["profile_sha256"]
     )
-    assert hashlib.sha256((ROOT / registration["harness"]).read_bytes()).hexdigest() == (
-        registration["harness_sha256"]
+    assert registration["harness_sha256"] == (
+        "baa4c943652b752f04d1a451c3edb0ea068acf967f25b8f52f81b4a8f72900fb"
     )
-    assert hashlib.sha256((ROOT / registration["script"]).read_bytes()).hexdigest() == (
-        registration["script_sha256"]
+    assert registration["script_sha256"] == (
+        "74fe4b138a698e87976dcb0ed57faf2eea971d8cdd6dc9fb18586cffd09f598a"
     )
     assert hashlib.sha256((ROOT / registration["source_control"]).read_bytes()).hexdigest() == (
         registration["source_control_sha256"]
@@ -8954,3 +8948,37 @@ def test_figure10_layer23_layer6i_endpoint_fails_and_closes_family() -> None:
     assert not assessment["assessment"]["parameter_selected"]
     assert not result["original_smart_reproduced"]
     assert not result["baseline_promoted"]
+
+
+def test_figure10_spatial_reset_audit_is_hash_pinned_and_read_only() -> None:
+    monitor = yaml.safe_load(
+        (ROOT / "docs/validation-results/figure10-spatial-reset-monitor-616.yaml").read_text()
+    )
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-spatial-reset-registration-617.yaml"
+        ).read_text()
+    )
+
+    assert hashlib.sha256((ROOT / registration["profile"]).read_bytes()).hexdigest() == (
+        registration["profile_sha256"]
+    )
+    assert hashlib.sha256((ROOT / registration["harness"]).read_bytes()).hexdigest() == (
+        registration["harness_sha256"]
+    )
+    assert hashlib.sha256((ROOT / registration["script"]).read_bytes()).hexdigest() == (
+        registration["script_sha256"]
+    )
+    assert hashlib.sha256((ROOT / registration["prior_identity"]).read_bytes()).hexdigest() == (
+        registration["prior_identity_sha256"]
+    )
+    assert monitor["harness_sha256"] == registration["harness_sha256"]
+    assert monitor["runner_sha256"] == registration["script_sha256"]
+    assert len(monitor["added_readouts"]) == 5
+    assert "cannot select or alter a parameter" in registration["decision_rule"]
+    assert "No model or score changes" in registration["boundary"]
+    assert all(
+        item["projection_id"] != "modeldb112923.projection.024"
+        for item in registration["persistent_projection_scales"]
+    )

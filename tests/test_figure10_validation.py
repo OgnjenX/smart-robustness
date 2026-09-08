@@ -30,6 +30,7 @@ def _condition(
         layer4_spike_indices=indices,
         layer4_spike_times_ms=times,
         nonspecific_spike_times_ms=pathway_times,
+        layer5_spike_indices=((40,) if chain else ()),
         layer5_spike_times_ms=pathway_times,
         layer6i_spike_times_ms=pathway_times,
     )
@@ -143,4 +144,6 @@ def test_figure10_condition_smoke_runs_persistent_two_phase_network() -> None:
     assert result.top_down_current_mode == "sustained_epoch"
     assert result.layer6i_mismatch_gate_integral_ms_by_projection == ()
     assert result.layer6i_mismatch_event_transmitter_samples == ()
+    assert result.layer6i_mismatch_projection025_gate_integral_ms_by_index == ()
+    assert result.layer6i_mismatch_soma_voltage_peak_mV_by_index == ()
     assert result.layer4i_mismatch_projection026_gate_integral_ms is None

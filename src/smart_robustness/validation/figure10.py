@@ -43,6 +43,7 @@ class Figure10ConditionResult:
     layer4_spike_indices: tuple[int, ...]
     layer4_spike_times_ms: tuple[float, ...]
     nonspecific_spike_times_ms: tuple[float, ...] = ()
+    layer5_spike_indices: tuple[int, ...] = ()
     layer5_spike_times_ms: tuple[float, ...] = ()
     layer6i_spike_indices: tuple[int, ...] = ()
     layer6i_spike_times_ms: tuple[float, ...] = ()
@@ -56,6 +57,13 @@ class Figure10ConditionResult:
     layer6i_mismatch_current_integral_pA_ms_by_projection: tuple[tuple[str, float], ...] = ()
     layer6i_mismatch_current_peak_pA_by_projection: tuple[tuple[str, float], ...] = ()
     layer6i_mismatch_event_transmitter_samples: tuple[tuple[int, float, float], ...] = ()
+    layer6i_mismatch_projection025_gate_integral_ms_by_index: tuple[tuple[int, float], ...] = ()
+    layer6i_mismatch_projection025_current_integral_pA_ms_by_index: tuple[
+        tuple[int, float], ...
+    ] = ()
+    layer6i_mismatch_projection025_current_peak_pA_by_index: tuple[tuple[int, float], ...] = ()
+    layer6i_mismatch_soma_voltage_peak_mV_by_index: tuple[tuple[int, float], ...] = ()
+    layer6i_mismatch_proximal_voltage_peak_mV_by_index: tuple[tuple[int, float], ...] = ()
     layer4i_mismatch_projection026_gate_integral_ms: float | None = None
     layer4i_mismatch_projection026_current_integral_pA_ms: float | None = None
     layer4i_mismatch_projection026_current_peak_pA: float | None = None
@@ -68,6 +76,10 @@ class Figure10ConditionResult:
             raise ValueError("Figure 10 phase durations must be positive")
         if len(self.layer4_spike_indices) != len(self.layer4_spike_times_ms):
             raise ValueError("layer-4 spike indices and times must have equal length")
+        if self.layer5_spike_indices and len(self.layer5_spike_indices) != len(
+            self.layer5_spike_times_ms
+        ):
+            raise ValueError("layer-5 spike indices and times must have equal length")
         if self.layer6i_spike_indices and len(self.layer6i_spike_indices) != len(
             self.layer6i_spike_times_ms
         ):
@@ -292,6 +304,8 @@ def run_figure10_condition(
                 "i_port_000",
                 "i_port_001",
                 "i_port_002",
+                "v_soma",
+                "v_proximal_dendrite",
             ),
             record=True,
             name=(
@@ -376,6 +390,11 @@ def run_figure10_condition(
     gate_integrals: tuple[tuple[str, float], ...] = ()
     current_integrals: tuple[tuple[str, float], ...] = ()
     current_peaks: tuple[tuple[str, float], ...] = ()
+    projection025_gate_by_index: tuple[tuple[int, float], ...] = ()
+    projection025_current_integral_by_index: tuple[tuple[int, float], ...] = ()
+    projection025_current_peak_by_index: tuple[tuple[int, float], ...] = ()
+    soma_voltage_peak_by_index: tuple[tuple[int, float], ...] = ()
+    proximal_voltage_peak_by_index: tuple[tuple[int, float], ...] = ()
     if layer6i_state is not None:
         times_ms = np.asarray(layer6i_state.t / brian.ms)
         mismatch_window = times_ms >= pre_match_duration_ms
@@ -413,6 +432,33 @@ def run_figure10_condition(
         )
         current_peaks = tuple(
             (projection_id, float(np.max(trace))) for projection_id, trace in current_traces.items()
+        )
+        projection025_gate = np.asarray(layer6i_state.port_002_gate)[:, mismatch_window]
+        projection025_current_pA = np.asarray(layer6i_state.i_port_002 / brian.pA)[
+            :, mismatch_window
+        ]
+        projection025_gate_by_index = tuple(
+            (index, float(np.trapz(trace, mismatch_times_ms)))
+            for index, trace in enumerate(projection025_gate)
+        )
+        projection025_current_integral_by_index = tuple(
+            (index, float(np.trapz(trace, mismatch_times_ms)))
+            for index, trace in enumerate(projection025_current_pA)
+        )
+        projection025_current_peak_by_index = tuple(
+            (index, float(np.max(trace))) for index, trace in enumerate(projection025_current_pA)
+        )
+        soma_voltage_peak_by_index = tuple(
+            (index, float(np.max(trace)))
+            for index, trace in enumerate(
+                np.asarray(layer6i_state.v_soma / brian.mV)[:, mismatch_window]
+            )
+        )
+        proximal_voltage_peak_by_index = tuple(
+            (index, float(np.max(trace)))
+            for index, trace in enumerate(
+                np.asarray(layer6i_state.v_proximal_dendrite / brian.mV)[:, mismatch_window]
+            )
         )
 
     transmitter_samples: tuple[tuple[int, float, float], ...] = ()
@@ -466,6 +512,7 @@ def run_figure10_condition(
         nonspecific_spike_times_ms=tuple(
             float(value) for value in np.asarray(nonspecific.t / brian.ms)
         ),
+        layer5_spike_indices=tuple(int(value) for value in np.asarray(layer5.i)),
         layer5_spike_times_ms=tuple(float(value) for value in np.asarray(layer5.t / brian.ms)),
         layer6i_spike_indices=tuple(int(value) for value in np.asarray(layer6i.i)),
         layer6i_spike_times_ms=tuple(float(value) for value in np.asarray(layer6i.t / brian.ms)),
@@ -487,6 +534,15 @@ def run_figure10_condition(
         layer6i_mismatch_current_integral_pA_ms_by_projection=current_integrals,
         layer6i_mismatch_current_peak_pA_by_projection=current_peaks,
         layer6i_mismatch_event_transmitter_samples=transmitter_samples,
+        layer6i_mismatch_projection025_gate_integral_ms_by_index=(projection025_gate_by_index),
+        layer6i_mismatch_projection025_current_integral_pA_ms_by_index=(
+            projection025_current_integral_by_index
+        ),
+        layer6i_mismatch_projection025_current_peak_pA_by_index=(
+            projection025_current_peak_by_index
+        ),
+        layer6i_mismatch_soma_voltage_peak_mV_by_index=soma_voltage_peak_by_index,
+        layer6i_mismatch_proximal_voltage_peak_mV_by_index=(proximal_voltage_peak_by_index),
         layer4i_mismatch_projection026_gate_integral_ms=projection026_gate,
         layer4i_mismatch_projection026_current_integral_pA_ms=projection026_current,
         layer4i_mismatch_projection026_current_peak_pA=(

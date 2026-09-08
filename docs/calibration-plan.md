@@ -1643,3 +1643,13 @@ population-summed mismatch gate/current integrals and peaks. Greater intact
 projection-025 drive with identical layer-6I output will localize masking inside
 layer 6I; equal drive will localize event/transmitter loss before layer 6I.
 No parameter selection or AHP/ACh change is permitted.
+
+Artifacts 605--607 complete that localization with exact event identity.
+Projection 025 is not losing the layer-5 difference: intact/control mismatch
+gate integrals are 57.65/22.89, current integrals 57,937/21,003 pA·ms, and
+current peaks 4,502/503 pA. Relay drive is effectively identical and layer-2/3
+drive changes only slightly, yet layer-6I remains 30 events and layer-4 remains
+43 in both arms. The reset signal is masked or saturated inside layer 6I, or
+its event/resource timing prevents effective downstream transmission. Next
+record exact layer-6I event timing, source transmitter, and projection-026
+drive to layer-4 inhibitory cells without changing depletion or any weight.

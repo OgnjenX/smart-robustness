@@ -1,0 +1,49 @@
+schema_version: 1
+id: figure10-layer6i-transfer-assessment-607
+date: '2026-09-08'
+status: assessed-layer5-drive-reaches-layer6i-but-output-is-masked
+registration: docs/validation-results/figure10-layer6i-transfer-registration-605.yaml
+result: docs/validation-results/figure10-layer6i-transfer-pair-606.yaml
+result_sha256: 25241642d5ce5dcac5e2c50772a04333bdd41c665dfd8196f1c3c8a73f6cc73a
+assessment:
+  fresh_figure6_passed: true
+  prior_event_identity_reproduced: true
+  finite_layer6i_readouts: true
+  projection025_gate_greater_in_intact: true
+  projection025_current_integral_greater_in_intact: true
+  projection025_current_peak_greater_in_intact: true
+  relay_drive_materially_changed: false
+  layer23_drive_materially_changed: false
+  layer6i_event_count_changed: false
+  failure_localized_to_layer6i_masking_or_saturation: true
+  layer5_transmitter_transfer_failure_rejected: true
+  parameter_selected: false
+  candidate_reopened: false
+  official_figure10_reset_reproduced: false
+  original_smart_reproduced: false
+  baseline_promoted: false
+quantitative_summary:
+  projection025_gate_integral_ms_intact_control: [57.64704413164281, 22.89242778725304]
+  projection025_current_integral_pA_ms_intact_control: [57936.75645487377, 21003.156141073836]
+  projection025_current_peak_pA_intact_control: [4501.529744115889, 502.7285515566416]
+  projection023_current_integral_pA_ms_intact_control: [238329.170622851, 238386.2997423449]
+  projection024_current_integral_pA_ms_intact_control: [478093.5610642588, 476459.82025795034]
+  layer6i_post_events_intact_control: [30, 30]
+  layer4_post_events_intact_control: [43, 43]
+interpretation: >-
+  The run repeats every Artifact-602 event count and active-cell identity. The
+  intact reset pathway delivers 2.52 times the projection-025 gate integral,
+  2.76 times its current integral, and 8.95 times its peak current to layer 6I.
+  Relay input is effectively unchanged and layer-2/3 input differs only
+  slightly. Despite this large selective layer-5 signal, layer 6I still emits
+  30 events in both arms and layer 4 remains unchanged. Layer-5 transmitter
+  transfer is therefore not the blocker; the signal is masked or saturated
+  within layer 6I, or its event timing/resource state makes the downstream
+  projection ineffective.
+next_gate: >-
+  Record exact layer-6I mismatch event identity/timing, source transmitter at
+  those events, and projection-026 gate/current at layer-4 inhibitory cells in
+  one unchanged intact/control repeat. This will distinguish unchanged layer-6I
+  event timing from a timing-only difference and test whether the documented
+  epsilon-1, 400-ms transmitter resource suppresses downstream reset efficacy.
+  Do not alter depletion, projection 025/026, AHP/ACh, or any score first.

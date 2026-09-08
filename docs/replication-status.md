@@ -3720,3 +3720,11 @@ Artifact 602 and compares projection-025 gate/current transfer between intact
 and reset-disconnected arms. This will distinguish erased layer-5 transmission
 from a real input difference masked by layer-6I dynamics. The audit cannot tune
 projection 025, AHP/ACh, or any reset score.
+
+Artifacts 605--607 show that the added layer-5 signal reaches layer 6I very
+strongly: projection-025 intact/control current integral is 57,937 versus
+21,003 pA·ms and peak current is 4,502 versus 503 pA. Other layer-6I inputs are
+nearly unchanged, but layer-6I and layer-4 event counts remain exactly equal.
+The failure is therefore not layer-5 event/transmitter transfer; it is masking
+or saturation at layer 6I, or ineffective downstream timing/resource state.
+Figure 10 and baseline freezing remain failed.

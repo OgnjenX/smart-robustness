@@ -8758,3 +8758,39 @@ def test_figure10_layer6i_transfer_audit_is_hash_pinned_and_read_only() -> None:
     assert registration["required_identity"]["intact_control_layer5_post"] == [70, 55]
     assert "cannot select a parameter" in registration["decision_rule"]
     assert "No projection-025 scaling" in registration["boundary"]
+
+
+def test_figure10_layer6i_transfer_localizes_masking_after_input() -> None:
+    result_path = (
+        ROOT / "docs/validation-results/figure10-layer6i-transfer-pair-606.yaml"
+    )
+    result = yaml.safe_load(result_path.read_text())
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-layer6i-transfer-assessment-607.yaml"
+        ).read_text()
+    )
+
+    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment[
+        "result_sha256"
+    ]
+    assert all(result["figure6_gates"].values())
+    intact = result["intact"]
+    control = result["disconnected_control"]
+    projection = "modeldb112923.projection.025"
+    assert intact["layer6i_mismatch_gate_integral_ms_by_projection"][projection] > control[
+        "layer6i_mismatch_gate_integral_ms_by_projection"
+    ][projection]
+    assert intact["layer6i_mismatch_current_integral_pA_ms_by_projection"][projection] > control[
+        "layer6i_mismatch_current_integral_pA_ms_by_projection"
+    ][projection]
+    assert intact["layer6i_mismatch_current_peak_pA_by_projection"][projection] > control[
+        "layer6i_mismatch_current_peak_pA_by_projection"
+    ][projection]
+    assert intact["layer6i_post_events"] == control["layer6i_post_events"] == 30
+    assert intact["layer4_post_events"] == control["layer4_post_events"] == 43
+    assert assessment["assessment"]["failure_localized_to_layer6i_masking_or_saturation"]
+    assert assessment["assessment"]["layer5_transmitter_transfer_failure_rejected"]
+    assert not assessment["assessment"]["parameter_selected"]
+    assert not assessment["assessment"]["baseline_promoted"]

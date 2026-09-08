@@ -624,9 +624,9 @@ parameters:
     note: Sequential history yields exact four-to-seven nonspecific events, and disconnecting projections 017/018 reduces layer-5 mismatch events from 70 to 55. Layer-6I remains 30 and layer-4 remains 43 in both arms, so winner suppression and alternative release fail. No parameter is selected; projection-025 transfer requires read-only localization next.
   diagnostics.figure10.layer6i_projection025_transfer:
     value: read-only intact/control mismatch gate and current integrals for layer-6I projections 023--025
-    status: preregistered-awaiting-execution
-    source: Figure 10 causal failure Artifact 603; source port mapping and monitor Artifact 604; Registration 605
-    note: Complete Artifact-602 event identity and finite readouts are required. The diagnostic distinguishes layer-5 transmitter-transfer loss from masking within layer 6I and cannot select a parameter or alter AHP/ACh.
+    status: completed-layer5-transfer-confirmed-layer6i-output-masked
+    source: Artifacts 604--607, authorized by Artifact 603
+    note: Artifact-602 identity repeats. Projection-025 intact/control gate integrals are 57.65/22.89 and current integrals are 57,937/21,003 pA-ms, while relay and layer-2/3 drive are nearly unchanged. Layer-6I remains 30 events in both arms. No parameter is selected; exact layer-6I timing, transmitter, and projection-026 downstream transfer require read-only audit.
   benchmark.population_sizes:
     value: see configs/*.yaml
     status: exploratory

@@ -1,0 +1,43 @@
+schema_version: 1
+id: figure7-persistent-recurrent-gaba-pair-registration-590
+date: '2026-09-08'
+status: registered-before-execution-single-fixed-pair
+classification: calibrated-persistent-recurrent-gaba-fixed-pair
+profile: configs/calibration/figure7_learned_coincidence_effective_t_pair_v1.yaml
+profile_sha256: 4b6aa0bdf4fb844e428fb330f34970900cc8bc741183b2d8e6e73789cba0b30f
+script: scripts/run_figure7_persistent_recurrent_gaba_pair.py
+script_sha256: 8497729a2a697bfaa57adf11f482af9c9bd52ec0128ea8df5fd58c306db24f67
+runtime_fingerprint: fa4ab9f0bf2bec4d6ad53cb6a91620047689b6839b146ed7d777d42350c2cdf5
+authorization: docs/validation-results/figure7-persistent-recurrent-gaba-match-cross-assessment-589.yaml
+result_id: figure7-persistent-recurrent-gaba-pair-591
+result: docs/validation-results/figure7-persistent-recurrent-gaba-pair-591.yaml
+assessment: docs/validation-results/figure7-persistent-recurrent-gaba-pair-assessment-592.yaml
+persistent_projection_scales:
+- {projection_id: modeldb112923.projection.008, scale: 0.75}
+- {projection_id: modeldb112923.projection.011, scale: 0.9375}
+nonspecific_t_scale: 0.1875
+fixed_match_control:
+  relay_active_indices: [38, 39, 40, 41, 42]
+  relay_events: 20
+  trn_events: 697
+  nonspecific_events: 4
+fixed_mismatch_gates:
+  relay_active_indices: [40]
+  match_more_active_relay_cells: true
+  match_more_trn_events: true
+  nonspecific_events: 7
+registered_diagnostics:
+  - central, peripheral, and whole-sheet TRN event totals
+  - full-sheet relay and layer-6II afferent gate-integral sums
+  - peripheral per-cell event and afferent direction counts
+  - largest peripheral mismatch-minus-match event deltas
+  - direct TRN-to-nonspecific integrated GABA
+selection_rule: >-
+  Execute one fresh Figure 6 and one fixed match/mismatch pair. Every Figure 6,
+  match-control, and mismatch gate must pass. Do not adjust, repeat, interpolate,
+  or add values after seeing the result. Any failure closes the survivor.
+boundary: >-
+  This is an explicitly calibrated reconstruction of unresolved recurrent-GABA
+  balance. A complete pass would validate the Figure 7 spatial/rate/TRN-order
+  phenotype for this fixed reconstruction, not recover original KInNeSS ring
+  semantics or by itself reproduce all SMART figures and freeze the baseline.

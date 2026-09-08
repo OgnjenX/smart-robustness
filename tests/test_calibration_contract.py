@@ -9443,3 +9443,35 @@ def test_persistent_recurrent_gaba_match_cross_has_one_survivor() -> None:
     assert assessment["assessment"]["persistent_mismatch_authorized"]
     assert not assessment["assessment"]["grid_extension_authorized"]
     assert not assessment["assessment"]["baseline_promoted"]
+
+
+def test_persistent_recurrent_gaba_pair_is_single_fixed_verification() -> None:
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-persistent-recurrent-gaba-pair-registration-590.yaml"
+        ).read_text()
+    )
+    profile_path = ROOT / registration["profile"]
+    script_path = ROOT / registration["script"]
+
+    assert hashlib.sha256(profile_path.read_bytes()).hexdigest() == registration[
+        "profile_sha256"
+    ]
+    assert hashlib.sha256(script_path.read_bytes()).hexdigest() == registration[
+        "script_sha256"
+    ]
+    assert registration["persistent_projection_scales"] == [
+        {"projection_id": "modeldb112923.projection.008", "scale": 0.75},
+        {"projection_id": "modeldb112923.projection.011", "scale": 0.9375},
+    ]
+    assert registration["fixed_match_control"]["trn_events"] == 697
+    assert registration["fixed_mismatch_gates"] == {
+        "relay_active_indices": [40],
+        "match_more_active_relay_cells": True,
+        "match_more_trn_events": True,
+        "nonspecific_events": 7,
+    }
+    assert len(registration["registered_diagnostics"]) == 5
+    assert "Do not adjust, repeat" in registration["selection_rule"]
+    assert "not recover original" in registration["boundary"]

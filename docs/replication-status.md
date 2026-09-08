@@ -3645,3 +3645,10 @@ nonspecific match, with 697 TRN events. The 0.875 candidate fails Figure 6 and
 source-control 1.0 gives only three nonspecific events. Mismatch remains
 unconsulted. One fixed fresh-learning pair with full-sheet and direct-drive
 diagnostics is authorized; no grid extension is allowed.
+
+Registration 590 fixes the survivor's only mismatch test before execution. The
+fresh match must repeat 20 relay, 697 TRN, and four nonspecific events. Mismatch
+must be confined to relay cell 40, have fewer TRN events than match, and produce
+seven nonspecific events. The runner records full-sheet afferent/TRN summaries
+and direct inhibition in the same process. No post-result adjustment or repeat
+is authorized.

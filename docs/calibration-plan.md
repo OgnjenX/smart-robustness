@@ -1553,3 +1553,10 @@ source control 1.0 produces only three nonspecific events. The nonlinear grid is
 closed without interpolation. Register one fixed fresh-learning match/mismatch
 pair at projection-008 scale 0.75, projection-011 scale 0.9375, and T scale
 0.1875, with full-sheet and direct-drive diagnostics; any failure closes it.
+
+Registration 590 fixes that one pair before mismatch execution. Both recurrent
+scales persist through fresh learning; the archived 697-event match is locked.
+Mismatch must remain overlap-only, produce fewer TRN events than match, and
+yield exactly seven nonspecific events against match's four. Full-sheet afferent
+and direct-inhibition summaries are mandatory. No adjustment or repeat follows
+a failed gate.

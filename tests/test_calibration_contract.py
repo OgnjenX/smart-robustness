@@ -9594,3 +9594,38 @@ def test_mismatch_nonspecific_trace_compare_localizes_missing_event() -> None:
     assert not assessment["assessment"]["parameter_selected"]
     assert not assessment["assessment"]["candidate_reopened"]
     assert not assessment["assessment"]["baseline_promoted"]
+
+
+def test_repaired_trn_output_gaba_interaction_is_narrow_and_preregistered() -> None:
+    audit_path = (
+        ROOT
+        / "docs/validation-results/figure7-trn-nonspecific-gaba-reopen-audit-596.yaml"
+    )
+    audit = yaml.safe_load(audit_path.read_text())
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-persistent-output-gaba-match-registration-597.yaml"
+        ).read_text()
+    )
+
+    assert hashlib.sha256(audit_path.read_bytes()).hexdigest() == registration[
+        "authorization_sha256"
+    ]
+    assert hashlib.sha256((ROOT / registration["profile"]).read_bytes()).hexdigest() == registration[
+        "profile_sha256"
+    ]
+    assert hashlib.sha256((ROOT / registration["script"]).read_bytes()).hexdigest() == registration[
+        "script_sha256"
+    ]
+    assert audit["admissibility"]["sole_reopened_scale"] == 0.75
+    assert not audit["admissibility"]["new_interpolation_allowed"]
+    assert not audit["admissibility"]["new_grid_extension_allowed"]
+    assert registration["nonspecific_gaba_common_scale"] == 0.75
+    assert registration["nonspecific_gaba_projection_ids"] == [
+        "modeldb112923.projection.047",
+        "modeldb112923.projection.048",
+        "modeldb112923.projection.049",
+    ]
+    assert "consult mismatch" in registration["boundary"]
+    assert "promote a baseline" in registration["boundary"]

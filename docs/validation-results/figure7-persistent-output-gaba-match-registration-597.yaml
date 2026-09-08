@@ -1,0 +1,47 @@
+schema_version: 1
+id: figure7-persistent-output-gaba-match-registration-597
+date: '2026-09-08'
+status: registered-before-execution-single-persistent-output-gaba-match
+classification: calibrated-repaired-trn-by-prior-output-transfer-interaction
+profile: configs/calibration/figure7_learned_coincidence_effective_t_pair_v1.yaml
+profile_sha256: 4b6aa0bdf4fb844e428fb330f34970900cc8bc741183b2d8e6e73789cba0b30f
+script: scripts/run_figure7_persistent_output_gaba_match.py
+script_sha256: e1623a13adea4ed65e188d836032e11f04954290fe9413cf07d2c4dd6805fcc2
+runtime_fingerprint: fa4ab9f0bf2bec4d6ad53cb6a91620047689b6839b146ed7d777d42350c2cdf5
+authorization: docs/validation-results/figure7-trn-nonspecific-gaba-reopen-audit-596.yaml
+authorization_sha256: 23b2d58a522ef85326e2b7f1e8fda57f2b9e8ac67ba1f2d228259f2d2ebb270a
+causal_diagnostic: docs/validation-results/figure7-mismatch-nonspecific-trace-compare-assessment-595.yaml
+result_id: figure7-persistent-output-gaba-match-598
+result: docs/validation-results/figure7-persistent-output-gaba-match-598.yaml
+assessment: docs/validation-results/figure7-persistent-output-gaba-match-assessment-599.yaml
+persistent_projection_scales:
+- {projection_id: modeldb112923.projection.008, scale: 0.75}
+- {projection_id: modeldb112923.projection.011, scale: 0.9375}
+nonspecific_gaba_projection_ids:
+- modeldb112923.projection.047
+- modeldb112923.projection.048
+- modeldb112923.projection.049
+nonspecific_gaba_common_scale: 0.75
+nonspecific_t_scale: 0.1875
+source_control:
+  common_scale: 1.0
+  archived_match: docs/validation-results/figure7-persistent-recurrent-gaba-pair-591.yaml
+  archived_mismatch_trace: docs/validation-results/figure7-mismatch-nonspecific-trace-compare-594.yaml
+fixed_match_gates:
+  figure6_all: true
+  relay_active_indices: [38, 39, 40, 41, 42]
+  relay_events: 20
+  nonspecific_events: 4
+decision_rule: >-
+  Run one fresh Figure 6 episode with every scale persistent. Construct match
+  only if every Figure 6 gate passes. The candidate survives only if match has
+  exactly relay cells 38--42, 20 relay events, and four nonspecific events.
+  TRN count and GABA integral are diagnostics and cannot rank or rescue it. A
+  complete pass authorizes one separately registered mismatch; any failure
+  closes this interaction endpoint without adjustment.
+boundary: >-
+  This reuses the sole prior match-selected common output-transfer endpoint
+  under newly repaired recurrent balance. It does not reopen the old top-five
+  family, interpolate, extend a grid, alter compartment ratios or kinetics,
+  tune T current, consult mismatch, recover an original SMART parameter, or
+  promote a baseline.

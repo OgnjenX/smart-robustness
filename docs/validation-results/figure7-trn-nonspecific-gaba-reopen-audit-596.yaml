@@ -1,0 +1,70 @@
+schema_version: 1
+id: figure7-trn-nonspecific-gaba-reopen-audit-596
+date: '2026-09-08'
+status: completed-source-and-calibration-history-audit
+classification: source-constrained-interaction-family-admissibility
+source_records:
+- projection_id: modeldb112923.projection.047
+  target_compartment: soma
+  conductance_mS_cm2: 2.461
+  rise_fall_ms: [1.0, 4.0]
+  delay_ms: 0.1
+  weight: 0.01
+- projection_id: modeldb112923.projection.048
+  target_compartment: proximal_dendrite
+  conductance_mS_cm2: 1.5
+  rise_fall_ms: [1.0, 4.0]
+  delay_ms: 0.1
+  weight: 0.16
+- projection_id: modeldb112923.projection.049
+  target_compartment: distal_dendrite
+  conductance_mS_cm2: 1.461
+  rise_fall_ms: [1.0, 4.0]
+  delay_ms: 0.1
+  weight: 0.16
+source_conflict:
+  projection_id: modeldb112923.projection.049
+  paper_supplement_tuple:
+    conductance_mS_cm2: 1.5
+    rise_fall_ms: [1.0, 7.0]
+  prior_test: docs/validation-results/figure6-nonspecific-distal-gaba-source-327.yaml
+  outcome: failed-Figure-6-relay-selectivity
+  admissible_for_current_screen: false
+prior_common_transfer_family:
+  registration: docs/validation-results/figure7-top5-nonspecific-gaba-transfer-registration-328.yaml
+  tested_common_scales: [0.25, 0.5, 0.75, 1.0]
+  match_survivors: [0.75, 1.0]
+  selected_scale: 0.75
+  verification: docs/validation-results/figure7-top5-nonspecific-gaba-transfer-verification-332.yaml
+  mismatch: docs/validation-results/figure7-top5-nonspecific-gaba-transfer-pair-334.yaml
+  mismatch_outcome: four-versus-four-events-family-closed
+new_interaction_evidence:
+  upstream_candidate: docs/validation-results/figure7-persistent-recurrent-gaba-pair-591.yaml
+  trace_assessment: docs/validation-results/figure7-mismatch-nonspecific-trace-compare-assessment-595.yaml
+  distinction_from_prior_family:
+  - learned-coincidence comparator replaces the older top-five reconstruction
+  - persistent projection-008 and projection-011 scales repair TRN event ordering
+  - nonspecific T density is fixed at the independently selected 0.1875 scale
+  - the repaired arm has stronger effective TRN inhibition and loses one late event
+admissibility:
+  distinct_interaction_family_supported: true
+  source_control_scale: 1.0
+  source_control_already_fixed_and_observed: true
+  sole_reopened_scale: 0.75
+  sole_reopened_scale_basis: prior-match-selected-and-independently-verified-endpoint
+  new_interpolation_allowed: false
+  new_grid_extension_allowed: false
+  supplement_tuple_reopened: false
+  t_current_tuning_allowed: false
+  mismatch_access_before_fresh_match_pass: false
+decision: >-
+  The old common-transfer family remains closed in its original upstream model.
+  Artifact 595 supplies genuinely new interaction evidence under the repaired
+  recurrent balance, so exactly one previously selected endpoint, common scale
+  0.75, may be tested as a persistent fresh-learning Figure 6 plus match
+  candidate. Source control 1.0 is already represented by Artifacts 591 and 594.
+  No midpoint, weaker scale, compartment-specific change, kinetics change, or
+  T-current adjustment is authorized. Mismatch remains hidden unless the 0.75
+  endpoint passes every fresh Figure 6 and exact match gate.
+original_smart_reproduced: false
+baseline_promoted: false

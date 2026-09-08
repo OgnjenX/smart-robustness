@@ -1589,3 +1589,14 @@ the corrected inhibitory envelope suppresses the seventh event. This diagnostic
 selects no parameter and reopens neither candidate. Before any new screen, audit
 the source and prior calibration history of projections 047--049 under the new
 recurrent balance; do not retune the T current.
+
+Artifact 596 completes that source/history audit. The ModelDB records preserve
+three all-to-one GABA contacts with 1/4-ms kinetics and fixed soma/proximal/
+distal ratios; the supplement's conflicting distal 1/7-ms tuple already fails
+Figure 6. The old common-scale family remains closed for its top-five upstream
+model. Artifact 595 supplies new interaction evidence only under the repaired
+recurrent balance, so the audit permits exactly its previously selected and
+verified 0.75 endpoint—no new midpoint or grid. Registration 597 fixes one
+persistent fresh-learning Figure 6-plus-match test at that endpoint. Mismatch
+is hidden unless all Figure 6 gates and the exact 20-relay/four-nonspecific
+match pass.

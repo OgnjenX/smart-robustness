@@ -3677,3 +3677,12 @@ fourth late positive maximum that becomes the control's seventh spike. This
 localizes the one-event deficit to the inhibitory envelope, not to intrinsic
 calcium recovery. No parameter is selected, neither closed candidate is
 reopened, and original SMART remains unreproduced and unfrozen.
+
+Artifact 596 audits whether that localization can legitimately open new work.
+The published/executable source conflict for distal projection 049 has already
+been tested and rejected at Figure 6, and the prior top-five common-transfer
+family remains closed. The new repaired recurrent balance creates a distinct
+interaction context, but it supports only one narrow test: reuse the prior
+match-selected 0.75 common scale on projections 047--049. Registration 597
+locks that endpoint through fresh learning and match. No interpolation,
+T-current tuning, or mismatch access is permitted before an exact match pass.

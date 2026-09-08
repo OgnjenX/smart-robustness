@@ -10827,6 +10827,74 @@ def test_projection026_source_arrival_audit_is_hash_pinned_and_passive() -> None
     assert "No original-SMART claim" in registration["boundary"]
 
 
+def test_projection026_source_arrival_pair_is_exact_and_left_censored() -> None:
+    result_path = (
+        ROOT
+        / "docs/validation-results/figure10-projection026-source-arrival-pair-704.yaml"
+    )
+    result = yaml.safe_load(result_path.read_text())
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-projection026-source-arrival-assessment-705.yaml"
+        ).read_text()
+    )
+
+    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment[
+        "result_sha256"
+    ]
+    assert all(result["figure6_gates"].values())
+    assert result["source_identity"]["layer6i_post_events"] == [153, 76]
+    contract = result["projection026_arrival_contract"]
+    assert contract["effective_delay_ms"] == pytest.approx(1.0)
+    assert contract["total_edge_weight_each_target"] == pytest.approx(
+        3.2292073770027754
+    )
+    assert contract["connected_source_and_weight_sets_identical_between_arms"]
+    assert contract["no_arrivals_in_registered_window_both_arms"]
+    verdict = assessment["assessment"]
+    assert verdict["identical_projection026_connected_source_sets"]
+    assert verdict["identical_projection026_compiled_edge_weights"]
+    assert not verdict["projection026_arrival_present_in_registered_window"]
+    assert verdict["causal_source_history_left_censored"]
+    assert not verdict["parameter_selected"]
+    assert not result["original_smart_reproduced"]
+    assert not result["baseline_promoted"]
+
+
+def test_projection026_source_history_registration_is_hash_pinned() -> None:
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-projection026-source-arrival-from-onset-registration-706.yaml"
+        ).read_text()
+    )
+
+    for path_key, hash_key in (
+        ("profile", "profile_sha256"),
+        ("harness", "harness_sha256"),
+        ("runtime", "runtime_sha256"),
+        ("script", "script_sha256"),
+        ("source_result", "source_result_sha256"),
+        ("prior_assessment", "prior_assessment_sha256"),
+    ):
+        assert hashlib.sha256(
+            (ROOT / registration[path_key]).read_bytes()
+        ).hexdigest() == registration[hash_key]
+    assert registration["persistent_projection_delays"] == []
+    assert registration["record_projection026_arrival_target_indices"] == [
+        38,
+        40,
+        42,
+    ]
+    assert registration["projection026_arrival_window_ms"] == [0.0, 23.6]
+    assert registration["required_prior_trace_identity"][
+        "first_projection026_gate_difference_ms"
+    ] == pytest.approx(23.45)
+    assert "Only the passive" in registration["boundary"]
+    assert "No original-SMART claim" in registration["boundary"]
+
+
 def test_projection036_source_arrival_result_localizes_phase_not_topology() -> None:
     result_path = (
         ROOT

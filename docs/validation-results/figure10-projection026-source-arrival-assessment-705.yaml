@@ -1,0 +1,38 @@
+schema_version: 1
+id: figure10-projection026-source-arrival-assessment-705
+date: '2026-09-09'
+status: assessed-identical-topology-no-window-arrivals-source-history-left-censored
+registration: docs/validation-results/figure10-projection026-source-arrival-registration-703.yaml
+result: docs/validation-results/figure10-projection026-source-arrival-pair-704.yaml
+result_sha256: 3648dde8e79a8e84881019f4971c7fc5b077b5da8ccd1df6fb8d5ab140c00778
+assessment:
+  all_fresh_figure6_gates_pass: true
+  exact_registered_population_identity: true
+  exact_registered_projection036_arrival_identity: true
+  identical_projection026_connected_source_sets: true
+  identical_projection026_compiled_edge_weights: true
+  projection026_arrival_present_in_registered_window: false
+  gate_difference_attributable_to_new_window_arrival: false
+  causal_source_history_left_censored: true
+  parameter_selected: false
+  official_figure10_reset_reproduced: false
+  original_smart_reproduced: false
+  baseline_promoted: false
+interpretation: >-
+  Each focal layer-4 inhibitory target has the same nine connected layer-6I
+  sources, the same center-plus-neighbor weight stencil, total weight
+  3.2292073770027754, and the same 1.0-ms effective delay in both arms. Neither
+  arm has a projection-026 arrival between 23.3 and 23.6 ms. The first gate
+  difference at 23.45 ms therefore reflects decaying state inherited from
+  earlier source arrivals rather than a new arrival in the registered window.
+  Topology and compiled weights are excluded at this focal stage, but the
+  initiating layer-6I source event remains earlier than the window.
+closure: >-
+  Accept identical focal topology and absence of registered-window arrivals.
+  Do not select a delay, weight, spread, kinetics, depletion, intrinsic
+  parameter, or source cell; all closed parameter families remain closed.
+next_gate: >-
+  Run one passive source-resolved projection-026 arrival audit from mismatch
+  onset through 23.6 ms for the same targets. Locate the first arm-dependent
+  arrival history and distinguish source-spike timing from source selection.
+  Preserve the same model, causal arms, identities, and 1.0-ms delay.

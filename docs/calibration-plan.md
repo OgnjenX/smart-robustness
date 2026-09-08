@@ -2141,3 +2141,17 @@ Artifacts 702--703 implement and preregister that passive audit. It retains the
 compiled projection-026 source/target map, weights, effective delays, observed
 layer-6I source spikes, and delayed arrivals for the three focal targets. The
 model and reset score are unchanged, and the result cannot select a parameter.
+
+Artifacts 704--705 complete the exact pair. All identity gates pass, and every
+focal target has the same nine connected sources, compiled weights, and
+3.2292073770027754 total weight in both arms. Neither arm has an arrival in
+23.3--23.6 ms, so the p026 gate contrast at 23.45 ms is inherited from earlier
+source history rather than caused by a new event in that window. Extend the
+same passive arrival audit once, from mismatch onset through 23.6 ms; do not
+select a parameter.
+
+Registration 706 fixes that extension before execution. It changes only the
+passive p026 arrival-retention window to 0.0--23.6 ms and preserves the 1.0-ms
+delay, compiled topology, fixed calibration state, causal arms, and all identity
+gates. The result may localize source timing or source selection but cannot
+select a parameter.

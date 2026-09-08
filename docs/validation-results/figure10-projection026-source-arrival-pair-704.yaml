@@ -1,0 +1,63 @@
+schema_version: 1
+id: figure10-projection026-source-arrival-pair-704
+date: '2026-09-08'
+status: completed-unchanged-source-resolved-arrival-pair
+classification: figure10-projection026-source-resolved-arrival-audit
+registration: docs/validation-results/figure10-projection026-source-arrival-registration-703.yaml
+runtime_fingerprint: fa4ab9f0bf2bec4d6ad53cb6a91620047689b6839b146ed7d777d42350c2cdf5
+persistent_projection_delays_ms: {}
+figure6_gates:
+  relay_active_indices: true
+  relay_events_per_active_index: true
+  relay_events: true
+  cortical_chain_complete: true
+  causal_learning_pair: true
+  top_down_horizontal_contrast: true
+source_identity:
+  layer4_pre_events: [39, 39]
+  layer4_post_events: [78, 92]
+  nonspecific_post_events: [18, 13]
+  layer5_post_events: [285, 140]
+  layer6i_post_events: [153, 76]
+  layer4_inhibitory_post_events: [218, 232]
+  layer5_active_cells: [81, 11]
+  layer6i_active_cells: [81, 11]
+projection036_arrival_identity:
+  target_index: 31
+  source_set_both_arms: [38, 39, 40, 41, 42]
+  total_edge_weight_both_arms: 5.482968310784057
+  intact_first_source_set: [38, 42]
+  control_first_source_set: [40]
+  intact_first_arrival_ms: 75.38000000000002
+  control_first_arrival_ms: 75.53
+projection026_arrival_contract:
+  window_from_mismatch_ms: [23.3, 23.6]
+  effective_delay_ms: 1.0
+  focal_targets: [38, 40, 42]
+  total_edge_weight_each_target: 3.2292073770027754
+  connected_sources_by_target:
+    38: [28, 29, 30, 37, 38, 39, 46, 47, 48]
+    40: [30, 31, 32, 39, 40, 41, 48, 49, 50]
+    42: [32, 33, 34, 41, 42, 43, 50, 51, 52]
+  connected_edge_weights_each_target:
+    - 0.03663127777746836
+    - 0.2706705664732254
+    - 0.03663127777746836
+    - 0.2706705664732254
+    - 2.0
+    - 0.2706705664732254
+    - 0.03663127777746836
+    - 0.2706705664732254
+    - 0.03663127777746836
+  connected_source_and_weight_sets_identical_between_arms: true
+  intact_arrivals_by_target: {38: [], 40: [], 42: []}
+  disconnected_control_arrivals_by_target: {38: [], 40: [], 42: []}
+  no_arrivals_in_registered_window_both_arms: true
+reset_gates:
+  pre_reset_winner: true
+  reset_chain: true
+  winner_suppression: false
+  alternative_release: false
+reproduced_reset: false
+original_smart_reproduced: false
+baseline_promoted: false

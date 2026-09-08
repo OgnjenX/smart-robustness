@@ -3901,3 +3901,13 @@ is not frozen. A source-resolved projection-026 arrival audit is next.
 Artifacts 702--703 now implement and preregister that audit on the unchanged
 source-control model. The paired result has not yet run. Original SMART remains
 unreproduced and unfrozen.
+
+Artifacts 704--705 complete the pair with exact identities. Projection-026
+topology and compiled weights are identical between arms, and no p026 arrivals
+occur in the 23.3--23.6-ms window. The first gate difference is therefore
+inherited from earlier source history. Reset still fails winner suppression and
+alternative release; original SMART remains unreproduced and unfrozen.
+
+Registration 706 now extends only the passive projection-026 arrival window to
+mismatch onset. Its paired result has not yet run; no model value or reset gate
+has changed.

@@ -734,9 +734,14 @@ parameters:
     note: The final exact pair starts from equality of every retained variable and localizes the first presynaptic gate difference to projection 026 at 23.45 ms after mismatch onset, before projection 030 at 72.88 ms, projection 027 at 73.85 ms, and projection 028 at 75.40 ms. This authorizes only a passive source-resolved projection-026 arrival audit; no parameter is selected and all closed families remain closed.
   diagnostics.figure10.projection026_source_resolved_arrivals:
     value: connected layer-6I source indices, compiled edge weights, source spikes, and delayed arrivals into layer-4 inhibitory cells 38, 40, and 42 over 23.3--23.6 ms
+    status: completed-identical-topology-no-window-arrivals-history-left-censored
+    source: Artifact 701 authorization and Artifacts 702--705
+    note: Exact identities pass. Each focal target has the same nine sources, compiled weights, total weight 3.2292073770027754, and 1.0-ms delay in both arms, but neither arm has an arrival in 23.3--23.6 ms. The gate contrast is inherited from earlier source history. No parameter is selected; one passive onset-to-23.6-ms arrival audit is required.
+  diagnostics.figure10.projection026_source_history_from_mismatch_onset:
+    value: source-resolved projection-026 arrivals into cells 38, 40, and 42 from mismatch onset through 23.6 ms
     status: registered-before-execution
-    source: Artifact 701 authorization and Artifacts 702--703
-    note: This is a passive localization of the first measured projection-026 gate contrast. It preserves the recovered 1.0-ms delay and every fixed model parameter; it cannot select a parameter, repair reset, or promote the baseline.
+    source: Artifact 705 authorization and Registration 706
+    note: Only the passive retention window expands. The recovered 1.0-ms delay and every model parameter remain fixed; this audit may localize source timing but cannot select a parameter or repair reset.
   benchmark.population_sizes:
     value: see configs/*.yaml
     status: exploratory

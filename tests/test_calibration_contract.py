@@ -9323,3 +9323,64 @@ def test_layer6i_timing_diagnostic_is_hash_pinned_and_read_only() -> None:
     }
     assert not monitor["serialization"]["full_time_series_persisted"]
     assert "No parameter can be selected" in registration["boundary"]
+
+
+def test_layer6i_timing_localizes_isolated_subthreshold_peripheral_drive() -> None:
+    result_path = (
+        ROOT / "docs/validation-results/figure10-layer6i-timing-pair-634.yaml"
+    )
+    result = yaml.safe_load(result_path.read_text())
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-layer6i-timing-assessment-635.yaml"
+        ).read_text()
+    )
+
+    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment[
+        "result_sha256"
+    ]
+    assert all(result["figure6_gates"].values())
+    intact_identity = result["intact"]["population_identity"]
+    control_identity = result["disconnected_control"]["population_identity"]
+    assert intact_identity["layer4_pre_post_events"] == [39, 92]
+    assert control_identity["layer4_pre_post_events"] == [39, 92]
+    assert intact_identity["nonspecific_pre_post_events"] == [4, 13]
+    assert control_identity["nonspecific_pre_post_events"] == [4, 13]
+    assert intact_identity["layer5_pre_post_events"] == [41, 231]
+    assert control_identity["layer5_pre_post_events"] == [41, 140]
+    assert intact_identity["layer6i_pre_post_events"] == [36, 72]
+    assert control_identity["layer6i_pre_post_events"] == [36, 72]
+    assert set(result["intact"]["selected_cells"]) == {0, 31, 40}
+    intact_cell0 = result["intact"]["selected_cells"][0]
+    control_cell0 = result["disconnected_control"]["selected_cells"][0]
+    assert intact_cell0["mismatch_event_times_ms"] == []
+    assert control_cell0["mismatch_event_times_ms"] == []
+    projection023 = "modeldb112923.projection.023"
+    projection024 = "modeldb112923.projection.024"
+    projection025 = "modeldb112923.projection.025"
+    assert intact_cell0["projections"][projection023]["current_integral_pA_ms"] == 0
+    assert intact_cell0["projections"][projection024]["current_integral_pA_ms"] == 0
+    assert intact_cell0["projections"][projection025][
+        "current_integral_pA_ms"
+    ] == pytest.approx(3013.832334921532)
+    assert control_cell0["projections"][projection025][
+        "current_integral_pA_ms"
+    ] == 0
+    assert intact_cell0["detector_threshold_peak_gap_mV"][2] == pytest.approx(
+        48.519120517055725
+    )
+    cell31 = result["intact"]["selected_cells"][31]
+    cell40 = result["intact"]["selected_cells"][40]
+    assert cell31["projections"][projection024]["current_integral_pA_ms"] > (
+        12.0 * cell31["projections"][projection025]["current_integral_pA_ms"]
+    )
+    assert cell40["projections"][projection023]["current_integral_pA_ms"] > (
+        57.0 * cell40["projections"][projection025]["current_integral_pA_ms"]
+    )
+    assert assessment["assessment"]["amplitude_limitation_localized"]
+    assert not assessment["assessment"]["timing_only_explanation_supported"]
+    assert not assessment["assessment"]["parameter_selected"]
+    assert not result["reproduced_reset"]
+    assert not result["original_smart_reproduced"]
+    assert not result["baseline_promoted"]

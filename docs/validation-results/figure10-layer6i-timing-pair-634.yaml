@@ -1,0 +1,208 @@
+schema_version: 1
+id: figure10-layer6i-timing-pair-634
+date: '2026-09-08'
+status: completed-read-only-source-control-identity-repeated
+classification: read-only-source-control-layer6i-selected-cell-timing
+registration: docs/validation-results/figure10-layer6i-timing-registration-633.yaml
+serialization: bounded-lossless-for-registered-selected-cell-decisions
+execution_note: >-
+  The registered pair completed successfully. Its full stdout exceeded the
+  retained display window only within the intact selected-cell block, so one
+  unchanged deterministic recovery execution through the same hash-pinned
+  runner emitted this bounded subset. Both executions reproduced the same
+  registered population counts and reset assessment.
+runtime_fingerprint: fa4ab9f0bf2bec4d6ad53cb6a91620047689b6839b146ed7d777d42350c2cdf5
+figure6_gates:
+  relay_active_indices: true
+  relay_events_per_active_index: true
+  relay_events: true
+  cortical_chain_complete: true
+  causal_learning_pair: true
+  top_down_horizontal_contrast: true
+intact:
+  population_identity:
+    layer4_pre_post_events: [39, 92]
+    nonspecific_pre_post_events: [4, 13]
+    layer5_pre_post_events: [41, 231]
+    layer5_first100_late_mismatch_events: [70, 161]
+    layer6i_pre_post_events: [36, 72]
+    layer6i_first100_late_mismatch_events: [30, 42]
+  selected_cells:
+    0:
+      mismatch_event_times_ms: []
+      detector_threshold_peak_gap_mV: [-20.0, -68.51912051705573, 48.519120517055725]
+      detector_peak_time_ms: 208.35
+      soma_peak_mV_time_ms: [-68.51912051705573, 208.35]
+      proximal_peak_mV_time_ms: [-66.99519730951755, 205.93000000000004]
+      projections:
+        modeldb112923.projection.023:
+          gate_integral_ms: 0.0
+          current_integral_pA_ms: 0.0
+          current_peak_pA_time_ms: [0.0, 100.0]
+          gate_peak_time_ms: [0.0, 100.0]
+          gate_current_at_soma_peak: [0.0, 0.0]
+          gate_current_at_proximal_peak: [0.0, 0.0]
+        modeldb112923.projection.024:
+          gate_integral_ms: 0.0
+          current_integral_pA_ms: 0.0
+          current_peak_pA_time_ms: [0.0, 100.0]
+          gate_peak_time_ms: [0.0, 100.0]
+          gate_current_at_soma_peak: [0.0, 0.0]
+          gate_current_at_proximal_peak: [0.0, 0.0]
+        modeldb112923.projection.025:
+          gate_integral_ms: 2.826180753653513
+          current_integral_pA_ms: 3013.832334921532
+          current_peak_pA_time_ms: [541.0361110636329, 204.67000000000002]
+          gate_peak_time_ms: [0.5104366223305193, 204.72]
+          gate_current_at_soma_peak: [0.2389160404577202, 254.46156394086975]
+          gate_current_at_proximal_peak: [0.44918566752183153, 472.7041749318577]
+    31:
+      mismatch_event_times_ms: [204.57000000000002, 220.77, 243.3, 259.77, 280.39000000000004, 294.91]
+      detector_threshold_peak_gap_mV: [-20.0, 41.57217676497612, -61.57217676497612]
+      detector_peak_time_ms: 204.23000000000002
+      soma_peak_mV_time_ms: [41.57217676497612, 204.23000000000002]
+      proximal_peak_mV_time_ms: [-50.48101518314394, 204.5]
+      projections:
+        modeldb112923.projection.023:
+          gate_integral_ms: 1.2350023572560977
+          current_integral_pA_ms: 11581.251242617689
+          current_peak_pA_time_ms: [496.2227438334063, 116.83]
+          gate_peak_time_ms: [0.05063694828788511, 244.28000000000003]
+          gate_current_at_soma_peak: [3.4007662539128806e-05, 0.24992934916196327]
+          gate_current_at_proximal_peak: [2.97130362131936e-05, 0.21204962013252143]
+        modeldb112923.projection.024:
+          gate_integral_ms: 129.61592857572353
+          current_integral_pA_ms: 113571.95964301095
+          current_peak_pA_time_ms: [3412.902064834126, 200.61]
+          gate_peak_time_ms: [4.0, 201.01000000000002]
+          gate_current_at_soma_peak: [2.086826690944507, 1704.0579084573933]
+          gate_current_at_proximal_peak: [1.9176019788555865, 1520.5700295771278]
+        modeldb112923.projection.025:
+          gate_integral_ms: 9.577593380259417
+          current_integral_pA_ms: 9326.274511126248
+          current_peak_pA_time_ms: [540.9729560326643, 151.28000000000003]
+          gate_peak_time_ms: [0.5104366223305193, 151.33]
+          gate_current_at_soma_peak: [0.18671507016167985, 152.46752081418938]
+          gate_current_at_proximal_peak: [0.19083842872082157, 151.3260824739302]
+    40:
+      mismatch_event_times_ms: [105.48, 118.93, 125.08, 137.42000000000002, 143.84000000000003, 155.91000000000003, 166.39000000000001, 173.69, 185.08, 191.65, 203.97, 210.35, 228.73000000000002, 242.98000000000002, 247.53000000000003, 261.27, 266.02000000000004, 283.14]
+      detector_threshold_peak_gap_mV: [-20.0, 42.543197912227214, -62.543197912227214]
+      detector_peak_time_ms: 282.79
+      soma_peak_mV_time_ms: [42.543197912227214, 282.79]
+      proximal_peak_mV_time_ms: [-22.742384530325218, 244.89000000000001]
+      projections:
+        modeldb112923.projection.023:
+          gate_integral_ms: 73.216872029803
+          current_integral_pA_ms: 354585.4426640583
+          current_peak_pA_time_ms: [20714.72399325224, 299.68]
+          gate_peak_time_ms: [2.9998455957279666, 116.84000000000002]
+          gate_current_at_soma_peak: [1.3266353539517617, 5061.654493534577]
+          gate_current_at_proximal_peak: [2.3220808600746636, 7465.789205782135]
+        modeldb112923.projection.024:
+          gate_integral_ms: 170.52205582229865
+          current_integral_pA_ms: 133381.5690075263
+          current_peak_pA_time_ms: [3378.8044263848333, 257.63]
+          gate_peak_time_ms: [4.0, 100.60000000000001]
+          gate_current_at_soma_peak: [0.0002228522161945067, 0.09447466882917932]
+          gate_current_at_proximal_peak: [1.153300412151198, 412.00104977230774]
+        modeldb112923.projection.025:
+          gate_integral_ms: 7.735851345615158
+          current_integral_pA_ms: 6217.499483069972
+          current_peak_pA_time_ms: [152.79369240117518, 242.31000000000003]
+          gate_peak_time_ms: [0.18675124090341846, 242.20000000000002]
+          gate_current_at_soma_peak: [0.0001391428193230878, 0.05898739532405462]
+          gate_current_at_proximal_peak: [0.11574446673331704, 41.34815291578237]
+disconnected_control:
+  population_identity:
+    layer4_pre_post_events: [39, 92]
+    nonspecific_pre_post_events: [4, 13]
+    layer5_pre_post_events: [41, 140]
+    layer5_first100_late_mismatch_events: [55, 85]
+    layer6i_pre_post_events: [36, 72]
+    layer6i_first100_late_mismatch_events: [30, 42]
+  selected_cells:
+    0:
+      mismatch_event_times_ms: []
+      detector_threshold_peak_gap_mV: [-20.0, -69.94890030740304, 49.948900307403036]
+      detector_peak_time_ms: 100.0
+      soma_peak_mV_time_ms: [-69.94890030740304, 100.0]
+      proximal_peak_mV_time_ms: [-69.99244087387684, 100.0]
+      projections:
+        modeldb112923.projection.023: {gate_integral_ms: 0.0, current_integral_pA_ms: 0.0, current_peak_pA_time_ms: [0.0, 100.0]}
+        modeldb112923.projection.024: {gate_integral_ms: 0.0, current_integral_pA_ms: 0.0, current_peak_pA_time_ms: [0.0, 100.0]}
+        modeldb112923.projection.025: {gate_integral_ms: 0.0, current_integral_pA_ms: 0.0, current_peak_pA_time_ms: [0.0, 100.0]}
+    31:
+      mismatch_event_times_ms: [204.59, 220.78000000000003, 243.32, 259.74, 280.42, 295.00000000000006]
+      detector_threshold_peak_gap_mV: [-20.0, 41.59112767206521, -61.59112767206521]
+      detector_peak_time_ms: 204.25
+      soma_peak_mV_time_ms: [41.59112767206521, 204.25]
+      proximal_peak_mV_time_ms: [-50.012604289496515, 204.53]
+      projections:
+        modeldb112923.projection.023:
+          gate_integral_ms: 1.2340232850661534
+          current_integral_pA_ms: 11600.61040833095
+          current_peak_pA_time_ms: [496.2227438334063, 116.83]
+          gate_peak_time_ms: [0.050636948289999165, 244.28000000000003]
+          gate_current_at_soma_peak: [3.383804862960373e-05, 0.24651503808029368]
+          gate_current_at_proximal_peak: [2.9417386585781202e-05, 0.20799167109856873]
+        modeldb112923.projection.024:
+          gate_integral_ms: 129.60670688005624
+          current_integral_pA_ms: 113523.7277121619
+          current_peak_pA_time_ms: [3412.96023585389, 200.69]
+          gate_peak_time_ms: [4.0, 201.09]
+          gate_current_at_soma_peak: [2.125663013474398, 1720.6399959484818]
+          gate_current_at_proximal_peak: [1.948239689277046, 1530.5296013433456]
+        modeldb112923.projection.025:
+          gate_integral_ms: 7.017708855946182
+          current_integral_pA_ms: 6483.599210748302
+          current_peak_pA_time_ms: [405.7029262157329, 203.02]
+          gate_peak_time_ms: [0.5104366223305193, 202.92000000000002]
+          gate_current_at_soma_peak: [0.25493354054259765, 206.35860123913784]
+          gate_current_at_proximal_peak: [0.2597991163345031, 204.09718585517234]
+    40:
+      mismatch_event_times_ms: [105.48, 118.93, 125.08, 137.42000000000002, 143.84000000000003, 155.91000000000003, 166.39000000000001, 173.70000000000002, 185.08, 191.66000000000003, 204.07000000000002, 210.37000000000003, 228.74, 242.93, 247.49, 261.29, 266.04, 283.16]
+      detector_threshold_peak_gap_mV: [-20.0, 42.551645708811094, -62.551645708811094]
+      detector_peak_time_ms: 228.39000000000001
+      soma_peak_mV_time_ms: [42.551645708811094, 228.39000000000001]
+      proximal_peak_mV_time_ms: [-22.757153926513148, 244.89000000000001]
+      projections:
+        modeldb112923.projection.023:
+          gate_integral_ms: 73.158869724733
+          current_integral_pA_ms: 354318.9399000452
+          current_peak_pA_time_ms: [20714.725584370943, 299.7]
+          gate_peak_time_ms: [2.9998455957279666, 116.84000000000002]
+          gate_current_at_soma_peak: [1.326613665826642, 5060.402677602644]
+          gate_current_at_proximal_peak: [2.3220812507202107, 7470.6389074887775]
+        modeldb112923.projection.024:
+          gate_integral_ms: 170.52292086695783
+          current_integral_pA_ms: 133366.50865333492
+          current_peak_pA_time_ms: [3382.5570424302578, 257.64000000000004]
+          gate_peak_time_ms: [4.0, 100.60000000000001]
+          gate_current_at_soma_peak: [7.733602810826975e-05, 0.03277781230975886]
+          gate_current_at_proximal_peak: [1.1369325682962483, 406.4176229487968]
+        modeldb112923.projection.025:
+          gate_integral_ms: 7.880861182595343
+          current_integral_pA_ms: 6285.525696693862
+          current_peak_pA_time_ms: [141.69808237639427, 242.18]
+          gate_peak_time_ms: [0.17365146997648975, 242.04000000000002]
+          gate_current_at_soma_peak: [0.00025288805070490544, 0.1071831236248839]
+          gate_current_at_proximal_peak: [0.11031645016768182, 39.43466015445886]
+reset_assessment:
+  pre_reset_winner_index: 38
+  pre_reset_winner_indices: [38, 39, 40, 41, 42]
+  pre_reset_winner_spikes: 39
+  intact_winner_post_spikes: 76
+  control_winner_post_spikes: 76
+  intact_released_alternatives: 2
+  control_released_alternatives: 2
+  intact_nonspecific_spikes: 13
+  intact_layer5_spikes: 231
+  intact_layer6i_spikes: 72
+reset_gates:
+  pre_reset_winner: true
+  reset_chain: true
+  winner_suppression: false
+  alternative_release: false
+reproduced_reset: false
+original_smart_reproduced: false
+baseline_promoted: false

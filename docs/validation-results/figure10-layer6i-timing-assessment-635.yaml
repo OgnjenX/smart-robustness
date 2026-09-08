@@ -1,0 +1,84 @@
+schema_version: 1
+id: figure10-layer6i-timing-assessment-635
+date: '2026-09-08'
+status: assessed-peripheral-layer6i-receives-isolated-subthreshold-layer5-pulse
+registration: docs/validation-results/figure10-layer6i-timing-registration-633.yaml
+result: docs/validation-results/figure10-layer6i-timing-pair-634.yaml
+result_sha256: 96f0d32319d756f4853fcf720c49960bbe21abdde9c04b7ac1c85f146b51587d
+assessment:
+  fresh_figure6_passed: true
+  exact_source_control_population_identity_reproduced: true
+  selected_cells_reported: [0, 31, 40]
+  peripheral_cell0_receives_projection023: false
+  peripheral_cell0_receives_projection024: false
+  peripheral_cell0_receives_projection025_intact: true
+  peripheral_cell0_receives_projection025_control: false
+  peripheral_cell0_spikes_intact: false
+  peripheral_cell0_spikes_control: false
+  peripheral_cell0_is_near_threshold: false
+  active_cell31_projection024_dominates_projection025: true
+  active_cell40_projection023_dominates_projection025: true
+  projection025_changes_active_cell_event_count: false
+  amplitude_limitation_localized: true
+  timing_only_explanation_supported: false
+  parameter_selected: false
+  official_figure10_reset_reproduced: false
+  original_smart_reproduced: false
+  baseline_promoted: false
+quantitative_summary:
+  peripheral_cell0:
+    intact_control_event_counts: [0, 0]
+    projection025_current_integral_pA_ms_intact_control: [3013.832334921532, 0.0]
+    projection025_current_peak_pA_intact_control: [541.0361110636329, 0.0]
+    projection025_peak_time_ms: 204.67000000000002
+    proximal_peak_mV_intact_control: [-66.99519730951755, -69.99244087387684]
+    soma_peak_mV_intact_control: [-68.51912051705573, -69.94890030740304]
+    soma_depolarization_due_to_intact_reset_path_mV: 1.4297797903473102
+    proximal_depolarization_due_to_intact_reset_path_mV: 2.9972435643592903
+    intact_threshold_headroom_mV: 48.519120517055725
+    p025_peak_to_proximal_peak_lag_ms: 1.2600000000000193
+    p025_peak_to_soma_peak_lag_ms: 3.6799999999999784
+  active_cell31:
+    intact_control_event_counts: [6, 6]
+    intact_current_integral_pA_ms_by_projection:
+      modeldb112923.projection.023: 11581.251242617689
+      modeldb112923.projection.024: 113571.95964301095
+      modeldb112923.projection.025: 9326.274511126248
+    control_projection025_current_integral_pA_ms: 6483.599210748302
+    projection024_to_projection025_integral_ratio_intact: 12.177623708542268
+  active_cell40:
+    intact_control_event_counts: [18, 18]
+    intact_current_integral_pA_ms_by_projection:
+      modeldb112923.projection.023: 354585.4426640583
+      modeldb112923.projection.024: 133381.5690075263
+      modeldb112923.projection.025: 6217.499483069972
+    control_projection025_current_integral_pA_ms: 6285.525696693862
+    projection023_to_projection025_integral_ratio_intact: 57.02862428662942
+interpretation: >-
+  The unchanged source-control pair passes all fresh Figure-6 gates and exactly
+  reproduces every registered Artifact-622 population count. Peripheral cell
+  0 receives no projection-023 relay input and no projection-024 layer-2/3
+  input in either arm. The intact reset path adds one projection-025 envelope
+  with a 541-pA peak and 3,014-pA-ms integral; it depolarizes the proximal
+  dendrite by only 3.00 mV and the soma by 1.43 mV. The soma still peaks at
+  -68.52 mV, leaving 48.52 mV of headroom to the -20-mV event threshold. The
+  1.26-ms dendritic and 3.68-ms somatic lags after peak projection-025 current
+  are ordinary membrane integration, not evidence of a missed local
+  coincidence: there are no other local synaptic inputs with which to
+  coincide. Active cells 31 and 40 instead receive one to two orders of
+  magnitude more integrated drive from projections 023/024, and changing
+  projection 025 between causal arms changes neither one's event count. The
+  Figure-10 failure is therefore localized to insufficient isolated
+  layer-5-to-layer-6I drive at peripheral targets in this reconstruction, not
+  a small threshold miss or downstream reset transfer. No effective value is
+  selected from this observational result.
+next_gate: >-
+  Implement a default-off, lossless layer-6I replay capture for intact
+  peripheral cell 0 at mismatch onset, including all intrinsic dynamic state
+  and the integrator-visible projection-023/024/025 gate histories. First
+  prove that an isolated source-control cell reproduces the captured voltage
+  and event train exactly. Only after that identity gate passes may a separate
+  preregistration define a powers-of-two projection-025 gate/weight-equivalent
+  scale bracket to locate the first-spike transfer boundary. Keep event
+  multiplicity versus synaptic-strength interpretations distinct, and do not
+  alter the connected network yet.

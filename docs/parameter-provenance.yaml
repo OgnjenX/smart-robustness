@@ -659,9 +659,9 @@ parameters:
     note: SMART.nml and Table 3 agree on all layer-6I intrinsic and compartment values, and projection 025 is explicitly proximal. The sole KInNeSS Equation-9 endpoint passes Figure 6 but reduces layer-6I output from 72 to 40 events; intact and control remain identical through layer 6I and layer 4, with no reset. The source-discrete intrinsic/target/spread/axial routes are exhausted, the family is closed, and no parameter is selected.
   diagnostics.figure10.layer6i_selected_cell_timing:
     value: read-only soma/proximal/detector and projection-023/024/025 timing summaries for layer-6I cells 0, 31, and 40
-    status: preregistered-source-control-pair-awaiting-execution
-    source: Artifact 631 authorization and Artifacts 632--633 instrumentation/registration
-    note: The unchanged paper-axial, one-to-one projection-025 source control will be rerun for 300 ms. The monitor changes no model or protocol value and persists no full traces. Exact Artifact-622 event identity is required before threshold-gap or coincidence measurements may be interpreted; no parameter can be selected.
+    status: completed-peripheral-isolated-subthreshold-layer5-drive-localized
+    source: Artifact 631 authorization and Artifacts 632--635
+    note: The unchanged paper-axial, one-to-one projection-025 source control repeats every Figure-6 gate and Artifact-622 count. Intact peripheral cell 0 receives no projection-023/024 input and one 541-pA projection-025 envelope, which shifts its soma only 1.43 mV and leaves 48.52 mV to threshold. Active cells are dominated by projection 023/024 and keep identical event counts across arms. No parameter is selected; lossless isolated replay is required next.
   benchmark.population_sizes:
     value: see configs/*.yaml
     status: exploratory

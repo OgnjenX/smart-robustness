@@ -1800,3 +1800,17 @@ peaks; the signed -20-mV detector-threshold gap; and projection-023, -024, and
 persisted. Interpret the assay only if every Figure-6 gate and all registered
 Artifact-622 event counts repeat exactly. The result may define a later
 isolated replay, but cannot select or change a parameter.
+
+Artifacts 634--635 complete the timing localization after one registered run
+and one unchanged output-recovery replay. All Figure-6 gates and every
+Artifact-622 population count repeat exactly. Intact peripheral cell 0 gets no
+projection-023 or -024 input and one projection-025 envelope (541-pA peak,
+3,014-pA-ms integral). That pulse raises its proximal peak by 3.00 mV and soma
+peak by only 1.43 mV; the soma remains at -68.52 mV, 48.52 mV below the -20-mV
+event threshold. Active cells 31 and 40 instead receive dominant projection
+024 or 023 drive, and their event counts remain six and eighteen in both
+causal arms despite projection-025 differences. Thus the peripheral failure
+is insufficient isolated layer-5-to-layer-6I drive, not a small threshold miss
+or a local coincidence-timing error. Select no parameter. Next implement and
+validate a lossless isolated replay of cell 0 before registering any effective
+projection-025 scale bracket or changing the connected network.

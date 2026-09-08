@@ -2825,6 +2825,15 @@ combines observed layer-4-inhibitory spikes with exact compiled source edges,
 weights, and delays without changing the model. The pair has not yet run, and
 original SMART remains unreproduced and unfrozen.
 
+Artifacts 711--712 localize a 0.01-ms intact lead in layer-6I sources 39/41 at
+23.43 versus 23.44 ms, whose delayed p026 arrivals follow at 24.43/24.44 ms.
+The paired transmitter values were lost to output compaction, so resource
+magnitude remains uninterpreted and a focal output-recovery run is required.
+
+Artifacts 713--714 now implement and preregister that unchanged focal recovery.
+The paired result has not yet run. Figure 10 and the baseline remain failed and
+unfrozen.
+
 Artifacts 686--687 complete that audit with exact identity. The same five
 inhibitory cells and exactly the same total compiled edge weight reach cell 31
 in both arms. The intact gate leads by 0.15 ms because cells 38 and 42 emit

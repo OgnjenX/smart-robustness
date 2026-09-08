@@ -1,0 +1,55 @@
+schema_version: 1
+id: figure10-projection026-source-resource-pair-711
+date: '2026-09-09'
+status: completed-source-timing-localized-resource-output-transport-compacted
+classification: figure10-projection026-source-event-resource-audit
+registration: docs/validation-results/figure10-projection026-source-resource-registration-710.yaml
+runtime_fingerprint: fa4ab9f0bf2bec4d6ad53cb6a91620047689b6839b146ed7d777d42350c2cdf5
+persistent_projection_delays_ms: {}
+figure6_gates:
+  relay_active_indices: true
+  relay_events_per_active_index: true
+  relay_events: true
+  cortical_chain_complete: true
+  causal_learning_pair: true
+  top_down_horizontal_contrast: true
+source_identity:
+  layer4_pre_events: [39, 39]
+  layer4_post_events: [78, 92]
+  nonspecific_post_events: [18, 13]
+  layer5_post_events: [285, 140]
+  layer6i_post_events: [153, 76]
+  layer4_inhibitory_post_events: [218, 232]
+  layer5_active_cells: [81, 11]
+  layer6i_active_cells: [81, 11]
+projection026_source_timing:
+  focal_sources: [39, 41]
+  intact_source_spike_time_from_mismatch_ms: 23.430000000000007
+  disconnected_control_source_spike_time_from_mismatch_ms: 23.440000000000012
+  intact_arrival_time_from_mismatch_ms: 24.430000000000007
+  disconnected_control_arrival_time_from_mismatch_ms: 24.440000000000012
+  source_phase_lead_intact_ms: 0.010000000000005116
+  effective_delay_ms: 1.0
+  edge_weight: 0.2706705664732254
+  affected_targets_by_source:
+    39: [38, 40]
+    41: [40, 42]
+  first_projection026_gate_difference_ms: 23.450000000000003
+  timing_localized: true
+resource_evidence:
+  requested_all_layer6i_event_transmitter_samples: true
+  complete_intact_control_focal_samples_preserved: false
+  failure_mode: console-output-transport-compaction
+  transmitter_magnitude_interpreted: false
+synapse_semantics:
+  ongoing_gate_expression: weighted_pre_signal_times_current_transmitter_pre
+  transmitter_depletes_at_source_spike: true
+  ligand_arrival_uses_effective_delay_ms: 1.0
+reset_gates:
+  pre_reset_winner: true
+  reset_chain: true
+  winner_suppression: false
+  alternative_release: false
+reproduced_reset: false
+original_smart_reproduced: false
+baseline_promoted: false

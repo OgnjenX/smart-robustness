@@ -1,0 +1,76 @@
+schema_version: 1
+id: figure10-projection026-focal-resource-registration-714
+date: '2026-09-09'
+status: registered-before-execution-focal-resource-output-recovery
+classification: figure10-projection026-focal-resource-output-recovery
+implementation: docs/validation-results/figure10-projection026-focal-resource-output-713.yaml
+profile: configs/calibration/figure7_learned_coincidence_effective_t_pair_v1.yaml
+profile_sha256: 4b6aa0bdf4fb844e428fb330f34970900cc8bc741183b2d8e6e73789cba0b30f
+harness: src/smart_robustness/validation/figure10.py
+harness_sha256: 9dc58c1236b1de7add8815dbe26f15ffd9373d943143bd6656f0590f581ac89a
+runtime: src/smart_robustness/classic_sector.py
+runtime_sha256: ebdf48f0138803ab50b1dec2ef87817b4c537e4da490a088b9df6bdcb9d119a1
+script: scripts/run_figure10_calibrated_reset_pair.py
+script_sha256: f137a92900487e4f5c954ff044e0e5086e4304fa1d0fdcf7516a7fa3fa1c322b
+source_result: docs/validation-results/figure10-projection026-source-resource-pair-711.yaml
+source_result_sha256: 1c130d6de949c924f4e9d5708051b5ad945c7bdf009678779e281018272e3f4a
+prior_assessment: docs/validation-results/figure10-projection026-source-resource-assessment-712.yaml
+prior_assessment_sha256: ffa315c876743b3330b47957117eed2aac684c91587436ccd1511622da8ab62a
+runtime_fingerprint: fa4ab9f0bf2bec4d6ad53cb6a91620047689b6839b146ed7d777d42350c2cdf5
+result_id: figure10-projection026-focal-resource-pair-715
+result: docs/validation-results/figure10-projection026-focal-resource-pair-715.yaml
+assessment: docs/validation-results/figure10-projection026-focal-resource-assessment-716.yaml
+persistent_projection_scales:
+  - {projection_id: modeldb112923.projection.008, scale: 0.75}
+  - {projection_id: modeldb112923.projection.011, scale: 0.9375}
+  - {projection_id: modeldb112923.projection.025, scale: 8.0}
+persistent_projection_delays: []
+nonspecific_t_scale: 0.1875
+record_layer6i_diagnostics: false
+record_reset_chain_diagnostics: true
+record_layer4_balance_diagnostics: true
+record_projection036_arrival_target_indices: [31]
+projection036_arrival_window_ms: [75.2, 75.8]
+record_projection026_arrival_target_indices: [38, 40, 42]
+projection026_arrival_window_ms: [0.0, 24.6]
+output_mode: projection026_source_resource_bounded
+layer6i_source_resource_indices: [39, 41]
+layer6i_source_resource_window_ms: [23.3, 23.6]
+protocol:
+  pre_match_duration_ms: 100.0
+  mismatch_duration_ms: 200.0
+  total_duration_ms: 300.0
+  dt_ms: 0.01
+  top_down_current_pA: 800.0
+  top_down_current_mode: until_cued_cell_first_event
+  comparator: {transform: top_k_binary, source_index: 40, target_count: 5}
+required_source_identity:
+  layer4_pre_events_intact_control: [39, 39]
+  layer4_post_events_intact_control: [78, 92]
+  nonspecific_post_events_intact_control: [18, 13]
+  layer5_post_events_intact_control: [285, 140]
+  layer6i_post_events_intact_control: [153, 76]
+  layer4_inhibitory_post_events_intact_control: [218, 232]
+  layer5_active_cells_intact_control: [81, 11]
+  layer6i_active_cells_intact_control: [81, 11]
+required_timing_identity:
+  intact_source_spike_ms: 23.430000000000007
+  disconnected_control_source_spike_ms: 23.440000000000012
+  intact_arrival_ms: 24.430000000000007
+  disconnected_control_arrival_ms: 24.440000000000012
+  source_indices: [39, 41]
+  edge_weight: 0.2706705664732254
+diagnostic_question: >-
+  What are the paired threshold-schedule transmitter samples for sources 39/41
+  at the already-localized 23.43/23.44-ms events, and are they consistent with
+  the first p026 gate split under continuous transmitter multiplication?
+decision_rule: >-
+  Require all fresh identity and timing gates. Preserve exactly the focal event
+  and transmitter rows in both arms. Report monitor scheduling explicitly and
+  classify the numerical samples as pre-reset if order 0 precedes the reset
+  operation. Use them to confirm availability at event time, not to estimate or
+  fit depletion. Do not select a parameter.
+boundary: >-
+  This is an unchanged output-recovery replay. Filtering occurs only after
+  simulation and scoring. No original-SMART claim, baseline promotion or
+  freeze, parameter selection, or reopening of a closed family is authorized.

@@ -1,0 +1,37 @@
+schema_version: 1
+id: figure10-projection026-source-resource-assessment-712
+date: '2026-09-09'
+status: assessed-source-phase-localized-resource-magnitude-not-preserved
+registration: docs/validation-results/figure10-projection026-source-resource-registration-710.yaml
+result: docs/validation-results/figure10-projection026-source-resource-pair-711.yaml
+result_sha256: 1c130d6de949c924f4e9d5708051b5ad945c7bdf009678779e281018272e3f4a
+assessment:
+  all_fresh_figure6_gates_pass: true
+  exact_registered_population_identity: true
+  focal_source_indices_localized: true
+  source_phase_difference_localized: true
+  delayed_arrival_identity_localized: true
+  timing_consistent_with_first_projection026_gate_difference: true
+  complete_paired_focal_transmitter_values_preserved: false
+  transmitter_magnitude_interpretation_authorized: false
+  parameter_selected: false
+  official_figure10_reset_reproduced: false
+  original_smart_reproduced: false
+  baseline_promoted: false
+interpretation: >-
+  Sources 39 and 41 fire at 23.43 ms intact and 23.44 ms control. Their
+  projection-026 ligand arrivals occur at 24.43 and 24.44 ms after the fixed
+  1.0-ms delay. The one-timestep source phase lead is consistent with the first
+  focal gate difference sampled at 23.45 ms because current transmitter
+  availability multiplies the ongoing ligand waveform and depletes at source
+  spike time. This localizes timing but does not quantify the resource effect:
+  the all-event payload was transport-compacted and the paired focal
+  transmitter samples were not both preserved.
+closure: >-
+  Accept the source indices and 0.01-ms timing lead. Do not infer or select a
+  transmitter, depletion, delay, kinetics, or weight parameter from incomplete
+  resource evidence.
+next_gate: >-
+  Rerun the unchanged pair with output filtered to sources 39/41 and
+  23.3--23.6 ms for both events and transmitter samples. Preserve the already
+  localized 24.43/24.44-ms arrivals. No model change is permitted.

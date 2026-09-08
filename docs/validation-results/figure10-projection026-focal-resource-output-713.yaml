@@ -1,0 +1,31 @@
+schema_version: 1
+id: figure10-projection026-focal-resource-output-713
+date: '2026-09-09'
+status: implementation-ready-focal-source-resource-output-tests-pass
+classification: figure10-projection026-focal-resource-output-recovery
+authorization: docs/validation-results/figure10-projection026-source-resource-assessment-712.yaml
+authorization_sha256: ffa315c876743b3330b47957117eed2aac684c91587436ccd1511622da8ab62a
+harness: src/smart_robustness/validation/figure10.py
+harness_sha256: 9dc58c1236b1de7add8815dbe26f15ffd9373d943143bd6656f0590f581ac89a
+runner: scripts/run_figure10_calibrated_reset_pair.py
+runner_sha256: f137a92900487e4f5c954ff044e0e5086e4304fa1d0fdcf7516a7fa3fa1c322b
+runtime: src/smart_robustness/classic_sector.py
+runtime_sha256: ebdf48f0138803ab50b1dec2ef87817b4c537e4da490a088b9df6bdcb9d119a1
+implementation:
+  output_mode: projection026_source_resource_bounded
+  source_filter: [39, 41]
+  window_from_mismatch_ms: [23.3, 23.6]
+  retained_fields:
+    - layer6i_mismatch_events
+    - layer6i_mismatch_event_transmitter_samples
+  behavior_change: none
+tests:
+  command: >-
+    .venv/bin/ruff check scripts/run_figure10_calibrated_reset_pair.py
+    tests/test_calibration_contract.py && .venv/bin/pytest -q
+    tests/test_calibration_contract.py -k projection026_source_resource
+  result: 2-passed
+boundary: >-
+  Filtering occurs only after both simulations and reset scoring complete. It
+  cannot alter a monitor, event, state, parameter, equation, schedule, protocol,
+  or result.

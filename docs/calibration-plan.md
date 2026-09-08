@@ -2169,3 +2169,15 @@ Artifacts 709--710 now preserve the already-monitored layer-6I event/resource
 samples in a bounded output and preregister the 0.0--24.6-ms p026 arrival
 endpoint. The paired result has not yet run. Equations, schedules, model values,
 and reset gates are unchanged.
+
+Artifacts 711--712 localize the relevant source phase: layer-6I cells 39/41
+fire at 23.43 ms intact versus 23.44 ms control, with p026 arrivals one
+millisecond later. This timing is consistent with the 23.45-ms gate split under
+continuous transmitter multiplication. The all-event resource payload was
+transport-compacted, however, so transmitter magnitude is not interpreted. An
+unchanged recovery run must retain only sources 39/41 over 23.3--23.6 ms.
+
+Artifacts 713--714 implement and preregister that focal output recovery. The
+filter is applied after simulation and scoring and retains only source 39/41
+event and transmitter rows over 23.3--23.6 ms. The p026 arrival endpoint remains
+24.6 ms. No behavior changes.

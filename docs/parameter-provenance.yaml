@@ -744,9 +744,14 @@ parameters:
     note: Exact identities pass and focal source, weight, and arrival histories are identical through 23.6 ms. No delayed ligand arrival explains the 23.45-ms gate split. Because the executable gate is continuously multiplied by source transmitter, which depletes at source spike time before delayed ligand arrival, focal source events/resources and arrivals through 24.6 ms are required next. No parameter is selected.
   diagnostics.figure10.projection026_source_event_resource:
     value: bounded layer-6I source events and transmitter samples plus focal projection-026 arrivals through 24.6 ms
+    status: completed-source-phase-localized-resource-output-compacted
+    source: Artifact 708 authorization and Artifacts 709--712
+    note: Sources 39/41 lead by 0.01 ms intact at 23.43 versus 23.44 ms control, and their delayed arrivals follow at 24.43/24.44 ms. This is consistent with the 23.45-ms gate split under continuous transmitter multiplication, but paired focal transmitter values were not both preserved because the all-event payload was compacted. No parameter is selected; focal output recovery is required.
+  diagnostics.figure10.projection026_focal_resource_output_recovery:
+    value: post-simulation output filter for layer-6I sources 39/41 and 23.3--23.6 ms
     status: registered-before-execution
-    source: Artifact 708 authorization and Artifacts 709--710
-    note: Output retention only; the existing threshold-order transmitter monitor and arrival reducer are reused. No model parameter, equation, schedule, protocol, or reset gate changes.
+    source: Artifact 712 authorization and Artifacts 713--714
+    note: The unchanged replay retains focal event and threshold-order transmitter rows only. Filtering occurs after simulation and scoring and cannot affect behavior or authorize a parameter.
   benchmark.population_sizes:
     value: see configs/*.yaml
     status: exploratory

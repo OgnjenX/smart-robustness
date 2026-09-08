@@ -10948,6 +10948,75 @@ def test_projection026_source_resource_audit_is_hash_pinned_and_passive() -> Non
         ("profile", "profile_sha256"),
         ("harness", "harness_sha256"),
         ("runtime", "runtime_sha256"),
+        ("source_result", "source_result_sha256"),
+        ("prior_assessment", "prior_assessment_sha256"),
+    ):
+        assert hashlib.sha256(
+            (ROOT / registration[path_key]).read_bytes()
+        ).hexdigest() == registration[hash_key]
+    assert registration["script_sha256"] == (
+        "b8c10ed056900959ee61bb9d88c8733ed59cd7804152acc1c27ae671c5b0a08d"
+    )
+    assert implementation["implementation"]["behavior_change"] == "none"
+    assert registration["output_mode"] == "projection026_source_resource_bounded"
+    assert registration["projection026_arrival_window_ms"] == [0.0, 24.6]
+    assert registration["persistent_projection_delays"] == []
+    assert "Only output retention" in registration["boundary"]
+    assert "No original-SMART claim" in registration["boundary"]
+
+
+def test_projection026_source_resource_pair_localizes_timing_only() -> None:
+    result_path = (
+        ROOT
+        / "docs/validation-results/figure10-projection026-source-resource-pair-711.yaml"
+    )
+    result = yaml.safe_load(result_path.read_text())
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-projection026-source-resource-assessment-712.yaml"
+        ).read_text()
+    )
+
+    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment[
+        "result_sha256"
+    ]
+    assert all(result["figure6_gates"].values())
+    timing = result["projection026_source_timing"]
+    assert timing["focal_sources"] == [39, 41]
+    assert timing["intact_source_spike_time_from_mismatch_ms"] == pytest.approx(
+        23.43
+    )
+    assert timing[
+        "disconnected_control_source_spike_time_from_mismatch_ms"
+    ] == pytest.approx(23.44)
+    assert timing["source_phase_lead_intact_ms"] == pytest.approx(0.01)
+    verdict = assessment["assessment"]
+    assert verdict["source_phase_difference_localized"]
+    assert verdict["timing_consistent_with_first_projection026_gate_difference"]
+    assert not verdict["complete_paired_focal_transmitter_values_preserved"]
+    assert not verdict["transmitter_magnitude_interpretation_authorized"]
+    assert not verdict["parameter_selected"]
+
+
+def test_projection026_focal_resource_recovery_is_hash_pinned_and_passive() -> None:
+    implementation = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-projection026-focal-resource-output-713.yaml"
+        ).read_text()
+    )
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-projection026-focal-resource-registration-714.yaml"
+        ).read_text()
+    )
+
+    for path_key, hash_key in (
+        ("profile", "profile_sha256"),
+        ("harness", "harness_sha256"),
+        ("runtime", "runtime_sha256"),
         ("script", "script_sha256"),
         ("source_result", "source_result_sha256"),
         ("prior_assessment", "prior_assessment_sha256"),
@@ -10956,10 +11025,10 @@ def test_projection026_source_resource_audit_is_hash_pinned_and_passive() -> Non
             (ROOT / registration[path_key]).read_bytes()
         ).hexdigest() == registration[hash_key]
     assert implementation["implementation"]["behavior_change"] == "none"
-    assert registration["output_mode"] == "projection026_source_resource_bounded"
+    assert registration["layer6i_source_resource_indices"] == [39, 41]
+    assert registration["layer6i_source_resource_window_ms"] == [23.3, 23.6]
     assert registration["projection026_arrival_window_ms"] == [0.0, 24.6]
-    assert registration["persistent_projection_delays"] == []
-    assert "Only output retention" in registration["boundary"]
+    assert "after simulation" in registration["boundary"]
     assert "No original-SMART claim" in registration["boundary"]
 
 

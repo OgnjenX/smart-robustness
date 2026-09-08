@@ -407,22 +407,58 @@ def main() -> None:
     output_mode = registration.get("output_mode", "full")
     layer6i_source_resource_payload = None
     if output_mode == "projection026_source_resource_bounded":
+        source_resource_indices = {
+            int(index)
+            for index in registration.get("layer6i_source_resource_indices", ())
+        }
+        source_resource_window = tuple(
+            float(value)
+            for value in registration.get(
+                "layer6i_source_resource_window_ms",
+                (0.0, float(protocol["mismatch_duration_ms"])),
+            )
+        )
+        if len(source_resource_window) != 2 or (
+            source_resource_window[0] < 0
+            or source_resource_window[1] <= source_resource_window[0]
+            or source_resource_window[1] > float(protocol["mismatch_duration_ms"])
+        ):
+            raise ValueError("layer-6I source-resource window must lie within mismatch")
+
+        def _select_source_resource_rows(rows):
+            return [
+                row
+                for row in rows
+                if (not source_resource_indices or int(row[0]) in source_resource_indices)
+                and source_resource_window[0]
+                <= float(row[1]) - float(protocol["pre_match_duration_ms"])
+                < source_resource_window[1]
+            ]
+
         layer6i_source_resource_payload = (
             {
-                "layer6i_mismatch_events": intact_summary[
-                    "layer6i_mismatch_events"
-                ],
-                "layer6i_mismatch_event_transmitter_samples": intact_summary[
-                    "layer6i_mismatch_event_transmitter_samples"
-                ],
+                "layer6i_mismatch_events": _select_source_resource_rows(
+                    intact_summary["layer6i_mismatch_events"]
+                ),
+                "layer6i_mismatch_event_transmitter_samples": (
+                    _select_source_resource_rows(
+                        intact_summary[
+                            "layer6i_mismatch_event_transmitter_samples"
+                        ]
+                    )
+                ),
             },
             {
-                "layer6i_mismatch_events": control_summary[
-                    "layer6i_mismatch_events"
-                ],
-                "layer6i_mismatch_event_transmitter_samples": control_summary[
-                    "layer6i_mismatch_event_transmitter_samples"
-                ],
+                "layer6i_mismatch_events": _select_source_resource_rows(
+                    control_summary["layer6i_mismatch_events"]
+                ),
+                "layer6i_mismatch_event_transmitter_samples": (
+                    _select_source_resource_rows(
+                        control_summary[
+                            "layer6i_mismatch_event_transmitter_samples"
+                        ]
+                    )
+                ),
             },
         )
     if output_mode in {

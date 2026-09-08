@@ -1855,3 +1855,12 @@ recovered source parameter. Next preregister one connected causal pair at the
 first event-producing endpoint, scale 8. Require fresh Figure 6 and exact
 upstream identity, then test broad layer-6I recruitment, winner suppression,
 and alternative release before any refinement or parameter selection.
+
+Artifact 644 preregisters that sole connected endpoint. Projection 025 is
+scaled to 8 in both the intact arm and the mismatch-onset disconnection
+control; persistent projection-008/011 and nonspecific-T calibrations remain
+fixed. The 300-ms protocol, comparator, event rule, spread, compartments, and
+all other parameters are unchanged. Fresh Figure 6 is mandatory. A reset pass
+requires the existing pre-reset-winner, reset-chain, winner-suppression, and
+alternative-release gates; increased layer-6I activity alone is insufficient.
+No refinement, parameter selection, or baseline promotion is authorized.

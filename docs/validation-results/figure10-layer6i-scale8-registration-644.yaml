@@ -1,0 +1,53 @@
+schema_version: 1
+id: figure10-layer6i-scale8-registration-644
+date: '2026-09-08'
+status: registered-before-execution-one-connected-scale8-causal-pair
+classification: figure10-connected-projection025-scale8-reset-diagnostic
+authorization: docs/validation-results/figure10-layer6i-conductance-assessment-643.yaml
+authorization_sha256: 56d68682caf9b5d0281c40846778928b5e5cec1341cd5f0207b59b615d91bd14
+profile: configs/calibration/figure7_learned_coincidence_effective_t_pair_v1.yaml
+profile_sha256: 4b6aa0bdf4fb844e428fb330f34970900cc8bc741183b2d8e6e73789cba0b30f
+harness: src/smart_robustness/validation/figure10.py
+harness_sha256: e280bfdc864c63630ac9e07a8ee980aa768015dce736bf04e5c98df9e0ef5a0f
+runtime: src/smart_robustness/classic_sector.py
+runtime_sha256: 3e9bedd47822a785c0735afb4ab25bfa03e099b3258875fd434964255d102a85
+script: scripts/run_figure10_calibrated_reset_pair.py
+script_sha256: 27829c7fdfef9aa23995790eb465d4604a1bacff6b5d358f54f0d73bb8ab026e
+runtime_fingerprint: fa4ab9f0bf2bec4d6ad53cb6a91620047689b6839b146ed7d777d42350c2cdf5
+result_id: figure10-layer6i-scale8-pair-645
+result: docs/validation-results/figure10-layer6i-scale8-pair-645.yaml
+assessment: docs/validation-results/figure10-layer6i-scale8-assessment-646.yaml
+persistent_projection_scales:
+- {projection_id: modeldb112923.projection.008, scale: 0.75}
+- {projection_id: modeldb112923.projection.011, scale: 0.9375}
+- {projection_id: modeldb112923.projection.025, scale: 8.0}
+nonspecific_t_scale: 0.1875
+record_layer6i_diagnostics: true
+record_layer6i_trace_indices: [0, 31, 40]
+record_reset_chain_diagnostics: true
+protocol:
+  pre_match_duration_ms: 100.0
+  mismatch_duration_ms: 200.0
+  total_duration_ms: 300.0
+  dt_ms: 0.01
+  top_down_current_pA: 800.0
+  top_down_current_mode: until_cued_cell_first_event
+  comparator: {transform: top_k_binary, source_index: 40, target_count: 5}
+required_prerequisites:
+  figure6_all_gates: true
+  projection025_scale: 8.0
+  scale_selection_basis: first-event-producing-preregistered-isolated-endpoint
+  reset_control: disconnect-projections-017-and-018-at-mismatch-onset
+decision_rule: >-
+  Fresh Figure 6 is a hard prerequisite. The intact arm must recruit more
+  layer-6I mismatch activity than the disconnected control. Official reset
+  requires the preregistered assessor's pre-reset winner, reset-chain, winner-
+  suppression, and alternative-release gates all to pass. Report all failures
+  and causal-arm identities without changing the score after inspection.
+boundary: >-
+  Execute one connected intact/control pair at projection-025 scale 8 under the
+  fixed 300-ms protocol. Do not refine the scale, change event multiplicity,
+  projection spread, target compartment, kinetics, intrinsic parameters,
+  comparator, event rule, duration, score, or any other connected-network
+  quantity. Scale 8 is a diagnostic endpoint, not a recovered or selected SMART
+  parameter. No baseline promotion is authorized without the complete reset.

@@ -9553,3 +9553,33 @@ def test_layer6i_conductance_bracket_locates_first_event_without_selection() -> 
     assert not result["connected_network_changed"]
     assert not result["original_smart_reproduced"]
     assert not result["baseline_promoted"]
+
+
+def test_layer6i_scale8_connected_pair_is_hash_pinned_and_single_endpoint() -> None:
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-layer6i-scale8-registration-644.yaml"
+        ).read_text()
+    )
+
+    for path_key, hash_key in (
+        ("authorization", "authorization_sha256"),
+        ("profile", "profile_sha256"),
+        ("harness", "harness_sha256"),
+        ("runtime", "runtime_sha256"),
+        ("script", "script_sha256"),
+    ):
+        assert hashlib.sha256(
+            (ROOT / registration[path_key]).read_bytes()
+        ).hexdigest() == registration[hash_key]
+    assert registration["persistent_projection_scales"][-1] == {
+        "projection_id": "modeldb112923.projection.025",
+        "scale": 8.0,
+    }
+    assert registration["required_prerequisites"]["figure6_all_gates"]
+    assert registration["record_layer6i_diagnostics"]
+    assert registration["record_reset_chain_diagnostics"]
+    assert registration["record_layer6i_trace_indices"] == [0, 31, 40]
+    assert "Execute one connected intact/control pair" in registration["boundary"]
+    assert "No baseline promotion" in registration["boundary"]

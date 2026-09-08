@@ -672,6 +672,11 @@ parameters:
     status: completed-first-event-bracket-four-to-eight-connected-endpoint-authorized
     source: Artifact 639 authorization and Artifacts 640--643
     note: Scale 1 remains exactly lossless. Scales 1, 2, and 4 are silent; scale 8 first produces one peripheral event, while 16, 32, and 64 produce one, two, and two. The effective requirement is greater than 4 and at most 8 times the reconstructed conductance. This is not a recovered SMART parameter; one connected diagnostic pair at scale 8 is authorized without refinement or selection.
+  calibration.figure10.layer6i_projection025_scale8_connected_pair:
+    value: one 300-ms connected intact/control Figure-10 pair at projection-025 scale 8
+    status: preregistered-awaiting-execution
+    source: Artifact 643 authorization and Artifact 644 registration
+    note: Scale 8 is the first event-producing isolated endpoint and is applied equally to both causal arms. Fresh Figure 6 and all four official reset gates are mandatory. The endpoint is diagnostic, not recovered or selected; no refinement or baseline promotion is authorized.
   benchmark.population_sizes:
     value: see configs/*.yaml
     status: exploratory

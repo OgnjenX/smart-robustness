@@ -1622,3 +1622,15 @@ Both arms share one fresh Figure 6 snapshot; the negative control disconnects
 only nonspecific-thalamus-to-layer-5 projections 017/018 at mismatch onset.
 Every causal gate is conjunctive, no result-driven tuning is allowed, and the
 known six-versus-seven Figure 7 deficit remains explicitly locked.
+
+Artifacts 601--603 execute the fixed causal pair and reveal a deeper but
+localized reset failure. Both arms establish the identical five-cell horizontal
+layer-4 assembly. In the persistent sequence, nonspecific output is exactly
+four events during match and seven during mismatch. Disconnecting projections
+017/018 at mismatch reduces layer-5 output from 70 to 55 events, proving that
+the nonspecific burst reaches layer 5. Yet layer-6I remains 30 events and
+layer-4 remains 43 events in both arms; winner suppression and alternative
+release fail. Figure 10 is not reproduced. Next add read-only projection-025
+gate/current diagnostics to determine whether the causal difference is erased
+in layer-5 transmission or masked at layer 6I. No weight or AHP/ACh tuning is
+authorized before that localization.

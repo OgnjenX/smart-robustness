@@ -8687,3 +8687,44 @@ def test_calibrated_figure10_reset_pair_is_hash_pinned_and_causal() -> None:
     assert len(registration["fixed_gates"]) == 6
     assert "cannot erase" in registration["known_locked_discrepancy"]
     assert not registration["baseline_freeze_authorized"]
+
+
+def test_calibrated_figure10_reset_localizes_failure_after_layer5() -> None:
+    result_path = (
+        ROOT / "docs/validation-results/figure10-calibrated-reset-pair-602.yaml"
+    )
+    result = yaml.safe_load(result_path.read_text())
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-calibrated-reset-assessment-603.yaml"
+        ).read_text()
+    )
+
+    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment[
+        "result_sha256"
+    ]
+    assert all(result["figure6_gates"].values())
+    assert result["intact"]["layer4_pre_active_indices"] == [38, 39, 40, 41, 42]
+    assert result["intact"]["nonspecific_pre_events"] == 4
+    assert result["intact"]["nonspecific_post_events"] == 7
+    assert result["intact"]["layer5_post_events"] > result["disconnected_control"][
+        "layer5_post_events"
+    ]
+    assert result["intact"]["layer6i_post_events"] == result[
+        "disconnected_control"
+    ]["layer6i_post_events"]
+    assert result["intact"]["layer4_post_events"] == result["disconnected_control"][
+        "layer4_post_events"
+    ]
+    assert result["reset_gates"] == {
+        "pre_reset_winner": True,
+        "reset_chain": True,
+        "winner_suppression": False,
+        "alternative_release": False,
+    }
+    assert not result["reproduced_reset"]
+    assert assessment["assessment"]["nonspecific_to_layer5_causal_effect_observed"]
+    assert not assessment["assessment"]["layer5_to_layer6i_causal_effect_observed"]
+    assert not assessment["assessment"]["official_figure10_reset_reproduced"]
+    assert not assessment["assessment"]["baseline_promoted"]

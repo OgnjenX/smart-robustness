@@ -1,0 +1,48 @@
+schema_version: 1
+id: figure10-calibrated-reset-assessment-603
+date: '2026-09-08'
+status: assessed-reset-failed-causal-effect-stops-at-layer5
+registration: docs/validation-results/figure10-calibrated-reset-registration-601.yaml
+result: docs/validation-results/figure10-calibrated-reset-pair-602.yaml
+result_sha256: 0eff1434907eeef6ac9bd039ba7441be43c2f68827204d417b11dc8efa89de1e
+assessment:
+  fresh_figure6_passed: true
+  identical_pre_mismatch_layer4_state: true
+  pre_reset_horizontal_assembly_passed: true
+  sequential_nonspecific_4_to_7_observed: true
+  intact_reset_chain_activity_passed: true
+  nonspecific_to_layer5_causal_effect_observed: true
+  layer5_to_layer6i_causal_effect_observed: false
+  winner_suppression_passed: false
+  alternative_release_passed: false
+  official_figure10_reset_reproduced: false
+  parameter_selected: false
+  figure7_discrepancy_erased: false
+  original_smart_reproduced: false
+  baseline_promoted: false
+quantitative_summary:
+  pre_reset_layer4_assembly: [38, 39, 40, 41, 42]
+  pre_reset_layer4_events: 39
+  nonspecific_pre_post_events_intact: [4, 7]
+  layer5_post_events_intact_control: [70, 55]
+  layer6i_post_events_intact_control: [30, 30]
+  layer4_post_events_intact_control: [43, 43]
+  pre_reset_assembly_post_events_intact_control: [39, 39]
+  released_alternative_cells_intact_control: [2, 2]
+interpretation: >-
+  The fixed calibrated model establishes the same five-cell horizontal
+  pre-reset assembly in both arms. Its sequential history produces four
+  nonspecific events during match and seven during mismatch, unlike the six
+  events in the separately initialized Figure 7 mismatch. Disconnecting
+  projections 017/018 only at mismatch leaves nonspecific output unchanged but
+  reduces layer-5 events from 70 to 55, proving causal transmission into layer
+  5. That difference produces no change in layer-6I or layer-4 events. The
+  published reset therefore fails because the causal effect stops after layer
+  5, not because the mismatch burst or its layer-5 input is absent.
+next_gate: >-
+  Add read-only source-separated layer-6I diagnostics for projection 025
+  (layer 5 to layer 6I) in the same fixed intact/control protocol. Determine
+  whether the extra layer-5 events produce a different receptor gate/current
+  at layer 6I and are masked by other inputs, or whether transmitter/event
+  transfer erases the difference before layer 6I. Do not scale projection 025,
+  alter AHP/ACh, or tune reset behavior before that localization.

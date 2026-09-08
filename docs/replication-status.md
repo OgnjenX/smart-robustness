@@ -3704,3 +3704,12 @@ onset. The declared phase duration remains source-unreported. This downstream
 test cannot cure or hide the six-versus-seven Figure 7 deficit; it asks whether
 the published nonspecific→layer-5→layer-6I reset chain and winner release are
 nevertheless present in the same fixed model.
+
+Artifacts 601--603 show that only the first part of that chain is causal. Both
+arms have the same 39-event horizontal pre-reset layer-4 assembly. Sequential
+match/mismatch history gives the official four then seven nonspecific events.
+Removing projections 017/018 at mismatch reduces layer-5 activity from 70 to
+55 events, but layer-6I remains 30 and layer-4 remains 43 in both arms. Thus
+the mismatch burst and nonspecific→layer-5 transmission are present, while the
+causal effect fails to propagate through layer 6I to reset layer 4. Figure 10,
+complete original SMART, and baseline freezing all remain failed.

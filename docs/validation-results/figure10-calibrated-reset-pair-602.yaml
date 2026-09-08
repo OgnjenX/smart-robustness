@@ -1,0 +1,64 @@
+schema_version: 1
+id: figure10-calibrated-reset-pair-602
+date: '2026-09-08'
+status: completed-calibrated-figure10-reset-pair
+classification: downstream-validation-with-locked-figure7-discrepancy
+registration: docs/validation-results/figure10-calibrated-reset-registration-601.yaml
+runtime_fingerprint: fa4ab9f0bf2bec4d6ad53cb6a91620047689b6839b146ed7d777d42350c2cdf5
+persistent_projection_weight_scales:
+  modeldb112923.projection.000: 0.01
+  modeldb112923.projection.001: 0.01
+  modeldb112923.projection.004: 0.03
+  modeldb112923.projection.008: 0.75
+  modeldb112923.projection.011: 0.9375
+figure6_gates:
+  relay_active_indices: true
+  relay_events_per_active_index: true
+  relay_events: true
+  cortical_chain_complete: true
+  causal_learning_pair: true
+  top_down_horizontal_contrast: true
+intact:
+  reset_pathway_enabled: true
+  layer4_pre_events: 39
+  layer4_pre_active_indices: [38, 39, 40, 41, 42]
+  layer4_post_events: 43
+  layer4_post_active_indices: [31, 38, 39, 40, 41, 42, 49]
+  nonspecific_pre_events: 4
+  nonspecific_post_events: 7
+  layer5_pre_events: 41
+  layer5_post_events: 70
+  layer6i_pre_events: 36
+  layer6i_post_events: 30
+disconnected_control:
+  reset_pathway_enabled: false
+  layer4_pre_events: 39
+  layer4_pre_active_indices: [38, 39, 40, 41, 42]
+  layer4_post_events: 43
+  layer4_post_active_indices: [31, 38, 39, 40, 41, 42, 49]
+  nonspecific_pre_events: 4
+  nonspecific_post_events: 7
+  layer5_pre_events: 41
+  layer5_post_events: 55
+  layer6i_pre_events: 36
+  layer6i_post_events: 30
+reset_assessment:
+  pre_reset_winner_index: 38
+  pre_reset_winner_indices: [38, 39, 40, 41, 42]
+  pre_reset_winner_spikes: 39
+  intact_winner_post_spikes: 39
+  control_winner_post_spikes: 39
+  intact_released_alternatives: 2
+  control_released_alternatives: 2
+  intact_nonspecific_spikes: 7
+  intact_layer5_spikes: 70
+  intact_layer6i_spikes: 30
+reset_gates:
+  pre_reset_winner: true
+  reset_chain: true
+  winner_suppression: false
+  alternative_release: false
+reproduced_reset: false
+figure7_known_discrepancy_locked: true
+original_smart_reproduced: false
+baseline_promoted: false

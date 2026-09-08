@@ -619,9 +619,9 @@ parameters:
     note: Fresh Figure 6 and the exact five-cell/20-relay match pass, but common scale 0.75 emits five nonspecific match events instead of four. Mismatch remains unconsulted. The endpoint and distinct interaction family close without interpolation, extension, compartment-specific changes, or T-current adjustment.
   validation.figure10.calibrated_reset_pair:
     value: persistent 100-ms match to 100-ms mismatch with intact versus mismatch-onset disconnection of projections 017/018
-    status: preregistered-awaiting-execution-with-figure7-discrepancy-locked
-    source: Grossberg and Versace 2008 Figure 10 and Results 2.5; harness Artifact 600; Registration 601
-    note: The current learned snapshot, persistent recurrent scales, top-five comparator, and first-event cue clearing are used. Phase duration is a declared source-unreported convention. Figure 10 requires all causal-chain, winner-suppression, and alternative-release gates and cannot erase the known six-versus-seven Figure 7 mismatch deficit.
+    status: completed-reset-failed-causal-effect-stops-at-layer5
+    source: Grossberg and Versace 2008 Figure 10 and Results 2.5; Artifacts 600--603
+    note: Sequential history yields exact four-to-seven nonspecific events, and disconnecting projections 017/018 reduces layer-5 mismatch events from 70 to 55. Layer-6I remains 30 and layer-4 remains 43 in both arms, so winner suppression and alternative release fail. No parameter is selected; projection-025 transfer requires read-only localization next.
   benchmark.population_sizes:
     value: see configs/*.yaml
     status: exploratory

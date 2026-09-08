@@ -1,0 +1,61 @@
+schema_version: 1
+id: figure10-projection026-supplement-delay-assessment-683
+date: '2026-09-08'
+status: assessed-reset-failed-source-delay-conflict-rejected-closed
+registration: docs/validation-results/figure10-projection026-supplement-delay-registration-681.yaml
+result: docs/validation-results/figure10-projection026-supplement-delay-pair-682.yaml
+result_sha256: e8bb06ca359803b6d9ef7fa15152008c1588c1fe418fb8a174f315bcc3c6ed0d
+assessment:
+  all_fresh_figure6_gates_pass: true
+  identical_nonempty_pre_reset_assembly: true
+  reset_chain_pass: true
+  winner_suppression_pass: false
+  alternative_release_pass: false
+  projection026_supplement_delay_selected: false
+  projection026_delay_conflict_closed: true
+  delay_grid_or_interpolation_authorized: false
+  global_classic_convention_authorized: false
+  parameter_selected: false
+  official_figure10_reset_reproduced: false
+  original_smart_reproduced: false
+  baseline_promoted: false
+decision_evidence:
+  winner_events_intact_control: [81, 80]
+  winner_intact_minus_control: 1
+  released_alternatives_intact_control: [0, 2]
+  intact_layer6i_events: 153
+  intact_layer6i_active_cells: 81
+  intact_layer4_inhibitory_events: 218
+  intact_projection026_current_integral_pA_ms: 1903.355247740959
+  intact_projection036_current_integral_pA_ms: -1829727.7541203846
+  intact_projection038_current_integral_pA_ms: 3230.45296615339
+timing_evidence:
+  retained_control_window_from_mismatch_ms: [73.0, 78.0]
+  control_alternative31_spike_ms: 76.78000000000003
+  control_alternative31_projection036_gate_onset_ms: 75.59000000000003
+  control_alternative31_projection038_gate_reached_0p1: false
+  control_winner40_projection038_gate_reached_0p1: false
+interpretation: >-
+  The exact supplementary 0.1-ms projection-026 delay preserves every fresh
+  Figure-6 gate, the five-cell pre-reset representation, broad intact layer-6I
+  recruitment, and the upstream reset chain. It does not change the causal
+  sign at layer 4: the intact winner emits 81 events versus 80 control and
+  releases zero alternatives versus two control. The winner difference narrows
+  relative to the +2 baseline but remains in the wrong direction, and
+  alternative release is unchanged. Retained target timing also shows that
+  direct projection-038 gate activity stays below 0.1 at control cells 31 and
+  40 during the critical 73--78-ms interval. The primary-source delay conflict
+  therefore does not recover Figure-10 reset and cannot be promoted globally.
+closure: >-
+  Reject projection-026 delay 0.1 ms as the Figure-10 source-cross endpoint and
+  retain recovered SMART.nml delay 1.0 ms as the executable default. Close the
+  conflict without an intermediate delay, grid, condition-specific override,
+  or projection-038 change. No parameter is selected.
+next_gate: >-
+  Return to the unchanged executable-source timing and add a passive,
+  source-resolved projection-036 arrival audit at alternative cell 31 around
+  the first 75--76-ms inhibitory surge. Attribute the target gate onset to the
+  exact connected layer-4-inhibitory source events and serialized weights in
+  each causal arm before considering any other effective family. The audit may
+  localize an upstream source cell or topology interpretation but cannot alter
+  a model quantity or reset score.

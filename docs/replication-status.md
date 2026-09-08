@@ -2811,6 +2811,14 @@ p038 gate-onset observation at cells 31 and 40. It has not yet run. No delay
 grid, intermediate value, or global classic-SMART convention claim is
 authorized.
 
+Artifacts 682--683 complete and reject the p026 source cross. Every fresh
+Figure-6 and upstream reset-chain gate passes, including all 81 intact
+layer-6I cells, but winner output remains greater intact (81 versus 80) and
+alternative release remains zero versus two control. The supplementary 0.1-ms
+delay is unselected and the conflict is closed without interpolation;
+recovered `SMART.nml` 1.0 ms remains the executable default. Figure 10,
+complete original SMART reproduction, and baseline freezing remain failed.
+
 Artifacts 535--537 perform the permitted match-only effective T-conductance
 screen on that fixed replay trace. The full preregistered grid from zero to the
 paper density is finite and was executed without interpolation. Scale 0.1875,

@@ -10405,3 +10405,45 @@ def test_projection026_supplement_delay_endpoint_is_source_pinned_and_bounded() 
     assert "without an intermediate value" in registration["decision_rule"]
     assert "cannot establish a global" in registration["boundary"]
     assert "until the same choice passes fresh learning" in registration["boundary"]
+
+
+def test_projection026_supplement_delay_fails_reset_and_closes_conflict() -> None:
+    result_path = (
+        ROOT
+        / "docs/validation-results/figure10-projection026-supplement-delay-pair-682.yaml"
+    )
+    result = yaml.safe_load(result_path.read_text())
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-projection026-supplement-delay-assessment-683.yaml"
+        ).read_text()
+    )
+
+    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment[
+        "result_sha256"
+    ]
+    assert all(result["figure6_gates"].values())
+    assert result["persistent_projection_delays_ms"] == {
+        "modeldb112923.projection.026": 0.1
+    }
+    assert result["reset_assessment"]["intact_winner_post_spikes"] == 81
+    assert result["reset_assessment"]["control_winner_post_spikes"] == 80
+    assert result["reset_assessment"]["intact_released_alternatives"] == 0
+    assert result["reset_assessment"]["control_released_alternatives"] == 2
+    assert result["reset_gates"] == {
+        "pre_reset_winner": True,
+        "reset_chain": True,
+        "winner_suppression": False,
+        "alternative_release": False,
+    }
+    timing = result["retained_control_target_timing"]
+    assert timing["cell31"]["projection038_first_gate_threshold_ms"] is None
+    assert timing["cell40"]["projection038_first_gate_threshold_ms"] is None
+    verdict = assessment["assessment"]
+    assert not verdict["projection026_supplement_delay_selected"]
+    assert verdict["projection026_delay_conflict_closed"]
+    assert not verdict["delay_grid_or_interpolation_authorized"]
+    assert not verdict["global_classic_convention_authorized"]
+    assert not result["original_smart_reproduced"]
+    assert not result["baseline_promoted"]

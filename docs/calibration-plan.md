@@ -2058,3 +2058,14 @@ no interpolation. The passive target trace now includes projection-038 gate
 onset at representative alternative cell 31 and winner cell 40. Even a pass is
 only a mixed-source candidate until the convention survives fresh learning,
 Figure 7, and all holdouts.
+
+Artifacts 682--683 execute and reject the source cross. Fresh Figure 6, the
+pre-reset assembly, the reset chain, and broad intact layer-6I recruitment all
+pass. The intact winner nevertheless emits 81 events versus 80 control, and
+intact releases zero alternatives versus two control. The smaller +1 winner
+difference remains the wrong causal sign. Retained 73--78-ms target traces show
+projection 038 below the 0.1 gate threshold in control cells 31 and 40, so it
+does not initiate their early divergence. Close the p026 delay conflict without
+interpolation and retain recovered `SMART.nml` 1.0 ms as executable default.
+Next localize the exact layer-4-inhibitory source events that generate the
+p036 surge at alternative cell 31 under unchanged source timing.

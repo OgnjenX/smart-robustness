@@ -1,0 +1,62 @@
+schema_version: 1
+id: figure10-layer6i-axial-assessment-631
+date: '2026-09-08'
+status: assessed-kinness-layer6i-axial-reduces-output-not-reset-family-closed
+registration: docs/validation-results/figure10-layer6i-axial-registration-629.yaml
+result: docs/validation-results/figure10-layer6i-axial-pair-630.yaml
+result_sha256: 3e2be4451ecc64f3c1b892063434f4566bf87c0c45f87c54de8ce353126c1e55
+assessment:
+  fresh_figure6_passed: true
+  kinness_layer6i_axial_endpoint_executed: true
+  source_control_upstream_identity_reproduced: true
+  layer6i_output_reduced_from_source_control: true
+  broad_layer6i_recruitment_observed: false
+  layer6i_event_count_identical_between_arms: true
+  layer6i_event_identity_identical_between_arms: true
+  layer4_output_identical_between_arms: true
+  winner_suppression: false
+  alternative_release: false
+  family_closed: true
+  parameter_selected: false
+  official_figure10_reset_reproduced: false
+  original_smart_reproduced: false
+  baseline_promoted: false
+quantitative_summary:
+  source_control_paper_axial_layer6i_post_events_intact_control: [72, 72]
+  kinness_axial_layer6i_post_events_intact_control: [40, 40]
+  kinness_axial_layer6i_late_events_intact_control: [24, 24]
+  kinness_axial_layer6i_active_indices_intact_control:
+  - [31, 38, 39, 40, 41, 42, 49]
+  - [31, 38, 39, 40, 41, 42, 49]
+  kinness_axial_layer4_post_events_intact_control: [98, 98]
+  kinness_axial_winner_post_events_intact_control: [80, 80]
+  kinness_axial_released_alternatives_intact_control: [2, 2]
+  projection025_current_integral_pA_ms_intact_control:
+  - 307809.7137795616
+  - 66469.28397673822
+  projection025_current_integral_ratio: 4.631014459280413
+  common_peripheral_projection025_current_integral_pA_ms: 3018.6608806744343
+  common_nonspiking_layer6i_soma_voltage_peak_mV: -69.00389361216988
+  common_nonspiking_layer6i_proximal_voltage_peak_mV: -67.15186714678283
+interpretation: >-
+  The sole source-discrete layer-6I axial endpoint passes every fresh Figure-6
+  gate and preserves the complete upstream Figure-10 identity. Applying the
+  KInNeSS Equation-9 conductance only to layer 6I reduces post-mismatch output
+  from the source-control 72 events to 40, rather than recruiting the broad
+  inhibitory wave required for reset. The intact and disconnected arms emit
+  exactly the same 40 layer-6I events from the same seven cells, followed by
+  the same 98 layer-4 events, 80 winner events, and two released alternatives.
+  Projection 025 still carries a 4.63-fold intact/control current-integral
+  contrast, but common peripheral somata remain near -69 mV. The KInNeSS axial
+  transfer is therefore not sufficient and is directionally worse for the
+  missing reset. All source-discrete layer-6I intrinsic, target-compartment,
+  spread, and axial alternatives are now exhausted; the family is closed and
+  no value is selected.
+next_gate: >-
+  Return to the paper-axial, one-to-one projection-025 source control and add a
+  preregistered read-only trace assay for representative winner-aligned and
+  peripheral layer-6I cells. Measure the timing of projection-023, -024, and
+  -025 currents relative to proximal and somatic voltage maxima and threshold.
+  Use that measured transfer gap to define an isolated replay and bounded
+  effective calibration family; do not tune a weight, leak, threshold, or
+  axial resistance from this result alone.

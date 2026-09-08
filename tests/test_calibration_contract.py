@@ -9244,3 +9244,55 @@ def test_layer6i_axial_candidate_is_one_source_discrete_endpoint() -> None:
     }
     assert registration["required_prerequisites"]["projection025_connections"] == 81
     assert "No resistance or conductance scale" in registration["boundary"]
+
+
+def test_layer6i_kinness_axial_reduces_output_but_not_reset() -> None:
+    result_path = (
+        ROOT / "docs/validation-results/figure10-layer6i-axial-pair-630.yaml"
+    )
+    result = yaml.safe_load(result_path.read_text())
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-layer6i-axial-assessment-631.yaml"
+        ).read_text()
+    )
+
+    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment[
+        "result_sha256"
+    ]
+    assert all(result["figure6_gates"].values())
+    assert result["runtime_overrides"] == {
+        "layer6i_axial_convention": "kinness_serialized_edge"
+    }
+    intact = result["intact"]
+    control = result["disconnected_control"]
+    assert intact["layer6i_post_events"] == control["layer6i_post_events"] == 40
+    assert intact["layer6i_late_mismatch_events"] == (
+        control["layer6i_late_mismatch_events"]
+    ) == 24
+    assert intact["layer6i_mismatch_active_indices"] == control[
+        "layer6i_mismatch_active_indices"
+    ]
+    assert intact["layer6i_mismatch_events_by_index"] == control[
+        "layer6i_mismatch_events_by_index"
+    ]
+    assert intact["layer4_post_events"] == control["layer4_post_events"] == 98
+    projection025 = "modeldb112923.projection.025"
+    assert intact["layer6i_mismatch_current_integral_pA_ms_by_projection"][
+        projection025
+    ] > 4.6 * control["layer6i_mismatch_current_integral_pA_ms_by_projection"][
+        projection025
+    ]
+    assert result["reset_assessment"]["intact_winner_post_spikes"] == (
+        result["reset_assessment"]["control_winner_post_spikes"]
+    ) == 80
+    assert result["reset_assessment"]["intact_released_alternatives"] == (
+        result["reset_assessment"]["control_released_alternatives"]
+    ) == 2
+    assert assessment["assessment"]["layer6i_output_reduced_from_source_control"]
+    assert assessment["assessment"]["family_closed"]
+    assert not assessment["assessment"]["parameter_selected"]
+    assert not result["reproduced_reset"]
+    assert not result["original_smart_reproduced"]
+    assert not result["baseline_promoted"]

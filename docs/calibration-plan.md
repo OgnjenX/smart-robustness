@@ -1776,3 +1776,16 @@ terms, whereas KInNeSS Equation 9 with the same serialized edge yields
 the source-control one-to-one projection 025, and requires fresh Figure 6
 before one 300-ms causal pair. This is a mixed source-equation reconstruction,
 not an axial scale fit or a recovered global simulator convention.
+
+Artifacts 630--631 execute and close the layer-6I axial family. Every fresh
+Figure-6 gate and the upstream Figure-10 identity pass. The KInNeSS axial
+endpoint reduces layer-6I post-mismatch output from the paper-axial source
+control's 72 events to 40, but the intact and disconnected arms still emit the
+same 40 events from the same seven cells. They also produce the same 98
+layer-4 events, 80 winner events, and two released alternatives. Projection
+025 preserves a 4.63-fold intact/control current-integral difference, while a
+common peripheral soma peaks only near -69 mV. Reject the endpoint and close
+the family: every source-discrete layer-6I intrinsic, target-compartment,
+spread, and axial alternative is now exhausted. Next return to paper axial and
+the one-to-one projection-025 source control for a preregistered read-only
+selected-cell timing assay before defining any effective calibration family.

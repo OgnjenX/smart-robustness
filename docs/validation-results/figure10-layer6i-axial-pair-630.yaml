@@ -1,0 +1,124 @@
+schema_version: 1
+id: figure10-layer6i-axial-pair-630
+date: '2026-09-08'
+status: completed-calibrated-figure10-reset-pair
+classification: source-discrete-layer6i-kinness-axial-300ms-causal-reset
+registration: docs/validation-results/figure10-layer6i-axial-registration-629.yaml
+serialization: bounded-sparse-lossless-for-decision-readouts
+runtime_fingerprint: 5a7ed0ded09ea559cb1cc9fba53d86bdc12899cd0e1bea041a8b3f63c407ed3e
+runtime_overrides:
+  layer6i_axial_convention: kinness_serialized_edge
+axial_conductance_nS:
+  into_soma: 35.298793860559485
+  into_proximal: 35.29879386055947
+persistent_projection_weight_scales:
+  modeldb112923.projection.000: 0.01
+  modeldb112923.projection.001: 0.01
+  modeldb112923.projection.004: 0.03
+  modeldb112923.projection.008: 0.75
+  modeldb112923.projection.011: 0.9375
+figure6_gates:
+  relay_active_indices: true
+  relay_events_per_active_index: true
+  relay_events: true
+  cortical_chain_complete: true
+  causal_learning_pair: true
+  top_down_horizontal_contrast: true
+intact:
+  reset_pathway_enabled: true
+  layer4_pre_events: 39
+  layer4_pre_active_indices: [38, 39, 40, 41, 42]
+  layer4_post_events: 98
+  layer4_post_active_indices: [31, 38, 39, 40, 41, 42, 49]
+  layer4_first_100ms_mismatch_events: 43
+  layer4_late_mismatch_events: 55
+  nonspecific_pre_events: 4
+  nonspecific_post_events: 13
+  nonspecific_first_100ms_mismatch_events: 7
+  nonspecific_late_mismatch_events: 6
+  layer5_pre_events: 41
+  layer5_post_events: 225
+  layer5_first_100ms_mismatch_events: 72
+  layer5_late_mismatch_events: 153
+  layer5_post_active_indices: all-0-through-80
+  layer5_late_active_indices: all-0-through-80
+  layer6i_pre_events: 23
+  layer6i_post_events: 40
+  layer6i_first_100ms_mismatch_events: 16
+  layer6i_late_mismatch_events: 24
+  layer6i_mismatch_active_indices: [31, 38, 39, 40, 41, 42, 49]
+  layer6i_mismatch_events_by_index: {31: 3, 38: 5, 39: 6, 40: 12, 41: 6, 42: 5, 49: 3}
+  layer6i_mismatch_gate_integral_ms_by_projection:
+    modeldb112923.projection.023: 84.55464058461364
+    modeldb112923.projection.024: 1338.7818526956821
+    modeldb112923.projection.025: 295.75471885634335
+  layer6i_mismatch_current_integral_pA_ms_by_projection:
+    modeldb112923.projection.023: 445254.81977386796
+    modeldb112923.projection.024: 1166726.4590556188
+    modeldb112923.projection.025: 307809.7137795616
+  layer6i_mismatch_current_peak_pA_by_projection:
+    modeldb112923.projection.023: 22477.807904076195
+    modeldb112923.projection.024: 23482.41341621754
+    modeldb112923.projection.025: 35305.482893040884
+  projection025_nonzero_target_indices: all-0-through-80
+  common_peripheral_projection025_current_integral_pA_ms: 3018.6608806744343
+  common_peripheral_projection025_current_peak_pA: 541.7419660753831
+  common_nonspiking_layer6i_soma_voltage_peak_mV: -69.00389361216988
+  common_nonspiking_layer6i_proximal_voltage_peak_mV: -67.15186714678283
+disconnected_control:
+  reset_pathway_enabled: false
+  layer4_pre_events: 39
+  layer4_pre_active_indices: [38, 39, 40, 41, 42]
+  layer4_post_events: 98
+  layer4_post_active_indices: [31, 38, 39, 40, 41, 42, 49]
+  layer4_first_100ms_mismatch_events: 43
+  layer4_late_mismatch_events: 55
+  nonspecific_pre_events: 4
+  nonspecific_post_events: 13
+  nonspecific_first_100ms_mismatch_events: 7
+  nonspecific_late_mismatch_events: 6
+  layer5_pre_events: 41
+  layer5_post_events: 140
+  layer5_first_100ms_mismatch_events: 55
+  layer5_late_mismatch_events: 85
+  layer5_post_active_indices: [30, 31, 32, 38, 39, 40, 41, 42, 48, 49, 50]
+  layer5_late_active_indices: [30, 31, 32, 38, 39, 40, 41, 42, 48, 49, 50]
+  layer6i_pre_events: 23
+  layer6i_post_events: 40
+  layer6i_first_100ms_mismatch_events: 16
+  layer6i_late_mismatch_events: 24
+  layer6i_mismatch_active_indices: [31, 38, 39, 40, 41, 42, 49]
+  layer6i_mismatch_events_by_index: {31: 3, 38: 5, 39: 6, 40: 12, 41: 6, 42: 5, 49: 3}
+  layer6i_mismatch_gate_integral_ms_by_projection:
+    modeldb112923.projection.023: 84.52625151270023
+    modeldb112923.projection.024: 1338.8329176028346
+    modeldb112923.projection.025: 70.27191595675824
+  layer6i_mismatch_current_integral_pA_ms_by_projection:
+    modeldb112923.projection.023: 445204.7398897486
+    modeldb112923.projection.024: 1166547.9170592076
+    modeldb112923.projection.025: 66469.28397673822
+  layer6i_mismatch_current_peak_pA_by_projection:
+    modeldb112923.projection.023: 22479.500522466104
+    modeldb112923.projection.024: 23457.76143835454
+    modeldb112923.projection.025: 2448.037520638712
+  projection025_nonzero_target_count: 11
+reset_assessment:
+  pre_reset_winner_index: 38
+  pre_reset_winner_indices: [38, 39, 40, 41, 42]
+  pre_reset_winner_spikes: 39
+  intact_winner_post_spikes: 80
+  control_winner_post_spikes: 80
+  intact_released_alternatives: 2
+  control_released_alternatives: 2
+  intact_nonspecific_spikes: 13
+  intact_layer5_spikes: 225
+  intact_layer6i_spikes: 40
+reset_gates:
+  pre_reset_winner: true
+  reset_chain: true
+  winner_suppression: false
+  alternative_release: false
+reproduced_reset: false
+figure7_known_discrepancy_locked: true
+original_smart_reproduced: false
+baseline_promoted: false

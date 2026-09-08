@@ -108,6 +108,8 @@ class Figure10ConditionResult:
     layer6i_mismatch_soma_voltage_peak_mV_by_index: tuple[tuple[int, float], ...] = ()
     layer6i_mismatch_proximal_voltage_peak_mV_by_index: tuple[tuple[int, float], ...] = ()
     layer6i_selected_trace_summaries: tuple[Figure10Layer6iTraceSummary, ...] = ()
+    layer6i_replay_trace_path: str | None = None
+    layer6i_replay_trace_sha256: str | None = None
     layer4i_mismatch_projection026_gate_integral_ms: float | None = None
     layer4i_mismatch_projection026_current_integral_pA_ms: float | None = None
     layer4i_mismatch_projection026_current_peak_pA: float | None = None
@@ -369,6 +371,8 @@ def run_figure10_condition(
     top_down_current_mode: TopDownCurrentMode | str = (TopDownCurrentMode.SUSTAINED_EPOCH),
     record_layer6i_diagnostics: bool = False,
     record_layer6i_trace_indices: tuple[int, ...] = (),
+    layer6i_replay_trace_output: str | Path | None = None,
+    layer6i_replay_cell_index: int = 0,
     record_reset_chain_diagnostics: bool = False,
     conventions=None,
     dt_ms: float = 0.01,
@@ -398,6 +402,18 @@ def run_figure10_condition(
         raise ValueError("layer-6I trace index must be between 0 and 80")
     if record_layer6i_trace_indices and not record_layer6i_diagnostics:
         raise ValueError("selected layer-6I traces require layer-6I diagnostics")
+    if isinstance(layer6i_replay_cell_index, bool) or not isinstance(
+        layer6i_replay_cell_index, int
+    ):
+        raise TypeError("layer-6I replay cell index must be an integer")
+    if layer6i_replay_cell_index < 0 or layer6i_replay_cell_index >= 81:
+        raise ValueError("layer-6I replay cell index must be between 0 and 80")
+    if layer6i_replay_trace_output is not None:
+        replay_output = Path(layer6i_replay_trace_output)
+        if replay_output.exists():
+            raise FileExistsError(replay_output)
+        if not replay_output.parent.is_dir():
+            raise ValueError("layer-6I replay trace parent directory does not exist")
     if not isinstance(record_reset_chain_diagnostics, bool):
         raise TypeError("reset-chain diagnostics flag must be boolean")
     current_mode = TopDownCurrentMode(top_down_current_mode)
@@ -542,6 +558,35 @@ def run_figure10_condition(
     apply_match_mismatch_cue(sector, match, relay_input_gains=relay_input_gains, brian=brian)
     sector.network.run(pre_match_duration_ms * brian.ms)
     clear_match_mismatch_cue(sector, match, brian=brian)
+    layer6i_replay_state = None
+    layer6i_replay_initial_state = None
+    layer6i_replay_start_ms = None
+    if layer6i_replay_trace_output is not None:
+        from .layer6i_replay import (
+            LAYER6I_REPLAY_MONITOR_VARIABLES,
+            capture_layer6i_initial_state,
+        )
+
+        layer6i_group = sector.populations["layer6i_excitatory_v1"].group
+        layer6i_replay_initial_state = capture_layer6i_initial_state(
+            layer6i_group,
+            cell_index=layer6i_replay_cell_index,
+            brian=brian,
+        )
+        layer6i_replay_start_ms = float(sector.network.t / brian.ms)
+        layer6i_replay_state = brian.StateMonitor(
+            layer6i_group,
+            LAYER6I_REPLAY_MONITOR_VARIABLES,
+            record=[layer6i_replay_cell_index],
+            when="thresholds",
+            order=0,
+            name=(
+                "figure10_intact_layer6i_replay_state"
+                if reset_pathway_enabled
+                else "figure10_control_layer6i_replay_state"
+            ),
+        )
+        sector.network.add(layer6i_replay_state)
     # Disconnect only at mismatch onset.  The intact and negative-control
     # conditions must establish exactly the same pre-reset winner.
     if not reset_pathway_enabled:
@@ -564,6 +609,27 @@ def run_figure10_condition(
         from ..standalone import build_and_run_cpp_standalone
 
         build_and_run_cpp_standalone(brian, cpp_standalone_directory)
+
+    layer6i_replay_trace_sha256 = None
+    if layer6i_replay_trace_output is not None:
+        from .layer6i_replay import write_layer6i_replay_trace
+
+        assert layer6i_replay_state is not None
+        assert layer6i_replay_initial_state is not None
+        assert layer6i_replay_start_ms is not None
+        layer6i_replay_trace_sha256 = write_layer6i_replay_trace(
+            layer6i_replay_state,
+            layer6i,
+            layer6i_replay_trace_output,
+            initial_state=layer6i_replay_initial_state,
+            cell_index=layer6i_replay_cell_index,
+            mismatch_start_ms=layer6i_replay_start_ms,
+            duration_ms=mismatch_duration_ms,
+            dt_ms=dt_ms,
+            condition=("intact" if reset_pathway_enabled else "disconnected_control"),
+            fingerprint=conventions.fingerprint,
+            brian=brian,
+        )
 
     gate_integrals: tuple[tuple[str, float], ...] = ()
     current_integrals: tuple[tuple[str, float], ...] = ()
@@ -745,6 +811,10 @@ def run_figure10_condition(
         layer6i_mismatch_soma_voltage_peak_mV_by_index=soma_voltage_peak_by_index,
         layer6i_mismatch_proximal_voltage_peak_mV_by_index=(proximal_voltage_peak_by_index),
         layer6i_selected_trace_summaries=selected_trace_summaries,
+        layer6i_replay_trace_path=(
+            None if layer6i_replay_trace_output is None else str(layer6i_replay_trace_output)
+        ),
+        layer6i_replay_trace_sha256=layer6i_replay_trace_sha256,
         layer4i_mismatch_projection026_gate_integral_ms=projection026_gate,
         layer4i_mismatch_projection026_current_integral_pA_ms=projection026_current,
         layer4i_mismatch_projection026_current_peak_pA=(

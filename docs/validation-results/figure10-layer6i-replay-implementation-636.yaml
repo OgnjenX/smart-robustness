@@ -1,0 +1,62 @@
+schema_version: 1
+id: figure10-layer6i-replay-implementation-636
+date: '2026-09-08'
+status: implementation-ready-lossless-tests-pass
+classification: layer6i-cell0-lossless-receptor-gate-replay
+authorization: docs/validation-results/figure10-layer6i-timing-assessment-635.yaml
+harness: src/smart_robustness/validation/figure10.py
+harness_sha256: e280bfdc864c63630ac9e07a8ee980aa768015dce736bf04e5c98df9e0ef5a0f
+replay_module: src/smart_robustness/validation/layer6i_replay.py
+replay_module_sha256: 3dea8711dc75664c2015065988168b2de0ef893bfafb693e5aa7bb8fbfc78167
+runner: scripts/run_figure10_layer6i_isolated_replay.py
+runner_sha256: bc7b55ad6870bbb7a7018fef12b306d9715d86fd6e8b0d7ef14fd0068489fb54
+capture:
+  population: layer6i_excitatory_v1
+  cell_index: 0
+  initial_state_time: mismatch_onset_before_mismatch_cue_application
+  duration_ms: 200.0
+  dt_ms: 0.01
+  schedule: thresholds-order-zero
+  incoming_projection_ids:
+  - modeldb112923.projection.023
+  - modeldb112923.projection.024
+  - modeldb112923.projection.025
+  dynamic_variables:
+  - v_soma
+  - v_proximal_dendrite
+  - m_soma
+  - h_soma
+  - n_soma
+  - previous_spike_voltage
+  - armed
+  - last_spike_onset
+  - drive_spikes_until_clear
+  - transmitter
+  forced_integrator_inputs:
+  - port_000_gate
+  - port_001_gate
+  - port_002_gate
+  - i_syn_soma
+  - i_syn_proximal_dendrite
+  - i_drive_soma
+  - i_drive_proximal_dendrite
+  - clear_drive_on_spike
+replay_semantics:
+  receptor_gate_waveforms_replayed: true
+  precomputed_projection_currents_replayed: false
+  voltage_dependent_conductance_preserved: true
+  same_runtime_fingerprint_required: true
+  reason: >-
+    Receptor gates preserve each current's dependence on the isolated cell's
+    own membrane voltage. The additive i_syn and i_drive arrays are captured
+    only to preserve any non-projection input; i_port_000/001/002 currents are
+    recomputed by the isolated cell and are never forced.
+verification:
+  unit_and_short_integration_tests: 10-passed
+  maximum_synthetic_state_error: less-than-1e-12
+  lint: pass
+boundary: >-
+  Capture and intact replay are default-off diagnostics. No projection gate,
+  weight, event count, threshold, conductance, intrinsic state, protocol, or
+  connected-network parameter is changed. This implementation authorizes no
+  scale search; a lossless intact replay must pass first.

@@ -1,0 +1,67 @@
+schema_version: 1
+id: figure10-layer6i-replay-registration-637
+date: '2026-09-08'
+status: registered-before-execution-lossless-intact-replay-only
+classification: figure10-peripheral-layer6i-cell0-lossless-replay
+authorization: docs/validation-results/figure10-layer6i-replay-implementation-636.yaml
+profile: configs/calibration/figure7_learned_coincidence_effective_t_pair_v1.yaml
+profile_sha256: 4b6aa0bdf4fb844e428fb330f34970900cc8bc741183b2d8e6e73789cba0b30f
+harness: src/smart_robustness/validation/figure10.py
+harness_sha256: e280bfdc864c63630ac9e07a8ee980aa768015dce736bf04e5c98df9e0ef5a0f
+replay_module: src/smart_robustness/validation/layer6i_replay.py
+replay_module_sha256: 3dea8711dc75664c2015065988168b2de0ef893bfafb693e5aa7bb8fbfc78167
+runtime: src/smart_robustness/classic_sector.py
+runtime_sha256: 3e9bedd47822a785c0735afb4ab25bfa03e099b3258875fd434964255d102a85
+script: scripts/run_figure10_layer6i_isolated_replay.py
+script_sha256: bc7b55ad6870bbb7a7018fef12b306d9715d86fd6e8b0d7ef14fd0068489fb54
+source_control: docs/validation-results/figure10-layer6i-timing-pair-634.yaml
+source_control_sha256: 96f0d32319d756f4853fcf720c49960bbe21abdde9c04b7ac1c85f146b51587d
+runtime_fingerprint: fa4ab9f0bf2bec4d6ad53cb6a91620047689b6839b146ed7d777d42350c2cdf5
+result_id: figure10-layer6i-replay-638
+result: docs/validation-results/figure10-layer6i-replay-638.yaml
+assessment: docs/validation-results/figure10-layer6i-replay-assessment-639.yaml
+trace:
+  path: results/figure10-layer6i-cell0-replay-638.npz
+  population: layer6i_excitatory_v1
+  cell_index: 0
+  duration_ms: 200.0
+  dt_ms: 0.01
+  capture_schedule: thresholds-order-zero
+  initial_state_time: mismatch_onset-before-mismatch-cue
+  replay_quantity: receptor_gate_waveforms
+  precomputed_projection_currents_replayed: false
+persistent_projection_scales:
+- {projection_id: modeldb112923.projection.008, scale: 0.75}
+- {projection_id: modeldb112923.projection.011, scale: 0.9375}
+nonspecific_t_scale: 0.1875
+protocol:
+  pre_match_duration_ms: 100.0
+  mismatch_duration_ms: 200.0
+  total_duration_ms: 300.0
+  dt_ms: 0.01
+  top_down_current_pA: 800.0
+  top_down_current_mode: until_cued_cell_first_event
+  comparator: {transform: top_k_binary, source_index: 40, target_count: 5}
+required_connected_source_identity:
+  layer4_pre_post_events: [39, 92]
+  nonspecific_pre_post_events: [4, 13]
+  layer5_pre_post_events: [41, 231]
+  layer5_first100_late_mismatch_events: [70, 161]
+  layer6i_pre_post_events: [36, 72]
+  layer6i_first100_late_mismatch_events: [30, 42]
+intact_replay_gate:
+  source_and_replay_spike_times_exact: true
+  maximum_voltage_error_mV: 1.0e-12
+  maximum_dimensionless_state_error: 1.0e-12
+decision_rule: >-
+  Require every fresh Figure-6 gate and exact Artifact-634 connected-source
+  identity. The isolated cell must then reproduce the captured empty cell-0
+  mismatch event train and every dynamic-state trace within 1e-12 in native
+  units. A failure closes this replay implementation for repair; a pass only
+  authorizes a separately preregistered effective transfer bracket.
+boundary: >-
+  Execute one intact connected source capture and one unchanged isolated
+  replay. Do not run the disconnected arm, multiply any gate, change a weight,
+  event multiplicity, threshold, conductance, axial term, duration, input,
+  comparator, event rule, reset score, or connected-network parameter. No
+  calibration value, original-SMART claim, or baseline promotion is authorized.

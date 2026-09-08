@@ -1814,3 +1814,14 @@ is insufficient isolated layer-5-to-layer-6I drive, not a small threshold miss
 or a local coincidence-timing error. Select no parameter. Next implement and
 validate a lossless isolated replay of cell 0 before registering any effective
 projection-025 scale bracket or changing the connected network.
+
+Artifacts 636--637 implement and preregister the lossless replay gate. The
+unchanged intact network will capture peripheral layer-6I cell 0 at mismatch
+onset, all ten intrinsic dynamic variables, and the three integrator-visible
+projection gates over the fixed 200-ms mismatch. The isolated cell recomputes
+projection currents from its own voltage; no precomputed projection current is
+forced. A synthetic replay and a short end-to-end Figure-10 capture/replay both
+match every state to less than 1e-12. The full run must first repeat all fresh
+Figure-6 gates and Artifact-634 connected-source counts, then reproduce the
+empty cell-0 event train and every state within 1e-12. No scale or calibration
+is authorized until this identity gate passes.

@@ -1,15 +1,19 @@
 from __future__ import annotations
 
+from dataclasses import replace
+
 import pytest
 
 brian = pytest.importorskip("brian2")
 
+from smart_robustness.classic_sector import figure6_runtime_conventions
 from smart_robustness.validation.figure10 import (
     Figure10ConditionResult,
     assess_figure10_reset,
     run_figure10_condition,
     summarize_layer6i_selected_traces,
 )
+from smart_robustness.validation.layer6i_replay import run_layer6i_replay
 
 
 def _condition(
@@ -146,6 +150,14 @@ def test_figure10_runner_requires_explicit_positive_protocol_values() -> None:
             record_layer6i_diagnostics=True,
             record_layer6i_trace_indices=(81,),
         )
+    with pytest.raises(ValueError, match="parent directory"):
+        run_figure10_condition(
+            top_down_current_pA=600,
+            pre_match_duration_ms=100,
+            mismatch_duration_ms=100,
+            reset_pathway_enabled=True,
+            layer6i_replay_trace_output="missing/trace.npz",
+        )
     with pytest.raises(ValueError, match="top_down_current"):
         run_figure10_condition(
             top_down_current_pA=0,
@@ -174,7 +186,36 @@ def test_figure10_condition_smoke_runs_persistent_two_phase_network() -> None:
     assert result.layer6i_mismatch_projection025_gate_integral_ms_by_index == ()
     assert result.layer6i_mismatch_soma_voltage_peak_mV_by_index == ()
     assert result.layer6i_selected_trace_summaries == ()
+    assert result.layer6i_replay_trace_path is None
+    assert result.layer6i_replay_trace_sha256 is None
     assert result.layer4i_mismatch_projection026_gate_integral_ms is None
+
+
+def test_figure10_condition_captures_lossless_layer6i_replay(tmp_path) -> None:
+    trace = tmp_path / "layer6i.npz"
+    conventions = replace(
+        figure6_runtime_conventions(),
+        spike_event_coordinate="absolute_physical",
+        spike_event_rule="falling_threshold_crossing",
+        spike_event_threshold_mV=-20.0,
+    )
+    result = run_figure10_condition(
+        top_down_current_pA=600,
+        pre_match_duration_ms=0.01,
+        mismatch_duration_ms=0.02,
+        reset_pathway_enabled=True,
+        dt_ms=0.01,
+        conventions=conventions,
+        layer6i_replay_trace_output=trace,
+        layer6i_replay_cell_index=0,
+        brian=brian,
+    )
+
+    assert result.layer6i_replay_trace_path == str(trace)
+    assert result.layer6i_replay_trace_sha256
+    replay = run_layer6i_replay(trace, conventions=conventions, brian=brian)
+    assert replay.exact_spike_train
+    assert replay.max_voltage_error_mV < 1e-12
 
 
 def test_selected_layer6i_trace_summary_preserves_peak_timing_and_threshold_gap() -> None:

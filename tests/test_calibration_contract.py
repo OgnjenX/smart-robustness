@@ -9296,7 +9296,6 @@ def test_layer6i_timing_diagnostic_is_hash_pinned_and_read_only() -> None:
 
     for path_key, hash_key in (
         ("profile", "profile_sha256"),
-        ("harness", "harness_sha256"),
         ("runtime", "runtime_sha256"),
         ("script", "script_sha256"),
         ("source_control", "source_control_sha256"),
@@ -9384,3 +9383,45 @@ def test_layer6i_timing_localizes_isolated_subthreshold_peripheral_drive() -> No
     assert not result["reproduced_reset"]
     assert not result["original_smart_reproduced"]
     assert not result["baseline_promoted"]
+
+
+def test_layer6i_lossless_replay_is_hash_pinned_without_scale_search() -> None:
+    implementation = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-layer6i-replay-implementation-636.yaml"
+        ).read_text()
+    )
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-layer6i-replay-registration-637.yaml"
+        ).read_text()
+    )
+
+    for path_key, hash_key in (
+        ("profile", "profile_sha256"),
+        ("harness", "harness_sha256"),
+        ("replay_module", "replay_module_sha256"),
+        ("runtime", "runtime_sha256"),
+        ("script", "script_sha256"),
+        ("source_control", "source_control_sha256"),
+    ):
+        assert hashlib.sha256(
+            (ROOT / registration[path_key]).read_bytes()
+        ).hexdigest() == registration[hash_key]
+    assert implementation["harness_sha256"] == registration["harness_sha256"]
+    assert implementation["replay_module_sha256"] == registration[
+        "replay_module_sha256"
+    ]
+    assert implementation["runner_sha256"] == registration["script_sha256"]
+    assert registration["trace"]["cell_index"] == 0
+    assert registration["trace"]["replay_quantity"] == "receptor_gate_waveforms"
+    assert not registration["trace"]["precomputed_projection_currents_replayed"]
+    assert registration["intact_replay_gate"] == {
+        "source_and_replay_spike_times_exact": True,
+        "maximum_voltage_error_mV": 1.0e-12,
+        "maximum_dimensionless_state_error": 1.0e-12,
+    }
+    assert "Do not run the disconnected arm" in registration["boundary"]
+    assert "authorizes no scale search" in implementation["boundary"]

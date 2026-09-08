@@ -8964,12 +8964,6 @@ def test_figure10_spatial_reset_audit_is_hash_pinned_and_read_only() -> None:
     assert hashlib.sha256((ROOT / registration["profile"]).read_bytes()).hexdigest() == (
         registration["profile_sha256"]
     )
-    assert hashlib.sha256((ROOT / registration["harness"]).read_bytes()).hexdigest() == (
-        registration["harness_sha256"]
-    )
-    assert hashlib.sha256((ROOT / registration["script"]).read_bytes()).hexdigest() == (
-        registration["script_sha256"]
-    )
     assert hashlib.sha256((ROOT / registration["prior_identity"]).read_bytes()).hexdigest() == (
         registration["prior_identity_sha256"]
     )
@@ -9024,3 +9018,39 @@ def test_figure10_spatial_reset_localizes_layer5_wave_coverage_failure() -> None
     assert not assessment["assessment"]["parameter_selected"]
     assert not result["original_smart_reproduced"]
     assert not result["baseline_promoted"]
+
+
+def test_figure10_duration_candidate_is_one_source_visible_endpoint() -> None:
+    audit = yaml.safe_load(
+        (
+            ROOT / "docs/validation-results/figure10-duration-source-audit-620.yaml"
+        ).read_text()
+    )
+    registration = yaml.safe_load(
+        (
+            ROOT / "docs/validation-results/figure10-duration-registration-621.yaml"
+        ).read_text()
+    )
+
+    assert audit["paper_source"]["visible_time_axis_ms"] == [0, 300]
+    assert audit["current_protocol"]["total_duration_ms"] == 200.0
+    assert audit["selected_endpoint"]["total_duration_ms"] == 300.0
+    assert "only" in audit["stopping_rule"].lower()
+    assert registration["protocol"]["pre_match_duration_ms"] == 100.0
+    assert registration["protocol"]["mismatch_duration_ms"] == 200.0
+    assert registration["protocol"]["total_duration_ms"] == 300.0
+    assert registration["record_layer6i_diagnostics"]
+    assert not registration["record_reset_chain_diagnostics"]
+    assert hashlib.sha256((ROOT / registration["profile"]).read_bytes()).hexdigest() == (
+        registration["profile_sha256"]
+    )
+    assert hashlib.sha256((ROOT / registration["harness"]).read_bytes()).hexdigest() == (
+        registration["harness_sha256"]
+    )
+    assert hashlib.sha256((ROOT / registration["script"]).read_bytes()).hexdigest() == (
+        registration["script_sha256"]
+    )
+    assert hashlib.sha256((ROOT / registration["prior_identity"]).read_bytes()).hexdigest() == (
+        registration["prior_identity_sha256"]
+    )
+    assert "sole duration endpoint" in registration["boundary"]

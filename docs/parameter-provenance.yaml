@@ -642,6 +642,11 @@ parameters:
     status: completed-layer5-wave-coverage-fails-first
     source: Grossberg and Versace 2008 Figure 10 and Sections 2.6--2.7; Artifacts 610 and 615--619
     note: The intact mismatch recruits only 17 of 81 layer-5 cells versus five in control; each of twelve added peripheral cells emits one event. Projection 025 preserves that support, but peripheral layer-6I dendrites peak only near -67 to -61 mV and somata near -69 to -68 mV. Only the five winner-aligned layer-6I cells spike. Broad sustained layer-5 recruitment is the earliest missing spatial phenomenon; no parameter was selected.
+  validation.figure10.source_visible_duration:
+    value: 100-ms pre-match plus 200-ms mismatch, 300 ms total
+    status: preregistered-one-endpoint-awaiting-execution
+    source: Grossberg and Versace 2008 Figure 10e and Sections 2.5--2.7; Artifacts 618--621
+    note: Figure 10e spans 300 ms, places reset near 175 ms, and shows replacement-winner firing after 200 ms, whereas the current assay ends at 200 ms. One 300-ms-total causal pair is allowed. The first 100-ms mismatch prefix and all Figure-6 gates must repeat; no duration grid or model change is authorized.
   benchmark.population_sizes:
     value: see configs/*.yaml
     status: exploratory

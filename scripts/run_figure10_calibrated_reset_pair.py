@@ -23,13 +23,20 @@ from smart_robustness.validation.figure10 import (
 
 def _condition_summary(result):
     split = result.pre_match_duration_ms
+    late_split = split + min(100.0, result.mismatch_duration_ms)
 
     def phase_count(values, *, post):
         return sum((value >= split) is post for value in values)
 
+    def mismatch_window_count(values, *, late):
+        if late:
+            return sum(value >= late_split for value in values)
+        return sum(split <= value < late_split for value in values)
+
     pre_layer4 = result.layer4_counts(after_mismatch=False)
     post_layer4 = result.layer4_counts(after_mismatch=True)
     layer5_post_counts = {}
+    layer5_late_counts = {}
     for index, time_ms in zip(
         result.layer5_spike_indices,
         result.layer5_spike_times_ms,
@@ -37,6 +44,8 @@ def _condition_summary(result):
     ):
         if time_ms >= split:
             layer5_post_counts[int(index)] = layer5_post_counts.get(int(index), 0) + 1
+        if time_ms >= late_split:
+            layer5_late_counts[int(index)] = layer5_late_counts.get(int(index), 0) + 1
     layer4i_post_events = [
         [int(index), float(time_ms)]
         for index, time_ms in zip(
@@ -52,14 +61,40 @@ def _condition_summary(result):
         "layer4_pre_active_indices": [int(index) for index in pre_layer4.nonzero()[0]],
         "layer4_post_events": int(post_layer4.sum()),
         "layer4_post_active_indices": [int(index) for index in post_layer4.nonzero()[0]],
+        "layer4_first_100ms_mismatch_events": mismatch_window_count(
+            result.layer4_spike_times_ms, late=False
+        ),
+        "layer4_late_mismatch_events": mismatch_window_count(
+            result.layer4_spike_times_ms, late=True
+        ),
         "nonspecific_pre_events": phase_count(result.nonspecific_spike_times_ms, post=False),
         "nonspecific_post_events": phase_count(result.nonspecific_spike_times_ms, post=True),
+        "nonspecific_first_100ms_mismatch_events": mismatch_window_count(
+            result.nonspecific_spike_times_ms, late=False
+        ),
+        "nonspecific_late_mismatch_events": mismatch_window_count(
+            result.nonspecific_spike_times_ms, late=True
+        ),
         "layer5_pre_events": phase_count(result.layer5_spike_times_ms, post=False),
         "layer5_post_events": phase_count(result.layer5_spike_times_ms, post=True),
+        "layer5_first_100ms_mismatch_events": mismatch_window_count(
+            result.layer5_spike_times_ms, late=False
+        ),
+        "layer5_late_mismatch_events": mismatch_window_count(
+            result.layer5_spike_times_ms, late=True
+        ),
         "layer5_post_active_indices": sorted(layer5_post_counts),
         "layer5_post_events_by_index": layer5_post_counts,
+        "layer5_late_active_indices": sorted(layer5_late_counts),
+        "layer5_late_events_by_index": layer5_late_counts,
         "layer6i_pre_events": phase_count(result.layer6i_spike_times_ms, post=False),
         "layer6i_post_events": phase_count(result.layer6i_spike_times_ms, post=True),
+        "layer6i_first_100ms_mismatch_events": mismatch_window_count(
+            result.layer6i_spike_times_ms, late=False
+        ),
+        "layer6i_late_mismatch_events": mismatch_window_count(
+            result.layer6i_spike_times_ms, late=True
+        ),
         "layer6i_mismatch_events": [
             [int(index), float(time_ms)]
             for index, time_ms in zip(

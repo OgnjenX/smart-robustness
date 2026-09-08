@@ -1713,3 +1713,12 @@ Figure 10 phenomenon; sparse peripheral drive is then filtered below layer-6I
 spike threshold. Before changing a model parameter, audit the published 300-ms
 panel and approximately 175-ms reset onset against the current 200-ms total
 assay duration.
+
+Artifact 620 performs that source audit. Figure 10e spans 0--300 ms, depicts a
+reset bar beginning around 175 ms, and shows replacement-winner activity mainly
+after 200 ms. The current assay ends at 200 ms total. Registration 621 therefore
+selects one source-visible endpoint only: retain the 100-ms winner phase and
+extend mismatch from 100 to 200 ms, for 300 ms total. The runner now reports
+first-100-ms and late mismatch counts separately. Every Artifact-618 prefix and
+fresh Figure 6 gate must repeat before late behavior is interpreted; the family
+closes after this endpoint without a duration grid or parameter change.

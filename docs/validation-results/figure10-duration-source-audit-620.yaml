@@ -1,0 +1,47 @@
+schema_version: 1
+id: figure10-duration-source-audit-620
+date: '2026-09-08'
+status: audited-one-source-visible-duration-endpoint-selected
+classification: figure10-visible-time-axis-protocol-discrepancy
+authorization: docs/validation-results/figure10-spatial-reset-assessment-619.yaml
+paper_source:
+  path: tmp/pdfs/GrossbergVersace2008.pdf
+  figure: 10e
+  page: 24
+  visible_time_axis_ms: [0, 300]
+  approximate_reset_bar_ms: [175, 300]
+  approximate_replacement_winner_activity_ms: [200, 285]
+  text_evidence:
+  - mismatch layer-5 wave reactivates nonspecific thalamus around 150 ms after stimulus onset
+  - mismatch-mediated layer-6I firing drives reset
+current_protocol:
+  pre_match_duration_ms: 100.0
+  mismatch_duration_ms: 100.0
+  total_duration_ms: 200.0
+  consequence: >-
+    The assay ends near the first replacement-winner activity visible in Figure
+    10e and leaves little time to observe the sustained reset interval.
+selected_endpoint:
+  pre_match_duration_ms: 100.0
+  mismatch_duration_ms: 200.0
+  total_duration_ms: 300.0
+  justification: >-
+    This exactly matches the visible Figure-10e time-axis endpoint while
+    preserving the established 100-ms pre-reset winner phase. It changes only
+    observation/stimulation duration, not a model parameter.
+instrumentation:
+  runner: scripts/run_figure10_calibrated_reset_pair.py
+  runner_sha256: 05ed8952d86b2b310253e184c3488ae54631571403f7c2a8282463278f4ca107
+  added_readouts:
+  - first 100 ms versus late mismatch counts for layer 4, nonspecific thalamus, layer 5, and layer 6I
+  - late mismatch layer-5 active indices and counts per index
+stopping_rule: >-
+  Execute only the 300-ms-total endpoint. The first 100 ms of mismatch must
+  reproduce Artifact 618 before late behavior is interpreted. Close the
+  duration family after this run; do not add durations, alter input amplitude,
+  change weights, depletion, AHP/ACh, comparator, event rules, or reset scores.
+claims_boundary: >-
+  Figure 10 does not tabulate a complete stimulus schedule. The 300-ms endpoint
+  is source-visible but the mapping of the panel's reset bar onto the current
+  two-phase protocol remains an explicit reconstruction, not recovered KInNeSS
+  scheduler metadata.

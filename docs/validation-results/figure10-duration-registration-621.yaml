@@ -1,0 +1,50 @@
+schema_version: 1
+id: figure10-duration-registration-621
+date: '2026-09-08'
+status: registered-before-execution-one-source-visible-duration
+classification: fixed-figure10-300ms-total-causal-reset
+profile: configs/calibration/figure7_learned_coincidence_effective_t_pair_v1.yaml
+profile_sha256: 4b6aa0bdf4fb844e428fb330f34970900cc8bc741183b2d8e6e73789cba0b30f
+harness: src/smart_robustness/validation/figure10.py
+harness_sha256: 67419aed44e5cc25a0ff0173f6e5ebf989c828605d894d57d1e90f2da8b42624
+script: scripts/run_figure10_calibrated_reset_pair.py
+script_sha256: 05ed8952d86b2b310253e184c3488ae54631571403f7c2a8282463278f4ca107
+runtime_fingerprint: fa4ab9f0bf2bec4d6ad53cb6a91620047689b6839b146ed7d777d42350c2cdf5
+authorization: docs/validation-results/figure10-duration-source-audit-620.yaml
+prior_identity: docs/validation-results/figure10-spatial-reset-pair-618.yaml
+prior_identity_sha256: 25bf6d51dbe7d945c339009ad66b4830767ca3f40ba93194c04411a57db84987
+result_id: figure10-duration-pair-622
+result: docs/validation-results/figure10-duration-pair-622.yaml
+assessment: docs/validation-results/figure10-duration-assessment-623.yaml
+persistent_projection_scales:
+- {projection_id: modeldb112923.projection.008, scale: 0.75}
+- {projection_id: modeldb112923.projection.011, scale: 0.9375}
+nonspecific_t_scale: 0.1875
+record_layer6i_diagnostics: true
+record_reset_chain_diagnostics: false
+protocol:
+  pre_match_duration_ms: 100.0
+  mismatch_duration_ms: 200.0
+  total_duration_ms: 300.0
+  dt_ms: 0.01
+  top_down_current_pA: 800.0
+  top_down_current_mode: until_cued_cell_first_event
+  comparator: {transform: top_k_binary, source_index: 40, target_count: 5}
+required_prerequisites:
+  figure6_all_gates: true
+  first_100ms_mismatch:
+    each_arm_layer4_events: 43
+    each_arm_nonspecific_events: 7
+    intact_control_layer5_events: [70, 55]
+    intact_control_layer6i_events: [30, 30]
+decision_rule: >-
+  Interpret late behavior only after every fresh Figure-6 and first-100-ms
+  identity gate passes. A Figure-10 pass still requires causal winner
+  suppression and greater alternative release in the intact arm. Spatial
+  evidence may localize whether layer-5 coverage broadens during the added
+  interval, but cannot change the reset score.
+boundary: >-
+  This is the sole duration endpoint. Use released-network weights and the
+  existing learned state, comparator, inputs, and event rules. No duration
+  grid, amplitude change, parameter change, score change, or result-driven
+  extension is allowed, and no baseline may be promoted by timing alone.

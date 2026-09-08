@@ -1,0 +1,42 @@
+schema_version: 1
+id: figure10-projection026-supplement-delay-implementation-680
+date: '2026-09-08'
+status: implementation-ready-read-only-arrival-monitor-tests-pass
+classification: figure10-projection026-supplement-delay-source-cross
+authorization:
+  failed_endpoint: docs/validation-results/figure10-projection036-delay0p2-assessment-679.yaml
+  failed_endpoint_sha256: 6d9fc5b056ea811c5be65a9f8e9adf0efbeaeb6d024aad7c6b8d0f00befaf891
+  upstream_localization: docs/validation-results/figure10-layer6i-scale8-assessment-646.yaml
+  upstream_localization_sha256: 62f511e06840954707705d1ada921e0533c31d8c730c522577eadda68dc13ce5
+source_conflict:
+  supplementary_catalog: src/smart_robustness/data/supplementary_table3.yaml
+  supplementary_catalog_sha256: 4fe43992e1678b7031921e1a5d6b56f004d427963f57adf1659f4df4664ad0b0
+  supplementary_record: l4_i.proximal_dendrite.from_l6i.unknown_depletable
+  supplementary_delay_ms: 0.1
+  executable_catalog: src/smart_robustness/data/modeldb112923_first_order.yaml
+  executable_catalog_sha256: 3b42be7dd0b17cc01ad29f474f152cfcd8c2a605410aad223d14c676fe98d965
+  executable_record: modeldb112923.projection.026
+  executable_delay_ms: 1.0
+  comparison_projection: modeldb112923.projection.038
+  comparison_projection_delay_ms_both_sources: 1.0
+implementation:
+  harness: src/smart_robustness/validation/figure10.py
+  harness_sha256: 4c4e7effe3157a25e24dac9724054a346c91b79eac325ff28eb70d7e12fcbb9a
+  runner: scripts/run_figure10_calibrated_reset_pair.py
+  runner_sha256: 1df663f30a4d16e6a860d795a266a68482ee01fbb371038ce243b81ed79195c1
+  runtime: src/smart_robustness/classic_sector.py
+  runtime_sha256: ebdf48f0138803ab50b1dec2ef87817b4c537e4da490a088b9df6bdcb9d119a1
+  behavior_change: none
+  diagnostic_extension:
+    - projection038_excitation_gate_mean
+    - projection038_first_gate_threshold_time_from_mismatch_ms
+  delay_override_support: existing-default-off-projection-specific-path
+tests:
+  command: .venv/bin/pytest -q tests/test_figure10_validation.py
+  result: 13-passed
+boundary: >-
+  The implementation adds a passive projection-038 gate readout to the existing
+  target timing summary. It does not alter equations, scheduling, connectivity,
+  weights, delays, kinetics, protocols, or scores. Projection-026 delay 0.1 ms
+  is an exact supplementary alternative to the executable catalog's 1.0 ms,
+  not a fitted intermediate and not yet a selected classic convention.

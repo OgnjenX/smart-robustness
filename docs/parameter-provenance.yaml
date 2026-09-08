@@ -717,6 +717,11 @@ parameters:
     status: completed-reset-failed-endpoint-rejected-closed
     source: Artifact 675 authorization and Artifacts 676--679
     note: All fresh Figure-6 and upstream reset-chain gates pass, but neither arm releases an alternative, layer-4 inhibitory output is 218 events in both arms, and winner output is 79/76 intact/control, worsening the baseline difference from +2 to +3. The delay also removes the two control alternatives present at the serialized 0.1-ms delay. The endpoint is rejected, unselected, and closed without refinement; the default remains 0.1 ms.
+  calibration.figure10.projection026_supplement_delay0p1:
+    value: projection-026 runtime delay 0.1 ms from the 2008 supplement versus recovered SMART.nml 1.0 ms
+    status: implemented-and-preregistered-before-execution-single-source-cross
+    source: Supplementary record l4_i.proximal_dendrite.from_l6i.unknown_depletable, SMART.nml projection 026, and Artifacts 679--681
+    note: Projection 038 remains 1.0 ms in both sources and projection 036 returns to its serialized/default 0.1 ms. One Figure-10-only source cross is authorized. Selection requires every causal reset gate; failure closes the conflict without interpolation. A pass would remain mixed-source until fresh learning and all holdouts pass.
   benchmark.population_sizes:
     value: see configs/*.yaml
     status: exploratory

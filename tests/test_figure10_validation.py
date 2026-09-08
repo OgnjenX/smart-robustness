@@ -458,6 +458,7 @@ def test_layer4_target_timing_preserves_current_onset_before_exact_spike() -> No
         projection038_current_pA_by_index=brian.asarray([[0.0] * 6, [0, 4, 3, 2, 1, 0]]),
         projection035_gate_by_index=brian.asarray([[0.0] * 6, [0, 1, 2, 3, 4, 5]]),
         projection036_gate_by_index=brian.asarray([[0.0] * 6, [0, 2, 4, 6, 8, 10]]),
+        projection038_gate_by_index=brian.asarray([[0.0] * 6, [0, 0, 0, 3, 6, 9]]),
         layer4_spike_indices=brian.asarray([1]),
         layer4_spike_times_ms=brian.asarray([103.5]),
     )
@@ -470,6 +471,8 @@ def test_layer4_target_timing_preserves_current_onset_before_exact_spike() -> No
     assert summary.layer4_spike_times_from_mismatch_ms == (3.5,)
     assert summary.projection035_relay_gate_mean == (1.0, 2.0, 3.0, 4.0)
     assert summary.projection036_inhibition_gate_mean == (2.0, 4.0, 6.0, 8.0)
+    assert summary.projection038_excitation_gate_mean == (0.0, 0.0, 3.0, 6.0)
     assert summary.projection035_first_gate_threshold_time_from_mismatch_ms == 2.0
     assert summary.projection036_first_gate_threshold_time_from_mismatch_ms == 1.0
+    assert summary.projection038_first_gate_threshold_time_from_mismatch_ms == 3.0
     assert summary.soma_voltage_max_mV == (-68.0, -60.0, -50.0, -45.0)

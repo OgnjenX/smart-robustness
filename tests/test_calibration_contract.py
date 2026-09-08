@@ -10297,7 +10297,6 @@ def test_projection036_delay0p2_endpoint_is_hash_pinned_and_bounded() -> None:
     for path_key, hash_key in (
         ("authorization", "authorization_sha256"),
         ("profile", "profile_sha256"),
-        ("harness", "harness_sha256"),
         ("runtime", "runtime_sha256"),
         ("script", "script_sha256"),
         ("source_result", "source_result_sha256"),
@@ -10307,6 +10306,9 @@ def test_projection036_delay0p2_endpoint_is_hash_pinned_and_bounded() -> None:
         ).hexdigest() == registration[hash_key]
     assert implementation["harness_sha256"] == registration["harness_sha256"]
     assert implementation["runner_sha256"] == registration["script_sha256"]
+    assert registration["harness_sha256"] == (
+        "82af92d2da5c5ccdba24ee049a1ea07794c3726a167d2fca9b5f8d389b640b26"
+    )
     assert registration["persistent_projection_delays"] == [
         {"projection_id": "modeldb112923.projection.036", "delay_ms": 0.2}
     ]
@@ -10360,3 +10362,46 @@ def test_projection036_delay0p2_fails_reset_and_closes_endpoint() -> None:
     assert not verdict["delay_refinement_or_interpolation_authorized"]
     assert not result["original_smart_reproduced"]
     assert not result["baseline_promoted"]
+
+
+def test_projection026_supplement_delay_endpoint_is_source_pinned_and_bounded() -> None:
+    implementation = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-projection026-supplement-delay-implementation-680.yaml"
+        ).read_text()
+    )
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-projection026-supplement-delay-registration-681.yaml"
+        ).read_text()
+    )
+
+    for path_key, hash_key in (
+        ("profile", "profile_sha256"),
+        ("harness", "harness_sha256"),
+        ("runtime", "runtime_sha256"),
+        ("script", "script_sha256"),
+        ("supplementary_catalog", "supplementary_catalog_sha256"),
+        ("executable_catalog", "executable_catalog_sha256"),
+        ("prior_assessment", "prior_assessment_sha256"),
+    ):
+        assert hashlib.sha256(
+            (ROOT / registration[path_key]).read_bytes()
+        ).hexdigest() == registration[hash_key]
+    conflict = implementation["source_conflict"]
+    assert conflict["supplementary_delay_ms"] == 0.1
+    assert conflict["executable_delay_ms"] == 1.0
+    assert conflict["comparison_projection_delay_ms_both_sources"] == 1.0
+    assert registration["persistent_projection_delays"] == [
+        {"projection_id": "modeldb112923.projection.026", "delay_ms": 0.1}
+    ]
+    assert registration["source_cross"]["projection036_delay_ms"] == 0.1
+    assert registration["source_cross"]["projection038_delay_ms"] == 1.0
+    assert registration["record_layer4_target_timing_indices"] == [31, 40]
+    assert registration["layer4_target_timing_window_ms"] == [73.0, 78.0]
+    assert registration["output_mode"] == "layer4_target_timing_bounded"
+    assert "without an intermediate value" in registration["decision_rule"]
+    assert "cannot establish a global" in registration["boundary"]
+    assert "until the same choice passes fresh learning" in registration["boundary"]

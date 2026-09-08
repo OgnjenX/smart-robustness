@@ -1,0 +1,82 @@
+schema_version: 1
+id: figure10-projection026-supplement-delay-registration-681
+date: '2026-09-08'
+status: registered-before-execution-single-source-cross-endpoint
+classification: figure10-projection026-supplement-delay-source-cross
+implementation: docs/validation-results/figure10-projection026-supplement-delay-implementation-680.yaml
+profile: configs/calibration/figure7_learned_coincidence_effective_t_pair_v1.yaml
+profile_sha256: 4b6aa0bdf4fb844e428fb330f34970900cc8bc741183b2d8e6e73789cba0b30f
+harness: src/smart_robustness/validation/figure10.py
+harness_sha256: 4c4e7effe3157a25e24dac9724054a346c91b79eac325ff28eb70d7e12fcbb9a
+runtime: src/smart_robustness/classic_sector.py
+runtime_sha256: ebdf48f0138803ab50b1dec2ef87817b4c537e4da490a088b9df6bdcb9d119a1
+script: scripts/run_figure10_calibrated_reset_pair.py
+script_sha256: 1df663f30a4d16e6a860d795a266a68482ee01fbb371038ce243b81ed79195c1
+supplementary_catalog: src/smart_robustness/data/supplementary_table3.yaml
+supplementary_catalog_sha256: 4fe43992e1678b7031921e1a5d6b56f004d427963f57adf1659f4df4664ad0b0
+executable_catalog: src/smart_robustness/data/modeldb112923_first_order.yaml
+executable_catalog_sha256: 3b42be7dd0b17cc01ad29f474f152cfcd8c2a605410aad223d14c676fe98d965
+prior_assessment: docs/validation-results/figure10-projection036-delay0p2-assessment-679.yaml
+prior_assessment_sha256: 6d9fc5b056ea811c5be65a9f8e9adf0efbeaeb6d024aad7c6b8d0f00befaf891
+runtime_fingerprint: fa4ab9f0bf2bec4d6ad53cb6a91620047689b6839b146ed7d777d42350c2cdf5
+result_id: figure10-projection026-supplement-delay-pair-682
+result: docs/validation-results/figure10-projection026-supplement-delay-pair-682.yaml
+assessment: docs/validation-results/figure10-projection026-supplement-delay-assessment-683.yaml
+persistent_projection_scales:
+  - {projection_id: modeldb112923.projection.008, scale: 0.75}
+  - {projection_id: modeldb112923.projection.011, scale: 0.9375}
+  - {projection_id: modeldb112923.projection.025, scale: 8.0}
+persistent_projection_delays:
+  - {projection_id: modeldb112923.projection.026, delay_ms: 0.1}
+nonspecific_t_scale: 0.1875
+record_layer6i_diagnostics: false
+record_reset_chain_diagnostics: true
+record_layer4_balance_diagnostics: true
+record_layer4_target_timing_indices: [31, 40]
+layer4_target_timing_window_ms: [73.0, 78.0]
+layer4_target_timing_bin_width_ms: 0.1
+layer4_target_timing_current_threshold_pA: 1.0e-9
+layer4_target_timing_gate_threshold: 0.1
+output_mode: layer4_target_timing_bounded
+protocol:
+  pre_match_duration_ms: 100.0
+  mismatch_duration_ms: 200.0
+  total_duration_ms: 300.0
+  dt_ms: 0.01
+  top_down_current_pA: 800.0
+  top_down_current_mode: until_cued_cell_first_event
+  comparator: {transform: top_k_binary, source_index: 40, target_count: 5}
+source_cross:
+  projection_id: modeldb112923.projection.026
+  executable_delay_ms: 1.0
+  supplementary_delay_ms: 0.1
+  projection036_delay_ms: 0.1
+  projection038_delay_ms: 1.0
+  all_other_model_quantities: unchanged
+baseline_reference:
+  result: docs/validation-results/figure10-layer4-native-gate-onset-pair-674.yaml
+  layer4_post_events_intact_control: [78, 92]
+  layer6i_post_events_intact_control: [153, 76]
+  layer4_inhibitory_post_events_intact_control: [218, 232]
+  winner_events_intact_control: [78, 76]
+  released_alternatives_intact_control: [0, 2]
+decision_rule: >-
+  Require every fresh Figure-6 gate, identical nonempty pre-reset assemblies,
+  the reset-chain gate, causal winner suppression, and greater intact
+  alternative release. Select projection-026 delay 0.1 ms only as a mixed-
+  source calibrated candidate if every reset gate passes. Otherwise reject the
+  endpoint and close the delay conflict without an intermediate value, grid,
+  or condition-specific override.
+diagnostic_rule: >-
+  Report intact/control layer-6I recruitment, projection-026 transfer, layer-4
+  inhibitory events, projection-036 inhibition, projection-038 excitation, and
+  the native gate/spike order at representative alternative cell 31 and winner
+  cell 40. Diagnostic directionality may explain a failed endpoint but cannot
+  replace the registered behavioral gates.
+boundary: >-
+  This Figure-10 source cross applies the supplement's exact delay only during
+  the connected reset pair. Even a pass cannot establish a global classic-
+  SMART convention until the same choice passes fresh learning, Figure 7, and
+  all remaining holdouts. No projection-036 delay/radius/weight refinement,
+  projection-025 refinement, projection-038 weakening, intrinsic-cell change,
+  protocol change, comparator change, or score change is authorized.

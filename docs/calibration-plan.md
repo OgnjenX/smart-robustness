@@ -2047,3 +2047,14 @@ also disappear, demonstrating trajectory sensitivity without causal reset.
 Restore the serialized/default 0.1-ms delay and close the family without
 refinement, interpolation, another delay, or a condition-specific override.
 Original SMART remains unreproduced and unfrozen.
+
+Artifacts 680--681 open a distinct primary-source conflict at projection 026.
+The 2008 supplementary table prints a 0.1-ms layer-6I-to-layer-4-inhibitory
+delay, while recovered `SMART.nml` prints 1.0 ms; projection 038 is 1.0 ms in
+both sources. One Figure-10-only endpoint applies the exact supplementary
+0.1-ms value and restores projection 036 to its serialized/default 0.1 ms. A
+pass requires all four causal reset gates; a failure closes the conflict with
+no interpolation. The passive target trace now includes projection-038 gate
+onset at representative alternative cell 31 and winner cell 40. Even a pass is
+only a mixed-source candidate until the convention survives fresh learning,
+Figure 7, and all holdouts.

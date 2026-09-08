@@ -2803,6 +2803,14 @@ The endpoint is closed without refinement and the serialized/default 0.1-ms
 delay remains active. Figure 10, complete original SMART reproduction, and
 baseline freezing remain failed.
 
+Artifacts 680--681 identify and preregister the next bounded source cross.
+Projection 026 is delayed 0.1 ms in the 2008 supplement but 1.0 ms in recovered
+`SMART.nml`, whereas direct projection 038 is 1.0 ms in both. The single
+Figure-10 endpoint uses the supplementary p026 value and adds only passive
+p038 gate-onset observation at cells 31 and 40. It has not yet run. No delay
+grid, intermediate value, or global classic-SMART convention claim is
+authorized.
+
 Artifacts 535--537 perform the permitted match-only effective T-conductance
 screen on that fixed replay trace. The full preregistered grid from zero to the
 paper density is finite and was executed without interpolation. Scale 0.1875,

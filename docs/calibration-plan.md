@@ -1722,3 +1722,18 @@ extend mismatch from 100 to 200 ms, for 300 ms total. The runner now reports
 first-100-ms and late mismatch counts separately. Every Artifact-618 prefix and
 fresh Figure 6 gate must repeat before late behavior is interpreted; the family
 closes after this endpoint without a duration grid or parameter change.
+
+Artifacts 621--623 complete that endpoint and revise the localization without
+recovering reset. Every fresh Figure 6 gate and the complete first-100-ms
+mismatch prefix repeat. During the added interval, the intact arm recruits all
+81 layer-5 cells and projection 025 delivers finite input to all 81 layer-6I
+targets, versus 11 in the disconnected control; integrated projection-025
+current is 4.68 times greater intact. Yet both arms emit the same 42 late
+layer-6I events from the same seven cells and the same 49 late layer-4 events.
+Thus 200 ms was too short to observe the published broad layer-5 wave, but
+duration alone does not restore causal winner suppression or alternative
+release. Close the duration family. Before changing an intrinsic parameter,
+audit whether projection 025's serialized 0.2 `connectFromMany` spread is a
+standard deviation or variance: the field name and archived manual conflict,
+and the active standard-deviation convention makes this pathway effectively
+one-to-one after the documented cutoff.

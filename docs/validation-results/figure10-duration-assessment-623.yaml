@@ -1,0 +1,66 @@
+schema_version: 1
+id: figure10-duration-assessment-623
+date: '2026-09-08'
+status: assessed-duration-restores-layer5-wave-not-reset-family-closed
+registration: docs/validation-results/figure10-duration-registration-621.yaml
+result: docs/validation-results/figure10-duration-pair-622.yaml
+result_sha256: dccdf94c3c4abb2155b71049ed85ae5af6fad61fdb2e21c421ed90e7d24d5bc5
+assessment:
+  fresh_figure6_passed: true
+  first_100ms_mismatch_identity_reproduced: true
+  source_visible_300ms_endpoint_executed: true
+  intact_late_layer5_all_cells_recruited: true
+  disconnected_late_layer5_active_cells: 11
+  projection025_transfers_intact_layer5_support_to_all_targets: true
+  projection025_intact_control_current_integral_ratio: 4.683000647281127
+  layer6i_late_event_count_identical: true
+  layer6i_late_event_identity_identical: true
+  layer4_late_output_identical: true
+  winner_suppression: false
+  alternative_release: false
+  duration_family_closed: true
+  parameter_selected: false
+  official_figure10_reset_reproduced: false
+  original_smart_reproduced: false
+  baseline_promoted: false
+quantitative_summary:
+  first_100ms_layer4_events_intact_control: [43, 43]
+  first_100ms_nonspecific_events_intact_control: [7, 7]
+  first_100ms_layer5_events_intact_control: [70, 55]
+  first_100ms_layer6i_events_intact_control: [30, 30]
+  late_layer5_events_intact_control: [161, 85]
+  late_layer5_active_cells_intact_control: [81, 11]
+  projection025_nonzero_targets_intact_control: [81, 11]
+  projection025_current_integral_pA_ms_intact_control:
+  - 309565.5704695583
+  - 66104.10584702501
+  late_layer6i_events_intact_control: [42, 42]
+  late_layer6i_active_indices_intact_control:
+  - [31, 38, 39, 40, 41, 42, 49]
+  - [31, 38, 39, 40, 41, 42, 49]
+  late_layer4_events_intact_control: [49, 49]
+  winner_post_events_intact_control: [76, 76]
+  released_alternatives_intact_control: [2, 2]
+interpretation: >-
+  The sole source-visible duration endpoint passes every fresh Figure-6 gate
+  and exactly repeats the registered first 100 ms of mismatch. During the
+  added interval, the intact nonspecific pathway recruits all 81 layer-5
+  cells, so the prior 200-ms assay was too short to observe the complete
+  layer-5 reset wave. Projection 025 transfers that support to all 81 layer-6I
+  targets and carries 4.68 times the integrated current of the disconnected
+  control. Nevertheless, both arms produce the same 42 late layer-6I events
+  from the same seven cells and the same 49 late layer-4 events. There is no
+  causal winner suppression or alternative release. Duration therefore
+  repairs the upstream spatial wave but does not reproduce Figure 10; the
+  remaining failure is the conversion of broad layer-5 input into broad
+  layer-6I recruitment. The duration family is closed and no parameter is
+  selected.
+next_gate: >-
+  Audit projection 025's connectFromMany Gaussian spread semantics against
+  SMART.nml and the archived KInNeSS manual. The serialized fields are named
+  sigma_x/sigma_y, while the manual calls Spread X/Y variances. Under the
+  active standard-deviation interpretation, a 0.2 spread is effectively
+  one-to-one after the documented 0.001 cutoff. Decide whether one
+  projection-specific, source-discrete variance interpretation is admissible;
+  preregister it before execution and retain Figure 6 plus the 300-ms causal
+  reset gates without fitting a spread value.

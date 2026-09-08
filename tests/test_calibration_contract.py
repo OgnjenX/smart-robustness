@@ -9054,3 +9054,53 @@ def test_figure10_duration_candidate_is_one_source_visible_endpoint() -> None:
         registration["prior_identity_sha256"]
     )
     assert "sole duration endpoint" in registration["boundary"]
+
+
+def test_figure10_duration_restores_layer5_wave_but_not_reset() -> None:
+    result_path = ROOT / "docs/validation-results/figure10-duration-pair-622.yaml"
+    result = yaml.safe_load(result_path.read_text())
+    assessment = yaml.safe_load(
+        (
+            ROOT / "docs/validation-results/figure10-duration-assessment-623.yaml"
+        ).read_text()
+    )
+
+    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment[
+        "result_sha256"
+    ]
+    assert all(result["figure6_gates"].values())
+    intact = result["intact"]
+    control = result["disconnected_control"]
+    assert intact["layer4_first_100ms_mismatch_events"] == (
+        control["layer4_first_100ms_mismatch_events"]
+    ) == 43
+    assert intact["nonspecific_first_100ms_mismatch_events"] == (
+        control["nonspecific_first_100ms_mismatch_events"]
+    ) == 7
+    assert [
+        intact["layer5_first_100ms_mismatch_events"],
+        control["layer5_first_100ms_mismatch_events"],
+    ] == [70, 55]
+    assert intact["layer5_late_active_indices"] == "all-0-through-80"
+    assert len(control["layer5_late_active_indices"]) == 11
+    assert intact["projection025_nonzero_target_indices"] == "all-0-through-80"
+    projection025 = "modeldb112923.projection.025"
+    assert intact["layer6i_mismatch_current_integral_pA_ms_by_projection"][
+        projection025
+    ] > 4.5 * control["layer6i_mismatch_current_integral_pA_ms_by_projection"][
+        projection025
+    ]
+    assert intact["layer6i_late_mismatch_events"] == (
+        control["layer6i_late_mismatch_events"]
+    ) == 42
+    assert intact["layer6i_late_active_indices"] == control[
+        "layer6i_late_active_indices"
+    ]
+    assert intact["layer4_late_mismatch_events"] == (
+        control["layer4_late_mismatch_events"]
+    ) == 49
+    assert assessment["assessment"]["duration_family_closed"]
+    assert not assessment["assessment"]["parameter_selected"]
+    assert not result["reproduced_reset"]
+    assert not result["original_smart_reproduced"]
+    assert not result["baseline_promoted"]

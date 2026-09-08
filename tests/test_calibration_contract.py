@@ -9680,3 +9680,44 @@ def test_layer4_balance_audit_is_hash_pinned_and_read_only() -> None:
     assert registration["record_layer4_balance_diagnostics"]
     assert registration["output_mode"] == "layer4_balance_bounded"
     assert "No parameter" in registration["boundary"]
+
+
+def test_layer4_balance_localizes_first_wrong_sign_at_projection036() -> None:
+    result_path = (
+        ROOT / "docs/validation-results/figure10-layer4-balance-pair-649.yaml"
+    )
+    result = yaml.safe_load(result_path.read_text())
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-layer4-balance-assessment-650.yaml"
+        ).read_text()
+    )
+
+    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment[
+        "result_sha256"
+    ]
+    assert all(result["figure6_gates"].values())
+    assert result["source_identity"]["layer6i_post_events_intact_control"] == [
+        153,
+        76,
+    ]
+    assert len(result["intact_balance_bins"]) == 20
+    assert len(result["control_balance_bins"]) == 20
+    intact_focal = result["intact_balance_bins"][10]
+    control_focal = result["control_balance_bins"][10]
+    assert intact_focal[:2] == [100.0, 110.0]
+    assert control_focal[:2] == [100.0, 110.0]
+    assert intact_focal[2] > control_focal[2]
+    assert intact_focal[3] > control_focal[3]
+    assert abs(intact_focal[4]) < abs(control_focal[4])
+    assert intact_focal[5] > control_focal[5]
+    assert intact_focal[6] > control_focal[6]
+    assert intact_focal[8] < control_focal[8]
+    assert assessment["assessment"]["first_wrong_sign_stage"] == (
+        "projection036-output"
+    )
+    assert not assessment["assessment"]["parameter_selected"]
+    assert not result["reproduced_reset"]
+    assert not result["original_smart_reproduced"]
+    assert not result["baseline_promoted"]

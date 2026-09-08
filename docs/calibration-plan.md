@@ -1888,3 +1888,17 @@ winner/alternative events into fixed 10-ms bins after simulation. The focal
 bins are 100--110 ms after mismatch, containing the 108.36-ms broad layer-6I
 wave, and 110--120 ms immediately after it. Bounded serialization occurs only
 after full scoring. Require exact Artifact-645 identity; select no parameter.
+
+Artifacts 649--650 repeat every scale-8 identity and localize the downstream
+sign failure. In the focal 100--110-ms bin, projection-026 excitation is 1.54
+times control and layer-4 inhibitory events are 5 versus 2, but projection-036
+inhibitory-current magnitude is already only 92.9% of control. Projection-038
+direct excitation is 1.19 times control, winner events are 7 versus 5, and two
+control alternatives disappear. In 110--120 ms, projection 026 rises
+25.35-fold and projection 038 rises 18.71-fold, while inhibitory events are 21
+versus 26 and projection-036 inhibition is only 76.2% of control. The winner
+pauses transiently but no alternative is released. The first measured
+wrong-sign stage is projection-036 output, with direct projection 038 opposing
+reset. Next audit unresolved projection-036 `ring=true` geometry and obtain
+target-resolved 036/038 balance for winner and alternative cells before any
+new parameter experiment.

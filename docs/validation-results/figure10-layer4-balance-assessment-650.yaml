@@ -1,0 +1,71 @@
+schema_version: 1
+id: figure10-layer4-balance-assessment-650
+date: '2026-09-08'
+status: assessed-projection036-output-first-wrong-sign-direct038-opposes-reset
+registration: docs/validation-results/figure10-layer4-balance-registration-648.yaml
+result: docs/validation-results/figure10-layer4-balance-pair-649.yaml
+result_sha256: d3cc4cc13365fd2dff129d7373eb7f21aaffc59b271d23079cebec458ba7fffa
+assessment:
+  exact_scale8_source_identity_reproduced: true
+  complete_ten_ms_series_reported: true
+  focal_projection026_direction_supports_reset: true
+  focal_layer4_inhibitory_event_direction_supports_reset: true
+  focal_projection036_direction_supports_reset: false
+  focal_projection038_opposes_reset: true
+  transient_winner_pause_observed: true
+  transient_alternative_release_observed: false
+  first_wrong_sign_stage: projection036-output
+  source_ring_geometry_resolved: false
+  parameter_selected: false
+  official_figure10_reset_reproduced: false
+  original_smart_reproduced: false
+  baseline_promoted: false
+focal_100_110_ms:
+  projection026_current_pA_ms_intact_control: [121.98943678005962,
+    79.11512338629392]
+  projection026_ratio: 1.5419231059581884
+  layer4_inhibitory_events_intact_control: [5, 2]
+  projection036_current_pA_ms_intact_control: [-43092.870523652964,
+    -46386.79147509599]
+  projection036_inhibitory_magnitude_ratio: 0.9289901101866151
+  projection038_current_pA_ms_intact_control: [87.9831748870104,
+    74.17955493293859]
+  projection038_ratio: 1.1860838874882826
+  winner_events_intact_control: [7, 5]
+  alternative_active_cells_intact_control: [0, 2]
+subsequent_110_120_ms:
+  projection026_current_pA_ms_intact_control: [918.7949959672351,
+    36.242538476793754]
+  projection026_ratio: 25.351287039552798
+  layer4_inhibitory_events_intact_control: [21, 26]
+  projection036_current_pA_ms_intact_control: [-109849.31284311764,
+    -144190.66969932147]
+  projection036_inhibitory_magnitude_ratio: 0.7618337099909771
+  projection038_current_pA_ms_intact_control: [1385.1694743577325,
+    74.04574404664768]
+  projection038_ratio: 18.706942474439813
+  winner_events_intact_control: [0, 2]
+  alternative_active_cells_intact_control: [0, 0]
+interpretation: >-
+  Every Artifact-645 population identity and reset gate repeats exactly. In the
+  preregistered 100--110-ms wave bin, projection 026 and layer-4 inhibitory
+  events both move in the reset-supporting direction, yet projection-036
+  inhibitory-current magnitude is already 7.1% lower intact. Direct projection
+  038 excitation is simultaneously 18.6% higher, winner output is seven versus
+  five events, and the two control alternatives disappear. In 110--120 ms,
+  projection-026 excitation rises 25.35-fold and projection-038 excitation
+  18.71-fold, but layer-4 inhibitory events are 21 versus 26 and projection-036
+  inhibition remains only 76.2% of control. The winner is transiently silent
+  in that bin, but no alternative is released and the winner resumes later.
+  Thus the broad layer-6I wave reaches layer-4 inhibitory cells, while the first
+  wrong-sign measured stage is projection-036 output and direct projection 038
+  provides concurrent opposing excitation. This audit selects no parameter.
+next_gate: >-
+  Audit projection 036's source-defined `ring=true` connectFromMany topology
+  and the spatial distribution of layer-4 inhibitory events against the
+  recovered SMART.nml and KInNeSS evidence. Exact legacy ring geometry remains
+  unresolved. Before any topology or weight experiment, add or preregister
+  target-resolved projection-036 gate/current and projection-038 current for
+  the five winner cells and the two control alternatives. Distinguish a spatial
+  off-surround failure from temporal saturation or direct-excitation balance;
+  do not change projection 025 or select another parameter yet.

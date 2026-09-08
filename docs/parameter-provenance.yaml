@@ -679,9 +679,9 @@ parameters:
     note: Scale 8 recruits all 81 layer-6I cells intact and doubles their event output versus control. Projection-026 drive rises 2.12-fold, but layer-4 inhibitory events fall from 232 control to 218 intact and projection-036 inhibitory magnitude falls 10.2%. Winner events are 78/76 and alternatives 0/2 intact/control. Scale 8 closes without selection; time-resolved projection-026/036 and direct projection-038 audit is required before another parameter.
   diagnostics.figure10.layer4_on_center_off_surround_balance:
     value: read-only 10-ms projection-026, layer-4 inhibitory, projection-036, projection-038, and layer-4 output bins under the fixed scale-8 causal pair
-    status: preregistered-awaiting-execution
-    source: Artifact 646 authorization and Artifacts 647--648
-    note: The audit includes the direct layer-6I-to-layer-4-excitatory projection 038 omitted from the earlier aggregate reset-chain monitor. It requires exact Artifact-645 identity and focuses on 100--110 and 110--120 ms after mismatch. No parameter or reset score can change.
+    status: completed-projection036-first-wrong-sign-target-resolved-audit-required
+    source: Artifact 646 authorization and Artifacts 647--650
+    note: Exact scale-8 identity repeats. In 100--110 ms projection-026 drive and layer-4 inhibitory events rise intact, but projection-036 inhibitory magnitude falls 7.1% and projection-038 excitation rises 18.6%. In 110--120 ms projection 026 rises 25.35-fold and projection 038 18.71-fold while projection-036 magnitude is only 76.2% of control. The winner pauses transiently without alternative release. No parameter is selected; unresolved projection-036 ring geometry and target-resolved 036/038 balance are next.
   benchmark.population_sizes:
     value: see configs/*.yaml
     status: exploratory

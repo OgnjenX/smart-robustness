@@ -2155,3 +2155,17 @@ passive p026 arrival-retention window to 0.0--23.6 ms and preserves the 1.0-ms
 delay, compiled topology, fixed calibration state, causal arms, and all identity
 gates. The result may localize source timing or source selection but cannot
 select a parameter.
+
+Artifacts 707--708 complete that exact wider history. The two arms have the
+same focal source, weight, and arrival records through 23.6 ms, so no new
+delayed ligand arrival causes the 23.45-ms gate split. The executable synapse
+instead multiplies its ongoing ligand waveform by current source-transmitter
+availability; transmitter depletes immediately at a source spike, before that
+spike's 1.0-ms delayed ligand update. The next passive audit must retain focal
+source events/resources and arrivals through 24.6 ms. No transmitter or
+depletion parameter is opened.
+
+Artifacts 709--710 now preserve the already-monitored layer-6I event/resource
+samples in a bounded output and preregister the 0.0--24.6-ms p026 arrival
+endpoint. The paired result has not yet run. Equations, schedules, model values,
+and reset gates are unchanged.

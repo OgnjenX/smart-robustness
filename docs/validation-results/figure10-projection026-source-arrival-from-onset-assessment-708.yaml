@@ -1,0 +1,42 @@
+schema_version: 1
+id: figure10-projection026-source-arrival-from-onset-assessment-708
+date: '2026-09-09'
+status: assessed-identical-arrival-history-source-resource-event-audit-required
+registration: docs/validation-results/figure10-projection026-source-arrival-from-onset-registration-706.yaml
+result: docs/validation-results/figure10-projection026-source-arrival-from-onset-pair-707.yaml
+result_sha256: d1b74e6506740a0c335569a59f73b43032e2041c6ee01e79cecdf8a8191a0af3
+assessment:
+  all_fresh_figure6_gates_pass: true
+  exact_registered_population_identity: true
+  exact_registered_projection036_arrival_identity: true
+  identical_projection026_connected_source_sets: true
+  identical_projection026_compiled_edge_weights: true
+  identical_projection026_arrival_histories_through_23p6_ms: true
+  source_spike_timing_or_selection_before_22p6_ms_excluded: true
+  delayed_ligand_arrival_explains_23p45_gate_difference: false
+  source_transmitter_event_semantics_remain_candidate: true
+  parameter_selected: false
+  official_figure10_reset_reproduced: false
+  original_smart_reproduced: false
+  baseline_promoted: false
+interpretation: >-
+  Both arms have exactly the same projection-026 source, weight, and arrival
+  histories from mismatch onset through 23.6 ms. The last arrivals before the
+  23.45-ms gate difference occur at 5.59 ms for targets 38/42 and 19.86 ms for
+  target 40. A new delayed ligand arrival therefore does not initiate the gate
+  contrast. In this implementation, however, the ongoing ligand waveform is
+  multiplied by the source cell's current transmitter availability, and that
+  resource depletes immediately when the source spikes, before its 1.0-ms
+  delayed ligand update reaches the target. A source spike near 23.45 ms can
+  therefore alter an existing target gate immediately while its corresponding
+  arrival lies outside the 23.6-ms retention window.
+closure: >-
+  Exclude focal topology, compiled weights, delay, source selection, and source
+  spike timing through 22.6 ms as causes of the first gate contrast. Do not
+  select a transmitter, depletion, kinetics, or any numerical parameter.
+next_gate: >-
+  Preserve focal layer-6I event and transmitter samples and extend the passive
+  arrival endpoint to 24.6 ms. Test whether an arm-dependent source spike at
+  approximately 23.45 ms changes current transmitter availability immediately
+  and produces a delayed p026 arrival approximately 1.0 ms later. No model or
+  score change is permitted.

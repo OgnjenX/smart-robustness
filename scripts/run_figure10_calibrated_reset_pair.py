@@ -405,11 +405,32 @@ def main() -> None:
     intact_summary = _condition_summary(intact)
     control_summary = _condition_summary(control)
     output_mode = registration.get("output_mode", "full")
+    layer6i_source_resource_payload = None
+    if output_mode == "projection026_source_resource_bounded":
+        layer6i_source_resource_payload = (
+            {
+                "layer6i_mismatch_events": intact_summary[
+                    "layer6i_mismatch_events"
+                ],
+                "layer6i_mismatch_event_transmitter_samples": intact_summary[
+                    "layer6i_mismatch_event_transmitter_samples"
+                ],
+            },
+            {
+                "layer6i_mismatch_events": control_summary[
+                    "layer6i_mismatch_events"
+                ],
+                "layer6i_mismatch_event_transmitter_samples": control_summary[
+                    "layer6i_mismatch_event_transmitter_samples"
+                ],
+            },
+        )
     if output_mode in {
         "layer4_balance_bounded",
         "layer4_complete_target_bounded",
         "layer4_target_timing_bounded",
         "layer4_source_trace_files",
+        "projection026_source_resource_bounded",
     }:
         intact_summary = _bounded_layer4_balance_summary(intact_summary)
         control_summary = _bounded_layer4_balance_summary(control_summary)
@@ -419,6 +440,9 @@ def main() -> None:
         if output_mode == "layer4_source_trace_files":
             intact_summary.pop("layer4_inhibitory_source_traces")
             control_summary.pop("layer4_inhibitory_source_traces")
+        if layer6i_source_resource_payload is not None:
+            intact_summary.update(layer6i_source_resource_payload[0])
+            control_summary.update(layer6i_source_resource_payload[1])
     elif output_mode != "full":
         raise ValueError(f"unknown Figure 10 output mode: {output_mode}")
 

@@ -1,0 +1,30 @@
+schema_version: 1
+id: figure10-projection026-source-resource-monitor-709
+date: '2026-09-09'
+status: implementation-ready-bounded-source-resource-output-tests-pass
+classification: figure10-projection026-source-event-resource-audit
+authorization: docs/validation-results/figure10-projection026-source-arrival-from-onset-assessment-708.yaml
+authorization_sha256: 434f854d1a48ab15bc3c52f93331634945bf8855bcd95b7be974ae5c140da3d4
+harness: src/smart_robustness/validation/figure10.py
+harness_sha256: 9dc58c1236b1de7add8815dbe26f15ffd9373d943143bd6656f0590f581ac89a
+runner: scripts/run_figure10_calibrated_reset_pair.py
+runner_sha256: b8c10ed056900959ee61bb9d88c8733ed59cd7804152acc1c27ae671c5b0a08d
+runtime: src/smart_robustness/classic_sector.py
+runtime_sha256: ebdf48f0138803ab50b1dec2ef87817b4c537e4da490a088b9df6bdcb9d119a1
+implementation:
+  output_mode: projection026_source_resource_bounded
+  newly_preserved_fields:
+    - layer6i_mismatch_events
+    - layer6i_mismatch_event_transmitter_samples
+  existing_preserved_field: projection026_target_arrival_summaries
+  transmitter_sample_schedule: thresholds-order-0
+  behavior_change: none
+tests:
+  command: >-
+    .venv/bin/ruff check scripts/run_figure10_calibrated_reset_pair.py
+    tests/test_calibration_contract.py
+  result: passed
+boundary: >-
+  Only structured output retention changes. Existing spike monitors,
+  transmitter state monitor, projection-026 arrival reducer, equations,
+  schedules, states, parameters, protocol, and score are unchanged.

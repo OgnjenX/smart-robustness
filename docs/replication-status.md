@@ -3911,3 +3911,13 @@ alternative release; original SMART remains unreproduced and unfrozen.
 Registration 706 now extends only the passive projection-026 arrival window to
 mismatch onset. Its paired result has not yet run; no model value or reset gate
 has changed.
+
+Artifacts 707--708 show identical focal p026 arrival histories through 23.6 ms.
+The 23.45-ms gate split is not a delayed ligand arrival; source-transmitter
+depletion can affect an ongoing ligand waveform immediately at a source spike,
+before the new delayed arrival. One passive source-event/resource audit remains
+next. Figure 10 and the baseline remain failed and unfrozen.
+
+Artifacts 709--710 implement and preregister that final source-event/resource
+audit. It changes output retention only. The paired result has not yet run, and
+original SMART remains unreproduced and unfrozen.

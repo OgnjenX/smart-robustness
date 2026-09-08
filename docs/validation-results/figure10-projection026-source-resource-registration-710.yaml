@@ -1,0 +1,74 @@
+schema_version: 1
+id: figure10-projection026-source-resource-registration-710
+date: '2026-09-09'
+status: registered-before-execution-source-event-resource-audit
+classification: figure10-projection026-source-event-resource-audit
+implementation: docs/validation-results/figure10-projection026-source-resource-monitor-709.yaml
+profile: configs/calibration/figure7_learned_coincidence_effective_t_pair_v1.yaml
+profile_sha256: 4b6aa0bdf4fb844e428fb330f34970900cc8bc741183b2d8e6e73789cba0b30f
+harness: src/smart_robustness/validation/figure10.py
+harness_sha256: 9dc58c1236b1de7add8815dbe26f15ffd9373d943143bd6656f0590f581ac89a
+runtime: src/smart_robustness/classic_sector.py
+runtime_sha256: ebdf48f0138803ab50b1dec2ef87817b4c537e4da490a088b9df6bdcb9d119a1
+script: scripts/run_figure10_calibrated_reset_pair.py
+script_sha256: b8c10ed056900959ee61bb9d88c8733ed59cd7804152acc1c27ae671c5b0a08d
+source_result: docs/validation-results/figure10-projection026-source-arrival-from-onset-pair-707.yaml
+source_result_sha256: d1b74e6506740a0c335569a59f73b43032e2041c6ee01e79cecdf8a8191a0af3
+prior_assessment: docs/validation-results/figure10-projection026-source-arrival-from-onset-assessment-708.yaml
+prior_assessment_sha256: 434f854d1a48ab15bc3c52f93331634945bf8855bcd95b7be974ae5c140da3d4
+runtime_fingerprint: fa4ab9f0bf2bec4d6ad53cb6a91620047689b6839b146ed7d777d42350c2cdf5
+result_id: figure10-projection026-source-resource-pair-711
+result: docs/validation-results/figure10-projection026-source-resource-pair-711.yaml
+assessment: docs/validation-results/figure10-projection026-source-resource-assessment-712.yaml
+persistent_projection_scales:
+  - {projection_id: modeldb112923.projection.008, scale: 0.75}
+  - {projection_id: modeldb112923.projection.011, scale: 0.9375}
+  - {projection_id: modeldb112923.projection.025, scale: 8.0}
+persistent_projection_delays: []
+nonspecific_t_scale: 0.1875
+record_layer6i_diagnostics: false
+record_reset_chain_diagnostics: true
+record_layer4_balance_diagnostics: true
+record_projection036_arrival_target_indices: [31]
+projection036_arrival_window_ms: [75.2, 75.8]
+record_projection026_arrival_target_indices: [38, 40, 42]
+projection026_arrival_window_ms: [0.0, 24.6]
+output_mode: projection026_source_resource_bounded
+protocol:
+  pre_match_duration_ms: 100.0
+  mismatch_duration_ms: 200.0
+  total_duration_ms: 300.0
+  dt_ms: 0.01
+  top_down_current_pA: 800.0
+  top_down_current_mode: until_cued_cell_first_event
+  comparator: {transform: top_k_binary, source_index: 40, target_count: 5}
+required_source_identity:
+  layer4_pre_events_intact_control: [39, 39]
+  layer4_post_events_intact_control: [78, 92]
+  nonspecific_post_events_intact_control: [18, 13]
+  layer5_post_events_intact_control: [285, 140]
+  layer6i_post_events_intact_control: [153, 76]
+  layer4_inhibitory_post_events_intact_control: [218, 232]
+  layer5_active_cells_intact_control: [81, 11]
+  layer6i_active_cells_intact_control: [81, 11]
+required_prior_arrival_identity:
+  histories_identical_through_ms: 23.6
+  total_edge_weight_each_target: 3.2292073770027754
+  first_projection026_gate_difference_ms: 23.450000000000003
+diagnostic_question: >-
+  Does an arm-dependent layer-6I source spike at the 23.45-ms gate divergence
+  deplete current transmitter availability immediately, while its corresponding
+  projection-026 ligand arrival occurs about 1.0 ms later?
+decision_rule: >-
+  Require every fresh Figure-6 gate and exact registered population and
+  projection-036 identities. Confirm focal p026 topology, weights, and all
+  arrivals through 23.6 ms repeat exactly. Compare focal layer-6I source events
+  and threshold-time transmitter samples around 23.45 ms, then identify their
+  delayed arrivals through 24.6 ms. Attribute only observed source/resource
+  timing; do not fit or select transmitter, depletion, delay, or synapse values.
+boundary: >-
+  Only output retention and the passive arrival endpoint change. Preserve the
+  recovered p026 delay 1.0 ms, all scales, geometry, equations, states, cue,
+  durations, causal arms, and reset score. No original-SMART claim, baseline
+  promotion or freeze, parameter selection, or reopening of a closed family is
+  authorized.

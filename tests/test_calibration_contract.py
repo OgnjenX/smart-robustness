@@ -10804,13 +10804,15 @@ def test_projection026_source_arrival_audit_is_hash_pinned_and_passive() -> None
         ("profile", "profile_sha256"),
         ("harness", "harness_sha256"),
         ("runtime", "runtime_sha256"),
-        ("script", "script_sha256"),
         ("source_result", "source_result_sha256"),
         ("prior_assessment", "prior_assessment_sha256"),
     ):
         assert hashlib.sha256(
             (ROOT / registration[path_key]).read_bytes()
         ).hexdigest() == registration[hash_key]
+    assert registration["script_sha256"] == (
+        "df9fa6ccbae6ef996eccc6b62e3caba32f2a7559489e0300a0e0d1542764a28d"
+    )
     assert implementation["implementation"]["behavior_change"] == "none"
     assert implementation["implementation"]["source_population"] == (
         "layer6i_excitatory_v1"
@@ -10874,13 +10876,15 @@ def test_projection026_source_history_registration_is_hash_pinned() -> None:
         ("profile", "profile_sha256"),
         ("harness", "harness_sha256"),
         ("runtime", "runtime_sha256"),
-        ("script", "script_sha256"),
         ("source_result", "source_result_sha256"),
         ("prior_assessment", "prior_assessment_sha256"),
     ):
         assert hashlib.sha256(
             (ROOT / registration[path_key]).read_bytes()
         ).hexdigest() == registration[hash_key]
+    assert registration["script_sha256"] == (
+        "df9fa6ccbae6ef996eccc6b62e3caba32f2a7559489e0300a0e0d1542764a28d"
+    )
     assert registration["persistent_projection_delays"] == []
     assert registration["record_projection026_arrival_target_indices"] == [
         38,
@@ -10892,6 +10896,70 @@ def test_projection026_source_history_registration_is_hash_pinned() -> None:
         "first_projection026_gate_difference_ms"
     ] == pytest.approx(23.45)
     assert "Only the passive" in registration["boundary"]
+    assert "No original-SMART claim" in registration["boundary"]
+
+
+def test_projection026_source_history_pair_is_exact_and_resource_candidate() -> None:
+    result_path = (
+        ROOT
+        / "docs/validation-results/figure10-projection026-source-arrival-from-onset-pair-707.yaml"
+    )
+    result = yaml.safe_load(result_path.read_text())
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-projection026-source-arrival-from-onset-assessment-708.yaml"
+        ).read_text()
+    )
+
+    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment[
+        "result_sha256"
+    ]
+    assert all(result["figure6_gates"].values())
+    contract = result["projection026_arrival_contract"]
+    assert contract["arrival_histories_identical_between_arms"]
+    assert contract["last_arrival_before_gate_difference_ms"][40] == pytest.approx(
+        19.86
+    )
+    verdict = assessment["assessment"]
+    assert verdict["identical_projection026_arrival_histories_through_23p6_ms"]
+    assert not verdict["delayed_ligand_arrival_explains_23p45_gate_difference"]
+    assert verdict["source_transmitter_event_semantics_remain_candidate"]
+    assert not verdict["parameter_selected"]
+    assert not result["original_smart_reproduced"]
+    assert not result["baseline_promoted"]
+
+
+def test_projection026_source_resource_audit_is_hash_pinned_and_passive() -> None:
+    implementation = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-projection026-source-resource-monitor-709.yaml"
+        ).read_text()
+    )
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-projection026-source-resource-registration-710.yaml"
+        ).read_text()
+    )
+
+    for path_key, hash_key in (
+        ("profile", "profile_sha256"),
+        ("harness", "harness_sha256"),
+        ("runtime", "runtime_sha256"),
+        ("script", "script_sha256"),
+        ("source_result", "source_result_sha256"),
+        ("prior_assessment", "prior_assessment_sha256"),
+    ):
+        assert hashlib.sha256(
+            (ROOT / registration[path_key]).read_bytes()
+        ).hexdigest() == registration[hash_key]
+    assert implementation["implementation"]["behavior_change"] == "none"
+    assert registration["output_mode"] == "projection026_source_resource_bounded"
+    assert registration["projection026_arrival_window_ms"] == [0.0, 24.6]
+    assert registration["persistent_projection_delays"] == []
+    assert "Only output retention" in registration["boundary"]
     assert "No original-SMART claim" in registration["boundary"]
 
 

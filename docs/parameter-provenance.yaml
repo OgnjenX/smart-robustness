@@ -739,9 +739,14 @@ parameters:
     note: Exact identities pass. Each focal target has the same nine sources, compiled weights, total weight 3.2292073770027754, and 1.0-ms delay in both arms, but neither arm has an arrival in 23.3--23.6 ms. The gate contrast is inherited from earlier source history. No parameter is selected; one passive onset-to-23.6-ms arrival audit is required.
   diagnostics.figure10.projection026_source_history_from_mismatch_onset:
     value: source-resolved projection-026 arrivals into cells 38, 40, and 42 from mismatch onset through 23.6 ms
+    status: completed-identical-arrival-history-resource-event-audit-required
+    source: Artifact 705 authorization and Artifacts 706--708
+    note: Exact identities pass and focal source, weight, and arrival histories are identical through 23.6 ms. No delayed ligand arrival explains the 23.45-ms gate split. Because the executable gate is continuously multiplied by source transmitter, which depletes at source spike time before delayed ligand arrival, focal source events/resources and arrivals through 24.6 ms are required next. No parameter is selected.
+  diagnostics.figure10.projection026_source_event_resource:
+    value: bounded layer-6I source events and transmitter samples plus focal projection-026 arrivals through 24.6 ms
     status: registered-before-execution
-    source: Artifact 705 authorization and Registration 706
-    note: Only the passive retention window expands. The recovered 1.0-ms delay and every model parameter remain fixed; this audit may localize source timing but cannot select a parameter or repair reset.
+    source: Artifact 708 authorization and Artifacts 709--710
+    note: Output retention only; the existing threshold-order transmitter monitor and arrival reducer are reused. No model parameter, equation, schedule, protocol, or reset gate changes.
   benchmark.population_sizes:
     value: see configs/*.yaml
     status: exploratory

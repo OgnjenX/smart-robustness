@@ -10170,3 +10170,36 @@ def test_layer4_gate_timing_audit_is_hash_pinned_and_read_only() -> None:
     assert registration.get("runtime_overrides") is None
     assert "Do not select or fit a parameter" in registration["decision_rule"]
     assert "No parameter selection" in registration["boundary"]
+
+
+def test_layer4_gate_timing_localizes_inhibitory_arrival_candidate() -> None:
+    result_path = (
+        ROOT
+        / "docs/validation-results/figure10-layer4-gate-timing-pair-670.yaml"
+    )
+    result = yaml.safe_load(result_path.read_text())
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-layer4-gate-timing-assessment-671.yaml"
+        ).read_text()
+    )
+
+    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment[
+        "result_sha256"
+    ]
+    assert all(result["figure6_gates"].values())
+    assert result["source_identity"]["layer4_post_events"] == [78, 92]
+    assert result["source_identity"]["layer6i_post_events"] == [153, 76]
+    endpoint = result["preregistered_first_voltage_divergence"]
+    assert endpoint["preceding_bin_available"] is False
+    assert endpoint["classification"] == "left-censored-by-registered-window"
+    sequence = assessment["localized_sequence"]
+    assert sequence["projection036_intact_surge_bin_ms"] == [75.4, 75.5]
+    assert sequence["projection036_control_surge_bin_ms"] == [75.5, 75.6]
+    assert sequence["inhibitory_arrival_lead_intact_ms"] == 0.1
+    assert assessment["assessment"]["inhibitory_arrival_is_candidate_release_block"]
+    assert not assessment["assessment"]["preregistered_endpoint_decisive"]
+    assert not assessment["assessment"]["parameter_selected"]
+    assert not result["original_smart_reproduced"]
+    assert not result["baseline_promoted"]

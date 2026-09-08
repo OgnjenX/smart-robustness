@@ -2000,3 +2000,13 @@ current summaries, and somatic-voltage bounds for cell 31 in 0.1-ms bins from
 maximum voltage reaches 0.1 mV and compares both gate means in that and the
 preceding bin. Exact source identity is mandatory and no parameter may be
 selected or fitted.
+
+Artifacts 670--671 complete the pair with exact identity. The preregistered
+first 0.1-mV difference is present at the left edge of the 74-ms window, so its
+required preceding bin is unavailable and that endpoint is formally
+left-censored. The retained trajectory still localizes the candidate mechanism:
+the intact projection-036 gate surges in 75.4--75.5 ms while control remains at
+baseline, and the intact voltage advantage reverses to a control advantage in
+75.5--75.6 ms. Projection-035 gate differences remain about 0.001. A native-
+sample gate-onset confirmation over a wider window is required before opening
+a projection-036 arrival/delay family.

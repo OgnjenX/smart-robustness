@@ -3802,3 +3802,10 @@ Artifacts 668--669 now add and preregister a 0.1-ms projection-035/036 gate and
 somatic-voltage audit over 74--78 ms at representative alternative cell 31.
 The registered pair has not yet run. Original SMART remains unreproduced and
 unfrozen.
+
+Artifacts 670--671 complete the exact repeat. Its preregistered voltage endpoint
+is left-censored by the 74-ms window, but the trace localizes an intact
+projection-036 inhibitory surge one 0.1-ms bin before control; the voltage
+advantage reverses in the following bin, whereas relay-gate differences remain
+small. This candidate timing mechanism still needs native-sample confirmation.
+Original SMART remains unreproduced and unfrozen.

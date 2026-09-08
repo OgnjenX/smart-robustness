@@ -1,0 +1,72 @@
+schema_version: 1
+id: figure10-layer4-gate-timing-pair-670
+date: '2026-09-08'
+status: completed-unchanged-read-only-gate-voltage-pair
+classification: figure10-source-control-layer4-gate-voltage-audit
+registration: docs/validation-results/figure10-layer4-gate-timing-registration-669.yaml
+runtime_fingerprint: fa4ab9f0bf2bec4d6ad53cb6a91620047689b6839b146ed7d777d42350c2cdf5
+figure6_gates:
+  relay_active_indices: true
+  relay_events_per_active_index: true
+  relay_events: true
+  cortical_chain_complete: true
+  causal_learning_pair: true
+  top_down_horizontal_contrast: true
+source_identity:
+  layer4_pre_events: [39, 39]
+  layer4_post_events: [78, 92]
+  nonspecific_post_events: [18, 13]
+  layer5_post_events: [285, 140]
+  layer6i_post_events: [153, 76]
+  layer4_inhibitory_post_events: [218, 232]
+  layer5_active_cells: [81, 11]
+  layer6i_active_cells: [81, 11]
+timing_contract:
+  target_index: 31
+  window_from_mismatch_ms: [74.0, 78.0]
+  bin_width_ms: 0.1
+  native_state_sample_ms: 0.01
+  voltage_divergence_threshold_mV: 0.1
+preregistered_first_voltage_divergence:
+  bin_from_mismatch_ms: [74.0, 74.1]
+  intact_control_soma_voltage_max_mV: [-60.4050275856022, -60.600959407554186]
+  intact_minus_control_mV: 0.19593182195198522
+  preceding_bin_available: false
+  classification: left-censored-by-registered-window
+critical_gate_arrival_bins_from_mismatch_ms: [75.2, 75.3, 75.4, 75.5, 75.6,
+  75.7]
+critical_series_columns:
+- projection035_relay_gate_mean
+- projection036_inhibition_gate_mean
+- soma_voltage_max_mV
+critical_series:
+  intact:
+  - [0.7568233526900957, 0.7705454330854179, 0.7818909947456687,
+      0.7910940487694813, 0.7983667813779747]
+  - [0.009783849361932818, 0.009306714019328298, 0.6122697235760189,
+      1.9670927842264825, 4.181303807623598]
+  - [-54.83569111772352, -53.91237625709751, -52.96439783332944,
+      -52.38864896317928, -52.349037061008524]
+  disconnected_control:
+  - [0.755301239436392, 0.7692771944587328, 0.7808514820584291,
+      0.7902604723972301, 0.797718491615356]
+  - [0.01016534089219302, 0.009669599988109607, 0.009198033929532888,
+      0.32427910537875426, 2.153003345455803]
+  - [-55.15111523760686, -54.264309673528196, -53.23707186153883,
+      -52.027297373908304, -51.09533367836668]
+  intact_minus_control:
+  - [0.0015221132537037204, 0.001268238626685149, 0.001039512687239646,
+      0.0008335763722512244, 0.0006482897626187074]
+  - [-0.00038149153026020166, -0.000362885968781309,
+      0.603071689646486, 1.6428136788477283, 2.028300462167795]
+  - [0.31542411988334273, 0.3519334164306848, 0.2726740282093896,
+      -0.3613515892709753, -1.2537033826428435]
+control_action_potential:
+  first_positive_soma_bin_from_mismatch_ms: [76.8, 76.9]
+  detected_spike_time_from_mismatch_ms: 77.33000000000001
+  projection037_first_active_time_from_mismatch_ms: 77.45000000000002
+reset_gates: {pre_reset_winner: true, reset_chain: true,
+  winner_suppression: false, alternative_release: false}
+reproduced_reset: false
+original_smart_reproduced: false
+baseline_promoted: false

@@ -1,0 +1,46 @@
+schema_version: 1
+id: figure10-layer4-gate-timing-assessment-671
+date: '2026-09-08'
+status: assessed-preregistered-endpoint-left-censored-inhibitory-arrival-localized
+registration: docs/validation-results/figure10-layer4-gate-timing-registration-669.yaml
+result: docs/validation-results/figure10-layer4-gate-timing-pair-670.yaml
+result_sha256: f34a42ffac2259bd7ca0852b8aaa74a7637be9112325ff4f02b152dad5197fd4
+assessment:
+  exact_source_identity_reproduced: true
+  preregistered_first_voltage_divergence_found: true
+  preregistered_preceding_bin_available: false
+  preregistered_endpoint_decisive: false
+  relay_gate_difference_explains_voltage_reversal: false
+  inhibitory_gate_arrival_precedes_voltage_reversal: true
+  inhibitory_arrival_is_candidate_release_block: true
+  parameter_selected: false
+  official_figure10_reset_reproduced: false
+  original_smart_reproduced: false
+  baseline_promoted: false
+localized_sequence:
+  projection036_intact_surge_bin_ms: [75.4, 75.5]
+  projection036_control_surge_bin_ms: [75.5, 75.6]
+  inhibitory_arrival_lead_intact_ms: 0.1
+  voltage_advantage_reverses_to_control_bin_ms: [75.5, 75.6]
+  control_first_positive_soma_bin_ms: [76.8, 76.9]
+  control_spike_detection_ms: 77.33000000000001
+  projection037_onset_ms: 77.45000000000002
+interpretation: >-
+  Every registered identity repeats. The preregistered 0.1-mV voltage endpoint
+  is already crossed in the first 74.0--74.1-ms bin, so its required preceding
+  bin is unavailable and that endpoint is formally left-censored. The retained
+  trajectory nevertheless localizes a directionally coherent mechanism: relay
+  gate 035 differs by only about 0.001 throughout 75.2--75.7 ms, whereas the
+  intact projection-036 inhibitory gate jumps to 0.612 in 75.4--75.5 ms while
+  control remains 0.009. In the next bin the intact-minus-control voltage
+  advantage reverses from +0.273 to -0.361 mV. Control then enters an action
+  potential before recurrent excitation begins. This supports earlier
+  inhibitory arrival as the candidate block on intact alternative release, but
+  the preregistered endpoint cannot itself authorize a parameter.
+next_gate: >-
+  Preregister a confirmation on the already localized trajectory: define
+  projection-036 surge onset as the first native sample with gate at least 0.1,
+  record 73--77 ms for target 31, and require the gate-onset arm difference to
+  precede the first voltage sign reversal. If confirmed with exact source
+  identity, authorize a bounded projection-036 delay/arrival calibration family
+  rather than a recurrent or relay-weight family.

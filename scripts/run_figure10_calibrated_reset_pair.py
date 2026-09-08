@@ -321,6 +321,9 @@ def main() -> None:
         "layer4_target_timing_current_threshold_pA": float(
             registration.get("layer4_target_timing_current_threshold_pA", 1e-9)
         ),
+        "layer4_target_timing_gate_threshold": float(
+            registration.get("layer4_target_timing_gate_threshold", 0.1)
+        ),
         "brian": brian,
     }
     intact = run_figure10_condition(reset_pathway_enabled=True, **common)

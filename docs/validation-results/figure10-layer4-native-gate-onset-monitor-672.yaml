@@ -1,0 +1,29 @@
+schema_version: 1
+id: figure10-layer4-native-gate-onset-monitor-672
+date: '2026-09-08'
+status: implementation-ready-read-only-native-gate-onset-tests-pass
+classification: target-resolved-layer4-native-gate-onset-confirmation
+authorization: docs/validation-results/figure10-layer4-gate-timing-assessment-671.yaml
+harness: src/smart_robustness/validation/figure10.py
+harness_sha256: a985727d1a1b87e676452d8878b639b6a53250244508c08bcb677663cd7f2446
+runner: scripts/run_figure10_calibrated_reset_pair.py
+runner_sha256: 94fcd7d827cb024964ba5f0b461e265b0f5e52da5bf34e0470a04db70287199e
+implementation:
+  selected_cell: 31
+  window_from_mismatch_ms: [73.0, 77.0]
+  display_bin_width_ms: 0.1
+  native_state_sample_ms: 0.01
+  gate_activity_threshold: 0.1
+  native_onsets:
+  - projection035_first_gate_threshold_time_from_mismatch_ms
+  - projection036_first_gate_threshold_time_from_mismatch_ms
+  default_behavior_changed: false
+verification:
+  pure_native_onset_test: pass
+  live_short_sector_integration_test: pass
+  focused_tests: 2-passed
+  lint: pass
+boundary: >-
+  Native gate-onset extraction is default-off and post hoc. No equation,
+  connection, weight, delay, event, stimulus, parameter, protocol, score, or
+  prior result is altered.

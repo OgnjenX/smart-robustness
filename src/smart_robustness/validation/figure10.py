@@ -124,6 +124,8 @@ class Figure10Layer4TargetTimingSummary:
     soma_voltage_max_mV: tuple[float, ...]
     layer4_spike_times_from_mismatch_ms: tuple[float, ...]
     projection037_first_active_time_from_mismatch_ms: float | None
+    projection035_first_gate_threshold_time_from_mismatch_ms: float | None
+    projection036_first_gate_threshold_time_from_mismatch_ms: float | None
 
 
 @dataclass(frozen=True, slots=True)
@@ -613,6 +615,7 @@ def summarize_layer4_target_timing(
     dt_ms: float,
     bin_width_ms: float,
     current_activity_threshold_pA: float,
+    gate_activity_threshold: float,
     state_times_ms: np.ndarray,
     soma_voltage_mV_by_index: np.ndarray,
     projection035_current_pA_by_index: np.ndarray,
@@ -626,7 +629,12 @@ def summarize_layer4_target_timing(
 ) -> tuple[Figure10Layer4TargetTimingSummary, ...]:
     """Reduce a focal trace while preserving sub-bin event/current ordering."""
 
-    if dt_ms <= 0 or bin_width_ms <= 0 or current_activity_threshold_pA < 0:
+    if (
+        dt_ms <= 0
+        or bin_width_ms <= 0
+        or current_activity_threshold_pA < 0
+        or gate_activity_threshold < 0
+    ):
         raise ValueError("layer-4 target timing values are invalid")
     if window_start_from_mismatch_ms < 0 or (
         window_end_from_mismatch_ms <= window_start_from_mismatch_ms
@@ -695,6 +703,12 @@ def summarize_layer4_target_timing(
         active = np.flatnonzero(
             np.abs(current037[index, trace_window]) > current_activity_threshold_pA
         )
+        gate035_active = np.flatnonzero(
+            gate035[index, trace_window] >= gate_activity_threshold
+        )
+        gate036_active = np.flatnonzero(
+            gate036[index, trace_window] >= gate_activity_threshold
+        )
         target_spikes = spike_times[
             (spike_indices == index)
             & (spike_times >= absolute_start)
@@ -721,6 +735,16 @@ def summarize_layer4_target_timing(
                     None
                     if active.size == 0
                     else float(trace_times[int(active[0])] - mismatch_start_ms)
+                ),
+                projection035_first_gate_threshold_time_from_mismatch_ms=(
+                    None
+                    if gate035_active.size == 0
+                    else float(trace_times[int(gate035_active[0])] - mismatch_start_ms)
+                ),
+                projection036_first_gate_threshold_time_from_mismatch_ms=(
+                    None
+                    if gate036_active.size == 0
+                    else float(trace_times[int(gate036_active[0])] - mismatch_start_ms)
                 ),
             )
         )
@@ -749,6 +773,7 @@ def run_figure10_condition(
     layer4_target_timing_window_ms: tuple[float, float] = (65.0, 85.0),
     layer4_target_timing_bin_width_ms: float = 1.0,
     layer4_target_timing_current_threshold_pA: float = 1e-9,
+    layer4_target_timing_gate_threshold: float = 0.1,
     conventions=None,
     dt_ms: float = 0.01,
     cpp_standalone_directory: str | Path | None = None,
@@ -833,6 +858,8 @@ def run_figure10_condition(
         raise ValueError("layer-4 target timing bin width must be positive")
     if layer4_target_timing_current_threshold_pA < 0:
         raise ValueError("layer-4 target timing current threshold cannot be negative")
+    if layer4_target_timing_gate_threshold < 0:
+        raise ValueError("layer-4 target timing gate threshold cannot be negative")
     current_mode = TopDownCurrentMode(top_down_current_mode)
     if current_mode is TopDownCurrentMode.UNTIL_CUED_CELL_EVENT_LIMIT:
         raise ValueError("Figure 10 does not define an event-count-limited cue")
@@ -1270,6 +1297,7 @@ def run_figure10_condition(
                 current_activity_threshold_pA=(
                     layer4_target_timing_current_threshold_pA
                 ),
+                gate_activity_threshold=layer4_target_timing_gate_threshold,
                 state_times_ms=state_times_ms,
                 soma_voltage_mV_by_index=np.asarray(
                     layer4e_inhibitory_state.v_soma / brian.mV

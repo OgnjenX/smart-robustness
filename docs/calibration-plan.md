@@ -2010,3 +2010,11 @@ baseline, and the intact voltage advantage reverses to a control advantage in
 75.5--75.6 ms. Projection-035 gate differences remain about 0.001. A native-
 sample gate-onset confirmation over a wider window is required before opening
 a projection-036 arrival/delay family.
+
+Artifacts 672--673 implement and preregister the native-sample confirmation.
+For cell 31 over 73--77 ms, projection-035 and projection-036 gate threshold
+times are extracted on the 0.01-ms integration grid at a fixed gate value of
+0.1; 0.1-ms voltage summaries are retained. Confirmation requires earlier
+intact projection-036 onset before the voltage sign reversal without a matching
+directional explanation from projection 035. The result can authorize, but not
+execute or select, a bounded arrival/delay family.

@@ -2791,6 +2791,10 @@ count only. It does not reconstruct the upstream two-against-one comparison or
 70-Hz mismatch disinhibition, and no mismatch-driven retuning is authorized.
 Original SMART remains unreproduced and unfrozen.
 
+Artifacts 672--673 now add and preregister native 0.01-ms gate-threshold timing
+for projection 035 and 036 over a wider 73--77-ms window. The confirmation pair
+has not yet run. Original SMART remains unreproduced and unfrozen.
+
 Artifacts 535--537 perform the permitted match-only effective T-conductance
 screen on that fixed replay trace. The full preregistered grid from zero to the
 paper density is finite and was executed without interpolation. Scale 0.1875,

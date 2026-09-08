@@ -707,6 +707,11 @@ parameters:
     status: completed-left-censored-inhibitory-arrival-candidate-localized
     source: Artifacts 666--671
     note: Exact source identity repeats. The preregistered first voltage threshold is left-censored at 74 ms, but projection-036 gate surges in intact during 75.4--75.5 ms, one bin before control, and the voltage advantage reverses in the next bin. Relay gate differences remain about 0.001. A native-sample gate-onset confirmation is required before authorizing a delay family.
+  diagnostics.figure10.layer4_native_gate_onset:
+    value: first native 0.01-ms projection-035/036 gate sample at or above 0.1 for cell 31 over 73--77 ms
+    status: implemented-and-preregistered-before-execution
+    source: Artifacts 670--673
+    note: Confirmation requires earlier intact projection-036 onset before the voltage sign reversal without the same directional explanation from projection 035. It may authorize but cannot execute or select a delay family.
   benchmark.population_sizes:
     value: see configs/*.yaml
     status: exploratory

@@ -594,9 +594,9 @@ parameters:
     note: The corrected monitor preserves exact event identity and returns finite values. Peak gate/current range are equal because the bounded gate saturates, while mismatch integrated GABA is 1154.93 versus match 1110.27 gate-ms. The mechanistic inhibition direction is wrong as well as the event-count order. Candidate remains closed and unfrozen.
   validation.figure7.peripheral_trn_localization:
     value: unchanged persistent pair with source-resolved diagnostics on all 81 TRN cells
-    status: first-output-truncated-reduced-summary-repeat-preregistered
-    source: Artifacts 581--584, authorized by Artifact 580
-    note: The first full-sheet simulation completed and repeated visible event identity, but its 30,806-token stdout was transport-truncated. Registration 584 repeats the identical diagnostics while serializing only bounded regional sums and direction counts. No missing arrays are inferred and the candidate cannot reopen.
+    status: completed-recurrent-inversion-confirmed
+    source: Artifacts 581--586, authorized by Artifact 580
+    note: The reduced-output repeat preserves exact identity and shows match-greater peripheral drive through every afferent projection, with zero cells showing mismatch-greater afferent integrals, despite 520 versus 492 mismatch-greater peripheral events. The inversion is generated inside recurrent/intrinsic TRN dynamics. Candidate remains closed.
   benchmark.population_sizes:
     value: see configs/*.yaml
     status: exploratory

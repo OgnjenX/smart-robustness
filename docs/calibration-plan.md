@@ -1527,3 +1527,14 @@ reconstructed or interpreted. Registration 584 fixes one identical full-sheet
 repeat that changes only stdout serialization. It emits bounded regional sums,
 per-cell order counts, and ranked peripheral deltas; all model and diagnostic
 state remain fixed.
+
+Artifacts 584--586 pass that bounded repeat and directly confirm the recurrent
+localization. Peripheral match excitation exceeds mismatch through relay AMPA
+(11882.13 versus 1680.78 gate-ms), layer-6II AMPA (2336.45 versus 505.51), and
+layer-6II NMDA (255.46 versus 44.77); no peripheral cell has mismatch-greater
+afferent integral. Yet 36 peripheral cells fire more in mismatch and the region
+emits 520 versus 492 events. Broad mismatch afferent recruitment is rejected.
+The next bounded effective reconstruction may cross the already tested
+persistent projection-008 scale 0.75 with modest projection-011 reductions at
+fixed T scale 0.1875, match-only first. This calibrates unresolved recurrent
+balance and is not source recovery.

@@ -9338,3 +9338,41 @@ def test_peripheral_trn_summary_repeat_changes_serialization_only() -> None:
     assert registration["required_event_identity"]["match"]["trn_events"] == 576
     assert registration["required_event_identity"]["mismatch"]["trn_events"] == 595
     assert "cannot be promoted" in registration["boundary"]
+
+
+def test_peripheral_trn_summary_confirms_recurrent_inversion() -> None:
+    result_path = (
+        ROOT / "docs/validation-results/figure7-peripheral-trn-summary-585.yaml"
+    )
+    result = yaml.safe_load(result_path.read_text())
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-peripheral-trn-summary-assessment-586.yaml"
+        ).read_text()
+    )
+
+    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment[
+        "result_sha256"
+    ]
+    assert all(result["figure6_gates"].values())
+    assert result["event_identity"] == {
+        "match": {"relay_events": 20, "trn_events": 576, "nonspecific_events": 4},
+        "mismatch": {"relay_events": 3, "trn_events": 595, "nonspecific_events": 7},
+    }
+    peripheral = result["region_summaries"]["peripheral"]
+    assert peripheral["mismatch"]["trn_events"] > peripheral["match"]["trn_events"]
+    for field in (
+        "relay_ampa_integral_ms",
+        "layer6ii_ampa_integral_ms",
+        "layer6ii_nmda_integral_ms",
+    ):
+        assert peripheral["match"][field] > peripheral["mismatch"][field]
+    for field in ("relay_ampa", "layer6ii_ampa", "layer6ii_nmda"):
+        assert result["peripheral_per_cell_order_counts"][field][
+            "mismatch_greater"
+        ] == 0
+    assert assessment["assessment"]["recurrent_trn_inversion_confirmed"]
+    assert assessment["assessment"]["broad_afferent_mismatch_excess_rejected"]
+    assert assessment["assessment"]["candidate_closed"]
+    assert not assessment["assessment"]["baseline_promoted"]

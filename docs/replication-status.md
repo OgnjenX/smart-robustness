@@ -3621,3 +3621,12 @@ transport limit. The missing middle is not reconstructed. Registration 584
 therefore repeats the identical model and all-cell monitors while emitting only
 predefined central/peripheral/whole sums, per-cell direction counts, and the 15
 largest peripheral event deltas with their afferent-drive deltas.
+
+Artifacts 584--586 complete that bounded repeat and close the afferent
+alternative. Across the peripheral 72 cells, match has much greater relay AMPA,
+layer-6II AMPA, and layer-6II NMDA integrals; no cell has mismatch-greater drive
+on any of those pathways. Nevertheless, mismatch produces 520 peripheral TRN
+events versus 492 in match, with 36 cells firing more. The inversion therefore
+emerges from recurrent/intrinsic TRN dynamics. Together with the projection-008
+and projection-011 ablations, this supports one bounded effective recurrent-GABA
+balance cross, explicitly labeled calibration rather than recovered SMART.

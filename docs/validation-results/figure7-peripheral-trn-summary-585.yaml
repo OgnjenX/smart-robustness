@@ -1,0 +1,86 @@
+schema_version: 1
+id: figure7-peripheral-trn-summary-585
+date: '2026-09-08'
+status: completed-read-only-full-sheet-trn-summary
+classification: fixed-persistent-full-sheet-trn-source-summary
+registration: docs/validation-results/figure7-peripheral-trn-summary-registration-584.yaml
+runtime_fingerprint: fa4ab9f0bf2bec4d6ad53cb6a91620047689b6839b146ed7d777d42350c2cdf5
+figure6_gates:
+  relay_active_indices: true
+  relay_events_per_active_index: true
+  relay_events: true
+  cortical_chain_complete: true
+  causal_learning_pair: true
+  top_down_horizontal_contrast: true
+event_identity:
+  match: {relay_events: 20, trn_events: 576, nonspecific_events: 4}
+  mismatch: {relay_events: 3, trn_events: 595, nonspecific_events: 7}
+region_summaries:
+  central:
+    match:
+      cell_count: 9
+      trn_events: 84
+      relay_ampa_integral_ms: 3373.780416027134
+      layer6ii_ampa_integral_ms: 897.2637588065395
+      layer6ii_nmda_integral_ms: 122.55261153044599
+    mismatch:
+      cell_count: 9
+      trn_events: 75
+      relay_ampa_integral_ms: 585.3922804753151
+      layer6ii_ampa_integral_ms: 297.8705922940383
+      layer6ii_nmda_integral_ms: 40.924359527203805
+  peripheral:
+    match:
+      cell_count: 72
+      trn_events: 492
+      relay_ampa_integral_ms: 11882.126373304398
+      layer6ii_ampa_integral_ms: 2336.449503867898
+      layer6ii_nmda_integral_ms: 255.45692055582813
+    mismatch:
+      cell_count: 72
+      trn_events: 520
+      relay_ampa_integral_ms: 1680.7831706136035
+      layer6ii_ampa_integral_ms: 505.5063614345706
+      layer6ii_nmda_integral_ms: 44.76622845781198
+  whole:
+    match:
+      cell_count: 81
+      trn_events: 576
+      relay_ampa_integral_ms: 15255.906789331531
+      layer6ii_ampa_integral_ms: 3233.713262674437
+      layer6ii_nmda_integral_ms: 378.00953208627413
+    mismatch:
+      cell_count: 81
+      trn_events: 595
+      relay_ampa_integral_ms: 2266.175451088919
+      layer6ii_ampa_integral_ms: 803.3769537286086
+      layer6ii_nmda_integral_ms: 85.69058798501584
+peripheral_per_cell_order_counts:
+  events: {match_greater: 12, equal: 24, mismatch_greater: 36}
+  relay_ampa: {match_greater: 72, equal: 0, mismatch_greater: 0}
+  layer6ii_ampa: {match_greater: 72, equal: 0, mismatch_greater: 0}
+  layer6ii_nmda: {match_greater: 64, equal: 8, mismatch_greater: 0}
+largest_peripheral_spike_excess:
+- {index: 18, mismatch_minus_match_trn_events: 2, mismatch_minus_match_relay_ampa_integral_ms: -121.59488708796717, mismatch_minus_match_layer6ii_ampa_integral_ms: -13.617892350749184, mismatch_minus_match_layer6ii_nmda_integral_ms: -0.796924607221769}
+- {index: 20, mismatch_minus_match_trn_events: 2, mismatch_minus_match_relay_ampa_integral_ms: -191.0737238721975, mismatch_minus_match_layer6ii_ampa_integral_ms: -37.55476699977291, mismatch_minus_match_layer6ii_nmda_integral_ms: -3.998585082932975}
+- {index: 21, mismatch_minus_match_trn_events: 2, mismatch_minus_match_relay_ampa_integral_ms: -229.3028805096148, mismatch_minus_match_layer6ii_ampa_integral_ms: -44.7827870402275, mismatch_minus_match_layer6ii_nmda_integral_ms: -4.498071382011309}
+- {index: 23, mismatch_minus_match_trn_events: 2, mismatch_minus_match_relay_ampa_integral_ms: -229.3028805096148, mismatch_minus_match_layer6ii_ampa_integral_ms: -44.7827870402275, mismatch_minus_match_layer6ii_nmda_integral_ms: -4.498071382011308}
+- {index: 24, mismatch_minus_match_trn_events: 2, mismatch_minus_match_relay_ampa_integral_ms: -191.0737238721975, mismatch_minus_match_layer6ii_ampa_integral_ms: -37.55476699977291, mismatch_minus_match_layer6ii_nmda_integral_ms: -3.998585082932975}
+- {index: 26, mismatch_minus_match_trn_events: 2, mismatch_minus_match_relay_ampa_integral_ms: -121.59488708796717, mismatch_minus_match_layer6ii_ampa_integral_ms: -13.617892350749184, mismatch_minus_match_layer6ii_nmda_integral_ms: -0.7969246072217689}
+- {index: 54, mismatch_minus_match_trn_events: 2, mismatch_minus_match_relay_ampa_integral_ms: -121.59488708796717, mismatch_minus_match_layer6ii_ampa_integral_ms: -13.617892350749184, mismatch_minus_match_layer6ii_nmda_integral_ms: -0.796924607221769}
+- {index: 56, mismatch_minus_match_trn_events: 2, mismatch_minus_match_relay_ampa_integral_ms: -191.0737238721975, mismatch_minus_match_layer6ii_ampa_integral_ms: -37.55476699977291, mismatch_minus_match_layer6ii_nmda_integral_ms: -3.998585082932975}
+- {index: 57, mismatch_minus_match_trn_events: 2, mismatch_minus_match_relay_ampa_integral_ms: -229.3028805096148, mismatch_minus_match_layer6ii_ampa_integral_ms: -44.7827870402275, mismatch_minus_match_layer6ii_nmda_integral_ms: -4.498071382011309}
+- {index: 59, mismatch_minus_match_trn_events: 2, mismatch_minus_match_relay_ampa_integral_ms: -229.3028805096148, mismatch_minus_match_layer6ii_ampa_integral_ms: -44.7827870402275, mismatch_minus_match_layer6ii_nmda_integral_ms: -4.498071382011308}
+- {index: 60, mismatch_minus_match_trn_events: 2, mismatch_minus_match_relay_ampa_integral_ms: -191.0737238721975, mismatch_minus_match_layer6ii_ampa_integral_ms: -37.55476699977291, mismatch_minus_match_layer6ii_nmda_integral_ms: -3.998585082932975}
+- {index: 62, mismatch_minus_match_trn_events: 2, mismatch_minus_match_relay_ampa_integral_ms: -121.59488708796717, mismatch_minus_match_layer6ii_ampa_integral_ms: -13.617892350749184, mismatch_minus_match_layer6ii_nmda_integral_ms: -0.7969246072217689}
+- {index: 3, mismatch_minus_match_trn_events: 1, mismatch_minus_match_relay_ampa_integral_ms: -66.37857445124644, mismatch_minus_match_layer6ii_ampa_integral_ms: -3.111662598930756, mismatch_minus_match_layer6ii_nmda_integral_ms: -0.03214444198432634}
+- {index: 4, mismatch_minus_match_trn_events: 1, mismatch_minus_match_relay_ampa_integral_ms: -70.41450786398836, mismatch_minus_match_layer6ii_ampa_integral_ms: -3.2099584029180646, mismatch_minus_match_layer6ii_nmda_integral_ms: -0.002224881287007187}
+- {index: 5, mismatch_minus_match_trn_events: 1, mismatch_minus_match_relay_ampa_integral_ms: -66.37857445124644, mismatch_minus_match_layer6ii_ampa_integral_ms: -3.111662598930756, mismatch_minus_match_layer6ii_nmda_integral_ms: -0.03214444198432634}
+nonspecific_trn_gaba_integral_ms:
+  match: 1110.2716079690626
+  mismatch: 1154.9256487298926
+model_or_protocol_change: false
+instrumentation_change_only: true
+candidate_reopened: false
+original_smart_reproduced: false
+baseline_promoted: false

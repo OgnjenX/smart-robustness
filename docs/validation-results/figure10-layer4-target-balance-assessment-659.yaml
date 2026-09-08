@@ -1,0 +1,88 @@
+schema_version: 1
+id: figure10-layer4-target-balance-assessment-659
+date: '2026-09-08'
+status: assessed-winner-balance-opposes-reset-alternative-failure-needs-complete-inputs
+registration: docs/validation-results/figure10-layer4-target-balance-registration-657.yaml
+result: docs/validation-results/figure10-layer4-target-balance-pair-658.yaml
+result_sha256: 2164271b610c919228fbd2509538e4677c954449060bb84211638e465ee5ac3d
+assessment:
+  first_run_exact_source_identity_reproduced: true
+  unchanged_output_recovery_exact_source_identity_reproduced: true
+  all_twenty_bins_reported_for_each_target_and_arm: true
+  winner_late_balance_direction_supports_reset: false
+  alternative_silence_explained_by_projection036: false
+  alternative_silence_fully_explained_by_projection038: false
+  complete_layer4_input_balance_required: true
+  parameter_selected: false
+  official_figure10_reset_reproduced: false
+  original_smart_reproduced: false
+  baseline_promoted: false
+winner_group_38_42:
+  full_mismatch:
+    projection036_inhibitory_magnitude_pA_ms_intact_control: [1392691.3249518543,
+      1428632.655657693]
+    projection036_ratio: 0.9748421467453489
+    projection038_excitation_pA_ms_intact_control: [1181.2039948099934,
+      1123.8828546262173]
+    projection038_ratio: 1.051002771283347
+    events_intact_control: [78, 76]
+  late_100_200_ms:
+    projection036_inhibitory_magnitude_pA_ms_intact_control: [597346.1290441522,
+      628082.4242184419]
+    projection036_ratio: 0.9510632777019089
+    projection038_excitation_pA_ms_intact_control: [590.3850819544816,
+      533.0939680971999]
+    projection038_ratio: 1.1074690716568674
+    events_intact_control: [39, 37]
+  wave_100_120_ms:
+    projection036_inhibitory_magnitude_pA_ms_intact_control: [118553.7455013277,
+      129190.64001480895]
+    projection036_ratio: 0.9176651302891452
+    projection038_excitation_pA_ms_intact_control: [113.00017080779926,
+      109.41452241494854]
+    projection038_ratio: 1.0327712292089744
+    events_intact_control: [7, 7]
+alternative_group_31_49:
+  full_mismatch:
+    projection036_inhibitory_magnitude_pA_ms_intact_control: [216909.24410648237,
+      392631.7142579459]
+    projection036_ratio: 0.5524496270415391
+    projection038_excitation_pA_ms_intact_control: [90.41063706758683,
+      211.5320140873161]
+    projection038_ratio: 0.4274087657968744
+    events_intact_control: [0, 16]
+  early_0_100_ms:
+    projection036_inhibitory_magnitude_pA_ms_intact_control: [115903.5810405999,
+      143313.7976300013]
+    projection036_ratio: 0.8087398628555821
+    projection038_excitation_pA_ms_intact_control: [45.6003831652178, 0.0]
+    events_intact_control: [0, 4]
+  wave_100_120_ms:
+    projection036_inhibitory_magnitude_pA_ms_intact_control: [21135.894026843154,
+      49542.062920221404]
+    projection036_ratio: 0.4266252307837628
+    projection038_excitation_pA_ms_intact_control: [2.4995238062830718e-06,
+      38.81077656463775]
+    projection038_ratio: 6.440282899570994e-08
+    events_intact_control: [0, 2]
+interpretation: >-
+  Both executions repeat every Artifact-649 population count and all fresh
+  Figure-6 gates exactly. Across winner cells 38--42, the intact late phase has
+  4.9% less projection-036 inhibition and 10.7% more projection-038 excitation
+  than control, followed by 39 versus 37 events. Both measured currents therefore
+  favor continued winner activity rather than reset. Alternatives 31 and 49 are
+  silent intact despite receiving 44.8% less total projection-036 inhibition
+  than control, so excessive off-surround inhibition cannot explain their
+  failure to release. They also receive 57.3% less projection-038 excitation;
+  however, the control alternatives already emit four early events while their
+  projection-038 current is zero, proving that this direct path is not the sole
+  release drive. The omitted relay projection 035 and recurrent projection 037
+  are required to close the target-level current balance. No parameter is
+  selected.
+next_gate: >-
+  Extend the same default-off target-resolved monitor to projection 035 relay
+  AMPA and projection 037 recurrent AMPA. Preregister one unchanged source-
+  control identity repeat covering all four layer-4 excitatory synaptic ports.
+  Determine the first complete-input difference that separates silent intact
+  alternatives from active control alternatives before authorizing any
+  effective transfer calibration.

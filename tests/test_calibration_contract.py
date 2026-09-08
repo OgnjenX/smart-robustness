@@ -9900,3 +9900,49 @@ def test_layer4_target_balance_audit_is_hash_pinned_and_read_only() -> None:
     assert registration["record_layer4_balance_diagnostics"]
     assert "unchanged source-control" in registration["boundary"]
     assert "No parameter selection" in registration["boundary"]
+
+
+def test_layer4_target_balance_localizes_complete_input_gap() -> None:
+    result_path = (
+        ROOT
+        / "docs/validation-results/figure10-layer4-target-balance-pair-658.yaml"
+    )
+    result = yaml.safe_load(result_path.read_text())
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-layer4-target-balance-assessment-659.yaml"
+        ).read_text()
+    )
+
+    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment[
+        "result_sha256"
+    ]
+    assert all(result["figure6_gates"].values())
+    assert result["source_identity"]["layer4_post_events"] == [78, 92]
+    assert result["source_identity"]["layer6i_post_events"] == [153, 76]
+    assert result["reset_gates"]["winner_suppression"] is False
+    assert result["reset_gates"]["alternative_release"] is False
+    for arm in ("intact", "disconnected_control"):
+        assert set(result["target_series"][arm]) == {
+            "31",
+            "38",
+            "39",
+            "40",
+            "41",
+            "42",
+            "49",
+        }
+        for series in result["target_series"][arm].values():
+            assert all(len(values) == 20 for values in series)
+    winner = assessment["winner_group_38_42"]["late_100_200_ms"]
+    assert winner["projection036_ratio"] == pytest.approx(0.9510632777019089)
+    assert winner["projection038_ratio"] == pytest.approx(1.1074690716568674)
+    alternatives = assessment["alternative_group_31_49"]["full_mismatch"]
+    assert alternatives["projection036_ratio"] == pytest.approx(0.5524496270415391)
+    assert alternatives["events_intact_control"] == [0, 16]
+    assert assessment["assessment"]["complete_layer4_input_balance_required"]
+    assert not assessment["assessment"]["parameter_selected"]
+    assert not assessment["assessment"]["official_figure10_reset_reproduced"]
+    assert not result["original_smart_reproduced"]
+    assert not result["baseline_promoted"]

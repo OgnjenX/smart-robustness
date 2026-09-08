@@ -1943,3 +1943,16 @@ projection-038 current, and layer-4 output into fixed 10-ms bins for cells 31,
 38--42, and 49. The endpoint returns to the source-control center-excluded
 Gaussian and must exactly repeat Artifact 649 before spatial interpretation.
 No parameter, topology, event rule, protocol, or reset score changes.
+
+Artifacts 658--659 complete the audit after an unchanged bounded-output
+recovery repeat. Both executions exactly reproduce every Artifact-649 count.
+For winner cells 38--42, intact late projection-036 inhibition is 4.9% weaker
+and projection-038 excitation 10.7% stronger than control, with 39 versus 37
+events; both measured directions oppose reset. Alternatives 31/49 remain
+silent intact despite 44.8% less total projection-036 inhibition than control,
+so excessive off-surround inhibition does not explain their silence. Their
+projection-038 excitation is also 57.3% lower, but control alternatives already
+emit four early events while that current is zero. Therefore neither measured
+path alone explains release. Next add the omitted projection-035 relay and
+projection-037 recurrent AMPA currents to the same passive target audit before
+opening any numerical calibration.

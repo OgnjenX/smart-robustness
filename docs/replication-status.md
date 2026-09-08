@@ -3760,3 +3760,13 @@ alternative cells 31/49 in 10-ms bins, separating projection-036 inhibition
 from projection-038 excitation and output. The diagnostic result has not yet
 run and cannot alter the model or reset score. Original SMART remains
 unreproduced and unfrozen.
+
+Artifacts 658--659 complete the target audit with exact source identity in the
+first run and unchanged compact-output recovery. The intact winner receives
+less late projection-036 inhibition and more projection-038 excitation than
+control, explaining why it persists rather than resets. The alternatives are
+silent intact even though their off-surround inhibition is much weaker; control
+alternatives also fire before receiving any projection-038 current. Thus the
+two measured paths cannot explain alternative release in isolation. A passive
+complete-port audit of relay projection 035 and recurrent projection 037 is
+required next. Original SMART remains unreproduced and unfrozen.

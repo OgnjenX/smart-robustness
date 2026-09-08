@@ -9541,3 +9541,56 @@ def test_mismatch_nonspecific_trace_compare_is_read_only_and_fixed() -> None:
     assert len(registration["added_readouts_only"]) == 6
     assert "cannot select a parameter" in registration["decision_rule"]
     assert "cannot reopen" in registration["boundary"]
+
+
+def test_mismatch_nonspecific_trace_compare_localizes_missing_event() -> None:
+    result_path = (
+        ROOT
+        / "docs/validation-results/figure7-mismatch-nonspecific-trace-compare-594.yaml"
+    )
+    result = yaml.safe_load(result_path.read_text())
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-mismatch-nonspecific-trace-compare-assessment-595.yaml"
+        ).read_text()
+    )
+
+    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment[
+        "result_sha256"
+    ]
+    assert len(result["outcomes"]) == 2
+    control, repaired = result["outcomes"]
+    assert all(control["figure6_gates"].values())
+    assert all(repaired["figure6_gates"].values())
+    assert control["mismatch_identity"] == {
+        "relay_events": 3,
+        "relay_active_indices": [40],
+        "trn_events": 595,
+        "nonspecific_events": 7,
+    }
+    assert repaired["mismatch_identity"] == {
+        "relay_events": 3,
+        "relay_active_indices": [40],
+        "trn_events": 608,
+        "nonspecific_events": 6,
+    }
+    assert (
+        repaired["nonspecific_trn_gaba"]["integral_ms"]
+        > control["nonspecific_trn_gaba"]["integral_ms"]
+    )
+    assert len(control["nonspecific_positive_detector_local_maxima_ms_mV"]) == 7
+    assert len(repaired["nonspecific_positive_detector_local_maxima_ms_mV"]) == 6
+    assert repaired["fourth_late_detector_peak"] is None
+    assert result["comparison"][
+        "missing_event_localized_to_stronger_inhibitory_envelope"
+    ]
+    assert result["comparison"][
+        "intrinsic_t_recovery_rejected_as_primary_difference"
+    ]
+    assert assessment["assessment"][
+        "missing_event_localized_to_inhibitory_envelope"
+    ]
+    assert not assessment["assessment"]["parameter_selected"]
+    assert not assessment["assessment"]["candidate_reopened"]
+    assert not assessment["assessment"]["baseline_promoted"]

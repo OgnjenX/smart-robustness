@@ -3667,3 +3667,13 @@ repeat its prior mismatch identity. Nonspecific local maxima, detector state
 transitions, source-separated currents/gates, and inhibitory integrals will test
 whether the missing seventh event is suppressed by the corrected TRN envelope
 or by intrinsic rebound timing. No parameter selection is permitted.
+
+Artifacts 593--595 complete the read-only comparison. Both arms pass fresh
+Figure 6 and exactly reproduce their prior mismatch event identities. Their
+direct input, layer-6II excitation, and dendritic T-current are nearly identical
+at the corresponding third late detector peak. The repaired arm instead has
+substantially stronger TRN inhibition in all three compartments and lacks the
+fourth late positive maximum that becomes the control's seventh spike. This
+localizes the one-event deficit to the inhibitory envelope, not to intrinsic
+calcium recovery. No parameter is selected, neither closed candidate is
+reopened, and original SMART remains unreproduced and unfrozen.

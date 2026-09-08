@@ -1577,3 +1577,15 @@ detector transitions, source-separated peak currents and gates, current ranges,
 and TRN GABA integrals. Exact identity is required before interpretation. The
 diagnostic cannot change parameters, reopen either candidate, or promote a
 baseline.
+
+Artifacts 593--595 complete the comparison and localize the missing event.
+Both independently learned arms pass Figure 6 and exactly repeat their archived
+mismatch identities. At the comparable third late detector maximum, dendritic
+T-type calcium, direct input, and layer-6II excitation are nearly unchanged,
+whereas the repaired arm receives stronger TRN GABA in soma and both dendrites.
+It never develops the control arm's fourth late positive detector maximum.
+Intrinsic T-current recovery is therefore rejected as the primary difference;
+the corrected inhibitory envelope suppresses the seventh event. This diagnostic
+selects no parameter and reopens neither candidate. Before any new screen, audit
+the source and prior calibration history of projections 047--049 under the new
+recurrent balance; do not retune the T current.

@@ -609,9 +609,9 @@ parameters:
     note: The pair repairs TRN event and effective-inhibition ordering while preserving relay selectivity and four-event match. Mismatch emits six rather than seven nonspecific events, so the sole survivor closes without adjustment and is not frozen.
   validation.figure7.mismatch_nonspecific_trace_compare:
     value: read-only comparison of archived seven-event control and six-event repaired-TRN mismatch
-    status: preregistered-awaiting-execution
-    source: Registration 593, authorized by Artifact 592
-    note: The comparison records detector maxima/transitions and source-separated nonspecific currents/gates after independent fresh learning. It may localize the missing event but cannot select a parameter or reopen either closed candidate.
+    status: completed-missing-event-localized-to-stronger-inhibitory-envelope
+    source: Artifacts 593--595, authorized by Artifact 592
+    note: Both fresh Figure 6 episodes and archived mismatch identities repeat. At the comparable third late detector peak, T-current, direct input, and layer-6II excitation are nearly equal, while TRN GABA is stronger in all three nonspecific compartments in the repaired arm. That arm lacks the fourth late positive maximum and seventh event. The result selects no parameter and both candidates remain closed.
   benchmark.population_sizes:
     value: see configs/*.yaml
     status: exploratory

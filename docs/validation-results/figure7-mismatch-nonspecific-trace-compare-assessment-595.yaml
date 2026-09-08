@@ -1,0 +1,52 @@
+schema_version: 1
+id: figure7-mismatch-nonspecific-trace-compare-assessment-595
+date: '2026-09-08'
+status: assessed-missing-event-localized-to-stronger-trn-envelope
+registration: docs/validation-results/figure7-mismatch-nonspecific-trace-compare-registration-593.yaml
+result: docs/validation-results/figure7-mismatch-nonspecific-trace-compare-594.yaml
+result_sha256: 5dda9bd52233bdde449516cfd8487e85db728034735653b1629710ec87910a11
+assessment:
+  both_fresh_figure6_passed: true
+  both_archived_mismatch_identities_reproduced: true
+  direct_input_difference_supported: false
+  layer6ii_excitation_difference_supported: false
+  intrinsic_t_current_difference_supported: false
+  stronger_repaired_arm_trn_inhibition_supported: true
+  missing_fourth_late_detector_maximum_confirmed: true
+  missing_event_localized_to_inhibitory_envelope: true
+  intrinsic_t_recovery_rejected_as_primary_cause: true
+  parameter_selected: false
+  candidate_reopened: false
+  repeat_or_adjustment_authorized: false
+  original_smart_reproduced: false
+  baseline_promoted: false
+quantitative_summary:
+  mismatch_identity_control: [3, 595, 7]
+  mismatch_identity_repaired: [3, 608, 6]
+  nonspecific_trn_gaba_integral_ms_control_repaired: [1154.92565, 1175.65871]
+  detector_threshold_upcrossings_control_repaired: [7, 6]
+  late_detector_maxima_count_control_repaired: [4, 3]
+  third_late_peak_proximal_t_calcium_pA_control_repaired: [1663.096, 1663.425]
+  third_late_peak_distal_t_calcium_pA_control_repaired: [1659.741, 1660.684]
+  third_late_peak_direct_input_pA_control_repaired: [-168.394, -167.345]
+  third_late_peak_layer6ii_excitation_pA_control_repaired: [17.598, 17.719]
+  third_late_peak_trn_gaba_soma_pA_control_repaired: [-1402.494, -1654.531]
+  third_late_peak_trn_gaba_proximal_pA_control_repaired: [-1226.717, -1447.512]
+  third_late_peak_trn_gaba_distal_pA_control_repaired: [-1212.039, -1427.161]
+interpretation: >-
+  Both independently learned arms repeat every registered Figure 6 and mismatch
+  identity gate. At the comparable third late detector maximum, dendritic
+  T-type calcium, direct input, and layer-6II excitation are nearly identical.
+  The repaired-TRN arm instead receives substantially stronger TRN GABA in all
+  three nonspecific compartments and never develops the control arm's fourth
+  late positive detector maximum. The missing seventh event is therefore best
+  localized to the corrected inhibitory envelope, not a primary failure of
+  intrinsic T-current recovery. This is a causal-routing diagnostic, not a
+  parameter fit; both candidates remain closed and unfrozen.
+next_gate: >-
+  Audit the source and prior calibration record for projections 047--049, the
+  TRN-to-nonspecific GABA transfer, under the newly repaired recurrent balance.
+  A new bounded calibration is admissible only if it is a genuinely distinct
+  interaction family justified by that source audit; otherwise retain the
+  six-event result as a documented reconstruction discrepancy. Do not tune the
+  nonspecific T current from this result.

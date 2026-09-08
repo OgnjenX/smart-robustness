@@ -1,0 +1,28 @@
+schema_version: 1
+id: figure10-layer4-target-balance-monitor-656
+date: '2026-09-08'
+status: implementation-ready-read-only-tests-pass
+classification: target-resolved-layer4-reset-balance-audit
+authorization: docs/validation-results/figure10-projection036-ring-assessment-655.yaml
+harness: src/smart_robustness/validation/figure10.py
+harness_sha256: 927dd94a24a5d6a8f25aa1d04160f35ffcbb341bd16a94547675949b8fb19aca
+runner: scripts/run_figure10_calibrated_reset_pair.py
+runner_sha256: 1d837d92be8824256dbc3f99e5ee12acacd406fe121ea994fa492960145abea1
+implementation:
+  selected_cells_only: true
+  recorded_variables:
+  - projection-036 inhibitory current
+  - projection-038 excitatory current
+  - layer-4 excitatory events
+  reduction: fixed 10-ms bins after simulation
+  default_behavior_changed: false
+verification:
+  pure_target_bin_reducer_test: pass
+  live_short_sector_integration_test: pass
+  focused_tests: 11-passed
+  lint: pass
+boundary: >-
+  The added output is default-off and reduces state variables already monitored
+  by the existing layer-4 balance diagnostic. It adds no synapse, state equation,
+  current, connection, event, schedule operation, stimulus, parameter, or score.
+  It cannot itself select a model change or promote a baseline.

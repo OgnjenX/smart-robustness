@@ -1936,3 +1936,10 @@ Consequently winner suppression and alternative release both fail. Close the
 parameter-free ring-topology route without radius or weight refinement. Next
 add target-resolved, read-only projection-036/038 balance for winner and
 alternative cells before authorizing any effective numerical family.
+
+Artifacts 656--657 implement and preregister that passive audit. The monitor
+reuses the existing layer-4 state recording and reduces projection-036 current,
+projection-038 current, and layer-4 output into fixed 10-ms bins for cells 31,
+38--42, and 49. The endpoint returns to the source-control center-excluded
+Gaussian and must exactly repeat Artifact 649 before spatial interpretation.
+No parameter, topology, event rule, protocol, or reset score changes.

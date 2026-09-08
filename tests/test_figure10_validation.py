@@ -12,6 +12,7 @@ from smart_robustness.validation.figure10 import (
     assess_figure10_reset,
     run_figure10_condition,
     summarize_layer4_balance_bins,
+    summarize_layer4_target_balance_bins,
     summarize_layer6i_selected_traces,
 )
 from smart_robustness.validation.layer6i_replay import run_layer6i_replay
@@ -133,6 +134,14 @@ def test_figure10_runner_requires_explicit_positive_protocol_values() -> None:
             reset_pathway_enabled=True,
             record_layer4_balance_diagnostics=True,
         )
+    with pytest.raises(ValueError, match="requires layer-4 balance diagnostics"):
+        run_figure10_condition(
+            top_down_current_pA=600,
+            pre_match_duration_ms=100,
+            mismatch_duration_ms=100,
+            reset_pathway_enabled=True,
+            record_layer4_target_balance_indices=(40,),
+        )
     with pytest.raises(ValueError, match="require layer-6I diagnostics"):
         run_figure10_condition(
             top_down_current_pA=600,
@@ -200,6 +209,7 @@ def test_figure10_condition_smoke_runs_persistent_two_phase_network() -> None:
     assert result.layer4i_mismatch_projection026_gate_integral_ms is None
     assert result.layer4e_mismatch_projection038_gate_integral_ms is None
     assert result.layer4_balance_bins == ()
+    assert result.layer4_target_balance_bins == ()
 
 
 def test_figure10_condition_captures_lossless_layer6i_replay(tmp_path) -> None:
@@ -238,6 +248,7 @@ def test_figure10_condition_records_layer4_balance_diagnostics() -> None:
         dt_ms=0.01,
         record_reset_chain_diagnostics=True,
         record_layer4_balance_diagnostics=True,
+        record_layer4_target_balance_indices=(40,),
         brian=brian,
     )
 
@@ -248,6 +259,8 @@ def test_figure10_condition_records_layer4_balance_diagnostics() -> None:
     assert len(result.layer4_balance_bins) == 1
     assert result.layer4_balance_bins[0].start_from_mismatch_ms == 0.0
     assert result.layer4_balance_bins[0].end_from_mismatch_ms == pytest.approx(0.02)
+    assert len(result.layer4_target_balance_bins) == 1
+    assert result.layer4_target_balance_bins[0].index == 40
 
 
 def test_selected_layer6i_trace_summary_preserves_peak_timing_and_threshold_gap() -> None:
@@ -325,3 +338,37 @@ def test_layer4_balance_summary_preserves_causal_bins() -> None:
     assert summaries[0].layer4_alternative_active_count == 1
     assert summaries[1].projection026_excitation_integral_pA_ms == pytest.approx(35.0)
     assert summaries[1].layer4_inhibitory_events == 1
+
+
+def test_layer4_target_balance_summary_preserves_cells_and_bins() -> None:
+    summaries = summarize_layer4_target_balance_bins(
+        target_indices=(1, 3),
+        mismatch_start_ms=100.0,
+        mismatch_duration_ms=20.0,
+        dt_ms=5.0,
+        bin_width_ms=10.0,
+        state_times_ms=brian.asarray([100.0, 105.0, 110.0, 115.0]),
+        projection036_current_pA_by_index=brian.asarray(
+            [[-1.0, -1.0, -1.0, -1.0], [-2.0, -4.0, -6.0, -8.0],
+             [-1.0, -1.0, -1.0, -1.0], [-3.0, -5.0, -7.0, -9.0]]
+        ),
+        projection038_current_pA_by_index=brian.asarray(
+            [[1.0, 1.0, 1.0, 1.0], [2.0, 4.0, 6.0, 8.0],
+             [1.0, 1.0, 1.0, 1.0], [3.0, 5.0, 7.0, 9.0]]
+        ),
+        layer4_spike_indices=brian.asarray([1, 3, 1]),
+        layer4_spike_times_ms=brian.asarray([101.0, 106.0, 111.0]),
+    )
+
+    assert [(item.start_from_mismatch_ms, item.index) for item in summaries] == [
+        (0.0, 1),
+        (0.0, 3),
+        (10.0, 1),
+        (10.0, 3),
+    ]
+    assert summaries[0].projection036_inhibition_integral_pA_ms == pytest.approx(-30.0)
+    assert summaries[1].projection038_excitation_integral_pA_ms == pytest.approx(40.0)
+    assert summaries[0].layer4_events == 1
+    assert summaries[1].layer4_events == 1
+    assert summaries[2].layer4_events == 1
+    assert summaries[3].layer4_events == 0

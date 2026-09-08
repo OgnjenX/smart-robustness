@@ -687,6 +687,11 @@ parameters:
     status: completed-reset-failed-family-closed
     source: SMART.nml projection 036, archived KInNeSS manual, and Artifacts 651--655
     note: Exact ring=true geometry is unrecovered. The default-off radial annulus affects only projection 036 and passes fresh Figure 6, but aggregate projection-036 inhibition is only 1.0002 times control while direct projection-038 excitation is 2.11 times control. Winner events rise to 72 versus 64 and both arms release the same two alternatives. The sole parameter-free alternative is rejected and closed. No weight/radius tuning or source-recovery claim is allowed.
+  diagnostics.figure10.layer4_target_resolved_balance:
+    value: 10-ms projection-036 inhibition, projection-038 excitation, and output-event bins for winner cells 38--42 and alternative cells 31/49
+    status: implemented-and-preregistered-before-execution
+    source: Artifacts 655--657; target identities from Artifact 649
+    note: The readout is default-off and returns to the center-excluded-Gaussian source control at projection-025 scale 8. Every Artifact-649 identity must repeat before interpretation. No model parameter or reset score is changed.
   benchmark.population_sizes:
     value: see configs/*.yaml
     status: exploratory

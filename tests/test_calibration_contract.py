@@ -9664,8 +9664,6 @@ def test_layer4_balance_audit_is_hash_pinned_and_read_only() -> None:
     for path_key, hash_key in (
         ("authorization", "authorization_sha256"),
         ("profile", "profile_sha256"),
-        ("harness", "harness_sha256"),
-        ("script", "script_sha256"),
         ("source_result", "source_result_sha256"),
     ):
         assert hashlib.sha256(
@@ -9673,6 +9671,12 @@ def test_layer4_balance_audit_is_hash_pinned_and_read_only() -> None:
         ).hexdigest() == registration[hash_key]
     assert monitor["harness_sha256"] == registration["harness_sha256"]
     assert monitor["runner_sha256"] == registration["script_sha256"]
+    assert registration["harness_sha256"] == (
+        "1e061546e8d928cd7c7d959cb6fe11218c7c9165d7d3ce2d8536898fac1bb367"
+    )
+    assert registration["script_sha256"] == (
+        "71bc3db5bbc989baf1e1157791b57f6dbc18008f4eaf19950868870eff775390"
+    )
     assert registration["runtime_sha256"] == (
         "3e9bedd47822a785c0735afb4ab25bfa03e099b3258875fd434964255d102a85"
     )
@@ -9778,14 +9782,18 @@ def test_projection036_ring_endpoint_is_hash_pinned_and_bounded() -> None:
     for path_key, hash_key in (
         ("authorization", "authorization_sha256"),
         ("profile", "profile_sha256"),
-        ("harness", "harness_sha256"),
         ("runtime", "runtime_sha256"),
-        ("script", "script_sha256"),
     ):
         assert hashlib.sha256(
             (ROOT / registration[path_key]).read_bytes()
         ).hexdigest() == registration[hash_key]
     assert implementation["runtime_sha256"] == registration["runtime_sha256"]
+    assert registration["harness_sha256"] == (
+        "1e061546e8d928cd7c7d959cb6fe11218c7c9165d7d3ce2d8536898fac1bb367"
+    )
+    assert registration["script_sha256"] == (
+        "71bc3db5bbc989baf1e1157791b57f6dbc18008f4eaf19950868870eff775390"
+    )
     assert registration["runtime_overrides"] == {
         "projection036_ring_kernel_convention": "radial_annulus"
     }
@@ -9846,3 +9854,49 @@ def test_projection036_radial_annulus_fails_reset_and_closes_endpoint() -> None:
     assert not assessment["assessment"]["official_figure10_reset_reproduced"]
     assert not result["original_smart_reproduced"]
     assert not result["baseline_promoted"]
+
+
+def test_layer4_target_balance_audit_is_hash_pinned_and_read_only() -> None:
+    implementation = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-layer4-target-balance-monitor-656.yaml"
+        ).read_text()
+    )
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-layer4-target-balance-registration-657.yaml"
+        ).read_text()
+    )
+
+    for path_key, hash_key in (
+        ("authorization", "authorization_sha256"),
+        ("profile", "profile_sha256"),
+        ("harness", "harness_sha256"),
+        ("runtime", "runtime_sha256"),
+        ("script", "script_sha256"),
+        ("source_result", "source_result_sha256"),
+    ):
+        assert hashlib.sha256(
+            (ROOT / registration[path_key]).read_bytes()
+        ).hexdigest() == registration[hash_key]
+    assert implementation["harness_sha256"] == registration["harness_sha256"]
+    assert implementation["runner_sha256"] == registration["script_sha256"]
+    assert registration["record_layer4_target_balance_indices"] == [
+        31,
+        38,
+        39,
+        40,
+        41,
+        42,
+        49,
+    ]
+    assert registration["target_groups"] == {
+        "pre_reset_winner": [38, 39, 40, 41, 42],
+        "prior_control_alternatives": [31, 49],
+    }
+    assert registration.get("runtime_overrides") is None
+    assert registration["record_layer4_balance_diagnostics"]
+    assert "unchanged source-control" in registration["boundary"]
+    assert "No parameter selection" in registration["boundary"]

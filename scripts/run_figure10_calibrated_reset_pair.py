@@ -167,6 +167,9 @@ def _condition_summary(result):
             result.layer4e_mismatch_projection038_current_peak_pA
         ),
         "layer4_balance_bins": [asdict(item) for item in result.layer4_balance_bins],
+        "layer4_target_balance_bins": [
+            asdict(item) for item in result.layer4_target_balance_bins
+        ],
     }
 
 
@@ -205,6 +208,7 @@ def _bounded_layer4_balance_summary(summary):
         "layer4e_mismatch_projection038_current_integral_pA_ms",
         "layer4e_mismatch_projection038_current_peak_pA",
         "layer4_balance_bins",
+        "layer4_target_balance_bins",
     )
     bounded = {key: summary[key] for key in keys}
     bounded["layer5_post_active_count"] = len(summary["layer5_post_active_indices"])
@@ -293,6 +297,10 @@ def main() -> None:
         ),
         "record_layer4_balance_diagnostics": bool(
             registration.get("record_layer4_balance_diagnostics", False)
+        ),
+        "record_layer4_target_balance_indices": tuple(
+            int(index)
+            for index in registration.get("record_layer4_target_balance_indices", ())
         ),
         "brian": brian,
     }

@@ -3753,3 +3753,10 @@ arms while direct projection-038 excitation doubles. The parameter-free ring
 route is closed without tuning. Original SMART remains unreproduced and
 unfrozen; the next admissible step is target-resolved, read-only 036/038 balance
 before any new effective parameter family.
+
+Artifacts 656--657 now add and preregister that target-resolved audit on the
+unchanged source-control model. It observes winner cells 38--42 and prior
+alternative cells 31/49 in 10-ms bins, separating projection-036 inhibition
+from projection-038 excitation and output. The diagnostic result has not yet
+run and cannot alter the model or reset score. Original SMART remains
+unreproduced and unfrozen.

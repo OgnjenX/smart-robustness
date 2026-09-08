@@ -171,6 +171,9 @@ def _condition_summary(result):
         "layer4_target_balance_bins": [
             asdict(item) for item in result.layer4_target_balance_bins
         ],
+        "layer4_target_timing_summaries": [
+            asdict(item) for item in result.layer4_target_timing_summaries
+        ],
     }
 
 
@@ -210,6 +213,7 @@ def _bounded_layer4_balance_summary(summary):
         "layer4e_mismatch_projection038_current_peak_pA",
         "layer4_balance_bins",
         "layer4_target_balance_bins",
+        "layer4_target_timing_summaries",
     )
     bounded = {key: summary[key] for key in keys}
     bounded["layer5_post_active_count"] = len(summary["layer5_post_active_indices"])
@@ -303,6 +307,20 @@ def main() -> None:
             int(index)
             for index in registration.get("record_layer4_target_balance_indices", ())
         ),
+        "record_layer4_target_timing_indices": tuple(
+            int(index)
+            for index in registration.get("record_layer4_target_timing_indices", ())
+        ),
+        "layer4_target_timing_window_ms": tuple(
+            float(value)
+            for value in registration.get("layer4_target_timing_window_ms", (65.0, 85.0))
+        ),
+        "layer4_target_timing_bin_width_ms": float(
+            registration.get("layer4_target_timing_bin_width_ms", 1.0)
+        ),
+        "layer4_target_timing_current_threshold_pA": float(
+            registration.get("layer4_target_timing_current_threshold_pA", 1e-9)
+        ),
         "brian": brian,
     }
     intact = run_figure10_condition(reset_pathway_enabled=True, **common)
@@ -314,6 +332,7 @@ def main() -> None:
     if output_mode in {
         "layer4_balance_bounded",
         "layer4_complete_target_bounded",
+        "layer4_target_timing_bounded",
     }:
         intact_summary = _bounded_layer4_balance_summary(intact_summary)
         control_summary = _bounded_layer4_balance_summary(control_summary)

@@ -14,6 +14,7 @@ from smart_robustness.validation.figure10 import (
     run_figure10_condition,
     summarize_layer4_balance_bins,
     summarize_layer4_target_balance_bins,
+    summarize_layer4_target_timing,
     summarize_layer6i_selected_traces,
 )
 from smart_robustness.validation.layer6i_replay import run_layer6i_replay
@@ -211,6 +212,7 @@ def test_figure10_condition_smoke_runs_persistent_two_phase_network() -> None:
     assert result.layer4e_mismatch_projection038_gate_integral_ms is None
     assert result.layer4_balance_bins == ()
     assert result.layer4_target_balance_bins == ()
+    assert result.layer4_target_timing_summaries == ()
 
 
 def test_figure10_condition_captures_lossless_layer6i_replay(tmp_path) -> None:
@@ -250,6 +252,9 @@ def test_figure10_condition_records_layer4_balance_diagnostics() -> None:
         record_reset_chain_diagnostics=True,
         record_layer4_balance_diagnostics=True,
         record_layer4_target_balance_indices=(40,),
+        record_layer4_target_timing_indices=(31,),
+        layer4_target_timing_window_ms=(0.0, 0.02),
+        layer4_target_timing_bin_width_ms=0.01,
         brian=brian,
     )
 
@@ -262,6 +267,9 @@ def test_figure10_condition_records_layer4_balance_diagnostics() -> None:
     assert result.layer4_balance_bins[0].end_from_mismatch_ms == pytest.approx(0.02)
     assert len(result.layer4_target_balance_bins) == 1
     assert result.layer4_target_balance_bins[0].index == 40
+    assert len(result.layer4_target_timing_summaries) == 1
+    assert result.layer4_target_timing_summaries[0].index == 31
+    assert len(result.layer4_target_timing_summaries[0].soma_voltage_max_mV) == 2
 
 
 def test_selected_layer6i_trace_summary_preserves_peak_timing_and_threshold_gap() -> None:
@@ -416,3 +424,33 @@ def test_compact_layer4_target_balance_summary_preserves_exact_arrays() -> None:
         [31.0, 61.0],
         [0, 1],
     ]
+
+
+def test_layer4_target_timing_preserves_current_onset_before_exact_spike() -> None:
+    summaries = summarize_layer4_target_timing(
+        target_indices=(1,),
+        mismatch_start_ms=100.0,
+        window_start_from_mismatch_ms=1.0,
+        window_end_from_mismatch_ms=5.0,
+        dt_ms=1.0,
+        bin_width_ms=1.0,
+        current_activity_threshold_pA=1e-9,
+        state_times_ms=brian.asarray([100.0, 101.0, 102.0, 103.0, 104.0, 105.0]),
+        soma_voltage_mV_by_index=brian.asarray(
+            [[-70.0] * 6, [-70.0, -68.0, -60.0, -50.0, -45.0, -55.0]]
+        ),
+        projection035_current_pA_by_index=brian.asarray([[0.0] * 6, [0, 1, 2, 3, 4, 5]]),
+        projection036_current_pA_by_index=brian.asarray([[0.0] * 6, [0, -1, -2, -3, -4, -5]]),
+        projection037_current_pA_by_index=brian.asarray([[0.0] * 6, [0, 0, 0.5, 1, 2, 3]]),
+        projection038_current_pA_by_index=brian.asarray([[0.0] * 6, [0, 4, 3, 2, 1, 0]]),
+        layer4_spike_indices=brian.asarray([1]),
+        layer4_spike_times_ms=brian.asarray([103.5]),
+    )
+
+    assert len(summaries) == 1
+    summary = summaries[0]
+    assert summary.bin_edges_from_mismatch_ms == (1.0, 2.0, 3.0, 4.0, 5.0)
+    assert summary.projection035_relay_excitation_integral_pA_ms == (1.0, 2.0, 3.0, 4.0)
+    assert summary.projection037_first_active_time_from_mismatch_ms == 2.0
+    assert summary.layer4_spike_times_from_mismatch_ms == (3.5,)
+    assert summary.soma_voltage_max_mV == (-68.0, -60.0, -50.0, -45.0)

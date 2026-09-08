@@ -1975,3 +1975,11 @@ whether recurrent current starts before or after the first spike, although its
 large later control-only total establishes positive-feedback amplification.
 Next preregister a read-only 65--85-ms, one-ms timing audit of voltage, events,
 and projections 035--038. No parameter is selected.
+
+Artifacts 664--665 implement and preregister that causal-order audit. For cells
+31 and 49, it stores one-ms projection-current integrals and somatic-voltage
+bounds, exact spike times, and projection-037 onset measured on the native
+0.01-ms grid using a fixed 1e-9-pA threshold. One unchanged source-control pair
+must repeat every Artifact-662 identity. The result may classify recurrent
+excitation as initiation or feedback amplification but cannot authorize or
+select a parameter.

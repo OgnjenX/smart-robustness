@@ -1,0 +1,36 @@
+schema_version: 1
+id: figure10-layer4-subbin-timing-monitor-664
+date: '2026-09-08'
+status: implementation-ready-read-only-one-ms-timing-tests-pass
+classification: target-resolved-layer4-causal-order-audit
+authorization: docs/validation-results/figure10-layer4-complete-input-assessment-663.yaml
+harness: src/smart_robustness/validation/figure10.py
+harness_sha256: ccd45605d8406b2eb7f5f41f63860b21f465283f10ee058895887186cfb0eb7f
+runner: scripts/run_figure10_calibrated_reset_pair.py
+runner_sha256: 836b050b9c3ecfd1e8c27d719bb093c0b8ea10966ed6a76355db37719c4d10f9
+implementation:
+  selected_cells: [31, 49]
+  window_from_mismatch_ms: [65.0, 85.0]
+  bin_width_ms: 1.0
+  native_state_sample_ms: 0.01
+  recurrent_current_activity_threshold_pA: 1.0e-9
+  recorded_per_cell:
+  - projection035_relay_excitation_integral_pA_ms
+  - projection036_inhibition_integral_pA_ms
+  - projection037_recurrent_excitation_integral_pA_ms
+  - projection038_excitation_integral_pA_ms
+  - soma_voltage_min_mV
+  - soma_voltage_max_mV
+  - exact_spike_times_from_mismatch_ms
+  - projection037_first_active_time_from_mismatch_ms
+  default_behavior_changed: false
+verification:
+  pure_timing_reducer_test: pass
+  live_short_sector_integration_test: pass
+  figure10_validation_tests: 13-passed
+  lint: pass
+boundary: >-
+  Recording and reduction are default-off and post hoc. The first recurrent-
+  current onset uses the native 0.01-ms samples and a preregistered 1e-9-pA
+  threshold. No equation, current, connection, event, schedule, stimulus,
+  parameter, protocol, or reset score is altered.

@@ -1,0 +1,68 @@
+schema_version: 1
+id: figure10-layer4-subbin-timing-registration-665
+date: '2026-09-08'
+status: registered-before-execution-read-only-causal-order-pair
+classification: figure10-source-control-layer4-subbin-timing-audit
+authorization: docs/validation-results/figure10-layer4-complete-input-assessment-663.yaml
+authorization_sha256: 5606b591ab3d1fa2e345ca801ffcc90ce8518d7df7efa587af3acc9031a11292
+implementation: docs/validation-results/figure10-layer4-subbin-timing-monitor-664.yaml
+profile: configs/calibration/figure7_learned_coincidence_effective_t_pair_v1.yaml
+profile_sha256: 4b6aa0bdf4fb844e428fb330f34970900cc8bc741183b2d8e6e73789cba0b30f
+harness: src/smart_robustness/validation/figure10.py
+harness_sha256: ccd45605d8406b2eb7f5f41f63860b21f465283f10ee058895887186cfb0eb7f
+runtime: src/smart_robustness/classic_sector.py
+runtime_sha256: ebdf48f0138803ab50b1dec2ef87817b4c537e4da490a088b9df6bdcb9d119a1
+script: scripts/run_figure10_calibrated_reset_pair.py
+script_sha256: 836b050b9c3ecfd1e8c27d719bb093c0b8ea10966ed6a76355db37719c4d10f9
+source_result: docs/validation-results/figure10-layer4-complete-input-pair-662.yaml
+source_result_sha256: e7ea49852c1a84d530603089583c0689d3ea1feae4fe27c6814b3d948452cc7f
+runtime_fingerprint: fa4ab9f0bf2bec4d6ad53cb6a91620047689b6839b146ed7d777d42350c2cdf5
+result_id: figure10-layer4-subbin-timing-pair-666
+result: docs/validation-results/figure10-layer4-subbin-timing-pair-666.yaml
+assessment: docs/validation-results/figure10-layer4-subbin-timing-assessment-667.yaml
+persistent_projection_scales:
+- {projection_id: modeldb112923.projection.008, scale: 0.75}
+- {projection_id: modeldb112923.projection.011, scale: 0.9375}
+- {projection_id: modeldb112923.projection.025, scale: 8.0}
+nonspecific_t_scale: 0.1875
+record_layer6i_diagnostics: false
+record_reset_chain_diagnostics: true
+record_layer4_balance_diagnostics: true
+record_layer4_target_timing_indices: [31, 49]
+layer4_target_timing_window_ms: [65.0, 85.0]
+layer4_target_timing_bin_width_ms: 1.0
+layer4_target_timing_current_threshold_pA: 1.0e-9
+output_mode: layer4_target_timing_bounded
+protocol:
+  pre_match_duration_ms: 100.0
+  mismatch_duration_ms: 200.0
+  total_duration_ms: 300.0
+  dt_ms: 0.01
+  top_down_current_pA: 800.0
+  top_down_current_mode: until_cued_cell_first_event
+  comparator: {transform: top_k_binary, source_index: 40, target_count: 5}
+required_source_identity:
+  figure6_all_gates: true
+  intact_control_layer4_pre_events: [39, 39]
+  intact_control_layer4_post_events: [78, 92]
+  intact_control_nonspecific_post_events: [18, 13]
+  intact_control_layer5_post_events: [285, 140]
+  intact_control_layer6i_post_events: [153, 76]
+  intact_control_layer4_inhibitory_post_events: [218, 232]
+  reset_gates:
+    pre_reset_winner: true
+    reset_chain: true
+    winner_suppression: false
+    alternative_release: false
+decision_rule: >-
+  Interpret only after exact source-identity and fresh Figure-6 repetition.
+  For each arm and both symmetric alternatives, compare the native-sample
+  projection-037 onset with exact spike time, then inspect the preceding one-ms
+  relay, inhibitory, layer-6I, and voltage bins. Classify projection 037 as an
+  initiator only if its current begins before the first alternative spike.
+  Otherwise classify it as feedback amplification. Do not select a parameter.
+boundary: >-
+  Execute one unchanged source-control scale-8 pair with passive timing
+  readouts. Do not change or fit topology, weights, kinetics, intrinsic
+  parameters, event rule, protocol, comparator, duration, or score. No
+  parameter selection, original-SMART claim, promotion, or freeze is authorized.

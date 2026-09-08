@@ -9969,9 +9969,7 @@ def test_layer4_complete_input_audit_is_hash_pinned_and_read_only() -> None:
     for path_key, hash_key in (
         ("authorization", "authorization_sha256"),
         ("profile", "profile_sha256"),
-        ("harness", "harness_sha256"),
         ("runtime", "runtime_sha256"),
-        ("script", "script_sha256"),
         ("source_result", "source_result_sha256"),
     ):
         assert hashlib.sha256(
@@ -9979,6 +9977,12 @@ def test_layer4_complete_input_audit_is_hash_pinned_and_read_only() -> None:
         ).hexdigest() == registration[hash_key]
     assert implementation["harness_sha256"] == registration["harness_sha256"]
     assert implementation["runner_sha256"] == registration["script_sha256"]
+    assert registration["harness_sha256"] == (
+        "eaba419ebab808f8540a17928882cd070eca376e8664ca75b7a28716cd3eb093"
+    )
+    assert registration["script_sha256"] == (
+        "f59d35c19f56cba6df148f4f2cb35a5b071e6daea3ab7c216bf4895da0218e52"
+    )
     assert [item["projection_id"] for item in implementation["target_inputs"]] == [
         "modeldb112923.projection.035",
         "modeldb112923.projection.036",
@@ -10050,3 +10054,40 @@ def test_layer4_complete_input_result_localizes_first_divergence() -> None:
     assert not assessment["assessment"]["parameter_selected"]
     assert not result["original_smart_reproduced"]
     assert not result["baseline_promoted"]
+
+
+def test_layer4_subbin_timing_audit_is_hash_pinned_and_read_only() -> None:
+    implementation = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-layer4-subbin-timing-monitor-664.yaml"
+        ).read_text()
+    )
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-layer4-subbin-timing-registration-665.yaml"
+        ).read_text()
+    )
+
+    for path_key, hash_key in (
+        ("authorization", "authorization_sha256"),
+        ("profile", "profile_sha256"),
+        ("harness", "harness_sha256"),
+        ("runtime", "runtime_sha256"),
+        ("script", "script_sha256"),
+        ("source_result", "source_result_sha256"),
+    ):
+        assert hashlib.sha256(
+            (ROOT / registration[path_key]).read_bytes()
+        ).hexdigest() == registration[hash_key]
+    assert implementation["harness_sha256"] == registration["harness_sha256"]
+    assert implementation["runner_sha256"] == registration["script_sha256"]
+    assert registration["record_layer4_target_timing_indices"] == [31, 49]
+    assert registration["layer4_target_timing_window_ms"] == [65.0, 85.0]
+    assert registration["layer4_target_timing_bin_width_ms"] == 1.0
+    assert registration["layer4_target_timing_current_threshold_pA"] == 1e-9
+    assert registration["output_mode"] == "layer4_target_timing_bounded"
+    assert registration.get("runtime_overrides") is None
+    assert "Do not select a parameter" in registration["decision_rule"]
+    assert "No parameter selection" in registration["boundary"]

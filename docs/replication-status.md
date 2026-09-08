@@ -3785,3 +3785,8 @@ cannot determine whether it initiates or follows the first event. A passive
 one-ms timing audit around 65--85 ms is therefore required before any new
 parameter family can be authorized. Original SMART remains unreproduced and
 unfrozen.
+
+Artifacts 664--665 now provide and preregister that passive timing audit. It
+preserves exact alternative spike times and native-sample recurrent-current
+onset, plus one-ms voltage and all four input-current summaries. The registered
+pair has not yet run. Original SMART remains unreproduced and unfrozen.

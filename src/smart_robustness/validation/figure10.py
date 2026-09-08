@@ -10,6 +10,7 @@ from __future__ import annotations
 
 from collections.abc import Mapping
 from dataclasses import dataclass
+from itertools import pairwise
 from pathlib import Path
 
 import numpy as np
@@ -106,6 +107,24 @@ class Figure10Layer4TargetBalanceBin:
 
 
 @dataclass(frozen=True, slots=True)
+class Figure10Layer4TargetTimingSummary:
+    """One-ms causal-order summary for one layer-4 excitatory cell."""
+
+    index: int
+    window_start_from_mismatch_ms: float
+    window_end_from_mismatch_ms: float
+    bin_edges_from_mismatch_ms: tuple[float, ...]
+    projection035_relay_excitation_integral_pA_ms: tuple[float, ...]
+    projection036_inhibition_integral_pA_ms: tuple[float, ...]
+    projection037_recurrent_excitation_integral_pA_ms: tuple[float, ...]
+    projection038_excitation_integral_pA_ms: tuple[float, ...]
+    soma_voltage_min_mV: tuple[float, ...]
+    soma_voltage_max_mV: tuple[float, ...]
+    layer4_spike_times_from_mismatch_ms: tuple[float, ...]
+    projection037_first_active_time_from_mismatch_ms: float | None
+
+
+@dataclass(frozen=True, slots=True)
 class Figure10ConditionResult:
     """Spike evidence from one persistent pre-reset then mismatch episode."""
 
@@ -150,6 +169,9 @@ class Figure10ConditionResult:
     layer4e_mismatch_projection038_current_peak_pA: float | None = None
     layer4_balance_bins: tuple[Figure10Layer4BalanceBin, ...] = ()
     layer4_target_balance_bins: tuple[Figure10Layer4TargetBalanceBin, ...] = ()
+    layer4_target_timing_summaries: tuple[
+        Figure10Layer4TargetTimingSummary, ...
+    ] = ()
 
     def __post_init__(self) -> None:
         if self.pre_match_duration_ms <= 0 or self.mismatch_duration_ms <= 0:
@@ -580,6 +602,119 @@ def compact_layer4_target_balance_summary(summary: dict) -> dict:
     return summary
 
 
+def summarize_layer4_target_timing(
+    *,
+    target_indices: tuple[int, ...],
+    mismatch_start_ms: float,
+    window_start_from_mismatch_ms: float,
+    window_end_from_mismatch_ms: float,
+    dt_ms: float,
+    bin_width_ms: float,
+    current_activity_threshold_pA: float,
+    state_times_ms: np.ndarray,
+    soma_voltage_mV_by_index: np.ndarray,
+    projection035_current_pA_by_index: np.ndarray,
+    projection036_current_pA_by_index: np.ndarray,
+    projection037_current_pA_by_index: np.ndarray,
+    projection038_current_pA_by_index: np.ndarray,
+    layer4_spike_indices: np.ndarray,
+    layer4_spike_times_ms: np.ndarray,
+) -> tuple[Figure10Layer4TargetTimingSummary, ...]:
+    """Reduce a focal trace while preserving sub-bin event/current ordering."""
+
+    if dt_ms <= 0 or bin_width_ms <= 0 or current_activity_threshold_pA < 0:
+        raise ValueError("layer-4 target timing values are invalid")
+    if window_start_from_mismatch_ms < 0 or (
+        window_end_from_mismatch_ms <= window_start_from_mismatch_ms
+    ):
+        raise ValueError("layer-4 target timing window is invalid")
+    if len(set(target_indices)) != len(target_indices):
+        raise ValueError("layer-4 target timing indices must be unique")
+    times = np.asarray(state_times_ms, dtype=float)
+    matrices = tuple(
+        np.asarray(value, dtype=float)
+        for value in (
+            soma_voltage_mV_by_index,
+            projection035_current_pA_by_index,
+            projection036_current_pA_by_index,
+            projection037_current_pA_by_index,
+            projection038_current_pA_by_index,
+        )
+    )
+    voltage, current035, current036, current037, current038 = matrices
+    if times.ndim != 1 or voltage.ndim != 2 or any(
+        value.shape != voltage.shape for value in matrices
+    ):
+        raise ValueError("layer-4 target timing arrays must be matching matrices")
+    if voltage.shape[1] != times.size:
+        raise ValueError("layer-4 target timing arrays must match the time grid")
+    if any(index < 0 or index >= voltage.shape[0] for index in target_indices):
+        raise ValueError("layer-4 target timing index is outside the state matrix")
+    spike_indices = np.asarray(layer4_spike_indices, dtype=int)
+    spike_times = np.asarray(layer4_spike_times_ms, dtype=float)
+    if spike_indices.shape != spike_times.shape:
+        raise ValueError("layer-4 target timing spike indices and times must match")
+
+    absolute_start = mismatch_start_ms + window_start_from_mismatch_ms
+    absolute_end = mismatch_start_ms + window_end_from_mismatch_ms
+    trace_window = (times >= absolute_start) & (times < absolute_end)
+    trace_times = times[trace_window]
+    if trace_times.size == 0:
+        raise ValueError("layer-4 target timing window contains no state samples")
+    edges = [window_start_from_mismatch_ms]
+    while edges[-1] < window_end_from_mismatch_ms - dt_ms / 2:
+        edges.append(min(edges[-1] + bin_width_ms, window_end_from_mismatch_ms))
+
+    summaries: list[Figure10Layer4TargetTimingSummary] = []
+    for index in target_indices:
+        current_series = (current035[index], current036[index], current037[index], current038[index])
+        integrals = [[] for _ in current_series]
+        voltage_min: list[float] = []
+        voltage_max: list[float] = []
+        for start, end in pairwise(edges):
+            window = (
+                (times >= mismatch_start_ms + start)
+                & (times < mismatch_start_ms + end)
+            )
+            if not np.any(window):
+                raise ValueError("layer-4 target timing bin contains no state samples")
+            for values, output in zip(current_series, integrals, strict=True):
+                output.append(float(np.sum(values[window]) * dt_ms))
+            voltage_min.append(float(np.min(voltage[index, window])))
+            voltage_max.append(float(np.max(voltage[index, window])))
+        active = np.flatnonzero(
+            np.abs(current037[index, trace_window]) > current_activity_threshold_pA
+        )
+        target_spikes = spike_times[
+            (spike_indices == index)
+            & (spike_times >= absolute_start)
+            & (spike_times < absolute_end)
+        ]
+        summaries.append(
+            Figure10Layer4TargetTimingSummary(
+                index=index,
+                window_start_from_mismatch_ms=window_start_from_mismatch_ms,
+                window_end_from_mismatch_ms=window_end_from_mismatch_ms,
+                bin_edges_from_mismatch_ms=tuple(float(value) for value in edges),
+                projection035_relay_excitation_integral_pA_ms=tuple(integrals[0]),
+                projection036_inhibition_integral_pA_ms=tuple(integrals[1]),
+                projection037_recurrent_excitation_integral_pA_ms=tuple(integrals[2]),
+                projection038_excitation_integral_pA_ms=tuple(integrals[3]),
+                soma_voltage_min_mV=tuple(voltage_min),
+                soma_voltage_max_mV=tuple(voltage_max),
+                layer4_spike_times_from_mismatch_ms=tuple(
+                    float(value - mismatch_start_ms) for value in target_spikes
+                ),
+                projection037_first_active_time_from_mismatch_ms=(
+                    None
+                    if active.size == 0
+                    else float(trace_times[int(active[0])] - mismatch_start_ms)
+                ),
+            )
+        )
+    return tuple(summaries)
+
+
 def run_figure10_condition(
     *,
     top_down_current_pA: float,
@@ -598,6 +733,10 @@ def run_figure10_condition(
     record_reset_chain_diagnostics: bool = False,
     record_layer4_balance_diagnostics: bool = False,
     record_layer4_target_balance_indices: tuple[int, ...] = (),
+    record_layer4_target_timing_indices: tuple[int, ...] = (),
+    layer4_target_timing_window_ms: tuple[float, float] = (65.0, 85.0),
+    layer4_target_timing_bin_width_ms: float = 1.0,
+    layer4_target_timing_current_threshold_pA: float = 1e-9,
     conventions=None,
     dt_ms: float = 0.01,
     cpp_standalone_directory: str | Path | None = None,
@@ -657,6 +796,31 @@ def run_figure10_condition(
         raise ValueError("layer-4 target balance index must be between 0 and 80")
     if record_layer4_target_balance_indices and not record_layer4_balance_diagnostics:
         raise ValueError("layer-4 target balance requires layer-4 balance diagnostics")
+    if not isinstance(record_layer4_target_timing_indices, tuple) or any(
+        isinstance(index, bool) or not isinstance(index, int)
+        for index in record_layer4_target_timing_indices
+    ):
+        raise TypeError("layer-4 target timing indices must be a tuple of integers")
+    if len(set(record_layer4_target_timing_indices)) != len(
+        record_layer4_target_timing_indices
+    ):
+        raise ValueError("layer-4 target timing indices must be unique")
+    if any(index < 0 or index >= 81 for index in record_layer4_target_timing_indices):
+        raise ValueError("layer-4 target timing index must be between 0 and 80")
+    if record_layer4_target_timing_indices and not record_layer4_balance_diagnostics:
+        raise ValueError("layer-4 target timing requires layer-4 balance diagnostics")
+    if record_layer4_target_timing_indices and (
+        not isinstance(layer4_target_timing_window_ms, tuple)
+        or len(layer4_target_timing_window_ms) != 2
+        or layer4_target_timing_window_ms[0] < 0
+        or layer4_target_timing_window_ms[1] <= layer4_target_timing_window_ms[0]
+        or layer4_target_timing_window_ms[1] > mismatch_duration_ms
+    ):
+        raise ValueError("layer-4 target timing window must lie within mismatch")
+    if layer4_target_timing_bin_width_ms <= 0:
+        raise ValueError("layer-4 target timing bin width must be positive")
+    if layer4_target_timing_current_threshold_pA < 0:
+        raise ValueError("layer-4 target timing current threshold cannot be negative")
     current_mode = TopDownCurrentMode(top_down_current_mode)
     if current_mode is TopDownCurrentMode.UNTIL_CUED_CELL_EVENT_LIMIT:
         raise ValueError("Figure 10 does not define an event-count-limited cue")
@@ -781,6 +945,9 @@ def run_figure10_condition(
             layer4e_variables.extend(("port_003_gate", "i_port_003"))
         if record_layer4_target_balance_indices:
             layer4e_variables.extend(("i_port_000", "i_port_002"))
+        if record_layer4_target_timing_indices:
+            layer4e_variables.extend(("i_port_000", "i_port_002", "v_soma"))
+        layer4e_variables = list(dict.fromkeys(layer4e_variables))
         layer4e_inhibitory_state = brian.StateMonitor(
             sector.populations["layer4_excitatory_v1"].group,
             tuple(layer4e_variables),
@@ -1018,6 +1185,7 @@ def run_figure10_condition(
     projection038_gate = projection038_current = projection038_trace = None
     layer4_balance_bins: tuple[Figure10Layer4BalanceBin, ...] = ()
     layer4_target_balance_bins: tuple[Figure10Layer4TargetBalanceBin, ...] = ()
+    layer4_target_timing_summaries: tuple[Figure10Layer4TargetTimingSummary, ...] = ()
     if record_layer4_balance_diagnostics:
         projection038_gate, projection038_current, projection038_trace = (
             _single_projection_summary(layer4e_inhibitory_state, "port_003")
@@ -1073,6 +1241,37 @@ def run_figure10_condition(
                 projection038_current_pA_by_index=np.asarray(
                     layer4e_inhibitory_state.i_port_003 / brian.pA
                 )[:, mismatch_window],
+                layer4_spike_indices=np.asarray(layer4.i),
+                layer4_spike_times_ms=np.asarray(layer4.t / brian.ms),
+            )
+        if record_layer4_target_timing_indices:
+            state_times_ms = np.asarray(layer4e_inhibitory_state.t / brian.ms)
+            layer4_target_timing_summaries = summarize_layer4_target_timing(
+                target_indices=record_layer4_target_timing_indices,
+                mismatch_start_ms=pre_match_duration_ms,
+                window_start_from_mismatch_ms=float(layer4_target_timing_window_ms[0]),
+                window_end_from_mismatch_ms=float(layer4_target_timing_window_ms[1]),
+                dt_ms=dt_ms,
+                bin_width_ms=layer4_target_timing_bin_width_ms,
+                current_activity_threshold_pA=(
+                    layer4_target_timing_current_threshold_pA
+                ),
+                state_times_ms=state_times_ms,
+                soma_voltage_mV_by_index=np.asarray(
+                    layer4e_inhibitory_state.v_soma / brian.mV
+                ),
+                projection035_current_pA_by_index=np.asarray(
+                    layer4e_inhibitory_state.i_port_000 / brian.pA
+                ),
+                projection036_current_pA_by_index=np.asarray(
+                    layer4e_inhibitory_state.i_port_001 / brian.pA
+                ),
+                projection037_current_pA_by_index=np.asarray(
+                    layer4e_inhibitory_state.i_port_002 / brian.pA
+                ),
+                projection038_current_pA_by_index=np.asarray(
+                    layer4e_inhibitory_state.i_port_003 / brian.pA
+                ),
                 layer4_spike_indices=np.asarray(layer4.i),
                 layer4_spike_times_ms=np.asarray(layer4.t / brian.ms),
             )
@@ -1139,4 +1338,5 @@ def run_figure10_condition(
         ),
         layer4_balance_bins=layer4_balance_bins,
         layer4_target_balance_bins=layer4_target_balance_bins,
+        layer4_target_timing_summaries=layer4_target_timing_summaries,
     )

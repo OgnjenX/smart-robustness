@@ -10601,6 +10601,74 @@ def test_layer4i_source_phase_file_rerun_is_hash_pinned_and_passive() -> None:
     assert "No original-SMART claim" in registration["boundary"]
 
 
+def test_layer4i_source_phase_file_pair_is_exact_and_left_censored() -> None:
+    result_path = (
+        ROOT
+        / "docs/validation-results/figure10-layer4i-source-phase-file-pair-694.yaml"
+    )
+    result = yaml.safe_load(result_path.read_text())
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-layer4i-source-phase-file-assessment-695.yaml"
+        ).read_text()
+    )
+
+    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment[
+        "result_sha256"
+    ]
+    assert all(result["figure6_gates"].values())
+    assert result["source_identity"]["layer4_post_events"] == [78, 92]
+    assert result["arrival_identity"]["intact_first_source_set"] == [38, 42]
+    assert result["arrival_identity"]["control_first_source_set"] == [40]
+    assert result["trace_contract"]["samples_per_source"] == 61
+    assert result["trace_contract"]["intact"]["sha256"] == (
+        "79e24d69d2aeefb76cd53bdd05c662a0060073537c40ae02c0d39eca6f927024"
+    )
+    assert result["trace_contract"]["disconnected_control"]["sha256"] == (
+        "12f0bf5e1bc2ccbac5aab4b030a4ab71ab3166572eec94d0699212a19cb753bf"
+    )
+    endpoint = result["left_endpoint_evidence"]["soma_voltage_mV"]
+    assert min(endpoint["intact_cells_38_40_42"]) > 0
+    assert min(endpoint["control_cells_38_40_42"]) > 0
+    verdict = assessment["assessment"]
+    assert verdict["exact_registered_population_identity"]
+    assert verdict["exact_registered_arrival_identity"]
+    assert verdict["window_left_censored"]
+    assert not verdict["input_path_selected_as_initiator"]
+    assert not verdict["parameter_selected"]
+    assert not result["original_smart_reproduced"]
+    assert not result["baseline_promoted"]
+
+
+def test_layer4i_source_phase_wide_trace_is_hash_pinned_and_passive() -> None:
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-layer4i-source-phase-wide-registration-696.yaml"
+        ).read_text()
+    )
+
+    for path_key, hash_key in (
+        ("profile", "profile_sha256"),
+        ("harness", "harness_sha256"),
+        ("runtime", "runtime_sha256"),
+        ("script", "script_sha256"),
+        ("source_result", "source_result_sha256"),
+        ("prior_assessment", "prior_assessment_sha256"),
+    ):
+        assert hashlib.sha256(
+            (ROOT / registration[path_key]).read_bytes()
+        ).hexdigest() == registration[hash_key]
+    assert registration["record_layer4_inhibitory_trace_indices"] == [38, 40, 42]
+    assert registration["layer4_inhibitory_trace_window_ms"] == [73.5, 75.6]
+    assert registration["persistent_projection_delays"] == []
+    assert registration["output_mode"] == "layer4_source_trace_files"
+    assert "voltage-dependent" in registration["decision_rule"]
+    assert "Do not fit or select a parameter" in registration["decision_rule"]
+    assert "No original-SMART claim" in registration["boundary"]
+
+
 def test_projection036_source_arrival_result_localizes_phase_not_topology() -> None:
     result_path = (
         ROOT

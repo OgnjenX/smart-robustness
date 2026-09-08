@@ -1,0 +1,40 @@
+schema_version: 1
+id: figure10-layer4i-source-phase-file-assessment-695
+date: '2026-09-08'
+status: assessed-exact-pair-window-left-censored
+registration: docs/validation-results/figure10-layer4i-source-phase-file-registration-693.yaml
+result: docs/validation-results/figure10-layer4i-source-phase-file-pair-694.yaml
+result_sha256: ec2242100c07431bc50e099d4838651fbc0024c34ae731500d452004503fb040
+assessment:
+  all_fresh_figure6_gates_pass: true
+  exact_registered_population_identity: true
+  exact_registered_arrival_identity: true
+  intact_trace_hash_verified: true
+  control_trace_hash_verified: true
+  focal_cells_already_in_action_potential_at_window_start: true
+  causal_onset_within_window: false
+  window_left_censored: true
+  input_path_selected_as_initiator: false
+  parameter_selected: false
+  official_figure10_reset_reproduced: false
+  original_smart_reproduced: false
+  baseline_promoted: false
+interpretation: >-
+  The compact rerun exactly reproduces every registered population and
+  projection-036 arrival identity, and both saved trace hashes verify. At the
+  75.0-ms left endpoint all focal cells already have strongly positive soma
+  and detector voltage (30.07--43.43 mV), placing them inside action-potential
+  trajectories that began before the trace. Several input gates also already
+  differ. The observed 75.0--75.6-ms currents are therefore consequences or
+  continuations of an earlier phase split and cannot be ranked causally as its
+  initiator.
+closure: >-
+  Accept the trace recovery and classify the registered window as
+  left-censored. Do not select projection 026, 027, 028, 029, or 030; do not
+  open a parameter family; keep all executable defaults and closed families.
+next_gate: >-
+  Run one separately preregistered passive extension of the same focal trace
+  from 73.5 through 75.6 ms. Require exact population and arrival identity plus
+  valid hashed files. Locate the earliest departure in gate variables before
+  membrane divergence and spike onset; if divergence is still left-censored,
+  extend again without fitting. No behavior or score change is authorized.

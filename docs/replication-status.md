@@ -2849,6 +2849,18 @@ only the three focal cells monitored and each arm saved as a hashed compressed
 trace. The recovery pair has not yet run; original SMART remains unreproduced
 and unfrozen.
 
+Artifacts 694--695 complete the recovery with exact registered identities and
+verified intact/control trace hashes. At 75.0 ms all three focal inhibitory
+cells are already in an action potential, with positive soma voltage from
++30.07 to +43.43 mV, while several input gates already differ. The causal onset
+is therefore left-censored; none of projections 026--030 is selected as the
+initiator. Figure 10 and baseline freezing remain failed. A wider passive
+73.5--75.6-ms trace is required next.
+
+Registration 696 preregisters that wider trace with no model change. The pair
+has not yet run; all source and arrival identities plus both file hashes remain
+mandatory, and original SMART remains unreproduced and unfrozen.
+
 Artifacts 535--537 perform the permitted match-only effective T-conductance
 screen on that fixed replay trace. The full preregistered grid from zero to the
 paper density is finite and was executed without interpolation. Scale 0.1875,

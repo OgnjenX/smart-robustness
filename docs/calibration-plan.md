@@ -2105,3 +2105,16 @@ evidence-capture rerun using a focal three-row monitor, one hashed compressed
 trace per arm, and compact console metadata. Its additional decision boundary
 classifies the 75.0-ms start as left-censored if the focal cells are already on
 different action-potential trajectories there.
+
+Artifacts 694--695 complete the recovery pair with exact population and
+arrival identity and two verified trace hashes. All focal somata are already
+between +30.07 and +43.43 mV at 75.0 ms, so the window begins inside their
+action potentials; multiple gates also already differ. The audit is formally
+left-censored and cannot identify an initiating input. No parameter family is
+opened. Extend the same passive, hashed trace to 73.5--75.6 ms next.
+
+Registration 696 fixes that extension before execution. It changes only the
+trace start to 73.5 ms, preserves the same three cells, variables, hashed-file
+capture, source-control dynamics, and identity gates, and gives presynaptic gate
+ordering priority over voltage-dependent currents. A difference already
+present at 73.5 ms remains left-censored and cannot select a parameter.

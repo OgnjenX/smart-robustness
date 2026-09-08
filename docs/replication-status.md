@@ -3728,3 +3728,10 @@ nearly unchanged, but layer-6I and layer-4 event counts remain exactly equal.
 The failure is therefore not layer-5 event/transmitter transfer; it is masking
 or saturation at layer 6I, or ineffective downstream timing/resource state.
 Figure 10 and baseline freezing remain failed.
+
+Artifact 608 extends the passive monitor through the complete serialized reset
+route: layer-6I event/resource state, projection 026 into layer-4 inhibitory
+cells, and projection 036 into layer-4 excitatory cells. Registration 609
+requires exact repetition of Artifact 606 before identifying the first stage
+that loses the intact/control difference. Layer-6I epsilon-1 depletion and
+400-ms recovery are measured as fixed source values, not calibration knobs.

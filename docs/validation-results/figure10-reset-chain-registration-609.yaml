@@ -1,0 +1,49 @@
+schema_version: 1
+id: figure10-reset-chain-registration-609
+date: '2026-09-08'
+status: registered-before-execution-read-only-complete-reset-chain
+classification: fixed-figure10-downstream-reset-chain-localization
+profile: configs/calibration/figure7_learned_coincidence_effective_t_pair_v1.yaml
+profile_sha256: 4b6aa0bdf4fb844e428fb330f34970900cc8bc741183b2d8e6e73789cba0b30f
+harness: src/smart_robustness/validation/figure10.py
+harness_sha256: baa4c943652b752f04d1a451c3edb0ea068acf967f25b8f52f81b4a8f72900fb
+script: scripts/run_figure10_calibrated_reset_pair.py
+script_sha256: 74fe4b138a698e87976dcb0ed57faf2eea971d8cdd6dc9fb18586cffd09f598a
+runtime_fingerprint: fa4ab9f0bf2bec4d6ad53cb6a91620047689b6839b146ed7d777d42350c2cdf5
+authorization: docs/validation-results/figure10-layer6i-transfer-assessment-607.yaml
+monitor_evidence: docs/validation-results/figure10-reset-chain-monitor-608.yaml
+prior_identity: docs/validation-results/figure10-layer6i-transfer-pair-606.yaml
+prior_identity_sha256: 25241642d5ce5dcac5e2c50772a04333bdd41c665dfd8196f1c3c8a73f6cc73a
+result_id: figure10-reset-chain-pair-610
+result: docs/validation-results/figure10-reset-chain-pair-610.yaml
+assessment: docs/validation-results/figure10-reset-chain-assessment-611.yaml
+persistent_projection_scales:
+- {projection_id: modeldb112923.projection.008, scale: 0.75}
+- {projection_id: modeldb112923.projection.011, scale: 0.9375}
+nonspecific_t_scale: 0.1875
+record_layer6i_diagnostics: true
+record_reset_chain_diagnostics: true
+protocol:
+  pre_match_duration_ms: 100.0
+  mismatch_duration_ms: 100.0
+  dt_ms: 0.01
+  top_down_current_pA: 800.0
+  top_down_current_mode: until_cued_cell_first_event
+  comparator: {transform: top_k_binary, source_index: 40, target_count: 5}
+required_identity:
+  each_arm_pre_layer4_events: 39
+  each_arm_pre_layer4_indices: [38, 39, 40, 41, 42]
+  each_arm_nonspecific_pre_post: [4, 7]
+  intact_control_layer5_post: [70, 55]
+  intact_control_layer6i_post: [30, 30]
+  intact_control_layer4_post: [43, 43]
+decision_rule: >-
+  Interpret only after complete prior identity and finite readouts repeat.
+  Compare exact layer-6I events, transmitter samples, projection-026 transfer,
+  layer-4 inhibitory events, and projection-036 inhibition in order. Localize
+  the earliest stage at which the intact/control difference disappears. The
+  audit cannot select or alter a parameter.
+boundary: >-
+  No model or score changes. Do not alter layer-6I depletion/recovery,
+  projections 025/026/036, AHP/ACh, phase timing, or the comparator. Neither
+  Figure 7 nor Figure 10 is reopened or promoted by this diagnostic.

@@ -1653,3 +1653,11 @@ drive changes only slightly, yet layer-6I remains 30 events and layer-4 remains
 its event/resource timing prevents effective downstream transmission. Next
 record exact layer-6I event timing, source transmitter, and projection-026
 drive to layer-4 inhibitory cells without changing depletion or any weight.
+
+Artifact 608 adds the remaining default-off reset-chain observations: exact
+layer-6I events and transmitter, projection-026 drive and layer-4 inhibitory
+events, then projection-036 inhibition of layer-4 excitatory cells. Registration
+609 fixes one unchanged intact/control repeat and locates the earliest point at
+which their difference disappears. The archived layer-6I resource parameters
+(epsilon 1, 400-ms recovery) are observed but not altered. No weight, AHP/ACh,
+timing, comparator, or score may change.

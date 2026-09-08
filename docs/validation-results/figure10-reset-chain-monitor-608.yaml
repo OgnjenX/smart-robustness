@@ -1,0 +1,33 @@
+schema_version: 1
+id: figure10-reset-chain-monitor-608
+date: '2026-09-08'
+status: implementation-ready-tests-pass
+classification: read-only-complete-reset-chain-localization
+harness: src/smart_robustness/validation/figure10.py
+harness_sha256: baa4c943652b752f04d1a451c3edb0ea068acf967f25b8f52f81b4a8f72900fb
+runner: scripts/run_figure10_calibrated_reset_pair.py
+runner_sha256: 74fe4b138a698e87976dcb0ed57faf2eea971d8cdd6dc9fb18586cffd09f598a
+source_path:
+- {projection_id: modeldb112923.projection.017, route: nonspecific-thalamus-to-layer5-AMPA}
+- {projection_id: modeldb112923.projection.018, route: nonspecific-thalamus-to-layer5-NMDA}
+- {projection_id: modeldb112923.projection.025, route: layer5-to-layer6I-AMPA}
+- {projection_id: modeldb112923.projection.026, route: layer6I-to-layer4-inhibitory-AMPA}
+- {projection_id: modeldb112923.projection.036, route: layer4-inhibitory-to-layer4-excitatory-GABA}
+added_readouts:
+- exact layer-6I mismatch event indices and times
+- nearest pre-reset-stage layer-6I transmitter sample at each mismatch event
+- layer-4 inhibitory mismatch event count and active indices
+- projection-026 mismatch gate integral, current integral, and peak
+- projection-036 mismatch gate integral, current integral, and inhibitory-current trough
+source_resource:
+  population: layer6i_excitatory_v1
+  depletion_epsilon: 1.0
+  recovery_ms: 400.0
+  status: archived ModelDB value and verified discrete depletion rule
+verification:
+  command: .venv/bin/pytest -q tests/test_figure10_validation.py
+  result: 6 passed
+  lint: pass
+boundary: >-
+  All monitors are default-off. They change no equations, parameters,
+  connectivity, stimuli, event handling, or score.

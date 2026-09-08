@@ -110,6 +110,14 @@ def test_figure10_runner_requires_explicit_positive_protocol_values() -> None:
             reset_pathway_enabled=True,
             record_layer6i_diagnostics=1,
         )
+    with pytest.raises(TypeError, match="reset-chain diagnostics"):
+        run_figure10_condition(
+            top_down_current_pA=600,
+            pre_match_duration_ms=100,
+            mismatch_duration_ms=100,
+            reset_pathway_enabled=True,
+            record_reset_chain_diagnostics=1,
+        )
     with pytest.raises(ValueError, match="top_down_current"):
         run_figure10_condition(
             top_down_current_pA=0,
@@ -134,3 +142,5 @@ def test_figure10_condition_smoke_runs_persistent_two_phase_network() -> None:
     assert result.learned_state_provenance == "paper-constrained-figure6c-reference"
     assert result.top_down_current_mode == "sustained_epoch"
     assert result.layer6i_mismatch_gate_integral_ms_by_projection == ()
+    assert result.layer6i_mismatch_event_transmitter_samples == ()
+    assert result.layer4i_mismatch_projection026_gate_integral_ms is None

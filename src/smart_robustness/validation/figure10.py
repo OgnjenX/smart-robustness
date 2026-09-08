@@ -44,7 +44,10 @@ class Figure10ConditionResult:
     layer4_spike_times_ms: tuple[float, ...]
     nonspecific_spike_times_ms: tuple[float, ...] = ()
     layer5_spike_times_ms: tuple[float, ...] = ()
+    layer6i_spike_indices: tuple[int, ...] = ()
     layer6i_spike_times_ms: tuple[float, ...] = ()
+    layer4_inhibitory_spike_indices: tuple[int, ...] = ()
+    layer4_inhibitory_spike_times_ms: tuple[float, ...] = ()
     convention_fingerprint: str | None = None
     learned_state_provenance: str | None = None
     comparator_target_count: int | None = None
@@ -52,12 +55,27 @@ class Figure10ConditionResult:
     layer6i_mismatch_gate_integral_ms_by_projection: tuple[tuple[str, float], ...] = ()
     layer6i_mismatch_current_integral_pA_ms_by_projection: tuple[tuple[str, float], ...] = ()
     layer6i_mismatch_current_peak_pA_by_projection: tuple[tuple[str, float], ...] = ()
+    layer6i_mismatch_event_transmitter_samples: tuple[tuple[int, float, float], ...] = ()
+    layer4i_mismatch_projection026_gate_integral_ms: float | None = None
+    layer4i_mismatch_projection026_current_integral_pA_ms: float | None = None
+    layer4i_mismatch_projection026_current_peak_pA: float | None = None
+    layer4e_mismatch_projection036_gate_integral_ms: float | None = None
+    layer4e_mismatch_projection036_current_integral_pA_ms: float | None = None
+    layer4e_mismatch_projection036_current_trough_pA: float | None = None
 
     def __post_init__(self) -> None:
         if self.pre_match_duration_ms <= 0 or self.mismatch_duration_ms <= 0:
             raise ValueError("Figure 10 phase durations must be positive")
         if len(self.layer4_spike_indices) != len(self.layer4_spike_times_ms):
             raise ValueError("layer-4 spike indices and times must have equal length")
+        if self.layer6i_spike_indices and len(self.layer6i_spike_indices) != len(
+            self.layer6i_spike_times_ms
+        ):
+            raise ValueError("layer-6I spike indices and times must have equal length")
+        if self.layer4_inhibitory_spike_indices and len(
+            self.layer4_inhibitory_spike_indices
+        ) != len(self.layer4_inhibitory_spike_times_ms):
+            raise ValueError("layer-4 inhibitory spike indices and times must have equal length")
 
     def layer4_counts(self, *, after_mismatch: bool) -> np.ndarray:
         indices = np.asarray(self.layer4_spike_indices, dtype=int)
@@ -173,6 +191,7 @@ def run_figure10_condition(
     comparator_source_index: int = 40,
     top_down_current_mode: TopDownCurrentMode | str = (TopDownCurrentMode.SUSTAINED_EPOCH),
     record_layer6i_diagnostics: bool = False,
+    record_reset_chain_diagnostics: bool = False,
     conventions=None,
     dt_ms: float = 0.01,
     cpp_standalone_directory: str | Path | None = None,
@@ -190,6 +209,8 @@ def run_figure10_condition(
         raise ValueError("top_down_current_pA must be positive")
     if not isinstance(record_layer6i_diagnostics, bool):
         raise TypeError("layer-6I diagnostics flag must be boolean")
+    if not isinstance(record_reset_chain_diagnostics, bool):
+        raise TypeError("reset-chain diagnostics flag must be boolean")
     current_mode = TopDownCurrentMode(top_down_current_mode)
     if current_mode is TopDownCurrentMode.UNTIL_CUED_CELL_EVENT_LIMIT:
         raise ValueError("Figure 10 does not define an event-count-limited cue")
@@ -247,7 +268,19 @@ def run_figure10_condition(
     nonspecific = brian.SpikeMonitor(sector.populations["thalamic_nonspecific"].group)
     layer5 = brian.SpikeMonitor(sector.populations["layer5_excitatory_v1"].group)
     layer6i = brian.SpikeMonitor(sector.populations["layer6i_excitatory_v1"].group)
+    layer4_inhibitory = None
+    if record_reset_chain_diagnostics:
+        layer4_inhibitory = brian.SpikeMonitor(
+            sector.populations["layer4_inhibitory_v1"].group,
+            name=(
+                "figure10_intact_layer4_inhibitory_spikes"
+                if reset_pathway_enabled
+                else "figure10_control_layer4_inhibitory_spikes"
+            ),
+        )
     sector.network.add(layer4, nonspecific, layer5, layer6i)
+    if layer4_inhibitory is not None:
+        sector.network.add(layer4_inhibitory)
     layer6i_state = None
     if record_layer6i_diagnostics:
         layer6i_state = brian.StateMonitor(
@@ -268,6 +301,43 @@ def run_figure10_condition(
             ),
         )
         sector.network.add(layer6i_state)
+    layer6i_transmitter_state = None
+    layer4i_state = None
+    layer4e_inhibitory_state = None
+    if record_reset_chain_diagnostics:
+        layer6i_transmitter_state = brian.StateMonitor(
+            sector.populations["layer6i_excitatory_v1"].group,
+            "transmitter",
+            record=True,
+            when="thresholds",
+            order=0,
+            name=(
+                "figure10_intact_layer6i_transmitter"
+                if reset_pathway_enabled
+                else "figure10_control_layer6i_transmitter"
+            ),
+        )
+        layer4i_state = brian.StateMonitor(
+            sector.populations["layer4_inhibitory_v1"].group,
+            ("port_000_gate", "i_port_000"),
+            record=True,
+            name=(
+                "figure10_intact_layer4i_projection026"
+                if reset_pathway_enabled
+                else "figure10_control_layer4i_projection026"
+            ),
+        )
+        layer4e_inhibitory_state = brian.StateMonitor(
+            sector.populations["layer4_excitatory_v1"].group,
+            ("port_001_gate", "i_port_001"),
+            record=True,
+            name=(
+                "figure10_intact_layer4e_projection036"
+                if reset_pathway_enabled
+                else "figure10_control_layer4e_projection036"
+            ),
+        )
+        sector.network.add(layer6i_transmitter_state, layer4i_state, layer4e_inhibitory_state)
     match = ClassicMatchMismatchCue(
         condition=MatchCondition.MATCH,
         top_down_current_pA=top_down_current_pA,
@@ -345,6 +415,48 @@ def run_figure10_condition(
             (projection_id, float(np.max(trace))) for projection_id, trace in current_traces.items()
         )
 
+    transmitter_samples: tuple[tuple[int, float, float], ...] = ()
+    if layer6i_transmitter_state is not None:
+        transmitter_times_ms = np.asarray(layer6i_transmitter_state.t / brian.ms)
+        transmitter_values = np.asarray(layer6i_transmitter_state.transmitter)
+        transmitter_samples = tuple(
+            (
+                int(index),
+                float(time_ms),
+                float(
+                    transmitter_values[
+                        int(index),
+                        int(np.argmin(np.abs(transmitter_times_ms - float(time_ms)))),
+                    ]
+                ),
+            )
+            for index, time_ms in zip(layer6i.i, layer6i.t / brian.ms, strict=True)
+            if float(time_ms) >= pre_match_duration_ms
+        )
+
+    def _single_projection_summary(state, port):
+        if state is None:
+            return None, None, None
+        state_times_ms = np.asarray(state.t / brian.ms)
+        window = state_times_ms >= pre_match_duration_ms
+        mismatch_times_ms = state_times_ms[window]
+        gate_trace = np.sum(np.asarray(getattr(state, f"{port}_gate"))[:, window], axis=0)
+        current_trace = np.sum(
+            np.asarray(getattr(state, f"i_{port}") / brian.pA)[:, window], axis=0
+        )
+        return (
+            float(np.trapz(gate_trace, mismatch_times_ms)),
+            float(np.trapz(current_trace, mismatch_times_ms)),
+            current_trace,
+        )
+
+    projection026_gate, projection026_current, projection026_trace = _single_projection_summary(
+        layer4i_state, "port_000"
+    )
+    projection036_gate, projection036_current, projection036_trace = _single_projection_summary(
+        layer4e_inhibitory_state, "port_001"
+    )
+
     return Figure10ConditionResult(
         pre_match_duration_ms=pre_match_duration_ms,
         mismatch_duration_ms=mismatch_duration_ms,
@@ -355,7 +467,18 @@ def run_figure10_condition(
             float(value) for value in np.asarray(nonspecific.t / brian.ms)
         ),
         layer5_spike_times_ms=tuple(float(value) for value in np.asarray(layer5.t / brian.ms)),
+        layer6i_spike_indices=tuple(int(value) for value in np.asarray(layer6i.i)),
         layer6i_spike_times_ms=tuple(float(value) for value in np.asarray(layer6i.t / brian.ms)),
+        layer4_inhibitory_spike_indices=(
+            ()
+            if layer4_inhibitory is None
+            else tuple(int(value) for value in np.asarray(layer4_inhibitory.i))
+        ),
+        layer4_inhibitory_spike_times_ms=(
+            ()
+            if layer4_inhibitory is None
+            else tuple(float(value) for value in np.asarray(layer4_inhibitory.t / brian.ms))
+        ),
         convention_fingerprint=conventions.fingerprint,
         learned_state_provenance=learned_state_provenance,
         comparator_target_count=comparator_top_k_targets,
@@ -363,4 +486,15 @@ def run_figure10_condition(
         layer6i_mismatch_gate_integral_ms_by_projection=gate_integrals,
         layer6i_mismatch_current_integral_pA_ms_by_projection=current_integrals,
         layer6i_mismatch_current_peak_pA_by_projection=current_peaks,
+        layer6i_mismatch_event_transmitter_samples=transmitter_samples,
+        layer4i_mismatch_projection026_gate_integral_ms=projection026_gate,
+        layer4i_mismatch_projection026_current_integral_pA_ms=projection026_current,
+        layer4i_mismatch_projection026_current_peak_pA=(
+            None if projection026_trace is None else float(np.max(projection026_trace))
+        ),
+        layer4e_mismatch_projection036_gate_integral_ms=projection036_gate,
+        layer4e_mismatch_projection036_current_integral_pA_ms=projection036_current,
+        layer4e_mismatch_projection036_current_trough_pA=(
+            None if projection036_trace is None else float(np.min(projection036_trace))
+        ),
     )

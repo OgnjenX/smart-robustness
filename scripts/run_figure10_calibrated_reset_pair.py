@@ -29,6 +29,15 @@ def _condition_summary(result):
 
     pre_layer4 = result.layer4_counts(after_mismatch=False)
     post_layer4 = result.layer4_counts(after_mismatch=True)
+    layer4i_post_events = [
+        [int(index), float(time_ms)]
+        for index, time_ms in zip(
+            result.layer4_inhibitory_spike_indices,
+            result.layer4_inhibitory_spike_times_ms,
+            strict=True,
+        )
+        if time_ms >= split
+    ]
     return {
         "reset_pathway_enabled": result.reset_pathway_enabled,
         "layer4_pre_events": int(pre_layer4.sum()),
@@ -41,6 +50,23 @@ def _condition_summary(result):
         "layer5_post_events": phase_count(result.layer5_spike_times_ms, post=True),
         "layer6i_pre_events": phase_count(result.layer6i_spike_times_ms, post=False),
         "layer6i_post_events": phase_count(result.layer6i_spike_times_ms, post=True),
+        "layer6i_mismatch_events": [
+            [int(index), float(time_ms)]
+            for index, time_ms in zip(
+                result.layer6i_spike_indices,
+                result.layer6i_spike_times_ms,
+                strict=True,
+            )
+            if time_ms >= split
+        ],
+        "layer6i_mismatch_event_transmitter_samples": [
+            [int(index), float(time_ms), float(transmitter)]
+            for index, time_ms, transmitter in (result.layer6i_mismatch_event_transmitter_samples)
+        ],
+        "layer4_inhibitory_post_events": len(layer4i_post_events),
+        "layer4_inhibitory_post_active_indices": sorted(
+            {index for index, _ in layer4i_post_events}
+        ),
         "layer6i_mismatch_gate_integral_ms_by_projection": dict(
             result.layer6i_mismatch_gate_integral_ms_by_projection
         ),
@@ -49,6 +75,24 @@ def _condition_summary(result):
         ),
         "layer6i_mismatch_current_peak_pA_by_projection": dict(
             result.layer6i_mismatch_current_peak_pA_by_projection
+        ),
+        "layer4i_mismatch_projection026_gate_integral_ms": (
+            result.layer4i_mismatch_projection026_gate_integral_ms
+        ),
+        "layer4i_mismatch_projection026_current_integral_pA_ms": (
+            result.layer4i_mismatch_projection026_current_integral_pA_ms
+        ),
+        "layer4i_mismatch_projection026_current_peak_pA": (
+            result.layer4i_mismatch_projection026_current_peak_pA
+        ),
+        "layer4e_mismatch_projection036_gate_integral_ms": (
+            result.layer4e_mismatch_projection036_gate_integral_ms
+        ),
+        "layer4e_mismatch_projection036_current_integral_pA_ms": (
+            result.layer4e_mismatch_projection036_current_integral_pA_ms
+        ),
+        "layer4e_mismatch_projection036_current_trough_pA": (
+            result.layer4e_mismatch_projection036_current_trough_pA
         ),
     }
 
@@ -120,6 +164,9 @@ def main() -> None:
         "conventions": conventions,
         "dt_ms": float(protocol["dt_ms"]),
         "record_layer6i_diagnostics": bool(registration.get("record_layer6i_diagnostics", False)),
+        "record_reset_chain_diagnostics": bool(
+            registration.get("record_reset_chain_diagnostics", False)
+        ),
         "brian": brian,
     }
     intact = run_figure10_condition(reset_pathway_enabled=True, **common)

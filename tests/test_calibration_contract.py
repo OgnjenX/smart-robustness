@@ -8743,12 +8743,6 @@ def test_figure10_layer6i_transfer_audit_is_hash_pinned_and_read_only() -> None:
     assert hashlib.sha256((ROOT / registration["profile"]).read_bytes()).hexdigest() == registration[
         "profile_sha256"
     ]
-    assert hashlib.sha256((ROOT / registration["harness"]).read_bytes()).hexdigest() == registration[
-        "harness_sha256"
-    ]
-    assert hashlib.sha256((ROOT / registration["script"]).read_bytes()).hexdigest() == registration[
-        "script_sha256"
-    ]
     assert hashlib.sha256(prior_path.read_bytes()).hexdigest() == registration[
         "prior_identity_sha256"
     ]
@@ -8794,3 +8788,44 @@ def test_figure10_layer6i_transfer_localizes_masking_after_input() -> None:
     assert assessment["assessment"]["layer5_transmitter_transfer_failure_rejected"]
     assert not assessment["assessment"]["parameter_selected"]
     assert not assessment["assessment"]["baseline_promoted"]
+
+
+def test_figure10_complete_reset_chain_audit_is_hash_pinned_and_read_only() -> None:
+    monitor = yaml.safe_load(
+        (
+            ROOT / "docs/validation-results/figure10-reset-chain-monitor-608.yaml"
+        ).read_text()
+    )
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-reset-chain-registration-609.yaml"
+        ).read_text()
+    )
+    prior_path = ROOT / registration["prior_identity"]
+
+    assert hashlib.sha256((ROOT / registration["profile"]).read_bytes()).hexdigest() == registration[
+        "profile_sha256"
+    ]
+    assert hashlib.sha256((ROOT / registration["harness"]).read_bytes()).hexdigest() == registration[
+        "harness_sha256"
+    ]
+    assert hashlib.sha256((ROOT / registration["script"]).read_bytes()).hexdigest() == registration[
+        "script_sha256"
+    ]
+    assert hashlib.sha256(prior_path.read_bytes()).hexdigest() == registration[
+        "prior_identity_sha256"
+    ]
+    assert monitor["harness_sha256"] == registration["harness_sha256"]
+    assert monitor["runner_sha256"] == registration["script_sha256"]
+    assert registration["record_layer6i_diagnostics"]
+    assert registration["record_reset_chain_diagnostics"]
+    assert [item["projection_id"] for item in monitor["source_path"]] == [
+        "modeldb112923.projection.017",
+        "modeldb112923.projection.018",
+        "modeldb112923.projection.025",
+        "modeldb112923.projection.026",
+        "modeldb112923.projection.036",
+    ]
+    assert "cannot select or alter a parameter" in registration["decision_rule"]
+    assert "Neither Figure 7 nor Figure 10 is reopened" in registration["boundary"]

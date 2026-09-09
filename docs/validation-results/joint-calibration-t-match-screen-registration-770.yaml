@@ -1,0 +1,48 @@
+schema_version: 1
+id: joint-calibration-t-match-screen-registration-770
+date: '2026-09-09'
+status: registered-before-execution-stage1-match-only-grid
+classification: explicit-joint-calibration-stage1-match-screen
+methodology: docs/validation-results/joint-calibrated-reconstruction-methodology-769.yaml
+methodology_sha256: e86a05dd709ae06e7ce9f7fc54fb74a86b1b623311ce05ac75ba54d2b7bd5ae7
+profile: configs/calibration/figure6_7_10_projection025_source_control_v1.yaml
+profile_sha256: b2028a35666cb31645e91a741b00440b46a508558c5db8361404c2264041ffdf
+script: scripts/run_joint_calibration_t_match_screen.py
+script_sha256: 7d00e5af9aa6f29db380b02c036f054a0db2c6e1e9ebd1564edd55d4770643d2
+projection036_harness: src/smart_robustness/validation/figure10_search_cycle_spread.py
+projection036_harness_sha256: 2658161a8ddff80e918e6d8250553e155eac73c1286a36314ec7e7716c8faa7f
+base_runtime_fingerprint: fbcc1dc2ac7db8442ce1ff17b71a1d04582c32e817370c700c69ec3caa9fbe4e
+result_id: joint-calibration-t-match-screen-771
+result: docs/validation-results/joint-calibration-t-match-screen-771.yaml
+assessment: docs/validation-results/joint-calibration-t-match-screen-assessment-772.yaml
+fixed_endpoint:
+  projection025_scale: 1.0
+  projection036_spread_convention: variance
+  projection008_scale: 0.75
+  projection011_scale: 0.9375
+  integration_method: rk4
+nonspecific_t_scale_grid: [0.1875, 0.203125, 0.21875, 0.25]
+candidate_order: ascending
+admission:
+  fresh_figure6_required_for_each_candidate: true
+  match_only: true
+  mismatch_consulted: false
+  figure10_consulted: false
+  holdouts_consulted: false
+exact_match_gate:
+  relay_active_indices: [38, 39, 40, 41, 42]
+  relay_events: 20
+  nonspecific_events: 4
+decision_rule: >-
+  Report every candidate. A candidate survives only if all fresh Figure-6 gates
+  and every exact match gate pass. Advance all and only exact match survivors
+  to one separately registered fixed mismatch screen; do not rank by distance,
+  TRN count, event timing, or effective-inhibition integral.
+stopping_rule: >-
+  Execute the four listed values once in ascending order. Do not add midpoint,
+  endpoint, or interpolated values after observing the results. Do not inspect
+  mismatch, Figure 10, spectral, or higher-order outcomes in this stage.
+boundary: >-
+  This is explicit calibration of an effective nonspecific T-current density,
+  not recovery of the released 250-mS/cm2 value. A match survivor is only a
+  candidate and cannot be promoted, frozen, or used for neuron-model studies.

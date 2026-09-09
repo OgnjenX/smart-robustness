@@ -1,0 +1,47 @@
+schema_version: 1
+id: figure10-target-resolved-scale8-registration-783
+date: '2026-09-09'
+status: registered-before-execution-instrumentation-only-scale8-pair
+classification: figure10-target-resolved-closed-endpoint-diagnostic
+authorization: docs/validation-results/figure10-official-gate-source-audit-782.yaml
+authorization_sha256: 7aa1dcc4e20221c5bcb751df45ad594df7a782fb47903cb1502d9157a8e7f25c
+source_result: docs/validation-results/joint-calibration-projection025-figure10-screen-recovery-780.yaml
+source_result_sha256: 6482ef63c20f90ce1fa80a5787b67401dc0fa0afade7463f96d02dc49c29c52d
+profile: configs/calibration/figure6_7_10_projection025_source_control_v1.yaml
+profile_sha256: b2028a35666cb31645e91a741b00440b46a508558c5db8361404c2264041ffdf
+script: scripts/run_figure10_target_resolved_scale8_audit.py
+script_sha256: 3b43e6a9436cb08c8a7b51eae48c7592f9c157c39e919e26f68d367a6038919c
+figure10_harness: src/smart_robustness/validation/figure10_search_cycle_spread.py
+figure10_harness_sha256: 2658161a8ddff80e918e6d8250553e155eac73c1286a36314ec7e7716c8faa7f
+runtime_fingerprint: 7e654528a99f0b25b7148260a8d52021f6443fb992b210729a2475ae3cfcdaa4
+result_id: figure10-target-resolved-scale8-audit-784
+result: docs/validation-results/figure10-target-resolved-scale8-audit-784.yaml
+assessment: docs/validation-results/figure10-target-resolved-scale8-assessment-785.yaml
+nonspecific_t_scale: 0.203125
+projection025_scale: 8.0
+release_after_mismatch_ms: 61.880000000000024
+late_reset_start_ms: 75.0
+late_reset_source_basis: >-
+  Grossberg and Versace Figure 10e displays the reset bar beginning near 175 ms
+  on a 300-ms axis. Subtracting the fixed 100-ms pre-match phase maps that
+  visible boundary to 75 ms after mismatch onset. This boundary is approximate
+  and is used only for target-resolved diagnosis.
+fixed_readouts:
+  target_indices: [22, 31, 40, 49, 58]
+  prior_winner_center: 40
+  previously_inactive_alternatives: [22, 31, 49, 58]
+  windows:
+    pre_release_ms: [0.0, 61.880000000000024]
+    post_release_ms: [61.880000000000024, 200.0]
+    late_reset_ms: [75.0, 200.0]
+  per_target_fields: [event_count, first_event_ms, last_event_ms]
+diagnostic_rule: >-
+  Report every target in both intact and disconnected-control arms. A
+  replacement-winner candidate is an alternative whose late-reset event count
+  is positive and strictly exceeds target 40 in the same arm. This reports a
+  Figure-10 panel analogue but cannot select scale 8, replace the causal
+  negative-control gates, or promote the baseline.
+stopping_rule: >-
+  Execute this one fixed pair once. Do not change a parameter, interpolate
+  projection 025, change the late boundary after observing events, or open any
+  spectral, higher-order, neuron-model, or modern-anatomy holdout.

@@ -1,0 +1,79 @@
+schema_version: 1
+id: figure10-official-gate-source-audit-782
+date: '2026-09-09'
+status: official-descriptive-and-added-causal-gates-separated
+classification: primary-source-figure10-gate-audit
+primary_source:
+  path: tmp/pdfs/GrossbergVersace2008.pdf
+  sha256: c56c337624959d8c0bdf51aa79b0dbc82f31264af2b2cd675790879a6410d7ed
+  pages: [24, 25]
+  figure: Figure 10d-e
+paper_supported_claims:
+  - mismatch-driven nonspecific thalamic activity recruits the layer-5-to-layer-6I reset chain
+  - layer-6I firing drives layer-4 reset
+  - depletion removes the prior competition bias during reset
+  - reset unmasks previously inactive layer-4 cells with less-depleted layer-6I-to-layer-4 synapses
+  - the displayed old wrong winner is replaced by activity in a previously inhibited cell
+not_published_as_numeric_or_causal_comparison:
+  - disconnected-control condition
+  - intact-versus-control first-alternative latency
+  - intact-versus-control alternative event count
+  - exact reset onset or external-input release time
+  - exact per-cell spike-count acceptance threshold
+project_validation_matrix:
+  path: docs/validation-matrix.md
+  sha256: 48430db61ea87794aae9ad5128686f3295f85d18a8438dccb2fe76fbfb7e3574
+  existing_classification: structural-and-qualitative-latency-not-identifiable
+gate_layers:
+  publication_descriptive:
+    - nonempty wrong-winner state before reset
+    - reset chain recruited
+    - prior winner loses its privileged state
+    - one or more previously inactive cells form the replacement representation
+  added_causal_negative_control:
+    - yoked disconnected control preserves the pre-reset state and input delivery
+    - intact reset suppresses the prior winner more than control
+    - intact reset favors alternatives relative to control
+  latency:
+    classification: diagnostic-only-not-an-official-figure10-gate
+reassessment_of_artifact780:
+  result: docs/validation-results/joint-calibration-projection025-figure10-screen-recovery-780.yaml
+  result_sha256: 6482ef63c20f90ce1fa80a5787b67401dc0fa0afade7463f96d02dc49c29c52d
+  aggregate_causal_outcomes:
+  - projection025_scale: 1.0
+    winner_events_intact_control: [61, 59]
+    alternative_events_intact_control: [56, 60]
+    alternative_active_cells_intact_control: [4, 4]
+    causal_pass: false
+  - projection025_scale: 2.0
+    winner_events_intact_control: [61, 59]
+    alternative_events_intact_control: [56, 60]
+    alternative_active_cells_intact_control: [4, 4]
+    causal_pass: false
+  - projection025_scale: 4.0
+    winner_events_intact_control: [61, 59]
+    alternative_events_intact_control: [56, 60]
+    alternative_active_cells_intact_control: [4, 4]
+    causal_pass: false
+  - projection025_scale: 8.0
+    winner_events_intact_control: [48, 59]
+    alternative_events_intact_control: [44, 46]
+    alternative_active_cells_intact_control: [4, 4]
+    causal_pass: false
+conclusion: >-
+  The preregistered latency gate was an added causal proxy, not a directly
+  reported official metric. Correcting that classification does not rescue any
+  projection-025 scale: scales 1 through 4 fail winner suppression, and scale
+  8 suppresses the old winner but neither recruits more alternative cells nor
+  increases their aggregate output relative to control. Aggregate counts do
+  not establish whether one alternative becomes the displayed replacement
+  winner, so one target-resolved diagnostic is warranted at scale 8.
+next_gate: >-
+  Rerun only the scale-8 intact/control pair with unchanged dynamics and retain
+  per-cell layer-4 counts and first/last event times before release, after
+  release, and during the late reset interval. This is instrumentation-only
+  diagnosis, not selection or calibration. Do not interpolate projection 025
+  or open holdouts.
+original_smart_reproduced: false
+baseline_promoted: false
+baseline_frozen: false

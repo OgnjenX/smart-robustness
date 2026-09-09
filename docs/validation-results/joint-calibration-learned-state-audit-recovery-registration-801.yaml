@@ -1,0 +1,50 @@
+schema_version: 1
+id: joint-calibration-learned-state-audit-recovery-registration-801
+date: '2026-09-09'
+status: registered-before-execution-override-merge-recovery
+classification: explicit-joint-calibration-learned-state-diagnostic
+predecessor_registration: docs/validation-results/joint-calibration-learned-state-audit-registration-798.yaml
+predecessor_registration_sha256: 7060642e1aac79c9e7cefd354c40f0acf20dc66dd46caf2be01112ae3ce7bc26
+authorization: docs/validation-results/joint-calibration-learned-state-audit-assessment-800.yaml
+authorization_sha256: 8678c7e4fd7dbfc8c3793ab1d0d83c046799c5296b4b7a9a472caa68d63a7eb5
+profile: configs/calibration/figure6_7_10_projection025_source_control_v1.yaml
+profile_sha256: b2028a35666cb31645e91a741b00440b46a508558c5db8361404c2264041ffdf
+script: scripts/run_joint_calibration_learned_state_audit.py
+script_sha256: ad5cfee1333e01d03b6d8de282a43a7d913c16abd66c650841986e1a24ebb62c
+figure6_harness: src/smart_robustness/validation/figure6.py
+figure6_harness_sha256: 2507116d17e2bb859afe0102f863adfddbcfad5f220d7e038dd2501989a74696
+runtime_fingerprint: 7e654528a99f0b25b7148260a8d52021f6443fb992b210729a2475ae3cfcdaa4
+result_id: joint-calibration-learned-state-audit-recovery-802
+result: docs/validation-results/joint-calibration-learned-state-audit-recovery-802.yaml
+assessment: docs/validation-results/joint-calibration-learned-state-audit-recovery-assessment-803.yaml
+recovery_scope:
+  changed: duplicate_override_merge_only
+  parameter_change: false
+  readout_change: false
+  candidate_observed_before_recovery: false
+fixed_endpoint:
+  nonspecific_t_scale: 0.203125
+  projection036_spread_convention: variance
+  integration_method: rk4
+additional_global_scales:
+  modeldb112923.projection.025: 8.0
+  modeldb112923.projection.026: 0.75
+arms:
+  base_training:
+    description: Figure-10 screen training scales without projections 025/026
+  endpoint_training:
+    description: identical training plus globally active projections 025/026
+readouts:
+  exact_float64_sha256_per_learned_projection: true
+  exact_changed_value_count: true
+  l1_l2_and_max_absolute_difference: true
+  figure6_gate_matrix: true
+  population_spike_counts: true
+  learned_map_orientation_summaries: true
+selection_rule: >-
+  Diagnostic only. Exact learned-state equality requires identical canonical
+  float64 hashes and zero changed values for every learned projection.
+stopping_rule: >-
+  Execute each listed Figure-6 arm once. Do not run Figure 7, Figure 10,
+  spectra, higher-order circuitry, neuron variants, or modern anatomy. Do not
+  select, add, or interpolate a scale after observing differences.

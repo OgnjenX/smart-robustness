@@ -1,0 +1,48 @@
+schema_version: 1
+id: joint-calibration-projection025-figure10-screen-777
+date: '2026-09-09'
+status: failed-before-simulation-duplicate-runtime-override
+classification: implementation-failure-not-behavioral-outcome
+registration: docs/validation-results/joint-calibration-projection025-figure10-registration-776.yaml
+registered_script_sha256: db381db496c4e176825c75be774a07b9503963fdda8f9c50321f86b8fdd5d25a
+execution:
+  command: >-
+    .venv/bin/python
+    scripts/run_joint_calibration_projection025_figure10_screen.py
+    --registration
+    docs/validation-results/joint-calibration-projection025-figure10-registration-776.yaml
+  exit_code: 1
+  stdout_bytes: 0
+  stdout_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+  brian_debug_log_sha256: 57b78c24e4da4a034ad7724be736e20eb3ca35aeb337a5acad3c6ded4d82922b
+failure:
+  stage: runtime-convention construction before Brian2 import or simulation
+  exception: TypeError
+  message: >-
+    dataclasses.replace() got multiple values for keyword argument
+    'nonspecific_dendritic_calcium_density_scale'
+  cause: >-
+    The profile runtime-overrides mapping already contained the T-current key,
+    and the runner also passed the calibrated value as a separate keyword.
+scientific_assessment:
+  any_network_built: false
+  any_candidate_executed: false
+  any_behavioral_outcome_observed: false
+  parameter_selected: false
+  original_smart_reproduced: false
+  baseline_promoted: false
+  baseline_frozen: false
+recovery_authorization:
+  allowed_change: >-
+    Merge runtime override mappings first and replace the T-current key with
+    the registered survivor value before one dataclasses.replace call.
+  model_change: false
+  protocol_change: false
+  candidate_grid_change: false
+  gate_change: false
+  selection_rule_change: false
+  new_registration_required: true
+boundary: >-
+  This zero-byte pre-simulation failure contains no scientific result. The
+  complete fixed four-candidate screen must be executed under a new hash-pinned
+  recovery registration.

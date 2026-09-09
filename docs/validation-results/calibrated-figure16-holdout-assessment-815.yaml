@@ -1,0 +1,55 @@
+schema_version: 1
+id: calibrated-figure16-holdout-assessment-815
+date: '2026-09-10'
+status: completed-figure16-pass-complete-baseline-still-blocked-by-figure15
+classification: calibrated-classic-smart-figure16-holdout-assessment
+registration: docs/validation-results/calibrated-figure16-holdout-registration-813.yaml
+result: docs/validation-results/calibrated-figure16-holdout-814.yaml
+result_sha256: fdb6d7c6cc92b0110f0920695101ef752f27ec2c7c94e9a6bfd8fceb3ecab630
+execution:
+  fresh_global_learning_state: true
+  complete_v1_pulvinar_v2_network: true
+  exact_caption_epoch_lengths: true
+  exact_caption_inter_area_delay: true
+  compiled_backend_completed: true
+  parameter_changed_after_first_order_promotion: false
+result:
+  sample_count: 1000
+  v1_field_shape: [54, 1000]
+  v2_field_shape: [54, 1000]
+  all_fields_finite: true
+  strongest_band_hz: [2.0, 4.0]
+  strongest_band_peak: 0.9998461316639192
+  gamma_band_hz: [20.0, 100.0]
+  gamma_band_peak: 0.20724698989219445
+  lower_to_gamma_peak_ratio: 4.824415614511934
+gates:
+  exactly_1000_recording_samples: true
+  v1_and_v2_fields_finite: true
+  lower_frequency_stronger_than_gamma: true
+figure16_holdout_pass: true
+overall_validation_matrix:
+  figure6_learning: pass
+  figure7_match_mismatch: pass
+  figure10_causal_reset: pass
+  figure14_match_gamma_mismatch_slow: pass
+  figure15_local_44hz_synchrony: fail_53.0265hz_outside_39_49hz
+  figure16_higher_order_lower_frequency_dominance: pass
+interpretation: >-
+  The unchanged promoted endpoint reproduces the Figure-16 qualitative
+  higher-order direction on the complete recovered V1-pulvinar-V2 network.
+  The strongest 2--4-Hz normalized inter-area correlation is 4.82 times the
+  20--100-Hz peak. This independently validates the implemented higher-order
+  loop but cannot compensate for the previously failed Figure-15 local
+  synchrony target.
+decision: >-
+  Retain the endpoint as a strong calibrated classic-SMART candidate, not a
+  frozen complete baseline. Before any further behavioral calibration, conduct
+  a primary-source and identifiability audit of Figure 15's unpublished cell
+  identities, graphical peak, confidence-limit method, and the declared 44
+  plus-or-minus 5-Hz gate. Do not tune parameters or search cell pairs from the
+  observed 53.03-Hz result. Neuron-model comparisons and modern-anatomy variants
+  remain sealed until the classic-baseline decision is resolved.
+original_smart_reproduced: false
+baseline_promoted: false
+baseline_frozen: false

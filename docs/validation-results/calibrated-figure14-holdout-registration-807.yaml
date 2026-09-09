@@ -1,0 +1,65 @@
+schema_version: 1
+id: calibrated-figure14-holdout-registration-807
+date: '2026-09-09'
+status: registered-before-execution-fixed-spectral-holdout
+classification: calibrated-classic-smart-figure14-holdout
+authorization: docs/validation-results/joint-calibration-global-projection026-assessment-806.yaml
+authorization_sha256: d55d4e5135d24a913a4060f423b8700531dcad17e84bc6bd7638785257181467
+profile: configs/calibration/figure6_7_10_projection025_source_control_v1.yaml
+profile_sha256: b2028a35666cb31645e91a741b00440b46a508558c5db8361404c2264041ffdf
+script: scripts/run_calibrated_figure14_holdout.py
+script_sha256: 6a964f5c98a0efcf49b2b7740e528ede84c9ade8ed41410e44ab88acbae9c21e
+network_harness: src/smart_robustness/validation/figure14.py
+network_harness_sha256: 6d6613b2250e51519316bbf86dfdc2419e95b38cb11f16d88ed91c6b3271e131
+analysis_harness: src/smart_robustness/analysis/figure14.py
+analysis_harness_sha256: 011e3d31129ec27662b5d985148abeda430598bc9d03e4e0b939990b92f03335
+runtime_fingerprint: 7e654528a99f0b25b7148260a8d52021f6443fb992b210729a2475ae3cfcdaa4
+result_id: calibrated-figure14-holdout-808
+result: docs/validation-results/calibrated-figure14-holdout-808.yaml
+assessment: docs/validation-results/calibrated-figure14-holdout-assessment-809.yaml
+fixed_endpoint:
+  nonspecific_t_scale: 0.203125
+  projection025_scale: 8.0
+  projection026_scale: 0.5
+  projection036_spread_convention: variance
+  projection038_scale: 1.0
+  projection008_scale: 0.75
+  projection011_scale: 0.9375
+  integration_method: rk4
+additional_global_scales:
+  modeldb112923.projection.025: 8.0
+  modeldb112923.projection.026: 0.5
+figure14_protocol:
+  duration_ms: 1000.0
+  dt_ms: 0.01
+  histogram_bin_ms: 1.0
+  hamming_window_ms: 200.0
+  hamming_overlap_ms: 0.0
+  cortical_signal: cumulative_spikes_all_v1_cortical_populations
+  low_band_hz: [2.0, 8.0]
+  middle_caption_band_hz: [8.0, 20.0]
+  middle_methods_band_hz: [8.0, 10.0]
+  gamma_band_hz: [20.0, 70.0]
+  top_down_current_pA: 800.0
+  top_down_current_mode: until_cued_cell_first_event
+  comparator: top_k_binary_5_targets_source_40
+admission:
+  fresh_global_figure6_learning: true
+  no_parameter_change_after_first_order_promotion: true
+  fresh_match_and_mismatch: true
+  identical_analysis_for_both_conditions: true
+  figure15_consulted: false
+  higher_order_consulted: false
+gates:
+  match_dominant_frequency_in_20_70_hz: true
+  mismatch_dominant_frequency_in_2_20_hz: true
+  mismatch_gamma_power_strictly_below_match: true
+selection_rule: >-
+  This is a holdout, not calibration. Pass only if all three published
+  qualitative directions hold conjunctively. Preserve all values whether the
+  endpoint passes or fails; no parameter may be selected from this result.
+stopping_rule: >-
+  Execute one fresh 1000-ms match and one fresh 1000-ms mismatch from the same
+  newly trained state. Do not change a parameter, analysis band, window, or
+  comparator after observing spectra. Do not open Figure 15, higher-order,
+  neuron-model, or modern-anatomy results until this outcome is assessed.

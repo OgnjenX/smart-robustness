@@ -1,0 +1,20 @@
+schema_version: 1
+id: joint-calibration-learned-state-audit-assessment-800
+date: '2026-09-09'
+status: setup-failure-authorizes-override-merge-recovery
+classification: explicit-joint-calibration-learned-state-diagnostic-failure-assessment
+registration: docs/validation-results/joint-calibration-learned-state-audit-registration-798.yaml
+result: docs/validation-results/joint-calibration-learned-state-audit-799.yaml
+result_sha256: 75dc162564e1142d9f28e22960d59fc5978ca1ce9bbe1603cf4bf4be46d547ed
+assessment: >-
+  No Brian2 network was constructed and no learned state was observed. Merge
+  the profile and registered runtime overrides into one mapping so the
+  registered T-current scale replaces the profile value exactly once. Preserve
+  both training arms, all readouts, and the no-selection boundary; hash the
+  repaired runner and issue a recovery registration before execution.
+parameter_change_authorized: false
+readout_change_authorized: false
+holdout_access_authorized: false
+original_smart_reproduced: false
+baseline_promoted: false
+baseline_frozen: false

@@ -1,0 +1,20 @@
+schema_version: 1
+id: joint-calibration-first-order-confirmation-assessment-794
+date: '2026-09-09'
+status: setup-failure-authorizes-interface-only-recovery
+classification: explicit-joint-calibration-first-order-confirmation-failure-assessment
+registration: docs/validation-results/joint-calibration-first-order-confirmation-registration-792.yaml
+result: docs/validation-results/joint-calibration-first-order-confirmation-793.yaml
+result_sha256: 9c14400ae45278875325d0397cd59d696f01f2a433c11639bbaa92f10caf748b
+assessment: >-
+  No Brian2 network was constructed and no candidate output was observed. The
+  failure therefore contains no scientific evidence and does not count as the
+  registered single execution. Correct only the YAML access path from top-level
+  keys to fixed_endpoint, preserve every parameter and gate, hash the repaired
+  runner, and issue a recovery registration before execution.
+parameter_change_authorized: false
+gate_change_authorized: false
+holdout_access_authorized: false
+original_smart_reproduced: false
+baseline_promoted: false
+baseline_frozen: false

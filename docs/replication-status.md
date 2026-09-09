@@ -4066,3 +4066,93 @@ failed while serializing one NumPy boolean, leaving zero-byte output. Artifacts
 758--760 record the non-scientific failure, apply only a built-in boolean cast,
 and preregister one complete recovery rerun. No behavioral gate has yet been
 interpreted.
+
+Artifacts 761--762 complete that recovery and reject the source-control
+endpoint. All identity and Figure-6 gates pass. Figure 7 remains one event low
+in both conditions at 3/6, while Figure 10 loses winner suppression entirely at
+59/59 intact/control despite a 0.03-ms intact alternative lead. Returning p025
+to released scale 1 therefore does not produce a joint baseline; the scale-8
+Figure-10 result remains valid only for its mixed-source calibrated endpoint
+and scale 8 remains unselected. A read-only p025 conductance/area parity audit
+is next. Original SMART is not reproduced or frozen.
+
+Artifact 763 closes that audit with exact parity. The source geometry gives a
+proximal membrane area of 0.00015707963267948968 cm2; multiplied by the archived
+0.1 mS/cm2 density, it yields 15.707963267948967 nS, exactly matching Brian2's
+compiled projection-025 port. The source weight is separately and correctly
+represented as one weight-1 edge per target, as required by KInNeSS Equation
+16. No omitted area, unit, or weight factor supports the diagnostic scale 8.
+Projection 025 and its already rejected spread/conductance alternatives are now
+closed. No available endpoint jointly passes Figures 6, 7, and 10; Figure 14,
+gamma/beta validation, promotion, freezing, neuron substitutions, and modern
+anatomy remain closed pending a new defensible recovery route.
+
+Artifact 764 extends the exact-runtime audit with executable SANNDRA 0.4.0
+predecessor source. Its synchronous barrier publishes all equation outputs only
+after calculation, and its Runge--Kutta helper advances one equation variable
+while holding other equation outputs and supplied coefficients fixed. This is
+not identical to Brian2's coupled-vector RK4. The new default-off
+`sanndra_scalar_rk4` comparator reproduces that narrow semantic in unit probes.
+It does not reproduce Figure 8 under either previously examined calcium-unit
+endpoint, and the missing Figure-8 clamp schedule prevents that assay from
+settling the 2008 runtime question. Exact SANNDRA 1.2.0 RC2 behavior therefore
+remains unrecovered.
+
+Artifacts 765--767 run the sole registered connected cross. Every Figure-6
+gate survives. Figure 7 retains the correct horizontal match and center-only
+mismatch relay identities, but nonspecific output is 5/6 instead of 4/7 and
+the integrated TRN inhibition is lower in match than mismatch. Figure 10 has
+identical nonempty pre-state and a complete intact reset chain, yet the old
+winner emits 50 times intact versus 48 control and alternatives start at the
+same 79.09 ms. The candidate is rejected and closed. It demonstrates that
+integration semantics affect SMART dynamics, but not in the combination needed
+for official reproduction. Original SMART remains unreproduced and unfrozen;
+the next admissible route is a transparent joint calibration phase, not another
+one-at-a-time source interpolation. Neuron substitutions and modern anatomy
+remain deferred until that calibrated classic baseline passes independent
+spectral and higher-order holdouts and is frozen.
+
+Artifact 769 establishes the new joint methodology: Figures 6, 7, and 10 are
+training targets, while Figures 14--16 are untouched holdouts. Artifacts
+770--775 identify nonspecific T-current scale 0.203125 as the sole Figure-6/7
+survivor, reproducing the exact four-event match and seven-event mismatch
+nonspecific outputs at an effective density of 50.78125 mS/cm2.
+
+Artifacts 776--803 close the first reset screens and expose a learned-state
+dependency. Projection-025 and projection-038 grids have no causal survivor.
+Projection-026 scale 0.75 passes only when applied downstream after base
+training; globally applying the endpoint changes all three adaptive maps and
+removes Figure-10 replacement. Two setup-only failures and their exact
+recoveries are retained in the ledger and carry no scientific outcome.
+
+Artifacts 804--806 complete the globally retrained projection-026 screen.
+Scale 0.5 is the sole first-order survivor. It passes all Figure-6 learning
+gates, exact Figure-7 4/7 output and inhibitory ordering, and Figure-10 reset:
+intact old-winner output is 53 versus 63 control events and the intact late
+replacement margin is +3 versus -2. This promotes a calibrated first-order
+endpoint with T-current scale 0.203125, p025 scale 8, p026 scale 0.5, p036
+variance spread, p038 scale 1, p008/p011 scales 0.75/0.9375, and coupled RK4.
+It is not source-exact recovery; p025 scale 8 is explicitly an effective
+calibration departure.
+
+The independent holdout results are now complete. Figure 14 passes with a
+55-Hz match peak, a 10-Hz mismatch peak, and reduced mismatch gamma power.
+Figure 16 passes on the complete V1-pulvinar-V2 network: 2--4-Hz inter-area
+correlation is strongest and its peak is 4.82 times the gamma-band peak.
+Figure 15 fails its preregistered numeric gate: the fixed adjacent layer-4 pair
+39/40 peaks at 53.0265 Hz rather than within 39--49 Hz. Thus Figures 6, 7, 10,
+14, and 16 pass; the registered Figure-15 numeric gate fails. The complete
+baseline is not frozen.
+
+Artifact 816 visually and textually audits Figure 15. The official panel labels
+the simulation `F = 44 Hz`, but no source identifies the cell pair, original
+spike arrays, bin width, spectral estimator, confidence-limit method, or
+tolerance. SMART.nml monitors the whole layer-4 population and the archive
+contains no result arrays or analysis program. The candidate does reproduce
+the source-identifiable claim of nearby layer-4 gamma synchrony, at 53.03 Hz,
+but not the graphical 44-Hz value under our registered reconstruction analysis.
+The failed holdout is not retroactively reclassified and no parameter or
+analysis choice is selected. Exact numerical recovery is not currently
+identifiable from the released sources; any calibrated-baseline freeze must
+state that limitation. Alternative neuron models and modern-anatomy variants
+remain unopened and separate.

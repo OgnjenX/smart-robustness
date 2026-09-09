@@ -1,0 +1,43 @@
+schema_version: 1
+id: calibrated-figure14-holdout-assessment-809
+date: '2026-09-09'
+status: completed-figure14-holdout-pass
+classification: calibrated-classic-smart-figure14-holdout-assessment
+registration: docs/validation-results/calibrated-figure14-holdout-registration-807.yaml
+result: docs/validation-results/calibrated-figure14-holdout-808.yaml
+result_sha256: 7f736891f5af6d09b19898ce8c302d678270bc9d5d379ce2a279baac0eedbffc
+execution:
+  fresh_global_learning_state: true
+  published_duration_match_and_mismatch: true
+  fixed_analysis_applied_identically: true
+  parameter_changed_after_first_order_promotion: false
+  later_holdouts_consulted: false
+match:
+  cortical_spikes: 6346
+  dominant_frequency_hz: 55.0
+  gamma_power_20_70_hz: 10.75157122040145
+mismatch:
+  cortical_spikes: 3959
+  dominant_frequency_hz: 10.0
+  gamma_power_20_70_hz: 9.177047558981252
+gates:
+  match_gamma_dominant: true
+  mismatch_lower_frequency_dominant: true
+  mismatch_gamma_reduced: true
+figure14_holdout_pass: true
+interpretation: >-
+  The fixed globally trained endpoint independently reproduces Figure 14's
+  three qualitative spectral directions. Match activity peaks at 55 Hz in the
+  published 20--70-Hz gamma band, mismatch peaks at 10 Hz below gamma, and
+  mismatch gamma power is 14.64 percent lower than match. No parameter or
+  analysis setting was selected from this outcome.
+decision: >-
+  Accept Figure 14 as a passed holdout and open one separately preregistered
+  Figure-15 local layer-4 synchrony test using the same endpoint, fresh global
+  learning, the published 1000-ms epoch, and the already source-bound adjacent
+  cell pair 39/40 with a 44 plus-or-minus 5-Hz gate. Keep Figure 16,
+  higher-order circuitry, neuron variants, and modern anatomy sealed until the
+  Figure-15 outcome is assessed.
+original_smart_reproduced: false
+baseline_promoted: false
+baseline_frozen: false

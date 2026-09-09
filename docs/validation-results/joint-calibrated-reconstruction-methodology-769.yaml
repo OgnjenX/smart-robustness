@@ -1,0 +1,85 @@
+schema_version: 1
+id: joint-calibrated-reconstruction-methodology-769
+date: '2026-09-09'
+status: calibration-phase-opened-with-fixed-training-holdout-split
+classification: explicit-joint-calibrated-reconstruction-methodology
+scientific_objective: >-
+  Find one parameterized reconstruction that jointly reproduces the published
+  first-order SMART learning, match/mismatch, and reset phenotypes, then test it
+  without further fitting on spectral and higher-order holdouts.
+epistemic_boundary:
+  label_if_successful: calibrated classic-SMART reconstruction
+  label_not_permitted: bit-identical recovered 2008 KInNeSS/SANNDRA execution
+  reason: >-
+    Released model files omit executable runtime details and exact SANNDRA
+    1.2.0 RC2 source is unavailable. All departures must remain explicit.
+training_targets:
+  figure6:
+    relay_active_indices: [38, 39, 40, 41, 42]
+    relay_events_per_active_index: 4
+    cortical_chain_complete: true
+    causal_learning_pair: true
+    top_down_horizontal_contrast: positive
+  figure7:
+    match_relay_active_indices: [38, 39, 40, 41, 42]
+    mismatch_relay_active_indices: [40]
+    nonspecific_events_match_mismatch: [4, 7]
+    match_more_trn_events: true
+    match_more_integrated_trn_inhibition: true
+  figure10:
+    identical_nonempty_prestate: true
+    alternatives_quiet_before_release: true
+    full_input_delivery: true
+    intact_reset_chain: true
+    intact_winner_suppression: true
+    intact_earlier_alternative: true
+holdouts_not_open_during_calibration:
+  - Figure 14 match-resonance spectrum
+  - Figures 15--16 gamma-versus-beta/reset timing
+  - pulvinar--V2 higher-order loop
+  - robustness under alternative neuron models
+  - modern-anatomy variants
+fixed_starting_endpoint:
+  profile: configs/calibration/figure6_7_10_projection025_source_control_v1.yaml
+  projection025_scale: 1.0
+  projection036_spread: variance
+  projection008_scale: 0.75
+  projection011_scale: 0.9375
+  nonspecific_t_scale: 0.1875
+  figure7_observation: [3, 6]
+  figure10_winner_intact_control: [59, 59]
+calibration_dimensions:
+  stage_1_nonspecific_t_scale:
+    rationale: >-
+      The fixed endpoint is exactly one nonspecific event low in each Figure-7
+      condition, while prior causal ablation establishes T-current dependence.
+    match_screen_grid: [0.1875, 0.203125, 0.21875, 0.25]
+    mismatch_blinded_until_match_survivor: true
+  stage_2_projection025_effective_scale:
+    rationale: >-
+      This direct layer-5-to-layer-6I dimension changes Figure-10 winner
+      suppression but did not change Figure-7 counts between scales 1 and 8.
+    status: unopened-until-stage1-survivor
+  further_dimensions:
+    status: forbidden-unless-stages1-2-have-no-joint-survivor-and-a-causal-audit-registers-them
+selection_and_overfitting_controls:
+  deterministic_seed_and_protocols_fixed: true
+  figure6_retrained_for_every_candidate: true
+  all_candidates_reported: true
+  no_interpolation_after_outcome: true
+  mismatch_runs_only_for_all_exact-match-survivors: true
+  figure10_runs_only_for-complete-figure7-survivors: true
+  spectral_and_higher_order_holdouts_open_only_after_joint_first_order_pass: true
+  source_departure_ledger_required: true
+freeze_rule: >-
+  Freeze only after one fixed endpoint passes all first-order training gates and
+  then independently passes preregistered spectral and higher-order holdouts.
+  Freezing means tagging an immutable commit/config, pinning environment and
+  seeds, archiving expected metrics, and forbidding further calibration of that
+  baseline before neuron-model and modern-anatomy experiments.
+current_state:
+  original_smart_reproduced: false
+  baseline_promoted: false
+  baseline_frozen: false
+  stage_1_authorized: true
+

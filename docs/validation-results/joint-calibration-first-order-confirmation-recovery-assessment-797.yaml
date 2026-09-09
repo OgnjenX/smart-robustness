@@ -1,0 +1,67 @@
+schema_version: 1
+id: joint-calibration-first-order-confirmation-recovery-assessment-797
+date: '2026-09-09'
+status: completed-joint-confirmation-failed-figure10
+classification: explicit-joint-calibration-first-order-confirmation-assessment
+registration: docs/validation-results/joint-calibration-first-order-confirmation-recovery-registration-795.yaml
+result: docs/validation-results/joint-calibration-first-order-confirmation-recovery-796.yaml
+result_sha256: e83479691deca02d7cae9249d6ee80974192e0babf43de80b49d112eb5a06350
+execution:
+  single_fixed_endpoint_executed_once: true
+  fresh_shared_learning_state: true
+  all_selected_scales_applied_globally: true
+  holdouts_consulted: false
+figure6:
+  pass: true
+  failed_gates: []
+figure7:
+  pass: true
+  match_relay_events: 20
+  match_relay_active_indices: [38, 39, 40, 41, 42]
+  match_trn_events: 688
+  match_nonspecific_events: 4
+  match_trn_to_nonspecific_gaba_integral_ms: 1231.0372503851845
+  mismatch_relay_events: 3
+  mismatch_relay_active_indices: [40]
+  mismatch_trn_events: 611
+  mismatch_nonspecific_events: 7
+  mismatch_trn_to_nonspecific_gaba_integral_ms: 1182.9799912086974
+  failed_gates: []
+figure10:
+  pass: false
+  intact_control_aggregate_winner_events: [47, 58]
+  intact_control_late_alternative_margin: [-1, 0]
+  intact_replacement_winner_candidates: []
+  control_replacement_winner_candidates: []
+  failed_gates: [intact_replacement_winner, reset_favors_replacement_margin]
+comparison_with_screen_790:
+  screen_training_scales_excluded_projection025_and_026: true
+  screen_figure10_scales:
+    projection025: 8.0
+    projection026: 0.75
+  screen_intact_control_late_alternative_margin: [2, -1]
+  confirmation_training_and_figure10_scales:
+    projection025: 8.0
+    projection026: 0.75
+  confirmation_intact_control_late_alternative_margin: [-1, 0]
+interpretation: >-
+  The provisional Figure-10 pass does not survive globally applying its two
+  calibrated projection scales during the learning episode. Figure 6's coarse
+  causal and orientation gates and every Figure-7 gate remain satisfied, but
+  the resulting learned state no longer permits reset-specific replacement in
+  Figure 10. Because the Figure-10 runtime scales are otherwise identical to
+  screen 790, the discrepancy localizes to learned-state dependence rather
+  than the reset arm alone. Exact learned-weight differences have not yet been
+  measured and must not be inferred from gate booleans.
+decision: >-
+  Reject the fixed global endpoint and do not open spectral holdouts. Do not
+  reinterpret projection scales as protocol-specific switches without source
+  evidence, relax the replacement gate, or rerun the same endpoint. Before a
+  further behavioral calibration, register a readout-only Figure-6 learned-
+  weight audit comparing base-training scales with the globally scaled
+  endpoint. Record exact projection-wise hashes and differences while keeping
+  Figure 7, Figure 10, spectra, higher-order circuitry, neuron variants, and
+  modern anatomy sealed.
+original_smart_reproduced: false
+baseline_promoted: false
+baseline_frozen: false

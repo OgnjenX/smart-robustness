@@ -1,0 +1,79 @@
+schema_version: 1
+id: joint-calibration-global-projection026-registration-804
+date: '2026-09-09'
+status: registered-before-execution-global-retraining-screen
+classification: explicit-joint-calibration-global-projection026-screen
+authorization: docs/validation-results/joint-calibration-learned-state-audit-recovery-assessment-803.yaml
+authorization_sha256: 20c5d9f21114c2408d91819c90f0e230e7dd9701ec73e2f0867e12824b948387
+profile: configs/calibration/figure6_7_10_projection025_source_control_v1.yaml
+profile_sha256: b2028a35666cb31645e91a741b00440b46a508558c5db8361404c2264041ffdf
+script: scripts/run_joint_calibration_global_projection026_screen.py
+script_sha256: 5ebbb023299d52d3b43fb4f08bb879f94a2ef048ad6151de8a7c1024837a1bae
+figure7_summary_helper: scripts/run_joint_calibration_first_order_confirmation.py
+figure7_summary_helper_sha256: 4e3c5148d94af0c741db43bef2a0bd4fc4efb2bc21ad70434d216ba2bef91a73
+figure6_figure10_helpers: scripts/run_joint_calibration_projection038_figure10_screen.py
+figure6_figure10_helpers_sha256: d316d42c08d8698fdb7da4bf93c335a30a756230053e856f448498d311bf9135
+figure6_harness: src/smart_robustness/validation/figure6.py
+figure6_harness_sha256: 2507116d17e2bb859afe0102f863adfddbcfad5f220d7e038dd2501989a74696
+figure7_harness: src/smart_robustness/validation/figure7.py
+figure7_harness_sha256: b0d28466eba34c4cb794554a9c38d3591cf0762e3d24e75b0e34d4c03c2ab3cb
+figure10_harness: src/smart_robustness/validation/figure10_search_cycle_spread.py
+figure10_harness_sha256: 2658161a8ddff80e918e6d8250553e155eac73c1286a36314ec7e7716c8faa7f
+runtime_fingerprint: 7e654528a99f0b25b7148260a8d52021f6443fb992b210729a2475ae3cfcdaa4
+result_id: joint-calibration-global-projection026-screen-805
+result: docs/validation-results/joint-calibration-global-projection026-screen-805.yaml
+assessment: docs/validation-results/joint-calibration-global-projection026-assessment-806.yaml
+nonspecific_t_scale: 0.203125
+projection025_scale: 8.0
+projection026_scale_grid: [1.0, 0.5]
+excluded_already_confirmed_failure: 0.75
+candidate_order: descending
+late_reset_start_ms: 75.0
+fixed_endpoint:
+  projection036_spread_convention: variance
+  projection038_scale: 1.0
+  projection008_scale: 0.75
+  projection011_scale: 0.9375
+  integration_method: rk4
+admission:
+  fresh_figure6_for_every_candidate: true
+  candidate_scales_active_during_learning_and_all_downstream_protocols: true
+  figure7_only_after_figure6_pass: true
+  figure10_only_after_joint_figure6_7_pass: true
+  new_learned_state_per_candidate: true
+  holdouts_consulted: false
+figure6_gates:
+  exact_horizontal_relay_indices: [38, 39, 40, 41, 42]
+  exact_events_per_active_relay: 4
+  exact_total_relay_events: 20
+  complete_cortical_chain: true
+  causal_learning_pair: true
+  positive_top_down_horizontal_contrast: true
+figure7_gates:
+  match_relay_active_indices: [38, 39, 40, 41, 42]
+  match_relay_events: 20
+  mismatch_relay_allowed_indices: [40]
+  match_more_active_relay_cells: true
+  match_more_trn_events: true
+  match_more_trn_to_nonspecific_gaba: true
+  match_nonspecific_events: 4
+  mismatch_nonspecific_events: 7
+figure10_gates:
+  identical_nonempty_prestate: true
+  alternatives_quiet_before_release: true
+  full_five_target_input_delivery: true
+  intact_reset_chain: true
+  aggregate_old_winner_suppression: true
+  intact_target_resolved_replacement_winner: true
+  intact_alternative_over_old_center_margin_strictly_greater_than_control: true
+selection_rule: >-
+  Report both remaining endpoints. A candidate passes only if all Figure-6,
+  Figure-7, and Figure-10 gates pass conjunctively after its own fresh globally
+  scaled learning episode. If both pass, select scale 1.0 as the smaller
+  departure from the released projection-026 strength.
+stopping_rule: >-
+  Execute scales 1.0 and 0.5 once in descending order. Do not rerun the already
+  failed global scale 0.75, add an intermediate, reduce below 0.5, change
+  projection 025, or consult spectral, higher-order, neuron-model, or modern-
+  anatomy holdouts. If neither passes, close this projection-026 coordinate and
+  require a new causal audit before further behavior.

@@ -1,5 +1,6 @@
 import hashlib
 import json
+import math
 from itertools import pairwise
 from pathlib import Path
 
@@ -12166,6 +12167,199 @@ def test_projection025_source_control_recovery_changes_serialization_only() -> N
     assert "complete joint source-control simulation once" in registration[
         "decision_rule"
     ]
+
+
+def test_projection025_source_control_has_no_joint_first_order_survivor() -> None:
+    result_path = (
+        ROOT
+        / "docs/validation-results/figure6-7-10-projection025-source-control-recovery-761.yaml"
+    )
+    result = yaml.safe_load(result_path.read_text())
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure6-7-10-projection025-source-control-assessment-762.yaml"
+        ).read_text()
+    )
+
+    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment[
+        "result_sha256"
+    ]
+    assert result["projection025_runtime_scale"] == 1.0
+    assert all(result["topology_and_source_gates"].values())
+    assert all(result["figure6_gates"].values())
+    assert result["figure7_event_identity"]["match"]["nonspecific_events"] == 3
+    assert result["figure7_event_identity"]["mismatch"]["nonspecific_events"] == 6
+    assert not result["figure7_gates"]["match_nonspecific_events"]
+    assert not result["figure7_gates"]["mismatch_nonspecific_events"]
+    assert result["figure10_intact"]["winner_post_events"] == 59
+    assert result["figure10_disconnected_control"]["winner_post_events"] == 59
+    assert not result["figure10_gates"]["winner_suppression"]
+    assert result["figure10_gates"]["alternative_latency"]
+    assert not result["joint_first_order_gates_pass"]
+    verdict = assessment["assessment"]
+    assert not verdict["current_constrained_family_has_joint_survivor"]
+    assert not verdict["source_control_endpoint_selected"]
+    assert not verdict["projection025_scale8_selected_or_recovered"]
+    assert not verdict["figure14_holdout_authorized"]
+    assert not verdict["original_smart_reproduced"]
+    assert not verdict["baseline_frozen"]
+
+
+def test_projection025_source_to_brian2_conductance_parity_is_exact_and_closed() -> None:
+    audit = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure6-7-10-projection025-conductance-parity-audit-763.yaml"
+        ).read_text()
+    )
+
+    for source in (
+        audit["authorization"],
+        audit["primary_sources"]["smart_nml"],
+        audit["primary_sources"]["kinness_framework"],
+        audit["primary_sources"]["derived_catalog"],
+        *audit["implementation_sources"].values(),
+    ):
+        assert hashlib.sha256((ROOT / source["path"]).read_bytes()).hexdigest() == source[
+            "sha256"
+        ]
+    compiled = audit["read_only_compilation"]
+    assert compiled["lateral_area_cm2"] == pytest.approx(
+        math.pi * compiled["target_diameter_cm"] * compiled["target_length_cm"]
+    )
+    assert compiled["expected_maximal_conductance_nS"] == pytest.approx(
+        compiled["density_mS_cm2"] * compiled["lateral_area_cm2"] * 1e6
+    )
+    assert compiled["compiled_maximal_conductance_nS"] == pytest.approx(
+        compiled["expected_maximal_conductance_nS"], rel=0.0, abs=0.0
+    )
+    assert compiled["compiled_edges"] == 81
+    assert compiled["inputs_per_target"] == 1
+    assert compiled["edge_weight_min"] == compiled["edge_weight_max"] == 1.0
+    assert compiled["incoming_weight_sum_target40"] == 1.0
+    assert not audit["parity_gates"]["unaccounted_conductance_factor_detected"]
+    assert all(
+        value
+        for key, value in audit["parity_gates"].items()
+        if key != "unaccounted_conductance_factor_detected"
+    )
+    verdict = audit["assessment"]
+    assert verdict["projection025_source_translation_exact"]
+    assert not verdict["projection025_source_ambiguity_remaining"]
+    assert verdict["projection025_family_closed"]
+    assert not verdict["projection025_scale8_source_supported"]
+    assert not verdict["projection025_interpolation_authorized"]
+    assert not verdict["current_constrained_family_has_joint_survivor"]
+    assert not verdict["source_level_correction_available_from_projection025"]
+    assert not verdict["parameter_selected"]
+    assert not verdict["figure14_holdout_authorized"]
+    assert not verdict["original_smart_reproduced"]
+    assert not verdict["baseline_frozen"]
+
+
+def test_sanndra_predecessor_integration_cross_is_bounded_and_rejected() -> None:
+    audit_path = (
+        ROOT
+        / "docs/validation-results/sanndra-predecessor-integration-audit-764.yaml"
+    )
+    audit = yaml.safe_load(audit_path.read_text())
+    registration_path = (
+        ROOT
+        / "docs/validation-results/figure6-7-10-sanndra-scalar-rk4-registration-765.yaml"
+    )
+    registration = yaml.safe_load(registration_path.read_text())
+    result_path = (
+        ROOT
+        / "docs/validation-results/figure6-7-10-sanndra-scalar-rk4-766.yaml"
+    )
+    result = yaml.safe_load(result_path.read_text())
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure6-7-10-sanndra-scalar-rk4-assessment-767.yaml"
+        ).read_text()
+    )
+
+    assert audit["primary_predecessor_source"]["archive_sha256"] == (
+        "ee6f0700280ea3df8ab1be0f2b45a03a351842ba4390c275df0ec45f64f466a3"
+    )
+    assert audit["primary_predecessor_source"]["release_scope"].startswith(
+        "preserved 2001 predecessor"
+    )
+    assert not audit["inference_boundary"]["exact_smart_era_sanndra_source_recovered"]
+    assert not audit["inference_boundary"]["exact_smart_era_scalar_update_proven"]
+    assert audit["inference_boundary"]["source_adjacent_candidate_justified"]
+    assert not audit["bounded_comparator"]["default_changed"]
+    assert audit["unit_gates"]["scalar_linear_equation_matches_brian_rk4"]
+    assert audit["unit_gates"]["coupled_two_state_probe_freezes_other_state"]
+    for path_key, hash_key in (
+        ("authorization", "authorization_sha256"),
+        ("profile", "profile_sha256"),
+        ("script", "script_sha256"),
+        ("runtime", "runtime_sha256"),
+        ("synapses", "synapses_sha256"),
+    ):
+        assert hashlib.sha256(
+            (ROOT / registration[path_key]).read_bytes()
+        ).hexdigest() == registration[hash_key]
+    refactor = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/sanndra-scalar-rk4-registration-refactor-768.yaml"
+        ).read_text()
+    )
+    assert refactor["executed_implementation"]["cell_runtime_sha256"] == registration[
+        "cell_runtime_sha256"
+    ]
+    assert refactor["executed_implementation"][
+        "integration_runtime_sha256"
+    ] == registration["integration_runtime_sha256"]
+    for item in refactor["current_equivalent_implementation"].values():
+        if isinstance(item, dict) and "path" in item:
+            assert hashlib.sha256((ROOT / item["path"]).read_bytes()).hexdigest() == item[
+                "sha256"
+            ]
+    equivalence = refactor["equivalence_gates"]
+    assert equivalence["scalar_update_function_unchanged"]
+    assert equivalence["wrapper_delegates_directly_to_scalar_update_function"]
+    assert equivalence[
+        "registered_wrapper_and_executed_callable_generate_identical_abstract_code"
+    ]
+    assert equivalence["method_name_unchanged"] == "sanndra_scalar_rk4"
+    assert equivalence["runtime_fingerprint_unchanged"] == registration[
+        "runtime_fingerprint"
+    ]
+    assert not equivalence["model_parameters_protocols_and_random_seed_changed"]
+    assert not equivalence["simulation_repeated"]
+    assert not refactor["scientific_assessment"]["prior_result_changed"]
+    assert not refactor["scientific_assessment"]["integration_endpoint_selected"]
+    assert registration["fixed_difference_from_source_control_761"][
+        "all_model_parameters_unchanged"
+    ]
+    assert registration["fixed_difference_from_source_control_761"][
+        "projection025_scale"
+    ] == 1.0
+    assert hashlib.sha256(registration_path.read_bytes()).hexdigest() == assessment[
+        "registration_sha256"
+    ]
+    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment[
+        "result_sha256"
+    ]
+    assert all(result["figure6_gates"].values())
+    assert result["figure7"]["match"]["nonspecific_events"] == 5
+    assert result["figure7"]["mismatch"]["nonspecific_events"] == 6
+    assert not result["figure7"]["gates"]["match_more_trn_to_nonspecific_gaba"]
+    assert result["figure10"]["intact"]["winner_post_events"] == 50
+    assert result["figure10"]["disconnected_control"]["winner_post_events"] == 48
+    assert not result["figure10"]["gates"]["winner_suppression"]
+    assert not result["figure10"]["gates"]["alternative_latency"]
+    assert not result["joint_first_order_gates_pass"]
+    verdict = assessment["assessment"]
+    assert not verdict["integration_endpoint_selected"]
+    assert not verdict["integration_interpolation_authorized"]
+    assert not verdict["original_smart_reproduced"]
+    assert not verdict["baseline_frozen"]
 
 
 def test_projection036_source_arrival_result_localizes_phase_not_topology() -> None:

@@ -1,0 +1,89 @@
+schema_version: 1
+id: joint-calibration-first-order-confirmation-recovery-registration-795
+date: '2026-09-09'
+status: registered-before-execution-interface-only-recovery
+classification: explicit-joint-calibration-first-order-confirmation
+predecessor_registration: docs/validation-results/joint-calibration-first-order-confirmation-registration-792.yaml
+predecessor_registration_sha256: 28cae5428c566a0c25c47475d5d20972d8831a5215941a44e13e2fe6bebd12cc
+authorization: docs/validation-results/joint-calibration-first-order-confirmation-assessment-794.yaml
+authorization_sha256: 058da0f43fc6b3334bfa01049051673f076b54f0285b53c27c197817a0f395e5
+profile: configs/calibration/figure6_7_10_projection025_source_control_v1.yaml
+profile_sha256: b2028a35666cb31645e91a741b00440b46a508558c5db8361404c2264041ffdf
+script: scripts/run_joint_calibration_first_order_confirmation.py
+script_sha256: 4e3c5148d94af0c741db43bef2a0bd4fc4efb2bc21ad70434d216ba2bef91a73
+figure6_harness: src/smart_robustness/validation/figure6.py
+figure6_harness_sha256: 2507116d17e2bb859afe0102f863adfddbcfad5f220d7e038dd2501989a74696
+figure7_harness: src/smart_robustness/validation/figure7.py
+figure7_harness_sha256: b0d28466eba34c4cb794554a9c38d3591cf0762e3d24e75b0e34d4c03c2ab3cb
+figure10_harness: src/smart_robustness/validation/figure10_search_cycle_spread.py
+figure10_harness_sha256: 2658161a8ddff80e918e6d8250553e155eac73c1286a36314ec7e7716c8faa7f
+runtime_fingerprint: 7e654528a99f0b25b7148260a8d52021f6443fb992b210729a2475ae3cfcdaa4
+result_id: joint-calibration-first-order-confirmation-recovery-796
+result: docs/validation-results/joint-calibration-first-order-confirmation-recovery-796.yaml
+assessment: docs/validation-results/joint-calibration-first-order-confirmation-recovery-assessment-797.yaml
+recovery_scope:
+  changed: registration_key_access_only
+  old_access: top_level_parameter_keys
+  new_access: fixed_endpoint_parameter_keys
+  candidate_observed_before_recovery: false
+  parameter_change: false
+  gate_change: false
+fixed_endpoint:
+  nonspecific_t_scale: 0.203125
+  nonspecific_t_effective_density_mS_cm2: 50.78125
+  projection025_scale: 8.0
+  projection026_scale: 0.75
+  projection036_spread_convention: variance
+  projection038_scale: 1.0
+  projection008_scale: 0.75
+  projection011_scale: 0.9375
+  integration_method: rk4
+late_reset_start_ms: 75.0
+admission:
+  one_fresh_figure6_learning_episode: true
+  same_learned_weights_used_for_figure7_and_figure10: true
+  every_selected_scale_active_in_all_three_figures: true
+  fresh_figure7_match_and_mismatch: true
+  fresh_figure10_intact_and_disconnected_control: true
+  no_grid: true
+  no_fallback: true
+  holdouts_consulted: false
+figure6_gates:
+  exact_horizontal_relay_indices: [38, 39, 40, 41, 42]
+  exact_events_per_active_relay: 4
+  exact_total_relay_events: 20
+  complete_cortical_chain: true
+  causal_learning_pair: true
+  positive_top_down_horizontal_contrast: true
+figure7_gates:
+  match_relay_active_indices: [38, 39, 40, 41, 42]
+  match_relay_events: 20
+  mismatch_relay_allowed_indices: [40]
+  match_more_active_relay_cells: true
+  match_more_trn_events: true
+  match_more_trn_to_nonspecific_gaba: true
+  match_nonspecific_events: 4
+  mismatch_nonspecific_events: 7
+figure10_gates:
+  identical_nonempty_prestate: true
+  alternatives_quiet_before_release: true
+  full_five_target_input_delivery: true
+  intact_reset_chain: true
+  aggregate_old_winner_suppression: true
+  intact_target_resolved_replacement_winner: true
+  intact_alternative_over_old_center_margin_strictly_greater_than_control: true
+selection_rule: >-
+  This remains a confirmation, not a search. The fixed endpoint passes only if
+  every Figure-6, Figure-7, and Figure-10 gate passes conjunctively in one
+  fresh execution. No metric may be substituted, relaxed, or compensated by
+  another.
+stopping_rule: >-
+  Execute the recovered single endpoint once. Do not change a parameter, add a
+  candidate, rerun after observing a scientific failure, or consult spectral,
+  higher-order, neuron-model, or modern-anatomy holdouts. A pass promotes only
+  the calibrated first-order endpoint and opens separately registered spectral
+  validation; it does not yet establish or freeze complete classic SMART.
+boundary: >-
+  The T-current and projection scales are explicit effective calibration
+  conventions necessitated by unavailable legacy runtime details. They are not
+  represented as recovered Grossberg-Versace source values.

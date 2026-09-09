@@ -1,0 +1,94 @@
+schema_version: 1
+id: sanndra-predecessor-integration-audit-764
+date: '2026-09-09'
+status: completed-source-adjacent-scalar-rk4-comparator-authorized
+classification: primary-predecessor-source-and-isolated-runtime-audit
+question: >-
+  Does preserved SANNDRA source expose a numerical-update semantic that differs
+  from Brian2 coupled RK4 and is bounded enough to test without fitting a SMART
+  behavioral result?
+primary_predecessor_source:
+  name: SANNDRA-0.4.0
+  original_url: http://temporal.bu.edu/Snapshots/SANNDRA-0.4.0.tar.gz
+  capture_timestamp: '20010604165244'
+  archive_sha256: ee6f0700280ea3df8ab1be0f2b45a03a351842ba4390c275df0ec45f64f466a3
+  release_scope: preserved 2001 predecessor, not SMART-era SANNDRA 1.2.0 RC2
+  files:
+    readme_sha256: 4ce81e7ecb728a96e2a1398c64e382a73c0340c2e3766846f1f67c5499396754
+    sanndra_h_sha256: 82afaa9a28e8de8bf837b67237fafefacf6878fa08bb509a90eddf2a85408ca5
+    layer_h_sha256: 40e59522ec447f79360398ea3755603ee406cf17f9ccc24ed0a3dc4eba07b616
+    cluster_cpp_sha256: 1b9fc9ff149c657e16df1d2478b813056f7b82a7fb9207b48ef4ec575a024403
+  executable_findings:
+    global_exchange: >-
+      Every unit calculates against the published Outputs arrays; only after a
+      barrier does each unit post its new signal, so connected-unit inputs are
+      previous-step values.
+    runge_kutta_form: >-
+      Runge_Kutta(x, ext, coef, fun) computes four stages by varying x only.
+      ext and coef are values passed into the helper and remain fixed across all
+      stages. The returned increment is h*(k1+2*k2+2*k3+k4)/6.
+    generic_equation_implication: >-
+      When membrane voltage and channel gates are represented as separate
+      SANNDRA equation units, each equation advances its own variable while
+      voltage, gates, axial neighbors, and other-unit inputs remain at their
+      beginning-of-step values.
+current_brian_behavior:
+  method: rk4
+  semantics: >-
+    Brian2 evaluates the complete differential state vector at each RK stage,
+    so voltage and every gate receive stage-intermediate values together.
+  exact_parity_with_predecessor_helper: false
+bounded_comparator:
+  name: sanndra_scalar_rk4
+  implementation: src/smart_robustness/models/integration.py
+  implementation_sha256: e023e862a735d2b7f4d2e5aebd6efc6a141db0d98cc617afcc836b2e3885dec2
+  runtime_adapter: src/smart_robustness/models/compartmental_hh.py
+  runtime_adapter_sha256: 704db53fc90dcb0e6642600766d838cfe435e4a1da808696b0fda85990c3f60f
+  isolated_adapter: src/smart_robustness/validation/isolated_cells.py
+  isolated_adapter_sha256: 85b06775e2f048ca62d838dc386b8a0ca7f4e3faab24c421eee7f1d339d740e9
+  unit_tests: tests/test_integration.py
+  unit_tests_sha256: 482ea5c3b49a9e6ebb28da880d1e3e939998b937ecb9a8cc7e61affa8a75f021
+  default_changed: false
+  parameter_fitted_from_smart_figures: false
+  deterministic_only: true
+unit_gates:
+  scalar_linear_equation_matches_brian_rk4: true
+  coupled_two_state_probe_freezes_other_state: true
+  focused_runtime_tests_passed: 64
+paired_figure8_source_assay:
+  protocol:
+    leak_density_mS_cm2: 0.1
+    specific_capacitance_uF_cm2: 1.0
+    calcium_density_candidates_mS_cm2: [0.25, 250.0]
+    dt_ms: 0.01
+    precondition_ms: 100.0
+    pulse_ms: 300.0
+  calcium_0p25:
+    brian_rk4_tonic_burst_voltage_peaks: [6, 18]
+    sanndra_scalar_rk4_tonic_burst_voltage_peaks: [6, 18]
+    brian_rk4_tonic_burst_release_events: [6, 18]
+    sanndra_scalar_rk4_tonic_burst_release_events: [6, 18]
+  calcium_250:
+    brian_rk4_tonic_burst_voltage_peaks: [137, 109]
+    sanndra_scalar_rk4_tonic_burst_voltage_peaks: [135, 108]
+    brian_rk4_tonic_burst_release_events: [1, 2]
+    sanndra_scalar_rk4_tonic_burst_release_events: [1, 2]
+  exact_figure8_reproduced: false
+  interpretation: >-
+    The comparator is numerically active but does not rescue the incomplete
+    Figure-8 protocol at either previously examined unit endpoint. The paper
+    and archive omit the clamp timing and other experiment defaults, so this
+    assay cannot reject the integration candidate by itself.
+inference_boundary:
+  exact_smart_era_sanndra_source_recovered: false
+  exact_smart_era_scalar_update_proven: false
+  source_adjacent_candidate_justified: true
+  source_parameter_selected: false
+  original_smart_reproduced: false
+  baseline_frozen: false
+decision: >-
+  Admit exactly one default-off joint Figure-6/7/10 cross that changes only the
+  integration method from coupled Brian2 RK4 to sanndra_scalar_rk4. Retain the
+  source projection-025 scale and every predeclared gate. If Figure 6 fails,
+  stop without Figure 7 or 10. If it passes, execute the registered joint cross
+  once and assess all gates conjunctively. Do not interpolate between methods.

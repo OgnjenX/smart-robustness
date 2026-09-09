@@ -1,0 +1,67 @@
+schema_version: 1
+id: joint-calibration-global-projection026-assessment-806
+date: '2026-09-09'
+status: completed-single-global-first-order-survivor
+classification: explicit-joint-calibration-global-projection026-assessment
+registration: docs/validation-results/joint-calibration-global-projection026-registration-804.yaml
+result: docs/validation-results/joint-calibration-global-projection026-screen-805.yaml
+result_sha256: c02a48d42dac0d6567e49d645134fd457d16c473c4ff2dc0f97df01896293997
+execution:
+  all_registered_candidates_executed_once: true
+  fresh_global_retraining_per_candidate: true
+  candidate_order: descending
+  holdouts_consulted: false
+outcomes:
+- projection026_scale: 1.0
+  figure6_pass: true
+  figure7_pass: false
+  match_mismatch_nonspecific_events: [3, 7]
+  figure10_executed: false
+  failed_gates: [match_nonspecific_events]
+- projection026_scale: 0.5
+  figure6_pass: true
+  figure7_pass: true
+  match_mismatch_nonspecific_events: [4, 7]
+  match_mismatch_relay_events: [20, 3]
+  match_mismatch_active_relay_indices: [[38, 39, 40, 41, 42], [40]]
+  figure10_pass: true
+  intact_control_aggregate_winner_events: [53, 63]
+  intact_control_late_alternative_margin: [3, -2]
+  intact_replacement_winner_candidates: [31, 49]
+  control_replacement_winner_candidates: []
+  failed_gates: []
+passing_scales: [0.5]
+selected_projection026_scale: 0.5
+first_order_endpoint_promoted: true
+promoted_endpoint:
+  nonspecific_t_scale: 0.203125
+  nonspecific_t_effective_density_mS_cm2: 50.78125
+  projection025_scale: 8.0
+  projection026_scale: 0.5
+  projection036_spread_convention: variance
+  projection038_scale: 1.0
+  projection008_scale: 0.75
+  projection011_scale: 0.9375
+  integration_method: rk4
+interpretation: >-
+  Projection-026 scale 0.5 is the sole globally trained endpoint that jointly
+  passes all registered first-order learning, match/mismatch, and causal reset
+  gates. It restores the exact 4-versus-7 nonspecific pattern and preserves
+  overlap-only mismatch relay output. Its intact Figure-10 reset produces a +3
+  alternative-over-old-center margin, compared with -2 in the disconnected
+  control, while suppressing aggregate old-winner output by ten events.
+decision: >-
+  Promote this immutable parameter tuple as the calibrated first-order
+  reconstruction endpoint. Open the Figure-14 spectral holdout for one
+  preregistered 1000-ms match/mismatch pair using a newly trained state and the
+  same global endpoint. No parameter may change in response to the spectrum.
+  Figure 15 and the higher-order Figure 16 loop remain sealed until the Figure
+  14 decision is recorded.
+boundary: >-
+  This is not yet the complete classic SMART baseline. The endpoint includes
+  explicit effective calibrations and has not yet passed spectral or higher-
+  order holdouts. Neuron-model substitutions and modern-anatomy variants remain
+  forbidden, and no repository tag or frozen-baseline config may be created.
+original_smart_reproduced: false
+baseline_promoted: false
+baseline_frozen: false

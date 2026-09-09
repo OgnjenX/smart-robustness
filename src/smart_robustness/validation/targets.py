@@ -158,10 +158,19 @@ CLASSIC_SMART_TARGETS: tuple[ValidationTarget, ...] = (
         id="fig15_local_synchrony",
         figure="Figure 15",
         outcome="Nearby layer-4 cells synchronize in the gamma range.",
-        evidence=(EvidenceClass.APPROXIMATE_NUMERIC,),
-        source="Figure 15 caption",
-        protocol={"local_range_um": 300.0},
+        evidence=(EvidenceClass.APPROXIMATE_NUMERIC, EvidenceClass.QUALITATIVE),
+        source="Figure 15 panel label and caption; Methods 4.9-4.10",
+        protocol={
+            "local_range_um": 300.0,
+            "duration_ms": 1000.0,
+            "hamming_window_ms": 200.0,
+        },
         numeric_targets={"simulation_peak_hz": 44.0, "experiment_peak_hz": 50.0},
+        unresolved=(
+            "The paper does not identify the simulated cell pair or its coordinates.",
+            "The 44-Hz value is a panel label, not a caption-defined tolerance.",
+            "The binning, confidence-limit calculation, and exact frequency estimator are unreported.",
+        ),
     ),
     _target(
         id="fig16_long_range_synchrony",

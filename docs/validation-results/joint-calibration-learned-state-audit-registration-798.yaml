@@ -1,0 +1,45 @@
+schema_version: 1
+id: joint-calibration-learned-state-audit-registration-798
+date: '2026-09-09'
+status: registered-before-execution-readout-only-learned-state-audit
+classification: explicit-joint-calibration-learned-state-diagnostic
+authorization: docs/validation-results/joint-calibration-first-order-confirmation-recovery-assessment-797.yaml
+authorization_sha256: 6aa8af040df7e6d8a4b995d0c56e44d48ed07389a9c20521c69d44bfc78bd20f
+profile: configs/calibration/figure6_7_10_projection025_source_control_v1.yaml
+profile_sha256: b2028a35666cb31645e91a741b00440b46a508558c5db8361404c2264041ffdf
+script: scripts/run_joint_calibration_learned_state_audit.py
+script_sha256: 189b17bcd86386d98534877e4f4f4347d3883e2bee1b4e17669dc33ae347c966
+figure6_harness: src/smart_robustness/validation/figure6.py
+figure6_harness_sha256: 2507116d17e2bb859afe0102f863adfddbcfad5f220d7e038dd2501989a74696
+runtime_fingerprint: 7e654528a99f0b25b7148260a8d52021f6443fb992b210729a2475ae3cfcdaa4
+result_id: joint-calibration-learned-state-audit-799
+result: docs/validation-results/joint-calibration-learned-state-audit-799.yaml
+assessment: docs/validation-results/joint-calibration-learned-state-audit-assessment-800.yaml
+fixed_endpoint:
+  nonspecific_t_scale: 0.203125
+  projection036_spread_convention: variance
+  integration_method: rk4
+additional_global_scales:
+  modeldb112923.projection.025: 8.0
+  modeldb112923.projection.026: 0.75
+arms:
+  base_training:
+    description: Figure-10 screen training scales without projections 025/026
+  endpoint_training:
+    description: identical training plus globally active projections 025/026
+readouts:
+  exact_float64_sha256_per_learned_projection: true
+  exact_changed_value_count: true
+  l1_l2_and_max_absolute_difference: true
+  figure6_gate_matrix: true
+  population_spike_counts: true
+  learned_map_orientation_summaries: true
+selection_rule: >-
+  Diagnostic only. Report both arms and every learned projection. Do not select
+  a parameter or treat a Figure-6 gate pass as evidence that learned states are
+  equivalent. Exact equality requires identical canonical float64 hashes and
+  zero changed values for every learned projection.
+stopping_rule: >-
+  Execute each listed Figure-6 arm once. Do not run Figure 7, Figure 10,
+  spectra, higher-order circuitry, neuron variants, or modern anatomy. Do not
+  add a scale, interpolate, or rerun after observing differences.

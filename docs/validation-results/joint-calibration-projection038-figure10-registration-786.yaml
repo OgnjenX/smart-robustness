@@ -1,0 +1,69 @@
+schema_version: 1
+id: joint-calibration-projection038-figure10-registration-786
+date: '2026-09-09'
+status: registered-before-execution-causal-direct-indirect-balance-grid
+classification: explicit-joint-calibration-figure10-projection038-screen
+authorization: docs/validation-results/figure10-target-resolved-scale8-assessment-785.yaml
+authorization_sha256: 669064b2fc35a2dbb8a44d280f17402cd7baeafdbaa683b13199c9fcf56011a0
+causal_balance_source: docs/validation-results/figure10-search-cycle-balance-assessment-745.yaml
+causal_balance_source_sha256: cc6a827bc7ec2a994925985a91f948782bd4810e744518faa1e90fef1c628653
+profile: configs/calibration/figure6_7_10_projection025_source_control_v1.yaml
+profile_sha256: b2028a35666cb31645e91a741b00440b46a508558c5db8361404c2264041ffdf
+script: scripts/run_joint_calibration_projection038_figure10_screen.py
+script_sha256: d316d42c08d8698fdb7da4bf93c335a30a756230053e856f448498d311bf9135
+figure10_harness: src/smart_robustness/validation/figure10_search_cycle_spread.py
+figure10_harness_sha256: 2658161a8ddff80e918e6d8250553e155eac73c1286a36314ec7e7716c8faa7f
+runtime_fingerprint: 7e654528a99f0b25b7148260a8d52021f6443fb992b210729a2475ae3cfcdaa4
+result_id: joint-calibration-projection038-figure10-screen-787
+result: docs/validation-results/joint-calibration-projection038-figure10-screen-787.yaml
+assessment: docs/validation-results/joint-calibration-projection038-figure10-assessment-788.yaml
+nonspecific_t_scale: 0.203125
+projection025_scale: 8.0
+projection038_scale_grid: [1.0, 1.5, 2.0]
+candidate_order: ascending
+late_reset_start_ms: 75.0
+grid_rationale:
+  measured_early_extra_projection038_pA_ms: 1599.3196690161844
+  measured_early_other_extra_excitation_pA_ms: 106.30120466393985
+  measured_early_extra_projection036_inhibition_magnitude_pA_ms: 2437.2071706185643
+  estimated_direct_scale_for_zero_early_deficit: 1.457436
+  derivation: >-
+    (2437.2071706185643 - 106.30120466393985) /
+    1599.3196690161844 = 1.457436. The fixed grid brackets this causal balance
+    estimate with the released scale 1, the nearest simple value 1.5, and one
+    upper value 2. No fitted intermediate is allowed.
+fixed_endpoint:
+  projection036_spread_convention: variance
+  projection008_scale: 0.75
+  projection011_scale: 0.9375
+  integration_method: rk4
+admission:
+  fresh_figure6_prerequisite: true
+  same_learned_state_yoked_across_all_figure10_arms: true
+  fresh_intact_and_disconnected_control_per_scale: true
+  target_resolved_late_reset_readout: true
+  figure7_rerun_in_this_stage: false
+  holdouts_consulted: false
+figure10_gates:
+  identical_nonempty_prestate: true
+  alternatives_quiet_before_release: true
+  full_five_target_input_delivery: true
+  intact_reset_chain: true
+  aggregate_old_winner_suppression: true
+  intact_target_resolved_replacement_winner: true
+  intact_alternative_over_old_center_margin_strictly_greater_than_control: true
+selection_rule: >-
+  Report all three candidates. A scale passes only if every gate passes
+  conjunctively. If multiple scales pass, select the smallest passing scale as
+  the least source-relative direct-conductance departure. Subject only that
+  endpoint to a separately registered fresh joint Figures-6/7/10
+  confirmation; this screen alone cannot promote or freeze the baseline.
+stopping_rule: >-
+  Execute the three listed scales once in ascending order. Do not add an
+  intermediate, extend the grid, alter projection 025, weaken the indirect
+  pathway, change timing, or repeat a candidate after observing output. Keep
+  all spectral, higher-order, neuron-model, and modern-anatomy holdouts sealed.
+boundary: >-
+  Projection 038 has an exact released scale of one. Values above one are
+  explicit effective-conductance calibration, justified by a measured causal
+  balance deficit rather than claimed as recovered 2008 source parameters.

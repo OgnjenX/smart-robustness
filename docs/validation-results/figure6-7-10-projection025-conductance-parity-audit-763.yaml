@@ -1,0 +1,148 @@
+schema_version: 1
+id: figure6-7-10-projection025-conductance-parity-audit-763
+date: '2026-09-09'
+status: completed-exact-conductance-parity-projection025-family-closed
+classification: read-only-source-to-brian2-unit-and-topology-audit
+authorization:
+  path: docs/validation-results/figure6-7-10-projection025-source-control-assessment-762.yaml
+  sha256: 9228efb20d3cb703ea17f09d08e955b32c6fb298315a3aad5db74dee65df9cd3
+primary_sources:
+  smart_nml:
+    path: tmp/official_SMART.nml
+    sha256: 16fc196f2ed68d1c02a39395fa83bb0ffab8fcf8edffe6fd11022bb6c6e299e1
+    target_population: Layer_6_I
+    target_compartment: Dendrite 0
+    target_diameter_cm: 0.005
+    target_length_cm: 0.01
+    projection_channel: Layer 5
+    channel_conductance_density_mS_cm2: 0.1
+    method: connectFromMany
+    weight: 1.0
+    asymptotic_weight: 1.0
+    spread_x_y: [0.2, 0.2]
+    border_effect: wrap
+    ring: false
+    delay_ms: 0.1
+    rise_fall_ms: [2.0, 2.0]
+  kinness_framework:
+    path: tmp/kinness-framework-expanded.pdf
+    sha256: 15a7f9166e301c9740e7cff4258810d315bd95b196ea5dff3419c5cc2879f177
+    section: 4.4 Ligand-gated channels
+    equation: 16
+    factorization: >-
+      Ligand-gated current density is channel conductance density times the
+      source-specific ligand gate, source-specific synaptic weight, available
+      transmitter, and voltage driving force.
+    channel_density_role: constant for one channel type on the target cell
+    weight_role: source-specific dimensionless coefficient set by synaptic weight
+    area_convention:
+      equations: [2, 9]
+      expression: pi*diameter*length
+      end_caps_included: false
+  derived_catalog:
+    path: src/smart_robustness/data/modeldb112923_first_order.yaml
+    sha256: 3b42be7dd0b17cc01ad29f474f152cfcd8c2a605410aad223d14c676fe98d965
+    projection_id: modeldb112923.projection.025
+    source_population: layer5_excitatory_v1
+    target_population: layer6i_excitatory_v1
+    target_compartment: proximal_dendrite
+    density_mS_cm2: 0.1
+    weight: 1.0
+implementation_sources:
+  modeldb_cell_library:
+    path: src/smart_robustness/models/modeldb112923.py
+    sha256: 6523c92fe22ceca917940b4fcb8f955999b72a6f399c859930e24bb773e439db
+  area_conversion:
+    path: src/smart_robustness/models/table3.py
+    sha256: 614fdef2f1da001fcd55cc1bd36a01410a3fdb2590beb49a00f372c93a6564b7
+  modeldb_port_conversion:
+    path: src/smart_robustness/models/ports.py
+    sha256: 1c38d6ac306620b37f55fd0839b134bd12253d858b249a32bba255887a78aad3
+  brian2_current_equation:
+    path: src/smart_robustness/models/equation_builder.py
+    sha256: 9f03338602c2d4bbc6c9aa2c3dec1308f2f6eccae1c69c58cc32464603b13e00
+    executable_form: g_port_002*port_002_gate*(e_port_002-v_proximal_dendrite)
+  brian2_parameter_assignment:
+    path: src/smart_robustness/models/compartmental_hh.py
+    sha256: ce6eaf11533fd892f6935645c3d3b83253793a708ee467d5616b8cca1fb17373
+    executable_form: density_mS_cm2*lateral_area_cm2*1e6*nS
+  synaptic_gate_and_weight:
+    path: src/smart_robustness/synapses.py
+    sha256: 0f155853a35e50d38e05294fe718d7632ba6575c08001da0ff77de013de16b4c
+    executable_form: port_002_gate_post=w*pre_signal*transmitter_scale
+read_only_compilation:
+  runtime: brian2-numpy
+  target_population: layer6i_excitatory_v1
+  target_port: port_002
+  target_compartment: proximal_dendrite
+  target_diameter_mm: 0.05
+  target_length_mm: 0.1
+  target_diameter_cm: 0.005
+  target_length_cm: 0.01
+  lateral_area_cm2: 0.00015707963267948968
+  density_mS_cm2: 0.1
+  expected_maximal_conductance_nS: 15.707963267948967
+  compiled_maximal_conductance_nS: 15.707963267948967
+  absolute_error_nS: 0.0
+  source_spread_interpretation: standard_deviation
+  compiled_edges: 81
+  inputs_per_target: 1
+  edge_weight_min: 1.0
+  edge_weight_max: 1.0
+  incoming_weight_sum_target40: 1.0
+  effective_peak_conductance_per_target_nS: 15.707963267948967
+parity_gates:
+  source_geometry_matches_catalog: true
+  cylindrical_lateral_area_exact: true
+  source_density_matches_port: true
+  density_to_total_conductance_exact: true
+  source_weight_separate_from_density: true
+  source_weight_matches_compiled_edges: true
+  equation16_factorization_preserved: true
+  source_delay_and_kinetics_preserved: true
+  unaccounted_conductance_factor_detected: false
+closed_alternatives:
+  projection025_variance_spread:
+    assessment: docs/validation-results/figure10-projection025-spread-assessment-627.yaml
+    assessment_sha256: acdb479d97cf28a0743a474b7ebe73ccf59155c53e8580ca6e1a0eeffea4b4c1
+    status: closed-without-selection
+    reason: >-
+      The fixed 3x3 variance stencil increased current but did not change the
+      layer-6I or layer-4 event identity and did not reproduce reset.
+  projection025_conductance_scale8:
+    assessment: docs/validation-results/figure10-layer6i-conductance-assessment-643.yaml
+    assessment_sha256: 56d68682caf9b5d0281c40846778928b5e5cec1341cd5f0207b59b615d91bd14
+    status: effective-diagnostic-only-closed-without-selection
+    reason: >-
+      Scale 8 was the first isolated event-producing sensitivity and has no
+      source support; its connected endpoint also failed the complete reset.
+assessment:
+  projection025_source_translation_exact: true
+  projection025_source_ambiguity_remaining: false
+  projection025_family_closed: true
+  projection025_scale8_source_supported: false
+  projection025_interpolation_authorized: false
+  current_constrained_family_has_joint_survivor: false
+  source_level_correction_available_from_projection025: false
+  parameter_selected: false
+  figure14_holdout_authorized: false
+  original_smart_reproduced: false
+  baseline_promoted: false
+  baseline_frozen: false
+interpretation: >-
+  Projection 025 is translated without a unit, area, targeting, weighting, or
+  kinetics error. The source density and geometry imply 15.707963267948967 nS,
+  and the compiled Brian2 port contains exactly that value. KInNeSS Equation 16
+  keeps the dimensionless source weight separate; the source interpretation
+  supplies exactly one weight-1 edge to each target. Therefore the previously
+  explored eightfold scale cannot be explained by a missing density-to-area or
+  weight factor. With both the variance-spread and conductance-scale routes
+  already rejected, projection 025 is closed as a classic-source correction.
+boundary: >-
+  The available source-constrained and preregistered calibrated family has no
+  endpoint that jointly passes Figures 6, 7, and 10. This does not prove that
+  original SMART cannot be reproduced; it shows that another p025 adjustment is
+  not a defensible route. Exact legacy scheduler/source recovery or an explicitly
+  declared joint calibrated-reconstruction methodology is required before
+  Figures 14--16, gamma/beta validation, baseline promotion, freezing, neuron
+  substitutions, or modern-anatomy variants.

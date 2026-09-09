@@ -1,0 +1,181 @@
+schema_version: 1
+id: joint-calibration-first-order-confirmation-recovery-796
+date: '2026-09-09'
+status: completed-first-order-joint-confirmation
+classification: explicit-joint-calibration-first-order-confirmation
+registration: docs/validation-results/joint-calibration-first-order-confirmation-recovery-registration-795.yaml
+runtime_fingerprint: 7e654528a99f0b25b7148260a8d52021f6443fb992b210729a2475ae3cfcdaa4
+nonspecific_t_scale: 0.203125
+projection_weight_scales:
+  modeldb112923.projection.000: 0.01
+  modeldb112923.projection.001: 0.01
+  modeldb112923.projection.004: 0.03
+  modeldb112923.projection.008: 0.75
+  modeldb112923.projection.011: 0.9375
+  modeldb112923.projection.025: 8.0
+  modeldb112923.projection.026: 0.75
+projection036_spread_convention: variance
+figure6_gates:
+  relay_active_indices: true
+  relay_events_per_active_index: true
+  relay_events: true
+  cortical_chain_complete: true
+  causal_learning_pair: true
+  top_down_horizontal_contrast: true
+figure7:
+  match:
+    relay_events: 20
+    relay_active_indices:
+    - 38
+    - 39
+    - 40
+    - 41
+    - 42
+    trn_events: 688
+    nonspecific_events: 4
+    nonspecific_event_times_ms:
+    - 1.31
+    - 3.1500000000000004
+    - 4.890000000000001
+    - 70.17
+    trn_to_nonspecific_gaba_integral_ms: 1231.0372503851845
+  mismatch:
+    relay_events: 3
+    relay_active_indices:
+    - 40
+    trn_events: 611
+    nonspecific_events: 7
+    nonspecific_event_times_ms:
+    - 1.31
+    - 3.1500000000000004
+    - 4.890000000000001
+    - 67.13000000000001
+    - 80.08000000000001
+    - 86.33
+    - 89.06000000000002
+    trn_to_nonspecific_gaba_integral_ms: 1182.9799912086974
+  gates:
+    match_relay_active_indices: true
+    match_relay_events: true
+    mismatch_relay_allowed_indices: true
+    match_more_active_relay_cells: true
+    match_more_trn_events: true
+    match_more_trn_to_nonspecific_gaba: true
+    match_nonspecific_events: true
+    mismatch_nonspecific_events: true
+  pass: true
+figure10:
+  intact:
+    pre_layer4_events: 45
+    pre_layer4_active_indices:
+    - 38
+    - 39
+    - 40
+    - 41
+    - 42
+    aggregate_winner_events: 47
+    aggregate_alternative_events: 44
+    pre_release_alternative_events: 0
+    late_reset_targets:
+    - target: 22
+      events: 10
+      first_event_ms: 84.83000000000001
+      last_event_ms: 197.45999999999998
+    - target: 31
+      events: 12
+      first_event_ms: 85.37
+      last_event_ms: 197.59000000000003
+    - target: 40
+      events: 13
+      first_event_ms: 86.47999999999999
+      last_event_ms: 197.33000000000004
+    - target: 49
+      events: 12
+      first_event_ms: 85.37
+      last_event_ms: 197.59000000000003
+    - target: 58
+      events: 10
+      first_event_ms: 84.83000000000001
+      last_event_ms: 197.45999999999998
+    late_old_center_events: 13
+    late_max_alternative_events: 12
+    late_alternative_margin: -1
+    replacement_winner_candidates: []
+    nonspecific_post_events: 13
+    layer5_post_events: 225
+    layer6i_post_events: 178
+    projection035_post_release_integral_pA_ms:
+    - - 22
+      - 343312.171000839
+    - - 31
+      - 448947.6099970204
+    - - 40
+      - 482281.66452702985
+    - - 49
+      - 448947.6099970204
+    - - 58
+      - 343312.171000839
+  disconnected_control:
+    pre_layer4_events: 45
+    pre_layer4_active_indices:
+    - 38
+    - 39
+    - 40
+    - 41
+    - 42
+    aggregate_winner_events: 58
+    aggregate_alternative_events: 54
+    pre_release_alternative_events: 0
+    late_reset_targets:
+    - target: 22
+      events: 13
+      first_event_ms: 86.41999999999999
+      last_event_ms: 197.87
+    - target: 31
+      events: 14
+      first_event_ms: 86.55000000000001
+      last_event_ms: 189.15000000000003
+    - target: 40
+      events: 14
+      first_event_ms: 97.31
+      last_event_ms: 188.48000000000002
+    - target: 49
+      events: 14
+      first_event_ms: 86.55000000000001
+      last_event_ms: 189.15000000000003
+    - target: 58
+      events: 13
+      first_event_ms: 86.41999999999999
+      last_event_ms: 197.87
+    late_old_center_events: 14
+    late_max_alternative_events: 14
+    late_alternative_margin: 0
+    replacement_winner_candidates: []
+    nonspecific_post_events: 14
+    layer5_post_events: 158
+    layer6i_post_events: 110
+    projection035_post_release_integral_pA_ms:
+    - - 22
+      - 389281.6720852507
+    - - 31
+      - 506784.61269131815
+    - - 40
+      - 554608.7835798508
+    - - 49
+      - 506784.61269131815
+    - - 58
+      - 389281.6720852507
+  gates:
+    identical_nonempty_prestate: true
+    alternatives_quiet_before_release: true
+    full_input_delivery: true
+    intact_reset_chain: true
+    aggregate_winner_suppression: true
+    intact_replacement_winner: false
+    reset_favors_replacement_margin: false
+  pass: false
+joint_first_order_pass: false
+holdouts_consulted: false
+original_smart_reproduced: false
+baseline_promoted: false
+baseline_frozen: false

@@ -1,0 +1,51 @@
+schema_version: 1
+id: joint-calibration-projection025-figure10-recovery-assessment-781
+date: '2026-09-09'
+status: completed-figure10-grid-no-joint-passer
+classification: explicit-joint-calibration-figure10-projection025-assessment
+registration: docs/validation-results/joint-calibration-projection025-figure10-recovery-registration-779.yaml
+result: docs/validation-results/joint-calibration-projection025-figure10-screen-recovery-780.yaml
+result_sha256: 6482ef63c20f90ce1fa80a5787b67401dc0fa0afade7463f96d02dc49c29c52d
+execution:
+  all_registered_scales_executed_once: true
+  candidate_order: ascending
+  fresh_figure6_pass: true
+  same_learned_state_yoked_across_scales: true
+  holdouts_consulted: false
+outcomes:
+- projection025_scale: 1.0
+  winner_events_intact_control: [61, 59]
+  first_alternative_ms_intact_control: [85.95, 86.25]
+  failed_gates: [winner_suppression]
+- projection025_scale: 2.0
+  winner_events_intact_control: [61, 59]
+  first_alternative_ms_intact_control: [85.96, 86.25]
+  failed_gates: [winner_suppression]
+- projection025_scale: 4.0
+  winner_events_intact_control: [61, 59]
+  first_alternative_ms_intact_control: [85.96, 86.26]
+  failed_gates: [winner_suppression]
+- projection025_scale: 8.0
+  winner_events_intact_control: [48, 59]
+  first_alternative_ms_intact_control: [95.04, 86.24]
+  failed_gates: [earlier_intact_alternative]
+passing_scales: []
+parameter_selected: false
+decision: >-
+  Close the registered projection-025 grid without selection. Do not
+  interpolate between scales 4 and 8 or extend the range. Before any additional
+  behavioral run, perform a causal timing audit of why the same inhibitory
+  transition that suppresses the old winner delays the first alternative.
+scientific_interpretation: >-
+  Projection-025 strengthening exhibits a gate tradeoff under the sole
+  Figure-6/7 survivor. At scales 1 through 4, the intact alternative is about
+  0.30 ms earlier but the winner is not suppressed. At scale 8, winner
+  suppression appears strongly, but the intact alternative is delayed by 8.80
+  ms. No tested endpoint jointly expresses both published Figure-10 criteria.
+boundary: >-
+  The project has an exact registered Figure-6/7 candidate but no complete
+  first-order Figures-6/7/10 endpoint. Spectral, higher-order, neuron-model, and
+  modern-anatomy holdouts remain sealed. Promotion and freezing are forbidden.
+original_smart_reproduced: false
+baseline_promoted: false
+baseline_frozen: false

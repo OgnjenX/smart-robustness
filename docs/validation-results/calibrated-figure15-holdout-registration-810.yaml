@@ -1,0 +1,64 @@
+schema_version: 1
+id: calibrated-figure15-holdout-registration-810
+date: '2026-09-09'
+status: registered-before-execution-fixed-local-synchrony-holdout
+classification: calibrated-classic-smart-figure15-holdout
+authorization: docs/validation-results/calibrated-figure14-holdout-assessment-809.yaml
+authorization_sha256: 7283f23316ba9f8273d4c0dbbd96e6caa1f10a89caa49258106fb44ab910b670
+profile: configs/calibration/figure6_7_10_projection025_source_control_v1.yaml
+profile_sha256: b2028a35666cb31645e91a741b00440b46a508558c5db8361404c2264041ffdf
+script: scripts/run_calibrated_figure15_holdout.py
+script_sha256: cef174c83d2abad3ab19eb70b43ea818e18249fa80239bc8e13e31273871a47b
+network_harness: src/smart_robustness/validation/figure15.py
+network_harness_sha256: 4362fc1dba215cbdfbab3de3903363049c10ff3f27dea12d15625012e91320d7
+analysis_harness: src/smart_robustness/analysis/figure15.py
+analysis_harness_sha256: 0df239469abb3f3cd284847869dd803d4484981c6e88820b04991f73a7a532f8
+runtime_fingerprint: 7e654528a99f0b25b7148260a8d52021f6443fb992b210729a2475ae3cfcdaa4
+result_id: calibrated-figure15-holdout-811
+result: docs/validation-results/calibrated-figure15-holdout-811.yaml
+assessment: docs/validation-results/calibrated-figure15-holdout-assessment-812.yaml
+fixed_endpoint:
+  nonspecific_t_scale: 0.203125
+  projection025_scale: 8.0
+  projection026_scale: 0.5
+  projection036_spread_convention: variance
+  projection038_scale: 1.0
+  projection008_scale: 0.75
+  projection011_scale: 0.9375
+  integration_method: rk4
+additional_global_scales:
+  modeldb112923.projection.025: 8.0
+  modeldb112923.projection.026: 0.5
+figure15_protocol:
+  condition: learned_horizontal_match
+  duration_ms: 1000.0
+  dt_ms: 0.01
+  first_cell_index: 39
+  second_cell_index: 40
+  pair_selection: predeclared_adjacent_cells_in_stimulated_horizontal_bar
+  histogram_bin_ms: 1.0
+  display_max_lag_ms: 180.0
+  spectrum_input: complete_linear_cross_correlogram
+  target_hz: 44.0
+  tolerance_hz: 5.0
+  top_down_current_pA: 800.0
+  top_down_current_mode: until_cued_cell_first_event
+  comparator: top_k_binary_5_targets_source_40
+admission:
+  figure14_holdout_passed: true
+  fresh_global_figure6_learning: true
+  no_parameter_change_after_first_order_promotion: true
+  no_neighbor_pair_search: true
+  higher_order_consulted: false
+gates:
+  both_cells_have_at_least_two_spikes: true
+  gamma_peak_within_39_49_hz: true
+selection_rule: >-
+  This is a holdout, not calibration. Pass only if the fixed pair has enough
+  events and its complete-correlogram spectrum peaks within 44 plus or minus 5
+  Hz. Preserve the observed value and do not search another pair or tolerance.
+stopping_rule: >-
+  Execute one fresh 1000-ms learned-match condition. Do not alter a parameter,
+  pair, lag convention, bin width, target, or tolerance after observing the
+  result. Do not open Figure 16, neuron-model, or modern-anatomy results until
+  this outcome is assessed.

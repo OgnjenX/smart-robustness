@@ -1,0 +1,59 @@
+schema_version: 1
+id: joint-calibration-t-mismatch-screen-registration-773
+date: '2026-09-09'
+status: registered-before-execution-stage2-fixed-match-mismatch-screen
+classification: explicit-joint-calibration-stage2-mismatch-screen
+methodology: docs/validation-results/joint-calibrated-reconstruction-methodology-769.yaml
+methodology_sha256: e86a05dd709ae06e7ce9f7fc54fb74a86b1b623311ce05ac75ba54d2b7bd5ae7
+stage1_registration: docs/validation-results/joint-calibration-t-match-screen-registration-770.yaml
+stage1_result: docs/validation-results/joint-calibration-t-match-screen-771.yaml
+stage1_result_sha256: 7bc287be4a68af725074702039bd484ae02b0c0b098d96d1d4f07a56407372f8
+stage1_assessment: docs/validation-results/joint-calibration-t-match-screen-assessment-772.yaml
+stage1_assessment_sha256: 7572cb24726e6542ab401ed915f2cc30080d9c99c9b20c80546687d574ad19d7
+profile: configs/calibration/figure6_7_10_projection025_source_control_v1.yaml
+profile_sha256: b2028a35666cb31645e91a741b00440b46a508558c5db8361404c2264041ffdf
+script: scripts/run_joint_calibration_t_mismatch_screen.py
+script_sha256: 910d11a987e96d2b1b76a57659b42669f02246fb28f8978fcd713b5f460cce43
+projection036_harness: src/smart_robustness/validation/figure10_search_cycle_spread.py
+projection036_harness_sha256: 2658161a8ddff80e918e6d8250553e155eac73c1286a36314ec7e7716c8faa7f
+base_runtime_fingerprint: fbcc1dc2ac7db8442ce1ff17b71a1d04582c32e817370c700c69ec3caa9fbe4e
+result_id: joint-calibration-t-mismatch-screen-774
+result: docs/validation-results/joint-calibration-t-mismatch-screen-774.yaml
+assessment: docs/validation-results/joint-calibration-t-mismatch-screen-assessment-775.yaml
+survivors: [0.203125, 0.21875]
+candidate_order: ascending
+fixed_endpoint:
+  projection025_scale: 1.0
+  projection036_spread_convention: variance
+  projection008_scale: 0.75
+  projection011_scale: 0.9375
+  integration_method: rk4
+admission:
+  fresh_figure6_required_for_each_candidate: true
+  fresh_match_and_mismatch_required_for_each_candidate: true
+  every_stage1_survivor_included: true
+  figure10_consulted: false
+  holdouts_consulted: false
+exact_figure7_gates:
+  match_relay_active_indices: [38, 39, 40, 41, 42]
+  match_relay_events: 20
+  mismatch_relay_active_indices: [40]
+  match_more_active_relay_cells: true
+  match_more_trn_events: true
+  match_more_integrated_trn_inhibition: true
+  match_nonspecific_events: 4
+  mismatch_nonspecific_events: 7
+decision_rule: >-
+  Report both candidates. A candidate survives only if every fresh Figure-6
+  gate and every Figure-7 match/mismatch gate passes conjunctively. Advance all
+  and only joint Figure-6/7 survivors to a separately registered Figure-10
+  projection-025 screen. Do not rank candidates by distance or event timing.
+stopping_rule: >-
+  Execute both registered survivors once in ascending order. Do not add,
+  interpolate, or repeat T-current values after observing mismatch. Do not
+  inspect Figure 10, spectral, higher-order, neuron-model, or modern-anatomy
+  outcomes in this stage.
+boundary: >-
+  A Stage-2 survivor remains a calibrated first-order candidate. It cannot be
+  called reproduced, promoted, or frozen before Figure 10 and the independent
+  spectral and higher-order holdouts pass.

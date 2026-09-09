@@ -1,0 +1,23 @@
+schema_version: 1
+id: joint-calibration-learned-state-audit-799
+date: '2026-09-09'
+status: failed-before-simulation-duplicate-runtime-override
+classification: explicit-joint-calibration-learned-state-diagnostic-failure
+registration: docs/validation-results/joint-calibration-learned-state-audit-registration-798.yaml
+failure_stage: setup-before-runtime-construction
+exception_type: TypeError
+exception_message: >-
+  dataclasses.replace() got multiple values for keyword argument
+  'nonspecific_dendritic_calcium_density_scale'
+cause: >-
+  The runner expanded the profile runtime_overrides and passed the registered
+  nonspecific T-current scale as a second explicit keyword instead of replacing
+  that field in one merged override mapping.
+simulation_started: false
+candidate_observed: false
+scientific_result_available: false
+holdouts_consulted: false
+parameter_selected: false
+original_smart_reproduced: false
+baseline_promoted: false
+baseline_frozen: false

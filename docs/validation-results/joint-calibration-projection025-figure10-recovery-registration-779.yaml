@@ -1,0 +1,67 @@
+schema_version: 1
+id: joint-calibration-projection025-figure10-recovery-registration-779
+date: '2026-09-09'
+status: registered-before-execution-pure-setup-recovery
+classification: explicit-joint-calibration-figure10-projection025-screen-recovery
+recovers_registration: docs/validation-results/joint-calibration-projection025-figure10-registration-776.yaml
+failed_result: docs/validation-results/joint-calibration-projection025-figure10-screen-777.yaml
+failed_result_sha256: 4f594ed7090d758165d32420ee26a15b72c40f67598e7b3b51539566247e40c2
+failure_assessment: docs/validation-results/joint-calibration-projection025-figure10-assessment-778.yaml
+failure_assessment_sha256: 891ee1baffe9450c86cf59224836eff7d2b1467718f267a3f8df66002bae9a8f
+methodology: docs/validation-results/joint-calibrated-reconstruction-methodology-769.yaml
+methodology_sha256: e86a05dd709ae06e7ce9f7fc54fb74a86b1b623311ce05ac75ba54d2b7bd5ae7
+stage2_result: docs/validation-results/joint-calibration-t-mismatch-screen-774.yaml
+stage2_result_sha256: 19a6b96d417a1aac0518eb5afabcebe079242ae2face260e6ccc80f32291dcf1
+stage2_assessment: docs/validation-results/joint-calibration-t-mismatch-screen-assessment-775.yaml
+stage2_assessment_sha256: 418946bb78e77eca4d10c46f41a67dac6721844c8d5838b5313d4ef530fb60df
+profile: configs/calibration/figure6_7_10_projection025_source_control_v1.yaml
+profile_sha256: b2028a35666cb31645e91a741b00440b46a508558c5db8361404c2264041ffdf
+script: scripts/run_joint_calibration_projection025_figure10_screen.py
+script_sha256: 481283b8d4654f1499db20fd4c8cae73f06501523f9b397421102a7ac0c4c86d
+authorized_code_change: >-
+  Merge the existing runtime override mappings and replace their T-current key
+  before one dataclasses.replace call. No model, protocol, grid, gate,
+  selection, output, or stopping-rule change is authorized.
+figure10_harness: src/smart_robustness/validation/figure10_search_cycle_spread.py
+figure10_harness_sha256: 2658161a8ddff80e918e6d8250553e155eac73c1286a36314ec7e7716c8faa7f
+runtime_fingerprint: 7e654528a99f0b25b7148260a8d52021f6443fb992b210729a2475ae3cfcdaa4
+result_id: joint-calibration-projection025-figure10-screen-recovery-780
+result: docs/validation-results/joint-calibration-projection025-figure10-screen-recovery-780.yaml
+assessment: docs/validation-results/joint-calibration-projection025-figure10-recovery-assessment-781.yaml
+nonspecific_t_scale: 0.203125
+projection025_scale_grid: [1.0, 2.0, 4.0, 8.0]
+candidate_order: ascending
+fixed_endpoint:
+  projection036_spread_convention: variance
+  projection008_scale: 0.75
+  projection011_scale: 0.9375
+  integration_method: rk4
+admission:
+  sole_joint_figure6_7_survivor_required: true
+  fresh_figure6_prerequisite: true
+  same_learned_state_yoked_across_all_figure10_arms: true
+  fresh_intact_and_disconnected_control_per_scale: true
+  figure7_rerun_in_this_stage: false
+  holdouts_consulted: false
+figure10_gates:
+  identical_nonempty_prestate: true
+  alternatives_quiet_before_release: true
+  full_five_target_input_delivery: true
+  intact_reset_chain: true
+  intact_winner_events_strictly_less_than_control: true
+  first_intact_alternative_strictly_before_control: true
+selection_rule: >-
+  Report all four candidates. A scale passes only if every Figure-10 gate
+  passes conjunctively. If one or more scales pass, select the smallest passing
+  scale as the least source-relative conductance departure, then subject that
+  single endpoint to a separately registered fresh joint Figures-6/7/10
+  confirmation. A screen pass alone cannot promote or freeze the baseline.
+stopping_rule: >-
+  Execute the four listed scales once in ascending order. Do not interpolate,
+  add intermediate or larger values, change the release marker, or repeat a
+  candidate after observing its outcome. Do not inspect spectral,
+  higher-order, neuron-model, or modern-anatomy holdouts in this stage.
+boundary: >-
+  This recovery repeats the scientifically unconsumed Stage-3 registration
+  after a pre-simulation setup failure. It calibrates an effective projection-
+  025 conductance departure and does not recover an omitted legacy convention.

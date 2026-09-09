@@ -1,0 +1,191 @@
+schema_version: 1
+id: figure10-target-resolved-scale8-audit-784
+date: '2026-09-09'
+status: completed-target-resolved-scale8-audit
+classification: figure10-target-resolved-closed-endpoint-diagnostic
+registration: docs/validation-results/figure10-target-resolved-scale8-registration-783.yaml
+runtime_fingerprint: 7e654528a99f0b25b7148260a8d52021f6443fb992b210729a2475ae3cfcdaa4
+nonspecific_t_scale: 0.203125
+projection025_scale: 8.0
+figure6_gates:
+  relay_active_indices: true
+  relay_events_per_active_index: true
+  relay_events: true
+  cortical_chain_complete: true
+  causal_learning_pair: true
+  top_down_horizontal_contrast: true
+intact:
+  aggregate_winner_events: 48
+  aggregate_alternative_events: 44
+  pre_release:
+  - target: 22
+    role: previously-inactive-alternative
+    events: 0
+    first_event_ms: null
+    last_event_ms: null
+  - target: 31
+    role: previously-inactive-alternative
+    events: 0
+    first_event_ms: null
+    last_event_ms: null
+  - target: 40
+    role: prior-winner-center
+    events: 3
+    first_event_ms: 6.170000000000016
+    last_event_ms: 27.490000000000023
+  - target: 49
+    role: previously-inactive-alternative
+    events: 0
+    first_event_ms: null
+    last_event_ms: null
+  - target: 58
+    role: previously-inactive-alternative
+    events: 0
+    first_event_ms: null
+    last_event_ms: null
+  post_release:
+  - target: 22
+    role: previously-inactive-alternative
+    events: 13
+    first_event_ms: 96.76000000000002
+    last_event_ms: 196.35000000000002
+  - target: 31
+    role: previously-inactive-alternative
+    events: 9
+    first_event_ms: 95.04000000000002
+    last_event_ms: 196.54000000000002
+  - target: 40
+    role: prior-winner-center
+    events: 15
+    first_event_ms: 65.98000000000002
+    last_event_ms: 196.18
+  - target: 49
+    role: previously-inactive-alternative
+    events: 9
+    first_event_ms: 95.04000000000002
+    last_event_ms: 196.54000000000002
+  - target: 58
+    role: previously-inactive-alternative
+    events: 13
+    first_event_ms: 96.76000000000002
+    last_event_ms: 196.35000000000002
+  late_reset:
+  - target: 22
+    role: previously-inactive-alternative
+    events: 13
+    first_event_ms: 96.76000000000002
+    last_event_ms: 196.35000000000002
+  - target: 31
+    role: previously-inactive-alternative
+    events: 9
+    first_event_ms: 95.04000000000002
+    last_event_ms: 196.54000000000002
+  - target: 40
+    role: prior-winner-center
+    events: 14
+    first_event_ms: 97.12
+    last_event_ms: 196.18
+  - target: 49
+    role: previously-inactive-alternative
+    events: 9
+    first_event_ms: 95.04000000000002
+    last_event_ms: 196.54000000000002
+  - target: 58
+    role: previously-inactive-alternative
+    events: 13
+    first_event_ms: 96.76000000000002
+    last_event_ms: 196.35000000000002
+  late_reset_start_ms: 75.0
+  replacement_winner_candidates: []
+disconnected_control:
+  aggregate_winner_events: 59
+  aggregate_alternative_events: 46
+  pre_release:
+  - target: 22
+    role: previously-inactive-alternative
+    events: 0
+    first_event_ms: null
+    last_event_ms: null
+  - target: 31
+    role: previously-inactive-alternative
+    events: 0
+    first_event_ms: null
+    last_event_ms: null
+  - target: 40
+    role: prior-winner-center
+    events: 3
+    first_event_ms: 6.170000000000016
+    last_event_ms: 27.490000000000023
+  - target: 49
+    role: previously-inactive-alternative
+    events: 0
+    first_event_ms: null
+    last_event_ms: null
+  - target: 58
+    role: previously-inactive-alternative
+    events: 0
+    first_event_ms: null
+    last_event_ms: null
+  post_release:
+  - target: 22
+    role: previously-inactive-alternative
+    events: 13
+    first_event_ms: 86.24000000000001
+    last_event_ms: 197.87
+  - target: 31
+    role: previously-inactive-alternative
+    events: 10
+    first_event_ms: 88.44999999999999
+    last_event_ms: 198.01999999999998
+  - target: 40
+    role: prior-winner-center
+    events: 12
+    first_event_ms: 68.78
+    last_event_ms: 197.71000000000004
+  - target: 49
+    role: previously-inactive-alternative
+    events: 10
+    first_event_ms: 88.44999999999999
+    last_event_ms: 198.01999999999998
+  - target: 58
+    role: previously-inactive-alternative
+    events: 13
+    first_event_ms: 86.24000000000001
+    last_event_ms: 197.87
+  late_reset:
+  - target: 22
+    role: previously-inactive-alternative
+    events: 13
+    first_event_ms: 86.24000000000001
+    last_event_ms: 197.87
+  - target: 31
+    role: previously-inactive-alternative
+    events: 10
+    first_event_ms: 88.44999999999999
+    last_event_ms: 198.01999999999998
+  - target: 40
+    role: prior-winner-center
+    events: 11
+    first_event_ms: 100.87
+    last_event_ms: 197.71000000000004
+  - target: 49
+    role: previously-inactive-alternative
+    events: 10
+    first_event_ms: 88.44999999999999
+    last_event_ms: 198.01999999999998
+  - target: 58
+    role: previously-inactive-alternative
+    events: 13
+    first_event_ms: 86.24000000000001
+    last_event_ms: 197.87
+  late_reset_start_ms: 75.0
+  replacement_winner_candidates:
+  - 22
+  - 58
+intact_replacement_winner_observed: false
+control_replacement_winner_observed: true
+parameter_selected: false
+holdouts_consulted: false
+original_smart_reproduced: false
+baseline_promoted: false
+baseline_frozen: false

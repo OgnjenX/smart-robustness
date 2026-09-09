@@ -789,9 +789,69 @@ parameters:
     note: All three builds have the selected p036 topology and every Figure-6, relay-selection, TRN-event-direction, and effective-inhibition gate passes. Nonspecific output is 3/6 rather than 4/7, so Figure-7 consistency fails, Figure 14 is not authorized, and no jointly validated Figure-6/7/10 endpoint exists. No repeat or rate tuning is allowed.
   validation.figure6_7_10.projection025_source_control:
     value: remove inherited diagnostic projection-025 scale 8 and restore released scale 1, then test one joint Figure-6/7/10 endpoint
-    status: recovery-rerun-registered-after-serialization-only-failure
-    source: SMART.nml projection 025; Artifacts 643 and 646; Artifacts 753--760
-    note: Scale 8 came from an isolated effective first-event bracket and its connected endpoint was explicitly closed, unselected, and not recovered. The sole source correction retains p036 variance and pre-depletion emission but omits p025 from the scale map. The first execution completed simulation but emitted zero bytes because PyYAML could not represent one numpy.bool_; no scientific result was interpreted. Registration 760 permits only a built-in bool cast and complete rerun with every scientific value and gate unchanged.
+    status: completed-joint-failure-source-control-closed
+    source: SMART.nml projection 025; Artifacts 643 and 646; Artifacts 753--762
+    note: The serialization-only recovery completed with source scale 1, exact p036 topology, and every Figure-6 gate. Figure 7 remains 3/6 instead of 4/7 and Figure 10 has tied 59/59 winner output, failing winner suppression despite an intact alternative lead of 0.03 ms. Source scale 1 is rejected as a joint endpoint; scale 8 remains a closed, unselected diagnostic and no interpolation is authorized. Artifact 763 confirms exact source-to-Brian2 conductance parity and closes projection 025 entirely.
+  validation.figure6_7_10.projection025_conductance_parity:
+    value: 0.1 mS/cm2 times pi*0.005 cm*0.01 cm equals 15.707963267948967 nS, with a separate weight-1 edge per target
+    status: completed-exact-parity-family-closed
+    source: SMART.nml projection 025 and Layer_6_I geometry; KInNeSS Equations 2, 9, and 16; Artifact 763
+    note: Brian2 compiles exactly 15.707963267948967 nS with zero numerical error. Standard-deviation spread produces 81 effective one-to-one edges and each target receives total weight 1. No unit, area, targeting, kinetics, or weight-factor error exists and no source evidence supports scale 8. Projection-025 spread and conductance alternatives are closed without selection or interpolation; the available constrained family has no joint Figure-6/7/10 survivor.
+  diagnostics.integration.sanndra_scalar_rk4:
+    value: default-off per-equation RK4 with all other differential states frozen through each variable's four stages
+    status: completed-source-adjacent-joint-failure-rejected-closed
+    source: preserved SANNDRA 0.4.0 source and Artifacts 764--767
+    note: The preserved 2001 helper and synchronous publish barrier justify this bounded comparator but do not prove unavailable SANNDRA 1.2.0 RC2 behavior. Unit probes pass and connected Figure 6 survives. Figure 7 becomes 5/6 rather than 4/7 and reverses the required TRN-GABA integral direction; Figure 10 gives 50/48 intact/control winner events and tied 79.09-ms alternative onset. The endpoint is unselected, no interpolation is authorized, and it remains available only for later robustness analysis.
+  calibration.joint_reconstruction_methodology:
+    value: Figures 6, 7, and 10 as training targets; Figures 14--16 as fixed holdouts
+    status: active-calibrated-reconstruction-contract
+    source: Artifact 769
+    note: A successful endpoint is a calibrated classic-SMART reconstruction, not bit-identical recovery of unavailable KInNeSS/SANNDRA execution. Alternative neuron models and modern anatomy remain separate later phases.
+  calibration.nonspecific_t_current_scale:
+    value: 0.203125, giving effective density 50.78125 mS/cm2
+    status: selected-joint-figure6-7-calibration-departure
+    source: Artifacts 770--775
+    note: This is the sole registered grid value producing exact 4/7 match/mismatch nonspecific output while preserving every Figure-6 and Figure-7 mechanism gate. It is an effective calibration, not a recovered source value.
+  calibration.projection025_effective_scale:
+    value: 8.0
+    status: selected-only-within-joint-calibrated-reconstruction
+    source: Artifacts 769 and 804--806
+    note: Source parity proves that SMART.nml scale 1 is translated exactly, and earlier source-recovery routes remain closed. Scale 8 is retained only as an explicit effective departure in the jointly trained endpoint; it must never be described as published or recovered.
+  calibration.projection026_effective_scale:
+    value: 0.5
+    status: selected-sole-global-first-order-survivor
+    source: Artifacts 789--806
+    note: Downstream-only scale 0.75 is invalidated by learned-state dependence. With fresh global retraining, scale 1 fails Figure 7 and scale 0.5 alone passes Figures 6, 7, and 10.
+  validation.calibrated_first_order_endpoint:
+    value: T=0.203125; p025=8; p026=0.5; p036=variance; p038=1; p008=0.75; p011=0.9375; integration=rk4
+    status: promoted-first-order-not-frozen-complete-baseline
+    source: Artifacts 804--806
+    note: The endpoint jointly passes learning, match/mismatch, and causal reset gates. Promotion opens holdouts but does not imply exact original SMART recovery.
+  validation.figure14.calibrated_holdout:
+    value: match peak 55 Hz; mismatch peak 10 Hz; mismatch gamma power lower
+    status: passed-unchanged-holdout
+    source: Artifacts 807--809
+    note: All three preregistered qualitative spectral directions pass after fresh global learning and without changing the first-order endpoint.
+  validation.figure15.calibrated_holdout:
+    value: fixed cells 39/40 peak at 53.026513256628306 Hz
+    status: failed-preregistered-44-plus-or-minus-5-hz-gate
+    source: Artifacts 810--812
+    note: Both cells fire repeatedly and show local gamma synchrony, but the peak exceeds the registered 49-Hz upper boundary. No pair, parameter, estimator, or tolerance was changed.
+  diagnostics.figure15.primary_source_identifiability:
+    value: graphical F=44 Hz label with unrecovered pair, spike arrays, estimator, confidence method, and tolerance
+    status: completed-exact-numeric-test-not-identifiable
+    source: Artifact 816
+    note: The source-identifiable local layer-4 gamma phenotype is reproduced at 53.03 Hz, while the graphical 44-Hz value is not reproduced under the registered reconstruction analysis. The failed holdout remains failed and no post-hoc analysis or parameter is selected.
+  validation.figure16.calibrated_holdout:
+    value: strongest 2--4-Hz peak; lower-to-gamma peak ratio 4.824415614511934
+    status: passed-unchanged-higher-order-holdout
+    source: Artifacts 813--815
+    note: The complete V1-pulvinar-V2 loop reproduces lower-frequency inter-area dominance. This does not compensate for the Figure-15 numeric failure.
+  research_program.phase_order:
+    value: classic calibrated reconstruction, then neuron-model robustness, then modern-anatomy robustness
+    status: fixed-separation-of-scientific-questions
+    source: user research objective and Artifact 769
+    note: AdEx, GIF, Hodgkin-Huxley, and multicompartment substitutions must compare against the frozen classic baseline. Post-2008 anatomy is a separately labeled intervention family and must not enter classic calibration.
   benchmark.population_sizes:
     value: see configs/*.yaml
     status: exploratory

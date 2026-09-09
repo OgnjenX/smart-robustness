@@ -1,0 +1,60 @@
+schema_version: 1
+id: joint-calibration-projection026-figure10-assessment-791
+date: '2026-09-09'
+status: completed-projection026-grid-single-causal-passer
+classification: explicit-joint-calibration-figure10-projection026-assessment
+registration: docs/validation-results/joint-calibration-projection026-figure10-registration-789.yaml
+result: docs/validation-results/joint-calibration-projection026-figure10-screen-790.yaml
+result_sha256: 4dcc7a38fd23de21983ecec2e1757e1186e035832822d029212fc72c1ac9f6e2
+execution:
+  interrupted_attempt_produced_observations: false
+  completed_attempt_used_unchanged_registration: true
+  all_registered_scales_executed_once_in_completed_attempt: true
+  candidate_order: descending
+  fresh_figure6_pass: true
+  intact_and_control_yoked_within_each_scale: true
+  figure7_rerun_in_this_stage: false
+  holdouts_consulted: false
+outcomes:
+- projection026_scale: 1.0
+  intact_control_late_alternative_margin: [-1, 2]
+  intact_replacement_winner_candidates: []
+  control_replacement_winner_candidates: [22, 58]
+  failed_gates: [intact_replacement_winner, reset_favors_replacement_margin]
+- projection026_scale: 0.75
+  intact_control_late_alternative_margin: [2, -1]
+  intact_replacement_winner_candidates: [31, 49]
+  control_replacement_winner_candidates: []
+  failed_gates: []
+- projection026_scale: 0.5
+  intact_control_late_alternative_margin: [-2, -1]
+  intact_replacement_winner_candidates: []
+  control_replacement_winner_candidates: []
+  failed_gates: [intact_replacement_winner, reset_favors_replacement_margin]
+passing_scales: [0.75]
+selected_largest_passing_scale: 0.75
+parameter_selected: true
+interpretation: >-
+  The balance-bracketing projection-026 scale 0.75 is the sole causal
+  Figure-10 survivor. In its intact arm, late targets 31 and 49 each emit 14
+  events while the old center emits 12, giving a +2 replacement margin. In
+  the yoked disconnected control, the old center emits 13 and the strongest
+  alternatives emit 12, giving a -1 margin and no replacement winner. The
+  scale-1 endpoint retains the previously observed wrong causal sign, whereas
+  scale 0.5 over-reduces the indirect pathway and loses replacement. The
+  response is therefore nonmonotonic and supports the registered discrete
+  selection, not interpolation.
+decision: >-
+  Select projection-026 scale 0.75 as the sole provisional Figure-10 endpoint.
+  Do not promote or freeze it from this screen. Register one fresh single-
+  endpoint confirmation that reruns Figures 6, 7 match/mismatch, and the
+  intact/disconnected Figure-10 pair from new learned state, with every
+  selected parameter fixed and no grid or fallback.
+boundary: >-
+  Projection 026 remains an explicitly calibrated effective-conductance
+  convention rather than a recovered 2008 source parameter. Spectral,
+  higher-order, neuron-model, and modern-anatomy holdouts remain sealed until
+  the joint first-order confirmation passes.
+original_smart_reproduced: false
+baseline_promoted: false
+baseline_frozen: false

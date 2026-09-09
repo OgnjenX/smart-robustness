@@ -1,0 +1,43 @@
+schema_version: 1
+id: calibrated-figure15-holdout-assessment-812
+date: '2026-09-09'
+status: completed-figure15-holdout-fail-peak-high
+classification: calibrated-classic-smart-figure15-holdout-assessment
+registration: docs/validation-results/calibrated-figure15-holdout-registration-810.yaml
+result: docs/validation-results/calibrated-figure15-holdout-811.yaml
+result_sha256: 8bf47bd703a4d501c676064c3eefe863914ba2ce122e82436b4179d8fe00ce71
+execution:
+  fresh_global_learning_state: true
+  published_duration_match: true
+  fixed_pair_and_analysis: true
+  neighbor_pair_search_performed: false
+  parameter_changed_after_first_order_promotion: false
+  later_holdouts_consulted: false
+result:
+  pair: [39, 40]
+  spike_counts: [114, 148]
+  all_layer4_spikes: 608
+  gamma_peak_hz: 53.026513256628306
+  target_hz: 44.0
+  tolerance_hz: 5.0
+  deviation_hz: 9.026513256628306
+gates:
+  both_cells_have_at_least_two_spikes: true
+  peak_within_39_49_hz: false
+figure15_holdout_pass: false
+interpretation: >-
+  The fixed pair exhibits strong local gamma synchrony, but its 53.03-Hz peak
+  lies 4.03 Hz above the preregistered upper acceptance boundary and 9.03 Hz
+  above the paper's approximate simulated 44-Hz value. It is close to the
+  caption's approximately 50-Hz experimental comparison, but that observation
+  cannot replace or relax the registered simulated-model target.
+decision: >-
+  Retain Figure 15 as a failed holdout. Do not tune any conductance, choose
+  another cell pair, crop the correlogram, or widen the tolerance from this
+  result. Open the independently required Figure-16 higher-order validation on
+  the unchanged endpoint solely to complete characterization of the classic
+  model. A Figure-16 pass cannot compensate for this Figure-15 failure, and the
+  complete baseline remains ineligible for freezing.
+original_smart_reproduced: false
+baseline_promoted: false
+baseline_frozen: false

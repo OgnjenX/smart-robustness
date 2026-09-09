@@ -1,0 +1,51 @@
+schema_version: 1
+id: figure10-target-resolved-scale8-assessment-785
+date: '2026-09-09'
+status: assessed-intact-reset-prevents-replacement-winner
+classification: figure10-target-resolved-scale8-diagnostic-assessment
+registration: docs/validation-results/figure10-target-resolved-scale8-registration-783.yaml
+result: docs/validation-results/figure10-target-resolved-scale8-audit-784.yaml
+result_sha256: 5c21d434ca9dd7457b2f559793486c7177438811a7219816378360ea9bc741e6
+assessment:
+  fresh_figure6_pass: true
+  alternatives_quiet_before_release_both_arms: true
+  intact_old_winner_suppressed_in_aggregate: true
+  intact_replacement_winner_observed: false
+  control_replacement_winner_observed: true
+  scale8_descriptive_figure10_pass: false
+  scale8_causal_figure10_pass: false
+  parameter_selected: false
+target_resolved_late_reset:
+  intact:
+    prior_winner_center_40_events: 14
+    maximal_alternative_events: 13
+    replacement_winner_candidates: []
+  disconnected_control:
+    prior_winner_center_40_events: 11
+    maximal_alternative_events: 13
+    replacement_winner_candidates: [22, 58]
+interpretation: >-
+  Scale 8 does not hide a publication-like replacement winner. During the
+  paper-derived late reset interval, the intact old center remains more active
+  than every alternative, whereas the disconnected control independently
+  switches to alternatives 22 and 58. The reset pathway therefore suppresses
+  the old winner in aggregate while preventing the selective replacement that
+  Figure 10 requires. This is broad inhibitory interference, not successful
+  reset-mediated search.
+causal_localization: >-
+  Together with the prior target-balance audits, the result points to the
+  indirect layer-6I-to-layer-4I-to-layer-4 off-surround route overpowering the
+  transmitter-biased direct layer-6I-to-layer-4 excitation at alternatives.
+  Projection-025 scale interpolation is not warranted because it controls both
+  routes upstream and the registered grid already shows their tradeoff.
+next_gate: >-
+  Before another simulation, register a bounded direct-versus-indirect balance
+  calibration justified by the measured early current deficit. Prefer the
+  direct projection-038 effective scale as one explicit dimension while
+  keeping projection-025 at the sole winner-suppressing scale 8. Require both
+  old-winner suppression and a target-resolved intact replacement winner that
+  is favored relative to the disconnected control. Any survivor must later
+  pass fresh Figures 6, 7, and 10 jointly before holdouts open.
+original_smart_reproduced: false
+baseline_promoted: false
+baseline_frozen: false

@@ -1,0 +1,138 @@
+schema_version: 1
+id: figure6-7-10-sanndra-scalar-rk4-766
+date: '2026-09-09'
+status: completed-source-adjacent-integration-cross-joint-failure
+classification: source-adjacent-joint-first-order-cross
+registration: docs/validation-results/figure6-7-10-sanndra-scalar-rk4-registration-765.yaml
+runtime_fingerprint: b846b9648bd46d02f83a4ba5390e10c0f0e5fc4d78404eb30a895f449b52d3c1
+integration_method: sanndra_scalar_rk4
+execution:
+  completed: true
+  backend: brian2-numpy
+  stdout_archival: compact-lossless-for-registered-gates-and-summary-metrics
+persistent_projection_weight_scales:
+  modeldb112923.projection.000: 0.01
+  modeldb112923.projection.001: 0.01
+  modeldb112923.projection.004: 0.03
+  modeldb112923.projection.008: 0.75
+  modeldb112923.projection.011: 0.9375
+projection025_runtime_scale: 1.0
+projection036_topology_observations:
+- {nonzero_edges: 5508, incoming_weight_sum_target40: 16.839467692819127}
+- {nonzero_edges: 5508, incoming_weight_sum_target40: 16.839467692819127}
+- {nonzero_edges: 5508, incoming_weight_sum_target40: 16.839467692819127}
+topology_and_source_gates:
+  three_figure6_figure7_builds_observed: true
+  nonzero_edges_all_observed_builds: true
+  incoming_weight_sum_all_observed_builds: true
+  projection025_source_scale: true
+figure6_gates:
+  relay_active_indices: true
+  relay_events_per_active_index: true
+  relay_events: true
+  cortical_chain_complete: true
+  causal_learning_pair: true
+  top_down_horizontal_contrast: true
+figure7:
+  match:
+    relay_events: 20
+    relay_active_indices: [38, 39, 40, 41, 42]
+    relay_event_times_ms:
+    - 5.95
+    - 5.95
+    - 5.960000000000001
+    - 5.960000000000001
+    - 5.960000000000001
+    - 56.31
+    - 56.31
+    - 58.650000000000006
+    - 58.650000000000006
+    - 59.56
+    - 77.91000000000001
+    - 77.91000000000001
+    - 78.99000000000001
+    - 78.99000000000001
+    - 79.44000000000001
+    - 97.98
+    - 97.98
+    - 98.83
+    - 98.83
+    - 99.38000000000001
+    trn_events: 630
+    nonspecific_events: 5
+    nonspecific_event_times_ms: [1.3800000000000001, 3.2900000000000005,
+      5.1000000000000005, 78.32, 95.85000000000001]
+    trn_to_nonspecific_gaba_integral_ms: 1175.1841812249
+  mismatch:
+    relay_events: 3
+    relay_active_indices: [40]
+    relay_event_times_ms: [5.960000000000001, 68.99000000000001,
+      87.02000000000001]
+    trn_events: 611
+    nonspecific_events: 6
+    nonspecific_event_times_ms: [1.3800000000000001, 3.2900000000000005,
+      5.1000000000000005, 67.89, 80.96000000000001, 87.51]
+    trn_to_nonspecific_gaba_integral_ms: 1181.9344953083655
+  gates:
+    match_relay_active_indices: true
+    match_relay_events: true
+    mismatch_relay_allowed_indices: true
+    match_more_active_relay_cells: true
+    match_more_trn_events: true
+    match_more_trn_to_nonspecific_gaba: false
+    match_nonspecific_events: false
+    mismatch_nonspecific_events: false
+figure10:
+  intact:
+    projection036_nonzero_edges: 5508
+    projection036_incoming_weight_sum: 16.839467692819134
+    pre_layer4_events: 33
+    pre_layer4_active_indices: [38, 39, 40, 41, 42]
+    winner_post_events: 50
+    alternative_events: 52
+    alternative_active_indices: [22, 31, 49, 58]
+    first_alternative_event_ms: 79.09000000000003
+    alternative_events_before_release: 0
+    nonspecific_post_events: 9
+    layer5_post_events: 224
+    layer6i_post_events: 98
+    layer4_inhibitory_post_events: 414
+    projection035_post_release_integral_pA_ms:
+    - [22, 374540.9185608885]
+    - [31, 489536.40645232936]
+    - [40, 565512.2186805584]
+    - [49, 489536.40645232936]
+    - [58, 374540.9185608885]
+  disconnected_control:
+    projection036_nonzero_edges: 5508
+    projection036_incoming_weight_sum: 16.839467692819134
+    pre_layer4_events: 33
+    pre_layer4_active_indices: [38, 39, 40, 41, 42]
+    winner_post_events: 48
+    alternative_events: 62
+    alternative_active_indices: [22, 31, 49, 58]
+    first_alternative_event_ms: 79.09000000000003
+    alternative_events_before_release: 0
+    nonspecific_post_events: 9
+    layer5_post_events: 148
+    layer6i_post_events: 97
+    layer4_inhibitory_post_events: 419
+    projection035_post_release_integral_pA_ms:
+    - [22, 386301.8814055143]
+    - [31, 509506.10134914913]
+    - [40, 583889.5418201401]
+    - [49, 509506.1013491491]
+    - [58, 386301.8814055143]
+  gates:
+    projection036_topology_both_arms: true
+    identical_nonempty_pre_reset_state: true
+    alternatives_quiet_before_release: true
+    full_input_delivery: true
+    intact_reset_chain: true
+    winner_suppression: false
+    alternative_latency: false
+joint_first_order_gates_pass: false
+parameter_selected: false
+original_smart_reproduced: false
+baseline_promoted: false
+baseline_frozen: false

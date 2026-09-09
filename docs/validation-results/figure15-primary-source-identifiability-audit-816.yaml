@@ -1,0 +1,123 @@
+schema_version: 1
+id: figure15-primary-source-identifiability-audit-816
+date: '2026-09-10'
+status: completed-exact-44hz-test-not-source-identifiable
+classification: read-only-primary-source-and-analysis-identifiability-audit
+authorization:
+  path: docs/validation-results/calibrated-figure16-holdout-assessment-815.yaml
+  sha256: 101aec07e0ad07375d2577dfca10a8eb9b0464154a5f07cc76ab6e732f1c83a1
+audited_holdout:
+  path: docs/validation-results/calibrated-figure15-holdout-811.yaml
+  sha256: 8bf47bd703a4d501c676064c3eefe863914ba2ce122e82436b4179d8fe00ce71
+primary_sources:
+  article:
+    citation: Grossberg and Versace 2008, Brain Research 1218, 278-312
+    local_path: tmp/pdfs/GroVer2008BR.pdf
+    sha256: c56c337624959d8c0bdf51aa79b0dbc82f31264af2b2cd675790879a6410d7ed
+    audited_pages: [30, 31, 44]
+  rendered_figure15_page:
+    local_path: /private/tmp/smart-figure15-page31.png
+    render_resolution_dpi: 200
+    sha256: 68ca51e9a0c6318d6c29ee8fea7ef25d45f668d8d7d0aa06fb7b61c76e3d9a53
+    redistribution: omitted; reproducible from the locally audited article
+  supplement:
+    local_path: tmp/pdfs/GroVer2008BR-supplement.doc
+    sha256: e5c8dea19d824126489782931f20d32a58a945f1d682f8561de557348d3a8ed3
+  official_model_archive:
+    url: https://modeldb.science/download/112923
+    archive_sha256: 5fc6e0042ef093665ad2f1c24c87f9cc0d796629c896ee8a4efe34827a4462c5
+  smart_nml:
+    local_path: tmp/modeldb-112923/versaceGrossberg2008/SMART.nml
+    sha256: 16fc196f2ed68d1c02a39395fa83bb0ffab8fcf8edffe6fd11022bb6c6e299e1
+  archive_readme:
+    local_path: tmp/modeldb-112923/versaceGrossberg2008/readme.txt
+    sha256: 222428a4b152d015f7ee522694b6f4f9cb77d8cab0f0a7a63c7f143b35679507
+article_findings:
+  figure_label:
+    simulation_panel_label: F = 44 Hz
+    status: directly-visible-graphical-value
+  caption:
+    simulated_population: V1 layer 4
+    cell_description: two nearby simulated cells during a learned stimulus
+    cross_correlation_confidence_limit: 95 percent
+    states_44hz_in_text: false
+    identifies_cell_indices_or_coordinates: false
+    defines_nearby_distance_for_simulated_pair: false
+    defines_confidence_limit_calculation: false
+    defines_frequency_estimator: false
+  surrounding_text:
+    mechanism_claim: nearby layer-4 cells with shared bottom-up input synchronize in gamma during match
+    exact_cell_indices_or_coordinates: absent
+  methods_4_9:
+    synchrony_epoch_ms: 1000
+    all_compartment_voltages_recorded: true
+  methods_4_10:
+    mean_rate_subtraction: stated
+    hamming_window_ms: 200
+    fourier_cross_and_auto_components: stated
+    figure15_application_explicit: false
+    histogram_bin_ms: absent
+    window_overlap: absent
+    normalization: absent
+    spectrum_of_full_or_displayed_correlogram: absent
+    confidence_limit_method: absent
+archive_findings:
+  contents: network files, horizontal and vertical stimuli, and README
+  layer4_somatic_spike_monitoring: enabled-for-population
+  figure15_pair_designation: absent
+  recorded_figure15_spike_arrays: absent
+  figure15_analysis_script: absent
+  figure15_expected-output-file: absent
+supplement_findings:
+  connection_and_synapse_parameters: present
+  figure15_cell_pair_or_analysis_protocol: absent
+repository_holdout_choices:
+  pair_indices: [39, 40]
+  pair_basis: adjacent central cells within the five-cell horizontal stimulus row
+  pair_source_status: defensible-fixed-reconstruction-not-recovered-original-identity
+  histogram_bin_ms: 1.0
+  spectrum_input: complete linear cross-correlogram
+  spectral_window: full-correlogram Hamming periodogram
+  tolerance_hz: 5.0
+  source_status:
+    target_44hz: graphical-primary-source-value
+    pair_indices: unreported-reconstruction-choice
+    histogram_bin: unreported-reconstruction-choice
+    full_correlogram_spectrum: unreported-reconstruction-choice
+    tolerance: preregistered-repository-choice-not-paper-value
+identifiability_gates:
+  official_44hz_graphical_label_recovered: true
+  official_local_gamma_phenotype_recovered: true
+  original_cell_pair_recovered: false
+  original_spike_arrays_recovered: false
+  original_frequency_estimator_recovered: false
+  original_confidence_method_recovered: false
+  exact_numeric_reproduction_test_identifiable: false
+holdout_interpretation:
+  registered_numeric_gate_result: fail
+  observed_fixed_pair_peak_hz: 53.026513256628306
+  observed_peak_in_published_gamma_band_20_70hz: true
+  source_identifiable_local_gamma_phenotype: reproduced
+  exact_44hz_result: not reproduced_under_registered_reconstruction_analysis
+decision: >-
+  Preserve Assessment 812 as a failed preregistered repository holdout; do not
+  change its pair, analysis, target, or tolerance after observing 53.03 Hz.
+  Also correct the epistemic claim: that gate is not an exact reconstruction of
+  a fully specified official test because the source does not identify the cell
+  pair, binning, frequency estimator, confidence procedure, or tolerance. The
+  candidate reproduces the source-identifiable Figure-15 behavior of local
+  layer-4 gamma synchrony, but it does not reproduce the graphically labeled
+  44-Hz value under the registered reconstruction analysis. No conductance,
+  pair, analysis method, or acceptance boundary is selected by this audit.
+next_action: >-
+  Do not tune the model to Figure 15. Either recover original spike arrays or
+  analysis code, or define a transparent freeze category that distinguishes a
+  calibrated classic-SMART behavioral reconstruction from exact numerical
+  recovery. Any freeze must retain the 53.03-versus-44-Hz discrepancy and the
+  failed preregistered gate as a first-class limitation. Neuron-model and
+  modern-anatomy experiments remain separate and unopened.
+parameter_selected: false
+analysis_selected: false
+registered_holdout_reclassified_as_pass: false
+original_smart_exact_numerical_recovery: false
+baseline_frozen: false

@@ -1,0 +1,46 @@
+schema_version: 1
+id: joint-calibration-t-match-screen-assessment-772
+date: '2026-09-09'
+status: completed-stage1-assessment-two-exact-match-survivors
+classification: explicit-joint-calibration-stage1-match-screen-assessment
+registration: docs/validation-results/joint-calibration-t-match-screen-registration-770.yaml
+result: docs/validation-results/joint-calibration-t-match-screen-771.yaml
+result_sha256: 7bc287be4a68af725074702039bd484ae02b0c0b098d96d1d4f07a56407372f8
+execution:
+  registered_candidates_executed_once: true
+  candidate_order: ascending
+  all_candidates_reported: true
+  mismatch_consulted: false
+  figure10_consulted: false
+  holdouts_consulted: false
+figure6:
+  all_candidates_passed_all_gates: true
+match_screen:
+  expected_relay_active_indices: [38, 39, 40, 41, 42]
+  expected_relay_events: 20
+  expected_nonspecific_events: 4
+  outcomes:
+  - nonspecific_t_scale: 0.1875
+    observed_nonspecific_events: 3
+    exact_match_gate: false
+  - nonspecific_t_scale: 0.203125
+    observed_nonspecific_events: 4
+    exact_match_gate: true
+  - nonspecific_t_scale: 0.21875
+    observed_nonspecific_events: 4
+    exact_match_gate: true
+  - nonspecific_t_scale: 0.25
+    observed_nonspecific_events: 5
+    exact_match_gate: false
+survivors: [0.203125, 0.21875]
+decision: >-
+  Advance both and only the two exact match survivors to the separately
+  registered fixed mismatch screen. Do not rank them by event timing, TRN
+  count, or integrated inhibition, and do not interpolate or extend the grid.
+boundary: >-
+  Stage 1 establishes two candidates, not a reproduced or frozen baseline.
+  The mismatch, Figure-10, spectral, higher-order, neuron-model, and
+  modern-anatomy outcomes remain unconsulted.
+original_smart_reproduced: false
+baseline_promoted: false
+baseline_frozen: false

@@ -1,0 +1,75 @@
+schema_version: 1
+id: calibrated-figure16-holdout-registration-813
+date: '2026-09-09'
+status: registered-before-execution-fixed-higher-order-holdout
+classification: calibrated-classic-smart-figure16-holdout
+authorization: docs/validation-results/calibrated-figure15-holdout-assessment-812.yaml
+authorization_sha256: 3b58cf785251e6378c28017e2b537d5f039419a830d89bfb7d307da4133bc220
+profile: configs/calibration/figure6_7_10_projection025_source_control_v1.yaml
+profile_sha256: b2028a35666cb31645e91a741b00440b46a508558c5db8361404c2264041ffdf
+script: scripts/run_calibrated_figure16_holdout.py
+script_sha256: e03e3ebeefe2bb51e7542f889b3ca8f0b40e1a9bf4110ec4df0938ccd57fb835
+network_harness: src/smart_robustness/validation/higher_order.py
+network_harness_sha256: cdfba4eb3a3dcc99e1d3ae359f997300ef01f3e18130c2a99de76f9ff00682ec
+cross_correlation_harness: src/smart_robustness/analysis/cross_correlation.py
+cross_correlation_harness_sha256: db637bccc97a9bd79e996474aae01ff5b5ca194edbfc8729a100384a873d6819
+field_harness: src/smart_robustness/analysis/lfp.py
+field_harness_sha256: 14ba4db071d935672f048248e2242fdb5ec64ccc394d0b0711624e905ee55aae
+full_network_builder: src/smart_robustness/classic_sector.py
+full_network_builder_sha256: b5be825407c52908fcd20d84d0287beec937a9d4b32ce6e85ad58f53313b8339
+runtime_fingerprint: 7e654528a99f0b25b7148260a8d52021f6443fb992b210729a2475ae3cfcdaa4
+result_id: calibrated-figure16-holdout-814
+result: docs/validation-results/calibrated-figure16-holdout-814.yaml
+assessment: docs/validation-results/calibrated-figure16-holdout-assessment-815.yaml
+fixed_endpoint:
+  nonspecific_t_scale: 0.203125
+  projection025_scale: 8.0
+  projection026_scale: 0.5
+  projection036_spread_convention: variance
+  projection038_scale: 1.0
+  projection008_scale: 0.75
+  projection011_scale: 0.9375
+  integration_method: rk4
+additional_global_scales:
+  modeldb112923.projection.025: 8.0
+  modeldb112923.projection.026: 0.5
+figure16_protocol:
+  network: complete_recovered_v1_pulvinar_v2_catalog
+  stimulus: horizontal_five_cell_bar
+  prestimulus_ms: 1000.0
+  recording_ms: 1000.0
+  integration_dt_ms: 0.01
+  recording_sample_ms: 1.0
+  inter_area_delay_ms: 10.0
+  inter_area_delay_pathway: v1_layer23_to_v2_layer4
+  frequency_bands_hz:
+  - [2.0, 4.0]
+  - [4.0, 8.0]
+  - [8.0, 12.0]
+  - [12.0, 20.0]
+  - [20.0, 100.0]
+  higher_area_signal: mean_v2_inferior_300um_electrode_tips
+  lower_area_signal: mean_v1_superior_300um_electrode_tips
+  geometry_seed_v1: 16
+  geometry_seed_v2: 17
+  backend: brian2_cpp_standalone
+admission:
+  figure15_failure_retained: true
+  figure16_cannot_compensate_for_figure15: true
+  fresh_global_figure6_learning: true
+  complete_higher_order_network: true
+  no_parameter_change_after_first_order_promotion: true
+gates:
+  exactly_1000_recording_samples: true
+  v1_and_v2_fields_finite: true
+  strongest_lower_frequency_correlation_strictly_exceeds_20_100_hz: true
+selection_rule: >-
+  This is a holdout and characterization, not calibration. Pass only if the
+  complete fixed network produces finite fields for all 1000 samples and at
+  least one band ending at or below 20 Hz has a strictly larger normalized
+  inter-area cross-correlation peak than the 20--100-Hz band.
+stopping_rule: >-
+  Execute the caption's one-second prestimulus and one-second recording epochs
+  once. Do not alter geometry seeds, field reduction, delay, bands, endpoint,
+  or analysis after observing output. A pass cannot erase Figure 15's failure
+  or authorize baseline freezing, neuron-model comparisons, or modern anatomy.

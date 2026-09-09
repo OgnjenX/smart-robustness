@@ -2342,3 +2342,106 @@ serializable. Artifact 758 records this implementation failure without any
 scientific inference. Artifact 759 wraps only that existing gate expression in
 the built-in `bool`; Registration 760 hash-pins a complete recovery rerun with
 identical model, protocol, seed, and scientific gates.
+
+Artifacts 761--762 complete and reject that recovery endpoint. Projection 025
+is verified at released scale 1, p036 topology is exact in all five builds, and
+fresh Figure 6 passes. Figure 7 retains correct relay/TRN mechanisms but emits
+3/6 rather than 4/7 nonspecific events. Figure 10 retains all admission and
+reset-chain gates except winner suppression: intact and control each emit 59
+winner events. The first intact alternative leads by only 0.03 ms, which passes
+its direction gate but cannot compensate. Scale 1 therefore has no joint
+survivor, while scale 8 remains a closed, unsupported diagnostic. Before any
+new behavior, audit p025 density/weight/target-area conversion through compiled
+Brian2 conductance; if exact, close that route and report the constrained-family
+boundary rather than tune an intermediate value.
+
+Artifact 763 completes that read-only parity audit. SMART.nml fixes the layer-6I
+proximal cylinder at 0.005 by 0.01 cm, projection-025 conductance density at 0.1
+mS/cm2, and source weight at 1. KInNeSS Equation 16 keeps the channel density
+and source-specific weight as separate factors, while its membrane equations
+use cylindrical lateral area `pi*D*L`. The resulting 15.707963267948967 nS is
+identical, with zero numerical error, to Brian2's compiled `port_002`; source
+spread yields one weight-1 edge per target. There is no missing factor that can
+justify scale 8. Close projection 025, its variance-spread alternative, and its
+conductance-scale family without selection or interpolation. The available
+constrained family has no joint Figure-6/7/10 survivor, so the next route must
+recover additional exact legacy execution semantics or explicitly establish a
+new joint calibrated-reconstruction methodology before opening holdouts.
+
+Artifact 764 recovers one additional executable simulator semantic from the
+preserved SANNDRA 0.4.0 predecessor. SANNDRA calculates every equation against
+previously posted values and its RK4 helper varies only that equation's own
+state through the four stages; externally supplied coefficients and inputs stay
+fixed. Brian2's standard RK4 instead advances the coupled state vector at every
+stage. A default-off `sanndra_scalar_rk4` comparator now implements exactly that
+bounded distinction. Unit probes pass, while paired Figure-8 source assays show
+only small trajectory differences and do not rescue the incompletely specified
+protocol. Because the 2008 SANNDRA 1.2.0 RC2 source remains unavailable, this
+is a source-adjacent candidate rather than recovered official behavior.
+
+Registration 765 fixes one no-tuning joint Figure-6/7/10 cross using that
+comparator with every model value, source-scale correction, protocol, and gate
+unchanged. Artifacts 766--767 complete and reject it. Figure 6 passes, but
+Figure 7 changes from 3/6 under coupled RK4 to 5/6 rather than the official 4/7;
+the required match-greater-than-mismatch TRN-GABA integral also reverses. In
+Figure 10, intact winner output is 50 versus 48 control and both alternatives
+begin at 79.09 ms. Per-equation integration matters dynamically but does not
+produce a jointly valid baseline. Close this endpoint without interpolation;
+retain it only as a later robustness comparator. The next phase must be an
+explicitly declared joint calibrated reconstruction with fixed training gates,
+unopened spectral/higher-order holdouts, and a complete ledger of departures
+from released source values.
+
+Artifact 769 opens that joint calibrated-reconstruction phase. Figures 6, 7,
+and 10 are fixed as training targets; Figures 14--16, alternative neuron
+models, and modern anatomy are sealed holdouts. The successful endpoint may be
+called a calibrated classic-SMART reconstruction, never bit-identical recovery
+of the unavailable KInNeSS/SANNDRA execution. Artifacts 770--775 screen the
+nonspecific thalamic T-current without consulting Figure 10. Scales 0.203125
+and 0.21875 produce the four-event match target; only 0.203125 also produces
+the seven-event mismatch target. Select 0.203125, corresponding to an effective
+50.78125 mS/cm2 density, as the sole joint Figure-6/7 survivor.
+
+Artifacts 776--791 then test the registered first-order reset dimensions. The
+first projection-025 run fails before simulation and its setup-only recovery is
+preserved. Neither the projection-025 nor projection-038 grid yields a causal
+Figure-10 survivor. A downstream-only projection-026 screen yields scale 0.75,
+but Artifacts 792--803 show why it cannot be promoted: globally applying its
+scales during Figure-6 learning changes 25, 13, and 65 values in adaptive
+projections 005, 007, and 035, respectively, and the resulting Figure-10
+replacement gate fails. These setup failures, recoveries, and learned-state
+differences remain part of the audit trail.
+
+Artifacts 804--806 execute the two remaining projection-026 grid endpoints
+with fresh global retraining. Scale 1 fails the Figure-7 match count. Scale 0.5
+is the sole endpoint that passes every Figure-6, Figure-7, and Figure-10 gate:
+match/mismatch nonspecific output is 4/7, the intact reset suppresses aggregate
+old-winner output 53 versus 63 control events, and its late replacement margin
+is +3 versus -2. Promote the complete tuple -- T-current scale 0.203125,
+projection 025 scale 8, projection 026 scale 0.5, projection-036 variance
+spread, projection 038 scale 1, projections 008/011 scales 0.75/0.9375, and
+coupled RK4 -- as the calibrated first-order endpoint. Projection-025 scale 8
+is now an explicit effective calibration departure, not a recovered source
+value.
+
+Artifacts 807--809 open and pass the unchanged Figure-14 holdout. Match peaks
+at 55 Hz in gamma; mismatch peaks at 10 Hz and has lower gamma power. Artifacts
+810--812 preserve a failed preregistered Figure-15 numeric test: adjacent
+stimulated cells 39/40 peak at 53.0265 Hz, outside the repository's 44 +/- 5 Hz
+gate. No pair, parameter, or tolerance is changed. Artifacts 813--815 then pass
+the unchanged full V1-pulvinar-V2 Figure-16 holdout: the 2--4-Hz inter-area
+correlation peak is 4.82 times the 20--100-Hz peak. A Figure-16 pass does not
+erase the Figure-15 failure, so the baseline is not frozen.
+
+Artifact 816 audits the Figure-15 primary-source identifiability boundary. The
+rendered panel directly labels the simulation `F = 44 Hz`, but the article,
+supplement, and official ModelDB archive do not identify the simulated cells,
+provide the spike arrays or analysis code, define the confidence calculation,
+or state the binning, exact spectrum estimator, or acceptance tolerance. The
+fixed candidate therefore reproduces the source-identifiable local layer-4
+gamma phenotype but not the graphical 44-Hz value under the preregistered
+reconstruction analysis. Preserve both facts. Do not tune Figure 15. The next
+decision must distinguish an auditable calibrated behavioral reconstruction
+from exact numerical recovery; any eventual freeze must retain this limitation.
+Neuron-model substitutions remain the next experimental phase, followed by a
+separately labeled modern-anatomy phase.

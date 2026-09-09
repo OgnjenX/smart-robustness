@@ -748,6 +748,7 @@ def figure8_source_parameters(
     specific_capacitance_uF_cm2: float,
     calcium_density_mS_cm2: float = 250.0,
     geometry_convention: Figure8GeometryConvention | str = Figure8GeometryConvention.CENTIMETERS,
+    integration_method: str = "rk4",
 ) -> dict[str, Any]:
     """Build the dedicated Ca_rebound.xml cell with two explicit missing defaults."""
 
@@ -775,7 +776,7 @@ def figure8_source_parameters(
         "ahp_convention": "modeldb_112923",
         "specific_capacitance_uF_cm2": float(specific_capacitance_uF_cm2),
         "enable_ahp_ach": False,
-        "method": "rk4",
+        "method": integration_method,
         "e_na_mV": 50.0,
         "e_k_mV": -90.0,
         "e_ca_mV": 180.0,
@@ -788,6 +789,7 @@ def run_figure8_source_candidate(
     specific_capacitance_uF_cm2: float,
     calcium_density_mS_cm2: float = 250.0,
     geometry_convention: Figure8GeometryConvention | str = Figure8GeometryConvention.CENTIMETERS,
+    integration_method: str = "rk4",
     protocol: Figure8Protocol | None = None,
     brian=None,
 ) -> Figure8SourceCandidate:
@@ -799,6 +801,7 @@ def run_figure8_source_candidate(
         specific_capacitance_uF_cm2=specific_capacitance_uF_cm2,
         calcium_density_mS_cm2=calcium_density_mS_cm2,
         geometry_convention=geometry_convention,
+        integration_method=integration_method,
     )
     tonic = run_figure8_condition(
         hyperpolarized=False,

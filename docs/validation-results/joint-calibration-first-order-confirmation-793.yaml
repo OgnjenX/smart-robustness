@@ -1,0 +1,20 @@
+schema_version: 1
+id: joint-calibration-first-order-confirmation-793
+date: '2026-09-09'
+status: failed-before-simulation-registration-interface-error
+classification: explicit-joint-calibration-first-order-confirmation-failure
+registration: docs/validation-results/joint-calibration-first-order-confirmation-registration-792.yaml
+failure_stage: setup-before-runtime-construction
+exception_type: KeyError
+exception_message: "'nonspecific_t_scale'"
+cause: >-
+  The runner read nonspecific_t_scale, projection025_scale, and
+  projection026_scale as top-level registration keys even though registration
+  792 correctly stores them under fixed_endpoint.
+simulation_started: false
+candidate_observed: false
+scientific_result_available: false
+holdouts_consulted: false
+original_smart_reproduced: false
+baseline_promoted: false
+baseline_frozen: false

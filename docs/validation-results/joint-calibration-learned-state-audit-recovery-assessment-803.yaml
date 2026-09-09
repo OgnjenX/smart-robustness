@@ -1,0 +1,59 @@
+schema_version: 1
+id: joint-calibration-learned-state-audit-recovery-assessment-803
+date: '2026-09-09'
+status: completed-global-training-materially-changes-learned-state
+classification: explicit-joint-calibration-learned-state-diagnostic-assessment
+registration: docs/validation-results/joint-calibration-learned-state-audit-recovery-registration-801.yaml
+result: docs/validation-results/joint-calibration-learned-state-audit-recovery-802.yaml
+result_sha256: dc9d7d3f0a323625b2f19089b9fbf5ac4a7e45e8628d79a8b9dc1267615b7ce2
+execution:
+  both_registered_arms_executed_once: true
+  figure7_consulted: false
+  figure10_consulted: false
+  holdouts_consulted: false
+figure6_gates:
+  base_training_pass: true
+  endpoint_training_pass: true
+learned_weight_differences:
+- projection_id: modeldb112923.projection.005
+  exact_changed_values: 25
+  value_count: 5589
+  max_abs_difference: 0.11561471837425569
+  l1_difference: 1.6567015231501532
+- projection_id: modeldb112923.projection.007
+  exact_changed_values: 13
+  value_count: 405
+  max_abs_difference: 0.10483722624733899
+  l1_difference: 0.7777889475650109
+- projection_id: modeldb112923.projection.035
+  exact_changed_values: 65
+  value_count: 1053
+  max_abs_difference: 0.31389039278111874
+  l1_difference: 3.0796555433058903
+population_changes:
+  trn_events_base_endpoint: [685, 678]
+  layer4_excitatory_events_base_endpoint: [36, 41]
+  layer4_inhibitory_events_base_endpoint: [150, 167]
+  layer23_excitatory_events_base_endpoint: [20, 22]
+  layer5_events_base_endpoint: [46, 49]
+  layer6i_events_base_endpoint: [35, 37]
+interpretation: >-
+  Globally applying projections 025 and 026 during Figure-6 learning changes
+  all three adaptive maps exactly and materially, even though both arms pass
+  the coarse Figure-6 gate set. The top-down combined horizontal contrast rises
+  from 0.381034 to 0.440928 while the bottom-up contrast falls from 1.146876 to
+  1.077746. The changed learned state fully explains why a downstream-only
+  Figure-10 screening pass cannot be promoted as a global model endpoint.
+decision: >-
+  Enforce methodology 769's requirement to retrain Figure 6 for every future
+  candidate. Protocol-specific projection scaling remains forbidden. The
+  globally trained 0.75 projection-026 endpoint is closed by confirmation 796.
+  The only admissible next bounded behavioral screen is the two untested global
+  endpoints from the already registered projection-026 grid, scales 1.0 and
+  0.5 with projection 025 fixed at 8.0. For each, rerun Figure 6, then Figure 7
+  only after a Figure-6 pass, and Figure 10 only after a joint Figure-6/7 pass.
+  Do not re-evaluate 0.75, interpolate, extend the grid, or open holdouts.
+parameter_selected: false
+original_smart_reproduced: false
+baseline_promoted: false
+baseline_frozen: false

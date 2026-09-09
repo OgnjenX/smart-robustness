@@ -1,0 +1,46 @@
+schema_version: 1
+id: figure6-7-10-sanndra-scalar-rk4-registration-765
+date: '2026-09-09'
+status: registered-before-execution-one-source-adjacent-integration-cross
+classification: source-adjacent-joint-first-order-cross
+authorization: docs/validation-results/sanndra-predecessor-integration-audit-764.yaml
+authorization_sha256: 4c3a141139934dabc98e1adba36f3f3bc9d077de73e39ad19d180e01c376434b
+profile: configs/calibration/figure6_7_10_sanndra_scalar_rk4_v1.yaml
+profile_sha256: 04da20689e28b9f494b466c07aac373df6d7aabf0ba52897dd32a27889f68615
+script: scripts/run_figure6_7_10_projection025_source_control_recovery.py
+script_sha256: 088453376c0623b2fd8ab31ab4d24090b0517ad513aa1e519fcf71e324b4ea53
+runtime: src/smart_robustness/classic_sector.py
+runtime_sha256: b5be825407c52908fcd20d84d0287beec937a9d4b32ce6e85ad58f53313b8339
+cell_runtime: src/smart_robustness/models/compartmental_hh.py
+cell_runtime_sha256: 704db53fc90dcb0e6642600766d838cfe435e4a1da808696b0fda85990c3f60f
+integration_runtime: src/smart_robustness/models/integration.py
+integration_runtime_sha256: e023e862a735d2b7f4d2e5aebd6efc6a141db0d98cc617afcc836b2e3885dec2
+synapses: src/smart_robustness/synapses.py
+synapses_sha256: 0f155853a35e50d38e05294fe718d7632ba6575c08001da0ff77de013de16b4c
+runtime_fingerprint: b846b9648bd46d02f83a4ba5390e10c0f0e5fc4d78404eb30a895f449b52d3c1
+result_id: figure6-7-10-sanndra-scalar-rk4-766
+result: docs/validation-results/figure6-7-10-sanndra-scalar-rk4-766.yaml
+assessment: docs/validation-results/figure6-7-10-sanndra-scalar-rk4-assessment-767.yaml
+fixed_difference_from_source_control_761:
+  integration_method:
+    control: rk4
+    candidate: sanndra_scalar_rk4
+  all_model_parameters_unchanged: true
+  all_projection_scales_unchanged: true
+  all_protocols_and_gates_unchanged: true
+  projection025_scale: 1.0
+decision_rule: >-
+  Run the complete Figure-6 prerequisite. If any Figure-6 gate fails, stop and
+  reject this endpoint without consulting Figure 7 or Figure 10. If Figure 6
+  passes, run one match, one mismatch, and one intact/control Figure-10 pair.
+  Select the endpoint only if every topology, Figure-6, exact Figure-7, and
+  Figure-10 gate passes conjunctively.
+stopping_rule: >-
+  Execute this candidate once. Archive pass or failure. Do not adjust timestep,
+  conductance, detector, source profile, protocol, or acceptance gate based on
+  the result, and do not interpolate between coupled and scalar RK4.
+boundary: >-
+  The candidate follows executable SANNDRA 0.4.0 predecessor semantics but is
+  not claimed as recovered SANNDRA 1.2.0 RC2. Even a joint first-order pass
+  would require independent spectral and higher-order validation before the
+  classic baseline could be promoted or frozen.

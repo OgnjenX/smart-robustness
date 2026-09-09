@@ -1,0 +1,69 @@
+schema_version: 1
+id: figure6-7-10-sanndra-scalar-rk4-assessment-767
+date: '2026-09-09'
+status: assessed-source-adjacent-integration-endpoint-rejected-and-closed
+registration: docs/validation-results/figure6-7-10-sanndra-scalar-rk4-registration-765.yaml
+registration_sha256: b1505031c9b402b616902bf5668f39b14224f612c4f5e5ba267b1c647ab6973b
+result: docs/validation-results/figure6-7-10-sanndra-scalar-rk4-766.yaml
+result_sha256: 6c093dbae835983a188abef042dd0a63fa5340bf3d79b17d25e22aa983d1e5c5
+assessment:
+  source_projection025_scale_pass: true
+  topology_identity_pass: true
+  all_figure6_gates_pass: true
+  figure7_spatial_identity_pass: true
+  figure7_match_more_trn_events_pass: true
+  figure7_match_more_trn_gaba_pass: false
+  figure7_exact_match_rate_pass: false
+  figure7_exact_mismatch_rate_pass: false
+  all_figure7_gates_pass: false
+  figure10_identical_nonempty_prestate_pass: true
+  figure10_full_input_delivery_pass: true
+  figure10_reset_chain_pass: true
+  figure10_winner_suppression_pass: false
+  figure10_alternative_latency_pass: false
+  all_figure10_gates_pass: false
+  joint_first_order_gates_pass: false
+  integration_endpoint_selected: false
+  integration_interpolation_authorized: false
+  exact_smart_era_runtime_recovered: false
+  original_smart_reproduced: false
+  baseline_promoted: false
+  baseline_frozen: false
+comparison_to_coupled_rk4_source_control_761:
+  figure7_nonspecific_events_match_mismatch:
+    coupled_rk4: [3, 6]
+    sanndra_scalar_rk4: [5, 6]
+    official_target: [4, 7]
+  figure7_trn_events_match_mismatch:
+    coupled_rk4: [684, 611]
+    sanndra_scalar_rk4: [630, 611]
+  figure7_trn_gaba_integral_match_mismatch_ms:
+    coupled_rk4: [1231.02058942453, 1182.9286240398208]
+    sanndra_scalar_rk4: [1175.1841812249, 1181.9344953083655]
+  figure10_winner_events_intact_control:
+    coupled_rk4: [59, 59]
+    sanndra_scalar_rk4: [50, 48]
+  figure10_first_alternative_event_ms_intact_control:
+    coupled_rk4: [86.22000000000003, 86.25000000000003]
+    sanndra_scalar_rk4: [79.09000000000003, 79.09000000000003]
+interpretation: >-
+  Per-equation frozen-state RK4 materially changes the connected dynamics, so
+  simulator semantics are not irrelevant. It does not provide a jointly valid
+  reconstruction: match gains two nonspecific events while mismatch remains at
+  six, the required match-greater-than-mismatch TRN-GABA relation reverses, and
+  the reset pathway increases rather than suppresses winner output. Exact
+  rates and reset therefore cannot be recovered by replacing coupled RK4 with
+  this source-adjacent endpoint.
+decision: >-
+  Reject and close sanndra_scalar_rk4 as a classic-baseline endpoint. Keep the
+  implementation default-off as a documented robustness comparator. Do not
+  average, interpolate, or tune between integration methods. The unavailable
+  SANNDRA 1.2.0 RC2 source remains an epistemic limitation, not a license to
+  label this predecessor behavior as official SMART.
+next_gate: >-
+  Source recovery and one-at-a-time bounded source alternatives have not
+  produced a joint Figure-6/7/10 survivor. Proceed only through an explicitly
+  declared joint calibrated-reconstruction phase that keeps the official
+  qualitative/quantitative targets fixed, separates calibration from holdout
+  figures, and reports every departure from released source values. Figures
+  14--16 remain unopened holdouts until a joint first-order candidate passes.

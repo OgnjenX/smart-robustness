@@ -234,6 +234,8 @@ def run_figure16_candidate(
     *,
     learned_weights: Mapping[str, tuple[float, ...] | np.ndarray] | None = None,
     use_paper_constrained_reference: bool = False,
+    persistent_projection_weight_scales: Mapping[str, float] | None = None,
+    projection036_variance_topology: bool = False,
     protocol: Figure16Protocol | None = None,
     geometry_seed: int = 16,
     conventions=None,
@@ -255,6 +257,8 @@ def run_figure16_candidate(
         raise ValueError("Figure 16 requires an explicit learned expectation state")
     if isinstance(geometry_seed, bool) or not isinstance(geometry_seed, int):
         raise TypeError("geometry_seed must be an integer")
+    if not isinstance(projection036_variance_topology, bool):
+        raise TypeError("projection036 variance topology flag must be boolean")
     if brian is None:
         import brian2 as brian
     if cpp_standalone_directory is not None:
@@ -278,6 +282,22 @@ def run_figure16_candidate(
     brian.start_scope()
     brian.defaultclock.dt = protocol.integration_dt_ms * brian.ms
     sector = build_full_smart_network(conventions=conventions, brian=brian)
+    if projection036_variance_topology:
+        from smart_robustness.validation.figure10_search_cycle_spread import (
+            apply_projection036_variance_topology,
+        )
+
+        apply_projection036_variance_topology(sector)
+    scales = persistent_projection_weight_scales or {}
+    unknown_scales = set(scales) - set(sector.projections)
+    if unknown_scales:
+        raise ValueError(f"unknown Figure 16 projection scale IDs: {sorted(unknown_scales)}")
+    for projection_id, scale in scales.items():
+        if not np.isfinite(scale) or scale <= 0:
+            raise ValueError("Figure 16 projection scales must be finite and positive")
+        projection = sector.projections[projection_id]
+        for block in getattr(projection, "blocks", (projection,)):
+            block.w = f"w*({float(scale)!r})"
     apply_figure16_inter_area_delay(sector, protocol=protocol, brian=brian)
     if use_paper_constrained_reference:
         learned_weights = paper_constrained_figure6_expectation(

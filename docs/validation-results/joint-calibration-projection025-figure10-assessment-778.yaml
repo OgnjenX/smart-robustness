@@ -1,0 +1,15 @@
+schema_version: 1
+id: joint-calibration-projection025-figure10-assessment-778
+date: '2026-09-09'
+status: implementation-failure-confirmed-recovery-required
+classification: pre-simulation-failure-assessment
+registration: docs/validation-results/joint-calibration-projection025-figure10-registration-776.yaml
+result: docs/validation-results/joint-calibration-projection025-figure10-screen-777.yaml
+assessment:
+  behavioral_result_available: false
+  registered_screen_consumed: false
+  recovery_rerun_authorized: true
+  scientific_choices_must_remain_identical: true
+  original_smart_reproduced: false
+  baseline_promoted: false
+  baseline_frozen: false

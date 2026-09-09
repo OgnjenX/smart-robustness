@@ -1,0 +1,49 @@
+schema_version: 1
+id: sanndra-scalar-rk4-registration-refactor-768
+date: '2026-09-09'
+status: completed-mechanical-registration-refactor-codegen-identity-verified
+classification: post-execution-implementation-only-provenance-repair
+trigger: >-
+  Contract validation detected that adding the comparator resolver directly to
+  compartmental_hh.py invalidated the hash of the previously completed
+  projection-025 conductance-parity audit.
+executed_implementation:
+  integration_runtime_sha256: e023e862a735d2b7f4d2e5aebd6efc6a141db0d98cc617afcc836b2e3885dec2
+  cell_runtime_sha256: 704db53fc90dcb0e6642600766d838cfe435e4a1da808696b0fda85990c3f60f
+  selection: >-
+    compartmental_hh.py resolved the exact string sanndra_scalar_rk4 to the
+    sanndra_scalar_rk4 callable before constructing each Brian2 NeuronGroup.
+current_equivalent_implementation:
+  integration_runtime:
+    path: src/smart_robustness/models/integration.py
+    sha256: faa5b96a2127f377dffc38551ae348941881bceccabce338850a728c9bb44ee3
+  model_package_registration:
+    path: src/smart_robustness/models/__init__.py
+    sha256: 9a0616773ec62ed52f9d150da9cc2848426717a5081c4a75d86fc8d03f25afbe
+  restored_cell_runtime:
+    path: src/smart_robustness/models/compartmental_hh.py
+    sha256: ce6eaf11533fd892f6935645c3d3b83253793a708ee467d5616b8cca1fb17373
+    matches_projection025_audit_763: true
+  tests:
+    path: tests/test_integration.py
+    sha256: 612d40a7d6955fe5d4ae7c7db316ee68e04db95d9d39208d6844c1bbe822e1dd
+equivalence_gates:
+  scalar_update_function_unchanged: true
+  wrapper_delegates_directly_to_scalar_update_function: true
+  registered_wrapper_and_executed_callable_generate_identical_abstract_code: true
+  method_name_unchanged: sanndra_scalar_rk4
+  runtime_fingerprint_unchanged: b846b9648bd46d02f83a4ba5390e10c0f0e5fc4d78404eb30a895f449b52d3c1
+  model_parameters_protocols_and_random_seed_changed: false
+  simulation_repeated: false
+scientific_assessment:
+  prior_result_changed: false
+  prior_result_reinterpreted: false
+  integration_endpoint_selected: false
+  original_smart_reproduced: false
+  baseline_frozen: false
+boundary: >-
+  This is a software-registration refactor after the single scientific run,
+  justified by exact generated-code identity. It neither creates a second
+  candidate nor changes Artifact 767's rejection. The original registration
+  retains hashes of the code that executed; this artifact pins the equivalent
+  current implementation while restoring the older audited cell-runtime hash.

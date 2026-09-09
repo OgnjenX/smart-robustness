@@ -1,0 +1,52 @@
+schema_version: 1
+id: joint-calibration-projection038-figure10-assessment-788
+date: '2026-09-09'
+status: completed-projection038-grid-no-causal-passer
+classification: explicit-joint-calibration-figure10-projection038-assessment
+registration: docs/validation-results/joint-calibration-projection038-figure10-registration-786.yaml
+result: docs/validation-results/joint-calibration-projection038-figure10-screen-787.yaml
+result_sha256: 86653a7f10b60bc6db34251361cd53d7355156fdd50263e49ead1f58d316f47b
+execution:
+  all_registered_scales_executed_once: true
+  candidate_order: ascending
+  fresh_figure6_pass: true
+  same_learned_state_yoked_across_scales: true
+  holdouts_consulted: false
+outcomes:
+- projection038_scale: 1.0
+  intact_control_late_alternative_margin: [-1, 2]
+  intact_replacement_winner: false
+  failed_gates: [intact_replacement_winner, reset_favors_replacement_margin]
+- projection038_scale: 1.5
+  intact_control_late_alternative_margin: [1, 4]
+  intact_replacement_winner: true
+  failed_gates: [reset_favors_replacement_margin]
+- projection038_scale: 2.0
+  intact_control_late_alternative_margin: [2, 4]
+  intact_replacement_winner: true
+  control_pre_release_alternative_events: 2
+  failed_gates: [alternatives_quiet_before_release, reset_favors_replacement_margin]
+passing_scales: []
+parameter_selected: false
+interpretation: >-
+  The balance-derived scale 1.5 is sufficient to create target-resolved
+  replacement alternatives in the intact arm, but it does not make reset
+  causally favor them: the intact alternative-over-old-center margin is +1,
+  compared with +4 in the disconnected control. At scale 2 the intact margin
+  improves to +2 but control remains +4 and begins activating alternatives
+  before the release marker. Stronger direct projection-038 excitation helps
+  ordinary input-driven switching more than reset-specific selection.
+decision: >-
+  Close projection-038 scaling without selection. Do not interpolate or extend
+  the grid. The remaining measured failure is excessive indirect layer-6I-to-
+  layer-4I drive in the intact arm, so any further bounded calibration must
+  act on projection 026 rather than increase direct excitation.
+next_gate: >-
+  Register one source-relative projection-026 reduction grid derived from the
+  measured early current balance, with projection 025 fixed at 8 and
+  projection 038 returned to source scale 1. Require the same target-resolved
+  causal Figure-10 gates. Any survivor must later pass fresh Figures 6, 7, and
+  10 jointly before holdouts open.
+original_smart_reproduced: false
+baseline_promoted: false
+baseline_frozen: false

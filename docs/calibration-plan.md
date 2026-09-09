@@ -2336,4 +2336,9 @@ therefore implement and preregister one source-control joint cross that removes
 only the inherited p025 scale-8 multiplier while retaining the selected p036
 topology and every other convention. It must pass Figures 6, 7, and 10
 conjunctively. No interpolation, compensating weight, repeat, or partial-pass
-selection is allowed; the result has not yet run.
+selection is allowed. The first execution reached the final YAML write after
+all simulations but emitted zero bytes because one `numpy.bool_` gate was not
+serializable. Artifact 758 records this implementation failure without any
+scientific inference. Artifact 759 wraps only that existing gate expression in
+the built-in `bool`; Registration 760 hash-pins a complete recovery rerun with
+identical model, protocol, seed, and scientific gates.

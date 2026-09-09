@@ -789,9 +789,9 @@ parameters:
     note: All three builds have the selected p036 topology and every Figure-6, relay-selection, TRN-event-direction, and effective-inhibition gate passes. Nonspecific output is 3/6 rather than 4/7, so Figure-7 consistency fails, Figure 14 is not authorized, and no jointly validated Figure-6/7/10 endpoint exists. No repeat or rate tuning is allowed.
   validation.figure6_7_10.projection025_source_control:
     value: remove inherited diagnostic projection-025 scale 8 and restore released scale 1, then test one joint Figure-6/7/10 endpoint
-    status: registered-not-yet-executed
-    source: SMART.nml projection 025; Artifacts 643 and 646; Artifacts 753--757
-    note: Scale 8 came from an isolated effective first-event bracket and its connected endpoint was explicitly closed, unselected, and not recovered. The sole source correction retains p036 variance and pre-depletion emission but omits p025 from the scale map. It must pass every Figure-6, Figure-7, and Figure-10 gate conjunctively; no interpolation, compensation, repeat, or partial-pass selection is authorized.
+    status: recovery-rerun-registered-after-serialization-only-failure
+    source: SMART.nml projection 025; Artifacts 643 and 646; Artifacts 753--760
+    note: Scale 8 came from an isolated effective first-event bracket and its connected endpoint was explicitly closed, unselected, and not recovered. The sole source correction retains p036 variance and pre-depletion emission but omits p025 from the scale map. The first execution completed simulation but emitted zero bytes because PyYAML could not represent one numpy.bool_; no scientific result was interpreted. Registration 760 permits only a built-in bool cast and complete rerun with every scientific value and gate unchanged.
   benchmark.population_sizes:
     value: see configs/*.yaml
     status: exploratory

@@ -1,0 +1,44 @@
+schema_version: 1
+id: figure6-7-10-projection025-source-control-758
+date: '2026-09-09'
+status: failed-result-serialization-after-simulations-no-scientific-result
+classification: implementation-failure-not-behavioral-outcome
+registration: docs/validation-results/figure6-7-10-projection025-source-control-registration-757.yaml
+registered_script_sha256: 5075ceeea2c7233549738f1034274c0dbb190a3f5672515da80a22afb3a070e5
+execution:
+  command: .venv/bin/python scripts/run_figure6_7_10_projection025_source_control.py --registration docs/validation-results/figure6-7-10-projection025-source-control-registration-757.yaml
+  exit_code: 1
+  stdout_bytes: 0
+  stdout_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+  brian_debug_log_sha256: a644997b9d36007ca23531e4553eac702ef7c7f2c413540b0f7c771b40fdacdb
+  final_simulation_finished: '2026-09-09 09:58:19.345'
+failure:
+  stage: yaml.safe_dump after all network simulations and gate calculations
+  exception: yaml.representer.RepresenterError
+  message: "cannot represent an object: numpy.bool_(True)"
+  source_location: scripts/run_figure6_7_10_projection025_source_control.py:284
+  cause: >-
+    The projection036_topology_both_arms expression ended with numpy.isclose,
+    so Python's and-expression retained a numpy.bool_ rather than a built-in
+    bool. PyYAML SafeDumper does not serialize numpy scalar booleans.
+scientific_assessment:
+  complete_structured_result_emitted: false
+  any_behavioral_gate_interpreted: false
+  candidate_passed: null
+  candidate_failed: null
+  parameter_selected: false
+  rerun_counts_as_registered_repeat: false
+recovery_authorization:
+  allowed_change: cast projection036_topology_both_arms to built-in bool before serialization
+  model_change: false
+  protocol_change: false
+  simulation_change: false
+  gate_change: false
+  output_schema_change: false
+  result_value_change: false
+  new_registration_required: true
+boundary: >-
+  No scientific result can be recovered from the zero-byte stdout after the
+  process exited. The simulation must be rerun under a new hash-pinned recovery
+  registration. Only the pure serialization cast is authorized; every model,
+  protocol, seed, gate, and stopping rule remains identical.

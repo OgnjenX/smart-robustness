@@ -12124,6 +12124,50 @@ def test_projection025_joint_source_control_is_preregistered_and_hash_pinned() -
     assert "Do not repeat" in registration["stopping_rule"]
 
 
+def test_projection025_source_control_recovery_changes_serialization_only() -> None:
+    failure = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure6-7-10-projection025-source-control-758.yaml"
+        ).read_text()
+    )
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure6-7-10-projection025-source-control-recovery-registration-760.yaml"
+        ).read_text()
+    )
+
+    assert failure["execution"]["stdout_bytes"] == 0
+    assert failure["execution"]["stdout_sha256"] == hashlib.sha256(b"").hexdigest()
+    assert failure["failure"]["stage"].startswith("yaml.safe_dump")
+    assert not failure["scientific_assessment"]["complete_structured_result_emitted"]
+    assert failure["scientific_assessment"]["candidate_passed"] is None
+    assert failure["scientific_assessment"]["candidate_failed"] is None
+    for path_key, hash_key in (
+        ("original_registration", "original_registration_sha256"),
+        ("failed_execution", "failed_execution_sha256"),
+        ("recovery_implementation", "recovery_implementation_sha256"),
+        ("authorization", "authorization_sha256"),
+        ("profile", "profile_sha256"),
+        ("script", "script_sha256"),
+        ("projection036_harness", "projection036_harness_sha256"),
+        ("runtime", "runtime_sha256"),
+        ("synapses", "synapses_sha256"),
+    ):
+        assert hashlib.sha256(
+            (ROOT / registration[path_key]).read_bytes()
+        ).hexdigest() == registration[hash_key]
+    recovery = registration["recovery_contract"]
+    assert recovery["only_change"] == "numpy.bool_ to bool serialization cast"
+    assert recovery["model_protocol_seed_and_gates_identical"]
+    assert recovery["execute_complete_simulation_again"]
+    assert not recovery["failed_execution_metrics_reused"]
+    assert "complete joint source-control simulation once" in registration[
+        "decision_rule"
+    ]
+
+
 def test_projection036_source_arrival_result_localizes_phase_not_topology() -> None:
     result_path = (
         ROOT

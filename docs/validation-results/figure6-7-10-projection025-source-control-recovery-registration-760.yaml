@@ -1,0 +1,47 @@
+schema_version: 1
+id: figure6-7-10-projection025-source-control-recovery-registration-760
+date: '2026-09-09'
+status: registered-before-execution-serialization-only-recovery
+classification: source-control-joint-first-order-cross-output-recovery
+original_registration: docs/validation-results/figure6-7-10-projection025-source-control-registration-757.yaml
+original_registration_sha256: 73a2ba5ba4e1178639b5728e45ff3f68d313fcc210fb4a2f5c04ec9745381b68
+failed_execution: docs/validation-results/figure6-7-10-projection025-source-control-758.yaml
+failed_execution_sha256: 5c171724f3db3a4e7cb77624b4b426f86f86b2fde8f3b0a1f93a7ad0e1cec063
+recovery_implementation: docs/validation-results/figure6-7-10-projection025-source-control-recovery-implementation-759.yaml
+recovery_implementation_sha256: f993b3f399600d058aa2871ff663bdbc71122a521dccbc08965c37dcc489b3f1
+authorization: docs/validation-results/figure6-7-10-projection025-source-control-audit-755.yaml
+authorization_sha256: b011d41e6fbe2c8da4baeda4486a50b0f287c5a4d27b2d6d5a830f928bf02c76
+profile: configs/calibration/figure6_7_10_projection025_source_control_v1.yaml
+profile_sha256: b2028a35666cb31645e91a741b00440b46a508558c5db8361404c2264041ffdf
+script: scripts/run_figure6_7_10_projection025_source_control_recovery.py
+script_sha256: 088453376c0623b2fd8ab31ab4d24090b0517ad513aa1e519fcf71e324b4ea53
+projection036_harness: src/smart_robustness/validation/figure10_search_cycle_spread.py
+projection036_harness_sha256: 2658161a8ddff80e918e6d8250553e155eac73c1286a36314ec7e7716c8faa7f
+runtime: src/smart_robustness/classic_sector.py
+runtime_sha256: b5be825407c52908fcd20d84d0287beec937a9d4b32ce6e85ad58f53313b8339
+synapses: src/smart_robustness/synapses.py
+synapses_sha256: 0f155853a35e50d38e05294fe718d7632ba6575c08001da0ff77de013de16b4c
+runtime_fingerprint: fbcc1dc2ac7db8442ce1ff17b71a1d04582c32e817370c700c69ec3caa9fbe4e
+result_id: figure6-7-10-projection025-source-control-recovery-761
+result: docs/validation-results/figure6-7-10-projection025-source-control-recovery-761.yaml
+assessment: docs/validation-results/figure6-7-10-projection025-source-control-assessment-762.yaml
+recovery_contract:
+  only_change: numpy.bool_ to bool serialization cast
+  model_protocol_seed_and_gates_identical: true
+  execute_complete_simulation_again: true
+  scientific_decision_rule: identical to registration 757
+  failed_execution_metrics_reused: false
+decision_rule: >-
+  Execute the complete joint source-control simulation once under the corrected
+  script. Apply exactly Registration 757's conjunctive projection identity,
+  Figure-6, Figure-7, and Figure-10 gates. Interpret only the newly emitted
+  complete result; the failed zero-byte execution contributes no metric.
+stopping_rule: >-
+  Do not change any scientific value, gate, score, or protocol. If another
+  serialization failure occurs, record it without interpreting the model. If a
+  complete result is emitted, archive and assess it whether it passes or fails;
+  do not repeat based on its scientific outcome.
+boundary: >-
+  This registration repairs output representation only. It does not authorize
+  a second scientific candidate, parameter adjustment, or post-hoc recovery of
+  values from the failed process.

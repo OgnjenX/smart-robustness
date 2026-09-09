@@ -1,0 +1,35 @@
+schema_version: 1
+id: figure6-7-10-projection025-source-control-recovery-implementation-759
+date: '2026-09-09'
+status: implemented-serialization-only-recovery-not-yet-executed
+classification: non-scientific-output-recovery
+failed_execution: docs/validation-results/figure6-7-10-projection025-source-control-758.yaml
+original_script_sha256: 5075ceeea2c7233549738f1034274c0dbb190a3f5672515da80a22afb3a070e5
+corrected_script: scripts/run_figure6_7_10_projection025_source_control_recovery.py
+corrected_script_sha256: 088453376c0623b2fd8ab31ab4d24090b0517ad513aa1e519fcf71e324b4ea53
+change:
+  expression: projection036_topology_both_arms
+  before_type: numpy.bool_
+  after_type: bool
+  mechanism: wrap the existing complete expression in built-in bool()
+unchanged:
+  model_equations: true
+  runtime_conventions: true
+  projection_scales: true
+  projection_topologies: true
+  learned_state_protocol: true
+  figure7_protocol: true
+  figure10_protocol: true
+  random_state: true
+  all_gate_definitions: true
+  conjunctive_decision_rule: true
+  emitted_schema_fields: true
+verification:
+  python_compilation: pass
+  ruff: pass
+  yaml_numpy_boolean_failure_mechanism_identified: true
+boundary: >-
+  This patch changes serialization type only. It cannot alter any simulated
+  state or scientific metric. Because the failed process emitted zero bytes,
+  the complete simulation must be rerun after a new registration; no result is
+  reconstructed from memory or logs.

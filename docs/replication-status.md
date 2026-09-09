@@ -4061,4 +4061,8 @@ specifies scale 1. Artifacts 756--757 implement and preregister the sole
 source-control correction: remove only the p025 multiplier and require the
 resulting endpoint to pass fresh Figure 6, fixed Figure 7, and fixed Figure 10
 together. The joint result has not yet run and no intermediate scale or
-compensation is authorized.
+compensation is authorized. Its first execution completed the simulations but
+failed while serializing one NumPy boolean, leaving zero-byte output. Artifacts
+758--760 record the non-scientific failure, apply only a built-in boolean cast,
+and preregister one complete recovery rerun. No behavioral gate has yet been
+interpreted.

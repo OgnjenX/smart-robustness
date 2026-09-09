@@ -11574,6 +11574,141 @@ def test_figure10_full_bottom_up_emission_cross_is_preregistered() -> None:
     ]
 
 
+def test_figure10_full_bottom_up_cross_delivers_input_but_fails_release() -> None:
+    result_path = (
+        ROOT
+        / "docs/validation-results/figure10-full-bottom-up-emission-pair-735.yaml"
+    )
+    result = yaml.safe_load(result_path.read_text())
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-full-bottom-up-emission-assessment-736.yaml"
+        ).read_text()
+    )
+
+    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment[
+        "result_sha256"
+    ]
+    assert all(result["figure6_gates"].values())
+    assert result["intact"]["layer4_pre_events"] == 43
+    assert result["disconnected_control"]["layer4_pre_events"] == 43
+    assert result["reset_assessment"] == {
+        "pre_reset_winner_index": 38,
+        "pre_reset_winner_indices": [38, 39, 40, 41, 42],
+        "pre_reset_winner_spikes": 43,
+        "intact_winner_post_spikes": 42,
+        "control_winner_post_spikes": 45,
+        "intact_released_alternatives": 4,
+        "control_released_alternatives": 4,
+        "intact_nonspecific_spikes": 13,
+        "intact_layer5_spikes": 235,
+        "intact_layer6i_spikes": 199,
+    }
+    assert result["reset_gates"] == {
+        "pre_reset_winner": True,
+        "reset_chain": True,
+        "winner_suppression": True,
+        "alternative_release": False,
+    }
+    assert all(
+        value > 0
+        for arm in assessment["input_delivery"][
+            "projection035_mismatch_integral_pA_ms"
+        ].values()
+        for value in arm.values()
+    )
+    assert assessment["causal_output"]["intact"]["alternative_events"] == 60
+    assert assessment["causal_output"]["disconnected_control"][
+        "alternative_events"
+    ] == 64
+    verdict = assessment["assessment"]
+    assert verdict["full_five_pixel_vertical_input_delivered_both_arms"]
+    assert verdict["winner_suppression_pass"]
+    assert not verdict["alternative_release_pass"]
+    assert not verdict["source_coherence_endpoint_pass"]
+    assert not verdict["emission_snapshot_scheduling_selected"]
+    assert not verdict["parameter_selected"]
+    assert not verdict["original_smart_reproduced"]
+    assert not verdict["baseline_promoted"]
+
+
+def test_figure10_search_cycle_source_audit_pins_missing_scheduler_boundary() -> None:
+    audit = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-search-cycle-lifecycle-source-audit-737.yaml"
+        ).read_text()
+    )
+
+    assert hashlib.sha256(
+        (ROOT / audit["authorization"]).read_bytes()
+    ).hexdigest() == audit["authorization_sha256"]
+    assert hashlib.sha256(
+        (ROOT / audit["primary_paper"]["path"]).read_bytes()
+    ).hexdigest() == audit["primary_paper"]["sha256"]
+    for item in audit["kinness_reports"]:
+        assert hashlib.sha256((ROOT / item["path"]).read_bytes()).hexdigest() == item[
+            "sha256"
+        ]
+    recovered = audit["recovered_executable"]
+    assert hashlib.sha256((ROOT / recovered["path"]).read_bytes()).hexdigest() == recovered[
+        "sha256"
+    ]
+    for endpoint in audit["completed_bracketing_endpoints"].values():
+        if isinstance(endpoint, dict) and "result" in endpoint:
+            assert hashlib.sha256(
+                (ROOT / endpoint["result"]).read_bytes()
+            ).hexdigest() == endpoint["result_sha256"]
+    marker = audit["independent_reset_marker"]
+    assert marker["direct_projection038_gate_threshold"] == pytest.approx(0.1)
+    assert marker["direct_projection038_first_threshold_crossing_ms_from_mismatch"] == pytest.approx(
+        61.88
+    )
+    reconstruction = audit["authorized_reconstruction"]
+    assert reconstruction["yoking"]["identical_transition_time_both_arms"]
+    assert reconstruction["at_marker"]["action"] == (
+        "replace relay gain vector with identity all ones"
+    )
+    assert "ties or silence fail" in audit["decision_rule"]
+
+
+def test_figure10_search_cycle_pair_is_preregistered_and_hash_pinned() -> None:
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-search-cycle-lifecycle-registration-739.yaml"
+        ).read_text()
+    )
+
+    for path_key, hash_key in (
+        ("source_audit", "source_audit_sha256"),
+        ("implementation", "implementation_sha256"),
+        ("profile", "profile_sha256"),
+        ("harness", "harness_sha256"),
+        ("runtime", "runtime_sha256"),
+        ("synapses", "synapses_sha256"),
+        ("script", "script_sha256"),
+        ("prior_result", "prior_result_sha256"),
+        ("prior_assessment", "prior_assessment_sha256"),
+    ):
+        assert hashlib.sha256(
+            (ROOT / registration[path_key]).read_bytes()
+        ).hexdigest() == registration[hash_key]
+    assert registration["runtime_fingerprint"] == (
+        "fbcc1dc2ac7db8442ce1ff17b71a1d04582c32e817370c700c69ec3caa9fbe4e"
+    )
+    assert registration["protocol"]["release_after_mismatch_ms"] == pytest.approx(
+        61.88
+    )
+    assert registration["protocol"]["release_yoked_across_arms"]
+    assert registration["required_source_identity"][
+        "alternatives_before_release_intact_control"
+    ] == [0, 0]
+    assert "strictly before" in registration["decision_rule"]
+    assert "no second marker" in registration["boundary"]
+
+
 def test_projection036_source_arrival_result_localizes_phase_not_topology() -> None:
     result_path = (
         ROOT

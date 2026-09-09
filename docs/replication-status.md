@@ -3983,3 +3983,25 @@ wrong-sign 78 versus 76. Nevertheless neither arm releases an alternative
 cell. The scheduling rule is therefore rejected as a standalone endpoint and
 remains default-off. It has localized a causal contributor, not reproduced
 Figure 10; original SMART remains unreproduced and unfrozen.
+
+Artifacts 726--731 show why alternative release remains absent under that
+candidate. The direct layer-6I reset input arrives at 61.88 ms, but the indirect
+off-surround wave creates a 10.76-mV intact disadvantage before the alternative
+recovers only to -58.70 mV. No alternative event occurs and no parameter is
+selected.
+
+Artifacts 732--736 then remove a Figure-7-only top-five sensory mask from the
+whole mismatch without changing model dynamics. The complete vertical input is
+verified at all five targets, but all four alternatives activate in both arms
+by 20--30 ms. Intact weakly suppresses the old winner (42 versus 45 events) yet
+also reduces alternative output (60 versus 64). Thus permanent masking was a
+real protocol incoherence but not the sole reset failure; immediate full input
+also fails the source-described inactive-to-reinstated ordering.
+
+Source audit 737 finds no exact Figure-10 scheduler in the paper, supplement,
+KInNeSS reports, or recovered SMART.nml. Artifacts 738--739 implement and
+preregister one bounded event-locked reconstruction in a separate harness: the
+full vertical input is reinstated at the independently measured 61.88-ms direct
+reset marker, yoked identically to intact and control. The pair has not yet run.
+Figure 10, gamma/beta reproduction, original SMART, and baseline freezing remain
+incomplete; neuron substitutions and modern-anatomy variants remain deferred.

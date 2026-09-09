@@ -1,0 +1,73 @@
+schema_version: 1
+id: figure10-search-cycle-lifecycle-registration-739
+date: '2026-09-09'
+status: registered-before-execution-event-locked-pair
+classification: figure10-event-locked-search-cycle-emission-cross
+source_audit: docs/validation-results/figure10-search-cycle-lifecycle-source-audit-737.yaml
+source_audit_sha256: 88a18bad9d7a918b451f5cf41d85ffb1df040d95e2039c190ae7dbf10d7a6441
+implementation: docs/validation-results/figure10-search-cycle-lifecycle-implementation-738.yaml
+implementation_sha256: 26b0bd7989aff60dfa9bacf5df67f309e5f4a3dbf03eab357764abf93796b967
+profile: configs/calibration/figure10_yoked_search_cycle_emission_v1.yaml
+profile_sha256: 22d8b8c03591e068cc4a54d422161e687ac4122fe4f0b882b071bf4a4bcc74ff
+harness: src/smart_robustness/validation/figure10_search_cycle.py
+harness_sha256: e0f0793fffafac4b34192e1f384bace874817290d7ef10615e252ad08dde99c3
+runtime: src/smart_robustness/classic_sector.py
+runtime_sha256: b5be825407c52908fcd20d84d0287beec937a9d4b32ce6e85ad58f53313b8339
+synapses: src/smart_robustness/synapses.py
+synapses_sha256: 0f155853a35e50d38e05294fe718d7632ba6575c08001da0ff77de013de16b4c
+script: scripts/run_figure10_search_cycle_pair.py
+script_sha256: 3c2e8d3e6177cb0254207377d5ddbd8f2d0753d4ade7e8a356e11040b20f879f
+prior_result: docs/validation-results/figure10-full-bottom-up-emission-pair-735.yaml
+prior_result_sha256: 83486278e6e52dc258cec6011652f8e28e0ec93048731b4b34f5c0f8a71289a9
+prior_assessment: docs/validation-results/figure10-full-bottom-up-emission-assessment-736.yaml
+prior_assessment_sha256: 2808856552492ff601d66dc7807ca11e6812580c54d62556fccc2f173373e0da
+runtime_overrides:
+  layer6i_output_transmitter_gate_convention: pre_depletion_emission_snapshot
+runtime_fingerprint: fbcc1dc2ac7db8442ce1ff17b71a1d04582c32e817370c700c69ec3caa9fbe4e
+result_id: figure10-search-cycle-lifecycle-pair-740
+result: docs/validation-results/figure10-search-cycle-lifecycle-pair-740.yaml
+assessment: docs/validation-results/figure10-search-cycle-lifecycle-assessment-741.yaml
+persistent_projection_scales:
+- {projection_id: modeldb112923.projection.008, scale: 0.75}
+- {projection_id: modeldb112923.projection.011, scale: 0.9375}
+- {projection_id: modeldb112923.projection.025, scale: 8.0}
+persistent_projection_delays: []
+nonspecific_t_scale: 0.1875
+protocol:
+  pre_match_duration_ms: 100.0
+  mismatch_duration_ms: 200.0
+  total_duration_ms: 300.0
+  dt_ms: 0.01
+  top_down_current_pA: 800.0
+  top_down_current_mode: until_cued_cell_first_event
+  pre_release_comparator: {transform: top_k_binary, source_index: 40,
+    target_count: 5}
+  release_after_mismatch_ms: 61.880000000000024
+  post_release_transform: identity_all_ones
+  release_yoked_across_arms: true
+required_source_identity:
+  figure6_all_gates: true
+  intact_control_layer4_pre_events: [43, 43]
+  intact_control_layer4_pre_active_indices: [[38, 39, 40, 41, 42],
+    [38, 39, 40, 41, 42]]
+  alternatives_before_release_intact_control: [0, 0]
+input_delivery_gate: >-
+  After the yoked transition, projection 035 must have positive integrated
+  current at targets 22, 31, 40, 49, and 58 in both arms.
+decision_rule: >-
+  Execute exactly one intact/control pair. Require every fresh Figure-6 gate,
+  identical nonempty pre-reset horizontal winners, the intact nonspecific-to-
+  layer5-to-layer6I chain, no vertical-alternative layer-4 event before the
+  marker in either arm, and full post-transition input delivery. Require fewer
+  intact prior-winner events than control. Alternative release passes only if
+  the first intact event among cells 22, 31, 49, and 58 occurs strictly before
+  the first control event; a tie or silence fails. Report all exact layer-4
+  mismatch events and total alternative activity without introducing a
+  post-hoc window or score.
+boundary: >-
+  A pass selects only a calibrated event-locked search-cycle reconstruction
+  for further holdouts. It does not prove the unavailable legacy scheduler,
+  repair Figure 7, reproduce gamma/beta, establish original SMART, promote or
+  freeze the baseline, or authorize neuron-model and modern-anatomy variants.
+  A failure closes this lifecycle endpoint with no second marker, threshold,
+  gain, waveform, or score.

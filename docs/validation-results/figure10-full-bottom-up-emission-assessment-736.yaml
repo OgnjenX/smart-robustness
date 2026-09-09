@@ -1,0 +1,123 @@
+schema_version: 1
+id: figure10-full-bottom-up-emission-assessment-736
+date: '2026-09-09'
+status: assessed-full-input-delivered-reset-specific-release-failed
+registration: docs/validation-results/figure10-full-bottom-up-emission-registration-734.yaml
+result: docs/validation-results/figure10-full-bottom-up-emission-pair-735.yaml
+result_sha256: 83486278e6e52dc258cec6011652f8e28e0ec93048731b4b34f5c0f8a71289a9
+assessment:
+  all_fresh_figure6_gates_pass: true
+  exact_pre_reset_source_identity_pass: true
+  full_five_pixel_vertical_input_delivered_both_arms: true
+  pre_reset_winner_pass: true
+  reset_chain_pass: true
+  winner_suppression_pass: true
+  alternative_release_pass: false
+  source_coherence_endpoint_pass: false
+  static_top5_mask_is_sole_alternative_release_cause: false
+  emission_snapshot_scheduling_selected: false
+  parameter_selected: false
+  official_figure10_reset_reproduced: false
+  original_smart_reproduced: false
+  baseline_promoted: false
+source_identity:
+  layer4_pre_events_intact_control: [43, 43]
+  layer4_pre_active_indices_intact_control:
+  - [38, 39, 40, 41, 42]
+  - [38, 39, 40, 41, 42]
+  figure6_gates:
+    relay_active_indices: true
+    relay_events_per_active_index: true
+    relay_events: true
+    cortical_chain_complete: true
+    causal_learning_pair: true
+    top_down_horizontal_contrast: true
+input_delivery:
+  registered_vertical_targets: [22, 31, 40, 49, 58]
+  projection035_mismatch_integral_pA_ms:
+    intact:
+      22: 583928.2205832169
+      31: 764766.6137070506
+      40: 890205.5687156415
+      49: 764766.6137070507
+      58: 583928.2205832169
+    disconnected_control:
+      22: 539710.1035973873
+      31: 710888.2537208427
+      40: 827008.0403245289
+      49: 710888.2537208427
+      58: 539710.1035973873
+  every_registered_integral_positive: true
+  interpretation: >-
+    The identity input transform closes the missing-input confound: all five
+    archived vertical-bar targets receive sustained feedforward projection-035
+    excitation in both causal arms.
+causal_output:
+  intact:
+    layer4_post_events: 102
+    prior_winner_events: 42
+    alternative_active_indices: [22, 31, 49, 58]
+    alternative_active_count: 4
+    alternative_events: 60
+    nonspecific_post_events: 13
+    layer5_post_events: 235
+    layer6i_post_events: 199
+    layer4_inhibitory_post_events: 606
+  disconnected_control:
+    layer4_post_events: 109
+    prior_winner_events: 45
+    alternative_active_indices: [22, 31, 49, 58]
+    alternative_active_count: 4
+    alternative_events: 64
+    nonspecific_post_events: 11
+    layer5_post_events: 165
+    layer6i_post_events: 124
+    layer4_inhibitory_post_events: 456
+  first_alternative_event_bin_ms:
+    intact: [20.0, 30.0]
+    disconnected_control: [20.0, 30.0]
+  projection038_alternative_current_first_nonzero_bin_ms:
+    intact: [10.0, 20.0]
+    disconnected_control: [10.0, 20.0]
+  interpretation: >-
+    The full sensory pattern recruits every vertical alternative in both arms
+    before reset-specific competition can distinguish them. The intact pathway
+    weakly suppresses the prior winner, but also reduces alternative output
+    from 64 to 60 events and therefore supplies broad inhibition rather than a
+    selective switch to a new winner.
+source_interpretation:
+  paper_constraint: >-
+    Figure 10d/e and Section 2.7 require a previously active winner, previously
+    inactive or weak alternatives with less-depleted layer-6I-to-4 resources,
+    and a later reset wave that changes the competition in their favor.
+  observed_static_top5_problem: >-
+    The reconstructed top-five input mask keeps the orthogonal sensory features
+    unavailable for the entire mismatch, so they cannot be reinstated.
+  observed_identity_input_problem: >-
+    Removing the mask from mismatch onset activates alternative layer-6I
+    on-center output in both arms in the 10--20-ms bin and all four layer-4
+    alternatives in the 20--30-ms bin. Thus those candidates are no longer a
+    reset-specific inactive pool.
+  resolved_conclusion: >-
+    Neither permanent masking nor immediate full-pattern delivery expresses
+    the source-described search-cycle ordering. The missing boundary is the
+    lifecycle that keeps alternatives weak during the failed recognition state
+    and reinstates bottom-up support after the reset eliminates that state.
+  caution: >-
+    The paper and recovered SMART.nml do not provide a numerical external-input
+    release time or runnable simulation scheduler. A time or gain must not be
+    fitted from this failed result.
+next_gate: >-
+  Audit Figure 10e as a local published reset assay separately from the broader
+  first-order match-to-mismatch integration test. Recover every available
+  protocol fact from the figure, paper, supplement, KInNeSS report, and
+  SMART.nml. Determine whether a parameter-free event-defined search-cycle
+  transition can be implemented, or whether the official panel is only
+  reproducible as a bounded figure-derived reconstruction. Do not run another
+  pair or change a model value until that scope and trigger are preregistered.
+boundary: >-
+  The full-bottom-up profile is rejected as a reset-specific endpoint and is
+  not promoted to Figure 7. The pre-depletion emission convention remains
+  default-off and unselected. Figure 10, official gamma/beta behavior, original
+  SMART, baseline promotion, freezing, neuron-model comparisons, and modern
+  anatomy variants remain incomplete.

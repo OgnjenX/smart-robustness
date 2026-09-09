@@ -1,0 +1,47 @@
+schema_version: 1
+name: figure10-yoked-search-cycle-emission-v1
+status: registered-event-locked-search-cycle-reconstruction
+training_profile: configs/calibration/figure6_legacy_detector_paper_nonspecific_paper_kinetics_v1.yaml
+source_audit: docs/validation-results/figure10-search-cycle-lifecycle-source-audit-737.yaml
+classification: calibrated-figure10-search-cycle-reconstruction
+runtime_overrides:
+  nonspecific_dendritic_calcium_density_scale: 0.1875
+effective_density_mS_cm2: 46.875
+source_density_mS_cm2: 250.0
+pre_release_comparator:
+  transform: top_k_binary
+  source_index: 40
+  target_count: 5
+post_release_relay_transform:
+  transform: identity_all_ones
+  source_index: 40
+  target_count: 81
+release_marker:
+  type: independently_measured_direct_projection038_gate_onset
+  mismatch_time_ms: 61.880000000000024
+  source_artifact: docs/validation-results/figure10-layer6i-emission-target-voltage-pair-730.yaml
+  source_gate_threshold: 0.1
+  yoked_across_arms: true
+protocol:
+  duration_ms: 100.0
+  dt_ms: 0.01
+  equilibration_ms: 0.0
+  top_down_current_pA: 800.0
+  top_down_current_mode: until_cued_cell_first_event
+  top_down_cue_lead_ms: 0.0
+  receptor_prime: none
+figure6_gates:
+  relay_active_indices: [38, 39, 40, 41, 42]
+  relay_events_per_active_index: 4
+  relay_events: 20
+  cortical_chain_complete: true
+  causal_learning_pair: true
+  top_down_horizontal_contrast: '>0'
+selection_rule: >-
+  Use only for the single preregistered Figure-10 search-cycle pair. It is not
+  a Figure-7 candidate and cannot revise the locked Figure-7 assessment.
+classification_boundary: >-
+  The marker is independently observed from the direct reset pathway and is
+  not tuned on this endpoint, but no recovered scheduler proves this external
+  input transition. A pass remains a calibrated, figure-constrained
+  reconstruction rather than exact legacy source recovery.

@@ -2244,3 +2244,31 @@ failure lies in the target-level balance after reset rather than in reset-wave
 propagation. The standalone scheduling candidate is rejected and remains
 default-off. One passive complete-input audit at alternatives 31/49 and winners
 38--42 is next; no parameter or convention is reopened.
+
+Artifacts 726--731 complete the passive target-current and corrected voltage
+audits. Direct projection-038 excitation reaches alternatives 31/49 at 61.88
+ms and initially depolarizes them, but the projection-036 wave creates a
+10.76-mV intact deficit by 69--70 ms. Intact voltage later overtakes control
+and peaks at -58.70 mV without an event. This is a real target membrane-state
+failure and selects no threshold, weight, delay, or scheduling convention.
+
+Artifacts 732--736 audit and test the reconstructed Figure-7 comparator in the
+Figure-10 protocol. The fixed top-five mask leaves four vertical inputs at zero
+for the whole mismatch, despite the ART description that bottom-up features are
+reinstated after reset. Its parameter-free identity-input cross delivers
+projection-035 excitation to all five vertical targets. All four alternatives
+then activate in both arms by 20--30 ms; intact suppresses the old winner 42
+versus 45 events but produces fewer alternative events, 60 versus 64. The
+source-coherence endpoint fails and the emission convention remains default-off.
+
+Source audit 737 establishes that the available paper, supplement, KInNeSS
+reports, and SMART.nml preserve the Figure-10 mechanism but not its runnable
+external-input scheduler. Permanent masking and input delivery from mismatch
+onset bracket a missing search-cycle lifecycle. Artifact 738 therefore adds a
+separate default-preserving harness for one calibrated, event-locked transition:
+retain the top-five state until the independently measured 61.88-ms direct reset
+marker, then restore the full relay input at the same yoked time in both arms.
+Registration 739 fixes one pair before execution. Alternatives must stay quiet
+before the marker, all five post-transition inputs must arrive, the old winner
+must be suppressed, and an intact alternative must fire strictly before the
+first control alternative. No second marker, gain, window, or score is allowed.

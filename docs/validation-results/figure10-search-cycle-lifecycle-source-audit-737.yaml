@@ -1,0 +1,115 @@
+schema_version: 1
+id: figure10-search-cycle-lifecycle-source-audit-737
+date: '2026-09-09'
+status: audited-exact-scheduler-unavailable-event-locked-reconstruction-authorized
+classification: figure10-search-cycle-input-lifecycle-source-audit
+authorization: docs/validation-results/figure10-full-bottom-up-emission-assessment-736.yaml
+authorization_sha256: 2808856552492ff601d66dc7807ca11e6812580c54d62556fccc2f173373e0da
+primary_paper:
+  path: tmp/pdfs/GrossbergVersace2008.pdf
+  sha256: c56c337624959d8c0bdf51aa79b0dbc82f31264af2b2cd675790879a6410d7ed
+  relevant_pages: [9, 24, 25, 26]
+  source_constraints:
+  - a failed category is inhibited and its top-down prototype is eliminated
+  - the bottom-up feature pattern can then be reinstated at the feature level
+  - Figure 10d/e begins with an active wrong winner and inactive or weak competitors
+  - activity-dependent layer-6I-to-4 resources are depleted at the winner and
+    relatively available at previously inactive or weak cells
+  - a later mismatch-mediated reset wave changes layer-4 competition in favor
+    of those previously inactive or weak cells
+  - Figure 10e plots 300 ms and marks a broad reset epoch, but neither the text
+    nor caption gives a numerical reset onset, input amplitude, or scheduler
+  figure_only_observations:
+    prior_winner_event: approximately 50 ms
+    replacement_winner_events: several events beginning after the reset starts
+    numeric_gate_status: qualitative-only-not-an-exact-calibration-target
+supplement:
+  doc_path: tmp/pdfs/GroVer2008BR-supplement.doc
+  doc_sha256: e5c8dea19d824126489782931f20d32a58a945f1d682f8561de557348d3a8ed3
+  docx_path: tmp/pdfs/GroVer2008BR-supplement.docx
+  docx_sha256: 297c69db41e3e3ad6df176d2d9b5593606751e26be994c6447751e817f9b5c1c
+  text_path: tmp/pdfs/GroVer2008BR-supplement.txt
+  text_sha256: 9f52024663b03a82ca714b21909f4d0d77262a9db7d7954623cb640cfbd499f2
+  figure10_stimulus_or_scheduler_present: false
+  retained_information: cell and synaptic records
+kinness_reports:
+- path: tmp/kinness-framework.pdf
+  sha256: 0f445537cc2e47a21c525f9cbd59cb5d7bd56d86bd195d0a772a4413c522024c
+- path: tmp/kinness-framework-expanded.pdf
+  sha256: 15a7f9166e301c9740e7cff4258810d315bd95b196ea5dff3419c5cc2879f177
+  figure10_experiment_scheduler_present: false
+  retained_information: simulator equations and execution framework
+recovered_executable:
+  path: tmp/official_SMART.nml
+  sha256: 16fc196f2ed68d1c02a39395fa83bb0ffab8fcf8edffe6fd11022bb6c6e299e1
+  model_populations_and_connections_present: true
+  experiment_run_or_stimulus_schedule_present: false
+completed_bracketing_endpoints:
+  permanently_masked:
+    result: docs/validation-results/figure10-layer6i-emission-target-voltage-pair-730.yaml
+    result_sha256: 9d036c6d1e8928ceff0db56edb731f505f231efc67a8f119432d89efb9af2d2b
+    outcome: alternatives never receive their archived orthogonal sensory drive
+  immediate_full_pattern:
+    result: docs/validation-results/figure10-full-bottom-up-emission-pair-735.yaml
+    result_sha256: 83486278e6e52dc258cec6011652f8e28e0ec93048731b4b34f5c0f8a71289a9
+    outcome: >-
+      all four alternatives activate in both arms by 20--30 ms and intact
+      alternative output is 60 versus 64 control events
+  source_conclusion: >-
+    The static endpoints bracket but do not express the ART search-cycle
+    lifecycle. The source requires a transition from an inhibited candidate
+    pool to reinstated bottom-up support after reset, while the available
+    executable artifacts do not preserve the transition scheduler.
+independent_reset_marker:
+  source_registration: docs/validation-results/figure10-layer6i-emission-target-voltage-registration-729.yaml
+  source_result: docs/validation-results/figure10-layer6i-emission-target-voltage-pair-730.yaml
+  direct_projection038_gate_threshold: 0.1
+  direct_projection038_first_threshold_crossing_ms_from_mismatch: 61.880000000000024
+  target_indices: [31, 49]
+  interpretation: >-
+    This is a preregistered, independently measured onset of the direct
+    layer-6I reset signal at previously inactive alternatives under the fixed
+    emission-snapshot candidate. It is not a time chosen from the proposed
+    lifecycle experiment or from its behavioral output.
+authorized_reconstruction:
+  name: yoked_reset_marker_bottom_up_reinstatement
+  before_marker:
+    relay_input_transform: fixed top-five learned comparator
+    purpose: retain the already validated previously inactive candidate pool
+  at_marker:
+    action: replace relay gain vector with identity all ones
+    mismatch_time_ms: 61.880000000000024
+  after_marker:
+    relay_input_transform: identity all ones
+  yoking:
+    identical_transition_time_both_arms: true
+    control_time_derived_from_intact_independent_audit: true
+    reason: prevent reset disconnection from changing sensory availability
+  unchanged:
+  - model equations and intrinsic parameters
+  - synaptic weights, delays, kinetics, topology, and depletion values
+  - mismatch stimulus values outside the relay gain transform
+  - top-down current state at the transition
+  - 100-ms match plus 200-ms mismatch duration
+  classification: calibrated-event-locked-search-cycle-reconstruction
+implementation_constraint: >-
+  Change only the active relay input values at the registered marker. Do not
+  reapply or restart the top-down current, nonspecific input, matrix input, or
+  mismatch epoch. The control receives the exact same sensory transition.
+decision_rule: >-
+  Preregister and execute one intact/control pair. Require fresh Figure 6,
+  exact pre-reset winner identity, the intact reset chain, no alternative
+  layer-4 events in either arm before the marker, and positive post-transition
+  projection-035 delivery at all five vertical targets. Require intact prior-
+  winner suppression. Reset-specific alternative release passes only if an
+  intact previously inactive alternative emits before the first such control
+  event; ties or silence fail. Report total alternative active counts and
+  events but do not tune or define a post hoc counting window.
+boundary: >-
+  This audit authorizes implementation and one pair, not a numerical legacy-
+  scheduler recovery claim. A pass would select a calibrated search-cycle
+  reconstruction for further holdouts, not establish original SMART by itself.
+  A failure closes this lifecycle endpoint without trying another marker,
+  threshold, gain, transition waveform, or output score. No Figure-7 revision,
+  gamma/beta claim, baseline promotion, freeze, neuron substitution, or modern
+  anatomy variant is authorized here.

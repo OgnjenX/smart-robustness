@@ -762,6 +762,21 @@ parameters:
     status: completed-winner-suppression-restored-alternative-release-failed-standalone-rejected
     source: Grossberg and Versace 2008 Sections 2.7/4.4 and Figures 10d-e/11; Versace et al. 2008 Equations 13-18; ModelDB 112923; Artifacts 719--725
     note: Printed sources fix the factors but not the legacy event/depletion/delay substep order. The candidate preserves Figure 6 and restores winner suppression from wrong-sign 78/76 to 69/78 intact/control, proving causal importance of resource placement, but neither arm releases an alternative. It is rejected as a standalone endpoint, remains default-off and unselected, and authorizes only a passive target-level p035--p038 balance audit.
+  diagnostics.figure10.layer6i_emission_target_voltage:
+    value: passive one-ms p035--p038 current, gate, voltage, and event timing at alternatives 31/49 from 50--90 ms
+    status: completed-inhibitory-voltage-deficit-confirmed-no-parameter-selected
+    source: Artifacts 726--731
+    note: Projection 038 reaches both alternatives at 61.88 ms and initially depolarizes them. Projection 036 then creates a maximum 10.76-mV intact-control voltage deficit by 69--70 ms. Intact later overtakes control but peaks at -58.70 mV without an event or recurrent p037 activity. This confirms membrane-state balance failure and selects no threshold, weight, delay, kernel, or scheduling rule.
+  protocol.figure10.static_comparator_lifecycle:
+    value: source audit plus parameter-free identity-input cross replacing the Figure-7-only top-five mask for the full mismatch
+    status: completed-full-input-delivered-reset-specific-release-failed
+    source: Grossberg and Versace 2008 Figures 4 and 10 and Section 2.7; Artifacts 732--736
+    note: The permanent top-five mask incorrectly holds vertical inputs 22/31/49/58 at zero, but immediate identity input is also insufficient. It delivers positive p035 current at all five targets and activates all four alternatives in both arms by 20--30 ms. Intact winner output is 42 versus 45 control, while alternative output is 60 versus 64. The endpoint fails, no parameter is selected, and the emission convention remains default-off.
+  protocol.figure10.event_locked_search_cycle_lifecycle:
+    value: top-five relay input until the independently measured 61.88-ms direct p038 reset marker, then identity input yoked across arms
+    status: implemented-preregistered-pair-not-yet-run
+    source: Grossberg and Versace 2008 Figures 4 and 10 and Section 2.7; Artifacts 730 and 737--739
+    note: Exact legacy stimulus scheduling is absent from the paper, supplement, KInNeSS reports, and SMART.nml. This single calibrated reconstruction changes only relay input values at an independently measured reset marker. It may pass only with pre-marker alternative silence, full post-marker input, winner suppression, and strictly earlier intact alternative release. No marker, gain, window, or score refinement is allowed.
   benchmark.population_sizes:
     value: see configs/*.yaml
     status: exploratory

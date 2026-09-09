@@ -1,0 +1,39 @@
+schema_version: 1
+id: figure10-search-cycle-lifecycle-implementation-738
+date: '2026-09-09'
+status: implementation-ready-default-preserving-tests-pass
+classification: figure10-event-locked-search-cycle-harness
+authorization: docs/validation-results/figure10-search-cycle-lifecycle-source-audit-737.yaml
+profile: configs/calibration/figure10_yoked_search_cycle_emission_v1.yaml
+implementation:
+  module: src/smart_robustness/validation/figure10_search_cycle.py
+  runner: scripts/run_figure10_search_cycle_pair.py
+  historical_figure10_harness_changed: false
+  historical_figure10_harness: src/smart_robustness/validation/figure10.py
+  pre_release_transform: top_k_binary_5
+  post_release_transform: identity_all_ones_81
+  release_after_mismatch_ms: 61.880000000000024
+  identical_release_time_both_arms: true
+  transition_operation: relay_external_input_values_only
+  top_down_current_reapplied_at_transition: false
+  nonspecific_or_matrix_epoch_restarted: false
+  model_equations_changed: false
+  synaptic_or_intrinsic_parameter_changed: false
+  release_marker_fitted_on_endpoint: false
+output:
+  exact_layer4_mismatch_events: true
+  pre_release_alternative_event_count: true
+  first_alternative_event_latency: true
+  prior_winner_event_count: true
+  reset_chain_population_counts: true
+  post_release_projection035_integrals_at_vertical_targets: [22, 31, 40, 49,
+    58]
+verification:
+  validation_and_marker_contract_tests: pass
+  python_compilation: pass
+  central_harness_hash_preserved: 9dc58c1236b1de7add8815dbe26f15ffd9373d943143bd6656f0590f581ac89a
+boundary: >-
+  The separate harness avoids mutating the evidence-pinned historical Figure-10
+  runner. It implements the one authorized calibrated transition and no other
+  scheduler. Passing tests establish implementation integrity, not behavioral
+  reproduction, source recovery, baseline promotion, or freezing.

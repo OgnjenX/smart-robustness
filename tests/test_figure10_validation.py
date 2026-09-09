@@ -20,6 +20,11 @@ from smart_robustness.validation.figure10 import (
     summarize_projection026_target_arrivals,
     summarize_projection036_target_arrivals,
 )
+from smart_robustness.validation.figure10_search_cycle import (
+    VERTICAL_ALTERNATIVES,
+    VERTICAL_TARGETS,
+    run_figure10_search_cycle_condition,
+)
 from smart_robustness.validation.layer6i_replay import run_layer6i_replay
 
 
@@ -195,6 +200,34 @@ def test_figure10_runner_requires_explicit_positive_protocol_values() -> None:
             mismatch_duration_ms=100,
             reset_pathway_enabled=True,
             persistent_projection_delays_ms={"modeldb112923.projection.036": 0.0},
+        )
+
+
+def test_search_cycle_runner_requires_internal_release_marker() -> None:
+    assert VERTICAL_TARGETS == (22, 31, 40, 49, 58)
+    assert VERTICAL_ALTERNATIVES == (22, 31, 49, 58)
+    with pytest.raises(ValueError, match="strictly inside mismatch"):
+        run_figure10_search_cycle_condition(
+            top_down_current_pA=800,
+            pre_match_duration_ms=100,
+            mismatch_duration_ms=200,
+            release_after_mismatch_ms=0,
+            reset_pathway_enabled=True,
+            learned_weights={},
+            persistent_projection_weight_scales={},
+            brian=brian,
+        )
+    with pytest.raises(ValueError, match="first-event cue clearing"):
+        run_figure10_search_cycle_condition(
+            top_down_current_pA=800,
+            pre_match_duration_ms=100,
+            mismatch_duration_ms=200,
+            release_after_mismatch_ms=61.88,
+            reset_pathway_enabled=True,
+            learned_weights={},
+            persistent_projection_weight_scales={},
+            top_down_current_mode="sustained_epoch",
+            brian=brian,
         )
 
 

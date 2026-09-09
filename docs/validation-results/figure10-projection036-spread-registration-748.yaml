@@ -1,0 +1,84 @@
+schema_version: 1
+id: figure10-projection036-spread-registration-748
+date: '2026-09-09'
+status: registered-before-execution-one-source-ambiguity-pair
+classification: figure10-event-locked-projection036-variance-spread-cross
+source_audit: docs/validation-results/figure10-projection036-spread-source-audit-746.yaml
+source_audit_sha256: a5e0a5b3c47932b4a3d2b3a6bb05c04a482b0a11a0306d530ab5c9b5ebcc7c65
+implementation: docs/validation-results/figure10-projection036-spread-implementation-747.yaml
+implementation_sha256: 7333794b15ffb9a05a441f616e666c52ccf22d39edf80b9b2a3bb238d6e7ae6e
+profile: configs/calibration/figure10_yoked_search_cycle_emission_v1.yaml
+profile_sha256: 22d8b8c03591e068cc4a54d422161e687ac4122fe4f0b882b071bf4a4bcc74ff
+harness: src/smart_robustness/validation/figure10_search_cycle_spread.py
+harness_sha256: 2658161a8ddff80e918e6d8250553e155eac73c1286a36314ec7e7716c8faa7f
+runtime: src/smart_robustness/classic_sector.py
+runtime_sha256: b5be825407c52908fcd20d84d0287beec937a9d4b32ce6e85ad58f53313b8339
+synapses: src/smart_robustness/synapses.py
+synapses_sha256: 0f155853a35e50d38e05294fe718d7632ba6575c08001da0ff77de013de16b4c
+script: scripts/run_figure10_search_cycle_spread_pair.py
+script_sha256: 9b2af5d63f085df9e712845d601729cf4b322d7285c4cc915f859a0fde002f3e
+prior_result: docs/validation-results/figure10-search-cycle-balance-pair-744.yaml
+prior_result_sha256: 0b0745a983854d9c5a2b955f6621d7d15deac8ee40eca7568c7e40a0b905ed89
+prior_assessment: docs/validation-results/figure10-search-cycle-balance-assessment-745.yaml
+prior_assessment_sha256: cc6a827bc7ec2a994925985a91f948782bd4810e744518faa1e90fef1c628653
+runtime_overrides:
+  layer6i_output_transmitter_gate_convention: pre_depletion_emission_snapshot
+runtime_fingerprint: fbcc1dc2ac7db8442ce1ff17b71a1d04582c32e817370c700c69ec3caa9fbe4e
+result_id: figure10-projection036-spread-pair-749
+result: docs/validation-results/figure10-projection036-spread-pair-749.yaml
+assessment: docs/validation-results/figure10-projection036-spread-assessment-750.yaml
+persistent_projection_scales:
+- {projection_id: modeldb112923.projection.008, scale: 0.75}
+- {projection_id: modeldb112923.projection.011, scale: 0.9375}
+- {projection_id: modeldb112923.projection.025, scale: 8.0}
+persistent_projection_delays: []
+nonspecific_t_scale: 0.1875
+projection036_cross:
+  serialized_spread_value: 1.5
+  candidate_interpretation: variance
+  ring_convention: center_excluded_gaussian
+  nonzero_edges: 5508
+  incoming_edges_per_target: 68
+  incoming_weight_sum_per_target: 16.83946769281913
+protocol:
+  pre_match_duration_ms: 100.0
+  mismatch_duration_ms: 200.0
+  total_duration_ms: 300.0
+  dt_ms: 0.01
+  top_down_current_pA: 800.0
+  top_down_current_mode: until_cued_cell_first_event
+  pre_release_comparator: {transform: top_k_binary, source_index: 40,
+    target_count: 5}
+  release_after_mismatch_ms: 61.880000000000024
+  post_release_transform: identity_all_ones
+  release_yoked_across_arms: true
+required_gates:
+  figure6_all_gates: true
+  projection036_nonzero_edges_both_arms: [5508, 5508]
+  projection036_incoming_weight_sum_both_arms: [16.83946769281913,
+    16.83946769281913]
+  identical_nonempty_pre_reset_state: true
+  alternatives_quiet_before_release_both_arms: true
+  full_five_target_input_delivery_both_arms: true
+  intact_reset_chain: true
+  intact_winner_events_strictly_less_than_control: true
+  first_intact_alternative_strictly_before_control: true
+decision_rule: >-
+  Execute exactly one intact/control pair with the same fixed 61.88-ms input
+  transition and every other registered convention unchanged. Interpret only
+  if all fresh Figure-6 gates pass, the compiled projection-036 topology
+  matches the registered 5508-edge variance cross in both arms, pre-reset
+  states are identical and nonempty, alternatives remain silent before the
+  marker, and all five vertical inputs arrive afterward. The endpoint passes
+  only if the intact reset chain is present, intact prior-winner output is
+  strictly lower than control, and the first intact alternative event is
+  strictly earlier than control. Ties or silence fail.
+stopping_rule: >-
+  A failure closes projection-036 spread without interpolation, global
+  variance promotion, weight compensation, ring/delay changes, marker changes,
+  or a revised score. A pass selects only this mixed-source calibrated
+  endpoint for further holdouts.
+boundary: >-
+  Even a pass does not prove exact KInNeSS recovery, repair the locked Figure-7
+  discrepancy, reproduce gamma/beta, establish original SMART, promote or
+  freeze the baseline, or authorize neuron-model and modern-anatomy variants.

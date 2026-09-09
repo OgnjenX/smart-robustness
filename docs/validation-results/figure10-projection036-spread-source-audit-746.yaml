@@ -1,0 +1,125 @@
+schema_version: 1
+id: figure10-projection036-spread-source-audit-746
+date: '2026-09-09'
+status: audited-one-bounded-source-ambiguity-endpoint-authorized
+classification: figure10-projection036-gaussian-spread-source-parity-audit
+authorization: docs/validation-results/figure10-search-cycle-balance-assessment-745.yaml
+authorization_sha256: cc6a827bc7ec2a994925985a91f948782bd4810e744518faa1e90fef1c628653
+primary_paper:
+  path: tmp/pdfs/GroVer2008BR.pdf
+  sha256: c56c337624959d8c0bdf51aa79b0dbc82f31264af2b2cd675790879a6410d7ed
+  visually_audited_pdf_pages: [24, 25, 26]
+  evidence:
+  - Figure 10d defines a layer-6I-to-4 on-center/off-surround circuit whose
+    reset favors previously inactive cells with less-depleted transmitter.
+  - Section 2.7 states that the layer-6I excitatory path to layer 4 and the
+    layer-6I path through layer-4 inhibitory interneurons are both scaled by
+    activity-dependent transmitter.
+  - The paper supplies no explicit Gaussian formula or ring=true semantics.
+kinness_framework:
+  path: tmp/kinness-framework-expanded.pdf
+  sha256: 15a7f9166e301c9740e7cff4258810d315bd95b196ea5dff3419c5cc2879f177
+  sections: ['4.4 Synaptic channels', '4.9 Connectivity']
+  evidence:
+  - Equation 16 defines chemical current as channel conductance density times
+    ligand gate, cell-specific weight, source transmitter, and driving force.
+  - Section 4.9 says the many-to-one Gaussian has variances set by Spread X
+    and Spread Y.
+  - The archived interface manual independently fixes Weight as the Gaussian
+    peak and drops resulting connection weights below 0.001.
+modeldb_executable:
+  path: tmp/modeldb-112923/versaceGrossberg2008/SMART.nml
+  sha256: 16fc196f2ed68d1c02a39395fa83bb0ffab8fcf8edffe6fd11022bb6c6e299e1
+  projection026:
+    route: layer6i-to-layer4-inhibitory-proximal
+    channel_conductance_mS_cm2: 0.2
+    weight: 2.0
+    sigma_x_y: [0.5, 0.5]
+    delay_ms: 1.0
+    rise_fall_ms: [0.1, 3.0]
+  projection036:
+    route: layer4-inhibitory-to-layer4-excitatory-proximal
+    channel_conductance_mS_cm2: 2.461
+    weight: 2.0
+    sigma_x_y: [1.5, 1.5]
+    ring: true
+    border_effect: wrap
+    delay_ms: 0.1
+    rise_fall_ms: [0.1, 2.0]
+  projection038:
+    route: layer6i-to-layer4-excitatory-proximal
+    channel_conductance_mS_cm2: 0.09
+    weight: 0.7
+    topology: one-to-one
+    delay_ms: 1.0
+    rise_fall_ms: [2.0, 2.0]
+supplement:
+  path: tmp/pdfs/GroVer2008BR-supplement.doc
+  sha256: e5c8dea19d824126489782931f20d32a58a945f1d682f8561de557348d3a8ed3
+  evidence:
+  - The corresponding projection-036 row independently prints conductance
+    2.461, weight 2, spread 1.5, delay 0.1, and rise/fall 0.1/2.
+  - It does not resolve the executable ring flag or whether 1.5 is a variance
+    or standard deviation.
+compiled_brian2_parity:
+  runtime_fingerprint: fbcc1dc2ac7db8442ce1ff17b71a1d04582c32e817370c700c69ec3caa9fbe4e
+  target_area_conversion: cylindrical_lateral_area_pi_D_L
+  current_formula: g_density_times_target_area_times_weight_gate_times_driving_force
+  projection026_target_area_cm2: 1.5707963267948967e-05
+  projection026_compiled_channel_conductance_nS: 3.1415926535897936
+  projection036_target_area_cm2: 7.853981633974484e-05
+  projection036_compiled_channel_conductance_nS: 193.28648801211204
+  projection038_target_area_cm2: 7.853981633974484e-05
+  projection038_compiled_channel_conductance_nS: 7.068583470577035
+  source_density_weight_area_translation_exact: true
+  source_transmitter_shared_by_026_and_038: true
+  current_or_area_transcription_error_found: false
+spread_ambiguity:
+  xml_field_names: [sigma_x, sigma_y]
+  framework_interface_wording: variances set by Spread X and Spread Y
+  active_standard_deviation:
+    variance_used: 2.25
+    incoming_edges_per_target: 80
+    incoming_weight_sum: 26.147518829085925
+    maximum_edge_weight: 1.6014748058336161
+    minimum_edge_weight: 0.0016319756701442965
+  bounded_variance_interpretation:
+    variance_used: 1.5
+    incoming_edges_per_target: 68
+    incoming_weight_sum: 16.83946769281913
+    maximum_edge_weight: 1.4330626211475785
+    minimum_edge_weight: 0.002545267602679618
+    summed_incoming_weight_reduction_fraction: 0.35598219460550584
+prior_closed_families:
+  projection036_ring_geometry: >-
+    The parameter-free radial-annulus alternative failed and is closed by
+    Artifacts 651--655; ring shape or radius is not reopened.
+  projection036_delay: >-
+    The 0.2-ms endpoint failed and is closed by Artifacts 676--679; delay is
+    not reopened.
+  projection026_delay: >-
+    The supplement's 0.1-ms endpoint failed and is closed by Artifacts
+    680--683; delay is not reopened.
+decision: >-
+  The compiled conductance, area conversion, topology weights, and shared
+  transmitter application match the recoverable source equations. The only
+  untested, discrete source ambiguity directly affecting the localized
+  inhibitory route is whether projection 036's serialized 1.5 spread is the
+  variance named by KInNeSS Section 4.9 or the standard deviation suggested by
+  the XML field name. Authorize exactly one projection-036-only variance cross
+  under the otherwise unchanged event-locked lifecycle and pre-depletion
+  emission candidate. This is a mixed-source sensitivity because a global
+  variance interpretation previously failed Figure 6.
+stopping_rule: >-
+  Preregister one intact/control pair. Require every fresh Figure-6 gate,
+  identical nonempty pre-reset states, no alternative event before the fixed
+  marker, full post-marker input delivery, reset-chain recruitment, winner
+  suppression, and strictly earlier intact alternative activation. A failure
+  closes projection-036 spread without interpolation, weight compensation,
+  global variance promotion, or another topology change.
+boundary: >-
+  This audit changes no executable quantity and recovers no legacy ring code.
+  Even a behavioral pass would select only a calibrated mixed-source
+  reconstruction for further holdouts; it would not prove exact KInNeSS
+  recovery, original SMART, gamma/beta behavior, or authorize baseline freeze,
+  neuron-model comparisons, or modern-anatomy variants.

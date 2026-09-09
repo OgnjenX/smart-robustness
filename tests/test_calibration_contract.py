@@ -11847,6 +11847,80 @@ def test_figure10_search_cycle_balance_localizes_indirect_inhibition() -> None:
     assert not verdict["baseline_frozen"]
 
 
+def test_projection036_spread_audit_finds_one_bounded_source_ambiguity() -> None:
+    audit = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-projection036-spread-source-audit-746.yaml"
+        ).read_text()
+    )
+
+    assert hashlib.sha256(
+        (ROOT / audit["authorization"]).read_bytes()
+    ).hexdigest() == audit["authorization_sha256"]
+    for source in ("primary_paper", "kinness_framework", "modeldb_executable", "supplement"):
+        assert hashlib.sha256((ROOT / audit[source]["path"]).read_bytes()).hexdigest() == audit[
+            source
+        ]["sha256"]
+    parity = audit["compiled_brian2_parity"]
+    assert parity["source_density_weight_area_translation_exact"]
+    assert parity["source_transmitter_shared_by_026_and_038"]
+    assert not parity["current_or_area_transcription_error_found"]
+    ambiguity = audit["spread_ambiguity"]
+    assert ambiguity["active_standard_deviation"]["incoming_edges_per_target"] == 80
+    assert ambiguity["bounded_variance_interpretation"][
+        "incoming_edges_per_target"
+    ] == 68
+    assert ambiguity["bounded_variance_interpretation"][
+        "summed_incoming_weight_reduction_fraction"
+    ] == pytest.approx(0.3559821946)
+    assert "exactly one" in audit["decision"]
+    assert "failure closes" in audit["stopping_rule"].lower()
+    assert "ring shape or radius is not reopened" in audit["prior_closed_families"][
+        "projection036_ring_geometry"
+    ]
+
+
+def test_projection036_spread_cross_is_preregistered_and_hash_pinned() -> None:
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-projection036-spread-registration-748.yaml"
+        ).read_text()
+    )
+
+    for path_key, hash_key in (
+        ("source_audit", "source_audit_sha256"),
+        ("implementation", "implementation_sha256"),
+        ("profile", "profile_sha256"),
+        ("harness", "harness_sha256"),
+        ("runtime", "runtime_sha256"),
+        ("synapses", "synapses_sha256"),
+        ("script", "script_sha256"),
+        ("prior_result", "prior_result_sha256"),
+        ("prior_assessment", "prior_assessment_sha256"),
+    ):
+        assert hashlib.sha256(
+            (ROOT / registration[path_key]).read_bytes()
+        ).hexdigest() == registration[hash_key]
+    assert registration["runtime_fingerprint"] == (
+        "fbcc1dc2ac7db8442ce1ff17b71a1d04582c32e817370c700c69ec3caa9fbe4e"
+    )
+    cross = registration["projection036_cross"]
+    assert cross["candidate_interpretation"] == "variance"
+    assert cross["ring_convention"] == "center_excluded_gaussian"
+    assert cross["nonzero_edges"] == 5508
+    assert cross["incoming_edges_per_target"] == 68
+    assert cross["incoming_weight_sum_per_target"] == pytest.approx(
+        16.83946769281913
+    )
+    assert registration["protocol"]["release_after_mismatch_ms"] == pytest.approx(
+        61.88
+    )
+    assert "Ties or silence fail" in registration["decision_rule"]
+    assert "failure closes" in registration["stopping_rule"].lower()
+
+
 def test_projection036_source_arrival_result_localizes_phase_not_topology() -> None:
     result_path = (
         ROOT

@@ -1,12 +1,16 @@
 from __future__ import annotations
 
 from dataclasses import replace
+from types import SimpleNamespace
 
+import numpy as np
 import pytest
 
 brian = pytest.importorskip("brian2")
 
 from smart_robustness.classic_sector import figure6_runtime_conventions
+from smart_robustness.modeldb_projections import MODELDB_FIRST_ORDER
+from smart_robustness.synapses import modeldb_topology_pairs
 from smart_robustness.validation.figure10 import (
     Figure10ConditionResult,
     assess_figure10_reset,
@@ -33,6 +37,10 @@ from smart_robustness.validation.figure10_search_cycle_balance import (
 )
 from smart_robustness.validation.figure10_search_cycle_balance import (
     run_figure10_search_cycle_balance_condition,
+)
+from smart_robustness.validation.figure10_search_cycle_spread import (
+    PROJECTION036_ID,
+    apply_projection036_variance_topology,
 )
 from smart_robustness.validation.layer6i_replay import run_layer6i_replay
 
@@ -265,6 +273,31 @@ def test_search_cycle_balance_audit_requires_fixed_bounded_window() -> None:
         run_figure10_search_cycle_balance_condition(
             audit_bin_width_ms=0, **common
         )
+
+
+def test_projection036_variance_cross_is_exact_bounded_reweighting() -> None:
+    record = MODELDB_FIRST_ORDER.by_id(PROJECTION036_ID)
+    sources, targets, _ = modeldb_topology_pairs(
+        record,
+        source_shape=(9, 9),
+        target_shape=(9, 9),
+        gaussian_weight_convention="source_peak",
+        gaussian_spread_convention="standard_deviation",
+        ring_kernel_convention="center_excluded_gaussian",
+    )
+    projection = SimpleNamespace(
+        i=sources,
+        j=targets,
+        w=np.full(len(sources), np.nan),
+    )
+    sector = SimpleNamespace(projections={PROJECTION036_ID: projection})
+
+    summary = apply_projection036_variance_topology(sector)
+
+    assert summary.nonzero_edges == 5508
+    assert summary.incoming_weight_sum == pytest.approx(16.83946769281913)
+    assert np.count_nonzero(projection.w) == 5508
+    assert len(projection.w) == 6480
 
 
 def test_figure10_condition_smoke_runs_persistent_two_phase_network() -> None:

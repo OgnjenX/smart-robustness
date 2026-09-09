@@ -1,0 +1,38 @@
+schema_version: 1
+id: figure10-projection036-spread-implementation-747
+date: '2026-09-09'
+status: implementation-ready-default-preserving-tests-pass
+classification: figure10-projection036-variance-spread-cross
+authorization: docs/validation-results/figure10-projection036-spread-source-audit-746.yaml
+authorization_sha256: a5e0a5b3c47932b4a3d2b3a6bb05c04a482b0a11a0306d530ab5c9b5ebcc7c65
+implementation:
+  module: src/smart_robustness/validation/figure10_search_cycle_spread.py
+  runner: scripts/run_figure10_search_cycle_spread_pair.py
+  central_runtime_changed: false
+  historical_search_cycle_harness_changed: false
+  projection_id: modeldb112923.projection.036
+  active_spread_interpretation: standard_deviation
+  candidate_spread_interpretation: variance
+  serialized_spread_value: 1.5
+  gaussian_peak_weight: 2.0
+  resulting_weight_cutoff: 0.001
+  ring_convention_held_fixed: center_excluded_gaussian
+  nonzero_edges: 5508
+  incoming_edges_per_target: 68
+  incoming_weight_sum_per_target: 16.83946769281913
+  runner_applies_candidate_during_fresh_figure6: true
+  runner_restores_central_builder_before_figure10: true
+  figure10_harness_applies_candidate_locally: true
+  model_equations_changed: false
+  other_projection_topology_changed: false
+  synaptic_or_intrinsic_parameter_fitted: false
+verification:
+  topology_unit_test: pass
+  python_compilation: pass
+  style_checks: pass
+boundary: >-
+  This separate module implements only the source-authorized interpretation
+  of the existing serialized spread. It does not alter central defaults or any
+  evidence-pinned historical harness. Passing tests establish exact mechanical
+  reweighting, not behavioral reproduction, original-source recovery,
+  baseline promotion, or freezing.

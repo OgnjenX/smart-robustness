@@ -541,6 +541,54 @@ def test_depleted_resource_continuously_scales_active_ligand_gate() -> None:
     assert float(target.port_005_gate[target_index]) == pytest.approx(expected, rel=1e-4)
 
 
+def test_layer6i_emission_snapshot_carries_pre_depletion_resource_through_delay() -> None:
+    brian.prefs.codegen.target = "numpy"
+    brian.start_scope()
+    brian.defaultclock.dt = 0.01 * brian.ms
+    conventions = FirstOrderRuntimeConventions(
+        layer6i_output_transmitter_gate_convention=(
+            "pre_depletion_emission_snapshot"
+        )
+    )
+    sector = build_first_order_chemical_sector(conventions=conventions, brian=brian)
+    source = sector.populations["layer6i_excitatory_v1"].group
+    projection026 = sector.projections["modeldb112923.projection.026"]
+    projection038 = sector.projections["modeldb112923.projection.038"]
+    unchanged = sector.projections["modeldb112923.projection.005"]
+    source_index = 40
+    outgoing026 = np.flatnonzero(np.asarray(projection026.i[:]) == source_index)
+    outgoing038 = np.flatnonzero(np.asarray(projection038.i[:]) == source_index)
+    source.transmitter[source_index] = 0.75
+    source.armed[source_index] = 1
+    source.v_soma[source_index] = -1 * brian.mV
+
+    sector.network.run(brian.defaultclock.dt)
+
+    assert float(source.transmitter[source_index]) == 0.0
+    assert np.asarray(projection026.last_amplitude[:])[outgoing026] == pytest.approx(
+        0.75, rel=1e-4
+    )
+    assert np.asarray(projection038.last_amplitude[:])[outgoing038] == pytest.approx(
+        0.75, rel=1e-4
+    )
+    assert np.asarray(projection026.last_arrival[:] / brian.ms)[outgoing026] == pytest.approx(
+        1.0
+    )
+    assert np.asarray(projection038.last_arrival[:] / brian.ms)[outgoing038] == pytest.approx(
+        1.0
+    )
+    assert float(projection026.delay[0] / brian.ms) == 0.0
+    assert float(projection038.delay[0] / brian.ms) == 0.0
+    assert "axonal_delay" in projection026.variables
+    assert "transmitter_pre" not in next(
+        iter(projection026.summed_updaters.values())
+    ).abstract_code
+    assert "axonal_delay" not in unchanged.variables
+    assert "transmitter_pre" in next(
+        iter(unchanged.summed_updaters.values())
+    ).abstract_code
+
+
 def test_distinct_presynaptic_ligand_currents_sum_per_kinness_equation_16() -> None:
     brian.prefs.codegen.target = "numpy"
     brian.start_scope()

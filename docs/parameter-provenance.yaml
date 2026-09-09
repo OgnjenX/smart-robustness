@@ -754,9 +754,14 @@ parameters:
     note: Exact identities repeat. Sources 39/41 fire at 23.43 ms intact versus 23.44 ms control. Their threshold-order-0 transmitter values are pre-reset, and epsilon 1.0 immediately sets availability to zero, so continuous transmitter multiplication changes the existing p026 gate before the new delayed arrivals at 24.43/24.44 ms. This confirms a source-phase/resource propagation mechanism, not a p026 parameter fault. No parameter is selected; projection 036 source-resource timing is the next passive diagnostic.
   diagnostics.figure10.layer6i_output_depletion_contrast:
     value: focal layer-6I source events and transmitter for alternatives 31/49 versus winner-aligned cells 38--42 through reset onset
-    status: registered-before-execution
-    source: Grossberg and Versace 2008 Figure 10d-e and Section 2.7; recovered layer-6I and layer-4 inhibitory population records; Artifacts 717--718
-    note: Layer-4 inhibitory cells are non-depleting, so a projection-036 source-resource audit is inapplicable. The source-described habituative comparison belongs to the shared layer-6I outputs through projections 026 and 038. One unchanged focal audit is registered for alternatives 31/49 and winner cells 38--42 through 80 ms; no transmitter convention or parameter is reopened.
+    status: completed-paper-resource-contrast-confirmed-delivery-advantage-erased
+    source: Grossberg and Versace 2008 Figure 10d-e and Section 2.7; recovered layer-6I and layer-4 inhibitory population records; Artifacts 717--720
+    note: Alternatives 31/49 enter the intact reset wave with transmitter 1.0 while winner-aligned sources are near 0.014, confirming the stated pre-event habituation contrast. Epsilon 1 then sets the newly active source to zero; under continuous Equation-16 multiplication only 0.0024968776025399153 has recovered at the one-millisecond p026/p038 delivery. The resource advantage is not carried by the emitted event. Projection 036 is closed as a depletion/weight fault, no parameter is selected, and source scheduling is the next discriminator.
+  calibration.figure10.layer6i_predepletion_emission_resource:
+    value: default-off pre-depletion transmitter snapshot on layer-6I projections 026 and 038 only
+    status: completed-winner-suppression-restored-alternative-release-failed-standalone-rejected
+    source: Grossberg and Versace 2008 Sections 2.7/4.4 and Figures 10d-e/11; Versace et al. 2008 Equations 13-18; ModelDB 112923; Artifacts 719--725
+    note: Printed sources fix the factors but not the legacy event/depletion/delay substep order. The candidate preserves Figure 6 and restores winner suppression from wrong-sign 78/76 to 69/78 intact/control, proving causal importance of resource placement, but neither arm releases an alternative. It is rejected as a standalone endpoint, remains default-off and unselected, and authorizes only a passive target-level p035--p038 balance audit.
   benchmark.population_sizes:
     value: see configs/*.yaml
     status: exploratory

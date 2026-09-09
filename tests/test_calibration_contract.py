@@ -14,6 +14,9 @@ from smart_robustness.validation.calibration import (
 )
 
 ROOT = Path(__file__).parents[1]
+HISTORICAL_FIGURE10_RUNTIME_SHA256 = (
+    "ebdf48f0138803ab50b1dec2ef87817b4c537e4da490a088b9df6bdcb9d119a1"
+)
 CONTRACT_PATH = ROOT / "configs/calibration/classic_uncertainty_space.yaml"
 TRN_SURVIVOR_PATH = ROOT / "configs/calibration/trn_stage_a_survivor_v1.yaml"
 NETWORK_CALIBRATION_PATH = (
@@ -9737,6 +9740,36 @@ def test_layer4_balance_localizes_first_wrong_sign_at_projection036() -> None:
     assert not result["baseline_promoted"]
 
 
+@pytest.mark.parametrize(
+    "registration_name",
+    [
+        "figure10-projection036-ring-registration-653.yaml",
+        "figure10-layer4-target-balance-registration-657.yaml",
+        "figure10-layer4-complete-input-registration-661.yaml",
+        "figure10-layer4-subbin-timing-registration-665.yaml",
+        "figure10-layer4-gate-timing-registration-669.yaml",
+        "figure10-layer4-native-gate-onset-registration-673.yaml",
+        "figure10-projection036-delay0p2-registration-677.yaml",
+        "figure10-projection026-supplement-delay-registration-681.yaml",
+        "figure10-projection036-source-arrival-registration-685.yaml",
+        "figure10-layer4i-source-phase-registration-689.yaml",
+        "figure10-layer4i-source-phase-file-registration-693.yaml",
+        "figure10-layer4i-source-phase-wide-registration-696.yaml",
+        "figure10-layer4i-source-phase-from-onset-registration-699.yaml",
+        "figure10-projection026-source-resource-registration-710.yaml",
+        "figure10-projection026-focal-resource-registration-714.yaml",
+        "figure10-layer6i-output-depletion-registration-718.yaml",
+    ],
+)
+def test_historical_figure10_runtime_digest_remains_pinned(
+    registration_name: str,
+) -> None:
+    registration = yaml.safe_load(
+        (ROOT / "docs/validation-results" / registration_name).read_text()
+    )
+    assert registration["runtime_sha256"] == HISTORICAL_FIGURE10_RUNTIME_SHA256
+
+
 def test_projection036_ring_audit_preserves_source_boundary() -> None:
     audit = yaml.safe_load(
         (
@@ -9782,7 +9815,6 @@ def test_projection036_ring_endpoint_is_hash_pinned_and_bounded() -> None:
     for path_key, hash_key in (
         ("authorization", "authorization_sha256"),
         ("profile", "profile_sha256"),
-        ("runtime", "runtime_sha256"),
     ):
         assert hashlib.sha256(
             (ROOT / registration[path_key]).read_bytes()
@@ -9873,7 +9905,6 @@ def test_layer4_target_balance_audit_is_hash_pinned_and_read_only() -> None:
     for path_key, hash_key in (
         ("authorization", "authorization_sha256"),
         ("profile", "profile_sha256"),
-        ("runtime", "runtime_sha256"),
         ("source_result", "source_result_sha256"),
     ):
         assert hashlib.sha256(
@@ -9969,7 +10000,6 @@ def test_layer4_complete_input_audit_is_hash_pinned_and_read_only() -> None:
     for path_key, hash_key in (
         ("authorization", "authorization_sha256"),
         ("profile", "profile_sha256"),
-        ("runtime", "runtime_sha256"),
         ("source_result", "source_result_sha256"),
     ):
         assert hashlib.sha256(
@@ -10073,7 +10103,6 @@ def test_layer4_subbin_timing_audit_is_hash_pinned_and_read_only() -> None:
     for path_key, hash_key in (
         ("authorization", "authorization_sha256"),
         ("profile", "profile_sha256"),
-        ("runtime", "runtime_sha256"),
         ("source_result", "source_result_sha256"),
     ):
         assert hashlib.sha256(
@@ -10152,7 +10181,6 @@ def test_layer4_gate_timing_audit_is_hash_pinned_and_read_only() -> None:
     for path_key, hash_key in (
         ("authorization", "authorization_sha256"),
         ("profile", "profile_sha256"),
-        ("runtime", "runtime_sha256"),
         ("source_result", "source_result_sha256"),
     ):
         assert hashlib.sha256(
@@ -10226,7 +10254,6 @@ def test_layer4_native_gate_onset_confirmation_is_hash_pinned() -> None:
     for path_key, hash_key in (
         ("authorization", "authorization_sha256"),
         ("profile", "profile_sha256"),
-        ("runtime", "runtime_sha256"),
         ("source_result", "source_result_sha256"),
     ):
         assert hashlib.sha256(
@@ -10297,7 +10324,6 @@ def test_projection036_delay0p2_endpoint_is_hash_pinned_and_bounded() -> None:
     for path_key, hash_key in (
         ("authorization", "authorization_sha256"),
         ("profile", "profile_sha256"),
-        ("runtime", "runtime_sha256"),
         ("source_result", "source_result_sha256"),
     ):
         assert hashlib.sha256(
@@ -10382,7 +10408,6 @@ def test_projection026_supplement_delay_endpoint_is_source_pinned_and_bounded() 
 
     for path_key, hash_key in (
         ("profile", "profile_sha256"),
-        ("runtime", "runtime_sha256"),
         ("supplementary_catalog", "supplementary_catalog_sha256"),
         ("executable_catalog", "executable_catalog_sha256"),
         ("prior_assessment", "prior_assessment_sha256"),
@@ -10471,7 +10496,6 @@ def test_projection036_source_arrival_audit_is_hash_pinned_and_passive() -> None
 
     for path_key, hash_key in (
         ("profile", "profile_sha256"),
-        ("runtime", "runtime_sha256"),
         ("source_result", "source_result_sha256"),
         ("prior_assessment", "prior_assessment_sha256"),
     ):
@@ -10511,7 +10535,6 @@ def test_layer4i_source_phase_audit_is_hash_pinned_complete_and_passive() -> Non
 
     for path_key, hash_key in (
         ("profile", "profile_sha256"),
-        ("runtime", "runtime_sha256"),
         ("source_result", "source_result_sha256"),
         ("prior_assessment", "prior_assessment_sha256"),
     ):
@@ -10582,7 +10605,6 @@ def test_layer4i_source_phase_file_rerun_is_hash_pinned_and_passive() -> None:
 
     for path_key, hash_key in (
         ("profile", "profile_sha256"),
-        ("runtime", "runtime_sha256"),
         ("source_result", "source_result_sha256"),
         ("prior_assessment", "prior_assessment_sha256"),
     ):
@@ -10655,7 +10677,6 @@ def test_layer4i_source_phase_wide_trace_is_hash_pinned_and_passive() -> None:
 
     for path_key, hash_key in (
         ("profile", "profile_sha256"),
-        ("runtime", "runtime_sha256"),
         ("source_result", "source_result_sha256"),
         ("prior_assessment", "prior_assessment_sha256"),
     ):
@@ -10687,7 +10708,6 @@ def test_layer4i_source_phase_from_onset_is_hash_pinned_and_passive() -> None:
 
     for path_key, hash_key in (
         ("profile", "profile_sha256"),
-        ("runtime", "runtime_sha256"),
         ("source_result", "source_result_sha256"),
         ("prior_assessment", "prior_assessment_sha256"),
     ):
@@ -10803,7 +10823,6 @@ def test_projection026_source_arrival_audit_is_hash_pinned_and_passive() -> None
     for path_key, hash_key in (
         ("profile", "profile_sha256"),
         ("harness", "harness_sha256"),
-        ("runtime", "runtime_sha256"),
         ("source_result", "source_result_sha256"),
         ("prior_assessment", "prior_assessment_sha256"),
     ):
@@ -10875,7 +10894,6 @@ def test_projection026_source_history_registration_is_hash_pinned() -> None:
     for path_key, hash_key in (
         ("profile", "profile_sha256"),
         ("harness", "harness_sha256"),
-        ("runtime", "runtime_sha256"),
         ("source_result", "source_result_sha256"),
         ("prior_assessment", "prior_assessment_sha256"),
     ):
@@ -10947,7 +10965,6 @@ def test_projection026_source_resource_audit_is_hash_pinned_and_passive() -> Non
     for path_key, hash_key in (
         ("profile", "profile_sha256"),
         ("harness", "harness_sha256"),
-        ("runtime", "runtime_sha256"),
         ("source_result", "source_result_sha256"),
         ("prior_assessment", "prior_assessment_sha256"),
     ):
@@ -11016,7 +11033,6 @@ def test_projection026_focal_resource_recovery_is_hash_pinned_and_passive() -> N
     for path_key, hash_key in (
         ("profile", "profile_sha256"),
         ("harness", "harness_sha256"),
-        ("runtime", "runtime_sha256"),
         ("source_result", "source_result_sha256"),
         ("prior_assessment", "prior_assessment_sha256"),
     ):
@@ -11025,6 +11041,9 @@ def test_projection026_focal_resource_recovery_is_hash_pinned_and_passive() -> N
         ).hexdigest() == registration[hash_key]
     assert registration["script_sha256"] == (
         "f137a92900487e4f5c954ff044e0e5086e4304fa1d0fdcf7516a7fa3fa1c322b"
+    )
+    assert registration["runtime_sha256"] == (
+        "ebdf48f0138803ab50b1dec2ef87817b4c537e4da490a088b9df6bdcb9d119a1"
     )
     assert implementation["implementation"]["behavior_change"] == "none"
     assert registration["layer6i_source_resource_indices"] == [39, 41]
@@ -11097,7 +11116,6 @@ def test_layer6i_output_depletion_audit_is_source_corrected_and_registered() -> 
         ("source_audit", "source_audit_sha256"),
         ("profile", "profile_sha256"),
         ("harness", "harness_sha256"),
-        ("runtime", "runtime_sha256"),
         ("script", "script_sha256"),
         ("source_result", "source_result_sha256"),
         ("prior_assessment", "prior_assessment_sha256"),
@@ -11105,6 +11123,9 @@ def test_layer6i_output_depletion_audit_is_source_corrected_and_registered() -> 
         assert hashlib.sha256(
             (ROOT / registration[path_key]).read_bytes()
         ).hexdigest() == registration[hash_key]
+    assert registration["runtime_sha256"] == (
+        "ebdf48f0138803ab50b1dec2ef87817b4c537e4da490a088b9df6bdcb9d119a1"
+    )
     executable = audit["executable_source"]
     assert executable["layer6i"]["depletion_enabled"]
     assert executable["layer6i"]["shared_source_resource_projections"] == [
@@ -11122,6 +11143,156 @@ def test_layer6i_output_depletion_audit_is_source_corrected_and_registered() -> 
     assert registration["record_projection036_arrival_target_indices"] == [31]
     assert registration["projection036_arrival_window_ms"] == [75.2, 77.4]
     assert "No transmitter alternative" in registration["boundary"]
+
+
+def test_layer6i_output_depletion_pair_localizes_delivery_schedule_conflict() -> None:
+    result_path = (
+        ROOT
+        / "docs/validation-results/figure10-layer6i-output-depletion-pair-719.yaml"
+    )
+    result = yaml.safe_load(result_path.read_text())
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-layer6i-output-depletion-assessment-720.yaml"
+        ).read_text()
+    )
+
+    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment[
+        "result_sha256"
+    ]
+    assert all(result["figure6_gates"].values())
+    assert result["persistent_projection_delays_ms"] == {}
+    assert result["exact_source_identity"]["layer6i_post_events_intact_control"] == [
+        153,
+        76,
+    ]
+    intact = result["first_source_events"]["intact"]
+    alternatives = intact["previously_inactive_alternatives"]
+    winners = intact["winner_aligned"]
+    assert [row["source_index"] for row in alternatives] == [31, 49]
+    assert [row["transmitter_pre_reset"] for row in alternatives] == [1.0, 1.0]
+    assert max(row["transmitter_pre_reset"] for row in winners) < 0.015
+    assert result["first_source_events"]["disconnected_control"][
+        "previously_inactive_alternatives"
+    ] == []
+    schedule = result["derived_resource_schedule"]
+    assert schedule["immediate_post_event_transmitter_epsilon1"] == 0.0
+    assert schedule["no_intervening_event_recovery_at_1ms_delivery"] == pytest.approx(
+        0.0024968776025399153
+    )
+    assert schedule["recovery_at_projection026_waveform_peak"] == pytest.approx(
+        0.0033739155249272734
+    )
+    assert schedule["recovery_at_projection038_waveform_peak"] == pytest.approx(
+        0.007471945180861583
+    )
+    verdict = assessment["assessment"]
+    assert verdict["previously_inactive_pre_event_transmitter_advantage"]
+    assert not verdict["pre_event_advantage_preserved_at_delayed_delivery"]
+    assert verdict["continuous_schedule_erases_emitted_event_advantage"]
+    assert verdict["layer6i_habituation_mechanism_conflict_localized"]
+    assert not verdict["parameter_selected"]
+    assert not verdict["official_figure10_reset_reproduced"]
+    assert not verdict["original_smart_reproduced"]
+    assert not verdict["baseline_promoted"]
+
+
+def test_layer6i_emission_resource_cross_is_bounded_and_preregistered() -> None:
+    audit_path = (
+        ROOT
+        / "docs/validation-results/figure10-transmitter-scheduling-source-audit-721.yaml"
+    )
+    implementation_path = (
+        ROOT
+        / "docs/validation-results/figure10-layer6i-emission-resource-implementation-722.yaml"
+    )
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-layer6i-emission-resource-registration-723.yaml"
+        ).read_text()
+    )
+
+    for path_key, hash_key in (
+        ("source_audit", "source_audit_sha256"),
+        ("implementation", "implementation_sha256"),
+        ("profile", "profile_sha256"),
+        ("harness", "harness_sha256"),
+        ("runtime", "runtime_sha256"),
+        ("synapses", "synapses_sha256"),
+        ("script", "script_sha256"),
+        ("prior_result", "prior_result_sha256"),
+        ("prior_assessment", "prior_assessment_sha256"),
+    ):
+        assert hashlib.sha256(
+            (ROOT / registration[path_key]).read_bytes()
+        ).hexdigest() == registration[hash_key]
+    audit = yaml.safe_load(audit_path.read_text())
+    implementation = yaml.safe_load(implementation_path.read_text())
+    assert not audit["unresolved_ordering"]["exact_legacy_source_body_available"]
+    assert audit["authorized_discriminator"]["affected_projections"] == [
+        "modeldb112923.projection.026",
+        "modeldb112923.projection.038",
+    ]
+    assert implementation["implementation"]["default"] == (
+        "continuous_current_resource"
+    )
+    assert implementation["implementation"]["candidate"] == (
+        "pre_depletion_emission_snapshot"
+    )
+    assert registration["runtime_overrides"] == {
+        "layer6i_output_transmitter_gate_convention": (
+            "pre_depletion_emission_snapshot"
+        )
+    }
+    assert registration["runtime_fingerprint"] == (
+        "fbcc1dc2ac7db8442ce1ff17b71a1d04582c32e817370c700c69ec3caa9fbe4e"
+    )
+    assert registration["candidate_scope"][
+        "continuous_default_retained_for_all_other_projections"
+    ]
+    assert "one intact/control pair" in registration["decision_rule"]
+    assert "would not" in registration["boundary"]
+
+
+def test_layer6i_emission_resource_pair_restores_only_winner_suppression() -> None:
+    result_path = (
+        ROOT
+        / "docs/validation-results/figure10-layer6i-emission-resource-pair-724.yaml"
+    )
+    result = yaml.safe_load(result_path.read_text())
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-layer6i-emission-resource-assessment-725.yaml"
+        ).read_text()
+    )
+
+    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment[
+        "result_sha256"
+    ]
+    assert all(result["figure6_gates"].values())
+    assert result["persistent_projection_delays_ms"] == {}
+    assert result["intact"]["layer6i_mismatch_active_count"] == 81
+    assert result["intact"]["layer4_inhibitory_active_count"] == 81
+    assert result["reset_assessment"]["intact_winner_post_spikes"] == 69
+    assert result["reset_assessment"]["control_winner_post_spikes"] == 78
+    assert result["reset_assessment"]["intact_released_alternatives"] == 0
+    assert result["reset_assessment"]["control_released_alternatives"] == 0
+    assert result["reset_gates"] == {
+        "pre_reset_winner": True,
+        "reset_chain": True,
+        "winner_suppression": True,
+        "alternative_release": False,
+    }
+    verdict = assessment["assessment"]
+    assert verdict["scheduling_convention_causally_improves_winner_suppression"]
+    assert not verdict["scheduling_convention_sufficient_for_reset"]
+    assert not verdict["scheduling_convention_selected"]
+    assert verdict["scheduling_convention_rejected_as_standalone_endpoint"]
+    assert not verdict["original_smart_reproduced"]
+    assert not verdict["baseline_promoted"]
 
 
 def test_projection036_source_arrival_result_localizes_phase_not_topology() -> None:

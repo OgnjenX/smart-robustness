@@ -1,0 +1,86 @@
+schema_version: 1
+id: figure10-transmitter-scheduling-source-audit-721
+date: '2026-09-09'
+status: source-ordering-underidentified-mechanism-preserving-cross-authorized
+classification: figure10-primary-source-scheduling-audit
+primary_sources:
+  smart_paper:
+    citation: Grossberg and Versace 2008, Sections 2.7 and 4.4, Figures 10d-e and 11, Equation 7
+    url: https://sites.bu.edu/steveg/files/2016/06/GroVer2008BR.pdf
+    source_statements:
+    - An activity-dependent fraction of neurotransmitter in the layer-6I direct and inhibitory-interneuron pathways is released to activate layer-4 targets.
+    - The reset favors previously inactive cells because more transmitter has accumulated in their non-depleted layer-6I-to-4 synapses.
+    - Neurotransmitter scales the EPSP or IPSP triggered at the postsynaptic site and depletes by minus epsilon times its current level whenever a spike occurs.
+  kinness_framework:
+    citation: Versace et al. 2008, Sections 2.1 and 4.4, Equations 13-18
+    url: https://open.bu.edu/bitstreams/fb52de7c-9d29-4101-9093-a1d4324d8623/download
+    audited_pdf_sha256: 15a7f9166e301c9740e7cff4258810d315bd95b196ea5dff3419c5cc2879f177
+    source_statements:
+    - Equation 13 defines ligand gating from a presynaptic spike arrival time.
+    - Equation 16 multiplies the ligand gate by source transmitter available at a given time.
+    - Equation 17 recovers transmitter continuously and depletes it by minus epsilon times its level at every source spike.
+    - SANNDRA is synchronous and time-driven and uses fourth-order Runge-Kutta integration.
+  recovered_network:
+    citation: ModelDB 112923 SMART.nml
+    url: https://modeldb.science/download/112923
+    archive_sha256: 5fc6e0042ef093665ad2f1c24c87f9cc0d796629c896ee8a4efe34827a4462c5
+    source_statements:
+    - Layer-6I output projections 026 and 038 both use epsilon 1 and 400-ms recovery.
+    - Both recovered projection records use a one-millisecond connection delay.
+resolved_facts:
+  transmitter_jump: z_after = z_before * (1 - epsilon)
+  epsilon1_immediate_post_event_value: 0.0
+  layer6i_resource_is_source_wide: true
+  direct_and_indirect_outputs_share_the_resource: true
+  current_equation_literal_form: weight * ligand_gate_at_t * transmitter_at_t
+  paper_required_behavior: previously inactive resource advantage affects reset-wave output
+unresolved_ordering:
+  exact_legacy_source_body_available: false
+  exact_impulse_discretization_available: false
+  exact_event_release_vs_depletion_substep_available: false
+  exact_resource_sampling_side_of_axonal_delay_available: false
+  conflict: >-
+    A literal current-time multiplier makes the first emitted event of an
+    epsilon-1 previously inactive source nearly unavailable after its
+    one-millisecond delay. That is mathematically consistent with the printed
+    KInNeSS factorization but cannot express the SMART paper's stated reason
+    why accumulated transmitter favors previously inactive cells. The printed
+    equations do not expose the missing legacy update order that reconciled
+    these descriptions.
+artifact719_evidence:
+  previously_inactive_pre_event_transmitter: 1.0
+  winner_first_event_transmitter_range:
+  - 0.013729873566392605
+  - 0.014321458149130413
+  continuous_value_at_one_ms_delivery: 0.0024968776025399153
+  winner_suppression_pass: false
+  alternative_release_pass: false
+authorized_discriminator:
+  name: layer6i pre-depletion emission-resource snapshot
+  affected_projections:
+  - modeldb112923.projection.026
+  - modeldb112923.projection.038
+  held_fixed:
+  - every neuron and synapse equation except placement of the same transmitter factor
+  - depletion epsilon and recovery
+  - weights and learned state
+  - delays and ligand kinetics
+  - topology and input protocol
+  - Figure 6 prerequisite and Figure 10 scoring
+  implementation_semantics: >-
+    At a layer-6I source event, copy transmitter immediately before epsilon-1
+    depletion into that event's amplitude, preserve the serialized one-
+    millisecond arrival time, and do not multiply that event again by the
+    subsequently recovering source resource.
+  decision_rule: >-
+    Run one current-calibration intact/control Figure-10 pair. Retain the
+    convention only as a calibration candidate if all fresh Figure-6 gates and
+    both upstream reset-chain gates pass and the intact arm both suppresses the
+    prior winner more than control and releases more alternatives than control.
+    Otherwise reject it without interpolation or parameter changes.
+boundary: >-
+  This cross tests whether the paper's stated habituative mechanism is lost at
+  the unavailable legacy scheduling boundary. A pass would be a calibrated
+  mechanism-preserving reconstruction, not proof of bit-faithful KInNeSS
+  scheduling. It cannot by itself reproduce Figure 7, establish gamma/beta
+  behavior, promote the classic baseline, or freeze original SMART.

@@ -330,6 +330,14 @@ def runtime_conventions_for_candidate(
                 ).trn_soma_proximal_axial_conductance_scale,
             )
         ),
+        layer6i_output_transmitter_gate_convention=str(
+            values.get(
+                "layer6i_output_transmitter_gate_convention",
+                (
+                    figure6_runtime_conventions() if base is None else base
+                ).layer6i_output_transmitter_gate_convention,
+            )
+        ),
         gaussian_spread_convention=str(values["gaussian_spread_convention"]),
         ring_kernel_convention=str(
             values.get(

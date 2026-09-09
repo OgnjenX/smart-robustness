@@ -1,0 +1,47 @@
+schema_version: 1
+id: figure10-layer6i-emission-resource-assessment-725
+date: '2026-09-09'
+status: assessed-winner-suppression-restored-alternative-release-failed-candidate-rejected
+registration: docs/validation-results/figure10-layer6i-emission-resource-registration-723.yaml
+result: docs/validation-results/figure10-layer6i-emission-resource-pair-724.yaml
+result_sha256: 9456f0730b81c278734f4b1401511cf57a5bbe0dd7b9fdb18450609f2f5e40a8
+assessment:
+  all_fresh_figure6_gates_pass: true
+  pre_reset_winner_pass: true
+  reset_chain_pass: true
+  winner_suppression_pass: true
+  alternative_release_pass: false
+  full_figure10_reset_pass: false
+  scheduling_convention_causally_improves_winner_suppression: true
+  scheduling_convention_sufficient_for_reset: false
+  scheduling_convention_selected: false
+  scheduling_convention_rejected_as_standalone_endpoint: true
+  parameter_selected: false
+  figure7_known_discrepancy_locked: true
+  original_smart_reproduced: false
+  baseline_promoted: false
+interpretation: >-
+  The candidate preserves every Figure-6 prerequisite and the upstream reset
+  chain. It reverses the winner effect from the continuous pair's 78 intact
+  versus 76 control spikes to 69 intact versus 78 control, restoring the
+  preregistered winner-suppression gate. This establishes that resource
+  placement across the event/depletion/delay schedule is causally important.
+  It does not release a previously inactive layer-4 cell: both arms remain at
+  zero alternatives. In the intact arm the candidate recruits all 81 layer-6I
+  and all 81 layer-4 inhibitory cells, raises the p026 gate integral to
+  880.0251121600821 ms, and raises the p038 gate integral to
+  307.520617748953 ms. The unresolved failure is therefore downstream balance
+  at alternative targets, not absence of the reset wave.
+closure: >-
+  Reject pre-depletion emission-resource sampling as a standalone Figure-10
+  solution under the preregistered rule. Keep it default-off and unselected.
+  Do not interpolate resource placement or tune p026, p038, depletion,
+  recovery, delays, weights, or intrinsic parameters.
+next_gate: >-
+  Because the candidate restores winner suppression while driving the complete
+  direct and indirect layer-6I reset outputs, run one passive target-resolved
+  audit at alternatives 31/49 and winners 38--42. Retain all four layer-4
+  inputs (p035--p038), voltage, and event counts in fixed 10-ms bins. The audit
+  may localize whether the missing alternative release is caused by relay
+  drive, recurrent excitation, p036 off-surround inhibition, or p038 on-center
+  excitation, but cannot reopen or select this scheduling convention.

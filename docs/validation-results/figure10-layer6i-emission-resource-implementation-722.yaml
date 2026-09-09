@@ -1,0 +1,29 @@
+schema_version: 1
+id: figure10-layer6i-emission-resource-implementation-722
+date: '2026-09-09'
+status: implemented-default-off-mechanism-preserving-scheduling-cross
+classification: figure10-runtime-convention-implementation
+source_audit: docs/validation-results/figure10-transmitter-scheduling-source-audit-721.yaml
+implementation:
+  runtime_field: layer6i_output_transmitter_gate_convention
+  default: continuous_current_resource
+  candidate: pre_depletion_emission_snapshot
+  affected_projection_ids:
+  - modeldb112923.projection.026
+  - modeldb112923.projection.038
+  source_event_order: thresholds, candidate synapse snapshot, source reset
+  candidate_delay_implementation: future ligand-arrival timestamp carried by a zero-delay Brian event pathway
+  unchanged_projection_default: continuous current-time transmitter multiplication
+  behavior_change_when_default: none
+verification:
+  pre_depletion_value_is_latched: true
+  epsilon1_source_reset_still_occurs: true
+  serialized_one_ms_arrival_preserved: true
+  p026_and_p038_only: true
+  other_depleting_projections_remain_continuous: true
+  default_runtime_fingerprint_preserved: true
+boundary: >-
+  The implementation is default-off and introduces no weight, delay, recovery,
+  depletion, topology, protocol, or score change. It is not selected, promoted,
+  source-faithful, or part of a frozen baseline until the preregistered pair is
+  executed and assessed.

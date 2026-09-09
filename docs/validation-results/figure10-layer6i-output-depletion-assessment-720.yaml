@@ -1,0 +1,46 @@
+schema_version: 1
+id: figure10-layer6i-output-depletion-assessment-720
+date: '2026-09-09'
+status: assessed-paper-resource-contrast-confirmed-delivery-advantage-erased
+registration: docs/validation-results/figure10-layer6i-output-depletion-registration-718.yaml
+result: docs/validation-results/figure10-layer6i-output-depletion-pair-719.yaml
+result_sha256: 21b4ef9576134ee8d3d853e36aa4c437599631a984b07d78c6ef4f89d54a9579
+assessment:
+  all_fresh_figure6_gates_pass: true
+  exact_registered_population_identity: true
+  previously_inactive_pre_event_transmitter_advantage: true
+  winner_sources_habituated_before_reset_wave: true
+  alternative_sources_unhabituated_before_first_reset_wave_event: true
+  pre_event_advantage_preserved_at_delayed_delivery: false
+  continuous_schedule_erases_emitted_event_advantage: true
+  layer6i_habituation_mechanism_conflict_localized: true
+  projection036_parameter_fault_detected: false
+  parameter_selected: false
+  official_figure10_reset_reproduced: false
+  original_smart_reproduced: false
+  baseline_promoted: false
+interpretation: >-
+  Intact layer-6I alternatives 31 and 49 first fire 54.95 ms after mismatch
+  onset with transmitter 1.0, while the winner-aligned cells first fire with
+  transmitter between 0.013729873566392605 and 0.014321458149130413. This is
+  the qualitative resource contrast described for Figure 10d/e. In the
+  current executable schedule, however, epsilon 1 resets transmitter to zero
+  at the source event and the ongoing ligand gate is multiplied by the
+  continuously recovering source value. At the one-millisecond p026/p038
+  delivery only 0.0024968776025399153 availability has recovered. Consequently
+  the previously inactive source's stored-resource advantage is not carried
+  by the newly emitted event. The direct and indirect layer-6I reset outputs
+  therefore cannot express the paper's stated habituative selection mechanism
+  under this particular schedule.
+closure: >-
+  Close projection 036 as a depletion or weight fault. Its source population
+  is non-depleting, and its observed timing only relays the upstream layer-6I
+  phase. Do not tune a synaptic or intrinsic parameter from this result.
+next_gate: >-
+  Audit the source texts for the unresolved ordering between release-resource
+  sampling, epsilon-1 depletion, axonal delay, and continuous Equation-16
+  multiplication. If legacy event scheduling remains unavailable, preregister
+  one mechanism-preserving current-calibration cross that snapshots the
+  pre-depletion resource into each emitted p026/p038 event. Keep every equation,
+  weight, delay, topology, protocol, and score fixed. Treat the cross as a
+  scheduling discriminator, not as a source-faithful baseline promotion.

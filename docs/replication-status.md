@@ -3956,3 +3956,30 @@ Registration 718 preregisters that unchanged contrast with exact source
 identity and bounded output. The paired result has not yet run. No source
 resource interpretation beyond the registered pre-event versus delayed-
 delivery calculation is authorized.
+
+Artifacts 719--720 now complete that contrast with exact registered identity.
+The intact reset wave recruits previously inactive layer-6I cells 31/49 with
+full transmitter availability 1.0, while winner-aligned cells 38--42 have only
+about 0.014 at their first mismatch events. This reproduces the resource
+contrast stated in the paper, but not its behavioral consequence: epsilon 1
+immediately resets the new source to zero, leaving only 0.0024968776025399153
+availability when its p026/p038 event reaches the target one millisecond later.
+Thus the current continuous-resource schedule erases the emitted-event
+advantage. Figure 10 still fails winner suppression and alternative release;
+original SMART remains unreproduced and unfrozen. No parameter is selected.
+
+Source audit 721 finds that the primary sources do not specify the exact
+legacy update order needed to reconcile current-time KInNeSS transmitter
+gating with the SMART paper's stored-resource reset explanation. Artifact 722
+therefore adds a default-off, p026/p038-only pre-depletion emission snapshot;
+all other depleting projections retain the current Equation-16 implementation.
+Registration 723 fixes one current-calibration Figure-10 discriminator. It has
+not yet run and cannot by itself promote or freeze the baseline.
+
+Artifacts 724--725 complete that discriminator. The fresh Figure-6 baseline
+and reset chain pass, and the resource snapshot restores winner suppression
+(69 intact versus 78 control events) compared with the continuous schedule's
+wrong-sign 78 versus 76. Nevertheless neither arm releases an alternative
+cell. The scheduling rule is therefore rejected as a standalone endpoint and
+remains default-off. It has localized a causal contributor, not reproduced
+Figure 10; original SMART remains unreproduced and unfrozen.

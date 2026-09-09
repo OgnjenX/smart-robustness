@@ -18,6 +18,13 @@ class ModifiableWeightInitialization(StrEnum):
     FIGURE6_PATHWAY_SPECIFIC = "figure6_pathway_specific"
 
 
+class TransmitterGateConvention(StrEnum):
+    """Ordering of source depletion relative to delayed ligand delivery."""
+
+    CONTINUOUS_CURRENT_RESOURCE = "continuous_current_resource"
+    PRE_DEPLETION_EMISSION_SNAPSHOT = "pre_depletion_emission_snapshot"
+
+
 class GaussianWeightConvention(StrEnum):
     """Interpretation of KInNeSS ``connectFromMany`` Gaussian weights."""
 
@@ -340,6 +347,9 @@ def connect_modeldb_projection(
     postsynaptic_learning_timestamp: str = "emitted_event",
     postsynaptic_depression_scale_convention: str = "local_learning_bounds",
     postsynaptic_signal_convention: str = "paper_equation6_literal",
+    transmitter_gate_convention: TransmitterGateConvention | str = (
+        TransmitterGateConvention.CONTINUOUS_CURRENT_RESOURCE
+    ),
     instrument_learning_terms: bool = False,
     topology_override: tuple[np.ndarray, np.ndarray, np.ndarray] | None = None,
     brian: Any,
@@ -352,13 +362,30 @@ def connect_modeldb_projection(
     )
     if port is None or record.weight is None:
         raise ValueError(f"{record.id}: incomplete compiled ModelDB projection")
-    transmitter_scale = "transmitter_pre" if pre.compiled.depletion_enabled else "1"
-    update = (
-        "previous_arrival = last_arrival\n"
-        "previous_amplitude = last_amplitude\n"
-        "last_arrival = t\n"
-        "last_amplitude = 1"
+    transmitter_convention = TransmitterGateConvention(transmitter_gate_convention)
+    emission_snapshot = (
+        pre.compiled.depletion_enabled
+        and transmitter_convention
+        is TransmitterGateConvention.PRE_DEPLETION_EMISSION_SNAPSHOT
     )
+    if emission_snapshot:
+        update = (
+            "previous_arrival = last_arrival\n"
+            "previous_amplitude = last_amplitude\n"
+            "last_arrival = t + axonal_delay\n"
+            "last_amplitude = transmitter_pre"
+        )
+        transmitter_scale = "1"
+        delay_model = "axonal_delay : second (constant)\n"
+    else:
+        update = (
+            "previous_arrival = last_arrival\n"
+            "previous_amplitude = last_amplitude\n"
+            "last_arrival = t\n"
+            "last_amplitude = 1"
+        )
+        transmitter_scale = "transmitter_pre" if pre.compiled.depletion_enabled else "1"
+        delay_model = ""
     if port.rise_ms == port.fall_ms:
         last_ratio = f"clip(last_elapsed/({port.rise_ms}*ms), 0, 100)"
         previous_ratio = f"clip(previous_elapsed/({port.rise_ms}*ms), 0, 100)"
@@ -383,6 +410,7 @@ def connect_modeldb_projection(
         "w_baseline : 1 (constant)\n"
         "w_maximum : 1 (constant)\n"
         "modifiable : 1 (constant)\n"
+        f"{delay_model}"
         "last_arrival : second\n"
         "previous_arrival : second\n"
         "last_amplitude : 1\n"
@@ -392,9 +420,10 @@ def connect_modeldb_projection(
         f"last_wave={last_wave} : 1\n"
         f"previous_wave={previous_wave} : 1\n"
         "pre_signal=last_wave+previous_wave-last_wave*previous_wave : 1\n"
-        # KInNeSS Equation 16 multiplies the ongoing ligand gate g_ij(t) by
-        # neurotransmitter availability z_j(t). It does not snapshot z into
-        # the event amplitude at emission or arrival.
+        # The default directly transcribes KInNeSS Equation 16 as ongoing
+        # g_ij(t)*z_j(t). The named Figure-10 discriminator instead carries
+        # pre-depletion z_j in the delayed event amplitude because the legacy
+        # simulator's event/depletion ordering is not preserved.
         f"{port.name}_gate_post=w*pre_signal*{transmitter_scale} : 1 (summed)"
     )
     on_post = None
@@ -585,7 +614,11 @@ def connect_modeldb_projection(
             else float(record.depotentiation_ms) + 0.1
         )
         synapse.last_post_spike = -(inactive_window + 1.0) * brian.ms
-    synapse.delay = float(record.delay_ms or 0.0) * brian.ms
+    if emission_snapshot:
+        synapse.axonal_delay = float(record.delay_ms or 0.0) * brian.ms
+        synapse.delay = 0 * brian.ms
+    else:
+        synapse.delay = float(record.delay_ms or 0.0) * brian.ms
     return synapse
 
 

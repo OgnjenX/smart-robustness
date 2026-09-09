@@ -1,0 +1,80 @@
+schema_version: 1
+id: figure10-layer6i-emission-resource-registration-723
+date: '2026-09-09'
+status: registered-before-execution-fixed-scheduling-cross
+classification: figure10-layer6i-resource-scheduling-discriminator
+source_audit: docs/validation-results/figure10-transmitter-scheduling-source-audit-721.yaml
+source_audit_sha256: b5a672810e014bef665cbb80fddef4855c5a6e62089df0614c8ce9dc4431ef03
+implementation: docs/validation-results/figure10-layer6i-emission-resource-implementation-722.yaml
+implementation_sha256: f9005300dc71a2d2580840b0bb60cf5f4425774e436469084f6135d0f256cc7f
+profile: configs/calibration/figure7_learned_coincidence_effective_t_pair_v1.yaml
+profile_sha256: 4b6aa0bdf4fb844e428fb330f34970900cc8bc741183b2d8e6e73789cba0b30f
+harness: src/smart_robustness/validation/figure10.py
+harness_sha256: 9dc58c1236b1de7add8815dbe26f15ffd9373d943143bd6656f0590f581ac89a
+runtime: src/smart_robustness/classic_sector.py
+runtime_sha256: b5be825407c52908fcd20d84d0287beec937a9d4b32ce6e85ad58f53313b8339
+synapses: src/smart_robustness/synapses.py
+synapses_sha256: 0f155853a35e50d38e05294fe718d7632ba6575c08001da0ff77de013de16b4c
+script: scripts/run_figure10_calibrated_reset_pair.py
+script_sha256: f137a92900487e4f5c954ff044e0e5086e4304fa1d0fdcf7516a7fa3fa1c322b
+prior_result: docs/validation-results/figure10-layer6i-output-depletion-pair-719.yaml
+prior_result_sha256: 21b4ef9576134ee8d3d853e36aa4c437599631a984b07d78c6ef4f89d54a9579
+prior_assessment: docs/validation-results/figure10-layer6i-output-depletion-assessment-720.yaml
+prior_assessment_sha256: 64d7720078c945fd306391d0b5f46c4b398ba05565136f5a8d5b9718137e7f09
+runtime_overrides:
+  layer6i_output_transmitter_gate_convention: pre_depletion_emission_snapshot
+runtime_fingerprint: fbcc1dc2ac7db8442ce1ff17b71a1d04582c32e817370c700c69ec3caa9fbe4e
+result_id: figure10-layer6i-emission-resource-pair-724
+result: docs/validation-results/figure10-layer6i-emission-resource-pair-724.yaml
+assessment: docs/validation-results/figure10-layer6i-emission-resource-assessment-725.yaml
+persistent_projection_scales:
+- {projection_id: modeldb112923.projection.008, scale: 0.75}
+- {projection_id: modeldb112923.projection.011, scale: 0.9375}
+- {projection_id: modeldb112923.projection.025, scale: 8.0}
+persistent_projection_delays: []
+nonspecific_t_scale: 0.1875
+record_layer6i_diagnostics: false
+record_reset_chain_diagnostics: true
+record_layer4_balance_diagnostics: true
+record_projection036_arrival_target_indices: []
+record_projection026_arrival_target_indices: []
+output_mode: layer4_balance_bounded
+protocol:
+  pre_match_duration_ms: 100.0
+  mismatch_duration_ms: 200.0
+  total_duration_ms: 300.0
+  dt_ms: 0.01
+  top_down_current_pA: 800.0
+  top_down_current_mode: until_cued_cell_first_event
+  comparator: {transform: top_k_binary, source_index: 40, target_count: 5}
+fixed_prerequisites:
+  figure6_relay_active_indices: [38, 39, 40, 41, 42]
+  figure6_relay_events_per_active_index: 4
+  figure6_relay_events: 20
+  figure6_cortical_chain_complete: true
+  figure6_causal_learning_pair: true
+  figure6_top_down_horizontal_contrast: '>0'
+  figure10_pre_reset_winner_required: true
+  figure10_reset_chain_required: true
+candidate_scope:
+  affected_projection_ids:
+  - modeldb112923.projection.026
+  - modeldb112923.projection.038
+  continuous_default_retained_for_all_other_projections: true
+  transmitter_snapshot: immediately before source-event depletion
+  event_amplitude: copied pre-depletion transmitter
+  delay_ms: 1.0
+  second_resource_multiplier: none
+decision_rule: >-
+  Execute exactly one intact/control pair. Require every fresh Figure-6 gate,
+  the pre-reset winner, and the nonspecific-to-layer5-to-layer6I reset chain.
+  The candidate passes its Figure-10 endpoint only if intact winner output is
+  lower than control and intact releases more previously inactive alternatives
+  than control. Reject without interpolation if either causal output gate
+  fails. Do not change a weight, delay, depletion value, recovery value,
+  topology, protocol, cell equation, threshold, or score.
+boundary: >-
+  A successful endpoint would select this rule only as a calibrated,
+  mechanism-preserving scheduling candidate. It would not prove the unavailable
+  KInNeSS substep order, repair the locked Figure-7 discrepancy, reproduce the
+  official gamma/beta results, promote the classic baseline, or freeze SMART.

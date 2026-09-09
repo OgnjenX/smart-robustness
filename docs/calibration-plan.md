@@ -2210,3 +2210,37 @@ arrivals at alternative target 31. All equations and calibrated values remain
 unchanged. The decision rule separates transmitter available immediately
 before an event from availability recovered by the one-millisecond p026/p038
 delivery time; it cannot select a replacement scheduling convention.
+
+Artifacts 719--720 complete the registered audit. Previously inactive
+layer-6I cells 31/49 first enter the intact reset wave with transmitter 1.0,
+whereas winner-aligned cells 38--42 are habituated to roughly 0.014 at their
+first mismatch event. That confirms the Figure-10 resource contrast before
+release. Under the current continuous schedule, epsilon 1 then resets the
+newly active source to zero before its one-millisecond-delayed p026/p038 ligand
+arrives; only 0.0024968776025399153 has recovered at delivery. The intended
+stored-resource advantage therefore is not carried by the emitted event.
+Projection 036 is closed as a depletion or weight fault, no parameter is
+selected, and the next gate is a source-scheduling audit followed, if legacy
+ordering remains unavailable, by one preregistered pre-depletion emission-time
+resource cross on the otherwise unchanged current calibration.
+
+Artifacts 721--723 complete that source audit, add a default-off runtime
+convention, and preregister the one allowed cross. The published SMART and
+KInNeSS equations jointly identify the resource, ligand waveform, and
+depletion terms but do not preserve the legacy substep order across source
+release, epsilon-1 depletion, and connection delay. The candidate snapshots
+only the shared layer-6I resource into p026/p038 events before depletion and
+preserves their one-millisecond arrival; every other projection retains the
+continuous default. One intact/control pair will decide the endpoint without
+tuning or interpolation.
+
+Artifacts 724--725 complete the cross. Every fresh Figure-6 and upstream reset
+gate passes. Pre-depletion emission sampling restores differential winner
+suppression: the intact winner emits 69 post-mismatch events versus 78 in the
+control, reversing the continuous pair's wrong-sign 78 versus 76. It does not
+release alternatives; both arms remain at zero. The intact reset wave recruits
+all 81 layer-6I cells and all 81 layer-4 inhibitory cells, so the remaining
+failure lies in the target-level balance after reset rather than in reset-wave
+propagation. The standalone scheduling candidate is rejected and remains
+default-off. One passive complete-input audit at alternatives 31/49 and winners
+38--42 is next; no parameter or convention is reopened.

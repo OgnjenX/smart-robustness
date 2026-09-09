@@ -179,6 +179,7 @@ class FirstOrderRuntimeConventions:
         "modeldb_serialized_1p461_1_4"
     )
     convergent_external_input_convention: str = "sum_independent_currents"
+    layer6i_output_transmitter_gate_convention: str = "continuous_current_resource"
 
     @property
     def fingerprint(self) -> str:
@@ -264,6 +265,10 @@ class FirstOrderRuntimeConventions:
             "modeldb_serialized_1p461_1_4"
         ):
             values.pop("nonspecific_distal_gaba_source_convention")
+        if values["layer6i_output_transmitter_gate_convention"] == (
+            "continuous_current_resource"
+        ):
+            values.pop("layer6i_output_transmitter_gate_convention")
         payload = json.dumps(values, sort_keys=True, separators=(",", ":"))
         return hashlib.sha256(payload.encode()).hexdigest()
 
@@ -390,6 +395,17 @@ def _ring_peak_radius_scale_for_record(
             )
         return scale
     return 1.0
+
+
+def _transmitter_gate_convention_for_record(
+    record_id: str, *, conventions: FirstOrderRuntimeConventions
+) -> str:
+    if record_id in {
+        "modeldb112923.projection.026",
+        "modeldb112923.projection.038",
+    }:
+        return conventions.layer6i_output_transmitter_gate_convention
+    return "continuous_current_resource"
 
 
 _TABLE3_CELL_BY_CANONICAL_STEM = {
@@ -924,6 +940,9 @@ def build_full_smart_network(
                 postsynaptic_depression_scale_convention=(
                     conventions.postsynaptic_depression_scale_convention
                 ),
+                transmitter_gate_convention=_transmitter_gate_convention_for_record(
+                    record.id, conventions=conventions
+                ),
             )
         else:
             projection = connect_modeldb_gap_junction(
@@ -1052,6 +1071,9 @@ def build_first_order_chemical_sector(
             ),
             postsynaptic_depression_scale_convention=(
                 resolved_conventions.postsynaptic_depression_scale_convention
+            ),
+            transmitter_gate_convention=_transmitter_gate_convention_for_record(
+                record.id, conventions=resolved_conventions
             ),
             instrument_learning_terms=instrument_learning_terms,
             brian=brian,

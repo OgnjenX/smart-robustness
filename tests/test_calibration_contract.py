@@ -11755,6 +11755,52 @@ def test_figure10_search_cycle_result_closes_wrong_sign_latency_endpoint() -> No
     assert not verdict["baseline_promoted"]
 
 
+def test_figure10_search_cycle_balance_audit_is_preregistered_and_passive() -> None:
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-search-cycle-balance-registration-743.yaml"
+        ).read_text()
+    )
+
+    for path_key, hash_key in (
+        ("authorization", "authorization_sha256"),
+        ("implementation", "implementation_sha256"),
+        ("profile", "profile_sha256"),
+        ("harness", "harness_sha256"),
+        ("runtime", "runtime_sha256"),
+        ("synapses", "synapses_sha256"),
+        ("script", "script_sha256"),
+        ("prior_result", "prior_result_sha256"),
+        ("prior_assessment", "prior_assessment_sha256"),
+    ):
+        assert hashlib.sha256(
+            (ROOT / registration[path_key]).read_bytes()
+        ).hexdigest() == registration[hash_key]
+    assert registration["runtime_fingerprint"] == (
+        "fbcc1dc2ac7db8442ce1ff17b71a1d04582c32e817370c700c69ec3caa9fbe4e"
+    )
+    assert registration["audit_window_ms"] == [61.0, 110.0]
+    assert registration["audit_bin_width_ms"] == pytest.approx(1.0)
+    assert registration["monitored_layer4_targets"] == [
+        22,
+        31,
+        38,
+        39,
+        40,
+        41,
+        42,
+        49,
+        58,
+    ]
+    assert registration["source_resolved_arrival_targets"] == [31, 40]
+    assert registration["required_source_identity"][
+        "intact_control_first_alternative_event_ms"
+    ] == pytest.approx([98.38, 85.91])
+    assert "localization only" in registration["decision_rule"]
+    assert "No model quantity" in registration["boundary"]
+
+
 def test_projection036_source_arrival_result_localizes_phase_not_topology() -> None:
     result_path = (
         ROOT

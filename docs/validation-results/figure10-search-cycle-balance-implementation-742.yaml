@@ -1,0 +1,43 @@
+schema_version: 1
+id: figure10-search-cycle-balance-implementation-742
+date: '2026-09-09'
+status: implementation-ready-passive-default-preserving-tests-pass
+classification: figure10-event-locked-target-balance-audit
+authorization: docs/validation-results/figure10-search-cycle-lifecycle-assessment-741.yaml
+authorization_sha256: 9bddb0a8579fe3e259ae2b3c472cf4ed1e40eeb6226a9f10b2aa51e12c62a91e
+source_result: docs/validation-results/figure10-search-cycle-lifecycle-pair-740.yaml
+source_result_sha256: 2128f4650c5dbadd1ae9e2262153ec3838a8f80f419aeb4be69aedf7e830d15c
+implementation:
+  module: src/smart_robustness/validation/figure10_search_cycle_balance.py
+  runner: scripts/run_figure10_search_cycle_balance_pair.py
+  historical_search_cycle_harness_changed: false
+  historical_search_cycle_harness: src/smart_robustness/validation/figure10_search_cycle.py
+  relay_schedule_changed: false
+  model_equations_changed: false
+  synaptic_or_intrinsic_parameter_changed: false
+  protocol_or_score_changed: false
+  audit_window_ms_from_mismatch: [61.0, 110.0]
+  audit_bin_width_ms: 1.0
+  monitored_layer4_targets: [22, 31, 38, 39, 40, 41, 42, 49, 58]
+  source_resolved_arrival_targets: [31, 40]
+output:
+  exact_layer4_mismatch_events: true
+  soma_voltage: true
+  projection035_current_and_gate: true
+  projection036_current_and_gate: true
+  projection037_current: true
+  projection038_current_and_gate: true
+  projection026_source_resolved_arrivals: true
+  projection036_source_resolved_arrivals: true
+  bounded_one_ms_bins: true
+verification:
+  validation_contract_tests: pass
+  python_compilation: pass
+  style_checks: pass
+boundary: >-
+  The separate harness adds passive readouts to the already rejected event-
+  locked pair. It changes no executable model quantity and cannot select a
+  marker, parameter, score, or scheduler. Its result may localize the wrong-
+  sign alternative latency but cannot itself reproduce Figure 10, establish
+  original SMART, promote or freeze the baseline, or authorize neuron-model
+  and modern-anatomy variants.

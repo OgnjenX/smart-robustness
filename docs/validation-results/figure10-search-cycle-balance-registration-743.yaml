@@ -1,0 +1,78 @@
+schema_version: 1
+id: figure10-search-cycle-balance-registration-743
+date: '2026-09-09'
+status: registered-before-execution-passive-target-balance-pair
+classification: figure10-event-locked-target-balance-audit
+authorization: docs/validation-results/figure10-search-cycle-lifecycle-assessment-741.yaml
+authorization_sha256: 9bddb0a8579fe3e259ae2b3c472cf4ed1e40eeb6226a9f10b2aa51e12c62a91e
+implementation: docs/validation-results/figure10-search-cycle-balance-implementation-742.yaml
+implementation_sha256: 6589b8eea9005da7d484ab98f1188ce4428fb272854458a8176fa4efe725867c
+profile: configs/calibration/figure10_yoked_search_cycle_emission_v1.yaml
+profile_sha256: 22d8b8c03591e068cc4a54d422161e687ac4122fe4f0b882b071bf4a4bcc74ff
+harness: src/smart_robustness/validation/figure10_search_cycle_balance.py
+harness_sha256: 6bd570bc7104dcdea1812103c5e0fb0fa1ae707f06285efd1faa4806316339b0
+runtime: src/smart_robustness/classic_sector.py
+runtime_sha256: b5be825407c52908fcd20d84d0287beec937a9d4b32ce6e85ad58f53313b8339
+synapses: src/smart_robustness/synapses.py
+synapses_sha256: 0f155853a35e50d38e05294fe718d7632ba6575c08001da0ff77de013de16b4c
+script: scripts/run_figure10_search_cycle_balance_pair.py
+script_sha256: b86037b556b6fe52ee2c3c5c2ffae91d7dd886ed3e29f056a44b468179bf196b
+prior_result: docs/validation-results/figure10-search-cycle-lifecycle-pair-740.yaml
+prior_result_sha256: 2128f4650c5dbadd1ae9e2262153ec3838a8f80f419aeb4be69aedf7e830d15c
+prior_assessment: docs/validation-results/figure10-search-cycle-lifecycle-assessment-741.yaml
+prior_assessment_sha256: 9bddb0a8579fe3e259ae2b3c472cf4ed1e40eeb6226a9f10b2aa51e12c62a91e
+runtime_overrides:
+  layer6i_output_transmitter_gate_convention: pre_depletion_emission_snapshot
+runtime_fingerprint: fbcc1dc2ac7db8442ce1ff17b71a1d04582c32e817370c700c69ec3caa9fbe4e
+result_id: figure10-search-cycle-balance-pair-744
+result: docs/validation-results/figure10-search-cycle-balance-pair-744.yaml
+assessment: docs/validation-results/figure10-search-cycle-balance-assessment-745.yaml
+persistent_projection_scales:
+- {projection_id: modeldb112923.projection.008, scale: 0.75}
+- {projection_id: modeldb112923.projection.011, scale: 0.9375}
+- {projection_id: modeldb112923.projection.025, scale: 8.0}
+persistent_projection_delays: []
+nonspecific_t_scale: 0.1875
+protocol:
+  pre_match_duration_ms: 100.0
+  mismatch_duration_ms: 200.0
+  total_duration_ms: 300.0
+  dt_ms: 0.01
+  top_down_current_pA: 800.0
+  top_down_current_mode: until_cued_cell_first_event
+  pre_release_comparator: {transform: top_k_binary, source_index: 40,
+    target_count: 5}
+  release_after_mismatch_ms: 61.880000000000024
+  post_release_transform: identity_all_ones
+  release_yoked_across_arms: true
+audit_window_ms: [61.0, 110.0]
+audit_bin_width_ms: 1.0
+monitored_layer4_targets: [22, 31, 38, 39, 40, 41, 42, 49, 58]
+source_resolved_arrival_targets: [31, 40]
+required_source_identity:
+  figure6_all_gates: true
+  intact_control_layer4_pre_events: [43, 43]
+  intact_control_layer4_pre_active_indices: [[38, 39, 40, 41, 42],
+    [38, 39, 40, 41, 42]]
+  alternatives_before_release_intact_control: [0, 0]
+  intact_control_winner_post_events: [49, 59]
+  intact_control_alternative_events: [36, 36]
+  intact_control_first_alternative_event_ms: [98.38000000000002,
+    85.91000000000003]
+  intact_control_layer4_inhibitory_post_events: [502, 375]
+decision_rule: >-
+  Execute exactly one unchanged intact/control pair and require exact
+  reproduction of every registered source-identity value and every fresh
+  Figure-6 gate before interpretation. For alternative cell 31 and prior-
+  winner cell 40, report source-resolved projection-026 and projection-036
+  arrivals together with fixed one-ms projection-035--038 current/gate and
+  somatic-voltage bins from 61 to 110 ms after mismatch onset. Identify the
+  earliest post-release causal divergence between arms and determine whether
+  projection-036 inhibition precedes or dominates the wrong-sign alternative
+  voltage divergence. This is localization only; do not select a parameter.
+boundary: >-
+  No model quantity, marker, resource schedule, ring geometry, weight, delay,
+  threshold, protocol, or output score may change. The event-locked lifecycle
+  endpoint remains rejected. The audit cannot reproduce Figure 10, establish
+  original SMART, promote or freeze the baseline, or authorize neuron-model
+  and modern-anatomy variants.

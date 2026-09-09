@@ -25,6 +25,15 @@ from smart_robustness.validation.figure10_search_cycle import (
     VERTICAL_TARGETS,
     run_figure10_search_cycle_condition,
 )
+from smart_robustness.validation.figure10_search_cycle_balance import (
+    ARRIVAL_TARGETS as BALANCE_ARRIVAL_TARGETS,
+)
+from smart_robustness.validation.figure10_search_cycle_balance import (
+    AUDIT_TARGETS as BALANCE_AUDIT_TARGETS,
+)
+from smart_robustness.validation.figure10_search_cycle_balance import (
+    run_figure10_search_cycle_balance_condition,
+)
 from smart_robustness.validation.layer6i_replay import run_layer6i_replay
 
 
@@ -228,6 +237,33 @@ def test_search_cycle_runner_requires_internal_release_marker() -> None:
             persistent_projection_weight_scales={},
             top_down_current_mode="sustained_epoch",
             brian=brian,
+        )
+
+
+def test_search_cycle_balance_audit_requires_fixed_bounded_window() -> None:
+    assert BALANCE_AUDIT_TARGETS == (22, 31, 38, 39, 40, 41, 42, 49, 58)
+    assert BALANCE_ARRIVAL_TARGETS == (31, 40)
+    common = {
+        "top_down_current_pA": 800,
+        "pre_match_duration_ms": 100,
+        "mismatch_duration_ms": 200,
+        "release_after_mismatch_ms": 61.88,
+        "reset_pathway_enabled": True,
+        "learned_weights": {},
+        "persistent_projection_weight_scales": {},
+        "brian": brian,
+    }
+    with pytest.raises(ValueError, match="audit window"):
+        run_figure10_search_cycle_balance_condition(
+            audit_window_ms=(110, 61), **common
+        )
+    with pytest.raises(ValueError, match="audit window"):
+        run_figure10_search_cycle_balance_condition(
+            audit_window_ms=(61, 201), **common
+        )
+    with pytest.raises(ValueError, match="audit bin width"):
+        run_figure10_search_cycle_balance_condition(
+            audit_bin_width_ms=0, **common
         )
 
 

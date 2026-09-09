@@ -4002,6 +4002,11 @@ Source audit 737 finds no exact Figure-10 scheduler in the paper, supplement,
 KInNeSS reports, or recovered SMART.nml. Artifacts 738--739 implement and
 preregister one bounded event-locked reconstruction in a separate harness: the
 full vertical input is reinstated at the independently measured 61.88-ms direct
-reset marker, yoked identically to intact and control. The pair has not yet run.
-Figure 10, gamma/beta reproduction, original SMART, and baseline freezing remain
-incomplete; neuron substitutions and modern-anatomy variants remain deferred.
+reset marker, yoked identically to intact and control. Artifacts 740--741 reject
+it: every prerequisite passes and intact suppresses the old winner by ten
+events, but the first intact alternative is delayed to 98.38 ms versus 85.91 ms
+control. Both arms emit 36 alternative events, while intact layer-4 inhibitory
+output rises to 502 versus 375. The reset is broad suppression, not selective
+release. Figure 10, gamma/beta reproduction, original SMART, and baseline
+freezing remain incomplete; neuron substitutions and modern-anatomy variants
+remain deferred.

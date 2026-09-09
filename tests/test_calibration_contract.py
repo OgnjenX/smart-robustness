@@ -11709,6 +11709,52 @@ def test_figure10_search_cycle_pair_is_preregistered_and_hash_pinned() -> None:
     assert "no second marker" in registration["boundary"]
 
 
+def test_figure10_search_cycle_result_closes_wrong_sign_latency_endpoint() -> None:
+    result_path = (
+        ROOT
+        / "docs/validation-results/figure10-search-cycle-lifecycle-pair-740.yaml"
+    )
+    result = yaml.safe_load(result_path.read_text())
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-search-cycle-lifecycle-assessment-741.yaml"
+        ).read_text()
+    )
+
+    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment[
+        "result_sha256"
+    ]
+    assert all(result["figure6_gates"].values())
+    assert result["reset_gates"] == {
+        "pre_reset_winner": True,
+        "reset_chain": True,
+        "alternatives_quiet_before_release": True,
+        "full_input_delivery": True,
+        "winner_suppression": True,
+        "alternative_latency": False,
+    }
+    assert result["intact"]["alternative_events_before_release"] == 0
+    assert result["disconnected_control"]["alternative_events_before_release"] == 0
+    assert result["intact"]["first_alternative_event_ms"] == pytest.approx(98.38)
+    assert result["disconnected_control"][
+        "first_alternative_event_ms"
+    ] == pytest.approx(85.91)
+    assert result["intact"]["winner_post_events"] == 49
+    assert result["disconnected_control"]["winner_post_events"] == 59
+    assert result["intact"]["alternative_events"] == 36
+    assert result["disconnected_control"]["alternative_events"] == 36
+    verdict = assessment["assessment"]
+    assert verdict["winner_suppression_pass"]
+    assert not verdict["alternative_latency_pass"]
+    assert verdict["event_locked_lifecycle_endpoint_closed"]
+    assert not verdict["another_marker_or_score_authorized"]
+    assert not verdict["emission_snapshot_scheduling_selected"]
+    assert not verdict["parameter_selected"]
+    assert not verdict["original_smart_reproduced"]
+    assert not verdict["baseline_promoted"]
+
+
 def test_projection036_source_arrival_result_localizes_phase_not_topology() -> None:
     result_path = (
         ROOT

@@ -1,0 +1,114 @@
+schema_version: 1
+id: figure10-search-cycle-lifecycle-assessment-741
+date: '2026-09-09'
+status: assessed-reset-delays-alternative-lifecycle-endpoint-closed
+registration: docs/validation-results/figure10-search-cycle-lifecycle-registration-739.yaml
+result: docs/validation-results/figure10-search-cycle-lifecycle-pair-740.yaml
+result_sha256: 2128f4650c5dbadd1ae9e2262153ec3838a8f80f419aeb4be69aedf7e830d15c
+assessment:
+  all_fresh_figure6_gates_pass: true
+  exact_pre_reset_source_identity_pass: true
+  alternatives_quiet_before_release_pass: true
+  full_post_release_input_delivery_pass: true
+  reset_chain_pass: true
+  winner_suppression_pass: true
+  alternative_latency_pass: false
+  reproduced_search_cycle: false
+  event_locked_lifecycle_endpoint_closed: true
+  another_marker_or_score_authorized: false
+  emission_snapshot_scheduling_selected: false
+  parameter_selected: false
+  official_figure10_reset_reproduced: false
+  original_smart_reproduced: false
+  baseline_promoted: false
+source_identity:
+  layer4_pre_events_intact_control: [43, 43]
+  layer4_pre_active_indices_intact_control:
+  - [38, 39, 40, 41, 42]
+  - [38, 39, 40, 41, 42]
+  figure6_gates:
+    relay_active_indices: true
+    relay_events_per_active_index: true
+    relay_events: true
+    cortical_chain_complete: true
+    causal_learning_pair: true
+    top_down_horizontal_contrast: true
+release_contract:
+  mismatch_marker_ms: 61.880000000000024
+  alternatives_before_marker_intact_control: [0, 0]
+  post_marker_projection035_integral_pA_ms:
+    intact:
+      22: 361816.471354967
+      31: 474430.29567532864
+      40: 506927.6381137938
+      49: 474430.29567532864
+      58: 361816.47135496704
+    disconnected_control:
+      22: 349436.6088070125
+      31: 451894.47354976094
+      40: 502225.30895496113
+      49: 451894.47354976094
+      58: 349436.60880701256
+  every_registered_integral_positive: true
+  intact_integral_greater_at_every_target: true
+causal_output:
+  intact:
+    winner_events: 49
+    alternative_events: 36
+    alternative_active_indices: [22, 31, 49, 58]
+    first_alternative_event_ms: 98.38000000000002
+    nonspecific_events: 13
+    layer5_events: 208
+    layer6i_events: 168
+    layer4_inhibitory_events: 502
+  disconnected_control:
+    winner_events: 59
+    alternative_events: 36
+    alternative_active_indices: [22, 31, 49, 58]
+    first_alternative_event_ms: 85.91000000000003
+    nonspecific_events: 12
+    layer5_events: 149
+    layer6i_events: 105
+    layer4_inhibitory_events: 375
+  intact_minus_control:
+    winner_events: -10
+    alternative_events: 0
+    first_alternative_latency_ms: 12.469999999999999
+    layer4_inhibitory_events: 127
+interpretation: >-
+  The event-locked reconstruction satisfies every prerequisite and preserves
+  the intended inactive candidate pool until the direct reset marker. The
+  intact pathway then suppresses ten prior-winner events and receives greater
+  integrated projection-035 excitation at every vertical target. Nevertheless,
+  its first alternative event occurs 12.47 ms later than control and total
+  alternative output is identical. The intact circuit also emits 127 more
+  layer-4 inhibitory events. Thus the modeled reset exerts broad suppression
+  rather than the paper-required transmitter-dependent bias toward inactive
+  cells. Missing sensory input, premature candidate activity, and a coarse
+  full-epoch active-count score are now excluded as explanations.
+resource_representation_check:
+  paper_equation: z_jk is written for a synapse between source j and target k
+  implementation: one transmitter variable per depleting source cell
+  exact_reduction_condition: >-
+    Collapsing z_jk to z_j is exact when all outgoing records share the same
+    initial resource, depletion epsilon, recovery tau, and source spike train.
+  layer6i_outputs_026_038_share_source_resource_parameters: true
+  current_source_level_collapse_identified_as_error: false
+  implication: >-
+    Per-synapse notation alone does not authorize a new resource state or
+    explain the failed bias; the equal resource trajectories can be represented
+    once per source without changing their values.
+next_gate: >-
+  Preregister a passive event-locked target-balance audit around and after the
+  61.88-ms transition. Retain projections 035--038, somatic voltage, exact
+  events, and source-resolved projection-026/036 contributions at the prior
+  winner and vertical alternatives. Determine whether the wrong-sign latency
+  is caused by reset excitation failing spatially, by the indirect off-surround
+  wave, or by their timing interaction. Do not reopen the marker, resource
+  schedule, ring geometry, weight, delay, threshold, or output score.
+boundary: >-
+  The sole event-locked lifecycle endpoint is rejected and closed. The result
+  is a mechanistic localization, not Figure-10 reproduction. The pre-depletion
+  emission convention remains default-off and unselected. Figure 7, official
+  gamma/beta behavior, original SMART, baseline promotion and freezing, neuron-
+  model comparisons, and modern-anatomy variants remain incomplete.

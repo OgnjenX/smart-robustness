@@ -2272,3 +2272,15 @@ Registration 739 fixes one pair before execution. Alternatives must stay quiet
 before the marker, all five post-transition inputs must arrive, the old winner
 must be suppressed, and an intact alternative must fire strictly before the
 first control alternative. No second marker, gain, window, or score is allowed.
+
+Artifacts 740--741 complete and reject the event-locked endpoint. Figure 6 and
+the 43-event horizontal pre-state repeat, both arms keep every alternative
+silent before 61.88 ms, and projection 035 reaches all five vertical targets
+after release. Intact suppresses the old winner to 49 versus 59 control events,
+but its first alternative occurs at 98.38 ms versus 85.91 ms control; each arm
+eventually emits 36 alternative events from all four cells. Intact also emits
+502 layer-4 inhibitory events versus 375 control. Reset therefore delays rather
+than favors the alternatives. Close the lifecycle endpoint and retain the
+emission convention as default-off. A passive event-locked p035--p038 and
+source-resolved inhibitory-balance audit is next; no closed parameter or score
+is reopened.

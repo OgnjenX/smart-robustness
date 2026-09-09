@@ -774,9 +774,9 @@ parameters:
     note: The permanent top-five mask incorrectly holds vertical inputs 22/31/49/58 at zero, but immediate identity input is also insufficient. It delivers positive p035 current at all five targets and activates all four alternatives in both arms by 20--30 ms. Intact winner output is 42 versus 45 control, while alternative output is 60 versus 64. The endpoint fails, no parameter is selected, and the emission convention remains default-off.
   protocol.figure10.event_locked_search_cycle_lifecycle:
     value: top-five relay input until the independently measured 61.88-ms direct p038 reset marker, then identity input yoked across arms
-    status: implemented-preregistered-pair-not-yet-run
+    status: completed-wrong-sign-alternative-latency-endpoint-rejected-closed
     source: Grossberg and Versace 2008 Figures 4 and 10 and Section 2.7; Artifacts 730 and 737--739
-    note: Exact legacy stimulus scheduling is absent from the paper, supplement, KInNeSS reports, and SMART.nml. This single calibrated reconstruction changes only relay input values at an independently measured reset marker. It may pass only with pre-marker alternative silence, full post-marker input, winner suppression, and strictly earlier intact alternative release. No marker, gain, window, or score refinement is allowed.
+    note: Exact legacy scheduling is unavailable. The one calibrated reconstruction passes Figure 6, pre-marker alternative silence, full post-marker input, and winner suppression at 49 versus 59 events. It fails the decisive latency gate: intact alternatives begin at 98.38 ms versus 85.91 ms control, both arms emit 36 alternative events, and intact layer-4 inhibitory output is 502 versus 375. Reset delays rather than favors alternatives. Close without another marker, gain, window, or score; no parameter is selected.
   benchmark.population_sizes:
     value: see configs/*.yaml
     status: exploratory

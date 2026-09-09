@@ -1,0 +1,34 @@
+schema_version: 1
+id: figure6-7-10-projection025-source-control-implementation-756
+date: '2026-09-09'
+status: implemented-joint-source-control-runner-not-yet-executed
+classification: source-control-joint-first-order-cross
+profile: configs/calibration/figure6_7_10_projection025_source_control_v1.yaml
+runner: scripts/run_figure6_7_10_projection025_source_control.py
+projection036_harness: src/smart_robustness/validation/figure10_search_cycle_spread.py
+implementation:
+  central_runtime_changed: false
+  central_synapse_runtime_changed: false
+  projection025_explicit_runtime_scale_present: false
+  projection025_effective_runtime_scale: 1.0
+  projection036_variant_default_off: true
+  p026_p038_predepletion_emission_default_off: true
+  fresh_figure6_learning_once: true
+  same_fresh_learned_weights_used_for_figure7_and_figure10: true
+  figure7_conditions: [match, mismatch]
+  figure10_conditions: [intact, reset_disconnected_control]
+  projection036_topology_observed_for_figure6_and_both_figure7_builds: true
+  projection036_topology_returned_by_both_figure10_arms: true
+  all_gate_families_conjunctive: true
+recorded_outputs:
+- projection-025 source-scale identity
+- projection-036 topology identity across all five builds
+- all fresh Figure-6 gates
+- Figure-7 relay, TRN, nonspecific, and effective-inhibition metrics
+- Figure-10 pre-state, reset-chain, winner, alternative, and input-delivery metrics
+- joint pass/fail result
+boundary: >-
+  The runner removes only the inherited diagnostic projection-025 scale 8 and
+  restores the released scale 1. It adds no fitted value, score, timing rule,
+  or central runtime behavior. Its result cannot authorize interpolation or a
+  compensating parameter.

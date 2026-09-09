@@ -1,0 +1,85 @@
+schema_version: 1
+id: figure7-projection036-spread-consistency-assessment-754
+date: '2026-09-09'
+status: assessed-figure7-two-rate-gate-failure-no-joint-baseline
+registration: docs/validation-results/figure7-projection036-spread-consistency-registration-752.yaml
+result: docs/validation-results/figure7-projection036-spread-consistency-753.yaml
+result_sha256: 78d60bca61902f5546aa9aad2776136a3c541eab07a85d42c621da490ae0febd
+assessment:
+  exact_registered_endpoint_executed: true
+  projection036_topology_identity_all_three_builds: true
+  all_fresh_figure6_gates_pass: true
+  match_relay_spatial_gate_pass: true
+  mismatch_overlap_only_relay_gate_pass: true
+  match_more_active_relay_cells_pass: true
+  match_more_trn_events_pass: true
+  match_more_trn_to_nonspecific_gaba_pass: true
+  exact_match_nonspecific_events_pass: false
+  exact_mismatch_nonspecific_events_pass: false
+  failed_gate_count: 2
+  figure7_consistency_reproduced: false
+  figure14_holdout_authorized: false
+  repeat_or_rate_tuning_authorized: false
+  figure10_search_cycle_result_retracted: false
+  joint_figure6_figure7_figure10_endpoint_exists: false
+  original_smart_reproduced: false
+  baseline_promoted: false
+  baseline_frozen: false
+quantitative_summary:
+  projection036_nonzero_edges_all_builds: [5508, 5508, 5508]
+  projection036_incoming_weight_sum_all_builds:
+  - 16.839467692819127
+  - 16.839467692819127
+  - 16.839467692819127
+  relay_events_match_mismatch: [20, 3]
+  relay_active_indices_match:
+  - 38
+  - 39
+  - 40
+  - 41
+  - 42
+  relay_active_indices_mismatch: [40]
+  trn_events_match_mismatch: [685, 611]
+  trn_to_nonspecific_gaba_integral_match_mismatch_ms:
+  - 1229.2009632729646
+  - 1182.9286240398208
+  nonspecific_events_match_mismatch: [3, 6]
+  required_nonspecific_events_match_mismatch: [4, 7]
+  nonspecific_event_deficits: [1, 1]
+comparison_to_prior_figure7_endpoint:
+  prior_result: docs/validation-results/figure7-persistent-recurrent-gaba-pair-591.yaml
+  prior_nonspecific_events_match_mismatch: [4, 6]
+  current_nonspecific_events_match_mismatch: [3, 6]
+  prior_trn_events_match_mismatch: [697, 608]
+  current_trn_events_match_mismatch: [685, 611]
+  attribution_from_this_pair_possible: false
+  reason: >-
+    Relative to the prior Figure-7 endpoint, the current fixed endpoint jointly
+    adds projection-025 scale 8, p026/p038 pre-depletion emission sampling, and
+    the projection-036 variance topology. The pair was designed to test joint
+    consistency, not identify the contribution of any one component.
+interpretation: >-
+  The Figure-10-selected endpoint remains structurally and mechanistically
+  coherent through learning and relay/TRN recognition. It reproduces the
+  horizontal match, overlap-only mismatch, match-greater TRN activity, and
+  match-greater effective inhibition of nonspecific thalamus. It does not
+  reproduce the published Figure-7 rates: both conditions are one event low,
+  at 3 versus the required 4 during match and 6 versus the required 7 during
+  mismatch. Therefore the Figure-10 pass cannot be promoted as a jointly
+  validated classic SMART baseline, and Figure 14 is not opened from this
+  endpoint.
+next_gate: >-
+  Audit the provenance of every Figure-10 component carried into this pair
+  before another simulation. In particular, projection-025 scale 8 was an
+  effective isolated-cell diagnostic and its own connected endpoint was closed,
+  not a recovered or selected SMART parameter. If that audit confirms the
+  source/default projection-025 value is the only admissible correction, allow
+  exactly one newly preregistered source-control cross that must jointly pass
+  fresh Figure 6, fixed Figure 7, and the already fixed Figure-10 search-cycle
+  gates. Do not fit a rate or interpolate projection 025.
+boundary: >-
+  The exact Figure-10 search-cycle result remains valid for its registered
+  calibrated endpoint, but no single endpoint yet reproduces Figures 6, 7, and
+  10 together. Official gamma/beta behavior, complete original SMART,
+  promotion/freezing, neuron-model substitutions, and modern-anatomy variants
+  remain incomplete and deferred.

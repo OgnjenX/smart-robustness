@@ -2322,4 +2322,18 @@ selected topology is applied independently to fresh Figure 6, match, and
 mismatch sectors and verified in each build. Exact 4/7 nonspecific output,
 spatial relay selection, and both TRN event and effective-inhibition directions
 are fixed before execution. No repeat or adjustment is authorized; the pair
-has not yet run.
+has now run as Artifacts 753--754. Every topology, Figure-6, spatial relay, and
+TRN-direction gate passes, but nonspecific output is 3/6 rather than 4/7. The
+Figure-10 result remains valid for its registered endpoint, yet there is no
+jointly valid Figure-6/7/10 baseline and Figure 14 is not opened.
+
+Source audit 755 identifies one provenance correction before any further
+behavioral work. Projection-025 scale 8 was introduced only as the first
+event-producing point of an isolated effective bracket; its connected endpoint
+was explicitly closed and the value was never selected or recovered. The
+released SMART.nml record fixes weight and runtime scale 1. Artifacts 756--757
+therefore implement and preregister one source-control joint cross that removes
+only the inherited p025 scale-8 multiplier while retaining the selected p036
+topology and every other convention. It must pass Figures 6, 7, and 10
+conjunctively. No interpolation, compensating weight, repeat, or partial-pass
+selection is allowed; the result has not yet run.

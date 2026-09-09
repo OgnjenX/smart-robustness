@@ -1,0 +1,74 @@
+schema_version: 1
+name: figure6-7-10-projection025-source-control-v1
+status: one-source-control-joint-cross
+training_profile: configs/calibration/figure6_legacy_detector_paper_nonspecific_paper_kinetics_v1.yaml
+authorization: docs/validation-results/figure6-7-10-projection025-source-control-audit-755.yaml
+classification: source-control-joint-first-order-cross
+runtime_overrides:
+  nonspecific_dendritic_calcium_density_scale: 0.1875
+  layer6i_output_transmitter_gate_convention: pre_depletion_emission_snapshot
+persistent_projection_scales:
+- {projection_id: modeldb112923.projection.008, scale: 0.75}
+- {projection_id: modeldb112923.projection.011, scale: 0.9375}
+projection025:
+  scale: 1.0
+  source: released SMART.nml projection record
+projection036_topology:
+  serialized_spread_value: 1.5
+  interpretation: variance
+  ring_convention: center_excluded_gaussian
+  nonzero_edges: 5508
+  incoming_edges_per_target: 68
+  incoming_weight_sum_per_target: 16.83946769281913
+comparator:
+  transform: top_k_binary
+  source_index: 40
+  target_count: 5
+figure6_gates:
+  relay_active_indices: [38, 39, 40, 41, 42]
+  relay_events_per_active_index: 4
+  relay_events: 20
+  cortical_chain_complete: true
+  causal_learning_pair: true
+  top_down_horizontal_contrast: '>0'
+figure7_protocol:
+  duration_ms: 100.0
+  dt_ms: 0.01
+  equilibration_ms: 0.0
+  top_down_current_pA: 800.0
+  top_down_current_mode: until_cued_cell_first_event
+  top_down_cue_lead_ms: 0.0
+figure7_gates:
+  match_relay_active_indices: [38, 39, 40, 41, 42]
+  match_relay_events: 20
+  mismatch_relay_allowed_indices: [40]
+  match_more_active_relay_cells: true
+  match_more_trn_events: true
+  match_more_trn_to_nonspecific_gaba: true
+  match_nonspecific_events: 4
+  mismatch_nonspecific_events: 7
+figure10_protocol:
+  pre_match_duration_ms: 100.0
+  mismatch_duration_ms: 200.0
+  total_duration_ms: 300.0
+  release_after_mismatch_ms: 61.880000000000024
+  dt_ms: 0.01
+  top_down_current_pA: 800.0
+  top_down_current_mode: until_cued_cell_first_event
+figure10_gates:
+  identical_nonempty_pre_reset_state: true
+  alternatives_quiet_before_release_both_arms: true
+  full_five_target_input_delivery_both_arms: true
+  intact_reset_chain: true
+  intact_winner_events_strictly_less_than_control: true
+  first_intact_alternative_strictly_before_control: true
+selection_rule: >-
+  The source-control endpoint passes only if every topology, Figure-6,
+  Figure-7, and Figure-10 gate passes conjunctively. Partial passes cannot
+  select a parameter or authorize another projection-025 value.
+classification_boundary: >-
+  This is the sole scale-1 source-control cross after scale 8 was recognized as
+  a closed diagnostic. It is a calibrated reconstruction because p036 spread,
+  p026/p038 scheduling, and the Figure-10 lifecycle remain unresolved legacy
+  conventions. Even a pass would still require independent spectral and
+  higher-order validation before promotion or freezing.

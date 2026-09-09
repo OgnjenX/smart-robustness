@@ -4045,3 +4045,20 @@ consistency pair under that exact selected endpoint. The result has not yet
 run. It can authorize a fixed Figure-14 holdout only by passing all topology,
 fresh-learning, spatial, inhibitory-direction, and exact 4/7 rate gates; it
 cannot tune or promote the model.
+
+Artifacts 753--754 complete that pair. The selected p036 topology repeats in
+all three builds and every Figure-6, relay-selection, TRN-event-direction, and
+effective-inhibition-direction gate passes. Exact Figure-7 output fails in both
+conditions, however: nonspecific thalamus emits 3 match and 6 mismatch events
+instead of 4 and 7. The Figure-10 pass is not retracted, but no single endpoint
+now passes Figures 6, 7, and 10, so Figure 14 and baseline freezing remain
+closed.
+
+Source audit 755 then finds that projection-025 scale 8 was improperly carried
+forward as calibration state despite its earlier explicit classification as a
+closed diagnostic, not a recovered or selected SMART parameter. SMART.nml
+specifies scale 1. Artifacts 756--757 implement and preregister the sole
+source-control correction: remove only the p025 multiplier and require the
+resulting endpoint to pass fresh Figure 6, fixed Figure 7, and fixed Figure 10
+together. The joint result has not yet run and no intermediate scale or
+compensation is authorized.

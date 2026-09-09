@@ -1,0 +1,80 @@
+schema_version: 1
+id: figure6-7-10-projection025-source-control-audit-755
+date: '2026-09-09'
+status: completed-source-control-audit-one-joint-cross-authorized
+classification: source-parity-audit-after-figure7-consistency-failure
+modeldb_source:
+  path: src/smart_robustness/data/modeldb112923_first_order.yaml
+  sha256: 3b42be7dd0b17cc01ad29f474f152cfcd8c2a605410aad223d14c676fe98d965
+  projection_id: modeldb112923.projection.025
+  source_population: layer5_excitatory_v1
+  target_population: layer6i_excitatory_v1
+  target_compartment: proximal_dendrite
+  channel_conductance_mS_cm2: 0.1
+  weight: 1.0
+  effective_runtime_scale: 1.0
+  alternative_scale_in_source: false
+diagnostic_bracket:
+  assessment: docs/validation-results/figure10-layer6i-conductance-assessment-643.yaml
+  assessment_sha256: 56d68682caf9b5d0281c40846778928b5e5cec1341cd5f0207b59b615d91bd14
+  finding: >-
+    An isolated lossless replay found no peripheral layer-6I event at scales 1,
+    2, or 4 and the first event at scale 8. The assessment explicitly called
+    this an effective sensitivity, selected no parameter, and denied recovered
+    SMART status.
+connected_scale8_endpoint:
+  assessment: docs/validation-results/figure10-layer6i-scale8-assessment-646.yaml
+  assessment_sha256: 62f511e06840954707705d1ada921e0533c31d8c730c522577eadda68dc13ce5
+  finding: >-
+    Scale 8 restored broad layer-6I recruitment but failed winner suppression
+    and alternative release. The endpoint was explicitly closed, unselected,
+    and not source-recovered.
+selected_figure10_endpoint:
+  assessment: docs/validation-results/figure10-projection036-spread-assessment-750.yaml
+  assessment_sha256: 17e43d2d51364fb8678d49234279a673abdf39f761b7b1a888cc18c55d808a16
+  finding: >-
+    The later p036 variance cross reproduced the registered search cycle while
+    retaining scale 8 as inherited calibration state. Its result remains valid
+    for that exact mixed-source endpoint but does not convert scale 8 into a
+    selected or recovered projection-025 value.
+figure7_consistency_failure:
+  result: docs/validation-results/figure7-projection036-spread-consistency-753.yaml
+  result_sha256: 78d60bca61902f5546aa9aad2776136a3c541eab07a85d42c621da490ae0febd
+  assessment: docs/validation-results/figure7-projection036-spread-consistency-assessment-754.yaml
+  assessment_sha256: 5e7377ba7ddf3688dc33e62d1e296bb852b640f139be000b23953585c57b48ee
+  finding: >-
+    The complete inherited endpoint passes learning, relay selection, and TRN
+    direction but emits 3/6 rather than 4/7 nonspecific events. This pair
+    cannot attribute the change to one component.
+provenance_conclusion:
+  projection025_scale8_admissible_for_classic_baseline: false
+  projection025_scale1_is_released_source_value: true
+  projection025_continuous_interpolation_authorized: false
+  figure10_scale8_result_retracted: false
+  joint_source_control_cross_authorized: true
+authorized_cross:
+  remove_only_persistent_projection025_scale8: true
+  resulting_projection025_scale: 1.0
+  retain_projection036_variance_topology: true
+  retain_p026_p038_predepletion_emission_snapshot: true
+  retain_all_other_fixed_scales_and_protocols: true
+  require_fresh_figure6: true
+  require_fixed_figure7_match_mismatch: true
+  require_fixed_figure10_search_cycle_intact_control: true
+decision: >-
+  Preregister and execute exactly one joint source-control endpoint that differs
+  from the selected mixed-source endpoint only by returning projection 025 to
+  its released scale 1. It passes only if all Figure-6 gates, all fixed Figure-7
+  gates including exact 4/7 output, and all fixed Figure-10 search-cycle gates
+  pass. Do not use partial success to select another value.
+stopping_rule: >-
+  If source-control projection 025 fails any joint gate, do not interpolate,
+  restore scale 8 as a classic value, change projection-025 spread, compensate
+  another weight, tune nonspecific rate, or alter the Figure-10 lifecycle. The
+  result instead establishes that the current source/calibrated conventions do
+  not contain one jointly valid first-order baseline.
+boundary: >-
+  This source audit corrects candidate provenance; it does not invalidate the
+  exact registered Figure-10 result, assert that source scale 1 will pass,
+  recover the unavailable KInNeSS scheduler, reproduce gamma/beta, or authorize
+  baseline promotion/freezing and downstream neuron/anatomy experiments.

@@ -12008,6 +12008,122 @@ def test_projection036_figure7_consistency_is_preregistered_and_hash_pinned() ->
     assert "not a calibration screen" in registration["boundary"]
 
 
+def test_projection036_figure7_consistency_fails_only_exact_rate_gates() -> None:
+    result_path = (
+        ROOT
+        / "docs/validation-results/figure7-projection036-spread-consistency-753.yaml"
+    )
+    result = yaml.safe_load(result_path.read_text())
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-projection036-spread-consistency-assessment-754.yaml"
+        ).read_text()
+    )
+
+    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment[
+        "result_sha256"
+    ]
+    assert all(result["projection036_topology_gates"].values())
+    assert all(result["figure6_gates"].values())
+    gates = result["figure7_gates"]
+    assert gates["match_relay_active_indices"]
+    assert gates["match_relay_events"]
+    assert gates["mismatch_relay_allowed_indices"]
+    assert gates["match_more_active_relay_cells"]
+    assert gates["match_more_trn_events"]
+    assert gates["match_more_trn_to_nonspecific_gaba"]
+    assert not gates["match_nonspecific_events"]
+    assert not gates["mismatch_nonspecific_events"]
+    assert result["event_identity"]["match"]["nonspecific_events"] == 3
+    assert result["event_identity"]["mismatch"]["nonspecific_events"] == 6
+    assert not result["figure7_consistency_reproduced"]
+    verdict = assessment["assessment"]
+    assert verdict["failed_gate_count"] == 2
+    assert not verdict["figure14_holdout_authorized"]
+    assert not verdict["repeat_or_rate_tuning_authorized"]
+    assert not verdict["joint_figure6_figure7_figure10_endpoint_exists"]
+    assert not verdict["original_smart_reproduced"]
+    assert not verdict["baseline_frozen"]
+
+
+def test_projection025_source_control_audit_closes_scale8_as_classic_value() -> None:
+    audit = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure6-7-10-projection025-source-control-audit-755.yaml"
+        ).read_text()
+    )
+
+    for section in (
+        "modeldb_source",
+        "diagnostic_bracket",
+        "connected_scale8_endpoint",
+        "selected_figure10_endpoint",
+        "figure7_consistency_failure",
+    ):
+        item = audit[section]
+        if "path" in item:
+            path_key = "path"
+        elif "result" in item and "result_sha256" in item:
+            assert hashlib.sha256((ROOT / item["result"]).read_bytes()).hexdigest() == item[
+                "result_sha256"
+            ]
+            path_key = "assessment"
+        else:
+            path_key = "assessment"
+        assert hashlib.sha256((ROOT / item[path_key]).read_bytes()).hexdigest() == item[
+            f"{path_key}_sha256" if path_key != "path" else "sha256"
+        ]
+    conclusion = audit["provenance_conclusion"]
+    assert not conclusion["projection025_scale8_admissible_for_classic_baseline"]
+    assert conclusion["projection025_scale1_is_released_source_value"]
+    assert not conclusion["projection025_continuous_interpolation_authorized"]
+    assert conclusion["joint_source_control_cross_authorized"]
+    assert "exactly one" in audit["decision"]
+    assert "do not interpolate" in audit["stopping_rule"].lower()
+
+
+def test_projection025_joint_source_control_is_preregistered_and_hash_pinned() -> None:
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure6-7-10-projection025-source-control-registration-757.yaml"
+        ).read_text()
+    )
+
+    for path_key, hash_key in (
+        ("authorization", "authorization_sha256"),
+        ("profile", "profile_sha256"),
+        ("implementation", "implementation_sha256"),
+        ("script", "script_sha256"),
+        ("projection036_harness", "projection036_harness_sha256"),
+        ("runtime", "runtime_sha256"),
+        ("synapses", "synapses_sha256"),
+        ("training_profile", "training_profile_sha256"),
+        ("prior_figure7_assessment", "prior_figure7_assessment_sha256"),
+        ("selected_figure10_assessment", "selected_figure10_assessment_sha256"),
+    ):
+        assert hashlib.sha256(
+            (ROOT / registration[path_key]).read_bytes()
+        ).hexdigest() == registration[hash_key]
+    assert registration["fixed_change"] == {
+        "projection_id": "modeldb112923.projection.025",
+        "prior_diagnostic_scale": 8.0,
+        "candidate_source_scale": 1.0,
+        "implementation": "absence from persistent projection scale map",
+    }
+    assert registration["required_gates"] == {
+        "projection025_source_scale": True,
+        "projection036_topology_identity_all_five_builds": True,
+        "all_fresh_figure6_gates": True,
+        "all_fixed_figure7_gates": True,
+        "all_fixed_figure10_search_cycle_gates": True,
+    }
+    assert "exactly one" in registration["decision_rule"]
+    assert "Do not repeat" in registration["stopping_rule"]
+
+
 def test_projection036_source_arrival_result_localizes_phase_not_topology() -> None:
     result_path = (
         ROOT

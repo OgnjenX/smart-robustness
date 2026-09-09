@@ -1,0 +1,103 @@
+schema_version: 1
+id: figure10-search-cycle-balance-assessment-745
+date: '2026-09-09'
+status: assessed-direct-reset-bias-present-off-surround-inhibition-dominates
+registration: docs/validation-results/figure10-search-cycle-balance-registration-743.yaml
+result: docs/validation-results/figure10-search-cycle-balance-pair-744.yaml
+result_sha256: 0b0745a983854d9c5a2b955f6621d7d15deac8ee40eca7568c7e40a0b905ed89
+assessment:
+  all_fresh_figure6_gates_pass: true
+  exact_registered_lifecycle_identity_pass: true
+  direct_projection038_spatial_bias_present: true
+  alternative_voltage_deficit_present_at_release: true
+  projection036_inhibition_precedes_or_dominates_voltage_deficit: true
+  direct_reset_excitation_spatial_failure_rejected: true
+  indirect_off_surround_balance_failure_localized: true
+  timing_interaction_contributes: true
+  parameter_selected: false
+  official_figure10_reset_reproduced: false
+  original_smart_reproduced: false
+  baseline_promoted: false
+  baseline_frozen: false
+source_identity:
+  figure6_gates:
+    relay_active_indices: true
+    relay_events_per_active_index: true
+    relay_events: true
+    cortical_chain_complete: true
+    causal_learning_pair: true
+    top_down_horizontal_contrast: true
+  layer4_pre_events_intact_control: [43, 43]
+  layer4_pre_active_indices_intact_control:
+  - [38, 39, 40, 41, 42]
+  - [38, 39, 40, 41, 42]
+  winner_events_intact_control: [49, 59]
+  alternative_events_intact_control: [36, 36]
+  first_alternative_event_ms_intact_control: [98.38000000000002,
+    85.91000000000003]
+  alternatives_before_release_intact_control: [0, 0]
+  layer4_inhibitory_events_intact_control: [502, 375]
+focal_alternative_31:
+  release_marker_ms: 61.880000000000024
+  projection038_gate_threshold_ms_intact_control: [61.880000000000024,
+    85.15]
+  projection026_first_arrival_ms_intact_control: [61.53,
+    62.150000000000006]
+  projection026_intact_lead_ms: 0.6200000000000045
+  projection036_gate_already_active_at_window_start_both_arms: true
+  projection036_gate_mean_61_62_ms_intact_control: [1.790190222863125,
+    0.8990072954010523]
+  projection036_first_new_arrival_ms_intact_control: [64.45000000000002,
+    70.0]
+  projection036_intact_lead_ms: 5.549999999999983
+  voltage_max_61_62_ms_intact_control_mV: [-68.7967821715544,
+    -67.83150611794396]
+  voltage_deficit_at_release_bin_mV: -0.9652760536104381
+  voltage_max_65_66_ms_intact_control_mV: [-66.97966805875876,
+    -64.14579332255532]
+  voltage_deficit_65_66_ms_mV: -2.833874736203441
+  projection037_first_activity_ms_intact_control: [100.47,
+    86.03000000000003]
+  recurrent_excitation_delay_ms: 14.43999999999997
+early_61_69_ms_balance_at_alternative_31:
+  extra_projection035_excitation_intact_minus_control_pA_ms: 106.30120466393985
+  extra_projection037_excitation_intact_minus_control_pA_ms: 0.0
+  extra_projection038_excitation_intact_minus_control_pA_ms: 1599.3196690161844
+  total_extra_excitation_intact_minus_control_pA_ms: 1705.6208735338123
+  extra_projection036_inhibitory_current_intact_minus_control_pA_ms: -2437.2071706185643
+  net_recorded_current_difference_intact_minus_control_pA_ms: -731.586297084752
+direct_projection038_spatial_bias_61_69_ms:
+  alternative31_intact_integral_pA_ms: 1599.3196690161844
+  prior_winner40_intact_integral_pA_ms: 41.80157324135401
+  alternative_to_winner_ratio: 38.259796103415276
+interpretation: >-
+  The passive harness exactly reproduces the rejected event-locked endpoint,
+  so its traces are comparable. The intended transmitter-dependent direct
+  reset bias is not missing: from 61--69 ms, intact projection 038 delivers
+  1599.32 pA ms to inactive alternative 31 but only 41.80 pA ms to prior
+  winner 40, a 38.26-fold contrast. However, projection-036 inhibition is
+  already stronger in the intact arm in the release bin, and the first newly
+  observed intact projection-036 arrival leads control by 5.55 ms. At the
+  alternative, 1705.62 pA ms of additional recorded excitation through 69 ms
+  is outweighed by 2437.21 pA ms of additional inhibitory current, leaving a
+  -731.59 pA ms net difference. The alternative is therefore already 0.97 mV
+  further from threshold in the marker-containing bin, its recurrent input
+  starts 14.44 ms later, and the global first-alternative event remains 12.47
+  ms later. This localizes the wrong sign to the balance/timing of the indirect
+  layer6I-to-layer4I-to-layer4E off-surround route, not failure of the direct
+  transmitter-dependent projection-038 spatial bias.
+next_gate: >-
+  Before changing another executable quantity, audit the projection-026/036
+  indirect route against the primary paper, recovered SMART.nml, KInNeSS
+  reports, and compiled Brian2 representation. Pin ring semantics, conductance
+  density and target-area conversion, source transmitter application, and the
+  relative direct-038 versus indirect-026/036 balance. Authorize a new
+  simulation only if that source-parity audit identifies one concrete
+  discrepancy or a bounded ambiguity; do not tune a weight or delay from this
+  trace.
+boundary: >-
+  This result is a successful mechanistic localization and a failed Figure-10
+  reproduction. It selects no parameter and does not reopen prior marker,
+  delay, ring, resource, threshold, or score families. Figure 7, official
+  gamma/beta behavior, original SMART, baseline promotion/freezing, neuron-
+  model comparisons, and modern-anatomy variants remain incomplete.

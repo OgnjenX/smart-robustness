@@ -4010,3 +4010,16 @@ output rises to 502 versus 375. The reset is broad suppression, not selective
 release. Figure 10, gamma/beta reproduction, original SMART, and baseline
 freezing remain incomplete; neuron substitutions and modern-anatomy variants
 remain deferred.
+
+Artifacts 742--745 now provide the corresponding passive, event-locked target
+balance audit. Every registered lifecycle value repeats exactly. Direct
+projection-038 excitation has the expected resource-dependent spatial bias:
+alternative 31 receives 38.26 times the early intact input delivered to prior
+winner 40. The indirect p026-to-p036 off-surround nevertheless wins the early
+balance. Its newly observed intact inhibitory arrival leads control by 5.55
+ms, and its additional inhibitory current exceeds all additional recorded
+excitation by 731.59 pA ms through 69 ms. The alternative begins the release
+interval hyperpolarized and receives recurrent excitation 14.44 ms later than
+control. This is a successful localization, not Figure-10 reproduction, and
+selects no parameter. A source-parity audit of the indirect route is next;
+original SMART remains unreproduced and unfrozen.

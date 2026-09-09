@@ -2284,3 +2284,18 @@ than favors the alternatives. Close the lifecycle endpoint and retain the
 emission convention as default-off. A passive event-locked p035--p038 and
 source-resolved inhibitory-balance audit is next; no closed parameter or score
 is reopened.
+
+Artifacts 742--745 implement, preregister, execute, and assess that passive
+balance audit without changing a model quantity. The lifecycle result repeats
+exactly. The intended direct transmitter-dependent projection-038 bias is
+present: from 61--69 ms, alternative 31 receives 1599.32 pA ms versus only
+41.80 pA ms at prior winner 40. The indirect off-surround route overwhelms it.
+At alternative 31, 1705.62 pA ms of extra intact excitation is opposed by
+2437.21 pA ms of extra projection-036 inhibitory current, leaving a -731.59
+pA ms net difference. The first newly observed intact p036 arrival leads
+control by 5.55 ms, the marker-bin voltage is already 0.97 mV lower, and
+recurrent excitation starts 14.44 ms later. This localizes the wrong sign to
+the indirect p026-to-p036 balance/timing, not a failure of the direct p038
+spatial bias. No parameter is selected. The next gate is a source-parity audit
+of ring semantics, conductance/area conversion, transmitter application, and
+the direct/indirect balance before another simulation is authorized.

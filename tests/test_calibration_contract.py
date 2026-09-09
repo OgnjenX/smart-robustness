@@ -11801,6 +11801,52 @@ def test_figure10_search_cycle_balance_audit_is_preregistered_and_passive() -> N
     assert "No model quantity" in registration["boundary"]
 
 
+def test_figure10_search_cycle_balance_localizes_indirect_inhibition() -> None:
+    result_path = (
+        ROOT / "docs/validation-results/figure10-search-cycle-balance-pair-744.yaml"
+    )
+    result = yaml.safe_load(result_path.read_text())
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-search-cycle-balance-assessment-745.yaml"
+        ).read_text()
+    )
+
+    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment[
+        "result_sha256"
+    ]
+    assert all(result["figure6_gates"].values())
+    assert result["intact"]["pre_layer4_events"] == 43
+    assert result["disconnected_control"]["pre_layer4_events"] == 43
+    assert result["intact"]["winner_post_events"] == 49
+    assert result["disconnected_control"]["winner_post_events"] == 59
+    assert result["intact"]["alternative_events"] == 36
+    assert result["disconnected_control"]["alternative_events"] == 36
+    assert result["intact"]["first_alternative_event_ms"] == pytest.approx(98.38)
+    assert result["disconnected_control"][
+        "first_alternative_event_ms"
+    ] == pytest.approx(85.91)
+    direct = assessment["direct_projection038_spatial_bias_61_69_ms"]
+    assert direct["alternative_to_winner_ratio"] == pytest.approx(38.2597961)
+    balance = assessment["early_61_69_ms_balance_at_alternative_31"]
+    assert balance["total_extra_excitation_intact_minus_control_pA_ms"] > 0
+    assert balance[
+        "extra_projection036_inhibitory_current_intact_minus_control_pA_ms"
+    ] < 0
+    assert balance["net_recorded_current_difference_intact_minus_control_pA_ms"] < 0
+    focal = assessment["focal_alternative_31"]
+    assert focal["projection036_intact_lead_ms"] == pytest.approx(5.55)
+    assert focal["recurrent_excitation_delay_ms"] == pytest.approx(14.44)
+    verdict = assessment["assessment"]
+    assert verdict["direct_projection038_spatial_bias_present"]
+    assert verdict["indirect_off_surround_balance_failure_localized"]
+    assert not verdict["parameter_selected"]
+    assert not verdict["official_figure10_reset_reproduced"]
+    assert not verdict["original_smart_reproduced"]
+    assert not verdict["baseline_frozen"]
+
+
 def test_projection036_source_arrival_result_localizes_phase_not_topology() -> None:
     result_path = (
         ROOT

@@ -11295,6 +11295,124 @@ def test_layer6i_emission_resource_pair_restores_only_winner_suppression() -> No
     assert not verdict["baseline_promoted"]
 
 
+def test_layer6i_emission_target_balance_audit_is_passive_and_pinned() -> None:
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-layer6i-emission-target-balance-registration-726.yaml"
+        ).read_text()
+    )
+
+    for path_key, hash_key in (
+        ("authorization", "authorization_sha256"),
+        ("implementation", "implementation_sha256"),
+        ("profile", "profile_sha256"),
+        ("harness", "harness_sha256"),
+        ("runtime", "runtime_sha256"),
+        ("synapses", "synapses_sha256"),
+        ("script", "script_sha256"),
+        ("source_registration", "source_registration_sha256"),
+        ("source_result", "source_result_sha256"),
+    ):
+        assert hashlib.sha256(
+            (ROOT / registration[path_key]).read_bytes()
+        ).hexdigest() == registration[hash_key]
+    assert registration["runtime_overrides"] == {
+        "layer6i_output_transmitter_gate_convention": (
+            "pre_depletion_emission_snapshot"
+        )
+    }
+    assert registration["record_layer4_target_balance_indices"] == [
+        31,
+        38,
+        39,
+        40,
+        41,
+        42,
+        49,
+    ]
+    assert registration["output_mode"] == "layer4_complete_target_bounded"
+    assert "cannot reopen or select" in registration["boundary"]
+
+
+def test_layer6i_emission_target_balance_localizes_but_does_not_select() -> None:
+    result_path = (
+        ROOT
+        / "docs/validation-results/figure10-layer6i-emission-target-balance-pair-727.yaml"
+    )
+    result = yaml.safe_load(result_path.read_text())
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-layer6i-emission-target-balance-assessment-728.yaml"
+        ).read_text()
+    )
+
+    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment[
+        "result_sha256"
+    ]
+    assert all(result["figure6_gates"].values())
+    assert result["reset_gates"] == {
+        "pre_reset_winner": True,
+        "reset_chain": True,
+        "winner_suppression": True,
+        "alternative_release": False,
+    }
+    for arm in ("intact", "disconnected_control"):
+        assert result[arm]["layer4_target_balance_bin_edges_ms"] == [
+            float(value) for value in range(0, 201, 10)
+        ]
+        assert set(result[arm]["layer4_target_balance_series"]) == {
+            "31",
+            "38",
+            "39",
+            "40",
+            "41",
+            "42",
+            "49",
+        }
+    verdict = assessment["assessment"]
+    assert verdict["exact_source_identity_reproduced"]
+    assert verdict["direct_projection038_reaches_alternatives"]
+    assert verdict["first_direct_reset_pulse_opposed_by_extra_projection036_inhibition"]
+    assert not verdict["registered_voltage_readout_present"]
+    assert not verdict["complete_causal_order_resolved"]
+    assert not verdict["parameter_selected"]
+    assert not verdict["original_smart_reproduced"]
+    assert not verdict["baseline_promoted"]
+
+
+def test_layer6i_emission_target_voltage_correction_is_preregistered() -> None:
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-layer6i-emission-target-voltage-registration-729.yaml"
+        ).read_text()
+    )
+
+    for path_key, hash_key in (
+        ("authorization", "authorization_sha256"),
+        ("source_result", "source_result_sha256"),
+        ("implementation", "implementation_sha256"),
+        ("profile", "profile_sha256"),
+        ("harness", "harness_sha256"),
+        ("runtime", "runtime_sha256"),
+        ("synapses", "synapses_sha256"),
+        ("script", "script_sha256"),
+    ):
+        assert hashlib.sha256(
+            (ROOT / registration[path_key]).read_bytes()
+        ).hexdigest() == registration[hash_key]
+    assert registration["record_layer4_target_timing_indices"] == [31, 49]
+    assert registration["layer4_target_timing_window_ms"] == [50.0, 90.0]
+    assert registration["layer4_target_timing_bin_width_ms"] == 1.0
+    assert registration["output_mode"] == "layer4_target_timing_bounded"
+    assert "changes no executable model quantity" in registration[
+        "instrumentation_correction"
+    ]
+    assert "remains rejected and default-off" in registration["boundary"]
+
+
 def test_projection036_source_arrival_result_localizes_phase_not_topology() -> None:
     result_path = (
         ROOT

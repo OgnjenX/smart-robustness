@@ -3930,3 +3930,15 @@ next. Figure 10 and the baseline remain failed and unfrozen.
 Artifacts 709--710 implement and preregister that final source-event/resource
 audit. It changes output retention only. The paired result has not yet run, and
 original SMART remains unreproduced and unfrozen.
+
+Artifacts 711--716 complete the source-event/resource audit and its focal
+output recovery. Exact identities repeat. Layer-6I sources 39/41 fire one
+0.01-ms step earlier intact, and their epsilon-1 transmitter reset immediately
+removes their contribution to the continuously multiplied projection-026 gate.
+The corresponding new ligand arrivals occur one millisecond later and do not
+cause the onset. Projection 026 is therefore closed as a parameter fault: its
+source phase and resource rule transmit the difference but do not identify a
+weight, delay, topology, kinetics, or depletion correction. Figure 10 still
+fails winner suppression and alternative release; original SMART remains
+unreproduced and unfrozen. The next read-only diagnostic is the same
+source-resource timing test at projection 036.

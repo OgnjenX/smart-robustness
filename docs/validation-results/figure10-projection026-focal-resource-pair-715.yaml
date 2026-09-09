@@ -1,0 +1,60 @@
+schema_version: 1
+id: figure10-projection026-focal-resource-pair-715
+date: '2026-09-09'
+status: completed-unchanged-focal-source-resource-recovery
+classification: figure10-projection026-focal-resource-output-recovery
+registration: docs/validation-results/figure10-projection026-focal-resource-registration-714.yaml
+runtime_fingerprint: fa4ab9f0bf2bec4d6ad53cb6a91620047689b6839b146ed7d777d42350c2cdf5
+persistent_projection_delays_ms: {}
+figure6_gates:
+  relay_active_indices: true
+  relay_events_per_active_index: true
+  relay_events: true
+  cortical_chain_complete: true
+  causal_learning_pair: true
+  top_down_horizontal_contrast: true
+source_identity:
+  layer4_pre_events: [39, 39]
+  layer4_post_events: [78, 92]
+  nonspecific_post_events: [18, 13]
+  layer5_post_events: [285, 140]
+  layer6i_post_events: [153, 76]
+  layer4_inhibitory_post_events: [218, 232]
+  layer5_active_cells: [81, 11]
+  layer6i_active_cells: [81, 11]
+focal_source_events:
+  source_indices: [39, 41]
+  intact:
+    time_from_mismatch_ms: 23.43
+    absolute_time_ms: 123.43
+    threshold_order0_transmitter_pre_reset: 0.046008006379109824
+  disconnected_control:
+    time_from_mismatch_ms: 23.44000000000001
+    absolute_time_ms: 123.44000000000001
+    threshold_order0_transmitter_pre_reset: 0.046031855880830336
+  intact_source_phase_lead_ms: 0.010000000000005116
+  depletion_epsilon: 1.0
+  derived_transmitter_immediately_after_reset_both_arms: 0.0
+  recovery_ms: 400.0
+focal_projection026_delivery:
+  edge_weight: 0.2706705664732254
+  effective_delay_ms: 1.0
+  intact_arrival_from_mismatch_ms: 24.430000000000007
+  disconnected_control_arrival_from_mismatch_ms: 24.440000000000012
+  affected_targets_by_source:
+    39: [38, 40]
+    41: [40, 42]
+causal_timing:
+  first_projection026_gate_difference_ms: 23.450000000000003
+  source_event_precedes_first_recorded_gate_difference: true
+  new_ligand_arrival_precedes_first_recorded_gate_difference: false
+  ongoing_gate_multiplied_by_current_transmitter: true
+  source_phase_and_resource_reset_explain_onset_order: true
+reset_gates:
+  pre_reset_winner: true
+  reset_chain: true
+  winner_suppression: false
+  alternative_release: false
+reproduced_reset: false
+original_smart_reproduced: false
+baseline_promoted: false

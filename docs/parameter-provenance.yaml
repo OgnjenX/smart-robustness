@@ -749,9 +749,9 @@ parameters:
     note: Sources 39/41 lead by 0.01 ms intact at 23.43 versus 23.44 ms control, and their delayed arrivals follow at 24.43/24.44 ms. This is consistent with the 23.45-ms gate split under continuous transmitter multiplication, but paired focal transmitter values were not both preserved because the all-event payload was compacted. No parameter is selected; focal output recovery is required.
   diagnostics.figure10.projection026_focal_resource_output_recovery:
     value: post-simulation output filter for layer-6I sources 39/41 and 23.3--23.6 ms
-    status: registered-before-execution
-    source: Artifact 712 authorization and Artifacts 713--714
-    note: The unchanged replay retains focal event and threshold-order transmitter rows only. Filtering occurs after simulation and scoring and cannot affect behavior or authorize a parameter.
+    status: completed-source-phase-resource-onset-confirmed-no-parameter-fault
+    source: Artifact 712 authorization and Artifacts 713--716
+    note: Exact identities repeat. Sources 39/41 fire at 23.43 ms intact versus 23.44 ms control. Their threshold-order-0 transmitter values are pre-reset, and epsilon 1.0 immediately sets availability to zero, so continuous transmitter multiplication changes the existing p026 gate before the new delayed arrivals at 24.43/24.44 ms. This confirms a source-phase/resource propagation mechanism, not a p026 parameter fault. No parameter is selected; projection 036 source-resource timing is the next passive diagnostic.
   benchmark.population_sizes:
     value: see configs/*.yaml
     status: exploratory

@@ -11032,6 +11032,53 @@ def test_projection026_focal_resource_recovery_is_hash_pinned_and_passive() -> N
     assert "No original-SMART claim" in registration["boundary"]
 
 
+def test_projection026_focal_resource_pair_confirms_onset_without_parameter() -> None:
+    result_path = (
+        ROOT
+        / "docs/validation-results/figure10-projection026-focal-resource-pair-715.yaml"
+    )
+    result = yaml.safe_load(result_path.read_text())
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-projection026-focal-resource-assessment-716.yaml"
+        ).read_text()
+    )
+
+    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment[
+        "result_sha256"
+    ]
+    assert all(result["figure6_gates"].values())
+    assert result["persistent_projection_delays_ms"] == {}
+    focal = result["focal_source_events"]
+    assert focal["source_indices"] == [39, 41]
+    assert focal["intact"]["time_from_mismatch_ms"] == pytest.approx(23.43)
+    assert focal["disconnected_control"][
+        "time_from_mismatch_ms"
+    ] == pytest.approx(23.44)
+    assert focal["intact"][
+        "threshold_order0_transmitter_pre_reset"
+    ] == pytest.approx(0.046008006379109824)
+    assert focal["disconnected_control"][
+        "threshold_order0_transmitter_pre_reset"
+    ] == pytest.approx(0.046031855880830336)
+    assert focal["depletion_epsilon"] == pytest.approx(1.0)
+    assert focal["derived_transmitter_immediately_after_reset_both_arms"] == 0.0
+    delivery = result["focal_projection026_delivery"]
+    assert delivery["intact_arrival_from_mismatch_ms"] == pytest.approx(24.43)
+    assert delivery[
+        "disconnected_control_arrival_from_mismatch_ms"
+    ] == pytest.approx(24.44)
+    verdict = assessment["assessment"]
+    assert verdict["complete_paired_focal_transmitter_values_preserved"]
+    assert verdict["source_phase_resource_onset_mechanism_confirmed"]
+    assert not verdict["projection026_parameter_fault_detected"]
+    assert not verdict["parameter_selected"]
+    assert not verdict["official_figure10_reset_reproduced"]
+    assert not verdict["original_smart_reproduced"]
+    assert not verdict["baseline_promoted"]
+
+
 def test_projection036_source_arrival_result_localizes_phase_not_topology() -> None:
     result_path = (
         ROOT

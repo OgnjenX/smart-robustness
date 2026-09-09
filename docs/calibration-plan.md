@@ -2181,3 +2181,14 @@ Artifacts 713--714 implement and preregister that focal output recovery. The
 filter is applied after simulation and scoring and retains only source 39/41
 event and transmitter rows over 23.3--23.6 ms. The p026 arrival endpoint remains
 24.6 ms. No behavior changes.
+
+Artifacts 715--716 complete the focal recovery with exact registered identity.
+Sources 39/41 fire at 23.43 ms intact and 23.44 ms control. Their order-0
+transmitter samples are taken before the event reset; depletion epsilon 1.0
+then drives each source to zero. Because projection 026 continuously multiplies
+its existing ligand waveform by current source availability, the intact event
+removes ongoing drive one 0.01-ms step earlier, before the new 24.43/24.44-ms
+ligand arrivals. This explains the first p026 gate split without identifying a
+p026 parameter fault. The next passive gate is the equivalent source-resource
+audit for projection 036 cells 38/40/42 over 75.2--75.7 ms; no parameter is
+selected and the failed reset remains unchanged.

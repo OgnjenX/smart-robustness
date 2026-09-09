@@ -1,0 +1,42 @@
+schema_version: 1
+id: figure10-projection026-focal-resource-assessment-716
+date: '2026-09-09'
+status: assessed-source-phase-resource-onset-confirmed-no-parameter-fault
+registration: docs/validation-results/figure10-projection026-focal-resource-registration-714.yaml
+result: docs/validation-results/figure10-projection026-focal-resource-pair-715.yaml
+result_sha256: f08f05e8d182ca8d77a911bd7b3d05ae3d7e1e5a11969e200a5fe2c408eed1ab
+assessment:
+  all_fresh_figure6_gates_pass: true
+  exact_registered_population_identity: true
+  exact_registered_timing_identity: true
+  complete_paired_focal_transmitter_values_preserved: true
+  threshold_order0_samples_are_pre_reset: true
+  immediate_post_reset_availability_is_zero: true
+  source_phase_resource_onset_mechanism_confirmed: true
+  projection026_parameter_fault_detected: false
+  parameter_selected: false
+  official_figure10_reset_reproduced: false
+  original_smart_reproduced: false
+  baseline_promoted: false
+interpretation: >-
+  Layer-6I sources 39 and 41 fire at 23.43 ms intact and 23.44 ms control.
+  Their threshold-order-0 transmitter samples immediately before reset are
+  0.046008006379109824 and 0.046031855880830336, respectively. With depletion
+  epsilon 1.0, both sources reset to zero availability at their event. The
+  intact source therefore removes its contribution to the continuously
+  transmitter-multiplied projection-026 gate one 0.01-ms step before control.
+  This precedes the first recorded p026 gate difference at 23.45 ms, whereas
+  the new delayed ligand arrivals occur only at 24.43 and 24.44 ms. Source
+  phase and resource reset thus explain the onset order without implicating a
+  projection-026 weight, topology, delay, kinetics, or depletion parameter.
+closure: >-
+  Close projection 026 as the initiating parameter fault. Retain its source
+  phase/resource timing as a causal propagation mechanism only. Do not select
+  or fit a parameter; all previously closed parameter families remain closed.
+next_gate: >-
+  Apply the same passive event/resource timing audit to projection-036 source
+  cells 38, 40, and 42 over 75.2--75.7 ms. Retain source transmitter state,
+  exact events, and the already localized arrivals into alternative cell 31.
+  Determine whether earlier intact layer-4-inhibitory spikes transiently
+  deplete the continuously applied p036 inhibition and thereby create the
+  downstream wrong-sign reset balance. No model change is permitted.

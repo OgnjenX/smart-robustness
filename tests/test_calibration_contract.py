@@ -11921,6 +11921,93 @@ def test_projection036_spread_cross_is_preregistered_and_hash_pinned() -> None:
     assert "failure closes" in registration["stopping_rule"].lower()
 
 
+def test_projection036_spread_cross_reproduces_registered_search_cycle() -> None:
+    result_path = (
+        ROOT
+        / "docs/validation-results/figure10-projection036-spread-pair-749.yaml"
+    )
+    result = yaml.safe_load(result_path.read_text())
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-projection036-spread-assessment-750.yaml"
+        ).read_text()
+    )
+
+    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment[
+        "result_sha256"
+    ]
+    assert all(result["figure6_gates"].values())
+    for arm in (result["intact"], result["disconnected_control"]):
+        assert arm["projection036_spread_convention"] == "variance"
+        assert arm["projection036_nonzero_edges"] == 5508
+        assert arm["projection036_incoming_weight_sum"] == pytest.approx(
+            16.83946769281913
+        )
+        assert arm["pre_layer4_events"] == 43
+        assert arm["pre_layer4_active_indices"] == [38, 39, 40, 41, 42]
+        assert arm["alternative_events_before_release"] == 0
+        assert arm["alternative_active_indices"] == [22, 31, 49, 58]
+    assert result["intact"]["winner_post_events"] == 47
+    assert result["disconnected_control"]["winner_post_events"] == 54
+    assert result["intact"]["first_alternative_event_ms"] == pytest.approx(79.25)
+    assert result["disconnected_control"][
+        "first_alternative_event_ms"
+    ] == pytest.approx(87.11)
+    assert all(result["reset_gates"].values())
+    assert result["reproduced_search_cycle"]
+    verdict = assessment["assessment"]
+    assert verdict["all_preregistered_search_cycle_gates_pass"]
+    assert verdict["projection036_variance_endpoint_selected"]
+    assert verdict["mixed_source_calibrated_endpoint"]
+    assert verdict["official_figure10_first_order_search_cycle_reproduced"]
+    assert not verdict["exact_kinness_recovery_proven"]
+    assert not verdict["figure7_exact_rate_reproduced"]
+    assert not verdict["official_gamma_beta_reproduced"]
+    assert not verdict["original_smart_reproduced"]
+    assert not verdict["baseline_frozen"]
+
+
+def test_projection036_figure7_consistency_is_preregistered_and_hash_pinned() -> None:
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure7-projection036-spread-consistency-registration-752.yaml"
+        ).read_text()
+    )
+
+    for path_key, hash_key in (
+        ("profile", "profile_sha256"),
+        ("implementation", "implementation_sha256"),
+        ("script", "script_sha256"),
+        ("projection036_harness", "projection036_harness_sha256"),
+        ("runtime", "runtime_sha256"),
+        ("synapses", "synapses_sha256"),
+        ("training_profile", "training_profile_sha256"),
+        ("selected_figure10_result", "selected_figure10_result_sha256"),
+        ("selected_figure10_assessment", "selected_figure10_assessment_sha256"),
+        ("prior_figure7_result", "prior_figure7_result_sha256"),
+        ("prior_figure7_assessment", "prior_figure7_assessment_sha256"),
+    ):
+        assert hashlib.sha256(
+            (ROOT / registration[path_key]).read_bytes()
+        ).hexdigest() == registration[hash_key]
+    assert registration["runtime_fingerprint"] == (
+        "fbcc1dc2ac7db8442ce1ff17b71a1d04582c32e817370c700c69ec3caa9fbe4e"
+    )
+    endpoint = registration["fixed_endpoint"]
+    assert endpoint["projection036_spread_convention"] == "variance"
+    assert endpoint["projection036_nonzero_edges"] == 5508
+    assert endpoint["projection036_incoming_weight_sum_per_target"] == pytest.approx(
+        16.83946769281913
+    )
+    assert registration["required_gates"]["match_nonspecific_events"] == 4
+    assert registration["required_gates"]["mismatch_nonspecific_events"] == 7
+    assert "exactly one" in registration["decision_rule"]
+    assert "Do not repeat or adjust" in registration["stopping_rule"]
+    assert "not a calibration screen" in registration["boundary"]
+
+
 def test_projection036_source_arrival_result_localizes_phase_not_topology() -> None:
     result_path = (
         ROOT

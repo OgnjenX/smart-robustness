@@ -1,0 +1,58 @@
+schema_version: 1
+name: figure7-projection036-spread-consistency-v1
+status: fixed-consistency-check-after-figure10-selection
+training_profile: configs/calibration/figure6_legacy_detector_paper_nonspecific_paper_kinetics_v1.yaml
+selected_endpoint: docs/validation-results/figure10-projection036-spread-assessment-750.yaml
+classification: mixed-source-calibrated-figure7-consistency
+runtime_overrides:
+  nonspecific_dendritic_calcium_density_scale: 0.1875
+  layer6i_output_transmitter_gate_convention: pre_depletion_emission_snapshot
+persistent_projection_scales:
+- {projection_id: modeldb112923.projection.008, scale: 0.75}
+- {projection_id: modeldb112923.projection.011, scale: 0.9375}
+- {projection_id: modeldb112923.projection.025, scale: 8.0}
+projection036_topology:
+  serialized_spread_value: 1.5
+  interpretation: variance
+  ring_convention: center_excluded_gaussian
+  nonzero_edges: 5508
+  incoming_edges_per_target: 68
+  incoming_weight_sum_per_target: 16.83946769281913
+comparator:
+  transform: top_k_binary
+  source_index: 40
+  target_count: 5
+protocol:
+  duration_ms: 100.0
+  dt_ms: 0.01
+  equilibration_ms: 0.0
+  top_down_current_pA: 800.0
+  top_down_current_mode: until_cued_cell_first_event
+  top_down_cue_lead_ms: 0.0
+figure6_gates:
+  relay_active_indices: [38, 39, 40, 41, 42]
+  relay_events_per_active_index: 4
+  relay_events: 20
+  cortical_chain_complete: true
+  causal_learning_pair: true
+  top_down_horizontal_contrast: '>0'
+figure7_gates:
+  match_relay_active_indices: [38, 39, 40, 41, 42]
+  match_relay_events: 20
+  mismatch_relay_allowed_indices: [40]
+  match_more_active_relay_cells: true
+  match_more_trn_events: true
+  match_more_trn_to_nonspecific_gaba: true
+  match_nonspecific_events: 4
+  mismatch_nonspecific_events: 7
+selection_rule: >-
+  Execute one fresh Figure 6 and one fixed 100-ms match/mismatch pair. Pass
+  only if every topology, learning, spatial, inhibitory-direction, and exact
+  4/7 rate gate passes. Do not adjust, repeat, interpolate, or add values after
+  observing the pair.
+classification_boundary: >-
+  This profile checks whether the Figure-10-selected mixed-source endpoint is
+  consistent with Figure 7. It cannot retroactively make Figure 10 an
+  independent holdout, prove exact KInNeSS recovery, or by itself promote or
+  freeze original SMART. Any later nonoverlap relay event would require a
+  separately preregistered calcium trace before it could count as rebound.

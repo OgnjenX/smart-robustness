@@ -4023,3 +4023,25 @@ interval hyperpolarized and receives recurrent excitation 14.44 ms later than
 control. This is a successful localization, not Figure-10 reproduction, and
 selects no parameter. A source-parity audit of the indirect route is next;
 original SMART remains unreproduced and unfrozen.
+
+Artifacts 746--750 resolve the bounded projection-036 spread ambiguity with
+one preregistered cross. Primary-source and executable audits find no
+conductance-density, target-area, transmitter, delay, or ring transcription
+error. They do expose one mixed-source ambiguity: KInNeSS describes spread as
+a variance while SMART.nml names it sigma. Applying the variance reading only
+to projection 036 reduces the compiled off-surround to 5508 nonzero edges and
+16.8394676928 incoming weight per target. All fresh Figure-6 and Figure-10
+admission gates pass. The intact arm suppresses the old winner to 47 versus 54
+control events and releases an alternative at 79.25 ms, 7.86 ms before the
+control's 87.11 ms; all four alternatives eventually activate in both arms.
+This reproduces the preregistered first-order Figure-10 search-cycle behavior
+and selects the p036-only variance endpoint for fixed consistency and holdout
+testing. It remains a calibrated reconstruction rather than proven exact
+KInNeSS recovery. Figure 7's exact rate, Figures 14--16, complete original
+SMART, promotion, and freezing remain incomplete.
+
+Artifacts 751--752 now implement and preregister one fixed Figure-7
+consistency pair under that exact selected endpoint. The result has not yet
+run. It can authorize a fixed Figure-14 holdout only by passing all topology,
+fresh-learning, spatial, inhibitory-direction, and exact 4/7 rate gates; it
+cannot tune or promote the model.

@@ -2299,3 +2299,27 @@ the indirect p026-to-p036 balance/timing, not a failure of the direct p038
 spatial bias. No parameter is selected. The next gate is a source-parity audit
 of ring semantics, conductance/area conversion, transmitter application, and
 the direct/indirect balance before another simulation is authorized.
+
+Artifacts 746--750 complete that source-parity gate and its sole authorized
+cross. The paper, SMART.nml, supplement, and KInNeSS equations reveal no
+conductance/area or transmitter transcription error, but the KInNeSS prose
+calls projection spread a variance while the serialized field is named sigma.
+Interpreting only projection 036's value 1.5 as a variance reduces each
+target's off-surround input from 80 edges and summed weight 26.1475 to 68 edges
+and 16.8395, while retaining the center-excluded Gaussian and every other
+spread convention. The preregistered pair passes fresh Figure 6, preserves the
+identical 43-event five-cell pre-state, keeps alternatives silent until the
+yoked 61.88-ms release, and delivers all five vertical inputs afterward. The
+intact reset suppresses the prior winner to 47 versus 54 control events and
+releases its first alternative at 79.25 ms versus 87.11 ms control. Every
+Figure-10 search-cycle gate passes. Select this p036-only variance convention
+as a mixed-source calibrated endpoint, not exact KInNeSS recovery or a global
+spread rewrite. Before spectral holdouts, run one fixed Figure-7 consistency
+pair; no value may be tuned from it.
+
+Artifacts 751--752 implement and preregister that fixed consistency pair. The
+selected topology is applied independently to fresh Figure 6, match, and
+mismatch sectors and verified in each build. Exact 4/7 nonspecific output,
+spatial relay selection, and both TRN event and effective-inhibition directions
+are fixed before execution. No repeat or adjustment is authorized; the pair
+has not yet run.

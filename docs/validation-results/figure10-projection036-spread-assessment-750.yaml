@@ -1,0 +1,107 @@
+schema_version: 1
+id: figure10-projection036-spread-assessment-750
+date: '2026-09-09'
+status: assessed-search-cycle-reproduced-mixed-source-endpoint-selected
+registration: docs/validation-results/figure10-projection036-spread-registration-748.yaml
+result: docs/validation-results/figure10-projection036-spread-pair-749.yaml
+result_sha256: e9a35b80e8138c64a7b71d8c28c60b2e741f8573decd94d3f5ec59bd4766eb75
+assessment:
+  all_fresh_figure6_gates_pass: true
+  projection036_registered_topology_both_arms: true
+  identical_nonempty_pre_reset_state: true
+  alternatives_quiet_before_release_both_arms: true
+  full_five_target_input_delivery_both_arms: true
+  intact_reset_chain_present: true
+  intact_winner_suppressed_relative_to_control: true
+  intact_alternative_released_before_control: true
+  all_preregistered_search_cycle_gates_pass: true
+  projection036_variance_endpoint_selected: true
+  mixed_source_calibrated_endpoint: true
+  official_figure10_first_order_search_cycle_reproduced: true
+  exact_kinness_recovery_proven: false
+  figure7_exact_rate_reproduced: false
+  official_gamma_beta_reproduced: false
+  original_smart_reproduced: false
+  baseline_promoted: false
+  baseline_frozen: false
+registered_identity:
+  figure6_gates:
+    relay_active_indices: true
+    relay_events_per_active_index: true
+    relay_events: true
+    cortical_chain_complete: true
+    causal_learning_pair: true
+    top_down_horizontal_contrast: true
+  projection036_spread_convention_both_arms: [variance, variance]
+  projection036_nonzero_edges_both_arms: [5508, 5508]
+  projection036_incoming_weight_sum_both_arms:
+  - 16.839467692819134
+  - 16.839467692819134
+  layer4_pre_events_both_arms: [43, 43]
+  layer4_pre_active_indices_both_arms:
+  - [38, 39, 40, 41, 42]
+  - [38, 39, 40, 41, 42]
+search_cycle_metrics:
+  release_marker_ms: 61.880000000000024
+  winner_events_intact_control: [47, 54]
+  winner_event_reduction: 7
+  winner_event_reduction_fraction: 0.12962962962962962
+  alternative_events_intact_control: [44, 54]
+  alternative_active_indices_both_arms:
+  - [22, 31, 49, 58]
+  - [22, 31, 49, 58]
+  first_alternative_event_ms_intact_control:
+  - 79.25000000000003
+  - 87.11000000000001
+  intact_alternative_latency_lead_ms: 7.859999999999985
+  alternatives_before_release_both_arms: [0, 0]
+  nonspecific_events_both_arms: [12, 12]
+  layer5_events_intact_control: [213, 136]
+  layer6i_events_intact_control: [175, 97]
+  layer4_inhibitory_events_intact_control: [545, 401]
+comparison_to_standard_deviation_endpoint:
+  prior_result: docs/validation-results/figure10-search-cycle-balance-pair-744.yaml
+  prior_first_alternative_event_ms_intact_control:
+  - 98.38000000000002
+  - 85.91000000000003
+  prior_intact_latency_relative_to_control_ms: 12.469999999999985
+  selected_intact_latency_relative_to_control_ms: -7.859999999999985
+  latency_sign_reversed: true
+  note: >-
+    This comparison explains why the finite source ambiguity is resolved in
+    favor of the variance endpoint. It does not authorize interpolation or a
+    global change to spread semantics.
+interpretation: >-
+  The sole preregistered projection-036 spread cross passes every admission and
+  causal gate. Fresh Figure 6 learning remains intact. Both arms enter mismatch
+  from the same nonempty five-cell layer-4 state, keep all four alternatives
+  silent before the yoked 61.88-ms release, and receive all five vertical
+  inputs afterward. The intact reset chain recruits more layer-5, layer-6I,
+  and layer-4 inhibitory activity, suppresses the prior winner from 54 to 47
+  events, and releases the first alternative 7.86 ms before control rather
+  than 12.47 ms after control under the standard-deviation endpoint. This is
+  the preregistered qualitative Figure-10 search-cycle result.
+selection: >-
+  Select the projection-036-only variance interpretation, with 5508 nonzero
+  edges and 16.839467692819134 summed incoming weight per target, only as part
+  of the current mixed-source calibrated endpoint. Retain the center-excluded
+  Gaussian shape, every other projection's existing spread convention, the
+  p026/p038 pre-depletion emission snapshot, fixed calibration scales, and the
+  event-locked input lifecycle. Do not interpolate spread, compensate weights,
+  or rewrite the central hash-pinned runtime from this result.
+next_gate: >-
+  Re-evaluate the selected fixed endpoint under the exact Figure-7 match and
+  mismatch protocol before opening a new spectral holdout. This is a
+  consistency check, not a new calibration screen: require fresh Figure-6
+  identity, the registered 4/7 nonspecific targets, initial overlap selection,
+  and correct TRN inhibitory direction. If later nonoverlap relay events
+  appear, they require a separately preregistered calcium trace before they can
+  count as rebound. Regardless of outcome, do not tune projection 036 or any
+  other value from that pair.
+boundary: >-
+  Figure 10's first-order search-cycle behavior is reproduced for this
+  calibrated endpoint. The result does not prove exact recovery of the missing
+  KInNeSS scheduler or global spread semantics, repair the known Figure-7
+  one-event rate discrepancy, reproduce Figures 14--16, establish complete
+  original SMART, promote or freeze the baseline, or authorize neuron-model
+  substitutions and modern-anatomy variants.

@@ -1,0 +1,35 @@
+schema_version: 1
+id: figure7-projection036-spread-consistency-implementation-751
+date: '2026-09-09'
+status: implemented-fixed-consistency-runner-not-yet-executed
+classification: mixed-source-calibrated-figure7-consistency
+profile: configs/calibration/figure7_projection036_spread_consistency_v1.yaml
+runner: scripts/run_figure7_projection036_spread_consistency.py
+reused_projection036_harness: src/smart_robustness/validation/figure10_search_cycle_spread.py
+implementation:
+  central_runtime_changed: false
+  central_synapse_runtime_changed: false
+  projection036_variant_default_off: true
+  projection036_variant_applied_to:
+  - fresh Figure 6 learning sector
+  - fixed Figure 7 match sector
+  - fixed Figure 7 mismatch sector
+  topology_observed_independently_for_all_three_builds: true
+  learned_weights_from_fresh_figure6: true
+  match_and_mismatch_share_learned_weights: true
+  match_and_mismatch_share_all_model_parameters: true
+  prior_figure10_result_used_to_adjust_values: false
+recorded_outputs:
+- all Figure 6 prerequisite gates
+- projection-036 nonzero edge count and target-40 incoming weight sum for all builds
+- match and mismatch relay event indices and times
+- match and mismatch TRN event totals
+- match and mismatch nonspecific event times
+- match and mismatch integrated TRN-to-nonspecific GABA
+- every preregistered Figure 7 consistency gate
+boundary: >-
+  The runner applies the already selected endpoint unchanged. It adds no
+  parameter, score, lifecycle transition, source interpretation, or central
+  runtime behavior. A pass is only a Figure-7 consistency result; a failure
+  cannot be repaired from this pair without new source or mechanistic evidence
+  and a new preregistration.

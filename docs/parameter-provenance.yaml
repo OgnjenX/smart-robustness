@@ -777,6 +777,16 @@ parameters:
     status: completed-wrong-sign-alternative-latency-endpoint-rejected-closed
     source: Grossberg and Versace 2008 Figures 4 and 10 and Section 2.7; Artifacts 730 and 737--739
     note: Exact legacy scheduling is unavailable. The one calibrated reconstruction passes Figure 6, pre-marker alternative silence, full post-marker input, and winner suppression at 49 versus 59 events. It fails the decisive latency gate: intact alternatives begin at 98.38 ms versus 85.91 ms control, both arms emit 36 alternative events, and intact layer-4 inhibitory output is 502 versus 375. Reset delays rather than favors alternatives. Close without another marker, gain, window, or score; no parameter is selected.
+  calibration.figure10.projection036_variance_spread:
+    value: projection-036-only variance interpretation of serialized spread 1.5, retaining center-excluded Gaussian geometry and every other projection's existing spread convention
+    status: selected-mixed-source-calibrated-endpoint-search-cycle-pass
+    source: Grossberg and Versace 2008 Figures 10d-e and Table 2; Versace et al. 2008 KInNeSS Section 4.9; SMART.nml projection 036; Artifacts 742--750
+    note: Source parity finds no conductance-area, transmitter, delay, or ring transcription error. The remaining prose-versus-field-name ambiguity yields 5508 nonzero edges, 68 incoming edges, and summed incoming weight 16.839467692819134 per target. The preregistered endpoint preserves every Figure-6 gate, suppresses the prior winner to 47 versus 54 control events, and releases the first intact alternative at 79.25 ms versus 87.11 ms control. It is selected only as part of the mixed-source calibrated endpoint; no interpolation, global variance convention, weight compensation, exact KInNeSS claim, promotion, or freeze is authorized.
+  validation.figure7.projection036_selected_endpoint_consistency:
+    value: one fresh Figure-6 episode plus one fixed 100-ms Figure-7 match/mismatch pair under the complete Figure-10-selected endpoint
+    status: registered-not-yet-executed
+    source: Artifact 750 authorization and Artifacts 751--752
+    note: All three sector builds must independently show the selected projection-036 variance topology. The pair is scored against the already fixed horizontal-match, overlap-only mismatch, match-greater TRN event and inhibitory-drive, and exact 4/7 nonspecific gates. It is not a calibration screen; no repeat or adjustment is authorized from its result.
   benchmark.population_sizes:
     value: see configs/*.yaml
     status: exploratory

@@ -1,0 +1,82 @@
+schema_version: 1
+id: figure10-layer6i-output-depletion-registration-718
+date: '2026-09-09'
+status: registered-before-execution-layer6i-output-depletion-contrast
+classification: figure10-layer6i-output-depletion-causal-audit
+source_audit: docs/validation-results/figure10-layer6i-output-depletion-source-audit-717.yaml
+source_audit_sha256: da41401e9f4729fcb5250d9de78846e7d3359d105887820dc7feb6ae1dc4db60
+profile: configs/calibration/figure7_learned_coincidence_effective_t_pair_v1.yaml
+profile_sha256: 4b6aa0bdf4fb844e428fb330f34970900cc8bc741183b2d8e6e73789cba0b30f
+harness: src/smart_robustness/validation/figure10.py
+harness_sha256: 9dc58c1236b1de7add8815dbe26f15ffd9373d943143bd6656f0590f581ac89a
+runtime: src/smart_robustness/classic_sector.py
+runtime_sha256: ebdf48f0138803ab50b1dec2ef87817b4c537e4da490a088b9df6bdcb9d119a1
+script: scripts/run_figure10_calibrated_reset_pair.py
+script_sha256: f137a92900487e4f5c954ff044e0e5086e4304fa1d0fdcf7516a7fa3fa1c322b
+source_result: docs/validation-results/figure10-projection026-focal-resource-pair-715.yaml
+source_result_sha256: f08f05e8d182ca8d77a911bd7b3d05ae3d7e1e5a11969e200a5fe2c408eed1ab
+prior_assessment: docs/validation-results/figure10-projection026-focal-resource-assessment-716.yaml
+prior_assessment_sha256: 7ec76b68db72e54b8fbc1f37abcba0e1034aba8c1a73f9d4e8d6a34922fd7422
+runtime_fingerprint: fa4ab9f0bf2bec4d6ad53cb6a91620047689b6839b146ed7d777d42350c2cdf5
+result_id: figure10-layer6i-output-depletion-pair-719
+result: docs/validation-results/figure10-layer6i-output-depletion-pair-719.yaml
+assessment: docs/validation-results/figure10-layer6i-output-depletion-assessment-720.yaml
+persistent_projection_scales:
+- {projection_id: modeldb112923.projection.008, scale: 0.75}
+- {projection_id: modeldb112923.projection.011, scale: 0.9375}
+- {projection_id: modeldb112923.projection.025, scale: 8.0}
+persistent_projection_delays: []
+nonspecific_t_scale: 0.1875
+record_layer6i_diagnostics: false
+record_reset_chain_diagnostics: true
+record_layer4_balance_diagnostics: true
+record_projection036_arrival_target_indices: [31]
+projection036_arrival_window_ms: [75.2, 77.4]
+record_projection026_arrival_target_indices: []
+output_mode: projection026_source_resource_bounded
+layer6i_source_resource_indices: [31, 38, 39, 40, 41, 42, 49]
+layer6i_source_resource_window_ms: [0.0, 80.0]
+protocol:
+  pre_match_duration_ms: 100.0
+  mismatch_duration_ms: 200.0
+  total_duration_ms: 300.0
+  dt_ms: 0.01
+  top_down_current_pA: 800.0
+  top_down_current_mode: until_cued_cell_first_event
+  comparator: {transform: top_k_binary, source_index: 40, target_count: 5}
+required_source_identity:
+  layer4_pre_events_intact_control: [39, 39]
+  layer4_post_events_intact_control: [78, 92]
+  nonspecific_post_events_intact_control: [18, 13]
+  layer5_post_events_intact_control: [285, 140]
+  layer6i_post_events_intact_control: [153, 76]
+  layer4_inhibitory_post_events_intact_control: [218, 232]
+  layer5_active_cells_intact_control: [81, 11]
+  layer6i_active_cells_intact_control: [81, 11]
+focal_roles:
+  previously_inactive_alternative_sources: [31, 49]
+  winner_aligned_sources: [38, 39, 40, 41, 42]
+source_parameters_held_fixed:
+  depletion_epsilon: 1.0
+  depletion_recovery_ms: 400.0
+  projection026_delay_ms: 1.0
+  projection038_delay_ms: 1.0
+diagnostic_question: >-
+  Do previously inactive layer-6I sources carry greater transmitter into their
+  first reset-wave events than winner-aligned sources, and under continuous
+  source-resource multiplication how much availability has recovered when the
+  corresponding one-millisecond-delayed p026/p038 ligand arrives?
+decision_rule: >-
+  Require every exact source identity. Compare the pre-reset order-0
+  transmitter sample at each focal source's first mismatch event. For epsilon
+  1.0, derive immediate post-event availability as zero and the no-intervening-
+  event one-millisecond recovery from the fixed 400-ms equation. Classify the
+  mechanism as preserved only if previously inactive sources retain a clear
+  pre-event advantage that remains functionally available at delivery. A
+  pre-event advantage followed by near-zero delivery availability localizes a
+  resource/delay scheduling conflict but does not select a replacement rule.
+boundary: >-
+  This is an unchanged passive replay using an existing post-simulation output
+  filter. No model value, equation, topology, protocol, reset score, or output
+  event changes. No transmitter alternative, parameter, original-SMART claim,
+  baseline promotion, or freeze is authorized.

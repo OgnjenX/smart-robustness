@@ -1,0 +1,52 @@
+schema_version: 1
+id: figure10-layer6i-output-depletion-source-audit-717
+date: '2026-09-09'
+status: audited-p036-resource-premise-rejected-layer6i-contrast-selected
+classification: figure10-depletion-pathway-source-correction
+authorization: docs/validation-results/figure10-projection026-focal-resource-assessment-716.yaml
+paper_source:
+  citation: Grossberg and Versace 2008, Figure 10d-e and Section 2.7
+  claims:
+  - >-
+    Layer-6I output activates both its direct excitatory pathway to layer 4 and
+    the layer-6I-to-layer-4 inhibitory-interneuron pathway.
+  - >-
+    Activity-dependent transmitter release occurs in these layer-6I pathways;
+    reset favors previously inactive layer-4 cells whose corresponding
+    layer-6I transmitter has not been depleted.
+executable_source:
+  population_catalog: src/smart_robustness/models/modeldb112923.py
+  population_catalog_sha256: 6523c92fe22ceca917940b4fcb8f955999b72a6f399c859930e24bb773e439db
+  projection_catalog: src/smart_robustness/data/modeldb112923_first_order.yaml
+  projection_catalog_sha256: 3b42be7dd0b17cc01ad29f474f152cfcd8c2a605410aad223d14c676fe98d965
+  layer6i:
+    depletion_enabled: true
+    epsilon: 1.0
+    recovery_ms: 400.0
+    shared_source_resource_projections:
+    - modeldb112923.projection.026
+    - modeldb112923.projection.038
+  layer4_inhibitory:
+    depletion_enabled: false
+  projection036:
+    source_population: layer4_inhibitory_v1
+    receptor: GABA_A
+    transmitter_multiplier: 1
+correction:
+  rejected_next_gate: projection036-source-transmitter-resource-audit
+  reason: layer-4 inhibitory sources have no transmitter state in the source model
+  model_or_parameter_changed: false
+selected_diagnostic:
+  question: >-
+    At reset onset, do newly recruited layer-6I sources retain more transmitter
+    than winner-aligned sources, and does the current continuous source-resource
+    schedule preserve that advantage through the one-millisecond delivery delay?
+  focal_previously_inactive_sources: [31, 49]
+  focal_winner_aligned_sources: [38, 39, 40, 41, 42]
+  source_resource_window_from_mismatch_ms: [0.0, 80.0]
+  projection036_arrival_target: 31
+  projection036_arrival_window_from_mismatch_ms: [75.2, 77.4]
+boundary: >-
+  This audit corrects a diagnostic premise only. It does not reopen the
+  source-promoted continuous-transmitter equation, select a resource schedule,
+  alter a model value, change a reset score, or claim original SMART behavior.

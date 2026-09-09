@@ -3942,3 +3942,17 @@ weight, delay, topology, kinetics, or depletion correction. Figure 10 still
 fails winner suppression and alternative release; original SMART remains
 unreproduced and unfrozen. The next read-only diagnostic is the same
 source-resource timing test at projection 036.
+
+Source audit 717 rejects that proposed p036 resource test: the recovered
+layer-4 inhibitory population is non-depleting, so projection 036 has no source
+transmitter multiplier. The paper locates the relevant habituative mechanism
+one stage earlier, in the shared layer-6I outputs to the direct layer-4
+on-center (projection 038) and inhibitory interneurons (projection 026). The
+next unchanged pair therefore compares layer-6I resources for previously
+inactive alternatives 31/49 against winner-aligned cells 38--42 through the
+reset onset. This is a diagnostic correction only; Figure 10 remains failed.
+
+Registration 718 preregisters that unchanged contrast with exact source
+identity and bounded output. The paired result has not yet run. No source
+resource interpretation beyond the registered pre-event versus delayed-
+delivery calculation is authorized.

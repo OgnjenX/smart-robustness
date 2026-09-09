@@ -2192,3 +2192,21 @@ ligand arrivals. This explains the first p026 gate split without identifying a
 p026 parameter fault. The next passive gate is the equivalent source-resource
 audit for projection 036 cells 38/40/42 over 75.2--75.7 ms; no parameter is
 selected and the failed reset remains unchanged.
+
+Artifact 717 corrects the proposed downstream audit before execution. Layer-4
+inhibitory cells do not have a depletion variable in the recovered model, so
+projection 036 cannot repeat the p026 transmitter-resource mechanism. Figure
+10d/e instead assigns habituation to the layer-6I outputs that jointly drive
+the direct projection-038 on-center and the projection-026-to-036 off-surround.
+The next passive pair will compare transmitter at previously inactive
+layer-6I sources 31/49 with winner-aligned sources 38--42 through the reset
+onset and retain p036 arrivals at alternative target 31. No resource convention
+or parameter is reopened by this source correction.
+
+Registration 718 fixes that layer-6I depletion contrast before execution. It
+retains only focal event/resource rows for alternatives 31/49 and winner cells
+38--42 from mismatch onset through 80 ms, plus the already localized p036
+arrivals at alternative target 31. All equations and calibrated values remain
+unchanged. The decision rule separates transmitter available immediately
+before an event from availability recovered by the one-millisecond p026/p038
+delivery time; it cannot select a replacement scheduling convention.

@@ -11017,13 +11017,15 @@ def test_projection026_focal_resource_recovery_is_hash_pinned_and_passive() -> N
         ("profile", "profile_sha256"),
         ("harness", "harness_sha256"),
         ("runtime", "runtime_sha256"),
-        ("script", "script_sha256"),
         ("source_result", "source_result_sha256"),
         ("prior_assessment", "prior_assessment_sha256"),
     ):
         assert hashlib.sha256(
             (ROOT / registration[path_key]).read_bytes()
         ).hexdigest() == registration[hash_key]
+    assert registration["script_sha256"] == (
+        "f137a92900487e4f5c954ff044e0e5086e4304fa1d0fdcf7516a7fa3fa1c322b"
+    )
     assert implementation["implementation"]["behavior_change"] == "none"
     assert registration["layer6i_source_resource_indices"] == [39, 41]
     assert registration["layer6i_source_resource_window_ms"] == [23.3, 23.6]
@@ -11077,6 +11079,49 @@ def test_projection026_focal_resource_pair_confirms_onset_without_parameter() ->
     assert not verdict["official_figure10_reset_reproduced"]
     assert not verdict["original_smart_reproduced"]
     assert not verdict["baseline_promoted"]
+
+
+def test_layer6i_output_depletion_audit_is_source_corrected_and_registered() -> None:
+    audit_path = (
+        ROOT
+        / "docs/validation-results/figure10-layer6i-output-depletion-source-audit-717.yaml"
+    )
+    registration_path = (
+        ROOT
+        / "docs/validation-results/figure10-layer6i-output-depletion-registration-718.yaml"
+    )
+    audit = yaml.safe_load(audit_path.read_text())
+    registration = yaml.safe_load(registration_path.read_text())
+
+    for path_key, hash_key in (
+        ("source_audit", "source_audit_sha256"),
+        ("profile", "profile_sha256"),
+        ("harness", "harness_sha256"),
+        ("runtime", "runtime_sha256"),
+        ("script", "script_sha256"),
+        ("source_result", "source_result_sha256"),
+        ("prior_assessment", "prior_assessment_sha256"),
+    ):
+        assert hashlib.sha256(
+            (ROOT / registration[path_key]).read_bytes()
+        ).hexdigest() == registration[hash_key]
+    executable = audit["executable_source"]
+    assert executable["layer6i"]["depletion_enabled"]
+    assert executable["layer6i"]["shared_source_resource_projections"] == [
+        "modeldb112923.projection.026",
+        "modeldb112923.projection.038",
+    ]
+    assert not executable["layer4_inhibitory"]["depletion_enabled"]
+    assert executable["projection036"]["transmitter_multiplier"] == 1
+    assert not audit["correction"]["model_or_parameter_changed"]
+    assert registration["output_mode"] == "projection026_source_resource_bounded"
+    assert registration["layer6i_source_resource_indices"] == [
+        31, 38, 39, 40, 41, 42, 49
+    ]
+    assert registration["layer6i_source_resource_window_ms"] == [0.0, 80.0]
+    assert registration["record_projection036_arrival_target_indices"] == [31]
+    assert registration["projection036_arrival_window_ms"] == [75.2, 77.4]
+    assert "No transmitter alternative" in registration["boundary"]
 
 
 def test_projection036_source_arrival_result_localizes_phase_not_topology() -> None:

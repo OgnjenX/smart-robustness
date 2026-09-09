@@ -430,6 +430,9 @@ def test_reconstructed_comparator_is_derived_from_learned_target_support() -> No
     assert top_k_comparator_relay_input_gains(
         learned, target_count=5
     ) == pytest.approx(top_five)
+    assert top_k_comparator_relay_input_gains(
+        learned, target_count=81
+    ) == pytest.approx(np.ones(81))
     with pytest.raises(TypeError, match="integer"):
         top_k_comparator_relay_input_gains(learned, target_count=5.0)  # type: ignore[arg-type]
     with pytest.raises(ValueError, match=r"\[1, 81\]"):

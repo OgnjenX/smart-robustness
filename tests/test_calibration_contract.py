@@ -11413,6 +11413,167 @@ def test_layer6i_emission_target_voltage_correction_is_preregistered() -> None:
     assert "remains rejected and default-off" in registration["boundary"]
 
 
+def test_layer6i_emission_target_voltage_confirms_membrane_state_deficit() -> None:
+    result_path = (
+        ROOT
+        / "docs/validation-results/figure10-layer6i-emission-target-voltage-pair-730.yaml"
+    )
+    result = yaml.safe_load(result_path.read_text())
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-layer6i-emission-target-voltage-assessment-731.yaml"
+        ).read_text()
+    )
+
+    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment[
+        "result_sha256"
+    ]
+    assert all(result["figure6_gates"].values())
+    assert result["reset_gates"] == {
+        "pre_reset_winner": True,
+        "reset_chain": True,
+        "winner_suppression": True,
+        "alternative_release": False,
+    }
+    verdict = assessment["assessment"]
+    assert verdict["exact_source_identity_reproduced"]
+    assert verdict["direct_projection038_gate_onset_ms"] == pytest.approx(61.88)
+    assert verdict["first_direct_pulse_creates_persistent_voltage_deficit"]
+    assert verdict["intact_voltage_overtakes_control_after_deficit"]
+    assert verdict["intact_voltage_overtake_first_bin_ms"] == [74.0, 75.0]
+    assert verdict["intact_peak_soma_voltage_mV_in_window"] == pytest.approx(
+        -58.703029330588265
+    )
+    assert verdict["intact_alternative_spikes_in_window"] == 0
+    assert not verdict["intact_projection037_active_in_window"]
+    assert not verdict["parameter_selected"]
+    assert not verdict["original_smart_reproduced"]
+    assert not verdict["baseline_promoted"]
+
+
+def test_figure10_static_comparator_lifecycle_audit_is_source_pinned() -> None:
+    audit = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-comparator-lifecycle-source-audit-732.yaml"
+        ).read_text()
+    )
+
+    for path_key, hash_key in (
+        ("authorization", "authorization_sha256"),
+        ("source_result", "source_result_sha256"),
+    ):
+        assert hashlib.sha256((ROOT / audit[path_key]).read_bytes()).hexdigest() == audit[
+            hash_key
+        ]
+    recovered = audit["recovered_executable"]
+    assert hashlib.sha256((ROOT / recovered["path"]).read_bytes()).hexdigest() == recovered[
+        "sha256"
+    ]
+    comparator = audit["reconstructed_comparator"]
+    assert hashlib.sha256(
+        (ROOT / comparator["registration"]).read_bytes()
+    ).hexdigest() == comparator["registration_sha256"]
+    harness = audit["current_figure10_harness"]
+    assert hashlib.sha256((ROOT / harness["path"]).read_bytes()).hexdigest() == harness[
+        "sha256"
+    ]
+    assert hashlib.sha256(
+        (ROOT / harness["protocol_path"]).read_bytes()
+    ).hexdigest() == harness["protocol_sha256"]
+    assert harness["lifecycle"] == {
+        "gain_vector_computed_once": True,
+        "same_gain_vector_applied_to_match_and_mismatch": True,
+        "gain_vector_released_after_reset": False,
+        "gain_vector_depends_on_reset_pathway": False,
+    }
+    consequence = harness["sensory_consequence"]
+    assert consequence["vertical_mismatch_active_pixels"] == [22, 31, 40, 49, 58]
+    assert consequence["vertical_mismatch_directly_driven_with_top5"] == [40]
+    assert consequence["vertical_pixels_held_at_zero_for_entire_mismatch"] == [
+        22,
+        31,
+        49,
+        58,
+    ]
+    decision = audit["source_coherence_decision"]
+    assert not decision["static_top5_figure10_use_source_coherent"]
+    assert not decision["fit_dynamic_release_time_authorized"]
+    assert decision["parameter_free_endpoint"] == "comparator-free Figure-10 input"
+
+
+def test_figure10_full_bottom_up_profile_is_parameter_free_identity_input() -> None:
+    profile = yaml.safe_load(
+        (
+            ROOT / "configs/calibration/figure10_full_bottom_up_emission_v1.yaml"
+        ).read_text()
+    )
+    implementation = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-full-bottom-up-emission-implementation-733.yaml"
+        ).read_text()
+    )
+
+    assert profile["comparator"] == {
+        "transform": "identity_all_ones_via_top_k_all",
+        "source_index": 40,
+        "target_count": 81,
+        "implementation_note": profile["comparator"]["implementation_note"],
+    }
+    assert implementation["implementation"]["code_change_required"] is False
+    assert implementation["implementation"]["expected_vector_unique_values"] == [1.0]
+    assert implementation["implementation"]["equations_changed"] is False
+    assert implementation["implementation"]["model_parameter_changed"] is False
+    assert "not a new comparator" in implementation["boundary"]
+
+
+def test_figure10_full_bottom_up_emission_cross_is_preregistered() -> None:
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure10-full-bottom-up-emission-registration-734.yaml"
+        ).read_text()
+    )
+
+    for path_key, hash_key in (
+        ("source_audit", "source_audit_sha256"),
+        ("implementation", "implementation_sha256"),
+        ("profile", "profile_sha256"),
+        ("harness", "harness_sha256"),
+        ("runtime", "runtime_sha256"),
+        ("synapses", "synapses_sha256"),
+        ("script", "script_sha256"),
+        ("prior_result", "prior_result_sha256"),
+        ("prior_assessment", "prior_assessment_sha256"),
+    ):
+        assert hashlib.sha256(
+            (ROOT / registration[path_key]).read_bytes()
+        ).hexdigest() == registration[hash_key]
+    assert registration["runtime_overrides"] == {
+        "layer6i_output_transmitter_gate_convention": (
+            "pre_depletion_emission_snapshot"
+        )
+    }
+    assert registration["record_layer4_target_balance_indices"] == [
+        22,
+        31,
+        40,
+        49,
+        58,
+    ]
+    assert registration["protocol"]["comparator"]["target_count"] == 81
+    assert registration["required_source_identity"][
+        "mismatch_event_counts_pinned_to_prior_result"
+    ] is False
+    assert "projection 035" in registration["input_delivery_gate"]
+    assert "more of" in registration["decision_rule"]
+    assert "one parameter-free source-coherence protocol cross" in registration[
+        "boundary"
+    ]
+
+
 def test_projection036_source_arrival_result_localizes_phase_not_topology() -> None:
     result_path = (
         ROOT

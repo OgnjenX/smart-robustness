@@ -1,0 +1,87 @@
+schema_version: 1
+id: figure10-layer6i-emission-target-voltage-assessment-731
+date: '2026-09-09'
+status: assessed-inhibitory-voltage-deficit-confirmed-static-comparator-audit-required
+registration: docs/validation-results/figure10-layer6i-emission-target-voltage-registration-729.yaml
+result: docs/validation-results/figure10-layer6i-emission-target-voltage-pair-730.yaml
+result_sha256: 9d036c6d1e8928ceff0db56edb731f505f231efc67a8f119432d89efb9af2d2b
+assessment:
+  exact_source_identity_reproduced: true
+  all_fresh_figure6_gates_pass: true
+  both_alternatives_have_same_qualitative_trace: true
+  direct_projection038_gate_onset_ms: 61.880000000000024
+  first_direct_pulse_creates_persistent_voltage_deficit: true
+  intact_voltage_overtakes_control_after_deficit: true
+  intact_voltage_overtake_first_bin_ms: [74.0, 75.0]
+  intact_peak_soma_voltage_mV_in_window: -58.703029330588265
+  intact_alternative_spikes_in_window: 0
+  intact_projection037_active_in_window: false
+  membrane_state_causal_order_resolved: true
+  threshold_or_weight_tuning_authorized: false
+  scheduling_convention_selected: false
+  parameter_selected: false
+  official_figure10_reset_reproduced: false
+  original_smart_reproduced: false
+  baseline_promoted: false
+source_identity:
+  layer4_pre_events_intact_control: [43, 43]
+  layer4_post_events_intact_control: [69, 78]
+  nonspecific_post_events_intact_control: [17, 21]
+  layer5_post_events_intact_control: [195, 109]
+  layer6i_post_events_intact_control: [147, 62]
+  layer4_inhibitory_post_events_intact_control: [349, 196]
+  reset_gates:
+    pre_reset_winner: true
+    reset_chain: true
+    winner_suppression: true
+    alternative_release: false
+alternative_trace_31_49:
+  projection038_gate_threshold_ms:
+    intact: 61.880000000000024
+    disconnected_control: null
+  first_direct_pulse_61_64_ms:
+    intact_soma_voltage_range_mV: [-69.11339207301198, -66.3420396123236]
+    disconnected_control_soma_voltage_range_mV: [-68.3848522282528,
+      -66.2638349307983]
+    interpretation: direct excitation initially depolarizes intact alternatives
+  inhibitory_dominance_65_70_ms:
+    intact_soma_voltage_range_mV: [-69.60513911434773, -66.97966796980257]
+    disconnected_control_soma_voltage_range_mV: [-65.25180206584414,
+      -58.796743746525206]
+    largest_intact_minus_control_maximum_deficit_mV: -10.756656398880779
+    interpretation: >-
+      The indirect off-surround pulse reverses the initial depolarization and
+      leaves the intact alternatives markedly more hyperpolarized than control.
+  recovery_74_83_ms:
+    intact_peak_soma_voltage_mV: -58.703029330588265
+    disconnected_control_peak_soma_voltage_mV: -65.48543904021231
+    intact_alternative_events: 0
+    projection037_active: false
+    interpretation: >-
+      Intact voltage recovers above control but remains subthreshold; another
+      projection-036 pulse in 82--83 ms returns the cell toward rest.
+instrumentation_correction:
+  registered_voltage_readout_present: true
+  all_forty_one_ms_bins_present_for_each_target_and_arm: true
+  original_registration_defect_closed: true
+interpretation: >-
+  The unchanged pair exactly repeats the prior target-balance result. Direct
+  projection-038 excitation crosses the registered gate threshold at 61.88 ms
+  in both symmetric alternatives and initially depolarizes them. The indirect
+  projection-036 wave then dominates, creating a maximum-bin voltage deficit
+  of 10.76 mV relative to control by 69--70 ms. Intact voltage later overtakes
+  control, but peaks at only -58.70 mV and never triggers a layer-4 event or
+  recurrent projection 037 before another inhibitory pulse. This confirms a
+  genuine membrane-state balance failure; it does not authorize changing a
+  threshold, weight, delay, or kernel. The source-fixed p026/p036/p038 values
+  are mutually consistent across the paper supplement and SMART.nml except
+  for already-audited delay/ring ambiguities.
+next_gate: >-
+  Audit the Figure-10 use of the top-five learned comparator before any new
+  biophysical intervention. That mask was preregistered as a Figure-7-only
+  calibrated reconstruction and multiplies all vertical mismatch relay inputs
+  for the full epoch, leaving only overlap cell 40 directly driven. Determine
+  from the paper and executable protocol whether carrying that static mask
+  through cortical reset improperly prevents reinstatement of the bottom-up
+  pattern. If so, preregister one source-coherence Figure-10 pair without the
+  reconstructed comparator; do not fit a dynamic release time or parameter.

@@ -1,0 +1,28 @@
+schema_version: 1
+id: figure10-full-bottom-up-emission-implementation-733
+date: '2026-09-09'
+status: implementation-ready-default-preserving-tests-pass
+classification: figure10-source-coherence-input-profile
+authorization: docs/validation-results/figure10-comparator-lifecycle-source-audit-732.yaml
+profile: configs/calibration/figure10_full_bottom_up_emission_v1.yaml
+implementation:
+  code_change_required: false
+  existing_function: top_k_comparator_relay_input_gains
+  registered_target_count: 81
+  vector_length: 81
+  expected_vector_unique_values: [1.0]
+  horizontal_match_active_pixels: [38, 39, 40, 41, 42]
+  vertical_mismatch_active_pixels: [22, 31, 40, 49, 58]
+  active_pixel_gain: 1.0
+  inactive_pixel_value: 0.0
+  equations_changed: false
+  runtime_conventions_changed_by_profile: false
+  model_parameter_changed: false
+verification_required:
+  - unit check proves the 81-target vector is exactly all ones: pass
+  - profile parser reproduces the existing runtime before registration override
+  - one preregistered pair repeats all fresh Figure-6 gates
+boundary: >-
+  This profile is an identity input transform represented through an existing
+  API because the runner requires a target count. It is not a new comparator,
+  dynamic reset switch, fitted gain, or source-recovery claim.

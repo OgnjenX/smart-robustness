@@ -1,0 +1,78 @@
+schema_version: 1
+id: figure10-comparator-lifecycle-source-audit-732
+date: '2026-09-09'
+status: audited-static-figure7-comparator-not-source-coherent-for-reset
+classification: figure10-bottom-up-input-lifecycle-source-audit
+authorization: docs/validation-results/figure10-layer6i-emission-target-voltage-assessment-731.yaml
+authorization_sha256: 79da04b5560934e4b277c3415e9312e8adbb8443bc924e034103d5056b209b09
+source_result: docs/validation-results/figure10-layer6i-emission-target-voltage-pair-730.yaml
+source_result_sha256: 9d036c6d1e8928ceff0db56edb731f505f231efc67a8f119432d89efb9af2d2b
+primary_paper:
+  citation: Grossberg and Versace 2008
+  url: https://sites.bu.edu/steveg/files/2016/06/GroVer2008BR.pdf
+  relevant_sections: [Figure 4c-d, Figure 10d-e, Sections 1.1 and 2.7]
+  source_statements:
+  - reset inhibits the failed recognition pattern and eliminates its top-down prototype
+  - after prototype removal, the bottom-up feature pattern can be reinstated
+  - cortical reset favors previously inhibited layer-4 cells
+  - the source does not describe an external fixed-cardinality mask on sensory input
+recovered_executable:
+  path: tmp/official_SMART.nml
+  sha256: 16fc196f2ed68d1c02a39395fa83bb0ffab8fcf8edffe6fd11022bb6c6e299e1
+  top_k_comparator_field_present: false
+reconstructed_comparator:
+  registration: docs/validation-results/figure7-top5-comparator-registration-316.yaml
+  registration_sha256: 9ac4b367f7e82d13a32a726d6b6247fcc4182895bf5bf7112dc3c91c0c94d5ca
+  classification: calibrated-reconstruction-not-recovered-source
+  registered_scope: active bottom-up relay pixels during Figure 7 recognition only
+  registered_downstream_status: figure10-reset-locked
+  transform: top_k_binary
+  source_index: 40
+  target_count: 5
+current_figure10_harness:
+  path: src/smart_robustness/validation/figure10.py
+  sha256: 9dc58c1236b1de7add8815dbe26f15ffd9373d943143bd6656f0590f581ac89a
+  protocol_path: src/smart_robustness/protocols.py
+  protocol_sha256: 0e01e6098dd223522ea2d9300d21f35be57d31ad24d18c64d79491d46a3f140a
+  lifecycle:
+    gain_vector_computed_once: true
+    same_gain_vector_applied_to_match_and_mismatch: true
+    gain_vector_released_after_reset: false
+    gain_vector_depends_on_reset_pathway: false
+  sensory_consequence:
+    horizontal_match_active_pixels: [38, 39, 40, 41, 42]
+    horizontal_match_directly_driven_with_top5: [38, 39, 40, 41, 42]
+    vertical_mismatch_active_pixels: [22, 31, 40, 49, 58]
+    vertical_mismatch_directly_driven_with_top5: [40]
+    vertical_pixels_held_at_zero_for_entire_mismatch: [22, 31, 49, 58]
+  implication: >-
+    Alternative cells 31 and 49 receive only spatial spillover from the overlap
+    relay cell. They cannot receive their own archived vertical-bar drive even
+    after the failed winner is suppressed, so the assay hard-codes continued
+    bottom-up masking across the reset it is meant to validate.
+source_coherence_decision:
+  static_top5_figure10_use_source_coherent: false
+  dynamic_release_time_recoverable: false
+  fit_dynamic_release_time_authorized: false
+  parameter_free_endpoint: comparator-free Figure-10 input
+  endpoint_effect:
+    match_phase_changed: false
+    mismatch_direct_relay_pixels: [22, 31, 40, 49, 58]
+    model_equations_changed: false
+    synaptic_or_intrinsic_parameter_changed: false
+  endpoint_classification: >-
+    source-coherence protocol cross within a calibrated reconstruction; not a
+    proof of unavailable legacy scheduler behavior
+decision_rule: >-
+  Implement a default-preserving registration override that disables only the
+  reconstructed top-five relay-input multiplier in Figure 10. Preregister one
+  unchanged emission-snapshot intact/control pair with the full vertical input.
+  Require fresh Figure 6, the pre-reset winner, and the upstream reset chain.
+  Pass the Figure-10 endpoint only if intact suppresses the prior winner and
+  releases more alternative layer-4 cells than control. Do not fit a release
+  time, input gain, score, weight, delay, threshold, or kernel.
+boundary: >-
+  This audit authorizes implementation and one pair only. It does not select
+  the rejected emission-snapshot convention, repair the locked Figure-7
+  source/reconstruction discrepancy, reproduce gamma or beta, establish
+  original SMART, promote the baseline, or freeze it.

@@ -20,6 +20,7 @@ from smart_robustness.validation.figure7 import (
     Figure7ConditionResult,
     TopDownCurrentMode,
     apply_figure7_learned_state,
+    apply_projection_conductance_scales,
     assess_figure7_arousal,
     assess_figure7_pathway,
     assess_figure7_reproduction,
@@ -35,12 +36,81 @@ from smart_robustness.validation.figure7 import (
 )
 
 
+class _FakeProjectionBlock:
+    def __init__(self, *variables: str) -> None:
+        self.variables = {name: object() for name in variables}
+        self.g = "unchanged"
+
+
+class _FakePartitionedProjection:
+    def __init__(self, *blocks: _FakeProjectionBlock) -> None:
+        self.blocks = blocks
+
+
 def _result(condition: MatchCondition, spike_count: int) -> Figure7ConditionResult:
     return Figure7ConditionResult(
         condition=condition,
         duration_ms=100.0,
         nonspecific_spike_times_ms=tuple(float(index * 10) for index in range(spike_count)),
     )
+
+
+def test_projection_conductance_scale_targets_each_electrical_block_once() -> None:
+    first = _FakeProjectionBlock("g")
+    second = _FakeProjectionBlock("g")
+
+    apply_projection_conductance_scales(
+        {"gap": _FakePartitionedProjection(first, second)},
+        {"gap": 0.5},
+    )
+
+    assert first.g == "g*(0.5)"
+    assert second.g == "g*(0.5)"
+
+
+def test_projection_conductance_scale_rejects_chemical_and_invalid_targets() -> None:
+    with pytest.raises(ValueError, match="electrical projection"):
+        apply_projection_conductance_scales(
+            {"chemical": _FakeProjectionBlock("w")},
+            {"chemical": 0.5},
+        )
+
+
+def test_projection029_gap_conductance_scales_exactly_on_built_sector() -> None:
+    brian.start_scope()
+    sector = build_first_order_connected_sector(
+        conventions=figure6_runtime_conventions(), brian=brian
+    )
+    projection_id = "modeldb112923.projection.029"
+    projection = sector.projections[projection_id]
+    before = np.asarray(projection.g[:] / brian.nsiemens, dtype=float).copy()
+
+    apply_projection_conductance_scales(
+        sector.projections,
+        {projection_id: 0.5},
+    )
+
+    after = np.asarray(projection.g[:] / brian.nsiemens, dtype=float)
+    assert np.allclose(after, before * 0.5, rtol=0.0, atol=0.0)
+    with pytest.raises(ValueError, match="unknown projection"):
+        apply_projection_conductance_scales({}, {"missing": 0.5})
+    with pytest.raises(ValueError, match="finite and positive"):
+        apply_projection_conductance_scales(
+            {"gap": _FakeProjectionBlock("g")},
+            {"gap": 0.0},
+        )
+
+
+def test_figure7_rejects_weight_and_conductance_scale_overlap_before_build() -> None:
+    with pytest.raises(ValueError, match="overlap"):
+        run_figure7_condition(
+            condition=MatchCondition.MATCH,
+            top_down_current_pA=800.0,
+            use_paper_constrained_reference=True,
+            persistent_projection_weight_scales={"projection": 0.5},
+            persistent_projection_conductance_scales={"projection": 0.5},
+            brian=brian,
+        )
 
 
 def test_figure7_result_validates_named_current_modes() -> None:

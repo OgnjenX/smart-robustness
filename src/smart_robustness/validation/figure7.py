@@ -163,6 +163,31 @@ def top_k_comparator_relay_input_gains(
     return gains
 
 
+def apply_projection_conductance_scales(
+    projections: Mapping[str, object],
+    scales: Mapping[str, float] | None,
+) -> None:
+    """Scale only electrical projection conductances on a built network."""
+
+    if not scales:
+        return
+    unknown = set(scales) - set(projections)
+    if unknown:
+        raise ValueError(f"unknown projection conductance scale IDs: {sorted(unknown)}")
+    for projection_id, scale in scales.items():
+        if not np.isfinite(scale) or scale <= 0:
+            raise ValueError("projection conductance scales must be finite and positive")
+        projection = projections[projection_id]
+        blocks = getattr(projection, "blocks", (projection,))
+        for block in blocks:
+            variables = getattr(block, "variables", {})
+            if "g" not in variables or "w" in variables:
+                raise ValueError(
+                    f"{projection_id}: conductance scaling requires an electrical projection"
+                )
+            block.g = f"g*({float(scale)!r})"
+
+
 @dataclass(frozen=True, slots=True)
 class Figure6ReferenceExpectation:
     """Paper-constrained horizontal expectation for downstream assays.
@@ -804,6 +829,7 @@ def run_figure7_condition(
     record_v1_cortical_spikes: bool = False,
     projection_weight_scales: Mapping[str, float] | None = None,
     persistent_projection_weight_scales: Mapping[str, float] | None = None,
+    persistent_projection_conductance_scales: Mapping[str, float] | None = None,
     disabled_projection_ids: tuple[str, ...] = (),
     top_down_relay_source_indices: frozenset[int] | None = None,
     prime_top_down_receptors_at_stimulus: bool = False,
@@ -957,17 +983,21 @@ def run_figure7_condition(
         raise ValueError(
             "fixed sample times must be unique, finite, and within the trial"
         )
-    overlapping_scales = set(projection_weight_scales or ()) & set(
+    weight_scale_ids = set(projection_weight_scales or ()) | set(
         persistent_projection_weight_scales or ()
+    )
+    conductance_scale_ids = set(persistent_projection_conductance_scales or ())
+    overlapping_scales = weight_scale_ids & conductance_scale_ids
+    overlapping_scales.update(
+        set(projection_weight_scales or ())
+        & set(persistent_projection_weight_scales or ())
     )
     if overlapping_scales:
         raise ValueError(
             "projection scale mappings overlap: "
             f"{sorted(overlapping_scales)}"
         )
-    scaled_projection_ids = set(projection_weight_scales or ()) | set(
-        persistent_projection_weight_scales or ()
-    )
+    scaled_projection_ids = weight_scale_ids | conductance_scale_ids
     disabled_and_scaled = set(disabled_projection_ids) & scaled_projection_ids
     if disabled_and_scaled:
         raise ValueError(
@@ -1051,6 +1081,10 @@ def run_figure7_condition(
     # optional same-network Figure 6 episode. The historical post-learning
     # scales below remain available for recognition-only diagnostics.
     apply_projection_scales(persistent_projection_weight_scales)
+    apply_projection_conductance_scales(
+        sector.projections,
+        persistent_projection_conductance_scales,
+    )
     pretraining_elapsed_ms = 0.0
     if pretrain_with_figure6_episode:
         from .figure6 import Figure6LearningProtocol

@@ -12769,3 +12769,31 @@ def test_figure15_projection028_changes_rate_not_inhibitory_spike_timing() -> No
     ]
     assert not assessment["scientific_status"]["original_smart_reproduced"]
     assert not assessment["scientific_status"]["baseline_frozen"]
+
+
+def test_projection029_conductance_scaling_is_typed_and_default_preserving() -> None:
+    implementation = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/projection029-conductance-scaling-implementation-839.yaml"
+        ).read_text()
+    )
+
+    for source in ("authorization", "implementation", "tests"):
+        item = implementation[source]
+        assert hashlib.sha256((ROOT / item["path"]).read_bytes()).hexdigest() == item[
+            "sha256"
+        ]
+    contract = implementation["contract"]
+    assert contract["electrical_state_variable"] == "g"
+    assert contract["chemical_state_variable"] == "w"
+    assert contract["symbolic_assignment"] == "g*(scale)"
+    assert contract["chemical_projection_rejected"]
+    assert contract["weight_and_conductance_scale_overlap_rejected"]
+    assert contract["built_projection029_exact_half_scale_test"]
+    assert contract["no_scale_means_no_change"]
+    boundary = implementation["scientific_boundary"]
+    assert not boundary["projection029_scale_selected"]
+    assert not boundary["projection029_executed"]
+    assert not boundary["original_smart_reproduced"]
+    assert not boundary["baseline_frozen"]

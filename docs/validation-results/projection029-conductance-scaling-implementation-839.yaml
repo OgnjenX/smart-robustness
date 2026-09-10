@@ -1,0 +1,39 @@
+schema_version: 1
+id: projection029-conductance-scaling-implementation-839
+date: '2026-09-10'
+status: completed-tested-no-default-change
+classification: electrical-projection-diagnostic-infrastructure
+authorization:
+  path: docs/validation-results/figure15-projection028-direction-assessment-838.yaml
+  sha256: d56a0955f8bca6dfbc23bfda496a247ad5db621ac3bd4b78740f2373f4f6bbe9
+implementation:
+  path: src/smart_robustness/validation/figure7.py
+  sha256: eb6edea54d36c7eb161bad360e7322804015bf609cd5653a975e6c5496333ec3
+  public_helper: apply_projection_conductance_scales
+  runner_argument: persistent_projection_conductance_scales
+tests:
+  path: tests/test_figure7_validation.py
+  sha256: 34bbd6d35741ed0e26f855281356a693acfedef7d5f1d397c078933cf42a17d1
+  focused_result: 4 passed
+contract:
+  electrical_state_variable: g
+  chemical_state_variable: w
+  symbolic_assignment: g*(scale)
+  finite_positive_scale_required: true
+  unknown_projection_rejected: true
+  chemical_projection_rejected: true
+  weight_and_conductance_scale_overlap_rejected: true
+  partitioned_electrical_blocks_scaled_once_each: true
+  built_projection029_exact_half_scale_test: true
+  no_scale_means_no_change: true
+scientific_boundary:
+  projection029_scale_selected: false
+  projection029_executed: false
+  original_smart_reproduced: false
+  baseline_frozen: false
+  neuron_models_consulted: false
+  modern_anatomy_consulted: false
+decision: >-
+  The implementation is admissible infrastructure for a separately source-
+  audited and preregistered projection-029 diagnostic. It changes no default,
+  selects no conductance, and does not itself authorize execution.

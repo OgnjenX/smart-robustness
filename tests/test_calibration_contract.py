@@ -12797,3 +12797,43 @@ def test_projection029_conductance_scaling_is_typed_and_default_preserving() -> 
     assert not boundary["projection029_executed"]
     assert not boundary["original_smart_reproduced"]
     assert not boundary["baseline_frozen"]
+
+
+def test_figure15_projection029_conductance_direction_is_preregistered() -> None:
+    audit_path = (
+        ROOT / "docs/validation-results/figure15-projection029-source-audit-840.yaml"
+    )
+    audit = yaml.safe_load(audit_path.read_text())
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure15-projection029-direction-registration-841.yaml"
+        ).read_text()
+    )
+
+    for path_key, hash_key in (
+        ("authorization", "authorization_sha256"),
+        ("conductance_scaling_implementation", "conductance_scaling_implementation_sha256"),
+        ("source_audit", "source_audit_sha256"),
+        ("original_holdout_registration", "original_holdout_registration_sha256"),
+        ("figure7_runtime", "figure7_runtime_sha256"),
+        ("script", "script_sha256"),
+        ("analysis", "analysis_sha256"),
+    ):
+        assert hashlib.sha256(
+            (ROOT / registration[path_key]).read_bytes()
+        ).hexdigest() == registration[hash_key]
+    assert registration["source_audit"] == str(audit_path.relative_to(ROOT))
+    assert audit["source_record"]["projection_id"] == "modeldb112923.projection.029"
+    assert audit["source_record"]["kind"] == "gap_junction"
+    assert audit["source_record"]["weight"] is None
+    assert registration["diagnostic"]["scaled_state_variable"] == "g"
+    assert registration["diagnostic"]["projection029_conductance_scales"] == [
+        0.5,
+        1.0,
+        1.5,
+    ]
+    assert registration["gates"]["no_chemical_weight_scaled_as_projection029"]
+    assert "select no scale" in registration["selection_rule"]
+    assert not registration["generation_two_opened"]
+    assert not registration["baseline_frozen"]

@@ -1,0 +1,76 @@
+schema_version: 1
+id: figure15-projection029-source-audit-840
+date: '2026-09-10'
+status: completed-next-causal-dimension-selected-for-diagnostic-only
+classification: post-holdout-calibration-projection029-source-audit
+authorization:
+  path: docs/validation-results/figure15-projection028-direction-assessment-838.yaml
+  sha256: d56a0955f8bca6dfbc23bfda496a247ad5db621ac3bd4b78740f2373f4f6bbe9
+conductance_scaling_implementation:
+  path: docs/validation-results/projection029-conductance-scaling-implementation-839.yaml
+  sha256: 74b7f2a2868b4e8a470797d4a6e7fb25043571851c1b1d455e8bc0e73df116e6
+primary_sources:
+  article:
+    local_path: tmp/pdfs/GroVer2008BR.pdf
+    sha256: c56c337624959d8c0bdf51aa79b0dbc82f31264af2b2cd675790879a6410d7ed
+    relevant_sections: [2.10, Figure 15, Methods 4.9-4.10]
+  smart_nml:
+    local_path: tmp/modeldb-112923/versaceGrossberg2008/SMART.nml
+    sha256: 16fc196f2ed68d1c02a39395fa83bb0ffab8fcf8edffe6fd11022bb6c6e299e1
+    source_lines: [636, 643]
+  extracted_catalog:
+    path: src/smart_robustness/data/modeldb112923_first_order.yaml
+    sha256: 3b42be7dd0b17cc01ad29f474f152cfcd8c2a605410aad223d14c676fe98d965
+    source_lines: [2782, 2811]
+source_record:
+  projection_id: modeldb112923.projection.029
+  kind: gap_junction
+  route: layer4 inhibitory proximal dendrite to layer4 inhibitory proximal dendrite
+  channel_conductance_mS_cm2: 0.03
+  weight: null
+  delay_ms: null
+  topology:
+    method: connectFromMany
+    sigma_x: 0.4
+    sigma_y: 0.4
+    ring: true
+    border_effect: extend
+mechanistic_scope:
+  source_supported: >-
+    Projection 029 electrically couples local layer-4 interneuron dendrites and
+    is the most direct remaining archived mechanism for subthreshold inhibitory
+    synchronization.
+  previous_diagnostics: >-
+    Isolated scales of recurrent excitation, E-to-I AMPA, I-to-E GABA, and I-to-I
+    GABA did not identify a monotonic Figure-15 frequency direction.
+  not_source_identified: >-
+    The paper and archive provide the 0.03 conductance record but do not identify
+    a non-unit scale or assign the graphical 44-Hz value uniquely to this route.
+  calibration_boundary: >-
+    Any non-unit conductance scale is an explicit downstream causal probe, not
+    recovery of a missing source parameter.
+authorized_next_diagnostic:
+  scientific_role: direction-only downstream causal discriminator
+  learned_state: reuse one fresh generation-one globally trained state across arms
+  projection029_conductance_scales: [0.5, 1.0, 1.5]
+  scale_application: Figure-15-style match epoch only
+  duration_ms: 200.0
+  pair: [39, 40]
+  bin_ms: 1.0
+  primary_readouts:
+  - pair spike counts and interspike-interval summaries
+  - all layer4 excitatory spike count
+  - complete layer4 inhibitory spike identities and times
+  - direct full-epoch pair cross-spectrum gamma peak with 5-Hz resolution
+  selection_authorized: false
+  global_candidate_authorized: false
+decision: >-
+  Preregister and execute only the symmetric projection-029 conductance probe.
+  Require a coherent frequency direction while both fixed cells remain active.
+  Any promising direction must then be tested in a new globally retrained
+  generation with all validation figures. No baseline freeze is authorized.
+parameter_selected: false
+generation_two_opened: false
+baseline_frozen: false
+neuron_models_consulted: false
+modern_anatomy_consulted: false

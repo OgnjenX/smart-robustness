@@ -1,0 +1,74 @@
+schema_version: 1
+id: figure15-projection029-direction-registration-841
+date: '2026-09-10'
+status: registered-before-execution
+classification: post-holdout-calibration-generation-one-projection029-direction-diagnostic
+authorization: docs/validation-results/figure15-projection028-direction-assessment-838.yaml
+authorization_sha256: d56a0955f8bca6dfbc23bfda496a247ad5db621ac3bd4b78740f2373f4f6bbe9
+conductance_scaling_implementation: docs/validation-results/projection029-conductance-scaling-implementation-839.yaml
+conductance_scaling_implementation_sha256: 74b7f2a2868b4e8a470797d4a6e7fb25043571851c1b1d455e8bc0e73df116e6
+source_audit: docs/validation-results/figure15-projection029-source-audit-840.yaml
+source_audit_sha256: 31fbfbf0cf00dad2c89ee1215b194dc8ab5802226e40e19f8420ac669a5a9058
+original_holdout_registration: docs/validation-results/calibrated-figure15-holdout-registration-810.yaml
+original_holdout_registration_sha256: 0aa7f3da487fe006f3e7a8f0edbea11a649076d510ff21dc89c7eda1203495cc
+figure7_runtime: src/smart_robustness/validation/figure7.py
+figure7_runtime_sha256: eb6edea54d36c7eb161bad360e7322804015bf609cd5653a975e6c5496333ec3
+script: scripts/run_figure15_projection029_direction_diagnostic.py
+script_sha256: e0f1c5a388ecc841311d39659c022e00d3a4e23ab8fd0e22e59e8c7813310c5c
+analysis: src/smart_robustness/analysis/figure15_sensitivity.py
+analysis_sha256: f549349895da02c16f86eff048ab8799404e81c103ed12afc8e3aae29bd4f77c
+result_id: figure15-projection029-direction-842
+result: docs/validation-results/figure15-projection029-direction-842.yaml
+assessment: docs/validation-results/figure15-projection029-direction-assessment-843.yaml
+fixed_generation_one:
+  nonspecific_t_scale: 0.203125
+  projection025_scale: 8.0
+  projection026_scale: 0.5
+  projection036_spread_convention: variance
+  projection038_scale: 1.0
+  projection008_scale: 0.75
+  projection011_scale: 0.9375
+  integration_method: rk4
+diagnostic:
+  projection_id: modeldb112923.projection.029
+  scaled_state_variable: g
+  projection029_conductance_scales: [0.5, 1.0, 1.5]
+  order: fixed-ascending
+  scale_application: downstream Figure-15-style match epoch only
+  learned_state: one fresh generation-one training reused unchanged across all arms
+  duration_ms: 200.0
+  dt_ms: 0.01
+  pair: [39, 40]
+  bin_ms: 1.0
+  primary_analysis: direct_full_epoch_cross_spectrum_power
+  gamma_band_hz: [20.0, 70.0]
+  frequency_resolution_hz: 5.0
+  mechanism_readouts:
+  - complete layer4 inhibitory spike identities and times
+  outcome_readouts:
+  - pair spike counts and interspike-interval summaries
+  - all layer4 excitatory spike count
+  - direct cross-spectrum gamma peak
+gates:
+  fresh_figure6_prerequisite: all registered Figure-6 gates pass
+  same_learned_state_all_arms: true
+  all_scales_executed_in_registered_order: true
+  both_pair_cells_active_for_frequency_interpretation: true
+  inhibitory_event_identity_and_timing_recorded: true
+  no_chemical_weight_scaled_as_projection029: true
+classification_rule: >-
+  Classify projection 029 as frequency-causal only if all arms retain at least
+  two fixed-cell spikes and the pair peak shifts coherently and monotonically.
+  Report inhibitory events, excitatory rates, and ISIs to separate
+  synchronization from rate effects. Non-monotonic behavior identifies no
+  calibration direction.
+selection_rule: >-
+  Report all arms in fixed ascending order and select no scale. Any promising
+  direction requires a distinct globally retrained generation and all
+  first-order validation gates.
+stopping_rule: >-
+  Execute exactly one fresh training followed by exactly three downstream arms.
+  Do not rerun, densify, interpolate, retrain per arm, alter chemical weights,
+  or consult neuron-model or modern-anatomy variants before assessment.
+generation_two_opened: false
+baseline_frozen: false

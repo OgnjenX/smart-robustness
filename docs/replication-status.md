@@ -4234,3 +4234,40 @@ lifecycle notices and dependency deprecations and do not change any validation
 outcome. This establishes technical freeze readiness only. It neither converts
 the failed 44-Hz numerical target into a pass nor authorizes an exact-
 replication label.
+
+Artifacts 860--875 independently audit the surviving 2004 KInNeSS relay
+benchmark. The first replay fails because the archived monitor uses a
+rest-relative membrane coordinate. Source audits then place all voltage gates,
+ionic driving potentials, and the spike detector on one consistent internal
+axis. The coordinate-complete replay recovers rest to within 0.047 mV and the
+archived action-potential amplitude regime, but its tonic train remains far too
+fast and its rebound burst too long. The contemporaneous source fixes specific
+capacitance at 1 microfarad/cm2, so neither capacitance nor a global time factor
+is fitted. This validates the coordinate translation but does not reproduce the
+legacy cell benchmark or identify the missing 2008 Figure-8 protocol.
+
+Artifacts 876--882 isolate the remaining 2004 discrepancy to an unpreserved
+condition-specific input protocol and exhaust its source-permitted amplitude
+route. A coarse voltage-selected reconstruction and then every exact normalized
+8-bit value in the registered neighborhoods fail the held-out tonic count/ISI
+and rebound count/timing gates under both coupled RK4 and the SANNDRA scalar-RK4
+comparator. No continuous interpolation or cellular/timing fit is authorized.
+
+Artifact 883 searches GitHub, Internet Archive, Arquivo.pt, Common Crawl,
+Boston University's repository, and research archives for KInNeSS 0.3.4 RC2,
+SANNDRA 1.2.0 RC2, `spikeevents.h`, and original Figure-8/Figure-15 outputs.
+None is recovered. Exact 2008 runtime and output reconstruction remains
+source-limited, and further Figure-15 or relay-parameter fitting would be
+post-hoc rather than faithful recovery.
+
+Artifact 884 therefore freezes the strongest scientifically admissible control
+as `classic-smart-calibrated-v1.0.0`. The manifest pins the implementation,
+runtime fingerprint, complete effective scale tuple, variance topology,
+protocols, geometry seeds, environment, expected metrics, and evidence hashes.
+Figures 6, 7, 10, 14, the source-identifiable Figure-15 local-gamma phenotype,
+and Figure 16 pass. Exact Figure 8 remains unidentifiable and the registered
+Figure-15 numeric gate remains failed at 53.0265 versus 44 Hz. The release is a
+frozen calibrated classic-SMART behavioral reconstruction, not exact original
+SMART numerical recovery. Classic parameter fitting is closed; controlled
+neuron-model comparisons are now open, while modern-anatomy variants remain a
+later separate phase.

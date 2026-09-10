@@ -65,10 +65,17 @@ clearly separate from published values.
   states, complete cell placements, or random seeds. Those values are not
   exact-source targets unless recovered from the original KInNeSS archive.
 
-## Claim gate
+## Claim gates
 
-The repository may use the phrase **classic SMART baseline reproduced** only
-after all structural gates pass and a versioned validation report demonstrates
-the isolated-cell, learning, match/mismatch arousal, reset, and oscillation
-targets. The report must include negative controls, tolerances, all declared
-seeds, and failures as well as successes.
+The repository may call `classic-smart-calibrated-v1.0.0` a **calibrated
+classic-SMART behavioral baseline** because artifact 884 freezes a versioned,
+test-clean implementation that passes the source-identifiable structural and
+behavioral targets while retaining all negative controls, tolerances, seeds,
+and failures.
+
+The stronger phrase **exact original SMART numerical reproduction** remains
+forbidden. Figure 8's exact protocol/runtime is not identifiable from the
+released material, and the preregistered Figure-15 numeric gate remains failed
+at 53.0265 rather than the graphically labeled 44 Hz. Recovering authoritative
+runtime/output material and reproducing those targets would require a new
+release; it cannot retroactively change the calibrated freeze.

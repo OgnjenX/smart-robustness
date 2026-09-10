@@ -1,0 +1,81 @@
+schema_version: 1
+id: classic-smart-calibrated-behavioral-freeze-884
+date: '2026-09-10'
+status: calibrated-behavioral-baseline-frozen
+classification: formal-calibrated-classic-smart-freeze-decision
+primary_reference: Grossberg and Versace 2008, Brain Research 1218, 278-312
+
+release:
+  tag: classic-smart-calibrated-v1.0.0
+  frozen_implementation_commit: f6dc9de948586597d13d544a50e2b1bf48ca5514
+  source_constrained_predecessor_tag: classic-smart-source-constrained-v0.1.0
+  manifest:
+    path: configs/baselines/classic_smart_calibrated_v1.yaml
+    sha256: d8a11933e4ed6a41a72647e4c9ce88f88fd870908bd9a086bbc67b75cff2a5fb
+  environment_lock:
+    path: requirements/classic-smart-calibrated-v1.txt
+    sha256: fbe81fe1d86928a07772a69ec5eca52638bc9108ef98af4f8e26b31ee4b2d082
+
+technical_verification:
+  artifact:
+    path: docs/validation-results/classic-smart-freeze-candidate-technical-verification-859.yaml
+    sha256: 701dde51d83377204be7e4d0494d52e31fd762fd1f0355d407e766c2e130a418
+  passed: 1062
+  failed: 0
+  python: 3.11.9
+  brian2: 2.9.0
+
+validated_scope:
+  structural:
+    table3_cell_library: complete
+    supplement_projection_catalog: complete
+    multicompartment_dynamics: complete
+    t_type_calcium: complete-source-constrained-kernel
+    layer5_ahp_and_ach: complete
+    first_order_9x9_sector: complete
+    learning_and_stdp: complete
+    match_mismatch_and_reset_protocols: complete
+    pulvinar_v2_higher_order_loop: complete
+  behavioral:
+    figure6_learning: pass
+    figure7_match_mismatch: pass
+    figure10_reset: pass
+    figure14_match_gamma_mismatch_slow: pass
+    figure15_source_identifiable_local_gamma: pass
+    figure15_graphical_44hz_numeric_gate: fail-53.0265hz
+    figure16_lower_frequency_inter_area_dominance: pass
+
+exact_reproduction_boundary:
+  exact_2008_numerical_reproduction_claimed: false
+  figure8_exact_protocol_reproduced: false
+  figure15_graphical_44hz_reproduced: false
+  reasons:
+    - KInNeSS 0.3.4 RC2 and SANNDRA 1.2.0 RC2 source bodies are unavailable.
+    - The 2008 Figure-8 clamp/input schedule and original voltage trace are unavailable.
+    - The Figure-15 cells, spike arrays, estimator, and confidence procedure are unavailable.
+    - Exact normalized 8-bit input values do not reproduce the independent 2004 relay benchmark.
+  source_boundary_artifacts:
+    - docs/validation-results/legacy-thalamus-source-grid-assessment-882.yaml
+    - docs/validation-results/smart-era-multiarchive-source-recovery-883.yaml
+
+freeze_meaning: >-
+  The named tag, manifest, implementation commit, environment, protocols,
+  seeds, validation gates, expected metrics, and documented failures form one
+  immutable control. Future work may add new configurations and code, but must
+  not recalibrate this control or relabel its calibrated values as published.
+
+decision:
+  calibrated_behavioral_baseline_frozen: true
+  exact_original_smart_baseline_frozen: false
+  source_constrained_predecessor_unchanged: true
+  further_classic_parameter_fitting_authorized: false
+  neuron_model_robustness_phase_authorized: true
+  modern_anatomy_phase_authorized_now: false
+  experiment_rule: >-
+    Change only the preregistered neuron-model factor first. Keep topology,
+    stimuli, learning protocol, projection scales, seeds, analysis, gates, and
+    the Figure-8/Figure-15 limitations fixed. Modern-anatomy interventions are
+    a later and separately labeled phase.
+
+baseline_frozen: true
+

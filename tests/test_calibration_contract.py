@@ -13659,3 +13659,43 @@ def test_smart_era_multiarchive_search_preserves_exact_source_boundary() -> None
     assert not audit["assessment"]["further_parameter_fitting_authorized"]
     assert audit["assessment"]["calibrated_behavioral_freeze_decision_remains_available"]
     assert not audit["baseline_frozen"]
+
+
+def test_calibrated_behavioral_freeze_is_integrity_pinned_and_epistemically_bounded() -> None:
+    freeze = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/classic-smart-calibrated-behavioral-freeze-884.yaml"
+        ).read_text()
+    )
+
+    assert freeze["status"] == "calibrated-behavioral-baseline-frozen"
+    for item in (
+        freeze["release"]["manifest"],
+        freeze["release"]["environment_lock"],
+        freeze["technical_verification"]["artifact"],
+    ):
+        assert hashlib.sha256((ROOT / item["path"]).read_bytes()).hexdigest() == item[
+            "sha256"
+        ]
+
+    assert freeze["technical_verification"]["passed"] == 1062
+    assert freeze["technical_verification"]["failed"] == 0
+    assert freeze["validated_scope"]["behavioral"] == {
+        "figure6_learning": "pass",
+        "figure7_match_mismatch": "pass",
+        "figure10_reset": "pass",
+        "figure14_match_gamma_mismatch_slow": "pass",
+        "figure15_source_identifiable_local_gamma": "pass",
+        "figure15_graphical_44hz_numeric_gate": "fail-53.0265hz",
+        "figure16_lower_frequency_inter_area_dominance": "pass",
+    }
+    assert not freeze["exact_reproduction_boundary"][
+        "exact_2008_numerical_reproduction_claimed"
+    ]
+    assert freeze["decision"]["calibrated_behavioral_baseline_frozen"]
+    assert not freeze["decision"]["exact_original_smart_baseline_frozen"]
+    assert not freeze["decision"]["further_classic_parameter_fitting_authorized"]
+    assert freeze["decision"]["neuron_model_robustness_phase_authorized"]
+    assert not freeze["decision"]["modern_anatomy_phase_authorized_now"]
+    assert freeze["baseline_frozen"]

@@ -2499,3 +2499,31 @@ be frozen as a calibrated behavioral reconstruction—with Figures 6, 7, 10,
 experiments should remain blocked until unavailable original runtime or output
 materials are recovered. Either choice must keep exact numerical recovery
 unclaimed and preserve generation one as the overfitting control.
+
+Artifacts 860--875 test the strongest surviving independent cell-level source
+route. Rest-relative output, integrated-axis gates, shifted driving potentials,
+and the physical -20-mV detector are now reconciled. The coordinate-complete
+replay matches rest and action-potential amplitude but not tonic cadence or
+rebound count. A contemporaneous source fixes capacitance at 1 microfarad/cm2,
+closing arbitrary time rescaling.
+
+Artifacts 876--882 then audit and exhaust the missing-input hypothesis. The
+archive omits the green tonic image, exact byte-to-runtime mapping, and GUI
+switch sequence. Voltage-selected coarse values fail all spike holdouts, and a
+preregistered exact normalized 8-bit refinement finds no byte that jointly
+passes tonic count/ISI or rebound count/timing. Continuous interpolation and
+cellular/timing fitting are closed.
+
+Artifact 883 expands exact-source recovery across independent web archives and
+institutional repositories without recovering SMART-era KInNeSS/SANNDRA source,
+event code, Figure-8 protocol, or Figure-15 outputs. This makes an exact 2008
+numerical label inadmissible from currently public evidence but leaves the
+transparent calibrated-behavioral freeze available.
+
+Artifact 884 takes that decision. The immutable
+`classic-smart-calibrated-v1.0.0` control preserves all passed behaviors, the
+failed Figure-15 numeric gate, and the Figure-8/source-runtime boundary. No
+classic parameter may be recalibrated in place. The next phase may vary only a
+preregistered neuron model while holding circuit, learning, stimuli, scales,
+seeds, analysis, and gates fixed. Modern-anatomy interventions remain sealed
+until the neuron-model comparison phase is complete.

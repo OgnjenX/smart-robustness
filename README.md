@@ -29,17 +29,17 @@ documented stimulus and analysis procedures:
    ablation/parameter effects.
 
 The source-constrained implementation and the complete first- and higher-order
-network scaffolds are now implemented. A separately calibrated classic-SMART
-candidate passes the registered Figure 6 learning, Figure 7 match/mismatch,
-Figure 10 reset, Figure 14 gamma-versus-slower mismatch, and Figure 16
-long-range synchrony gates. It also reproduces the source-identifiable Figure
-15 behavior of nearby layer-4 gamma synchrony, but its fixed pair peaks at
-53.0265 Hz rather than the panel's graphically labeled 44 Hz. The original
-pair, spike arrays, estimator, and legacy simulator runtime were not released;
-all registered analysis and bounded circuit-direction audits preserve rather
-than erase that discrepancy. The project therefore does **not yet claim exact
-numerical reproduction or a frozen behavioral baseline**. See
-[`docs/replication-status.md`](docs/replication-status.md).
+networks are implemented. The calibrated classic-SMART behavioral baseline is
+now frozen as `classic-smart-calibrated-v1.0.0`. It passes the registered
+Figure 6 learning, Figure 7 match/mismatch, Figure 10 reset, Figure 14
+gamma-versus-slower mismatch, and Figure 16 long-range synchrony gates. It also
+reproduces the source-identifiable Figure 15 behavior of nearby layer-4 gamma
+synchrony, but its fixed pair peaks at 53.0265 Hz rather than the panel's
+graphically labeled 44 Hz. The original pair, spike arrays, estimator, and
+legacy simulator runtime were not released. The frozen release is therefore a
+**calibrated behavioral reconstruction, not an exact numerical reproduction**.
+See [`docs/calibrated-behavioral-freeze-v1.0.0.md`](docs/calibrated-behavioral-freeze-v1.0.0.md)
+and [`docs/replication-status.md`](docs/replication-status.md).
 The immutable `classic-smart-source-constrained-v0.1.0` tag preserves the first
 complete source-constrained reconstruction, including its failed official
 reproduction gates. It is a provenance baseline, not a claim that classic
@@ -79,9 +79,9 @@ docs/                    provenance ledger and replication roadmap
 The boundary for neuron-model substitution is `models.create_population(...)`.
 Circuit code refers to declared receptor ports (`exc`, `inh`, and `reset`) rather
 than embedding a neuron's equations. `classic_hh` is the reference target;
-`multicompartment_hh` is the in-progress classic baseline kernel. `adex` and
-`gif` remain explicit planned backends rather than silently approximated
-aliases.
+The frozen baseline uses the source-constrained vectorized multicompartment HH
+kernel directly. `adex`, `gif`, and registry-level alternative HH adapters
+remain explicit planned backends rather than silently approximated aliases.
 
 ## Install and run
 
@@ -110,17 +110,16 @@ values must be labeled as such and must not be described as published values.
 
 ## Scope and next steps
 
-The immediate decision is deliberately narrow:
+The immediate next phase is deliberately controlled:
 
-- preserve the immutable source-constrained release and failed Figure 15
-  numeric holdout;
-- decide explicitly whether to freeze the current candidate as a calibrated
-  **behavioral** reconstruction with an unresolved 44-versus-53 Hz limitation,
-  or keep exact numerical recovery blocked pending original KInNeSS/SANNDRA
-  code, spike arrays, or analysis code;
-- only after that boundary is explicit, compare AdEx, GIF, alternative HH, and
-  multicompartment variants against the same behavioral gates;
-- evaluate post-2008 anatomical revisions in a later, separately labeled
+- preserve both immutable classic releases and the failed Figure 15 numeric
+  holdout;
+- compare AdEx, GIF, alternative HH, and multicompartment variants against the
+  frozen behavioral control, changing one preregistered neuron-model factor at
+  a time;
+- keep topology, stimuli, learning, projection scales, seeds, analysis, and
+  acceptance gates unchanged across the first comparison matrix;
+- evaluate post-2008 anatomical revisions only in a later, separately labeled
   robustness phase.
 
 Contributions should preserve the distinction between **published**, **derived**,

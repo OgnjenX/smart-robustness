@@ -1,0 +1,152 @@
+schema_version: 1
+name: classic-smart-calibrated-behavioral-v1
+status: frozen-calibrated-behavioral-baseline
+classification: calibrated-classic-smart-reconstruction
+scientific_label: calibrated classic-SMART behavioral baseline v1
+prohibited_labels:
+  - exact Grossberg-Versace-2008 numerical reproduction
+  - bit-identical KInNeSS/SANNDRA recovery
+
+primary_reference:
+  citation: Grossberg and Versace 2008, Brain Research 1218, 278-312
+  doi: 10.1016/j.brainres.2008.04.024
+source_constrained_predecessor:
+  tag: classic-smart-source-constrained-v0.1.0
+  commit: fda97304c37139f72697e82ff4d455a34eb4bd32
+
+implementation:
+  frozen_code_commit: f6dc9de948586597d13d544a50e2b1bf48ca5514
+  branch: codex/classic-smart-calibration
+  neuron_kernel: source-constrained-vectorized-multicompartment-hh
+  simulator: Brian2
+  profile:
+    path: configs/calibration/figure6_7_10_projection025_source_control_v1.yaml
+    sha256: b2028a35666cb31645e91a741b00440b46a508558c5db8361404c2264041ffdf
+  projection036_builder: smart_robustness.validation.figure10_search_cycle_spread.build_projection036_variance_sector
+
+runtime:
+  base_candidate_profile: configs/calibration/figure6_kinness_equation27_transition_v1.yaml
+  fingerprint: 7e654528a99f0b25b7148260a8d52021f6443fb992b210729a2475ae3cfcdaa4
+  integration_method: rk4
+  overrides:
+    spike_event_coordinate: absolute_physical
+    spike_event_threshold_mV: -20.0
+    spike_event_rule: falling_threshold_crossing
+    trn_spike_event_coordinate: null
+    trn_spike_event_threshold_mV: null
+    trn_spike_event_release_mV: null
+    trn_spike_event_voltage_offset_mV: null
+    trn_spike_event_proximal_blend_fraction: null
+    nonspecific_intrinsic_cell_convention: paper_table3
+    nonspecific_axial_convention: paper_literal
+    nonspecific_calcium_kinetics_convention: paper_2008
+    nonspecific_dendritic_calcium_density_scale: 0.203125
+    nonspecific_spike_event_threshold_mV: null
+    nonspecific_spike_event_release_mV: null
+    nonspecific_spike_event_rule: null
+    nonspecific_spike_event_proximal_blend_fraction: null
+    nonspecific_spike_event_release_proximal_blend_fraction: null
+    projection_source_convention: paper_supplement_cross_checked
+    mixed_input_gate_convention: declared_external_input
+    layer6i_output_transmitter_gate_convention: pre_depletion_emission_snapshot
+
+projection_weight_scales:
+  modeldb112923.projection.000: 0.01
+  modeldb112923.projection.001: 0.01
+  modeldb112923.projection.004: 0.03
+  modeldb112923.projection.008: 0.75
+  modeldb112923.projection.011: 0.9375
+  modeldb112923.projection.025: 8.0
+  modeldb112923.projection.026: 0.5
+
+topology:
+  projection036_spread_convention: variance
+  projection036_ring_convention: center_excluded_gaussian
+  projection038_scale: 1.0
+
+fixed_protocols:
+  figure6_learning: docs/validation-results/joint-calibration-global-projection026-registration-804.yaml
+  figure7_match_mismatch: docs/validation-results/joint-calibration-global-projection026-registration-804.yaml
+  figure10_reset: docs/validation-results/joint-calibration-global-projection026-registration-804.yaml
+  figure14_spectrum: docs/validation-results/calibrated-figure14-holdout-registration-807.yaml
+  figure15_local_synchrony: docs/validation-results/calibrated-figure15-holdout-registration-810.yaml
+  figure16_higher_order: docs/validation-results/calibrated-figure16-holdout-registration-813.yaml
+  figure16_geometry_seeds: [16, 17]
+
+expected_behavior:
+  figure6_learning: pass
+  figure7_match_mismatch:
+    status: pass
+    nonspecific_events_match_mismatch: [4, 7]
+  figure10_reset:
+    status: pass
+    intact_control_old_winner_events: [53, 63]
+    intact_control_late_alternative_margin: [3, -2]
+  figure14_spectrum:
+    status: pass
+    match_peak_hz: 55.0
+    mismatch_peak_hz: 10.0
+    mismatch_gamma_below_match: true
+  figure15_local_synchrony:
+    source_identifiable_gamma_phenotype: pass
+    preregistered_numeric_gate: fail
+    reconstructed_pair: [39, 40]
+    reconstructed_peak_hz: 53.026513256628306
+    paper_graphical_label_hz: 44.0
+  figure16_higher_order:
+    status: pass
+    strongest_band_hz: [2.0, 4.0]
+    lower_to_gamma_peak_ratio: 4.824415614511934
+
+evidence:
+  - path: docs/validation-results/joint-calibration-global-projection026-assessment-806.yaml
+    sha256: d55d4e5135d24a913a4060f423b8700531dcad17e84bc6bd7638785257181467
+  - path: docs/validation-results/calibrated-figure14-holdout-assessment-809.yaml
+    sha256: 7283f23316ba9f8273d4c0dbbd96e6caa1f10a89caa49258106fb44ab910b670
+  - path: docs/validation-results/calibrated-figure15-holdout-assessment-812.yaml
+    sha256: 3b58cf785251e6378c28017e2b537d5f039419a830d89bfb7d307da4133bc220
+  - path: docs/validation-results/calibrated-figure16-holdout-assessment-815.yaml
+    sha256: 101aec07e0ad07375d2577dfca10a8eb9b0464154a5f07cc76ab6e732f1c83a1
+  - path: docs/validation-results/figure15-primary-source-identifiability-audit-816.yaml
+    sha256: 409bbff878fcbf7d1724184d1719c28f060297ce154d0f24714ac4cc2200d3fe
+  - path: docs/validation-results/figure15-analysis-sensitivity-recovery-assessment-822.yaml
+    sha256: b0f8e30ee1fadb83fcfc1a4544dc8f4fccbce83670f38b67d9abc0bd02c7591c
+  - path: docs/validation-results/figure15-trn-relay-transfer-direction-assessment-858.yaml
+    sha256: f353b7f9434e9d5f5294a6193e8aa1f35a3b4850340106de49aac779e4aec28a
+  - path: docs/validation-results/classic-smart-freeze-candidate-technical-verification-859.yaml
+    sha256: 701dde51d83377204be7e4d0494d52e31fd762fd1f0355d407e766c2e130a418
+  - path: docs/validation-results/legacy-thalamus-source-grid-assessment-882.yaml
+    sha256: 140ef06a0b27827d801fb5863606fd69f4cb3ea805ced5a6cfb8d32a8135f104
+  - path: docs/validation-results/smart-era-multiarchive-source-recovery-883.yaml
+    sha256: affe0c4a23d6c55f7401fd4604db8bb1aa939ca7e9031de4142fc8be4883a791
+
+limitations:
+  figure8: >-
+    The released 2008 material does not preserve the original clamp/input
+    schedule or exact SMART-era runtime. The independent 2004 relay archive
+    cannot supply those missing Figure-8 details, and its exact normalized
+    8-bit input reconstruction fails the registered tonic/burst gates.
+  figure15: >-
+    Nearby layer-4 gamma synchrony is reproduced, but the fixed reconstruction
+    peaks at 53.0265 Hz rather than the paper panel's graphical 44 Hz. The
+    original cells, spike arrays, estimator, and confidence procedure are not
+    available, and the failed numeric holdout remains part of the frozen record.
+  source_runtime: >-
+    KInNeSS 0.3.4 RC2 and SANNDRA 1.2.0 RC2 source bodies have not been recovered.
+
+robustness_experiment_contract:
+  control_manifest: configs/baselines/classic_smart_calibrated_v1.yaml
+  hold_fixed:
+    - network topology and projection catalog
+    - learned-state protocol and stimulus schedules
+    - projection scales and projection-036 variance convention
+    - random and geometry seeds
+    - recording durations and analysis procedures
+    - validation gates and the two documented limitations
+  permitted_first_intervention: neuron model and its preregistered parameters
+  modern_anatomy_phase: separate-after-neuron-model-comparisons
+  no_further_classic_parameter_calibration: true
+
+baseline_frozen: true
+exact_numerical_reproduction_claimed: false
+

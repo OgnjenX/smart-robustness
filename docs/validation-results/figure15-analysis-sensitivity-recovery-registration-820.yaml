@@ -1,0 +1,53 @@
+schema_version: 1
+id: figure15-analysis-sensitivity-recovery-registration-820
+date: '2026-09-10'
+status: registered-before-execution-serialization-only-recovery
+classification: calibrated-classic-smart-figure15-analysis-sensitivity-audit-recovery
+authorization: docs/validation-results/figure15-analysis-sensitivity-assessment-819.yaml
+authorization_sha256: ba5b5623ec9e1bb1251525499110b3869ea757b1a125d63bfd083edfa068feca
+original_registration: docs/validation-results/figure15-analysis-sensitivity-registration-817.yaml
+original_registration_sha256: fe7c9e22faa5bea7b60020a9680364be7f9b3f64d9555e48702e545f02c84566
+failed_result: docs/validation-results/figure15-analysis-sensitivity-818.yaml
+failed_result_sha256: d412682da46cddf1632203a414f4fb8447d2ade24b598bd25fe0fa328b9d0f8a
+script: scripts/run_figure15_analysis_sensitivity_audit.py
+script_sha256: cafb6121d693227cd579de472728d9aa99183a11f395ae8c95fcf93e78652aab
+sensitivity_analysis: src/smart_robustness/analysis/figure15_sensitivity.py
+sensitivity_analysis_sha256: 90aeeb22dca52e8a4fcd23b369959ecf4c9fa50e09ccb7a7a66268cb3cca3a3b
+original_holdout_registration: docs/validation-results/calibrated-figure15-holdout-registration-810.yaml
+original_holdout_registration_sha256: 0aa7f3da487fe006f3e7a8f0edbea11a649076d510ff21dc89c7eda1203495cc
+result_id: figure15-analysis-sensitivity-recovery-821
+result: docs/validation-results/figure15-analysis-sensitivity-recovery-821.yaml
+assessment: docs/validation-results/figure15-analysis-sensitivity-recovery-assessment-822.yaml
+recovery_scope:
+  sole_change: cast numpy.isclose reproduction gate to native Python bool
+  model_or_parameter_change: false
+  protocol_or_pair_change: false
+  analysis_family_or_order_change: false
+  scientific_value_observed_before_recovery: false
+fixed_protocol:
+  pair: [39, 40]
+  duration_ms: 1000.0
+  histogram_bin_ms: 1.0
+  display_max_lag_ms: 180.0
+  gamma_band_hz: [20.0, 70.0]
+deterministic_reproduction_gate:
+  first_cell_spikes: 114
+  second_cell_spikes: 148
+  all_layer4_spikes: 608
+  registered_peak_hz: 53.026513256628306
+  absolute_tolerance: 1.0e-12
+analysis_family:
+  methods_hamming_window_ms: 200.0
+  methods:
+  - linear_correlogram_full_hamming_periodogram
+  - linear_correlogram_full_boxcar_periodogram
+  - linear_correlogram_displayed_hamming_periodogram
+  - linear_correlogram_displayed_boxcar_periodogram
+  - direct_full_epoch_cross_spectrum_power
+  - methods_4_10_200ms_nonoverlap_cross_spectrum_power
+selection_rule: report all six in order; select none
+interpretation_rule: >-
+  Preserve the failed registered holdout. Use the family only to quantify
+  analysis sensitivity of the same spike trains; it cannot identify the
+  original pair or estimator, change an acceptance gate, or authorize tuning.
+stopping_rule: execute this one recovery and stop

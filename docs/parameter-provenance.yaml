@@ -842,6 +842,16 @@ parameters:
     status: completed-exact-numeric-test-not-identifiable
     source: Artifact 816
     note: The source-identifiable local layer-4 gamma phenotype is reproduced at 53.03 Hz, while the graphical 44-Hz value is not reproduced under the registered reconstruction analysis. The failed holdout remains failed and no post-hoc analysis or parameter is selected.
+  diagnostics.figure15.analysis_sensitivity:
+    value: six fixed estimators span 52.631578947368425--55.0 Hz on the exact 114/148-spike pair
+    status: completed-high-peak-robust-analysis-route-closed
+    source: Artifacts 817--822
+    note: Full/displayed correlogram support, Hamming/boxcar taper, direct full-epoch cross-spectrum, and a 200-ms non-overlapping Methods-4.10 interpretation all remain above the registered 49-Hz boundary. The first output-only NumPy-boolean failure is preserved, the recovery exactly reproduces Artifact 811, and no method is selected.
+  calibration.figure15.post_holdout_generation:
+    value: disclose Figure 15 as a training target and preserve generation one as immutable holdout evidence
+    status: next-candidate-generation-not-yet-opened
+    source: Artifact 822
+    note: Any bounded layer-4 calibration must be justified causally before simulation, globally retrain every candidate, and require Figures 6, 7, 10, 14, and 16 to survive. It cannot be called independent Figure-15 validation and must not mix neuron-model or modern-anatomy changes.
   validation.figure16.calibrated_holdout:
     value: strongest 2--4-Hz peak; lower-to-gamma peak ratio 4.824415614511934
     status: passed-unchanged-higher-order-holdout

@@ -1,0 +1,18 @@
+schema_version: 1
+id: figure15-analysis-sensitivity-818
+date: '2026-09-10'
+status: failed-after-simulation-before-yaml-emission
+classification: calibrated-classic-smart-figure15-analysis-sensitivity-output-failure
+registration: docs/validation-results/figure15-analysis-sensitivity-registration-817.yaml
+registration_sha256: fe7c9e22faa5bea7b60020a9680364be7f9b3f64d9555e48702e545f02c84566
+failure_stage: yaml-safe-dump-after-all-simulation-and-analysis-computation
+failure_type: yaml.representer.RepresenterError
+failure_value: numpy.bool_ True in deterministic reproduction gates
+temporary_output_bytes: 0
+temporary_output_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+scientific_values_emitted: false
+analysis_family_observed: false
+parameter_changed: false
+pair_changed: false
+original_smart_reproduced: false
+baseline_frozen: false

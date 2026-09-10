@@ -1,0 +1,65 @@
+schema_version: 1
+id: figure15-analysis-sensitivity-recovery-assessment-822
+date: '2026-09-10'
+status: completed-analysis-family-robust-high-gamma-numeric-discrepancy-confirmed
+classification: calibrated-classic-smart-figure15-analysis-sensitivity-assessment
+registration: docs/validation-results/figure15-analysis-sensitivity-recovery-registration-820.yaml
+result: docs/validation-results/figure15-analysis-sensitivity-recovery-821.yaml
+result_sha256: 6b422c722e323a09030c5305a41846302c3c3ba3f647504e46d75d4c4fca08a2
+execution:
+  deterministic_reproduction_pass: true
+  first_cell_spikes: 114
+  second_cell_spikes: 148
+  all_layer4_spikes: 608
+  registered_peak_hz_reproduced_exactly: 53.026513256628306
+  pair_spike_times_archived: true
+  all_six_registered_methods_reported: true
+  method_selected_after_outcome: false
+analysis_family:
+- method: linear_correlogram_full_hamming_periodogram
+  gamma_peak_hz: 53.026513256628306
+- method: linear_correlogram_full_boxcar_periodogram
+  gamma_peak_hz: 53.026513256628306
+- method: linear_correlogram_displayed_hamming_periodogram
+  gamma_peak_hz: 52.631578947368425
+- method: linear_correlogram_displayed_boxcar_periodogram
+  gamma_peak_hz: 52.631578947368425
+- method: direct_full_epoch_cross_spectrum_power
+  gamma_peak_hz: 53.0
+- method: methods_4_10_200ms_nonoverlap_cross_spectrum_power
+  gamma_peak_hz: 55.0
+summary:
+  minimum_peak_hz: 52.631578947368425
+  maximum_peak_hz: 55.0
+  range_width_hz: 2.368421052631575
+  closest_deviation_from_graphical_44hz: 8.631578947368425
+  closest_deviation_above_registered_49hz_boundary: 3.631578947368425
+gates:
+  every_method_in_published_20_70hz_gamma_band: true
+  any_method_within_registered_39_49hz_gate: false
+  every_method_above_registered_49hz_boundary: true
+  registered_result_is_analysis-family-robust: true
+interpretation: >-
+  The exact Artifact-811 spike train and registered 53.026513-Hz estimate
+  reproduce. Every preregistered source-plausible analysis remains between
+  52.63 and 55 Hz. The high peak is therefore not caused by choosing the full
+  rather than displayed correlogram, Hamming rather than boxcar taper, a
+  correlogram periodogram rather than direct cross-spectrum, or the explicit
+  200-ms Methods-4.10 segmentation. Analysis ambiguity does not rescue the
+  graphical 44-Hz value. At the same time, all methods robustly reproduce the
+  source-identifiable local gamma phenotype.
+decision: >-
+  Preserve Figure 15 as a failed preregistered numeric holdout and close the
+  analysis-convention route without selection. Do not tune a method, pair, or
+  tolerance. Exact numerical SMART recovery remains unavailable. If the
+  project requires a baseline that expresses the graphical 44-Hz target, open
+  a new explicitly post-holdout calibration generation using a causal,
+  source-bounded circuit dimension and require all existing first-order and
+  spectral behaviors to survive; never relabel that generation as an
+  independent Figure-15 holdout. Otherwise freeze the current endpoint only as
+  a calibrated behavioral reconstruction with the 53-versus-44-Hz limitation.
+parameter_selected: false
+analysis_selected: false
+registered_holdout_reclassified_as_pass: false
+original_smart_exact_numerical_recovery: false
+baseline_frozen: false

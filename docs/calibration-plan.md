@@ -2445,3 +2445,25 @@ decision must distinguish an auditable calibrated behavioral reconstruction
 from exact numerical recovery; any eventual freeze must retain this limitation.
 Neuron-model substitutions remain the next experimental phase, followed by a
 separately labeled modern-anatomy phase.
+
+Artifacts 817--822 close the remaining Figure-15 analysis-convention question.
+Registration 817 fixes six source-plausible estimators and requires exact
+deterministic reproduction of the 114/148 pair spikes, 608 total layer-4
+spikes, and 53.026513-Hz registered estimate before interpretation. The first
+run completes but emits no YAML because `numpy.bool_` is not serializable;
+Artifacts 818--820 preserve that failure and authorize a native-boolean-only
+recovery. The recovery exactly reproduces every event-count and peak gate and
+archives both spike trains. All six estimators remain between 52.6316 and 55
+Hz. Thus the high local-gamma peak is robust to the registered analysis family,
+and no method reproduces the 39--49-Hz gate. Close analysis selection without
+reclassifying the holdout.
+
+Because the requested baseline is intended to exhibit the complete reported
+behavior before neuron substitutions, the next admissible route is an
+explicitly post-holdout calibration generation. Figure 15 becomes a disclosed
+training target in that generation; it can never again be described as an
+independent holdout. Select a causal layer-4 circuit dimension from source and
+current-balance evidence before opening a bounded grid, globally retrain every
+candidate, and require Figures 6, 7, 10, 14, and 16 to survive unchanged. Keep
+the current endpoint and its failed Figure-15 holdout immutable as generation
+one, and continue to forbid neuron-model and modern-anatomy changes.

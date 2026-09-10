@@ -55,6 +55,7 @@ def _assert_local_hash_pairs(value: object) -> None:
         "calibrated-figure14-holdout-registration-807.yaml",
         "calibrated-figure15-holdout-registration-810.yaml",
         "calibrated-figure16-holdout-registration-813.yaml",
+        "figure15-analysis-sensitivity-recovery-registration-820.yaml",
     ],
 )
 def test_joint_calibration_registrations_retain_local_hash_identity(name: str) -> None:
@@ -119,6 +120,8 @@ def test_failed_first_attempts_are_preserved_and_recoveries_pin_current_runner(
         "calibrated-figure14-holdout-assessment-809.yaml",
         "calibrated-figure15-holdout-assessment-812.yaml",
         "calibrated-figure16-holdout-assessment-815.yaml",
+        "figure15-analysis-sensitivity-assessment-819.yaml",
+        "figure15-analysis-sensitivity-recovery-assessment-822.yaml",
     ],
 )
 def test_joint_calibration_assessments_retain_result_hash_identity(name: str) -> None:
@@ -244,3 +247,55 @@ def test_figure15_source_audit_preserves_failure_and_identifiability_boundary() 
     assert not audit["analysis_selected"]
     assert not audit["registered_holdout_reclassified_as_pass"]
     assert not audit["baseline_frozen"]
+
+
+def test_figure15_sensitivity_failure_and_recovery_are_auditable() -> None:
+    registration = _load("figure15-analysis-sensitivity-registration-817.yaml")
+    failure = _load("figure15-analysis-sensitivity-818.yaml")
+    assessment = _load("figure15-analysis-sensitivity-assessment-819.yaml")
+    recovery = _load("figure15-analysis-sensitivity-recovery-registration-820.yaml")
+
+    assert failure["status"] == "failed-after-simulation-before-yaml-emission"
+    assert failure["temporary_output_bytes"] == 0
+    assert not failure["scientific_values_emitted"]
+    assert not assessment["scientific_result_available"]
+    assert registration["script"] == recovery["script"]
+    assert registration["script_sha256"] != recovery["script_sha256"]
+    assert hashlib.sha256((ROOT / recovery["script"]).read_bytes()).hexdigest() == (
+        recovery["script_sha256"]
+    )
+    assert recovery["recovery_scope"]["sole_change"].startswith(
+        "cast numpy.isclose"
+    )
+    assert not recovery["recovery_scope"]["scientific_value_observed_before_recovery"]
+
+
+def test_figure15_analysis_family_confirms_robust_high_peak_without_selection() -> None:
+    result = _load("figure15-analysis-sensitivity-recovery-821.yaml")
+    assessment = _load("figure15-analysis-sensitivity-recovery-assessment-822.yaml")
+
+    assert all(result["deterministic_reproduction_gates"].values())
+    assert result["deterministic_reproduction_pass"]
+    assert result["fixed_pair"] == [39, 40]
+    assert [len(result["raw_pair_spike_times_ms"][key]) for key in ("39", "40")] == [
+        114,
+        148,
+    ]
+    peaks = [row["gamma_peak_hz"] for row in result["analysis_family"]]
+    assert peaks == pytest.approx(
+        [
+            53.026513256628306,
+            53.026513256628306,
+            52.631578947368425,
+            52.631578947368425,
+            53.0,
+            55.0,
+        ]
+    )
+    assert not result["selection_performed"]
+    assert assessment["gates"]["every_method_in_published_20_70hz_gamma_band"]
+    assert not assessment["gates"]["any_method_within_registered_39_49hz_gate"]
+    assert assessment["gates"]["registered_result_is_analysis-family-robust"]
+    assert not assessment["analysis_selected"]
+    assert not assessment["registered_holdout_reclassified_as_pass"]
+    assert not assessment["baseline_frozen"]

@@ -1,0 +1,68 @@
+schema_version: 1
+id: figure15-analysis-sensitivity-registration-817
+date: '2026-09-10'
+status: registered-before-execution-readout-only-analysis-family
+classification: calibrated-classic-smart-figure15-analysis-sensitivity-audit
+authorization: docs/validation-results/figure15-primary-source-identifiability-audit-816.yaml
+authorization_sha256: 409bbff878fcbf7d1724184d1719c28f060297ce154d0f24714ac4cc2200d3fe
+original_holdout_registration: docs/validation-results/calibrated-figure15-holdout-registration-810.yaml
+original_holdout_registration_sha256: 0aa7f3da487fe006f3e7a8f0edbea11a649076d510ff21dc89c7eda1203495cc
+original_holdout_result: docs/validation-results/calibrated-figure15-holdout-811.yaml
+original_holdout_result_sha256: 8bf47bd703a4d501c676064c3eefe863914ba2ce122e82436b4179d8fe00ce71
+original_holdout_assessment: docs/validation-results/calibrated-figure15-holdout-assessment-812.yaml
+original_holdout_assessment_sha256: 3b58cf785251e6378c28017e2b537d5f039419a830d89bfb7d307da4133bc220f
+script: scripts/run_figure15_analysis_sensitivity_audit.py
+script_sha256: 75669e7744aacbc897e7f5339bedbb32e6d4eb36d16179d4bd8324d380137744
+sensitivity_analysis: src/smart_robustness/analysis/figure15_sensitivity.py
+sensitivity_analysis_sha256: 90aeeb22dca52e8a4fcd23b369959ecf4c9fa50e09ccb7a7a66268cb3cca3a3b
+registered_analysis: src/smart_robustness/analysis/figure15.py
+registered_analysis_sha256: 0df239469abb3f3cd284847869dd803d4484981c6e88820b04991f73a7a532f8
+network_harness: src/smart_robustness/validation/figure15.py
+network_harness_sha256: 4362fc1dba215cbdfbab3de3903363049c10ff3f27dea12d15625012e91320d7
+result_id: figure15-analysis-sensitivity-818
+result: docs/validation-results/figure15-analysis-sensitivity-818.yaml
+assessment: docs/validation-results/figure15-analysis-sensitivity-assessment-819.yaml
+scope:
+  model_parameter_change: false
+  cell_pair_change: false
+  duration_or_binning_change: false
+  acceptance_gate_change: false
+  deterministic_rerun_reason: recover pair spike times omitted from Artifact 811
+  scientific_role: analysis-identifiability-characterization-not-new-holdout
+fixed_protocol:
+  pair: [39, 40]
+  duration_ms: 1000.0
+  histogram_bin_ms: 1.0
+  display_max_lag_ms: 180.0
+  gamma_band_hz: [20.0, 70.0]
+  target_graphical_hz: 44.0
+  registered_tolerance_hz: 5.0
+deterministic_reproduction_gate:
+  first_cell_spikes: 114
+  second_cell_spikes: 148
+  all_layer4_spikes: 608
+  registered_peak_hz: 53.026513256628306
+  absolute_tolerance: 1.0e-12
+analysis_family:
+  methods_hamming_window_ms: 200.0
+  methods:
+  - linear_correlogram_full_hamming_periodogram
+  - linear_correlogram_full_boxcar_periodogram
+  - linear_correlogram_displayed_hamming_periodogram
+  - linear_correlogram_displayed_boxcar_periodogram
+  - direct_full_epoch_cross_spectrum_power
+  - methods_4_10_200ms_nonoverlap_cross_spectrum_power
+selection_rule: >-
+  Report every method in the registered order. Do not select, rank, average, or
+  privilege a method because its peak is closer to 44 Hz. The first method must
+  exactly reproduce Artifact 811 before any sensitivity result is interpreted.
+interpretation_rule: >-
+  This audit can establish whether the fixed spike trains' estimated peak is
+  robust to source-unresolved analysis choices. It cannot convert Assessment
+  812 into a passed preregistered holdout, identify the unpublished original
+  pair or estimator, or authorize model tuning. Preserve the full range and
+  the registered 53.03-versus-44-Hz discrepancy.
+stopping_rule: >-
+  Execute one deterministic fixed-endpoint replay, archive both pair spike
+  trains and all six method peaks, and stop. Do not search another pair,
+  parameter, bin width, lag, window length, overlap, tolerance, or method.

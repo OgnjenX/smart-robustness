@@ -4156,3 +4156,23 @@ analysis choice is selected. Exact numerical recovery is not currently
 identifiable from the released sources; any calibrated-baseline freeze must
 state that limitation. Alternative neuron models and modern-anatomy variants
 remain unopened and separate.
+
+Artifacts 817--822 test whether that numeric discrepancy is merely an analysis
+choice. The deterministic recovery exactly reproduces the fixed pair's
+114/148 spikes, 608 total layer-4 events, and 53.026513-Hz registered peak, and
+archives both pair spike trains. Full versus displayed correlograms, Hamming
+versus boxcar taper, direct cross-spectrum, and the explicit 200-ms Methods
+4.10 interpretation all peak between 52.6316 and 55 Hz. None enters the
+registered 39--49-Hz interval. The original output-only NumPy-boolean failure
+and serialization-only recovery are preserved. Analysis ambiguity is now
+closed without selection, and Figure 15 remains a failed numeric holdout with
+a robustly reproduced local-gamma phenotype.
+
+The current endpoint is therefore a strong calibrated classic-SMART candidate,
+not a complete exact-numerical reproduction and not a frozen baseline. To keep
+pursuing a baseline that exhibits the graphically reported 44-Hz behavior, the
+next model generation must explicitly disclose Figure 15 as a post-holdout
+calibration target, use a causal source-bounded layer-4 dimension, and require
+all existing Figure-6/7/10/14/16 behaviors to survive. The immutable generation-
+one outcome remains the overfitting control. Neuron substitutions and modern
+anatomy remain deferred.

@@ -1,0 +1,105 @@
+schema_version: 1
+id: legacy-thalamus-source-grid-assessment-882
+date: '2026-09-10'
+status: assessed-negative-closed
+classification: calibrated-independent-legacy-kinness-source-grid-refinement
+registration:
+  path: docs/validation-results/legacy-thalamus-source-grid-registration-880.yaml
+  sha256: a517a1a424735978276625ca7c504a98d38fc4b3104c4bcbe9bfd1e9e4c02031
+result:
+  path: docs/validation-results/legacy-thalamus-source-grid-refinement-881.yaml
+  sha256: dba689360a4c62eff72e92e66718a80a398a39d655751a0c16fe23c7cd19ec82
+passing_methods: []
+voltage_selected_outcomes:
+  rk4:
+    tonic:
+      input_byte: 17
+      input_value: 0.06666666666666667
+      mean_error_mV: -0.6592606032979669
+      event_count: 0
+    burst:
+      input_byte: 122
+      input_value: 0.47843137254901963
+      mean_error_mV: -0.04898034895391845
+      event_count: 4
+  sanndra_scalar_rk4:
+    tonic:
+      input_byte: 17
+      input_value: 0.06666666666666667
+      mean_error_mV: -0.6592604735726582
+      event_count: 0
+    burst:
+      input_byte: 122
+      input_value: 0.47843137254901963
+      mean_error_mV: -0.04898034895391845
+      event_count: 4
+post_selection_diagnostics:
+  rk4:
+    closest_tonic_event_count:
+      input_byte: 19
+      event_count: 181
+      median_interevent_interval_ms: 16.549999999999955
+      mean_error_mV: 1.131237454840897
+    tonic_any_byte_passes_count_and_interval: false
+    burst_six_event_byte_range: [142, 154]
+    closest_six_event_timing:
+      input_byte: 142
+      max_event_time_error_ms: 2.099999999999909
+      mean_error_mV: -1.8069340267392917
+    burst_any_byte_passes_count_and_timing: false
+  sanndra_scalar_rk4:
+    closest_tonic_event_count:
+      input_byte: 19
+      event_count: 175
+      median_interevent_interval_ms: 17.099999999999966
+      mean_error_mV: 1.232916498722024
+    tonic_any_byte_passes_count_and_interval: false
+    burst_six_event_byte_range: [145, 159]
+    closest_six_event_timing:
+      input_byte: 146
+      max_event_time_error_ms: 1.25
+      mean_error_mV: -2.118189514113837
+    burst_any_byte_passes_count_and_timing: false
+assessment:
+  registered_selection_rule_followed: true
+  spike_outputs_used_for_selection: false
+  vectorized_execution_verified_lossless: true
+  any_exact_normalized_8bit_source_value_reproduces_tonic_targets: false
+  any_exact_normalized_8bit_source_value_reproduces_burst_targets: false
+  normalized_8bit_input_mapping_reproduces_legacy_benchmark: false
+  legacy_benchmark_reproduced: false
+  t_type_mechanism_independently_validated: false
+  original_figure8_reproduced: false
+  exact_classic_baseline_freeze_authorized: false
+interpretation:
+  - >-
+    Both numerical methods select byte 17 from the tonic voltage mean and byte
+    122 from the burst voltage mean. Those selected cells emit zero tonic and
+    four rebound events, so every spike-based held-out gate fails.
+  - >-
+    The full registered source grid also rules out an overlooked passing byte.
+    Tonic byte 19 is closest to the archived 199 events but yields only 181
+    events at 16.55 ms under coupled RK4 and 175 at 17.10 ms under the SANNDRA
+    comparator. Byte 20 already overshoots to 233/224 events at 12.85/13.35 ms.
+  - >-
+    Six-event rebound trains do occur, but no six-event byte satisfies the
+    fixed 0.5-ms timing gate. Their closest maximum timing errors are 2.10 ms
+    and 1.25 ms, and they are not the voltage-selected inputs.
+  - >-
+    Continuous interpolation between 8-bit values is not source permitted.
+    The normalized 8-bit input-amplitude hypothesis is therefore closed without
+    changing membrane, channel, detector, timing, or integration parameters.
+  - >-
+    This independent 2004 benchmark still cannot identify the missing 2008
+    Figure-8 clamp schedule. It supplies no basis for an official Figure-8 or
+    exact original-SMART claim.
+next_action:
+  action: >-
+    Return to source recovery or a formal calibrated-behavioral freeze decision.
+    Do not refine the normalized input continuously and do not fit cellular or
+    timing parameters from this failed benchmark.
+  source_recovery_authorized: true
+  further_input_amplitude_fitting_authorized: false
+  cell_or_channel_fitting_authorized: false
+  figure8_claim_authorized: false
+baseline_frozen: false

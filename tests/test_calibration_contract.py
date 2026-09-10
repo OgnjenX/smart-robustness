@@ -13572,3 +13572,63 @@ def test_legacy_thalamus_source_grid_refinement_is_preregistered() -> None:
     assert registration["vectorization_validation"]["event_summaries_identical"]
     assert "Do not inspect event counts" in registration["selection_rule"]
     assert not registration["baseline_frozen"]
+
+
+def test_legacy_thalamus_source_grid_refinement_closes_input_hypothesis() -> None:
+    registration_path = (
+        ROOT
+        / "docs/validation-results/legacy-thalamus-source-grid-registration-880.yaml"
+    )
+    result_path = (
+        ROOT / "docs/validation-results/legacy-thalamus-source-grid-refinement-881.yaml"
+    )
+    result = yaml.safe_load(result_path.read_text())
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/legacy-thalamus-source-grid-assessment-882.yaml"
+        ).read_text()
+    )
+
+    assert hashlib.sha256(registration_path.read_bytes()).hexdigest() == assessment[
+        "registration"
+    ]["sha256"]
+    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment["result"][
+        "sha256"
+    ]
+    assert result["passing_methods"] == assessment["passing_methods"] == []
+    for method in result["method_results"]:
+        selected = method["voltage_selected"]
+        held_out = method["held_out_evaluation"]
+        assert selected["tonic"]["input_byte"] == 17
+        assert selected["tonic"]["event_count"] == 0
+        assert selected["burst"]["input_byte"] == 122
+        assert selected["burst"]["event_count"] == 4
+        assert not held_out["joint_pass"]
+    diagnostics = assessment["post_selection_diagnostics"]
+    assert diagnostics["rk4"]["closest_tonic_event_count"]["event_count"] == 181
+    assert diagnostics["sanndra_scalar_rk4"]["closest_tonic_event_count"][
+        "event_count"
+    ] == 175
+    assert not diagnostics["rk4"]["tonic_any_byte_passes_count_and_interval"]
+    assert not diagnostics["sanndra_scalar_rk4"][
+        "tonic_any_byte_passes_count_and_interval"
+    ]
+    assert not diagnostics["rk4"]["burst_any_byte_passes_count_and_timing"]
+    assert not diagnostics["sanndra_scalar_rk4"][
+        "burst_any_byte_passes_count_and_timing"
+    ]
+    verdict = assessment["assessment"]
+    assert verdict["registered_selection_rule_followed"]
+    assert verdict["vectorized_execution_verified_lossless"]
+    assert not verdict[
+        "any_exact_normalized_8bit_source_value_reproduces_tonic_targets"
+    ]
+    assert not verdict[
+        "any_exact_normalized_8bit_source_value_reproduces_burst_targets"
+    ]
+    assert not verdict["normalized_8bit_input_mapping_reproduces_legacy_benchmark"]
+    assert not verdict["original_figure8_reproduced"]
+    assert not verdict["exact_classic_baseline_freeze_authorized"]
+    assert not assessment["next_action"]["further_input_amplitude_fitting_authorized"]
+    assert not assessment["baseline_frozen"]

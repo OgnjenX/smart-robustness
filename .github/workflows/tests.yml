@@ -4,6 +4,10 @@ on:
   push:
   pull_request:
 
+concurrency:
+  group: tests-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -19,9 +23,16 @@ jobs:
           cache: pip
       - run: python -m pip install -e '.[dev]'
       - run: ruff check .
+      - name: Calibration and provenance contracts
+        run: >-
+          pytest -q
+          tests/test_calibration_contract.py
+          tests/test_joint_calibrated_reconstruction_contract.py
       - name: Unit and lightweight integration tests
         run: >-
           pytest -q
+          --ignore=tests/test_calibration_contract.py
+          --ignore=tests/test_joint_calibrated_reconstruction_contract.py
           --ignore=tests/test_classic_sector.py
           --ignore=tests/test_classic_synapses.py
           --ignore=tests/test_figure19_validation.py

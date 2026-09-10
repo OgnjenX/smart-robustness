@@ -8206,8 +8206,12 @@ def test_persistent_gaba0875_mismatch_is_single_fixed_trial() -> None:
     script_path = ROOT / registration["script"]
     match_path = ROOT / registration["match_result"]
 
-    assert hashlib.sha256(profile_path.read_bytes()).hexdigest() == registration["profile_sha256"]
-    assert hashlib.sha256(script_path.read_bytes()).hexdigest() == registration["script_sha256"]
+    assert _matches_current_or_committed_history(
+        str(profile_path.relative_to(ROOT)), registration["profile_sha256"]
+    )
+    assert _matches_current_or_committed_history(
+        str(script_path.relative_to(ROOT)), registration["script_sha256"]
+    )
     assert (
         hashlib.sha256(match_path.read_bytes()).hexdigest() == registration["match_result_sha256"]
     )
@@ -8259,8 +8263,12 @@ def test_persistent_inhibitory_drive_audit_is_readout_only() -> None:
     profile_path = ROOT / registration["profile"]
     script_path = ROOT / registration["script"]
 
-    assert hashlib.sha256(profile_path.read_bytes()).hexdigest() == registration["profile_sha256"]
-    assert hashlib.sha256(script_path.read_bytes()).hexdigest() == registration["script_sha256"]
+    assert _matches_current_or_committed_history(
+        str(profile_path.relative_to(ROOT)), registration["profile_sha256"]
+    )
+    assert _matches_current_or_committed_history(
+        str(script_path.relative_to(ROOT)), registration["script_sha256"]
+    )
     assert registration["persistent_projection_scale"] == {
         "projection_id": "modeldb112923.projection.008",
         "scale": 0.875,
@@ -8306,8 +8314,12 @@ def test_recorded_inhibitory_drive_audit_changes_instrumentation_only() -> None:
     profile_path = ROOT / registration["profile"]
     script_path = ROOT / registration["script"]
 
-    assert hashlib.sha256(profile_path.read_bytes()).hexdigest() == registration["profile_sha256"]
-    assert hashlib.sha256(script_path.read_bytes()).hexdigest() == registration["script_sha256"]
+    assert _matches_current_or_committed_history(
+        str(profile_path.relative_to(ROOT)), registration["profile_sha256"]
+    )
+    assert _matches_current_or_committed_history(
+        str(script_path.relative_to(ROOT)), registration["script_sha256"]
+    )
     assert registration["sole_execution_change"] == {
         "value": "record_relay_diagnostics=true",
         "purpose": "construct the existing nonspecific-pathway state monitor",

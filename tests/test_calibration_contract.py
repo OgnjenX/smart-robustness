@@ -13632,3 +13632,30 @@ def test_legacy_thalamus_source_grid_refinement_closes_input_hypothesis() -> Non
     assert not verdict["exact_classic_baseline_freeze_authorized"]
     assert not assessment["next_action"]["further_input_amplitude_fitting_authorized"]
     assert not assessment["baseline_frozen"]
+
+
+def test_smart_era_multiarchive_search_preserves_exact_source_boundary() -> None:
+    audit = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/smart-era-multiarchive-source-recovery-883.yaml"
+        ).read_text()
+    )
+
+    assert audit["status"] == "exact-source-not-recovered"
+    assert audit["target_releases"]["kinness"]["name"] == "KInNeSS 0.3.4 RC2"
+    assert audit["target_releases"]["sanndra"]["name"] == "SANNDRA 1.2.0 RC2"
+    assert audit["target_releases"]["sanndra"]["required_file"] == "spikeevents.h"
+    assert audit["searches"]["common_crawl"]["indexes"] == [
+        "CC-MAIN-2008-2009",
+        "CC-MAIN-2009-2010",
+    ]
+    assert len(audit["searches"]["boston_university_open_repository"]["relevant_items"]) == 2
+    assert not any(audit["recovered_material"].values())
+    assert not audit["assessment"][
+        "exact_runtime_semantics_identifiable_from_public_source"
+    ]
+    assert not audit["assessment"]["exact_2008_numerical_reproduction_claim_supported"]
+    assert not audit["assessment"]["further_parameter_fitting_authorized"]
+    assert audit["assessment"]["calibrated_behavioral_freeze_decision_remains_available"]
+    assert not audit["baseline_frozen"]

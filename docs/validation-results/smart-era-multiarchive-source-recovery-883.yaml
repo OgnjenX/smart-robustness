@@ -1,0 +1,96 @@
+schema_version: 1
+id: smart-era-multiarchive-source-recovery-883
+date: '2026-09-10'
+status: exact-source-not-recovered
+classification: independent-public-archive-source-recovery-audit
+question: >-
+  Does any independent public archive now preserve the SMART-era KInNeSS
+  0.3.4 RC2 or SANNDRA 1.2.0 RC2 source body needed to resolve exact simulator
+  scheduling, event detection, and input semantics?
+target_releases:
+  kinness:
+    name: KInNeSS 0.3.4 RC2
+    release_date: '2008-06-10'
+    original_url: http://symphony.bu.edu/Snapshots/KInNeSS-0.3.4-RC2.tar.gz
+    cvs_tag: KINNESS_0_3_4_RC2
+  sanndra:
+    name: SANNDRA 1.2.0 RC2
+    release_date: '2008-01-26'
+    original_url: http://symphony.bu.edu/Snapshots/SANNDRA-1.2.0-RC2.tar.gz
+    required_file: spikeevents.h
+prior_authoritative_audit:
+  path: docs/validation-results/kinness-smart-era-event-source-audit-522.yaml
+  conclusion: exact release identified; source bodies and event implementation not preserved
+searches:
+  github:
+    methods:
+      - exact global code search for spikeevents.h
+      - repository searches for KInNeSS and SANNDRA
+      - exact tag search for KINNESS_0_3_4_RC2
+    outcome: >-
+      No relevant source repository or tag was found. The sole spikeevents.h
+      code-search hit belonged to an unrelated modern project.
+  internet_archive_cdx:
+    methods:
+      - exact SMART-era release URLs
+      - wildcard inventories for symphony.bu.edu/Snapshots and temporal.bu.edu/Snapshots
+    outcome: >-
+      No new exact release payload was recovered. The temporal.bu.edu wildcard
+      inventory again exposes SANNDRA-0.4.0.tar.gz from 2001 but no later
+      KInNeSS or SANNDRA source release.
+  arquivo_pt:
+    api: https://arquivo.pt/wayback/cdx
+    queries:
+      - http://symphony.bu.edu/Snapshots/KInNeSS-0.3.4-RC2.tar.gz
+      - http://symphony.bu.edu/Snapshots/SANNDRA-1.2.0-RC2.tar.gz
+    outcome: no capture records returned
+  common_crawl:
+    api: https://index.commoncrawl.org/
+    indexes:
+      - CC-MAIN-2008-2009
+      - CC-MAIN-2009-2010
+    queries:
+      - both exact SMART-era release URLs
+      - wildcard symphony.bu.edu/Snapshots and temporal.bu.edu/Snapshots
+    outcome: no indexed records returned
+  boston_university_open_repository:
+    api: https://open.bu.edu/server/api/discover/search/objects
+    queries: [SANNDRA, KInNeSS]
+    relevant_items:
+      - id: 0e83be53-0aa9-4e52-90a0-d4c071205d62
+        title: 'KInNeSS: A Modular Framework for Computational Neuroscience'
+        original_attachment: 07.007.pdf
+      - id: 12df05aa-2b27-4198-ac6f-eda8039e6958
+        title: 'KInNeSS: A Modular Framework for Computational Neuroscience'
+        original_attachment: 07.025.pdf
+    attachment_inventory: >-
+      Each item contains only its PDF plus repository-derived text, thumbnail,
+      and metadata JSON. No source archive or executable attachment exists.
+  research_and_item_archives:
+    services: [Internet Archive advanced metadata search, Figshare]
+    queries: [KInNeSS, SANNDRA]
+    outcome: no relevant software or source package found
+recovered_material:
+  smart_era_kinness_source: false
+  smart_era_sanndra_source: false
+  spikeevents_header_body: false
+  original_figure8_input_schedule: false
+  original_figure15_spike_arrays_or_analysis: false
+assessment:
+  exact_runtime_semantics_identifiable_from_public_source: false
+  exact_2008_numerical_reproduction_claim_supported: false
+  further_parameter_fitting_authorized: false
+  calibrated_behavioral_freeze_decision_remains_available: true
+interpretation: >-
+  The expanded independent-archive search does not alter the implementation or
+  any numerical result. It strengthens the evidence that exact SMART-era
+  runtime and output recovery is currently source-limited. The repository may
+  freeze a transparent calibrated behavioral reconstruction, but it may not
+  label that artifact an exact numerical reproduction of the unavailable 2008
+  execution.
+next_action: >-
+  Consolidate the completed source-constrained and calibrated evidence into a
+  formal freeze decision. Preserve the failed Figure-8 exact benchmark and the
+  Figure-15 44-versus-53-Hz discrepancy as explicit limitations. Do not begin
+  neuron substitutions under an exact-reproduction label.
+baseline_frozen: false

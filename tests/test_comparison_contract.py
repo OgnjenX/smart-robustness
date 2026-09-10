@@ -16,6 +16,7 @@ from smart_robustness.models.adex import (
     make_somatic_adex_factory,
 )
 from smart_robustness.models.adex_parameters import LITERATURE_REGULAR_SPIKING
+from smart_robustness.models.gif import create_somatic_gif_population
 
 
 def _contract(factory=None):
@@ -34,6 +35,13 @@ def test_adex_preserves_first_order_topology_ports_delays_and_strengths() -> Non
     assert classic == adex
     assert len(classic.populations) == 12
     assert len(classic.projections) == 53
+
+
+def test_gif_preserves_first_order_topology_ports_delays_and_strengths() -> None:
+    classic = _contract()
+    gif = _contract(create_somatic_gif_population)
+    assert_controlled_substitution(classic, gif)
+    assert classic == gif
 
 
 def test_controlled_substitution_rejects_a_structural_change() -> None:

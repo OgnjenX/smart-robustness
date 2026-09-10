@@ -922,6 +922,16 @@ parameters:
     status: completed-no-new-candidate-promoted
     source: Artifacts 904--907
     note: Somatic capacitance and leak-conductance scales were intrinsic fit parameters; all network and dendritic parameters remained fixed. This registered relay rescue route is closed without a further network run.
+  model.gif.phase1_intervention:
+    value: replace somatic fast Na/K with stochastic Pozzorini-Mensi GIF while retaining SMART morphology, ports, T-current, AHP/ACh, learning, topology, and protocols
+    status: preregistered-controlled-intervention-before-network-outcomes
+    source: configs/robustness/gif_phase1_v1.yaml; docs/validation-results/neuron-model-gif-study-registration-908.yaml
+    note: Twenty fixed network seeds and separate isolated training/holdout seeds are required because GIF spike emission uses an escape-rate point process.
+  model.gif.literature_transfer:
+    value: excitatory and inhibitory GIF means with source absolute threshold/reset converted to offsets from EL and SMART passive terms retained
+    status: preregistered-literature-parameter-arm-before-network-outcomes
+    source: Mensi et al. 2012 doi:10.1152/jn.00408.2011; Pozzorini et al. 2015 doi:10.1371/journal.pcbi.1004275; Setareh et al. 2017 doi:10.3389/fncom.2017.00052 Table 1
+    note: Thalamic classes use a fixed excitatory/inhibitory transfer mapping only for this controlled arm; it is not presented as thalamic parameter evidence.
   benchmark.population_sizes:
     value: see configs/*.yaml
     status: exploratory

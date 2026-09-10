@@ -1,0 +1,95 @@
+schema_version: 1
+name: gif-parameter-invariant-v1
+model: somatic_gif_literature
+status: preregistered-before-any-gif-network-outcome
+classification: literature-derived-gif-only-parameters
+
+formulation:
+  membrane: leaky integrate-and-fire with two spike-triggered current exponentials
+  threshold: baseline plus two spike-triggered threshold exponentials
+  spike_emission: stochastic exponential escape rate
+  timestep_probability: 1-exp(-lambda*dt)
+  reset: clamp somatic voltage to Vreset during absolute refractory period
+
+intervention:
+  replaced: somatic fast sodium/potassium spike generator
+  retained:
+    - SMART Table 3 morphology, capacitance, leak conductance, and leak reversal
+    - axial compartment coupling and compartment-targeted conductance ports
+    - thalamic T-type calcium currents
+    - layer-5 and layer-6II SMART AHP/ACh mechanism
+    - transmitter depletion, STDP, projection weights, and delays
+    - active layer-5 distal sodium/potassium channels
+
+literature_presets:
+  excitatory:
+    threshold_offset_mV: 27.4
+    reset_offset_mV: 30.3
+    eta_fast_pA: 56.7
+    eta_fast_tau_ms: 57.8
+    eta_slow_pA: -6.9
+    eta_slow_tau_ms: 218.2
+    gamma_fast_mV: 11.7
+    gamma_fast_tau_ms: 53.8
+    gamma_slow_mV: 1.8
+    gamma_slow_tau_ms: 640.0
+    escape_rate_hz: 10000.0
+    stochasticity_mV: 1.4
+    refractory_ms: 4.0
+  inhibitory:
+    threshold_offset_mV: 30.0
+    reset_offset_mV: 22.8
+    eta_fast_pA: 31.8
+    eta_fast_tau_ms: 11.5
+    eta_slow_pA: 1.6
+    eta_slow_tau_ms: 500.1
+    gamma_fast_mV: 5.6
+    gamma_fast_tau_ms: 11.5
+    gamma_slow_mV: 0.6
+    gamma_slow_tau_ms: 473.7
+    escape_rate_hz: 10000.0
+    stochasticity_mV: 0.6
+    refractory_ms: 4.0
+
+smart_class_mapping:
+  excitatory:
+    - thalamic_relay
+    - thalamic_nonspecific
+    - thalamic_matrix
+    - layer4_excitatory_v1
+    - layer23_excitatory_v1
+    - layer5_excitatory_v1
+    - layer6i_excitatory_v1
+    - layer6ii_excitatory_v1
+  inhibitory:
+    - trn
+    - thalamic_interneuron
+    - layer4_inhibitory_v1
+    - layer23_inhibitory_v1
+
+transfer_rule: >-
+  Convert the literature absolute threshold and reset to offsets from the
+  literature EL, then add those offsets to each SMART cell's unchanged
+  somatic leak reversal. Use means without the source paper's +/-15 percent
+  heterogeneity so heterogeneity is not a second intervention.
+
+provenance:
+  formulation:
+    citation: Pozzorini et al. 2015, PLOS Computational Biology 11:e1004275
+    doi: 10.1371/journal.pcbi.1004275
+  numerical_means:
+    citation: Setareh et al. 2017, Frontiers in Computational Neuroscience 11:52, Table 1
+    doi: 10.3389/fncom.2017.00052
+    origin: means extracted from Mensi et al. 2012
+  original_extraction:
+    citation: Mensi et al. 2012, Journal of Neurophysiology 107:1756-1775
+    doi: 10.1152/jn.00408.2011
+  qualification: >-
+    Cortical excitatory means are assigned to SMART excitatory and relay-like
+    classes, and cortical inhibitory means to SMART inhibitory and TRN-like
+    classes. This is a fixed literature transfer arm, not a claim that the
+    source measurements characterize thalamic cells.
+
+passive_parameters_from_smart: true
+network_outcome_fitting: prohibited
+frozen_after_registration: true

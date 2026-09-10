@@ -50,6 +50,30 @@ def test_relay_has_active_soma_and_calcium_dendrites() -> None:
     assert "m_ca_inf_proximal_dendrite=1/(" in equations
 
 
+def test_gif_replaces_only_somatic_hh_equations() -> None:
+    compiled = compile_cell_equations(
+        get_cell_spec("thalamic_relay"),
+        axial_convention=AxialConvention.SYMMETRIC_CABLE,
+        leak_convention=LeakConvention.TABLE3_REVERSAL,
+        voltage_coordinate=VoltageCoordinate.RELATIVE_TO_TABLE3_LEAK,
+        nak_rate_convention=NaKRateConvention.PRINTED_SMART,
+        calcium_gate_convention=TTypeGateConvention.RECIPROCAL,
+        calcium_voltage_coordinate=CalciumVoltageCoordinate.INTEGRATED_VOLTAGE,
+        calcium_density_convention=CalciumDensityConvention.TABLE3,
+        ahp_convention=AHPConvention.PAPER_TEXT,
+        enable_ahp_ach=False,
+        somatic_spike_model="gif",
+    )
+    equations = compiled.equations
+    assert compiled.somatic_spike_model == "gif"
+    assert "lambda_gif=" in equations
+    assert "eta_fast_gif" in equations
+    assert "v_threshold_gif=" in equations
+    assert "i_na_soma=" not in equations
+    assert "i_na_proximal_dendrite=" not in equations
+    assert "i_ca_proximal_dendrite=" in equations
+
+
 def test_exact_voltage_clamp_replaces_only_selected_compartment_dynamics() -> None:
     compiled = compile_cell_equations(
         get_cell_spec("thalamic_relay"),

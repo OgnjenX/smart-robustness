@@ -1,0 +1,81 @@
+schema_version: 1
+name: gif-isolated-cell-match-protocol-v1
+status: preregistered-before-any-gif-isolated-fit-or-network-outcome
+cell_classes: all-12-source-smart-classes
+literature_predecessor: configs/models/gif_parameter_invariant_v1.yaml
+
+classic_target_scan:
+  pre_ms: 50.0
+  step_ms: 200.0
+  post_ms: 50.0
+  dt_ms: 0.02
+  voltage_recording_dt_ms: 0.1
+  passive_voltage_offset_range_mV: [-100.0, 200.0]
+  passive_voltage_offset_increment_mV: 5.0
+  amplitude_rule: soma_g_leak_nS_times_voltage_offset_mV_equals_pA
+  vectorized_current_levels: 61
+
+sealed_level_selection:
+  levels_per_cell_class: 7
+  rule: >-
+    Use the existing classic-only interleaved rate-spanning selector. GIF
+    outputs cannot influence selected current levels.
+  training_positions: [0, 2, 4, 6]
+  sealed_current_holdout_positions: [1, 3, 5]
+
+stochastic_repetitions:
+  training_seeds: [2026091101, 2026091102, 2026091103, 2026091104]
+  sealed_seed_holdout: [2026091201, 2026091202, 2026091203, 2026091204]
+  aggregation: arithmetic mean loss over seeds; retain every replicate
+  same_registered_seed_schedule_across_candidates: true
+
+candidate_generation:
+  method: scipy-qmc-sobol-unscrambled
+  candidates_per_cell_class: 32
+  include_literature_candidate: true
+  fitted_parameters:
+    threshold_offset_mV: [10.0, 40.0]
+    reset_offset_mV: [-15.0, 35.0]
+    eta_fast_pA: [-50.0, 150.0]
+    eta_slow_pA: [-50.0, 100.0]
+    gamma_fast_mV: [-10.0, 30.0]
+    gamma_slow_mV: [-10.0, 20.0]
+  held_to_literature_preset_by_excitatory_or_inhibitory_mapping:
+    - eta_fast_tau_ms
+    - eta_slow_tau_ms
+    - gamma_fast_tau_ms
+    - gamma_slow_tau_ms
+    - escape_rate_hz
+    - stochasticity_mV
+    - refractory_ms
+
+training_targets:
+  - resting voltage
+  - spike count and firing rate
+  - first-spike latency
+  - first-to-last interspike-interval adaptation ratio
+
+selection:
+  primary: minimum mean training loss across training seeds
+  deterministic_tie_break: ascending-parameter-tuple
+  current_holdout_not_used_for_selection: true
+  seed_holdout_not_used_for_selection: true
+  promotion:
+    - all selected traces are finite
+    - training loss is no worse than the literature predecessor
+    - sealed current-and-seed holdout loss is no worse than the literature predecessor
+  failed_promotion_rule: retain literature arm and do not enter matched network arm
+
+parameters_held_from_smart:
+  - capacitance, leak, and morphology
+  - axial coupling
+  - T-type calcium
+  - AHP/ACh
+  - every receptor and external-input port
+
+forbidden_fit_inputs:
+  - all full-network results
+  - Figure 6 learning outcomes
+  - Figure 7 match or mismatch outcomes
+  - Figure 10 reset outcomes
+  - Figure 14, 15, or 16 spectral and synchrony outcomes

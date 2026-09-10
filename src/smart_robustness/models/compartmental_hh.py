@@ -31,6 +31,7 @@ from .equation_builder import (
     VoltageCoordinate,
     compile_cell_equations,
 )
+from .gif_parameters import GIFParameters
 from .ports import ExternalInputPortSpec, GapJunctionPortSpec, InjectionPortSpec, SynapticPortSpec
 from .table3 import CellSpec, get_cell_spec
 
@@ -165,14 +166,20 @@ def create_compartmental_hh_population(
         import brian2 as brian
 
     somatic_spike_model = str(params.get("somatic_spike_model", "classic_hh"))
-    if somatic_spike_model not in {"classic_hh", "adex"}:
-        raise ValueError("somatic_spike_model must be 'classic_hh' or 'adex'")
+    if somatic_spike_model not in {"classic_hh", "adex", "gif"}:
+        raise ValueError("somatic_spike_model must be 'classic_hh', 'adex', or 'gif'")
     adex_parameters = None
+    gif_parameters = None
     if somatic_spike_model == "adex":
         raw_adex_parameters = params.get("adex_parameters")
         if not isinstance(raw_adex_parameters, dict):
             raise TypeError("AdEx populations require an adex_parameters mapping")
         adex_parameters = AdExParameters.from_mapping(raw_adex_parameters)
+    elif somatic_spike_model == "gif":
+        raw_gif_parameters = params.get("gif_parameters")
+        if not isinstance(raw_gif_parameters, dict):
+            raise TypeError("GIF populations require a gif_parameters mapping")
+        gif_parameters = GIFParameters.from_mapping(raw_gif_parameters)
 
     cell = params.get("cell_spec")
     if cell is None:
@@ -394,6 +401,21 @@ def create_compartmental_hh_population(
             threshold="v_soma >= v_peak_adex",
             refractory=adex_parameters.refractory_ms * brian.ms,
         )
+    elif somatic_spike_model == "gif":
+        assert gif_parameters is not None
+        spike_reset = (
+            "v_soma = v_reset_gif; "
+            "eta_fast_gif += eta_fast_jump_gif; "
+            "eta_slow_gif += eta_slow_jump_gif; "
+            "gamma_fast_gif += gamma_fast_jump_gif; "
+            "gamma_slow_gif += gamma_slow_jump_gif; "
+            "last_spike_onset = t; "
+            + spike_reset
+        )
+        group_kwargs.update(
+            threshold="rand() < 1-exp(-lambda_gif*dt)",
+            refractory=gif_parameters.refractory_ms * brian.ms,
+        )
     elif spike_event_rule in {
         SpikeEventRule.LATCHED_PEAK_THEN_ZERO,
         SpikeEventRule.HYSTERETIC_THRESHOLD_THEN_ZERO,
@@ -436,7 +458,7 @@ def create_compartmental_hh_population(
     group = brian.NeuronGroup(size, equations, reset=spike_reset, **group_kwargs)
     group.clear_drive_on_spike = 0
     group.drive_spikes_until_clear = 0
-    if somatic_spike_model == "adex":
+    if somatic_spike_model == "adex" or somatic_spike_model == "gif":
         pass
     elif spike_event_rule in {
         SpikeEventRule.LATCHED_PEAK_THEN_ZERO,
@@ -499,6 +521,37 @@ def create_compartmental_hh_population(
             + adex_parameters.reset_offset_mV
         ) * brian.mV
         group.v_peak_adex = adex_parameters.peak_mV * brian.mV
+    elif somatic_spike_model == "gif":
+        assert gif_parameters is not None
+        group.eta_fast_gif = 0 * brian.pA
+        group.eta_slow_gif = 0 * brian.pA
+        group.gamma_fast_gif = 0 * brian.mV
+        group.gamma_slow_gif = 0 * brian.mV
+        group.eta_fast_jump_gif = gif_parameters.eta_fast_pA * brian.pA
+        group.eta_slow_jump_gif = gif_parameters.eta_slow_pA * brian.pA
+        group.tau_eta_fast_gif = gif_parameters.eta_fast_tau_ms * brian.ms
+        group.tau_eta_slow_gif = gif_parameters.eta_slow_tau_ms * brian.ms
+        group.gamma_fast_jump_gif = gif_parameters.gamma_fast_mV * brian.mV
+        group.gamma_slow_jump_gif = gif_parameters.gamma_slow_mV * brian.mV
+        group.tau_gamma_fast_gif = gif_parameters.gamma_fast_tau_ms * brian.ms
+        group.tau_gamma_slow_gif = gif_parameters.gamma_slow_tau_ms * brian.ms
+        group.lambda0_gif = gif_parameters.escape_rate_hz * brian.Hz
+        group.delta_v_gif = gif_parameters.stochasticity_mV * brian.mV
+        group.e_l_gif = (
+            cell.soma.e_leak_mV + gif_parameters.effective_leak_offset_mV
+        ) * brian.mV
+        group.v_t_star_gif = (
+            cell.soma.e_leak_mV
+            + gif_parameters.effective_leak_offset_mV
+            + gif_parameters.threshold_offset_mV
+        ) * brian.mV
+        group.v_reset_gif = (
+            cell.soma.e_leak_mV
+            + gif_parameters.effective_leak_offset_mV
+            + gif_parameters.reset_offset_mV
+        ) * brian.mV
+        group.c_scale_gif = gif_parameters.somatic_capacitance_scale
+        group.g_l_scale_gif = gif_parameters.somatic_leak_conductance_scale
     elif spike_event_rule in {
         SpikeEventRule.LITERAL_PREVIOUS_SAMPLE,
         SpikeEventRule.FALLING_THRESHOLD_CROSSING,
@@ -590,7 +643,7 @@ def create_compartmental_hh_population(
         else:
             paper_voltage = initial_voltage - compartment.e_leak_mV
         if compartment.g_na_mS_cm2 is not None and not (
-            somatic_spike_model == "adex" and compartment_name == "soma"
+            somatic_spike_model in {"adex", "gif"} and compartment_name == "soma"
         ):
             _set(
                 group,

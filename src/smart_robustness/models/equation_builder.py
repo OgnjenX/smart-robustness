@@ -261,8 +261,8 @@ def compile_cell_equations(
     ahp = _enum(ahp_convention, AHPConvention, "ahp_convention")
     if not isinstance(enable_ahp_ach, bool):
         raise TypeError("enable_ahp_ach must be an explicit bool")
-    if somatic_spike_model not in {"classic_hh", "adex"}:
-        raise ValueError("somatic_spike_model must be 'classic_hh' or 'adex'")
+    if somatic_spike_model not in {"classic_hh", "adex", "gif"}:
+        raise ValueError("somatic_spike_model must be 'classic_hh', 'adex', or 'gif'")
     if not isinstance(synaptic_ports, tuple) or not all(
         isinstance(port, SynapticPortSpec) for port in synaptic_ports
     ):
@@ -348,6 +348,36 @@ def compile_cell_equations(
                 "g_l_scale_adex : 1 (constant)",
             )
         )
+    elif somatic_spike_model == "gif":
+        lines.extend(
+            (
+                "deta_fast_gif/dt=-eta_fast_gif/tau_eta_fast_gif : amp",
+                "deta_slow_gif/dt=-eta_slow_gif/tau_eta_slow_gif : amp",
+                "dgamma_fast_gif/dt=-gamma_fast_gif/tau_gamma_fast_gif : volt",
+                "dgamma_slow_gif/dt=-gamma_slow_gif/tau_gamma_slow_gif : volt",
+                "v_threshold_gif=v_t_star_gif+gamma_fast_gif+gamma_slow_gif : volt",
+                (
+                    "lambda_gif=lambda0_gif*exp(clip("
+                    "(v_soma-v_threshold_gif)/delta_v_gif, -50, 20)) : Hz"
+                ),
+                "i_gif_soma=g_l_soma*g_l_scale_gif*(e_l_gif-v_soma) : amp",
+                "eta_fast_jump_gif : amp (constant)",
+                "eta_slow_jump_gif : amp (constant)",
+                "tau_eta_fast_gif : second (constant)",
+                "tau_eta_slow_gif : second (constant)",
+                "gamma_fast_jump_gif : volt (constant)",
+                "gamma_slow_jump_gif : volt (constant)",
+                "tau_gamma_fast_gif : second (constant)",
+                "tau_gamma_slow_gif : second (constant)",
+                "lambda0_gif : Hz (constant)",
+                "delta_v_gif : volt (constant)",
+                "v_t_star_gif : volt (constant)",
+                "v_reset_gif : volt (constant)",
+                "e_l_gif : volt (constant)",
+                "c_scale_gif : 1 (constant)",
+                "g_l_scale_gif : 1 (constant)",
+            )
+        )
     for port in synaptic_ports:
         block = f"1/(1+0.33*exp(-v_{port.compartment}/(16.7*mV)))" if port.voltage_block else "1"
         lines.extend(
@@ -411,16 +441,18 @@ def compile_cell_equations(
         name = compartment.name
         membrane_current_terms = (
             []
-            if somatic_spike_model == "adex" and name == "soma"
+            if somatic_spike_model in {"adex", "gif"} and name == "soma"
             else [f"g_l_{name}*(e_l_{name}-v_{name})"]
         )
         if compartment.g_na_mS_cm2 is not None and not (
-            somatic_spike_model == "adex" and name == "soma"
+            somatic_spike_model in {"adex", "gif"} and name == "soma"
         ):
             lines.extend(_nak_lines(name, voltage, nak_rate))
             membrane_current_terms.extend((f"i_na_{name}", f"i_k_{name}"))
         elif somatic_spike_model == "adex" and name == "soma":
             membrane_current_terms.extend(("i_adex_soma", "-w_adex"))
+        elif somatic_spike_model == "gif" and name == "soma":
+            membrane_current_terms.extend(("i_gif_soma", "-eta_fast_gif", "-eta_slow_gif"))
         if compartment.g_ca_mS_cm2 is not None:
             lines.extend(
                 _calcium_lines(
@@ -458,7 +490,12 @@ def compile_cell_equations(
                 f"(C_{name}*c_scale_adex) : volt "
                 "(unless refractory)"
                 if somatic_spike_model == "adex" and name == "soma"
-                else f"dv_{name}/dt=({' + '.join(current_terms)})/C_{name} : volt"
+                else (
+                    f"dv_{name}/dt=({' + '.join(current_terms)})/"
+                    f"(C_{name}*c_scale_gif) : volt (unless refractory)"
+                    if somatic_spike_model == "gif" and name == "soma"
+                    else f"dv_{name}/dt=({' + '.join(current_terms)})/C_{name} : volt"
+                )
             )
         )
         lines.extend(

@@ -22,9 +22,16 @@ def _literature_adex_factory(**kwargs: Any) -> SmartPopulationAdapter:
 
     return create_somatic_adex_population(**kwargs)
 
+
+def _literature_gif_factory(**kwargs: Any) -> SmartPopulationAdapter:
+    from .gif import create_somatic_gif_population
+
+    return create_somatic_gif_population(**kwargs)
+
 _SMART_FACTORIES: dict[str, SmartPopulationFactory] = {
     "classic_multicompartment_hh": _classic_factory,
     "somatic_adex_literature": _literature_adex_factory,
+    "somatic_gif_literature": _literature_gif_factory,
 }
 
 

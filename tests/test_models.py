@@ -12,12 +12,14 @@ def test_classic_baseline_is_registered() -> None:
     assert available_models() == ("classic_hh",)
 
 
-def test_complete_smart_registry_separates_control_and_adex_substitution() -> None:
+def test_complete_smart_registry_separates_control_and_substitutions() -> None:
     assert available_smart_models() == (
         "classic_multicompartment_hh",
         "somatic_adex_literature",
+        "somatic_gif_literature",
     )
     assert callable(get_smart_population_factory("somatic_adex_literature"))
+    assert callable(get_smart_population_factory("somatic_gif_literature"))
 
 
 @pytest.mark.parametrize("name", ["adex", "gif", "point_hh", "multicompartment_hh"])

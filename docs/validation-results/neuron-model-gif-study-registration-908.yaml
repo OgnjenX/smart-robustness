@@ -1,0 +1,29 @@
+schema_version: 1
+artifact_id: 908
+artifact_type: preregistration
+name: controlled-stochastic-gif-comparison
+date: 2026-09-10
+status: registered-before-any-gif-network-outcome
+
+control: configs/baselines/classic_smart_calibrated_v1.yaml
+decision_record: docs/adr/0004-controlled-gif-substitution.md
+study_manifest: configs/robustness/gif_phase1_v1.yaml
+literature_arm: configs/models/gif_parameter_invariant_v1.yaml
+isolated_fit_protocol: configs/models/gif_isolated_match_protocol_v1.yaml
+
+frozen_decisions:
+  formulation: Pozzorini-Mensi stochastic GIF with eta and gamma kernels
+  intervention: replace only somatic fast Na/K spike generation
+  morphology_preserved: true
+  conductance_ports_preserved: true
+  network_seeds_registered: 20
+  fitting_uses_network_outcomes: false
+  modern_anatomy_changes: prohibited
+  network_parameter_rescue: prohibited
+
+execution_state:
+  source_review: complete
+  implementation: in-progress
+  isolated_fit: not-run
+  structural_identity: not-run
+  network_outcomes_observed: false

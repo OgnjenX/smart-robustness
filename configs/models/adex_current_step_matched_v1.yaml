@@ -1,0 +1,46 @@
+schema_version: 1
+name: adex-current-step-matched-v1
+status: frozen-before-current-step-matched-network-outcomes
+scientific_label: morphology-preserving somatic AdEx, per-cell current-step matched
+model: somatic_adex_per_cell_class
+
+provenance:
+  generation1_result:
+    path: results/adex-isolated-fit-v3-890.yaml
+    sha256: 9da8406d62ab1c22ec3f99a1c4770b6e252f00815db728a76cb9bf34a91b8e9c
+  generation2_result:
+    path: results/adex-isolated-refit-generation2-893.yaml
+    sha256: 122011e602baea15ae0963e21c7b62b20d66cc57baae1ba6822c65bf3fb942b2
+  final_isolated_assessment:
+    artifact: docs/validation-results/neuron-model-adex-rebound-ahp-assessment-895.yaml
+    promoted_as_fully_isolated_matched: false
+
+fixed_parameters:
+  peak_mV: 20.0
+  refractory_ms: 2.0
+
+cell_classes:
+  thalamic_relay: {threshold_offset_mV: 17.5, slope_factor_mV: 2.1875, reset_offset_mV: -2.5, subthreshold_adaptation_nS: 8.75, spike_adaptation_pA: 56.25, adaptation_time_constant_ms: 85.0}
+  trn: {threshold_offset_mV: 27.5, slope_factor_mV: 4.4375, reset_offset_mV: -12.5, subthreshold_adaptation_nS: 3.75, spike_adaptation_pA: 131.25, adaptation_time_constant_ms: 265.0}
+  layer5_excitatory_v1: {threshold_offset_mV: 15.0, slope_factor_mV: 3.875, reset_offset_mV: 0.0, subthreshold_adaptation_nS: 7.5, spike_adaptation_pA: 37.5, adaptation_time_constant_ms: 130.0}
+  layer6ii_excitatory_v1: {threshold_offset_mV: 21.875, slope_factor_mV: 4.859375, reset_offset_mV: 4.375, subthreshold_adaptation_nS: 1.5625, spike_adaptation_pA: 117.1875, adaptation_time_constant_ms: 208.75}
+  layer6i_excitatory_v1: {threshold_offset_mV: 10.0, slope_factor_mV: 0.5, reset_offset_mV: -15.0, subthreshold_adaptation_nS: 0.0, spike_adaptation_pA: 0.0, adaptation_time_constant_ms: 40.0}
+  layer4_inhibitory_v1: {threshold_offset_mV: 11.25, slope_factor_mV: 4.71875, reset_offset_mV: -3.75, subthreshold_adaptation_nS: 3.125, spike_adaptation_pA: 103.125, adaptation_time_constant_ms: 107.5}
+  layer23_excitatory_v1: {threshold_offset_mV: 10.0, slope_factor_mV: 0.5, reset_offset_mV: -15.0, subthreshold_adaptation_nS: 0.0, spike_adaptation_pA: 0.0, adaptation_time_constant_ms: 40.0}
+  layer4_excitatory_v1: {threshold_offset_mV: 10.0, slope_factor_mV: 0.5, reset_offset_mV: -15.0, subthreshold_adaptation_nS: 0.0, spike_adaptation_pA: 0.0, adaptation_time_constant_ms: 40.0}
+  layer23_inhibitory_v1: {threshold_offset_mV: 11.25, slope_factor_mV: 4.71875, reset_offset_mV: -3.75, subthreshold_adaptation_nS: 3.125, spike_adaptation_pA: 103.125, adaptation_time_constant_ms: 107.5}
+  thalamic_interneuron: {threshold_offset_mV: 11.25, slope_factor_mV: 4.71875, reset_offset_mV: -3.75, subthreshold_adaptation_nS: 3.125, spike_adaptation_pA: 103.125, adaptation_time_constant_ms: 107.5}
+  thalamic_nonspecific: {threshold_offset_mV: 21.875, slope_factor_mV: 4.859375, reset_offset_mV: 4.375, subthreshold_adaptation_nS: 1.5625, spike_adaptation_pA: 117.1875, adaptation_time_constant_ms: 208.75}
+  thalamic_matrix: {threshold_offset_mV: 10.0, slope_factor_mV: 0.5, reset_offset_mV: -15.0, subthreshold_adaptation_nS: 0.0, spike_adaptation_pA: 0.0, adaptation_time_constant_ms: 40.0}
+
+claims:
+  current_step_training_and_holdout_promoted: true
+  thalamic_rebound_matched: false
+  layer5_ahp_ach_voltage_signature_matched: false
+  complete_isolated_phenotype_matched: false
+  network_behavior_preserved: not-yet-observed
+
+prohibited:
+  - changing these parameters after observing any network result
+  - describing this arm as a full isolated-cell match
+  - altering SMART topology, weights, delays, stimuli, learning, or analysis

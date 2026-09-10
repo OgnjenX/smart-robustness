@@ -1,0 +1,59 @@
+schema_version: 1
+artifact_id: 895
+artifact_type: isolated-cell-promotion-assessment
+name: adex-rebound-and-ahp-ach-assessment
+date: 2026-09-10
+status: failed-promotion-gate-and-assay-limitation-recorded
+
+raw_result:
+  path: results/adex-rebound-ahp-promotion-895.yaml
+  sha256: de2133d21630693499e4992612132dfa6cd1060df2c08ca2f8b0ff8e24a1cf80
+  bytes: 3710
+  committed: false-generated-result
+
+execution:
+  protocol: configs/models/adex_rebound_ahp_promotion_v1.yaml
+  parameter_source: results/adex-isolated-refit-generation2-893.yaml
+  network_outcomes_used_for_selection: false
+  parameter_changes_after_assay: false
+
+assessment:
+  matched_parameter_map_promoted: false
+  all_rebound_classes_promoted: false
+  ahp_ach_promoted: false
+  thalamic_relay:
+    promoted: false
+    reason: classic emitted one release spike but did not exceed its baseline rate; AdEx emitted none
+  trn:
+    promoted: false
+    reason: AdEx release rate was 500 Hz versus 300 Hz in classic
+  thalamic_nonspecific:
+    promoted: true
+  thalamic_matrix:
+    promoted: true
+  layer5_ahp_ach:
+    classic_reproduced: true
+    adex_reproduced: false
+    failed_gate: ACh suppression of the voltage AHP
+
+assay_validity_audit:
+  rebound_gate_suitable_for_parameter_promotion: false
+  reasons:
+    - the classic relay control does not satisfy the registered rebound-presence definition
+    - TRN, nonspecific, and matrix classic controls spike during the hyperpolarizing epoch
+    - the frozen classic baseline already declares exact Figure 8 tonic/burst behavior unidentifiable from released sources
+  interpretation: >-
+    These traces remain useful descriptive outcomes, but this assay cannot certify
+    a source-valid rebound match. It must not be used to claim that either model
+    reproduces the unavailable original Figure 8 protocol.
+
+decision:
+  fully_isolated_matched_arm_authorized: false
+  current_step_matched_arm_may_be_registered: true
+  rationale: >-
+    Current-step fitting and sealed holdouts were completed without network
+    outcomes. The resulting parameter map may therefore be tested as an
+    accurately labeled current-step-matched arm, while all rebound and AHP/ACh
+    mismatches remain explicit outcomes rather than being erased by post-hoc
+    parameter changes.
+  network_level_parameter_rescue: prohibited

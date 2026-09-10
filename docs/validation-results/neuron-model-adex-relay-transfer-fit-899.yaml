@@ -1,0 +1,44 @@
+schema_version: 1
+artifact_id: 899
+artifact_type: isolated-transfer-fit-assessment
+name: strict-adex-relay-external-transfer-fit
+date: 2026-09-10
+status: diagnostic-fit-not-promoted-to-network
+
+raw_result:
+  path: results/adex-relay-external-transfer-fit-899.yaml
+  sha256: ac552ffd02422880ea6244456348f81ed4171499944dccf398b8728e26c4aab9
+  bytes: 4508
+  committed: false-generated-result
+
+execution:
+  protocol: configs/models/adex_relay_external_transfer_protocol_v1.yaml
+  candidate_count: 130
+  network_outcomes_used_for_selection: false
+  sealed_holdout_improved_over_predecessor: true
+
+selected:
+  effective_leak_offset_mV: 0.0
+  resting_voltage_mV: -59.40321982958601
+  external_rate_at_source_120_hz: 10.0
+  classic_resting_voltage_mV: -80.49352248243385
+  classic_external_rate_at_source_120_hz: 60.0
+
+assay_audit:
+  model_specific_voltage_peak_in_v1_loss: true
+  issue: >-
+    The HH control exposes a resolved action-potential peak, while the native
+    AdEx threshold/reset event does not expose a comparable voltage-monitor
+    peak. Penalizing their peak voltages is therefore not model neutral.
+  resting_balance_issue: >-
+    Holding the SMART leak reversal fixed while removing somatic HH Na/K fixes
+    the AdEx cell near -59 mV. The six-parameter strict arm cannot independently
+    recover the classic effective resting voltage near -80.5 mV.
+
+decision:
+  v1_candidate_network_arm_authorized: false
+  reason: assay contained a model-form-specific observable and remained a weak transfer match
+  next_step: >-
+    Register an extended standard-AdEx arm that fits effective leak offset and
+    uses only observables common to both model forms. Do not use network outputs
+    in that refit.

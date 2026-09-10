@@ -1,0 +1,53 @@
+schema_version: 1
+name: phase-1-somatic-spike-generator-robustness
+status: preregistered-before-alternative-network-outcomes
+control_manifest: configs/baselines/classic_smart_calibrated_v1.yaml
+
+arms:
+  classic_control:
+    model: classic_multicompartment_hh
+    parameters: frozen-control
+  adex_parameter_invariant:
+    model: somatic_adex_literature
+    parameters: configs/models/adex_parameter_invariant_v1.yaml
+  adex_current_step_matched:
+    model: somatic_adex_per_cell_class
+    parameters: configs/models/adex_current_step_matched_v1.yaml
+    matching_protocol: configs/models/adex_isolated_match_protocol_generation2_v1.yaml
+    disclosed_failed_assay: docs/validation-results/neuron-model-adex-rebound-ahp-assessment-895.yaml
+
+required_identity_checks:
+  - population names, sizes, compartments, and receptor/input port records
+  - projection source and target edge arrays
+  - initial projection strengths and delays
+  - learning equations and initial state
+  - stimulus schedules, durations, analysis procedures, and seeds
+
+execution_order:
+  - register all parameter ranges and isolated-cell targets
+  - execute and seal isolated-cell fitting and holdout results
+  - verify structural identity against the classic control
+  - execute fresh Figure 6 learning separately for every arm
+  - pass each arm's own learned state to Figures 7, 10, 14, 15, and 16
+  - assess all arms using the unchanged frozen gates
+
+primary_art_core_endpoint:
+  conjunction:
+    - Figure 6 learning and bidirectional activation gates pass
+    - Figure 7 match/mismatch discrimination passes
+    - Figure 14 match gamma exceeds mismatch gamma
+    - Figure 10 intact causal reset passes
+
+secondary_endpoints:
+  - complete unchanged official gate vector
+  - continuous paired differences from the classic metrics
+  - Figure 15 identifiable gamma phenotype and frozen failed numeric gate
+  - Figure 16 higher-order band-ordering behavior
+
+inference:
+  deterministic_comparison: true
+  p_values: prohibited-until-a-separate-stochastic-ensemble-is-preregistered
+  report_all_failures: true
+
+modern_anatomy_changes: prohibited-in-phase-1
+network_level_parameter_rescue: prohibited-in-phase-1

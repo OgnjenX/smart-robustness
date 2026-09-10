@@ -887,6 +887,41 @@ parameters:
     status: fixed-separation-of-scientific-questions
     source: user research objective and Artifact 769
     note: AdEx, GIF, Hodgkin-Huxley, and multicompartment substitutions must compare against the frozen classic baseline. Post-2008 anatomy is a separately labeled intervention family and must not enter classic calibration.
+  model.adex.phase1_intervention:
+    value: replace somatic fast Na/K with AdEx while retaining SMART morphology, ports, T-current, AHP/ACh, learning, topology, and protocols
+    status: preregistered-controlled-intervention
+    source: ADR 0003 and Artifact 886
+    note: Active layer-5 distal Na/K is retained in Phase 1 to avoid confounding somatic spike substitution with removal of active dendritic propagation.
+  model.adex.literature_regular_spiking:
+    value: threshold offset 20.2 mV; slope factor 2 mV; reset offset 0 mV; peak 20 mV; a=4 nS; b=80.5 pA; tau_w=144 ms; refractory=2 ms
+    status: literature-derived-adex-only-parameter-arm
+    source: Brette and Gerstner 2005, doi:10.1152/jn.00686.2005; configs/models/adex_parameter_invariant_v1.yaml
+    note: Capacitance, leak conductance, leak reversal, and geometry are not copied from the AdEx reference; they remain each SMART cell's fixed values. The 2-ms refractory interval is an explicit simulation safeguard and preregistered intrinsic parameter.
+  model.adex.isolated_matching:
+    value: per-class seven-level assay selected from a classic-only -100 to 200-mV passive-offset scan; alternating four training and three sealed holdout levels; 200 ms at isolated-fit dt 0.02 ms
+    status: preregistered-network-blind-adaptive-fitting-protocol-v3
+    source: configs/models/adex_isolated_match_protocol_v3.yaml and Artifacts 886--889
+    note: Fixed-level v2 completed finitely but was uninformative across heterogeneous classes and was not promoted. AdEx outputs cannot select v3 levels; full-network ART outcomes remain prohibited fitting inputs and the frozen network timestep remains 0.01 ms.
+  model.adex.current_step_matched_result:
+    value: all 12 per-class current-step fits pass their registered training/holdout comparison, but the full Figure 6 arm has zero relay spikes and fails all six gates
+    status: completed-negative-controlled-comparison
+    source: Artifacts 890, 893, 895, and 897
+    note: The label is current-step matched, not fully isolated-cell matched. Registered rebound and layer-5 AHP/ACh gates did not all pass.
+  model.adex.relay_transfer_extension:
+    value: effective leak offset -10.9375 mV, isolated relay rest -82.153 mV versus classic -80.494 mV, and 30 versus 60 Hz at external source 120
+    status: calibrated-isolated-relay-transfer-arm
+    source: Artifacts 899--902
+    note: The effective resting-potential offset is a standard AdEx intrinsic parameter. SMART leak conductance, dendrites, T-current, ports, weights, delays, topology, and protocols remain fixed in this arm.
+  model.adex.relay_transfer_network_result:
+    value: Figure 6 passes cortical chain, causal learning pair, and positive top-down contrast; fails relay map/count gates with 51 events over 31 indices instead of 20 events over 5 indices
+    status: completed-partial-negative-controlled-comparison
+    source: Artifact 903
+    note: No downstream ART protocol is authorized because the arm does not produce the frozen valid learned-state gate.
+  model.adex.full_somatic_relay_search:
+    value: 512 Sobol candidates plus frozen predecessor over nine somatic AdEx parameters; predecessor remains optimal on sealed current/external/GABA transfer targets
+    status: completed-no-new-candidate-promoted
+    source: Artifacts 904--907
+    note: Somatic capacitance and leak-conductance scales were intrinsic fit parameters; all network and dendritic parameters remained fixed. This registered relay rescue route is closed without a further network run.
   benchmark.population_sizes:
     value: see configs/*.yaml
     status: exploratory

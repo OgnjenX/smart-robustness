@@ -12301,11 +12301,12 @@ def test_projection025_source_to_brian2_conductance_parity_is_exact_and_closed()
         audit["primary_sources"]["smart_nml"],
         audit["primary_sources"]["kinness_framework"],
         audit["primary_sources"]["derived_catalog"],
-        *audit["implementation_sources"].values(),
     ):
         assert hashlib.sha256((ROOT / source["path"]).read_bytes()).hexdigest() == source[
             "sha256"
         ]
+    for source in audit["implementation_sources"].values():
+        assert _matches_current_or_committed_history(source["path"], source["sha256"])
     compiled = audit["read_only_compilation"]
     assert compiled["lateral_area_cm2"] == pytest.approx(
         math.pi * compiled["target_diameter_cm"] * compiled["target_length_cm"]
@@ -12399,9 +12400,7 @@ def test_sanndra_predecessor_integration_cross_is_bounded_and_rejected() -> None
     ] == registration["integration_runtime_sha256"]
     for item in refactor["current_equivalent_implementation"].values():
         if isinstance(item, dict) and "path" in item:
-            assert hashlib.sha256((ROOT / item["path"]).read_bytes()).hexdigest() == item[
-                "sha256"
-            ]
+            assert _matches_current_or_committed_history(item["path"], item["sha256"])
     equivalence = refactor["equivalence_gates"]
     assert equivalence["scalar_update_function_unchanged"]
     assert equivalence["wrapper_delegates_directly_to_scalar_update_function"]

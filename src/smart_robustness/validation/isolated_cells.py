@@ -900,6 +900,7 @@ def run_figure19_kernel_condition(
     spike_count: int,
     acetylcholine: bool,
     protocol: Figure19Protocol | None = None,
+    population_factory=None,
     brian=None,
 ) -> IsolatedCellTrace:
     """Run the source-specific layer-5 AHP/ACh kernel after explicit events."""
@@ -910,6 +911,7 @@ def run_figure19_kernel_condition(
     if spike_count < 0:
         raise ValueError("spike_count cannot be negative")
     protocol = protocol or Figure19Protocol()
+    population_factory = population_factory or create_compartmental_hh_population
     brian.start_scope()
     brian.defaultclock.dt = protocol.dt_ms * brian.ms
     cell = ahp_ach_layer5_spec(soma_axial_resistance_kohm_cm=protocol.soma_axial_resistance_kohm_cm)
@@ -937,7 +939,7 @@ def run_figure19_kernel_condition(
         "v_init_mV": -78.0,
         "method": "rk4",
     }
-    population = create_compartmental_hh_population(
+    population = population_factory(
         name="figure19_layer5", size=1, params=params, brian=brian
     )
     group = population.group

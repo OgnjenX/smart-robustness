@@ -1,0 +1,28 @@
+schema_version: 1
+artifact_id: 892
+artifact_type: preregistration
+name: adex-isolated-fit-generation2
+date: 2026-09-10
+status: registered-before-generation2-candidate-execution
+
+protocol: configs/models/adex_isolated_match_protocol_generation2_v1.yaml
+isolated_evidence:
+  generation1_fit: docs/validation-results/neuron-model-adex-isolated-fit-v3-890.yaml
+  failed_or_unidentified_classes:
+    - layer5_excitatory_v1
+    - layer4_excitatory_v1
+    - thalamic_interneuron
+
+timing_disclosure:
+  literature_network_result_already_known: true
+  literature_result: docs/validation-results/neuron-model-adex-literature-figure6-891.yaml
+  matched_network_arm_previously_run: false
+  network_metrics_used_in_generation2_design: false
+
+unchanged:
+  - AdEx parameter bounds and candidate generator
+  - isolated loss function
+  - training-only selection and sealed-holdout promotion
+  - all SMART network invariants
+
+matched_network_arm_authorized_before_generation2_result: false

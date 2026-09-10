@@ -1,0 +1,13 @@
+schema_version: 1
+artifact_id: 904
+artifact_type: isolated-transfer-fit-registration
+name: extended-adex-relay-inhibitory-context-fit
+date: 2026-09-10
+status: registered-before-candidate-execution
+
+protocol: configs/models/adex_relay_inhibitory_transfer_protocol_v1.yaml
+control: configs/baselines/classic_smart_calibrated_v1.yaml
+predecessor_parameters: configs/models/adex_relay_transfer_matched_v1.yaml
+fit_inputs: isolated classic relay only
+network_outputs_used_for_selection: false
+new_network_execution_authorized_before_fit_promotion: false

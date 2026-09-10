@@ -70,6 +70,7 @@ class CompiledCellEquations:
     injection_ports: tuple[InjectionPortSpec, ...]
     voltage_clamped_compartments: frozenset[str]
     depletion_enabled: bool
+    somatic_spike_model: str
 
 
 def _enum(value, enum_type, label):
@@ -238,6 +239,7 @@ def compile_cell_equations(
     voltage_clamped_compartments: frozenset[str] = frozenset(),
     depletion_epsilon: float | None = None,
     depletion_recovery_ms: float | None = None,
+    somatic_spike_model: str = "classic_hh",
 ) -> CompiledCellEquations:
     """Compile one source-specified cell; every ambiguous convention is required."""
 
@@ -259,6 +261,8 @@ def compile_cell_equations(
     ahp = _enum(ahp_convention, AHPConvention, "ahp_convention")
     if not isinstance(enable_ahp_ach, bool):
         raise TypeError("enable_ahp_ach must be an explicit bool")
+    if somatic_spike_model not in {"classic_hh", "adex"}:
+        raise ValueError("somatic_spike_model must be 'classic_hh' or 'adex'")
     if not isinstance(synaptic_ports, tuple) or not all(
         isinstance(port, SynapticPortSpec) for port in synaptic_ports
     ):
@@ -323,6 +327,27 @@ def compile_cell_equations(
         lines.extend(_layer5_ahp_lines(ahp))
     if depletion_enabled:
         lines.append(f"dtransmitter/dt=(1-transmitter)/({depletion_recovery_ms}*ms) : 1")
+    if somatic_spike_model == "adex":
+        lines.extend(
+            (
+                "dw_adex/dt=(a_adex*(v_soma-e_l_adex)-w_adex)/tau_w_adex : amp",
+                (
+                    "i_adex_soma=g_l_soma*g_l_scale_adex*"
+                    "((e_l_adex-v_soma)+delta_t_adex*"
+                    "exp(clip((v_soma-v_t_adex)/delta_t_adex, -50, 20))) : amp"
+                ),
+                "a_adex : siemens (constant)",
+                "b_adex : amp (constant)",
+                "tau_w_adex : second (constant)",
+                "delta_t_adex : volt (constant)",
+                "v_t_adex : volt (constant)",
+                "v_reset_adex : volt (constant)",
+                "v_peak_adex : volt (constant)",
+                "e_l_adex : volt (constant)",
+                "c_scale_adex : 1 (constant)",
+                "g_l_scale_adex : 1 (constant)",
+            )
+        )
     for port in synaptic_ports:
         block = f"1/(1+0.33*exp(-v_{port.compartment}/(16.7*mV)))" if port.voltage_block else "1"
         lines.extend(
@@ -384,10 +409,18 @@ def compile_cell_equations(
         )
     for compartment in cell.compartments:
         name = compartment.name
-        membrane_current_terms = [f"g_l_{name}*(e_l_{name}-v_{name})"]
-        if compartment.g_na_mS_cm2 is not None:
+        membrane_current_terms = (
+            []
+            if somatic_spike_model == "adex" and name == "soma"
+            else [f"g_l_{name}*(e_l_{name}-v_{name})"]
+        )
+        if compartment.g_na_mS_cm2 is not None and not (
+            somatic_spike_model == "adex" and name == "soma"
+        ):
             lines.extend(_nak_lines(name, voltage, nak_rate))
             membrane_current_terms.extend((f"i_na_{name}", f"i_k_{name}"))
+        elif somatic_spike_model == "adex" and name == "soma":
+            membrane_current_terms.extend(("i_adex_soma", "-w_adex"))
         if compartment.g_ca_mS_cm2 is not None:
             lines.extend(
                 _calcium_lines(
@@ -420,7 +453,13 @@ def compile_cell_equations(
         voltage_equation = (
             f"dv_{name}/dt=0*volt/second : volt"
             if name in voltage_clamped_compartments
-            else f"dv_{name}/dt=({' + '.join(current_terms)})/C_{name} : volt"
+            else (
+                f"dv_{name}/dt=({' + '.join(current_terms)})/"
+                f"(C_{name}*c_scale_adex) : volt "
+                "(unless refractory)"
+                if somatic_spike_model == "adex" and name == "soma"
+                else f"dv_{name}/dt=({' + '.join(current_terms)})/C_{name} : volt"
+            )
         )
         lines.extend(
             (
@@ -456,4 +495,5 @@ def compile_cell_equations(
         injection_ports=injection_ports,
         voltage_clamped_compartments=voltage_clamped_compartments,
         depletion_enabled=depletion_enabled,
+        somatic_spike_model=somatic_spike_model,
     )

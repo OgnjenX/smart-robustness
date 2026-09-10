@@ -1,0 +1,28 @@
+schema_version: 1
+name: adex-relay-transfer-matched-v1
+status: frozen-before-network-outcomes
+scientific_label: morphology-preserving AdEx with isolated relay transfer calibration
+base_parameter_manifest: configs/models/adex_current_step_matched_v1.yaml
+fit_assessment: docs/validation-results/neuron-model-adex-relay-transfer-v2-fit-901.yaml
+
+overrides:
+  thalamic_relay:
+    threshold_offset_mV: 2.578125
+    slope_factor_mV: 3.033203125
+    reset_offset_mV: -13.5546875
+    peak_mV: 20.0
+    subthreshold_adaptation_nS: 10.46875
+    spike_adaptation_pA: 17.1875
+    adaptation_time_constant_ms: 117.96875
+    refractory_ms: 2.0
+    effective_leak_offset_mV: -10.9375
+
+claims:
+  relay_current_and_external_transfer_sealed_holdout_promoted: true
+  all_cell_classes_synaptic_transfer_matched: false
+  network_behavior_preserved: not-yet-observed
+
+prohibited:
+  - changing relay parameters after observing the network result
+  - describing non-relay cell classes as transfer matched
+  - altering SMART topology, weights, delays, stimuli, learning, or analysis

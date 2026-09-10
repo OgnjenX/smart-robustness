@@ -1,0 +1,44 @@
+schema_version: 1
+artifact_id: 901
+artifact_type: isolated-transfer-fit-assessment
+name: extended-adex-relay-external-transfer-fit
+date: 2026-09-10
+status: completed-sealed-holdout-promoted
+
+raw_result:
+  path: results/adex-relay-external-transfer-fit-v2-901.yaml
+  sha256: 35c972aa317d2398ce654d8ee4637e9f53f46f1b5381d8d9a4b279bb2bfbe068
+  bytes: 4699
+  committed: false-generated-result
+
+execution:
+  protocol: configs/models/adex_relay_external_transfer_protocol_v2.yaml
+  candidate_count: 258
+  network_outcomes_used_for_selection: false
+  sealed_holdout_promoted: true
+
+selected:
+  parameters:
+    threshold_offset_mV: 2.578125
+    slope_factor_mV: 3.033203125
+    reset_offset_mV: -13.5546875
+    peak_mV: 20.0
+    subthreshold_adaptation_nS: 10.46875
+    spike_adaptation_pA: 17.1875
+    adaptation_time_constant_ms: 117.96875
+    refractory_ms: 2.0
+    effective_leak_offset_mV: -10.9375
+  resting_voltage_mV: -82.1532460220627
+  classic_resting_voltage_mV: -80.49352248243385
+  external_rate_at_source_120_hz: 30.0
+  classic_external_rate_at_source_120_hz: 60.0
+  combined_training_loss: 1.7400868565262586
+  combined_holdout_loss: 1.8471261002889565
+  predecessor_combined_training_loss: 30.323631956307743
+  predecessor_combined_holdout_loss: 30.53677752406005
+
+decision:
+  relay_parameters_frozen: true
+  figure6_arm_authorized: true
+  downstream_authorized_before_figure6: false
+  network_level_parameter_rescue: prohibited

@@ -1,0 +1,27 @@
+schema_version: 1
+artifact_id: 902
+artifact_type: alternative-network-arm-registration
+name: relay-transfer-matched-adex-figure6-arm
+date: 2026-09-10
+status: registered-before-network-execution
+
+control: configs/baselines/classic_smart_calibrated_v1.yaml
+parameters: configs/models/adex_relay_transfer_matched_v1.yaml
+fit_assessment: docs/validation-results/neuron-model-adex-relay-transfer-v2-fit-901.yaml
+structural_contract: exact population-port-projection-delay-and-strength identity
+
+known_before_registration:
+  isolated_relay_transfer_holdout_promoted: true
+  classic_rate_at_source_120_hz: 60.0
+  selected_adex_rate_at_source_120_hz: 30.0
+  relay_transfer_matched_network_outcomes: none
+
+execution:
+  protocol: frozen Figure 6 learning episode
+  gates: unchanged frozen classic Figure 6 gates
+  downstream_only_if_valid_learned_state: true
+
+interpretation:
+  parameters_change_after_result: prohibited
+  network_level_rescue: prohibited
+  failure_does_not_generalize_to_all_adex_parameterizations: true

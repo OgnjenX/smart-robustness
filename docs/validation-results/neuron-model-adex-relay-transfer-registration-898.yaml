@@ -1,0 +1,23 @@
+schema_version: 1
+artifact_id: 898
+artifact_type: isolated-transfer-fit-registration
+name: adex-relay-external-transfer-fit
+date: 2026-09-10
+status: registered-before-candidate-execution
+
+protocol: configs/models/adex_relay_external_transfer_protocol_v1.yaml
+control: configs/baselines/classic_smart_calibrated_v1.yaml
+predecessor_parameters: configs/models/adex_current_step_matched_v1.yaml
+
+known_network_results:
+  literature_adex_figure6_pass: false
+  current_step_matched_adex_figure6_pass: false
+  use_in_fit: prohibited
+
+fit_inputs:
+  - classic isolated relay direct-current phenotype
+  - classic isolated relay external-input-port phenotype
+fit_outputs_excluded:
+  - all network spike counts and timings
+  - all Figure 6 gates and learned weights
+  - all match, mismatch, reset, spectral, and synchrony metrics

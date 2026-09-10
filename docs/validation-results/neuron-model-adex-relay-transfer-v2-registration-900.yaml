@@ -1,0 +1,22 @@
+schema_version: 1
+artifact_id: 900
+artifact_type: isolated-transfer-fit-registration
+name: extended-adex-relay-external-transfer-fit
+date: 2026-09-10
+status: registered-before-candidate-execution
+
+protocol: configs/models/adex_relay_external_transfer_protocol_v2.yaml
+control: configs/baselines/classic_smart_calibrated_v1.yaml
+predecessor_parameters: configs/models/adex_current_step_matched_v1.yaml
+
+newly_permitted_parameter:
+  name: effective_leak_offset_mV
+  scientific_reason: standard AdEx resting-potential parameter
+  selection_source: isolated classic relay only
+
+excluded_observable:
+  name: action-potential voltage peak
+  reason: not represented equivalently by native AdEx threshold/reset dynamics
+
+network_outputs_used_for_candidate_selection: false
+parameters_will_be_frozen_before_new_network_execution: true

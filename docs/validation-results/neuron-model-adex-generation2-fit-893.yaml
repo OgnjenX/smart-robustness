@@ -1,0 +1,47 @@
+schema_version: 1
+artifact_id: 893
+artifact_type: isolated-cell-fit-assessment
+name: adex-generation2-three-class-refit
+date: 2026-09-10
+status: completed-current-step-promoted
+
+raw_result:
+  path: results/adex-isolated-refit-generation2-893.yaml
+  sha256: 122011e602baea15ae0963e21c7b62b20d66cc57baae1ba6822c65bf3fb942b2
+  bytes: 12234
+  committed: false-generated-result
+
+execution:
+  protocol: configs/models/adex_isolated_match_protocol_generation2_v1.yaml
+  refit_classes:
+    - layer5_excitatory_v1
+    - layer4_excitatory_v1
+    - thalamic_interneuron
+  parameter_bounds_changed: false
+  network_outcomes_used_for_selection: false
+
+assessment:
+  all_refit_classes_current_step_promoted: true
+  layer5_excitatory_v1:
+    selected_training_loss: 1.714559577957069
+    literature_training_loss: 2.076494864717756
+    selected_holdout_loss: 1.898517483804798
+    literature_holdout_loss: 2.343456993564248
+  layer4_excitatory_v1:
+    expanded_classic_rate_range_hz: [0.0, 315.0]
+    selected_training_loss: 1.0469880796782134
+    literature_training_loss: 4.679241461714529
+    selected_holdout_loss: 2.280518225230461
+    literature_holdout_loss: 2.422399121438633
+  thalamic_interneuron:
+    expanded_classic_rate_range_hz: [0.0, 175.0]
+    selected_training_loss: 1.965423293028271
+    literature_training_loss: 1.965423293028271
+    selected_holdout_loss: 1.926916509102871
+    literature_holdout_loss: 1.926916509102871
+
+decision:
+  complete_current_step_parameter_map_available: true
+  parameter_map_frozen: false
+  matched_network_arm_authorized: false
+  pending: thalamic rebound and layer-5 AHP/ACh promotion gates

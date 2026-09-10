@@ -1,0 +1,31 @@
+schema_version: 1
+artifact_id: 887
+artifact_type: preregistration-amendment
+name: adex-isolated-protocol-v2
+date: 2026-09-10
+status: amended-before-fitting-and-alternative-network-outcomes
+
+predecessor:
+  path: configs/models/adex_isolated_match_protocol_v1.yaml
+  execution_status: stopped-without-result-artifact
+  observations:
+    - wall-clock cost was impractical for the full declared candidate matrix
+    - upper passive-offset trials emitted classic-HH exponential overflow warnings
+
+amendment:
+  path: configs/models/adex_isolated_match_protocol_v2.yaml
+  changes:
+    - vectorize all seven current levels in one population per cell class
+    - reduce isolated fitting step from 500 to 200 ms
+    - use 0.02-ms isolated fitting integration and 0.1-ms voltage recording
+    - lower and interleave passive-offset training and sealed-holdout levels
+
+unchanged:
+  - frozen SMART network control and its 0.01-ms network protocols
+  - AdEx parameter bounds and deterministic Sobol candidate count
+  - training-only parameter selection
+  - holdout and all network-outcome blinding rules
+
+candidate_parameters_fitted_before_amendment: false
+alternative_network_outcomes_run_before_amendment: false
+partial_v1_output_accepted_as_data: false

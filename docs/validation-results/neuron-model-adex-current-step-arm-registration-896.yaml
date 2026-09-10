@@ -1,0 +1,33 @@
+schema_version: 1
+artifact_id: 896
+artifact_type: alternative-network-arm-registration
+name: current-step-matched-adex-network-arm
+date: 2026-09-10
+status: registered-before-network-execution
+
+control: configs/baselines/classic_smart_calibrated_v1.yaml
+parameters: configs/models/adex_current_step_matched_v1.yaml
+structural_contract: exact population-port-projection-delay-and-strength identity
+
+known_before_registration:
+  literature_adex_figure6_all_gates_pass: false
+  current_step_training_and_holdout_promoted: true
+  rebound_ahp_full_isolated_promotion: false
+  current_step_matched_network_outcomes: none
+
+execution:
+  first_protocol: frozen Figure 6 learning episode
+  first_gates: unchanged frozen classic Figure 6 gates
+  downstream_protocols: only if this arm produces a valid learned state
+  use_each_arms_own_learned_state: true
+
+interpretation_contract:
+  positive_result: >-
+    Evidence that the registered current-step-matched somatic AdEx substitution
+    preserves the tested SMART behavior despite its disclosed isolated rebound
+    and AHP/ACh differences.
+  negative_result: >-
+    Evidence that current-step matching alone is insufficient for the tested
+    SMART behavior; not evidence that all AdEx parameterizations must fail.
+  no_parameter_changes_after_network_result: true
+  no_network_level_rescue: true

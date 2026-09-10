@@ -1,0 +1,17 @@
+schema_version: 1
+artifact_id: 894
+artifact_type: preregistration
+name: adex-final-isolated-promotion
+date: 2026-09-10
+status: registered-before-execution
+
+protocol: configs/models/adex_rebound_ahp_promotion_v1.yaml
+parameter_source:
+  result: results/adex-isolated-refit-generation2-893.yaml
+  sha256: 122011e602baea15ae0963e21c7b62b20d66cc57baae1ba6822c65bf3fb942b2
+current_step_assessment: docs/validation-results/neuron-model-adex-generation2-fit-893.yaml
+
+parameters_changed_by_assay: false
+matched_network_outcomes_run_before_registration: false
+literature_network_result_known: true
+literature_network_result_used: false

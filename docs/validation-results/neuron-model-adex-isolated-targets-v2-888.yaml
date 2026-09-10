@@ -1,0 +1,46 @@
+schema_version: 1
+artifact_id: 888
+artifact_type: isolated-cell-assessment
+name: fixed-passive-offset-v2-assessment
+date: 2026-09-10
+status: completed-not-promoted
+
+raw_result:
+  path: results/adex-isolated-targets-v2-888.yaml
+  sha256: b19585d6202f658190517a28d8ad70131e03a506b02ac42e30a7d0831de01af3
+  bytes: 28879
+  committed: false-generated-result
+
+execution:
+  protocol: configs/models/adex_isolated_match_protocol_v2.yaml
+  cell_classes: 12
+  classic_and_literature_adex_training_and_holdout: completed
+  network_outcomes_used: false
+  all_classic_traces_finite: true
+  all_literature_adex_traces_finite: true
+
+assessment:
+  promoted_for_parameter_fitting: false
+  reason: >-
+    Fixed passive offsets are not comparably informative across heterogeneous
+    SMART cells. Four classes are silent in both models at every training
+    level, several thalamic classes are spontaneously active with nearly flat
+    rates, and only a subset spans useful rate/adaptation responses.
+  silent_both_models_all_training_levels:
+    - layer4_excitatory_v1
+    - layer4_inhibitory_v1
+    - layer23_inhibitory_v1
+    - thalamic_interneuron
+  classic_training_spike_counts:
+    thalamic_relay: [3, 4, 5, 6]
+    trn: [68, 68, 69, 70]
+    layer5_excitatory_v1: [0, 1, 2, 5]
+    layer6ii_excitatory_v1: [0, 3, 5, 6]
+    layer6i_excitatory_v1: [0, 22, 32, 39]
+    layer23_excitatory_v1: [0, 0, 0, 8]
+    thalamic_nonspecific: [130, 130, 130, 130]
+    thalamic_matrix: [34, 35, 35, 35]
+
+next_protocol: configs/models/adex_isolated_match_protocol_v3.yaml
+candidate_parameters_fitted: false
+alternative_network_outcomes_run: false

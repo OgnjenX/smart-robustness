@@ -1,0 +1,78 @@
+schema_version: 1
+name: adex-isolated-cell-match-protocol-v1
+status: superseded-before-fitting-or-network-outcomes
+superseded_by: configs/models/adex_isolated_match_protocol_v2.yaml
+supersession_reason: >-
+  A development execution was stopped before producing an output artifact:
+  the 500-ms 0.01-ms assay was computationally impractical for the declared
+  candidate matrix, and upper passive offsets caused classic-HH exponential
+  overflow warnings. No candidate was fitted and no network output was run.
+cell_classes: all-12-source-smart-classes
+
+current_steps:
+  pre_ms: 100.0
+  step_ms: 500.0
+  post_ms: 100.0
+  dt_ms: 0.01
+  amplitude_rule: soma_g_leak_nS_times_voltage_offset_mV_equals_pA
+  training_passive_voltage_offsets_mV: [10.0, 30.0, 50.0, 70.0]
+  sealed_holdout_passive_voltage_offsets_mV: [20.0, 40.0, 60.0]
+
+training_targets:
+  - resting voltage
+  - spike count and firing rate at each training current
+  - first-spike latency
+  - first-to-last interspike-interval adaptation ratio
+
+promotion_targets_before_network_execution:
+  - finite voltage trajectory
+  - isolated-current training loss
+  - isolated-current holdout loss
+  - thalamic hyperpolarization and rebound phenotype
+  - layer-5 AHP and ACh response
+
+parameters_allowed_to_vary:
+  - threshold_offset_mV
+  - slope_factor_mV
+  - reset_offset_mV
+  - subthreshold_adaptation_nS
+  - spike_adaptation_pA
+  - adaptation_time_constant_ms
+
+candidate_generation:
+  method: scipy-qmc-sobol-unscrambled
+  seed: deterministic-unscrambled
+  candidates_per_cell_class: 32
+  include_literature_candidate: true
+  bounds:
+    threshold_offset_mV: [10.0, 30.0]
+    slope_factor_mV: [0.5, 5.0]
+    reset_offset_mV: [-15.0, 5.0]
+    subthreshold_adaptation_nS: [0.0, 10.0]
+    spike_adaptation_pA: [0.0, 150.0]
+    adaptation_time_constant_ms: [40.0, 400.0]
+  fixed:
+    peak_mV: 20.0
+    refractory_ms: 2.0
+
+selection:
+  primary: minimum training loss
+  deterministic_tie_break: ascending-parameter-tuple
+  holdout_not_used_for_selection: true
+  promotion:
+    - every trace is finite
+    - training loss is no worse than literature arm
+    - sealed holdout loss is no worse than literature arm
+    - thalamic rebound and layer-5 AHP/ACh qualitative gates pass
+
+parameters_held_from_smart:
+  - capacitance, leak, and morphology
+  - axial coupling
+  - T-type calcium
+  - AHP/ACh
+
+forbidden_fit_inputs:
+  - Figure 6 learning outcomes
+  - Figure 7 match or mismatch outcomes
+  - Figure 10 reset outcomes
+  - Figure 14, 15, or 16 spectral and synchrony outcomes

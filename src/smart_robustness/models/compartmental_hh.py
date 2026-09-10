@@ -9,6 +9,7 @@ from typing import Any
 
 import numpy as np
 
+from .adex_parameters import AdExParameters
 from .axial import AxialConvention, build_axial_edges
 from .currents import (
     E_CA_MV,
@@ -162,6 +163,16 @@ def create_compartmental_hh_population(
 
     if brian is None:
         import brian2 as brian
+
+    somatic_spike_model = str(params.get("somatic_spike_model", "classic_hh"))
+    if somatic_spike_model not in {"classic_hh", "adex"}:
+        raise ValueError("somatic_spike_model must be 'classic_hh' or 'adex'")
+    adex_parameters = None
+    if somatic_spike_model == "adex":
+        raw_adex_parameters = params.get("adex_parameters")
+        if not isinstance(raw_adex_parameters, dict):
+            raise TypeError("AdEx populations require an adex_parameters mapping")
+        adex_parameters = AdExParameters.from_mapping(raw_adex_parameters)
 
     cell = params.get("cell_spec")
     if cell is None:
@@ -324,6 +335,7 @@ def create_compartmental_hh_population(
         voltage_clamped_compartments=frozenset(voltage_clamps_mV),
         depletion_epsilon=depletion_epsilon,
         depletion_recovery_ms=depletion_recovery_ms,
+        somatic_spike_model=somatic_spike_model,
     )
     # Protocols can request a one-event somatic current pulse. The flag
     # defaults to zero, preserving sustained-current behavior exactly.
@@ -372,7 +384,17 @@ def create_compartmental_hh_population(
         "\nclear_drive_on_spike : 1 (constant)"
         "\ndrive_spikes_until_clear : integer"
     )
-    if spike_event_rule in {
+    if somatic_spike_model == "adex":
+        assert adex_parameters is not None
+        spike_reset = (
+            "v_soma = v_reset_adex; w_adex += b_adex; last_spike_onset = t; "
+            + spike_reset
+        )
+        group_kwargs.update(
+            threshold="v_soma >= v_peak_adex",
+            refractory=adex_parameters.refractory_ms * brian.ms,
+        )
+    elif spike_event_rule in {
         SpikeEventRule.LATCHED_PEAK_THEN_ZERO,
         SpikeEventRule.HYSTERETIC_THRESHOLD_THEN_ZERO,
     }:
@@ -414,7 +436,9 @@ def create_compartmental_hh_population(
     group = brian.NeuronGroup(size, equations, reset=spike_reset, **group_kwargs)
     group.clear_drive_on_spike = 0
     group.drive_spikes_until_clear = 0
-    if spike_event_rule in {
+    if somatic_spike_model == "adex":
+        pass
+    elif spike_event_rule in {
         SpikeEventRule.LATCHED_PEAK_THEN_ZERO,
         SpikeEventRule.HYSTERETIC_THRESHOLD_THEN_ZERO,
     }:
@@ -452,7 +476,30 @@ def create_compartmental_hh_population(
     # coordinate is available only for separately labeled detector calibration.
     group.armed = 0
     group.last_spike_onset = -1 * brian.second
-    if spike_event_rule in {
+    if somatic_spike_model == "adex":
+        assert adex_parameters is not None
+        group.w_adex = 0 * brian.pA
+        group.a_adex = adex_parameters.subthreshold_adaptation_nS * brian.nsiemens
+        group.b_adex = adex_parameters.spike_adaptation_pA * brian.pA
+        group.tau_w_adex = adex_parameters.adaptation_time_constant_ms * brian.ms
+        group.delta_t_adex = adex_parameters.slope_factor_mV * brian.mV
+        group.e_l_adex = (
+            cell.soma.e_leak_mV + adex_parameters.effective_leak_offset_mV
+        ) * brian.mV
+        group.c_scale_adex = adex_parameters.somatic_capacitance_scale
+        group.g_l_scale_adex = adex_parameters.somatic_leak_conductance_scale
+        group.v_t_adex = (
+            cell.soma.e_leak_mV
+            + adex_parameters.effective_leak_offset_mV
+            + adex_parameters.threshold_offset_mV
+        ) * brian.mV
+        group.v_reset_adex = (
+            cell.soma.e_leak_mV
+            + adex_parameters.effective_leak_offset_mV
+            + adex_parameters.reset_offset_mV
+        ) * brian.mV
+        group.v_peak_adex = adex_parameters.peak_mV * brian.mV
+    elif spike_event_rule in {
         SpikeEventRule.LITERAL_PREVIOUS_SAMPLE,
         SpikeEventRule.FALLING_THRESHOLD_CROSSING,
     }:
@@ -542,7 +589,9 @@ def create_compartmental_hh_population(
             paper_voltage = initial_voltage + 67.0
         else:
             paper_voltage = initial_voltage - compartment.e_leak_mV
-        if compartment.g_na_mS_cm2 is not None:
+        if compartment.g_na_mS_cm2 is not None and not (
+            somatic_spike_model == "adex" and compartment_name == "soma"
+        ):
             _set(
                 group,
                 f"g_na_{compartment_name}",

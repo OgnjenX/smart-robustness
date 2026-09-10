@@ -1,0 +1,37 @@
+schema_version: 1
+name: adex-parameter-invariant-v1
+model: somatic_adex_literature
+status: preregistered-literature-arm
+classification: literature-derived-adex-only-parameters
+
+intervention:
+  replaced: somatic fast sodium/potassium spike generator
+  retained:
+    - SMART Table 3 morphology, capacitance, leak conductance, and leak reversal
+    - axial compartment coupling and compartment-targeted receptor ports
+    - thalamic T-type calcium currents
+    - layer-5 and layer-6II SMART AHP/ACh mechanism
+    - transmitter depletion, STDP, projection weights, and delays
+    - active layer-5 distal sodium/potassium channels
+
+adex_only_parameters:
+  threshold_offset_mV: 20.2
+  slope_factor_mV: 2.0
+  reset_offset_mV: 0.0
+  peak_mV: 20.0
+  subthreshold_adaptation_nS: 4.0
+  spike_adaptation_pA: 80.5
+  adaptation_time_constant_ms: 144.0
+  refractory_ms: 2.0
+
+provenance:
+  family: Brette and Gerstner 2005 regular-spiking AdEx
+  doi: 10.1152/jn.00686.2005
+  qualification: >-
+    Only the AdEx-specific constants are adopted. Passive membrane and
+    morphological parameters remain the corresponding SMART cell values, so
+    this is a controlled literature-derived substitution rather than a claim
+    that every SMART cell has the original paper's regular-spiking phenotype.
+
+network_outcome_fitting: prohibited
+frozen_after_registration: true

@@ -1,0 +1,30 @@
+schema_version: 1
+artifact_id: 905
+artifact_type: isolated-transfer-fit-assessment
+name: relay-inhibitory-context-fit-with-fixed-somatic-passives
+date: 2026-09-10
+status: completed-no-new-candidate-promoted
+
+raw_result:
+  path: results/adex-relay-inhibitory-transfer-fit-905.yaml
+  sha256: ace282b9daa8f7746cbf7c9d10f59a883652ecc0ddedb3771405d696aa880cb6
+  bytes: 6706
+  committed: false-generated-result
+
+execution:
+  protocol: configs/models/adex_relay_inhibitory_transfer_protocol_v1.yaml
+  candidate_count: 257
+  network_outcomes_used_for_selection: false
+
+assessment:
+  selected_candidate: unchanged-predecessor
+  sealed_holdout_promoted: false
+  combined_training_loss: 2.7409869431695046
+  combined_holdout_loss: 2.8590648689152496
+
+decision:
+  new_network_arm_authorized: false
+  predecessor_parameters_remain_frozen: true
+  next_intrinsic_extension: >-
+    Permit standard AdEx somatic capacitance and leak-conductance parameters in
+    an explicitly broader arm, selected only against the same isolated targets.

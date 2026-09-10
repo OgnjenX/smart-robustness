@@ -1,0 +1,47 @@
+schema_version: 1
+artifact_id: 890
+artifact_type: isolated-cell-fit-assessment
+name: adex-generation-1-network-blind-fit
+date: 2026-09-10
+status: completed-not-promoted
+
+raw_result:
+  path: results/adex-isolated-fit-v3-890.yaml
+  sha256: 9da8406d62ab1c22ec3f99a1c4770b6e252f00815db728a76cb9bf34a91b8e9c
+  bytes: 49865
+  committed: false-generated-result
+
+execution:
+  protocol: configs/models/adex_isolated_match_protocol_v3.yaml
+  cell_classes: 12
+  candidates_per_class: 33
+  network_outcomes_used: false
+  completed: true
+
+assessment:
+  all_classes_current_step_promoted: false
+  promoted_class_count: 11
+  failed_classes:
+    layer5_excitatory_v1:
+      selected_training_loss: 1.2464664518786774
+      literature_training_loss: 1.8992827667881642
+      selected_holdout_loss: 8.31577730951428
+      literature_holdout_loss: 2.4671013953134606
+      interpretation: training improvement did not generalize to sealed currents
+  uninformative_classic_scans:
+    layer4_excitatory_v1:
+      firing_rate_range_hz: [0.0, 0.0]
+    thalamic_interneuron:
+      firing_rate_range_hz: [0.0, 0.0]
+  rebound_and_ahp_ach_promotion_completed: false
+
+decision:
+  matched_parameter_map_frozen: false
+  matched_network_arm_authorized: false
+  literature_parameter_arm_authorized: true
+  rationale: >-
+    The literature arm was fixed before isolated outcomes and is independent
+    of fitting. The matched arm remains withheld: one class fails its sealed
+    holdout and two class scans do not identify spike-generation parameters.
+
+alternative_network_outcomes_run_before_assessment: false

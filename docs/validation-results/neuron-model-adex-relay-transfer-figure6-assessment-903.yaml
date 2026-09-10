@@ -1,0 +1,43 @@
+schema_version: 1
+artifact_id: 903
+artifact_type: alternative-network-assessment
+name: relay-transfer-matched-adex-figure6
+date: 2026-09-10
+status: completed-partial-frozen-gate-failure
+
+raw_result:
+  path: results/adex-relay-transfer-matched-figure6-903.yaml
+  sha256: a737debe8a9abefd70565e1d693b9d72347f5a90a1b3e69fb232b346cc697ba0
+  bytes: 177260
+  committed: false-generated-result
+
+arm:
+  registration: docs/validation-results/neuron-model-adex-relay-transfer-network-registration-902.yaml
+  parameters: configs/models/adex_relay_transfer_matched_v1.yaml
+  network_outcome_used_for_parameter_selection: false
+
+figure6:
+  all_gates_pass: false
+  passed:
+    - cortical_chain_complete
+    - causal_learning_pair
+    - top_down_horizontal_contrast
+  failed:
+    - relay_active_indices
+    - relay_events_per_active_index
+    - relay_events
+  relay_event_count: 51
+  relay_active_indices_count: 31
+  expected_relay_event_count: 20
+  expected_active_indices_count: 5
+
+interpretation: >-
+  Isolated external-transfer calibration restored relay and cortical recruitment,
+  causal learning timing, and positive top-down contrast. It did not preserve
+  spatially selective relay suppression: inactive relay cells also emitted.
+
+decision:
+  valid_learned_state_for_downstream_protocols: false
+  parameters_remain_frozen: true
+  next_network_blind_target: isolated relay external-by-GABA transfer surface
+  network_level_parameter_rescue: prohibited

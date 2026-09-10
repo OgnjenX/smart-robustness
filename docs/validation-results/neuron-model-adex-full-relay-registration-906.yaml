@@ -1,0 +1,15 @@
+schema_version: 1
+artifact_id: 906
+artifact_type: isolated-transfer-fit-registration
+name: full-somatic-adex-relay-fit
+date: 2026-09-10
+status: registered-before-candidate-execution
+
+protocol: configs/models/adex_relay_inhibitory_transfer_protocol_v2.yaml
+control: configs/baselines/classic_smart_calibrated_v1.yaml
+predecessor_parameters: configs/models/adex_relay_transfer_matched_v1.yaml
+new_intrinsic_parameters:
+  - somatic_capacitance_scale
+  - somatic_leak_conductance_scale
+network_outputs_used_for_selection: false
+parameters_will_be_frozen_before_any_new_network_execution: true

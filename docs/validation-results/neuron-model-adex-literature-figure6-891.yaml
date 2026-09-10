@@ -1,0 +1,60 @@
+schema_version: 1
+artifact_id: 891
+artifact_type: alternative-network-holdout-assessment
+name: literature-adex-figure6
+date: 2026-09-10
+status: completed-failed-prerequisite
+
+raw_result:
+  path: results/adex-literature-figure6-891.yaml
+  sha256: 60ecada656a636d9f60af342fddf66a5375933ec81f522eb9ac0b1cbd594a756
+  bytes: 176897
+  committed: false-generated-result
+
+arm:
+  model: somatic_adex_literature
+  parameters: configs/models/adex_parameter_invariant_v1.yaml
+  parameters_registered_before_network_result: true
+  network_outcome_used_for_parameter_selection: false
+
+fixed_control_contract:
+  manifest: configs/baselines/classic_smart_calibrated_v1.yaml
+  topology_ports_delays_initial_strengths_identical: true
+  learning_protocol_and_projection_scales_unchanged: true
+
+figure6:
+  all_gates_pass: false
+  gates:
+    relay_active_indices: false
+    relay_events_per_active_index: false
+    relay_events: false
+    cortical_chain_complete: false
+    causal_learning_pair: false
+    top_down_horizontal_contrast: false
+  relay_active_indices: []
+  relay_event_count: 0
+  top_down_horizontal_contrast: 0.0
+  population_spike_counts:
+    thalamic_relay: 0
+    trn: 486
+    thalamic_interneuron: 5
+    thalamic_nonspecific: 8
+    layer4_excitatory_v1: 0
+    layer4_inhibitory_v1: 0
+    layer23_excitatory_v1: 0
+    layer23_inhibitory_v1: 0
+    layer5_excitatory_v1: 0
+    layer6i_excitatory_v1: 0
+    layer6ii_excitatory_v1: 0
+
+decision:
+  art_core_endpoint_pass: false
+  downstream_learned_state_protocols_authorized: false
+  interpretation: >-
+    The preregistered literature regular-spiking AdEx-only constants do not
+    preserve the Figure-6 sensory relay and cortical learning prerequisite
+    under the fixed SMART circuit. This is evidence about this parameter arm,
+    not a general claim that no AdEx parameterization can support ART behavior.
+  next_step: >-
+    Continue only with an isolated-cell-promoted matched arm. Do not tune any
+    neuron parameter against this network failure.

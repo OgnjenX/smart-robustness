@@ -1,0 +1,36 @@
+schema_version: 1
+name: adex-rebound-ahp-promotion-v1
+status: registered-before-execution
+parameter_source: results/adex-isolated-refit-generation2-893.yaml
+
+thalamic_rebound:
+  cell_classes:
+    - thalamic_relay
+    - trn
+    - thalamic_nonspecific
+    - thalamic_matrix
+  baseline_ms: 100.0
+  hyperpolarization_ms: 100.0
+  release_ms: 100.0
+  hyperpolarizing_passive_offset_mV: -100.0
+  dt_ms: 0.02
+  gates:
+    - finite classic and AdEx voltage
+    - rebound presence agrees, defined as release rate at least 10 Hz above baseline
+    - release rate differs by no more than max of 20 Hz or 50 percent of classic
+    - first release-spike latency agrees within 20 ms, or both have no release spike
+
+layer5_ahp_ach:
+  protocol: source-specific Figure 19 kernel assay
+  conditions:
+    - zero direct spike events
+    - one direct spike event
+    - two direct spike events
+    - two direct spike events plus ACh
+  gates:
+    - frequency-dependent AHP in classic and AdEx
+    - ACh suppression of AHP in classic and AdEx
+    - recovery within 2 mV in classic and AdEx
+
+network_outcomes_used: false
+parameter_changes_after_assay: prohibited

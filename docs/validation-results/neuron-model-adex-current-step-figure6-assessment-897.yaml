@@ -1,0 +1,49 @@
+schema_version: 1
+artifact_id: 897
+artifact_type: alternative-network-assessment
+name: current-step-matched-adex-figure6
+date: 2026-09-10
+status: completed-failed-frozen-gate
+
+raw_result:
+  path: results/adex-current-step-matched-figure6-897.yaml
+  sha256: 98642f86ab85bf4da6fa01b2915debbd37d27f82cf4c4ae6d1c07099943a8439
+  bytes: 176986
+  committed: false-generated-result
+
+arm:
+  registration: docs/validation-results/neuron-model-adex-current-step-arm-registration-896.yaml
+  parameters: configs/models/adex_current_step_matched_v1.yaml
+  network_outcome_used_for_parameter_selection: false
+
+figure6:
+  all_gates_pass: false
+  gates:
+    relay_active_indices: false
+    relay_events_per_active_index: false
+    relay_events: false
+    cortical_chain_complete: false
+    causal_learning_pair: false
+    top_down_horizontal_contrast: false
+  population_spike_counts:
+    thalamic_relay: 0
+    trn: 405
+    layer5_excitatory_v1: 0
+    layer6ii_excitatory_v1: 0
+    layer6i_excitatory_v1: 0
+    layer4_inhibitory_v1: 0
+    layer23_excitatory_v1: 0
+    layer4_excitatory_v1: 0
+    layer23_inhibitory_v1: 0
+    thalamic_interneuron: 5
+    thalamic_nonspecific: 9
+
+decision:
+  downstream_learned_state_protocols_authorized: false
+  art_core_endpoint_pass: false
+  parameter_map_remains_frozen: true
+  interpretation: >-
+    Matching somatic direct-current responses with the registered candidate set
+    is insufficient to preserve the frozen SMART Figure 6 behavior. This does
+    not show that all AdEx parameterizations fail, because the fit did not
+    target the unchanged conductance-based external and synaptic input ports.

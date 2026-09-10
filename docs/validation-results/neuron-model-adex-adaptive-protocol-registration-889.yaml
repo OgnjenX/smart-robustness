@@ -1,0 +1,21 @@
+schema_version: 1
+artifact_id: 889
+artifact_type: preregistration-amendment
+name: adaptive-isolated-cell-level-selection-v3
+date: 2026-09-10
+status: registered-before-candidate-fitting-and-network-outcomes
+
+evidence_for_amendment:
+  path: docs/validation-results/neuron-model-adex-isolated-targets-v2-888.yaml
+  scope: isolated-cell-control-and-literature-arm-only
+
+new_protocol: configs/models/adex_isolated_match_protocol_v3.yaml
+rationale: >-
+  The 12 SMART cell classes have strongly heterogeneous leak, morphology,
+  active currents, and spontaneous regimes. Per-class levels selected solely
+  from a broad classic isolated-cell scan produce an informative target while
+  remaining blind to every AdEx candidate and every ART network outcome.
+
+candidate_parameters_fitted_before_registration: false
+alternative_network_outcomes_run_before_registration: false
+classic_network_control_changed: false

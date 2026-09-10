@@ -1,0 +1,41 @@
+schema_version: 1
+artifact_id: 886
+artifact_type: preregistration
+name: controlled-somatic-adex-phase1
+registered_before_alternative_network_results: true
+date: 2026-09-10
+
+scientific_question: >-
+  Do SMART learning, match resonance, mismatch discrimination, and causal reset
+  survive replacement of the somatic fast Na/K spike generator by AdEx, first
+  under literature-derived parameters and then under network-blind
+  isolated-cell-matched parameters?
+
+control:
+  manifest: configs/baselines/classic_smart_calibrated_v1.yaml
+  tag: classic-smart-calibrated-v1.0.0
+  exact_historical_reproduction_claimed: false
+
+experiment:
+  config: configs/robustness/adex_phase1_v1.yaml
+  literature_parameters: configs/models/adex_parameter_invariant_v1.yaml
+  isolated_matching_protocol: configs/models/adex_isolated_match_protocol_v1.yaml
+  design_decision: docs/adr/0003-controlled-adex-substitution.md
+
+blinding_rule: >-
+  No alternative full-network validation output may be used to select or fit
+  AdEx parameters. The isolated-cell parameter artifact and holdout assessment
+  must be hash-sealed before the matched network arm is run.
+
+primary_endpoint: preregistered ART-core conjunction in adex_phase1_v1.yaml
+official_gates_unchanged: true
+modern_anatomy_excluded: true
+network_parameter_rescue_excluded: true
+
+implementation_state_at_registration:
+  adapter_contract: implemented
+  literature_adex_population: implemented
+  structural_contract_snapshot: implemented
+  isolated_current_step_measurement: implemented
+  isolated_cell_parameter_fit: pending
+  alternative_network_outcomes: not-run

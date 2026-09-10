@@ -95,6 +95,22 @@ backends rather than silently approximated aliases. See
 [`docs/adr/0002-full-network-population-factory.md`](docs/adr/0002-full-network-population-factory.md)
 for the full-network substitution contract.
 
+The complete SMART network now has a separate model-neutral registry. Its first
+alternative is a morphology-preserving somatic AdEx substitution: dendrites,
+compartment-targeted ports, T-type calcium, AHP/ACh, learning, topology, and
+protocols stay fixed while the somatic Na/K spike generator changes. Phase 1
+and its network-blind fitting rule are preregistered in
+[`configs/robustness/adex_phase1_v1.yaml`](configs/robustness/adex_phase1_v1.yaml).
+
+The first controlled AdEx comparison is now recorded. The fixed literature arm
+and the per-class direct-current-matched arm both fail all frozen Figure 6
+gates. A separately registered relay-transfer calibration restores the cortical
+feedforward chain, causal learning timing, and positive top-down contrast, but
+produces spatially diffuse relay activity and therefore fails the three relay
+gates. No failed arm is passed into downstream match/mismatch protocols, and no
+network outcome is used to retune its parameters. See validation artifacts
+891, 897, 903, 905, and 907 for the complete positive and negative record.
+
 ## Install and run
 
 ```bash

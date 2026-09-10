@@ -90,8 +90,9 @@ factory, so alternative models are scored by the frozen protocols rather than
 by model-specific copies of those experiments.
 
 `models.create_population(...)` remains the registry for the reduced benchmark
-runner. `adex`, `gif`, and alternative HH adapters remain explicit planned
-backends rather than silently approximated aliases. See
+runner. Its `adex`, `gif`, and alternative HH adapters remain explicit planned
+backends rather than silently approximated aliases; complete SMART uses the
+separate model-neutral registry described below. See
 [`docs/adr/0002-full-network-population-factory.md`](docs/adr/0002-full-network-population-factory.md)
 for the full-network substitution contract.
 
@@ -110,6 +111,17 @@ produces spatially diffuse relay activity and therefore fails the three relay
 gates. No failed arm is passed into downstream match/mismatch protocols, and no
 network outcome is used to retune its parameters. See validation artifacts
 891, 897, 903, 905, and 907 for the complete positive and negative record.
+
+The stochastic GIF comparison is also complete through its registered Figure 6
+prerequisite. It uses the Pozzorini--Mensi GIF formulation with spike-triggered
+current, moving threshold, reset/refractoriness, and escape-rate firing. Both
+the fixed literature transfer and a network-blind per-class current-step fit
+were evaluated over the same 20 frozen seeds. Neither produced a valid Figure 6
+learned state in any seed. The matched arm preserved positive top-down contrast
+in 18/20 trials but did not preserve the selective repeated relay volleys,
+layer-4-led cortical chain, or causal learning pair. It therefore does not enter
+the downstream match/mismatch, reset, or spectral protocols. See the registered
+design and result in validation artifacts 908--911.
 
 ## Install and run
 

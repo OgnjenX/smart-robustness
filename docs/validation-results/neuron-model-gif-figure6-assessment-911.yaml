@@ -1,0 +1,81 @@
+schema_version: 1
+artifact_id: 911
+artifact_type: stochastic-alternative-network-assessment
+name: stochastic-gif-figure6-ensemble
+date: 2026-09-10
+status: completed-failed-frozen-progression-gate
+
+raw_result:
+  path: results/gif-figure6-ensemble-911.yaml
+  sha256: c89389a5c2afffb37e61ff0a6a83cc34ec5194b58b538b952cc94438e90e4e4e
+  bytes: 8761582
+  committed: false-generated-result
+
+registration: docs/validation-results/neuron-model-gif-figure6-registration-910.yaml
+study: configs/robustness/gif_phase1_v1.yaml
+control: configs/baselines/classic_smart_calibrated_v1.yaml
+network_outcome_used_for_parameter_selection: false
+registered_seeds_completed_per_arm: 20
+
+structural_control:
+  population_names_sizes_compartments_ports_identical: true
+  projection_edges_delays_initial_strengths_identical: true
+  verified_by: tests/test_comparison_contract.py::test_gif_preserves_first_order_topology_ports_delays_and_strengths
+
+arms:
+  literature:
+    parameters: configs/models/gif_parameter_invariant_v1.yaml
+    full_figure6_successes: 0
+    trials: 20
+    individual_gate_success_counts:
+      relay_active_indices: 0
+      relay_events_per_active_index: 0
+      relay_events: 0
+      cortical_chain_complete: 2
+      causal_learning_pair: 0
+      top_down_horizontal_contrast: 0
+    relay_event_range: [2, 4]
+    relay_active_index_count_range: [2, 4]
+    progression_pass: false
+  current_step_matched:
+    parameters: configs/models/gif_current_step_matched_v1.yaml
+    full_figure6_successes: 0
+    trials: 20
+    individual_gate_success_counts:
+      relay_active_indices: 0
+      relay_events_per_active_index: 0
+      relay_events: 0
+      cortical_chain_complete: 1
+      causal_learning_pair: 0
+      top_down_horizontal_contrast: 18
+    relay_event_range: [4, 11]
+    relay_active_index_count_range: [4, 11]
+    top_down_horizontal_contrast_range: [-0.054136855699745245, 0.20736797420669578]
+    median_population_spike_counts:
+      thalamic_relay: 7.0
+      trn: 240.5
+      layer4_excitatory_v1: 0.0
+      layer23_excitatory_v1: 22.5
+      layer5_excitatory_v1: 11.0
+      layer6ii_excitatory_v1: 18.0
+    progression_pass: false
+
+decision:
+  figure6_prerequisite_pass: false
+  downstream_figures_7_10_14_15_16_authorized: false
+  art_core_endpoint_pass: false
+  parameter_maps_remain_frozen: true
+  interpretation: >-
+    The fixed literature transfer and the network-blind current-step-matched
+    stochastic GIF both fail to preserve the frozen SMART learning
+    prerequisite in every registered seed. Current-step matching substantially
+    restores downstream activity and usually produces positive top-down
+    contrast, but not the source-selective repeated relay volleys, layer-4-led
+    cortical chain, or causal learning pair needed for a valid learned state.
+    This is evidence about the two registered GIF parameter arms, not proof
+    that no GIF formulation can support ART behavior.
+  next_step: >-
+    Do not tune these GIF parameters against Figure 6. Preserve this partial
+    negative result. Any further GIF work must introduce a new independently
+    motivated isolated conductance-transfer or thalamic formulation and be
+    registered as a new exploratory hypothesis before a network run.

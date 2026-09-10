@@ -62,3 +62,16 @@ def test_isolated_fit_is_sealed_before_network_holdout() -> None:
     assert parameters["claims"]["network_behavior_preserved"] == "not-yet-observed"
     assert registration["knowledge_boundary"]["gif_network_outcomes_observed_at_registration"] is False
     assert registration["knowledge_boundary"]["parameter_maps_frozen"] is True
+
+
+def test_completed_ensemble_blocks_downstream_protocols() -> None:
+    result = _yaml(
+        "docs/validation-results/neuron-model-gif-figure6-assessment-911.yaml"
+    )
+    assert result["registered_seeds_completed_per_arm"] == 20
+    assert result["arms"]["literature"]["full_figure6_successes"] == 0
+    assert result["arms"]["current_step_matched"]["full_figure6_successes"] == 0
+    assert result["arms"]["current_step_matched"][
+        "individual_gate_success_counts"
+    ]["top_down_horizontal_contrast"] == 18
+    assert result["decision"]["downstream_figures_7_10_14_15_16_authorized"] is False

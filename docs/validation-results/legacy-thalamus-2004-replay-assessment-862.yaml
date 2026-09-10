@@ -1,0 +1,68 @@
+schema_version: 1
+id: legacy-thalamus-2004-replay-assessment-862
+date: '2026-09-10'
+status: assessed-negative
+classification: independent-legacy-kinness-tonic-burst-replay
+registration:
+  path: docs/validation-results/legacy-thalamus-2004-replay-registration-860.yaml
+result:
+  path: docs/validation-results/legacy-thalamus-2004-replay-861.yaml
+  sha256: 84cf009a335e1c1f96aee1410689e5fe381f476c3f0a251fc8f14f29b0636de6
+archived_targets:
+  tonic_event_count: 199
+  tonic_median_interevent_interval_ms: 15.05
+  burst_event_count: 6
+  burst_event_times_ms: [2187.9, 2191.8, 2196.15, 2201.2, 2207.5, 2217.0]
+outcome_summary:
+  rk4_normalized_255:
+    finite: true
+    tonic_event_count: 3
+    tonic_median_interevent_interval_ms: 60.05
+    burst_event_count: 645
+    post_release_events_2183_to_2250_ms: 0
+  rk4_normalized_250:
+    finite: true
+    tonic_event_count: 3
+    tonic_median_interevent_interval_ms: 59.5
+    burst_event_count: 644
+    post_release_events_2183_to_2250_ms: 1
+  rk4_raw_0_255:
+    finite: false
+    tonic_event_count_before_instability: 2
+    burst_event_count_before_instability: 12
+  sanndra_scalar_rk4_normalized_255:
+    finite: true
+    tonic_event_count: 7
+    tonic_median_interevent_interval_ms: 1.75
+    burst_event_count: 1553
+    post_release_events_2183_to_2250_ms: 24
+  sanndra_scalar_rk4_normalized_250:
+    finite: true
+    tonic_event_count: 7
+    tonic_median_interevent_interval_ms: 1.775
+    burst_event_count: 1551
+    post_release_events_2183_to_2250_ms: 24
+  sanndra_scalar_rk4_raw_0_255:
+    finite: false
+    tonic_event_count_before_instability: 0
+    burst_event_count_before_instability: 511
+selection_performed: false
+assessment:
+  legacy_benchmark_reproduced: false
+  t_type_mechanism_independently_validated: false
+  original_figure8_reproduced: false
+  exact_classic_baseline_freeze_authorized: false
+interpretation:
+  - No preregistered integration-method/input-encoding arm jointly approaches
+    the archived tonic and burst event signatures.
+  - Treating the PNG channel value literally as 250 makes both integrators
+    non-finite, rejecting that encoding in the current conductance-input
+    translation.
+  - This negative result closes only the six registered arms. It neither
+    invalidates T-type calcium as a mechanism nor identifies the missing 2008
+    Figure-8 protocol.
+  - The archived voltage files subsequently expose a distinct membrane-output
+    coordinate from the physical-voltage coordinate used in this replay. That
+    source-derived correction must be tested in a new preregistered replay; it
+    is not selected post hoc in this result.
+baseline_frozen: false

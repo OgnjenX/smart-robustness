@@ -1,0 +1,64 @@
+schema_version: 1
+id: legacy-thalamus-output-coordinate-audit-863
+date: '2026-09-10'
+status: completed-source-audit
+classification: archived-output-coordinate-inference
+sources:
+  network:
+    path: tmp/legacy-thalamus-2004/KINENSS_tonic_burst/tonic_burst.xml
+    sha256: 3d4782503b74b818e4d94b29e72c5bb81f914b0c29d55a19cb99b088d1d14445
+  tonic_voltage:
+    path: tmp/legacy-thalamus-2004/KINENSS_tonic_burst/tonic_burst_data/Relay tonic.dat
+    sha256: 506e56c07e5ff13098a2ebb6f21db31e489d77efdffa65fc816c20d58f68c92f
+  burst_voltage:
+    path: tmp/legacy-thalamus-2004/KINENSS_tonic_burst/tonic_burst_data/Relay burst.dat
+    sha256: 4a14dd2c40b69ddaee9c652f6e89a713efd5eb9ba75949619a79f3925832b76c
+  prior_replay:
+    path: docs/validation-results/legacy-thalamus-2004-replay-861.yaml
+    sha256: 84cf009a335e1c1f96aee1410689e5fe381f476c3f0a251fc8f14f29b0636de6
+serialized_facts:
+  relay_leak_reversal_mV: -70.0
+  relay_soma_initial_archived_value_mV: 0.243604
+  burst_preinput_interval_ms: [0.0, 1011.0]
+  burst_preinput_mean_archived_value_mV: 0.241507
+  burst_preinput_minimum_archived_value_mV: 0.241355
+  burst_preinput_maximum_archived_value_mV: 0.247828
+  burst_hyperpolarized_minimum_archived_value_mV: -49.883523
+  tonic_initial_archived_value_mV: 5.454481
+inference:
+  membrane_state_coordinate: kinness_internal_zero
+  leak_runtime_reversal_in_that_coordinate_mV: 0.0
+  nak_gate_coordinate: internal_membrane_voltage
+  t_type_gate_coordinate: internal_membrane_voltage_plus_serialized_leak
+  confidence: strong
+  rationale: >-
+    The burst file begins and remains near +0.24 mV for more than one second
+    without applied input even though the XML serializes E_leak=-70 mV. The
+    monitored state is therefore not an absolute physical membrane voltage;
+    it is the KInNeSS internal coordinate whose zero denotes rest. The XML
+    Na/K offsets are expressed on that internal axis, while the relay T-type
+    sigmoids retain absolute-voltage offsets near -63 and -83.5 mV and must be
+    evaluated after adding the serialized leak value.
+prior_replay_error:
+  leak_convention: table3_reversal
+  membrane_initialization_convention: physical_leak_voltage
+  calcium_voltage_coordinate: integrated_voltage
+  consequence: >-
+    Replay 861 translated the archived cell into an absolute physical state
+    while leaving channel reversal potentials in the serialized KInNeSS axis.
+    Its negative outcome is valid for the registered arm but does not test the
+    source-implied internal-coordinate execution.
+authorized_next_test:
+  action: preregister one replay crossing the inferred coordinate with the same two integrators and three input encodings
+  forbidden_changes:
+    - cell geometry or channel densities
+    - ionic reversal potentials
+    - input conductance values or sensitivities
+    - inferred input schedule
+    - detector threshold, direction, or two-millisecond axonal delay
+    - post-execution interpolation or parameter fitting
+scope_boundary: >-
+  Success would validate the implemented cell kernel against the 2004
+  author-produced benchmark only. It cannot supply the missing 2008 Figure-8
+  clamp, schedule, capacitance, or leak fields and cannot by itself authorize
+  an exact original-SMART freeze.

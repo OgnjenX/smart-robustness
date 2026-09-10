@@ -83,6 +83,9 @@ the source-constrained vectorized multicompartment HH kernel used by the frozen
 control. A robustness backend must return the same population/port adapter
 interface, allowing the circuit topology, synapses, stimuli, seeds, learning,
 and analyses to remain fixed while only the cellular equations change.
+The Figure 6, 7, 10, 14, 15, and 16 validation entry points forward the same
+factory, so alternative models are scored by the frozen protocols rather than
+by model-specific copies of those experiments.
 
 `models.create_population(...)` remains the registry for the reduced benchmark
 runner. `adex`, `gif`, and alternative HH adapters remain explicit planned

@@ -39,6 +39,7 @@ def run_figure14_condition(
     histogram_bin_ms: float = 1.0,
     hamming_window_ms: float = 200.0,
     cpp_standalone_directory: str | Path | None = None,
+    population_factory=None,
     brian=None,
 ) -> Figure14ConditionResult:
     """Run one caption-duration condition and analyze cumulative V1 spikes."""
@@ -61,6 +62,7 @@ def run_figure14_condition(
         dt_ms=dt_ms,
         record_v1_cortical_spikes=True,
         cpp_standalone_directory=cpp_standalone_directory,
+        population_factory=population_factory,
         brian=brian,
     )
     spectrum = figure14_spectrum_from_spikes(

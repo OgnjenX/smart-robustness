@@ -240,6 +240,7 @@ def run_figure16_candidate(
     geometry_seed: int = 16,
     conventions=None,
     cpp_standalone_directory: str | Path | None = None,
+    population_factory=None,
     brian=None,
 ) -> Figure16CandidateResult:
     """Run the caption's learned-stimulus prestimulus and recording epochs.
@@ -281,7 +282,11 @@ def run_figure16_candidate(
     conventions = conventions or figure6_runtime_conventions()
     brian.start_scope()
     brian.defaultclock.dt = protocol.integration_dt_ms * brian.ms
-    sector = build_full_smart_network(conventions=conventions, brian=brian)
+    sector = build_full_smart_network(
+        conventions=conventions,
+        population_factory=population_factory,
+        brian=brian,
+    )
     if projection036_variance_topology:
         from smart_robustness.validation.figure10_search_cycle_spread import (
             apply_projection036_variance_topology,

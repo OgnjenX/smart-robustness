@@ -47,6 +47,7 @@ def run_figure15_condition(
     target_hz: float = 44.0,
     tolerance_hz: float = 5.0,
     cpp_standalone_directory: str | Path | None = None,
+    population_factory=None,
     brian=None,
 ) -> Figure15ConditionResult:
     """Run the learned-match trial and score one predeclared adjacent pair."""
@@ -68,6 +69,7 @@ def run_figure15_condition(
         duration_ms=duration_ms,
         dt_ms=dt_ms,
         cpp_standalone_directory=cpp_standalone_directory,
+        population_factory=population_factory,
         brian=brian,
     )
     synchrony = figure15_layer4_synchrony(

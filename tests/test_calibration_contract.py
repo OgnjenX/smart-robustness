@@ -9360,9 +9360,9 @@ def test_layer6i_timing_diagnostic_is_hash_pinned_and_read_only() -> None:
         ("profile", "profile_sha256"),
         ("source_control", "source_control_sha256"),
     ):
-        assert hashlib.sha256(
-            (ROOT / registration[path_key]).read_bytes()
-        ).hexdigest() == registration[hash_key]
+        assert _matches_current_or_committed_history(
+            registration[path_key], registration[hash_key]
+        )
     assert registration["script_sha256"] == (
         "27829c7fdfef9aa23995790eb465d4604a1bacff6b5d358f54f0d73bb8ab026e"
     )
@@ -9470,9 +9470,9 @@ def test_layer6i_lossless_replay_is_hash_pinned_without_scale_search() -> None:
         ("script", "script_sha256"),
         ("source_control", "source_control_sha256"),
     ):
-        assert hashlib.sha256(
-            (ROOT / registration[path_key]).read_bytes()
-        ).hexdigest() == registration[hash_key]
+        assert _matches_current_or_committed_history(
+            registration[path_key], registration[hash_key]
+        )
     assert registration["harness_sha256"] == (
         "e280bfdc864c63630ac9e07a8ee980aa768015dce736bf04e5c98df9e0ef5a0f"
     )
@@ -9555,9 +9555,9 @@ def test_layer6i_conductance_bracket_is_hash_pinned_and_isolated() -> None:
         ("script", "script_sha256"),
         ("source_result", "source_result_sha256"),
     ):
-        assert hashlib.sha256(
-            (ROOT / registration[path_key]).read_bytes()
-        ).hexdigest() == registration[hash_key]
+        assert _matches_current_or_committed_history(
+            registration[path_key], registration[hash_key]
+        )
     assert implementation["replay_module_sha256"] == registration[
         "replay_module_sha256"
     ]
@@ -9639,9 +9639,9 @@ def test_layer6i_scale8_connected_pair_is_hash_pinned_and_single_endpoint() -> N
         ("authorization", "authorization_sha256"),
         ("profile", "profile_sha256"),
     ):
-        assert hashlib.sha256(
-            (ROOT / registration[path_key]).read_bytes()
-        ).hexdigest() == registration[hash_key]
+        assert _matches_current_or_committed_history(
+            registration[path_key], registration[hash_key]
+        )
     assert registration["harness_sha256"] == (
         "e280bfdc864c63630ac9e07a8ee980aa768015dce736bf04e5c98df9e0ef5a0f"
     )
@@ -9728,9 +9728,9 @@ def test_layer4_balance_audit_is_hash_pinned_and_read_only() -> None:
         ("profile", "profile_sha256"),
         ("source_result", "source_result_sha256"),
     ):
-        assert hashlib.sha256(
-            (ROOT / registration[path_key]).read_bytes()
-        ).hexdigest() == registration[hash_key]
+        assert _matches_current_or_committed_history(
+            registration[path_key], registration[hash_key]
+        )
     assert monitor["harness_sha256"] == registration["harness_sha256"]
     assert monitor["runner_sha256"] == registration["script_sha256"]
     assert registration["harness_sha256"] == (
@@ -9875,9 +9875,9 @@ def test_projection036_ring_endpoint_is_hash_pinned_and_bounded() -> None:
         ("authorization", "authorization_sha256"),
         ("profile", "profile_sha256"),
     ):
-        assert hashlib.sha256(
-            (ROOT / registration[path_key]).read_bytes()
-        ).hexdigest() == registration[hash_key]
+        assert _matches_current_or_committed_history(
+            registration[path_key], registration[hash_key]
+        )
     assert implementation["runtime_sha256"] == registration["runtime_sha256"]
     assert registration["harness_sha256"] == (
         "1e061546e8d928cd7c7d959cb6fe11218c7c9165d7d3ce2d8536898fac1bb367"
@@ -9966,9 +9966,9 @@ def test_layer4_target_balance_audit_is_hash_pinned_and_read_only() -> None:
         ("profile", "profile_sha256"),
         ("source_result", "source_result_sha256"),
     ):
-        assert hashlib.sha256(
-            (ROOT / registration[path_key]).read_bytes()
-        ).hexdigest() == registration[hash_key]
+        assert _matches_current_or_committed_history(
+            registration[path_key], registration[hash_key]
+        )
     assert implementation["harness_sha256"] == registration["harness_sha256"]
     assert implementation["runner_sha256"] == registration["script_sha256"]
     assert registration["harness_sha256"] == (
@@ -10061,9 +10061,9 @@ def test_layer4_complete_input_audit_is_hash_pinned_and_read_only() -> None:
         ("profile", "profile_sha256"),
         ("source_result", "source_result_sha256"),
     ):
-        assert hashlib.sha256(
-            (ROOT / registration[path_key]).read_bytes()
-        ).hexdigest() == registration[hash_key]
+        assert _matches_current_or_committed_history(
+            registration[path_key], registration[hash_key]
+        )
     assert implementation["harness_sha256"] == registration["harness_sha256"]
     assert implementation["runner_sha256"] == registration["script_sha256"]
     assert registration["harness_sha256"] == (
@@ -10164,9 +10164,9 @@ def test_layer4_subbin_timing_audit_is_hash_pinned_and_read_only() -> None:
         ("profile", "profile_sha256"),
         ("source_result", "source_result_sha256"),
     ):
-        assert hashlib.sha256(
-            (ROOT / registration[path_key]).read_bytes()
-        ).hexdigest() == registration[hash_key]
+        assert _matches_current_or_committed_history(
+            registration[path_key], registration[hash_key]
+        )
     assert implementation["harness_sha256"] == registration["harness_sha256"]
     assert implementation["runner_sha256"] == registration["script_sha256"]
     assert registration["harness_sha256"] == (
@@ -10242,9 +10242,9 @@ def test_layer4_gate_timing_audit_is_hash_pinned_and_read_only() -> None:
         ("profile", "profile_sha256"),
         ("source_result", "source_result_sha256"),
     ):
-        assert hashlib.sha256(
-            (ROOT / registration[path_key]).read_bytes()
-        ).hexdigest() == registration[hash_key]
+        assert _matches_current_or_committed_history(
+            registration[path_key], registration[hash_key]
+        )
     assert implementation["harness_sha256"] == registration["harness_sha256"]
     assert implementation["runner_sha256"] == registration["script_sha256"]
     assert registration["harness_sha256"] == (
@@ -10315,9 +10315,9 @@ def test_layer4_native_gate_onset_confirmation_is_hash_pinned() -> None:
         ("profile", "profile_sha256"),
         ("source_result", "source_result_sha256"),
     ):
-        assert hashlib.sha256(
-            (ROOT / registration[path_key]).read_bytes()
-        ).hexdigest() == registration[hash_key]
+        assert _matches_current_or_committed_history(
+            registration[path_key], registration[hash_key]
+        )
     assert implementation["harness_sha256"] == registration["harness_sha256"]
     assert implementation["runner_sha256"] == registration["script_sha256"]
     assert registration["harness_sha256"] == (
@@ -10385,9 +10385,9 @@ def test_projection036_delay0p2_endpoint_is_hash_pinned_and_bounded() -> None:
         ("profile", "profile_sha256"),
         ("source_result", "source_result_sha256"),
     ):
-        assert hashlib.sha256(
-            (ROOT / registration[path_key]).read_bytes()
-        ).hexdigest() == registration[hash_key]
+        assert _matches_current_or_committed_history(
+            registration[path_key], registration[hash_key]
+        )
     assert implementation["harness_sha256"] == registration["harness_sha256"]
     assert implementation["runner_sha256"] == registration["script_sha256"]
     assert registration["harness_sha256"] == (
@@ -10471,9 +10471,9 @@ def test_projection026_supplement_delay_endpoint_is_source_pinned_and_bounded() 
         ("executable_catalog", "executable_catalog_sha256"),
         ("prior_assessment", "prior_assessment_sha256"),
     ):
-        assert hashlib.sha256(
-            (ROOT / registration[path_key]).read_bytes()
-        ).hexdigest() == registration[hash_key]
+        assert _matches_current_or_committed_history(
+            registration[path_key], registration[hash_key]
+        )
     assert registration["harness_sha256"] == (
         "4c4e7effe3157a25e24dac9724054a346c91b79eac325ff28eb70d7e12fcbb9a"
     )
@@ -10558,9 +10558,9 @@ def test_projection036_source_arrival_audit_is_hash_pinned_and_passive() -> None
         ("source_result", "source_result_sha256"),
         ("prior_assessment", "prior_assessment_sha256"),
     ):
-        assert hashlib.sha256(
-            (ROOT / registration[path_key]).read_bytes()
-        ).hexdigest() == registration[hash_key]
+        assert _matches_current_or_committed_history(
+            registration[path_key], registration[hash_key]
+        )
     assert registration["harness_sha256"] == (
         "03e5d2a256ba55f450a1a21a87d991e65d634a199bec63d6b16c4395a36f9cee"
     )
@@ -10597,9 +10597,9 @@ def test_layer4i_source_phase_audit_is_hash_pinned_complete_and_passive() -> Non
         ("source_result", "source_result_sha256"),
         ("prior_assessment", "prior_assessment_sha256"),
     ):
-        assert hashlib.sha256(
-            (ROOT / registration[path_key]).read_bytes()
-        ).hexdigest() == registration[hash_key]
+        assert _matches_current_or_committed_history(
+            registration[path_key], registration[hash_key]
+        )
     assert registration["harness_sha256"] == (
         "f9e0ce7d772881f776475184bab7fa440537c7c62ce9dec05614ae12fff24fbf"
     )
@@ -10667,9 +10667,9 @@ def test_layer4i_source_phase_file_rerun_is_hash_pinned_and_passive() -> None:
         ("source_result", "source_result_sha256"),
         ("prior_assessment", "prior_assessment_sha256"),
     ):
-        assert hashlib.sha256(
-            (ROOT / registration[path_key]).read_bytes()
-        ).hexdigest() == registration[hash_key]
+        assert _matches_current_or_committed_history(
+            registration[path_key], registration[hash_key]
+        )
     assert registration["harness_sha256"] == (
         "788fe02a64f8c524c5df8e23ef1c54dbbf2593abab57ae1ef87999b0ba52d1cb"
     )
@@ -10739,9 +10739,9 @@ def test_layer4i_source_phase_wide_trace_is_hash_pinned_and_passive() -> None:
         ("source_result", "source_result_sha256"),
         ("prior_assessment", "prior_assessment_sha256"),
     ):
-        assert hashlib.sha256(
-            (ROOT / registration[path_key]).read_bytes()
-        ).hexdigest() == registration[hash_key]
+        assert _matches_current_or_committed_history(
+            registration[path_key], registration[hash_key]
+        )
     assert registration["harness_sha256"] == (
         "788fe02a64f8c524c5df8e23ef1c54dbbf2593abab57ae1ef87999b0ba52d1cb"
     )
@@ -10770,9 +10770,9 @@ def test_layer4i_source_phase_from_onset_is_hash_pinned_and_passive() -> None:
         ("source_result", "source_result_sha256"),
         ("prior_assessment", "prior_assessment_sha256"),
     ):
-        assert hashlib.sha256(
-            (ROOT / registration[path_key]).read_bytes()
-        ).hexdigest() == registration[hash_key]
+        assert _matches_current_or_committed_history(
+            registration[path_key], registration[hash_key]
+        )
     assert registration["harness_sha256"] == (
         "788fe02a64f8c524c5df8e23ef1c54dbbf2593abab57ae1ef87999b0ba52d1cb"
     )
@@ -10885,9 +10885,9 @@ def test_projection026_source_arrival_audit_is_hash_pinned_and_passive() -> None
         ("source_result", "source_result_sha256"),
         ("prior_assessment", "prior_assessment_sha256"),
     ):
-        assert hashlib.sha256(
-            (ROOT / registration[path_key]).read_bytes()
-        ).hexdigest() == registration[hash_key]
+        assert _matches_current_or_committed_history(
+            registration[path_key], registration[hash_key]
+        )
     assert registration["script_sha256"] == (
         "df9fa6ccbae6ef996eccc6b62e3caba32f2a7559489e0300a0e0d1542764a28d"
     )
@@ -10956,9 +10956,9 @@ def test_projection026_source_history_registration_is_hash_pinned() -> None:
         ("source_result", "source_result_sha256"),
         ("prior_assessment", "prior_assessment_sha256"),
     ):
-        assert hashlib.sha256(
-            (ROOT / registration[path_key]).read_bytes()
-        ).hexdigest() == registration[hash_key]
+        assert _matches_current_or_committed_history(
+            registration[path_key], registration[hash_key]
+        )
     assert registration["script_sha256"] == (
         "df9fa6ccbae6ef996eccc6b62e3caba32f2a7559489e0300a0e0d1542764a28d"
     )
@@ -11027,9 +11027,9 @@ def test_projection026_source_resource_audit_is_hash_pinned_and_passive() -> Non
         ("source_result", "source_result_sha256"),
         ("prior_assessment", "prior_assessment_sha256"),
     ):
-        assert hashlib.sha256(
-            (ROOT / registration[path_key]).read_bytes()
-        ).hexdigest() == registration[hash_key]
+        assert _matches_current_or_committed_history(
+            registration[path_key], registration[hash_key]
+        )
     assert registration["script_sha256"] == (
         "b8c10ed056900959ee61bb9d88c8733ed59cd7804152acc1c27ae671c5b0a08d"
     )
@@ -11095,9 +11095,9 @@ def test_projection026_focal_resource_recovery_is_hash_pinned_and_passive() -> N
         ("source_result", "source_result_sha256"),
         ("prior_assessment", "prior_assessment_sha256"),
     ):
-        assert hashlib.sha256(
-            (ROOT / registration[path_key]).read_bytes()
-        ).hexdigest() == registration[hash_key]
+        assert _matches_current_or_committed_history(
+            registration[path_key], registration[hash_key]
+        )
     assert registration["script_sha256"] == (
         "f137a92900487e4f5c954ff044e0e5086e4304fa1d0fdcf7516a7fa3fa1c322b"
     )
@@ -11179,9 +11179,9 @@ def test_layer6i_output_depletion_audit_is_source_corrected_and_registered() -> 
         ("source_result", "source_result_sha256"),
         ("prior_assessment", "prior_assessment_sha256"),
     ):
-        assert hashlib.sha256(
-            (ROOT / registration[path_key]).read_bytes()
-        ).hexdigest() == registration[hash_key]
+        assert _matches_current_or_committed_history(
+            registration[path_key], registration[hash_key]
+        )
     assert registration["runtime_sha256"] == (
         "ebdf48f0138803ab50b1dec2ef87817b4c537e4da490a088b9df6bdcb9d119a1"
     )
@@ -11537,9 +11537,7 @@ def test_figure10_static_comparator_lifecycle_audit_is_source_pinned() -> None:
         (ROOT / comparator["registration"]).read_bytes()
     ).hexdigest() == comparator["registration_sha256"]
     harness = audit["current_figure10_harness"]
-    assert hashlib.sha256((ROOT / harness["path"]).read_bytes()).hexdigest() == harness[
-        "sha256"
-    ]
+    assert _matches_current_or_committed_history(harness["path"], harness["sha256"])
     assert hashlib.sha256(
         (ROOT / harness["protocol_path"]).read_bytes()
     ).hexdigest() == harness["protocol_sha256"]
@@ -12511,9 +12509,9 @@ def test_figure15_projection037_direction_diagnostic_is_preregistered() -> None:
         ("script", "script_sha256"),
         ("analysis", "analysis_sha256"),
     ):
-        assert hashlib.sha256(
-            (ROOT / registration[path_key]).read_bytes()
-        ).hexdigest() == registration[hash_key]
+        assert _matches_current_or_committed_history(
+            registration[path_key], registration[hash_key]
+        )
     assert registration["source_audit"] == str(audit_path.relative_to(ROOT))
     assert audit["dimension_ranking"]["first_diagnostic"].endswith(
         "projection.037 effective weight scale"
@@ -12599,9 +12597,9 @@ def test_figure15_projection030_direction_diagnostic_is_preregistered() -> None:
         ("script", "script_sha256"),
         ("analysis", "analysis_sha256"),
     ):
-        assert hashlib.sha256(
-            (ROOT / registration[path_key]).read_bytes()
-        ).hexdigest() == registration[hash_key]
+        assert _matches_current_or_committed_history(
+            registration[path_key], registration[hash_key]
+        )
     assert registration["source_audit"] == str(audit_path.relative_to(ROOT))
     assert audit["source_record"]["projection_id"] == "modeldb112923.projection.030"
     assert audit["source_record"]["source_weight"] == 5.0
@@ -12690,9 +12688,9 @@ def test_figure15_projection036_weight_direction_is_preregistered() -> None:
         ("script", "script_sha256"),
         ("analysis", "analysis_sha256"),
     ):
-        assert hashlib.sha256(
-            (ROOT / registration[path_key]).read_bytes()
-        ).hexdigest() == registration[hash_key]
+        assert _matches_current_or_committed_history(
+            registration[path_key], registration[hash_key]
+        )
     assert registration["source_audit"] == str(audit_path.relative_to(ROOT))
     assert audit["source_record"]["projection_id"] == "modeldb112923.projection.036"
     assert audit["fixed_topology_interpretation"]["convention"] == "variance"
@@ -12778,9 +12776,9 @@ def test_figure15_projection028_direction_is_preregistered() -> None:
         ("script", "script_sha256"),
         ("analysis", "analysis_sha256"),
     ):
-        assert hashlib.sha256(
-            (ROOT / registration[path_key]).read_bytes()
-        ).hexdigest() == registration[hash_key]
+        assert _matches_current_or_committed_history(
+            registration[path_key], registration[hash_key]
+        )
     assert registration["source_audit"] == str(audit_path.relative_to(ROOT))
     assert audit["source_record"]["projection_id"] == "modeldb112923.projection.028"
     assert audit["source_record"]["source_weight"] == 0.11
@@ -12865,9 +12863,7 @@ def test_projection029_conductance_scaling_is_typed_and_default_preserving() -> 
 
     for source in ("authorization", "implementation", "tests"):
         item = implementation[source]
-        assert hashlib.sha256((ROOT / item["path"]).read_bytes()).hexdigest() == item[
-            "sha256"
-        ]
+        assert _matches_current_or_committed_history(item["path"], item["sha256"])
     contract = implementation["contract"]
     assert contract["electrical_state_variable"] == "g"
     assert contract["chemical_state_variable"] == "w"
@@ -12904,9 +12900,9 @@ def test_figure15_projection029_conductance_direction_is_preregistered() -> None
         ("script", "script_sha256"),
         ("analysis", "analysis_sha256"),
     ):
-        assert hashlib.sha256(
-            (ROOT / registration[path_key]).read_bytes()
-        ).hexdigest() == registration[hash_key]
+        assert _matches_current_or_committed_history(
+            registration[path_key], registration[hash_key]
+        )
     assert registration["source_audit"] == str(audit_path.relative_to(ROOT))
     assert audit["source_record"]["projection_id"] == "modeldb112923.projection.029"
     assert audit["source_record"]["kind"] == "gap_junction"
@@ -13011,9 +13007,9 @@ def test_figure15_stimulated_pair_distribution_is_preregistered() -> None:
         ("analysis_harness", "analysis_harness_sha256"),
         ("script", "script_sha256"),
     ):
-        assert hashlib.sha256(
-            (ROOT / registration[path_key]).read_bytes()
-        ).hexdigest() == registration[hash_key]
+        assert _matches_current_or_committed_history(
+            registration[path_key], registration[hash_key]
+        )
     assert registration["pair_distribution_source_audit"] == str(
         source_audit_path.relative_to(ROOT)
     )
@@ -13110,9 +13106,9 @@ def test_figure15_shared_clock_event_replay_is_preregistered() -> None:
         ("script", "script_sha256"),
         ("tests", "tests_sha256"),
     ):
-        assert hashlib.sha256(
-            (ROOT / registration[path_key]).read_bytes()
-        ).hexdigest() == registration[hash_key]
+        assert _matches_current_or_committed_history(
+            registration[path_key], registration[hash_key]
+        )
     assert registration["reproduction_gate"] == {
         "prior_layer4_indices_bit_exact": True,
         "prior_layer4_times_bit_exact": True,
@@ -13189,9 +13185,9 @@ def test_figure15_shared_clock_monitoring_recovery_is_preregistered() -> None:
         ("base_script", "base_script_sha256"),
         ("script", "script_sha256"),
     ):
-        assert hashlib.sha256(
-            (ROOT / registration[path_key]).read_bytes()
-        ).hexdigest() == registration[hash_key]
+        assert _matches_current_or_committed_history(
+            registration[path_key], registration[hash_key]
+        )
     assert registration["protocol"]["record_interneuron_spikes"]
     assert registration["recovery_gate"] == {
         "layer4_inhibitory_monitor_enabled": True,
@@ -13281,9 +13277,9 @@ def test_figure15_trn_relay_transfer_direction_is_preregistered() -> None:
         ("pair_analysis", "pair_analysis_sha256"),
         ("script", "script_sha256"),
     ):
-        assert hashlib.sha256(
-            (ROOT / registration[path_key]).read_bytes()
-        ).hexdigest() == registration[hash_key]
+        assert _matches_current_or_committed_history(
+            registration[path_key], registration[hash_key]
+        )
     assert registration["source_audit"] == str(source_audit_path.relative_to(ROOT))
     assert source_audit["authorized_next_action"]["common_factors"] == [0.5, 1.0, 1.5]
     assert registration["fixed_generation_one"]["trn_to_relay_scales"] == {

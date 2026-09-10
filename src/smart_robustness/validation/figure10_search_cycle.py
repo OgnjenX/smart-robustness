@@ -68,6 +68,7 @@ def run_figure10_search_cycle_condition(
     ),
     conventions=None,
     dt_ms: float = 0.01,
+    population_factory=None,
     brian=None,
 ) -> Figure10SearchCycleConditionResult:
     """Run one yoked masked-to-full-input search-cycle condition."""
@@ -88,7 +89,11 @@ def run_figure10_search_cycle_condition(
 
     brian.start_scope()
     brian.defaultclock.dt = dt_ms * brian.ms
-    sector = build_first_order_connected_sector(conventions=conventions, brian=brian)
+    sector = build_first_order_connected_sector(
+        conventions=conventions,
+        population_factory=population_factory,
+        brian=brian,
+    )
 
     unknown_scales = set(persistent_projection_weight_scales) - set(
         sector.projections

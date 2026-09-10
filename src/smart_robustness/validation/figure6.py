@@ -517,6 +517,7 @@ def run_figure6_learning(
     record_relay_detector_diagnostics: bool = False,
     projection_weight_scales: Mapping[str, float] | None = None,
     convergent_external_source_scope: str = "nonzero_pixels",
+    population_factory=None,
     brian=None,
 ) -> Figure6LearningRun:
     """Run and summarize the official simultaneous Figure 6b/c episode."""
@@ -531,7 +532,11 @@ def run_figure6_learning(
     protocol = protocol or Figure6LearningProtocol()
     brian.start_scope()
     brian.defaultclock.dt = protocol.dt_ms * brian.ms
-    sector = build_first_order_connected_sector(conventions=conventions, brian=brian)
+    sector = build_first_order_connected_sector(
+        conventions=conventions,
+        population_factory=population_factory,
+        brian=brian,
+    )
     initialize_convergent_external_input(
         sector, ClassicBarStimulus(BarOrientation.HORIZONTAL),
         convergent_source_scope=convergent_external_source_scope,

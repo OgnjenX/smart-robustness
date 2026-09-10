@@ -854,6 +854,7 @@ def run_figure7_condition(
     ablate_all_relay_calcium_at_stimulus: bool = False,
     ablate_nonspecific_calcium_at_stimulus: bool = False,
     cpp_standalone_directory: str | Path | None = None,
+    population_factory=None,
     brian=None,
 ) -> Figure7ConditionResult:
     """Run one source-labeled Figure 7 match or mismatch condition."""
@@ -1042,12 +1043,21 @@ def run_figure7_condition(
             holding_mV=orientation.expected_holding_mV,
             compartment=relay_clamp_compartment,
             conventions=conventions,
+            population_factory=population_factory,
             brian=brian,
         )
     elif include_higher_order_loop:
-        sector = build_full_smart_network(conventions=conventions, brian=brian)
+        sector = build_full_smart_network(
+            conventions=conventions,
+            population_factory=population_factory,
+            brian=brian,
+        )
     else:
-        sector = build_first_order_connected_sector(conventions=conventions, brian=brian)
+        sector = build_first_order_connected_sector(
+            conventions=conventions,
+            population_factory=population_factory,
+            brian=brian,
+        )
 
     unknown_disabled = set(disabled_projection_ids) - set(sector.projections)
     initialize_convergent_external_input(

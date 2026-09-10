@@ -863,7 +863,7 @@ def build_full_smart_network(
     *,
     conventions: FirstOrderRuntimeConventions | None = None,
     projection_ids: frozenset[str] | None = None,
-    population_factory: PopulationFactory = create_compartmental_hh_population,
+    population_factory: PopulationFactory | None = None,
     brian=None,
 ) -> FirstOrderSector:
     """Assemble source-backed V1-pulvinar-V2 cells and selected projections.
@@ -876,6 +876,8 @@ def build_full_smart_network(
 
     if brian is None:
         import brian2 as brian
+    if population_factory is None:
+        population_factory = create_compartmental_hh_population
     conventions = conventions or FirstOrderRuntimeConventions()
     known_projection_ids = {record.id for record in MODELDB_FULL.projections}
     if projection_ids is not None:
@@ -966,7 +968,7 @@ def build_first_order_intrinsic_sector(
     *,
     conventions: FirstOrderRuntimeConventions | None = None,
     gate_initialization_convention: str | None = None,
-    population_factory: PopulationFactory = create_compartmental_hh_population,
+    population_factory: PopulationFactory | None = None,
     brian=None,
 ) -> FirstOrderSector:
     """Instantiate all 812 cells and 1,950 compartments before connectivity.
@@ -978,6 +980,8 @@ def build_first_order_intrinsic_sector(
 
     if brian is None:
         import brian2 as brian
+    if population_factory is None:
+        population_factory = create_compartmental_hh_population
 
     if conventions is not None and gate_initialization_convention is not None:
         raise ValueError("pass conventions or gate_initialization_convention, not both")
@@ -1009,7 +1013,7 @@ def build_first_order_chemical_sector(
     conventions: FirstOrderRuntimeConventions | None = None,
     gate_initialization_convention: str | None = None,
     instrument_learning_terms: bool = False,
-    population_factory: PopulationFactory = create_compartmental_hh_population,
+    population_factory: PopulationFactory | None = None,
     brian=None,
 ) -> FirstOrderSector:
     """Instantiate the first-order cells and every in-scope chemical projection."""
@@ -1096,7 +1100,7 @@ def build_first_order_voltage_clamp_sector(
     holding_mV: float = -12.0,
     compartment: str = "proximal_dendrite",
     conventions: FirstOrderRuntimeConventions | None = None,
-    population_factory: PopulationFactory = create_compartmental_hh_population,
+    population_factory: PopulationFactory | None = None,
     brian=None,
 ) -> FirstOrderSector:
     """Build a connected sector with a discrete exact relay voltage clamp.
@@ -1153,7 +1157,7 @@ def build_first_order_connected_sector(
     conventions: FirstOrderRuntimeConventions | None = None,
     gate_initialization_convention: str | None = None,
     instrument_learning_terms: bool = False,
-    population_factory: PopulationFactory = create_compartmental_hh_population,
+    population_factory: PopulationFactory | None = None,
     brian=None,
 ) -> FirstOrderSector:
     """Build chemical and electrical connectivity; external inputs remain separate."""

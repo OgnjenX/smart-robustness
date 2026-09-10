@@ -1160,6 +1160,7 @@ def run_figure10_condition(
     conventions=None,
     dt_ms: float = 0.01,
     cpp_standalone_directory: str | Path | None = None,
+    population_factory=None,
     brian=None,
 ) -> Figure10ConditionResult:
     """Run one persistent match-to-mismatch episode on the classic sector.
@@ -1340,7 +1341,11 @@ def run_figure10_condition(
     conventions = conventions or figure6_runtime_conventions()
     brian.start_scope()
     brian.defaultclock.dt = dt_ms * brian.ms
-    sector = build_first_order_connected_sector(conventions=conventions, brian=brian)
+    sector = build_first_order_connected_sector(
+        conventions=conventions,
+        population_factory=population_factory,
+        brian=brian,
+    )
     scales = persistent_projection_weight_scales or {}
     unknown_scales = set(scales) - set(sector.projections)
     if unknown_scales:

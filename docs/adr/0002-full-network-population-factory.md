@@ -34,6 +34,11 @@ The factory parameter is forwarded through intrinsic, chemical, connected, and
 voltage-clamp first-order builders and is also used for all 24 populations in
 the complete V1–pulvinar–V2 network.
 
+The registered validation entry points for Figures 6, 7, 10, 14, 15, and 16
+forward this same argument. Figure 7 covers the ordinary first-order,
+voltage-clamp, and higher-order build paths; Figure 10 covers both the persistent
+condition and the selected search-cycle/variance-topology reconstruction.
+
 Alternative AdEx, GIF, point-HH, or multicompartment backends must implement a
 compatible population adapter. They must not silently reinterpret missing
 ports or alter topology. Any deliberate port reduction belongs to a separately
@@ -46,4 +51,6 @@ still execute the same function with the same resolved parameters. Robustness
 experiments can inject a single alternative cellular backend end-to-end while
 holding the circuit and protocol fixed. Tests record all factory calls and
 verify that the first-order and complete builders preserve source population
-counts and topology through this boundary.
+counts and topology through this boundary. Separate forwarding tests stop at
+the builder boundary and prove that every official validation runner receives
+the exact factory object supplied by the experiment.

@@ -1,0 +1,91 @@
+schema_version: 1
+id: figure15-projection030-source-audit-827
+date: '2026-09-10'
+status: completed-next-causal-dimension-selected-for-diagnostic-only
+classification: post-holdout-calibration-projection030-source-audit
+authorization:
+  path: docs/validation-results/figure15-projection037-direction-assessment-826.yaml
+  sha256: 6cc40f1ffd4c8e5877aae32d3f2f7422d7db8b6949cc3d897c408b5778eb9aac
+primary_sources:
+  article:
+    local_path: tmp/pdfs/GroVer2008BR.pdf
+    sha256: c56c337624959d8c0bdf51aa79b0dbc82f31264af2b2cd675790879a6410d7ed
+    relevant_sections: [2.10, Figure 15, Methods 4.9-4.10]
+  smart_nml:
+    local_path: tmp/modeldb-112923/versaceGrossberg2008/SMART.nml
+    sha256: 16fc196f2ed68d1c02a39395fa83bb0ffab8fcf8edffe6fd11022bb6c6e299e1
+    source_lines: [646, 654]
+  extracted_catalog:
+    path: src/smart_robustness/data/modeldb112923_first_order.yaml
+    sha256: 3b42be7dd0b17cc01ad29f474f152cfcd8c2a605410aad223d14c676fe98d965
+    source_lines: [2812, 2843]
+source_record:
+  projection_id: modeldb112923.projection.030
+  route: layer4_excitatory_v1 to layer4_inhibitory_v1 proximal dendrite
+  receptor: Layer 4 AMPA
+  dependency: ligand
+  channel_conductance_mS_cm2: 0.1
+  reversal_mV: 0.0
+  rise_ms: 0.1
+  fall_ms: 2.0
+  delay_ms: 0.1
+  source_weight: 5.0
+  asymptotic_weight: 5.0
+  modifiable: false
+  topology:
+    method: connectFromMany
+    sigma_x: 0.3
+    sigma_y: 0.3
+    ring: false
+    border_effect: wrap
+mechanistic_scope:
+  source_supported: >-
+    Projection 030 is the direct archived route by which spikes from layer-4
+    excitatory cells recruit local layer-4 inhibitory cells. Together with
+    projection 036, it closes the local E-I feedback loop.
+  paper_supported: >-
+    The paper reports amplified local gamma during bottom-up/top-down match and
+    identifies gamma as a product of matched recurrent network dynamics.
+  not_source_identified: >-
+    Neither the paper nor the archive identifies projection 030 as the unique
+    controller of the Figure-15 graphical 44-Hz value or supplies a sensitivity
+    result for its weight.
+  calibration_boundary: >-
+    Any non-unit projection-030 scale is an explicit effective calibration
+    departure, not recovery of a missing source parameter.
+why_next:
+  projection037_result: >-
+    Scales 0.5, 1.0, and 1.5 left pair counts, total layer-4 counts, and the
+    direct cross-spectrum peak identical, closing recurrent self-excitation in
+    that registered range.
+  projection030_advantage:
+  - It directly tests recruitment of the inhibitory half of the local E-I loop.
+  - It leaves the selected projection-036 topology and Figure-10 reset route unchanged.
+  - Recording layer-4 inhibitory spikes can verify target engagement independently of the excitatory-pair spectrum.
+authorized_next_diagnostic:
+  scientific_role: direction-only downstream causal discriminator
+  learned_state: reuse one fresh generation-one globally trained state across arms
+  projection030_scales: [0.5, 1.0, 1.5]
+  scale_application: Figure-15-style match epoch only
+  duration_ms: 200.0
+  pair: [39, 40]
+  bin_ms: 1.0
+  primary_readouts:
+  - pair spike counts and interspike-interval summaries
+  - all layer4 excitatory spike count
+  - layer4 inhibitory spike count and active-cell count
+  - direct full-epoch pair cross-spectrum gamma peak with 5-Hz resolution
+  selection_authorized: false
+  global_candidate_authorized: false
+decision: >-
+  Preregister and execute only the symmetric projection-030 direction probe.
+  A coherent frequency shift, accompanied by inhibitory target engagement and
+  with both fixed excitatory cells active, may authorize a separately
+  preregistered globally retrained generation-two grid. Otherwise close this
+  dimension and continue to projection 036, then inhibitory normalization or
+  gap-junction dimensions. No baseline freeze is authorized.
+parameter_selected: false
+generation_two_opened: false
+baseline_frozen: false
+neuron_models_consulted: false
+modern_anatomy_consulted: false

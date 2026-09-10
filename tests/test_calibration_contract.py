@@ -12406,3 +12406,39 @@ def test_projection036_source_arrival_result_localizes_phase_not_topology() -> N
     assert not verdict["parameter_selected"]
     assert not result["original_smart_reproduced"]
     assert not result["baseline_promoted"]
+
+
+def test_figure15_projection037_direction_diagnostic_is_preregistered() -> None:
+    audit_path = (
+        ROOT
+        / "docs/validation-results/figure15-post-holdout-layer4-circuit-audit-823.yaml"
+    )
+    audit = yaml.safe_load(audit_path.read_text())
+    registration_path = (
+        ROOT
+        / "docs/validation-results/figure15-projection037-direction-registration-824.yaml"
+    )
+    registration = yaml.safe_load(registration_path.read_text())
+
+    for path_key, hash_key in (
+        ("authorization", "authorization_sha256"),
+        ("source_audit", "source_audit_sha256"),
+        ("original_holdout_registration", "original_holdout_registration_sha256"),
+        ("script", "script_sha256"),
+        ("analysis", "analysis_sha256"),
+    ):
+        assert hashlib.sha256(
+            (ROOT / registration[path_key]).read_bytes()
+        ).hexdigest() == registration[hash_key]
+    assert registration["source_audit"] == str(audit_path.relative_to(ROOT))
+    assert audit["dimension_ranking"]["first_diagnostic"].endswith(
+        "projection.037 effective weight scale"
+    )
+    assert not audit["parameter_selected"]
+    assert registration["diagnostic"]["projection037_scales"] == [0.5, 1.0, 1.5]
+    assert registration["diagnostic"]["duration_ms"] == 200.0
+    assert registration["diagnostic"]["pair"] == [39, 40]
+    assert registration["diagnostic"]["frequency_resolution_hz"] == 5.0
+    assert "Select no scale" in registration["selection_rule"]
+    assert not registration["generation_two_opened"]
+    assert not registration["baseline_frozen"]

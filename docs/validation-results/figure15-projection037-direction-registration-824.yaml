@@ -1,0 +1,68 @@
+schema_version: 1
+id: figure15-projection037-direction-registration-824
+date: '2026-09-10'
+status: registered-before-execution
+classification: post-holdout-calibration-generation-one-projection037-direction-diagnostic
+authorization: docs/validation-results/figure15-analysis-sensitivity-recovery-assessment-822.yaml
+authorization_sha256: b0f8e30ee1fadb83fcfc1a4544dc8f4fccbce83670f38b67d9abc0bd02c7591c
+source_audit: docs/validation-results/figure15-post-holdout-layer4-circuit-audit-823.yaml
+source_audit_sha256: 1f8b32a553b0d8cf391c05b65b9c7b33fbc3be2182ebe7756621a57df318e494
+original_holdout_registration: docs/validation-results/calibrated-figure15-holdout-registration-810.yaml
+original_holdout_registration_sha256: 0aa7f3da487fe006f3e7a8f0edbea11a649076d510ff21dc89c7eda1203495cc
+script: scripts/run_figure15_projection037_direction_diagnostic.py
+script_sha256: 073ca2798eb60a1670f7ec6edd8019fb4432827deae29c7fb62a19bc62059152
+analysis: src/smart_robustness/analysis/figure15_sensitivity.py
+analysis_sha256: f549349895da02c16f86eff048ab8799404e81c103ed12afc8e3aae29bd4f77c
+result_id: figure15-projection037-direction-825
+result: docs/validation-results/figure15-projection037-direction-825.yaml
+assessment: docs/validation-results/figure15-projection037-direction-assessment-826.yaml
+fixed_generation_one:
+  nonspecific_t_scale: 0.203125
+  projection025_scale: 8.0
+  projection026_scale: 0.5
+  projection036_spread_convention: variance
+  projection038_scale: 1.0
+  projection008_scale: 0.75
+  projection011_scale: 0.9375
+  integration_method: rk4
+diagnostic:
+  projection_id: modeldb112923.projection.037
+  projection037_scales: [0.5, 1.0, 1.5]
+  order: fixed-ascending
+  scale_application: downstream Figure-15-style match epoch only
+  learned_state: one fresh generation-one training reused unchanged across all arms
+  duration_ms: 200.0
+  dt_ms: 0.01
+  pair: [39, 40]
+  bin_ms: 1.0
+  primary_analysis: direct_full_epoch_cross_spectrum_power
+  gamma_band_hz: [20.0, 70.0]
+  frequency_resolution_hz: 5.0
+  readouts:
+  - pair spike counts
+  - all layer4 spike count
+  - direct cross-spectrum gamma peak
+  - pair-cell median and interquartile interspike intervals
+gates:
+  fresh_figure6_prerequisite: all registered Figure-6 gates pass
+  same_learned_state_all_arms: true
+  all_scales_executed_in_registered_order: true
+  both_pair_cells_active_for_frequency_interpretation: true
+classification_rule: >-
+  A scale has interpretable frequency evidence only if both fixed cells have at
+  least two spikes. Classify projection 037 as frequency-causal only if the
+  registered three-arm sequence shows a coherent monotonic peak shift; classify
+  it as rate-only if pair or population counts change without such a shift; and
+  classify it as non-causal in this range if neither changes materially. Report
+  quantized 5-Hz peaks and ISI summaries together, without interpolation.
+selection_rule: >-
+  Report every arm in fixed ascending order. Select no scale. This diagnostic
+  may identify a direction only; it cannot promote a candidate or change the
+  failed 1000-ms Figure-15 holdout.
+stopping_rule: >-
+  Execute exactly one fresh training followed by exactly three downstream arms.
+  Do not rerun, densify, interpolate, retrain per arm, change the pair, change
+  the epoch, inspect other projections, or consult neuron-model or modern-
+  anatomy variants before the result is assessed.
+generation_two_opened: false
+baseline_frozen: false

@@ -17,6 +17,36 @@ class Figure15MethodPeak:
     frequency_resolution_hz: float
 
 
+def direct_cross_spectrum_gamma_peak(
+    first_spike_times_ms: tuple[float, ...] | np.ndarray,
+    second_spike_times_ms: tuple[float, ...] | np.ndarray,
+    *,
+    duration_ms: float,
+    bin_ms: float = 1.0,
+) -> Figure15MethodPeak:
+    """Return the predeclared direct full-epoch pair cross-spectrum peak."""
+
+    first_times = np.asarray(first_spike_times_ms, dtype=float)
+    second_times = np.asarray(second_spike_times_ms, dtype=float)
+    if first_times.ndim != 1 or second_times.ndim != 1:
+        raise ValueError("spike times must be one-dimensional")
+    if not np.all(np.isfinite(first_times)) or not np.all(np.isfinite(second_times)):
+        raise ValueError("spike times must be finite")
+    if duration_ms <= 0 or bin_ms <= 0:
+        raise ValueError("duration and bin width must be positive")
+
+    first = _binary_train(first_times, duration_ms=duration_ms, bin_ms=bin_ms)
+    second = _binary_train(second_times, duration_ms=duration_ms, bin_ms=bin_ms)
+    sample_rate_hz = 1000.0 / bin_ms
+    frequencies = np.fft.rfftfreq(first.size, d=1.0 / sample_rate_hz)
+    cross_spectrum = np.fft.rfft(first) * np.conj(np.fft.rfft(second))
+    return _method_peak(
+        "direct_full_epoch_cross_spectrum_power",
+        frequencies,
+        np.abs(cross_spectrum) ** 2,
+    )
+
+
 def _binary_train(
     spike_times_ms: np.ndarray,
     *,
@@ -109,13 +139,12 @@ def figure15_analysis_sensitivity(
                 )
             )
 
-    frequencies = np.fft.rfftfreq(first.size, d=1.0 / sample_rate_hz)
-    cross_spectrum = np.fft.rfft(first) * np.conj(np.fft.rfft(second))
     outcomes.append(
-        _method_peak(
-            "direct_full_epoch_cross_spectrum_power",
-            frequencies,
-            np.abs(cross_spectrum) ** 2,
+        direct_cross_spectrum_gamma_peak(
+            first_times,
+            second_times,
+            duration_ms=duration_ms,
+            bin_ms=bin_ms,
         )
     )
 

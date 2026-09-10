@@ -1,0 +1,64 @@
+schema_version: 1
+id: legacy-thalamus-driving-potential-coordinate-audit-871
+date: '2026-09-10'
+status: completed-source-audit
+classification: kinness-internal-coordinate-dimensional-parity
+sources:
+  framework_manuscript:
+    path: tmp/kinness-framework-expanded.pdf
+    sha256: 15a7f9166e301c9740e7cff4258810d315bd95b196ea5dff3419c5cc2879f177
+    relevant_location: Section 3 Equation 3, PDF text lines 379-393
+  network:
+    path: tmp/legacy-thalamus-2004/KINENSS_tonic_burst/tonic_burst.xml
+    sha256: 3d4782503b74b818e4d94b29e72c5bb81f914b0c29d55a19cb99b088d1d14445
+  archived_tonic_voltage:
+    path: tmp/legacy-thalamus-2004/KINENSS_tonic_burst/tonic_burst_data/Relay tonic.dat
+    sha256: 506e56c07e5ff13098a2ebb6f21db31e489d77efdffa65fc816c20d58f68c92f
+  detector_audit:
+    path: docs/validation-results/legacy-thalamus-axon-detector-audit-476.yaml
+    sha256: 4d6d3cf0a9b235ee14856cf898fa890512755a8ea77fa2c4c90529f1c945699e
+  failed_unshifted_replay:
+    path: docs/validation-results/legacy-thalamus-integrated-gate-replay-869.yaml
+    sha256: 360b3c84e9dd08fa1039955775a5e5e1258ce08f4b5a4b9a4657e56d13cc1a1d
+source_facts:
+  serialized_leak_reversal_mV: -70.0
+  serialized_ionic_reversals_physical_mV:
+    sodium: 50.0
+    potassium: -90.0
+    calcium: 180.0
+  archived_state_coordinate: V_internal = V_physical - E_leak
+  archived_tonic_voltage_maximum_internal_mV: 109.56501
+  recovered_spike_detector_physical_mV: -20.0
+dimensional_requirement: >-
+  KInNeSS Equation 3 evaluates each current using V_eq minus V. Once V is
+  represented relative to E_leak, every physical driving potential and every
+  physical threshold must be represented on that same internal axis.
+derived_internal_values_mV:
+  sodium_reversal: 120.0
+  potassium_reversal: -20.0
+  calcium_reversal: 250.0
+  spike_detector_crossing: 50.0
+equivalent_detector_expression: V_internal - 70 mV crosses physical -20 mV downward
+diagnostic_consistency:
+  unshifted_candidate_peak_mV: 49.128761
+  unshifted_sodium_reversal_mV: 50.0
+  archived_peak_mV: 109.56501
+  shifted_sodium_reversal_mV: 120.0
+  interpretation: >-
+    Replay 869 terminates its action-potential peaks at the incorrectly
+    unshifted sodium reversal, while the archived trace lies below the correctly
+    shifted reversal. This is the expected signature of the coordinate error.
+authorized_next_test:
+  action: preregister one coordinate-complete relay replay
+  changes_from_registration_868:
+    ionic_reversals: subtract serialized E_leak from each physical XML value
+    spike_detector: evaluate physical voltage as V_internal plus E_leak
+  forbidden_changes:
+    - physical channel parameters, conductance densities, or gate equations
+    - input values, sensitivities, schedule, timestep, or integration method
+    - event-count or voltage acceptance gates
+    - post-execution fitting or interpolation
+scope_boundary: >-
+  This audit concerns the author-produced 2004 relay benchmark. A passing
+  coordinate translation validates the cell kernel against that benchmark but
+  does not supply the incomplete 2008 Figure-8 protocol.

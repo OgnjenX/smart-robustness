@@ -1,0 +1,67 @@
+schema_version: 1
+id: legacy-thalamus-integrated-gate-assessment-870
+date: '2026-09-10'
+status: assessed-negative-diagnostic
+classification: source-semantics-independent-legacy-kinness-replay
+registration:
+  path: docs/validation-results/legacy-thalamus-integrated-gate-registration-868.yaml
+result:
+  path: docs/validation-results/legacy-thalamus-integrated-gate-replay-869.yaml
+  sha256: 360b3c84e9dd08fa1039955775a5e5e1258ce08f4b5a4b9a4657e56d13cc1a1d
+passing_arms: []
+normalized_arm_summary:
+  rk4_normalized_255:
+    finite: true
+    burst_preinput_mean_error_mV: -0.114427
+    burst_hyperpolarized_mean_error_mV: -9.487944
+    tonic_event_count: 0
+    tonic_voltage_maximum_mV: 49.128761
+    burst_event_count: 1
+    burst_event_times_ms: [1013.2]
+  rk4_normalized_250:
+    finite: true
+    burst_preinput_mean_error_mV: -0.114427
+    burst_hyperpolarized_mean_error_mV: -9.69108
+    tonic_event_count: 0
+    tonic_voltage_maximum_mV: 49.201656
+    burst_event_count: 1
+    burst_event_times_ms: [1013.2]
+  sanndra_scalar_rk4_normalized_255:
+    finite: true
+    burst_preinput_mean_error_mV: -0.114427
+    burst_hyperpolarized_mean_error_mV: -9.487944
+    tonic_event_count: 0
+    tonic_voltage_maximum_mV: 49.331057
+    burst_event_count: 1
+    burst_event_times_ms: [1013.2]
+  sanndra_scalar_rk4_normalized_250:
+    finite: true
+    burst_preinput_mean_error_mV: -0.114427
+    burst_hyperpolarized_mean_error_mV: -9.69108
+    tonic_event_count: 0
+    tonic_voltage_maximum_mV: 49.384068
+    burst_event_count: 1
+    burst_event_times_ms: [1013.2]
+raw_input_arms:
+  finite: false
+assessment:
+  legacy_benchmark_reproduced: false
+  integrated_gate_axis_supported_for_rest: true
+  coordinate_translation_complete: false
+  original_figure8_reproduced: false
+  exact_classic_baseline_freeze_authorized: false
+interpretation:
+  - The all-gates-on-integrated-V convention corrects the unstimulated state by
+    more than 21 mV and brings it within 0.12 mV of the archived mean.
+  - The candidate's approximately +49 mV tonic peak is pinned near the
+    unshifted serialized sodium reversal of +50 mV, whereas the archived
+    internal-coordinate trace reaches +109.565 mV.
+  - The sole burst-arm event at 1013.2 ms is the two-millisecond-delayed onset
+    crossing of internal -20 mV during hyperpolarization. Audit 476 requires a
+    falling crossing of physical -20 mV, which is internal +50 mV for the
+    archived -70 mV rest coordinate.
+  - Equation 3 requires each driving potential and V to share one coordinate.
+    Leaving physical XML reversals unshifted while integrating rest-relative V
+    is therefore a dimensional coordinate error, not a failed physical
+    parameter hypothesis.
+baseline_frozen: false

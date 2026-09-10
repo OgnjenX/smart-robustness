@@ -849,9 +849,29 @@ parameters:
     note: Full/displayed correlogram support, Hamming/boxcar taper, direct full-epoch cross-spectrum, and a 200-ms non-overlapping Methods-4.10 interpretation all remain above the registered 49-Hz boundary. The first output-only NumPy-boolean failure is preserved, the recovery exactly reproduces Artifact 811, and no method is selected.
   calibration.figure15.post_holdout_generation:
     value: disclose Figure 15 as a training target and preserve generation one as immutable holdout evidence
-    status: next-candidate-generation-not-yet-opened
-    source: Artifact 822
-    note: Any bounded layer-4 calibration must be justified causally before simulation, globally retrain every candidate, and require Figures 6, 7, 10, 14, and 16 to survive. It cannot be called independent Figure-15 validation and must not mix neuron-model or modern-anatomy changes.
+    status: bounded-direction-phase-closed-no-generation-two-candidate
+    source: Artifacts 822--858
+    note: Five local layer-4 dimensions and one joint upstream TRN-to-relay transfer dimension were preregistered and tested without selecting a value. None supplied a coherent whole-observable frequency direction, so no globally retrained generation-two grid was opened. The immutable generation-one failed holdout remains the overfitting control.
+  diagnostics.figure15.local_layer4_direction_family:
+    value: projections 037, 030, 036, 028, and 029 tested at symmetric 0.5/1/1.5 factors
+    status: completed-all-five-isolated-directions-closed
+    source: Artifacts 823--843
+    note: Projection 037 is null; 030, 036, and 028 mainly control rates with non-monotonic frequencies; 029 has modest non-monotonic effects. Layer-4 inhibitory cells emit only one common 3.09-ms startup volley in every monitored arm. No endpoint or denser grid is selected.
+  diagnostics.figure15.stimulated_pair_distribution:
+    value: all 10 pairs among layer-4 cells 38--42 peak at 53.026513256628306 Hz
+    status: completed-pair-identity-route-closed
+    source: Artifacts 844--847
+    note: The exact 608-event stream and fixed 39/40 result reproduce. Different pair separations and spike counts do not change the peak, so the unrecovered official pair identity does not explain 44 versus 53 Hz within the source-compatible stimulated row.
+  diagnostics.figure15.shared_clock:
+    value: relay=53 Hz; TRN=53 Hz; layer4 excitatory=53 Hz; relay-to-layer4 lag=5 ms
+    status: completed-relay-locked-shared-pacing-supported
+    source: Artifacts 848--854
+    note: The first replay is preserved as a monitoring-only failure; its authorized recovery reproduces the layer-4 event stream bit-exactly and records all populations. Layer-4 inhibitory cells emit only one startup volley, so a sustained spiking local E-I oscillator is unsupported. Phase in a recurrent loop is not causal proof.
+  diagnostics.figure15.trn_relay_transfer_direction:
+    value: common factor 0.5/1/1.5 gives relay and TRN 60/50/40 Hz, layer4 population 60/45/55 Hz, and fixed pair 60/70/70 Hz
+    status: completed-upstream-control-whole-observable-direction-closed
+    source: Artifacts 855--858
+    note: Joint scaling of effective projection-000/001/004 transfer proves monotonic upstream frequency control but fails the preregistered layer-4 coherence criterion. No factor, full-duration confirmation, denser grid, or generation-two candidate is authorized.
   validation.figure16.calibrated_holdout:
     value: strongest 2--4-Hz peak; lower-to-gamma peak ratio 4.824415614511934
     status: passed-unchanged-higher-order-holdout

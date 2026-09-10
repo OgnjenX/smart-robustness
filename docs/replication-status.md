@@ -4176,3 +4176,53 @@ calibration target, use a causal source-bounded layer-4 dimension, and require
 all existing Figure-6/7/10/14/16 behaviors to survive. The immutable generation-
 one outcome remains the overfitting control. Neuron substitutions and modern
 anatomy remain deferred.
+
+Artifacts 823--843 execute that post-holdout direction phase without opening a
+new globally trained generation. Five source-bounded layer-4 dimensions are
+tested symmetrically around the immutable endpoint: recurrent excitation
+(projection 037), excitatory recruitment of local inhibition (030), local
+inhibition of excitation (036), inhibitory normalization (028), and inhibitory
+gap-junction coupling (029). Projection 037 is effectively null; projections
+030, 036, and 028 strongly alter layer-4 rates but produce non-monotonic
+frequency sequences; projection 029 produces only modest, non-monotonic rate
+and frequency changes. All five layer-4 inhibitory cells emit the same single
+startup event at 3.09 ms in every monitored arm. No value, denser grid, or
+generation-two candidate is selected.
+
+Artifacts 844--847 then test whether the unrecovered official cell identity
+could explain the discrepancy. One exact 1000-ms replay archives all 608
+layer-4 events and scores every unordered pair among stimulated cells 38--42.
+All ten pairs, across separations of one to four lattice positions and despite
+different event counts, peak at exactly 53.026513 Hz. Pair identity therefore
+does not explain 44 versus 53 Hz within the source-compatible stimulated row;
+the discrepancy is a shared circuit rhythm.
+
+Artifacts 848--854 localize that rhythm with a deterministic event-stream
+replay. The first output is retained as a monitoring failure because the
+Figure-15 wrapper did not enable the optional layer-4 inhibitory monitor. The
+registered readout-only recovery reproduces the prior layer-4 event stream
+bit-for-bit. Relay, TRN, and layer-4 excitatory population spectra all peak at
+53 Hz, with layer 4 following relay by 5 ms. Layer-4 inhibitory cells emit only
+the five-cell startup volley, while the category population peaks at 29 Hz.
+This supports relay-locked shared thalamocortical pacing and rules out a
+sustained spiking local E-I oscillator as the frequency generator in this
+reconstruction; phase in the closed loop is not claimed as causal proof.
+
+Artifacts 855--858 test the upstream clock directly by jointly multiplying the
+already calibrated TRN-to-relay GABA scales for projections 000, 001, and 004
+by 0.5, 1, and 1.5 during fixed learned 200-ms match epochs. Relay and TRN
+peaks decrease monotonically 60/50/40 Hz and their event counts fall, proving
+upstream frequency control. Layer-4 population peaks instead vary 60/45/55 Hz
+and the fixed pair varies 60/70/70 Hz. The preregistered whole-observable
+coherence gate therefore fails: no factor, full-duration confirmation, denser
+grid, or generation-two candidate is authorized.
+
+All registered local and upstream one-parameter Figure-15 directions are now
+closed. The candidate robustly reproduces the source-identifiable local-gamma
+phenotype and all other required behavioral gates, but not the unreported
+procedure behind the graphical 44-Hz value. Further one-parameter fitting would
+be post-hoc overfitting rather than faithful recovery. The next step is an
+explicit calibrated-behavioral freeze decision that preserves the failed
+numeric holdout and the unavailable-source boundary; exact numerical recovery
+remains unclaimed, and neuron-model and modern-anatomy experiments remain
+unopened.

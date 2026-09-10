@@ -1,4 +1,5 @@
 import hashlib
+import subprocess
 from pathlib import Path
 
 import pytest
@@ -12,6 +13,37 @@ def _load(name: str) -> dict:
     return yaml.safe_load((RESULTS / name).read_text())
 
 
+def _matches_current_or_committed_history(path: str, digest: str) -> bool:
+    """Accept the current file or the exact version preserved in Git history.
+
+    Registrations pin the bytes used for an execution.  A source or analysis
+    module can legitimately evolve after that execution, while Git retains the
+    registered version as immutable evidence.
+    """
+
+    candidate = ROOT / path
+    if candidate.is_file() and hashlib.sha256(candidate.read_bytes()).hexdigest() == digest:
+        return True
+
+    history = subprocess.run(
+        ["git", "log", "--format=%H", "--", path],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    ).stdout.splitlines()
+    for commit in history:
+        version = subprocess.run(
+            ["git", "show", f"{commit}:{path}"],
+            cwd=ROOT,
+            check=False,
+            capture_output=True,
+        )
+        if version.returncode == 0 and hashlib.sha256(version.stdout).hexdigest() == digest:
+            return True
+    return False
+
+
 def _assert_local_hash_pairs(value: object) -> None:
     """Verify path/hash pairs without requiring ignored primary-source files."""
 
@@ -21,7 +53,7 @@ def _assert_local_hash_pairs(value: object) -> None:
         if isinstance(path, str) and isinstance(digest, str):
             candidate = ROOT / path
             if candidate.is_file() and not path.startswith("tmp/"):
-                assert hashlib.sha256(candidate.read_bytes()).hexdigest() == digest
+                assert _matches_current_or_committed_history(path, digest)
 
         for key, digest in value.items():
             if not key.endswith("_sha256") or not isinstance(digest, str):
@@ -31,7 +63,7 @@ def _assert_local_hash_pairs(value: object) -> None:
                 continue
             candidate = ROOT / path
             if candidate.is_file() and not path.startswith("tmp/"):
-                assert hashlib.sha256(candidate.read_bytes()).hexdigest() == digest
+                assert _matches_current_or_committed_history(path, digest)
 
         for child in value.values():
             _assert_local_hash_pairs(child)

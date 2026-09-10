@@ -28,13 +28,17 @@ documented stimulus and analysis procedures:
 3. the relevant cell-level firing modes and the direction of the paper's
    ablation/parameter effects.
 
-This repository has completed **Milestone 1** and is actively validating the
-**Milestone 2 multicompartment cell kernel**: equation-tested reference
-components, the complete recovered first-order connection catalog, the
-official ModelDB executable-source audit, all 12 Table 3 cell classes, named
-KInNeSS/paper alternatives, predeclared validation targets, and swap-ready
-interfaces. It does **not yet claim a full
-replication** of the paper's two 9×9 thalamocortical loops. See
+The source-constrained implementation and the complete first- and higher-order
+network scaffolds are now implemented. A separately calibrated classic-SMART
+candidate passes the registered Figure 6 learning, Figure 7 match/mismatch,
+Figure 10 reset, Figure 14 gamma-versus-slower mismatch, and Figure 16
+long-range synchrony gates. It also reproduces the source-identifiable Figure
+15 behavior of nearby layer-4 gamma synchrony, but its fixed pair peaks at
+53.0265 Hz rather than the panel's graphically labeled 44 Hz. The original
+pair, spike arrays, estimator, and legacy simulator runtime were not released;
+all registered analysis and bounded circuit-direction audits preserve rather
+than erase that discrepancy. The project therefore does **not yet claim exact
+numerical reproduction or a frozen behavioral baseline**. See
 [`docs/replication-status.md`](docs/replication-status.md).
 The immutable `classic-smart-source-constrained-v0.1.0` tag preserves the first
 complete source-constrained reconstruction, including its failed official
@@ -106,19 +110,18 @@ values must be labeled as such and must not be described as published values.
 
 ## Scope and next steps
 
-The immediate sequence is deliberately narrow:
+The immediate decision is deliberately narrow:
 
-- reproduce isolated published cell behaviors;
-- complete isolated-cell validation of the source-audited multicompartment
-  kernel;
-- reproduce one full first-order LGN–V1–TRN–nonspecific-thalamus sector;
-- reproduce match→gamma and mismatch→beta/reset benchmarks;
-- preserve the source-constrained reconstruction as an immutable provenance
-  baseline;
-- calibrate only unresolved legacy conventions on a separate branch, without
-  rewriting the frozen source facts;
-- freeze a validated behavioral baseline before adding AdEx, GIF, alternative
-  HH, and multicompartment variants.
+- preserve the immutable source-constrained release and failed Figure 15
+  numeric holdout;
+- decide explicitly whether to freeze the current candidate as a calibrated
+  **behavioral** reconstruction with an unresolved 44-versus-53 Hz limitation,
+  or keep exact numerical recovery blocked pending original KInNeSS/SANNDRA
+  code, spike arrays, or analysis code;
+- only after that boundary is explicit, compare AdEx, GIF, alternative HH, and
+  multicompartment variants against the same behavioral gates;
+- evaluate post-2008 anatomical revisions in a later, separately labeled
+  robustness phase.
 
 Contributions should preserve the distinction between **published**, **derived**,
 **calibrated**, and **exploratory** parameters.

@@ -48,3 +48,17 @@ def test_literature_arm_declares_thalamic_transfer_limitation() -> None:
     assert manifest["passive_parameters_from_smart"] is True
     assert manifest["network_outcome_fitting"] == "prohibited"
     assert "not a claim" in manifest["provenance"]["qualification"]
+
+
+def test_isolated_fit_is_sealed_before_network_holdout() -> None:
+    assessment = _yaml(
+        "docs/validation-results/neuron-model-gif-isolated-fit-assessment-909.yaml"
+    )
+    registration = _yaml(
+        "docs/validation-results/neuron-model-gif-figure6-registration-910.yaml"
+    )
+    parameters = _yaml("configs/models/gif_current_step_matched_v1.yaml")
+    assert assessment["summary"]["all_classes_promoted"] is True
+    assert parameters["claims"]["network_behavior_preserved"] == "not-yet-observed"
+    assert registration["knowledge_boundary"]["gif_network_outcomes_observed_at_registration"] is False
+    assert registration["knowledge_boundary"]["parameter_maps_frozen"] is True

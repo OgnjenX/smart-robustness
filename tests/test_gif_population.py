@@ -6,7 +6,10 @@ import pytest
 brian = pytest.importorskip("brian2")
 
 from smart_robustness.classic_sector import build_full_smart_network
-from smart_robustness.models.gif import create_somatic_gif_population
+from smart_robustness.models.gif import (
+    create_somatic_gif_population,
+    load_gif_parameter_map,
+)
 from smart_robustness.models.gif_parameters import (
     LITERATURE_EXCITATORY,
     LITERATURE_INHIBITORY,
@@ -154,3 +157,10 @@ def test_gif_candidate_batch_is_seed_reproducible() -> None:
         brian=brian,
     )
     assert first == second
+
+
+def test_frozen_gif_parameter_map_covers_all_source_classes() -> None:
+    parameters = load_gif_parameter_map("configs/models/gif_current_step_matched_v1.yaml")
+    assert len(parameters) == 12
+    assert parameters["thalamic_relay"].threshold_offset_mV == pytest.approx(10.9375)
+    assert parameters["trn"] == LITERATURE_INHIBITORY

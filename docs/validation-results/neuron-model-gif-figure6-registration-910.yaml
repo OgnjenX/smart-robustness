@@ -1,0 +1,25 @@
+schema_version: 1
+artifact_id: 910
+artifact_type: network-holdout-registration
+name: stochastic-gif-figure6-ensemble
+date: 2026-09-10
+status: registered-before-any-gif-network-outcome
+
+study: configs/robustness/gif_phase1_v1.yaml
+control: configs/baselines/classic_smart_calibrated_v1.yaml
+arms:
+  literature: configs/models/gif_parameter_invariant_v1.yaml
+  current_step_matched: configs/models/gif_current_step_matched_v1.yaml
+
+fixed_execution:
+  seeds: configs/robustness/gif_phase1_v1.yaml#network_seed_ensemble
+  trials_per_arm: 20
+  figure6_gates: unchanged frozen six-gate vector
+  progression_rule: configs/robustness/gif_phase1_v1.yaml#figure6_progression_rule
+  checkpoint_after_every_seed: true
+  replace_failed_or_missing_seed: false
+
+knowledge_boundary:
+  gif_network_outcomes_observed_at_registration: false
+  parameter_maps_frozen: true
+  network_guided_tuning_prohibited: true

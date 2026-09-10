@@ -1,0 +1,45 @@
+schema_version: 1
+artifact_id: 909
+artifact_type: isolated-cell-fit-assessment
+name: stochastic-gif-current-step-fit
+date: 2026-09-10
+status: completed-promoted-with-disclosed-limitations
+
+raw_result:
+  path: results/gif-isolated-fit-v1-909.yaml
+  sha256: b87d8f0d4e24a25bd96b6b41c1710bfe25d432b98ea358e3ede3ed43b954f68b
+  bytes: 121107
+  committed: false-generated-result
+
+protocol: configs/models/gif_isolated_match_protocol_v1.yaml
+frozen_parameter_map: configs/models/gif_current_step_matched_v1.yaml
+network_outcomes_used: false
+
+summary:
+  cell_classes: 12
+  classes_passing_registered_training_and_holdout_rule: 12
+  all_classes_promoted: true
+  selected_on_training_levels_and_training_seeds_only: true
+  sealed_current_and_seed_holdouts_used_for_selection: false
+
+important_limitations:
+  complete_isolated_phenotype_match: false
+  silent_classic_target_classes:
+    - layer4_excitatory_v1
+    - thalamic_interneuron
+  all-six-fitted-parameters-at-lower-bound:
+    - layer4_inhibitory_v1
+    - layer23_inhibitory_v1
+    - thalamic_interneuron
+    - thalamic_matrix
+  interpretation: >-
+    The finite preregistered fit beats or ties the fixed literature transfer on
+    its current-step targets and unseen seeds. Some targets are uninformative
+    and several optima are boundary solutions. The correct label is
+    current-step matched and eligible for the frozen network holdout, not a
+    comprehensive physiological match.
+
+decision:
+  literature_network_arm_authorized: true
+  current_step_matched_network_arm_authorized: true
+  parameter_changes_after_network_result: prohibited

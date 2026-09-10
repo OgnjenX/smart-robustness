@@ -12,7 +12,7 @@ arms:
     parameters: configs/models/gif_parameter_invariant_v1.yaml
   gif_isolated_matched:
     model: somatic_gif_per_cell_class
-    parameters: generated-and-frozen-only-after-isolated-promotion
+    parameters: configs/models/gif_current_step_matched_v1.yaml
     matching_protocol: configs/models/gif_isolated_match_protocol_v1.yaml
 
 required_identity_checks:

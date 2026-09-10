@@ -932,6 +932,11 @@ parameters:
     status: preregistered-literature-parameter-arm-before-network-outcomes
     source: Mensi et al. 2012 doi:10.1152/jn.00408.2011; Pozzorini et al. 2015 doi:10.1371/journal.pcbi.1004275; Setareh et al. 2017 doi:10.3389/fncom.2017.00052 Table 1
     note: Thalamic classes use a fixed excitatory/inhibitory transfer mapping only for this controlled arm; it is not presented as thalamic parameter evidence.
+  model.gif.current_step_fit:
+    value: 12 per-class six-dimensional Sobol selections over four training seeds and four sealed seed holdouts; all pass the finite no-worse-than-literature rule
+    status: frozen-current-step-matched-before-network-outcomes
+    source: configs/models/gif_current_step_matched_v1.yaml; Artifact 909
+    note: Two classic target classes are silent and four selected classes hit all six lower bounds. This authorizes the registered network holdout but not a claim of complete isolated-cell equivalence.
   benchmark.population_sizes:
     value: see configs/*.yaml
     status: exploratory

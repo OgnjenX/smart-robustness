@@ -1,0 +1,43 @@
+schema_version: 1
+name: gif-current-step-matched-v1
+status: frozen-before-any-gif-network-outcome
+scientific_label: morphology-preserving somatic stochastic GIF, per-cell current-step matched
+model: somatic_gif_per_cell_class
+
+provenance:
+  result:
+    path: results/gif-isolated-fit-v1-909.yaml
+    sha256: b87d8f0d4e24a25bd96b6b41c1710bfe25d432b98ea358e3ede3ed43b954f68b
+    bytes: 121107
+  protocol: configs/models/gif_isolated_match_protocol_v1.yaml
+  network_outcomes_used: false
+
+cell_classes:
+  thalamic_relay: {threshold_offset_mV: 10.9375, reset_offset_mV: 11.5625, eta_fast_pA: 131.25, eta_fast_tau_ms: 57.8, eta_slow_pA: 95.3125, eta_slow_tau_ms: 218.2, gamma_fast_mV: 28.75, gamma_fast_tau_ms: 53.8, gamma_slow_mV: 13.4375, gamma_slow_tau_ms: 640.0, escape_rate_hz: 10000.0, stochasticity_mV: 1.4, refractory_ms: 4.0, effective_leak_offset_mV: 0.0, somatic_capacitance_scale: 1.0, somatic_leak_conductance_scale: 1.0}
+  trn: {threshold_offset_mV: 30.0, reset_offset_mV: 22.8, eta_fast_pA: 31.8, eta_fast_tau_ms: 11.5, eta_slow_pA: 1.6, eta_slow_tau_ms: 500.1, gamma_fast_mV: 5.6, gamma_fast_tau_ms: 11.5, gamma_slow_mV: 0.6, gamma_slow_tau_ms: 473.7, escape_rate_hz: 10000.0, stochasticity_mV: 0.6, refractory_ms: 4.0, effective_leak_offset_mV: 0.0, somatic_capacitance_scale: 1.0, somatic_leak_conductance_scale: 1.0}
+  layer5_excitatory_v1: {threshold_offset_mV: 18.4375, reset_offset_mV: -0.9375, eta_fast_pA: -18.75, eta_fast_tau_ms: 57.8, eta_slow_pA: -17.1875, eta_slow_tau_ms: 218.2, gamma_fast_mV: 18.75, gamma_fast_tau_ms: 53.8, gamma_slow_mV: 5.9375, gamma_slow_tau_ms: 640.0, escape_rate_hz: 10000.0, stochasticity_mV: 1.4, refractory_ms: 4.0, effective_leak_offset_mV: 0.0, somatic_capacitance_scale: 1.0, somatic_leak_conductance_scale: 1.0}
+  layer6ii_excitatory_v1: {threshold_offset_mV: 12.8125, reset_offset_mV: 8.4375, eta_fast_pA: 43.75, eta_fast_tau_ms: 57.8, eta_slow_pA: 48.4375, eta_slow_tau_ms: 218.2, gamma_fast_mV: 1.25, gamma_fast_tau_ms: 53.8, gamma_slow_mV: 19.0625, gamma_slow_tau_ms: 640.0, escape_rate_hz: 10000.0, stochasticity_mV: 1.4, refractory_ms: 4.0, effective_leak_offset_mV: 0.0, somatic_capacitance_scale: 1.0, somatic_leak_conductance_scale: 1.0}
+  layer6i_excitatory_v1: {threshold_offset_mV: 17.5, reset_offset_mV: 22.5, eta_fast_pA: 100.0, eta_fast_tau_ms: 57.8, eta_slow_pA: 62.5, eta_slow_tau_ms: 218.2, gamma_fast_mV: 0.0, gamma_fast_tau_ms: 53.8, gamma_slow_mV: -2.5, gamma_slow_tau_ms: 640.0, escape_rate_hz: 10000.0, stochasticity_mV: 1.4, refractory_ms: 4.0, effective_leak_offset_mV: 0.0, somatic_capacitance_scale: 1.0, somatic_leak_conductance_scale: 1.0}
+  layer4_inhibitory_v1: {threshold_offset_mV: 10.0, reset_offset_mV: -15.0, eta_fast_pA: -50.0, eta_fast_tau_ms: 11.5, eta_slow_pA: -50.0, eta_slow_tau_ms: 500.1, gamma_fast_mV: -10.0, gamma_fast_tau_ms: 11.5, gamma_slow_mV: -10.0, gamma_slow_tau_ms: 473.7, escape_rate_hz: 10000.0, stochasticity_mV: 0.6, refractory_ms: 4.0, effective_leak_offset_mV: 0.0, somatic_capacitance_scale: 1.0, somatic_leak_conductance_scale: 1.0}
+  layer23_excitatory_v1: {threshold_offset_mV: 11.875, reset_offset_mV: 31.875, eta_fast_pA: 62.5, eta_fast_tau_ms: 57.8, eta_slow_pA: -3.125, eta_slow_tau_ms: 218.2, gamma_fast_mV: 17.5, gamma_fast_tau_ms: 53.8, gamma_slow_mV: -4.375, gamma_slow_tau_ms: 640.0, escape_rate_hz: 10000.0, stochasticity_mV: 1.4, refractory_ms: 4.0, effective_leak_offset_mV: 0.0, somatic_capacitance_scale: 1.0, somatic_leak_conductance_scale: 1.0}
+  layer4_excitatory_v1: {threshold_offset_mV: 16.5625, reset_offset_mV: 27.1875, eta_fast_pA: -31.25, eta_fast_tau_ms: 57.8, eta_slow_pA: 29.6875, eta_slow_tau_ms: 218.2, gamma_fast_mV: 6.25, gamma_fast_tau_ms: 53.8, gamma_slow_mV: 7.8125, gamma_slow_tau_ms: 640.0, escape_rate_hz: 10000.0, stochasticity_mV: 1.4, refractory_ms: 4.0, effective_leak_offset_mV: 0.0, somatic_capacitance_scale: 1.0, somatic_leak_conductance_scale: 1.0}
+  layer23_inhibitory_v1: {threshold_offset_mV: 10.0, reset_offset_mV: -15.0, eta_fast_pA: -50.0, eta_fast_tau_ms: 11.5, eta_slow_pA: -50.0, eta_slow_tau_ms: 500.1, gamma_fast_mV: -10.0, gamma_fast_tau_ms: 11.5, gamma_slow_mV: -10.0, gamma_slow_tau_ms: 473.7, escape_rate_hz: 10000.0, stochasticity_mV: 0.6, refractory_ms: 4.0, effective_leak_offset_mV: 0.0, somatic_capacitance_scale: 1.0, somatic_leak_conductance_scale: 1.0}
+  thalamic_interneuron: {threshold_offset_mV: 10.0, reset_offset_mV: -15.0, eta_fast_pA: -50.0, eta_fast_tau_ms: 11.5, eta_slow_pA: -50.0, eta_slow_tau_ms: 500.1, gamma_fast_mV: -10.0, gamma_fast_tau_ms: 11.5, gamma_slow_mV: -10.0, gamma_slow_tau_ms: 473.7, escape_rate_hz: 10000.0, stochasticity_mV: 0.6, refractory_ms: 4.0, effective_leak_offset_mV: 0.0, somatic_capacitance_scale: 1.0, somatic_leak_conductance_scale: 1.0}
+  thalamic_nonspecific: {threshold_offset_mV: 21.25, reset_offset_mV: 3.75, eta_fast_pA: 75.0, eta_fast_tau_ms: 57.8, eta_slow_pA: 81.25, eta_slow_tau_ms: 218.2, gamma_fast_mV: 5.0, gamma_fast_tau_ms: 53.8, gamma_slow_mV: -6.25, gamma_slow_tau_ms: 640.0, escape_rate_hz: 10000.0, stochasticity_mV: 1.4, refractory_ms: 4.0, effective_leak_offset_mV: 0.0, somatic_capacitance_scale: 1.0, somatic_leak_conductance_scale: 1.0}
+  thalamic_matrix: {threshold_offset_mV: 10.0, reset_offset_mV: -15.0, eta_fast_pA: -50.0, eta_fast_tau_ms: 57.8, eta_slow_pA: -50.0, eta_slow_tau_ms: 218.2, gamma_fast_mV: -10.0, gamma_fast_tau_ms: 53.8, gamma_slow_mV: -10.0, gamma_slow_tau_ms: 640.0, escape_rate_hz: 10000.0, stochasticity_mV: 1.4, refractory_ms: 4.0, effective_leak_offset_mV: 0.0, somatic_capacitance_scale: 1.0, somatic_leak_conductance_scale: 1.0}
+
+claims:
+  current_step_training_and_holdout_promoted: true
+  stochastic_seed_holdout_promoted: true
+  complete_isolated_phenotype_matched: false
+  network_behavior_preserved: not-yet-observed
+
+limitations:
+  - layer4_excitatory_v1 and thalamic_interneuron classic current scans were silent at all selected levels
+  - four selected classes lie on every fitted lower bound, so the finite search does not identify an interior optimum
+  - rebound, conductance-transfer, and AHP/ACh equivalence were not selection targets
+
+prohibited:
+  - changing these parameters after observing any GIF network result
+  - describing this arm as a complete isolated-cell match
+  - altering SMART topology, weights, delays, stimuli, learning, or analysis

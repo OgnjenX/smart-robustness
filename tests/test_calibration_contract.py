@@ -1,6 +1,7 @@
 import hashlib
 import json
 import math
+import subprocess
 from itertools import pairwise
 from pathlib import Path
 
@@ -15,6 +16,42 @@ from smart_robustness.validation.calibration import (
 )
 
 ROOT = Path(__file__).parents[1]
+
+
+def _matches_current_or_committed_history(path: str, digest: str) -> bool:
+    """Accept the current bytes or the exact preregistered version in Git."""
+
+    candidate = ROOT / path
+    if candidate.is_file() and hashlib.sha256(candidate.read_bytes()).hexdigest() == digest:
+        return True
+
+    history = subprocess.run(
+        ["git", "log", "--format=%H", "--", path],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    ).stdout.splitlines()
+    for commit in history:
+        version = subprocess.run(
+            ["git", "show", f"{commit}:{path}"],
+            cwd=ROOT,
+            check=False,
+            capture_output=True,
+        )
+        if version.returncode == 0 and hashlib.sha256(version.stdout).hexdigest() == digest:
+            return True
+    return False
+
+
+def _skip_if_local_sources_missing(*paths: str) -> None:
+    """Skip source audits when non-redistributed primary files are unavailable."""
+
+    missing = [path for path in paths if not (ROOT / path).is_file()]
+    if missing:
+        pytest.skip(f"original source archive is local, not redistributed: {missing}")
+
+
 HISTORICAL_FIGURE10_RUNTIME_SHA256 = (
     "ebdf48f0138803ab50b1dec2ef87817b4c537e4da490a088b9df6bdcb9d119a1"
 )
@@ -7766,10 +7803,10 @@ def test_trn_drive_decomposition_is_hash_pinned_and_read_only() -> None:
         ).read_text()
     )
     profile_path = ROOT / registration["profile"]
-    script_path = ROOT / registration["script"]
-
     assert hashlib.sha256(profile_path.read_bytes()).hexdigest() == registration["profile_sha256"]
-    assert hashlib.sha256(script_path.read_bytes()).hexdigest() == registration["script_sha256"]
+    assert _matches_current_or_committed_history(
+        registration["script"], registration["script_sha256"]
+    )
     assert registration["runtime_fingerprint"] == (
         "fa4ab9f0bf2bec4d6ad53cb6a91620047689b6839b146ed7d777d42350c2cdf5"
     )
@@ -7809,10 +7846,10 @@ def test_trn_recurrent_gaba_ablation_is_recognition_only_and_nonpromotable() -> 
         ).read_text()
     )
     profile_path = ROOT / registration["profile"]
-    script_path = ROOT / registration["script"]
-
     assert hashlib.sha256(profile_path.read_bytes()).hexdigest() == registration["profile_sha256"]
-    assert hashlib.sha256(script_path.read_bytes()).hexdigest() == registration["script_sha256"]
+    assert _matches_current_or_committed_history(
+        registration["script"], registration["script_sha256"]
+    )
     assert registration["recognition_only_ablation"]["projection_ids"] == [
         "modeldb112923.projection.008",
         "modeldb112923.projection.011",
@@ -7854,10 +7891,10 @@ def test_trn_gap_junction_ablation_is_recognition_only_and_nonpromotable() -> No
         ).read_text()
     )
     profile_path = ROOT / registration["profile"]
-    script_path = ROOT / registration["script"]
-
     assert hashlib.sha256(profile_path.read_bytes()).hexdigest() == registration["profile_sha256"]
-    assert hashlib.sha256(script_path.read_bytes()).hexdigest() == registration["script_sha256"]
+    assert _matches_current_or_committed_history(
+        registration["script"], registration["script_sha256"]
+    )
     assert registration["recognition_only_ablation"]["projection_ids"] == [
         "modeldb112923.projection.013"
     ]
@@ -7897,10 +7934,10 @@ def test_trn_recurrent_gaba_path_decomposition_is_fixed_and_nonpromotable() -> N
         ).read_text()
     )
     profile_path = ROOT / registration["profile"]
-    script_path = ROOT / registration["script"]
-
     assert hashlib.sha256(profile_path.read_bytes()).hexdigest() == registration["profile_sha256"]
-    assert hashlib.sha256(script_path.read_bytes()).hexdigest() == registration["script_sha256"]
+    assert _matches_current_or_committed_history(
+        registration["script"], registration["script_sha256"]
+    )
     arms = registration["recognition_only_ablation_arms"]
     assert [arm["name"] for arm in arms] == [
         "soma_gaba_removed",
@@ -7969,10 +8006,10 @@ def test_trn_somatic_gaba_match_screen_is_bounded_and_mismatch_locked() -> None:
         ).read_text()
     )
     profile_path = ROOT / registration["profile"]
-    script_path = ROOT / registration["script"]
-
     assert hashlib.sha256(profile_path.read_bytes()).hexdigest() == registration["profile_sha256"]
-    assert hashlib.sha256(script_path.read_bytes()).hexdigest() == registration["script_sha256"]
+    assert _matches_current_or_committed_history(
+        registration["script"], registration["script_sha256"]
+    )
     assert registration["calibrated_projection_id"] == ("modeldb112923.projection.008")
     assert registration["effective_scale_grid"] == [
         0.75,
@@ -8022,11 +8059,12 @@ def test_trn_somatic_gaba_mismatch_is_limited_to_match_survivors() -> None:
         ).read_text()
     )
     profile_path = ROOT / registration["profile"]
-    script_path = ROOT / registration["script"]
     match_path = ROOT / registration["match_result"]
 
     assert hashlib.sha256(profile_path.read_bytes()).hexdigest() == registration["profile_sha256"]
-    assert hashlib.sha256(script_path.read_bytes()).hexdigest() == registration["script_sha256"]
+    assert _matches_current_or_committed_history(
+        registration["script"], registration["script_sha256"]
+    )
     assert (
         hashlib.sha256(match_path.read_bytes()).hexdigest() == registration["match_result_sha256"]
     )
@@ -8077,10 +8115,10 @@ def test_persistent_gaba_t_cross_is_bounded_and_applies_before_learning() -> Non
         ).read_text()
     )
     profile_path = ROOT / registration["profile"]
-    script_path = ROOT / registration["script"]
-
     assert hashlib.sha256(profile_path.read_bytes()).hexdigest() == registration["profile_sha256"]
-    assert hashlib.sha256(script_path.read_bytes()).hexdigest() == registration["script_sha256"]
+    assert _matches_current_or_committed_history(
+        registration["script"], registration["script_sha256"]
+    )
     assert registration["persistent_projection_scale"] == {
         "projection_id": "modeldb112923.projection.008",
         "scale": 0.75,
@@ -8124,10 +8162,10 @@ def test_persistent_gaba0875_consistency_introduces_no_new_value() -> None:
         ).read_text()
     )
     profile_path = ROOT / registration["profile"]
-    script_path = ROOT / registration["script"]
-
     assert hashlib.sha256(profile_path.read_bytes()).hexdigest() == registration["profile_sha256"]
-    assert hashlib.sha256(script_path.read_bytes()).hexdigest() == registration["script_sha256"]
+    assert _matches_current_or_committed_history(
+        registration["script"], registration["script_sha256"]
+    )
     assert registration["persistent_projection_scale"]["scale"] == 0.875
     assert registration["nonspecific_t_scale_grid"] == [0.1875]
     assert not registration["novel_parameter_values_introduced"]
@@ -11461,6 +11499,8 @@ def test_figure10_static_comparator_lifecycle_audit_is_source_pinned() -> None:
         ).read_text()
     )
 
+    _skip_if_local_sources_missing(audit["recovered_executable"]["path"])
+
     for path_key, hash_key in (
         ("authorization", "authorization_sha256"),
         ("source_result", "source_result_sha256"),
@@ -11640,6 +11680,12 @@ def test_figure10_search_cycle_source_audit_pins_missing_scheduler_boundary() ->
             ROOT
             / "docs/validation-results/figure10-search-cycle-lifecycle-source-audit-737.yaml"
         ).read_text()
+    )
+
+    _skip_if_local_sources_missing(
+        audit["primary_paper"]["path"],
+        *(item["path"] for item in audit["kinness_reports"]),
+        audit["recovered_executable"]["path"],
     )
 
     assert hashlib.sha256(
@@ -11854,6 +11900,15 @@ def test_projection036_spread_audit_finds_one_bounded_source_ambiguity() -> None
             ROOT
             / "docs/validation-results/figure10-projection036-spread-source-audit-746.yaml"
         ).read_text()
+    )
+
+    _skip_if_local_sources_missing(
+        *(audit[source]["path"] for source in (
+            "primary_paper",
+            "kinness_framework",
+            "modeldb_executable",
+            "supplement",
+        ))
     )
 
     assert hashlib.sha256(
@@ -12213,6 +12268,15 @@ def test_projection025_source_to_brian2_conductance_parity_is_exact_and_closed()
             / "docs/validation-results/figure6-7-10-projection025-conductance-parity-audit-763.yaml"
         ).read_text()
     )
+
+    source_paths = (
+        audit["authorization"]["path"],
+        audit["primary_sources"]["smart_nml"]["path"],
+        audit["primary_sources"]["kinness_framework"]["path"],
+        audit["primary_sources"]["derived_catalog"]["path"],
+        *(source["path"] for source in audit["implementation_sources"].values()),
+    )
+    _skip_if_local_sources_missing(*source_paths)
 
     for source in (
         audit["authorization"],

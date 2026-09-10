@@ -15,7 +15,6 @@ from pathlib import Path
 
 import numpy as np
 
-
 NONSPECIFIC_REPLAY_PROJECTION_IDS = (
     "modeldb112923.projection.047",
     "modeldb112923.projection.048",
@@ -125,7 +124,7 @@ def write_nonspecific_replay_trace(
     selected = (relative_time_ms >= -dt_ms / 2) & (
         relative_time_ms < duration_ms - dt_ms / 2
     )
-    expected_samples = int(round(duration_ms / dt_ms))
+    expected_samples = round(duration_ms / dt_ms)
     if int(np.count_nonzero(selected)) != expected_samples:
         raise ValueError(
             "nonspecific replay trace does not contain exactly one sample per trial step"
@@ -257,7 +256,7 @@ def run_nonspecific_replay(
 
     if dt_ms <= 0 or duration_ms <= 0 or not np.all(np.isfinite(time_ms)):
         raise ValueError("replay timing must be finite and positive")
-    expected_samples = int(round(duration_ms / dt_ms))
+    expected_samples = round(duration_ms / dt_ms)
     if time_ms.shape != (expected_samples,) or not np.allclose(
         time_ms, np.arange(expected_samples) * dt_ms, atol=dt_ms * 1e-6, rtol=0
     ):

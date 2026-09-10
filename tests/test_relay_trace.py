@@ -9,10 +9,10 @@ brian = pytest.importorskip("brian2")
 from smart_robustness.classic_sector import FirstOrderRuntimeConventions
 from smart_robustness.protocols import MatchCondition
 from smart_robustness.validation.figure7 import run_figure7_condition
-from smart_robustness.validation.relay_trace import write_relay_trace
 from smart_robustness.validation.nonspecific_replay import (
     NONSPECIFIC_REPLAY_MONITOR_VARIABLES,
 )
+from smart_robustness.validation.relay_trace import write_relay_trace
 
 
 def test_trace_preserves_units_cell_order_and_pre_stimulus_samples(tmp_path):

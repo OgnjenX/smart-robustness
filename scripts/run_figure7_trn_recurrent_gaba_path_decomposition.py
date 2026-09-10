@@ -85,20 +85,20 @@ def main() -> None:
 
     protocol = profile["protocol"]
     comparator = profile["comparator"]
-    common = dict(
-        learned_weights=training.learned_weights,
-        conventions=conventions,
-        persistent_projection_weight_scales=scales,
-        top_down_current_pA=float(protocol["top_down_current_pA"]),
-        top_down_current_mode=TopDownCurrentMode(protocol["top_down_current_mode"]),
-        top_down_cue_lead_ms=float(protocol["top_down_cue_lead_ms"]),
-        duration_ms=float(protocol["duration_ms"]),
-        dt_ms=float(protocol["dt_ms"]),
-        equilibration_ms=float(protocol["equilibration_ms"]),
-        comparator_top_k_targets=int(comparator["target_count"]),
-        comparator_source_index=int(comparator["source_index"]),
-        brian=brian,
-    )
+    common = {
+        "learned_weights": training.learned_weights,
+        "conventions": conventions,
+        "persistent_projection_weight_scales": scales,
+        "top_down_current_pA": float(protocol["top_down_current_pA"]),
+        "top_down_current_mode": TopDownCurrentMode(protocol["top_down_current_mode"]),
+        "top_down_cue_lead_ms": float(protocol["top_down_cue_lead_ms"]),
+        "duration_ms": float(protocol["duration_ms"]),
+        "dt_ms": float(protocol["dt_ms"]),
+        "equilibration_ms": float(protocol["equilibration_ms"]),
+        "comparator_top_k_targets": int(comparator["target_count"]),
+        "comparator_source_index": int(comparator["source_index"]),
+        "brian": brian,
+    }
     outcomes = []
     for arm in registration["recognition_only_ablation_arms"]:
         disabled = tuple(arm["projection_ids"])

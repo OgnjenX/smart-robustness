@@ -19,7 +19,6 @@ from smart_robustness.validation.figure7 import (
     run_figure7_condition,
 )
 
-
 IDENTITY_FIELDS = (
     "nonspecific_spike_times_ms",
     "layer4_spike_indices",

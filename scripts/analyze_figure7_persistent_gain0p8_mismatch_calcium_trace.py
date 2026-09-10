@@ -10,7 +10,6 @@ import numpy as np
 import yaml
 from run_figure6_nonspecific_distal_gaba_source import _plain
 
-
 COMPARTMENTS = ("soma", "proximal_dendrite", "distal_dendrite")
 
 
@@ -74,7 +73,6 @@ def main() -> None:
             previous_event_ms = 0.0
             for event_number, event_time_ms in enumerate(events, start=1):
                 event_index = int(np.argmin(np.abs(times - event_time_ms)))
-                interval_mask = (times >= previous_event_ms) & (times < event_time_ms)
                 interval_peaks = peaks[
                     (times[peaks] >= previous_event_ms)
                     & (times[peaks] < event_time_ms)

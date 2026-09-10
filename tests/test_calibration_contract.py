@@ -12949,3 +12949,60 @@ def test_figure15_stimulated_pair_distribution_is_preregistered() -> None:
     assert "select none" in registration["selection_rule"]
     assert not registration["generation_two_opened"]
     assert not registration["baseline_frozen"]
+
+
+def test_figure15_stimulated_pairs_share_the_same_high_gamma_peak() -> None:
+    registration_path = (
+        ROOT
+        / "docs/validation-results/figure15-stimulated-pair-distribution-registration-845.yaml"
+    )
+    result_path = (
+        ROOT
+        / "docs/validation-results/figure15-stimulated-pair-distribution-846.yaml"
+    )
+    result = yaml.safe_load(result_path.read_text())
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure15-stimulated-pair-distribution-assessment-847.yaml"
+        ).read_text()
+    )
+
+    assert hashlib.sha256(registration_path.read_bytes()).hexdigest() == assessment[
+        "registration_sha256"
+    ]
+    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment[
+        "result_sha256"
+    ]
+    assert result["reference_result_reproduced"]
+    assert len(result["raw_layer4_spike_indices"]) == 608
+    assert len(result["raw_layer4_spike_times_ms"]) == 608
+    assert [item["pair"] for item in result["pair_results"]] == [
+        [38, 39],
+        [38, 40],
+        [38, 41],
+        [38, 42],
+        [39, 40],
+        [39, 41],
+        [39, 42],
+        [40, 41],
+        [40, 42],
+        [41, 42],
+    ]
+    assert all(
+        item["gamma_peak_hz"] == pytest.approx(53.026513256628306)
+        for item in result["pair_results"]
+    )
+    assert not any(item["within_39_49_hz"] for item in result["pair_results"])
+    tests = assessment["classification_tests"]
+    assert not tests["any_pair_within_39_49_hz"]
+    assert tests["all_pairs_above_49_hz"]
+    assert tests["all_pair_peaks_numerically_identical"]
+    assert not tests["frequency_depends_on_pair_identity_within_stimulated_row"]
+    interpretation = assessment["interpretation"]
+    assert interpretation["shared_population_clock_supported"]
+    assert not interpretation["thalamic_or_cortical_origin_identified"]
+    assert not assessment["decision"]["pair_selected"]
+    assert not assessment["decision"]["original_holdout_reclassified"]
+    assert not assessment["scientific_status"]["original_smart_reproduced"]
+    assert not assessment["scientific_status"]["baseline_frozen"]

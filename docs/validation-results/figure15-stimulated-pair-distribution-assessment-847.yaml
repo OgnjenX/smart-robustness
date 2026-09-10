@@ -1,0 +1,77 @@
+schema_version: 1
+id: figure15-stimulated-pair-distribution-assessment-847
+date: '2026-09-10'
+status: completed-discrepancy-localized-to-shared-circuit-rhythm
+classification: post-holdout-generation-one-figure15-pair-distribution-assessment
+registration: docs/validation-results/figure15-stimulated-pair-distribution-registration-845.yaml
+registration_sha256: b2bad285d21254007ca36c1b7c6ecc67a2d1c9741d8e63093fc54e3d550d3714
+result: docs/validation-results/figure15-stimulated-pair-distribution-846.yaml
+result_sha256: 542838a751e56d1112486095fd911e39907225a13dd0f0e906a5882a819f8a3f
+integrity_gates:
+  fresh_figure6_prerequisite_passed: true
+  immutable_reference_result_reproduced: true
+  layer4_event_count_reproduced: true
+  all_ten_registered_pairs_reported_once: true
+  pair_order_lexicographic: true
+  raw_layer4_event_stream_archived: true
+  no_pair_selected_by_runner: true
+observations:
+  stimulated_row_indices: [38, 39, 40, 41, 42]
+  pair_count: 10
+  layer4_event_count: 608
+  per_cell_spike_counts:
+    38: 116
+    39: 114
+    40: 148
+    41: 114
+    42: 116
+  pair_gamma_peaks_hz:
+  - {pair: [38, 39], peak_hz: 53.026513256628306}
+  - {pair: [38, 40], peak_hz: 53.026513256628306}
+  - {pair: [38, 41], peak_hz: 53.026513256628306}
+  - {pair: [38, 42], peak_hz: 53.026513256628306}
+  - {pair: [39, 40], peak_hz: 53.026513256628306}
+  - {pair: [39, 41], peak_hz: 53.026513256628306}
+  - {pair: [39, 42], peak_hz: 53.026513256628306}
+  - {pair: [40, 41], peak_hz: 53.026513256628306}
+  - {pair: [40, 42], peak_hz: 53.026513256628306}
+  - {pair: [41, 42], peak_hz: 53.026513256628306}
+  pairs_within_39_49_hz: []
+classification_tests:
+  any_pair_within_39_49_hz: false
+  all_pairs_above_49_hz: true
+  all_pair_peaks_numerically_identical: true
+  frequency_depends_on_pair_identity_within_stimulated_row: false
+interpretation:
+  discrepancy_classification: circuit-level-within-registered-stimulated-row-observable
+  official_pair_identity_recovered: false
+  unknown_pair_identity_explains_44_vs_53_hz: false
+  shared_population_clock_supported: true
+  thalamic_or_cortical_origin_identified: false
+  note: >-
+    Every source-compatible pair has the same 53.026513-Hz peak despite
+    different per-cell spike counts and separations. The unrecovered official
+    pair identity therefore cannot account for the numerical discrepancy
+    within the five cells receiving the registered horizontal stimulus. This
+    supports a shared circuit rhythm but does not yet determine whether it is
+    paced by relay input, intracortical recurrence, or their closed loop.
+decision:
+  pair_selected: false
+  original_holdout_reclassified: false
+  generation_two_opened: false
+  pair_identity_path_closed: true
+  next_action: >-
+    Preregister one deterministic event-stream replay of the unchanged
+    generation-one endpoint, gated by exact reproduction of this layer-4 event
+    stream. Archive thalamic relay, layer-4 excitatory, layer-4 inhibitory, TRN,
+    and category events and compare their full-epoch population spectra and
+    event timing. Use this only to distinguish inherited thalamic pacing from
+    a locally generated cortical rhythm before choosing any circuit-level
+    generation-two hypothesis.
+scientific_status:
+  failed_original_figure15_holdout_preserved: true
+  all_five_local_parameter_diagnostics_preserved: true
+  original_smart_reproduced: false
+  baseline_frozen: false
+  neuron_models_consulted: false
+  modern_anatomy_consulted: false

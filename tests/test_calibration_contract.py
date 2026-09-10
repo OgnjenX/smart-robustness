@@ -13173,3 +13173,43 @@ def test_figure15_shared_clock_recovery_supports_relay_locked_pacing() -> None:
     assert not assessment["decision"]["generation_two_opened"]
     assert not assessment["scientific_status"]["original_smart_reproduced"]
     assert not assessment["scientific_status"]["baseline_frozen"]
+
+
+def test_figure15_trn_relay_transfer_direction_is_preregistered() -> None:
+    source_audit_path = (
+        ROOT
+        / "docs/validation-results/figure15-trn-relay-transfer-source-audit-855.yaml"
+    )
+    source_audit = yaml.safe_load(source_audit_path.read_text())
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure15-trn-relay-transfer-direction-registration-856.yaml"
+        ).read_text()
+    )
+
+    for path_key, hash_key in (
+        ("authorization", "authorization_sha256"),
+        ("source_audit", "source_audit_sha256"),
+        ("original_holdout_registration", "original_holdout_registration_sha256"),
+        ("figure7_runtime", "figure7_runtime_sha256"),
+        ("phase_analysis", "phase_analysis_sha256"),
+        ("pair_analysis", "pair_analysis_sha256"),
+        ("script", "script_sha256"),
+    ):
+        assert hashlib.sha256(
+            (ROOT / registration[path_key]).read_bytes()
+        ).hexdigest() == registration[hash_key]
+    assert registration["source_audit"] == str(source_audit_path.relative_to(ROOT))
+    assert source_audit["authorized_next_action"]["common_factors"] == [0.5, 1.0, 1.5]
+    assert registration["fixed_generation_one"]["trn_to_relay_scales"] == {
+        "modeldb112923.projection.000": 0.01,
+        "modeldb112923.projection.001": 0.01,
+        "modeldb112923.projection.004": 0.03,
+    }
+    assert registration["diagnostic"]["common_factors"] == [0.5, 1.0, 1.5]
+    assert registration["diagnostic"]["duration_ms"] == 200.0
+    assert registration["diagnostic"]["pair"] == [39, 40]
+    assert "select no factor" in registration["selection_rule"]
+    assert not registration["generation_two_opened"]
+    assert not registration["baseline_frozen"]

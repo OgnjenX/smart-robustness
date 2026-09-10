@@ -4226,3 +4226,11 @@ explicit calibrated-behavioral freeze decision that preserves the failed
 numeric holdout and the unavailable-source boundary; exact numerical recovery
 remains unclaimed, and neuron-model and modern-anatomy experiments remain
 unopened.
+
+Artifact 859 records a clean repository-wide freeze-candidate verification at
+commit `f6dc9de948586597d13d544a50e2b1bf48ca5514`: 1062 tests pass with no
+failures under Python 3.11.9 and Brian2 2.9.0. The warnings are Brian2 object-
+lifecycle notices and dependency deprecations and do not change any validation
+outcome. This establishes technical freeze readiness only. It neither converts
+the failed 44-Hz numerical target into a pass nor authorizes an exact-
+replication label.

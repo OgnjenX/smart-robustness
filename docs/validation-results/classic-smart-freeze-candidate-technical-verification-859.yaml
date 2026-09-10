@@ -1,0 +1,42 @@
+schema_version: 1
+id: classic-smart-freeze-candidate-technical-verification-859
+date: '2026-09-10'
+status: technical-freeze-ready-scientific-label-pending
+classification: calibrated-classic-smart-freeze-candidate-technical-verification
+git:
+  branch: codex/classic-smart-calibration
+  commit: f6dc9de948586597d13d544a50e2b1bf48ca5514
+  remote: https://github.com/OgnjenX/smart-robustness.git
+environment:
+  platform: macOS-26.6.2-arm64-arm-64bit
+  python: 3.11.9
+  brian2: 2.9.0
+  pytest: 8.4.2
+dependency_manifest:
+  path: pyproject.toml
+  sha256: a67faac5277cfc4e2d44e6b8048290ea4b20af30bba45c841a20abf5db8df828
+verification:
+  command: .venv/bin/python -m pytest -q --tb=short
+  exit_code: 0
+  passed: 1062
+  failed: 0
+  elapsed_seconds: 590.41
+  warnings: 143999
+  warning_classification: >-
+    Brian2 unused-object lifecycle warnings and dependency pyparsing
+    deprecations; no test failure or changed validation outcome.
+scientific_status:
+  passed_registered_behavioral_gates: [figure6, figure7, figure10, figure14, figure16]
+  figure15_source_identifiable_behavior: nearby-layer4-gamma-synchrony-reproduced
+  figure15_registered_pair_peak_hz: 53.026513256628306
+  figure15_paper_panel_label_hz: 44.0
+  exact_numerical_reproduction_claimed: false
+  reason: >-
+    The published pair, spike arrays, estimator, and original simulator runtime
+    are unavailable, and every registered source-bounded direction has been
+    closed without a coherent correction of the 44-versus-53-Hz discrepancy.
+release_boundary: >-
+  This artifact proves that commit f6dc9de is technically reproducible and
+  test-clean as a freeze candidate. It does not authorize an exact-replication
+  claim or choose the release label. A calibrated-behavioral freeze must retain
+  the Figure-15 limitation; an exact-reproduction freeze remains inadmissible.

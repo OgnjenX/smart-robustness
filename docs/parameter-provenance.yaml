@@ -872,6 +872,11 @@ parameters:
     status: completed-upstream-control-whole-observable-direction-closed
     source: Artifacts 855--858
     note: Joint scaling of effective projection-000/001/004 transfer proves monotonic upstream frequency control but fails the preregistered layer-4 coherence criterion. No factor, full-duration confirmation, denser grid, or generation-two candidate is authorized.
+  validation.classic_smart_freeze_candidate:
+    value: commit f6dc9de; 1062 tests passed; 0 failed
+    status: technical-freeze-ready-scientific-label-pending
+    source: Artifact 859
+    note: The clean full-suite result establishes technical reproducibility of the candidate. It does not authorize an exact numerical reproduction claim; a behavioral freeze must retain the Figure-15 44-versus-53-Hz limitation.
   validation.figure16.calibrated_holdout:
     value: strongest 2--4-Hz peak; lower-to-gamma peak ratio 4.824415614511934
     status: passed-unchanged-higher-order-holdout

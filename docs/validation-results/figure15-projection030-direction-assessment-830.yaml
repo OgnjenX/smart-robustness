@@ -1,0 +1,73 @@
+schema_version: 1
+id: figure15-projection030-direction-assessment-830
+date: '2026-09-10'
+status: completed-projection030-frequency-direction-closed
+classification: post-holdout-calibration-generation-one-projection030-direction-assessment
+registration: docs/validation-results/figure15-projection030-direction-registration-828.yaml
+registration_sha256: aeff3f2beb4e58256270705a0338f7f881275361ca8db9ccf081e0f2d4647790
+result: docs/validation-results/figure15-projection030-direction-829.yaml
+result_sha256: 94a1be5950335fd1065f398006cae09630a7555ef3c50df9908f78e0cee67591
+integrity_gates:
+  registered_three_scales_executed_in_order: true
+  fresh_figure6_prerequisite_passed: true
+  same_learned_state_reused_across_arms: true
+  runtime_fingerprint_matches_generation_one: true
+  both_fixed_cells_have_at_least_two_spikes_all_arms: true
+  direct_cross_spectrum_resolution_is_5_hz_all_arms: true
+  inhibitory_population_recorded_all_arms: true
+  no_scale_selected_by_runner: true
+observations:
+  scales: [0.5, 1.0, 1.5]
+  first_cell_spikes: [19, 19, 10]
+  second_cell_spikes: [28, 26, 23]
+  all_layer4_excitatory_spikes: [134, 96, 79]
+  layer4_inhibitory_spikes: [5, 5, 5]
+  layer4_inhibitory_active_cells: [5, 5, 5]
+  direct_cross_spectrum_gamma_peak_hz: [55.0, 70.0, 55.0]
+  first_cell_median_isi_ms:
+  - 7.485000000000001
+  - 8.564999999999998
+  - 17.900000000000006
+  second_cell_median_isi_ms:
+  - 2.960000000000001
+  - 7.72999999999999
+  - 6.3700000000000045
+direction_tests:
+  all_layer4_excitatory_spike_count_strictly_decreases_with_scale: true
+  first_cell_spike_count_nonincreasing_with_scale: true
+  second_cell_spike_count_strictly_decreases_with_scale: true
+  inhibitory_spike_count_changes_with_scale: false
+  inhibitory_active_cell_count_changes_with_scale: false
+  gamma_peak_monotonic_with_scale: false
+  gamma_peak_moves_coherently_toward_44_hz: false
+interpretation:
+  excitatory_rate_causal_in_registered_range: true
+  inhibitory_spike_count_direction_identified: false
+  frequency_causal_direction_identified: false
+  rate_or_engagement_only_classification: true
+  coherent_44_hz_calibration_direction: false
+  note: >-
+    The 0.5-scale and 1.5-scale arms both occupy the 55-Hz bin despite opposite
+    sides of the source value and substantially different excitatory rates.
+    Therefore the apparently closer 0.5-scale peak cannot identify a direction
+    or justify selecting that scale. The 200-ms bins remain a relative causal
+    probe and do not replace the failed 1000-ms 53.0265-Hz holdout.
+decision:
+  projection030_scale_selected: false
+  projection030_denser_grid_authorized: false
+  projection030_generation_two_candidate_authorized: false
+  projection030_closed_as_isolated_frequency_calibration: true
+  next_action: >-
+    Audit projection 036 weight as the source-listed inhibitory-to-excitatory
+    half of the local E-I loop. Preserve its already selected variance topology
+    and treat any scale as a downstream direction diagnostic only. Because this
+    route also contributes to the validated Figure-10 reset, any future global
+    candidate would have to rerun all first-order validation gates.
+scientific_status:
+  failed_original_figure15_holdout_preserved: true
+  generation_one_preserved_as_overfitting_control: true
+  generation_two_opened: false
+  original_smart_reproduced: false
+  baseline_frozen: false
+  neuron_models_consulted: false
+  modern_anatomy_consulted: false

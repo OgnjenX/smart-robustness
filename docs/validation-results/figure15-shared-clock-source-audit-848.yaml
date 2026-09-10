@@ -1,0 +1,69 @@
+schema_version: 1
+id: figure15-shared-clock-source-audit-848
+date: '2026-09-10'
+status: completed-shared-clock-pathways-bounded
+classification: read-only-primary-source-and-executable-circuit-audit
+authorization:
+  path: docs/validation-results/figure15-stimulated-pair-distribution-assessment-847.yaml
+  sha256: cd6e3ca5133b75912aa0e696c9540e0927bf99d9c433256031e1df9d834c76c3
+primary_source:
+  article: Grossberg and Versace 2008, Brain Research 1218, 278-312
+  local_path: tmp/pdfs/GroVer2008BR.pdf
+  sha256: c56c337624959d8c0bdf51aa79b0dbc82f31264af2b2cd675790879a6410d7ed
+  relevant_pages: [30, 31, 44]
+  figure15_mechanism: >-
+    The paper attributes local gamma synchrony to nearby layer-4 cells sharing
+    bottom-up input during match, in the absence of mismatch-imposed slow
+    synchronization.
+  stimulus_method: >-
+    Five aligned specific relay cells are voltage-clamped to induce a 40-Hz
+    action-potential stream; synchrony runs last 1000 ms.
+executable_source:
+  catalog:
+    path: src/smart_robustness/data/modeldb112923_first_order.yaml
+    sha256: 3b42be7dd0b17cc01ad29f474f152cfcd8c2a605410aad223d14c676fe98d965
+  shared_bottom_up_to_layer4_excitatory:
+    projection_id: modeldb112923.projection.035
+    route: thalamic relay to V1 layer-4 excitatory proximal dendrite
+    receptor: AMPA
+    density_mS_cm2: 0.247
+    rise_fall_ms: [1.0, 7.0]
+    delay_ms: 3.0
+    initial_weight: 6.0
+    asymptotic_weight: 0.3
+    plasticity: postsynaptically gated
+  shared_bottom_up_to_layer4_inhibitory:
+    projection_id: modeldb112923.projection.027
+    route: thalamic relay to V1 layer-4 inhibitory proximal dendrite
+    receptor: AMPA
+    density_mS_cm2: 0.5
+    rise_fall_ms: [0.1, 3.0]
+    delay_ms: 0.1
+    weight: 2.0
+  closed_loop_context:
+  - relay-TRN interactions can alter relay event timing during match
+  - layer-6 corticothalamic feedback is active in the learned match loop
+  - local layer-4 excitation and inhibition can reshape relay-locked responses
+observed_generation_one_boundary:
+  layer4_pair_peak_hz: 53.026513256628306
+  all_ten_stimulated_pair_peaks_identical: true
+  relay_events_1000ms: 260
+  relay_active_cells: 5
+  mean_relay_events_per_active_cell: 52.0
+  inference: >-
+    The relay event count is numerically compatible with the shared 53-Hz
+    layer-4 rhythm, but counts alone cannot establish its spectral peak, phase,
+    or causal direction in a recurrent thalamocortical loop.
+authorized_next_action: >-
+  Execute one exact deterministic replay solely to archive population event
+  streams and compare full-epoch gamma peaks and near-zero population lags.
+  Require bit-exact reproduction of the archived layer-4 indices and times
+  before interpretation. Select no parameter and do not ablate a pathway.
+scientific_boundary:
+  phase_relationship_is_not_causal_proof: true
+  projection035_or_027_parameter_selection_authorized: false
+  generation_two_opened: false
+  neuron_models_consulted: false
+  modern_anatomy_consulted: false
+  original_smart_reproduced: false
+  baseline_frozen: false

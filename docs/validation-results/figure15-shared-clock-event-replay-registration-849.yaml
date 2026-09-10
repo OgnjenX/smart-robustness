@@ -1,0 +1,79 @@
+schema_version: 1
+id: figure15-shared-clock-event-replay-registration-849
+date: '2026-09-10'
+status: registered-before-execution
+classification: post-holdout-generation-one-figure15-shared-clock-event-replay
+authorization: docs/validation-results/figure15-stimulated-pair-distribution-assessment-847.yaml
+authorization_sha256: cd6e3ca5133b75912aa0e696c9540e0927bf99d9c433256031e1df9d834c76c3
+source_audit: docs/validation-results/figure15-shared-clock-source-audit-848.yaml
+source_audit_sha256: f288caf04f4676271941fcdf23113e6abea40054f2d29b1f244ca721aeda8a5c
+prior_event_result: docs/validation-results/figure15-stimulated-pair-distribution-846.yaml
+prior_event_result_sha256: 542838a751e56d1112486095fd911e39907225a13dd0f0e906a5882a819f8a3f
+profile: configs/calibration/figure6_7_10_projection025_source_control_v1.yaml
+profile_sha256: b2028a35666cb31645e91a741b00440b46a508558c5db8361404c2264041ffdf
+network_harness: src/smart_robustness/validation/figure15.py
+network_harness_sha256: 4362fc1dba215cbdfbab3de3903363049c10ff3f27dea12d15625012e91320d7
+analysis: src/smart_robustness/analysis/figure15_phase.py
+analysis_sha256: 1a8dca995e2898e44e47fdeef9efebfe516922fa33eac9fc5447672c748920fd
+script: scripts/run_figure15_shared_clock_event_replay.py
+script_sha256: e62990fb49cd29590c33deafffb27361ee25025044606139a4a5167af1093fe6
+tests: tests/test_figure15_phase.py
+tests_sha256: 2bd6a90d822e90766706a9117a014f2babb4880e1015ea3015e9ee1ef7c06123
+runtime_fingerprint: 7e654528a99f0b25b7148260a8d52021f6443fb992b210729a2475ae3cfcdaa4
+result_id: figure15-shared-clock-event-replay-850
+result: docs/validation-results/figure15-shared-clock-event-replay-850.yaml
+assessment: docs/validation-results/figure15-shared-clock-event-replay-assessment-851.yaml
+fixed_endpoint:
+  nonspecific_t_scale: 0.203125
+  projection025_scale: 8.0
+  projection026_scale: 0.5
+  projection036_spread_convention: variance
+  projection038_scale: 1.0
+  projection008_scale: 0.75
+  projection011_scale: 0.9375
+  integration_method: rk4
+additional_global_scales:
+  modeldb112923.projection.025: 8.0
+  modeldb112923.projection.026: 0.5
+protocol:
+  condition: learned_horizontal_match
+  duration_ms: 1000.0
+  dt_ms: 0.01
+  reference_pair: [39, 40]
+  histogram_bin_ms: 1.0
+  display_max_lag_ms: 180.0
+  target_hz: 44.0
+  tolerance_hz: 5.0
+  population_gamma_band_hz: [20.0, 70.0]
+  population_spectrum: full-epoch-1ms-histogram-hamming-periodogram
+  population_spectrum_resolution_hz: 1.0
+  near_zero_lag_range_ms: [-10.0, 10.0]
+  positive_lag_convention: target-follows-source
+  archived_populations:
+  - thalamic_relay
+  - layer4_excitatory
+  - layer4_inhibitory
+  - trn
+  - layer6ii_category
+  archive_nonspecific_event_times: true
+  summarize_learned_projection035: true
+reproduction_gate:
+  prior_layer4_indices_bit_exact: true
+  prior_layer4_times_bit_exact: true
+classification_rule: >-
+  Support relay-locked shared pacing only if the prior layer-4 stream
+  reproduces exactly, relay and layer-4 excitatory full-epoch population peaks
+  agree within 1 Hz, both lie above 49 Hz, and the near-zero relay-to-layer-4
+  peak has positive target-following lag. Support a locally transformed rhythm
+  if layer 4 remains above 49 Hz while relay does not agree within 2 Hz. Treat
+  either classification as phase evidence inside a recurrent loop, not causal
+  proof or permission to select a projection.
+selection_rule: >-
+  Report all registered spectra, lags, learned-projection-035 summary, and raw
+  events. Select no pathway, parameter, pair, or analysis method.
+stopping_rule: >-
+  Execute one deterministic replay. Do not rerun, ablate, rescale, change the
+  learned state, open generation two, or consult neuron-model and
+  modern-anatomy variants before assessment.
+generation_two_opened: false
+baseline_frozen: false

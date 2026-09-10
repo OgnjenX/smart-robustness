@@ -13006,3 +13006,44 @@ def test_figure15_stimulated_pairs_share_the_same_high_gamma_peak() -> None:
     assert not assessment["decision"]["original_holdout_reclassified"]
     assert not assessment["scientific_status"]["original_smart_reproduced"]
     assert not assessment["scientific_status"]["baseline_frozen"]
+
+
+def test_figure15_shared_clock_event_replay_is_preregistered() -> None:
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure15-shared-clock-event-replay-registration-849.yaml"
+        ).read_text()
+    )
+
+    for path_key, hash_key in (
+        ("authorization", "authorization_sha256"),
+        ("source_audit", "source_audit_sha256"),
+        ("prior_event_result", "prior_event_result_sha256"),
+        ("profile", "profile_sha256"),
+        ("network_harness", "network_harness_sha256"),
+        ("analysis", "analysis_sha256"),
+        ("script", "script_sha256"),
+        ("tests", "tests_sha256"),
+    ):
+        assert hashlib.sha256(
+            (ROOT / registration[path_key]).read_bytes()
+        ).hexdigest() == registration[hash_key]
+    assert registration["reproduction_gate"] == {
+        "prior_layer4_indices_bit_exact": True,
+        "prior_layer4_times_bit_exact": True,
+    }
+    assert registration["protocol"]["population_spectrum_resolution_hz"] == 1.0
+    assert registration["protocol"]["positive_lag_convention"] == (
+        "target-follows-source"
+    )
+    assert registration["protocol"]["archived_populations"] == [
+        "thalamic_relay",
+        "layer4_excitatory",
+        "layer4_inhibitory",
+        "trn",
+        "layer6ii_category",
+    ]
+    assert "Select no pathway" in registration["selection_rule"]
+    assert not registration["generation_two_opened"]
+    assert not registration["baseline_frozen"]

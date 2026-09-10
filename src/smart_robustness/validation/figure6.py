@@ -518,6 +518,7 @@ def run_figure6_learning(
     projection_weight_scales: Mapping[str, float] | None = None,
     convergent_external_source_scope: str = "nonzero_pixels",
     population_factory=None,
+    random_seed: int | None = None,
     brian=None,
 ) -> Figure6LearningRun:
     """Run and summarize the official simultaneous Figure 6b/c episode."""
@@ -531,6 +532,8 @@ def run_figure6_learning(
     conventions = conventions or figure6_runtime_conventions()
     protocol = protocol or Figure6LearningProtocol()
     brian.start_scope()
+    if random_seed is not None:
+        brian.seed(int(random_seed))
     brian.defaultclock.dt = protocol.dt_ms * brian.ms
     sector = build_first_order_connected_sector(
         conventions=conventions,

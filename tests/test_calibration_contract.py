@@ -12901,3 +12901,51 @@ def test_figure15_projection029_has_no_isolated_frequency_direction() -> None:
     assert not assessment["scientific_status"]["generation_two_opened"]
     assert not assessment["scientific_status"]["original_smart_reproduced"]
     assert not assessment["scientific_status"]["baseline_frozen"]
+
+
+def test_figure15_stimulated_pair_distribution_is_preregistered() -> None:
+    source_audit_path = (
+        ROOT
+        / "docs/validation-results/figure15-stimulated-pair-distribution-source-audit-844.yaml"
+    )
+    source_audit = yaml.safe_load(source_audit_path.read_text())
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure15-stimulated-pair-distribution-registration-845.yaml"
+        ).read_text()
+    )
+
+    for path_key, hash_key in (
+        ("authorization", "authorization_sha256"),
+        ("source_identifiability_audit", "source_identifiability_audit_sha256"),
+        ("pair_distribution_source_audit", "pair_distribution_source_audit_sha256"),
+        ("original_holdout_registration", "original_holdout_registration_sha256"),
+        ("original_holdout_result", "original_holdout_result_sha256"),
+        ("profile", "profile_sha256"),
+        ("network_harness", "network_harness_sha256"),
+        ("analysis_harness", "analysis_harness_sha256"),
+        ("script", "script_sha256"),
+    ):
+        assert hashlib.sha256(
+            (ROOT / registration[path_key]).read_bytes()
+        ).hexdigest() == registration[hash_key]
+    assert registration["pair_distribution_source_audit"] == str(
+        source_audit_path.relative_to(ROOT)
+    )
+    boundary = source_audit["scientific_boundary"]
+    assert boundary["pair_search_for_reclassification"] == "forbidden"
+    assert boundary["pair_selection"] == "forbidden"
+    assert registration["protocol"]["reference_pair"] == [39, 40]
+    assert registration["protocol"]["stimulated_row_indices"] == [38, 39, 40, 41, 42]
+    assert registration["protocol"]["pair_count"] == 10
+    assert registration["reproduction_gates"] == {
+        "pair": [39, 40],
+        "first_spikes": 114,
+        "second_spikes": 148,
+        "all_layer4_spikes": 608,
+        "gamma_peak_hz": pytest.approx(53.026513256628306),
+    }
+    assert "select none" in registration["selection_rule"]
+    assert not registration["generation_two_opened"]
+    assert not registration["baseline_frozen"]

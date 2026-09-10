@@ -1,0 +1,78 @@
+schema_version: 1
+id: figure15-stimulated-pair-distribution-registration-845
+date: '2026-09-10'
+status: registered-before-execution
+classification: post-holdout-generation-one-figure15-pair-distribution-audit
+authorization: docs/validation-results/figure15-projection029-direction-assessment-843.yaml
+authorization_sha256: 1838196b237350899f1d665196590c460a5d580fa11dfb4b10684975e4a2fc97
+source_identifiability_audit: docs/validation-results/figure15-primary-source-identifiability-audit-816.yaml
+source_identifiability_audit_sha256: 409bbff878fcbf7d1724184d1719c28f060297ce154d0f24714ac4cc2200d3fe
+pair_distribution_source_audit: docs/validation-results/figure15-stimulated-pair-distribution-source-audit-844.yaml
+pair_distribution_source_audit_sha256: 4a554eeb9d894380f9c93d4a5788bf24b09316a2af3b23db1252821337269c95
+original_holdout_registration: docs/validation-results/calibrated-figure15-holdout-registration-810.yaml
+original_holdout_registration_sha256: 0aa7f3da487fe006f3e7a8f0edbea11a649076d510ff21dc89c7eda1203495cc
+original_holdout_result: docs/validation-results/calibrated-figure15-holdout-811.yaml
+original_holdout_result_sha256: 8bf47bd703a4d501c676064c3eefe863914ba2ce122e82436b4179d8fe00ce71
+profile: configs/calibration/figure6_7_10_projection025_source_control_v1.yaml
+profile_sha256: b2028a35666cb31645e91a741b00440b46a508558c5db8361404c2264041ffdf
+network_harness: src/smart_robustness/validation/figure15.py
+network_harness_sha256: 4362fc1dba215cbdfbab3de3903363049c10ff3f27dea12d15625012e91320d7
+analysis_harness: src/smart_robustness/analysis/figure15.py
+analysis_harness_sha256: 0df239469abb3f3cd284847869dd803d4484981c6e88820b04991f73a7a532f8
+script: scripts/run_figure15_stimulated_pair_distribution_audit.py
+script_sha256: 3b141a406cd8040a48c0a63f0ae542af9b4bbcbf185bc0db8c1417c0397fb1c5
+runtime_fingerprint: 7e654528a99f0b25b7148260a8d52021f6443fb992b210729a2475ae3cfcdaa4
+result_id: figure15-stimulated-pair-distribution-846
+result: docs/validation-results/figure15-stimulated-pair-distribution-846.yaml
+assessment: docs/validation-results/figure15-stimulated-pair-distribution-assessment-847.yaml
+fixed_endpoint:
+  nonspecific_t_scale: 0.203125
+  projection025_scale: 8.0
+  projection026_scale: 0.5
+  projection036_spread_convention: variance
+  projection038_scale: 1.0
+  projection008_scale: 0.75
+  projection011_scale: 0.9375
+  integration_method: rk4
+additional_global_scales:
+  modeldb112923.projection.025: 8.0
+  modeldb112923.projection.026: 0.5
+protocol:
+  condition: learned_horizontal_match
+  duration_ms: 1000.0
+  dt_ms: 0.01
+  reference_pair: [39, 40]
+  stimulated_row_indices: [38, 39, 40, 41, 42]
+  pair_order: all-unordered-combinations-lexicographic
+  pair_count: 10
+  histogram_bin_ms: 1.0
+  display_max_lag_ms: 180.0
+  spectrum_input: complete_linear_cross_correlogram
+  spectral_window: hamming
+  gamma_band_hz: [20.0, 70.0]
+  target_hz: 44.0
+  tolerance_hz: 5.0
+  raw_layer4_event_stream_archived: true
+reproduction_gates:
+  pair: [39, 40]
+  first_spikes: 114
+  second_spikes: 148
+  all_layer4_spikes: 608
+  gamma_peak_hz: 53.026513256628306
+classification_rule: >-
+  Classify the graphical discrepancy as pair-dependent only if the immutable
+  39/40 result first reproduces exactly and at least one other stimulated-row
+  pair enters 39--49 Hz. Classify it as circuit-level within this observable if
+  every stimulated-row pair remains above 49 Hz. Neither outcome identifies
+  the official pair because its identity was not released.
+selection_rule: >-
+  Report all 10 pairs and select none. A pair closer to 44 Hz cannot replace the
+  preregistered 39/40 holdout, become a calibration target, or be called the
+  original official pair.
+stopping_rule: >-
+  Execute exactly one fresh Figure-6 training and one unchanged 1000-ms match
+  epoch. Do not rerun, tune parameters, change the estimator, search outside
+  the five stimulated cells, open generation two, or consult neuron-model and
+  modern-anatomy variants before assessment.
+generation_two_opened: false
+baseline_frozen: false

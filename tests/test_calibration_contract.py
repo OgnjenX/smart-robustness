@@ -13047,3 +13047,73 @@ def test_figure15_shared_clock_event_replay_is_preregistered() -> None:
     assert "Select no pathway" in registration["selection_rule"]
     assert not registration["generation_two_opened"]
     assert not registration["baseline_frozen"]
+
+
+def test_figure15_shared_clock_first_replay_closes_as_monitoring_failure() -> None:
+    registration_path = (
+        ROOT
+        / "docs/validation-results/figure15-shared-clock-event-replay-registration-849.yaml"
+    )
+    result_path = (
+        ROOT / "docs/validation-results/figure15-shared-clock-event-replay-850.yaml"
+    )
+    result = yaml.safe_load(result_path.read_text())
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure15-shared-clock-event-replay-assessment-851.yaml"
+        ).read_text()
+    )
+
+    assert hashlib.sha256(registration_path.read_bytes()).hexdigest() == assessment[
+        "registration_sha256"
+    ]
+    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment[
+        "result_sha256"
+    ]
+    assert result["layer4_prior_event_stream_exact"]
+    assert result["population_spectra"]["layer4_inhibitory"]["event_count"] == 0
+    assert assessment["failure"]["classification"] == (
+        "monitoring-omission-not-biological-silence"
+    )
+    assert assessment["failure"]["output_only_failure"]
+    assert assessment["recovery_authorization"]["authorized"]
+    assert not assessment["decision"]["scientific_result_available"]
+    assert not assessment["decision"]["parameter_selected"]
+    assert not assessment["decision"]["generation_two_opened"]
+    assert not assessment["decision"]["original_smart_reproduced"]
+    assert not assessment["decision"]["baseline_frozen"]
+
+
+def test_figure15_shared_clock_monitoring_recovery_is_preregistered() -> None:
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure15-shared-clock-event-replay-recovery-registration-852.yaml"
+        ).read_text()
+    )
+
+    for path_key, hash_key in (
+        ("authorization", "authorization_sha256"),
+        ("source_audit", "source_audit_sha256"),
+        ("prior_event_result", "prior_event_result_sha256"),
+        ("failed_registration", "failed_registration_sha256"),
+        ("failed_result", "failed_result_sha256"),
+        ("profile", "profile_sha256"),
+        ("network_harness", "network_harness_sha256"),
+        ("analysis", "analysis_sha256"),
+        ("base_script", "base_script_sha256"),
+        ("script", "script_sha256"),
+    ):
+        assert hashlib.sha256(
+            (ROOT / registration[path_key]).read_bytes()
+        ).hexdigest() == registration[hash_key]
+    assert registration["protocol"]["record_interneuron_spikes"]
+    assert registration["recovery_gate"] == {
+        "layer4_inhibitory_monitor_enabled": True,
+        "output_population_has_observed_spike_monitor": True,
+    }
+    assert "differs from Registration 849 only" in registration["stopping_rule"]
+    assert "Select no pathway" in registration["selection_rule"]
+    assert not registration["generation_two_opened"]
+    assert not registration["baseline_frozen"]

@@ -1,0 +1,62 @@
+schema_version: 1
+id: figure15-shared-clock-event-replay-assessment-851
+date: '2026-09-10'
+status: output-monitoring-failure-authorizes-readout-only-recovery
+classification: post-holdout-generation-one-figure15-shared-clock-replay-failure-assessment
+registration: docs/validation-results/figure15-shared-clock-event-replay-registration-849.yaml
+registration_sha256: 703029a2c049e0737ae537f6a532b4b5cacd41a0e68cf686c8119ca9969fb4a0
+result: docs/validation-results/figure15-shared-clock-event-replay-850.yaml
+result_sha256: 76bfab5fe50578c4e739c870d1a6eb0d0d24a1fc407dd904f605eb44d86b3f9e
+integrity_gates:
+  execution_completed: true
+  fresh_figure6_prerequisite_passed: true
+  prior_layer4_event_stream_reproduced_bit_exact: true
+  relay_event_stream_archived: true
+  layer4_excitatory_event_stream_archived: true
+  layer4_inhibitory_event_stream_archived: false
+  trn_event_stream_archived: true
+  category_event_stream_archived: true
+failure:
+  failed_population: layer4_inhibitory
+  observed_event_count: 0
+  cause: >-
+    run_figure15_condition calls run_figure7_condition without setting its
+    record_interneuron_spikes flag. Figure7ConditionResult therefore returns
+    empty default interneuron tuples even when the population was not silent.
+    Earlier 200-ms diagnostics explicitly set that flag and observed five
+    layer-4 inhibitory events.
+  classification: monitoring-omission-not-biological-silence
+  dynamics_changed: false
+  output_only_failure: true
+uninterpreted_observations:
+  note: >-
+    Relay, layer-4 excitatory, and TRN spectra were emitted, but Registration
+    849 required all listed populations before interpretation. Their values
+    are preserved in Result 850 and intentionally receive no scientific
+    classification here.
+recovery_authorization:
+  authorized: true
+  allowed_change: >-
+    Create a separate recovery runner that invokes the same unchanged
+    generation-one Figure-7 match condition with record_interneuron_spikes set
+    to true, then performs the identical Figure-15 and phase analyses.
+  required_unchanged:
+  - runtime fingerprint
+  - fresh Figure-6 training procedure and learned state
+  - all projection scales and projection-036 variance topology
+  - 1000-ms duration and 0.01-ms integration step
+  - population spectrum and lag methods
+  - complete output population list
+  - exact prior layer-4 event-stream gate
+  - classification, selection, and stopping rules
+  forbidden:
+  - parameter or pair change
+  - pathway ablation
+  - interpretation of Result 850
+  - neuron-model or modern-anatomy consultation
+decision:
+  scientific_result_available: false
+  parameter_selected: false
+  generation_two_opened: false
+  original_smart_reproduced: false
+  baseline_frozen: false

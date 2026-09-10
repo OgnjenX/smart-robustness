@@ -12442,3 +12442,55 @@ def test_figure15_projection037_direction_diagnostic_is_preregistered() -> None:
     assert "Select no scale" in registration["selection_rule"]
     assert not registration["generation_two_opened"]
     assert not registration["baseline_frozen"]
+
+
+def test_figure15_projection037_direction_is_null_and_closed() -> None:
+    result_path = (
+        ROOT / "docs/validation-results/figure15-projection037-direction-825.yaml"
+    )
+    result = yaml.safe_load(result_path.read_text())
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure15-projection037-direction-assessment-826.yaml"
+        ).read_text()
+    )
+
+    registration_path = (
+        ROOT
+        / "docs/validation-results/figure15-projection037-direction-registration-824.yaml"
+    )
+    assert hashlib.sha256(registration_path.read_bytes()).hexdigest() == assessment[
+        "registration_sha256"
+    ]
+    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment[
+        "result_sha256"
+    ]
+    assert all(result["figure6_gates"].values())
+    assert result["learned_state_reused_across_arms"]
+    assert [item["projection037_scale"] for item in result["outcomes"]] == [
+        0.5,
+        1.0,
+        1.5,
+    ]
+    assert {item["first_cell_spikes"] for item in result["outcomes"]} == {19}
+    assert {item["second_cell_spikes"] for item in result["outcomes"]} == {26}
+    assert {item["all_layer4_spikes"] for item in result["outcomes"]} == {96}
+    assert {
+        item["direct_cross_spectrum"]["gamma_peak_hz"]
+        for item in result["outcomes"]
+    } == {70.0}
+    assert all(
+        item["direct_cross_spectrum"]["frequency_resolution_hz"] == 5.0
+        for item in result["outcomes"]
+    )
+    interpretation = assessment["interpretation"]
+    assert not interpretation["frequency_causal_in_registered_range"]
+    assert not interpretation["rate_only_in_registered_range"]
+    assert interpretation["noncausal_for_registered_frequency_and_rate_readouts"]
+    decision = assessment["decision"]
+    assert not decision["projection037_scale_selected"]
+    assert decision["projection037_closed_in_scale_range_0p5_to_1p5"]
+    assert not assessment["scientific_status"]["generation_two_opened"]
+    assert not assessment["scientific_status"]["original_smart_reproduced"]
+    assert not assessment["scientific_status"]["baseline_frozen"]

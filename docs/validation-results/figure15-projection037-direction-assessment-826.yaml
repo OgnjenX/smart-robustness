@@ -1,0 +1,62 @@
+schema_version: 1
+id: figure15-projection037-direction-assessment-826
+date: '2026-09-10'
+status: completed-projection037-closed-in-registered-range
+classification: post-holdout-calibration-generation-one-projection037-direction-assessment
+registration: docs/validation-results/figure15-projection037-direction-registration-824.yaml
+registration_sha256: a14c14a2645e85e967e3f0ba404a2c17daf38c081df97cf03511a2fd1d2d7a58
+result: docs/validation-results/figure15-projection037-direction-825.yaml
+result_sha256: 36be29240142505b337450c1a870c642ba85e2b77c0081f9f5c7bd698f2f43a7
+integrity_gates:
+  registered_three_scales_executed_in_order: true
+  fresh_figure6_prerequisite_passed: true
+  same_learned_state_reused_across_arms: true
+  runtime_fingerprint_matches_generation_one: true
+  both_fixed_cells_have_at_least_two_spikes_all_arms: true
+  direct_cross_spectrum_resolution_is_5_hz_all_arms: true
+  no_scale_selected_by_runner: true
+observations:
+  scales: [0.5, 1.0, 1.5]
+  first_cell_spikes: [19, 19, 19]
+  second_cell_spikes: [26, 26, 26]
+  all_layer4_spikes: [96, 96, 96]
+  direct_cross_spectrum_gamma_peak_hz: [70.0, 70.0, 70.0]
+  first_cell_median_isi_ms: [8.57, 8.564999999999998, 8.555000000000007]
+  second_cell_median_isi_ms: [7.689999999999998, 7.72999999999999, 7.740000000000009]
+  across_arm_ranges:
+    first_cell_spike_count: 0
+    second_cell_spike_count: 0
+    all_layer4_spike_count: 0
+    gamma_peak_hz: 0.0
+    first_cell_median_isi_ms: 0.014999999999993463
+    second_cell_median_isi_ms: 0.05000000000001137
+interpretation:
+  frequency_causal_in_registered_range: false
+  rate_only_in_registered_range: false
+  noncausal_for_registered_frequency_and_rate_readouts: true
+  minor_sub_bin_spike_timing_perturbation_present: true
+  coherent_shift_toward_44_hz: false
+  note: >-
+    The 70-Hz values are the upper included gamma bin of this deliberately
+    short 200-ms direction diagnostic. They are not substituted for the
+    preregistered 1000-ms Figure-15 holdout estimator or its observed 53.0265
+    Hz value. Only the absence of an across-scale direction is interpreted.
+decision:
+  projection037_scale_selected: false
+  projection037_denser_grid_authorized: false
+  projection037_generation_two_candidate_authorized: false
+  projection037_closed_in_scale_range_0p5_to_1p5: true
+  next_action: >-
+    Return to the source-listed local E-I dimensions. Audit projection 030
+    (layer-4 excitatory to inhibitory AMPA) first because it recruits the
+    inhibitory feedback loop while leaving the already validated projection-
+    036 topology and reset route unchanged. Preregister any execution
+    separately; this assessment alone authorizes no scale selection.
+scientific_status:
+  failed_original_figure15_holdout_preserved: true
+  generation_one_preserved_as_overfitting_control: true
+  generation_two_opened: false
+  original_smart_reproduced: false
+  baseline_frozen: false
+  neuron_models_consulted: false
+  modern_anatomy_consulted: false

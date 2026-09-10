@@ -1,0 +1,80 @@
+schema_version: 1
+id: figure15-projection029-direction-assessment-843
+date: '2026-09-10'
+status: completed-projection029-frequency-direction-closed
+classification: post-holdout-calibration-generation-one-projection029-direction-assessment
+registration: docs/validation-results/figure15-projection029-direction-registration-841.yaml
+registration_sha256: c176ffc0c81848743631c59fa24d9d83e96d1019427b4da18f8c6dbdecb79381
+result: docs/validation-results/figure15-projection029-direction-842.yaml
+result_sha256: 0dc25fa450c1f0bcb558619ccde7ebd0bd2b04844c49493a056776efbc187c38
+integrity_gates:
+  registered_three_scales_executed_in_order: true
+  fresh_figure6_prerequisite_passed: true
+  same_learned_state_reused_across_arms: true
+  runtime_fingerprint_matches_generation_one: true
+  both_fixed_cells_have_at_least_two_spikes_all_arms: true
+  direct_cross_spectrum_resolution_is_5_hz_all_arms: true
+  complete_inhibitory_events_recorded_all_arms: true
+  electrical_conductance_scaled_without_chemical_weight_substitution: true
+  no_scale_selected_by_runner: true
+observations:
+  scales: [0.5, 1.0, 1.5]
+  first_cell_spikes: [21, 19, 21]
+  second_cell_spikes: [26, 26, 22]
+  all_layer4_excitatory_spikes: [98, 96, 100]
+  layer4_inhibitory_spikes: [5, 5, 5]
+  layer4_inhibitory_active_cells: [5, 5, 5]
+  inhibitory_events_each_arm:
+  - [38, 3.0900000000000003]
+  - [39, 3.0900000000000003]
+  - [40, 3.0900000000000003]
+  - [41, 3.0900000000000003]
+  - [42, 3.0900000000000003]
+  direct_cross_spectrum_gamma_peak_hz: [50.0, 70.0, 60.0]
+direction_tests:
+  all_layer4_excitatory_spike_count_monotonic_with_scale: false
+  first_cell_spike_count_monotonic_with_scale: false
+  second_cell_spike_count_monotonic_with_scale: true
+  inhibitory_event_identity_changes_with_scale: false
+  inhibitory_event_time_changes_with_scale: false
+  gamma_peak_monotonic_with_scale: false
+  gamma_peak_moves_coherently_toward_44_hz: false
+interpretation:
+  substantial_population_rate_direction_identified: false
+  registered_inhibitory_spike_timing_mechanism_supported: false
+  frequency_causal_direction_identified: false
+  coherent_44_hz_calibration_direction: false
+  continuous_subthreshold_electrical_effect_possible_but_unproven: true
+  note: >-
+    Scaling the typed projection-029 gap conductance changes individual spike
+    trains but leaves the 200-ms layer-4 excitatory total near 100 and leaves
+    all monitored inhibitory spike identities and times unchanged. The 50, 70,
+    60-Hz sequence is non-monotonic; neither the closer 0.5-scale arm nor any
+    other arm may be selected from this diagnostic.
+decision:
+  projection029_conductance_scale_selected: false
+  projection029_denser_grid_authorized: false
+  projection029_generation_two_candidate_authorized: false
+  projection029_closed_as_isolated_frequency_calibration: true
+  source_conductance_preserved: true
+  all_five_registered_local_dimensions_closed: true
+  closed_local_dimensions:
+  - modeldb112923.projection.037
+  - modeldb112923.projection.030
+  - modeldb112923.projection.036
+  - modeldb112923.projection.028
+  - modeldb112923.projection.029
+  next_action: >-
+    Stop isolated one-parameter screening. Reassess the circuit-level origin of
+    the Figure-15 spectral discrepancy and the correspondence between the
+    published fixed-cell observable and this executable reconstruction before
+    preregistering any new calibration generation. Preserve the failed original
+    holdout and all five negative direction diagnostics as overfitting controls.
+scientific_status:
+  failed_original_figure15_holdout_preserved: true
+  generation_one_preserved_as_overfitting_control: true
+  generation_two_opened: false
+  original_smart_reproduced: false
+  baseline_frozen: false
+  neuron_models_consulted: false
+  modern_anatomy_consulted: false

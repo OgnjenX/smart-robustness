@@ -13703,3 +13703,57 @@ def test_calibrated_behavioral_freeze_is_integrity_pinned_and_epistemically_boun
     assert freeze["decision"]["neuron_model_robustness_phase_authorized"]
     assert not freeze["decision"]["modern_anatomy_phase_authorized_now"]
     assert freeze["baseline_frozen"]
+
+
+def test_objective_audit_distinguishes_implementation_from_exact_reproduction() -> None:
+    audit = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/classic-smart-objective-audit-885.yaml"
+        ).read_text()
+    )
+
+    assert audit["status"] == (
+        "audited-calibrated-freeze-complete-exact-reproduction-incomplete"
+    )
+    requirements = audit["implementation_requirements"]
+    assert all(
+        item["status"].startswith("complete") for item in requirements.values()
+    )
+    for item in requirements.values():
+        implementation_paths = item.get("implementation", [])
+        if isinstance(implementation_paths, str):
+            implementation_paths = [implementation_paths]
+        assert all((ROOT / path).is_file() for path in implementation_paths)
+
+        direct_tests = item.get("direct_tests", [])
+        if "direct_test" in item:
+            direct_tests = [item["direct_test"], *direct_tests]
+        for node_id in direct_tests:
+            test_path, separator, test_name = node_id.partition("::")
+            assert (ROOT / test_path).is_file()
+            if separator:
+                assert f"def {test_name}(" in (ROOT / test_path).read_text()
+
+        for evidence_key in ("behavioral_evidence", "spectral_evidence", "reset_evidence"):
+            if evidence_key in item:
+                assert (ROOT / item[evidence_key]).is_file()
+
+    official = audit["official_result_validation"]
+    assert official["figure6_learning"] == "pass"
+    assert official["figure7_match_mismatch"] == "pass"
+    assert official["figure10_causal_reset"] == "pass"
+    assert official["figure14_match_gamma_mismatch_slower"] == "pass"
+    assert official["figure15_source_identifiable_nearby_gamma"] == "pass"
+    assert official["figure15_graphical_44hz_numeric_gate"] == "fail-53.0265hz"
+    assert official["figure16_higher_order_lower_frequency_dominance"] == "pass"
+    assert official["figure8_exact_2008_protocol_and_trace"].startswith(
+        "not-identifiable"
+    )
+    assessment = audit["goal_assessment"]
+    assert assessment["structural_and_mechanistic_implementation_complete"]
+    assert assessment["calibrated_behavioral_baseline_complete_and_frozen"]
+    assert assessment["ready_for_controlled_neuron_model_experiments"]
+    assert not assessment["exact_original_2008_numerical_reproduction_complete"]
+    assert not assessment["full_unqualified_reproduction_goal_complete"]
+    assert (ROOT / assessment["governing_source_boundary"]).is_file()

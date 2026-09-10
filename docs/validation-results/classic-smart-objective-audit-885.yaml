@@ -1,0 +1,132 @@
+schema_version: 1
+id: classic-smart-objective-audit-885
+date: '2026-09-10'
+status: audited-calibrated-freeze-complete-exact-reproduction-incomplete
+classification: requirement-by-requirement-classic-smart-objective-audit
+primary_reference: Grossberg and Versace 2008, Brain Research 1218, 278-312
+
+release:
+  tag: classic-smart-calibrated-v1.0.0
+  tag_target_commit: faf08740be6084046c46c3f2d2636c1bedc778eb
+  frozen_implementation_commit: f6dc9de948586597d13d544a50e2b1bf48ca5514
+  manifest: configs/baselines/classic_smart_calibrated_v1.yaml
+  environment_lock: requirements/classic-smart-calibrated-v1.txt
+  exact_freeze_ci_run: 34477497442
+  exact_freeze_ci_conclusion: success
+
+implementation_requirements:
+  table3_cell_library:
+    status: complete-verified
+    scope: 12 published cell classes and 30 compartment definitions
+    implementation: src/smart_robustness/models/table3.py
+    direct_test: tests/test_table3.py::test_all_table3_cell_classes_are_transcribed
+  complete_supplement:
+    status: complete-verified
+    scope: 55 nonblank recovered first-order records and 118 full-network projections
+    implementation: src/smart_robustness/modeldb_projections.py
+    direct_tests:
+      - tests/test_modeldb_projections.py::test_derived_modeldb_projection_catalog_is_integrity_pinned_and_complete
+      - tests/test_modeldb_projections.py::test_full_modeldb_catalog_covers_both_areas_and_cross_area_connections
+  multicompartment_dynamics:
+    status: complete-verified
+    implementation: src/smart_robustness/models/compartmental_hh.py
+    direct_test: tests/test_compartmental_hh.py::test_vectorized_population_runs_and_exposes_published_compartments
+  t_type_calcium:
+    status: complete-source-constrained-kernel-verified
+    implementation: src/smart_robustness/models/currents.py
+    direct_tests:
+      - tests/test_currents.py::test_t_type_literal_values_preserve_printed_equations
+      - tests/test_compartmental_hh.py::test_modeldb_calcium_gates_initialize_in_absolute_voltage_coordinate
+  layer5_ahp_and_ach:
+    status: complete-verified-with-documented-source-profile-discrepancy
+    implementation: src/smart_robustness/models/compartmental_hh.py
+    direct_tests:
+      - tests/test_compartmental_hh.py::test_layer5_spike_generates_ahp_and_ach_suppresses_it
+      - tests/test_figure19_validation.py::test_source_specific_figure19_kernel_has_frequency_ach_and_recovery_signatures
+  first_order_9x9_sector:
+    status: complete-verified
+    scope: 812 cells, 1950 compartments, and 53 in-sector connected projections
+    implementation: src/smart_robustness/classic_sector.py
+    direct_tests:
+      - tests/test_classic_sector.py::test_first_order_intrinsic_sector_builds_all_source_cells
+      - tests/test_classic_synapses.py::test_first_order_connected_sector_adds_all_gap_junction_records
+  stdp_and_adaptive_learning:
+    status: complete-verified
+    implementation: src/smart_robustness/synapses.py
+    scope: postsynaptically gated bottom-up and dual-AND top-down learning
+    direct_tests:
+      - tests/test_classic_synapses.py::test_modifiable_modeldb_projection_starts_at_source_serialized_weight
+      - tests/test_protocols.py::test_match_and_mismatch_share_a_horizontal_top_down_category
+    behavioral_evidence: docs/validation-results/joint-calibration-global-projection026-assessment-806.yaml
+  match_mismatch_protocols:
+    status: complete-verified
+    implementation: src/smart_robustness/protocols.py
+    direct_tests:
+      - tests/test_protocols.py::test_match_and_mismatch_share_a_horizontal_top_down_category
+      - tests/test_protocols.py::test_match_mismatch_cue_targets_one_layer6ii_cell_and_clears
+  gamma_slower_mismatch_and_reset:
+    status: complete-calibrated-behavioral-pass
+    figure14_match_peak_hz: 55.0
+    figure14_mismatch_peak_hz: 10.0
+    terminology_boundary: >-
+      The paper's slower mismatch direction passes. The result is reported by
+      frequency and the paper's bands; no claim is made that 10 Hz lies in the
+      modern conventional beta band.
+    spectral_evidence: docs/validation-results/calibrated-figure14-holdout-assessment-809.yaml
+    reset_evidence: docs/validation-results/joint-calibration-global-projection026-assessment-806.yaml
+  higher_order_pulvinar_v2_loop:
+    status: complete-verified-behavioral-pass
+    scope: 24 populations, 1624 cells, 3900 compartments, and 118 projections
+    implementation: src/smart_robustness/classic_sector.py
+    direct_test: tests/test_full_smart_network.py::test_full_smart_network_builds_all_cells_compartments_and_connections
+    behavioral_evidence: docs/validation-results/calibrated-figure16-holdout-assessment-815.yaml
+  robustness_experiment_boundary:
+    status: complete-verified
+    implementation:
+      - src/smart_robustness/classic_sector.py
+      - src/smart_robustness/validation/figure6.py
+      - src/smart_robustness/validation/figure7.py
+      - src/smart_robustness/validation/figure10.py
+      - src/smart_robustness/validation/figure14.py
+      - src/smart_robustness/validation/figure15.py
+      - src/smart_robustness/validation/higher_order.py
+    direct_tests:
+      - tests/test_classic_sector.py::test_connected_sector_forwards_population_factory_without_changing_topology
+      - tests/test_full_smart_network.py::test_full_network_forwards_population_factory_to_both_cortical_areas
+      - tests/test_validation_population_factory.py
+
+official_result_validation:
+  figure6_learning: pass
+  figure7_match_mismatch: pass
+  figure10_causal_reset: pass
+  figure14_match_gamma_mismatch_slower: pass
+  figure15_source_identifiable_nearby_gamma: pass
+  figure15_graphical_44hz_numeric_gate: fail-53.0265hz
+  figure16_higher_order_lower_frequency_dominance: pass
+  figure8_exact_2008_protocol_and_trace: not-identifiable-from-released-sources
+
+technical_verification:
+  implementation_commit: a8d14309c2b2df9e5c5ece70caf850944ac59454
+  verification_scope: implementation-plus-objective-audit
+  local_full_suite:
+    passed: 1081
+    failed: 0
+  lint: pass
+
+goal_assessment:
+  structural_and_mechanistic_implementation_complete: true
+  calibrated_behavioral_baseline_complete_and_frozen: true
+  ready_for_controlled_neuron_model_experiments: true
+  exact_original_2008_numerical_reproduction_complete: false
+  full_unqualified_reproduction_goal_complete: false
+  blocker: >-
+    KInNeSS 0.3.4 RC2 and SANNDRA 1.2.0 RC2 source bodies, the exact Figure-8
+    protocol/output, and Figure-15 cell identities, spikes, estimator, and
+    confidence procedure have not been recovered. Source-bounded alternatives
+    have been exhausted without reproducing the registered Figure-15 value.
+  governing_source_boundary: docs/validation-results/smart-era-multiarchive-source-recovery-883.yaml
+
+claim_policy:
+  permitted: calibrated classic-SMART behavioral baseline
+  prohibited: exact Grossberg-Versace-2008 numerical reproduction
+  no_further_classic_parameter_fitting: true

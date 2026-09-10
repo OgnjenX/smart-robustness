@@ -39,7 +39,9 @@ graphically labeled 44 Hz. The original pair, spike arrays, estimator, and
 legacy simulator runtime were not released. The frozen release is therefore a
 **calibrated behavioral reconstruction, not an exact numerical reproduction**.
 See [`docs/calibrated-behavioral-freeze-v1.0.0.md`](docs/calibrated-behavioral-freeze-v1.0.0.md)
-and [`docs/replication-status.md`](docs/replication-status.md).
+and [`docs/replication-status.md`](docs/replication-status.md). The machine-readable
+requirement audit is
+[`docs/validation-results/classic-smart-objective-audit-885.yaml`](docs/validation-results/classic-smart-objective-audit-885.yaml).
 The immutable `classic-smart-source-constrained-v0.1.0` tag preserves the first
 complete source-constrained reconstruction, including its failed official
 reproduction gates. It is a provenance baseline, not a claim that classic

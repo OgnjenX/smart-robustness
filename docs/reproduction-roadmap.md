@@ -172,7 +172,8 @@ Exit: a versioned classic baseline and a robustness experiment matrix that can
 distinguish architecture-level effects from neuron-model-dependent effects.
 
 Current status: the calibrated behavioral control is frozen as
-`classic-smart-calibrated-v1.0.0`; see artifact 884 and
+`classic-smart-calibrated-v1.0.0`; see freeze artifact 884, objective audit 885,
+and
 `configs/baselines/classic_smart_calibrated_v1.yaml`. Its Figure-8 exact-source
 boundary and failed Figure-15 44-Hz numeric gate are part of the freeze. The
 next work is the preregistered neuron-model matrix; exact-reproduction recovery

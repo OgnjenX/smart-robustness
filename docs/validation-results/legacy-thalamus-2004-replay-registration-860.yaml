@@ -1,0 +1,84 @@
+schema_version: 1
+id: legacy-thalamus-2004-replay-registration-860
+date: '2026-09-10'
+status: registered-before-execution
+classification: independent-legacy-kinness-tonic-burst-replay
+purpose: >-
+  Test whether the implemented multicompartment Na/K/T-current kernel can
+  reproduce the author-produced 2004 KInNeSS relay benchmark that immediately
+  predates SMART and includes raw output traces. This is an independent
+  mechanism regression, not a substitute for the incompletely serialized 2008
+  Figure-8 protocol.
+authorization:
+  path: docs/validation-results/legacy-thalamus-axon-detector-audit-476.yaml
+  sha256: 4d6d3cf0a9b235ee14856cf898fa890512755a8ea77fa2c4c90529f1c945699e
+script: scripts/run_legacy_thalamus_2004_replay.py
+script_sha256: 2de2b42edae9e0f55f78a9e838d0eac4d630adf1e835fd03a8e55dab5a7334ee
+sources:
+  network:
+    path: tmp/legacy-thalamus-2004/KINENSS_tonic_burst/tonic_burst.xml
+    sha256: 3d4782503b74b818e4d94b29e72c5bb81f914b0c29d55a19cb99b088d1d14445
+  tonic_voltage:
+    path: tmp/legacy-thalamus-2004/KINENSS_tonic_burst/tonic_burst_data/Relay tonic.dat
+    sha256: 506e56c07e5ff13098a2ebb6f21db31e489d77efdffa65fc816c20d58f68c92f
+  tonic_axon:
+    path: tmp/legacy-thalamus-2004/KINENSS_tonic_burst/tonic_burst_data/Relay axon tonic.dat
+    sha256: 81dcdfe8670c78e02eb9c3e2012f1e9e6258b5ba116314f3a2f1a6d209644208
+  burst_voltage:
+    path: tmp/legacy-thalamus-2004/KINENSS_tonic_burst/tonic_burst_data/Relay burst.dat
+    sha256: 4a14dd2c40b69ddaee9c652f6e89a713efd5eb9ba75949619a79f3925832b76c
+  burst_axon:
+    path: tmp/legacy-thalamus-2004/KINENSS_tonic_burst/tonic_burst_data/Relay axon burst.dat
+    sha256: beef20f46bbeac4c35ba19b12434159cb5a02fef8b2b704c4a713ec09b172880
+  explanatory_pdf:
+    path: tmp/legacy-thalamus-2004/KINENSS_tonic_burst/burst_tonic.pdf
+    sha256: 66271db7aa958815f5365ce86066664d682308dcef089c6ac74e47e7922a8131
+fixed_cell:
+  compartments: [soma, proximal_dendrite]
+  dimensions_each_mm: [0.01, 0.05]
+  axial_resistance_kohm_cm: 20.0
+  leak_density_mS_cm2: 0.1
+  leak_reversal_mV: -70.0
+  soma_na_k_density_mS_cm2: [50.0, 30.0]
+  t_type_density_mS_cm2: 250.0
+  calcium_reversal_mV: 180.0
+  specific_capacitance_uF_cm2: 1.0
+fixed_inputs:
+  tonic_dendritic_depolarization:
+    conductance_source_value: 0.9
+    green_sensitivity_mV: 250.0
+  burst_somatic_hyperpolarization:
+    conductance_source_value: 0.4
+    red_sensitivity_mV: -250.0
+protocol:
+  duration_ms: 3000.0
+  dt_ms: 0.05
+  hyperpolarization_on_ms: 1011.0
+  hyperpolarization_off_ms: 2183.0
+  schedule_provenance: boundaries inferred before replay from archived voltage-trace deflections
+  integration_methods: [rk4, sanndra_scalar_rk4]
+  input_encodings:
+    normalized_255: 0.9803921568627451
+    normalized_250: 1.0
+    raw_0_255: 250.0
+  encoding_rationale: >-
+    The one-pixel PNG stores red=250, while the version-1 XML stores input
+    sensitivities of magnitude 250 and the explanatory PDF does not state
+    whether pixels entered the input gate raw or normalized. All three discrete
+    interpretations are reported without selecting one after execution.
+archived_targets:
+  tonic_event_count: 199
+  tonic_median_interevent_interval_ms: 15.05
+  tonic_reported_rate_hz: 66.0
+  burst_event_count: 6
+  burst_event_times_ms: [2187.9, 2191.8, 2196.15, 2201.2, 2207.5, 2217.0]
+  burst_interevent_intervals_ms: [3.9, 4.35, 5.05, 6.3, 9.5]
+result_id: legacy-thalamus-2004-replay-861
+result: docs/validation-results/legacy-thalamus-2004-replay-861.yaml
+assessment: docs/validation-results/legacy-thalamus-2004-replay-assessment-862.yaml
+selection_rule: report every arm; select no input encoding or integration method
+interpretation_rule: >-
+  A passing arm validates the corresponding implementation against the 2004
+  benchmark only. It cannot fill missing 2008 Figure-8 protocol fields, rescue
+  a network gate, or authorize an exact original-SMART claim.
+stopping_rule: execute this six-arm replay once and stop

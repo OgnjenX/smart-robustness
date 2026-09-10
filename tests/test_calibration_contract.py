@@ -13525,3 +13525,50 @@ def test_legacy_thalamus_input_reconstruction_closes_without_promotion() -> None
     assert assessment["next_action"]["authorized"]
     assert not assessment["next_action"]["cell_or_channel_fitting_authorized"]
     assert not assessment["baseline_frozen"]
+
+
+def test_legacy_thalamus_source_grid_refinement_is_preregistered() -> None:
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/legacy-thalamus-source-grid-registration-880.yaml"
+        ).read_text()
+    )
+
+    assert registration["status"] == "registered-before-execution"
+    assert registration["authorization"] == {
+        "path": "docs/validation-results/legacy-thalamus-input-reconstruction-assessment-879.yaml",
+        "sha256": "974c50d3aa844c10017d41514642fd9b7d0e58bd1b65737e5f085bdabe76a266",
+    }
+    assert _matches_current_or_committed_history(
+        registration["script"], registration["script_sha256"]
+    )
+    for source in registration["sources"].values():
+        if not source["path"].startswith("tmp/"):
+            assert _matches_current_or_committed_history(
+                source["path"], source["sha256"]
+            )
+    fixed = registration["fixed_model"]
+    assert fixed["specific_capacitance_uF_cm2"] == 1.0
+    assert fixed["global_time_multiplier"] == 1.0
+    for key in (
+        "channel_parameters_changed",
+        "conductance_densities_changed",
+        "gate_rates_changed",
+        "reversals_changed",
+        "axial_coupling_changed",
+        "detector_changed",
+    ):
+        assert not fixed[key]
+    protocol = registration["protocol"]
+    assert protocol["source_mapping"] == (
+        "effective_input = unsigned_8_bit_value / 255"
+    )
+    assert protocol["tonic_input_bytes"] == list(range(16, 33))
+    assert protocol["burst_input_bytes"] == list(range(96, 161))
+    assert registration["vectorization_validation"][
+        "vectorized_vs_independent_max_absolute_voltage_error_mV"
+    ] == [0.0, 0.0, 0.0, 0.0]
+    assert registration["vectorization_validation"]["event_summaries_identical"]
+    assert "Do not inspect event counts" in registration["selection_rule"]
+    assert not registration["baseline_frozen"]

@@ -1,0 +1,109 @@
+schema_version: 1
+id: legacy-thalamus-source-grid-registration-880
+date: '2026-09-10'
+status: registered-before-execution
+classification: calibrated-independent-legacy-kinness-source-grid-refinement
+purpose: >-
+  Resolve the coarse input intervals identified by Assessment 879 using only
+  exact normalized 8-bit source values. Select tonic and burst independently
+  by archived steady-voltage mean and reserve every spike observable as a
+  held-out validation gate.
+authorization:
+  path: docs/validation-results/legacy-thalamus-input-reconstruction-assessment-879.yaml
+  sha256: 974c50d3aa844c10017d41514642fd9b7d0e58bd1b65737e5f085bdabe76a266
+script: scripts/run_legacy_thalamus_source_grid_refinement.py
+script_sha256: da80e195f4dfebae32926c8c7cab90cfb964052a83b995378afd09f9861c6dd6
+sources:
+  source_audit:
+    path: docs/validation-results/legacy-thalamus-input-protocol-source-audit-876.yaml
+    sha256: cb38a52da8268c6e30296be4aa39036c29bfc12f8ab21091a600c6ce7aaa6dc2
+  coarse_registration:
+    path: docs/validation-results/legacy-thalamus-input-reconstruction-registration-877.yaml
+    sha256: 54b8ffca28825e41b46f21d3e915a857a30e4253d4bb32cef032988d135786be
+  coarse_result:
+    path: docs/validation-results/legacy-thalamus-input-reconstruction-878.yaml
+    sha256: 2af9bad2068e48223a7eada6e9895dd2d35f0244a3a3f82ea3eb6f35022d70ef
+  coarse_assessment:
+    path: docs/validation-results/legacy-thalamus-input-reconstruction-assessment-879.yaml
+    sha256: 974c50d3aa844c10017d41514642fd9b7d0e58bd1b65737e5f085bdabe76a266
+  coarse_runner:
+    path: scripts/run_legacy_thalamus_input_reconstruction.py
+    sha256: 7b426bb0a6bef8ef77ce6f0f06fcebfb25a47425b3996830fbfd909083827154
+  replay_harness:
+    path: scripts/run_legacy_thalamus_2004_internal_coordinate_replay.py
+    sha256: c1a54881d53fcbfab9a5461d55a2de3188e09c4f7739f8370abae0769e1fd26f
+  network:
+    path: tmp/legacy-thalamus-2004/KINENSS_tonic_burst/tonic_burst.xml
+    sha256: 3d4782503b74b818e4d94b29e72c5bb81f914b0c29d55a19cb99b088d1d14445
+  archived_input_image:
+    path: tmp/legacy-thalamus-2004/KINENSS_tonic_burst/one_input.png
+    sha256: c63f54b3d2a3cc28bb84beee66b9471b642c830c60e338412e39acd5ce3b1042
+  tonic_voltage:
+    path: tmp/legacy-thalamus-2004/KINENSS_tonic_burst/tonic_burst_data/Relay tonic.dat
+    sha256: 506e56c07e5ff13098a2ebb6f21db31e489d77efdffa65fc816c20d58f68c92f
+  tonic_axon:
+    path: tmp/legacy-thalamus-2004/KINENSS_tonic_burst/tonic_burst_data/Relay axon tonic.dat
+    sha256: 81dcdfe8670c78e02eb9c3e2012f1e9e6258b5ba116314f3a2f1a6d209644208
+  burst_voltage:
+    path: tmp/legacy-thalamus-2004/KINENSS_tonic_burst/tonic_burst_data/Relay burst.dat
+    sha256: 4a14dd2c40b69ddaee9c652f6e89a713efd5eb9ba75949619a79f3925832b76c
+  burst_axon:
+    path: tmp/legacy-thalamus-2004/KINENSS_tonic_burst/tonic_burst_data/Relay axon burst.dat
+    sha256: beef20f46bbeac4c35ba19b12434159cb5a02fef8b2b704c4a713ec09b172880
+fixed_model:
+  inherited_from: docs/validation-results/legacy-thalamus-complete-coordinate-registration-873.yaml
+  specific_capacitance_uF_cm2: 1.0
+  channel_parameters_changed: false
+  conductance_densities_changed: false
+  gate_rates_changed: false
+  reversals_changed: false
+  axial_coupling_changed: false
+  detector_changed: false
+  global_time_multiplier: 1.0
+vectorization_validation:
+  method: rk4
+  tonic_values: [0.0, 0.125]
+  burst_values: [0.25, 0.5]
+  duration_ms: 20.0
+  vectorized_vs_independent_max_absolute_voltage_error_mV: [0.0, 0.0, 0.0, 0.0]
+  event_summaries_identical: true
+protocol:
+  duration_ms: 3000.0
+  dt_ms: 0.05
+  hyperpolarization_on_ms: 1011.0
+  hyperpolarization_off_ms: 2183.0
+  axonal_delay_ms: 2.0
+  integration_methods: [rk4, sanndra_scalar_rk4]
+  source_mapping: effective_input = unsigned_8_bit_value / 255
+  tonic_input_bytes: [16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32]
+  burst_input_bytes: [96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160]
+  tonic_calibration_window_ms: [100.0, 3000.0]
+  burst_preinput_window_ms: [100.0, 1000.0]
+  burst_calibration_window_ms: [1500.0, 2150.0]
+archived_targets:
+  tonic_event_count: 199
+  tonic_median_interevent_interval_ms: 15.05
+  tonic_reported_rate_hz: 66.0
+  burst_event_count: 6
+  burst_event_times_ms: [2187.9, 2191.8, 2196.15, 2201.2, 2207.5, 2217.0]
+held_out_acceptance_gates:
+  tonic_event_count_tolerance: 2
+  tonic_median_interevent_interval_tolerance_ms: 0.25
+  burst_event_count: exact
+  burst_max_event_time_error_ms: 0.5
+  burst_preinput_mean_error_mV: 2.0
+selection_rule: >-
+  For each integration method, select tonic and burst source bytes
+  independently by minimum absolute calibration-window mean-voltage error;
+  break an exact tie in favor of the lower byte. Do not inspect event counts,
+  intervals, event times, or any other spike output during selection.
+result_id: legacy-thalamus-source-grid-refinement-881
+result: docs/validation-results/legacy-thalamus-source-grid-refinement-881.yaml
+assessment: docs/validation-results/legacy-thalamus-source-grid-assessment-882.yaml
+stopping_rule: execute this fixed vectorized four-simulation refinement once and stop
+interpretation_rule: >-
+  A joint held-out pass validates only a calibrated reconstruction of the
+  missing 2004 input values under the normalized 8-bit mapping. It cannot prove
+  exact historical input recovery, reconstruct the absent 2008 Figure-8
+  protocol, or authorize an exact original-SMART freeze.
+baseline_frozen: false

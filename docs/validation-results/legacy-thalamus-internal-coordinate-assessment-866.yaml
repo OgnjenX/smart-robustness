@@ -1,0 +1,60 @@
+schema_version: 1
+id: legacy-thalamus-internal-coordinate-assessment-866
+date: '2026-09-10'
+status: assessed-negative
+classification: source-corrected-independent-legacy-kinness-replay
+registration:
+  path: docs/validation-results/legacy-thalamus-internal-coordinate-registration-864.yaml
+result:
+  path: docs/validation-results/legacy-thalamus-internal-coordinate-replay-865.yaml
+  sha256: 0aed184ef3ed390ffeee3978c7e8987d9be0d0389590e34ce1d9e4d953729e88
+passing_arms: []
+normalized_arm_summary:
+  rk4_normalized_255:
+    finite: true
+    tonic_event_count: 0
+    burst_event_count: 0
+    burst_preinput_mean_error_mV: 21.730329
+    burst_hyperpolarized_mean_error_mV: 52.369448
+  rk4_normalized_250:
+    finite: true
+    tonic_event_count: 0
+    burst_event_count: 0
+    burst_preinput_mean_error_mV: 21.730329
+    burst_hyperpolarized_mean_error_mV: 52.319597
+  sanndra_scalar_rk4_normalized_255:
+    finite: true
+    tonic_event_count: 0
+    burst_event_count: 0
+    burst_preinput_mean_error_mV: 21.802419
+    burst_hyperpolarized_mean_error_mV: 52.526479
+  sanndra_scalar_rk4_normalized_250:
+    finite: true
+    tonic_event_count: 0
+    burst_event_count: 0
+    burst_preinput_mean_error_mV: 21.802419
+    burst_hyperpolarized_mean_error_mV: 52.485751
+raw_input_arms:
+  finite: false
+  interpretation: literal 250 remains numerically unstable under both integrators
+assessment:
+  legacy_benchmark_reproduced: false
+  coordinate_hypothesis_supported: false
+  original_figure8_reproduced: false
+  exact_classic_baseline_freeze_authorized: false
+interpretation:
+  - Moving the integrated membrane and leak to KInNeSS's internal-zero axis is
+    necessary to match the archived output coordinate but is not sufficient.
+  - >-
+    Evaluating relay T-type gates after adding -70 mV produces a large tonic
+    calcium drive: the nominally unstimulated burst cell settles approximately
+    21.7 mV above the archived preinput trace and the normalized hyperpolarizing
+    input fails to reach the archived negative regime.
+  - No registered arm passes even one event-signature gate. This coordinate
+    combination is closed without parameter fitting.
+  - The contemporaneous KInNeSS equations define every voltage gate as a
+    function of the simulator membrane variable V. Because the archived file
+    identifies that V with the internal-zero output, applying the serialized
+    leak only to the T gate is an unsupported split-coordinate assumption and
+    warrants one separately preregistered source-semantics test.
+baseline_frozen: false

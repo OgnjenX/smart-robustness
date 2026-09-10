@@ -1,0 +1,53 @@
+schema_version: 1
+id: legacy-thalamus-voltage-gate-axis-audit-867
+date: '2026-09-10'
+status: completed-source-audit
+classification: contemporaneous-kinness-voltage-gate-semantics
+sources:
+  framework_manuscript:
+    path: tmp/kinness-framework-expanded.pdf
+    sha256: 15a7f9166e301c9740e7cff4258810d315bd95b196ea5dff3419c5cc2879f177
+    relevant_locations:
+      - Section 3 Equations 1-3, PDF text lines 358-400
+      - Table 2 voltage-dependence definitions, PDF text lines 1386-1464
+  network:
+    path: tmp/legacy-thalamus-2004/KINENSS_tonic_burst/tonic_burst.xml
+    sha256: 3d4782503b74b818e4d94b29e72c5bb81f914b0c29d55a19cb99b088d1d14445
+  archived_burst_voltage:
+    path: tmp/legacy-thalamus-2004/KINENSS_tonic_burst/tonic_burst_data/Relay burst.dat
+    sha256: 4a14dd2c40b69ddaee9c652f6e89a713efd5eb9ba75949619a79f3925832b76c
+  failed_split_coordinate_replay:
+    path: docs/validation-results/legacy-thalamus-internal-coordinate-replay-865.yaml
+    sha256: 0aed184ef3ed390ffeee3978c7e8987d9be0d0389590e34ce1d9e4d953729e88
+source_facts:
+  - The framework manuscript defines compartment membrane potential as V and
+    writes every current as maximal conductance times gates times V_eq minus V.
+  - Its voltage-gate table defines exponential, sigmoid, linoid, Simple_Tau,
+    and Reticular_Tau dependencies directly as functions of that same V; it
+    specifies no channel-family-specific addition of E_leak.
+  - The relay XML assigns both Na/K and T-type channels to voltage-dependent
+    gates but serializes no per-gate voltage-coordinate transform.
+  - The archived burst monitor establishes that the simulator V is near zero
+    at rest even though the compartment serializes E_leak=-70 mV.
+resolved_inference:
+  membrane_state_coordinate: kinness_internal_zero
+  all_voltage_gate_coordinate: integrated_internal_membrane_voltage
+  calcium_voltage_coordinate: integrated_voltage
+  confidence: strong-source-composite
+rejected_inference:
+  calcium_voltage_coordinate: internal_zero_plus_serialized_leak
+  reason: >-
+    That split coordinate is absent from the contemporaneous simulator
+    equations and produces a 21.7 mV preinput mean error with no tonic or burst
+    events in replay 865.
+authorized_next_test:
+  action: preregister one all-gates-on-integrated-V replay
+  sole_model_change_from_registration_864: calcium_voltage_coordinate becomes integrated_voltage
+  forbidden_changes:
+    - any cell, channel, reversal, input, schedule, detector, delay, or timestep value
+    - Na/K coordinate or gate formulas
+    - post-execution interpolation, scaling, or parameter fitting
+scope_boundary: >-
+  This is a 2004 KInNeSS mechanism regression. A pass cannot reconstruct the
+  missing Grossberg and Versace 2008 Figure-8 protocol and cannot independently
+  authorize an exact original-SMART network claim.

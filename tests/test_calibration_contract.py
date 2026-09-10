@@ -13213,3 +13213,69 @@ def test_figure15_trn_relay_transfer_direction_is_preregistered() -> None:
     assert "select no factor" in registration["selection_rule"]
     assert not registration["generation_two_opened"]
     assert not registration["baseline_frozen"]
+
+
+def test_figure15_trn_relay_transfer_controls_upstream_not_pair_frequency() -> None:
+    registration_path = (
+        ROOT
+        / "docs/validation-results/figure15-trn-relay-transfer-direction-registration-856.yaml"
+    )
+    result_path = (
+        ROOT
+        / "docs/validation-results/figure15-trn-relay-transfer-direction-857.yaml"
+    )
+    result = yaml.safe_load(result_path.read_text())
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure15-trn-relay-transfer-direction-assessment-858.yaml"
+        ).read_text()
+    )
+
+    assert hashlib.sha256(registration_path.read_bytes()).hexdigest() == assessment[
+        "registration_sha256"
+    ]
+    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment[
+        "result_sha256"
+    ]
+    outcomes = result["outcomes"]
+    assert [item["common_factor"] for item in outcomes] == [0.5, 1.0, 1.5]
+    assert [item["event_counts"]["thalamic_relay"] for item in outcomes] == [
+        60,
+        45,
+        35,
+    ]
+    assert [
+        item["population_spectra"]["thalamic_relay"]["gamma_peak_hz"]
+        for item in outcomes
+    ] == [60.0, 50.0, 40.0]
+    assert [
+        item["population_spectra"]["trn"]["gamma_peak_hz"] for item in outcomes
+    ] == [60.0, 50.0, 40.0]
+    assert [
+        item["population_spectra"]["layer4_excitatory"]["gamma_peak_hz"]
+        for item in outcomes
+    ] == [60.0, 45.0, 55.0]
+    assert [
+        item["fixed_pair_direct_cross_spectrum"]["gamma_peak_hz"]
+        for item in outcomes
+    ] == [60.0, 70.0, 70.0]
+    assert [
+        item["relay_to_layer4_excitatory_lag"]["peak_lag_ms"] for item in outcomes
+    ] == [5.0, 5.0, 5.0]
+    tests = assessment["direction_tests"]
+    assert tests["relay_gamma_peak_strictly_decreases_with_factor"]
+    assert tests["trn_gamma_peak_strictly_decreases_with_factor"]
+    assert not tests["layer4_excitatory_gamma_peak_monotonic_with_factor"]
+    assert not tests["fixed_pair_gamma_peak_moves_toward_44_hz"]
+    assert not tests["all_registered_frequencies_move_coherently"]
+    assert assessment["interpretation"][
+        "trn_to_relay_transfer_controls_upstream_frequency"
+    ]
+    assert not assessment["interpretation"][
+        "coherent_shared_clock_calibration_direction_identified"
+    ]
+    assert not assessment["decision"]["common_factor_selected"]
+    assert not assessment["decision"]["generation_two_candidate_authorized"]
+    assert not assessment["scientific_status"]["exact_graphical_44hz_reproduced"]
+    assert not assessment["scientific_status"]["baseline_frozen"]

@@ -13117,3 +13117,59 @@ def test_figure15_shared_clock_monitoring_recovery_is_preregistered() -> None:
     assert "Select no pathway" in registration["selection_rule"]
     assert not registration["generation_two_opened"]
     assert not registration["baseline_frozen"]
+
+
+def test_figure15_shared_clock_recovery_supports_relay_locked_pacing() -> None:
+    registration_path = (
+        ROOT
+        / "docs/validation-results/figure15-shared-clock-event-replay-recovery-registration-852.yaml"
+    )
+    result_path = (
+        ROOT
+        / "docs/validation-results/figure15-shared-clock-event-replay-recovery-853.yaml"
+    )
+    result = yaml.safe_load(result_path.read_text())
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure15-shared-clock-event-replay-recovery-assessment-854.yaml"
+        ).read_text()
+    )
+
+    assert hashlib.sha256(registration_path.read_bytes()).hexdigest() == assessment[
+        "registration_sha256"
+    ]
+    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment[
+        "result_sha256"
+    ]
+    assert result["layer4_prior_event_stream_exact"]
+    spectra = result["population_spectra"]
+    assert spectra["thalamic_relay"]["gamma_peak_hz"] == 53.0
+    assert spectra["layer4_excitatory"]["gamma_peak_hz"] == 53.0
+    assert spectra["trn"]["gamma_peak_hz"] == 53.0
+    assert spectra["layer4_inhibitory"]["event_count"] == 5
+    assert result["near_zero_population_lags"]["relay_to_layer4_excitatory"][
+        "peak_lag_ms"
+    ] == pytest.approx(5.0)
+    assert list(
+        zip(
+            result["event_streams"]["layer4_inhibitory"]["indices"],
+            result["event_streams"]["layer4_inhibitory"]["times_ms"],
+            strict=True,
+        )
+    ) == [
+        (38, 3.0900000000000003),
+        (39, 3.0900000000000003),
+        (40, 3.0900000000000003),
+        (41, 3.0900000000000003),
+        (42, 3.0900000000000003),
+    ]
+    tests = assessment["classification_tests"]
+    assert tests["registered_relay_locked_shared_pacing_supported"]
+    assert not tests["locally_transformed_layer4_frequency_supported"]
+    assert not tests["sustained_spiking_layer4_inhibitory_oscillator_supported"]
+    assert not assessment["interpretation"]["causal_origin_proven"]
+    assert not assessment["decision"]["parameter_selected"]
+    assert not assessment["decision"]["generation_two_opened"]
+    assert not assessment["scientific_status"]["original_smart_reproduced"]
+    assert not assessment["scientific_status"]["baseline_frozen"]

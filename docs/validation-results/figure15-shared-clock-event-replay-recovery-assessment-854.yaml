@@ -1,0 +1,86 @@
+schema_version: 1
+id: figure15-shared-clock-event-replay-recovery-assessment-854
+date: '2026-09-10'
+status: completed-relay-locked-shared-pacing-supported
+classification: post-holdout-generation-one-figure15-shared-clock-recovery-assessment
+registration: docs/validation-results/figure15-shared-clock-event-replay-recovery-registration-852.yaml
+registration_sha256: 28efb8bbbbc86459df2c1f5fbc55c187bfdeac1ff82932061677106d2d816f37
+result: docs/validation-results/figure15-shared-clock-event-replay-recovery-853.yaml
+result_sha256: 185771d0d4f9a77fdb8472397d702e27fd3afaac95f422b76ea83926c9739c20
+integrity_gates:
+  authorized_monitoring_only_recovery: true
+  fresh_figure6_prerequisite_passed: true
+  prior_layer4_event_stream_reproduced_bit_exact: true
+  all_registered_population_monitors_enabled: true
+  relay_event_stream_archived: true
+  layer4_excitatory_event_stream_archived: true
+  layer4_inhibitory_event_stream_archived: true
+  trn_event_stream_archived: true
+  category_event_stream_archived: true
+  no_parameter_selected_by_runner: true
+observations:
+  population_spectra:
+    thalamic_relay: {events: 260, active_cells: 5, gamma_peak_hz: 53.0}
+    layer4_excitatory: {events: 608, active_cells: 5, gamma_peak_hz: 53.0}
+    layer4_inhibitory: {events: 5, active_cells: 5, gamma_peak_hz: 56.0}
+    trn: {events: 5057, active_cells: 81, gamma_peak_hz: 53.0}
+    layer6ii_category: {events: 134, active_cells: 5, gamma_peak_hz: 29.0}
+  near_zero_population_lags_ms:
+    relay_to_layer4_excitatory: 5.0
+    relay_to_layer4_inhibitory: -2.0
+    layer4_inhibitory_to_excitatory: 7.0
+  layer4_inhibitory_events:
+  - [38, 3.0900000000000003]
+  - [39, 3.0900000000000003]
+  - [40, 3.0900000000000003]
+  - [41, 3.0900000000000003]
+  - [42, 3.0900000000000003]
+  learned_projection035:
+    edge_count: 1053
+    minimum: 0.0020127757674150712
+    maximum: 6.0
+    mean: 0.7413383880330497
+    nonzero_count: 1053
+classification_tests:
+  relay_and_layer4_excitatory_peaks_agree_within_1_hz: true
+  relay_and_layer4_excitatory_peaks_above_49_hz: true
+  relay_to_layer4_excitatory_target_following_lag_positive: true
+  registered_relay_locked_shared_pacing_supported: true
+  locally_transformed_layer4_frequency_supported: false
+  sustained_spiking_layer4_inhibitory_oscillator_supported: false
+interpretation:
+  phase_classification: relay-locked-shared-thalamocortical-pacing
+  causal_origin_proven: false
+  layer4_excitatory_follows_relay_by_ms: 5.0
+  trn_shares_relay_and_layer4_peak: true
+  layer4_inhibitory_frequency_interpretable: false
+  note: >-
+    Relay, TRN, and layer-4 excitatory population histograms all peak at 53 Hz,
+    and layer-4 excitation follows relay by 5 ms. Layer-4 inhibitory cells emit
+    only one five-cell startup volley, so their nominal 56-Hz periodogram peak
+    and sparse-event lags do not represent a sustained inhibitory rhythm. The
+    evidence localizes the shared clock to the relay-TRN-thalamocortical loop
+    rather than a spiking local E-I oscillator, but phase in a recurrent loop
+    is not causal proof.
+decision:
+  parameter_selected: false
+  projection035_selected: false
+  projection027_selected: false
+  trn_to_relay_projection_family_selected: false
+  generation_two_opened: false
+  next_action: >-
+    Audit the source records and prior calibration constraints for the three
+    TRN-to-relay GABA paths (projections 000, 001, and 004), which are already
+    effective legacy-transfer calibrations at 0.01, 0.01, and 0.03 of source.
+    If their joint scaling is not already ruled out, preregister one symmetric
+    200-ms direction-only diagnostic that measures relay, TRN, and layer-4
+    frequency and timing together. Do not select a value or open global
+    generation two until a coherent causal direction is observed.
+scientific_status:
+  failed_original_figure15_holdout_preserved: true
+  pair_identity_path_closed: true
+  five_local_parameter_paths_closed: true
+  original_smart_reproduced: false
+  baseline_frozen: false
+  neuron_models_consulted: false
+  modern_anatomy_consulted: false

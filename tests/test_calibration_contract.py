@@ -12673,3 +12673,37 @@ def test_figure15_projection036_weight_controls_rate_not_frequency_direction() -
     ]
     assert not assessment["scientific_status"]["original_smart_reproduced"]
     assert not assessment["scientific_status"]["baseline_frozen"]
+
+
+def test_figure15_projection028_direction_is_preregistered() -> None:
+    audit_path = (
+        ROOT / "docs/validation-results/figure15-projection028-source-audit-835.yaml"
+    )
+    audit = yaml.safe_load(audit_path.read_text())
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure15-projection028-direction-registration-836.yaml"
+        ).read_text()
+    )
+
+    for path_key, hash_key in (
+        ("authorization", "authorization_sha256"),
+        ("source_audit", "source_audit_sha256"),
+        ("original_holdout_registration", "original_holdout_registration_sha256"),
+        ("script", "script_sha256"),
+        ("analysis", "analysis_sha256"),
+    ):
+        assert hashlib.sha256(
+            (ROOT / registration[path_key]).read_bytes()
+        ).hexdigest() == registration[hash_key]
+    assert registration["source_audit"] == str(audit_path.relative_to(ROOT))
+    assert audit["source_record"]["projection_id"] == "modeldb112923.projection.028"
+    assert audit["source_record"]["source_weight"] == 0.11
+    assert registration["diagnostic"]["projection028_scales"] == [0.5, 1.0, 1.5]
+    assert registration["diagnostic"]["duration_ms"] == 200.0
+    assert registration["diagnostic"]["pair"] == [39, 40]
+    assert registration["gates"]["inhibitory_event_identity_and_timing_recorded"]
+    assert "select no scale" in registration["selection_rule"]
+    assert not registration["generation_two_opened"]
+    assert not registration["baseline_frozen"]

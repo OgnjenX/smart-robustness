@@ -1,0 +1,68 @@
+schema_version: 1
+id: figure15-projection028-direction-registration-836
+date: '2026-09-10'
+status: registered-before-execution
+classification: post-holdout-calibration-generation-one-projection028-direction-diagnostic
+authorization: docs/validation-results/figure15-projection036-weight-direction-assessment-834.yaml
+authorization_sha256: 63715f1c2a347e7a24adc5fe2f3698c39b97aba595fe6ad1e2545eb42cedd86b
+source_audit: docs/validation-results/figure15-projection028-source-audit-835.yaml
+source_audit_sha256: 4d707c9ee79f6f6ac049c031039cd81a1ae0a8b8333d637154ca921de72a25d0
+original_holdout_registration: docs/validation-results/calibrated-figure15-holdout-registration-810.yaml
+original_holdout_registration_sha256: 0aa7f3da487fe006f3e7a8f0edbea11a649076d510ff21dc89c7eda1203495cc
+script: scripts/run_figure15_projection028_direction_diagnostic.py
+script_sha256: 9bf3299f3fe87898a0a8c6701e4d43c7bf082c401f243303db9d9a31385643df
+analysis: src/smart_robustness/analysis/figure15_sensitivity.py
+analysis_sha256: f549349895da02c16f86eff048ab8799404e81c103ed12afc8e3aae29bd4f77c
+result_id: figure15-projection028-direction-837
+result: docs/validation-results/figure15-projection028-direction-837.yaml
+assessment: docs/validation-results/figure15-projection028-direction-assessment-838.yaml
+fixed_generation_one:
+  nonspecific_t_scale: 0.203125
+  projection025_scale: 8.0
+  projection026_scale: 0.5
+  projection036_spread_convention: variance
+  projection038_scale: 1.0
+  projection008_scale: 0.75
+  projection011_scale: 0.9375
+  integration_method: rk4
+diagnostic:
+  projection_id: modeldb112923.projection.028
+  projection028_scales: [0.5, 1.0, 1.5]
+  order: fixed-ascending
+  scale_application: downstream Figure-15-style match epoch only
+  learned_state: one fresh generation-one training reused unchanged across all arms
+  duration_ms: 200.0
+  dt_ms: 0.01
+  pair: [39, 40]
+  bin_ms: 1.0
+  primary_analysis: direct_full_epoch_cross_spectrum_power
+  gamma_band_hz: [20.0, 70.0]
+  frequency_resolution_hz: 5.0
+  mechanism_readouts:
+  - layer4 inhibitory spike count and active-cell count
+  - complete layer4 inhibitory event identities and times
+  outcome_readouts:
+  - pair spike counts and interspike-interval summaries
+  - all layer4 excitatory spike count
+  - direct cross-spectrum gamma peak
+gates:
+  fresh_figure6_prerequisite: all registered Figure-6 gates pass
+  same_learned_state_all_arms: true
+  all_scales_executed_in_registered_order: true
+  both_pair_cells_active_for_frequency_interpretation: true
+  inhibitory_event_identity_and_timing_recorded: true
+classification_rule: >-
+  Classify projection 028 as frequency-causal only if all arms retain at least
+  two fixed-cell spikes, inhibitory event timing changes systematically, and
+  the pair peak shifts coherently and monotonically. Timing-only or rate-only
+  effects do not identify a Figure-15 calibration direction.
+selection_rule: >-
+  Report all arms in fixed ascending order and select no scale. Any promising
+  direction requires a separate globally retrained generation and all
+  first-order validation gates.
+stopping_rule: >-
+  Execute exactly one fresh training followed by exactly three downstream arms.
+  Do not rerun, densify, interpolate, retrain per arm, alter another projection,
+  or consult neuron-model or modern-anatomy variants before assessment.
+generation_two_opened: false
+baseline_frozen: false

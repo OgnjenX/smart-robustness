@@ -12707,3 +12707,65 @@ def test_figure15_projection028_direction_is_preregistered() -> None:
     assert "select no scale" in registration["selection_rule"]
     assert not registration["generation_two_opened"]
     assert not registration["baseline_frozen"]
+
+
+def test_figure15_projection028_changes_rate_not_inhibitory_spike_timing() -> None:
+    registration_path = (
+        ROOT
+        / "docs/validation-results/figure15-projection028-direction-registration-836.yaml"
+    )
+    result_path = (
+        ROOT / "docs/validation-results/figure15-projection028-direction-837.yaml"
+    )
+    result = yaml.safe_load(result_path.read_text())
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure15-projection028-direction-assessment-838.yaml"
+        ).read_text()
+    )
+
+    assert hashlib.sha256(registration_path.read_bytes()).hexdigest() == assessment[
+        "registration_sha256"
+    ]
+    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment[
+        "result_sha256"
+    ]
+    assert all(result["figure6_gates"].values())
+    assert result["learned_state_reused_across_arms"]
+    assert [item["projection028_scale"] for item in result["outcomes"]] == [
+        0.5,
+        1.0,
+        1.5,
+    ]
+    assert [
+        item["all_layer4_excitatory_spikes"] for item in result["outcomes"]
+    ] == [52, 96, 116]
+    assert all(
+        item["layer4_inhibitory_events"]
+        == [
+            [38, 3.0900000000000003],
+            [39, 3.0900000000000003],
+            [40, 3.0900000000000003],
+            [41, 3.0900000000000003],
+            [42, 3.0900000000000003],
+        ]
+        for item in result["outcomes"]
+    )
+    assert [
+        item["direct_cross_spectrum"]["gamma_peak_hz"]
+        for item in result["outcomes"]
+    ] == [50.0, 70.0, 55.0]
+    assert assessment["interpretation"]["excitatory_rate_causal_in_registered_range"]
+    assert not assessment["interpretation"][
+        "registered_inhibitory_spike_timing_mechanism_supported"
+    ]
+    assert not assessment["interpretation"][
+        "frequency_causal_direction_identified"
+    ]
+    assert not assessment["decision"]["projection028_scale_selected"]
+    assert assessment["decision"][
+        "projection028_closed_as_isolated_frequency_calibration"
+    ]
+    assert not assessment["scientific_status"]["original_smart_reproduced"]
+    assert not assessment["scientific_status"]["baseline_frozen"]

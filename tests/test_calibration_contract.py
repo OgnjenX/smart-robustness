@@ -12583,3 +12583,40 @@ def test_figure15_projection030_controls_rate_not_frequency_direction() -> None:
     ]
     assert not assessment["scientific_status"]["original_smart_reproduced"]
     assert not assessment["scientific_status"]["baseline_frozen"]
+
+
+def test_figure15_projection036_weight_direction_is_preregistered() -> None:
+    audit_path = (
+        ROOT
+        / "docs/validation-results/figure15-projection036-weight-source-audit-831.yaml"
+    )
+    audit = yaml.safe_load(audit_path.read_text())
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/figure15-projection036-weight-direction-registration-832.yaml"
+        ).read_text()
+    )
+
+    for path_key, hash_key in (
+        ("authorization", "authorization_sha256"),
+        ("prior_topology_constraint", "prior_topology_constraint_sha256"),
+        ("source_audit", "source_audit_sha256"),
+        ("original_holdout_registration", "original_holdout_registration_sha256"),
+        ("script", "script_sha256"),
+        ("analysis", "analysis_sha256"),
+    ):
+        assert hashlib.sha256(
+            (ROOT / registration[path_key]).read_bytes()
+        ).hexdigest() == registration[hash_key]
+    assert registration["source_audit"] == str(audit_path.relative_to(ROOT))
+    assert audit["source_record"]["projection_id"] == "modeldb112923.projection.036"
+    assert audit["fixed_topology_interpretation"]["convention"] == "variance"
+    assert not audit["fixed_topology_interpretation"]["change_in_this_diagnostic"]
+    assert registration["diagnostic"]["projection036_scales"] == [0.5, 1.0, 1.5]
+    assert registration["diagnostic"]["fixed_projection036_topology"] == "variance"
+    assert registration["diagnostic"]["duration_ms"] == 200.0
+    assert registration["diagnostic"]["pair"] == [39, 40]
+    assert "Select no scale" in registration["selection_rule"]
+    assert not registration["generation_two_opened"]
+    assert not registration["baseline_frozen"]

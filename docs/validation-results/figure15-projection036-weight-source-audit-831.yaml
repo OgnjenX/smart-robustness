@@ -1,0 +1,99 @@
+schema_version: 1
+id: figure15-projection036-weight-source-audit-831
+date: '2026-09-10'
+status: completed-next-causal-dimension-selected-for-diagnostic-only
+classification: post-holdout-calibration-projection036-weight-source-audit
+authorization:
+  path: docs/validation-results/figure15-projection030-direction-assessment-830.yaml
+  sha256: 5fb32a8c8a1042535d19bd778df169812ce9e15b93f9dd8b1d03928eb6b1509f
+prior_topology_constraint:
+  path: docs/validation-results/figure10-projection036-spread-assessment-750.yaml
+  sha256: 17e43d2d51364fb8678d49234279a673abdf39f761b7b1a888cc18c55d808a16
+primary_sources:
+  article:
+    local_path: tmp/pdfs/GroVer2008BR.pdf
+    sha256: c56c337624959d8c0bdf51aa79b0dbc82f31264af2b2cd675790879a6410d7ed
+    relevant_sections: [2.10, Figure 10, Figure 15, Methods 4.9-4.10]
+  smart_nml:
+    local_path: tmp/modeldb-112923/versaceGrossberg2008/SMART.nml
+    sha256: 16fc196f2ed68d1c02a39395fa83bb0ffab8fcf8edffe6fd11022bb6c6e299e1
+    source_lines: [783, 790]
+  extracted_catalog:
+    path: src/smart_robustness/data/modeldb112923_first_order.yaml
+    sha256: 3b42be7dd0b17cc01ad29f474f152cfcd8c2a605410aad223d14c676fe98d965
+    source_lines: [3026, 3057]
+source_record:
+  projection_id: modeldb112923.projection.036
+  route: layer4_inhibitory_v1 to layer4_excitatory_v1 proximal dendrite
+  receptor: GABA_A Fast
+  dependency: ligand
+  channel_conductance_mS_cm2: 2.461
+  reversal_mV: -70.0
+  rise_ms: 0.1
+  fall_ms: 2.0
+  delay_ms: 0.1
+  source_weight: 2.0
+  asymptotic_weight: 2.0
+  modifiable: false
+  source_topology:
+    method: connectFromMany
+    sigma_x: 1.5
+    sigma_y: 1.5
+    ring: true
+    border_effect: wrap
+fixed_topology_interpretation:
+  convention: variance
+  status: selected-before-first-order-holdouts
+  change_in_this_diagnostic: false
+  reason: >-
+    The source's Gaussian spread convention was underidentified and the
+    variance interpretation was selected by the preregistered Figure-10 cross.
+    Reopening topology while testing weight would confound two dimensions.
+mechanistic_scope:
+  source_supported: >-
+    Projection 036 is the archived inhibitory feedback from local layer-4
+    interneurons to layer-4 excitatory cells and therefore the inhibitory half
+    of the local E-I loop.
+  current_validation_role: >-
+    The same route expresses a validated part of the Figure-10 reset effect;
+    downstream match-only diagnosis cannot establish global admissibility.
+  not_source_identified: >-
+    The paper and archive do not identify a non-unit scale or assign the
+    graphical Figure-15 44-Hz value uniquely to projection 036.
+  calibration_boundary: >-
+    Any non-unit weight scale is an explicit effective calibration departure,
+    not recovery of an omitted source value.
+why_next:
+  projection037: no frequency or rate direction in the registered range
+  projection030: strong excitatory rate control but non-monotonic 55-70-55 Hz response
+  projection036_advantage:
+  - It directly controls inhibitory feedback onto the measured excitatory pair.
+  - Its 0.1/2-ms kinetics are fast enough to participate in local gamma timing.
+  - A symmetric scale probe can distinguish rate suppression from coherent frequency control.
+authorized_next_diagnostic:
+  scientific_role: direction-only downstream causal discriminator
+  learned_state: reuse one fresh generation-one globally trained state across arms
+  projection036_scales: [0.5, 1.0, 1.5]
+  scale_application: Figure-15-style match epoch only
+  duration_ms: 200.0
+  pair: [39, 40]
+  bin_ms: 1.0
+  fixed_projection036_topology: variance
+  primary_readouts:
+  - pair spike counts and interspike-interval summaries
+  - all layer4 excitatory spike count
+  - layer4 inhibitory spike count and active-cell count
+  - direct full-epoch pair cross-spectrum gamma peak with 5-Hz resolution
+  selection_authorized: false
+  global_candidate_authorized: false
+decision: >-
+  Preregister and execute only the symmetric projection-036 weight direction
+  probe. A coherent frequency direction may authorize a distinct global
+  generation-two grid, but no diagnostic arm may be selected directly. If no
+  direction appears, proceed to inhibitory normalization and gap-junction
+  dimensions. No baseline freeze is authorized.
+parameter_selected: false
+generation_two_opened: false
+baseline_frozen: false
+neuron_models_consulted: false
+modern_anatomy_consulted: false

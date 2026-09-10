@@ -1,0 +1,75 @@
+schema_version: 1
+id: figure15-projection036-weight-direction-assessment-834
+date: '2026-09-10'
+status: completed-projection036-frequency-direction-closed
+classification: post-holdout-calibration-generation-one-projection036-weight-direction-assessment
+registration: docs/validation-results/figure15-projection036-weight-direction-registration-832.yaml
+registration_sha256: ea936ab798b6032ec489fc46ba06afa446ecd921990524b3439da8717b57023e
+result: docs/validation-results/figure15-projection036-weight-direction-833.yaml
+result_sha256: b67bb449b4a431b3e93534e3ac9b49d2db68255652c6921e737b0c41fce97db7
+integrity_gates:
+  registered_three_scales_executed_in_order: true
+  fresh_figure6_prerequisite_passed: true
+  same_learned_state_reused_across_arms: true
+  runtime_fingerprint_matches_generation_one: true
+  variance_topology_preserved: true
+  both_fixed_cells_have_at_least_two_spikes_all_arms: true
+  direct_cross_spectrum_resolution_is_5_hz_all_arms: true
+  inhibitory_population_recorded_all_arms: true
+  no_scale_selected_by_runner: true
+observations:
+  scales: [0.5, 1.0, 1.5]
+  first_cell_spikes: [26, 19, 15]
+  second_cell_spikes: [29, 26, 25]
+  all_layer4_excitatory_spikes: [139, 96, 71]
+  layer4_inhibitory_spikes: [5, 5, 5]
+  layer4_inhibitory_active_cells: [5, 5, 5]
+  direct_cross_spectrum_gamma_peak_hz: [20.0, 70.0, 50.0]
+  first_cell_median_isi_ms:
+  - 6.439999999999998
+  - 8.564999999999998
+  - 10.320000000000004
+  second_cell_median_isi_ms:
+  - 5.949999999999989
+  - 7.72999999999999
+  - 6.304999999999993
+direction_tests:
+  all_layer4_excitatory_spike_count_strictly_decreases_with_scale: true
+  first_cell_spike_count_strictly_decreases_with_scale: true
+  second_cell_spike_count_strictly_decreases_with_scale: true
+  inhibitory_spike_count_changes_with_scale: false
+  inhibitory_active_cell_count_changes_with_scale: false
+  gamma_peak_monotonic_with_scale: false
+  gamma_peak_moves_coherently_toward_44_hz: false
+interpretation:
+  excitatory_rate_causal_in_registered_range: true
+  frequency_causal_direction_identified: false
+  coherent_44_hz_calibration_direction: false
+  variance_topology_result_changed: false
+  note: >-
+    Stronger inhibitory feedback monotonically suppresses excitatory firing,
+    but the quantized peaks follow 20, 70, and 50 Hz. The closer 50-Hz arm at
+    scale 1.5 is therefore not part of a monotonic direction and cannot be
+    selected. The 200-ms analysis remains a relative discriminator, not a
+    replacement for the preserved 1000-ms Figure-15 failure.
+decision:
+  projection036_weight_scale_selected: false
+  projection036_denser_grid_authorized: false
+  projection036_generation_two_candidate_authorized: false
+  projection036_closed_as_isolated_frequency_calibration: true
+  projection036_source_weight_and_variance_topology_preserved: true
+  next_action: >-
+    Audit projection 028, the archived inhibitory-to-inhibitory GABA route, as
+    the next executable local-network dimension. It can alter inhibitory
+    normalization and timing without changing projection 036. If it does not
+    identify a coherent direction, add an explicit, tested conductance-scaling
+    path for projection 029 gap junctions before preregistering that synchrony
+    diagnostic.
+scientific_status:
+  failed_original_figure15_holdout_preserved: true
+  generation_one_preserved_as_overfitting_control: true
+  generation_two_opened: false
+  original_smart_reproduced: false
+  baseline_frozen: false
+  neuron_models_consulted: false
+  modern_anatomy_consulted: false

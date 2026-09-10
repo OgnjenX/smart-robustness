@@ -1,0 +1,240 @@
+schema_version: 1
+id: figure15-projection036-weight-direction-833
+date: '2026-09-10'
+status: completed-projection036-weight-direction-diagnostic
+classification: post-holdout-calibration-generation-one-projection036-weight-direction-diagnostic
+registration: docs/validation-results/figure15-projection036-weight-direction-registration-832.yaml
+runtime_fingerprint: 7e654528a99f0b25b7148260a8d52021f6443fb992b210729a2475ae3cfcdaa4
+generation_one_projection_weight_scales:
+  modeldb112923.projection.000: 0.01
+  modeldb112923.projection.001: 0.01
+  modeldb112923.projection.004: 0.03
+  modeldb112923.projection.008: 0.75
+  modeldb112923.projection.011: 0.9375
+  modeldb112923.projection.025: 8.0
+  modeldb112923.projection.026: 0.5
+projection036_topology: variance
+figure6_gates:
+  relay_active_indices: true
+  relay_events_per_active_index: true
+  relay_events: true
+  cortical_chain_complete: true
+  causal_learning_pair: true
+  top_down_horizontal_contrast: true
+learned_state_reused_across_arms: true
+outcomes:
+- projection036_scale: 0.5
+  first_cell_spikes: 26
+  second_cell_spikes: 29
+  all_layer4_excitatory_spikes: 139
+  layer4_inhibitory_spikes: 5
+  layer4_inhibitory_active_cells: 5
+  direct_cross_spectrum:
+    method: direct_full_epoch_cross_spectrum_power
+    gamma_peak_hz: 20.0
+    frequency_resolution_hz: 5.0
+  first_cell_isi:
+    count: 25
+    median_ms: 6.439999999999998
+    q25_ms: 3.5600000000000023
+    q75_ms: 8.630000000000024
+  second_cell_isi:
+    count: 28
+    median_ms: 5.949999999999989
+    q25_ms: 3.2699999999999996
+    q75_ms: 8.170000000000009
+  raw_pair_spike_times_ms:
+    '39':
+    - 10.690000000000001
+    - 19.37
+    - 55.49
+    - 61.4
+    - 64.25
+    - 73.08
+    - 76.36000000000001
+    - 85.74000000000001
+    - 88.62
+    - 98.63000000000001
+    - 105.33
+    - 108.62
+    - 116.63000000000001
+    - 125.41000000000003
+    - 128.57999999999998
+    - 137.21
+    - 144.21
+    - 152.28
+    - 155.48
+    - 161.34
+    - 164.9
+    - 171.34
+    - 175.62000000000003
+    - 181.48
+    - 185.85000000000002
+    - 194.0
+    '40':
+    - 10.690000000000001
+    - 19.32
+    - 22.410000000000004
+    - 29.52
+    - 55.64
+    - 61.440000000000005
+    - 64.22
+    - 73.48
+    - 76.81
+    - 84.96000000000001
+    - 87.86
+    - 98.52000000000001
+    - 104.46000000000001
+    - 107.34
+    - 117.37000000000002
+    - 124.27
+    - 127.17
+    - 137.09
+    - 143.74
+    - 151.97000000000003
+    - 155.01000000000002
+    - 160.97
+    - 163.92000000000002
+    - 168.05
+    - 174.69
+    - 180.48
+    - 184.65
+    - 190.79000000000002
+    - 194.18
+- projection036_scale: 1.0
+  first_cell_spikes: 19
+  second_cell_spikes: 26
+  all_layer4_excitatory_spikes: 96
+  layer4_inhibitory_spikes: 5
+  layer4_inhibitory_active_cells: 5
+  direct_cross_spectrum:
+    method: direct_full_epoch_cross_spectrum_power
+    gamma_peak_hz: 70.0
+    frequency_resolution_hz: 5.0
+  first_cell_isi:
+    count: 18
+    median_ms: 8.564999999999998
+    q25_ms: 7.827500000000008
+    q75_ms: 10.669999999999995
+  second_cell_isi:
+    count: 25
+    median_ms: 7.72999999999999
+    q25_ms: 2.9899999999999807
+    q75_ms: 8.739999999999995
+  raw_pair_spike_times_ms:
+    '39':
+    - 10.690000000000001
+    - 21.580000000000002
+    - 57.370000000000005
+    - 65.7
+    - 68.60000000000001
+    - 79.35000000000001
+    - 87.94
+    - 90.87
+    - 98.97
+    - 107.51
+    - 110.49000000000001
+    - 118.24000000000001
+    - 127.23
+    - 150.94000000000003
+    - 154.04000000000002
+    - 164.73000000000002
+    - 174.66
+    - 182.72000000000003
+    - 193.33
+    '40':
+    - 10.690000000000001
+    - 21.51
+    - 24.55
+    - 36.53
+    - 40.21
+    - 57.32
+    - 65.65
+    - 68.52000000000001
+    - 79.26
+    - 87.35000000000001
+    - 90.22000000000001
+    - 98.96000000000001
+    - 106.87
+    - 109.74
+    - 118.25
+    - 126.32000000000001
+    - 129.21
+    - 150.52
+    - 153.51
+    - 162.83
+    - 165.69
+    - 168.34
+    - 174.25
+    - 181.98
+    - 185.21
+    - 192.91000000000003
+- projection036_scale: 1.5
+  first_cell_spikes: 15
+  second_cell_spikes: 25
+  all_layer4_excitatory_spikes: 71
+  layer4_inhibitory_spikes: 5
+  layer4_inhibitory_active_cells: 5
+  direct_cross_spectrum:
+    method: direct_full_epoch_cross_spectrum_power
+    gamma_peak_hz: 50.0
+    frequency_resolution_hz: 5.0
+  first_cell_isi:
+    count: 14
+    median_ms: 10.320000000000004
+    q25_ms: 8.127500000000001
+    q75_ms: 17.12749999999999
+  second_cell_isi:
+    count: 24
+    median_ms: 6.304999999999993
+    q25_ms: 2.9074999999999953
+    q75_ms: 11.890000000000004
+  raw_pair_spike_times_ms:
+    '39':
+    - 10.690000000000001
+    - 22.85
+    - 56.74
+    - 66.34
+    - 69.28
+    - 80.32000000000001
+    - 89.55
+    - 92.52
+    - 100.28
+    - 109.53
+    - 112.46000000000001
+    - 129.19
+    - 149.61
+    - 167.73000000000002
+    - 184.99
+    '40':
+    - 10.690000000000001
+    - 22.76
+    - 25.87
+    - 41.2
+    - 45.28
+    - 57.11000000000001
+    - 66.17
+    - 69.08
+    - 80.33000000000001
+    - 89.04
+    - 91.93
+    - 109.88000000000001
+    - 112.78
+    - 126.7
+    - 129.96
+    - 132.52
+    - 137.66
+    - 148.78000000000003
+    - 151.73
+    - 165.57000000000002
+    - 168.47
+    - 170.92000000000002
+    - 183.48
+    - 186.35000000000002
+    - 193.82000000000002
+selection_performed: false
+generation_two_opened: false
+neuron_models_consulted: false
+modern_anatomy_consulted: false
+original_smart_reproduced: false
+baseline_frozen: false

@@ -13480,3 +13480,48 @@ def test_legacy_thalamus_input_reconstruction_is_preregistered_and_bounded() -> 
     assert "mean-voltage error" in registration["selection_rule"]
     assert "Do not inspect spike outputs" in registration["selection_rule"]
     assert not registration["baseline_frozen"]
+
+
+def test_legacy_thalamus_input_reconstruction_closes_without_promotion() -> None:
+    registration_path = (
+        ROOT
+        / "docs/validation-results/legacy-thalamus-input-reconstruction-registration-877.yaml"
+    )
+    result_path = (
+        ROOT / "docs/validation-results/legacy-thalamus-input-reconstruction-878.yaml"
+    )
+    result = yaml.safe_load(result_path.read_text())
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/legacy-thalamus-input-reconstruction-assessment-879.yaml"
+        ).read_text()
+    )
+
+    assert hashlib.sha256(registration_path.read_bytes()).hexdigest() == assessment[
+        "registration"
+    ]["sha256"]
+    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment["result"][
+        "sha256"
+    ]
+    assert result["passing_methods"] == assessment["passing_methods"] == []
+    for method in result["method_results"]:
+        selected = method["voltage_selected"]
+        held_out = method["held_out_evaluation"]
+        assert selected["tonic"]["input_value"] == 0.0625
+        assert selected["tonic"]["event_count"] == 0
+        assert selected["burst"]["input_value"] == 0.5
+        assert selected["burst"]["event_count"] == 4
+        assert held_out["checks"]["burst_preinput_mean_voltage"]
+        assert not held_out["joint_pass"]
+    verdict = assessment["assessment"]
+    assert verdict["registered_selection_rule_followed"]
+    assert not verdict["spike_outputs_used_for_selection"]
+    assert not verdict["fixed_cell_or_channel_parameter_changed"]
+    assert not verdict["missing_input_amplitude_alone_reproduces_legacy_benchmark"]
+    assert not verdict["legacy_benchmark_reproduced"]
+    assert not verdict["original_figure8_reproduced"]
+    assert not verdict["exact_classic_baseline_freeze_authorized"]
+    assert assessment["next_action"]["authorized"]
+    assert not assessment["next_action"]["cell_or_channel_fitting_authorized"]
+    assert not assessment["baseline_frozen"]

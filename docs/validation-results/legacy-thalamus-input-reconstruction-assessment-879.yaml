@@ -1,0 +1,93 @@
+schema_version: 1
+id: legacy-thalamus-input-reconstruction-assessment-879
+date: '2026-09-10'
+status: assessed-negative
+classification: calibrated-independent-legacy-kinness-input-protocol-reconstruction
+registration:
+  path: docs/validation-results/legacy-thalamus-input-reconstruction-registration-877.yaml
+  sha256: 54b8ffca28825e41b46f21d3e915a857a30e4253d4bb32cef032988d135786be
+result:
+  path: docs/validation-results/legacy-thalamus-input-reconstruction-878.yaml
+  sha256: 2af9bad2068e48223a7eada6e9895dd2d35f0244a3a3f82ea3eb6f35022d70ef
+passing_methods: []
+voltage_selected_outcomes:
+  rk4:
+    tonic:
+      input_value: 0.0625
+      calibration_mean_error_mV: -1.3864718442276223
+      event_count: 0
+      median_interevent_interval_ms: null
+    burst:
+      input_value: 0.5
+      calibration_mean_error_mV: -0.5701030444212591
+      preinput_mean_error_mV: -0.046976645328540595
+      event_count: 4
+      event_times_ms: [2188.05, 2192.1, 2196.8, 2202.7000000000003]
+  sanndra_scalar_rk4:
+    tonic:
+      input_value: 0.0625
+      calibration_mean_error_mV: -1.3864717815288063
+      event_count: 0
+      median_interevent_interval_ms: null
+    burst:
+      input_value: 0.5
+      calibration_mean_error_mV: -0.5701030444212591
+      preinput_mean_error_mV: -0.04697664296755377
+      event_count: 4
+      event_times_ms: [2188.25, 2192.6000000000004, 2197.7, 2204.3]
+held_out_gates:
+  rk4:
+    tonic_event_count: false
+    tonic_median_interevent_interval: false
+    burst_event_count: false
+    burst_event_timing: false
+    burst_preinput_mean_voltage: true
+    joint_pass: false
+  sanndra_scalar_rk4:
+    tonic_event_count: false
+    tonic_median_interevent_interval: false
+    burst_event_count: false
+    burst_event_timing: false
+    burst_preinput_mean_voltage: true
+    joint_pass: false
+assessment:
+  registered_selection_rule_followed: true
+  spike_outputs_used_for_selection: false
+  fixed_cell_or_channel_parameter_changed: false
+  missing_input_amplitude_alone_reproduces_legacy_benchmark: false
+  legacy_benchmark_reproduced: false
+  t_type_mechanism_independently_validated: false
+  original_figure8_reproduced: false
+  exact_classic_baseline_freeze_authorized: false
+interpretation:
+  - >-
+    The two numerical methods agree on the voltage-selected values and on the
+    negative held-out result. The selected tonic value is subthreshold, while
+    the next coarse grid value enters a much faster repetitive-spiking regime;
+    the archived voltage mean lies near this transition and was not resolved
+    by the coarse screen.
+  - >-
+    The selected burst value reduces the hyperpolarized mean error from the
+    7.69--7.89 mV seen in Replay 874 to 0.57 mV and preserves the preinput mean,
+    but it yields four rebound events rather than the archived six. Thus drive
+    amplitude explains the steady-voltage discrepancy but not the full event
+    pattern at the registered resolution.
+  - >-
+    This negative result rejects promotion of either coarse-grid arm. It does
+    not prove that no source-permitted 8-bit input value can pass, because the
+    tonic transition lies inside one registered interval.
+  - >-
+    This remains an independent 2004 single-cell benchmark. Even a future
+    calibrated pass cannot reconstruct the unpreserved 2008 Figure-8 clamp
+    schedule or alone establish an exact original-SMART reproduction.
+next_action:
+  action: >-
+    If this route is continued, preregister a source-grid refinement restricted
+    to exact 8-bit normalized values inside the tonic 0.0625--0.125 transition
+    and a similarly bounded neighborhood of burst 0.5. Continue selecting by
+    archived voltage only and retain all spike observables as held-out gates.
+  authorized: true
+  exact_input_recovery_claim_authorized: false
+  cell_or_channel_fitting_authorized: false
+  figure8_claim_authorized: false
+baseline_frozen: false

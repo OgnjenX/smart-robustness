@@ -1,0 +1,2364 @@
+schema_version: 1
+id: legacy-thalamus-input-reconstruction-878
+date: '2026-09-10'
+status: completed-calibrated-input-protocol-reconstruction
+classification: calibrated-independent-legacy-kinness-input-protocol-reconstruction
+registration: docs/validation-results/legacy-thalamus-input-reconstruction-registration-877.yaml
+archived_targets:
+  tonic_event_count: 199
+  tonic_median_interevent_interval_ms: 15.05
+  tonic_reported_rate_hz: 66.0
+  burst_event_count: 6
+  burst_event_times_ms:
+  - 2187.9
+  - 2191.8
+  - 2196.15
+  - 2201.2
+  - 2207.5
+  - 2217.0
+method_results:
+- integration_method: rk4
+  tonic_outcomes:
+  - input_value: 0.0
+    event_count: 0
+    median_interevent_interval_ms: null
+    first_event_ms: null
+    last_event_ms: null
+    event_times_ms: []
+    minimum_voltage_mV: 0.0
+    maximum_voltage_mV: 0.1976070558632518
+    finite: true
+    calibration_window:
+      candidate_mean_mV: 0.19437882137117685
+      archived_mean_mV: 7.873061034379345
+      mean_error_mV: -7.678682213008168
+      rmse_mV: 18.11882502447406
+      correlation: 0.003605490472429571
+  - &id001
+    input_value: 0.0625
+    event_count: 0
+    median_interevent_interval_ms: null
+    first_event_ms: null
+    last_event_ms: null
+    event_times_ms: []
+    minimum_voltage_mV: 0.0
+    maximum_voltage_mV: 6.603405714903719
+    finite: true
+    calibration_window:
+      candidate_mean_mV: 6.486589190151722
+      archived_mean_mV: 7.873061034379345
+      mean_error_mV: -1.3864718442276223
+      rmse_mV: 16.469728466873278
+      correlation: 0.003580936585194011
+  - input_value: 0.125
+    event_count: 511
+    median_interevent_interval_ms: 5.850000000000136
+    first_event_ms: 6.25
+    last_event_ms: 2999.1
+    first_twenty_event_times_ms:
+    - 6.25
+    - 12.100000000000001
+    - 17.950000000000003
+    - 23.8
+    - 29.650000000000002
+    - 35.5
+    - 41.400000000000006
+    - 47.25000000000001
+    - 53.1
+    - 59.0
+    - 64.85
+    - 70.7
+    - 76.6
+    - 82.45
+    - 88.3
+    - 94.2
+    - 100.05
+    - 105.9
+    - 111.80000000000001
+    - 117.65
+    last_twenty_event_times_ms:
+    - 2887.6
+    - 2893.4500000000003
+    - 2899.3500000000004
+    - 2905.2
+    - 2911.1
+    - 2916.9500000000003
+    - 2922.8
+    - 2928.7000000000003
+    - 2934.5499999999997
+    - 2940.4
+    - 2946.3
+    - 2952.15
+    - 2958.05
+    - 2963.9
+    - 2969.75
+    - 2975.65
+    - 2981.5
+    - 2987.35
+    - 2993.25
+    - 2999.1
+    minimum_voltage_mV: -9.682496628174356
+    maximum_voltage_mV: 109.26870233347533
+    finite: true
+    calibration_window:
+      candidate_mean_mV: 12.258790647153225
+      archived_mean_mV: 7.873061034379345
+      mean_error_mV: 4.38572961277388
+      rmse_mV: 28.895479536937625
+      correlation: -0.0002749843177236525
+  - input_value: 0.1875
+    event_count: 703
+    median_interevent_interval_ms: 4.25
+    first_event_ms: 5.0
+    last_event_ms: 2999.4
+    first_twenty_event_times_ms:
+    - 5.0
+    - 9.3
+    - 13.55
+    - 17.8
+    - 22.05
+    - 26.349999999999998
+    - 30.6
+    - 34.85
+    - 39.1
+    - 43.4
+    - 47.65
+    - 51.9
+    - 56.150000000000006
+    - 60.45
+    - 64.7
+    - 68.95
+    - 73.25
+    - 77.5
+    - 81.75
+    - 86.05
+    last_twenty_event_times_ms:
+    - 2918.35
+    - 2922.6000000000004
+    - 2926.9
+    - 2931.1499999999996
+    - 2935.4
+    - 2939.7
+    - 2943.9500000000003
+    - 2948.2000000000003
+    - 2952.5000000000005
+    - 2956.75
+    - 2961.0
+    - 2965.25
+    - 2969.55
+    - 2973.7999999999997
+    - 2978.05
+    - 2982.35
+    - 2986.6000000000004
+    - 2990.8500000000004
+    - 2995.15
+    - 2999.4
+    minimum_voltage_mV: -8.811880762487753
+    maximum_voltage_mV: 109.72525869135652
+    finite: true
+    calibration_window:
+      candidate_mean_mV: 14.691363594560556
+      archived_mean_mV: 7.873061034379345
+      mean_error_mV: 6.818302560181212
+      rmse_mV: 31.109820755518165
+      correlation: -0.00037483774050275725
+  - input_value: 0.25
+    event_count: 836
+    median_interevent_interval_ms: 3.599999999999909
+    first_event_ms: 4.5
+    last_event_ms: 3000.85
+    first_twenty_event_times_ms:
+    - 4.5
+    - 8.100000000000001
+    - 11.7
+    - 15.3
+    - 18.85
+    - 22.45
+    - 26.05
+    - 29.650000000000002
+    - 33.2
+    - 36.800000000000004
+    - 40.400000000000006
+    - 44.0
+    - 47.55
+    - 51.15
+    - 54.75000000000001
+    - 58.35
+    - 61.9
+    - 65.5
+    - 69.10000000000001
+    - 72.7
+    last_twenty_event_times_ms:
+    - 2932.65
+    - 2936.25
+    - 2939.85
+    - 2943.4
+    - 2947.0
+    - 2950.6000000000004
+    - 2954.2
+    - 2957.75
+    - 2961.35
+    - 2964.9500000000003
+    - 2968.55
+    - 2972.15
+    - 2975.7
+    - 2979.3
+    - 2982.9
+    - 2986.5
+    - 2990.05
+    - 2993.65
+    - 2997.25
+    - 3000.85
+    minimum_voltage_mV: -8.024104958639509
+    maximum_voltage_mV: 109.99107454512077
+    finite: true
+    calibration_window:
+      candidate_mean_mV: 16.403532816135648
+      archived_mean_mV: 7.873061034379345
+      mean_error_mV: 8.530471781756304
+      rmse_mV: 31.972931046283772
+      correlation: 0.0013143334041405624
+  - input_value: 0.3125
+    event_count: 939
+    median_interevent_interval_ms: 3.1999999999999886
+    first_event_ms: 4.2
+    last_event_ms: 2999.65
+    first_twenty_event_times_ms:
+    - 4.2
+    - 7.45
+    - 10.65
+    - 13.799999999999999
+    - 17.0
+    - 20.2
+    - 23.400000000000002
+    - 26.6
+    - 29.8
+    - 32.95
+    - 36.15
+    - 39.35
+    - 42.550000000000004
+    - 45.75
+    - 48.95
+    - 52.15
+    - 55.3
+    - 58.5
+    - 61.7
+    - 64.9
+    last_twenty_event_times_ms:
+    - 2938.95
+    - 2942.15
+    - 2945.35
+    - 2948.55
+    - 2951.7500000000005
+    - 2954.95
+    - 2958.15
+    - 2961.3
+    - 2964.5000000000005
+    - 2967.7
+    - 2970.9
+    - 2974.1
+    - 2977.3
+    - 2980.5
+    - 2983.65
+    - 2986.8500000000004
+    - 2990.05
+    - 2993.25
+    - 2996.45
+    - 2999.65
+    minimum_voltage_mV: -7.286599151676915
+    maximum_voltage_mV: 110.66468618673693
+    finite: true
+    calibration_window:
+      candidate_mean_mV: 17.73615778069528
+      archived_mean_mV: 7.873061034379345
+      mean_error_mV: 9.863096746315936
+      rmse_mV: 32.341141798689605
+      correlation: 0.0005899040287349079
+  - input_value: 0.375
+    event_count: 1025
+    median_interevent_interval_ms: 2.949999999999818
+    first_event_ms: 4.050000000000001
+    last_event_ms: 3001.2
+    first_twenty_event_times_ms:
+    - 4.050000000000001
+    - 7.0
+    - 9.9
+    - 12.85
+    - 15.75
+    - 18.7
+    - 21.599999999999998
+    - 24.55
+    - 27.45
+    - 30.400000000000002
+    - 33.3
+    - 36.25
+    - 39.15
+    - 42.1
+    - 45.0
+    - 47.95
+    - 50.9
+    - 53.800000000000004
+    - 56.75
+    - 59.65
+    last_twenty_event_times_ms:
+    - 2945.6
+    - 2948.5000000000005
+    - 2951.4500000000003
+    - 2954.35
+    - 2957.3
+    - 2960.2000000000003
+    - 2963.15
+    - 2966.05
+    - 2969.0
+    - 2971.9
+    - 2974.8500000000004
+    - 2977.75
+    - 2980.7000000000003
+    - 2983.65
+    - 2986.55
+    - 2989.5
+    - 2992.4
+    - 2995.35
+    - 2998.2500000000005
+    - 3001.2
+    minimum_voltage_mV: -6.588238700049124
+    maximum_voltage_mV: 110.97877469528505
+    finite: true
+    calibration_window:
+      candidate_mean_mV: 18.823983233733877
+      archived_mean_mV: 7.873061034379345
+      mean_error_mV: 10.950922199354533
+      rmse_mV: 32.41656530589489
+      correlation: 0.0017904579510956942
+  - input_value: 0.5
+    event_count: 1163
+    median_interevent_interval_ms: 2.599999999999909
+    first_event_ms: 3.8
+    last_event_ms: 3001.45
+    first_twenty_event_times_ms:
+    - 3.8
+    - 6.4
+    - 9.0
+    - 11.55
+    - 14.15
+    - 16.700000000000003
+    - 19.3
+    - 21.900000000000002
+    - 24.45
+    - 27.05
+    - 29.6
+    - 32.2
+    - 34.800000000000004
+    - 37.35
+    - 39.95
+    - 42.5
+    - 45.1
+    - 47.65
+    - 50.25
+    - 52.85
+    last_twenty_event_times_ms:
+    - 2952.45
+    - 2955.0000000000005
+    - 2957.6
+    - 2960.2000000000003
+    - 2962.75
+    - 2965.35
+    - 2967.9
+    - 2970.5
+    - 2973.1000000000004
+    - 2975.65
+    - 2978.25
+    - 2980.8
+    - 2983.4
+    - 2986.0
+    - 2988.55
+    - 2991.15
+    - 2993.7000000000003
+    - 2996.2999999999997
+    - 2998.9
+    - 3001.45
+    minimum_voltage_mV: -5.276102188293969
+    maximum_voltage_mV: 111.31771932713069
+    finite: true
+    calibration_window:
+      candidate_mean_mV: 20.521598189303482
+      archived_mean_mV: 7.873061034379345
+      mean_error_mV: 12.648537154924139
+      rmse_mV: 32.21521374602211
+      correlation: -0.00031649147033711275
+  - input_value: 0.625
+    event_count: 1273
+    median_interevent_interval_ms: 2.3500000000000227
+    first_event_ms: 3.65
+    last_event_ms: 3001.0
+    first_twenty_event_times_ms:
+    - 3.65
+    - 6.05
+    - 8.4
+    - 10.75
+    - 13.1
+    - 15.45
+    - 17.8
+    - 20.15
+    - 22.55
+    - 24.9
+    - 27.25
+    - 29.6
+    - 31.95
+    - 34.300000000000004
+    - 36.65
+    - 39.00000000000001
+    - 41.400000000000006
+    - 43.75
+    - 46.1
+    - 48.45
+    last_twenty_event_times_ms:
+    - 2956.2000000000003
+    - 2958.5499999999997
+    - 2960.9500000000003
+    - 2963.3
+    - 2965.65
+    - 2968.0
+    - 2970.35
+    - 2972.7000000000003
+    - 2975.05
+    - 2977.4
+    - 2979.8
+    - 2982.15
+    - 2984.5
+    - 2986.8500000000004
+    - 2989.2
+    - 2991.5499999999997
+    - 2993.9
+    - 2996.25
+    - 2998.65
+    - 3001.0
+    minimum_voltage_mV: -4.028342208002278
+    maximum_voltage_mV: 111.71850599743563
+    finite: true
+    calibration_window:
+      candidate_mean_mV: 21.838674141418615
+      archived_mean_mV: 7.873061034379345
+      mean_error_mV: 13.965613107039271
+      rmse_mV: 31.759185860351128
+      correlation: -0.00037709420438525814
+  - input_value: 0.75
+    event_count: 1365
+    median_interevent_interval_ms: 2.200000000000017
+    first_event_ms: 3.55
+    last_event_ms: 2999.9500000000003
+    first_twenty_event_times_ms:
+    - 3.55
+    - 5.75
+    - 7.95
+    - 10.15
+    - 12.35
+    - 14.55
+    - 16.75
+    - 18.95
+    - 21.15
+    - 23.35
+    - 25.55
+    - 27.75
+    - 29.950000000000003
+    - 32.15
+    - 34.35
+    - 36.5
+    - 38.7
+    - 40.900000000000006
+    - 43.1
+    - 45.300000000000004
+    last_twenty_event_times_ms:
+    - 2958.2
+    - 2960.4
+    - 2962.6000000000004
+    - 2964.8
+    - 2967.0000000000005
+    - 2969.2
+    - 2971.4
+    - 2973.6
+    - 2975.8
+    - 2978.0
+    - 2980.2000000000003
+    - 2982.4
+    - 2984.6
+    - 2986.8
+    - 2988.9500000000003
+    - 2991.15
+    - 2993.35
+    - 2995.5499999999997
+    - 2997.75
+    - 2999.9500000000003
+    minimum_voltage_mV: -2.8611547650152844
+    maximum_voltage_mV: 112.03131538804935
+    finite: true
+    calibration_window:
+      candidate_mean_mV: 22.907045312935235
+      archived_mean_mV: 7.873061034379345
+      mean_error_mV: 15.033984278555891
+      rmse_mV: 31.23685329127289
+      correlation: -0.0013508264805869189
+  - input_value: 0.8125
+    event_count: 1407
+    median_interevent_interval_ms: 2.1499999999998636
+    first_event_ms: 3.5
+    last_event_ms: 3001.45
+    first_twenty_event_times_ms:
+    - 3.5
+    - 5.65
+    - 7.800000000000001
+    - 9.95
+    - 12.049999999999999
+    - 14.200000000000001
+    - 16.35
+    - 18.45
+    - 20.6
+    - 22.7
+    - 24.85
+    - 27.0
+    - 29.1
+    - 31.25
+    - 33.400000000000006
+    - 35.5
+    - 37.65
+    - 39.8
+    - 41.900000000000006
+    - 44.050000000000004
+    last_twenty_event_times_ms:
+    - 2960.9
+    - 2963.05
+    - 2965.2
+    - 2967.3
+    - 2969.45
+    - 2971.6000000000004
+    - 2973.7000000000003
+    - 2975.85
+    - 2978.0
+    - 2980.1
+    - 2982.25
+    - 2984.4
+    - 2986.5
+    - 2988.65
+    - 2990.8
+    - 2992.9
+    - 2995.05
+    - 2997.15
+    - 2999.3
+    - 3001.45
+    minimum_voltage_mV: -2.2975430574071525
+    maximum_voltage_mV: 112.17383182177537
+    finite: true
+    calibration_window:
+      candidate_mean_mV: 23.37120060857462
+      archived_mean_mV: 7.873061034379345
+      mean_error_mV: 15.498139574195275
+      rmse_mV: 30.909715299199554
+      correlation: 0.0036311157748456385
+  - input_value: 0.875
+    event_count: 1445
+    median_interevent_interval_ms: 2.099999999999909
+    first_event_ms: 3.45
+    last_event_ms: 3000.1
+    first_twenty_event_times_ms:
+    - 3.45
+    - 5.550000000000001
+    - 7.65
+    - 9.7
+    - 11.799999999999999
+    - 13.850000000000001
+    - 15.950000000000001
+    - 18.0
+    - 20.1
+    - 22.150000000000002
+    - 24.250000000000004
+    - 26.3
+    - 28.4
+    - 30.450000000000003
+    - 32.55
+    - 34.6
+    - 36.7
+    - 38.75000000000001
+    - 40.85
+    - 42.9
+    last_twenty_event_times_ms:
+    - 2960.65
+    - 2962.75
+    - 2964.8
+    - 2966.9
+    - 2968.9500000000003
+    - 2971.05
+    - 2973.1000000000004
+    - 2975.2000000000003
+    - 2977.25
+    - 2979.35
+    - 2981.4
+    - 2983.5
+    - 2985.55
+    - 2987.65
+    - 2989.7000000000003
+    - 2991.8
+    - 2993.8500000000004
+    - 2995.9500000000003
+    - 2998.0
+    - 3000.1
+    minimum_voltage_mV: -1.7353735585366972
+    maximum_voltage_mV: 111.96283528774183
+    finite: true
+    calibration_window:
+      candidate_mean_mV: 23.805776226002966
+      archived_mean_mV: 7.873061034379345
+      mean_error_mV: 15.932715191623622
+      rmse_mV: 30.690811808550635
+      correlation: -7.529910789077749e-05
+  - input_value: 0.9375
+    event_count: 1482
+    median_interevent_interval_ms: 2.0000000000004547
+    first_event_ms: 3.4
+    last_event_ms: 3001.55
+    first_twenty_event_times_ms:
+    - 3.4
+    - 5.5
+    - 7.5
+    - 9.55
+    - 11.55
+    - 13.600000000000001
+    - 15.600000000000001
+    - 17.65
+    - 19.650000000000002
+    - 21.700000000000003
+    - 23.7
+    - 25.75
+    - 27.75
+    - 29.8
+    - 31.8
+    - 33.85
+    - 35.85
+    - 37.85
+    - 39.900000000000006
+    - 41.900000000000006
+    last_twenty_event_times_ms:
+    - 2963.05
+    - 2965.1000000000004
+    - 2967.1
+    - 2969.15
+    - 2971.15
+    - 2973.2
+    - 2975.2000000000003
+    - 2977.25
+    - 2979.25
+    - 2981.3
+    - 2983.3
+    - 2985.35
+    - 2987.35
+    - 2989.4
+    - 2991.4
+    - 2993.45
+    - 2995.4500000000003
+    - 2997.5
+    - 2999.5
+    - 3001.55
+    minimum_voltage_mV: -1.2269726305225588
+    maximum_voltage_mV: 112.12634303788477
+    finite: true
+    calibration_window:
+      candidate_mean_mV: 24.213429762819498
+      archived_mean_mV: 7.873061034379345
+      mean_error_mV: 16.340368728440154
+      rmse_mV: 30.449611054338902
+      correlation: -0.000495262940807123
+  - input_value: 0.9803921568627451
+    event_count: 1505
+    median_interevent_interval_ms: 2.0
+    first_event_ms: 3.4
+    last_event_ms: 3000.15
+    first_twenty_event_times_ms:
+    - 3.4
+    - 5.45
+    - 7.45
+    - 9.4
+    - 11.4
+    - 13.4
+    - 15.4
+    - 17.4
+    - 19.400000000000002
+    - 21.35
+    - 23.35
+    - 25.35
+    - 27.35
+    - 29.35
+    - 31.35
+    - 33.35
+    - 35.300000000000004
+    - 37.300000000000004
+    - 39.3
+    - 41.300000000000004
+    last_twenty_event_times_ms:
+    - 2962.3
+    - 2964.2999999999997
+    - 2966.25
+    - 2968.25
+    - 2970.25
+    - 2972.25
+    - 2974.25
+    - 2976.25
+    - 2978.25
+    - 2980.2000000000003
+    - 2982.2
+    - 2984.2000000000003
+    - 2986.2
+    - 2988.2000000000003
+    - 2990.2
+    - 2992.2000000000003
+    - 2994.15
+    - 2996.15
+    - 2998.15
+    - 3000.15
+    minimum_voltage_mV: -0.8603335727449591
+    maximum_voltage_mV: 112.36344624008984
+    finite: true
+    calibration_window:
+      candidate_mean_mV: 24.47090867252757
+      archived_mean_mV: 7.873061034379345
+      mean_error_mV: 16.597847638148227
+      rmse_mV: 30.277646441281394
+      correlation: -2.911237855593969e-06
+  - input_value: 1.0
+    event_count: 1516
+    median_interevent_interval_ms: 2.0
+    first_event_ms: 3.4
+    last_event_ms: 3001.1000000000004
+    first_twenty_event_times_ms:
+    - 3.4
+    - 5.4
+    - 7.4
+    - 9.350000000000001
+    - 11.35
+    - 13.35
+    - 15.3
+    - 17.3
+    - 19.25
+    - 21.25
+    - 23.2
+    - 25.200000000000003
+    - 27.150000000000002
+    - 29.15
+    - 31.150000000000002
+    - 33.1
+    - 35.1
+    - 37.050000000000004
+    - 39.05
+    - 41.0
+    last_twenty_event_times_ms:
+    - 2963.5
+    - 2965.5
+    - 2967.4500000000003
+    - 2969.45
+    - 2971.4
+    - 2973.4
+    - 2975.35
+    - 2977.35
+    - 2979.35
+    - 2981.3
+    - 2983.3
+    - 2985.25
+    - 2987.25
+    - 2989.2
+    - 2991.2000000000003
+    - 2993.2
+    - 2995.15
+    - 2997.15
+    - 2999.1
+    - 3001.1000000000004
+    minimum_voltage_mV: -0.7199228776592602
+    maximum_voltage_mV: 112.58325570407224
+    finite: true
+    calibration_window:
+      candidate_mean_mV: 24.588081091428233
+      archived_mean_mV: 7.873061034379345
+      mean_error_mV: 16.71502005704889
+      rmse_mV: 30.216582450795062
+      correlation: -0.0008571078604964779
+  burst_outcomes:
+  - input_value: 0.0
+    event_count: 0
+    median_interevent_interval_ms: null
+    first_event_ms: null
+    last_event_ms: null
+    event_times_ms: []
+    minimum_voltage_mV: 0.0
+    maximum_voltage_mV: 0.1976070558632518
+    finite: true
+    preinput_window:
+      candidate_mean_mV: 0.19437922511590383
+      archived_mean_mV: 0.24135587044444443
+      mean_error_mV: -0.046976645328540595
+      rmse_mV: 0.046976645346571484
+      correlation: 0.9995314185531199
+    calibration_window:
+      candidate_mean_mV: 0.19437863968604968
+      archived_mean_mV: -32.519054999999994
+      mean_error_mV: 32.713433639686045
+      rmse_mV: 32.71343363968605
+      correlation: 1.0
+  - input_value: 0.0625
+    event_count: 0
+    median_interevent_interval_ms: null
+    first_event_ms: null
+    last_event_ms: null
+    event_times_ms: []
+    minimum_voltage_mV: -7.230779557681177
+    maximum_voltage_mV: 0.3907071955428493
+    finite: true
+    preinput_window:
+      candidate_mean_mV: 0.19437922511590383
+      archived_mean_mV: 0.24135587044444443
+      mean_error_mV: -0.046976645328540595
+      rmse_mV: 0.046976645346571484
+      correlation: 0.9995314185531199
+    calibration_window:
+      candidate_mean_mV: -7.0253365610978
+      archived_mean_mV: -32.519054999999994
+      mean_error_mV: 25.493718438902196
+      rmse_mV: 25.4937184389022
+      correlation: -0.0021194399756943316
+  - input_value: 0.125
+    event_count: 0
+    median_interevent_interval_ms: null
+    first_event_ms: null
+    last_event_ms: null
+    event_times_ms: []
+    minimum_voltage_mV: -14.50068097435314
+    maximum_voltage_mV: 0.9377563412950427
+    finite: true
+    preinput_window:
+      candidate_mean_mV: 0.19437922511590383
+      archived_mean_mV: 0.24135587044444443
+      mean_error_mV: -0.046976645328540595
+      rmse_mV: 0.046976645346571484
+      correlation: 0.9995314185531199
+    calibration_window:
+      candidate_mean_mV: -13.696947414509362
+      archived_mean_mV: -32.519054999999994
+      mean_error_mV: 18.822107585490635
+      rmse_mV: 18.822107585490638
+      correlation: -0.18466738508306046
+  - input_value: 0.1875
+    event_count: 0
+    median_interevent_interval_ms: null
+    first_event_ms: null
+    last_event_ms: null
+    event_times_ms: []
+    minimum_voltage_mV: -21.500641955723594
+    maximum_voltage_mV: 2.1929958064380806
+    finite: true
+    preinput_window:
+      candidate_mean_mV: 0.19437922511590383
+      archived_mean_mV: 0.24135587044444443
+      mean_error_mV: -0.046976645328540595
+      rmse_mV: 0.046976645346571484
+      correlation: 0.9995314185531199
+    calibration_window:
+      candidate_mean_mV: -19.354395382373433
+      archived_mean_mV: -32.519054999999994
+      mean_error_mV: 13.164659617626562
+      rmse_mV: 13.164659617626572
+      correlation: -0.81391883112059
+  - input_value: 0.25
+    event_count: 0
+    median_interevent_interval_ms: null
+    first_event_ms: null
+    last_event_ms: null
+    event_times_ms: []
+    minimum_voltage_mV: -28.04573921536467
+    maximum_voltage_mV: 4.449723753582505
+    finite: true
+    preinput_window:
+      candidate_mean_mV: 0.19437922511590383
+      archived_mean_mV: 0.24135587044444443
+      mean_error_mV: -0.046976645328540595
+      rmse_mV: 0.046976645346571484
+      correlation: 0.9995314185531199
+    calibration_window:
+      candidate_mean_mV: -23.73665616585738
+      archived_mean_mV: -32.519054999999994
+      mean_error_mV: 8.782398834142615
+      rmse_mV: 8.782398834142617
+      correlation: 0.5239017030052406
+  - input_value: 0.3125
+    event_count: 1
+    median_interevent_interval_ms: null
+    first_event_ms: 2198.45
+    last_event_ms: 2198.45
+    event_times_ms:
+    - 2198.45
+    minimum_voltage_mV: -33.97950143343367
+    maximum_voltage_mV: 107.47675180612342
+    finite: true
+    preinput_window:
+      candidate_mean_mV: 0.19437922511590383
+      archived_mean_mV: 0.24135587044444443
+      mean_error_mV: -0.046976645328540595
+      rmse_mV: 0.046976645346571484
+      correlation: 0.9995314185531199
+    calibration_window:
+      candidate_mean_mV: -27.016449443847687
+      archived_mean_mV: -32.519054999999994
+      mean_error_mV: 5.502605556152307
+      rmse_mV: 5.502605556152319
+      correlation: -0.37156903841668687
+  - input_value: 0.375
+    event_count: 2
+    median_interevent_interval_ms: 8.25
+    first_event_ms: 2189.8
+    last_event_ms: 2198.05
+    event_times_ms:
+    - 2189.8
+    - 2198.05
+    minimum_voltage_mV: -39.24790354925517
+    maximum_voltage_mV: 108.94161783020668
+    finite: true
+    preinput_window:
+      candidate_mean_mV: 0.19437922511590383
+      archived_mean_mV: 0.24135587044444443
+      mean_error_mV: -0.046976645328540595
+      rmse_mV: 0.046976645346571484
+      correlation: 0.9995314185531199
+    calibration_window:
+      candidate_mean_mV: -29.51353701257193
+      archived_mean_mV: -32.519054999999994
+      mean_error_mV: 3.005517987428064
+      rmse_mV: 3.005517987428076
+      correlation: -0.41017630428281343
+  - &id002
+    input_value: 0.5
+    event_count: 4
+    median_interevent_interval_ms: 4.700000000000273
+    first_event_ms: 2188.05
+    last_event_ms: 2202.7000000000003
+    event_times_ms:
+    - 2188.05
+    - 2192.1
+    - 2196.8
+    - 2202.7000000000003
+    minimum_voltage_mV: -48.0343553648155
+    maximum_voltage_mV: 109.72991985812095
+    finite: true
+    preinput_window:
+      candidate_mean_mV: 0.19437922511590383
+      archived_mean_mV: 0.24135587044444443
+      mean_error_mV: -0.046976645328540595
+      rmse_mV: 0.046976645346571484
+      correlation: 0.9995314185531199
+    calibration_window:
+      candidate_mean_mV: -33.089158044421254
+      archived_mean_mV: -32.519054999999994
+      mean_error_mV: -0.5701030444212591
+      rmse_mV: 0.570103044421254
+      correlation: 0.2505352596751118
+  - input_value: 0.625
+    event_count: 7
+    median_interevent_interval_ms: 4.0750000000000455
+    first_event_ms: 2187.4
+    last_event_ms: 2214.85
+    event_times_ms:
+    - 2187.4
+    - 2190.6
+    - 2194.0
+    - 2197.8
+    - 2202.15
+    - 2207.4
+    - 2214.85
+    minimum_voltage_mV: -55.14922446033932
+    maximum_voltage_mV: 111.03445654615894
+    finite: true
+    preinput_window:
+      candidate_mean_mV: 0.19437922511590383
+      archived_mean_mV: 0.24135587044444443
+      mean_error_mV: -0.046976645328540595
+      rmse_mV: 0.046976645346571484
+      correlation: 0.9995314185531199
+    calibration_window:
+      candidate_mean_mV: -35.60051873364576
+      archived_mean_mV: -32.519054999999994
+      mean_error_mV: -3.081463733645762
+      rmse_mV: 3.081463733645756
+      correlation: 0.19715072994247
+  - input_value: 0.75
+    event_count: 9
+    median_interevent_interval_ms: 3.525000000000091
+    first_event_ms: 2187.0
+    last_event_ms: 2218.85
+    event_times_ms:
+    - 2187.0
+    - 2189.8
+    - 2192.7000000000003
+    - 2195.7999999999997
+    - 2199.15
+    - 2202.85
+    - 2207.1000000000004
+    - 2212.1
+    - 2218.85
+    minimum_voltage_mV: -61.22978082101805
+    maximum_voltage_mV: 111.2300004118273
+    finite: true
+    preinput_window:
+      candidate_mean_mV: 0.19437922511590383
+      archived_mean_mV: 0.24135587044444443
+      mean_error_mV: -0.046976645328540595
+      rmse_mV: 0.046976645346571484
+      correlation: 0.9995314185531199
+    calibration_window:
+      candidate_mean_mV: -37.525086663631896
+      archived_mean_mV: -32.519054999999994
+      mean_error_mV: -5.0060316636319016
+      rmse_mV: 5.006031663631896
+      correlation: 0.20756710951422666
+  - input_value: 0.8125
+    event_count: 10
+    median_interevent_interval_ms: 3.3499999999994543
+    first_event_ms: 2186.9
+    last_event_ms: 2221.2000000000003
+    event_times_ms:
+    - 2186.9
+    - 2189.5
+    - 2192.25
+    - 2195.1000000000004
+    - 2198.2000000000003
+    - 2201.5499999999997
+    - 2205.3
+    - 2209.5
+    - 2214.5
+    - 2221.2000000000003
+    minimum_voltage_mV: -64.01425069878147
+    maximum_voltage_mV: 111.59806395002829
+    finite: true
+    preinput_window:
+      candidate_mean_mV: 0.19437922511590383
+      archived_mean_mV: 0.24135587044444443
+      mean_error_mV: -0.046976645328540595
+      rmse_mV: 0.046976645346571484
+      correlation: 0.9995314185531199
+    calibration_window:
+      candidate_mean_mV: -38.342384100966754
+      archived_mean_mV: -32.519054999999994
+      mean_error_mV: -5.82332910096676
+      rmse_mV: 5.823329100966753
+      correlation: 0.154638045674627
+  - input_value: 0.875
+    event_count: 11
+    median_interevent_interval_ms: 3.2499999999997726
+    first_event_ms: 2186.8
+    last_event_ms: 2223.75
+    event_times_ms:
+    - 2186.8
+    - 2189.3
+    - 2191.8500000000004
+    - 2194.55
+    - 2197.4500000000003
+    - 2200.55
+    - 2203.95
+    - 2207.6499999999996
+    - 2211.9
+    - 2216.95
+    - 2223.75
+    minimum_voltage_mV: -66.66685338265641
+    maximum_voltage_mV: 111.79533480568203
+    finite: true
+    preinput_window:
+      candidate_mean_mV: 0.19437922511590383
+      archived_mean_mV: 0.24135587044444443
+      mean_error_mV: -0.046976645328540595
+      rmse_mV: 0.046976645346571484
+      correlation: 0.9995314185531199
+    calibration_window:
+      candidate_mean_mV: -39.08712100936935
+      archived_mean_mV: -32.519054999999994
+      mean_error_mV: -6.568066009369353
+      rmse_mV: 6.568066009369347
+      correlation: 0.22208162388493327
+  - input_value: 0.9375
+    event_count: 12
+    median_interevent_interval_ms: 3.099999999999909
+    first_event_ms: 2186.7000000000003
+    last_event_ms: 2226.5
+    event_times_ms:
+    - 2186.7000000000003
+    - 2189.1
+    - 2191.55
+    - 2194.15
+    - 2196.8500000000004
+    - 2199.75
+    - 2202.85
+    - 2206.25
+    - 2210.05
+    - 2214.2999999999997
+    - 2219.4
+    - 2226.5
+    minimum_voltage_mV: -69.239330105869
+    maximum_voltage_mV: 111.85430252036643
+    finite: true
+    preinput_window:
+      candidate_mean_mV: 0.19437922511590383
+      archived_mean_mV: 0.24135587044444443
+      mean_error_mV: -0.046976645328540595
+      rmse_mV: 0.046976645346571484
+      correlation: 0.9995314185531199
+    calibration_window:
+      candidate_mean_mV: -39.77180703075005
+      archived_mean_mV: -32.519054999999994
+      mean_error_mV: -7.252752030750052
+      rmse_mV: 7.252752030750038
+      correlation: -0.8561430989140122
+  - input_value: 0.9803921568627451
+    event_count: 13
+    median_interevent_interval_ms: 3.099999999999909
+    first_event_ms: 2186.65
+    last_event_ms: 2232.95
+    event_times_ms:
+    - 2186.65
+    - 2188.95
+    - 2191.35
+    - 2193.85
+    - 2196.5
+    - 2199.3
+    - 2202.25
+    - 2205.5
+    - 2209.0000000000005
+    - 2212.95
+    - 2217.5
+    - 2223.1000000000004
+    - 2232.95
+    minimum_voltage_mV: -70.96215030365484
+    maximum_voltage_mV: 112.02132258792521
+    finite: true
+    preinput_window:
+      candidate_mean_mV: 0.19437922511590383
+      archived_mean_mV: 0.24135587044444443
+      mean_error_mV: -0.046976645328540595
+      rmse_mV: 0.046976645346571484
+      correlation: 0.9995314185531199
+    calibration_window:
+      candidate_mean_mV: -40.212029646377275
+      archived_mean_mV: -32.519054999999994
+      mean_error_mV: -7.69297464637728
+      rmse_mV: 7.692974646377272
+      correlation: 0.19956603648875895
+  - input_value: 1.0
+    event_count: 13
+    median_interevent_interval_ms: 3.0249999999998636
+    first_event_ms: 2186.6
+    last_event_ms: 2229.5
+    event_times_ms:
+    - 2186.6
+    - 2188.95
+    - 2191.3
+    - 2193.7500000000005
+    - 2196.35
+    - 2199.1000000000004
+    - 2202.0
+    - 2205.15
+    - 2208.6
+    - 2212.4
+    - 2216.75
+    - 2222.0
+    - 2229.5
+    minimum_voltage_mV: -71.74359254486976
+    maximum_voltage_mV: 111.77193505014054
+    finite: true
+    preinput_window:
+      candidate_mean_mV: 0.19437922511590383
+      archived_mean_mV: 0.24135587044444443
+      mean_error_mV: -0.046976645328540595
+      rmse_mV: 0.046976645346571484
+      correlation: 0.9995314185531199
+    calibration_window:
+      candidate_mean_mV: -40.40608540529102
+      archived_mean_mV: -32.519054999999994
+      mean_error_mV: -7.8870304052910285
+      rmse_mV: 7.887030405291015
+      correlation: -0.9629343598077509
+  voltage_selected:
+    tonic: *id001
+    burst: *id002
+  held_out_evaluation:
+    checks:
+      tonic_event_count: false
+      tonic_median_interevent_interval: false
+      burst_event_count: false
+      burst_event_timing: false
+      burst_preinput_mean_voltage: true
+    joint_pass: false
+    burst_max_event_time_error_ms: null
+- integration_method: sanndra_scalar_rk4
+  tonic_outcomes:
+  - input_value: 0.0
+    event_count: 0
+    median_interevent_interval_ms: null
+    first_event_ms: null
+    last_event_ms: null
+    event_times_ms: []
+    minimum_voltage_mV: 0.0
+    maximum_voltage_mV: 0.1976018348131394
+    finite: true
+    calibration_window:
+      candidate_mean_mV: 0.1943788221038969
+      archived_mean_mV: 7.873061034379345
+      mean_error_mV: -7.678682212275447
+      rmse_mV: 18.118825024141984
+      correlation: 0.003605745742231856
+  - &id003
+    input_value: 0.0625
+    event_count: 0
+    median_interevent_interval_ms: null
+    first_event_ms: null
+    last_event_ms: null
+    event_times_ms: []
+    minimum_voltage_mV: 0.0
+    maximum_voltage_mV: 6.602006896032657
+    finite: true
+    calibration_window:
+      candidate_mean_mV: 6.486589252850538
+      archived_mean_mV: 7.873061034379345
+      mean_error_mV: -1.3864717815288063
+      rmse_mV: 16.46972845962074
+      correlation: 0.003581183920291371
+  - input_value: 0.125
+    event_count: 484
+    median_interevent_interval_ms: 6.200000000000003
+    first_event_ms: 6.55
+    last_event_ms: 3000.2000000000003
+    first_twenty_event_times_ms:
+    - 6.55
+    - 12.700000000000001
+    - 18.900000000000002
+    - 25.1
+    - 31.300000000000004
+    - 37.5
+    - 43.7
+    - 49.900000000000006
+    - 56.1
+    - 62.3
+    - 68.45
+    - 74.65
+    - 80.85000000000001
+    - 87.05
+    - 93.25
+    - 99.45
+    - 105.65
+    - 111.85
+    - 118.05
+    - 124.25000000000001
+    last_twenty_event_times_ms:
+    - 2882.4500000000003
+    - 2888.65
+    - 2894.85
+    - 2901.05
+    - 2907.25
+    - 2913.4500000000003
+    - 2919.65
+    - 2925.8500000000004
+    - 2932.05
+    - 2938.25
+    - 2944.4
+    - 2950.6000000000004
+    - 2956.8
+    - 2963.0000000000005
+    - 2969.2
+    - 2975.4
+    - 2981.6
+    - 2987.8
+    - 2994.0
+    - 3000.2000000000003
+    minimum_voltage_mV: -11.269790336835237
+    maximum_voltage_mV: 109.5930902829567
+    finite: true
+    calibration_window:
+      candidate_mean_mV: 12.373903098158966
+      archived_mean_mV: 7.873061034379345
+      mean_error_mV: 4.500842063779621
+      rmse_mV: 29.435706041814093
+      correlation: -0.0064071894220102425
+  - input_value: 0.1875
+    event_count: 661
+    median_interevent_interval_ms: 4.5499999999999545
+    first_event_ms: 5.25
+    last_event_ms: 2997.8
+    first_twenty_event_times_ms:
+    - 5.25
+    - 9.8
+    - 14.35
+    - 18.85
+    - 23.400000000000002
+    - 27.900000000000002
+    - 32.45
+    - 37.0
+    - 41.5
+    - 46.05
+    - 50.6
+    - 55.1
+    - 59.65
+    - 64.2
+    - 68.7
+    - 73.25
+    - 77.80000000000001
+    - 82.30000000000001
+    - 86.85000000000001
+    - 91.4
+    last_twenty_event_times_ms:
+    - 2911.65
+    - 2916.15
+    - 2920.7000000000003
+    - 2925.2500000000005
+    - 2929.75
+    - 2934.3
+    - 2938.85
+    - 2943.3500000000004
+    - 2947.9
+    - 2952.45
+    - 2956.9500000000003
+    - 2961.5
+    - 2966.05
+    - 2970.55
+    - 2975.1
+    - 2979.65
+    - 2984.2000000000003
+    - 2988.7000000000003
+    - 2993.25
+    - 2997.8
+    minimum_voltage_mV: -10.498373724039627
+    maximum_voltage_mV: 110.68726849722137
+    finite: true
+    calibration_window:
+      candidate_mean_mV: 14.768601402918286
+      archived_mean_mV: 7.873061034379345
+      mean_error_mV: 6.895540368538941
+      rmse_mV: 31.73745141234802
+      correlation: -0.00013603466107195306
+  - input_value: 0.25
+    event_count: 784
+    median_interevent_interval_ms: 3.849999999999909
+    first_event_ms: 4.7
+    last_event_ms: 3001.15
+    first_twenty_event_times_ms:
+    - 4.7
+    - 8.55
+    - 12.4
+    - 16.200000000000003
+    - 20.05
+    - 23.85
+    - 27.7
+    - 31.5
+    - 35.35
+    - 39.15
+    - 43.0
+    - 46.85
+    - 50.650000000000006
+    - 54.50000000000001
+    - 58.300000000000004
+    - 62.15
+    - 65.95
+    - 69.8
+    - 73.6
+    - 77.45
+    last_twenty_event_times_ms:
+    - 2928.45
+    - 2932.25
+    - 2936.1
+    - 2939.9
+    - 2943.7500000000005
+    - 2947.55
+    - 2951.4
+    - 2955.2000000000003
+    - 2959.05
+    - 2962.8500000000004
+    - 2966.7000000000003
+    - 2970.5
+    - 2974.35
+    - 2978.2
+    - 2982.0
+    - 2985.8500000000004
+    - 2989.65
+    - 2993.5
+    - 2997.3
+    - 3001.15
+    minimum_voltage_mV: -9.802405884181173
+    maximum_voltage_mV: 110.85376605559983
+    finite: true
+    calibration_window:
+      candidate_mean_mV: 16.471838933297228
+      archived_mean_mV: 7.873061034379345
+      mean_error_mV: 8.598777898917884
+      rmse_mV: 32.86236389823607
+      correlation: -0.004186967017983812
+  - input_value: 0.3125
+    event_count: 879
+    median_interevent_interval_ms: 3.400000000000091
+    first_event_ms: 4.4
+    last_event_ms: 3001.1000000000004
+    first_twenty_event_times_ms:
+    - 4.4
+    - 7.85
+    - 11.250000000000002
+    - 14.700000000000001
+    - 18.099999999999998
+    - 21.5
+    - 24.9
+    - 28.35
+    - 31.75
+    - 35.15
+    - 38.55
+    - 42.0
+    - 45.4
+    - 48.8
+    - 52.2
+    - 55.65
+    - 59.050000000000004
+    - 62.45
+    - 65.85
+    - 69.3
+    last_twenty_event_times_ms:
+    - 2936.25
+    - 2939.65
+    - 2943.05
+    - 2946.5
+    - 2949.9
+    - 2953.3
+    - 2956.7000000000003
+    - 2960.15
+    - 2963.55
+    - 2966.95
+    - 2970.35
+    - 2973.7999999999997
+    - 2977.2
+    - 2980.6
+    - 2984.0
+    - 2987.4500000000003
+    - 2990.8500000000004
+    - 2994.2500000000005
+    - 2997.6499999999996
+    - 3001.1000000000004
+    minimum_voltage_mV: -9.127261011465334
+    maximum_voltage_mV: 111.32515671662448
+    finite: true
+    calibration_window:
+      candidate_mean_mV: 17.7864901018262
+      archived_mean_mV: 7.873061034379345
+      mean_error_mV: 9.913429067446856
+      rmse_mV: 33.295177134875225
+      correlation: 0.0015150344789200691
+  - input_value: 0.375
+    event_count: 957
+    median_interevent_interval_ms: 3.1499999999999773
+    first_event_ms: 4.2
+    last_event_ms: 2999.8
+    first_twenty_event_times_ms:
+    - 4.2
+    - 7.4
+    - 10.5
+    - 13.65
+    - 16.8
+    - 19.9
+    - 23.05
+    - 26.200000000000003
+    - 29.3
+    - 32.45
+    - 35.6
+    - 38.7
+    - 41.85
+    - 45.0
+    - 48.1
+    - 51.25
+    - 54.4
+    - 57.5
+    - 60.65
+    - 63.8
+    last_twenty_event_times_ms:
+    - 2940.3
+    - 2943.4
+    - 2946.5499999999997
+    - 2949.7000000000003
+    - 2952.8
+    - 2955.9500000000003
+    - 2959.1
+    - 2962.2
+    - 2965.35
+    - 2968.5000000000005
+    - 2971.6000000000004
+    - 2974.75
+    - 2977.9
+    - 2981.0
+    - 2984.15
+    - 2987.3
+    - 2990.4
+    - 2993.55
+    - 2996.7000000000003
+    - 2999.8
+    minimum_voltage_mV: -8.501800645642433
+    maximum_voltage_mV: 111.66270391816334
+    finite: true
+    calibration_window:
+      candidate_mean_mV: 18.842417627586457
+      archived_mean_mV: 7.873061034379345
+      mean_error_mV: 10.969356593207113
+      rmse_mV: 33.52833354955319
+      correlation: -0.0004924961875060695
+  - input_value: 0.5
+    event_count: 1083
+    median_interevent_interval_ms: 2.75
+    first_event_ms: 3.95
+    last_event_ms: 2999.8
+    first_twenty_event_times_ms:
+    - 3.95
+    - 6.75
+    - 9.55
+    - 12.3
+    - 15.1
+    - 17.85
+    - 20.6
+    - 23.400000000000002
+    - 26.150000000000002
+    - 28.9
+    - 31.7
+    - 34.449999999999996
+    - 37.2
+    - 40.0
+    - 42.75
+    - 45.550000000000004
+    - 48.3
+    - 51.050000000000004
+    - 53.85
+    - 56.6
+    last_twenty_event_times_ms:
+    - 2947.2000000000003
+    - 2949.95
+    - 2952.75
+    - 2955.5
+    - 2958.25
+    - 2961.0499999999997
+    - 2963.8
+    - 2966.6000000000004
+    - 2969.35
+    - 2972.1
+    - 2974.9
+    - 2977.65
+    - 2980.4
+    - 2983.2000000000003
+    - 2985.95
+    - 2988.75
+    - 2991.5
+    - 2994.2500000000005
+    - 2997.0499999999997
+    - 2999.8
+    minimum_voltage_mV: -7.271939530485238
+    maximum_voltage_mV: 112.21988549657904
+    finite: true
+    calibration_window:
+      candidate_mean_mV: 20.527784940717243
+      archived_mean_mV: 7.873061034379345
+      mean_error_mV: 12.6547239063379
+      rmse_mV: 33.49218917887778
+      correlation: 0.0008201083064707497
+  - input_value: 0.625
+    event_count: 1184
+    median_interevent_interval_ms: 2.5499999999999545
+    first_event_ms: 3.8
+    last_event_ms: 3001.35
+    first_twenty_event_times_ms:
+    - 3.8
+    - 6.4
+    - 8.9
+    - 11.45
+    - 14.0
+    - 16.5
+    - 19.049999999999997
+    - 21.599999999999998
+    - 24.1
+    - 26.650000000000002
+    - 29.200000000000003
+    - 31.7
+    - 34.25
+    - 36.800000000000004
+    - 39.3
+    - 41.85
+    - 44.4
+    - 46.9
+    - 49.449999999999996
+    - 52.0
+    last_twenty_event_times_ms:
+    - 2953.2
+    - 2955.7500000000005
+    - 2958.25
+    - 2960.8
+    - 2963.35
+    - 2965.8500000000004
+    - 2968.4
+    - 2970.95
+    - 2973.45
+    - 2976.0
+    - 2978.55
+    - 2981.0499999999997
+    - 2983.6000000000004
+    - 2986.15
+    - 2988.65
+    - 2991.2000000000003
+    - 2993.75
+    - 2996.25
+    - 2998.8
+    - 3001.35
+    minimum_voltage_mV: -6.153281324796217
+    maximum_voltage_mV: 112.4285439942834
+    finite: true
+    calibration_window:
+      candidate_mean_mV: 21.8311181509081
+      archived_mean_mV: 7.873061034379345
+      mean_error_mV: 13.958057116528757
+      rmse_mV: 33.157347515057666
+      correlation: 0.0025782876264584475
+  - input_value: 0.75
+    event_count: 1268
+    median_interevent_interval_ms: 2.3500000000001364
+    first_event_ms: 3.7
+    last_event_ms: 3000.9500000000003
+    first_twenty_event_times_ms:
+    - 3.7
+    - 6.1000000000000005
+    - 8.45
+    - 10.85
+    - 13.2
+    - 15.55
+    - 17.950000000000003
+    - 20.3
+    - 22.650000000000002
+    - 25.05
+    - 27.400000000000002
+    - 29.75
+    - 32.15
+    - 34.5
+    - 36.85
+    - 39.2
+    - 41.6
+    - 43.95
+    - 46.3
+    - 48.7
+    last_twenty_event_times_ms:
+    - 2956.0
+    - 2958.35
+    - 2960.75
+    - 2963.1
+    - 2965.4500000000003
+    - 2967.85
+    - 2970.2
+    - 2972.55
+    - 2974.95
+    - 2977.3
+    - 2979.65
+    - 2982.05
+    - 2984.4
+    - 2986.75
+    - 2989.15
+    - 2991.5
+    - 2993.8500000000004
+    - 2996.2000000000003
+    - 2998.6
+    - 3000.9500000000003
+    minimum_voltage_mV: -5.048565955180157
+    maximum_voltage_mV: 112.50676620250721
+    finite: true
+    calibration_window:
+      candidate_mean_mV: 22.877496398543155
+      archived_mean_mV: 7.873061034379345
+      mean_error_mV: 15.004435364163811
+      rmse_mV: 32.72603612347137
+      correlation: 0.00039514425933796055
+  - input_value: 0.8125
+    event_count: 1306
+    median_interevent_interval_ms: 2.2999999999999545
+    first_event_ms: 3.65
+    last_event_ms: 3001.9
+    first_twenty_event_times_ms:
+    - 3.65
+    - 6.0
+    - 8.3
+    - 10.6
+    - 12.9
+    - 15.2
+    - 17.5
+    - 19.8
+    - 22.099999999999998
+    - 24.35
+    - 26.650000000000002
+    - 28.950000000000003
+    - 31.25
+    - 33.55
+    - 35.85
+    - 38.15
+    - 40.45
+    - 42.75
+    - 45.050000000000004
+    - 47.35
+    last_twenty_event_times_ms:
+    - 2958.25
+    - 2960.55
+    - 2962.8500000000004
+    - 2965.15
+    - 2967.4500000000003
+    - 2969.75
+    - 2972.05
+    - 2974.35
+    - 2976.65
+    - 2978.9
+    - 2981.2
+    - 2983.5
+    - 2985.7999999999997
+    - 2988.1
+    - 2990.4
+    - 2992.7000000000003
+    - 2995.0000000000005
+    - 2997.3
+    - 2999.6000000000004
+    - 3001.9
+    minimum_voltage_mV: -4.525214440282057
+    maximum_voltage_mV: 112.54526504502714
+    finite: true
+    calibration_window:
+      candidate_mean_mV: 23.343489826023056
+      archived_mean_mV: 7.873061034379345
+      mean_error_mV: 15.470428791643712
+      rmse_mV: 32.50001803338754
+      correlation: -0.0011316376199151626
+  - input_value: 0.875
+    event_count: 1341
+    median_interevent_interval_ms: 2.25
+    first_event_ms: 3.6
+    last_event_ms: 3001.5
+    first_twenty_event_times_ms:
+    - 3.6
+    - 5.9
+    - 8.15
+    - 10.35
+    - 12.6
+    - 14.85
+    - 17.1
+    - 19.3
+    - 21.55
+    - 23.8
+    - 26.05
+    - 28.250000000000004
+    - 30.5
+    - 32.75
+    - 35.0
+    - 37.2
+    - 39.45
+    - 41.699999999999996
+    - 43.95
+    - 46.15
+    last_twenty_event_times_ms:
+    - 2959.0000000000005
+    - 2961.25
+    - 2963.5
+    - 2965.7000000000003
+    - 2967.9500000000003
+    - 2970.2
+    - 2972.45
+    - 2974.65
+    - 2976.9
+    - 2979.15
+    - 2981.4
+    - 2983.6000000000004
+    - 2985.8500000000004
+    - 2988.1
+    - 2990.35
+    - 2992.55
+    - 2994.8
+    - 2997.0499999999997
+    - 2999.3
+    - 3001.5
+    minimum_voltage_mV: -4.028143954899335
+    maximum_voltage_mV: 113.08491333677266
+    finite: true
+    calibration_window:
+      candidate_mean_mV: 23.763585878269318
+      archived_mean_mV: 7.873061034379345
+      mean_error_mV: 15.890524843889974
+      rmse_mV: 32.23947638514499
+      correlation: -0.0011041297337165087
+  - input_value: 0.9375
+    event_count: 1374
+    median_interevent_interval_ms: 2.199999999999818
+    first_event_ms: 3.55
+    last_event_ms: 3001.4
+    first_twenty_event_times_ms:
+    - 3.55
+    - 5.8
+    - 8.0
+    - 10.200000000000001
+    - 12.35
+    - 14.55
+    - 16.75
+    - 18.900000000000002
+    - 21.1
+    - 23.3
+    - 25.450000000000003
+    - 27.650000000000002
+    - 29.8
+    - 32.0
+    - 34.199999999999996
+    - 36.35
+    - 38.55
+    - 40.75
+    - 42.9
+    - 45.1
+    last_twenty_event_times_ms:
+    - 2959.9500000000003
+    - 2962.1
+    - 2964.2999999999997
+    - 2966.5
+    - 2968.65
+    - 2970.8500000000004
+    - 2973.0499999999997
+    - 2975.2000000000003
+    - 2977.4
+    - 2979.6000000000004
+    - 2981.75
+    - 2983.9500000000003
+    - 2986.15
+    - 2988.2999999999997
+    - 2990.5
+    - 2992.7000000000003
+    - 2994.8500000000004
+    - 2997.0499999999997
+    - 2999.25
+    - 3001.4
+    minimum_voltage_mV: -3.5338661689099093
+    maximum_voltage_mV: 113.47758857817675
+    finite: true
+    calibration_window:
+      candidate_mean_mV: 24.156634214419586
+      archived_mean_mV: 7.873061034379345
+      mean_error_mV: 16.283573180040243
+      rmse_mV: 31.99646171194747
+      correlation: -0.0023809115825997648
+  - input_value: 0.9803921568627451
+    event_count: 1395
+    median_interevent_interval_ms: 2.1500000000000057
+    first_event_ms: 3.55
+    last_event_ms: 3000.2000000000003
+    first_twenty_event_times_ms:
+    - 3.55
+    - 5.75
+    - 7.8999999999999995
+    - 10.049999999999999
+    - 12.200000000000001
+    - 14.35
+    - 16.5
+    - 18.650000000000002
+    - 20.8
+    - 22.95
+    - 25.1
+    - 27.25
+    - 29.4
+    - 31.55
+    - 33.7
+    - 35.85
+    - 38.0
+    - 40.150000000000006
+    - 42.300000000000004
+    - 44.45
+    last_twenty_event_times_ms:
+    - 2959.35
+    - 2961.5
+    - 2963.65
+    - 2965.7999999999997
+    - 2967.9500000000003
+    - 2970.1
+    - 2972.25
+    - 2974.4
+    - 2976.55
+    - 2978.7000000000003
+    - 2980.85
+    - 2983.0000000000005
+    - 2985.15
+    - 2987.3
+    - 2989.45
+    - 2991.6000000000004
+    - 2993.75
+    - 2995.9
+    - 2998.05
+    - 3000.2000000000003
+    minimum_voltage_mV: -3.1345408876721703
+    maximum_voltage_mV: 113.03401128223653
+    finite: true
+    calibration_window:
+      candidate_mean_mV: 24.415973782086677
+      archived_mean_mV: 7.873061034379345
+      mean_error_mV: 16.542912747707334
+      rmse_mV: 31.78788606872695
+      correlation: 0.0009086756598193448
+  - input_value: 1.0
+    event_count: 1405
+    median_interevent_interval_ms: 2.1499999999999773
+    first_event_ms: 3.55
+    last_event_ms: 3001.0499999999997
+    first_twenty_event_times_ms:
+    - 3.55
+    - 5.7
+    - 7.85
+    - 10.0
+    - 12.15
+    - 14.25
+    - 16.4
+    - 18.55
+    - 20.65
+    - 22.8
+    - 24.950000000000003
+    - 27.1
+    - 29.200000000000003
+    - 31.35
+    - 33.5
+    - 35.6
+    - 37.75
+    - 39.900000000000006
+    - 42.0
+    - 44.15
+    last_twenty_event_times_ms:
+    - 2960.5000000000005
+    - 2962.65
+    - 2964.75
+    - 2966.9
+    - 2969.0499999999997
+    - 2971.2000000000003
+    - 2973.3
+    - 2975.4500000000003
+    - 2977.6
+    - 2979.7
+    - 2981.8500000000004
+    - 2984.0
+    - 2986.1
+    - 2988.25
+    - 2990.4
+    - 2992.55
+    - 2994.65
+    - 2996.8
+    - 2998.95
+    - 3001.0499999999997
+    minimum_voltage_mV: -3.016415930920739
+    maximum_voltage_mV: 113.35313597840974
+    finite: true
+    calibration_window:
+      candidate_mean_mV: 24.524761735764958
+      archived_mean_mV: 7.873061034379345
+      mean_error_mV: 16.651700701385614
+      rmse_mV: 31.695779892953585
+      correlation: 0.0019072126778706367
+  burst_outcomes:
+  - input_value: 0.0
+    event_count: 0
+    median_interevent_interval_ms: null
+    first_event_ms: null
+    last_event_ms: null
+    event_times_ms: []
+    minimum_voltage_mV: 0.0
+    maximum_voltage_mV: 0.1976018348131394
+    finite: true
+    preinput_window:
+      candidate_mean_mV: 0.19437922747689065
+      archived_mean_mV: 0.24135587044444443
+      mean_error_mV: -0.04697664296755377
+      rmse_mV: 0.04697664298526966
+      correlation: 0.9995310374342811
+    calibration_window:
+      candidate_mean_mV: 0.19437863968604968
+      archived_mean_mV: -32.519054999999994
+      mean_error_mV: 32.713433639686045
+      rmse_mV: 32.71343363968605
+      correlation: 1.0
+  - input_value: 0.0625
+    event_count: 0
+    median_interevent_interval_ms: null
+    first_event_ms: null
+    last_event_ms: null
+    event_times_ms: []
+    minimum_voltage_mV: -7.2306091473780665
+    maximum_voltage_mV: 0.3904377177307392
+    finite: true
+    preinput_window:
+      candidate_mean_mV: 0.19437922747689065
+      archived_mean_mV: 0.24135587044444443
+      mean_error_mV: -0.04697664296755377
+      rmse_mV: 0.04697664298526966
+      correlation: 0.9995310374342811
+    calibration_window:
+      candidate_mean_mV: -7.0253365610978
+      archived_mean_mV: -32.519054999999994
+      mean_error_mV: 25.493718438902196
+      rmse_mV: 25.4937184389022
+      correlation: -0.003012777107967189
+  - input_value: 0.125
+    event_count: 0
+    median_interevent_interval_ms: null
+    first_event_ms: null
+    last_event_ms: null
+    event_times_ms: []
+    minimum_voltage_mV: -14.500592992062845
+    maximum_voltage_mV: 0.9370207242238171
+    finite: true
+    preinput_window:
+      candidate_mean_mV: 0.19437922747689065
+      archived_mean_mV: 0.24135587044444443
+      mean_error_mV: -0.04697664296755377
+      rmse_mV: 0.04697664298526966
+      correlation: 0.9995310374342811
+    calibration_window:
+      candidate_mean_mV: -13.696947414509353
+      archived_mean_mV: -32.519054999999994
+      mean_error_mV: 18.82210758549064
+      rmse_mV: 18.82210758549065
+      correlation: 0.22261903191210944
+  - input_value: 0.1875
+    event_count: 0
+    median_interevent_interval_ms: null
+    first_event_ms: null
+    last_event_ms: null
+    event_times_ms: []
+    minimum_voltage_mV: -21.502148257876517
+    maximum_voltage_mV: 2.191676521185682
+    finite: true
+    preinput_window:
+      candidate_mean_mV: 0.19437922747689065
+      archived_mean_mV: 0.24135587044444443
+      mean_error_mV: -0.04697664296755377
+      rmse_mV: 0.04697664298526966
+      correlation: 0.9995310374342811
+    calibration_window:
+      candidate_mean_mV: -19.354395382373433
+      archived_mean_mV: -32.519054999999994
+      mean_error_mV: 13.164659617626562
+      rmse_mV: 13.164659617626572
+      correlation: -0.8238287827057337
+  - input_value: 0.25
+    event_count: 0
+    median_interevent_interval_ms: null
+    first_event_ms: null
+    last_event_ms: null
+    event_times_ms: []
+    minimum_voltage_mV: -28.053566387542904
+    maximum_voltage_mV: 4.446729142712856
+    finite: true
+    preinput_window:
+      candidate_mean_mV: 0.19437922747689065
+      archived_mean_mV: 0.24135587044444443
+      mean_error_mV: -0.04697664296755377
+      rmse_mV: 0.04697664298526966
+      correlation: 0.9995310374342811
+    calibration_window:
+      candidate_mean_mV: -23.73665616585738
+      archived_mean_mV: -32.519054999999994
+      mean_error_mV: 8.782398834142615
+      rmse_mV: 8.782398834142617
+      correlation: 0.5317295150569028
+  - input_value: 0.3125
+    event_count: 0
+    median_interevent_interval_ms: null
+    first_event_ms: null
+    last_event_ms: null
+    event_times_ms: []
+    minimum_voltage_mV: -34.00268610013504
+    maximum_voltage_mV: 9.574102630921491
+    finite: true
+    preinput_window:
+      candidate_mean_mV: 0.19437922747689065
+      archived_mean_mV: 0.24135587044444443
+      mean_error_mV: -0.04697664296755377
+      rmse_mV: 0.04697664298526966
+      correlation: 0.9995310374342811
+    calibration_window:
+      candidate_mean_mV: -27.016449443847687
+      archived_mean_mV: -32.519054999999994
+      mean_error_mV: 5.502605556152307
+      rmse_mV: 5.502605556152319
+      correlation: -0.36870863885596433
+  - input_value: 0.375
+    event_count: 2
+    median_interevent_interval_ms: 9.099999999999909
+    first_event_ms: 2190.1
+    last_event_ms: 2199.2
+    event_times_ms:
+    - 2190.1
+    - 2199.2
+    minimum_voltage_mV: -39.299612022180554
+    maximum_voltage_mV: 109.9291306748058
+    finite: true
+    preinput_window:
+      candidate_mean_mV: 0.19437922747689065
+      archived_mean_mV: 0.24135587044444443
+      mean_error_mV: -0.04697664296755377
+      rmse_mV: 0.04697664298526966
+      correlation: 0.9995310374342811
+    calibration_window:
+      candidate_mean_mV: -29.51353701257193
+      archived_mean_mV: -32.519054999999994
+      mean_error_mV: 3.005517987428064
+      rmse_mV: 3.0055179874280755
+      correlation: -0.4061326049211113
+  - &id004
+    input_value: 0.5
+    event_count: 4
+    median_interevent_interval_ms: 5.099999999999454
+    first_event_ms: 2188.25
+    last_event_ms: 2204.3
+    event_times_ms:
+    - 2188.25
+    - 2192.6000000000004
+    - 2197.7
+    - 2204.3
+    minimum_voltage_mV: -48.18566456384964
+    maximum_voltage_mV: 111.06330521366682
+    finite: true
+    preinput_window:
+      candidate_mean_mV: 0.19437922747689065
+      archived_mean_mV: 0.24135587044444443
+      mean_error_mV: -0.04697664296755377
+      rmse_mV: 0.04697664298526966
+      correlation: 0.9995310374342811
+    calibration_window:
+      candidate_mean_mV: -33.089158044421254
+      archived_mean_mV: -32.519054999999994
+      mean_error_mV: -0.5701030444212591
+      rmse_mV: 0.570103044421254
+      correlation: 0.2543861946722402
+  - input_value: 0.625
+    event_count: 7
+    median_interevent_interval_ms: 4.474999999999682
+    first_event_ms: 2187.55
+    last_event_ms: 2222.7
+    event_times_ms:
+    - 2187.55
+    - 2191.0
+    - 2194.7000000000003
+    - 2198.85
+    - 2203.6499999999996
+    - 2209.65
+    - 2222.7
+    minimum_voltage_mV: -55.451362065280115
+    maximum_voltage_mV: 111.6306161192215
+    finite: true
+    preinput_window:
+      candidate_mean_mV: 0.19437922747689065
+      archived_mean_mV: 0.24135587044444443
+      mean_error_mV: -0.04697664296755377
+      rmse_mV: 0.04697664298526966
+      correlation: 0.9995310374342811
+    calibration_window:
+      candidate_mean_mV: -35.60051873364576
+      archived_mean_mV: -32.519054999999994
+      mean_error_mV: -3.081463733645762
+      rmse_mV: 3.081463733645756
+      correlation: 0.19278337591915987
+  - input_value: 0.75
+    event_count: 9
+    median_interevent_interval_ms: 3.900000000000091
+    first_event_ms: 2187.15
+    last_event_ms: 2225.85
+    event_times_ms:
+    - 2187.15
+    - 2190.15
+    - 2193.25
+    - 2196.65
+    - 2200.3
+    - 2204.4500000000003
+    - 2209.2000000000003
+    - 2215.1000000000004
+    - 2225.85
+    minimum_voltage_mV: -61.71640178091609
+    maximum_voltage_mV: 112.13222434010432
+    finite: true
+    preinput_window:
+      candidate_mean_mV: 0.19437922747689065
+      archived_mean_mV: 0.24135587044444443
+      mean_error_mV: -0.04697664296755377
+      rmse_mV: 0.04697664298526966
+      correlation: 0.9995310374342811
+    calibration_window:
+      candidate_mean_mV: -37.525086663631896
+      archived_mean_mV: -32.519054999999994
+      mean_error_mV: -5.0060316636319016
+      rmse_mV: 5.006031663631896
+      correlation: 0.254139453831937
+  - input_value: 0.8125
+    event_count: 10
+    median_interevent_interval_ms: 3.699999999999818
+    first_event_ms: 2187.0499999999997
+    last_event_ms: 2231.55
+    event_times_ms:
+    - 2187.0499999999997
+    - 2189.85
+    - 2192.8
+    - 2195.9
+    - 2199.3
+    - 2203.0
+    - 2207.15
+    - 2211.95
+    - 2217.9500000000003
+    - 2231.55
+    minimum_voltage_mV: -64.60310963741794
+    maximum_voltage_mV: 112.08100968199442
+    finite: true
+    preinput_window:
+      candidate_mean_mV: 0.19437922747689065
+      archived_mean_mV: 0.24135587044444443
+      mean_error_mV: -0.04697664296755377
+      rmse_mV: 0.04697664298526966
+      correlation: 0.9995310374342811
+    calibration_window:
+      candidate_mean_mV: -38.342384100966754
+      archived_mean_mV: -32.519054999999994
+      mean_error_mV: -5.82332910096676
+      rmse_mV: 5.823329100966753
+      correlation: 0.15195645656744763
+  - input_value: 0.875
+    event_count: 10
+    median_interevent_interval_ms: 3.400000000000091
+    first_event_ms: 2186.9
+    last_event_ms: 2220.9
+    event_times_ms:
+    - 2186.9
+    - 2189.6000000000004
+    - 2192.3999999999996
+    - 2195.35
+    - 2198.5
+    - 2201.9
+    - 2205.65
+    - 2209.85
+    - 2214.7
+    - 2220.9
+    minimum_voltage_mV: -67.37216856888472
+    maximum_voltage_mV: 112.50305474377829
+    finite: true
+    preinput_window:
+      candidate_mean_mV: 0.19437922747689065
+      archived_mean_mV: 0.24135587044444443
+      mean_error_mV: -0.04697664296755377
+      rmse_mV: 0.04697664298526966
+      correlation: 0.9995310374342811
+    calibration_window:
+      candidate_mean_mV: -39.08712100936935
+      archived_mean_mV: -32.519054999999994
+      mean_error_mV: -6.568066009369353
+      rmse_mV: 6.568066009369347
+      correlation: 0.2163368194117644
+  - input_value: 0.9375
+    event_count: 11
+    median_interevent_interval_ms: 3.300000000000182
+    first_event_ms: 2186.8
+    last_event_ms: 2224.05
+    event_times_ms:
+    - 2186.8
+    - 2189.4
+    - 2192.05
+    - 2194.85
+    - 2197.85
+    - 2201.0000000000005
+    - 2204.4500000000003
+    - 2208.25
+    - 2212.55
+    - 2217.5499999999997
+    - 2224.05
+    minimum_voltage_mV: -70.05368090873337
+    maximum_voltage_mV: 112.62462040061303
+    finite: true
+    preinput_window:
+      candidate_mean_mV: 0.19437922747689065
+      archived_mean_mV: 0.24135587044444443
+      mean_error_mV: -0.04697664296755377
+      rmse_mV: 0.04697664298526966
+      correlation: 0.9995310374342811
+    calibration_window:
+      candidate_mean_mV: -39.771807030750054
+      archived_mean_mV: -32.519054999999994
+      mean_error_mV: -7.2527520307500595
+      rmse_mV: 7.2527520307500515
+      correlation: 0.18608794034315027
+  - input_value: 0.9803921568627451
+    event_count: 12
+    median_interevent_interval_ms: 3.299999999999727
+    first_event_ms: 2186.75
+    last_event_ms: 2229.3
+    event_times_ms:
+    - 2186.75
+    - 2189.3
+    - 2191.8500000000004
+    - 2194.6
+    - 2197.4500000000003
+    - 2200.5
+    - 2203.7999999999997
+    - 2207.35
+    - 2211.35
+    - 2215.9
+    - 2221.4
+    - 2229.3
+    minimum_voltage_mV: -71.86146707965801
+    maximum_voltage_mV: 112.78804384199675
+    finite: true
+    preinput_window:
+      candidate_mean_mV: 0.19437922747689065
+      archived_mean_mV: 0.24135587044444443
+      mean_error_mV: -0.04697664296755377
+      rmse_mV: 0.04697664298526966
+      correlation: 0.9995310374342811
+    calibration_window:
+      candidate_mean_mV: -40.212029646377275
+      archived_mean_mV: -32.519054999999994
+      mean_error_mV: -7.69297464637728
+      rmse_mV: 7.692974646377272
+      correlation: 0.18811590500193362
+  - input_value: 1.0
+    event_count: 12
+    median_interevent_interval_ms: 3.199999999999818
+    first_event_ms: 2186.75
+    last_event_ms: 2227.4
+    event_times_ms:
+    - 2186.75
+    - 2189.25
+    - 2191.7999999999997
+    - 2194.45
+    - 2197.3
+    - 2200.3
+    - 2203.5
+    - 2207.0
+    - 2210.85
+    - 2215.25
+    - 2220.4500000000003
+    - 2227.4
+    minimum_voltage_mV: -72.67324092034373
+    maximum_voltage_mV: 112.30274203800447
+    finite: true
+    preinput_window:
+      candidate_mean_mV: 0.19437922747689065
+      archived_mean_mV: 0.24135587044444443
+      mean_error_mV: -0.04697664296755377
+      rmse_mV: 0.04697664298526966
+      correlation: 0.9995310374342811
+    calibration_window:
+      candidate_mean_mV: -40.40608540529102
+      archived_mean_mV: -32.519054999999994
+      mean_error_mV: -7.8870304052910285
+      rmse_mV: 7.887030405291015
+      correlation: -0.9552719038686815
+  voltage_selected:
+    tonic: *id003
+    burst: *id004
+  held_out_evaluation:
+    checks:
+      tonic_event_count: false
+      tonic_median_interevent_interval: false
+      burst_event_count: false
+      burst_event_timing: false
+      burst_preinput_mean_voltage: true
+    joint_pass: false
+    burst_max_event_time_error_ms: null
+passing_methods: []
+selection_basis: voltage means only
+spike_outputs_used_for_selection: false
+exact_legacy_protocol_recovered: false
+original_figure8_reproduced: false
+baseline_frozen: false

@@ -76,12 +76,19 @@ tests/                   equations, configuration, analysis, optional smoke test
 docs/                    provenance ledger and replication roadmap
 ```
 
-The boundary for neuron-model substitution is `models.create_population(...)`.
-Circuit code refers to declared receptor ports (`exc`, `inh`, and `reset`) rather
-than embedding a neuron's equations. `classic_hh` is the reference target;
-The frozen baseline uses the source-constrained vectorized multicompartment HH
-kernel directly. `adex`, `gif`, and registry-level alternative HH adapters
-remain explicit planned backends rather than silently approximated aliases.
+The complete SMART builders accept an explicit `population_factory` and pass
+the same source-backed population names, sizes, parameters, receptor ports, and
+Brian2 context to every cell population in V1 and V2. The default factory is
+the source-constrained vectorized multicompartment HH kernel used by the frozen
+control. A robustness backend must return the same population/port adapter
+interface, allowing the circuit topology, synapses, stimuli, seeds, learning,
+and analyses to remain fixed while only the cellular equations change.
+
+`models.create_population(...)` remains the registry for the reduced benchmark
+runner. `adex`, `gif`, and alternative HH adapters remain explicit planned
+backends rather than silently approximated aliases. See
+[`docs/adr/0002-full-network-population-factory.md`](docs/adr/0002-full-network-population-factory.md)
+for the full-network substitution contract.
 
 ## Install and run
 

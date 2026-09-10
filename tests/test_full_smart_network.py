@@ -9,6 +9,7 @@ brian = pytest.importorskip("brian2")
 
 from smart_robustness.classic_sector import build_full_smart_network
 from smart_robustness.modeldb_projections import MODELDB_FULL
+from smart_robustness.models.compartmental_hh import create_compartmental_hh_population
 
 
 def test_full_smart_network_builds_all_cells_compartments_and_connections() -> None:
@@ -64,6 +65,32 @@ def test_full_network_projection_selector_is_exact_and_rejects_unknown_ids() -> 
     brian.start_scope()
     with pytest.raises(ValueError, match="unknown full-network projection IDs"):
         build_full_smart_network(projection_ids=frozenset({"missing"}), brian=brian)
+
+
+def test_full_network_forwards_population_factory_to_both_cortical_areas() -> None:
+    brian.start_scope()
+    brian.prefs.codegen.target = "numpy"
+    calls: list[dict[str, object]] = []
+
+    def recording_factory(**kwargs):
+        calls.append(kwargs.copy())
+        return create_compartmental_hh_population(**kwargs)
+
+    sector = build_full_smart_network(
+        projection_ids=frozenset(),
+        population_factory=recording_factory,
+        brian=brian,
+    )
+
+    assert len(calls) == 24
+    assert sum(int(call["size"]) for call in calls) == 1624
+    assert {str(call["name"]) for call in calls} == {
+        f"smart_full_{fact.canonical_name}" for fact in sector.facts
+    }
+    assert sector.cell_count == 1624
+    assert sector.compartment_count == 3900
+    assert sector.projections == {}
+    sector.network.run(0 * brian.ms)
 
 
 def test_inactive_v2_plastic_projection_starts_without_numeric_overflow() -> None:

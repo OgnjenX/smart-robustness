@@ -18,12 +18,14 @@ from smart_robustness.classic_sector import (
     _ring_kernel_convention_for_record,
     _ring_peak_radius_scale_for_record,
     build_first_order_chemical_sector,
+    build_first_order_connected_sector,
     build_first_order_intrinsic_sector,
     build_first_order_voltage_clamp_sector,
     figure6_runtime_conventions,
     first_order_population_parameters,
 )
 from smart_robustness.modeldb_projections import MODELDB_FIRST_ORDER
+from smart_robustness.models.compartmental_hh import create_compartmental_hh_population
 from smart_robustness.models.modeldb112923 import first_order_population_facts
 
 
@@ -137,6 +139,37 @@ def test_first_order_intrinsic_sector_builds_all_source_cells() -> None:
         )
         == 4
     )
+    sector.network.run(0 * brian.ms)
+
+
+def test_connected_sector_forwards_population_factory_without_changing_topology() -> None:
+    brian.start_scope()
+    brian.prefs.codegen.target = "numpy"
+    calls: list[dict[str, object]] = []
+
+    def recording_factory(**kwargs):
+        calls.append(kwargs.copy())
+        return create_compartmental_hh_population(**kwargs)
+
+    sector = build_first_order_connected_sector(
+        population_factory=recording_factory,
+        brian=brian,
+    )
+
+    assert len(calls) == 12
+    assert {str(call["name"]) for call in calls} == {
+        f"smart_v1_{fact.canonical_name}" for fact in first_order_population_facts()
+    }
+    assert sum(int(call["size"]) for call in calls) == 812
+    assert sector.cell_count == 812
+    assert sector.compartment_count == 1950
+    population_names = set(sector.populations)
+    assert set(sector.projections) == {
+        record.id
+        for record in MODELDB_FIRST_ORDER.projections
+        if record.source_population in population_names
+        and record.target_population in population_names
+    }
     sector.network.run(0 * brian.ms)
 
 

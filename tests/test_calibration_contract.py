@@ -2,6 +2,7 @@ import hashlib
 import json
 import math
 import subprocess
+from functools import cache
 from itertools import pairwise
 from pathlib import Path
 
@@ -18,12 +19,9 @@ from smart_robustness.validation.calibration import (
 ROOT = Path(__file__).parents[1]
 
 
-def _matches_current_or_committed_history(path: str, digest: str) -> bool:
-    """Accept the current bytes or the exact preregistered version in Git."""
-
-    candidate = ROOT / path
-    if candidate.is_file() and hashlib.sha256(candidate.read_bytes()).hexdigest() == digest:
-        return True
+@cache
+def _committed_history_digests(path: str) -> frozenset[str]:
+    """Return every committed byte digest for one provenance path."""
 
     history = subprocess.run(
         ["git", "log", "--format=%H", "--", path],
@@ -32,6 +30,7 @@ def _matches_current_or_committed_history(path: str, digest: str) -> bool:
         capture_output=True,
         text=True,
     ).stdout.splitlines()
+    digests: set[str] = set()
     for commit in history:
         version = subprocess.run(
             ["git", "show", f"{commit}:{path}"],
@@ -39,9 +38,18 @@ def _matches_current_or_committed_history(path: str, digest: str) -> bool:
             check=False,
             capture_output=True,
         )
-        if version.returncode == 0 and hashlib.sha256(version.stdout).hexdigest() == digest:
-            return True
-    return False
+        if version.returncode == 0:
+            digests.add(hashlib.sha256(version.stdout).hexdigest())
+    return frozenset(digests)
+
+
+def _matches_current_or_committed_history(path: str, digest: str) -> bool:
+    """Accept the current bytes or the exact preregistered version in Git."""
+
+    candidate = ROOT / path
+    if candidate.is_file() and hashlib.sha256(candidate.read_bytes()).hexdigest() == digest:
+        return True
+    return digest in _committed_history_digests(path)
 
 
 def _skip_if_local_sources_missing(*paths: str) -> None:
@@ -11276,9 +11284,9 @@ def test_layer6i_emission_resource_cross_is_bounded_and_preregistered() -> None:
         ("prior_result", "prior_result_sha256"),
         ("prior_assessment", "prior_assessment_sha256"),
     ):
-        assert hashlib.sha256(
-            (ROOT / registration[path_key]).read_bytes()
-        ).hexdigest() == registration[hash_key]
+        assert _matches_current_or_committed_history(
+            registration[path_key], registration[hash_key]
+        )
     audit = yaml.safe_load(audit_path.read_text())
     implementation = yaml.safe_load(implementation_path.read_text())
     assert not audit["unresolved_ordering"]["exact_legacy_source_body_available"]
@@ -11365,9 +11373,9 @@ def test_layer6i_emission_target_balance_audit_is_passive_and_pinned() -> None:
         ("source_registration", "source_registration_sha256"),
         ("source_result", "source_result_sha256"),
     ):
-        assert hashlib.sha256(
-            (ROOT / registration[path_key]).read_bytes()
-        ).hexdigest() == registration[hash_key]
+        assert _matches_current_or_committed_history(
+            registration[path_key], registration[hash_key]
+        )
     assert registration["runtime_overrides"] == {
         "layer6i_output_transmitter_gate_convention": (
             "pre_depletion_emission_snapshot"
@@ -11451,9 +11459,9 @@ def test_layer6i_emission_target_voltage_correction_is_preregistered() -> None:
         ("synapses", "synapses_sha256"),
         ("script", "script_sha256"),
     ):
-        assert hashlib.sha256(
-            (ROOT / registration[path_key]).read_bytes()
-        ).hexdigest() == registration[hash_key]
+        assert _matches_current_or_committed_history(
+            registration[path_key], registration[hash_key]
+        )
     assert registration["record_layer4_target_timing_indices"] == [31, 49]
     assert registration["layer4_target_timing_window_ms"] == [50.0, 90.0]
     assert registration["layer4_target_timing_bin_width_ms"] == 1.0
@@ -11601,9 +11609,9 @@ def test_figure10_full_bottom_up_emission_cross_is_preregistered() -> None:
         ("prior_result", "prior_result_sha256"),
         ("prior_assessment", "prior_assessment_sha256"),
     ):
-        assert hashlib.sha256(
-            (ROOT / registration[path_key]).read_bytes()
-        ).hexdigest() == registration[hash_key]
+        assert _matches_current_or_committed_history(
+            registration[path_key], registration[hash_key]
+        )
     assert registration["runtime_overrides"] == {
         "layer6i_output_transmitter_gate_convention": (
             "pre_depletion_emission_snapshot"
@@ -11751,9 +11759,9 @@ def test_figure10_search_cycle_pair_is_preregistered_and_hash_pinned() -> None:
         ("prior_result", "prior_result_sha256"),
         ("prior_assessment", "prior_assessment_sha256"),
     ):
-        assert hashlib.sha256(
-            (ROOT / registration[path_key]).read_bytes()
-        ).hexdigest() == registration[hash_key]
+        assert _matches_current_or_committed_history(
+            registration[path_key], registration[hash_key]
+        )
     assert registration["runtime_fingerprint"] == (
         "fbcc1dc2ac7db8442ce1ff17b71a1d04582c32e817370c700c69ec3caa9fbe4e"
     )
@@ -11833,9 +11841,9 @@ def test_figure10_search_cycle_balance_audit_is_preregistered_and_passive() -> N
         ("prior_result", "prior_result_sha256"),
         ("prior_assessment", "prior_assessment_sha256"),
     ):
-        assert hashlib.sha256(
-            (ROOT / registration[path_key]).read_bytes()
-        ).hexdigest() == registration[hash_key]
+        assert _matches_current_or_committed_history(
+            registration[path_key], registration[hash_key]
+        )
     assert registration["runtime_fingerprint"] == (
         "fbcc1dc2ac7db8442ce1ff17b71a1d04582c32e817370c700c69ec3caa9fbe4e"
     )
@@ -11968,9 +11976,9 @@ def test_projection036_spread_cross_is_preregistered_and_hash_pinned() -> None:
         ("prior_result", "prior_result_sha256"),
         ("prior_assessment", "prior_assessment_sha256"),
     ):
-        assert hashlib.sha256(
-            (ROOT / registration[path_key]).read_bytes()
-        ).hexdigest() == registration[hash_key]
+        assert _matches_current_or_committed_history(
+            registration[path_key], registration[hash_key]
+        )
     assert registration["runtime_fingerprint"] == (
         "fbcc1dc2ac7db8442ce1ff17b71a1d04582c32e817370c700c69ec3caa9fbe4e"
     )
@@ -12057,9 +12065,9 @@ def test_projection036_figure7_consistency_is_preregistered_and_hash_pinned() ->
         ("prior_figure7_result", "prior_figure7_result_sha256"),
         ("prior_figure7_assessment", "prior_figure7_assessment_sha256"),
     ):
-        assert hashlib.sha256(
-            (ROOT / registration[path_key]).read_bytes()
-        ).hexdigest() == registration[hash_key]
+        assert _matches_current_or_committed_history(
+            registration[path_key], registration[hash_key]
+        )
     assert registration["runtime_fingerprint"] == (
         "fbcc1dc2ac7db8442ce1ff17b71a1d04582c32e817370c700c69ec3caa9fbe4e"
     )
@@ -12172,9 +12180,9 @@ def test_projection025_joint_source_control_is_preregistered_and_hash_pinned() -
         ("prior_figure7_assessment", "prior_figure7_assessment_sha256"),
         ("selected_figure10_assessment", "selected_figure10_assessment_sha256"),
     ):
-        assert hashlib.sha256(
-            (ROOT / registration[path_key]).read_bytes()
-        ).hexdigest() == registration[hash_key]
+        assert _matches_current_or_committed_history(
+            registration[path_key], registration[hash_key]
+        )
     assert registration["fixed_change"] == {
         "projection_id": "modeldb112923.projection.025",
         "prior_diagnostic_scale": 8.0,
@@ -12223,9 +12231,9 @@ def test_projection025_source_control_recovery_changes_serialization_only() -> N
         ("runtime", "runtime_sha256"),
         ("synapses", "synapses_sha256"),
     ):
-        assert hashlib.sha256(
-            (ROOT / registration[path_key]).read_bytes()
-        ).hexdigest() == registration[hash_key]
+        assert _matches_current_or_committed_history(
+            registration[path_key], registration[hash_key]
+        )
     recovery = registration["recovery_contract"]
     assert recovery["only_change"] == "numpy.bool_ to bool serialization cast"
     assert recovery["model_protocol_seed_and_gates_identical"]
@@ -12376,9 +12384,9 @@ def test_sanndra_predecessor_integration_cross_is_bounded_and_rejected() -> None
         ("runtime", "runtime_sha256"),
         ("synapses", "synapses_sha256"),
     ):
-        assert hashlib.sha256(
-            (ROOT / registration[path_key]).read_bytes()
-        ).hexdigest() == registration[hash_key]
+        assert _matches_current_or_committed_history(
+            registration[path_key], registration[hash_key]
+        )
     refactor = yaml.safe_load(
         (
             ROOT

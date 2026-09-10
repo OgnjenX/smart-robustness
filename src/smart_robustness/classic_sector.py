@@ -5,6 +5,7 @@ from __future__ import annotations
 import hashlib
 import json
 import math
+from collections.abc import Callable
 from dataclasses import asdict, dataclass, replace
 from enum import StrEnum
 from typing import Any
@@ -26,6 +27,8 @@ from .models.ports import (
 from .models.table3 import CellSpec, get_cell_spec
 from .partition import population_parts
 from .synapses import connect_modeldb_gap_junction, connect_modeldb_projection
+
+PopulationFactory = Callable[..., CompartmentalPopulation]
 
 
 @dataclass(slots=True)
@@ -860,6 +863,7 @@ def build_full_smart_network(
     *,
     conventions: FirstOrderRuntimeConventions | None = None,
     projection_ids: frozenset[str] | None = None,
+    population_factory: PopulationFactory = create_compartmental_hh_population,
     brian=None,
 ) -> FirstOrderSector:
     """Assemble source-backed V1-pulvinar-V2 cells and selected projections.
@@ -883,7 +887,7 @@ def build_full_smart_network(
     populations: dict[str, CompartmentalPopulation] = {}
     for fact in facts:
         width, height = fact.shape
-        populations[fact.canonical_name] = create_compartmental_hh_population(
+        populations[fact.canonical_name] = population_factory(
             name=f"smart_full_{fact.canonical_name}",
             size=width * height,
             params=first_order_population_parameters(
@@ -962,6 +966,7 @@ def build_first_order_intrinsic_sector(
     *,
     conventions: FirstOrderRuntimeConventions | None = None,
     gate_initialization_convention: str | None = None,
+    population_factory: PopulationFactory = create_compartmental_hh_population,
     brian=None,
 ) -> FirstOrderSector:
     """Instantiate all 812 cells and 1,950 compartments before connectivity.
@@ -986,7 +991,7 @@ def build_first_order_intrinsic_sector(
     populations: dict[str, CompartmentalPopulation] = {}
     for population_facts in facts:
         width, height = population_facts.shape
-        populations[population_facts.canonical_name] = create_compartmental_hh_population(
+        populations[population_facts.canonical_name] = population_factory(
             name=f"smart_v1_{population_facts.canonical_name}",
             size=width * height,
             params=first_order_population_parameters(
@@ -1004,6 +1009,7 @@ def build_first_order_chemical_sector(
     conventions: FirstOrderRuntimeConventions | None = None,
     gate_initialization_convention: str | None = None,
     instrument_learning_terms: bool = False,
+    population_factory: PopulationFactory = create_compartmental_hh_population,
     brian=None,
 ) -> FirstOrderSector:
     """Instantiate the first-order cells and every in-scope chemical projection."""
@@ -1018,6 +1024,7 @@ def build_first_order_chemical_sector(
     )
     sector = build_first_order_intrinsic_sector(
         conventions=resolved_conventions,
+        population_factory=population_factory,
         brian=brian,
     )
     facts_by_name = {fact.canonical_name: fact for fact in sector.facts}
@@ -1089,6 +1096,7 @@ def build_first_order_voltage_clamp_sector(
     holding_mV: float = -12.0,
     compartment: str = "proximal_dendrite",
     conventions: FirstOrderRuntimeConventions | None = None,
+    population_factory: PopulationFactory = create_compartmental_hh_population,
     brian=None,
 ) -> FirstOrderSector:
     """Build a connected sector with a discrete exact relay voltage clamp.
@@ -1115,7 +1123,11 @@ def build_first_order_voltage_clamp_sector(
         raise ValueError("clamped relay indices must be nonempty and unique")
     if any(index < 0 or index >= 81 for index in clamped_relay_indices):
         raise ValueError("clamped relay index outside 9x9 sheet")
-    sector = build_first_order_connected_sector(conventions=conventions, brian=brian)
+    sector = build_first_order_connected_sector(
+        conventions=conventions,
+        population_factory=population_factory,
+        brian=brian,
+    )
     relay = sector.populations["thalamic_relay"].group
     # A generated per-neuron expression works in both Brian runtime and C++
     # standalone. Python callbacks and NumPy-index assignments cannot be
@@ -1141,6 +1153,7 @@ def build_first_order_connected_sector(
     conventions: FirstOrderRuntimeConventions | None = None,
     gate_initialization_convention: str | None = None,
     instrument_learning_terms: bool = False,
+    population_factory: PopulationFactory = create_compartmental_hh_population,
     brian=None,
 ) -> FirstOrderSector:
     """Build chemical and electrical connectivity; external inputs remain separate."""
@@ -1158,6 +1171,7 @@ def build_first_order_connected_sector(
     sector = build_first_order_chemical_sector(
         conventions=resolved_conventions,
         instrument_learning_terms=instrument_learning_terms,
+        population_factory=population_factory,
         brian=brian,
     )
     facts_by_name = {fact.canonical_name: fact for fact in sector.facts}

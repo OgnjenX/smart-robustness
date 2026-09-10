@@ -1,0 +1,123 @@
+schema_version: 1
+id: legacy-thalamus-input-reconstruction-registration-877
+date: '2026-09-10'
+status: registered-before-execution
+classification: calibrated-independent-legacy-kinness-input-protocol-reconstruction
+purpose: >-
+  Reconstruct the two condition-specific effective external-input values that
+  are absent from the surviving 2004 KInNeSS archive. Select each value using
+  only its archived steady-voltage mean, then evaluate event count, tonic
+  interevent interval, rebound timing, and preinput voltage as held-out gates.
+authorization:
+  path: docs/validation-results/legacy-thalamus-input-protocol-source-audit-876.yaml
+  sha256: cb38a52da8268c6e30296be4aa39036c29bfc12f8ab21091a600c6ce7aaa6dc2
+script: scripts/run_legacy_thalamus_input_reconstruction.py
+script_sha256: 7b426bb0a6bef8ef77ce6f0f06fcebfb25a47425b3996830fbfd909083827154
+sources:
+  source_audit:
+    path: docs/validation-results/legacy-thalamus-input-protocol-source-audit-876.yaml
+    sha256: cb38a52da8268c6e30296be4aa39036c29bfc12f8ab21091a600c6ce7aaa6dc2
+  coordinate_registration:
+    path: docs/validation-results/legacy-thalamus-complete-coordinate-registration-873.yaml
+    sha256: 1850e168cd7aafc18970d5b6529b29cbac8d133c8f6ab05bcbdf873d3157f133
+  coordinate_result:
+    path: docs/validation-results/legacy-thalamus-complete-coordinate-replay-874.yaml
+    sha256: d18f17fdb13fd1d80d1a57c45981dbcda2e7aff9b951572419cc42016a82b773
+  coordinate_assessment:
+    path: docs/validation-results/legacy-thalamus-complete-coordinate-assessment-875.yaml
+    sha256: 0b0d0576069dd76429eeaa98917c2183198106f84e303ec298554ad5cbe10bd9
+  replay_harness:
+    path: scripts/run_legacy_thalamus_2004_internal_coordinate_replay.py
+    sha256: c1a54881d53fcbfab9a5461d55a2de3188e09c4f7739f8370abae0769e1fd26f
+  integrated_gate_wrapper:
+    path: scripts/run_legacy_thalamus_2004_integrated_gate_replay.py
+    sha256: ec44669d7cfa51c714f3e7c464aae0cc7fa08aef2fe9feec2fccc8026c24751f
+  base_helpers:
+    path: scripts/run_legacy_thalamus_2004_replay.py
+    sha256: 2de2b42edae9e0f55f78a9e838d0eac4d630adf1e835fd03a8e55dab5a7334ee
+  network:
+    path: tmp/legacy-thalamus-2004/KINENSS_tonic_burst/tonic_burst.xml
+    sha256: 3d4782503b74b818e4d94b29e72c5bb81f914b0c29d55a19cb99b088d1d14445
+  archived_input_image:
+    path: tmp/legacy-thalamus-2004/KINENSS_tonic_burst/one_input.png
+    sha256: c63f54b3d2a3cc28bb84beee66b9471b642c830c60e338412e39acd5ce3b1042
+  tonic_voltage:
+    path: tmp/legacy-thalamus-2004/KINENSS_tonic_burst/tonic_burst_data/Relay tonic.dat
+    sha256: 506e56c07e5ff13098a2ebb6f21db31e489d77efdffa65fc816c20d58f68c92f
+  tonic_axon:
+    path: tmp/legacy-thalamus-2004/KINENSS_tonic_burst/tonic_burst_data/Relay axon tonic.dat
+    sha256: 81dcdfe8670c78e02eb9c3e2012f1e9e6258b5ba116314f3a2f1a6d209644208
+  burst_voltage:
+    path: tmp/legacy-thalamus-2004/KINENSS_tonic_burst/tonic_burst_data/Relay burst.dat
+    sha256: 4a14dd2c40b69ddaee9c652f6e89a713efd5eb9ba75949619a79f3925832b76c
+  burst_axon:
+    path: tmp/legacy-thalamus-2004/KINENSS_tonic_burst/tonic_burst_data/Relay axon burst.dat
+    sha256: beef20f46bbeac4c35ba19b12434159cb5a02fef8b2b704c4a713ec09b172880
+fixed_model:
+  inherited_from: docs/validation-results/legacy-thalamus-complete-coordinate-registration-873.yaml
+  specific_capacitance_uF_cm2: 1.0
+  calcium_voltage_coordinate: integrated_voltage
+  ionic_reversals_internal_mV:
+    sodium: 120.0
+    potassium: -20.0
+    calcium: 250.0
+  spike_detector:
+    internal_threshold_mV: 50.0
+    runtime_expression: V_internal - 70 mV
+  channel_parameters_changed: false
+  conductance_densities_changed: false
+  gate_rates_changed: false
+  axial_coupling_changed: false
+protocol:
+  duration_ms: 3000.0
+  dt_ms: 0.05
+  hyperpolarization_on_ms: 1011.0
+  hyperpolarization_off_ms: 2183.0
+  axonal_delay_ms: 2.0
+  integration_methods: [rk4, sanndra_scalar_rk4]
+  effective_input_grid:
+    - 0.0
+    - 0.0625
+    - 0.125
+    - 0.1875
+    - 0.25
+    - 0.3125
+    - 0.375
+    - 0.5
+    - 0.625
+    - 0.75
+    - 0.8125
+    - 0.875
+    - 0.9375
+    - 0.9803921568627451
+    - 1.0
+  tonic_calibration_window_ms: [100.0, 3000.0]
+  burst_preinput_window_ms: [100.0, 1000.0]
+  burst_calibration_window_ms: [1500.0, 2150.0]
+archived_targets:
+  tonic_event_count: 199
+  tonic_median_interevent_interval_ms: 15.05
+  tonic_reported_rate_hz: 66.0
+  burst_event_count: 6
+  burst_event_times_ms: [2187.9, 2191.8, 2196.15, 2201.2, 2207.5, 2217.0]
+held_out_acceptance_gates:
+  tonic_event_count_tolerance: 2
+  tonic_median_interevent_interval_tolerance_ms: 0.25
+  burst_event_count: exact
+  burst_max_event_time_error_ms: 0.5
+  burst_preinput_mean_error_mV: 2.0
+selection_rule: >-
+  For each integration method, select tonic and burst effective inputs
+  independently by minimum absolute calibration-window mean-voltage error;
+  break an exact tie in favor of the lower input. Do not inspect spike outputs
+  during selection.
+result_id: legacy-thalamus-input-reconstruction-878
+result: docs/validation-results/legacy-thalamus-input-reconstruction-878.yaml
+assessment: docs/validation-results/legacy-thalamus-input-reconstruction-assessment-879.yaml
+stopping_rule: execute this fixed 60-arm screen once and stop
+interpretation_rule: >-
+  A joint held-out pass validates a calibrated reconstruction of the missing
+  2004 input protocol for the selected integration method. It does not prove
+  exact recovery of the historical input, reproduce the missing 2008 Figure-8
+  protocol, or authorize an exact classic-SMART freeze.
+baseline_frozen: false

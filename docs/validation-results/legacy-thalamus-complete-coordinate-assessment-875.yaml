@@ -1,0 +1,92 @@
+schema_version: 1
+id: legacy-thalamus-complete-coordinate-assessment-875
+date: '2026-09-10'
+status: assessed-negative-diagnostic
+classification: coordinate-complete-independent-legacy-kinness-replay
+registration:
+  path: docs/validation-results/legacy-thalamus-complete-coordinate-registration-873.yaml
+  sha256: 1850e168cd7aafc18970d5b6529b29cbac8d133c8f6ab05bcbdf873d3157f133
+result:
+  path: docs/validation-results/legacy-thalamus-complete-coordinate-replay-874.yaml
+  sha256: d18f17fdb13fd1d80d1a57c45981dbcda2e7aff9b951572419cc42016a82b773
+passing_arms: []
+normalized_arm_summary:
+  rk4_normalized_255:
+    finite: true
+    tonic_event_count: 1505
+    tonic_median_interevent_interval_ms: 2.0
+    tonic_voltage_maximum_mV: 112.363446
+    burst_event_count: 13
+    burst_first_event_ms: 2186.65
+    burst_last_event_ms: 2232.95
+    burst_preinput_mean_error_mV: -0.046977
+    burst_hyperpolarized_mean_error_mV: -7.692975
+  rk4_normalized_250:
+    finite: true
+    tonic_event_count: 1516
+    tonic_median_interevent_interval_ms: 2.0
+    tonic_voltage_maximum_mV: 112.583255
+    burst_event_count: 13
+    burst_first_event_ms: 2186.6
+    burst_last_event_ms: 2229.5
+    burst_preinput_mean_error_mV: -0.046977
+    burst_hyperpolarized_mean_error_mV: -7.88703
+  sanndra_scalar_rk4_normalized_255:
+    finite: true
+    tonic_event_count: 1395
+    tonic_median_interevent_interval_ms: 2.15
+    tonic_voltage_maximum_mV: 113.034011
+    burst_event_count: 12
+    burst_first_event_ms: 2186.75
+    burst_last_event_ms: 2229.3
+    burst_preinput_mean_error_mV: -0.046977
+    burst_hyperpolarized_mean_error_mV: -7.692975
+  sanndra_scalar_rk4_normalized_250:
+    finite: true
+    tonic_event_count: 1405
+    tonic_median_interevent_interval_ms: 2.15
+    tonic_voltage_maximum_mV: 113.353136
+    burst_event_count: 12
+    burst_first_event_ms: 2186.75
+    burst_last_event_ms: 2227.4
+    burst_preinput_mean_error_mV: -0.046977
+    burst_hyperpolarized_mean_error_mV: -7.88703
+raw_input_arms:
+  finite: false
+assessment:
+  coordinate_translation_dimensionally_complete: true
+  archived_rest_coordinate_reproduced: true
+  archived_action_potential_amplitude_regime_reproduced: true
+  legacy_benchmark_reproduced: false
+  t_type_mechanism_independently_validated: false
+  original_figure8_reproduced: false
+  exact_classic_baseline_freeze_authorized: false
+interpretation:
+  - >-
+    Shifting every driving potential and the detector onto the integrated
+    internal-zero axis corrects the two decisive coordinate signatures. The
+    normalized arms begin within 0.047 mV of the archived preinput mean and
+    reach 112--113 mV, close to the archived 109.565 mV action-potential peak.
+  - >-
+    The remaining mismatch is dynamical rather than a voltage-origin error.
+    Normalized tonic arms fire every 2.0--2.15 ms instead of every 15.05 ms and
+    produce 1395--1516 events instead of 199. Rebound arms produce 12--13
+    events instead of six and hyperpolarize 7.69--7.89 mV too far.
+  - >-
+    Neither integration method nor normalized input encoding passes the fixed
+    joint gates, and literal raw input remains non-finite. Per Registration
+    873, no arm, method, or input encoding is selected.
+  - >-
+    The 2004 XML does not serialize specific membrane capacitance, but a
+    contemporaneous KInNeSS methods paper explicitly fixes CM at 1
+    microfarad/cm2. That is the value already used here, so capacitance and an
+    arbitrary global time scale are closed rather than fitted.
+  - >-
+    Even a future reproduction of this independent 2004 relay benchmark would
+    validate only the shared KInNeSS cell kernel. It cannot reconstruct the
+    missing 2008 Figure-8 clamp schedule or by itself prove original SMART.
+next_action:
+  action: audit the surviving KInNeSS material for the unpreserved condition-specific input protocol
+  fitting_authorized: false
+  new_parameter_selected: false
+baseline_frozen: false

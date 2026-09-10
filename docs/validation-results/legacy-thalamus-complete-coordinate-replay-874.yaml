@@ -1,0 +1,574 @@
+schema_version: 1
+id: legacy-thalamus-complete-coordinate-replay-874
+date: '2026-09-10'
+status: completed-internal-coordinate-replay
+classification: coordinate-complete-independent-legacy-kinness-replay
+registration: docs/validation-results/legacy-thalamus-complete-coordinate-registration-873.yaml
+archived_targets:
+  tonic_event_count: 199
+  tonic_median_interevent_interval_ms: 15.05
+  tonic_reported_rate_hz: 66.0
+  burst_event_count: 6
+  burst_event_times_ms:
+  - 2187.9
+  - 2191.8
+  - 2196.15
+  - 2201.2
+  - 2207.5
+  - 2217.0
+outcomes:
+- integration_method: rk4
+  input_encoding: normalized_255
+  input_value: 0.9803921568627451
+  tonic:
+    event_count: 1505
+    median_interevent_interval_ms: 2.0
+    first_event_ms: 3.4
+    last_event_ms: 3000.15
+    first_twenty_event_times_ms:
+    - 3.4
+    - 5.45
+    - 7.45
+    - 9.4
+    - 11.4
+    - 13.4
+    - 15.4
+    - 17.4
+    - 19.400000000000002
+    - 21.35
+    - 23.35
+    - 25.35
+    - 27.35
+    - 29.35
+    - 31.35
+    - 33.35
+    - 35.300000000000004
+    - 37.300000000000004
+    - 39.3
+    - 41.300000000000004
+    last_twenty_event_times_ms:
+    - 2962.3
+    - 2964.2999999999997
+    - 2966.25
+    - 2968.25
+    - 2970.25
+    - 2972.25
+    - 2974.25
+    - 2976.25
+    - 2978.25
+    - 2980.2000000000003
+    - 2982.2
+    - 2984.2000000000003
+    - 2986.2
+    - 2988.2000000000003
+    - 2990.2
+    - 2992.2000000000003
+    - 2994.15
+    - 2996.15
+    - 2998.15
+    - 3000.15
+    minimum_voltage_mV: -0.8603335727449591
+    maximum_voltage_mV: 112.36344624008984
+    windows:
+      steady:
+        candidate_mean_mV: 24.47090867252757
+        archived_mean_mV: 7.873061034379345
+        mean_error_mV: 16.597847638148227
+        rmse_mV: 30.277646441281394
+        correlation: -2.911237855593969e-06
+  burst:
+    event_count: 13
+    median_interevent_interval_ms: 3.099999999999909
+    first_event_ms: 2186.65
+    last_event_ms: 2232.95
+    event_times_ms:
+    - 2186.65
+    - 2188.95
+    - 2191.35
+    - 2193.85
+    - 2196.5
+    - 2199.3
+    - 2202.25
+    - 2205.5
+    - 2209.0000000000005
+    - 2212.95
+    - 2217.5
+    - 2223.1000000000004
+    - 2232.95
+    minimum_voltage_mV: -70.96215030365484
+    maximum_voltage_mV: 112.02132258792521
+    windows:
+      preinput:
+        candidate_mean_mV: 0.19437922511590383
+        archived_mean_mV: 0.24135587044444443
+        mean_error_mV: -0.046976645328540595
+        rmse_mV: 0.046976645346571484
+        correlation: 0.9995314185531199
+      hyperpolarized:
+        candidate_mean_mV: -40.212029646377275
+        archived_mean_mV: -32.519054999999994
+        mean_error_mV: -7.69297464637728
+        rmse_mV: 7.692974646377272
+        correlation: 0.19956603648875895
+      rebound:
+        candidate_mean_mV: 12.70238946461834
+        archived_mean_mV: 6.912332275373121
+        mean_error_mV: 5.7900571892452195
+        rmse_mV: 28.737690167276522
+        correlation: 0.040301677528020975
+  evaluation:
+    checks:
+      finite_voltage: true
+      tonic_event_count: false
+      tonic_median_interevent_interval: false
+      burst_event_count: false
+      burst_event_timing: false
+      burst_preinput_mean_voltage: true
+      burst_hyperpolarized_mean_voltage: false
+    joint_pass: false
+    burst_max_event_time_error_ms: null
+- integration_method: rk4
+  input_encoding: normalized_250
+  input_value: 1.0
+  tonic:
+    event_count: 1516
+    median_interevent_interval_ms: 2.0
+    first_event_ms: 3.4
+    last_event_ms: 3001.1000000000004
+    first_twenty_event_times_ms:
+    - 3.4
+    - 5.4
+    - 7.4
+    - 9.350000000000001
+    - 11.35
+    - 13.35
+    - 15.3
+    - 17.3
+    - 19.25
+    - 21.25
+    - 23.2
+    - 25.200000000000003
+    - 27.150000000000002
+    - 29.15
+    - 31.150000000000002
+    - 33.1
+    - 35.1
+    - 37.050000000000004
+    - 39.05
+    - 41.0
+    last_twenty_event_times_ms:
+    - 2963.5
+    - 2965.5
+    - 2967.4500000000003
+    - 2969.45
+    - 2971.4
+    - 2973.4
+    - 2975.35
+    - 2977.35
+    - 2979.35
+    - 2981.3
+    - 2983.3
+    - 2985.25
+    - 2987.25
+    - 2989.2
+    - 2991.2000000000003
+    - 2993.2
+    - 2995.15
+    - 2997.15
+    - 2999.1
+    - 3001.1000000000004
+    minimum_voltage_mV: -0.7199228776592602
+    maximum_voltage_mV: 112.58325570407224
+    windows:
+      steady:
+        candidate_mean_mV: 24.588081091428233
+        archived_mean_mV: 7.873061034379345
+        mean_error_mV: 16.71502005704889
+        rmse_mV: 30.216582450795062
+        correlation: -0.0008571078604964779
+  burst:
+    event_count: 13
+    median_interevent_interval_ms: 3.0249999999998636
+    first_event_ms: 2186.6
+    last_event_ms: 2229.5
+    event_times_ms:
+    - 2186.6
+    - 2188.95
+    - 2191.3
+    - 2193.7500000000005
+    - 2196.35
+    - 2199.1000000000004
+    - 2202.0
+    - 2205.15
+    - 2208.6
+    - 2212.4
+    - 2216.75
+    - 2222.0
+    - 2229.5
+    minimum_voltage_mV: -71.74359254486976
+    maximum_voltage_mV: 111.77193505014054
+    windows:
+      preinput:
+        candidate_mean_mV: 0.19437922511590383
+        archived_mean_mV: 0.24135587044444443
+        mean_error_mV: -0.046976645328540595
+        rmse_mV: 0.046976645346571484
+        correlation: 0.9995314185531199
+      hyperpolarized:
+        candidate_mean_mV: -40.40608540529102
+        archived_mean_mV: -32.519054999999994
+        mean_error_mV: -7.8870304052910285
+        rmse_mV: 7.887030405291015
+        correlation: -0.9629343598077509
+      rebound:
+        candidate_mean_mV: 12.737271374217206
+        archived_mean_mV: 6.912332275373121
+        mean_error_mV: 5.8249390988440854
+        rmse_mV: 27.329665563821134
+        correlation: 0.1266569671493255
+  evaluation:
+    checks:
+      finite_voltage: true
+      tonic_event_count: false
+      tonic_median_interevent_interval: false
+      burst_event_count: false
+      burst_event_timing: false
+      burst_preinput_mean_voltage: true
+      burst_hyperpolarized_mean_voltage: false
+    joint_pass: false
+    burst_max_event_time_error_ms: null
+- integration_method: rk4
+  input_encoding: raw_0_255
+  input_value: 250.0
+  tonic:
+    event_count: 1
+    median_interevent_interval_ms: null
+    first_event_ms: 2.35
+    last_event_ms: 2.35
+    event_times_ms:
+    - 2.35
+    minimum_voltage_mV: .nan
+    maximum_voltage_mV: .nan
+    windows:
+      steady:
+        candidate_mean_mV: null
+        archived_mean_mV: null
+        mean_error_mV: null
+        rmse_mV: null
+        correlation: null
+  burst:
+    event_count: 0
+    median_interevent_interval_ms: null
+    first_event_ms: null
+    last_event_ms: null
+    event_times_ms: []
+    minimum_voltage_mV: .nan
+    maximum_voltage_mV: .nan
+    windows:
+      preinput:
+        candidate_mean_mV: 0.19437922511590383
+        archived_mean_mV: 0.24135587044444443
+        mean_error_mV: -0.046976645328540595
+        rmse_mV: 0.046976645346571484
+        correlation: 0.9995314185531199
+      hyperpolarized:
+        candidate_mean_mV: null
+        archived_mean_mV: null
+        mean_error_mV: null
+        rmse_mV: null
+        correlation: null
+      rebound:
+        candidate_mean_mV: null
+        archived_mean_mV: null
+        mean_error_mV: null
+        rmse_mV: null
+        correlation: null
+  evaluation:
+    checks:
+      finite_voltage: false
+      tonic_event_count: false
+      tonic_median_interevent_interval: false
+      burst_event_count: false
+      burst_event_timing: false
+      burst_preinput_mean_voltage: true
+      burst_hyperpolarized_mean_voltage: false
+    joint_pass: false
+    burst_max_event_time_error_ms: null
+- integration_method: sanndra_scalar_rk4
+  input_encoding: normalized_255
+  input_value: 0.9803921568627451
+  tonic:
+    event_count: 1395
+    median_interevent_interval_ms: 2.1500000000000057
+    first_event_ms: 3.55
+    last_event_ms: 3000.2000000000003
+    first_twenty_event_times_ms:
+    - 3.55
+    - 5.75
+    - 7.8999999999999995
+    - 10.049999999999999
+    - 12.200000000000001
+    - 14.35
+    - 16.5
+    - 18.650000000000002
+    - 20.8
+    - 22.95
+    - 25.1
+    - 27.25
+    - 29.4
+    - 31.55
+    - 33.7
+    - 35.85
+    - 38.0
+    - 40.150000000000006
+    - 42.300000000000004
+    - 44.45
+    last_twenty_event_times_ms:
+    - 2959.35
+    - 2961.5
+    - 2963.65
+    - 2965.7999999999997
+    - 2967.9500000000003
+    - 2970.1
+    - 2972.25
+    - 2974.4
+    - 2976.55
+    - 2978.7000000000003
+    - 2980.85
+    - 2983.0000000000005
+    - 2985.15
+    - 2987.3
+    - 2989.45
+    - 2991.6000000000004
+    - 2993.75
+    - 2995.9
+    - 2998.05
+    - 3000.2000000000003
+    minimum_voltage_mV: -3.1345408876721703
+    maximum_voltage_mV: 113.03401128223653
+    windows:
+      steady:
+        candidate_mean_mV: 24.415973782086677
+        archived_mean_mV: 7.873061034379345
+        mean_error_mV: 16.542912747707334
+        rmse_mV: 31.78788606872695
+        correlation: 0.0009086756598193448
+  burst:
+    event_count: 12
+    median_interevent_interval_ms: 3.299999999999727
+    first_event_ms: 2186.75
+    last_event_ms: 2229.3
+    event_times_ms:
+    - 2186.75
+    - 2189.3
+    - 2191.8500000000004
+    - 2194.6
+    - 2197.4500000000003
+    - 2200.5
+    - 2203.7999999999997
+    - 2207.35
+    - 2211.35
+    - 2215.9
+    - 2221.4
+    - 2229.3
+    minimum_voltage_mV: -71.86146707965801
+    maximum_voltage_mV: 112.78804384199675
+    windows:
+      preinput:
+        candidate_mean_mV: 0.19437922747689065
+        archived_mean_mV: 0.24135587044444443
+        mean_error_mV: -0.04697664296755377
+        rmse_mV: 0.04697664298526966
+        correlation: 0.9995310374342811
+      hyperpolarized:
+        candidate_mean_mV: -40.212029646377275
+        archived_mean_mV: -32.519054999999994
+        mean_error_mV: -7.69297464637728
+        rmse_mV: 7.692974646377272
+        correlation: 0.18811590500193362
+      rebound:
+        candidate_mean_mV: 12.622192548858177
+        archived_mean_mV: 6.912332275373121
+        mean_error_mV: 5.709860273485056
+        rmse_mV: 27.933962934828592
+        correlation: 0.12231208027058327
+  evaluation:
+    checks:
+      finite_voltage: true
+      tonic_event_count: false
+      tonic_median_interevent_interval: false
+      burst_event_count: false
+      burst_event_timing: false
+      burst_preinput_mean_voltage: true
+      burst_hyperpolarized_mean_voltage: false
+    joint_pass: false
+    burst_max_event_time_error_ms: null
+- integration_method: sanndra_scalar_rk4
+  input_encoding: normalized_250
+  input_value: 1.0
+  tonic:
+    event_count: 1405
+    median_interevent_interval_ms: 2.1499999999999773
+    first_event_ms: 3.55
+    last_event_ms: 3001.0499999999997
+    first_twenty_event_times_ms:
+    - 3.55
+    - 5.7
+    - 7.85
+    - 10.0
+    - 12.15
+    - 14.25
+    - 16.4
+    - 18.55
+    - 20.65
+    - 22.8
+    - 24.950000000000003
+    - 27.1
+    - 29.200000000000003
+    - 31.35
+    - 33.5
+    - 35.6
+    - 37.75
+    - 39.900000000000006
+    - 42.0
+    - 44.15
+    last_twenty_event_times_ms:
+    - 2960.5000000000005
+    - 2962.65
+    - 2964.75
+    - 2966.9
+    - 2969.0499999999997
+    - 2971.2000000000003
+    - 2973.3
+    - 2975.4500000000003
+    - 2977.6
+    - 2979.7
+    - 2981.8500000000004
+    - 2984.0
+    - 2986.1
+    - 2988.25
+    - 2990.4
+    - 2992.55
+    - 2994.65
+    - 2996.8
+    - 2998.95
+    - 3001.0499999999997
+    minimum_voltage_mV: -3.016415930920739
+    maximum_voltage_mV: 113.35313597840974
+    windows:
+      steady:
+        candidate_mean_mV: 24.524761735764958
+        archived_mean_mV: 7.873061034379345
+        mean_error_mV: 16.651700701385614
+        rmse_mV: 31.695779892953585
+        correlation: 0.0019072126778706367
+  burst:
+    event_count: 12
+    median_interevent_interval_ms: 3.199999999999818
+    first_event_ms: 2186.75
+    last_event_ms: 2227.4
+    event_times_ms:
+    - 2186.75
+    - 2189.25
+    - 2191.7999999999997
+    - 2194.45
+    - 2197.3
+    - 2200.3
+    - 2203.5
+    - 2207.0
+    - 2210.85
+    - 2215.25
+    - 2220.4500000000003
+    - 2227.4
+    minimum_voltage_mV: -72.67324092034373
+    maximum_voltage_mV: 112.30274203800447
+    windows:
+      preinput:
+        candidate_mean_mV: 0.19437922747689065
+        archived_mean_mV: 0.24135587044444443
+        mean_error_mV: -0.04697664296755377
+        rmse_mV: 0.04697664298526966
+        correlation: 0.9995310374342811
+      hyperpolarized:
+        candidate_mean_mV: -40.40608540529102
+        archived_mean_mV: -32.519054999999994
+        mean_error_mV: -7.8870304052910285
+        rmse_mV: 7.887030405291015
+        correlation: -0.9552719038686815
+      rebound:
+        candidate_mean_mV: 12.746893906845798
+        archived_mean_mV: 6.912332275373121
+        mean_error_mV: 5.834561631472678
+        rmse_mV: 29.03852175139831
+        correlation: 0.037228135411517004
+  evaluation:
+    checks:
+      finite_voltage: true
+      tonic_event_count: false
+      tonic_median_interevent_interval: false
+      burst_event_count: false
+      burst_event_timing: false
+      burst_preinput_mean_voltage: true
+      burst_hyperpolarized_mean_voltage: false
+    joint_pass: false
+    burst_max_event_time_error_ms: null
+- integration_method: sanndra_scalar_rk4
+  input_encoding: raw_0_255
+  input_value: 250.0
+  tonic:
+    event_count: 0
+    median_interevent_interval_ms: null
+    first_event_ms: null
+    last_event_ms: null
+    event_times_ms: []
+    minimum_voltage_mV: .nan
+    maximum_voltage_mV: .nan
+    windows:
+      steady:
+        candidate_mean_mV: null
+        archived_mean_mV: null
+        mean_error_mV: null
+        rmse_mV: null
+        correlation: null
+  burst:
+    event_count: 0
+    median_interevent_interval_ms: null
+    first_event_ms: null
+    last_event_ms: null
+    event_times_ms: []
+    minimum_voltage_mV: .nan
+    maximum_voltage_mV: .nan
+    windows:
+      preinput:
+        candidate_mean_mV: 0.19437922747689065
+        archived_mean_mV: 0.24135587044444443
+        mean_error_mV: -0.04697664296755377
+        rmse_mV: 0.04697664298526966
+        correlation: 0.9995310374342811
+      hyperpolarized:
+        candidate_mean_mV: null
+        archived_mean_mV: null
+        mean_error_mV: null
+        rmse_mV: null
+        correlation: null
+      rebound:
+        candidate_mean_mV: null
+        archived_mean_mV: null
+        mean_error_mV: null
+        rmse_mV: null
+        correlation: null
+  evaluation:
+    checks:
+      finite_voltage: false
+      tonic_event_count: false
+      tonic_median_interevent_interval: false
+      burst_event_count: false
+      burst_event_timing: false
+      burst_preinput_mean_voltage: true
+      burst_hyperpolarized_mean_voltage: false
+    joint_pass: false
+    burst_max_event_time_error_ms: null
+passing_arms: []
+selection_performed: false
+original_figure8_reproduced: false
+baseline_frozen: false

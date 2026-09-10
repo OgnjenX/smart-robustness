@@ -13343,3 +13343,128 @@ def test_figure15_trn_relay_transfer_controls_upstream_not_pair_frequency() -> N
     assert not assessment["decision"]["generation_two_candidate_authorized"]
     assert not assessment["scientific_status"]["exact_graphical_44hz_reproduced"]
     assert not assessment["scientific_status"]["baseline_frozen"]
+
+
+def test_legacy_thalamus_complete_coordinate_replay_is_preregistered() -> None:
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/legacy-thalamus-complete-coordinate-registration-873.yaml"
+        ).read_text()
+    )
+
+    assert registration["status"] == "registered-before-execution"
+    assert _matches_current_or_committed_history(
+        registration["script"], registration["script_sha256"]
+    )
+    for source in registration["sources"].values():
+        path = source["path"]
+        if not path.startswith("tmp/"):
+            assert _matches_current_or_committed_history(path, source["sha256"])
+    assert registration["fixed_model"]["coordinate_transforms_mV"] == {
+        "sodium_reversal": {"physical": 50.0, "internal": 120.0},
+        "potassium_reversal": {"physical": -90.0, "internal": -20.0},
+        "calcium_reversal": {"physical": 180.0, "internal": 250.0},
+        "spike_detector": {
+            "physical": -20.0,
+            "internal": 50.0,
+            "runtime_expression": "V_internal - 70 mV",
+        },
+    }
+    assert registration["selection_rule"] == (
+        "report every arm; select no input encoding or integration method"
+    )
+
+
+def test_legacy_thalamus_complete_coordinate_replay_closes_without_promotion() -> None:
+    registration_path = (
+        ROOT
+        / "docs/validation-results/legacy-thalamus-complete-coordinate-registration-873.yaml"
+    )
+    result_path = (
+        ROOT / "docs/validation-results/legacy-thalamus-complete-coordinate-replay-874.yaml"
+    )
+    result = yaml.safe_load(result_path.read_text())
+    assessment = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/legacy-thalamus-complete-coordinate-assessment-875.yaml"
+        ).read_text()
+    )
+
+    assert hashlib.sha256(registration_path.read_bytes()).hexdigest() == assessment[
+        "registration"
+    ]["sha256"]
+    assert hashlib.sha256(result_path.read_bytes()).hexdigest() == assessment["result"][
+        "sha256"
+    ]
+    assert result["passing_arms"] == assessment["passing_arms"] == []
+    normalized = [
+        outcome
+        for outcome in result["outcomes"]
+        if outcome["input_encoding"].startswith("normalized")
+    ]
+    assert len(normalized) == 4
+    assert all(outcome["evaluation"]["checks"]["finite_voltage"] for outcome in normalized)
+    assert all(not outcome["evaluation"]["joint_pass"] for outcome in normalized)
+    assert [outcome["tonic"]["event_count"] for outcome in normalized] == [
+        1505,
+        1516,
+        1395,
+        1405,
+    ]
+    assert [outcome["burst"]["event_count"] for outcome in normalized] == [13, 13, 12, 12]
+    assert all(
+        abs(outcome["burst"]["windows"]["preinput"]["mean_error_mV"]) < 0.05
+        for outcome in normalized
+    )
+    assert all(outcome["tonic"]["maximum_voltage_mV"] > 109.0 for outcome in normalized)
+    verdict = assessment["assessment"]
+    assert verdict["coordinate_translation_dimensionally_complete"]
+    assert verdict["archived_rest_coordinate_reproduced"]
+    assert verdict["archived_action_potential_amplitude_regime_reproduced"]
+    assert not verdict["legacy_benchmark_reproduced"]
+    assert not verdict["t_type_mechanism_independently_validated"]
+    assert not verdict["original_figure8_reproduced"]
+    assert not verdict["exact_classic_baseline_freeze_authorized"]
+    assert not assessment["next_action"]["fitting_authorized"]
+    assert not assessment["baseline_frozen"]
+
+
+def test_legacy_thalamus_input_reconstruction_is_preregistered_and_bounded() -> None:
+    registration = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/legacy-thalamus-input-reconstruction-registration-877.yaml"
+        ).read_text()
+    )
+
+    assert registration["status"] == "registered-before-execution"
+    assert registration["authorization"] == {
+        "path": "docs/validation-results/legacy-thalamus-input-protocol-source-audit-876.yaml",
+        "sha256": "cb38a52da8268c6e30296be4aa39036c29bfc12f8ab21091a600c6ce7aaa6dc2",
+    }
+    assert _matches_current_or_committed_history(
+        registration["script"], registration["script_sha256"]
+    )
+    for source in registration["sources"].values():
+        if not source["path"].startswith("tmp/"):
+            assert _matches_current_or_committed_history(
+                source["path"], source["sha256"]
+            )
+    assert registration["fixed_model"]["specific_capacitance_uF_cm2"] == 1.0
+    assert not registration["fixed_model"]["channel_parameters_changed"]
+    assert not registration["fixed_model"]["conductance_densities_changed"]
+    assert not registration["fixed_model"]["gate_rates_changed"]
+    assert not registration["fixed_model"]["axial_coupling_changed"]
+    assert registration["protocol"]["integration_methods"] == [
+        "rk4",
+        "sanndra_scalar_rk4",
+    ]
+    assert len(registration["protocol"]["effective_input_grid"]) == 15
+    assert registration["stopping_rule"] == (
+        "execute this fixed 60-arm screen once and stop"
+    )
+    assert "mean-voltage error" in registration["selection_rule"]
+    assert "Do not inspect spike outputs" in registration["selection_rule"]
+    assert not registration["baseline_frozen"]

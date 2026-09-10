@@ -1,0 +1,113 @@
+schema_version: 1
+id: legacy-thalamus-input-protocol-source-audit-876
+date: '2026-09-10'
+status: completed-source-audit
+classification: independent-legacy-kinness-protocol-identifiability-audit
+sources:
+  contemporaneous_kinness_cable_equation:
+    citation: Gorchetchnikov A. Timing of consecutive traveling pulses in a model of entorhinal cortex. IJCNN 2003.
+    url: https://www.bu.edu/hasselmo/GorchetchnikovIJCNN_03.pdf
+    path: tmp/pdfs/GorchetchnikovIJCNN_03.pdf
+    sha256: 13bf91b8f8f1d12a1d2d8c693fdafde335cbe046f1a478e006c2d497bb4c8260
+    relevant_location: PDF page 5, Appendix A, Equations 1-4
+  kinness_framework:
+    citation: Versace et al. 2008, KInNeSS - a modular framework for computational neuroscience
+    path: tmp/kinness-framework-expanded.pdf
+    sha256: 15a7f9166e301c9740e7cff4258810d315bd95b196ea5dff3419c5cc2879f177
+    relevant_locations:
+      integration: manuscript Section 2.1
+      membrane_equation: manuscript Section 4, Equation 1
+      input_gate: manuscript Section 4.1, Equations 4-5
+      voltage_gate_library: manuscript Section 4.3, Table 2
+  network:
+    path: tmp/legacy-thalamus-2004/KINENSS_tonic_burst/tonic_burst.xml
+    sha256: 3d4782503b74b818e4d94b29e72c5bb81f914b0c29d55a19cb99b088d1d14445
+  archived_input_image:
+    path: tmp/legacy-thalamus-2004/KINENSS_tonic_burst/one_input.png
+    sha256: c63f54b3d2a3cc28bb84beee66b9471b642c830c60e338412e39acd5ce3b1042
+    dimensions: [1, 1]
+    rgba_pixel: [250, 0, 0, 8]
+  archive_readme:
+    path: tmp/legacy-thalamus-2004/KINENSS_tonic_burst/readme.txt
+    sha256: e8ad1f2cee100943c7c11d6739cb50b2b664074cc53f3073d82682047ab98a77
+  archive_analysis:
+    path: tmp/legacy-thalamus-2004/KINENSS_tonic_burst/Burst_tonic.m
+    sha256: 6bad5f66106e72525ccdadec5b7d41c00a97171be31efa723c41a2da32f1e412
+  coordinate_complete_result:
+    path: docs/validation-results/legacy-thalamus-complete-coordinate-replay-874.yaml
+    sha256: d18f17fdb13fd1d80d1a57c45981dbcda2e7aff9b951572419cc42016a82b773
+source_fixed_conventions:
+  specific_capacitance_uF_cm2:
+    value: 1.0
+    evidence: Gorchetchnikov 2003 Appendix A explicitly states CM = 1 microfarad/cm2
+    current_replay_value: 1.0
+    open_for_calibration: false
+  integration:
+    method: fourth-order Runge-Kutta
+    current_replay_arms: [rk4, sanndra_scalar_rk4]
+  input_gate:
+    equation: V_eq = V_rest + sum(s_color * V_color)
+    source_range_per_color: [0, 255]
+    zero_input_effect: extra leak toward resting potential
+  voltage_output:
+    coordinate: rest-relative
+    status: already corrected in Replay 874
+  ionic_driving_potentials:
+    coordinate: same integrated membrane axis
+    status: already corrected in Replay 874
+archive_protocol_identifiability:
+  network_serializes:
+    tonic_dendritic_green_sensitivity_mV: 250.0
+    tonic_dendritic_conductance_density_mS_cm2: 0.9
+    burst_somatic_red_sensitivity_mV: -250.0
+    burst_somatic_conductance_density_mS_cm2: 0.4
+  image_preserves:
+    red_value: 250
+    green_value: 0
+    blue_value: 0
+    alpha_value: 8
+  missing:
+    - the green tonic-condition image or interactive input value
+    - the mapping from serialized image byte to the effective runtime input used by the archived KInNeSS release
+    - the interactive switch sequence that produced tonic versus burst files
+  inferred_from_archived_voltage_only:
+    hyperpolarization_on_ms: 1011.0
+    hyperpolarization_off_ms: 2183.0
+  conclusion: >-
+    The cell and channel parameters are source constrained, but the
+    condition-specific input protocol is not exactly executable from the
+    surviving archive. The single preserved red image cannot generate the
+    separately described green tonic drive, and neither the README nor MATLAB
+    analysis records the GUI switching sequence.
+result_diagnostic:
+  normalized_tonic_isi_ms: [2.0, 2.15]
+  archived_tonic_isi_ms: 15.05
+  normalized_burst_event_count: [12, 13]
+  archived_burst_event_count: 6
+  normalized_rest_mean_error_mV_absolute_max: 0.047
+  interpretation: >-
+    Correct rest and action-potential amplitude with wrong driven timing is
+    consistent with an unresolved drive protocol; it does not authorize
+    changing membrane capacitance, ionic channel density, or gate kinetics.
+authorized_next_action:
+  classification: calibrated-input-protocol-reconstruction
+  action: >-
+    Preregister a coarse condition-specific effective-input screen. Select the
+    tonic and burst input independently using only the corresponding archived
+    steady-voltage mean, then evaluate spike count, interevent interval, and
+    rebound timing as held-out gates.
+  fixed:
+    - coordinate-complete cell equations and all channel parameters from Replay 874
+    - specific capacitance 1 microfarad/cm2
+    - archived onset, release, duration, timestep, and axonal delay
+    - no global time multiplier
+  forbidden:
+    - fitting conductance, capacitance, gate rates, reversals, axial coupling, or detector threshold
+    - selecting an input using spike-count, interevent-interval, or rebound-event outcomes
+    - calling a passing reconstruction an exact recovered 2004 protocol
+    - using this benchmark to claim the missing 2008 Figure-8 protocol
+scope_boundary: >-
+  This audit authorizes reconstruction of missing external stimulus values for
+  an independent 2004 relay benchmark. It does not alter SMART parameters,
+  reproduce original SMART, authorize an exact classic freeze, or open neuron
+  model robustness comparisons.

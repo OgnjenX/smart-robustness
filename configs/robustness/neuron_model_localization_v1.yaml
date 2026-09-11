@@ -134,3 +134,6 @@ execution_amendment_2026_09_11:
     Classic and AdEx use the frozen deterministic execution once. GIF uses the
     20 registered stochastic seeds, applied only after identical construction.
   model_parameters_gates_and_stimuli_changed: false
+  scheduling: >-
+    Registered GIF seeds may run in non-overlapping parallel shards. The merge
+    rejects duplicates, missing seeds, and execution-fingerprint differences.

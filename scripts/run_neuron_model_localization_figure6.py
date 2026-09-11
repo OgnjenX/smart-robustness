@@ -130,6 +130,8 @@ def main() -> None:
     )
     parser.add_argument("--output", required=True)
     parser.add_argument("--arms", nargs="*", default=None)
+    parser.add_argument("--seed-start", type=int, default=0)
+    parser.add_argument("--seed-stop", type=int, default=None)
     args = parser.parse_args()
 
     baseline = load_frozen_classic_baseline(args.baseline)
@@ -138,6 +140,10 @@ def main() -> None:
     rule = study["figure6_progression_rule"]
     if len(seeds) != int(rule["stochastic_gif_total_trials"]):
         raise ValueError("registered seed count and Figure 6 trial count differ")
+    seed_stop = len(seeds) if args.seed_stop is None else args.seed_stop
+    if not 0 <= args.seed_start < seed_stop <= len(seeds):
+        raise ValueError("seed slice must be a non-empty subset of registered positions")
+    selected_seeds = seeds[args.seed_start:seed_stop]
 
     raw_manifest = yaml.safe_load(Path(args.baseline).read_text())
     profile = yaml.safe_load(
@@ -175,7 +181,7 @@ def main() -> None:
         for arm_name, factory in factories.items():
             trials: list[dict[str, object]] = arms[arm_name]["trials"]  # type: ignore[assignment]
             stochastic = arm_name.startswith("gif_")
-            arm_seeds: tuple[int | None, ...] = seeds if stochastic else (None,)
+            arm_seeds: tuple[int | None, ...] = selected_seeds if stochastic else (None,)
             for seed in arm_seeds:
                 training = run_figure6_learning(
                     conventions=baseline.runtime_conventions(),
@@ -198,6 +204,7 @@ def main() -> None:
                             "baseline_manifest_fingerprint": baseline.manifest_fingerprint,
                             "runtime_fingerprint": baseline.runtime_fingerprint,
                             "study": args.study,
+                            "registered_gif_seed_positions": [args.seed_start, seed_stop],
                             "network_outcome_used_for_parameter_selection": False,
                             "arms": arms,
                         },
@@ -211,11 +218,16 @@ def main() -> None:
         yaml.safe_dump(
             {
                 "schema_version": 1,
-                "status": "completed-neuron-model-localization",
+                "status": (
+                    "completed-neuron-model-localization"
+                    if args.seed_start == 0 and seed_stop == len(seeds)
+                    else "completed-neuron-model-localization-shard"
+                ),
                 "baseline_manifest": args.baseline,
                 "baseline_manifest_fingerprint": baseline.manifest_fingerprint,
                 "runtime_fingerprint": baseline.runtime_fingerprint,
                 "study": args.study,
+                "registered_gif_seed_positions": [args.seed_start, seed_stop],
                 "network_outcome_used_for_parameter_selection": False,
                 "arms": arms,
             },

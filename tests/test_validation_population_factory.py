@@ -47,6 +47,45 @@ def test_figure6_forwards_population_factory(monkeypatch) -> None:
         )
 
 
+def test_figure6_applies_dynamics_seed_only_after_network_construction(
+    monkeypatch,
+) -> None:
+    from smart_robustness.validation import figure6
+
+    events = []
+
+    def build_marker(**kwargs):
+        events.append("build")
+        return object()
+
+    def seed_marker(value):
+        events.append(("seed", value))
+
+    def initialization_marker(*args, **kwargs):
+        events.append("initialize")
+        raise FactoryForwarded
+
+    monkeypatch.setattr(
+        classic_sector,
+        "build_first_order_connected_sector",
+        build_marker,
+    )
+    monkeypatch.setattr(brian, "seed", seed_marker)
+    monkeypatch.setattr(
+        figure6,
+        "initialize_convergent_external_input",
+        initialization_marker,
+    )
+    with pytest.raises(FactoryForwarded):
+        run_figure6_learning(dynamics_seed=17, brian=brian)
+    assert events == ["build", ("seed", 17), "initialize"]
+
+
+def test_figure6_rejects_ambiguous_seed_semantics() -> None:
+    with pytest.raises(ValueError, match="mutually exclusive"):
+        run_figure6_learning(random_seed=1, dynamics_seed=2, brian=brian)
+
+
 def test_figure7_forwards_population_factory_to_each_network_scope(monkeypatch) -> None:
     monkeypatch.setattr(
         classic_sector,

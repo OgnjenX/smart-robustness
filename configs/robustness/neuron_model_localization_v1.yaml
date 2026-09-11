@@ -57,9 +57,15 @@ cortical_stage_arms:
     parameters: configs/models/gif_current_step_matched_v1.yaml
     replace: cortical_inhibitory
 
-network_seed_ensemble:
+execution_repetitions:
+  deterministic_arms: 1
+  deterministic_interpretation: exact reproducibility check, not an independent sample
+  stochastic_gif_arms: 20
+
+gif_dynamics_seed_ensemble:
   source: configs/robustness/gif_phase1_v1.yaml#network_seed_ensemble
-  common_random_numbers_between_all_arms: true
+  application: after fixed network construction and immediately before dynamics
+  common_random_numbers_between_gif_arms: true
   seeds:
     - 2026091001
     - 2026091002
@@ -83,10 +89,11 @@ network_seed_ensemble:
     - 2026091020
 
 figure6_progression_rule:
-  trial_success: all six frozen Figure 6 gates pass in that seed
-  minimum_successful_trials: 16
-  total_trials: 20
-  each_individual_gate_minimum_trials: 18
+  trial_success: all six frozen Figure 6 gates pass in that replicate
+  deterministic_arm: one of one complete success
+  stochastic_gif_minimum_successful_trials: 16
+  stochastic_gif_total_trials: 20
+  stochastic_gif_each_individual_gate_minimum_trials: 18
   no_seed_replacement: true
 
 thalamic_stage:
@@ -112,3 +119,18 @@ knowledge_boundary:
     - every selective cortical replacement outcome in this study
     - every conditionally eligible thalamic replacement outcome in this study
   post_network_parameter_tuning: prohibited
+
+execution_amendment_2026_09_11:
+  reason: >-
+    The first classic sentinel failed after the GIF replicate seed was applied
+    before network construction. That made the proposed control differ from
+    its frozen execution and invalidated the attempted comparison.
+  invalid_outcomes_observed_before_amendment:
+    - classic sentinel under an inapplicable GIF seed
+    - one AdEx cortical-all run under an inapplicable GIF seed
+    - one GIF cortical-all run with its seed applied before construction
+  use_of_invalid_outcomes: prohibited
+  corrected_rule: >-
+    Classic and AdEx use the frozen deterministic execution once. GIF uses the
+    20 registered stochastic seeds, applied only after identical construction.
+  model_parameters_gates_and_stimuli_changed: false

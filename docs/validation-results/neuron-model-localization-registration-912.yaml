@@ -9,8 +9,9 @@ study: configs/robustness/neuron_model_localization_v1.yaml
 control: configs/baselines/classic_smart_calibrated_v1.yaml
 primary_endpoint: frozen Figure 6 six-gate conjunction
 fixed_execution:
-  trials_per_arm: 20
-  common_seed_ensemble: true
+  deterministic_trials_per_classic_or_adex_arm: 1
+  stochastic_trials_per_gif_arm: 20
+  common_gif_dynamics_seed_ensemble: true
   checkpoint_after_every_seed: true
   failed_or_missing_seed_replacement: prohibited
 
@@ -24,6 +25,21 @@ knowledge_boundary:
   selective_population_outcomes_observed_at_registration: false
   thalamic_fit_outcomes_observed_at_registration: false
   network_guided_parameter_selection: prohibited
+
+amendment:
+  date: 2026-09-11
+  reason: invalid-classic-sentinel-after-replicate-seed-was-applied-before-construction
+  invalid_attempted_selective_outcomes_observed: true
+  invalid_attempted_outcomes_used_for_inference_or_fitting: false
+  corrected_selective_outcomes_observed_at_amendment: false
+  corrected_seed_semantics: >-
+    Preserve the frozen deterministic construction for classic and AdEx. Apply
+    each stochastic GIF seed only after the identical sector is constructed.
+  deterministic_repetitions_reduced_to_one: true
+  scientific_rationale: >-
+    Repeating a deterministic arm with arbitrary seeds is neither a sample nor
+    a valid robustness test and changed the frozen control. One exact sentinel
+    is required; stochastic GIF retains all 20 preregistered replicates.
 
 interpretation: >-
   The experiment can identify where the existing AdEx/GIF substitutions first

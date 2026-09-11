@@ -519,6 +519,7 @@ def run_figure6_learning(
     convergent_external_source_scope: str = "nonzero_pixels",
     population_factory=None,
     random_seed: int | None = None,
+    dynamics_seed: int | None = None,
     brian=None,
 ) -> Figure6LearningRun:
     """Run and summarize the official simultaneous Figure 6b/c episode."""
@@ -531,6 +532,8 @@ def run_figure6_learning(
 
     conventions = conventions or figure6_runtime_conventions()
     protocol = protocol or Figure6LearningProtocol()
+    if random_seed is not None and dynamics_seed is not None:
+        raise ValueError("random_seed and dynamics_seed are mutually exclusive")
     brian.start_scope()
     if random_seed is not None:
         brian.seed(int(random_seed))
@@ -540,6 +543,11 @@ def run_figure6_learning(
         population_factory=population_factory,
         brian=brian,
     )
+    if dynamics_seed is not None:
+        # Seed stochastic spike emission only after the fixed network and its
+        # initial state have been assembled. This prevents a GIF replicate
+        # seed from silently changing any non-GIF construction randomness.
+        brian.seed(int(dynamics_seed))
     initialize_convergent_external_input(
         sector, ClassicBarStimulus(BarOrientation.HORIZONTAL),
         convergent_source_scope=convergent_external_source_scope,

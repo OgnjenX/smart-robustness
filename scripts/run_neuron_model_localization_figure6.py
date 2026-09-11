@@ -28,7 +28,7 @@ from smart_robustness.validation.figure10_search_cycle_spread import (
 )
 
 
-def _trial(training, expected: set[int], seed: int) -> dict[str, object]:
+def _trial(training, expected: set[int], seed: int | None) -> dict[str, object]:
     relay_indices = training.result.population_spike_indices["thalamic_relay"]
     relay_counts = {index: relay_indices.count(index) for index in expected}
     recruitment = assess_figure6_cortical_recruitment(training.result)
@@ -56,22 +56,36 @@ def _trial(training, expected: set[int], seed: int) -> dict[str, object]:
     }
 
 
-def _summary(trials: list[dict[str, object]], rule: dict[str, object]) -> dict[str, object]:
+def _summary(
+    trials: list[dict[str, object]],
+    rule: dict[str, object],
+    *,
+    stochastic: bool,
+) -> dict[str, object]:
     gate_names = tuple(trials[0]["gates"]) if trials else ()
     counts = {
         name: sum(bool(trial["gates"][name]) for trial in trials)  # type: ignore[index]
         for name in gate_names
     }
     all_gate_count = sum(bool(trial["all_gates_pass"]) for trial in trials)
-    complete = len(trials) == int(rule["total_trials"])
-    progression = bool(
-        complete
-        and all_gate_count >= int(rule["minimum_successful_trials"])
-        and all(
-            value >= int(rule["each_individual_gate_minimum_trials"])
-            for value in counts.values()
+    if stochastic:
+        complete = len(trials) == int(rule["stochastic_gif_total_trials"])
+        progression = bool(
+            complete
+            and all_gate_count >= int(rule["stochastic_gif_minimum_successful_trials"])
+            and all(
+                value
+                >= int(rule["stochastic_gif_each_individual_gate_minimum_trials"])
+                for value in counts.values()
+            )
         )
-    )
+    else:
+        complete = len(trials) == 1
+        progression = bool(
+            complete
+            and all_gate_count == 1
+            and all(value == 1 for value in counts.values())
+        )
     return {
         "completed_trials": len(trials),
         "all_gate_success_count": all_gate_count,
@@ -120,9 +134,9 @@ def main() -> None:
 
     baseline = load_frozen_classic_baseline(args.baseline)
     study = yaml.safe_load(Path(args.study).read_text())
-    seeds = tuple(int(seed) for seed in study["network_seed_ensemble"]["seeds"])
+    seeds = tuple(int(seed) for seed in study["gif_dynamics_seed_ensemble"]["seeds"])
     rule = study["figure6_progression_rule"]
-    if len(seeds) != int(rule["total_trials"]):
+    if len(seeds) != int(rule["stochastic_gif_total_trials"]):
         raise ValueError("registered seed count and Figure 6 trial count differ")
 
     raw_manifest = yaml.safe_load(Path(args.baseline).read_text())
@@ -149,24 +163,32 @@ def main() -> None:
     output_path = Path(args.output)
     output_path.parent.mkdir(parents=True, exist_ok=True)
     arms: dict[str, dict[str, object]] = {
-        name: {"trials": [], "summary": _summary([], rule)} for name in factories
+        name: {
+            "trials": [],
+            "summary": _summary([], rule, stochastic=name.startswith("gif_")),
+        }
+        for name in factories
     }
     original_builder = classic_sector.build_first_order_connected_sector
     try:
         classic_sector.build_first_order_connected_sector = build_projection036_variance_sector
         for arm_name, factory in factories.items():
             trials: list[dict[str, object]] = arms[arm_name]["trials"]  # type: ignore[assignment]
-            for seed in seeds:
+            stochastic = arm_name.startswith("gif_")
+            arm_seeds: tuple[int | None, ...] = seeds if stochastic else (None,)
+            for seed in arm_seeds:
                 training = run_figure6_learning(
                     conventions=baseline.runtime_conventions(),
                     protocol=protocol,
                     projection_weight_scales=dict(baseline.projection_weight_scales),
                     population_factory=factory,
-                    random_seed=seed,
+                    dynamics_seed=seed,
                     brian=brian,
                 )
                 trials.append(_trial(training, expected, seed))
-                arms[arm_name]["summary"] = _summary(trials, rule)
+                arms[arm_name]["summary"] = _summary(
+                    trials, rule, stochastic=stochastic
+                )
                 output_path.write_text(
                     yaml.safe_dump(
                         {

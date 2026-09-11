@@ -61,11 +61,17 @@ def test_localization_study_freezes_seeds_gates_and_thalamic_fit_boundary() -> N
             / "docs/validation-results/neuron-model-localization-registration-912.yaml"
         ).read_text()
     )
-    seeds = study["network_seed_ensemble"]["seeds"]
+    seeds = study["gif_dynamics_seed_ensemble"]["seeds"]
     assert len(seeds) == len(set(seeds)) == 20
-    assert study["figure6_progression_rule"]["minimum_successful_trials"] == 16
+    assert study["figure6_progression_rule"][
+        "stochastic_gif_minimum_successful_trials"
+    ] == 16
+    assert study["execution_repetitions"]["deterministic_arms"] == 1
     assert study["thalamic_stage"]["sealed_holdout_required"] is True
     assert study["thalamic_stage"]["network_outcomes_as_fit_inputs"] == "prohibited"
     assert registration["knowledge_boundary"][
         "selective_population_outcomes_observed_at_registration"
+    ] is False
+    assert registration["amendment"][
+        "invalid_attempted_outcomes_used_for_inference_or_fitting"
     ] is False

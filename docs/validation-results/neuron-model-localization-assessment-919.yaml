@@ -1,0 +1,123 @@
+schema_version: 1
+artifact_id: 919
+artifact_type: controlled-neuron-model-localization-assessment
+name: population-localization-of-somatic-spike-generator-dependence
+date: 2026-09-11
+status: completed-cortical-stage-negative-thalamic-stage-blocked
+
+registration: docs/validation-results/neuron-model-localization-registration-912.yaml
+study: configs/robustness/neuron_model_localization_v1.yaml
+control: configs/baselines/classic_smart_calibrated_v1.yaml
+network_outcome_used_for_parameter_selection: false
+
+execution_audit:
+  invalid_seed-confounded_attempts_excluded: true
+  corrected_seed_isolation_commit: e679c9b
+  deterministic_classic_and_adex_repetitions: 1
+  stochastic_gif_repetitions_per_arm: 20
+  duplicate_boundary_seed_policy: >-
+    Interrupted-shard duplicates were compared with completed-shard reruns;
+    completed results replaced non-identical truncated checkpoints.
+
+raw_results:
+  classic_control:
+    path: results/neuron-model-localization-classic-control-914.yaml
+    sha256: 35e358273746bebd8601680ca3b6969410c7b982d0682af38f63e2afd3ba91ce
+    bytes: 1634
+  adex_cortical_all:
+    path: results/neuron-model-localization-adex_cortical_all-914.yaml
+    sha256: f48867c6b117549136698a7895ef81bc974f3010744c84f8cf7877f59eebd6fe
+    bytes: 1643
+  adex_cortical_excitatory:
+    path: results/neuron-model-localization-adex_cortical_excitatory-914.yaml
+    sha256: 2fa6b107deffb8bc180829a4ddcb0141f766b469935a4796488740486904ebe9
+    bytes: 1632
+  adex_cortical_inhibitory:
+    path: results/neuron-model-localization-adex_cortical_inhibitory-914.yaml
+    sha256: c0481e22a409c849525c0e449632e8e0b54b389c74260557a78822847258f5b4
+    bytes: 1652
+  gif_merged:
+    path: results/neuron-model-localization-gif-complete-919.yaml
+    sha256: df9a88bc1418ad3085097eaa33383685fab19e646543748261c6647242514190
+    bytes: 49865
+  committed: false-generated-results
+
+arms:
+  classic_control:
+    complete_successes: 1
+    trials: 1
+    progression_pass: true
+    relay_event_range: [20, 20]
+    top_down_horizontal_contrast_range: [0.5256118696154084, 0.5256118696154084]
+    all_six_gates: pass
+  adex_cortical_all:
+    complete_successes: 0
+    trials: 1
+    progression_pass: false
+    relay_events: 15
+    passed_gates: [relay active indices, cortical chain complete, positive top-down horizontal contrast]
+    failed_gates: [four relay events per selected index, exactly 20 relay events, causal learning pair]
+  adex_cortical_excitatory:
+    complete_successes: 0
+    trials: 1
+    progression_pass: false
+    relay_events: 15
+    passed_gates: [relay active indices, cortical chain complete]
+    failed_gates: [four relay events per selected index, exactly 20 relay events, causal learning pair, positive top-down horizontal contrast]
+  adex_cortical_inhibitory:
+    complete_successes: 0
+    trials: 1
+    progression_pass: false
+    relay_events: 14
+    passed_gates: [relay active indices, cortical chain complete, positive top-down horizontal contrast]
+    failed_gates: [four relay events per selected index, exactly 20 relay events, causal learning pair]
+  gif_cortical_all:
+    complete_successes: 0
+    trials: 20
+    progression_pass: false
+    individual_gate_successes: {relay_active_indices: 10, relay_events_per_active_index: 4, relay_events: 4, cortical_chain_complete: 1, causal_learning_pair: 1, top_down_horizontal_contrast: 10}
+    relay_event_range: [0, 20]
+    top_down_horizontal_contrast_range: [0.0, 0.44419622953494964]
+  gif_cortical_excitatory:
+    complete_successes: 0
+    trials: 20
+    progression_pass: false
+    individual_gate_successes: {relay_active_indices: 10, relay_events_per_active_index: 1, relay_events: 1, cortical_chain_complete: 4, causal_learning_pair: 2, top_down_horizontal_contrast: 10}
+    relay_event_range: [0, 20]
+    top_down_horizontal_contrast_range: [0.0, 0.4456354958341005]
+  gif_cortical_inhibitory:
+    complete_successes: 0
+    trials: 20
+    progression_pass: false
+    individual_gate_successes: {relay_active_indices: 20, relay_events_per_active_index: 0, relay_events: 0, cortical_chain_complete: 0, causal_learning_pair: 20, top_down_horizontal_contrast: 20}
+    relay_event_range: [10, 15]
+    top_down_horizontal_contrast_range: [0.17377897405737083, 0.3076477959185071]
+
+thalamic_stage:
+  prerequisite: docs/validation-results/thalamic-conductance-rebound-v2-assessment-918.yaml
+  trn_classic_target_valid: true
+  relay_classic_target_valid: false
+  alternative_fit_executed: false
+  relay_trn_network_arms_executed: false
+  status: blocked-by-invalid-classic-relay-rebound-target
+
+decision:
+  figure6_control_valid: true
+  any_adex_cortical_arm_preserves_figure6: false
+  any_gif_cortical_arm_preserves_figure6: false
+  downstream_art_protocols_authorized_for_alternatives: false
+  conclusion: >-
+    With the frozen independently current-step-matched parameter maps, changing
+    either excitatory or inhibitory cortical somatic spike generators is
+    sufficient to break the complete Figure 6 learning prerequisite. The
+    pattern is distributed rather than uniquely thalamic: multiple sub-gates
+    survive, but no alternative arm preserves their conjunction.
+  prohibited_conclusion: >-
+    These results do not show that ART dynamics are stable only with
+    Hodgkin-Huxley neurons, nor that AdEx or GIF families are intrinsically
+    incapable of ART. They reject only the registered parameterizations under
+    the morphology-preserving somatic-substitution contract.
+  thalamic_interpretation: >-
+    A rebound-matched relay/TRN comparison cannot be made honestly because the
+    calibrated classic relay does not express the preregistered source-port
+    rebound target. The original Figure 8 protocol remains unavailable.

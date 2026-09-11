@@ -1,0 +1,65 @@
+schema_version: 1
+artifact_id: 918
+artifact_type: isolated-assay-assessment
+name: classic-smart-thalamic-conductance-rebound-validity-v2
+date: 2026-09-11
+status: completed-relay-target-invalid-thalamic-comparison-blocked
+
+raw_result:
+  path: results/thalamic-conductance-rebound-validity-v2-918.yaml
+  sha256: a1392e84ae9aba95c1262081abe514d513b9a893211b337bfa690b2963882f71
+  bytes: 20401
+  committed: false-generated-result
+
+execution:
+  protocol: configs/models/thalamic_conductance_rebound_protocol_v2.yaml
+  baseline: configs/baselines/classic_smart_calibrated_v1.yaml
+  network_outcomes_used: false
+  alternative_model_outcomes_observed: false
+
+classic_validity:
+  thalamic_relay:
+    valid: false
+    passing_registered_conditions: 0
+    strongest_suppression_condition:
+      tonic_external_value: 120.0
+      inhibition_scale: 32.0
+      baseline_inhibition_release_spikes: [7, 0, 6]
+      early_release_spikes: 2
+      first_release_latency_ms: 3.8000000000000114
+      first_release_isi_ms: 16.660000000000025
+      baseline_t_current_inward_charge_pA_ms: 3786.386470968
+      release_t_current_inward_charge_pA_ms: 2798.5046046018524
+    failed_gates:
+      - first release ISI exceeds the registered 10-ms burst bound
+      - release inward T-current charge does not exceed baseline
+  trn:
+    valid: true
+    selected_condition:
+      inhibition_scale: 3.0
+      baseline_inhibition_release_spikes: [46, 0, 48]
+      early_release_spikes: 13
+      first_release_latency_ms: 0.8999999999999773
+      first_release_isi_ms: 2.140000000000043
+      baseline_t_current_inward_charge_pA_ms: 5555.708357980989
+      release_t_current_inward_charge_pA_ms: 13140.192515616916
+
+decision:
+  both_required_classic_targets_valid: false
+  adex_relay_trn_fit_authorized: false
+  gif_relay_trn_fit_authorized: false
+  relay_only_network_arm_authorized: false
+  trn_only_network_arm_authorized: false
+  relay_plus_trn_network_arm_authorized: false
+  rationale: >-
+    The registered final stage required independently valid classic relay and
+    TRN conductance-input/rebound targets before any alternative was fitted.
+    TRN passes, but relay does not exhibit the registered rebound phenotype.
+    Fitting an alternative to a non-existent relay target or redefining the
+    gate after observing it would make the comparison network-guided and is
+    therefore prohibited.
+  interpretation_boundary: >-
+    This blocks the requested rebound-matched relay/TRN substitution under the
+    calibrated reconstruction. It is not evidence that ART requires HH relay
+    neurons, and it does not repair the frozen fact that the original Figure 8
+    protocol is unavailable.

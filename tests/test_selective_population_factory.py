@@ -75,3 +75,27 @@ def test_localization_study_freezes_seeds_gates_and_thalamic_fit_boundary() -> N
     assert registration["amendment"][
         "invalid_attempted_outcomes_used_for_inference_or_fitting"
     ] is False
+
+
+def test_completed_localization_assessment_preserves_interpretation_boundary() -> None:
+    result = yaml.safe_load(
+        (
+            ROOT
+            / "docs/validation-results/neuron-model-localization-assessment-919.yaml"
+        ).read_text()
+    )
+    assert result["arms"]["classic_control"]["progression_pass"] is True
+    for name in (
+        "adex_cortical_all",
+        "adex_cortical_excitatory",
+        "adex_cortical_inhibitory",
+        "gif_cortical_all",
+        "gif_cortical_excitatory",
+        "gif_cortical_inhibitory",
+    ):
+        assert result["arms"][name]["progression_pass"] is False
+    assert result["arms"]["gif_cortical_inhibitory"][
+        "individual_gate_successes"
+    ]["causal_learning_pair"] == 20
+    assert result["thalamic_stage"]["alternative_fit_executed"] is False
+    assert "do not show" in result["decision"]["prohibited_conclusion"]

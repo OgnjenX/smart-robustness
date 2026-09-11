@@ -123,6 +123,16 @@ layer-4-led cortical chain, or causal learning pair. It therefore does not enter
 the downstream match/mismatch, reset, or spectral protocols. See the registered
 design and result in validation artifacts 908--911.
 
+The follow-up population-localization study keeps the calibrated thalamus
+classic while replacing all cortical, excitatory-only, or inhibitory-only
+somatic spike generators. None of the frozen current-step-matched AdEx arms
+passed Figure 6; the corresponding GIF arms each scored 0/20 complete
+successes. This rejects those registered parameterizations, not the AdEx/GIF
+families in general and not all non-HH explanations of ART. A rebound-matched
+relay/TRN arm was withheld because the classic relay failed the independently
+registered source-port rebound target, although TRN passed. See validation
+artifacts 912 and 915--919.
+
 ## Install and run
 
 ```bash

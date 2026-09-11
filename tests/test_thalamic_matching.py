@@ -1,4 +1,7 @@
+from pathlib import Path
+
 import pytest
+import yaml
 
 from smart_robustness.validation.thalamic_matching import (
     ConductanceReboundCondition,
@@ -42,3 +45,17 @@ def test_classic_conductance_rebound_gate_requires_suppression_burst_and_t_curre
 def test_conductance_rebound_protocol_rejects_invalid_windows() -> None:
     with pytest.raises(ValueError, match="cannot exceed"):
         ConductanceReboundProtocol(early_release_ms=101.0)
+
+
+def test_failed_classic_relay_target_blocks_alternative_thalamic_fit() -> None:
+    root = Path(__file__).parents[1]
+    assessment = yaml.safe_load(
+        (
+            root
+            / "docs/validation-results/thalamic-conductance-rebound-v2-assessment-918.yaml"
+        ).read_text()
+    )
+    assert assessment["classic_validity"]["thalamic_relay"]["valid"] is False
+    assert assessment["classic_validity"]["trn"]["valid"] is True
+    assert assessment["decision"]["adex_relay_trn_fit_authorized"] is False
+    assert assessment["decision"]["gif_relay_trn_fit_authorized"] is False

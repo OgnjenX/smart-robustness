@@ -1,0 +1,14 @@
+schema_version: 1
+artifact_id: 915
+artifact_type: isolated-assay-registration
+name: classic-smart-thalamic-conductance-rebound-validity
+date: 2026-09-11
+status: registered-before-classic-validity-scan
+
+protocol: configs/models/thalamic_conductance_rebound_protocol_v1.yaml
+baseline: configs/baselines/classic_smart_calibrated_v1.yaml
+network_outcomes_used: false
+alternative_model_outcomes_observed: false
+selection: lowest registered nonzero scale passing every fixed gate
+stopping_rule: both relay and TRN classic controls must pass before alternative fitting
+claim_boundary: operational-calibrated-reconstruction-assay-not-original-figure8

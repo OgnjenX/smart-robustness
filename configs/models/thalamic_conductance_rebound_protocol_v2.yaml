@@ -1,0 +1,64 @@
+schema_version: 1
+name: classic-smart-thalamic-conductance-rebound-validity-v2
+status: registered-before-generation-2-classic-validity-scan
+classification: network-blind-source-port-assay
+predecessor: configs/models/thalamic_conductance_rebound_protocol_v1.yaml
+
+amendment_reason:
+  measurement_correction: SMART inward calcium current is positive, not negative
+  bounded_classic_only_extension: >-
+    Cross the relay's already registered source value with two higher values
+    from the existing external-input transfer grid and extend only the
+    inhibitory scale grid. No alternative-model trace has been observed.
+
+timing:
+  equilibration_ms: 100.0
+  baseline_ms: 100.0
+  inhibition_ms: 100.0
+  release_ms: 100.0
+  early_release_ms: 25.0
+  dt_ms: 0.02
+  record_dt_ms: 0.1
+
+operational_rebound_gate:
+  - finite voltage and T-current traces
+  - at least two baseline spikes during tonic drive
+  - inhibition epoch has at most half the baseline spike count
+  - early 25-ms release window has at least two spikes and exceeds its baseline-rate expectation by one
+  - first release spike latency is at most 25 ms
+  - first release interspike interval is at most 10 ms
+  - release inward T-current charge exceeds baseline inward T-current charge
+
+cells:
+  thalamic_relay:
+    tonic_external_input:
+      record_id: modeldb112923.external.002
+      channel: green
+      values: [120.0, 180.0, 240.0]
+    tonic_synaptic_gate_baselines: {}
+    inhibitory_gate_baselines:
+      modeldb112923.projection.000: 0.0019
+      modeldb112923.projection.001: 0.0018
+      modeldb112923.projection.004: 0.0057
+    inhibition_scales: [0.0, 1.0, 2.0, 4.0, 8.0, 12.0, 16.0, 24.0, 32.0]
+  trn:
+    tonic_external_input: null
+    tonic_synaptic_gate_baselines:
+      modeldb112923.projection.009: 0.03
+      modeldb112923.projection.010: 0.5
+      modeldb112923.projection.012: 0.4
+    tonic_gate_basis: ten-percent steady approximation to source projection weights
+    inhibitory_gate_baselines:
+      modeldb112923.projection.008: 0.225
+      modeldb112923.projection.011: 0.1875
+    inhibition_scales: [0.0, 0.25, 0.5, 1.0, 1.5, 2.0, 3.0]
+
+validity_and_progression:
+  select: lowest nonzero inhibition scale, then lowest tonic value, passing every gate
+  classic_relay_and_trn_must_both_pass: true
+  if_classic_fails: stop; do not fit an alternative to an invalid target
+  if_classic_passes: register disjoint training and sealed-holdout conditions before fitting
+
+claim_boundary: >-
+  This is an operational source-port rebound assay for the calibrated
+  reconstruction. It is not a reproduction of the unavailable 2008 Figure 8.

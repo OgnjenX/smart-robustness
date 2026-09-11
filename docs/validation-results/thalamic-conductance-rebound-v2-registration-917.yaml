@@ -1,0 +1,13 @@
+schema_version: 1
+artifact_id: 917
+artifact_type: isolated-assay-registration
+name: classic-smart-thalamic-conductance-rebound-validity-v2
+date: 2026-09-11
+status: registered-before-generation-2-classic-validity-scan
+
+protocol: configs/models/thalamic_conductance_rebound_protocol_v2.yaml
+predecessor_audit: docs/validation-results/thalamic-conductance-rebound-v1-audit-916.yaml
+alternative_model_outcomes_observed: false
+network_outcomes_used: false
+selection: lowest nonzero inhibition scale, then lowest tonic value, passing every fixed gate
+stopping_rule: both relay and TRN classic controls must pass before alternative fitting

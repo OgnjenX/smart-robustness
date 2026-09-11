@@ -171,8 +171,11 @@ def run_conductance_rebound_protocol(
         early = release[release < release_start + protocol.early_release_ms]
         release_latencies = release - release_start
         release_isis = np.diff(release_latencies)
-        baseline_inward = np.maximum(-calcium_pA[index, baseline_mask], 0.0)
-        release_inward = np.maximum(-calcium_pA[index, release_mask], 0.0)
+        # SMART writes calcium current as g*m*h*(E_Ca-V), so inward current is
+        # positive in this implementation (opposite the common outward-positive
+        # electrophysiology convention).
+        baseline_inward = np.maximum(calcium_pA[index, baseline_mask], 0.0)
+        release_inward = np.maximum(calcium_pA[index, release_mask], 0.0)
         finite = bool(
             np.all(np.isfinite(voltage[index]))
             and np.all(np.isfinite(calcium_pA[index]))

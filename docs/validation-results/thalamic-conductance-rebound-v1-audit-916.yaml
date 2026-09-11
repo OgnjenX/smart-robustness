@@ -1,0 +1,20 @@
+schema_version: 1
+artifact_id: 916
+artifact_type: isolated-assay-execution-audit
+name: classic-smart-thalamic-conductance-rebound-validity-v1
+date: 2026-09-11
+status: invalid-measurement-and-no-target-promoted
+
+raw_result: results/thalamic-conductance-rebound-validity-916.yaml
+classic_targets_promoted: false
+alternative_fitting_authorized: false
+observations:
+  relay_operational_rebound_passes: 0
+  trn_operational_rebound_passes: 0
+measurement_defect: >-
+  The audit integrated negative calcium current as inward, but the executable
+  SMART equations define i_ca=g*m*h*(E_Ca-V), making inward current positive.
+decision: >-
+  Void the T-current gate result, retain the descriptive spike/voltage traces,
+  correct the sign, and run only the bounded registered generation-2 classic
+  validity grid before exposing any alternative-model response.

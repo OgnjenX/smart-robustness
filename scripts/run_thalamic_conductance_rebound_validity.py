@@ -46,41 +46,65 @@ def main() -> None:
             facts[cell_class], conventions=baseline.runtime_conventions()
         )
         external = cell_raw["tonic_external_input"]
-        tonic_external = None
+        external_values: tuple[float | None, ...] = (None,)
         if external is not None:
-            tonic_external = (
-                str(external["record_id"]),
-                str(external["channel"]),
-                float(external["value"]),
-            )
-        result = run_conductance_rebound_protocol(
-            population_factory=create_compartmental_hh_population,
-            population_params=params,
-            inhibition_scales=tuple(float(x) for x in cell_raw["inhibition_scales"]),
-            inhibitory_gate_baselines={
-                str(key): float(value)
-                for key, value in cell_raw["inhibitory_gate_baselines"].items()
-            },
-            tonic_synaptic_gate_baselines={
-                str(key): float(value)
-                for key, value in cell_raw["tonic_synaptic_gate_baselines"].items()
-            },
-            tonic_external_input=tonic_external,
-            protocol=protocol,
-            brian=brian,
-        )
+            raw_values = external.get("values", [external.get("value")])
+            external_values = tuple(float(value) for value in raw_values)
         conditions = []
-        passing_scales = []
-        for condition in result.conditions:
-            passed = classic_rebound_valid(condition, protocol=protocol)
-            conditions.append({**asdict(condition), "operational_rebound_pass": passed})
-            if passed:
-                passing_scales.append(condition.inhibition_scale)
-        selected = min(passing_scales) if passing_scales else None
+        passing_conditions = []
+        for external_value in external_values:
+            tonic_external = None
+            if external is not None and external_value is not None:
+                tonic_external = (
+                    str(external["record_id"]),
+                    str(external["channel"]),
+                    external_value,
+                )
+            result = run_conductance_rebound_protocol(
+                population_factory=create_compartmental_hh_population,
+                population_params=params,
+                inhibition_scales=tuple(
+                    float(x) for x in cell_raw["inhibition_scales"]
+                ),
+                inhibitory_gate_baselines={
+                    str(key): float(value)
+                    for key, value in cell_raw["inhibitory_gate_baselines"].items()
+                },
+                tonic_synaptic_gate_baselines={
+                    str(key): float(value)
+                    for key, value in cell_raw["tonic_synaptic_gate_baselines"].items()
+                },
+                tonic_external_input=tonic_external,
+                protocol=protocol,
+                brian=brian,
+            )
+            for condition in result.conditions:
+                passed = classic_rebound_valid(condition, protocol=protocol)
+                record = {
+                    "tonic_external_value": external_value,
+                    **asdict(condition),
+                    "operational_rebound_pass": passed,
+                }
+                conditions.append(record)
+                if passed:
+                    passing_conditions.append(record)
+        selected = (
+            min(
+                passing_conditions,
+                key=lambda item: (
+                    item["inhibition_scale"],
+                    -1.0
+                    if item["tonic_external_value"] is None
+                    else item["tonic_external_value"],
+                ),
+            )
+            if passing_conditions
+            else None
+        )
         all_valid &= selected is not None
         cells[cell_class] = {
             "conditions": conditions,
-            "selected_lowest_passing_scale": selected,
+            "selected_lowest_passing_condition": selected,
             "classic_assay_valid": selected is not None,
         }
 

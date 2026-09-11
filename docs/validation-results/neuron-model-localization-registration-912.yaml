@@ -1,0 +1,32 @@
+schema_version: 1
+artifact_id: 912
+artifact_type: mechanistic-localization-registration
+name: population-localization-of-somatic-spike-generator-dependence
+date: 2026-09-11
+status: registered-before-any-selective-replacement-network-outcome
+
+study: configs/robustness/neuron_model_localization_v1.yaml
+control: configs/baselines/classic_smart_calibrated_v1.yaml
+primary_endpoint: frozen Figure 6 six-gate conjunction
+fixed_execution:
+  trials_per_arm: 20
+  common_seed_ensemble: true
+  checkpoint_after_every_seed: true
+  failed_or_missing_seed_replacement: prohibited
+
+stage_order:
+  - cortical all, excitatory-only, and inhibitory-only replacements
+  - independently register and fit relay/TRN isolated transfer and rebound behavior
+  - run thalamic localization only for alternatives passing every isolated holdout
+
+knowledge_boundary:
+  prior_all_population_alternative_outcomes_known: true
+  selective_population_outcomes_observed_at_registration: false
+  thalamic_fit_outcomes_observed_at_registration: false
+  network_guided_parameter_selection: prohibited
+
+interpretation: >-
+  The experiment can identify where the existing AdEx/GIF substitutions first
+  break or preserve the calibrated SMART learning prerequisite. It cannot by
+  itself prove that a mathematical neuron family is universally incapable of
+  ART behavior.

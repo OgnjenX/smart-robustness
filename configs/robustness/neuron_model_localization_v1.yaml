@@ -1,0 +1,114 @@
+schema_version: 1
+name: population-localization-of-somatic-spike-generator-dependence
+status: registered-before-any-selective-replacement-network-outcome
+control_manifest: configs/baselines/classic_smart_calibrated_v1.yaml
+
+scientific_question: >-
+  Which population class accounts for the loss of the frozen SMART Figure 6
+  learning prerequisite when every somatic HH spike generator is replaced by
+  an independently chosen AdEx or GIF alternative?
+
+scope:
+  manipulated: somatic spike generator in the named populations only
+  held_fixed:
+    - multicompartment morphology and axial coupling
+    - dendritic voltage-gated currents, including thalamic T-type calcium
+    - shunting AMPA, NMDA, GABA-A, and GABA-B synaptic dynamics
+    - projection graph, source delays, weights, and learning equations
+    - calibrated runtime conventions and Figure 6 stimulus
+  interpretation_limit: >-
+    This localizes dependence on the implemented somatic spike generator. It
+    does not compare wholly channel-free AdEx/GIF cells with wholly HH cells,
+    because the source-backed dendritic mechanisms remain fixed.
+
+cell_class_sets:
+  cortical_excitatory:
+    - layer4_excitatory_v1
+    - layer23_excitatory_v1
+    - layer5_excitatory_v1
+    - layer6i_excitatory_v1
+    - layer6ii_excitatory_v1
+  cortical_inhibitory:
+    - layer4_inhibitory_v1
+    - layer23_inhibitory_v1
+  relay_trn:
+    - thalamic_relay
+    - trn
+
+cortical_stage_arms:
+  classic_control:
+    replacement: none
+  adex_cortical_all:
+    parameters: configs/models/adex_current_step_matched_v1.yaml
+    replace: cortical_excitatory+ cortical_inhibitory
+  adex_cortical_excitatory:
+    parameters: configs/models/adex_current_step_matched_v1.yaml
+    replace: cortical_excitatory
+  adex_cortical_inhibitory:
+    parameters: configs/models/adex_current_step_matched_v1.yaml
+    replace: cortical_inhibitory
+  gif_cortical_all:
+    parameters: configs/models/gif_current_step_matched_v1.yaml
+    replace: cortical_excitatory+ cortical_inhibitory
+  gif_cortical_excitatory:
+    parameters: configs/models/gif_current_step_matched_v1.yaml
+    replace: cortical_excitatory
+  gif_cortical_inhibitory:
+    parameters: configs/models/gif_current_step_matched_v1.yaml
+    replace: cortical_inhibitory
+
+network_seed_ensemble:
+  source: configs/robustness/gif_phase1_v1.yaml#network_seed_ensemble
+  common_random_numbers_between_all_arms: true
+  seeds:
+    - 2026091001
+    - 2026091002
+    - 2026091003
+    - 2026091004
+    - 2026091005
+    - 2026091006
+    - 2026091007
+    - 2026091008
+    - 2026091009
+    - 2026091010
+    - 2026091011
+    - 2026091012
+    - 2026091013
+    - 2026091014
+    - 2026091015
+    - 2026091016
+    - 2026091017
+    - 2026091018
+    - 2026091019
+    - 2026091020
+
+figure6_progression_rule:
+  trial_success: all six frozen Figure 6 gates pass in that seed
+  minimum_successful_trials: 16
+  total_trials: 20
+  each_individual_gate_minimum_trials: 18
+  no_seed_replacement: true
+
+thalamic_stage:
+  status: conditional-on-independent-isolated-fit
+  target_cell_classes: [thalamic_relay, trn]
+  required_fit_domains:
+    - current-step response
+    - source-shaped conductance-input response
+    - release-from-inhibition rebound response
+  sealed_holdout_required: true
+  network_outcomes_as_fit_inputs: prohibited
+  progression: >-
+    Run relay-only, TRN-only, and relay-plus-TRN Figure 6 arms only for an
+    alternative model whose relay and TRN parameters pass all independently
+    registered isolated holdouts. A failed fit is reported and is not rescued
+    by network-guided tuning.
+
+knowledge_boundary:
+  known_before_registration:
+    - calibrated classic control passes the frozen behavioral baseline
+    - all-cell AdEx and all-cell GIF substitutions fail the Figure 6 prerequisite
+  not_observed_before_registration:
+    - every selective cortical replacement outcome in this study
+    - every conditionally eligible thalamic replacement outcome in this study
+  post_network_parameter_tuning: prohibited

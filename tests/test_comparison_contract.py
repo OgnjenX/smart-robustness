@@ -17,6 +17,10 @@ from smart_robustness.models.adex import (
 )
 from smart_robustness.models.adex_parameters import LITERATURE_REGULAR_SPIKING
 from smart_robustness.models.gif import create_somatic_gif_population
+from smart_robustness.models.selective import (
+    CORTICAL_EXCITATORY_CELL_CLASSES,
+    make_selective_population_factory,
+)
 
 
 def _contract(factory=None):
@@ -57,3 +61,14 @@ def test_per_class_adex_factory_preserves_the_same_contract() -> None:
         make_somatic_adex_factory({"thalamic_relay": LITERATURE_REGULAR_SPIKING})
     )
     assert_controlled_substitution(classic, adex)
+
+
+def test_selective_cortical_adex_factory_preserves_the_same_contract() -> None:
+    classic = _contract()
+    adex = make_somatic_adex_factory(
+        {"layer4_excitatory_v1": LITERATURE_REGULAR_SPIKING}
+    )
+    hybrid = _contract(
+        make_selective_population_factory(adex, CORTICAL_EXCITATORY_CELL_CLASSES)
+    )
+    assert_controlled_substitution(classic, hybrid)

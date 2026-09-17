@@ -1,0 +1,43 @@
+schema_version: 1
+artifact_id: 922
+artifact_type: preregistration
+name: layer5-distal-active-nak-ablation
+date: 2026-09-17
+status: registered-before-implementation-or-outcomes
+
+context:
+  classic_control: classic-smart-calibrated-v1.0.0
+  completed_neuron_model_screening: neuron-model-screening-v1.0.0
+  predecessor_result: docs/validation-results/neuron-model-alternative-hh-isolated-fit-921.yaml
+  phase: 2-compartment-and-active-mechanism-localization
+
+frozen_decisions:
+  protocol: configs/robustness/layer5_distal_nak_ablation_v1.yaml
+  affected_cell_class: layer5_excitatory_v1
+  affected_compartment: distal_dendrite
+  removed_currents: [fast Na, delayed-rectifier K]
+  morphology_preserved: true
+  axial_coupling_preserved: true
+  synaptic_targeting_preserved: true
+  somatic_spike_generator_preserved: true
+  network_parameters_preserved: true
+  fitting_permitted: false
+  deterministic_exact_reruns: 2
+  progression_requires_all_prior_gates: true
+
+implementation_state_at_registration:
+  ablation_factory: not-implemented
+  equation_option: not-implemented
+  isolated_checks: not-run
+  connected_network_outcomes_observed: false
+
+hypotheses:
+  h1: layer-5 distal active Na/K is required for at least one frozen SMART progression gate
+  h0: all frozen SMART gates survive its removal without compensation
+
+prohibited_claims:
+  - a failure proves distal dendritic spikes are universally required for ART
+  - a pass proves biological layer-5 dendrites are passive
+  - this intervention tests modern apical-feedback anatomy
+  - post-outcome tuning belongs to this registered arm
+

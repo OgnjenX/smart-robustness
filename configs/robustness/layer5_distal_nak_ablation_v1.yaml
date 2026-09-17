@@ -1,0 +1,69 @@
+schema_version: 1
+name: layer5-distal-nak-ablation-v1
+status: preregistered-before-implementation-or-outcomes
+control_manifest: configs/baselines/classic_smart_calibrated_v1.yaml
+registration: docs/validation-results/mechanism-layer5-distal-nak-registration-922.yaml
+
+scientific_question: >-
+  Does the frozen SMART behavioral sequence depend on the active fast Na/K
+  mechanism in the layer-5 distal dendrite when morphology, routing, passive
+  properties, somatic spiking, and every network parameter remain unchanged?
+
+arms:
+  classic_control:
+    disabled_intrinsic_currents: []
+  layer5_distal_nak_disabled:
+    target_cell_classes: [layer5_excitatory_v1]
+    target_compartments: [distal_dendrite]
+    disabled_intrinsic_currents: [fast_na, delayed_rectifier_k]
+
+intervention_identity:
+  removed:
+    - distal-dendritic fast sodium current and its m/h gates
+    - distal-dendritic delayed-rectifier potassium current and its n gate
+  retained:
+    - layer-5 soma, proximal dendrite, and distal dendrite
+    - distal capacitance, leak, reversal, geometry, and axial coupling
+    - every synaptic port and its original target compartment
+    - somatic classic Na/K, AHP/ACh, detector, and transmitter depletion
+    - every other population and intrinsic current
+    - topology, weights, delays, stimuli, learning, seeds, and analysis
+  compensation_or_refitting: prohibited
+
+pre_network_checks:
+  - compiled control contains distal i_na and i_k states
+  - compiled ablation lacks only distal Na/K currents, gates, and conductances
+  - layer-5 compartment names, ports, capacitances, leaks, and axial parameters match
+  - both isolated cells remain finite during rest and fixed distal-current probes
+  - serialized connected-sector structure differs only in the registered layer-5 equations
+
+execution:
+  deterministic: true
+  exact_reruns_per_arm: 2
+  run_order: [classic_control, layer5_distal_nak_disabled]
+  contemporaneous_classic_required: true
+
+progression:
+  stage_1:
+    endpoint: structural and isolated finite checks
+    rule: all checks must pass before a network outcome is opened
+  stage_2:
+    endpoint: frozen Figure 6 six-gate conjunction
+    rule: both exact reruns must agree; the classic sentinel and ablation must pass all six gates
+  stage_3:
+    endpoints: [Figure 7 match/mismatch, Figure 10 causal reset and negative control]
+    rule: authorized only when stage 2 passes
+  stage_4:
+    endpoints: [Figure 14 spectrum, Figure 15 local synchrony, Figure 16 higher order]
+    rule: authorized only when both stage-3 behavioral endpoints pass
+
+stopping_rules:
+  - a failed prerequisite is sealed and no downstream network endpoint is run for this arm
+  - no parameter, detector, threshold, weight, delay, or stimulus may be adjusted after an outcome
+  - proceed to the next separately registered mechanism intervention after recording this arm
+
+interpretation:
+  full_pass: the distal active Na/K mechanism is unnecessary for the tested frozen behaviors
+  figure6_fail: the mechanism is necessary under this frozen parameterization, not universally necessary for ART
+  later_fail: localize dependence to the first failed behavioral or spectral stage
+

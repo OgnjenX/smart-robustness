@@ -71,3 +71,18 @@ def test_point_hh_prechecks_authorize_only_figure6() -> None:
     assert result["decision"]["stage_1_pass"] is True
     assert result["decision"]["figure6_authorized"] is True
     assert result["decision"]["later_network_stages_authorized"] is False
+
+
+def test_point_hh_figure6_passes_exactly_before_stage3() -> None:
+    result = _yaml(
+        "docs/validation-results/mechanism-cortical-point-hh-figure6-assessment-929.yaml"
+    )
+    assert result["arms"]["classic_control"]["exact_repeat"] is True
+    assert result["arms"]["classic_control"]["all_trials_pass"] is True
+    assert result["arms"]["cortical_point_hh_conserved"]["exact_repeat"] is True
+    assert result["arms"]["cortical_point_hh_conserved"]["all_trials_pass"] is True
+    assert result["recovery_audit"][
+        "canonical_trial_field_differences_excluding_repetition"
+    ] == 0
+    assert result["decision"]["stage3_match_mismatch_and_reset_authorized"] is True
+    assert result["decision"]["spectral_and_higher_order_stages_authorized"] is False

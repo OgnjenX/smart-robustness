@@ -1,0 +1,115 @@
+schema_version: 1
+artifact_id: 929
+artifact_type: connected-network-gate-assessment
+name: conserved-cortical-point-hh-figure6
+date: 2026-09-17
+status: completed-passed-stage3-authorized
+
+raw_result:
+  path: results/cortical-point-hh-figure6-929.yaml
+  sha256: 65c419c0ffd230ecc041d17750d952104e05c684da4fe38269807ff26b4dd182
+  bytes: 969386
+  committed: false-generated-result
+
+execution:
+  intervention_implementation_commit: dbbbc15
+  original_runner_commit: ae71ff1
+  interruption_recovery_commit: 6ec2518
+  canonical_exactness_correction_commit: 82eaf03
+  study: configs/robustness/cortical_point_hh_conserved_v1.yaml
+  control_manifest: configs/baselines/classic_smart_calibrated_v1.yaml
+  control_manifest_fingerprint: 992fdd7c3bc9fa0f0d385b9e5a58ba317599357ca377145aba6f01c80d631cd2
+  runtime_fingerprint: 7e654528a99f0b25b7148260a8d52021f6443fb992b210729a2475ae3cfcdaa4
+  deterministic_exact_reruns_per_arm: 2
+  network_outcome_used_for_parameter_selection: false
+  compensation_or_refitting_used: false
+
+recovery_audit:
+  original_process_handle_lost_after_completed_trials: 3
+  preserved_partial_sha256: 36b97bb8d2c8bae573ff00b473268b9b78f59d598b3a5fb63510a5ac4d74e446
+  only_missing_trial_executed: cortical_point_hh_conserved repetition 1
+  canonical_trial_field_differences_excluding_repetition: 0
+  trial_fields_or_gates_changed_by_correction: 0
+  evidence:
+    - docs/validation-results/mechanism-cortical-point-hh-figure6-recovery-registration-929r.yaml
+    - docs/validation-results/mechanism-cortical-point-hh-figure6-exactness-correction-929c.yaml
+
+arms:
+  classic_control:
+    exact_repeat: true
+    all_trials_pass: true
+    six_gates:
+      relay_active_indices: true
+      relay_events_per_active_index: true
+      relay_events: true
+      cortical_chain_complete: true
+      causal_learning_pair: true
+      top_down_horizontal_contrast: true
+    population_spike_counts:
+      thalamic_relay: 20
+      trn: 676
+      layer5_excitatory_v1: 59
+      layer6ii_excitatory_v1: 14
+      layer6i_excitatory_v1: 41
+      layer4_inhibitory_v1: 148
+      layer23_excitatory_v1: 31
+      layer4_excitatory_v1: 45
+      layer23_inhibitory_v1: 19
+      thalamic_interneuron: 5
+      thalamic_nonspecific: 5
+    top_down_horizontal_contrast: 0.5256118696154084
+  cortical_point_hh_conserved:
+    exact_repeat: true
+    all_trials_pass: true
+    six_gates:
+      relay_active_indices: true
+      relay_events_per_active_index: true
+      relay_events: true
+      cortical_chain_complete: true
+      causal_learning_pair: true
+      top_down_horizontal_contrast: true
+    population_spike_counts:
+      thalamic_relay: 20
+      trn: 710
+      layer5_excitatory_v1: 20
+      layer6ii_excitatory_v1: 22
+      layer6i_excitatory_v1: 70
+      layer4_inhibitory_v1: 106
+      layer23_excitatory_v1: 25
+      layer4_excitatory_v1: 40
+      layer23_inhibitory_v1: 20
+      thalamic_interneuron: 5
+      thalamic_nonspecific: 4
+    top_down_horizontal_contrast: 0.5132681938090454
+
+controlled_difference:
+  relay_selection_and_event_count_unchanged: true
+  top_down_horizontal_contrast_remains_positive: true
+  population_spike_count_deltas_point_minus_control:
+    thalamic_relay: 0
+    trn: 34
+    layer5_excitatory_v1: -39
+    layer6ii_excitatory_v1: 8
+    layer6i_excitatory_v1: 29
+    layer4_inhibitory_v1: -42
+    layer23_excitatory_v1: -6
+    layer4_excitatory_v1: -5
+    layer23_inhibitory_v1: 1
+    thalamic_interneuron: 0
+    thalamic_nonspecific: -1
+  interpretation: >-
+    Figure 6 selection, feedforward recruitment, causal learning, and positive
+    top-down contrast survive the conserved cortical point-HH collapse, while
+    several population firing counts change substantially. This establishes
+    stage-2 functional survival, not complete dynamical equivalence.
+
+decision:
+  classic_sentinel_pass: true
+  point_hh_figure6_pass: true
+  stage3_match_mismatch_and_reset_authorized: true
+  spectral_and_higher_order_stages_authorized: false
+
+prohibited_conclusions:
+  - cortical compartmental organization is irrelevant to SMART
+  - ART resonance and reset have already survived
+  - later oscillatory or higher-order behavior necessarily survives

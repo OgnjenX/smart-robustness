@@ -1,0 +1,88 @@
+schema_version: 1
+artifact_id: 935
+artifact_type: behavioral-progression-assessment
+name: expanded-layer5-branched-stage3
+date: 2026-09-17
+status: completed-figure7-exact-gate-failed-arm-closed
+
+raw_result:
+  path: results/expanded-layer5-stage3-935.yaml
+  sha256: e9904b4384d6e378b31560ed9fb9183411e2f83e452bca099e2a36185d1b5b2d
+  bytes: 12704
+  committed: false-generated-result
+
+execution:
+  runner_commit: 17799d2
+  study: configs/robustness/expanded_layer5_branched_v1.yaml
+  control_manifest: configs/baselines/classic_smart_calibrated_v1.yaml
+  control_manifest_fingerprint: 992fdd7c3bc9fa0f0d385b9e5a58ba317599357ca377145aba6f01c80d631cd2
+  runtime_fingerprint: 7e654528a99f0b25b7148260a8d52021f6443fb992b210729a2475ae3cfcdaa4
+  figure6_result_sha256: 5fdf735abbc958d8d44b869250422f7a2fd406f1ca186aaabb8f8c4553543775
+  deterministic_exact_reruns_per_arm: 2
+  resumed: false
+  network_outcome_used_for_parameter_selection: false
+  compensation_or_refitting_used: false
+
+classic_control:
+  exact_repeat: true
+  figure7_pass: true
+  match_mismatch_nonspecific_events: [4, 7]
+  match_mismatch_relay_events: [20, 3]
+  match_mismatch_relay_active_indices: [[38, 39, 40, 41, 42], [40]]
+  match_mismatch_trn_events: [690, 611]
+  match_mismatch_trn_to_nonspecific_gaba_integral_ms:
+    - 1243.575428743736
+    - 1182.9799912086974
+  figure10_pass: true
+  intact_control_aggregate_winner_events: [53, 63]
+  intact_control_late_alternative_margin: [3, -2]
+  all_stage3_gates_pass: true
+
+expanded_layer5_branched:
+  exact_repeat: true
+  figure7_pass: false
+  passed_figure7_gate_count: 7
+  total_figure7_gate_count: 8
+  match_mismatch_nonspecific_events: [4, 6]
+  match_mismatch_relay_events: [20, 3]
+  match_mismatch_relay_active_indices: [[38, 39, 40, 41, 42], [40]]
+  match_mismatch_trn_events: [689, 623]
+  match_mismatch_trn_to_nonspecific_gaba_integral_ms:
+    - 1234.7978897242142
+    - 1191.8796075309176
+  failed_gates:
+    - mismatch_nonspecific_events
+  qualitative_mismatch_greater_than_match_nonspecific_output: true
+  figure10_executed: false
+  stage3_pass: false
+
+interpretation:
+  exact_baseline_reproduction: >-
+    The preregistered branched layer-5 representation preserves Figure 6 and
+    seven of eight Figure 7 gates, but reproducibly removes one nonspecific
+    mismatch event: 4 match versus 6 mismatch rather than the frozen 4 versus
+    7 target. The exact calibrated SMART match/mismatch phenotype therefore
+    does not survive this morphology under the fixed symmetry reduction.
+  qualitative_art_behavior: >-
+    Match remains spatially broad at the relay, mismatch remains overlap-only,
+    match retains greater TRN activity and TRN-to-nonspecific GABA integral,
+    and mismatch still produces more nonspecific output than match (6 versus
+    4 events). A coarse resonance-versus-mismatch contrast survives.
+  mechanistic_localization: >-
+    Resolving the original layer-5 proximal and distal path into basal,
+    proximal-apical, and tuft domains is sufficient to shift the calibrated
+    mismatch burst count by one event while leaving all other Figure 7 gates
+    intact. This identifies quantitative sensitivity to layer-5 axial topology
+    and input location, not biological invalidity of branching.
+
+decision:
+  arm_closed_at_first_failed_stage: true
+  figure10_expanded_layer5_authorized: false
+  spectral_and_higher_order_stages_authorized: false
+  neuron_model_and_mechanism_phase_complete: true
+
+prohibited_conclusions:
+  - qualitative ART match/mismatch behavior is abolished by branching
+  - the unexecuted expanded-layer-5 reset or spectral result can be inferred
+  - real layer-5 branching is incompatible with ART
+  - the equal-area split should be tuned after observing the sixth mismatch event

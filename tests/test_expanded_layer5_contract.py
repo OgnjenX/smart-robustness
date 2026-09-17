@@ -113,3 +113,31 @@ def test_expanded_layer5_figure6_passes_exactly_before_stage3() -> None:
         "stage3_match_mismatch_and_reset_authorized": True,
         "spectral_and_higher_order_stages_authorized": False,
     }
+
+
+def test_expanded_layer5_stage3_closes_at_exact_figure7_failure() -> None:
+    result = _yaml(
+        "docs/validation-results/mechanism-expanded-layer5-stage3-assessment-935.yaml"
+    )
+    assert result["raw_result"] == {
+        "path": "results/expanded-layer5-stage3-935.yaml",
+        "sha256": (
+            "e9904b4384d6e378b31560ed9fb91834"
+            "11e2f83e452bca099e2a36185d1b5b2d"
+        ),
+        "bytes": 12704,
+        "committed": "false-generated-result",
+    }
+    assert result["classic_control"]["all_stage3_gates_pass"] is True
+    expanded = result["expanded_layer5_branched"]
+    assert expanded["exact_repeat"] is True
+    assert expanded["passed_figure7_gate_count"] == 7
+    assert expanded["failed_gates"] == ["mismatch_nonspecific_events"]
+    assert expanded["match_mismatch_nonspecific_events"] == [4, 6]
+    assert expanded["figure10_executed"] is False
+    assert result["decision"] == {
+        "arm_closed_at_first_failed_stage": True,
+        "figure10_expanded_layer5_authorized": False,
+        "spectral_and_higher_order_stages_authorized": False,
+        "neuron_model_and_mechanism_phase_complete": True,
+    }

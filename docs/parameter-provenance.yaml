@@ -969,9 +969,9 @@ parameters:
     note: All conservation and isolated checks pass, and two exact point-HH Figure 6 repeats pass all six gates without fitting. Two exact Figure 7 repeats preserve relay match/mismatch structure and 7 mismatch nonspecific events but give 5 rather than 4 match events and reverse the required TRN-to-nonspecific GABA integral direction. Figure 10 and spectra are prohibited by the stopping rule. This is quantitative failure with a surviving coarse match/mismatch contrast.
   mechanism.expanded_layer5.branched_conserved:
     value: split the passive proximal layer-5 compartment equally into basal and proximal-apical branches, retain the original soma and distal active membrane as the distal tuft, and recompute axial coupling on the preregistered tree
-    status: completed-figure6-pass-stage3-authorized
-    source: configs/robustness/expanded_layer5_branched_v1.yaml; Artifacts 931--934
-    note: The split is an exploratory symmetry rule, not a literature-fitted morphology. Area, capacitance, intrinsic-channel maxima, and every port total are conserved exactly; only the layer-5 adapter manifest changes; isolated soma and distal probes remain finite. Two exact Figure 6 repeats per arm pass all six gates without fitting; the expanded arm changes layer-5 spikes from 59 to 53 and TRN spikes from 676 to 674 while retaining all frozen Figure 6 gates. Match/mismatch and reset are authorized but not yet run.
+    status: completed-figure7-exact-failure-arm-closed
+    source: configs/robustness/expanded_layer5_branched_v1.yaml; Artifacts 931--935
+    note: The split is an exploratory symmetry rule, not a literature-fitted morphology. Conservation and isolated checks pass, and two exact Figure 6 repeats per arm pass all six gates without fitting. At Figure 7, the expanded arm reproducibly preserves seven of eight gates but yields 4 match versus 6 mismatch nonspecific events instead of the frozen 4 versus 7 target. The coarse mismatch-greater-than-match contrast survives. Figure 10 and spectra are prohibited by the stopping rule.
   benchmark.population_sizes:
     value: see configs/*.yaml
     status: exploratory

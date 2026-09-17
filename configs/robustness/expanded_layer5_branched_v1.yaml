@@ -1,0 +1,93 @@
+schema_version: 1
+name: expanded-layer5-branched-v1
+status: preregistered-before-implementation-or-outcomes
+control_manifest: configs/baselines/classic_smart_calibrated_v1.yaml
+source_audit: docs/validation-results/mechanism-expanded-layer5-source-audit-931.yaml
+registration: docs/validation-results/mechanism-expanded-layer5-registration-932.yaml
+
+scientific_question: >-
+  Do frozen SMART behaviors survive a branched layer-5 representation that
+  separates basal, proximal-apical, and distal-tuft integration while
+  conserving every original non-axial membrane and port conductance total?
+
+arms:
+  classic_control:
+    layer5_representation: recovered three-compartment serial SMART cell
+  expanded_layer5_branched:
+    target_cell_class: layer5_excitatory_v1
+    compartments: [soma, basal_dendrite, proximal_apical_dendrite, distal_tuft]
+    axial_edges:
+      - [soma, basal_dendrite]
+      - [soma, proximal_apical_dendrite]
+      - [proximal_apical_dendrite, distal_tuft]
+
+transformation:
+  soma: byte-identical to original soma
+  original_proximal_dendrite:
+    area_fraction_basal: 0.5
+    area_fraction_proximal_apical: 0.5
+    rule: retain original diameter and halve original length for each child
+    basal_channels: original proximal leak only
+    proximal_apical_channels: original proximal leak only
+  original_distal_dendrite:
+    new_name: distal_tuft
+    geometry_and_channels: byte-identical except name
+  ports:
+    original_proximal_target: basal_dendrite
+    original_distal_target: distal_tuft
+    density_and_all_other_fields: unchanged
+  axial_coupling:
+    convention: retain frozen classic convention
+    rule: recompute from registered new geometry and explicit tree edges
+    conserved: false
+    rationale: axial topology and path geometry are the independent variable
+
+held_fixed:
+  - total area, capacitance, leak, fast-Na, delayed-rectifier-K, and T-type-Ca maxima
+  - every receptor, external-input, injection, and gap-port total conductance
+  - somatic classic-HH kinetics, reversals, detector, and integration method
+  - distal Na/K densities and layer-5 AHP/ACh total conductance
+  - all non-layer-5 cells and all thalamic mechanisms
+  - population sizes, projections, weights, delays, learning, stimuli, and analyses
+
+prohibited:
+  - fitting the 0.5 split, geometry, axial coupling, ports, or network values
+  - importing Hay-model or other modern active conductances
+  - adding direct thalamus-to-layer-5 input or changing feedback anatomy
+  - interpreting the aggregate SMART layer-5 class as a biological subtype
+
+pre_network_checks:
+  - explicit tree has exactly four connected compartments and three edges
+  - total area and all non-axial membrane conductances conserved within 1e-12 relative tolerance
+  - every port retains its original total conductance within 1e-12 relative tolerance
+  - only layer-5 adapter manifest changes under selective dispatch
+  - isolated control and expanded cells remain finite under fixed somatic and distal probes
+
+execution:
+  deterministic: true
+  exact_reruns_per_arm: 2
+  run_order: [classic_control, expanded_layer5_branched]
+  contemporaneous_classic_required: true
+
+progression:
+  stage_1:
+    endpoint: structural conservation and isolated finite checks
+    rule: all checks pass before network outcomes
+  stage_2:
+    endpoint: frozen Figure 6 six-gate conjunction
+    rule: both exact reruns agree and both arms pass
+  stage_3:
+    endpoints: [Figure 7 match/mismatch, Figure 10 causal reset and negative control]
+    rule: authorized only when stage 2 passes
+  stage_4:
+    endpoints: [Figure 14 spectrum, Figure 15 local synchrony, Figure 16 higher order]
+    rule: authorized only when both stage-3 behavioral endpoints pass
+
+stopping_rules:
+  - seal the first failed stage and do not run later endpoints for the expanded arm
+  - record qualitative survival separately from exact numeric gate survival
+  - do not tune the exploratory split after observing any network result
+
+interpretation:
+  full_pass: the tested branched L5 resolution is compatible with all frozen behaviors
+  failure: the tested topology perturbs a gate under the fixed symmetry reduction, not that biological branching is incompatible with ART

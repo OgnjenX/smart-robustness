@@ -1,0 +1,98 @@
+schema_version: 1
+artifact_id: 931
+artifact_type: source-and-scope-audit
+name: expanded-layer5-branched-morphology-source-audit
+date: 2026-09-17
+status: completed-before-registration-or-implementation
+
+motivation:
+  predecessor: docs/validation-results/mechanism-cortical-point-hh-stage3-assessment-930.yaml
+  finding: >-
+    Conserved cortical point-HH cells pass Figure 6 but fail two exact Figure 7
+    gates, establishing that some cortical compartmental organization or
+    voltage/location context matters after learned-state formation. The
+    earlier layer-5 distal Na/K ablation also changed the exact mismatch count.
+  justification: >-
+    These results satisfy the program plan's condition for one final Phase-2
+    expanded layer-5 morphology intervention before modern anatomy begins.
+
+smart_source_boundary:
+  source: ModelDB 112923 SMART.nml and recovered layer5_excitatory_v1 cell
+  original_compartments:
+    soma:
+      diameter_mm: 0.1
+      length_mm: 0.15
+      leak_mS_cm2: 0.1
+      fast_na_mS_cm2: 50.0
+      delayed_rectifier_k_mS_cm2: 30.0
+    proximal_dendrite:
+      diameter_mm: 0.06
+      length_mm: 0.4
+      leak_mS_cm2: 0.03
+      active_intrinsic_channels: []
+    distal_dendrite:
+      diameter_mm: 0.06
+      length_mm: 0.5
+      leak_mS_cm2: 0.03
+      fast_na_mS_cm2: 50.0
+      delayed_rectifier_k_mS_cm2: 30.0
+  recovered_port_routing:
+    proximal_dendrite:
+      - modeldb112923.projection.015: layer23_excitatory_v1 AMPA
+    distal_dendrite:
+      - modeldb112923.projection.016: V2 layer-6II top-down excitation
+      - modeldb112923.projection.017: nonspecific-thalamic AMPA
+      - modeldb112923.projection.018: nonspecific-thalamic NMDA
+      - modeldb112923.projection.019: matrix-thalamic excitation
+
+external_primary_sources:
+  - citation: Petreanu et al. 2009, Nature, DOI 10.1038/nature07709
+    url: https://pmc.ncbi.nlm.nih.gov/articles/PMC2745650/
+    supported_use: >-
+      Structural justification that layer-5 inputs can occupy distinct basal
+      and apical dendritic domains; barrel-cortex results are not used as
+      visual-cortex quantitative parameters.
+  - citation: Hay et al. 2011, PLOS Computational Biology, DOI 10.1371/journal.pcbi.1002107
+    url: https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1002107
+    supported_use: >-
+      Structural justification for representing soma, basal dendrites,
+      proximal apical dendrite, and distal apical/tuft integration separately.
+      Its rat L5b morphology and active-channel fits are not transferred.
+
+identifiability:
+  literature_supports:
+    - a branched basal and apical organization rather than a serial basal-to-tuft cable
+    - spatially distinct input domains on layer-5 dendrites
+    - sensitivity of active dendritic behavior to morphology
+  literature_does_not_identify_for_smart:
+    - a unique reduction of the SMART proximal area into basal versus apical fractions
+    - visual-area/species-matched axial geometry for the aggregate SMART cell
+    - a mapping from SMART's aggregate layer-5 class to L5A, L5B, IT, ET, or other subtypes
+    - permission to import Hay-model calcium, HCN, or other active conductances
+
+decision:
+  intervention: >-
+    A fit-free four-compartment branched reduction: soma, basal dendrite,
+    proximal apical dendrite, and distal tuft.
+  proximal_area_split: equal 0.5 basal and 0.5 proximal-apical
+  split_status: exploratory symmetry rule, not a published biological estimate
+  retained_distal_compartment: original geometry and Na/K densities, renamed distal_tuft
+  port_mapping:
+    original_proximal: basal_dendrite
+    original_distal: distal_tuft
+  explicit_axial_edges:
+    - [soma, basal_dendrite]
+    - [soma, proximal_apical_dendrite]
+    - [proximal_apical_dendrite, distal_tuft]
+  fitting_to_network_outcomes: prohibited
+
+phase_boundary:
+  included:
+    - morphology/topology resolution and source-preserving port retargeting
+    - exact conservation of membrane and registered non-axial conductance totals
+  excluded_until_modern_anatomy_phases:
+    - direct visual thalamus-to-layer-5 input
+    - new apical calcium or HCN mechanisms
+    - higher-area feedback rerouting
+    - layer-5 subtype splitting
+    - PV/SST/VIP-like inhibitory classes

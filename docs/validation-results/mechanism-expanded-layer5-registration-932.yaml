@@ -1,0 +1,42 @@
+schema_version: 1
+artifact_id: 932
+artifact_type: preregistration
+name: expanded-layer5-branched-morphology
+date: 2026-09-17
+status: registered-before-implementation-or-outcomes
+
+context:
+  phase: 2-compartment-and-active-mechanism-localization
+  classic_control: classic-smart-calibrated-v1.0.0
+  predecessor_result: docs/validation-results/mechanism-cortical-point-hh-stage3-assessment-930.yaml
+  source_audit: docs/validation-results/mechanism-expanded-layer5-source-audit-931.yaml
+
+frozen_decisions:
+  protocol: configs/robustness/expanded_layer5_branched_v1.yaml
+  affected_population: layer5_excitatory_v1 only
+  source_compartment_count: 3
+  intervention_compartment_count: 4
+  basal_proximal_apical_area_split: [0.5, 0.5]
+  topology: branched tree
+  new_active_intrinsic_mechanisms: []
+  total_non_axial_conductances_conserved: true
+  axial_conductance_conserved: false
+  fitting_permitted: false
+  deterministic_exact_reruns: 2
+  progression_requires_all_prior_gates: true
+
+implementation_state_at_registration:
+  explicit_axial_tree_support: not-implemented
+  expanded_layer5_factory: not-implemented
+  conservation_checks: not-run
+  isolated_checks: not-run
+  connected_network_outcomes_observed: false
+
+hypotheses:
+  h1: at least one frozen SMART gate changes when existing L5 input domains are resolved on a branched tree
+  h0: all frozen SMART gates survive the registered branched L5 expansion
+
+interpretation_boundary:
+  - A failure applies to this equal-area aggregate reduction, not to biological layer-5 branching in general.
+  - A pass would not validate the morphology as biologically accurate.
+  - This arm contains no post-2008 visual-thalamic pathway or active-apical mechanism.

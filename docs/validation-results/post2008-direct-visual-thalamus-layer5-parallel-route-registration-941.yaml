@@ -1,0 +1,55 @@
+schema_version: 1
+artifact_id: 941
+artifact_type: preregistration
+name: direct-visual-thalamus-layer5-parallel-route-behavior-v1
+date: 2026-09-17
+status: sealed-before-figure7-or-figure10-outcomes
+
+study: configs/robustness/direct_visual_thalamus_layer5_parallel_route_v1.yaml
+preceding_assessment: docs/validation-results/post2008-direct-visual-thalamus-layer5-figure6-assessment-940.yaml
+preceding_raw_result:
+  path: results/direct-visual-thalamus-layer5-figure6-940.yaml
+  sha256: 3150721f19b1e3d4c2a60767eb8f6318ab42a06f2c4a741c2dfcb8149d3ce6d3
+  bytes: 3437986
+
+why_this_is_not_compensation:
+  - no network, neuron, synapse, pathway, stimulus, comparator, or ratio parameter changes
+  - each arm reuses its sealed Figure 6 learned weights exactly
+  - frozen behavioral gates are evaluated without modification
+  - the assay accepts rather than repairs the observed parallel-route causal order
+
+registered_inputs:
+  arm_order:
+    - ratio_0
+    - ratio_0p03125
+    - ratio_0p0625
+    - ratio_0p125
+    - ratio_0p25
+    - ratio_0p5
+    - ratio_1
+  strength_ratios: [0.0, 0.03125, 0.0625, 0.125, 0.25, 0.5, 1.0]
+  learned_weight_source: first-of-two-exact-identical-trials-per-arm-in-artifact-940
+  exact_reruns_per_arm: 2
+
+endpoints:
+  figure7:
+    conditions: [match, mismatch]
+    gates: frozen-eight-gate-conjunction
+    required_for_figure10: true
+  figure10:
+    conditions: [intact-reset-pathway, disconnected-control]
+    gates: frozen-seven-gate-conjunction
+    eligibility: same-arm-figure7-pass
+
+reporting_requirements:
+  - exact-repeat status per arm
+  - all Figure 7 match and mismatch summaries and individual gates
+  - all eligible Figure 10 intact and control summaries and individual gates
+  - exact versus qualitative survival kept separate
+  - causal-order failure from artifact 940 carried forward independently
+  - no claim about L5 PV stabilization or biological strength estimation
+
+authorization:
+  implement_and_seal_runner: true
+  execute_figure7_and_conditionally_figure10: true
+  spectral_and_higher_order_endpoints: false

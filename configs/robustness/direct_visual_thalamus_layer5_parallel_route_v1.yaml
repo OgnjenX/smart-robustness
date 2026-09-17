@@ -1,0 +1,74 @@
+schema_version: 1
+name: direct-visual-thalamus-layer5-parallel-route-v1
+status: preregistered-after-causal-order-localization-before-behavioral-outcomes
+control_manifest: configs/baselines/classic_smart_calibrated_v1.yaml
+anatomy_study: configs/robustness/direct_visual_thalamus_layer5_v1.yaml
+source_audit: docs/validation-results/post2008-direct-visual-thalamus-layer5-source-audit-937.yaml
+figure6_assessment: docs/validation-results/post2008-direct-visual-thalamus-layer5-figure6-assessment-940.yaml
+registration: docs/validation-results/post2008-direct-visual-thalamus-layer5-parallel-route-registration-941.yaml
+
+scientific_question: >-
+  When direct visual-thalamic input creates a parallel route to L5 and thereby
+  replaces the classic serial L4-to-L2/3-to-L5 event order, do the higher-level
+  ART match-resonance and mismatch/reset phenotypes nevertheless survive?
+
+rationale: >-
+  Artifact 940 localized every nonzero Figure 6 failure to the causal-order
+  gate alone. Relay recruitment, causal learning timing, and positive learned
+  orientation contrast survived. The original stage-3 progression is correctly
+  stopped, but that serial-order gate cannot answer whether ART behavior survives
+  a source-supported parallel anatomical route. This orthogonal assay changes no
+  model parameter and uses every already sealed ratio and learned state.
+
+arms:
+  ratio_0: 0.0
+  ratio_0p03125: 0.03125
+  ratio_0p0625: 0.0625
+  ratio_0p125: 0.125
+  ratio_0p25: 0.25
+  ratio_0p5: 0.5
+  ratio_1: 1.0
+
+held_fixed:
+  - direct-path implementation, receptor, delay, topology, target, and fixed ratio
+  - each arm's exact learned weights from sealed Figure 6 artifact 940
+  - frozen Figure 7 match/mismatch protocol and all eight gates
+  - frozen Figure 10 causal-reset protocol, disconnected control, and all seven gates
+  - frozen projection scales, comparator, projection-036 variance interpretation, and seeds
+  - two exact deterministic reruns per arm
+
+prohibited:
+  - changing or refining the ratio grid
+  - fitting any compensation after observing a behavioral result
+  - redefining Figure 7 or Figure 10 gates
+  - treating this assay as retroactive passage of the classic serial Figure 6 gate
+  - adding L5 PV input, active apical mechanisms, or other modern modules
+
+execution:
+  backend: brian2-numpy
+  exact_reruns_per_arm: 2
+  run_order:
+    - ratio_0
+    - ratio_0p03125
+    - ratio_0p0625
+    - ratio_0p125
+    - ratio_0p25
+    - ratio_0p5
+    - ratio_1
+  figure7_for_every_arm: true
+  figure10_only_after_same_arm_figure7_pass: true
+  resumable_after_each_repetition: true
+
+classification:
+  exact_behavior_survives: all Figure 7 and Figure 10 gates pass exactly
+  qualitative_behavior_survives: >-
+    match/mismatch directions and causal reset remain, but at least one frozen
+    numeric gate changes; report the changed gates without calling it full pass
+  fails: qualitative ART match/mismatch or causal-reset direction is lost
+  serial_order_status: independently-failed-in-artifact-940
+
+stopping_rules:
+  - run Figure 7 for every arm regardless of artifact-940 serial-order failure
+  - skip Figure 10 for an arm whose Figure 7 gates fail
+  - never use one arm's outcome to alter another arm
+  - do not run spectral or higher-order endpoints in this orthogonal assay

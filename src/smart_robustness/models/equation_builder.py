@@ -360,7 +360,7 @@ def compile_cell_equations(
             raise ValueError("depletion epsilon and recovery must be supplied together")
         if not 0 <= depletion_epsilon <= 1 or depletion_recovery_ms <= 0:
             raise ValueError("invalid source-backed transmitter depletion parameters")
-    edges = build_axial_edges(cell, axial)
+    edges = () if len(cell.compartments) == 1 else build_axial_edges(cell, axial)
     axial_terms: dict[str, list[str]] = {c.name: [] for c in cell.compartments}
     axial_parameters: list[str] = []
     for index, edge in enumerate(edges):

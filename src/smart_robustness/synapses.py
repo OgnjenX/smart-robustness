@@ -663,9 +663,11 @@ def connect_modeldb_gap_junction(
         raise ValueError(f"{record.id}: incomplete ModelDB gap-junction record")
     target = post.cell_spec.compartment(port.compartment)
     source_compartment = record.source_compartment or port.compartment
+    if source_compartment not in pre.compartments and pre.compartments == ("soma",):
+        source_compartment = "soma"
     source = pre.cell_spec.compartment(source_compartment)
     total_nS = kinness_gap_total_conductance_nS(
-        record.channel_conductance_mS_cm2,
+        port.conductance_density_mS_cm2,
         diameter_mm=target.diameter_mm,
         length_mm=target.length_mm,
     )

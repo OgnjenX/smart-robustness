@@ -57,3 +57,17 @@ def test_point_hh_progression_stops_at_first_failed_stage() -> None:
     assert "stage 2" in progression["stage_3"]["rule"]
     assert "stage-3" in progression["stage_4"]["rule"]
     assert "first failed stage" in study["stopping_rules"][0]
+
+
+def test_point_hh_prechecks_authorize_only_figure6() -> None:
+    result = _yaml(
+        "docs/validation-results/mechanism-cortical-point-hh-precheck-928.yaml"
+    )
+    assert result["execution"]["network_outcomes_observed"] is False
+    assert result["structural_assessment"]["cortical_cell_classes_checked"] == 7
+    assert result["structural_assessment"][
+        "all_thalamic_adapter_manifests_identical"
+    ] is True
+    assert result["decision"]["stage_1_pass"] is True
+    assert result["decision"]["figure6_authorized"] is True
+    assert result["decision"]["later_network_stages_authorized"] is False

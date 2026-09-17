@@ -962,6 +962,11 @@ parameters:
     status: completed-controlled-mechanism-intervention
     source: configs/robustness/layer5_distal_nak_ablation_v1.yaml; Artifacts 922--925
     note: Structural and isolated checks pass. Figure 6 passes twice with exact repeats. Figure 7 reproducibly gives 4 match versus 8 mismatch nonspecific events instead of the frozen 4 versus 7 target; the other seven gates pass. The qualitative mismatch-greater-than-match contrast survives, but the exact behavioral gate fails, so reset and spectral stages are not run for the ablation.
+  mechanism.cortical_point_hh.conserved_collapse:
+    value: collapse all seven cortical classes to one classic-HH soma while conserving total membrane, intrinsic-channel, receptor-port, external-input, injection, and executable gap-junction conductances
+    status: pre-network-checks-passed-figure6-authorized
+    source: configs/robustness/cortical_point_hh_conserved_v1.yaml; Artifacts 927, 927a, and 928
+    note: The gap-junction rule was amended before implementation or outcomes because KInNeSS Equation 8 is geometry-dependent. All seven cortical classes pass 1e-12 conservation and finite isolated probes; all five thalamic adapter manifests are identical. No fitting or compensation was used, and no connected-network outcome has yet been observed.
   benchmark.population_sizes:
     value: see configs/*.yaml
     status: exploratory

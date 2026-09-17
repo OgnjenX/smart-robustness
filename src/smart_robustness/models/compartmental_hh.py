@@ -788,7 +788,7 @@ def create_compartmental_hh_population(
                     t_type_h_inf(calcium_voltage, calcium_gate),
                 )
 
-    axial_edges = build_axial_edges(cell, axial)
+    axial_edges = () if len(cell.compartments) == 1 else build_axial_edges(cell, axial)
     axial_edge_scales = params.get(
         "axial_edge_conductance_scales", (1.0,) * len(axial_edges)
     )

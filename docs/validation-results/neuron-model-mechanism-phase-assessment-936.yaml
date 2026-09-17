@@ -1,0 +1,102 @@
+schema_version: 1
+artifact_id: 936
+artifact_type: completed-phase-synthesis
+name: neuron-model-and-compartment-mechanism-robustness
+date: 2026-09-17
+status: completed-frozen-for-release
+
+control:
+  release: classic-smart-calibrated-v1.0.0
+  manifest: configs/baselines/classic_smart_calibrated_v1.yaml
+  manifest_fingerprint: 992fdd7c3bc9fa0f0d385b9e5a58ba317599357ca377145aba6f01c80d631cd2
+  runtime_fingerprint: 7e654528a99f0b25b7148260a8d52021f6443fb992b210729a2475ae3cfcdaa4
+  modified: false
+
+registered_neuron_model_results:
+  adex:
+    evidence:
+      - docs/validation-results/neuron-model-adex-current-step-figure6-assessment-897.yaml
+      - docs/validation-results/neuron-model-adex-relay-transfer-figure6-assessment-903.yaml
+      - docs/validation-results/neuron-model-adex-full-relay-fit-907.yaml
+    furthest_stage: figure6
+    exact_survival: false
+    conclusion: >-
+      Literature-transfer and isolated-matched morphology-preserving AdEx arms
+      did not pass the frozen six-gate learned-state prerequisite. Registered
+      relay rescue searches did not promote a new candidate.
+  gif:
+    evidence: docs/validation-results/neuron-model-gif-figure6-assessment-911.yaml
+    furthest_stage: figure6
+    exact_survival: false
+    conclusion: >-
+      Neither literature-transfer nor independently current-step-matched GIF
+      arms produced a valid Figure 6 learned state over 20 fixed seeds.
+  alternative_conductance_hh:
+    evidence: docs/validation-results/neuron-model-alternative-hh-isolated-fit-921.yaml
+    furthest_stage: isolated-cell-promotion
+    exact_survival: false
+    conclusion: >-
+      The preregistered Pospischil-type somatic HH family failed promotion in
+      five of seven cortical classes, so no network result was authorized.
+  conserved_point_hh:
+    evidence: docs/validation-results/mechanism-cortical-point-hh-stage3-assessment-930.yaml
+    furthest_stage: figure7
+    figure6_exact_survival: true
+    figure7_exact_survival: false
+    figure7_gates_passed: 6
+    figure7_gates_total: 8
+    qualitative_match_mismatch_survival: true
+
+registered_mechanism_results:
+  layer5_distal_nak_disabled:
+    evidence: docs/validation-results/mechanism-layer5-distal-nak-stage3-assessment-925.yaml
+    figure6_exact_survival: true
+    figure7_exact_survival: false
+    mismatch_nonspecific_events: 8
+    frozen_target: 7
+    qualitative_match_mismatch_survival: true
+  expanded_layer5_branched:
+    evidence: docs/validation-results/mechanism-expanded-layer5-stage3-assessment-935.yaml
+    figure6_exact_survival: true
+    figure7_exact_survival: false
+    mismatch_nonspecific_events: 6
+    frozen_target: 7
+    qualitative_match_mismatch_survival: true
+
+cross-study_synthesis:
+  exact_gate_robustness: >-
+    No registered alternative neuron family completed the full frozen SMART
+    behavioral hierarchy. Three morphology/mechanism interventions reached
+    Figure 7 after exact Figure 6 survival, but each changed at least one
+    calibrated match/mismatch gate.
+  qualitative_art_robustness: >-
+    The point-HH collapse, distal Na/K ablation, and branched layer-5 expansion
+    all preserve broad relay match, overlap-only relay mismatch, and greater
+    nonspecific output for mismatch than match. Coarse ART-like recognition
+    dynamics are therefore more robust than exact event-count phenotypes.
+  layer5_localization: >-
+    Removing distal layer-5 Na/K increases mismatch nonspecific events from 7
+    to 8, whereas the conserved branched expansion decreases them from 7 to 6.
+    This bidirectional bracketing localizes the exact mismatch count as
+    sensitive to layer-5 dendritic excitability, axial topology, and receptor
+    location under otherwise frozen circuitry.
+  family_inference_boundary: >-
+    These finite preregistered searches reject specific parameterizations and
+    transformations. They do not establish that HH kinetics are necessary for
+    ART, that AdEx/GIF cannot support ART after an independent system-level
+    construction, or that biological branching is incompatible with SMART.
+
+decision:
+  neuron_model_comparison_complete: true
+  compartment_mechanism_localization_complete: true
+  failed_arms_closed_without_network_guided_tuning: true
+  classic_baseline_remains_frozen: true
+  release_manifest: configs/releases/neuron_model_robustness_v1.yaml
+  next_phase: post-2008-anatomy-module-preregistration
+
+next_phase_order:
+  - direct visual thalamus-to-layer-5 input
+  - active apical feedback integration
+  - updated pulvinar and transthalamic routing
+  - PV/SST/VIP-like inhibitory specificity
+  - only preregistered interactions among individually characterized modules

@@ -1,0 +1,53 @@
+schema_version: 1
+name: neuron-model-robustness-v1
+status: frozen-completed-phase
+release_tag: neuron-model-robustness-v1.0.0
+date: 2026-09-17
+
+classic_control:
+  tag: classic-smart-calibrated-v1.0.0
+  manifest: configs/baselines/classic_smart_calibrated_v1.yaml
+  manifest_fingerprint: 992fdd7c3bc9fa0f0d385b9e5a58ba317599357ca377145aba6f01c80d631cd2
+  runtime_fingerprint: 7e654528a99f0b25b7148260a8d52021f6443fb992b210729a2475ae3cfcdaa4
+  modified_by_phase: false
+
+scope:
+  completed:
+    - morphology-preserving AdEx comparison
+    - morphology-preserving stochastic GIF comparison
+    - independently isolated-matched alternative conductance-based HH comparison
+    - conserved cortical point-HH collapse
+    - layer-5 distal Na/K ablation
+    - conserved branched layer-5 expansion
+  excluded:
+    - post-2008 anatomy additions
+    - network-guided rescue or compensation
+    - inference from unexecuted downstream stages
+
+outcome_classes:
+  exact_survival:
+    - classic_control
+  prerequisite_failure:
+    - adex_registered_parameterizations
+    - gif_registered_parameterizations
+    - alternative_pospischil_hh_registered_search
+  figure6_survival_then_figure7_quantitative_failure:
+    - conserved_cortical_point_hh
+    - layer5_distal_nak_disabled
+    - expanded_layer5_branched
+
+evidence:
+  adex: docs/validation-results/neuron-model-adex-full-relay-fit-907.yaml
+  gif: docs/validation-results/neuron-model-gif-figure6-assessment-911.yaml
+  alternative_hh: docs/validation-results/neuron-model-alternative-hh-isolated-fit-921.yaml
+  localization: docs/validation-results/neuron-model-localization-assessment-919.yaml
+  point_hh: docs/validation-results/mechanism-cortical-point-hh-stage3-assessment-930.yaml
+  layer5_distal_nak: docs/validation-results/mechanism-layer5-distal-nak-stage3-assessment-925.yaml
+  expanded_layer5: docs/validation-results/mechanism-expanded-layer5-stage3-assessment-935.yaml
+  phase_assessment: docs/validation-results/neuron-model-mechanism-phase-assessment-936.yaml
+
+interpretation_contract:
+  - Exact frozen gate survival and qualitative ART-like survival are reported separately.
+  - Failed registered parameterizations do not imply neuron-family impossibility.
+  - No failed arm may be retuned against connected-network outcomes in this release.
+  - The frozen classic baseline remains the sole control for post-2008 anatomy studies.

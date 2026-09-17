@@ -20,6 +20,9 @@ def test_expanded_layer5_registration_freezes_branched_conserved_mapping() -> No
     assert proximal["area_fraction_basal"] == 0.5
     assert proximal["area_fraction_proximal_apical"] == 0.5
     assert study["transformation"]["axial_coupling"]["conserved"] is False
+    assert study["transformation"]["ports"]["invariant"] == (
+        "each port's total maximum conductance is conserved independently"
+    )
     assert study["execution"]["exact_reruns_per_arm"] == 2
     assert "fitting the 0.5 split" in study["prohibited"][0]
 
@@ -45,3 +48,13 @@ def test_expanded_layer5_is_registered_before_implementation_or_outcomes() -> No
     assert state["conservation_checks"] == "not-run"
     assert state["connected_network_outcomes_observed"] is False
     assert registration["frozen_decisions"]["new_active_intrinsic_mechanisms"] == []
+
+
+def test_expanded_layer5_port_rule_was_amended_before_outcomes() -> None:
+    amendment = _yaml(
+        "docs/validation-results/mechanism-expanded-layer5-port-amendment-932a.yaml"
+    )
+    assert amendment["status"] == "amended-before-implementation-or-outcomes"
+    assert amendment["reason"]["connected_network_outcomes_observed"] is False
+    assert amendment["amended_rule"]["proximal_to_basal_scale"] == 2.0
+    assert "conserved" in amendment["amended_rule"]["invariant"]

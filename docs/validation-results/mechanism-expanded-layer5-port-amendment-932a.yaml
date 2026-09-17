@@ -1,0 +1,31 @@
+schema_version: 1
+artifact_id: 932a
+artifact_type: preregistration-amendment
+name: expanded-layer5-retargeted-port-conservation
+date: 2026-09-17
+status: amended-before-implementation-or-outcomes
+
+parent_registration: docs/validation-results/mechanism-expanded-layer5-registration-932.yaml
+protocol: configs/robustness/expanded_layer5_branched_v1.yaml
+
+reason:
+  discovered_during: preimplementation invariant audit
+  issue: >-
+    The original rule retargeted the proximal receptor port to a basal
+    compartment with half the original proximal area while retaining density.
+    Since executable chemical conductance is density times target area, that
+    would halve total conductance and contradict the frozen conservation rule.
+  connected_network_outcomes_observed: false
+
+amended_rule:
+  density: original_density_times_original_target_area_divided_by_new_target_area
+  proximal_to_basal_scale: 2.0
+  distal_to_tuft_scale: 1.0
+  invariant: each retargeted port's executable total conductance is conserved
+
+unchanged:
+  - equal 0.5 basal/proximal-apical area split
+  - explicit branched axial topology
+  - all membrane-channel and capacitance conservation rules
+  - receptor identity, kinetics, reversal, voltage block, and source projection weight
+  - prohibition on fitting, new mechanisms, or modern anatomy

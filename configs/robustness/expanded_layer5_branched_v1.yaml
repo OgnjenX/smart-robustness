@@ -35,7 +35,10 @@ transformation:
   ports:
     original_proximal_target: basal_dendrite
     original_distal_target: distal_tuft
-    density_and_all_other_fields: unchanged
+    density: original_density_times_original_target_area_divided_by_new_target_area
+    all_other_fields: unchanged
+    invariant: each port's total maximum conductance is conserved independently
+    amendment: docs/validation-results/mechanism-expanded-layer5-port-amendment-932a.yaml
   axial_coupling:
     convention: retain frozen classic convention
     rule: recompute from registered new geometry and explicit tree edges

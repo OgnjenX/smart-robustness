@@ -1,0 +1,47 @@
+schema_version: 1
+artifact_id: 927
+artifact_type: preregistration
+name: conserved-cortical-point-hh-collapse
+date: 2026-09-17
+status: registered-before-implementation-or-outcomes
+
+context:
+  phase: 2-compartment-and-active-mechanism-localization
+  classic_control: classic-smart-calibrated-v1.0.0
+  predecessor_result: docs/validation-results/mechanism-layer5-distal-nak-stage3-assessment-925.yaml
+  alias_audit: docs/validation-results/mechanism-cortical-dendrite-passivization-alias-audit-926.yaml
+
+frozen_decisions:
+  protocol: configs/robustness/cortical_point_hh_conserved_v1.yaml
+  affected_population_family: all seven first-order cortical cell classes
+  thalamic_populations_affected: false
+  somatic_equation_family: unchanged classic SMART HH
+  conserved_quantities:
+    - total membrane capacitance per cell
+    - total leak conductance and leak equilibrium per cell
+    - total maximal Na/K/Ca conductance per cell
+    - each synaptic, gap, and external port total conductance
+    - each external-current channel's total injected current
+  removed_quantities:
+    - cortical axial edges
+    - compartment-specific cortical voltages and receptor locations
+  fitting_permitted: false
+  deterministic_exact_reruns: 2
+  progression_requires_all_prior_gates: true
+
+implementation_state_at_registration:
+  aggregation_function: not-implemented
+  point_population_factory: not-implemented
+  conservation_checks: not-run
+  isolated_checks: not-run
+  connected_network_outcomes_observed: false
+
+hypotheses:
+  h1: at least one frozen SMART gate depends on compartmental cortical filtering even when all registered totals are conserved
+  h0: all frozen SMART gates survive the conserved point-HH collapse
+
+interpretation_boundary:
+  - A failure localizes dependence to compartmental organization plus voltage-specific receptor placement, not to a particular removed variable alone.
+  - A pass would show those recovered cortical compartments are unnecessary for the tested behaviors under the conservation rule.
+  - This is not an AdEx, GIF, Pospischil-HH, or modern-anatomy arm.
+

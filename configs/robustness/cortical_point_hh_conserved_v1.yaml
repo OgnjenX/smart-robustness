@@ -1,0 +1,101 @@
+schema_version: 1
+name: cortical-point-hh-conserved-v1
+status: preregistered-before-implementation-or-outcomes
+control_manifest: configs/baselines/classic_smart_calibrated_v1.yaml
+registration: docs/validation-results/mechanism-cortical-point-hh-registration-927.yaml
+
+scientific_question: >-
+  Do frozen SMART behaviors survive collapse of every cortical cell to one
+  classic-HH compartment when total membrane capacitance, leak, active
+  conductances, and each receptor-port conductance are conserved?
+
+arms:
+  classic_control:
+    cortical_representation: recovered multicompartment
+  cortical_point_hh_conserved:
+    target_cell_classes:
+      - layer4_excitatory_v1
+      - layer23_excitatory_v1
+      - layer5_excitatory_v1
+      - layer6i_excitatory_v1
+      - layer6ii_excitatory_v1
+      - layer4_inhibitory_v1
+      - layer23_inhibitory_v1
+    cortical_representation: one-compartment classic HH
+
+aggregation_rule:
+  area:
+    total_cm2: sum of all original compartment lateral areas
+    point_diameter_mm: original soma diameter
+    point_length_mm: total_area_cm2_times_100_divided_by_pi_and_point_diameter_mm
+  capacitance:
+    rule: retain specific capacitance and total area
+    invariant: total capacitance is exactly conserved
+  leak:
+    density: sum_gleak_times_area_divided_by_total_area
+    reversal_mV: leak-conductance-weighted original reversal
+    invariant: total leak conductance and zero-current leak equilibrium are conserved
+  active_intrinsic_conductances:
+    channels: [fast Na, delayed-rectifier K, T-type Ca when present]
+    density: sum_channel_density_times_area_divided_by_total_area
+    invariant: total maximum conductance is conserved
+  receptor_and_external_ports:
+    target_compartment: soma
+    density: original_density_times_original_target_area_divided_by_total_area
+    invariant: each port's total maximum conductance is conserved independently
+  current_injection_ports:
+    target_compartment: soma
+    sensitivity: original_sensitivity_times_original_target_area_divided_by_total_area
+    invariant: each channel's total injected current at a fixed source value is conserved
+  gap_junction_ports:
+    target_compartment: soma
+    density: original_density_times_original_target_area_divided_by_total_area
+  removed: [all cortical axial edges, compartment-specific voltage states]
+
+held_fixed:
+  - classic HH Na/K kinetics, reversals, spike detector, and integration method
+  - thalamic cells and all thalamic mechanisms
+  - layer-5 AHP/ACh total conductance and event dynamics
+  - transmitter depletion and learning rules
+  - population sizes, topology, edge weights, delays, stimuli, and analysis
+  - every receptor identity, reversal, kinetic time constant, voltage block flag, and total conductance
+
+prohibited:
+  - fitting or compensating any intrinsic, receptor, network, or protocol value
+  - preserving conductance density instead of total conductance
+  - treating the arm as a different neuron-model family
+  - adding modern anatomy or dendritic nonlinearities
+
+pre_network_checks:
+  - exactly one soma compartment for every collapsed cortical class
+  - total capacitance and leak conductance conserved within 1e-12 relative tolerance
+  - total Na, K, and Ca maximum conductances conserved within 1e-12 relative tolerance
+  - every receptor and input-port total conductance conserved within 1e-12 relative tolerance
+  - thalamic populations remain byte-identical at the adapter-manifest level
+  - isolated control and point cells remain finite under fixed somatic-current probes
+
+execution:
+  deterministic: true
+  exact_reruns_per_arm: 2
+  run_order: [classic_control, cortical_point_hh_conserved]
+  contemporaneous_classic_required: true
+
+progression:
+  stage_1:
+    endpoint: structural conservation and isolated finite checks
+    rule: all checks pass before network outcomes
+  stage_2:
+    endpoint: frozen Figure 6 six-gate conjunction
+    rule: both exact reruns agree and both control and point-HH arms pass
+  stage_3:
+    endpoints: [Figure 7 match/mismatch, Figure 10 causal reset and negative control]
+    rule: authorized only when stage 2 passes
+  stage_4:
+    endpoints: [Figure 14 spectrum, Figure 15 local synchrony, Figure 16 higher order]
+    rule: authorized only when both stage-3 behavioral endpoints pass
+
+stopping_rules:
+  - seal the first failed stage and do not run later endpoints for the point-HH arm
+  - record qualitative survival separately from exact numeric gate survival
+  - proceed to expanded layer-5 morphology only if the completed mechanism evidence justifies it
+

@@ -1,0 +1,68 @@
+schema_version: 1
+name: morphology-preserving-pospischil-hh-phase1
+status: registered-before-implementation-isolated-fit-and-network-outcomes
+control_manifest: configs/baselines/classic_smart_calibrated_v1.yaml
+decision_record: docs/adr/0005-controlled-alternative-hh-substitution.md
+isolated_fit_protocol: configs/models/alternative_hh_isolated_match_protocol_v1.yaml
+
+scientific_question: >-
+  Do frozen SMART behaviors survive an independently current-step-matched,
+  conductance-based somatic HH replacement when morphology, dendritic
+  mechanisms, synaptic ports, circuit, learning, and analysis remain fixed?
+
+intervention:
+  model_label: morphology-preserving Pospischil-type somatic HH
+  manipulated:
+    - somatic Na and delayed-rectifier K kinetics and conductances
+    - somatic kinetic threshold shift
+    - somatic M-type adaptation current
+  held_fixed:
+    - classic SMART control release
+    - all non-somatic compartments and active currents
+    - all receptor and external-input ports
+    - topology, weights, delays, depletion, plasticity, and stimuli
+    - runtime conventions, integration step, seeds, and analyses
+
+arms:
+  classic_control: {replace: []}
+  alternative_hh_cortical_all:
+    replace: [cortical_excitatory, cortical_inhibitory]
+  alternative_hh_cortical_excitatory:
+    replace: [cortical_excitatory]
+  alternative_hh_cortical_inhibitory:
+    replace: [cortical_inhibitory]
+
+execution:
+  deterministic: true
+  trials_per_arm: 1
+  deterministic_rerun_required_for_any_passing_arm: true
+  stochastic_seed_claims: prohibited
+
+progression:
+  stage_1:
+    endpoint: isolated-cell promotion gates
+    rule: every replaced cortical class must pass before any network run
+  stage_2:
+    endpoint: frozen Figure 6 six-gate conjunction
+    rule: all six gates must pass in the arm and contemporaneous classic sentinel
+  stage_3:
+    endpoints: [Figure 7 match/mismatch, Figure 10 causal reset and negative control]
+    rule: authorized only for a Figure-6-passing arm
+  stage_4:
+    endpoints: [Figure 14 spectrum, Figure 15 local synchrony, Figure 16 higher order]
+    rule: authorized only for an arm passing both stage-3 behavioral endpoints
+
+structural_identity:
+  compare_serialized_network_fingerprints: true
+  permitted_differences:
+    - selected populations' somatic intrinsic equation family
+    - selected populations' independently frozen somatic parameters
+  any_other_difference_invalidates_arm: true
+
+prohibited:
+  - fitting any parameter to a network result
+  - changing a failed arm after opening its network output
+  - modifying the frozen classic baseline
+  - modern-anatomy changes
+  - claiming family-level HH necessity or sufficiency from one parameterization
+

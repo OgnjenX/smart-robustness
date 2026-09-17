@@ -1,0 +1,44 @@
+schema_version: 1
+artifact_id: 920
+artifact_type: preregistration
+name: controlled-alternative-conductance-hh-comparison
+date: 2026-09-17
+status: registered-before-implementation-isolated-fit-and-network-outcomes
+
+control: configs/baselines/classic_smart_calibrated_v1.yaml
+decision_record: docs/adr/0005-controlled-alternative-hh-substitution.md
+study_manifest: configs/robustness/alternative_hh_phase1_v1.yaml
+isolated_fit_protocol: configs/models/alternative_hh_isolated_match_protocol_v1.yaml
+
+frozen_decisions:
+  source_family: Pospischil et al. 2008 minimal cortical HH
+  intervention: morphology-preserving somatic conductance-based substitution
+  cortical_arms: [all, excitatory-only, inhibitory-only]
+  thalamic_arms: excluded-after-invalid-classic-relay-rebound-target
+  candidate_generation: 256-point unscrambled Sobol plus two literature seeds
+  fitting_uses_network_outcomes: false
+  holdout_used_for_selection: false
+  classic_control_immutable: true
+  modern_anatomy_changes: prohibited
+  network_parameter_rescue: prohibited
+
+knowledge_boundary:
+  known:
+    - frozen classic control passes Figure 6
+    - registered cortical AdEx and GIF arms fail complete Figure 6 progression
+    - Pospischil source equations and published RS/FS parameter summaries
+  not_observed:
+    - any alternative-HH isolated candidate outcome
+    - any alternative-HH full-network outcome
+    - any mechanism-ablation outcome
+
+implementation_state:
+  source_review: complete
+  equations: not-implemented
+  isolated_fit: not-run
+  network_outcomes_observed: false
+
+interpretation_boundary: >-
+  This study tests whether one independently fitted, source-backed
+  conductance-based somatic HH family preserves frozen SMART behavior. It cannot
+  establish necessity or sufficiency for the entire Hodgkin-Huxley model class.

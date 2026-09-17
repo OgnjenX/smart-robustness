@@ -1,0 +1,68 @@
+schema_version: 1
+artifact_id: 924
+artifact_type: connected-network-gate-assessment
+name: layer5-distal-active-nak-ablation-figure6
+date: 2026-09-17
+status: completed-passed-stage3-authorized
+
+raw_result:
+  path: results/layer5-distal-nak-figure6-924.yaml
+  sha256: 54a1431c62498cfa2ea99df071a43d21342c7962bee1135a485752ea272acebc
+  bytes: 972219
+  committed: false-generated-result
+
+execution:
+  implementation_commit: 6a4d9aa19e11cb28b7cccd73dee08c7957f7f330
+  study: configs/robustness/layer5_distal_nak_ablation_v1.yaml
+  control_manifest: configs/baselines/classic_smart_calibrated_v1.yaml
+  control_manifest_fingerprint: 992fdd7c3bc9fa0f0d385b9e5a58ba317599357ca377145aba6f01c80d631cd2
+  runtime_fingerprint: 7e654528a99f0b25b7148260a8d52021f6443fb992b210729a2475ae3cfcdaa4
+  deterministic_exact_reruns_per_arm: 2
+  network_outcome_used_for_parameter_selection: false
+
+arms:
+  classic_control:
+    exact_repeat: true
+    all_trials_pass: true
+    six_gates:
+      relay_active_indices: true
+      relay_events_per_active_index: true
+      relay_events: true
+      cortical_chain_complete: true
+      causal_learning_pair: true
+      top_down_horizontal_contrast: true
+    layer5_spike_count: 59
+    top_down_horizontal_contrast: 0.5256118696154084
+  layer5_distal_nak_disabled:
+    exact_repeat: true
+    all_trials_pass: true
+    six_gates:
+      relay_active_indices: true
+      relay_events_per_active_index: true
+      relay_events: true
+      cortical_chain_complete: true
+      causal_learning_pair: true
+      top_down_horizontal_contrast: true
+    layer5_spike_count: 72
+    top_down_horizontal_contrast: 0.5250647506349821
+
+controlled_difference:
+  layer5_spike_count_delta_ablation_minus_control: 13
+  all_other_recorded_population_spike_counts_identical: true
+  interpretation: >-
+    Distal active Na/K changes layer-5 excitability but is not required for the
+    frozen Figure 6 relay selection, cortical recruitment, causal learning, or
+    positive top-down contrast gates under this parameterization.
+
+decision:
+  classic_sentinel_pass: true
+  ablation_figure6_pass: true
+  stage3_match_mismatch_and_reset_authorized: true
+  spectral_and_higher_order_stages_authorized: false
+  compensation_or_refitting_used: false
+
+prohibited_conclusions:
+  - distal active Na/K is irrelevant to SMART
+  - biological layer-5 distal dendrites are passive
+  - later match, reset, or spectral behavior necessarily survives
+

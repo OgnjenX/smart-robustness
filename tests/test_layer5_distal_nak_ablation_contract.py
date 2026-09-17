@@ -54,3 +54,18 @@ def test_layer5_distal_nak_prechecks_authorize_figure6_without_network_data() ->
     assert assessment["decision"]["figure6_authorized"] is True
     assert assessment["decision"]["compensation_or_refitting_used"] is False
     assert assessment["execution"]["network_outcomes_observed"] is False
+
+
+def test_layer5_distal_nak_figure6_pass_authorizes_only_stage3() -> None:
+    assessment = _yaml(
+        "docs/validation-results/"
+        "mechanism-layer5-distal-nak-figure6-assessment-924.yaml"
+    )
+    assert assessment["arms"]["classic_control"]["exact_repeat"] is True
+    assert assessment["arms"]["classic_control"]["all_trials_pass"] is True
+    assert assessment["arms"]["layer5_distal_nak_disabled"]["exact_repeat"] is True
+    assert assessment["arms"]["layer5_distal_nak_disabled"]["all_trials_pass"] is True
+    decision = assessment["decision"]
+    assert decision["stage3_match_mismatch_and_reset_authorized"] is True
+    assert decision["spectral_and_higher_order_stages_authorized"] is False
+    assert decision["compensation_or_refitting_used"] is False

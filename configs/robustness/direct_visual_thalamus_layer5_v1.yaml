@@ -1,0 +1,96 @@
+schema_version: 1
+name: direct-visual-thalamus-layer5-v1
+status: preregistered-before-implementation-or-network-outcomes
+control_manifest: configs/baselines/classic_smart_calibrated_v1.yaml
+source_audit: docs/validation-results/post2008-direct-visual-thalamus-layer5-source-audit-937.yaml
+registration: docs/validation-results/post2008-direct-visual-thalamus-layer5-registration-938.yaml
+
+scientific_question: >-
+  Across what fixed relative pathway-strength range does classic SMART retain
+  its learned resonance and mismatch/reset behavior when a direct specific
+  visual-thalamus-to-layer-5 excitatory pathway is added?
+
+independent_variable:
+  name: relay_to_layer5_peak_weight_ratio_to_relay_to_layer4
+  values: [0.0, 0.03125, 0.0625, 0.125, 0.25, 0.5, 1.0]
+  source_consistent_primary_values: [0.03125, 0.0625, 0.125, 0.25, 0.5]
+  null_control: 0.0
+  boundary_stress_test: 1.0
+  selection_rule: fixed-log2-grid-no-outcome-guided-refinement
+
+pathway:
+  id: post2008.direct_visual_thalamus_to_layer5_excitatory.ampa_v1
+  source_population: thalamic_relay
+  target_population: layer5_excitatory_v1
+  target_compartment: proximal_dendrite
+  template_projection_id: modeldb112923.projection.035
+  copied_fields:
+    - receptor and channel maximum conductance density
+    - rise and fall kinetics
+    - reversal potential
+    - axonal delay
+    - Gaussian topology and border convention
+  fixed_intervention_field:
+    plasticity: nonmodifiable
+    rationale: the anatomy source does not constrain a SMART learning rule
+  changed_fields:
+    - stable intervention ID and descriptive channel name
+    - target population
+    - projection peak weight multiplied by registered ratio
+    - modifiable flag disabled instead of inheriting projection 035 plasticity
+
+held_fixed:
+  - immutable classic SMART release and frozen baseline manifest
+  - all intrinsic neuron parameters and cell morphologies
+  - all original projections, weights, delays, plasticity, and receptor ports
+  - projection-036 frozen variance interpretation
+  - stimuli, learning episode, learned-state transfer, and validation gates
+  - random state and deterministic NumPy backend
+
+prohibited:
+  - fitting pathway strength to any network endpoint
+  - changing receptor kinetics, delay, kernel, or dendritic placement after outcomes
+  - adding the source-supported L5 PV arm in this module
+  - interpreting a passing grid point as a measured biological conductance
+  - refining the grid around a pass/fail boundary in this registered version
+
+execution:
+  deterministic: true
+  exact_reruns_per_arm: 2
+  run_order:
+    - ratio_0
+    - ratio_0p03125
+    - ratio_0p0625
+    - ratio_0p125
+    - ratio_0p25
+    - ratio_0p5
+    - ratio_1
+  contemporaneous_classic_required: true
+
+progression:
+  stage_1:
+    endpoint: structural and finite-network prechecks
+    rule: all checks pass before any Figure 6 outcomes
+  stage_2:
+    endpoint: frozen Figure 6 six-gate conjunction
+    rule: two exact reruns per grid point; stage 3 only for exact passing points
+  stage_3:
+    endpoints: [Figure 7 match-mismatch, Figure 10 causal reset and negative control]
+    rule: run each Figure-6-passing point without parameter changes
+  stage_4:
+    endpoints: [Figure 14 spectrum, Figure 15 local synchrony, Figure 16 higher order]
+    rule: only points passing both stage-3 behavioral endpoints are eligible
+
+classification:
+  survives: all frozen gates pass without compensation
+  bounded_compensation: >-
+    original behavior can be restored only by a separately preregistered change
+    to another parameter; no compensation is allowed in this version
+  fails: at least one frozen gate fails at the first authorized stage
+  robust_interval: contiguous registered source-consistent ratios that survive
+  unresolved_below_grid: lowest nonzero ratio fails or passes without locating a lower boundary
+
+stopping_rules:
+  - stop each ratio at its first failed stage
+  - preserve qualitative and exact-gate conclusions separately
+  - do not let one ratio's result alter execution or parameters of another ratio

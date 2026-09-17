@@ -1,0 +1,71 @@
+schema_version: 1
+artifact_id: 938
+artifact_type: preregistration
+name: direct-visual-thalamus-to-layer5-excitatory-v1
+date: 2026-09-17
+status: sealed-before-implementation-or-network-outcomes
+
+study: configs/robustness/direct_visual_thalamus_layer5_v1.yaml
+source_audit: docs/validation-results/post2008-direct-visual-thalamus-layer5-source-audit-937.yaml
+control_manifest: configs/baselines/classic_smart_calibrated_v1.yaml
+
+hypotheses:
+  h1: >-
+    A nonempty source-consistent interval of direct relay-to-L5 strength retains
+    the frozen Figure 6 learning/recruitment gates.
+  h2: >-
+    Within any Figure-6-passing interval, resonance and mismatch/reset direction
+    survive even when exact event counts change.
+  h3: >-
+    Failure, if present, has a reproducible first-stage boundary on the sealed grid.
+
+implementation_contract:
+  template_projection_id: modeldb112923.projection.035
+  new_projection_id: post2008.direct_visual_thalamus_to_layer5_excitatory.ampa_v1
+  target_population: layer5_excitatory_v1
+  target_compartment: proximal_dendrite
+  ratio_definition: new_peak_weight_divided_by_template_peak_weight
+  registered_ratios: [0.0, 0.03125, 0.0625, 0.125, 0.25, 0.5, 1.0]
+  ratio_zero_contract: build-the-unchanged-frozen-control-with-no-extra-port-or-projection
+  nonzero_contract: >-
+    Add exactly one dedicated AMPA receptor port to L5 and exactly one
+    nonmodifiable relay-to-L5 projection. Copy receptor kinetics, reversal,
+    delay, and topology from projection 035; replace its learned weight by the
+    registered fixed ratio because the anatomy source does not constrain a
+    SMART learning rule for this pathway.
+  no_changes_allowed_to_original_catalog: true
+
+pre_network_checks:
+  - source record transformation matches the implementation contract exactly
+  - ratio zero produces the unchanged control manifest and projection set
+  - each nonzero ratio adds one L5 receptor port and one projection only
+  - all original adapter manifests and projection state remain unchanged
+  - registered topology uses the copied 9-by-9 Gaussian kernel
+  - representative nonzero network builds, runs briefly, and remains finite
+
+execution_and_gates:
+  backend: brian2-numpy
+  exact_reruns_per_arm: 2
+  stage_2_gates: frozen-Figure6-six-gate-conjunction
+  stage_3_gates: frozen-Figure7-and-Figure10-gates
+  stage_4_gates: frozen-Figure14-Figure15-and-Figure16-gates
+  eligibility: per-ratio-sequential-first-failure-stopping
+  parameter_selection_from_outcomes: forbidden
+
+reporting:
+  required:
+    - raw-result hashes and byte counts
+    - exact-repeat status
+    - per-ratio first failed stage
+    - exact and qualitative behavior classifications
+    - source-consistent robust interval if one exists
+    - boundary-stress result kept separate from primary domain
+  forbidden_conclusions:
+    - that the sealed ratio grid estimates biological synaptic strength
+    - that omitted L5 inhibitory input is biologically absent
+    - that a single aggregate L5 class captures known L5 subtype diversity
+
+authorization:
+  implementation_and_prechecks: true
+  figure6_network_outcomes: false
+  later_network_outcomes: false

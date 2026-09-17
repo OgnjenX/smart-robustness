@@ -1,0 +1,95 @@
+schema_version: 1
+artifact_id: 937
+artifact_type: post-2008-anatomy-source-audit
+name: direct-visual-thalamus-to-layer5-excitatory
+date: 2026-09-17
+status: source-audit-complete-no-network-outcomes-observed
+
+scientific_question: >-
+  Does the frozen classic SMART behavior survive direct first-order visual
+  thalamic excitation of the model's aggregate layer-5 excitatory population?
+
+primary_source:
+  citation: >-
+    Ji X, Zingg B, Mesik L, Xiao Z, Zhang LI, Tao HW (2016).
+    Thalamocortical Innervation Pattern in Mouse Auditory and Visual Cortex:
+    Laminar and Cell-Type Specificity. Cerebral Cortex 26(6):2612-2625.
+  doi: 10.1093/cercor/bhv099
+  pmid: 25979090
+  pmcid: PMC4869808
+  url: https://pmc.ncbi.nlm.nih.gov/articles/PMC4869808/
+  preparation: mouse-primary-visual-cortex-slices-with-dLGN-ChR2-expression
+  supported_facts:
+    - dLGN axons directly innervated V1 pyramidal cells throughout L2/3 through L6.
+    - all sampled V1 L5 pyramidal cells exhibited a response (8 of 8 cells).
+    - L4 pyramidal innervation was significantly stronger than L5 innervation.
+    - response onset latencies were similar across the tested V1 cell groups.
+    - V1 PV cells also received direct input, but that arm is not represented in this module.
+  unsupported_inferences:
+    - an absolute SMART-compatible conductance or receptor-density value
+    - a precise L5-to-L4 conductance ratio transferable into this model
+    - a proximal-versus-distal dendritic target for V1 L5 pyramidal cells
+    - a claim that the aggregate SMART L5 population is one biological L5 subtype
+
+corroborating_source:
+  citation: >-
+    Su C, et al. (2025). Fast-Spike Interneurons in Visual Cortical Layer 5
+    Receive Strong and Retinotopically Aligned LGN Input. Journal of Neuroscience.
+  doi: 10.1523/JNEUROSCI.1116-24.2024
+  pmid: 39667901
+  pmcid: PMC11756620
+  url: https://pmc.ncbi.nlm.nih.gov/articles/PMC11756620/
+  role: >-
+    Supports a distinct direct LGN-to-L5 fast-spiking inhibitory arm. It is
+    deliberately deferred to the later PV/SST/VIP module so excitatory and
+    inhibitory anatomy are not introduced together.
+
+frozen_smart_audit:
+  specific_relay_to_l4_excitatory:
+    projection_id: modeldb112923.projection.035
+    receptor: AMPA
+    target_compartment: proximal_dendrite
+    channel_conductance_mS_cm2: 0.247
+    projection_peak_weight: 6.0
+    delay_ms: 3.0
+    spatial_kernel: gaussian-sigma-0.5-wrap
+  already_present_deep_targets:
+    - specific relay to layer-6I excitatory
+    - nonspecific thalamus to layer-5 distal AMPA and NMDA
+    - matrix thalamus to layer-5 distal excitation
+  missing_pathway: specific-relay-to-layer5-excitatory
+
+  translation_decision:
+  topology: add-specific-relay-to-layer5-excitatory
+  receptor_kinetics_delay_and_kernel: copy-frozen-projection-035
+  target_compartment: proximal_dendrite
+  target_compartment_status: registered-minimal-intervention-assumption-not-source-resolved
+  parameterization: >-
+    Express peak projection weight as a dimensionless ratio of frozen
+    projection 035. Do not infer or fit an absolute conductance from the paper.
+  primary_source_consistent_domain: greater-than-zero-and-less-than-one
+  frozen_grid_ratios: [0.0, 0.03125, 0.0625, 0.125, 0.25, 0.5, 1.0]
+  grid_roles:
+    0.0: contemporaneous-null-control
+    0.03125-through-0.5: fixed-log2-weaker-than-L4-source-consistent-sensitivity-grid
+    1.0: equal-to-L4-boundary-stress-test-not-primary-biological-domain
+  plasticity: fixed-nonmodifiable
+  plasticity_rationale: >-
+    Projection 035 supplies executable AMPA kinetics, delay, and spatial
+    topology, but its SMART learning rule is not evidence about the newly
+    introduced biological pathway. The intervention therefore holds each
+    registered ratio fixed throughout training and recognition.
+
+scope_boundary:
+  included: direct excitation of the existing aggregate L5 excitatory population
+  deferred:
+    - direct relay input to L5 PV or fast-spiking cells
+    - PV/SST/VIP cell-class decomposition
+    - active-apical conductances or feedback relocation
+    - pulvinar or transthalamic routing changes
+  rationale: one-anatomical-change-per-module
+
+decision:
+  preregistration_authorized: true
+  network_outcomes_authorized: false
+  reason: implementation and structural prechecks must be sealed first

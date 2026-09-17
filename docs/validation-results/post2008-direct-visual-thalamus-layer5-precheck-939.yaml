@@ -1,0 +1,52 @@
+schema_version: 1
+artifact_id: 939
+artifact_type: pre-network-structural-assessment
+name: direct-visual-thalamus-to-layer5-excitatory-prechecks
+date: 2026-09-17
+status: completed-passed-figure6-authorized
+
+raw_result:
+  path: results/direct-visual-thalamus-layer5-prechecks-939.yaml
+  sha256: d899f90c9e273675a62a2cb17abe4a98b8ee22b7d640d4b7931a1b755bfe616a
+  bytes: 2216
+  committed: false-generated-result
+
+execution:
+  study: configs/robustness/direct_visual_thalamus_layer5_v1.yaml
+  registration: docs/validation-results/post2008-direct-visual-thalamus-layer5-registration-938.yaml
+  runner: scripts/run_direct_visual_thalamus_layer5_prechecks.py
+  baseline_manifest: configs/baselines/classic_smart_calibrated_v1.yaml
+  baseline_manifest_fingerprint: 992fdd7c3bc9fa0f0d385b9e5a58ba317599357ca377145aba6f01c80d631cd2
+  runtime_fingerprint: 7e654528a99f0b25b7148260a8d52021f6443fb992b210729a2475ae3cfcdaa4
+  connected_behavioral_outcomes_observed: false
+  parameter_selection_or_fitting_used: false
+
+assessment:
+  ratio_zero_uses_exact_frozen_builder: true
+  registered_nonzero_records_checked: 6
+  all_copied_executable_fields_match_projection035: true
+  all_added_records_fixed_nonmodifiable: true
+  representative_ratio: 0.5
+  control_projection_count: 52
+  intervention_projection_count: 53
+  added_projection_ids:
+    - post2008.direct_visual_thalamus_to_layer5_excitatory.ampa_v1
+  added_l5_port_ids:
+    - post2008.direct_visual_thalamus_to_layer5_excitatory.ampa_v1
+  added_port_found_in_other_populations: false
+  source_and_target_indices_identical_to_projection035: true
+  weights_equal_registered_ratio_times_projection035: true
+  control_brief_run_finite: true
+  intervention_brief_run_finite: true
+
+decision:
+  stage_1_pass: true
+  figure6_grid_authorized: true
+  figure7_and_figure10_authorized_ratios: []
+  later_stages_authorized: false
+
+interpretation_boundary:
+  - This establishes a well-formed one-pathway intervention, not behavioral survival.
+  - The zero arm is the exact frozen builder and not a numerically zero extra pathway.
+  - Figure 6 must complete two exact reruns at each ratio before any ratio can enter stage 3.
+  - The fixed grid is a sensitivity analysis, not an estimate of biological conductance.

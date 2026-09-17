@@ -1,0 +1,41 @@
+schema_version: 1
+artifact_id: 927a
+artifact_type: preregistration-amendment
+name: conserved-cortical-point-hh-gap-junction-rule
+date: 2026-09-17
+status: amended-before-implementation-or-outcomes
+
+parent_registration: docs/validation-results/mechanism-cortical-point-hh-registration-927.yaml
+protocol: configs/robustness/cortical_point_hh_conserved_v1.yaml
+
+reason:
+  discovered_during: preimplementation source audit
+  issue: >-
+    The registered area-ratio rule assumed that a ModelDB gap-junction port
+    was executed as density times target area. The recovered SMART connector
+    instead interprets the archived coefficient through KInNeSS Equation 8,
+    whose geometry factor depends on diameter squared divided by length.
+    Applying the area-ratio rule after changing geometry would therefore not
+    conserve the executable total conductance.
+  network_outcomes_observed: false
+
+amended_rule:
+  original_target_total_nS: >-
+    kinness_equation_8(original_coefficient, original_target_diameter,
+    original_target_length)
+  point_target_coefficient: >-
+    the unique coefficient whose KInNeSS Equation 8 total, using point-cell
+    diameter and length, equals original_target_total_nS
+  target_compartment: soma
+  invariant: executable total gap-junction conductance is conserved exactly
+
+unchanged_rules:
+  - chemical receptor and external-input densities retain target-area scaling
+  - injection sensitivities retain target-area scaling
+  - cell area, capacitance, leak, active conductances, and leak equilibrium remain conserved
+  - no fitting or network compensation is permitted
+  - thalamic cells and all network-level parameters remain fixed
+
+interpretation_boundary:
+  - This is a correction to make the stated conservation objective executable.
+  - It is not selected using behavioral outcomes and does not add a fitted degree of freedom.

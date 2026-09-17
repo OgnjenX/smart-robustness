@@ -1,6 +1,6 @@
 schema_version: 1
 name: cortical-point-hh-conserved-v1
-status: preregistered-before-implementation-or-outcomes
+status: preregistered-with-preimplementation-gap-amendment
 control_manifest: configs/baselines/classic_smart_calibrated_v1.yaml
 registration: docs/validation-results/mechanism-cortical-point-hh-registration-927.yaml
 
@@ -49,7 +49,11 @@ aggregation_rule:
     invariant: each channel's total injected current at a fixed source value is conserved
   gap_junction_ports:
     target_compartment: soma
-    density: original_density_times_original_target_area_divided_by_total_area
+    coefficient: >-
+      choose the new KInNeSS Equation 8 coefficient that preserves the
+      original target compartment's executable total conductance in nS
+    invariant: each gap junction port's executable total conductance is conserved
+    amendment: docs/validation-results/mechanism-cortical-point-hh-gap-amendment-927a.yaml
   removed: [all cortical axial edges, compartment-specific voltage states]
 
 held_fixed:
@@ -98,4 +102,3 @@ stopping_rules:
   - seal the first failed stage and do not run later endpoints for the point-HH arm
   - record qualitative survival separately from exact numeric gate survival
   - proceed to expanded layer-5 morphology only if the completed mechanism evidence justifies it
-

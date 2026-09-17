@@ -19,8 +19,21 @@ def test_point_hh_registration_freezes_total_conductance_aggregation() -> None:
         "each port's total maximum conductance is conserved independently"
     )
     assert aggregation["receptor_and_external_ports"]["target_compartment"] == "soma"
+    assert aggregation["gap_junction_ports"]["invariant"] == (
+        "each gap junction port's executable total conductance is conserved"
+    )
     assert study["execution"]["exact_reruns_per_arm"] == 2
     assert "fitting or compensating" in study["prohibited"][0]
+
+
+def test_point_hh_gap_rule_was_amended_before_outcomes() -> None:
+    amendment = _yaml(
+        "docs/validation-results/mechanism-cortical-point-hh-gap-amendment-927a.yaml"
+    )
+    assert amendment["status"] == "amended-before-implementation-or-outcomes"
+    assert amendment["reason"]["network_outcomes_observed"] is False
+    assert "KInNeSS Equation 8" in amendment["reason"]["issue"]
+    assert "conserved exactly" in amendment["amended_rule"]["invariant"]
 
 
 def test_point_hh_is_registered_before_implementation_and_outcomes() -> None:

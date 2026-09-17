@@ -88,3 +88,28 @@ def test_expanded_layer5_prechecks_authorize_only_figure6() -> None:
         "figure6_authorized": True,
         "later_network_stages_authorized": False,
     }
+
+
+def test_expanded_layer5_figure6_passes_exactly_before_stage3() -> None:
+    result = _yaml(
+        "docs/validation-results/mechanism-expanded-layer5-figure6-assessment-934.yaml"
+    )
+    assert result["raw_result"] == {
+        "path": "results/expanded-layer5-figure6-934.yaml",
+        "sha256": (
+            "5fdf735abbc958d8d44b869250422f7a"
+            "2fd406f1ca186aaabb8f8c4553543775"
+        ),
+        "bytes": 971804,
+        "committed": "false-generated-result",
+    }
+    for arm in ("classic_control", "expanded_layer5_branched"):
+        assert result["arms"][arm]["exact_repeat"] is True
+        assert result["arms"][arm]["all_trials_pass"] is True
+        assert all(result["arms"][arm]["six_gates"].values())
+    assert result["decision"] == {
+        "classic_sentinel_pass": True,
+        "expanded_layer5_figure6_pass": True,
+        "stage3_match_mismatch_and_reset_authorized": True,
+        "spectral_and_higher_order_stages_authorized": False,
+    }

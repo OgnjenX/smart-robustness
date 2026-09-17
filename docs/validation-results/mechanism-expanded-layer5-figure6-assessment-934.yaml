@@ -1,0 +1,105 @@
+schema_version: 1
+artifact_id: 934
+artifact_type: connected-network-gate-assessment
+name: expanded-layer5-branched-figure6
+date: 2026-09-17
+status: completed-passed-stage3-authorized
+
+raw_result:
+  path: results/expanded-layer5-figure6-934.yaml
+  sha256: 5fdf735abbc958d8d44b869250422f7a2fd406f1ca186aaabb8f8c4553543775
+  bytes: 971804
+  committed: false-generated-result
+
+execution:
+  implementation_and_precheck_commit: 516e15a
+  sealed_runner_commit: 39a4cdb
+  study: configs/robustness/expanded_layer5_branched_v1.yaml
+  precheck: docs/validation-results/mechanism-expanded-layer5-precheck-933.yaml
+  control_manifest: configs/baselines/classic_smart_calibrated_v1.yaml
+  control_manifest_fingerprint: 992fdd7c3bc9fa0f0d385b9e5a58ba317599357ca377145aba6f01c80d631cd2
+  runtime_fingerprint: 7e654528a99f0b25b7148260a8d52021f6443fb992b210729a2475ae3cfcdaa4
+  deterministic_exact_reruns_per_arm: 2
+  network_outcome_used_for_parameter_selection: false
+  compensation_or_refitting_used: false
+
+arms:
+  classic_control:
+    exact_repeat: true
+    all_trials_pass: true
+    six_gates:
+      relay_active_indices: true
+      relay_events_per_active_index: true
+      relay_events: true
+      cortical_chain_complete: true
+      causal_learning_pair: true
+      top_down_horizontal_contrast: true
+    population_spike_counts:
+      thalamic_relay: 20
+      trn: 676
+      layer5_excitatory_v1: 59
+      layer6ii_excitatory_v1: 14
+      layer6i_excitatory_v1: 41
+      layer4_inhibitory_v1: 148
+      layer23_excitatory_v1: 31
+      layer4_excitatory_v1: 45
+      layer23_inhibitory_v1: 19
+      thalamic_interneuron: 5
+      thalamic_nonspecific: 5
+    top_down_horizontal_contrast: 0.5256118696154084
+  expanded_layer5_branched:
+    exact_repeat: true
+    all_trials_pass: true
+    six_gates:
+      relay_active_indices: true
+      relay_events_per_active_index: true
+      relay_events: true
+      cortical_chain_complete: true
+      causal_learning_pair: true
+      top_down_horizontal_contrast: true
+    population_spike_counts:
+      thalamic_relay: 20
+      trn: 674
+      layer5_excitatory_v1: 53
+      layer6ii_excitatory_v1: 14
+      layer6i_excitatory_v1: 41
+      layer4_inhibitory_v1: 148
+      layer23_excitatory_v1: 31
+      layer4_excitatory_v1: 45
+      layer23_inhibitory_v1: 19
+      thalamic_interneuron: 5
+      thalamic_nonspecific: 5
+    top_down_horizontal_contrast: 0.5263458364293148
+
+controlled_difference:
+  relay_selection_and_event_count_unchanged: true
+  all_non_layer5_cortical_spike_counts_unchanged: true
+  top_down_horizontal_contrast_remains_positive: true
+  population_spike_count_deltas_expanded_minus_control:
+    thalamic_relay: 0
+    trn: -2
+    layer5_excitatory_v1: -6
+    layer6ii_excitatory_v1: 0
+    layer6i_excitatory_v1: 0
+    layer4_inhibitory_v1: 0
+    layer23_excitatory_v1: 0
+    layer4_excitatory_v1: 0
+    layer23_inhibitory_v1: 0
+    thalamic_interneuron: 0
+    thalamic_nonspecific: 0
+  interpretation: >-
+    Figure 6 selection, feedforward recruitment, causal learning, and positive
+    top-down contrast survive the preregistered branched layer-5 expansion.
+    Layer-5 and TRN firing counts change modestly, so this is functional gate
+    survival rather than dynamical identity.
+
+decision:
+  classic_sentinel_pass: true
+  expanded_layer5_figure6_pass: true
+  stage3_match_mismatch_and_reset_authorized: true
+  spectral_and_higher_order_stages_authorized: false
+
+prohibited_conclusions:
+  - the equal-area branched morphology is biologically validated
+  - ART resonance and reset have already survived
+  - oscillatory or higher-order behavior necessarily survives

@@ -86,3 +86,21 @@ def test_point_hh_figure6_passes_exactly_before_stage3() -> None:
     ] == 0
     assert result["decision"]["stage3_match_mismatch_and_reset_authorized"] is True
     assert result["decision"]["spectral_and_higher_order_stages_authorized"] is False
+
+
+def test_point_hh_stage3_closes_at_exact_figure7_failure() -> None:
+    result = _yaml(
+        "docs/validation-results/mechanism-cortical-point-hh-stage3-assessment-930.yaml"
+    )
+    assert result["classic_control"]["all_stage3_gates_pass"] is True
+    point = result["cortical_point_hh_conserved"]
+    assert point["exact_repeat"] is True
+    assert point["figure7_pass"] is False
+    assert point["match_mismatch_nonspecific_events"] == [5, 7]
+    assert point["failed_gates"] == [
+        "match_more_trn_to_nonspecific_gaba",
+        "match_nonspecific_events",
+    ]
+    assert point["figure10_executed"] is False
+    assert result["decision"]["arm_closed_at_first_failed_stage"] is True
+    assert result["decision"]["spectral_and_higher_order_stages_authorized"] is False

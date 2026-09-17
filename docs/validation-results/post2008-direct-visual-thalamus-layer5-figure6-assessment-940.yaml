@@ -1,0 +1,119 @@
+schema_version: 1
+artifact_id: 940
+artifact_type: sealed-figure6-grid-assessment
+name: direct-visual-thalamus-to-layer5-excitatory-figure6
+date: 2026-09-17
+status: completed-first-stage-failure-localized
+
+raw_result:
+  path: results/direct-visual-thalamus-layer5-figure6-940.yaml
+  sha256: 3150721f19b1e3d4c2a60767eb8f6318ab42a06f2c4a741c2dfcb8149d3ce6d3
+  bytes: 3437986
+  committed: false-generated-result
+
+execution:
+  study: configs/robustness/direct_visual_thalamus_layer5_v1.yaml
+  precheck: docs/validation-results/post2008-direct-visual-thalamus-layer5-precheck-939.yaml
+  runner: scripts/run_direct_visual_thalamus_layer5_figure6.py
+  baseline_manifest: configs/baselines/classic_smart_calibrated_v1.yaml
+  baseline_manifest_fingerprint: 992fdd7c3bc9fa0f0d385b9e5a58ba317599357ca377145aba6f01c80d631cd2
+  runtime_fingerprint: 7e654528a99f0b25b7148260a8d52021f6443fb992b210729a2475ae3cfcdaa4
+  exact_reruns_per_arm: 2
+  all_arms_exact: true
+  parameter_selection_or_fitting_used: false
+
+control:
+  ratio: 0.0
+  exact_repeat: true
+  all_six_figure6_gates_pass: true
+  relay_events: 20
+  relay_active_indices: [38, 39, 40, 41, 42]
+  layer4_first_event_ms: 10.69
+  layer23_first_event_ms: 17.14
+  layer5_first_event_ms: 19.92
+  top_down_horizontal_contrast: 0.5256118696154084
+
+grid:
+  - ratio: 0.03125
+    exact_repeat: true
+    figure6_pass: false
+    failed_gates: [cortical_chain_complete]
+    layer5_first_event_ms: 14.99
+    layer5_events: 74
+    top_down_horizontal_contrast: 0.5239714265609277
+  - ratio: 0.0625
+    exact_repeat: true
+    figure6_pass: false
+    failed_gates: [cortical_chain_complete]
+    layer5_first_event_ms: 12.79
+    layer5_events: 89
+    top_down_horizontal_contrast: 0.4849603727628316
+  - ratio: 0.125
+    exact_repeat: true
+    figure6_pass: false
+    failed_gates: [cortical_chain_complete]
+    layer5_first_event_ms: 11.77
+    layer5_events: 107
+    top_down_horizontal_contrast: 0.5271049425625198
+  - ratio: 0.25
+    exact_repeat: true
+    figure6_pass: false
+    failed_gates: [cortical_chain_complete]
+    layer5_first_event_ms: 11.16
+    layer5_events: 160
+    top_down_horizontal_contrast: 0.41754349880270997
+  - ratio: 0.5
+    exact_repeat: true
+    figure6_pass: false
+    failed_gates: [cortical_chain_complete]
+    layer5_first_event_ms: 10.77
+    layer5_events: 212
+    top_down_horizontal_contrast: 0.4710078407909329
+  - ratio: 1.0
+    exact_repeat: true
+    figure6_pass: false
+    failed_gates: [cortical_chain_complete]
+    layer5_first_event_ms: 10.5
+    layer5_events: 273
+    top_down_horizontal_contrast: 0.4756413213669895
+
+invariants_across_every_nonzero_ratio:
+  relay_active_indices_gate: passed
+  relay_events_per_active_index_gate: passed
+  relay_event_count_gate: passed
+  causal_learning_pair_gate: passed
+  top_down_horizontal_contrast_gate: passed
+  layer4_first_event_ms: 10.69
+  layer23_first_event_ms: 17.14
+  sole_failure: >-
+    Direct relay excitation advances the first L5 event ahead of the first
+    L2/3 event, violating the classic serial L4-to-L2/3-to-L5 causal-order gate.
+
+decision:
+  exact_classic_serial_sequence_survives_nonzero_pathway: false
+  source_consistent_figure6_robust_interval: []
+  figure6_passing_ratios: [0.0]
+  nonzero_ratios_authorized_for_registered_stage3: []
+  stage3_not_run_reason: preregistered-first-failed-stage-stopping-rule
+
+scientific_interpretation:
+  supported:
+    - >-
+      In this aggregate SMART L5 implementation, even the weakest tested direct
+      relay-to-L5 path creates a parallel route that precedes the classic
+      L2/3-to-L5 category recruitment sequence.
+    - >-
+      The perturbation is localized to causal ordering at Figure 6; relay
+      recruitment, the learning-time relation, and learned orientation contrast
+      remain present throughout the sealed grid.
+  not_supported:
+    - ART resonance or mismatch/reset behavior fails under direct L5 input.
+    - no biologically realistic direct relay-to-L5 strength can preserve behavior.
+    - L5 inhibitory input or modern cell-class specificity would not stabilize the route.
+
+next_registered_question: >-
+  A separate, noncompensatory parallel-route assay is required to test whether
+  high-level match resonance and mismatch/reset phenotypes survive despite the
+  expected replacement of the classic serial L4-to-L2/3-to-L5 event order. It
+  must preserve this fixed grid and prohibit tuning; it is not authorized by
+  the present registration.

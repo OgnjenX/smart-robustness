@@ -1,0 +1,49 @@
+schema_version: 1
+artifact_id: 929c
+artifact_type: execution-bookkeeping-correction-registration
+name: conserved-cortical-point-hh-figure6-canonical-exactness
+date: 2026-09-17
+status: registered-before-correction
+
+input_result:
+  path: results/cortical-point-hh-figure6-929.yaml
+  sha256: 7b791652e30a8650760a1a17a96b792ae40a964687781e95276d62f96e71f62f
+  bytes: 969053
+
+observed_state:
+  classic_control_trials: 2
+  classic_control_exact_repeat: true
+  classic_control_all_trials_pass: true
+  point_hh_trials: 2
+  point_hh_each_trial_all_six_gates_pass: true
+  stored_point_hh_exact_repeat: false
+  canonical_yaml_point_hh_trials_equal_excluding_repetition: true
+  field_by_field_scientific_differences: 0
+
+cause: >-
+  The recovery process loaded repetition 0 from YAML, where persisted
+  sequences are lists, and compared it directly with fresh repetition 1,
+  where some otherwise identical sequences remained tuples in memory. Direct
+  Python container equality therefore returned false before both records were
+  serialized to the same representation.
+
+correction_rule:
+  input_hash_must_match: true
+  canonicalization: YAML safe dump and safe load with sorted keys
+  excluded_field: repetition
+  required_before_correction:
+    - both point-HH trials pass all six unchanged gates
+    - canonical persisted trial records are exactly equal
+    - classic sentinel remains complete, exact, and passing
+  permitted_changes:
+    - point-HH exact_repeat false to true
+    - point-HH all_trials_pass false to true
+    - point_hh_figure6_pass false to true
+    - stage_3_authorized false to true
+    - append correction provenance
+
+prohibited:
+  - rerunning or discarding either point-HH trial
+  - changing any trial field, gate, parameter, tolerance, or protocol
+  - approximate numeric comparison
+  - proceeding if canonical equality is not exact

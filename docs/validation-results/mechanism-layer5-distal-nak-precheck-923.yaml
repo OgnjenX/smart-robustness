@@ -1,0 +1,52 @@
+schema_version: 1
+artifact_id: 923
+artifact_type: pre-network-structural-and-isolated-assessment
+name: layer5-distal-active-nak-ablation-prechecks
+date: 2026-09-17
+status: completed-passed-network-outcomes-still-sealed
+
+raw_result:
+  path: results/layer5-distal-nak-prechecks-923.yaml
+  sha256: dd0fd28f6091550ddc83344bf5ec85a315aa3e9d78393ae2180443ac6343110e
+  bytes: 2748
+  committed: false-generated-result
+
+execution:
+  study: configs/robustness/layer5_distal_nak_ablation_v1.yaml
+  control_manifest: configs/baselines/classic_smart_calibrated_v1.yaml
+  control_manifest_fingerprint: 992fdd7c3bc9fa0f0d385b9e5a58ba317599357ca377145aba6f01c80d631cd2
+  runtime_fingerprint: 7e654528a99f0b25b7148260a8d52021f6443fb992b210729a2475ae3cfcdaa4
+  network_outcomes_observed: false
+
+structural_assessment:
+  all_checks_pass: true
+  compartments_match: true
+  synaptic_ports_match: true
+  external_input_ports_match: true
+  injection_ports_match: true
+  axial_parameters_match: true
+  passive_values_match: true
+  variables_added: []
+  variables_removed_exactly:
+    - distal Na/K alpha and beta rate subexpressions
+    - distal m, h, and n gates
+    - distal fast-Na and delayed-rectifier-K maximal conductances
+    - distal fast-Na and delayed-rectifier-K currents
+
+isolated_assessment:
+  current_probes_pA: [0.0, 500.0, 1500.0]
+  classic_control_finite: true
+  ablation_finite: true
+  classic_spike_counts: [0, 1, 1]
+  ablation_spike_counts: [0, 0, 3]
+  interpretation: >-
+    The intervention is viable and has a measurable dendritic-transfer effect.
+    These outputs are descriptive prechecks, not fitting targets, and no value
+    was selected from them.
+
+decision:
+  stage_1_pass: true
+  figure6_authorized: true
+  compensation_or_refitting_used: false
+  network_outcomes_observed_before_decision: false
+

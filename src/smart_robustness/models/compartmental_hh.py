@@ -323,6 +323,11 @@ def create_compartmental_hh_population(
         for value in voltage_clamps_mV.values()
     ):
         raise ValueError("voltage clamp values must be finite numbers")
+    disabled_nak_compartments = params.get("disabled_nak_compartments", frozenset())
+    if not isinstance(disabled_nak_compartments, frozenset) or not all(
+        isinstance(name, str) for name in disabled_nak_compartments
+    ):
+        raise TypeError("disabled_nak_compartments must be a frozenset of names")
     enable_ahp_ach = params["enable_ahp_ach"]
     if not isinstance(enable_ahp_ach, bool):
         raise TypeError("enable_ahp_ach must be an explicit bool")
@@ -357,6 +362,7 @@ def create_compartmental_hh_population(
         depletion_epsilon=depletion_epsilon,
         depletion_recovery_ms=depletion_recovery_ms,
         somatic_spike_model=somatic_spike_model,
+        disabled_nak_compartments=disabled_nak_compartments,
     )
     # Protocols can request a one-event somatic current pulse. The flag
     # defaults to zero, preserving sustained-current behavior exactly.
@@ -662,8 +668,12 @@ def create_compartmental_hh_population(
             paper_voltage = initial_voltage + 67.0
         else:
             paper_voltage = initial_voltage - compartment.e_leak_mV
-        if compartment.g_na_mS_cm2 is not None and not (
+        if (
+            compartment.g_na_mS_cm2 is not None
+            and compartment_name not in disabled_nak_compartments
+            and not (
             somatic_spike_model in {"adex", "gif"} and compartment_name == "soma"
+            )
         ):
             if somatic_spike_model == "pospischil_hh" and compartment_name == "soma":
                 assert alternative_hh_parameters is not None

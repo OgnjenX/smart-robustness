@@ -41,3 +41,16 @@ def test_layer5_distal_nak_progression_stops_at_first_failure() -> None:
     assert "stage 2" in progression["stage_3"]["rule"]
     assert "stage-3" in progression["stage_4"]["rule"]
     assert "failed prerequisite" in study["stopping_rules"][0]
+
+
+def test_layer5_distal_nak_prechecks_authorize_figure6_without_network_data() -> None:
+    assessment = _yaml(
+        "docs/validation-results/mechanism-layer5-distal-nak-precheck-923.yaml"
+    )
+    assert assessment["structural_assessment"]["all_checks_pass"] is True
+    assert assessment["isolated_assessment"]["classic_control_finite"] is True
+    assert assessment["isolated_assessment"]["ablation_finite"] is True
+    assert assessment["decision"]["stage_1_pass"] is True
+    assert assessment["decision"]["figure6_authorized"] is True
+    assert assessment["decision"]["compensation_or_refitting_used"] is False
+    assert assessment["execution"]["network_outcomes_observed"] is False

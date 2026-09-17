@@ -71,6 +71,7 @@ class CompiledCellEquations:
     voltage_clamped_compartments: frozenset[str]
     depletion_enabled: bool
     somatic_spike_model: str
+    disabled_nak_compartments: frozenset[str]
 
 
 def _enum(value, enum_type, label):
@@ -272,6 +273,7 @@ def compile_cell_equations(
     depletion_epsilon: float | None = None,
     depletion_recovery_ms: float | None = None,
     somatic_spike_model: str = "classic_hh",
+    disabled_nak_compartments: frozenset[str] = frozenset(),
 ) -> CompiledCellEquations:
     """Compile one source-specified cell; every ambiguous convention is required."""
 
@@ -303,6 +305,26 @@ def compile_cell_equations(
     ):
         raise TypeError("synaptic_ports must be an explicit tuple of SynapticPortSpec")
     compartment_names = {compartment.name for compartment in cell.compartments}
+    if not isinstance(disabled_nak_compartments, frozenset) or not all(
+        isinstance(name, str) for name in disabled_nak_compartments
+    ):
+        raise TypeError("disabled_nak_compartments must be a frozenset of names")
+    unknown_disabled_nak = disabled_nak_compartments - compartment_names
+    if unknown_disabled_nak:
+        raise ValueError(
+            "unknown Na/K-disabled compartments: "
+            f"{sorted(unknown_disabled_nak)}"
+        )
+    non_active_disabled_nak = {
+        name
+        for name in disabled_nak_compartments
+        if cell.compartment(name).g_na_mS_cm2 is None
+    }
+    if non_active_disabled_nak:
+        raise ValueError(
+            "cannot disable Na/K in compartments without active Na/K: "
+            f"{sorted(non_active_disabled_nak)}"
+        )
     for port in synaptic_ports:
         if port.compartment not in compartment_names:
             raise ValueError(f"{port.record_id}: unknown target compartment {port.compartment}")
@@ -479,7 +501,9 @@ def compile_cell_equations(
             if somatic_spike_model in {"adex", "gif"} and name == "soma"
             else [f"g_l_{name}*(e_l_{name}-v_{name})"]
         )
-        if somatic_spike_model == "pospischil_hh" and name == "soma":
+        if name in disabled_nak_compartments:
+            pass
+        elif somatic_spike_model == "pospischil_hh" and name == "soma":
             lines.extend(_pospischil_hh_lines(name))
             membrane_current_terms.extend(
                 (f"i_na_{name}", f"i_k_{name}", f"i_m_{name}")
@@ -573,4 +597,5 @@ def compile_cell_equations(
         voltage_clamped_compartments=voltage_clamped_compartments,
         depletion_enabled=depletion_enabled,
         somatic_spike_model=somatic_spike_model,
+        disabled_nak_compartments=disabled_nak_compartments,
     )

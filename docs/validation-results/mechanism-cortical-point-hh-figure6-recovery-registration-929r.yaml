@@ -1,0 +1,43 @@
+schema_version: 1
+artifact_id: 929r
+artifact_type: interrupted-execution-recovery-registration
+name: conserved-cortical-point-hh-figure6-final-repeat-recovery
+date: 2026-09-17
+status: registered-before-recovery-run
+
+study: configs/robustness/cortical_point_hh_conserved_v1.yaml
+runner: scripts/run_cortical_point_hh_figure6.py
+recovery_runner: scripts/recover_cortical_point_hh_figure6.py
+
+interruption_evidence:
+  process_handle: 1741
+  handle_status: missing
+  partial_result: results/cortical-point-hh-figure6-929.yaml
+  partial_result_sha256: 36b97bb8d2c8bae573ff00b473268b9b78f59d598b3a5fb63510a5ac4d74e446
+  partial_result_bytes: 727097
+  completed_trials:
+    classic_control: 2
+    cortical_point_hh_conserved: 1
+  missing_trials:
+    classic_control: 0
+    cortical_point_hh_conserved: 1
+
+known_outcomes_at_registration:
+  classic_control_two_exact_repeats_pass: true
+  first_point_hh_repeat_pass: true
+  second_point_hh_repeat: not-run
+  stage_3_authorized: false
+
+recovery_constraints:
+  - validate the exact partial-result hash before simulation
+  - preserve all three completed trials byte-for-byte in the recovered YAML structure
+  - import the already-committed Figure 6 trial scorer rather than redefine any gate
+  - execute only repetition 1 of cortical_point_hh_conserved
+  - use the same baseline, study, runtime conventions, profile, protocol, projection scales, and population factory
+  - require exact equality between point-HH repetitions for progression
+  - prohibit fitting, compensation, gate changes, or selective reruns after the recovery result
+
+interpretation_boundary:
+  - This recovery was necessitated by a missing process handle, not by a scientific failure.
+  - The already observed passing point-HH repeat cannot be discarded or replaced.
+  - The recovery can complete or fail the registered stage but cannot alter its criteria.

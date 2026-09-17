@@ -1,0 +1,75 @@
+schema_version: 1
+artifact_id: 925
+artifact_type: behavioral-progression-assessment
+name: layer5-distal-active-nak-ablation-stage3
+date: 2026-09-17
+status: completed-figure7-exact-gate-failed-arm-closed
+
+raw_result:
+  path: results/layer5-distal-nak-stage3-925.yaml
+  sha256: 5a56a6caa58d9703289e0a08505189a727ffacc58d898e4fd370a1b4f913a819
+  bytes: 12723
+  committed: false-generated-result
+
+execution:
+  implementation_commit: 5bbaa9bc27b7ea8a0fb3db9bc7c2fbd4014d1983
+  study: configs/robustness/layer5_distal_nak_ablation_v1.yaml
+  control_manifest: configs/baselines/classic_smart_calibrated_v1.yaml
+  control_manifest_fingerprint: 992fdd7c3bc9fa0f0d385b9e5a58ba317599357ca377145aba6f01c80d631cd2
+  runtime_fingerprint: 7e654528a99f0b25b7148260a8d52021f6443fb992b210729a2475ae3cfcdaa4
+  figure6_result_sha256: 54a1431c62498cfa2ea99df071a43d21342c7962bee1135a485752ea272acebc
+  deterministic_exact_reruns_per_arm: 2
+  network_outcome_used_for_parameter_selection: false
+
+classic_control:
+  exact_repeat: true
+  figure7_pass: true
+  match_mismatch_nonspecific_events: [4, 7]
+  match_mismatch_relay_events: [20, 3]
+  match_mismatch_relay_active_indices: [[38, 39, 40, 41, 42], [40]]
+  figure10_pass: true
+  intact_control_aggregate_winner_events: [53, 63]
+  intact_control_late_alternative_margin: [3, -2]
+  all_stage3_gates_pass: true
+
+layer5_distal_nak_disabled:
+  exact_repeat: true
+  figure7_pass: false
+  passed_figure7_gate_count: 7
+  total_figure7_gate_count: 8
+  match_mismatch_nonspecific_events: [4, 8]
+  match_mismatch_relay_events: [20, 3]
+  match_mismatch_relay_active_indices: [[38, 39, 40, 41, 42], [40]]
+  failed_gates: [mismatch_nonspecific_events]
+  qualitative_mismatch_greater_than_match: true
+  figure10_executed: false
+  stage3_pass: false
+
+interpretation:
+  exact_baseline_reproduction: >-
+    Removing layer-5 distal fast Na/K preserves Figure 6 and seven of eight
+    Figure 7 gates but reproducibly adds one nonspecific mismatch event. The
+    intervention therefore does not preserve the exact frozen classic SMART
+    match/mismatch phenotype under this parameterization.
+  qualitative_art_behavior: >-
+    Match remains spatially broad with four nonspecific events, mismatch
+    remains overlap-only at the relay and produces greater nonspecific output
+    than match. The qualitative match-versus-mismatch contrast survives; this
+    result should not be described as loss of ART resonance/reset behavior.
+  mechanistic_localization: >-
+    Layer-5 distal active Na/K constrains the quantitative mismatch burst even
+    though it is unnecessary for the Figure 6 learned-state gates.
+
+decision:
+  arm_closed_at_first_failed_stage: true
+  figure10_ablation_authorized: false
+  spectral_and_higher_order_stages_authorized: false
+  compensation_or_refitting_used: false
+  next_intervention: passivize cortical dendrites with classic somatic HH retained
+
+prohibited_conclusions:
+  - distal dendritic spikes are universally necessary for ART
+  - removing distal Na/K abolishes qualitative match/mismatch behavior
+  - an unexecuted reset or spectral outcome can be inferred from this result
+  - changing a threshold or parameter to remove the eighth mismatch event
+

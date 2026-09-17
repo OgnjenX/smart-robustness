@@ -69,3 +69,21 @@ def test_layer5_distal_nak_figure6_pass_authorizes_only_stage3() -> None:
     assert decision["stage3_match_mismatch_and_reset_authorized"] is True
     assert decision["spectral_and_higher_order_stages_authorized"] is False
     assert decision["compensation_or_refitting_used"] is False
+
+
+def test_layer5_distal_nak_exact_figure7_failure_closes_arm() -> None:
+    assessment = _yaml(
+        "docs/validation-results/"
+        "mechanism-layer5-distal-nak-stage3-assessment-925.yaml"
+    )
+    assert assessment["classic_control"]["all_stage3_gates_pass"] is True
+    ablation = assessment["layer5_distal_nak_disabled"]
+    assert ablation["exact_repeat"] is True
+    assert ablation["match_mismatch_nonspecific_events"] == [4, 8]
+    assert ablation["qualitative_mismatch_greater_than_match"] is True
+    assert ablation["failed_gates"] == ["mismatch_nonspecific_events"]
+    assert ablation["figure10_executed"] is False
+    decision = assessment["decision"]
+    assert decision["arm_closed_at_first_failed_stage"] is True
+    assert decision["spectral_and_higher_order_stages_authorized"] is False
+    assert decision["compensation_or_refitting_used"] is False

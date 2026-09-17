@@ -127,6 +127,38 @@ def _nak_lines(
     ]
 
 
+def _pospischil_hh_lines(name: str) -> list[str]:
+    """Source equations for the Pospischil-type somatic Na/K/M model."""
+
+    v = f"v_{name}"
+    shifted = f"({v}-v_t_pospischil)"
+    return [
+        f"dm_{name}/dt=alpha_m_{name}*(1-m_{name})-beta_m_{name}*m_{name} : 1",
+        f"dh_{name}/dt=alpha_h_{name}*(1-h_{name})-beta_h_{name}*h_{name} : 1",
+        f"dn_{name}/dt=alpha_n_{name}*(1-n_{name})-beta_n_{name}*n_{name} : 1",
+        f"alpha_m_{name}=1.28/exprel((13*mV-{shifted})/(4*mV))/ms : Hz",
+        f"beta_m_{name}=1.4/exprel(({shifted}-40*mV)/(5*mV))/ms : Hz",
+        f"alpha_h_{name}=0.128*exp((17*mV-{shifted})/(18*mV))/ms : Hz",
+        f"beta_h_{name}=4/(exp((40*mV-{shifted})/(5*mV))+1)/ms : Hz",
+        f"alpha_n_{name}=0.16/exprel((15*mV-{shifted})/(5*mV))/ms : Hz",
+        f"beta_n_{name}=0.5*exp((10*mV-{shifted})/(40*mV))/ms : Hz",
+        f"i_na_{name}=g_na_{name}*m_{name}**3*h_{name}*(e_na-{v}) : amp",
+        f"i_k_{name}=g_k_{name}*n_{name}**4*(e_k-{v}) : amp",
+        f"dp_m_{name}/dt=(p_m_inf_{name}-p_m_{name})/tau_p_m_{name} : 1",
+        f"p_m_inf_{name}=1/(1+exp(-({v}+35*mV)/(10*mV))) : 1",
+        (
+            f"tau_p_m_{name}=tau_max_m_pospischil/"
+            f"(3.3*exp(({v}+35*mV)/(20*mV))+exp(-({v}+35*mV)/(20*mV))) : second"
+        ),
+        f"i_m_{name}=g_m_{name}*p_m_{name}*(e_k-{v}) : amp",
+        f"g_na_{name} : siemens (constant)",
+        f"g_k_{name} : siemens (constant)",
+        f"g_m_{name} : siemens (constant)",
+        "v_t_pospischil : volt (constant)",
+        "tau_max_m_pospischil : second (constant)",
+    ]
+
+
 def _calcium_lines(
     name: str,
     coordinate: VoltageCoordinate,
@@ -261,8 +293,11 @@ def compile_cell_equations(
     ahp = _enum(ahp_convention, AHPConvention, "ahp_convention")
     if not isinstance(enable_ahp_ach, bool):
         raise TypeError("enable_ahp_ach must be an explicit bool")
-    if somatic_spike_model not in {"classic_hh", "adex", "gif"}:
-        raise ValueError("somatic_spike_model must be 'classic_hh', 'adex', or 'gif'")
+    if somatic_spike_model not in {"classic_hh", "adex", "gif", "pospischil_hh"}:
+        raise ValueError(
+            "somatic_spike_model must be 'classic_hh', 'adex', 'gif', or "
+            "'pospischil_hh'"
+        )
     if not isinstance(synaptic_ports, tuple) or not all(
         isinstance(port, SynapticPortSpec) for port in synaptic_ports
     ):
@@ -444,7 +479,12 @@ def compile_cell_equations(
             if somatic_spike_model in {"adex", "gif"} and name == "soma"
             else [f"g_l_{name}*(e_l_{name}-v_{name})"]
         )
-        if compartment.g_na_mS_cm2 is not None and not (
+        if somatic_spike_model == "pospischil_hh" and name == "soma":
+            lines.extend(_pospischil_hh_lines(name))
+            membrane_current_terms.extend(
+                (f"i_na_{name}", f"i_k_{name}", f"i_m_{name}")
+            )
+        elif compartment.g_na_mS_cm2 is not None and not (
             somatic_spike_model in {"adex", "gif"} and name == "soma"
         ):
             lines.extend(_nak_lines(name, voltage, nak_rate))

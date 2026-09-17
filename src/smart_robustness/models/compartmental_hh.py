@@ -10,6 +10,7 @@ from typing import Any
 import numpy as np
 
 from .adex_parameters import AdExParameters
+from .alternative_hh_parameters import AlternativeHHParameters
 from .axial import AxialConvention, build_axial_edges
 from .currents import (
     E_CA_MV,
@@ -166,10 +167,14 @@ def create_compartmental_hh_population(
         import brian2 as brian
 
     somatic_spike_model = str(params.get("somatic_spike_model", "classic_hh"))
-    if somatic_spike_model not in {"classic_hh", "adex", "gif"}:
-        raise ValueError("somatic_spike_model must be 'classic_hh', 'adex', or 'gif'")
+    if somatic_spike_model not in {"classic_hh", "adex", "gif", "pospischil_hh"}:
+        raise ValueError(
+            "somatic_spike_model must be 'classic_hh', 'adex', 'gif', or "
+            "'pospischil_hh'"
+        )
     adex_parameters = None
     gif_parameters = None
+    alternative_hh_parameters = None
     if somatic_spike_model == "adex":
         raw_adex_parameters = params.get("adex_parameters")
         if not isinstance(raw_adex_parameters, dict):
@@ -180,6 +185,15 @@ def create_compartmental_hh_population(
         if not isinstance(raw_gif_parameters, dict):
             raise TypeError("GIF populations require a gif_parameters mapping")
         gif_parameters = GIFParameters.from_mapping(raw_gif_parameters)
+    elif somatic_spike_model == "pospischil_hh":
+        raw_alternative_hh_parameters = params.get("alternative_hh_parameters")
+        if not isinstance(raw_alternative_hh_parameters, dict):
+            raise TypeError(
+                "Pospischil-HH populations require an alternative_hh_parameters mapping"
+            )
+        alternative_hh_parameters = AlternativeHHParameters.from_mapping(
+            raw_alternative_hh_parameters
+        )
 
     cell = params.get("cell_spec")
     if cell is None:
@@ -552,6 +566,12 @@ def create_compartmental_hh_population(
         ) * brian.mV
         group.c_scale_gif = gif_parameters.somatic_capacitance_scale
         group.g_l_scale_gif = gif_parameters.somatic_leak_conductance_scale
+    elif somatic_spike_model == "pospischil_hh":
+        assert alternative_hh_parameters is not None
+        group.v_t_pospischil = alternative_hh_parameters.threshold_mV * brian.mV
+        group.tau_max_m_pospischil = (
+            alternative_hh_parameters.m_current_tau_max_ms * brian.ms
+        )
     elif spike_event_rule in {
         SpikeEventRule.LITERAL_PREVIOUS_SAMPLE,
         SpikeEventRule.FALLING_THRESHOLD_CROSSING,
@@ -645,22 +665,67 @@ def create_compartmental_hh_population(
         if compartment.g_na_mS_cm2 is not None and not (
             somatic_spike_model in {"adex", "gif"} and compartment_name == "soma"
         ):
-            _set(
-                group,
-                f"g_na_{compartment_name}",
-                compartment.conductance_nS("na") * brian.nsiemens,
-            )
-            _set(
-                group,
-                f"g_k_{compartment_name}",
-                compartment.conductance_nS("k") * brian.nsiemens,
-            )
+            if somatic_spike_model == "pospischil_hh" and compartment_name == "soma":
+                assert alternative_hh_parameters is not None
+                area_cm2 = compartment.lateral_area_cm2
+                _set(
+                    group,
+                    f"g_na_{compartment_name}",
+                    alternative_hh_parameters.sodium_density_mS_cm2
+                    * area_cm2
+                    * 1e6
+                    * brian.nsiemens,
+                )
+                _set(
+                    group,
+                    f"g_k_{compartment_name}",
+                    alternative_hh_parameters.potassium_density_mS_cm2
+                    * area_cm2
+                    * 1e6
+                    * brian.nsiemens,
+                )
+                _set(
+                    group,
+                    f"g_m_{compartment_name}",
+                    alternative_hh_parameters.m_current_density_mS_cm2
+                    * area_cm2
+                    * 1e6
+                    * brian.nsiemens,
+                )
+            else:
+                _set(
+                    group,
+                    f"g_na_{compartment_name}",
+                    compartment.conductance_nS("na") * brian.nsiemens,
+                )
+                _set(
+                    group,
+                    f"g_k_{compartment_name}",
+                    compartment.conductance_nS("k") * brian.nsiemens,
+                )
             if gate_initialization is GateInitializationConvention.ZERO:
                 _set(group, f"m_{compartment_name}", 0)
                 _set(group, f"h_{compartment_name}", 0)
                 _set(group, f"n_{compartment_name}", 0)
+                if (
+                    somatic_spike_model == "pospischil_hh"
+                    and compartment_name == "soma"
+                ):
+                    _set(group, f"p_m_{compartment_name}", 0)
             else:
-                rates = traub_miles_rates(paper_voltage, nak_rate)
+                if (
+                    somatic_spike_model == "pospischil_hh"
+                    and compartment_name == "soma"
+                ):
+                    assert alternative_hh_parameters is not None
+                    rates = traub_miles_rates(
+                        initial_voltage - alternative_hh_parameters.threshold_mV,
+                        NaKRateConvention.STANDARD_TRAUB_MILES,
+                    )
+                    p_m_inf = 1.0 / (1.0 + math.exp(-(initial_voltage + 35.0) / 10.0))
+                    _set(group, f"p_m_{compartment_name}", p_m_inf)
+                else:
+                    rates = traub_miles_rates(paper_voltage, nak_rate)
                 _set(
                     group,
                     f"m_{compartment_name}",

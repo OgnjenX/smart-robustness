@@ -1,0 +1,97 @@
+schema_version: 1
+artifact_id: 921
+artifact_type: isolated-cell-fit-assessment
+name: pospischil-hh-network-blind-isolated-fit
+date: 2026-09-17
+status: completed-not-promoted
+
+raw_result:
+  path: results/alternative-hh-isolated-fit-921.yaml
+  sha256: 1c2f704e589e7ade25087667d484b20f7ea163421675b1fa208d98c02ae7132e
+  bytes: 33848
+  committed: false-generated-result
+
+execution:
+  implementation_commit: e27b193a8163f8efb2bf7a857c24f4a2a6ef0019
+  control_manifest: configs/baselines/classic_smart_calibrated_v1.yaml
+  control_manifest_fingerprint: 992fdd7c3bc9fa0f0d385b9e5a58ba317599357ca377145aba6f01c80d631cd2
+  runtime_fingerprint: 7e654528a99f0b25b7148260a8d52021f6443fb992b210729a2475ae3cfcdaa4
+  protocol: configs/models/alternative_hh_isolated_match_protocol_v1.yaml
+  cell_classes: 7
+  candidates_per_class: 258
+  candidate_composition: 256 deterministic Sobol points plus two literature seeds
+  training_levels_per_class: 4
+  sealed_holdout_levels_per_class: 3
+  network_outcomes_used: false
+  holdout_used_for_selection: false
+  completed: true
+  environment:
+    python: 3.11.9
+    brian2: 2.9.0
+    numpy: 1.26.4
+    scipy: 1.17.1
+
+assessment:
+  every_cortical_class_promoted: false
+  promoted_class_count: 2
+  promoted_classes:
+    layer6ii_excitatory_v1:
+      training_loss: 0.9782456178134491
+      informative_spiking_target: true
+    layer4_excitatory_v1:
+      training_loss: 0.00002035238475471841
+      informative_spiking_target: false
+      note: all seven classic scan levels were silent, so this pass constrains rest and silence but not spike transfer
+  failed_classes:
+    layer5_excitatory_v1:
+      training_promoted: true
+      holdout_promoted: false
+      failed_holdout_gates: [adaptation ratio]
+    layer6i_excitatory_v1:
+      training_promoted: false
+      holdout_promoted: false
+      failed_training_gates: [spike count]
+      failed_holdout_gates: [spike count]
+    layer4_inhibitory_v1:
+      training_promoted: false
+      holdout_promoted: false
+      failed_training_gates: [spike count, first-spike latency]
+      failed_holdout_gates: [spike count, first-spike latency, adaptation ratio]
+    layer23_excitatory_v1:
+      training_promoted: true
+      holdout_promoted: false
+      failed_holdout_gates: [spike count]
+    layer23_inhibitory_v1:
+      training_promoted: false
+      holdout_promoted: false
+      failed_training_gates: [spike count, first-spike latency]
+      failed_holdout_gates: [spike count, first-spike latency, adaptation ratio]
+  shared_survivals:
+    finite: all classes and all levels
+    resting_voltage: all classes pass within 2 mV
+    silent_levels: all classes preserve zero spikes at classic-silent levels
+
+decision:
+  matched_parameter_map_frozen: false
+  figure6_network_arms_authorized: false
+  downstream_network_protocols_authorized: false
+  next_phase: registered compartment and active-mechanism localization
+  rationale: >-
+    The preregistered progression rule requires every replaced cortical class
+    to pass both training and sealed holdout gates before any network run. Five
+    of seven classes fail, and one of the two nominal passes is silent across
+    all selected target levels. The exact alternative-HH arm therefore stops
+    at the isolated-cell gate without consulting SMART network behavior.
+
+interpretation:
+  supported: >-
+    This independently parameterized, morphology-preserving Pospischil-type
+    somatic HH family did not reproduce the registered classic isolated-cell
+    phenotype across cortical classes under the finite search and gates.
+  prohibited:
+    - claiming that conductance-based HH substitutions cannot preserve SMART
+    - claiming that ART requires the exact classic SMART neuron
+    - tuning the failed parameter map against Figure 6 or any later network outcome
+    - treating the silent layer-4 excitatory pass as evidence of spike-transfer equivalence
+
+alternative_network_outcomes_run_before_assessment: false

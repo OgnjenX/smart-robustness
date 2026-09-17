@@ -50,3 +50,16 @@ def test_alternative_hh_network_progression_is_strictly_staged() -> None:
     assert "stage-3" in progression["stage_4"]["rule"]
     assert study["structural_identity"]["any_other_difference_invalidates_arm"] is True
     assert "modern-anatomy changes" in study["prohibited"]
+
+
+def test_failed_isolated_gate_prohibits_alternative_hh_network_run() -> None:
+    assessment = _yaml(
+        "docs/validation-results/neuron-model-alternative-hh-isolated-fit-921.yaml"
+    )
+    assert assessment["execution"]["network_outcomes_used"] is False
+    assert assessment["execution"]["holdout_used_for_selection"] is False
+    assert assessment["assessment"]["every_cortical_class_promoted"] is False
+    assert assessment["assessment"]["promoted_class_count"] == 2
+    assert assessment["decision"]["matched_parameter_map_frozen"] is False
+    assert assessment["decision"]["figure6_network_arms_authorized"] is False
+    assert assessment["alternative_network_outcomes_run_before_assessment"] is False

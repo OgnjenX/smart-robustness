@@ -942,6 +942,21 @@ parameters:
     status: completed-partial-negative-controlled-comparison
     source: Artifact 911
     note: The matched arm retains positive top-down contrast in 18 of 20 trials but never passes relay selection/count, causal learning, or the full conjunction. No downstream match, mismatch, reset, or spectral protocol is authorized.
+  model.alternative_hh.phase1_intervention:
+    value: replace cortical somatic fast Na/K with a Pospischil-type Na/K/M conductance model while retaining SMART morphology, ports, dendritic currents, circuit, and protocols
+    status: preregistered-controlled-intervention-before-isolated-outcomes
+    source: Pospischil et al. 2008 doi:10.1007/s00422-008-0263-8; ADR 0005; Artifact 920
+    note: The source models are single-compartment cortical models. This arm deliberately retains SMART compartments and leak, so it is a morphology-preserving somatic mechanism substitution rather than a literal Pospischil cell reproduction.
+  model.alternative_hh.isolated_matching:
+    value: 256 deterministic Sobol points plus Pospischil RS/FS mean seeds per class; four classic-only-selected training levels and three sealed holdouts
+    status: completed-network-blind-fit-not-promoted
+    source: configs/models/alternative_hh_isolated_match_protocol_v1.yaml; Artifact 921
+    note: Five of seven cortical classes fail registered spike-count, latency, or adaptation gates. Layer 6ii excitatory passes an informative target; layer 4 excitatory passes only an all-silent target. No parameter map is frozen and no network arm is authorized.
+  model.alternative_hh.network_result:
+    value: not run because the isolated-cell prerequisite failed
+    status: prohibited-by-preregistered-progression-gate
+    source: configs/robustness/alternative_hh_phase1_v1.yaml; Artifact 921
+    note: The negative result applies to this finite source-backed family and search, not to all conductance-based HH neurons and not to the necessity of exact SMART kinetics.
   benchmark.population_sizes:
     value: see configs/*.yaml
     status: exploratory

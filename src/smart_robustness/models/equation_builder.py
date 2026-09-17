@@ -64,6 +64,7 @@ class CompiledCellEquations:
     ahp_ach_enabled: bool
     compartments: tuple[str, ...]
     axial_parameter_names: tuple[str, ...]
+    axial_topology_pairs: tuple[tuple[str, str], ...]
     synaptic_ports: tuple[SynapticPortSpec, ...]
     gap_junction_ports: tuple[GapJunctionPortSpec, ...]
     external_input_ports: tuple[ExternalInputPortSpec, ...]
@@ -274,6 +275,7 @@ def compile_cell_equations(
     depletion_recovery_ms: float | None = None,
     somatic_spike_model: str = "classic_hh",
     disabled_nak_compartments: frozenset[str] = frozenset(),
+    axial_topology_pairs: tuple[tuple[str, str], ...] | None = None,
 ) -> CompiledCellEquations:
     """Compile one source-specified cell; every ambiguous convention is required."""
 
@@ -360,7 +362,11 @@ def compile_cell_equations(
             raise ValueError("depletion epsilon and recovery must be supplied together")
         if not 0 <= depletion_epsilon <= 1 or depletion_recovery_ms <= 0:
             raise ValueError("invalid source-backed transmitter depletion parameters")
-    edges = () if len(cell.compartments) == 1 else build_axial_edges(cell, axial)
+    edges = (
+        ()
+        if len(cell.compartments) == 1
+        else build_axial_edges(cell, axial, topology_pairs=axial_topology_pairs)
+    )
     axial_terms: dict[str, list[str]] = {c.name: [] for c in cell.compartments}
     axial_parameters: list[str] = []
     for index, edge in enumerate(edges):
@@ -590,6 +596,10 @@ def compile_cell_equations(
         ahp_ach_enabled=enable_ahp_ach,
         compartments=tuple(c.name for c in cell.compartments),
         axial_parameter_names=tuple(axial_parameters),
+        axial_topology_pairs=tuple(
+            (edge.near.compartment_name, edge.far.compartment_name)
+            for edge in edges
+        ),
         synaptic_ports=synaptic_ports,
         gap_junction_ports=gap_junction_ports,
         external_input_ports=external_input_ports,

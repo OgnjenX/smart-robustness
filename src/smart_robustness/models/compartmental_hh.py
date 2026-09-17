@@ -328,6 +328,7 @@ def create_compartmental_hh_population(
         isinstance(name, str) for name in disabled_nak_compartments
     ):
         raise TypeError("disabled_nak_compartments must be a frozenset of names")
+    axial_topology_pairs = params.get("axial_topology_pairs")
     enable_ahp_ach = params["enable_ahp_ach"]
     if not isinstance(enable_ahp_ach, bool):
         raise TypeError("enable_ahp_ach must be an explicit bool")
@@ -363,6 +364,7 @@ def create_compartmental_hh_population(
         depletion_recovery_ms=depletion_recovery_ms,
         somatic_spike_model=somatic_spike_model,
         disabled_nak_compartments=disabled_nak_compartments,
+        axial_topology_pairs=axial_topology_pairs,
     )
     # Protocols can request a one-event somatic current pulse. The flag
     # defaults to zero, preserving sustained-current behavior exactly.
@@ -788,7 +790,15 @@ def create_compartmental_hh_population(
                     t_type_h_inf(calcium_voltage, calcium_gate),
                 )
 
-    axial_edges = () if len(cell.compartments) == 1 else build_axial_edges(cell, axial)
+    axial_edges = (
+        ()
+        if len(cell.compartments) == 1
+        else build_axial_edges(
+            cell,
+            axial,
+            topology_pairs=axial_topology_pairs,
+        )
+    )
     axial_edge_scales = params.get(
         "axial_edge_conductance_scales", (1.0,) * len(axial_edges)
     )

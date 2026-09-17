@@ -231,3 +231,78 @@ def test_kinness_serialized_edge_uses_child_connection_value_both_directions() -
     assert edge.conductance_into_near_nS == pytest.approx(edge.conductance_into_far_nS)
     near_current, far_current = edge.currents_pA(-70.0, -60.0)
     assert near_current == pytest.approx(-far_current)
+
+
+@pytest.mark.parametrize("convention", tuple(AxialConvention))
+def test_explicit_branched_tree_builds_registered_edges(
+    convention: AxialConvention,
+) -> None:
+    cell = CellSpec(
+        "branched",
+        (
+            _valid_compartment("soma"),
+            _valid_compartment("basal"),
+            _valid_compartment("apical"),
+            _valid_compartment("tuft"),
+        ),
+    )
+    topology = (
+        ("soma", "basal"),
+        ("soma", "apical"),
+        ("apical", "tuft"),
+    )
+    edges = build_axial_edges(cell, convention, topology_pairs=topology)
+    assert tuple(
+        (edge.near.compartment_name, edge.far.compartment_name)
+        for edge in edges
+    ) == topology
+    assert all(edge.conductance_into_near_nS > 0 for edge in edges)
+    assert all(edge.conductance_into_far_nS > 0 for edge in edges)
+
+
+@pytest.mark.parametrize(
+    ("topology", "error_type", "message"),
+    (
+        ((("soma", "basal"),), ValueError, "one fewer edge"),
+        (
+            (("soma", "basal"), ("soma", "missing"), ("apical", "tuft")),
+            ValueError,
+            "unknown compartments",
+        ),
+        (
+            (("soma", "soma"), ("soma", "apical"), ("apical", "tuft")),
+            ValueError,
+            "self edges",
+        ),
+        (
+            (("soma", "basal"), ("basal", "soma"), ("apical", "tuft")),
+            ValueError,
+            "duplicate edges",
+        ),
+    ),
+)
+def test_invalid_explicit_axial_trees_fail_loudly(
+    topology,
+    error_type,
+    message,
+) -> None:
+    cell = CellSpec(
+        "branched",
+        tuple(_valid_compartment(name) for name in ("soma", "basal", "apical", "tuft")),
+    )
+    with pytest.raises(error_type, match=message):
+        build_axial_edges(cell, "paper_literal", topology_pairs=topology)
+
+
+def test_disconnected_explicit_axial_tree_fails_loudly() -> None:
+    cell = CellSpec(
+        "branched",
+        tuple(_valid_compartment(name) for name in ("soma", "basal", "apical", "tuft")),
+    )
+    topology = (
+        ("soma", "basal"),
+        ("basal", "apical"),
+        ("apical", "soma"),
+    )
+    with pytest.raises(ValueError, match="connected tree"):
+        build_axial_edges(cell, "paper_literal", topology_pairs=topology)

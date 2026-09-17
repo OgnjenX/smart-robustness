@@ -58,3 +58,33 @@ def test_expanded_layer5_port_rule_was_amended_before_outcomes() -> None:
     assert amendment["reason"]["connected_network_outcomes_observed"] is False
     assert amendment["amended_rule"]["proximal_to_basal_scale"] == 2.0
     assert "conserved" in amendment["amended_rule"]["invariant"]
+
+
+def test_expanded_layer5_prechecks_authorize_only_figure6() -> None:
+    result = _yaml(
+        "docs/validation-results/mechanism-expanded-layer5-precheck-933.yaml"
+    )
+    assert result["raw_result"] == {
+        "path": "results/expanded-layer5-prechecks-933.yaml",
+        "sha256": (
+            "e8730f2bb6b18d5bc9c7a4d014b0b08f"
+            "c342316b0339d1fd215842f8c317bea5"
+        ),
+        "bytes": 7436,
+        "committed": "false-generated-result",
+    }
+    assert result["execution"]["connected_network_outcomes_observed"] is False
+    assert result["structural_assessment"]["changed_adapter_classes"] == [
+        "layer5_excitatory_v1"
+    ]
+    assert result["structural_assessment"][
+        "maximum_membrane_conservation_relative_error"
+    ] == 0.0
+    assert result["structural_assessment"][
+        "maximum_port_conservation_relative_error"
+    ] == 0.0
+    assert result["decision"] == {
+        "stage_1_pass": True,
+        "figure6_authorized": True,
+        "later_network_stages_authorized": False,
+    }

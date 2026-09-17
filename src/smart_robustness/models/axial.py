@@ -260,8 +260,9 @@ def _symmetric_cable_edge(
 def build_axial_edges(
     cell: CellSpec,
     convention: AxialConvention | str,
+    topology_pairs: tuple[tuple[str, str], ...] | None = None,
 ) -> tuple[AxialEdgeSpec, ...]:
-    """Build ordered adjacent-compartment edges for one SMART cell class."""
+    """Build axial edges from the default chain or an explicit tree."""
 
     resolved_convention = _coerce_convention(convention)
     if not isinstance(cell.name, str) or not cell.name.strip():
@@ -272,9 +273,57 @@ def build_axial_edges(
     names = tuple(compartment.name for compartment in cell.compartments)
     if len(names) != len(set(names)):
         raise ValueError(f"{cell.name}: compartment names must be unique")
+    by_name = {compartment.name: compartment for compartment in cell.compartments}
+    if topology_pairs is None:
+        compartment_pairs = tuple(pairwise(cell.compartments))
+    else:
+        if not isinstance(topology_pairs, tuple) or not all(
+            isinstance(pair, tuple)
+            and len(pair) == 2
+            and all(isinstance(name, str) and name for name in pair)
+            for pair in topology_pairs
+        ):
+            raise TypeError(
+                "topology_pairs must be a tuple of two-name compartment tuples"
+            )
+        if len(topology_pairs) != len(cell.compartments) - 1:
+            raise ValueError(
+                "explicit axial topology must contain one fewer edge than compartments"
+            )
+        unknown = {
+            name for pair in topology_pairs for name in pair if name not in by_name
+        }
+        if unknown:
+            raise ValueError(
+                f"explicit axial topology contains unknown compartments: {sorted(unknown)}"
+            )
+        if any(near == far for near, far in topology_pairs):
+            raise ValueError("explicit axial topology cannot contain self edges")
+        undirected = {frozenset(pair) for pair in topology_pairs}
+        if len(undirected) != len(topology_pairs):
+            raise ValueError("explicit axial topology cannot contain duplicate edges")
+        reached = {names[0]}
+        while True:
+            expanded = reached | {
+                far
+                for near, far in topology_pairs
+                if near in reached
+            } | {
+                near
+                for near, far in topology_pairs
+                if far in reached
+            }
+            if expanded == reached:
+                break
+            reached = expanded
+        if reached != set(names):
+            raise ValueError("explicit axial topology must be a connected tree")
+        compartment_pairs = tuple(
+            (by_name[near], by_name[far]) for near, far in topology_pairs
+        )
     if resolved_convention is AxialConvention.KINNESS_SERIALIZED_EDGE:
         edges: list[AxialEdgeSpec] = []
-        for near_compartment, far_compartment in pairwise(cell.compartments):
+        for near_compartment, far_compartment in compartment_pairs:
             # KInNeSS serializes ``inpResistance`` on the child compartment,
             # representing the parent-child connection rather than a root
             # membrane property. Use that one value in both current directions.
@@ -291,13 +340,16 @@ def build_axial_edges(
             )
             edges.append(_kinness_edge(cell.name, near, far))
         return tuple(edges)
-    endpoints = tuple(
-        _endpoint(compartment, f"{cell.name}.{compartment.name or '<unnamed>'}")
-        for compartment in cell.compartments
-    )
-
     edges: list[AxialEdgeSpec] = []
-    for near, far in pairwise(endpoints):
+    for near_compartment, far_compartment in compartment_pairs:
+        near = _endpoint(
+            near_compartment,
+            f"{cell.name}.{near_compartment.name or '<unnamed>'}",
+        )
+        far = _endpoint(
+            far_compartment,
+            f"{cell.name}.{far_compartment.name or '<unnamed>'}",
+        )
         if resolved_convention is AxialConvention.PAPER_LITERAL:
             edges.append(_paper_literal_edge(cell.name, near, far))
         elif resolved_convention is AxialConvention.SYMMETRIC_CABLE:

@@ -1,0 +1,64 @@
+schema_version: 1
+artifact_id: 933
+artifact_type: pre-network-structural-and-isolated-assessment
+name: expanded-layer5-branched-prechecks
+date: 2026-09-17
+status: completed-passed-network-outcomes-still-sealed
+
+raw_result:
+  path: results/expanded-layer5-prechecks-933.yaml
+  sha256: e8730f2bb6b18d5bc9c7a4d014b0b08fc342316b0339d1fd215842f8c317bea5
+  bytes: 7436
+  committed: false-generated-result
+
+execution:
+  study: configs/robustness/expanded_layer5_branched_v1.yaml
+  registration: docs/validation-results/mechanism-expanded-layer5-registration-932.yaml
+  port_amendment: docs/validation-results/mechanism-expanded-layer5-port-amendment-932a.yaml
+  runner: scripts/run_expanded_layer5_prechecks.py
+  control_manifest: configs/baselines/classic_smart_calibrated_v1.yaml
+  control_manifest_fingerprint: 992fdd7c3bc9fa0f0d385b9e5a58ba317599357ca377145aba6f01c80d631cd2
+  runtime_fingerprint: 7e654528a99f0b25b7148260a8d52021f6443fb992b210729a2475ae3cfcdaa4
+  connected_network_outcomes_observed: false
+  compensation_or_refitting_used: false
+
+structural_assessment:
+  source_compartments: [soma, proximal_dendrite, distal_dendrite]
+  expanded_compartments: [soma, basal_dendrite, proximal_apical_dendrite, distal_tuft]
+  observed_tree:
+    - [soma, basal_dendrite]
+    - [soma, proximal_apical_dendrite]
+    - [proximal_apical_dendrite, distal_tuft]
+  observed_tree_matches_registration: true
+  relative_tolerance: 1.0e-12
+  maximum_membrane_conservation_relative_error: 0.0
+  maximum_port_conservation_relative_error: 0.0
+  invariants_passed:
+    - total membrane area and capacitance
+    - total leak, fast-Na, delayed-rectifier-K, and T-type-Ca maximum conductance
+    - each chemical receptor, external-input, injection, and executable gap port independently
+  adapter_manifests_checked: 12
+  changed_adapter_classes: [layer5_excitatory_v1]
+  all_other_adapter_manifests_identical: true
+
+isolated_assessment:
+  protocol: >-
+    Fixed 0, 500, and 1500 pA probes applied separately to the soma and to the
+    original distal dendrite or registered distal tuft, with 20 ms pre-step
+    and 30 ms step at dt=0.02 ms.
+  classic_control_soma_and_distal_finite: true
+  expanded_layer5_soma_and_tuft_finite: true
+  fitting_or_selection_performed: false
+  note: >-
+    Spike counts and voltage extrema are descriptive viability outputs only.
+    They did not select or alter morphology, coupling, ports, or network values.
+
+decision:
+  stage_1_pass: true
+  figure6_authorized: true
+  later_network_stages_authorized: false
+
+interpretation_boundary:
+  - Passing this stage establishes a well-formed conserved intervention, not behavioral survival.
+  - Figure 6 must pass in two exact control and intervention repeats before Figure 7 or Figure 10 may run.
+  - The intervention remains an exploratory equal-area aggregate morphology, not a claim about a biological layer-5 subtype.

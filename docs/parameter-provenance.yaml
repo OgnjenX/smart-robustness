@@ -967,6 +967,11 @@ parameters:
     status: completed-figure7-exact-failure-arm-closed
     source: configs/robustness/cortical_point_hh_conserved_v1.yaml; Artifacts 927--930
     note: All conservation and isolated checks pass, and two exact point-HH Figure 6 repeats pass all six gates without fitting. Two exact Figure 7 repeats preserve relay match/mismatch structure and 7 mismatch nonspecific events but give 5 rather than 4 match events and reverse the required TRN-to-nonspecific GABA integral direction. Figure 10 and spectra are prohibited by the stopping rule. This is quantitative failure with a surviving coarse match/mismatch contrast.
+  mechanism.expanded_layer5.branched_conserved:
+    value: split the passive proximal layer-5 compartment equally into basal and proximal-apical branches, retain the original soma and distal active membrane as the distal tuft, and recompute axial coupling on the preregistered tree
+    status: completed-pre-network-checks-figure6-authorized
+    source: configs/robustness/expanded_layer5_branched_v1.yaml; Artifacts 931--933
+    note: The split is an exploratory symmetry rule, not a literature-fitted morphology. Area, capacitance, intrinsic-channel maxima, and every port total are conserved exactly; only the layer-5 adapter manifest changes; isolated soma and distal probes remain finite. No connected-network result has yet been observed.
   benchmark.population_sizes:
     value: see configs/*.yaml
     status: exploratory

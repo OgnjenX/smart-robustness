@@ -1,0 +1,54 @@
+schema_version: 1
+artifact_id: 926
+artifact_type: intervention-identity-audit
+name: cortical-dendrite-passivization-alias-audit
+date: 2026-09-17
+status: completed-exact-alias-no-duplicate-run
+
+question: >-
+  Is the planned all-cortical-dendrite passivization a distinct intervention
+  from the completed layer-5 distal fast-Na/K ablation?
+
+source_catalog:
+  source: ModelDB 112923 SMART.nml transcription in modeldb112923.py
+  cortical_cell_classes: 7
+  nonsomatic_compartments_with_fast_na_or_delayed_rectifier_k:
+    - cell_class: layer5_excitatory_v1
+      compartment: distal_dendrite
+      sodium_density_mS_cm2: 50.0
+      potassium_density_mS_cm2: 30.0
+  nonsomatic_compartments_with_other_active_intrinsic_currents: []
+  already_passive_nonsomatic_compartments:
+    layer5_excitatory_v1: [proximal_dendrite]
+    layer6ii_excitatory_v1: [proximal_dendrite, distal_dendrite]
+    layer6i_excitatory_v1: [proximal_dendrite]
+    layer4_inhibitory_v1: [proximal_dendrite]
+    layer23_excitatory_v1: [proximal_dendrite]
+    layer4_excitatory_v1: [proximal_dendrite]
+    layer23_inhibitory_v1: [proximal_dendrite]
+
+identity_result:
+  all_cortical_dendrites_passive_manipulation: >-
+    disable fast Na/K in layer5_excitatory_v1 distal_dendrite
+  completed_layer5_distal_nak_manipulation: >-
+    disable fast Na/K in layer5_excitatory_v1 distal_dendrite
+  manipulated_variables_identical: true
+  added_or_removed_variables_beyond_artifacts_923_925: []
+
+decision:
+  duplicate_network_run_authorized: false
+  reuse_completed_evidence: true
+  evidence:
+    - docs/validation-results/mechanism-layer5-distal-nak-precheck-923.yaml
+    - docs/validation-results/mechanism-layer5-distal-nak-figure6-assessment-924.yaml
+    - docs/validation-results/mechanism-layer5-distal-nak-stage3-assessment-925.yaml
+  next_distinct_intervention: conserved point-HH cortical collapse
+  rationale: >-
+    Repeating an identical executable manipulation under a broader label would
+    add no independent evidence and could falsely inflate confidence.
+
+interpretation_boundary:
+  - This identity is specific to the recovered SMART cortical cell catalog.
+  - It does not claim that biological cortical dendrites lack other active currents.
+  - It does not replace the later modern active-apical-integration study.
+

@@ -123,6 +123,7 @@ reporting:
 
 authorization:
   amendment: docs/validation-results/post2008-active-apical-feedback-routing-amendment-945a.yaml
+  execution_environment_block: docs/validation-results/post2008-active-apical-feedback-routing-block-945b.yaml
   structural_precheck: true
   network_execution: conditional-on-passing-precheck-946
   active_nmda_arm: false

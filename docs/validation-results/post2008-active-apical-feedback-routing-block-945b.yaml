@@ -1,0 +1,48 @@
+schema_version: 1
+artifact_id: 945b
+artifact_type: pre-outcome-execution-environment-block
+name: active-apical-feedback-cpp-standalone-compiler-license-block
+date: 2026-09-18
+status: blocked-before-network-integration
+
+registration: docs/validation-results/post2008-active-apical-feedback-routing-registration-945.yaml
+runner: scripts/run_active_apical_feedback_routing.py
+
+failure:
+  phase: brian2-cpp-standalone-before-run-code-generation
+  exception: NotImplementedError-exprel-needs-C99-compiler-support
+  root_cause: macos-xcode-license-not-accepted
+  compiler_commands_affected: [/usr/bin/clang, /usr/bin/clang++, /usr/bin/cc, /usr/bin/c++]
+  diagnostic: >-
+    Compiler invocations return that the Xcode license agreements have not
+    been accepted, so Brian2 cannot verify or use C99/C++ support for exprel.
+  network_objects_constructed: true
+  integration_started: false
+  network_outcome_observed: false
+  raw_checkpoint_written: false
+
+scientific_integrity:
+  model_or_protocol_changed: false
+  arm_grid_changed: false
+  metrics_or_gates_changed: false
+  outcome_guided_tuning_occurred: false
+  frozen_classic_baseline_modified: false
+
+recovery:
+  preferred_action: accept-the-installed-Xcode-license
+  user_command: sudo xcodebuild -license accept
+  then_resume_command: >-
+    MPLCONFIGDIR=/private/tmp/mpl .venv/bin/python
+    scripts/run_active_apical_feedback_routing.py
+    --output results/active-apical-feedback-routing-947.yaml
+  concurrency_rule: confirm-no-identical-runner-before-resume
+  alternative_not_selected: >-
+    Switching to Brian2 numpy runtime would alter the preregistered execution
+    backend and make the ten full two-second, 0.01-ms-step two-area runs much
+    slower; it is not justified while the installed compiler only needs its
+    system license accepted.
+
+decision:
+  scientific_registration_remains_binding: true
+  rerun_after_environment_repair_authorized: true
+  user_action_required: true

@@ -1,0 +1,229 @@
+{
+  "schema_version": 1,
+  "artifact_id": 952,
+  "artifact_type": "isolated-active-apical-assessment",
+  "date": "2026-09-19",
+  "status": "completed-isolated-mapping-not-promoted",
+  "raw_result": {
+    "path": "results/active-apical-isolated-951.yaml",
+    "sha256": "beddb8752e0ef03a839f35f05fe8d6cce2acaa03788e99f54c9b277123e6d296",
+    "bytes": 207293,
+    "archive_directory": "results/active-apical-isolated-951",
+    "archives": [
+      {
+        "file": "reference-rest.npz",
+        "sha256": "94009f2fca61979491eefbae4807a0b1733ced3cdfa04d36a50e0d869f20209e"
+      },
+      {
+        "file": "classic_ampa-dt0.01-repeat0.npz",
+        "sha256": "28f5368f8e59133d493820f79add430c757c616635492dbaf5b6f28a9e92cecb"
+      },
+      {
+        "file": "classic_ampa-dt0.01-repeat1.npz",
+        "sha256": "28f5368f8e59133d493820f79add430c757c616635492dbaf5b6f28a9e92cecb"
+      },
+      {
+        "file": "classic_ampa-dt0.005-repeat0.npz",
+        "sha256": "827cd5f5e0b2b166f194b6e1cdf05136c572a385b1c8eb13657f5d48ebe6f507"
+      },
+      {
+        "file": "classic_ampa-dt0.005-repeat1.npz",
+        "sha256": "827cd5f5e0b2b166f194b6e1cdf05136c572a385b1c8eb13657f5d48ebe6f507"
+      },
+      {
+        "file": "mixed_rest_block-dt0.01-repeat0.npz",
+        "sha256": "32bcaf82b5b48dd0fc7bcde1dc1381aa3531ee6f20adbc24b38dbebaa57f08d3"
+      },
+      {
+        "file": "mixed_rest_block-dt0.01-repeat1.npz",
+        "sha256": "32bcaf82b5b48dd0fc7bcde1dc1381aa3531ee6f20adbc24b38dbebaa57f08d3"
+      },
+      {
+        "file": "mixed_rest_block-dt0.005-repeat0.npz",
+        "sha256": "ad9757964d175a8ef26768af30b7c1279a391ff1c96ac6a5f93da3f5c96f3e0b"
+      },
+      {
+        "file": "mixed_rest_block-dt0.005-repeat1.npz",
+        "sha256": "ad9757964d175a8ef26768af30b7c1279a391ff1c96ac6a5f93da3f5c96f3e0b"
+      },
+      {
+        "file": "mixed_active_block-dt0.01-repeat0.npz",
+        "sha256": "dc06cf06ad7cbe7261d5e31a42f0e7b1df012bfdcf8e2d6e07d3a61087eaa778"
+      },
+      {
+        "file": "mixed_active_block-dt0.01-repeat1.npz",
+        "sha256": "dc06cf06ad7cbe7261d5e31a42f0e7b1df012bfdcf8e2d6e07d3a61087eaa778"
+      },
+      {
+        "file": "mixed_active_block-dt0.005-repeat0.npz",
+        "sha256": "47d1d9c37971e1f3dbfa1b48342f734c57363087697811124c12eec4cd4ef801"
+      },
+      {
+        "file": "mixed_active_block-dt0.005-repeat1.npz",
+        "sha256": "47d1d9c37971e1f3dbfa1b48342f734c57363087697811124c12eec4cd4ef801"
+      }
+    ],
+    "committed": false
+  },
+  "provenance": {
+    "seal_sha256": "3cecda10d77939fdad2e32d5c140c68d79e65fc023bddbcdf1244fb2bf78a482",
+    "baseline_manifest_fingerprint": "992fdd7c3bc9fa0f0d385b9e5a58ba317599357ca377145aba6f01c80d631cd2",
+    "runtime_fingerprint": "7e654528a99f0b25b7148260a8d52021f6443fb992b210729a2475ae3cfcdaa4",
+    "python": "3.11.9",
+    "platform": "macOS-27.0-arm64-arm-64bit",
+    "brian2": "2.9.0",
+    "numpy": "1.26.4",
+    "scipy": "1.17.1",
+    "execution_seal": "docs/validation-results/post2008-active-apical-isolated-implementation-seal-950a.yaml",
+    "design": "docs/validation-results/post2008-active-apical-integration-design-registration-949.yaml",
+    "execution_commit": "f9e59a7",
+    "process_exit_code": 0,
+    "network_outcome_used_for_parameter_selection": false
+  },
+  "verification": {
+    "raw_archives": 13,
+    "stimulated_runs": 12,
+    "cases_per_run": 24,
+    "all_raw_trace_fingerprints_checked": true,
+    "all_numeric_response_arrays_finite": true,
+    "all_six_raw_repeat_pairs_exact": true,
+    "independent_raw_recalculation": "Recomputed all soma/proximal/distal absolute peaks and positive areas, soma event counts, and all active paired-area excess values; checked every recorded repeat array, dtype and shape.",
+    "remaining_scope": "The numerical timestep checks are as preregistered; deterministic repeats are not independent biological samples. No additional network outcomes generated."
+  },
+  "registered_assessment": {
+    "exact_raw_repeats": {
+      "classic_ampa-dt0.01": true,
+      "classic_ampa-dt0.005": true,
+      "mixed_rest_block-dt0.01": true,
+      "mixed_rest_block-dt0.005": true,
+      "mixed_active_block-dt0.01": true,
+      "mixed_active_block-dt0.005": true
+    },
+    "numerical_gates": {
+      "classic_ampa": {
+        "pass": true,
+        "failures": []
+      },
+      "mixed_rest_block": {
+        "pass": true,
+        "failures": []
+      },
+      "mixed_active_block": {
+        "pass": true,
+        "failures": []
+      }
+    },
+    "mechanism_points_by_dt": {
+      "0.01": [],
+      "0.005": []
+    },
+    "shared_mechanism_points": [],
+    "all_run_rest_checks_pass": true,
+    "isolated_promotion_gates_pass": false,
+    "boundary": "engineering seal and independent assessment required before network registration"
+  },
+  "paired_input_diagnostics": [
+    {
+      "dt_ms": 0.01,
+      "drive_factor": 0.25,
+      "active_distal_area_mV_ms": 316.0589009292597,
+      "fixed_distal_area_mV_ms": 316.6233278415649,
+      "active_minus_fixed_mV_ms": -0.5644269123051799,
+      "active_paired_area_excess_mV_ms": -355.0611067376226
+    },
+    {
+      "dt_ms": 0.01,
+      "drive_factor": 0.5,
+      "active_distal_area_mV_ms": 440.02993600744514,
+      "fixed_distal_area_mV_ms": 435.68433047755366,
+      "active_minus_fixed_mV_ms": 4.345605529891486,
+      "active_paired_area_excess_mV_ms": -238.34925853086747
+    },
+    {
+      "dt_ms": 0.01,
+      "drive_factor": 1,
+      "active_distal_area_mV_ms": 589.9167708978356,
+      "fixed_distal_area_mV_ms": 589.5753637235312,
+      "active_minus_fixed_mV_ms": 0.341407174304436,
+      "active_paired_area_excess_mV_ms": -194.47360096885677
+    },
+    {
+      "dt_ms": 0.01,
+      "drive_factor": 2,
+      "active_distal_area_mV_ms": 928.3492792167976,
+      "fixed_distal_area_mV_ms": 911.2919703549798,
+      "active_minus_fixed_mV_ms": 17.057308861817887,
+      "active_paired_area_excess_mV_ms": -390.2628113350702
+    },
+    {
+      "dt_ms": 0.01,
+      "drive_factor": 4,
+      "active_distal_area_mV_ms": 1202.6002956541843,
+      "fixed_distal_area_mV_ms": 1326.013405741481,
+      "active_minus_fixed_mV_ms": -123.41311008729667,
+      "active_paired_area_excess_mV_ms": -333.05479797181033
+    },
+    {
+      "dt_ms": 0.005,
+      "drive_factor": 0.25,
+      "active_distal_area_mV_ms": 316.0566847557071,
+      "fixed_distal_area_mV_ms": 316.6242245351545,
+      "active_minus_fixed_mV_ms": -0.5675397794473724,
+      "active_paired_area_excess_mV_ms": -355.06066874249564
+    },
+    {
+      "dt_ms": 0.005,
+      "drive_factor": 0.5,
+      "active_distal_area_mV_ms": 440.01247576383724,
+      "fixed_distal_area_mV_ms": 435.69131762077,
+      "active_minus_fixed_mV_ms": 4.321158143067237,
+      "active_paired_area_excess_mV_ms": -238.36540659417875
+    },
+    {
+      "dt_ms": 0.005,
+      "drive_factor": 1,
+      "active_distal_area_mV_ms": 589.9110481227134,
+      "fixed_distal_area_mV_ms": 589.5718491057602,
+      "active_minus_fixed_mV_ms": 0.3391990169532164,
+      "active_paired_area_excess_mV_ms": -194.4655811756079
+    },
+    {
+      "dt_ms": 0.005,
+      "drive_factor": 2,
+      "active_distal_area_mV_ms": 928.360713687609,
+      "fixed_distal_area_mV_ms": 911.2918901406196,
+      "active_minus_fixed_mV_ms": 17.068823546989393,
+      "active_paired_area_excess_mV_ms": -390.2965591839295
+    },
+    {
+      "dt_ms": 0.005,
+      "drive_factor": 4,
+      "active_distal_area_mV_ms": 1202.5941829305955,
+      "fixed_distal_area_mV_ms": 1326.0258013051437,
+      "active_minus_fixed_mV_ms": -123.43161837454818,
+      "active_paired_area_excess_mV_ms": -333.0489795154342
+    }
+  ],
+  "conclusion": {
+    "promotion": false,
+    "reason": "Every nonzero drive point has negative paired-input distal area excess at both timesteps. None meets the joint effect-size and positive-excess criterion; the active-minus-fixed area change is also below the registered 5-percent increase at all tested points.",
+    "supported": "The specified 80/20 receptor mapping into the classic lumped distal compartment does not establish the registered cooperative apical integration phenotype.",
+    "not_supported": [
+      "NMDA current has no effect",
+      "Active dendrites cannot contribute to cortical feedback",
+      "ART requires a particular neuron family",
+      "A negative isolated assay proves failure of ART resonance or reset",
+      "The full active-apical or contemporary-anatomy program is complete"
+    ],
+    "representation_limit": "The retained classic distal Na/K mechanism, lumped morphology and rest-referenced mixed conductance are a particular mapping. Branch-specific tuft calcium events, L5 IT subtype geometry, and inhibitory context remain unrepresented.",
+    "no_postoutcome_changes": "Do not change the mixture, receptor strengths, input grid or threshold to rescue this sealed mapping.",
+    "historical_baseline": "Unchanged calibrated behavioral reconstruction; Figure-8 source/runtime boundary and Figure-15 numeric mismatch remain."
+  },
+  "next": {
+    "active_network_run_authorized": false,
+    "close_this_mapping_as": "not-promoted-under-isolated-contract",
+    "phase5_status": "incomplete-at-program-level; aggregate NMDA mapping assessed, broader branch-resolved mechanism and context endpoints remain untested",
+    "allowed_followup": "Continue the preregistered program with an independent source audit of the next anatomy module; any further apical model requires a separately justified design, not a rescue fit.",
+    "multi_seed_and_interactions": "Not completed; do not use this unpromoted mapping as a validated active-dendrite module."
+  }
+}

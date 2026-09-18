@@ -1,0 +1,64 @@
+schema_version: 1
+artifact_id: 954
+artifact_type: source-and-runtime-audit-addendum
+date: 2026-09-19
+predecessor: docs/validation-results/post2008-pulvinar-source-audit-953.yaml
+status: pathway-identity-and-delay-boundaries-verified
+network_execution_authorized: false
+frozen_baseline_modified: false
+
+primary_evidence:
+  citation: Kirchgessner, Franklin and Callaway (2021), Current Biology 31, 5121-5137.e7
+  doi: 10.1016/j.cub.2021.09.025
+  url: https://pubmed.ncbi.nlm.nih.gov/34614389/
+  accessed_scope: abstract-and-figure-captions
+  preparation: awake-mouse-V1-dLGN-pulvinar
+  supported:
+    - V1 L5 inactivation reduced pulvinar visual responses; V1 L6 did not have the same driving role.
+    - Both pathways supplied retinotopic baseline excitation.
+    - Superior-colliculus inactivation also suppressed visual responses in the investigated pulvinar subregion.
+  limits:
+    - This evidence does not identify SMART synaptic conductance, delay or short-term-plasticity constants.
+    - The tested L6 source is V1, not the higher visual area represented by SMART V2.
+    - Population inactivation is not equivalent to selectively disabling a single modeled synapse class.
+    - No independent quantitative transfer-function fit or model intervention is authorized by this audit.
+  access_note: >-
+    The prior full-text access limitation in audit953 remains historical fact.
+    This addendum uses the separately accessible PubMed abstract and captions;
+    it does not claim a completed full-text or data reanalysis.
+
+catalog_identity_check:
+  source: src/smart_robustness/modeldb_projections.py
+  catalog: MODELDB_FULL
+  target: thalamic_relay_v2
+  complete_incoming_record_numbers: [62, 63, 64, 65, 66, 67, 68, 69, 70]
+  v1_l5_record_numbers: [65]
+  v2_l6ii_record_numbers: [66, 68, 69, 70]
+  v1_l6_records: []
+  consequence: >-
+    Do not relabel existing V2 L6 feedback as the V1 L6 pathway tested in this
+    source. Adding V1 L6 input would be a distinct anatomical intervention,
+    requiring its own source mapping, controls and seal. It must not silently
+    replace existing V2 feedback or simultaneously introduce collicular input.
+
+figure16_runtime_delay_check:
+  source: src/smart_robustness/validation/higher_order.py
+  function: apply_figure16_inter_area_delay
+  affected_record: modeldb112923.projection.089
+  pathway: V1-layer23-to-V2-layer4-excitatory
+  catalog_delay_ms: 5.0
+  default_protocol_delay_ms: 10.0
+  scope: runtime-protocol-override-only
+  unaffected_control_record: modeldb112923.projection.081
+  unaffected_control_delay_ms: 1.0
+  test: tests/test_higher_order_validation.py::test_figure16_delay_override_changes_only_named_feedforward_pathway
+  interpretation: >-
+    Future delay comparisons must describe the instantiated Figure16 delay,
+    not only the serialized catalog. The override is a classic protocol
+    convention, not a new estimate from the 2021 physiological evidence.
+
+remaining_work:
+  - Independently source quantitative visual corticothalamic dynamics and termination mapping.
+  - Select one species/area stratum and one anatomical intervention before simulation.
+  - Preregister source-mapped inputs, pathway controls and encoding versus coordination endpoints.
+  - Keep the unfinished active-apical questions and subsequent anatomy phases explicitly open.

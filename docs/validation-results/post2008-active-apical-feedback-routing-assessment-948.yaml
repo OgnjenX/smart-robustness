@@ -1,0 +1,165 @@
+schema_version: 1
+artifact_id: 948
+artifact_type: sealed-active-apical-feedback-routing-assessment
+name: active-apical-feedback-conductance-only-routing-v1
+date: 2026-09-19
+status: completed-discrete-grid-survival-with-nonmonotonic-band-sensitivity
+
+raw_result:
+  path: results/active-apical-feedback-routing-947.yaml
+  sha256: 6b3f51f881bc7ca6a3bc76392d144ec324725d9d6269973f2363d4546bf79640
+  bytes: 13698
+  committed: false-generated-result
+  retention_boundary: >-
+    This file retains summary measurements, not the simulated field time series.
+    Exact repetition means equality of every recorded outcome field except the
+    repetition index; it does not establish bitwise equality of raw waveforms.
+
+execution:
+  commit_at_completion: b651471b6a64b3703e21020991d3505c423843c2
+  registration: docs/validation-results/post2008-active-apical-feedback-routing-registration-945.yaml
+  registration_sha256: 23a3cac4405938556ad9a49f1b9a7855468113517adca50e9722a171632431b3
+  study: configs/robustness/active_apical_feedback_routing_v1.yaml
+  runner: scripts/run_active_apical_feedback_routing.py
+  structural_precheck: docs/validation-results/post2008-active-apical-feedback-routing-precheck-946.yaml
+  baseline_manifest: configs/baselines/classic_smart_calibrated_v1.yaml
+  baseline_manifest_fingerprint: 992fdd7c3bc9fa0f0d385b9e5a58ba317599357ca377145aba6f01c80d631cd2
+  runtime_fingerprint: 7e654528a99f0b25b7148260a8d52021f6443fb992b210729a2475ae3cfcdaa4
+  python: 3.11.9
+  brian2: 2.9.0
+  numpy: 1.26.4
+  scipy: 1.17.1
+  platform: macOS-27.0-arm64-arm-64bit
+  backend: cpp-standalone
+  geometry_seeds: [16, 17]
+  exact_repetitions_per_arm: 2
+  total_completed_outcomes: 10
+  fresh_figure6_prerequisite: all-six-gates-pass
+  process_exit_code: 0
+  parameter_selection_or_compensation_from_network_outcomes: false
+
+verification:
+  all_registered_arms_present_in_order: true
+  two_outcomes_per_arm_with_indices_0_and_1: true
+  all_recorded_outcomes_exactly_repeated: true
+  sealed_source_study_test_and_registration_hashes_verified: true
+  source_audit_hash_verified: true
+  frozen_manifest_and_runtime_fingerprints_verified: true
+  band_order_matches_registration: true
+  all_recorded_peaks_and_lags_finite: true
+  strongest_band_and_ratios_independently_recomputed_from_saved_peaks: true
+  pass_flags_independently_recomputed_from_saved_metrics: true
+  waveform_finiteness_independently_recomputed: false
+  waveform_finiteness_evidence: runner-recorded-flags-only
+  focused_tests:
+    command: MPLCONFIGDIR=/private/tmp/mpl .venv/bin/python -m pytest tests/test_active_apical_feedback.py -q
+    passed: 13
+    warnings: 2960
+    warning_type: Brian2-Pyparsing-deprecation-warnings
+    elapsed_seconds: 26.81
+  full_ci_reverified_for_this_assessment: false
+  scope: >-
+    Recalculation verifies the summary arithmetic, gate conjunctions, repetition
+    equality, and provenance. It cannot independently validate filtering or
+    correlations from discarded time series. Structural behavior is additionally
+    covered by the sealed precheck and focused tests, not inferred from a pass flag.
+
+measurement_columns:
+  bands_hz: [[2.0, 4.0], [4.0, 8.0], [8.0, 12.0], [12.0, 20.0], [20.0, 100.0]]
+  band_pairs: [peak_absolute_normalized_correlation, peak_lag_ms]
+  gates: [exactly_1000_recording_samples, v1_and_v2_fields_finite, lower_frequency_stronger_than_gamma, strongest_band_remains_2_4_hz]
+  topology: [edge_count, source_row_sum_min, source_row_sum_max, center_factor_at_source40, nearest_surround_factor_at_source40]
+
+arms:
+  - offset_route_fraction: 0.0
+    exact_recorded_repeat: true
+    gates: [true, true, true, true]
+    classification: contemporaneous-control-pass
+    strongest_band_hz: [2.0, 4.0]
+    lower_frequency_to_gamma_peak_ratio: 4.824418111857828
+    band_pairs: [[0.9998461316639192, -473.0], [0.7930001225698665, 384.0], [0.48429954659067853, -351.0], [0.415259756489114, -149.0], [0.20724698989219445, -488.0]]
+    source_row_sums_equal_control: true
+    topology: [729, 1.6146036885013872, 1.6146036885013877, 1.0, 0.1353352832366127]
+  - offset_route_fraction: 0.25
+    exact_recorded_repeat: true
+    gates: [true, true, true, false]
+    classification: breaks-registered-four-gate-conjunction
+    strongest_band_hz: [4.0, 8.0]
+    lower_frequency_to_gamma_peak_ratio: 3.339221321337264
+    band_pairs: [[0.7389188563649287, -163.0], [0.8489197068657375, 466.0], [0.7303657226492483, 18.0], [0.7110670858622843, -53.0], [0.2542268466726755, -399.0]]
+    source_row_sums_equal_control: true
+    topology: [1701, 1.6146036885013872, 1.614603688501388, 0.75, 0.18009759207327292]
+  - offset_route_fraction: 0.5
+    exact_recorded_repeat: true
+    gates: [true, true, true, true]
+    classification: weakens-without-breaking-registered-phenotype
+    strongest_band_hz: [2.0, 4.0]
+    lower_frequency_to_gamma_peak_ratio: 4.518497820721947
+    band_pairs: [[0.9547317981630636, 265.0], [0.7320663050195154, -76.0], [0.730040296457139, 192.0], [0.46492312760082255, -312.0], [0.21129407073842973, 292.0]]
+    source_row_sums_equal_control: true
+    topology: [1701, 1.6146036885013872, 1.614603688501388, 0.5, 0.22485990090993316]
+  - offset_route_fraction: 0.75
+    exact_recorded_repeat: true
+    gates: [true, true, true, true]
+    classification: weakens-without-breaking-registered-phenotype
+    strongest_band_hz: [2.0, 4.0]
+    lower_frequency_to_gamma_peak_ratio: 4.176057591109348
+    band_pairs: [[0.9589316230867942, 160.0], [0.6848492053075793, -390.0], [0.8897875792211682, 211.0], [0.33450675114542144, 126.0], [0.22962605332079697, -230.0]]
+    source_row_sums_equal_control: true
+    topology: [1701, 1.6146036885013872, 1.614603688501388, 0.25, 0.26962220974659334]
+  - offset_route_fraction: 1.0
+    exact_recorded_repeat: true
+    gates: [true, true, true, true]
+    classification: weakens-without-breaking-registered-phenotype
+    strongest_band_hz: [2.0, 4.0]
+    lower_frequency_to_gamma_peak_ratio: 4.000487780355055
+    band_pairs: [[0.935457914292859, 356.0], [0.7958281799779741, 106.0], [0.7367644993186951, -82.0], [0.619985772827411, 39.0], [0.2338359634258986, 499.0]]
+    source_row_sums_equal_control: true
+    topology: [1620, 1.614603688501387, 1.614603688501388, 0.0, 0.3143845185832536]
+
+conclusions:
+  registered_existence_hypothesis_supported: true
+  passing_nonzero_grid_points: [0.5, 0.75, 1.0]
+  strengthening_grid_points: []
+  failed_grid_points: [0.25]
+  interpretation: >-
+    Three nonzero grid points preserve the four registered higher-order gates,
+    but all have a lower low-frequency-to-gamma correlation ratio than control.
+    The 0.25 point preserves low-frequency dominance but shifts the strongest
+    band to 4-8 Hz. This is nonmonotonic sensitivity of the strict band criterion,
+    not evidence that ART resonance/reset disappears. No continuous survival
+    interval, improvement, or compensation has been established.
+  input_matching_boundary: >-
+    Conserved source-row sums match initial available feedback weight, not
+    realized synaptic current, recipient input history, or final learned weights.
+  temporal_boundary: >-
+    Correlations use a one-second recording and broad lag search. Several peaks
+    approach the lag boundary, including the 100-percent gamma peak at 499 ms.
+    Peaks are descriptive endpoints, not conduction delays or causal direction.
+  scientific_scope: >-
+    This is a deterministic, single geometry-seed-pair routing sensitivity study
+    in a calibrated reconstruction. Exact repeats are not independent seeds or
+    statistical replication. The additional 2-4-Hz preservation gate is a study
+    criterion, not proof of complete original SMART or modern mouse physiology.
+    First-order ART learning/mismatch/reset circuits do not contain this V2 route;
+    their structural invariance is not a new behavioral test of the intervention.
+  not_tested:
+    - active NMDA or calcium-mediated apical integration
+    - branch-specific tuft events or aligned suppression through inhibitory classes
+    - retinotopic-context somatic output, dendritic events, gamma, and false resonance
+    - independent seed sets or other parameter mappings
+    - interaction with direct thalamic L5 input or any other modern-anatomy module
+  retained_historical_limits:
+    - Figure-8 source/runtime boundary
+    - Figure-15 numerical 44-Hz target failure
+
+next_step:
+  action: independently-preregister-active-apical-integration-and-isolated-cell-gates
+  routing_selection: preserve-the-entire-sealed-grid-do-not-select-only-passing-points
+  network_execution_authorized_by_this_assessment: false
+  prerequisites:
+    - source-backed active mechanism and isolated transfer/rejection criteria
+    - matched conductance-only controls and structural fingerprints
+    - seal implementation and all network endpoints before opening active-arm outcomes
+    - preserve frozen baseline and do not combine modern-anatomy modules
+  full_phase5_complete: false

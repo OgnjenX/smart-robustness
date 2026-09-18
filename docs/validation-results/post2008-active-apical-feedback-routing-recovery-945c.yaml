@@ -1,0 +1,43 @@
+schema_version: 1
+artifact_id: 945c
+artifact_type: execution-environment-recovery
+name: active-apical-feedback-cpp-standalone-compiler-recovery
+date: 2026-09-18
+status: compiler-recovery-verified-study-running
+
+preceding_block: docs/validation-results/post2008-active-apical-feedback-routing-block-945b.yaml
+registration: docs/validation-results/post2008-active-apical-feedback-routing-registration-945.yaml
+
+verification:
+  standalone_test:
+    command: MPLCONFIGDIR=/private/tmp/mpl .venv/bin/python -m pytest tests/test_standalone.py -q
+    result: 1-passed
+    scope: compile-execute-and-reload-spike-monitor
+  exprel_diagnostic:
+    backend: brian2-cpp-standalone
+    build_helper: smart_robustness.standalone.build_and_run_cpp_standalone
+    model: 'y = exprel(x) : 1; x : 1'
+    input_x: [0.0, 0.00000001, 1.0]
+    observed_y: [1.0, 1.0000000050000002, 1.7182818284590453]
+    reference: numpy-expm1(x)-divided-by-x-with-analytic-limit-one-at-zero
+    tolerance: {rtol: 1.0e-12, atol: 1.0e-12}
+    result: passed
+    temporary_build_removed: true
+
+study_state_at_verification:
+  runner: scripts/run_active_apical_feedback_routing.py
+  output: results/active-apical-feedback-routing-947.yaml
+  process_confirmed_live: true
+  raw_checkpoint_exists: false
+  network_outcome_claimed: false
+  interpretation: >-
+    The earlier compiler capability failure is no longer reproducible.
+    These small execution checks do not prove that the full-network sweep
+    will complete or pass its scientific gates.
+
+scientific_integrity:
+  model_or_protocol_changed: false
+  sealed_files_changed: false
+  metrics_or_gates_changed: false
+  outcome_guided_tuning_occurred: false
+  frozen_classic_baseline_modified: false

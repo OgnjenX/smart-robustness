@@ -129,4 +129,4 @@ def simulate(
             return arrays
         finally:
             brian.device.reinit()
-            brian.reset_device()
+            brian.set_device("runtime")

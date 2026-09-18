@@ -1,0 +1,118 @@
+schema_version: 1
+artifact_id: 953
+artifact_type: staged-source-and-implementation-audit
+date: 2026-09-19
+status: structural-audit-complete-quantitative-source-mapping-incomplete
+network_execution_authorized: false
+frozen_baseline_modified: false
+
+program_position:
+  preceding_assessment: docs/validation-results/post2008-active-apical-isolated-assessment-952.yaml
+  preceding_mapping: isolated-NMDA-mapping-not-promoted
+  scope_boundary: >-
+    Begin independent Phase6 source work, not an outcome-guided repair of
+    Phase5. Remaining active-apical context and branch-resolved questions stay
+    explicitly incomplete; this audit does not close them or the overall goal.
+
+primary_evidence:
+  - citation: Blot et al. (2021), Neuron 109, 1996-2008.e6
+    doi: 10.1016/j.neuron.2021.04.017
+    url: https://pmc.ncbi.nlm.nih.gov/articles/PMC8221812/
+    preparation: mouse-visual-V1-LP-AL-PM
+    supported:
+      - LP projections to AL and PM are largely segregated populations.
+      - Their inputs include V1 L5, higher visual areas and superior colliculus.
+      - Direct V1 and LP routes carry distinct visual and locomotor-context signals.
+    translation_limits:
+      - AL and PM are not interchangeable with a single generic SMART V2 sector.
+      - Bouton calcium signals do not directly specify conductance or axonal delay.
+      - Tracing cell counts are not measurements of synaptic weights.
+      - The existing static bar stimulus cannot test visuo-motor signal differences.
+  - citation: Saalmann et al. (2012), Science 337, 753-756
+    doi: 10.1126/science.1223082
+    url: https://pmc.ncbi.nlm.nih.gov/articles/PMC3714098/
+    preparation: macaque-pulvinar-V4-TEO-spatial-attention
+    supported:
+      - Attention-associated inter-area coherence includes 8-15 Hz and 30-60 Hz bands.
+      - Pulvinar, V4 and TEO were recorded during a cued attention task.
+    translation_limits:
+      - These species, areas and behavioral epochs differ from mouse V1-LP-AL/PM.
+      - Coherence is not the existing Figure16 peak cross-correlation statistic.
+      - Spectral association does not determine an executable connection delay or weight.
+      - Do not substitute these bands for the frozen classic gates after observing results.
+
+implementation_audit:
+  source: src/smart_robustness/modeldb_projections.py
+  catalog: MODELDB_FULL
+  higher_order_relay_population: thalamic_relay_v2
+  existing_cortical_driver:
+    id: modeldb112923.projection.065
+    source: layer5_excitatory_v1
+    target: thalamic_relay_v2
+    compartment: proximal_dendrite
+    channel: Layer-5-AMPA
+    serialized_delay_ms: 0.1
+    modifiable: false
+  existing_corticothalamic_feedback:
+    source: layer6ii_excitatory_v2
+    target: thalamic_relay_v2
+    compartment: distal_dendrite
+    serialized_delay_ms: 2.0
+    projections:
+      - {id: modeldb112923.projection.066, receptor: NMDA, spatial_class: wide, modifiable: false}
+      - {id: modeldb112923.projection.068, receptor: AMPA, spatial_class: wide, modifiable: true}
+      - {id: modeldb112923.projection.069, receptor: NMDA, spatial_class: narrow, modifiable: false}
+      - {id: modeldb112923.projection.070, receptor: AMPA, spatial_class: narrow, modifiable: true}
+  direct_corticocortical_routes:
+    source: layer23_excitatory_v1
+    projections:
+      - {id: modeldb112923.projection.081, target: layer6i_excitatory_v2, compartment: proximal_dendrite, serialized_delay_ms: 1.0}
+      - {id: modeldb112923.projection.089, target: layer4_excitatory_v2, compartment: proximal_dendrite, serialized_delay_ms: 5.0}
+  higher_order_relay_cortical_outputs:
+    source: thalamic_relay_v2
+    projections:
+      - {id: modeldb112923.projection.075, target: layer5_excitatory_v2, compartment: distal_dendrite, serialized_delay_ms: 1.0}
+      - {id: modeldb112923.projection.079, target: layer6i_excitatory_v2, compartment: proximal_dendrite, serialized_delay_ms: 0.5}
+      - {id: modeldb112923.projection.114, target: layer4_inhibitory_v2, compartment: proximal_dendrite, serialized_delay_ms: 3.0}
+  additional_higher_order_channels:
+    v1_l5_inputs:
+      - {id: modeldb112923.projection.098, target: thalamic_interneuron_v2}
+      - {id: modeldb112923.projection.105, target: thalamic_nonspecific_v2}
+      - {id: modeldb112923.projection.112, target: thalamic_matrix_v2}
+    v2_l5_distal_outputs:
+      - {id: modeldb112923.projection.076, source: thalamic_nonspecific_v2, receptor: AMPA}
+      - {id: modeldb112923.projection.077, source: thalamic_nonspecific_v2, receptor: NMDA}
+      - {id: modeldb112923.projection.078, source: thalamic_matrix_v2}
+  important_runtime_boundary: >-
+    These are serialized catalog values. The frozen Figure16 protocol separately
+    imposes an inter-area delay convention. Audit the actual instantiated
+    delays before interpreting catalog numbers as experiment parameters.
+
+design_implications:
+  already_present:
+    - a proximal L5 and distal L6 distinction at the higher-order relay
+    - parallel direct cortical and indirect higher-order thalamic paths
+  not_a_valid_modernization_claim: merely-adding-the-already-present-motifs
+  next_evidence_needed:
+    - visual-system primary measurements distinguishing driver and modulator transfer functions
+    - target-resolved LP cortical termination layers and quantitative pathway efficacy
+    - independent delay and short-term-dynamics sources or explicit bounds on missing measurements
+    - executable source-defined visual and state/context inputs, not tuning to Figure16
+  next_design_requirements:
+    - choose and label one visual species/area stratum for the primary intervention
+    - keep mouse source mapping distinct from macaque attention endpoints
+    - preregister pathway-off, direct-only, indirect-only and matched-input controls
+    - separate sensory encoding from state-dependent coordination readouts
+    - preserve raw signals and preregister independent seeds and temporal windows
+    - seal one anatomical modification at a time before network outcomes
+  matched_input_caution: >-
+    Equal initial weight or total conductance is not equal realized current or
+    information. Register which quantity is matched and measure residual drive
+    differences; an ablation alone cannot distinguish pathway coding from drive.
+
+unresolved:
+  - Short-term-plasticity parameters have not been independently sourced.
+  - Absolute pathway strengths and delays have not been identified from these papers.
+  - Target-specific AL/PM and behavioral-state inputs are absent from the current assay.
+  - An additional driver/modulator source (PMC8665059) was located but full text access returned a browser check; no parameter claim relies on it.
+  - Phase6 implementation, preregistration, experiments and synthesis remain uncompleted.

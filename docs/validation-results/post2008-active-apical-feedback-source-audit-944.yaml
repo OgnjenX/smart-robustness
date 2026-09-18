@@ -1,0 +1,131 @@
+schema_version: 1
+artifact_id: 944
+artifact_type: post-2008-anatomy-source-audit
+name: active-apical-integration-of-visual-cortical-feedback
+date: 2026-09-18
+status: source-audit-complete-no-network-outcomes-observed
+
+scientific_question: >-
+  Does the frozen classic SMART behavior survive a modernized higher-area
+  visual-feedback route that distinguishes distal apical targeting,
+  retinotopic surround facilitation, and active dendritic integration?
+
+primary_source:
+  citation: >-
+    Fisek M, Herrmann D, Egea-Weiss A, et al. (2023). Cortico-cortical
+    feedback engages active dendrites in visual cortex. Nature 617:769-776.
+  doi: 10.1038/s41586-023-06007-6
+  pmid: 37138089
+  pmcid: PMC10244179
+  url: https://pmc.ncbi.nlm.nih.gov/articles/PMC10244179/
+  preparation: awake-mouse-LM-to-V1-visual-feedback
+  supported_facts:
+    - LM-to-V1 feedback influence is retinotopically organized.
+    - feedback aligned to the V1 target receptive field is relatively suppressive.
+    - retinotopically offset or surround feedback is relatively facilitating.
+    - sparse LM excitatory connections terminate on identified apical-dendritic spines of V1 layer-5 pyramidal neurons.
+    - surround-biased stimuli and identified LM inputs can evoke local branch-specific calcium signals in V1 apical tufts.
+    - feedback can boost dendritic responses nonlinearly rather than behaving as a purely additive somatic input.
+  explicit_source_cautions:
+    - >-
+      The reported local events are consistent with NMDA spikes, but the paper
+      states that their voltage profile, true frequency, and biophysical basis
+      remain to be established and could involve other mechanisms.
+    - >-
+      Calcium fluorescence and boosting indices are not absolute synaptic
+      conductances, dendritic voltage thresholds, or membrane-current densities.
+  unsupported_inferences:
+    - a unique NMDA, calcium, or sodium mechanism for the local event
+    - an absolute SMART-compatible feedback conductance
+    - a source-resolved event threshold, plateau duration, or refractory period
+    - a direct conversion from responsive-spine counts to a 9-by-9 network edge probability
+    - equivalence between mouse LM-to-V1 feedback and every SMART V2-to-V1 category signal
+
+frozen_smart_audit:
+  existing_feedback_projection:
+    projection_id: modeldb112923.projection.016
+    source: layer6ii_excitatory_v2
+    target: layer5_excitatory_v1
+    target_compartment: distal_dendrite
+    channel: fast-voltage-independent-ligand-gated-excitation
+    channel_conductance_mS_cm2: 0.09
+    rise_ms: 2.0
+    fall_ms: 2.0
+    delay_ms: 0.1
+    kernel: local-gaussian-sigma-0.5-wrap
+    modifiable: true
+    learning_rule: dual-and-gated
+  existing_recipient:
+    population: aggregate-layer5-excitatory-v1
+    distal_representation: one-lumped-distal-compartment
+    active_membrane: fast-distal-sodium-and-potassium
+    missing_features:
+      - branch-resolved apical-tuft integration
+      - local regenerative NMDA-or-calcium-like event variable
+      - explicit aligned-suppressive-versus-offset-facilitating feedback routing
+  important_boundary: >-
+    Classic SMART already routes V2 feedback to the L5 distal compartment. The
+    modern question is therefore not whether apical feedback exists at all, but
+    whether its retinotopic routing and nonlinear dendritic integration matter.
+
+translation_decision:
+  single_factor_order:
+    - conductance-only-retinotopic-routing
+    - active-apical-integration-with-identical-routing
+  conductance_only_arm:
+    description: >-
+      Add a sparse, retinotopically offset V2-to-V1 L5-distal feedback component
+      while preserving the classic receptor kinetics and recipient membrane.
+      Compare it with an input-matched local-routing control so surround routing
+      is not confounded with added mean excitation.
+    fixed_before_outcomes:
+      - source and target populations
+      - distal target compartment
+      - offset kernel family and edge mask
+      - conductance-ratio sensitivity grid
+      - delay and receptor kinetics
+      - matched-input normalization rule
+  active_arm:
+    description: >-
+      Reuse the exact conductance-only routing and add one independently
+      specified aggregate distal nonlinear event mechanism. The mechanism must
+      be validated in an isolated L5 recipient before any network execution.
+    representation_boundary: >-
+      The one-compartment distal event is an aggregate test of active apical
+      gain, not a reproduction of branch-specific spine or tuft dynamics.
+  prohibited:
+    - selecting a nonlinear threshold or strength from SMART network outcomes
+    - calling the active event definitively NMDA-mediated
+    - changing the classic direct-thalamus-to-L5 module in this phase
+    - combining active apical feedback with any prior modern-anatomy intervention
+    - interpreting calcium fluorescence as membrane voltage or conductance
+
+required_before_preregistration:
+  - define a source-independent finite conductance-ratio grid relative to projection 016
+  - define an offset kernel and matched-input normalization without network consultation
+  - select and source an isolated-dendrite nonlinear event model
+  - preregister isolated recipient-cell transfer targets and rejection criteria
+  - preregister structural fingerprints proving that only the selected feedback module changes
+  - preregister the Figure 6, 7, 10, 14, 15, and 16 progression and stopping rules
+
+scope_boundary:
+  included:
+    - V2-or-LM-like feedback to the existing V1 aggregate L5 distal compartment
+    - aligned-versus-offset retinotopic routing
+    - conductance-only versus active aggregate apical integration
+  deferred:
+    - branch-explicit tuft morphology
+    - PV-SST-VIP feedback recruitment
+    - updated pulvinar or transthalamic routing
+    - interaction with direct visual-thalamus-to-L5 excitation
+  rationale: one-modern-anatomy-module-at-a-time
+
+decision:
+  source_audit_complete: true
+  immediate_network_execution_authorized: false
+  implementation_preregistration_authorized_after_required_items: true
+  reason: >-
+    The source supports the pathway, target, topographic sign difference, and
+    nonlinear-integration hypothesis, but it does not identify executable
+    membrane parameters. Those parameters require an independent biophysical
+    source and isolated-cell registration before network outcomes are opened.

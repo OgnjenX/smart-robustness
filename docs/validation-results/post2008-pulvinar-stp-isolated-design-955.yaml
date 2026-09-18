@@ -1,0 +1,63 @@
+schema_version: 1
+artifact_id: 955
+artifact_type: isolated-component-design-registration
+date: 2026-09-19
+status: algebraic-reference-only
+network_execution_authorized: false
+frozen_baseline_modified: false
+predecessor: docs/validation-results/post2008-pulvinar-source-audit-addendum-954.yaml
+
+evidence:
+  physiology:
+    doi: 10.1152/jn.00456.2003
+    url: https://pubmed.ncbi.nlm.nih.gov/12890796/
+    stratum: rat-LPN-in-vitro
+    finding: Type I EPSPs facilitate and type II depress during repeated stimulation.
+    boundary: Predates SMART; not evidence of a discovery after 2008 or mouse-specific constants.
+  computational_candidate:
+    doi: 10.3389/fncel.2021.787170
+    url: https://www.frontiersin.org/journals/cellular-neuroscience/articles/10.3389/fncel.2021.787170/full
+    stratum: model-with-cat-cortical-anatomy
+    classification: model-derived-not-empirically-measured-parameters
+    reported_parameters:
+      type1: {U0: 0.006, omega_f_per_s: 0.48, omega_d_per_s: 1.5}
+      type2: {U0: 0.8, omega_f_per_s: 2.0, omega_d_per_s: 3.33}
+    cautions:
+      - Methods refer to Li2013 while the introduction cites Li2003 physiology; the listed Li2013 concerns retinotopic maps.
+      - Rate labels in the parameter paragraph differ from the state-dynamics description; use explicit state names.
+      - Network connectivity was explored for alpha oscillations; do not import those weights as independent physiology.
+
+implementation_scope:
+  component: src/smart_robustness/models/pulvinar_stp.py
+  purpose: Exact event-level reference for later independently checked isolated synapse implementations.
+  network_integration: none
+  parameter_presets: none
+  inputs: finite-strictly-increasing-nonnegative-arrival-times-in-seconds
+  initial_state: {u: 0.0, x: 1.0}
+  inter_event_update:
+    u: u_previous_post * exp(-facilitation_decay_per_s * elapsed_s)
+    x: 1 - (1 - x_previous_post) * exp(-resource_recovery_per_s * elapsed_s)
+  ordered_event_update:
+    - u_post = u_pre + U0 * (1 - u_pre)
+    - released = u_post * x_pre
+    - x_post = x_pre - released
+  output: full-pre-and-post-event-states-and-release-fractions
+  normalization: none
+  interpretation_boundary: >-
+    Release fraction is not EPSP amplitude, charge, firing probability or
+    information transfer. No conductance, receptor kinetics, membrane,
+    anatomical routing or delay is inferred from this algebraic component.
+
+verification_contract:
+  - Hand-derived first and second event values with synthetic parameters.
+  - Event ordering and conservation of available resource at each event.
+  - State bounds, recovery after a long silence and exact deterministic repetition.
+  - Reject invalid rates, utilization, event order, nonfinite and multidimensional inputs.
+  - No network outcomes or parameter fitting in the tests.
+
+promotion_requirements:
+  - Resolve the candidate model equation and citation ambiguities before claiming source replication.
+  - Verify an independent numerical implementation against this event reference.
+  - Preregister isolated conductance and voltage assays before inspecting their outcomes.
+  - Complete target-specific empirical mapping or explicitly register cross-species assumptions.
+  - Seal network controls, matched-input definitions, seeds and gates separately.

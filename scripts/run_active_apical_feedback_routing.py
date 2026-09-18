@@ -253,9 +253,9 @@ def main() -> None:
     registration_path = Path(args.registration)
     study = yaml.safe_load(study_path.read_text())
     registration = yaml.safe_load(registration_path.read_text())
-    if _sha256(study_path) != registration["study_sha256"]:
-        raise ValueError("active-apical study differs from sealed registration")
     sealed = registration["sealed_implementation"]
+    if _sha256(study_path) != sealed["study_sha256"]:
+        raise ValueError("active-apical study differs from sealed registration")
     sealed_paths = {
         "module": "module_sha256",
         "full_network_extension_hook": "full_network_extension_hook_sha256",

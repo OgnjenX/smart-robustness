@@ -1,0 +1,35 @@
+schema_version: 1
+artifact_id: 945a
+artifact_type: preregistration-execution-amendment
+name: active-apical-feedback-routing-study-key-fix
+date: 2026-09-18
+status: sealed-before-any-network-outcome
+
+registration: docs/validation-results/post2008-active-apical-feedback-routing-registration-945.yaml
+runner: scripts/run_active_apical_feedback_routing.py
+
+observed_failure:
+  phase: startup-integrity-check-before-baseline-loading-or-simulation
+  exception: KeyError-study_sha256
+  network_constructed: false
+  network_outcome_observed: false
+  raw_checkpoint_written: false
+
+correction:
+  scope: runner-schema-access-only
+  before: registration-top-level-study_sha256
+  after: registration-sealed_implementation-study_sha256
+  scientific_inputs_changed: false
+  arm_grid_changed: false
+  model_or_protocol_changed: false
+  metrics_or_gates_changed: false
+  stopping_rules_changed: false
+
+verification:
+  compile: passed
+  lint: passed
+  corrected_runner_sha256: 623a3aed28a29ae92ba507b3ae9bb52202dd24b53fb8d0d98d34eafb918fb055
+
+decision:
+  original_preregistration_remains_scientifically_binding: true
+  execution_may_restart_from_empty_output: true

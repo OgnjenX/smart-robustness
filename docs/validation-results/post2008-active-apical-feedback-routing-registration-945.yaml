@@ -27,7 +27,7 @@ sealed_implementation:
   higher_order_harness: src/smart_robustness/validation/higher_order.py
   higher_order_harness_sha256: af83ceae4ddaaa9991308ceb6152e5ab40b94230deb898657eb77d2da5bf5cc9
   runner: scripts/run_active_apical_feedback_routing.py
-  runner_sha256: 56993b34df95fb99b8bbfe5febc56e2ba432064784fb3cfdccd718a097e27b16
+  runner_sha256: 623a3aed28a29ae92ba507b3ae9bb52202dd24b53fb8d0d98d34eafb918fb055
   focused_test: tests/test_active_apical_feedback.py
   focused_test_sha256: 20b0677ee51fee08a7299ac6f119a9e031d2f3a05ec166af0d92bbc2421e1e1b
 
@@ -122,6 +122,7 @@ reporting:
     - no branch-specific or causal-NMDA claim
 
 authorization:
+  amendment: docs/validation-results/post2008-active-apical-feedback-routing-amendment-945a.yaml
   structural_precheck: true
   network_execution: conditional-on-passing-precheck-946
   active_nmda_arm: false

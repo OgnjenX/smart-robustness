@@ -1,0 +1,185 @@
+schema_version: 1
+artifact_id: 949
+artifact_type: staged-design-preregistration
+name: active-apical-nmda-voltage-dependence-v1
+date: 2026-09-19
+status: design-sealed-before-isolated-or-active-network-outcomes
+
+preceding_result:
+  assessment: docs/validation-results/post2008-active-apical-feedback-routing-assessment-948.yaml
+  raw_sha256: 6b3f51f881bc7ca6a3bc76392d144ec324725d9d6269973f2363d4546bf79640
+  outcomes_already_known: true
+  selection_safeguard: retain-all-five-routing-fractions-including-failed-0.25
+  no_active_arm_outcomes_observed: true
+
+question: >-
+  Does voltage-dependent distal NMDA current change isolated apical integration
+  and calibrated higher-order SMART behavior relative to identical receptor
+  kinetics with voltage block fixed at the independently measured resting state?
+  This is a mechanistic sensitivity hypothesis, not a claim that the observed
+  mouse feedback events have a uniquely established NMDA basis.
+
+sources:
+  modern_anatomy:
+    url: https://pmc.ncbi.nlm.nih.gov/articles/PMC10244179/
+    doi: 10.1038/s41586-023-06007-6
+    evidence: mouse-LM-to-V1-L5-IT-apical-feedback-and-local-nonlinear-calcium-events
+    limitation: event-biophysical-mechanism-not-uniquely-established
+  independent_receptor_mixture:
+    url: https://pmc.ncbi.nlm.nih.gov/articles/PMC2278846/
+    doi: 10.1111/j.1469-7793.2001.00167.x
+    evidence: rat-visual-L5-model-with-80-percent-AMPA-20-percent-NMDA-peak-conductance
+    limitation: >-
+      An older biophysical model supplies a sensitivity anchor, not measured
+      mouse LM-to-V1 receptor proportions or a source for SMART-compatible
+      absolute conductances. Its branched morphology is not reproduced here.
+  prior_source_audit: docs/validation-results/post2008-active-apical-feedback-source-audit-944.yaml
+
+fixed_mechanism:
+  changed_projection: modeldb112923.projection.016
+  recipient: layer5_excitatory_v1
+  compartment: distal_dendrite
+  nmda_peak_fraction: 0.2
+  ampa_peak_fraction: 0.8
+  total_unblocked_peak_density_mS_cm2: 0.09
+  derived_ampa_density_mS_cm2: 0.072
+  derived_nmda_density_mS_cm2: 0.018
+  reversal_mV: 0.0
+  ampa_rise_ms: 2.0
+  ampa_fall_ms: 2.0
+  nmda_rise_ms: 0.7
+  nmda_fall_ms: 80.0
+  nmda_kinetics_anchor: modeldb112923.projection.034
+  kinetics_translation_status: explicit-SMART-catalog-assumption-not-mouse-feedback-measurement
+  voltage_block: B(v)=1/(1+0.33*exp(-v_mV/16.7))
+  voltage_coordinate: absolute-physical-membrane-potential
+  delay_ms: 0.1
+  normalization: each-receptor-kernel-has-unit-isolated-event-peak
+  learning_contract: >-
+    One projection, one topology, one plastic weight state, one presynaptic
+    arrival/resource history. Both receptor gates must use that same weight
+    and history; do not create independently learning duplicate projections.
+  matching_boundary: >-
+    Match summed unblocked peak conductance, not integrated charge or realized
+    current. Slower kinetics and voltage block change both. The frozen-block
+    control isolates voltage dependence within the mixed-receptor comparison.
+  unchanged:
+    - intrinsic soma and distal Na/K, AHP/ACh, morphology, axial coupling
+    - all other receptor ports and projections
+    - learning rule, weight bounds, event delays, transmitter conventions
+    - frozen classic baseline files and runtime parameters
+
+arms:
+  - id: classic_ampa
+    mixture: unchanged-projection016
+    role: conductance-only-contemporaneous-reference
+  - id: mixed_rest_block
+    mixture: fixed-80-20
+    block: B(v_distal_rest)
+    role: kinetics-and-mixture-matched-voltage-independent-control
+  - id: mixed_active_block
+    mixture: fixed-80-20
+    block: B(v_distal(t))
+    role: voltage-dependent-apical-sensitivity
+
+isolated_stage:
+  cell: frozen-classic-V1-L5-recipient-from-full-network-population-parameters
+  network_feedback: absent
+  plasticity: disabled-for-isolated-transfer-assay
+  background_external_drive: zero
+  initialization: frozen-classic-conventions
+  resting_state:
+    settling_ms: 1000.0
+    terminal_window_ms: 100.0
+    maximum_distal_peak_to_peak_mV: 0.1
+    reject_if_somatic_spikes_in_terminal_window: true
+    fixed_block_voltage: mean-distal-voltage-over-terminal-window
+    rule: >-
+      Determine rest once in the zero-input classic cell, before any stimulated
+      response. Use the same value in both isolated and later network controls.
+      Never choose the fixed block from a network trajectory or input response.
+  numerical_steps_ms: [0.01, 0.005]
+  independent_exact_repetitions: 2
+  stimulus:
+    timing_after_settling_ms: [50.0, 83.33, 116.67]
+    schedule_origin: protocol-chosen-three-event-approximately-30-Hz-barrage
+    observation_after_settling_ms: 400.0
+    drive_factors: [0.0, 0.25, 0.5, 1.0, 2.0, 4.0]
+    drive_factor_definition: multiplier-of-unit-normalized-gate-at-registered-receptor-density
+    empirical_status: finite-diagnostic-grid-not-estimated-synapse-counts
+    inputs: [none, distal_only, proximal_only, distal_and_proximal]
+    proximal_control: >-
+      Inject an independent fast 2-ms alpha conductance into the existing
+      proximal dendrite with the same total unblocked conductance in nS as the
+      distal input, not the same density across different compartment areas.
+      It is an isolated assay probe, never an added network projection.
+  retained_data:
+    - full soma, proximal, and distal voltage time series in mV
+    - fast and slow receptor gates and component currents
+    - emitted soma spike times and integration timestep
+    - exact stimulus specification, rest voltage, file hashes, environment
+  metrics:
+    - distal and somatic peak voltage and positive depolarization area relative to own no-input trace
+    - somatic spike count and first-event latency when present
+    - distal time above -40 mV as a declared descriptive proxy, not a calcium-event label
+    - paired-input area minus sum of single-input areas at each compartment
+    - active-minus-fixed-block differences for every metric and drive factor
+  promotion:
+    engineering_gates:
+      - all saved states finite and no unrequested current path changes
+      - resting-state stability criterion passes without changing intrinsic parameters
+      - receptor kernels and voltage-block current agree with independent analytic checks
+      - same events and weight feed both receptor components
+      - all exact repeats agree in saved arrays, not only summary statistics
+    numerical_gate:
+      soma_and_distal_peak_difference_mV_at_most: 1.0
+      positive_depolarization_area_relative_error_at_most: 0.05
+      relative_error_denominator_floor_mV_ms: 1.0
+      soma_event_counts_equal_between_timesteps: true
+    mechanism_gate:
+      definition: >-
+        At one or more of the fixed nonzero drive points, mixed_active_block
+        must exceed mixed_rest_block distal positive depolarization area by
+        at least 5 percent and by at least 1 mV ms in both timesteps, with
+        positive paired-input area excess at that point in both timesteps.
+      threshold_status: preregistered-diagnostic-effect-floor-not-an-empirical-fit
+      interpretation: aggregate-voltage-dependent-cooperative-integration-only
+    failure_rule: >-
+      Seal all outcomes and stop network promotion if any engineering or
+      numerical gate fails, or the mechanism gate is absent. Do not change
+      density, block, kinetics, intrinsic excitability, or grid to manufacture
+      a nonlinear event. Report the tested mapping as unpromoted, not a
+      refutation of active dendrites or NMDA mechanisms generally.
+
+network_stage_requirements:
+  authorized_now: false
+  routing_fractions: [0.0, 0.25, 0.5, 0.75, 1.0]
+  comparison: all-three-receptor-arms-at-every-routing-fraction
+  first_order_prerequisite: fresh-frozen-Figure6-six-gate-pass
+  endpoint_protocol: same-Figure16-protocol-as-registration945
+  retain_previous_four_gates: true
+  additional_required_readouts:
+    - soma and distal voltages and currents in identified V1 L5 cells
+    - somatic output and declared distal event proxies under aligned and offset contexts
+    - gamma coordination and false-resonance operational definitions sealed before outcomes
+    - independently specified seed ensemble and time-window sensitivity
+  record_raw_fields: required-for-independent-correlation-reanalysis
+  unchanged_sentinel_boundary: first-order-networks-lack-the-intervened-V2-source
+  prerequisite: >-
+    A separate implementation seal must pin code, tests, runner, configuration,
+    and complete isolated protocol before isolated execution. A subsequent
+    network registration must seal context protocols, metrics, seeds, gates,
+    and stopping rules before any active network run. No automatic network
+    launch follows an isolated pass.
+
+scope:
+  included: aggregate-distal-voltage-dependent-synaptic-integration
+  not_claimed:
+    - full branch-specific tuft physiology
+    - identification of the mechanism underlying Fisek calcium events
+    - improved ART behavior merely from increased depolarization
+    - a completed Phase5 or the complete SMART robustness goal
+  prohibited:
+    - selecting only routing points that passed study947
+    - mixing this intervention with direct thalamic L5, pulvinar, or inhibitory-class updates
+    - network-guided parameter fitting or post-outcome gate revision

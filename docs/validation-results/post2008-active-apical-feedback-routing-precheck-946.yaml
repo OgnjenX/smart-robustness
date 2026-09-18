@@ -1,0 +1,90 @@
+schema_version: 1
+artifact_id: 946
+artifact_type: sealed-implementation-precheck
+name: active-apical-feedback-conductance-only-routing-v1
+date: 2026-09-18
+status: passed-network-execution-authorized
+
+registration: docs/validation-results/post2008-active-apical-feedback-routing-registration-945.yaml
+study: configs/robustness/active_apical_feedback_routing_v1.yaml
+runner: scripts/run_active_apical_feedback_routing.py
+raw_result: results/active-apical-feedback-routing-947.yaml
+
+sealed_hash_verification:
+  source_audit: passed
+  control_manifest: passed
+  study: passed
+  implementation_module: passed
+  full_network_extension_hook: passed
+  higher_order_harness: passed
+  runner: passed
+  focused_test: passed
+
+verification:
+  compile: passed
+  lint:
+    command: ruff-check-focused-files
+    status: passed
+  focused_tests:
+    command: >-
+      pytest tests/test_full_smart_network.py
+      tests/test_active_apical_feedback.py
+      tests/test_higher_order_validation.py
+      tests/test_validation_population_factory.py
+    passed: 40
+    failed: 0
+  warnings:
+    count: 24018
+    classification: brian2-pyparsing-deprecation-only
+
+structural_grid:
+  - offset_route_fraction: 0.0
+    edge_count: 729
+    source40_center_factor: 1.0
+    source40_nearest_surround_factor: 0.1353352832366127
+    source_row_sum_range: [1.6146036885013872, 1.6146036885013877]
+  - offset_route_fraction: 0.25
+    edge_count: 1701
+    source40_center_factor: 0.75
+    source40_nearest_surround_factor: 0.18009759207327292
+    source_row_sum_range: [1.6146036885013872, 1.614603688501388]
+  - offset_route_fraction: 0.5
+    edge_count: 1701
+    source40_center_factor: 0.5
+    source40_nearest_surround_factor: 0.22485990090993316
+    source_row_sum_range: [1.6146036885013872, 1.614603688501388]
+  - offset_route_fraction: 0.75
+    edge_count: 1701
+    source40_center_factor: 0.25
+    source40_nearest_surround_factor: 0.26962220974659334
+    source_row_sum_range: [1.6146036885013872, 1.614603688501388]
+  - offset_route_fraction: 1.0
+    edge_count: 1620
+    source40_center_factor: 0.0
+    source40_nearest_surround_factor: 0.3143845185832536
+    source_row_sum_range: [1.614603688501387, 1.614603688501388]
+
+gates:
+  source_row_sums_equal_control: true
+  center_factor_monotonic_nonincrease: true
+  nearest_surround_factor_monotonic_nondecrease: true
+  zero_fraction_returns_exact_original_builder: true
+  nonzero_wrapper_overrides_only_projection016: true
+  frozen_default_full_network_behavior_unchanged: true
+  runner_is_checkpoint_resumable: true
+  raw_result_is_ignored: true
+
+interpretation_boundary:
+  - This precheck contains no Figure-16 or other network outcome.
+  - Passing verifies intervention isolation and executable structure only.
+  - The annular route is an aggregate retinotopic sensitivity test, not a branch-level dendritic reconstruction.
+  - Voltage-dependent NMDA and other active-apical mechanisms remain excluded from this arm.
+
+decision:
+  structural_precheck_pass: true
+  network_execution_authorized: true
+  active_nmda_arm_authorized: false
+  command: >-
+    MPLCONFIGDIR=/private/tmp/mpl .venv/bin/python
+    scripts/run_active_apical_feedback_routing.py
+    --output results/active-apical-feedback-routing-947.yaml

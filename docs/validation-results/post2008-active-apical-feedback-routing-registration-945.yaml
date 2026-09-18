@@ -1,0 +1,128 @@
+schema_version: 1
+artifact_id: 945
+artifact_type: preregistration
+name: active-apical-feedback-conductance-only-routing-v1
+date: 2026-09-18
+status: sealed-before-higher-order-network-outcomes
+
+control:
+  manifest: configs/baselines/classic_smart_calibrated_v1.yaml
+  manifest_sha256: d8a11933e4ed6a41a72647e4c9ce88f88fd870908bd9a086bbc67b75cff2a5fb
+  manifest_fingerprint: 992fdd7c3bc9fa0f0d385b9e5a58ba317599357ca377145aba6f01c80d631cd2
+  runtime_fingerprint: 7e654528a99f0b25b7148260a8d52021f6443fb992b210729a2475ae3cfcdaa4
+  modified: false
+
+source_audit:
+  path: docs/validation-results/post2008-active-apical-feedback-source-audit-944.yaml
+  sha256: b9d54a7f97e1f743947641fd1c89325ba7353f5efe30022a1edd61a7bcb45ae6
+  network_outcomes_observed_when_sealed: false
+
+sealed_implementation:
+  study: configs/robustness/active_apical_feedback_routing_v1.yaml
+  study_sha256: 30eb1230b5b23592c96b84517d3fd98490991b464275d41c593ebb0d78d50a01
+  module: src/smart_robustness/models/active_apical_feedback.py
+  module_sha256: 9c6ac53928b30f6f0b1ae6d0028689c4c945820ba9a60a4bf1764767323724e8
+  full_network_extension_hook: src/smart_robustness/classic_sector.py
+  full_network_extension_hook_sha256: 6191cc09727220b363e9a82863d235010cc75b274e5cc5f3884e6158ce2e8a7e
+  higher_order_harness: src/smart_robustness/validation/higher_order.py
+  higher_order_harness_sha256: af83ceae4ddaaa9991308ceb6152e5ab40b94230deb898657eb77d2da5bf5cc9
+  runner: scripts/run_active_apical_feedback_routing.py
+  runner_sha256: 56993b34df95fb99b8bbfe5febc56e2ba432064784fb3cfdccd718a097e27b16
+  focused_test: tests/test_active_apical_feedback.py
+  focused_test_sha256: 20b0677ee51fee08a7299ac6f119a9e031d2f3a05ec166af0d92bbc2421e1e1b
+
+hypothesis: >-
+  Retinotopically offset redistribution of the existing distal V2-to-V1 L5
+  feedback path will preserve the calibrated Figure-16 lower-frequency
+  inter-area coordination phenotype over at least one nonzero route fraction
+  when each source cell's total available feedback weight is conserved.
+
+independent_variable:
+  name: offset-route-fraction
+  values: [0.0, 0.25, 0.5, 0.75, 1.0]
+  arm_order:
+    - offset_0
+    - offset_0p25
+    - offset_0p5
+    - offset_0p75
+    - offset_1
+  selection: fixed-uniform-sensitivity-grid-not-fitted
+
+structural_contract:
+  changed_projection: modeldb112923.projection.016
+  unchanged_fields:
+    - source and target population
+    - distal target compartment
+    - AMPA-like channel and reversal potential
+    - rise and fall kinetics
+    - delay
+    - projection weight and plasticity rule
+  changed_field: topology-factor-matrix-only
+  matched_input_rule: every-source-row-sum-equals-offset-0-control
+  offset_kernel: parameter-free-radial-annulus-using-serialized-sigma-and-wrap
+
+first_order_boundary:
+  statement: >-
+    Figure 6, 7, 10, 14, and 15 networks have no V2 source population, so the
+    intervention is structurally absent from those protocols.
+  prerequisite: fresh-six-gate-Figure6-pass-before-every-run
+  interpretation: unchanged-sentinel-not-an-intervention-outcome
+
+figure16_protocol:
+  network: complete-recovered-v1-pulvinar-v2-catalog
+  stimulus: horizontal-five-cell-bar-to-v1
+  prestimulus_ms: 1000.0
+  recording_ms: 1000.0
+  integration_dt_ms: 0.01
+  recording_sample_ms: 1.0
+  inter_area_delay_ms: 10.0
+  frequency_bands_hz:
+    - [2.0, 4.0]
+    - [4.0, 8.0]
+    - [8.0, 12.0]
+    - [12.0, 20.0]
+    - [20.0, 100.0]
+  higher_area_signal: mean-v2-inferior-300um-electrode-tips
+  lower_area_signal: mean-v1-superior-300um-electrode-tips
+  geometry_seed_v1: 16
+  geometry_seed_v2: 17
+  exact_repetitions_per_arm: 2
+
+gates:
+  structural:
+    source_row_sums_equal_control: required
+    center_factor_monotonic_nonincrease: required
+    nearest_surround_factor_monotonic_nondecrease: required
+    only_projection016_overridden: required
+  figure16:
+    exactly_1000_recording_samples: required
+    v1_and_v2_fields_finite: required
+    lower_frequency_stronger_than_gamma: required
+    strongest_band_2_4_hz: required
+  exact_repeat: required-per-arm
+
+stopping_rules:
+  - run and verify two contemporaneous offset-0 repetitions first
+  - stop the study if the offset-0 control fails any Figure-16 gate or exact repeat
+  - after control passage, run every nonzero fraction regardless of preceding results
+  - checkpoint after every repetition and never run two copies concurrently
+  - do not alter the grid, topology, metrics, or gates after opening outcomes
+  - do not run the NMDA sensitivity arm until this result is hash-pinned and assessed
+
+reporting:
+  raw_result: results/active-apical-feedback-routing-947.yaml
+  raw_result_committed: false
+  assessment: docs/validation-results/post2008-active-apical-feedback-routing-assessment-948.yaml
+  required:
+    - exact repeat status and every individual gate per arm
+    - all five band peaks and peak lags
+    - lower-frequency-to-gamma peak ratio
+    - structural topology summary for every arm
+    - exact behavioral survival kept separate from strengthening or weakening
+    - no branch-specific or causal-NMDA claim
+
+authorization:
+  structural_precheck: true
+  network_execution: conditional-on-passing-precheck-946
+  active_nmda_arm: false
+  module_interactions: false

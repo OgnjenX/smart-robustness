@@ -41,6 +41,25 @@ primary_source:
     - a direct conversion from responsive-spine counts to a 9-by-9 network edge probability
     - equivalence between mouse LM-to-V1 feedback and every SMART V2-to-V1 category signal
 
+implementation_source:
+  citation: >-
+    Rhodes PA, Llinas RR (2001). Apical tuft input efficacy in layer 5
+    pyramidal cells from rat visual cortex. Journal of Physiology 536:167-187.
+  doi: 10.1111/j.1469-7793.2001.00167.x
+  pmid: 11579167
+  pmcid: PMC2278846
+  url: https://pmc.ncbi.nlm.nih.gov/articles/PMC2278846/
+  role: independent-biophysical-sensitivity-anchor-not-modern-anatomy-evidence
+  supported_translation:
+    - colocalized AMPA and voltage-dependent NMDA conductances on the apical tuft
+    - an 80-percent AMPA and 20-percent NMDA peak-conductance mixture
+    - zero-millivolt excitatory reversal potential
+  retained_smart_parameters:
+    - >-
+      The NMDA sensitivity arm reuses SMART's already implemented voltage block
+      and source-catalog NMDA kinetics; it does not claim that Rhodes and Llinas
+      or Fisek et al. identified those exact kinetics for LM-to-V1 synapses.
+
 frozen_smart_audit:
   existing_feedback_projection:
     projection_id: modeldb112923.projection.016
@@ -106,7 +125,10 @@ required_before_preregistration:
   - select and source an isolated-dendrite nonlinear event model
   - preregister isolated recipient-cell transfer targets and rejection criteria
   - preregister structural fingerprints proving that only the selected feedback module changes
-  - preregister the Figure 6, 7, 10, 14, 15, and 16 progression and stopping rules
+  - >-
+    preregister the isolated-transfer, retinotopic-context, and Figure-16
+    progression and stopping rules; first-order Figure 6, 7, 10, 14, and 15
+    remain unchanged sentinels because their networks contain no V2 source
 
 scope_boundary:
   included:

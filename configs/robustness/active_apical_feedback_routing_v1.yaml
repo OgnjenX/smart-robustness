@@ -1,0 +1,80 @@
+schema_version: 1
+name: active-apical-feedback-routing-v1
+status: preregistered-conductance-only-before-network-outcomes
+control_manifest: configs/baselines/classic_smart_calibrated_v1.yaml
+source_audit: docs/validation-results/post2008-active-apical-feedback-source-audit-944.yaml
+registration: docs/validation-results/post2008-active-apical-feedback-routing-registration-945.yaml
+
+scientific_question: >-
+  Does calibrated classic SMART higher-order behavior survive redistribution of
+  the existing V2-layer-6II to V1-layer-5 distal feedback projection from its
+  aligned Gaussian route toward a retinotopically offset annular route when the
+  total available feedback weight from every source cell is held constant?
+
+intervention:
+  projection_id: modeldb112923.projection.016
+  source_population: layer6ii_excitatory_v2
+  target_population: layer5_excitatory_v1
+  target_compartment: distal_dendrite
+  aligned_component: archived-gaussian-sigma-0.5-wrap
+  offset_component: radial-annulus-from-the-same-sigma-and-wrap
+  normalization: each-offset-source-row-matches-its-archived-source-row-sum
+  route_fractions: [0.0, 0.25, 0.5, 0.75, 1.0]
+
+held_fixed:
+  - frozen classic intrinsic cells and all receptor equations
+  - every population and projection other than projection-016 topology factors
+  - projection-016 source, target, distal compartment, kinetics, delay, weight, plasticity, and learning rule
+  - total available projection-016 weight from every V2 source cell
+  - fresh frozen Figure-6 learned state shared by every higher-order arm
+  - Figure-16 stimulus, durations, integration step, inter-area delay, field geometry seeds, bands, and analysis
+  - two exact deterministic repetitions per arm
+
+prohibited:
+  - adding NMDA or another nonlinear apical mechanism in this first arm
+  - changing feedback strength or compensating another projection
+  - using an observed network outcome to refine the route-fraction grid or annulus
+  - combining direct thalamus-to-L5, pulvinar updates, or inhibitory subclasses
+  - calling the aggregate annular kernel a branch-level reproduction of Fisek et al.
+
+execution:
+  backend: brian2-cpp-standalone
+  arm_order:
+    - offset_0
+    - offset_0p25
+    - offset_0p5
+    - offset_0p75
+    - offset_1
+  exact_reruns_per_arm: 2
+  checkpoint_after_each_repetition: true
+  first_order_prerequisite: fresh-frozen-figure6-six-gate-pass
+  higher_order_endpoint: frozen-figure16
+
+gates:
+  structural:
+    - projection016_source_row_sums_equal_control
+    - center_weight_nonincreasing_with_offset_fraction
+    - nearest_surround_weight_nondecreasing_with_offset_fraction
+    - no_other_projection_override
+  figure16:
+    - exactly_1000_recording_samples
+    - v1_and_v2_fields_finite
+    - strongest_lower_frequency_correlation_strictly_exceeds_20_100_hz
+    - strongest_band_remains_2_4_hz
+
+classification:
+  survives_registered_higher_order_behavior: all four Figure-16 gates pass
+  strengthens: >-
+    all gates pass and the preregistered lower-frequency-to-gamma peak ratio is
+    greater than the exact contemporaneous control in both repetitions
+  weakens_without_breaking: >-
+    all gates pass but the lower-frequency-to-gamma peak ratio is lower than
+    the control in both repetitions
+  breaks: at least one frozen Figure-16 gate fails
+  first_order_status: structurally unchanged by absence of the V2 source network
+
+stopping_rules:
+  - stop the complete sweep if the contemporaneous offset-0 control fails
+  - otherwise run every route fraction regardless of an earlier candidate result
+  - do not start the NMDA sensitivity arm until this conductance-only result is sealed
+  - do not tune or add compensation after observing an outcome

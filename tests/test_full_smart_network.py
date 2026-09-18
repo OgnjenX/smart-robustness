@@ -3,6 +3,7 @@ from __future__ import annotations
 import warnings
 from collections import Counter
 
+import numpy as np
 import pytest
 
 brian = pytest.importorskip("brian2")
@@ -65,6 +66,53 @@ def test_full_network_projection_selector_is_exact_and_rejects_unknown_ids() -> 
     brian.start_scope()
     with pytest.raises(ValueError, match="unknown full-network projection IDs"):
         build_full_smart_network(projection_ids=frozenset({"missing"}), brian=brian)
+
+
+def test_full_network_accepts_explicit_topology_override_without_changing_default() -> None:
+    brian.start_scope()
+    brian.prefs.codegen.target = "numpy"
+    projection_id = "modeldb112923.projection.016"
+    sector = build_full_smart_network(
+        projection_ids=frozenset({projection_id}),
+        projection_topology_overrides={
+            projection_id: (
+                np.asarray([0], dtype=int),
+                np.asarray([1], dtype=int),
+                np.asarray([0.5], dtype=float),
+            )
+        },
+        brian=brian,
+    )
+    projection = sector.projections[projection_id]
+    assert np.array_equal(np.asarray(projection.i), np.asarray([0]))
+    assert np.array_equal(np.asarray(projection.j), np.asarray([1]))
+    np.testing.assert_allclose(np.asarray(projection.w), [0.5])
+    sector.network.run(0 * brian.ms)
+
+
+def test_full_network_topology_override_rejects_unknown_or_unselected_projection() -> None:
+    topology = (
+        np.asarray([0], dtype=int),
+        np.asarray([0], dtype=int),
+        np.asarray([1.0], dtype=float),
+    )
+    brian.start_scope()
+    with pytest.raises(ValueError, match="unknown full-network topology override IDs"):
+        build_full_smart_network(
+            projection_ids=frozenset(),
+            projection_topology_overrides={"missing": topology},
+            brian=brian,
+        )
+
+    brian.start_scope()
+    with pytest.raises(ValueError, match="topology overrides require selected projections"):
+        build_full_smart_network(
+            projection_ids=frozenset(),
+            projection_topology_overrides={
+                "modeldb112923.projection.016": topology
+            },
+            brian=brian,
+        )
 
 
 def test_full_network_forwards_population_factory_to_both_cortical_areas() -> None:

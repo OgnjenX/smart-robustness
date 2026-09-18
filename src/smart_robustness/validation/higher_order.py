@@ -241,6 +241,7 @@ def run_figure16_candidate(
     conventions=None,
     cpp_standalone_directory: str | Path | None = None,
     population_factory=None,
+    network_builder=None,
     brian=None,
 ) -> Figure16CandidateResult:
     """Run the caption's learned-stimulus prestimulus and recording epochs.
@@ -280,9 +281,10 @@ def run_figure16_candidate(
 
     protocol = protocol or Figure16Protocol()
     conventions = conventions or figure6_runtime_conventions()
+    resolved_network_builder = network_builder or build_full_smart_network
     brian.start_scope()
     brian.defaultclock.dt = protocol.integration_dt_ms * brian.ms
-    sector = build_full_smart_network(
+    sector = resolved_network_builder(
         conventions=conventions,
         population_factory=population_factory,
         brian=brian,

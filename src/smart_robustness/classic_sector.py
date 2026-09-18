@@ -5,7 +5,7 @@ from __future__ import annotations
 import hashlib
 import json
 import math
-from collections.abc import Callable
+from collections.abc import Callable, Mapping
 from dataclasses import asdict, dataclass, replace
 from enum import StrEnum
 from typing import Any
@@ -863,6 +863,9 @@ def build_full_smart_network(
     *,
     conventions: FirstOrderRuntimeConventions | None = None,
     projection_ids: frozenset[str] | None = None,
+    projection_topology_overrides: Mapping[
+        str, tuple[Any, Any, Any]
+    ] | None = None,
     population_factory: PopulationFactory | None = None,
     brian=None,
 ) -> FirstOrderSector:
@@ -884,6 +887,20 @@ def build_full_smart_network(
         unknown = projection_ids - known_projection_ids
         if unknown:
             raise ValueError(f"unknown full-network projection IDs: {sorted(unknown)}")
+    topology_overrides = dict(projection_topology_overrides or {})
+    unknown_overrides = set(topology_overrides) - known_projection_ids
+    if unknown_overrides:
+        raise ValueError(
+            "unknown full-network topology override IDs: "
+            f"{sorted(unknown_overrides)}"
+        )
+    if projection_ids is not None:
+        unselected_overrides = set(topology_overrides) - projection_ids
+        if unselected_overrides:
+            raise ValueError(
+                "topology overrides require selected projections: "
+                f"{sorted(unselected_overrides)}"
+            )
     facts = first_order_population_facts() + second_order_population_facts()
     facts_by_name = {fact.canonical_name: fact for fact in facts}
     populations: dict[str, CompartmentalPopulation] = {}
@@ -949,6 +966,7 @@ def build_full_smart_network(
                 transmitter_gate_convention=_transmitter_gate_convention_for_record(
                     record.id, conventions=conventions
                 ),
+                topology_override=topology_overrides.get(record.id),
             )
         else:
             projection = connect_modeldb_gap_junction(
@@ -958,6 +976,7 @@ def build_full_smart_network(
                     record.id, conventions=conventions
                 ),
                 ring_kernel_convention=conventions.ring_kernel_convention,
+                topology_override=topology_overrides.get(record.id),
             )
         projections[record.id] = projection
         network.add(projection)

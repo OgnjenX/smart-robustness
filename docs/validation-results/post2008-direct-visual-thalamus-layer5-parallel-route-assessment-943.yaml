@@ -1,0 +1,137 @@
+schema_version: 1
+artifact_id: 943
+artifact_type: sealed-parallel-route-behavior-assessment
+name: direct-visual-thalamus-layer5-parallel-route-behavior-v1
+date: 2026-09-18
+status: completed-exact-behavior-negative-qualitative-interval-localized
+
+raw_result:
+  path: results/direct-visual-thalamus-layer5-parallel-route-942.yaml
+  sha256: 692e118f7cb02a503250b8fa948009c9b1e6667c8aa62ce18f8d18681f1792ac
+  bytes: 27287
+  committed: false-generated-result
+
+execution:
+  study: configs/robustness/direct_visual_thalamus_layer5_parallel_route_v1.yaml
+  registration: docs/validation-results/post2008-direct-visual-thalamus-layer5-parallel-route-registration-941.yaml
+  runner: scripts/run_direct_visual_thalamus_layer5_parallel_route.py
+  preceding_figure6_assessment: docs/validation-results/post2008-direct-visual-thalamus-layer5-figure6-assessment-940.yaml
+  baseline_manifest: configs/baselines/classic_smart_calibrated_v1.yaml
+  baseline_manifest_fingerprint: 992fdd7c3bc9fa0f0d385b9e5a58ba317599357ca377145aba6f01c80d631cd2
+  runtime_fingerprint: 7e654528a99f0b25b7148260a8d52021f6443fb992b210729a2475ae3cfcdaa4
+  exact_reruns_per_arm: 2
+  all_arms_exact: true
+  parameter_selection_or_fitting_used: false
+
+control:
+  ratio: 0.0
+  exact_repeat: true
+  figure7_pass: true
+  figure10_pass: true
+  full_behavioral_pass: true
+  figure7:
+    match:
+      relay_events: 20
+      trn_events: 690
+      nonspecific_events: 4
+      trn_to_nonspecific_gaba_integral_ms: 1243.575428743736
+    mismatch:
+      relay_events: 3
+      trn_events: 611
+      nonspecific_events: 7
+      trn_to_nonspecific_gaba_integral_ms: 1182.9799912086974
+
+nonzero_grid:
+  - ratio: 0.03125
+    exact_repeat: true
+    figure7_pass: false
+    failed_gates: [mismatch_nonspecific_events]
+    match_nonspecific_events: 4
+    mismatch_nonspecific_events: 8
+    all_four_directional_relations_preserved: true
+    figure10_status: not-run-by-preregistered-stopping-rule
+  - ratio: 0.0625
+    exact_repeat: true
+    figure7_pass: false
+    failed_gates: [mismatch_nonspecific_events]
+    match_nonspecific_events: 4
+    mismatch_nonspecific_events: 8
+    all_four_directional_relations_preserved: true
+    figure10_status: not-run-by-preregistered-stopping-rule
+  - ratio: 0.125
+    exact_repeat: true
+    figure7_pass: false
+    failed_gates: [match_nonspecific_events, mismatch_nonspecific_events]
+    match_nonspecific_events: 5
+    mismatch_nonspecific_events: 8
+    all_four_directional_relations_preserved: true
+    figure10_status: not-run-by-preregistered-stopping-rule
+  - ratio: 0.25
+    exact_repeat: true
+    figure7_pass: false
+    failed_gates: [match_relay_events, match_nonspecific_events, mismatch_nonspecific_events]
+    match_relay_events: 15
+    match_nonspecific_events: 5
+    mismatch_nonspecific_events: 8
+    all_four_directional_relations_preserved: true
+    figure10_status: not-run-by-preregistered-stopping-rule
+  - ratio: 0.5
+    exact_repeat: true
+    figure7_pass: false
+    failed_gates: [match_nonspecific_events, mismatch_nonspecific_events]
+    match_nonspecific_events: 5
+    mismatch_nonspecific_events: 8
+    all_four_directional_relations_preserved: true
+    figure10_status: not-run-by-preregistered-stopping-rule
+  - ratio: 1.0
+    exact_repeat: true
+    figure7_pass: false
+    failed_gates: [match_more_trn_to_nonspecific_gaba, mismatch_nonspecific_events]
+    match_nonspecific_events: 4
+    mismatch_nonspecific_events: 8
+    match_trn_to_nonspecific_gaba_integral_ms: 1198.8912351925942
+    mismatch_trn_to_nonspecific_gaba_integral_ms: 1213.2487150979346
+    all_four_directional_relations_preserved: false
+    lost_direction: match_more_trn_to_nonspecific_gaba
+    figure10_status: not-run-by-preregistered-stopping-rule
+
+decision:
+  exact_figure7_passing_ratios: [0.0]
+  exact_full_behavioral_passing_ratios: [0.0]
+  source_consistent_exact_behavioral_interval: []
+  qualitative_figure7_directional_survival_ratios: [0.03125, 0.0625, 0.125, 0.25, 0.5]
+  equal_to_l4_boundary_qualitative_figure7_survival: false
+  nonzero_figure10_reset_status: unassessed-by-preregistered-prerequisite
+  classic_serial_order_status: failed-for-every-nonzero-ratio-in-artifact-940
+
+scientific_interpretation:
+  supported:
+    - >-
+      No tested nonzero direct relay-to-L5 strength preserves the exact frozen
+      Figure 7 event-count phenotype, even though all source-consistent ratios
+      through one half of the L4 reference strength preserve the registered
+      qualitative match-versus-mismatch directions.
+    - >-
+      The earliest exact deviation is narrow and reproducible: at 0.03125 and
+      0.0625, mismatch nonspecific output increases from the frozen target of
+      seven events to eight while the other seven Figure 7 gates pass.
+    - >-
+      At the equal-to-L4 stress-test boundary, the match condition no longer
+      produces greater integrated TRN-to-nonspecific GABA than mismatch, so the
+      full registered qualitative Figure 7 relation is not preserved there.
+    - >-
+      Combined with artifact 940, direct relay-to-L5 excitation is therefore
+      incompatible with exact classic causal order and exact Figure 7 behavior
+      across this sealed parameter-invariant grid.
+  not_supported:
+    - ART resonance or causal reset is abolished by biologically realistic direct L5 input.
+    - mismatch-driven nonspecific recruitment loses its qualitative direction below the equal-to-L4 boundary.
+    - Figure 10 reset survives or fails at any nonzero ratio; it was not authorized after Figure 7 failure.
+    - bounded compensation, direct L5 PV input, or cell-type-specific routing would restore exact behavior.
+    - the tested dimensionless ratios estimate an in-vivo synaptic-strength distribution.
+
+next_registered_question: >-
+  Close this excitatory direct-thalamus-to-L5 module without compensation and
+  proceed to a separately sourced, one-module-at-a-time active-apical-feedback
+  registration. Do not combine the two interventions until both single-factor
+  outcomes are sealed.

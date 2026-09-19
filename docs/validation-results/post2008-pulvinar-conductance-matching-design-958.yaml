@@ -1,0 +1,79 @@
+schema_version: 1
+artifact_id: 958
+artifact_type: isolated-transfer-design-registration
+date: 2026-09-19
+status: construction-and-analytic-tests-only
+network_execution_authorized: false
+frozen_baseline_modified: false
+predecessor: docs/validation-results/post2008-pulvinar-stp-release-assessment-957.yaml
+
+target_scope:
+  record: modeldb112923.projection.065
+  source: layer5_excitatory_v1
+  target: thalamic_relay_v2
+  compartment: proximal_dendrite
+  receptor: AMPA
+  source_catalog: src/smart_robustness/data/modeldb112923_full.yaml
+  alpha_tau_ms: 2.0
+  axonal_delay_ms: 0.1
+  port_density_mS_cm2: 0.2
+  serialized_weight: 6.0
+  modifiable: false
+  source_depletion_fraction: 0.5
+  source_recovery_ms: 100.0
+  boundary: Serialized weight is not a claim about every instantiated spatial connection.
+
+implementation_audit:
+  connector_file: src/smart_robustness/synapses.py
+  reset_file: src/smart_robustness/models/compartmental_hh.py
+  resource_scope: presynaptic-population-state-shared-by-outgoing-connections
+  baseline_delivery: two-most-recent-alpha-kernels-union-times-current-source-resource
+  dangers:
+    - Multiplying new release by existing transmitter would double-count depression.
+    - Disabling source depletion globally would change additional L5 output pathways.
+    - Replacing union with all-event addition changes temporal summation independently of STP.
+    - Normalized facilitation amplitudes can exceed one and invalidate a probabilistic union interpretation.
+  eventual_override_boundary: >-
+    A replacement must be projection-local, leaving the source transmitter
+    state and all other output projections unchanged. No override is implemented
+    or authorized by this design.
+
+first_event_reference:
+  component: src/smart_robustness/models/pulvinar_matching.py
+  initial_resource: 1.0
+  emission_time_ms: 0.0
+  time_coordinate: s-ms-after-arrival
+  kernel: exp(1)*(s/tau)*exp(-s/tau)-for-s-nonnegative
+  classic_resource: 1-epsilon*exp(-(s+delay)/T)
+  static_event: r_first-times-kernel
+  matching_rules:
+    peak: classic-peak-divided-by-r_first
+    area: classic-infinite-conductance-area-divided-by-r_first-and-static-kernel-area
+  assumptions:
+    - Continuous-time reference does not reproduce finite-step Brian event scheduling.
+    - Resource is depleted at emission, before the delayed alpha response.
+    - Peak and area gains are separate controls, not two simultaneous matching claims.
+    - Conductance area does not equal charge unless the driving force is fixed.
+    - Neither matching rule guarantees equal firing, information or train-integrated drive.
+
+next_isolated_assay:
+  required_before_execution: separate-runner-seal-and-output-protocol
+  input_protocol: all-five-frequencies-from-registration956-with-fixed-type2-parameters
+  record_raw:
+    - source-resource-history
+    - event-arrivals-and-release-history
+    - continuous-conductance-traces
+  factorization_controls:
+    - classic-union-with-continuous-classic-resource
+    - additive-kernels-with-continuous-classic-resource
+    - additive-kernels-with-emission-snapshot-classic-resource
+    - additive-kernels-with-type2-release-peak-matched
+    - additive-kernels-with-type2-release-area-matched
+  numerical_checks:
+    - Compare first-event peak and area against independent quadrature and maximization.
+    - Compare continuous reference against actual Brian connector scheduling at two steps.
+    - Verify exact repeats and preserve every condition without choosing favorable gains.
+  further_requirements:
+    - Add an isolated frozen relay voltage assay after conductance verification.
+    - Seal network progression and pathway controls separately before any SMART outcome.
+    - Do not claim this model-derived dynamic update resolves missing modern routing anatomy.

@@ -1,0 +1,57 @@
+schema_version: 1
+artifact_id: 956
+artifact_type: pre-outcome-isolated-release-assay-seal
+date: 2026-09-19
+predecessor: docs/validation-results/post2008-pulvinar-stp-isolated-design-955.yaml
+network_execution_authorized: false
+isolated_release_execution_authorized: true
+frozen_baseline_modified: false
+
+source_resolution:
+  doi: 10.3389/fncel.2021.787170
+  pdf_url: https://www.frontiersin.org/journals/cellular-neuroscience/articles/10.3389/fncel.2021.787170/pdf
+  pdf_sha256: a3ebfbdaaf7226385d55c6d0cd1bd46271a7f766117da529d1ef91139b0c15bf
+  verified_printed_page: 5
+  verification: rendered-page-visual-inspection-and-text-extraction
+  equation3: omega_f-decays-u;omega_d-recovers-x
+  equation4: update-u-then-release-u-times-x-then-deplete-x
+  decision: Use equation symbols and corresponding numeric values, not the conflicting prose rate labels.
+  remaining_limits:
+    - Methods citation inconsistency is not an author-confirmed correction.
+    - Source implementation code was not recovered from the inspected publisher page.
+    - Values are model-derived and are not mouse-specific physiological estimates.
+
+parameters:
+  type1:
+    utilization: 0.006
+    facilitation_decay_per_s: 0.48
+    resource_recovery_per_s: 1.5
+  type2:
+    utilization: 0.8
+    facilitation_decay_per_s: 2.0
+    resource_recovery_per_s: 3.33
+frequencies_hz: [0.5, 2, 5, 10, 20]
+events_per_train: 10
+repetitions: 2
+initial_state: {u: 0.0, x: 1.0}
+time_origin_s: 0.0
+design_choices:
+  - Ten events and exact repeat count are assay choices, not inferred physiological sample sizes.
+  - No stochastic variables; repeated execution is a reproducibility check, not independent biological replication.
+readouts:
+  - full-pre-and-post-event-state-history
+  - released-resource-fraction
+  - second-over-first-and-last-over-first-release
+integrity_checks:
+  - all-values-finite
+  - dimensionless-states-in-unit-interval
+  - resource-conservation-absolute-tolerance-1e-14
+  - exact-repeat-equality
+stopping_rule: Abort on seal, repeat or state-integrity failure; never adjust parameters from output.
+interpretation:
+  - This is an equation-level release assay, not an EPSP or network reproduction.
+  - Report all frequencies and both types, including any unexpected direction.
+  - No automatic promotion to SMART even if qualitative release directions agree.
+implementation_sha256:
+  scripts/run_pulvinar_stp_release.py: db6200dfe8e6e16e7bd58b6a476391cc0165a04a04023d2f53b7ac502adf639f
+  src/smart_robustness/models/pulvinar_stp.py: cffba31c086370b6da202699a61f0bde81429ab4a5ccf69011c7c27691727f29

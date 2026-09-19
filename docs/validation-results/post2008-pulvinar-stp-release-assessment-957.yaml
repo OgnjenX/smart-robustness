@@ -1,0 +1,52 @@
+schema_version: 1
+artifact_id: 957
+artifact_type: isolated-release-assessment
+date: 2026-09-19
+status: complete-equation-level-assay-not-network-validation
+registration: docs/validation-results/post2008-pulvinar-stp-release-registration-956.yaml
+sealed_commit: 35744d2
+raw_result: results/pulvinar-stp-release-956.yaml
+raw_sha256: 5bcf2d44777d96519c0ebd4134d154cb8af77d5cee6381abcc4daac77693311a
+network_execution_authorized: false
+frozen_baseline_modified: false
+software: {python: 3.11.9, numpy: 1.26.4, pyyaml: 6.0.3}
+
+verification:
+  conditions_expected: 10
+  conditions_completed: 10
+  repetitions_per_condition: 2
+  exact_repeats: 10
+  full_state_histories_retained: true
+  independently_recomputed_stored_states_and_ratios: true
+  registration_hash_verified: true
+  finite_bounded_resource_conserved: true
+  focused_tests_passed: 18
+  test_scope: synthetic-algebra-and-independent-Brian2-event-driven-implementation
+  full_repository_suite_run_this_checkpoint: false
+
+release_ratios:
+  - {terminal: type1, frequency_hz: 0.5, second_over_first: 1.3801831138354188, last_over_first: 1.6135322123324016}
+  - {terminal: type1, frequency_hz: 2, second_over_first: 1.7768578111984528, last_over_first: 4.106906268587869}
+  - {terminal: type1, frequency_hz: 5, second_over_first: 1.894554510713633, last_over_first: 6.092430212655145}
+  - {terminal: type1, frequency_hz: 10, second_over_first: 1.9373580506923755, last_over_first: 6.905821191664193}
+  - {terminal: type1, frequency_hz: 20, second_over_first: 1.9594596850707382, last_over_first: 7.2430271849971435}
+  - {terminal: type2, frequency_hz: 0.5, second_over_first: 1.002634456279154, last_over_first: 1.0026438675317595}
+  - {terminal: type2, frequency_hz: 2, second_over_first: 0.9110874652833798, last_over_first: 0.8983978787951067}
+  - {terminal: type2, frequency_hz: 5, second_over_first: 0.6679550723480988, last_over_first: 0.5843810002549126}
+  - {terminal: type2, frequency_hz: 10, second_over_first: 0.4964353071558456, last_over_first: 0.3495507196749871}
+  - {terminal: type2, frequency_hz: 20, second_over_first: 0.3811002694626491, last_over_first: 0.19102447138437897}
+
+interpretation:
+  - Type1 second and last release exceed first release at every tested frequency.
+  - Type2 second and last release are below first release at 2-20 Hz.
+  - Type2 at 0.5 Hz instead has a small increase; retain this exception without adjusting parameters.
+  - Exact repeats establish computational repeatability, not biological uncertainty.
+  - Algebraic release agrees with the stated component equations; published EPSP amplitudes were not reproduced here.
+  - No SMART resonance, reset, learning, spectral or routing outcome has been assessed by this assay.
+
+remaining_requirements:
+  - Source-specific voltage and conductance transfer checks before biological interpretation.
+  - Independently justified routing, compartments, delays and strength normalization.
+  - Separate any cross-species/model-derived assumption from measured modern visual anatomy.
+  - Preregister one-module network controls and staged SMART gates before execution.
+  - Complete the remaining apical, pulvinar, inhibitory-class, interaction and multi-seed program.

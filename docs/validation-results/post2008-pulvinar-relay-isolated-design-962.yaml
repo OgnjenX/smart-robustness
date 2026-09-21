@@ -1,0 +1,100 @@
+schema_version: 1
+artifact_id: 962
+artifact_type: pre-outcome-isolated-relay-design-registration
+date: 2026-09-21
+status: implementation-complete-execution-not-yet-sealed
+network_execution_authorized: false
+isolated_relay_execution_authorized: false
+frozen_baseline_modified: false
+predecessor: docs/validation-results/post2008-pulvinar-conductance-isolated-assessment-961.yaml
+
+scientific_question: >-
+  How do the five already factorized projection-065 conductance conventions
+  transform into current, voltage and spikes in the frozen SMART V2 relay cell?
+
+frozen_cell:
+  population: thalamic_relay_v2
+  source: second_order_population_facts-plus-frozen-classic-runtime-conventions
+  baseline_manifest: configs/baselines/classic_smart_calibrated_v1.yaml
+  compartments: [soma, proximal_dendrite, distal_dendrite]
+  targeted_port:
+    record: modeldb112923.projection.065
+    compiled_name: port_003
+    compartment: proximal_dendrite
+    receptor: AMPA
+    reversal_mV: 0.0
+    conductance_density_mS_cm2: 0.2
+    alpha_tau_ms: 2.0
+  all_other_synaptic_ports: present-silent-unchanged
+  external_inputs: present-silent-unchanged
+  injection_inputs: present-silent-unchanged
+
+drive:
+  controls:
+    - classic_union_continuous_resource
+    - additive_continuous_resource
+    - additive_emission_snapshot
+    - type2_peak_matched
+    - type2_area_matched
+  implementation: src/smart_robustness/models/pulvinar_conductance.py
+  projection_gate_scale: 6.0
+  scale_interpretation: archived-projection-peak-weight
+  scale_boundary: >-
+    This is a representative peak-weight single-input assay, not an average
+    Gaussian connection, total convergent pathway strength, or matched firing-rate fit.
+  frequencies_hz: [0.5, 2, 5, 10, 20]
+  events_per_train: 10
+  dt_ms: [0.01, 0.005]
+  repetitions_per_condition: 2
+  fitting_from_relay_or_network_outcomes: prohibited
+
+timeline:
+  unrecorded_settling_ms: 900.0
+  recorded_rest_ms: [900.0, 1000.0]
+  first_emission_ms: 1000.0
+  response_recording: >-
+    Record from each emission through 100.1 ms after that emission, merging
+    touching or overlapping windows. Simulate all omitted quiet gaps with the
+    monitor disabled. Spike monitoring remains active for the complete run.
+  response_tail_basis: 0.1-ms-delay-plus-100-ms-after-arrival
+
+raw_outputs:
+  - absolute-physical-time-ms
+  - recording-segment-id
+  - expected-and-realized-projection-gate
+  - soma-proximal-and-distal-voltage-mV
+  - projection065-current-pA
+  - all-spike-times-and-cell-indices
+  - frequency-and-time-step
+summary_per_control:
+  - resting-soma-mean-and-peak-to-peak-mV
+  - response-soma-peak-and-minimum-mV
+  - response-proximal-peak-mV
+  - positive-soma-area-relative-to-own-rest-mV-ms
+  - inward-current-charge-pA-ms
+  - response-spike-count-and-first-latency-ms
+
+integrity_prerequisites_each_step:
+  - all-recorded-values-finite
+  - realized-gate-exactly-equals-sealed-input-at-every-retained-sample
+  - five-cells-exactly-identical-during-recorded-rest
+  - maximum-rest-soma-peak-to-peak-at-most-0.1-mV
+  - zero-spikes-during-recorded-rest
+numerical_gate_coarse_vs_fine:
+  voltage_peak_absolute_tolerance_mV: 0.5
+  positive_soma_area_relative_tolerance: 0.01
+  inward_current_charge_relative_tolerance: 0.01
+  area_and_charge_denominator_floor: 1.0
+  response_spike_count: exact
+  first_response_spike_latency_absolute_tolerance_ms: 0.05
+  missing_latency_policy: pass-only-if-both-missing
+  gate_scope: every-frequency-and-every-control
+
+progression_and_interpretation:
+  - Execute and report every control regardless of its direction or spike count.
+  - A numerical failure blocks relay-transfer interpretation at that frequency; it does not authorize retuning.
+  - A numerical pass establishes implementation stability, not biological validity or SMART robustness.
+  - Compare realized charge explicitly; first-event peak or area matching is not assumed to match train drive.
+  - Do not select peak- versus area-matched type2 after these outcomes.
+  - No result from this assay directly authorizes a network claim.
+  - A later network registration must preserve projection-local replacement and all other L5 outputs.

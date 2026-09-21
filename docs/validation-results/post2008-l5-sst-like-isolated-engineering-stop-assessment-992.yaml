@@ -1,0 +1,80 @@
+schema_version: 1
+artifact_id: 992
+artifact_type: layer5-sst-like-isolated-recruitment-engineering-stop-assessment
+date: 2026-09-21
+status: representation-false-negative-confirmed-corrected-reexecution-not-yet-authorized
+registration: docs/validation-results/post2008-l5-sst-like-isolated-recruitment-registration-989.yaml
+seal: docs/validation-results/post2008-l5-sst-like-isolated-recruitment-seal-990.yaml
+implementation_commit: 3267d60
+raw_result: results/l5-sst-like-isolated-recruitment-991.yaml
+raw_result_sha256: b3465d0d3fe6c637616b25688cb3bfa4a2068f6ca7629d05d220f81027f2cd14
+raw_result_bytes: 1789
+raw_trace: results/l5-sst-like-isolated-recruitment-991/delay1-resource0p125-dt0p01-repeat0.npz
+raw_trace_sha256: 02e2b73dfd1e5397763112884fdf3ea9bf460981db2f7e71402f73625c082b6d
+raw_trace_bytes: 236544
+checkpoint_resume_reverified: true
+result_hash_stable_after_resume: true
+corrected_execution_authorized: false
+nonzero_network_execution_authorized: false
+frozen_baseline_modified: false
+
+stopped_run:
+  key: delay1-resource0p125-dt0p01-repeat0
+  delay_ms: 1.0
+  resource_fraction: 0.125
+  total_conductance_nS: 24.160811001514006
+  dt_ms: 0.01
+  repetition: 0
+  source_event_count: 5
+  delivery_count: 5
+  target_spike_count: 0
+  all_numeric_arrays_finite: true
+  requested_total_conductance_nS: 24.160811001514006
+  realized_total_conductance_nS: 24.16081100151401
+  resource_absolute_error_nS: 3.552713678800501e-15
+  peak_distal_gate: 0.9999999965199291
+  peak_absolute_distal_current_pA: 362.4121637614903
+  clamp_maximum_absolute_error_mV: 0.0
+  only_failed_gate: source_times_exact
+
+diagnosis:
+  configured_emission_times_ms: [50.0, 70.0, 90.0, 110.0, 130.0]
+  recorded_emission_times_ms: [50.0, 70.0, 90.00000000000001, 110.00000000000001, 130.0]
+  recorded_minus_configured_ms: [0.0, 0.0, 1.4210854715202004e-14, 1.4210854715202004e-14, 0.0]
+  maximum_absolute_difference_ms: 1.4210854715202004e-14
+  configured_clock_ticks_at_dt_0p01_ms: [5000, 7000, 9000, 11000, 13000]
+  recorded_clock_ticks_at_dt_0p01_ms: [5000, 7000, 9000, 11000, 13000]
+  exact_clock_tick_match: true
+  cause: >-
+    Brian scheduled and delivered every event on the registered clock tick,
+    but converting its dimensioned binary floating-point times back to
+    milliseconds does not preserve bitwise equality with every decimal Python
+    literal. Array bit equality therefore tested serialization representation,
+    not exact event scheduling.
+
+classification:
+  scientific_result: not-reached
+  biological_failure: false
+  numerical_failure: false
+  resource_failure: false
+  event_delivery_failure: false
+  engineering_failure: measurement-representation-false-negative
+
+decision:
+  - Preserve the stopped raw result and trace unchanged.
+  - Do not relax the event schedule or introduce an outcome-sized tolerance.
+  - Redefine exact source timing as exact integer simulation-clock ticks, the native discrete-time event identity.
+  - Record the raw float offset as a diagnostic but do not gate on float bit identity after unit conversion.
+  - Patch only the timing metric and its tests, then create a new hash seal and use a new raw-result target.
+  - Keep every biological parameter, grid point, event count, delay, duration, clamp, time step and convergence tolerance unchanged.
+
+prohibited_actions:
+  - Do not overwrite or continue result 991.
+  - Do not interpret the first run as evidence for or against SST-like preservation of SMART behavior.
+  - Do not alter route resource, delay, kinetics, event train, target, clamp or numerical thresholds from this outcome.
+  - Do not execute a corrected run before the addendum, implementation patch, tests and new seal are committed.
+  - Do not execute a nonzero SMART network.
+
+next_step: >-
+  Register the clock-tick identity addendum, implement only that representation
+  correction with regression tests, and seal a fresh run targeting result 995.

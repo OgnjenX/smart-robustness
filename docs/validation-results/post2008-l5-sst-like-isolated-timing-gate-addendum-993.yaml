@@ -1,0 +1,58 @@
+schema_version: 1
+artifact_id: 993
+artifact_type: pre-outcome-layer5-sst-like-isolated-timing-gate-registration-addendum
+date: 2026-09-21
+status: registered-before-corrected-implementation-and-reexecution
+parent_registration: docs/validation-results/post2008-l5-sst-like-isolated-recruitment-registration-989.yaml
+engineering_stop_assessment: docs/validation-results/post2008-l5-sst-like-isolated-engineering-stop-assessment-992.yaml
+corrected_execution_authorized: false
+nonzero_network_execution_authorized: false
+frozen_baseline_modified: false
+
+scope:
+  changed_field: per_run_gates.exact_source_event_delivery.source_times_exact
+  unchanged_fields:
+    - source emission times and count
+    - route construction and last-two-arrival union gate
+    - all 12 delay/resource points
+    - both dt values and two repetitions
+    - duration and voltage clamps
+    - conductance normalization gate
+    - finite-state, nonzero-current and no-target-spike gates
+    - exact raw-repeat gate
+    - all numerical convergence metrics and tolerances
+
+corrected_definition:
+  name: source_clock_ticks_exact
+  recorded_ticks: rint(recorded_source_times_ms / registered_dt_ms).astype(int64)
+  expected_ticks: rint(registered_emission_times_ms / registered_dt_ms).astype(int64)
+  pass_rule: >-
+    Recorded and expected integer tick arrays must be exactly equal in shape,
+    dtype and value, and source indices must all equal the registered source
+    index zero. Event and delivery counts must still both equal five.
+  raw_float_diagnostic:
+    record_maximum_absolute_source_time_error_ms: true
+    pass_threshold: none
+  justification: >-
+    SpikeGeneratorGroup operates on the simulator clock. Integer tick identity
+    is therefore the exact event-scheduling invariant, whereas bitwise equality
+    after converting dimensioned binary floats to decimal milliseconds is not.
+    This definition has no empirical tolerance and is independent of the
+    observed 1.42e-14-ms serialization offset.
+
+regression_contracts:
+  - the preserved result-991 source times map exactly to ticks [5000, 7000, 9000, 11000, 13000] at dt 0.01 ms
+  - a source event displaced by one full clock tick fails
+  - a nonzero source index fails
+  - missing, duplicate or extra source or delivered events fail
+  - all non-timing metrics reconstructed from the preserved trace remain unchanged
+
+corrected_result_target: results/l5-sst-like-isolated-recruitment-corrected-995.yaml
+
+stopping_rules:
+  - Commit this addendum before changing metric code.
+  - Change only timing identity, diagnostics and directly associated tests.
+  - Run focused and full verification, then commit a new hash seal before reexecution.
+  - Preserve result 991 and its trace as the engineering-stop record.
+  - Stop without tuning on any corrected-run engineering or convergence failure.
+  - Do not construct or observe a SMART network under this addendum.

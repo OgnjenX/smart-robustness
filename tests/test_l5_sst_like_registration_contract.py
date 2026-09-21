@@ -78,3 +78,16 @@ def test_isolated_recruitment_design_fixes_all_pre_outcome_choices() -> None:
     assert registration["promotion"]["does_not_authorize"].startswith(
         "nonzero-network-execution"
     )
+
+
+def test_timing_gate_addendum_changes_only_representation_identity() -> None:
+    addendum = _yaml(
+        "docs/validation-results/"
+        "post2008-l5-sst-like-isolated-timing-gate-addendum-993.yaml"
+    )
+    assert addendum["corrected_execution_authorized"] is False
+    assert addendum["scope"]["changed_field"].endswith("source_times_exact")
+    definition = addendum["corrected_definition"]
+    assert definition["name"] == "source_clock_ticks_exact"
+    assert definition["raw_float_diagnostic"]["pass_threshold"] == "none"
+    assert len(addendum["scope"]["unchanged_fields"]) == 9

@@ -232,6 +232,32 @@ def exact_trace_repeat(first: dict[str, np.ndarray], second: dict[str, np.ndarra
     )
 
 
+def source_timing_gate(arrays: dict[str, np.ndarray]) -> dict[str, Any]:
+    """Test exact discrete-clock identity without comparing converted float bits."""
+
+    dt_ms = float(arrays["dt_ms"])
+    source_times = np.asarray(arrays["source_spike_times_ms"], dtype=float)
+    source_indices = np.asarray(arrays["source_spike_indices"], dtype=np.int64)
+    recorded_ticks = np.rint(source_times / dt_ms).astype(np.int64)
+    expected_ticks = np.rint(EMISSIONS_MS / dt_ms).astype(np.int64)
+    expected_indices = np.zeros(EXPECTED_EVENT_COUNT, dtype=np.int64)
+    ticks_exact = bool(np.array_equal(recorded_ticks, expected_ticks))
+    indices_exact = bool(np.array_equal(source_indices, expected_indices))
+    maximum_float_error_ms = (
+        float(np.max(np.abs(source_times - EMISSIONS_MS)))
+        if source_times.shape == EMISSIONS_MS.shape
+        else None
+    )
+    return {
+        "recorded_source_ticks": recorded_ticks.tolist(),
+        "expected_source_ticks": expected_ticks.tolist(),
+        "source_clock_ticks_exact": ticks_exact,
+        "source_indices_exact": indices_exact,
+        "maximum_float_serialization_error_ms": maximum_float_error_ms,
+        "pass": ticks_exact and indices_exact,
+    }
+
+
 def summarize(arrays: dict[str, np.ndarray]) -> dict[str, Any]:
     """Compute only the preregistered engineering metrics and gates."""
 
@@ -256,11 +282,11 @@ def summarize(arrays: dict[str, np.ndarray]) -> dict[str, Any]:
         compartment: float(np.max(np.abs(values - CLAMP_MV)))
         for compartment, values in voltages.items()
     }
-    source_exact = bool(np.array_equal(source_times, EMISSIONS_MS))
+    timing = source_timing_gate(arrays)
     resource_error = abs(realized - requested)
     per_run_pass = bool(
         finite
-        and source_exact
+        and timing["pass"]
         and source_times.size == EXPECTED_EVENT_COUNT
         and delivery_count == EXPECTED_EVENT_COUNT
         and resource_error <= RESOURCE_ABSOLUTE_TOLERANCE_NS
@@ -273,7 +299,8 @@ def summarize(arrays: dict[str, np.ndarray]) -> dict[str, Any]:
         "trace_sha256": trace_sha256(arrays),
         "all_numeric_arrays_finite": finite,
         "source_event_count": int(source_times.size),
-        "source_times_exact": source_exact,
+        "source_times_exact": timing["pass"],
+        "source_timing": timing,
         "delivery_count": delivery_count,
         "target_spike_count": int(
             np.asarray(arrays["target_spike_times_ms"]).size

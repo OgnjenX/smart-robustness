@@ -20,6 +20,7 @@ from smart_robustness.validation.l5_sst_like_isolated import (
     load_trace,
     numerical_gate,
     save_trace,
+    source_timing_gate,
     summarize,
 )
 
@@ -96,6 +97,33 @@ def test_synthetic_metrics_repeat_and_convergence_contract() -> None:
     gate = numerical_gate(metrics, metrics)
     assert gate["pass"] is True
     assert gate["relative_tolerances"] == CONVERGENCE_RELATIVE_TOLERANCES
+
+
+def test_timing_gate_uses_exact_clock_ticks_not_converted_float_bits() -> None:
+    arrays = synthetic_arrays()
+    arrays["source_spike_times_ms"] = np.array(
+        [50.0, 70.0, 90.00000000000001, 110.00000000000001, 130.0]
+    )
+    gate = source_timing_gate(arrays)
+    assert gate["recorded_source_ticks"] == [5000, 7000, 9000, 11000, 13000]
+    assert gate["expected_source_ticks"] == [5000, 7000, 9000, 11000, 13000]
+    assert gate["source_clock_ticks_exact"] is True
+    assert gate["source_indices_exact"] is True
+    assert gate["pass"] is True
+    assert gate["maximum_float_serialization_error_ms"] == pytest.approx(
+        1.4210854715202004e-14
+    )
+
+
+def test_timing_gate_rejects_one_tick_or_wrong_source_index() -> None:
+    arrays = synthetic_arrays()
+    arrays["source_spike_times_ms"] = arrays["source_spike_times_ms"].copy()
+    arrays["source_spike_times_ms"][2] += float(arrays["dt_ms"])
+    assert source_timing_gate(arrays)["pass"] is False
+    arrays = synthetic_arrays()
+    arrays["source_spike_indices"] = arrays["source_spike_indices"].copy()
+    arrays["source_spike_indices"][2] = 1
+    assert source_timing_gate(arrays)["pass"] is False
 
 
 def test_trace_archive_is_exclusive_and_detects_tampering(tmp_path: Path) -> None:

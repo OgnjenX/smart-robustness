@@ -1,0 +1,111 @@
+schema_version: 1
+artifact_id: 961
+artifact_type: isolated-conductance-factorization-assessment
+date: 2026-09-21
+status: complete-component-assay-numerical-pass-threshold-not-preregistered
+registration: docs/validation-results/post2008-pulvinar-conductance-isolated-registration-959a.yaml
+sealed_commit: 475db70
+raw_result: results/pulvinar-conductance-isolated-960a.yaml
+raw_result_sha256: ddc91d86043070a5e20c4d9b79e74618a112fc776c0ed6e2890001d665dc897e
+raw_archive_directory: results/pulvinar-conductance-isolated-960a
+raw_archive_total_bytes: 259868927
+network_execution: false
+frozen_baseline_modified: false
+
+execution:
+  conditions_expected: 10
+  conditions_completed: 10
+  exact_raw_repeats: 10
+  raw_archives_hash_verified: 10
+  raw_arrays_and_summaries_independently_recomputed: true
+  finite_nonnegative_traces: true
+  complete_frequencies_hz: [0.5, 2, 5, 10, 20]
+  complete_dt_ms: [0.01, 0.005]
+  focused_tests_passed: 48
+  focused_test_scope: >-
+    STP algebra, independent Brian event implementation, first-event matching,
+    conductance factorization, Brian source-resource timing, and runner construction.
+  full_repository_suite_run_this_checkpoint: false
+
+time_step_comparison:
+  metric: maximum-relative-full-train-area-difference-across-five-controls
+  coarse_dt_ms: 0.01
+  fine_dt_ms: 0.005
+  values_by_frequency:
+    0.5: 1.5624983725550678e-06
+    2: 1.5624983722781719e-06
+    5: 1.5624983724084866e-06
+    10: 1.562498372713166e-06
+    20: 1.5624983725516996e-06
+  classification: descriptive-convergence-only
+  reason: >-
+    Registration959/959a required a comparison but omitted a prospective
+    numerical acceptance threshold. The observed differences may not be used
+    to choose a retroactive threshold or claim a preregistered numerical pass.
+
+fine_step_full_train_area_ratios_to_classic:
+  - frequency_hz: 0.5
+    additive_continuous: 1.0
+    emission_snapshot: 1.9234617497044522
+    type2_peak_matched: 0.9842350237112428
+    type2_area_matched: 1.0023785175795394
+  - frequency_hz: 2
+    additive_continuous: 1.0
+    emission_snapshot: 1.9230127708391676
+    type2_peak_matched: 0.8959709963449803
+    type2_area_matched: 0.9124874216770729
+  - frequency_hz: 5
+    additive_continuous: 1.0
+    emission_snapshot: 1.9133157628002635
+    type2_peak_matched: 0.6634081383644649
+    type2_area_matched: 0.6756374750580608
+  - frequency_hz: 10
+    additive_continuous: 1.0
+    emission_snapshot: 1.8878387781118795
+    type2_peak_matched: 0.5174172423988739
+    type2_area_matched: 0.5269553672762194
+  - frequency_hz: 20
+    additive_continuous: 1.0000000001993805
+    emission_snapshot: 1.8397664382990297
+    type2_peak_matched: 0.4378419102708453
+    type2_area_matched: 0.44591313495082885
+
+factorization_findings:
+  temporal_summation:
+    result: >-
+      Union and additive-continuous traces are identical through 10 Hz. At
+      20 Hz their maximum gate difference is 1.7123569229227087e-10 and area
+      difference is 3.6953371068513435e-09 ms.
+    interpretation: >-
+      With a 2-ms alpha kernel and at most 20-Hz input, changing only the
+      summation rule is numerically negligible in this isolated protocol.
+  depletion_timing:
+    result: >-
+      Emission-snapshot area is 1.84-1.92 times classic continuous-resource
+      area, despite identical source depletion parameters.
+    interpretation: >-
+      Event/resource ordering is a large independent intervention and must be
+      held fixed or represented as its own control in relay and network assays.
+  type2_dynamics:
+    result: >-
+      First-event peak/area matching does not equalize full-train drive. Both
+      type2 arms lose area progressively with frequency; at 20 Hz they retain
+      approximately 43.8% and 44.6% of classic area.
+    interpretation: >-
+      Any later circuit effect could arise from reduced realized drive rather
+      than the categorical label driver/depressing. Matched-input controls must
+      measure residual drive rather than assume first-event matching suffices.
+
+claims_not_supported:
+  - No EPSP, relay voltage, relay spike, information-routing, oscillation, resonance or reset result was measured.
+  - No source-derived modern mouse conductance strength or delay was established.
+  - No type2 arm is selected as preferred based on these outcomes.
+  - No SMART network execution is authorized by this assessment alone.
+  - No preregistered numerical convergence pass is claimed.
+
+next_requirements:
+  - Prospectively define numerical acceptance for a relay-voltage assay.
+  - Include classic-continuous, snapshot, peak-matched and area-matched controls; additive-continuous may remain as a verified summation sentinel.
+  - Measure realized current, voltage, spikes and residual drive under identical frozen relay parameters.
+  - Keep projection-local replacement separate from the source's other outgoing pathways.
+  - Seal network progression, seeds and gates only after isolated relay results are assessed.

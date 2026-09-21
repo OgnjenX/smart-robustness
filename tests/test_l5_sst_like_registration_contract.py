@@ -91,3 +91,36 @@ def test_timing_gate_addendum_changes_only_representation_identity() -> None:
     assert definition["name"] == "source_clock_ticks_exact"
     assert definition["raw_float_diagnostic"]["pass_threshold"] == "none"
     assert len(addendum["scope"]["unchanged_fields"]) == 9
+
+
+def test_stage3_registration_fixes_complete_grid_and_classifications() -> None:
+    registration = _yaml(
+        "docs/validation-results/"
+        "post2008-l5-sst-like-behavioral-grid-registration-997.yaml"
+    )
+    assert registration["network_execution_authorized"] is False
+    grid = registration["fixed_grid"]
+    assert grid["order"] == "delay-major-then-resource-fraction-ascending"
+    assert grid["delays_ms"] == [1.0, 3.0, 7.0]
+    assert grid["resource_fractions"] == [0.125, 0.25, 0.5, 1.0]
+    assert grid["point_count"] == 12
+    assert grid["repetitions_per_point"] == 2
+    assert grid["execute_every_point"] is True
+    assert grid["early_stop_on_behavioral_failure"] is False
+    contract = registration["execution_contract"]
+    assert contract["figure7"]["required_for_every_repetition"] is True
+    assert contract["figure10"][
+        "required_only_if_same-repetition-figure7-passes"
+    ] is True
+    assert contract["exact_repeat"]["required"] is True
+    assert registration["prospective_region_classification"] == {
+        "invariant_region": "all 12 points are exact_survival",
+        "robust_region": (
+            "all 12 points survive and at least one is robust_changed_survival"
+        ),
+        "mixed_region": (
+            "at least one point survives and at least one point is failure"
+        ),
+        "no_survival_in_registered_region": "all 12 points are failure",
+        "indeterminate": "any point is incomplete or has an engineering_stop",
+    }

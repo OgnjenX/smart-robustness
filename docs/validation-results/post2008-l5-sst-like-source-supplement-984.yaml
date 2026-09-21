@@ -1,0 +1,95 @@
+schema_version: 1
+artifact_id: 984
+artifact_type: post2008-layer5-sst-like-functional-route-source-supplement
+date: 2026-09-21
+status: source-constraint-supplement-complete-no-network-outcomes-observed
+parent_source_audit: docs/validation-results/post2008-inhibitory-cell-class-source-audit-970.yaml
+representation_audit: docs/validation-results/post2008-sst-like-routing-representation-audit-983.yaml
+network_execution_authorized: false
+frozen_baseline_modified: false
+
+scope: >-
+  Identify one source-supported cortical layer and functional SST-like motif
+  that can be represented as a new opt-in module after the frozen SMART
+  representation proved unable to express a routing-only distal inhibition arm.
+
+primary_evidence:
+  - citation: >-
+      Wu SJ, et al. (2023). Cortical somatostatin interneuron subtypes form
+      cell-type-specific circuits. Neuron 111:2675-2692.e9.
+    doi: 10.1016/j.neuron.2023.05.032
+    pmid: 37390821
+    pmcid: PMC11645782
+    url: https://pmc.ncbi.nlm.nih.gov/articles/PMC11645782/
+    preparation: mouse-S1-and-V1-genetic-mapping-optogenetics-and-tracing
+    supported:
+      - In V1, distinct SST subtypes have stereotyped laminar and axonal projection patterns.
+      - L5 PT pyramidal neurons receive strong input from SST-Calb2 and SST-Myh8 subtypes.
+      - SST-Calb2 and SST-Myh8 target distinct dendritic domains of L5 PT neurons.
+      - Tracing supports reciprocal, subtype-selective connectivity between L5 excitatory neurons and SST subtypes, including the SST-Myh8/L5-PT motif.
+    translation_limits:
+      - The study distinguishes multiple SST subtypes; it does not justify one universal SST intrinsic model.
+      - Synaptic puncta, tracing fractions and optogenetic responses are not SMART-compatible conductance weights, delays, population counts or spatial kernels.
+      - The frozen SMART L5 population is not separated into PT and IT subclasses.
+
+  - citation: >-
+      Gamlin CR, et al. (2025). Connectomics of predicted Sst transcriptomic
+      types in mouse visual cortex. Nature 640:497-505.
+    doi: 10.1038/s41586-025-08805-6
+    pmid: 40205210
+    pmcid: PMC11981948
+    url: https://www.nature.com/articles/s41586-025-08805-6
+    preparation: mouse-VISp-MICrONS-connectomics-and-Patch-seq
+    supported:
+      - V1 Martinotti cells comprise multiple predicted Sst types with distinct output-connectivity patterns.
+      - Sst type and morphology constrain laminar and postsynaptic targeting rather than defining a homogeneous blanket of inhibition.
+    translation_limits:
+      - Anatomical synapse counts do not directly specify physiological conductance, event timing or recruitment.
+      - The sampled volume and predicted type assignments cannot define a universal SMART population prevalence.
+
+corroborating_non_v1_functional_evidence:
+  citation: >-
+    Hilscher MM, Leao RN, Edwards SJ, Leao KE, Kullander K (2017).
+    Chrna2-Martinotti Cells Synchronize Layer 5 Type A Pyramidal Cells via
+    Rebound Excitation. PLoS Biology 15:e2001392.
+  doi: 10.1371/journal.pbio.2001392
+  url: https://journals.plos.org/plosbiology/article?id=10.1371/journal.pbio.2001392
+  supported:
+    - L5 Chrna2-Martinotti cells project to layer 1 and target distal dendrites of thick-tufted L5 pyramidal cells.
+    - The reciprocal L5 pyramidal-Martinotti circuit can reset and synchronize pyramidal firing in a frequency-dependent manner.
+  boundary: >-
+    The paired-recording physiology is not a V1-specific parameter source and
+    may not be imported quantitatively. It supports only the plausibility of a
+    collapsed recurrent feedback-gating motif and relevant timing outcomes.
+
+translation_decision:
+  selected_layer: layer5
+  selected_function: recurrent-SST-like-distal-feedback-gating
+  selected_target: layer5_excitatory_v1.distal_dendrite
+  first_representation: collapsed-disynaptic-functional-route
+  rationale:
+    - L5 is the only represented SMART cortical output layer with a distal compartment and direct relevance to reset/search behavior.
+    - V1 evidence supports reciprocal L5 excitatory/SST motifs and subtype-specific L5 dendritic targeting.
+    - Collapsing the unrepresented interneuron into a delayed feedback route isolates function without pretending that unknown prevalence or intrinsic parameters are measured.
+  not_claimed:
+    - exact SST subtype identity
+    - explicit SST intrinsic dynamics
+    - PT-versus-IT selectivity
+    - biological population prevalence
+    - source-derived conductance, delay or spatial kernel
+
+parameter_policy:
+  - Unknown delay and inhibitory resource must be a bounded preregistered region, not a fitted point.
+  - The region is a computational sensitivity map anchored to existing SMART units, not a biological confidence interval.
+  - Topology must use the smallest same-index functional unit in the first arm; unmeasured lateral spread is deferred.
+  - Every tested point and failure must be reported; no result-guided replacement point is permitted.
+
+decision:
+  collapsed_l5_sst_like_design_authorized: true
+  network_execution_authorized: false
+  explicit_sst_population_authorized: false
+  vip_interaction_authorized: false
+  next_step: >-
+    Register the exact-null scaffold and full delay/resource grid before
+    implementation. First prove that a zero-resource opt-in module is exactly
+    identical to the archived legacy behavior.

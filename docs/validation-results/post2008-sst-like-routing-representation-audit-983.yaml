@@ -1,0 +1,91 @@
+schema_version: 1
+artifact_id: 983
+artifact_type: post2008-sst-like-routing-representation-feasibility-audit
+date: 2026-09-21
+status: no-valid-routing-only-sst-arm-explicit-extension-required
+source_audit: docs/validation-results/post2008-inhibitory-cell-class-source-audit-970.yaml
+predecessor: docs/validation-results/post2008-layer4-pv-like-somatic-routing-assessment-982.yaml
+network_execution_authorized: false
+frozen_baseline_modified: false
+
+question: >-
+  Can an SST-like distal-dendritic cortical inhibition experiment be expressed
+  as the same one-field target-compartment transformation used for the
+  projection-036 PV-like experiment, while preserving source population,
+  target population, topology, event train and all synaptic resource fields?
+
+authoritative_inventory:
+  represented_cortical_inhibitory_populations:
+    - layer23_inhibitory_v1
+    - layer4_inhibitory_v1
+  represented_cortical_gaba_outputs_to_excitatory_cells:
+    - id: modeldb112923.projection.031
+      source: layer23_inhibitory_v1
+      target: layer23_excitatory_v1
+      registered_target: proximal_dendrite
+      target_compartments: [soma, proximal_dendrite]
+      distal_target_available: false
+    - id: modeldb112923.projection.036
+      source: layer4_inhibitory_v1
+      target: layer4_excitatory_v1
+      registered_target: proximal_dendrite
+      target_compartments: [soma, proximal_dendrite]
+      distal_target_available: false
+  cortical_excitatory_populations_with_distal_compartments:
+    - population: layer5_excitatory_v1
+      compartments: [soma, proximal_dendrite, distal_dendrite]
+      represented_cortical_gaba_input: false
+    - population: layer6ii_excitatory_v1
+      compartments: [soma, proximal_dendrite, distal_dendrite]
+      represented_cortical_gaba_input: false
+  excluded_non_sst_route:
+    id: modeldb112923.projection.049
+    reason: >-
+      This is a thalamic-reticular-to-thalamic-nonspecific distal GABA route,
+      not a cortical SST source or a cortical pyramidal target.
+
+feasibility_result:
+  existing_output_with_existing_distal_target: false
+  one_field_target_reassignment_possible: false
+  exact_resource_conserving_routing_only_arm_possible: false
+  reason: >-
+    The two represented cortical inhibitory outputs target pyramidal models
+    that do not contain a distal dendrite. The pyramidal models that contain a
+    distal dendrite have no represented cortical GABA input. Any SST-like
+    network arm must therefore add at least a source population or event
+    process and a new projection, and must independently specify recruitment,
+    topology, prevalence and resource allocation.
+
+scientific_boundary:
+  - The isolated target-location assay established a non-null distal-versus-proximal membrane effect in an L5 pyramidal cell, but it did not supply an SST source or network route.
+  - Relabeling layer4_inhibitory_v1 or layer23_inhibitory_v1 as SST would be unsupported because neither target cell has a distal compartment and the archived source does not molecularly identify either population.
+  - Redirecting projection 031 or 036 to L5 would simultaneously change target population, topology and functional pathway, so it would not be a controlled routing-only test.
+  - Reusing thalamic projection 049 would confound cortical cell class with a thalamic route and is prohibited.
+  - This is a limitation of the frozen SMART representation, not evidence that SST dendritic gating is absent or unimportant biologically.
+
+decision:
+  sst_routing_only_network_execution_authorized: false
+  vip_disinhibitory_network_execution_authorized: false
+  explicit_functional_class_extension_design_authorized: true
+  required_next_design_features:
+    - introduce the smallest opt-in SST-like source/event representation without editing the classic assembly path
+    - target one represented distal pyramidal compartment in one layer only
+    - preregister recruitment, topology, delay, kinetics, cell/event prevalence and a bounded resource grid independently of network outcomes
+    - include an exact-null extension arm proving dormant extension identity
+    - use matched-input and matched-total-resource controls across the prospective grid
+    - classify the full preregistered region rather than selecting a successful point
+    - defer VIP-like disinhibition until the SST-like target representation and recruitment protocol are sealed
+
+prohibited_actions:
+  - Do not force a distal port onto a cell model that has no distal compartment.
+  - Do not infer an SST source identity from a generic SMART inhibitory population name.
+  - Do not create a single unregistered weight or cell-count choice from observed SMART behavior.
+  - Do not treat an explicit new SST-like projection as a one-factor retargeting experiment.
+  - Do not combine the SST representation extension with PV-like, VIP-like or other modern modules in its first behavioral test.
+
+next_step: >-
+  Preregister a parameter-region design for one explicit functional SST-like
+  extension, beginning with an exact-null dormant-population scaffold and an
+  isolated recruitment/resource calibration. No SMART behavioral outcome may
+  be observed until the extension assumptions, ranges, controls and stopping
+  rules are sealed.

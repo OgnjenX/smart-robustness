@@ -1,0 +1,112 @@
+schema_version: 1
+artifact_id: 982
+artifact_type: layer4-pv-like-somatic-routing-behavioral-assessment
+date: 2026-09-21
+status: deterministic-figure7-failure-no-rescue-authorized
+source_audit: docs/validation-results/post2008-inhibitory-cell-class-source-audit-970.yaml
+registration: docs/validation-results/post2008-layer4-pv-like-somatic-routing-registration-979.yaml
+seal: docs/validation-results/post2008-layer4-pv-like-somatic-routing-seal-980.yaml
+sealed_commit: 93e9100
+raw_result: results/layer4-pv-like-somatic-routing-981.yaml
+raw_result_sha256: ebb29e60206b6acb22d57979e2467cbb554ad79d27425b3d771df76e7a0990a3
+raw_result_bytes: 7546
+network_execution: true
+frozen_baseline_modified: false
+
+execution:
+  expected_transformed_repetitions: 2
+  completed_transformed_repetitions: 2
+  archived_exact_legacy_repetitions: 4
+  transformed_exact_repeat: true
+  transformed_equals_legacy: false
+  checkpoint_resume_reverified: true
+  result_hash_stable_after_resume: true
+  figure7_executions: 2
+  figure10_executions: 0
+  figure10_skip_reason: both same-repetition Figure-7 gate sets failed
+
+structural_control:
+  changed_projection_ids: [modeldb112923.projection.036]
+  source_population: layer4_inhibitory_v1
+  target_population: layer4_excitatory_v1
+  changed_field: target_compartment
+  original_compartment: proximal_dendrite
+  transformed_compartment: soma
+  original_total_receptor_conductance_nS: 193.28648801211204
+  transformed_total_receptor_conductance_nS: 193.28648801211204
+  total_receptor_conductance_exactly_preserved: true
+  all_non_port_population_parameters_equal: true
+
+exact_transformed_outcome:
+  figure7:
+    match:
+      relay_events: 15
+      relay_active_indices: [38, 39, 40, 41, 42]
+      trn_events: 729
+      nonspecific_events: 3
+      nonspecific_event_times_ms: [1.31, 3.1500000000000004, 4.890000000000001]
+      trn_to_nonspecific_gaba_integral_ms: 1334.6729666330443
+    mismatch:
+      relay_events: 4
+      relay_active_indices: [40]
+      trn_events: 627
+      nonspecific_events: 6
+      nonspecific_event_times_ms: [1.31, 3.1500000000000004, 4.890000000000001, 70.0, 85.8, 88.52]
+      trn_to_nonspecific_gaba_integral_ms: 1181.8539879201805
+    passed_gates:
+      - match_relay_active_indices
+      - mismatch_relay_allowed_indices
+      - match_more_active_relay_cells
+      - match_more_trn_events
+      - match_more_trn_to_nonspecific_gaba
+    failed_gates:
+      - match_relay_events
+      - match_nonspecific_events
+      - mismatch_nonspecific_events
+
+differences_from_exact_legacy:
+  match_relay_events: {legacy: 20, transformed: 15, delta: -5}
+  match_trn_events: {legacy: 690, transformed: 729, delta: 39}
+  match_nonspecific_events: {legacy: 4, transformed: 3, delta: -1}
+  match_trn_to_nonspecific_gaba_integral_ms:
+    legacy: 1243.575428743736
+    transformed: 1334.6729666330443
+    delta: 91.09753788930823
+  mismatch_relay_events: {legacy: 3, transformed: 4, delta: 1}
+  mismatch_trn_events: {legacy: 611, transformed: 627, delta: 16}
+  mismatch_nonspecific_events: {legacy: 7, transformed: 6, delta: -1}
+  mismatch_trn_to_nonspecific_gaba_integral_ms:
+    legacy: 1182.9799912086974
+    transformed: 1181.8539879201805
+    delta: -1.1260032885168194
+
+classification:
+  registered_class: failure
+  repeatability: exact
+  structural_conservation: passed
+  figure7_behavior: failed
+  figure10_behavior: not-tested-by-registered-conditional-rule
+  compensation: none
+  rescue: not-authorized
+
+interpretation:
+  - Moving only the represented layer-4 inhibitory projection from the proximal dendrite to the soma changes the calibrated SMART Figure-7 trajectory enough to cross three preregistered gates.
+  - The directional match-versus-mismatch organization remains visible: match recruits the registered five relay cells, mismatch remains centered on relay cell 40, and match exceeds mismatch in relay count, TRN events and integrated TRN-to-nonspecific GABA.
+  - Nevertheless, preservation of qualitative ordering is insufficient for the registered classic-behavior baseline because the absolute relay and nonspecific event gates fail exactly in both repetitions.
+  - The result localizes a deterministic sensitivity to the target location of projection 036 under fixed conductance density and exactly conserved total receptor conductance.
+  - This routing-only abstraction does not include PV intrinsic dynamics, PV prevalence, cell-type-specific connectivity, modern thalamic recruitment or compensatory development. It therefore does not establish that biological PV circuitry is incompatible with ART or SMART.
+  - Figure 10 is missing by design rather than failed: the sealed protocol forbids running it after a same-repetition Figure-7 failure.
+  - No parameter was selected or adjusted from these outcomes, and the immutable classic baseline remains unchanged.
+
+prohibited_actions:
+  - Do not retune projection 036 or run a result-guided rescue under this registration.
+  - Do not reinterpret preserved directional ordering as a registered behavioral pass.
+  - Do not generalize this one-route target-location failure to PV cells as a biological class.
+  - Do not combine this failed route with SST-like, VIP-like or other post-2008 modules before their isolated experiments are complete.
+  - Do not modify the frozen classic baseline or commit the ignored raw result.
+
+next_step:
+  - Preserve this failure as the preregistered PV-like routing result with no rescue arm.
+  - Audit and preregister an SST-like dendritic-targeting route as an independent one-module experiment, using only represented compartments and a source-supported source population.
+  - If no anatomically defensible distal route exists in the current represented populations, document that representational limitation instead of forcing an SST label.
+  - Specify VIP-like disinhibition only after an explicit SST-like target population and independently justified recruitment protocol exist.

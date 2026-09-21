@@ -1,0 +1,35 @@
+schema_version: 1
+artifact_id: 963
+artifact_type: isolated-relay-execution-seal
+date: 2026-09-21
+status: sealed-before-isolated-relay-outcomes
+network_execution_authorized: false
+isolated_relay_execution_authorized: true
+frozen_baseline_modified: false
+design: docs/validation-results/post2008-pulvinar-relay-isolated-design-962.yaml
+baseline_manifest: configs/baselines/classic_smart_calibrated_v1.yaml
+baseline_manifest_fingerprint: 992fdd7c3bc9fa0f0d385b9e5a58ba317599357ca377145aba6f01c80d631cd2
+runtime_fingerprint: 7e654528a99f0b25b7148260a8d52021f6443fb992b210729a2475ae3cfcdaa4
+result: results/pulvinar-relay-isolated-964.yaml
+raw_result_directory: results/pulvinar-relay-isolated-964
+resume_policy: >-
+  Verify every retained archive hash and recomputed summary before reuse. Run
+  each missing condition in a fresh standalone process. Never run two copies
+  against the same checkpoint; the runner holds a nonblocking exclusive lock.
+failure_policy: >-
+  Preserve the checkpoint and raw records, diagnose without inspecting an
+  unexecuted condition, and issue an immutable amendment before any code fix.
+files:
+  scripts/run_pulvinar_relay_isolated.py: b47b27fcd176d7a3b3e9627f8c9ef4c8d06d3cc2c78ab92a62fbc7050802cd5c
+  src/smart_robustness/validation/pulvinar_relay_isolated.py: 46a9402d4cdf5f3dad9031912d0c6a53768e057fd291ddec882b30f327f36642
+  src/smart_robustness/validation/pulvinar_relay_recording.py: c0aa60869fb0e2e83d0e4b79e277b805fa2ce97c1d90eb199ad5fe342b7fd5a4
+  src/smart_robustness/models/pulvinar_conductance.py: 854e3e144ddf6a1c2ee3a99edcb8169331b9ba424af6dda050b13c7f3ef04bea
+  src/smart_robustness/models/pulvinar_matching.py: 1fdd12e6c7e3d6f2a2f030eb4cbdba7ebd9dda62c6ef2ed786b204913152e3dd
+  src/smart_robustness/models/pulvinar_stp.py: cffba31c086370b6da202699a61f0bde81429ab4a5ccf69011c7c27691727f29
+  src/smart_robustness/validation/active_apical_recording.py: b394a0876f1294fe8b845902e32f22322db20a835e07511a354f71a8a0e7708f
+  src/smart_robustness/standalone.py: a34a48b728f48a5782126973af769830f8b167ce840ecf402e855c0307bc9e1e
+  docs/validation-results/post2008-pulvinar-relay-isolated-design-962.yaml: ba586170cec3c6143dcc22cc2757058a82ef83ebbed225385867593838b1080e
+  configs/baselines/classic_smart_calibrated_v1.yaml: d8a11933e4ed6a41a72647e4c9ce88f88fd870908bd9a086bbc67b75cff2a5fb
+  tests/test_pulvinar_relay_isolated.py: 9fd3d53665b5987adcca804f683e05c325322d1ceda4391540305c75fea55feb
+  tests/test_pulvinar_relay_recording.py: ba0688c25df86246e8100b94b980345a61aa49e8b9ee4fe91452ed529204bd51
+  tests/test_pulvinar_relay_runner.py: b2f50d5eb3509bf667f8ecace834c98e5d3b451bea1f3d1088199492faee498d

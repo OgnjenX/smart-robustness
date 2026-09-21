@@ -1,0 +1,55 @@
+schema_version: 1
+artifact_id: 971
+artifact_type: pre-outcome-exact-null-routing-registration
+date: 2026-09-21
+status: implementation-complete-execution-not-yet-sealed
+network_execution_authorized: false
+frozen_baseline_modified: false
+source_audit: docs/validation-results/post2008-inhibitory-cell-class-source-audit-970.yaml
+
+question: >-
+  Can a fail-closed inhibitory-routing integration scaffold pass through the
+  frozen legacy aggregate topology without any structural or behavioral change?
+
+scope:
+  mode: legacy_aggregate
+  changed_biology: none
+  changed_parameters: none
+  added_or_removed_populations: none
+  added_removed_or_retargeted_projections: none
+  role: prerequisite-for-all-PV-SST-VIP-like-routing-arms
+
+implementation_contract:
+  module: src/smart_robustness/models/inhibitory_routing.py
+  mode_enum: legacy_aggregate
+  behavior:
+    - derive the complete source projection inventory touching the two represented cortical inhibitory populations
+    - fail closed if that source inventory changes
+    - call the supplied classic sector builder with unchanged keyword arguments
+    - fail closed if any registered inhibitory projection is absent from the assembled sector
+    - return the same sector object without modifying populations, projections, ports, state or parameters
+  forbidden:
+    - adding PV, SST or VIP labels to source cells
+    - changing a receptor based on presynaptic population name
+    - changing target compartment, weight, delay, kinetics, topology or intrinsic dynamics
+
+prospective_validation:
+  structural:
+    - exact registered source inventory
+    - wrapper returns the unmodified sector object
+    - missing projection and unknown mode fail closed
+  behavioral:
+    protocol: frozen-Figure7-and-conditional-Figure10-pair
+    comparator: contemporaneous-unwrapped-builder-with-identical-frozen-inputs
+    repetitions_per_arm: 2
+    required:
+      - exact equality of serialized summaries between wrapped and unwrapped arms
+      - exact repeats within each arm
+      - all frozen Figure7 and Figure10 gates retain their control values
+  raw_retention: full-run-summaries-and-identity-hashes
+
+stopping_rules:
+  - Seal the behavioral runner and all dependencies before execution.
+  - Any wrapped-versus-unwrapped difference fails the scaffold and blocks biological inhibitory routing.
+  - A pass authorizes only a separately preregistered isolated routing assay; it does not authorize a PV/SST/VIP network outcome.
+  - Do not change the frozen baseline or tune from null-validation outcomes.

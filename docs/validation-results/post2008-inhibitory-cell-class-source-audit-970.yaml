@@ -1,0 +1,191 @@
+schema_version: 1
+artifact_id: 970
+artifact_type: post-2008-inhibitory-cell-class-source-and-implementation-audit
+date: 2026-09-21
+status: source-audit-complete-no-inhibitory-class-network-outcomes-observed
+network_execution_authorized: false
+frozen_baseline_modified: false
+
+program_position:
+  predecessor: docs/validation-results/post2008-pulvinar-relay-source-identity-assessment-969.yaml
+  phase: independent-PV-SST-VIP-like-cell-class-specificity
+  boundary: >-
+    The updated-pulvinar route remains stopped at its isolated relay-cell rest
+    prerequisite. This phase is an independent modern-anatomy module, not a
+    repair of that failure and not an interaction study.
+
+scientific_question: >-
+  Does the frozen classic SMART match-resonance and mismatch/reset behavior
+  survive when its aggregate cortical inhibitory populations are replaced in
+  controlled stages by source-supported PV-like, SST-like and VIP-like routing
+  motifs while total drive is explicitly accounted for?
+
+primary_evidence:
+  - citation: >-
+      Ji X, Zingg B, Mesik L, Xiao Z, Zhang LI, Tao HW (2016).
+      Thalamocortical Innervation Pattern in Mouse Auditory and Visual Cortex:
+      Laminar and Cell-Type Specificity. Cerebral Cortex 26:2612-2625.
+    doi: 10.1093/cercor/bhv099
+    pmid: 25979090
+    pmcid: PMC4869808
+    url: https://pmc.ncbi.nlm.nih.gov/articles/PMC4869808/
+    preparation: mouse-primary-visual-cortex-slices-with-dLGN-ChR2-expression
+    supported:
+      - PV cells received direct dLGN input across L2/3 through L6, strongest in L4.
+      - V1 response incidence was 11/14 L2/3, 13/13 L4, 15/15 L5 and 8/8 L6 PV cells.
+      - V1 L5 adjusted response amplitude was 426 +/- 130 for PV cells and 195 +/- 58 for pyramidal cells in the reported table.
+      - SOM and VIP cells were essentially not directly innervated outside L4; L4 incidence was 5/14 SOM and 6/16 VIP and responses were weak.
+      - Onset latencies were similar across tested V1 cell groups.
+    translation_limits:
+      - Optogenetic response amplitudes are not SMART conductance densities or projection weights.
+      - Cell response incidence is not a population-size ratio.
+      - The measurements do not specify the PV-to-pyramidal synaptic strength, target compartment or spatial kernel.
+      - The preparation does not justify collapsing all PV, SST or VIP subtypes into one intrinsic neuron model.
+
+  - citation: >-
+      Pfeffer CK, Xue M, He M, Huang ZJ, Scanziani M (2013).
+      Inhibition of inhibition in visual cortex: the logic of connections
+      between molecularly distinct interneurons. Nature Neuroscience 16:1068-1076.
+    doi: 10.1038/nn.3446
+    url: https://www.gatsby.ucl.ac.uk/tea/tea_archive/attached_files/Pfeffer2013jz.pdf
+    preparation: mouse-primary-visual-cortex-layers-2-3-and-5
+    supported:
+      - PV, SST and VIP are large, substantially non-overlapping interneuron classes.
+      - PV cells inhibit pyramidal cells and preferentially inhibit other PV cells among the tested interneuron classes.
+      - SST cells inhibit pyramidal cells and the other major interneuron classes but weakly inhibit one another.
+      - VIP cells preferentially inhibit SST cells, defining a disinhibitory motif.
+    translation_limits:
+      - Class prevalence does not determine synaptic weight or SMART grid population count.
+      - The study does not provide one universal connection matrix for every cortical layer and visual state.
+      - Molecular class is broader than a single morphological, transcriptomic or electrophysiological type.
+
+  - citation: >-
+      Scala F, et al. (2019). Layer 4 of mouse neocortex differs in cell types
+      and circuit organization between sensory areas. Nature Communications 10:4174.
+    doi: 10.1038/s41467-019-12058-z
+    url: https://www.nature.com/articles/s41467-019-12058-z
+    preparation: adult-mouse-V1-and-S1-layer-4-multicell-recordings-and-morphology
+    supported:
+      - Adult mouse V1 L4 contained one major excitatory and seven inhibitory morphological types.
+      - V1 L4 SOM cells were Martinotti cells, unlike the non-Martinotti SOM organization emphasized for S1.
+      - PV and SOM classes follow different local and thalamic connectivity motifs.
+    translation_limits:
+      - Somatosensory findings must not be substituted for visual-cortex parameters.
+      - A three-class PV/SST/VIP model remains a coarse functional abstraction, not a complete V1 L4 census.
+
+  - citation: >-
+      Schneider-Mizell CM, et al. (2023). Cell-type-specific inhibitory
+      circuitry from a connectomic census of mouse visual cortex. Cell 186:1-18.
+    doi: 10.1016/j.cell.2023.01.004
+    pmcid: PMC9900837
+    url: https://pmc.ncbi.nlm.nih.gov/articles/PMC9900837/
+    preparation: mouse-primary-visual-cortex-MICrONS-electron-microscopy-volume
+    supported:
+      - Inhibitory neurons separated into output-defined subclasses based on excitatory dendritic targets and inhibitory targets.
+      - The census identified more than one disinhibitory specialization, including a basket-cell-targeting class distinct from the expected SST-targeting class.
+    translation_limits:
+      - PV/SST/VIP labels alone do not capture all target-specific inhibitory structure.
+      - Anatomical synapse counts do not directly specify physiological efficacy or kinetics.
+
+  - citation: >-
+      Liu X, et al. (2024). Organization of corticocortical and
+      thalamocortical top-down inputs in the primary visual cortex.
+      Nature Communications 15:4496.
+    doi: 10.1038/s41467-024-48924-8
+    url: https://www.nature.com/articles/s41467-024-48924-8
+    preparation: mouse-V1-layer-and-cell-type-specific-long-range-input-mapping
+    supported:
+      - LP input strongly recruited VIP cells across L2-L6 and PV cells in L5.
+      - PV and SST activation produced large IPSCs in sampled L5 pyramidal subtypes, while direct VIP-to-pyramidal IPSCs were weak.
+      - Higher-order inputs engaged layer- and cell-type-specific inhibitory routes.
+    translation_limits:
+      - This evidence belongs to a later interaction study with the unresolved pulvinar module, not the first inhibitory-only test.
+      - Input strength does not specify a SMART-compatible weight, delay or cell count.
+
+corroborating_species-boundary:
+  citation: >-
+    Su C, Mendes-Platt RF, Alonso JM, Swadlow HA, Bereshpolova Y (2025).
+    Fast-Spike Interneurons in Visual Cortical Layer 5: Heterogeneous Response
+    Properties Are Related to Thalamocortical Connectivity. Journal of Neuroscience 45:e1116242024.
+  doi: 10.1523/JNEUROSCI.1116-24.2024
+  pmid: 39667901
+  pmcid: PMC11756620
+  url: https://pmc.ncbi.nlm.nih.gov/articles/PMC11756620/
+  species: rabbit
+  role: >-
+    Corroborates fast monosynaptic LGN drive to a subset of upper-L5
+    fast-spiking interneurons, but must not be merged quantitatively with the
+    mouse V1 evidence. This explicitly supplies the species label omitted from
+    the short corroborating-source description in artifact937.
+
+frozen_smart_implementation_audit:
+  cortical_inhibitory_populations:
+    - layer23_inhibitory_v1
+    - layer4_inhibitory_v1
+  absent_explicit_populations:
+    - layer5_inhibitory_v1
+    - layer6_inhibitory_v1
+    - PV
+    - SST
+    - VIP
+  aggregate_intrinsic_identity: >-
+    Each represented layer has one generic multicompartment inhibitory cell
+    class. The source does not molecularly identify it as PV, SST or VIP.
+  thalamic_recruitment:
+    - {id: modeldb112923.projection.027, route: thalamic_relay-to-layer4_inhibitory_v1, target: proximal_dendrite, delay_ms: 3.0}
+    - no direct specific-relay route targets a cortical inhibitory population in L2/3, L5 or L6
+  generic_inhibitory_outputs:
+    - {id: modeldb112923.projection.031, route: layer23_inhibitory_v1-to-layer23_excitatory_v1, target: proximal_dendrite, receptor: GABA_A}
+    - {id: modeldb112923.projection.036, route: layer4_inhibitory_v1-to-layer4_excitatory_v1, target: proximal_dendrite, receptor: GABA_A}
+  inhibitory_to_inhibitory:
+    - {id: modeldb112923.projection.028, route: layer4_inhibitory_v1-recurrent, target: proximal_dendrite, receptor: GABA_A}
+    - {id: modeldb112923.projection.029, route: layer4_inhibitory_v1-recurrent, target: proximal_dendrite, receptor: gap-junction}
+    - {id: modeldb112923.projection.040, route: layer23_inhibitory_v1-recurrent, target: proximal_dendrite, receptor: GABA_A}
+  source-serialization-warning:
+    id: modeldb112923.projection.022
+    route: layer4_inhibitory_v1-to-layer6ii_excitatory_v1
+    serialized_channel: AMPA-2-3
+    reversal_mV: 0.0
+    consequence: >-
+      Presynaptic population names cannot be used to infer inhibitory sign or
+      to relabel all outgoing projections automatically. Every route must retain
+      its serialized receptor semantics unless separately audited.
+
+missing_modern_motifs:
+  - PV-like perisomatic target specificity is not explicit.
+  - SST-like dendritic target specificity and weak SST-to-SST inhibition are not explicit.
+  - VIP-to-SST disinhibition is absent.
+  - Direct dLGN recruitment of L5 PV-like cells is absent.
+  - Layer- and projection-subtype-specific inhibitory recruitment is absent.
+
+translation_decision:
+  strategy: staged-routing-first-then-intrinsic-diversity
+  rationale:
+    - Replacing all generic inhibitory cells at once would confound population count, intrinsic dynamics, subcellular targeting, long-range recruitment and recurrent inhibition.
+    - No audited source supplies a complete set of SMART-compatible absolute parameters for such a replacement.
+    - Source-cell name alone cannot determine synaptic sign because projection022 is AMPA-labeled.
+  ordered_subphases:
+    - exact-null-routing-scaffold-equivalence
+    - isolated-target-location-and-interneuron-routing-controls-with-fixed-event-replay
+    - one-layer-at-a-time PV-like network routing
+    - one-layer-at-a-time SST-like dendritic routing
+    - VIP-like disinhibitory routing only after an independently specified recruitment protocol
+    - intrinsic PV-SST-VIP neuron-model differences only after routing effects are localized
+    - cross-module interactions only after single-module results are sealed
+
+conservation_requirements:
+  - The null arm must reproduce the frozen baseline exactly before any biological arm is run.
+  - Every routing-only comparison must hold presynaptic events, receptor kinetics, reversal potential, delay and total registered synaptic resource fixed unless the changed field is the preregistered factor.
+  - Realized conductance/current and spike drive must be reported; equal nominal weight is not equal effective inhibition across compartments.
+  - Population prevalence may not be converted into synaptic weights.
+  - No observed SMART outcome may be used to choose a split fraction, target compartment or gain.
+
+decision:
+  source-supported_staged_preregistration_authorized: true
+  immediate_full_PV_SST_VIP_replacement_authorized: false
+  network_outcomes_authorized: false
+  next_step: >-
+    Implement and seal an exact-null inhibitory-routing scaffold. Its legacy
+    aggregate mode must be structurally identical and behaviorally hash-equal
+    to the frozen baseline before any PV-like, SST-like or VIP-like route is
+    allowed to execute.

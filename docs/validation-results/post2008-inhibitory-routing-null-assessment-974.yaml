@@ -1,0 +1,84 @@
+schema_version: 1
+artifact_id: 974
+artifact_type: exact-null-inhibitory-routing-behavioral-assessment
+date: 2026-09-21
+status: exact-null-scaffold-passed-isolated-routing-authorized
+source_audit: docs/validation-results/post2008-inhibitory-cell-class-source-audit-970.yaml
+registration: docs/validation-results/post2008-inhibitory-routing-null-registration-971.yaml
+seal: docs/validation-results/post2008-inhibitory-routing-null-seal-972.yaml
+sealed_commit: 7d965c1
+raw_result: results/inhibitory-routing-null-973.yaml
+raw_result_sha256: 4ad5dc017a0112dbad1434846c4542caa2bc48e2d3a6ae784499924a5d3b133e
+raw_result_bytes: 19397
+network_execution: true
+biological_routing_execution: false
+isolated_biological_routing_execution_authorized: true
+frozen_baseline_modified: false
+
+execution:
+  expected_runs: 4
+  completed_runs: 4
+  arms: [unwrapped_control, wrapped_legacy_aggregate]
+  repetitions_per_arm: 2
+  exact_within_arm_repeats:
+    unwrapped_control: true
+    wrapped_legacy_aggregate: true
+  exact_wrapped_vs_unwrapped: true
+  all_behavioral_gates_passed:
+    unwrapped_control: true
+    wrapped_legacy_aggregate: true
+  figure7_registered_gates_per_run: 8
+  figure10_registered_gates_per_run: 7
+  checkpoint_resume_reverified: true
+  result_hash_stable_after_resume: true
+  focused_tests:
+    command: .venv/bin/pytest -q tests/test_inhibitory_routing.py tests/test_inhibitory_routing_runner.py
+    passed: 9
+    failed: 0
+
+behavioral_invariants:
+  figure7:
+    match_relay_events: 20
+    mismatch_relay_events: 3
+    match_trn_events: 690
+    mismatch_trn_events: 611
+    match_nonspecific_events: 4
+    mismatch_nonspecific_events: 7
+    match_relay_active_indices: [38, 39, 40, 41, 42]
+    mismatch_relay_active_indices: [40]
+  figure10:
+    intact_late_alternative_margin: 3
+    disconnected_late_alternative_margin: -2
+    intact_replacement_winner_candidates: [31, 49]
+    disconnected_replacement_winner_candidates: []
+    intact_layer5_post_events: 240
+    disconnected_layer5_post_events: 187
+    intact_layer6i_post_events: 182
+    disconnected_layer6i_post_events: 129
+
+classification:
+  scaffold_result: exact-null
+  classic_behavior: survives-null-abstraction-exactly
+  biological_cell_class_result: not-tested
+  compensation: none
+  failure: none-at-null-scaffold-stage
+
+interpretation:
+  - The inhibitory-routing abstraction is an exact identity transformation when configured as the legacy aggregate route.
+  - Both wrapped repetitions exactly reproduce each other and the unwrapped control for every retained Figure 7 and Figure 10 value.
+  - The result validates the scaffold and measurement boundary; it does not test or support any biological claim about PV-like, SST-like or VIP-like routing.
+  - No parameters were selected or tuned from network outcomes.
+  - The pass authorizes only a separately registered and sealed isolated fixed-event routing assay before any biological route is admitted to the SMART network.
+  - The immutable classic baseline and all prior calibrated results remain unchanged.
+
+prohibited_actions:
+  - Do not interpret this null pass as evidence that PV, SST or VIP mechanisms preserve SMART behavior.
+  - Do not execute a biological inhibitory route in the SMART network under the null seal.
+  - Do not tune inhibitory route strengths, kinetics, compartments or cell-class mixtures from these network outcomes.
+  - Do not modify the frozen baseline or overwrite the raw result.
+
+next_step:
+  - Preregister an isolated fixed-event replay assay comparing legacy proximal inhibition with PV-like somatic and SST-like dendritic routing.
+  - Hold presynaptic events, receptor kinetics, nominal inhibitory resource and postsynaptic state protocol fixed across arms.
+  - Measure realized current or conductance, compartment voltage effects and numerical repeatability before defining any network-level biological route.
+  - Treat VIP-like disinhibition as a later independently sealed mechanism rather than combining it with the first PV/SST routing assay.

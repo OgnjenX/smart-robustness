@@ -1,0 +1,110 @@
+schema_version: 1
+artifact_id: 978
+artifact_type: isolated-inhibitory-target-location-assessment
+date: 2026-09-21
+status: isolated-target-location-effect-passed-network-design-authorized
+source_audit: docs/validation-results/post2008-inhibitory-cell-class-source-audit-970.yaml
+null_assessment: docs/validation-results/post2008-inhibitory-routing-null-assessment-974.yaml
+registration: docs/validation-results/post2008-inhibitory-target-location-isolated-registration-975.yaml
+seal: docs/validation-results/post2008-inhibitory-target-location-isolated-seal-976.yaml
+sealed_commit: a26f028
+raw_result: results/inhibitory-target-location-isolated-977.yaml
+raw_result_sha256: c4b7b96437531dc7c0f3fe365435a8b79df75f73d069f214beed47367a4fd012
+raw_result_bytes: 41916
+raw_directory: results/inhibitory-target-location-isolated-977
+raw_files: 24
+raw_archive_total_bytes: 21880960
+raw_archive_manifest_sha256: 0078a38dc9f4400d8dbb3c8826e3482d94bd012403d771a70fca4cef80629406
+network_execution: false
+one_layer_network_design_authorized: true
+one_layer_network_execution_authorized: false
+frozen_baseline_modified: false
+
+execution:
+  expected_runs: 24
+  completed_runs: 24
+  exact_raw_repeat_pairs: 12
+  exact_raw_repeat_pairs_passed: 12
+  numerical_gates: 6
+  numerical_gates_passed: 6
+  cross_arm_gates: 4
+  cross_arm_gates_passed: 4
+  raw_hashes_and_summaries_verified_on_resume: true
+  result_hash_stable_after_resume: true
+  all_recorded_values_finite: true
+  isolated_promotion_gates_passed: true
+
+realized_resource_control:
+  fine_dt_ms: 0.005
+  effective_conductance_exact_across_arms: true
+  maximum_cross_arm_current_difference_pA: 9.094947017729282e-13
+  peak_effective_conductance_nS: 386.5728640139619
+  integral_effective_conductance_nS_ms: 2438.976837255741
+  peak_absolute_current_pA: 5798.592960209433
+  integral_absolute_current_pA_ms: 36584.65255883614
+  coarse_vs_fine_maximum_resource_relative_error: 0.00005311861260627907
+  consequence: >-
+    The free-membrane differences cannot be attributed to unequal event trains,
+    receptor gates or total nominal conductance. Target compartment was the
+    only changed factor.
+
+free_membrane_location_effect:
+  pre_arrival_voltage_traces_exact_across_arms: true
+  maximum_cross_arm_soma_difference_mV:
+    dt_0_01: 0.508310823653602
+    dt_0_005: 0.5083225017809951
+  maximum_cross_arm_target_difference_mV:
+    dt_0_01: 0.6652227839389298
+    dt_0_005: 0.6652338161623845
+  fine_dt_arm_summaries:
+    legacy_proximal:
+      soma_post_arrival_range_mV: [-71.61236792027056, -70.94873634288501]
+      target_post_arrival_range_mV: [-71.60491883917115, -70.91114886839857]
+      peak_absolute_current_pA: 560.1911669119938
+      integral_absolute_current_pA_ms: 2598.598203144097
+      spikes: 0
+    pv_like_somatic:
+      soma_post_arrival_range_mV: [-71.61236792027054, -71.24045052148536]
+      target_post_arrival_range_mV: [-71.61236792027054, -71.24045052148536]
+      peak_absolute_current_pA: 546.9375685305657
+      integral_absolute_current_pA_ms: 3364.3970547242575
+      spikes: 0
+    sst_like_distal:
+      soma_post_arrival_range_mV: [-71.61236792027056, -71.06452684493966]
+      target_post_arrival_range_mV: [-71.52860658711872, -70.77659103217643]
+      peak_absolute_current_pA: 542.271760370496
+      integral_absolute_current_pA_ms: 2322.6407909698332
+      spikes: 0
+  maximum_coarse_vs_fine_voltage_error_mV: 0.0000920567956228524
+  maximum_coarse_vs_fine_current_relative_error: 0.0013957393646174172
+
+classification:
+  resource_conservation: verified
+  target_location_effect: detected
+  numerical_stability: passed
+  exact_repeatability: passed
+  network_behavior: not-tested
+  PV_SST_intrinsic_biology: not-tested
+  VIP_disinhibition: not-tested
+
+interpretation:
+  - Equal total GABA-A resource produces measurably different compartmental and somatic responses when routed to soma, proximal dendrite or distal dendrite.
+  - The target-location effect is exact across repeats and closely converged between 0.01 and 0.005 ms.
+  - The archived projection-036 reversal is -70 mV, while the free cell is below -71 mV around the first arrival. The registered events are therefore depolarizing and shunting in this isolated state, not conventionally hyperpolarizing.
+  - The pv_like_somatic and sst_like_distal labels describe source-supported routing abstractions only. No PV or SST intrinsic cell model, recruitment pattern, population prevalence or connection matrix was tested.
+  - This result establishes that subcellular targeting is a non-null mechanistic factor worth carrying into a one-layer network design. It does not establish which route improves, preserves or disrupts SMART resonance/reset behavior.
+  - No parameter or threshold was selected from these outcomes, and the immutable classic baseline remains unchanged.
+
+prohibited_actions:
+  - Do not call the observed voltage shift hyperpolarizing inhibition under this resting-state protocol.
+  - Do not infer PV-versus-SST efficacy generally from one L5 pyramidal cell and one fixed event train.
+  - Do not combine PV-like, SST-like and VIP-like routes in one first network experiment.
+  - Do not tune compartment-specific gains to equalize free-membrane effects.
+  - Do not execute a network route until its layer, source population, projection transformation, conservation rule and behavioral gates are separately preregistered and sealed.
+  - Do not modify the frozen baseline or overwrite raw traces.
+
+next_step:
+  - Audit candidate one-layer routes against represented SMART compartments and source-supported anatomy.
+  - Preregister the first PV-like somatic-routing network comparison as a single projection transformation with an exact legacy control and conserved total nominal resource.
+  - Run SST-like dendritic routing later as a separate sealed experiment; do not force it onto a SMART population that lacks a distal compartment.
+  - Defer VIP-like disinhibition until an independently specified recruitment protocol and SST target population exist.

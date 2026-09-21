@@ -1,0 +1,57 @@
+schema_version: 1
+artifact_id: 966
+artifact_type: pre-outcome-rest-only-source-identity-registration
+date: 2026-09-21
+status: implementation-complete-execution-not-yet-sealed
+network_execution_authorized: false
+rest_diagnostic_execution_authorized: false
+frozen_baseline_modified: false
+predecessor: docs/validation-results/post2008-pulvinar-relay-isolated-assessment-965.yaml
+
+question: >-
+  Does an opt-in V2 relay built from its serialized ModelDB intrinsic cell and
+  KInNeSS axial convention satisfy a quiet zero-input rest prerequisite that
+  the immutable frozen-dispatch V2 relay failed?
+
+arms:
+  frozen_dispatch:
+    purpose: immutable-positive-failure-control
+    intrinsic_cell: existing-frozen-runtime-dispatch
+    axial_convention: existing-frozen-runtime-dispatch
+  source_faithful_modeldb:
+    purpose: separately-labelled-candidate
+    intrinsic_cell_convention: modeldb_112923
+    axial_convention: kinness_serialized_edge
+    source_population: thalamic_relay_v2
+    source_catalog: src/smart_robustness/data/modeldb112923_full.yaml
+    source_calcium_density_mS_cm2: {soma: 0.1, proximal_dendrite: 0.1, distal_dendrite: 0.1}
+    source_potassium_reversal_mV: -100.0
+
+invariants:
+  baseline_manifest: configs/baselines/classic_smart_calibrated_v1.yaml
+  cell_count_per_arm: 1
+  all_synaptic_external_and_injection_inputs: zero
+  duration_ms: 1000.0
+  unrecorded_settling_ms: 900.0
+  recorded_rest_ms: [900.0, 1000.0]
+  dt_ms: [0.01, 0.005]
+  repetitions_per_step: 2
+  raw_voltage_and_spike_retention: true
+  exact_raw_repeat_required: true
+
+source_faithful_candidate_gate:
+  each_step:
+    all_values_finite: true
+    maximum_soma_peak_to_peak_mV: 0.1
+    spike_count: 0
+  coarse_vs_fine:
+    soma_mean_absolute_tolerance_mV: 0.5
+    soma_peak_to_peak_absolute_tolerance_mV: 0.05
+  frozen_arm_gate: none-report-descriptively
+
+stopping_and_progression:
+  - Never alter the immutable frozen arm or erase assessment965.
+  - Do not fit or tune any source-faithful parameter from rest or prior response outcomes.
+  - Failure blocks source-faithful conductance-transfer execution and triggers assessment only.
+  - Pass authorizes a separately sealed rerun of design962 with the source-faithful cell; it does not authorize network execution.
+  - Any future network candidate remains separate from classic-smart-calibrated-v1.0.0.

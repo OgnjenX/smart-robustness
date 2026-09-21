@@ -1,0 +1,23 @@
+schema_version: 1
+artifact_id: 967
+artifact_type: source-identity-rest-execution-seal
+date: 2026-09-21
+status: sealed-before-source-identity-outcomes
+network_execution_authorized: false
+rest_diagnostic_execution_authorized: true
+frozen_baseline_modified: false
+design: docs/validation-results/post2008-pulvinar-relay-source-identity-design-966.yaml
+baseline_manifest: configs/baselines/classic_smart_calibrated_v1.yaml
+baseline_manifest_fingerprint: 992fdd7c3bc9fa0f0d385b9e5a58ba317599357ca377145aba6f01c80d631cd2
+runtime_fingerprint: 7e654528a99f0b25b7148260a8d52021f6443fb992b210729a2475ae3cfcdaa4
+result: results/pulvinar-relay-source-identity-968.yaml
+raw_result_directory: results/pulvinar-relay-source-identity-968
+files:
+  scripts/run_pulvinar_relay_source_identity.py: 07f5008ad472ff49f7a7344d86a6b872c439d5b82e21cfed52018dcc9ca66637
+  src/smart_robustness/validation/pulvinar_relay_identity.py: a2053060988d4ef276c885477a9af4699dca865a6c88386153748ce1cdb3e6e2
+  src/smart_robustness/validation/active_apical_recording.py: b394a0876f1294fe8b845902e32f22322db20a835e07511a354f71a8a0e7708f
+  src/smart_robustness/standalone.py: a34a48b728f48a5782126973af769830f8b167ce840ecf402e855c0307bc9e1e
+  docs/validation-results/post2008-pulvinar-relay-source-identity-design-966.yaml: d999d4e946a369c5fdd12eb4cfc80cdae7178f66601ff6d1715215625a7bc968
+  configs/baselines/classic_smart_calibrated_v1.yaml: d8a11933e4ed6a41a72647e4c9ce88f88fd870908bd9a086bbc67b75cff2a5fb
+  tests/test_pulvinar_relay_identity.py: 7bfa0eec74ded9dc2a88ad2501c3c6559530d62a798ebe86d2549a65061f234c
+  tests/test_pulvinar_relay_identity_runner.py: b7d19a184234e320f516e0ea936d848de96eed4f9744d649508ac183ab8e0d83

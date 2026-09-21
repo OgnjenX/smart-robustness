@@ -1,0 +1,115 @@
+schema_version: 1
+artifact_id: 996
+artifact_type: layer5-sst-like-isolated-recruitment-assessment
+date: 2026-09-22
+status: isolated-engineering-stage-passed-stage3-registration-authorized
+registration: docs/validation-results/post2008-l5-sst-like-isolated-recruitment-registration-989.yaml
+timing_gate_addendum: docs/validation-results/post2008-l5-sst-like-isolated-timing-gate-addendum-993.yaml
+engineering_stop_assessment: docs/validation-results/post2008-l5-sst-like-isolated-engineering-stop-assessment-992.yaml
+seal: docs/validation-results/post2008-l5-sst-like-isolated-corrected-seal-994.yaml
+implementation_commit: aca259a
+raw_result: results/l5-sst-like-isolated-recruitment-corrected-995.yaml
+raw_result_sha256: 9d06160659e9f9ff187d033b9263eaf7684343196d73d9fa3ed4dad52b2a427c
+raw_result_bytes: 78859
+raw_trace_count: 48
+raw_trace_total_bytes: 17142508
+raw_trace_manifest_sha256: 7e60d051e63a733de4ffc647bfe8e9c1061e670e233a08678f82337c29827ba0
+checkpoint_resume_reverified: true
+result_and_trace_hashes_stable_after_resume: true
+stage3_registration_authorized: true
+stage3_network_execution_authorized: false
+frozen_baseline_modified: false
+
+execution:
+  completed_runs: 48
+  nonzero_grid_points: 12
+  dt_values_per_point: 2
+  repetitions_per_point_per_dt: 2
+  smart_network_constructed: false
+  smart_behavior_observed: false
+  all_per_run_gates_pass: true
+  exact_raw_repeat_comparisons_passed: 24
+  exact_raw_repeat_comparisons_total: 24
+  numerical_convergence_comparisons_passed: 12
+  numerical_convergence_comparisons_total: 12
+  classification: isolated_engineering_pass
+
+event_delivery:
+  expected_source_events_per_run: 5
+  expected_deliveries_per_run: 5
+  all_source_clock_tick_arrays_exact: true
+  all_source_indices_zero: true
+  all_delivery_counts_exact: true
+  maximum_float_serialization_diagnostic_error_ms: 1.4210854715202004e-14
+  float_diagnostic_used_as_gate: false
+
+resource_and_response:
+  registered_total_conductances_nS: [24.160811001514005, 48.32162200302801, 96.64324400605602, 193.28648801211204]
+  maximum_resource_absolute_error_nS: 2.842170943040401e-14
+  resource_absolute_tolerance_nS: 1.0e-12
+  all_numeric_arrays_finite: true
+  all_distal_gates_nonzero: true
+  all_distal_currents_nonzero: true
+  all_target_spike_counts_zero: true
+  maximum_clamp_error_mV: 0.0
+  representative_peak_absolute_current_pA_by_resource_fraction:
+    0.125: 362.4121637614903
+    0.25: 724.8243275229806
+    0.5: 1449.6486550459615
+    1.0: 2899.297310091923
+  note: >-
+    Current scaling was measured under the preregistered -55-mV clamp and is
+    an engineering realization check, not a prediction of in-network current.
+
+numerical_convergence:
+  peak_distal_gate_maximum_relative_error: 0.0
+  integral_distal_gate_maximum_relative_error: 8.28136219806696e-08
+  peak_absolute_current_maximum_relative_error: 0.0
+  integral_absolute_current_maximum_relative_error: 8.281362217487285e-08
+  clamp_error_maximum_difference_mV: 0.0
+  all_registered_tolerances_pass: true
+
+classification:
+  route_construction: valid
+  event_delivery: exact-on-simulation-clock
+  conductance_resource: exact-within-preregistered-tolerance
+  deterministic_repeatability: exact
+  numerical_convergence: passed
+  smart_behavior: not-tested
+  biological_sst_model: not-claimed
+  compensation: not-applicable-at-isolated-stage
+  failure: none-after-representation-correction
+
+interpretation:
+  - Every registered nonzero route coordinate is executable and deterministic in the network-blind isolated assay.
+  - The same last-two-arrival union gate used by the opt-in network connector delivered all events and generated finite distal GABA-A current.
+  - Conductance realization is exact to far below the preregistered 1e-12-nS tolerance, and coarse/fine differences are orders of magnitude below all convergence limits.
+  - The corrected timing gate measures exact simulator-clock identity and adds no empirical tolerance; the preserved result 991 documents why converted-float bit equality was invalid.
+  - This pass removes the isolated engineering barrier but says nothing yet about whether nonzero SST-like feedback preserves SMART resonance/reset behavior.
+  - No resource fraction, delay or numerical threshold was changed or selected from the isolated response amplitudes.
+  - The frozen classic baseline and every archived control remain unchanged.
+
+authorized_next_stage:
+  name: stage3_behavioral_grid_registration
+  scope: all-12-prospectively-fixed-nonzero-points
+  figure7_for_every_point: true
+  figure10_only_after_same-run-figure7-pass: true
+  repetitions_per_point: 2
+  exact_repeat_required: true
+  report_all_points: true
+  separate_registration_and_hash_seal_required: true
+  execution_authorized_by_this_assessment: false
+
+prohibited_actions:
+  - Do not interpret the isolated pass as survival of SMART behavior or evidence for a biological SST subtype model.
+  - Do not select, omit, rank or tune grid points from isolated current amplitude.
+  - Do not change resource, delay, kinetics, topology, target compartment or behavioral gates.
+  - Do not combine this module with PV-like, VIP-like, apical, thalamic-L5, pulvinar or other interventions.
+  - Do not execute Stage 3 until its runner, controls, learned weights, tests and registration are committed and hash-sealed.
+  - Do not modify the frozen classic baseline or overwrite results 991 or 995.
+
+next_step:
+  - Register the exact Stage-3 execution and classification contract inherited from registration 985.
+  - Implement a checkpoint-resumable behavioral runner using the frozen Figure-7 and conditional Figure-10 machinery.
+  - Verify the zero-outcome runner contract and full suite, commit implementation, then create a separate pre-outcome seal.
+  - Execute and report all 12 points without fitting or early selection.

@@ -1,0 +1,98 @@
+schema_version: 1
+artifact_id: 990
+artifact_type: layer5-sst-like-isolated-recruitment-execution-seal
+date: 2026-09-21
+status: sealed-before-isolated-nonzero-outcomes
+implementation_commit: 3267d60
+isolated_nonzero_execution_authorized: true
+nonzero_network_execution_authorized: false
+frozen_baseline_modified: false
+registration: docs/validation-results/post2008-l5-sst-like-isolated-recruitment-registration-989.yaml
+null_assessment: docs/validation-results/post2008-l5-sst-like-exact-null-assessment-988.yaml
+parent_registration: docs/validation-results/post2008-l5-sst-like-functional-grid-registration-985.yaml
+source_supplement: docs/validation-results/post2008-l5-sst-like-source-supplement-984.yaml
+baseline_manifest: configs/baselines/classic_smart_calibrated_v1.yaml
+baseline_manifest_fingerprint: 992fdd7c3bc9fa0f0d385b9e5a58ba317599357ca377145aba6f01c80d631cd2
+runtime_fingerprint: 7e654528a99f0b25b7148260a8d52021f6443fb992b210729a2475ae3cfcdaa4
+result: results/l5-sst-like-isolated-recruitment-991.yaml
+
+execution:
+  smart_network_constructed: false
+  smart_behavior_observed: false
+  source_emission_times_ms: [50.0, 70.0, 90.0, 110.0, 130.0]
+  source_events_per_run: 5
+  delays_ms: [1.0, 3.0, 7.0]
+  resource_fractions: [0.125, 0.25, 0.5, 1.0]
+  total_conductances_nS: [24.160811001514005, 48.32162200302801, 96.64324400605602, 193.28648801211204]
+  dt_ms: [0.01, 0.005]
+  repetitions_per_point_per_dt: 2
+  total_runs: 48
+  checkpoint_after_every_run: true
+  raw_npz_sha256_required: true
+  exact_repeat_required: true
+  convergence_required: true
+
+pre_outcome_verification:
+  focused_tests:
+    command: >-
+      .venv/bin/pytest -q tests/test_l5_sst_like_feedback.py
+      tests/test_l5_sst_like_isolated.py
+      tests/test_l5_sst_like_isolated_runner.py
+      tests/test_l5_sst_like_registration_contract.py
+    passed: 19
+    failed: 0
+  full_suite:
+    command: .venv/bin/pytest -q
+    collected: 1387
+    passed: 1387
+    failed: 0
+  ruff:
+    command: .venv/bin/ruff check .
+    passed: true
+  diff_check:
+    command: git diff --check
+    passed: true
+  zero_duration_brian_preparation_passed: true
+  real_nonzero_trace_observed_before_seal: false
+
+files:
+  scripts/run_l5_sst_like_isolated_recruitment.py: cbd669856a9a1ac7673bda207c418669dca45839afd9f5f51dd84bfb2dde930d
+  src/smart_robustness/validation/l5_sst_like_isolated.py: 6494586622cd5edb30d71fee9e523aec4e90e3a7cb89b921fb0a65653ddefad1
+  src/smart_robustness/models/sst_like_feedback.py: d540c6ae2e88d3602a8fdf246aff1b06e6b6d60fb54f6d4021ad89682fc8e1a5
+  src/smart_robustness/models/compartmental_hh.py: 62c9d95697e85caf026f26bebd6cdaa5aa1a5b663c8a5bc981f4c15c9405f01c
+  src/smart_robustness/models/equation_builder.py: bbe5777370c30c3dc41b6f804dcf2d33f587b8d36ef17dab7e26475bc6658684
+  src/smart_robustness/models/currents.py: 718ddc2f7c8956fa415b804f1ebc70894089af0ae4b6aef1390a3e9e6759b988
+  src/smart_robustness/models/ports.py: 1c38d6ac306620b37f55fd0839b134bd12253d858b249a32bba255887a78aad3
+  src/smart_robustness/models/modeldb112923.py: 6523c92fe22ceca917940b4fcb8f955999b72a6f399c859930e24bb773e439db
+  src/smart_robustness/models/table3.py: 614fdef2f1da001fcd55cc1bd36a01410a3fdb2590beb49a00f372c93a6564b7
+  src/smart_robustness/classic_sector.py: 6191cc09727220b363e9a82863d235010cc75b274e5cc5f3884e6158ce2e8a7e
+  src/smart_robustness/baseline.py: 36b08a894cc9fa74a1b60189f9e56184dfd64fe14f1f84b605f4890767846770
+  src/smart_robustness/data/modeldb112923_first_order.yaml: 3b42be7dd0b17cc01ad29f474f152cfcd8c2a605410aad223d14c676fe98d965
+  src/smart_robustness/data/supplementary_table3.yaml: 4fe43992e1678b7031921e1a5d6b56f004d427963f57adf1659f4df4664ad0b0
+  tests/test_l5_sst_like_feedback.py: 1a4167416cb3bb1856b80570ac86c19ce29a933e4992555d403afd7908625f51
+  tests/test_l5_sst_like_isolated.py: a720d686bf2d0754762e211c209caf936f45b801b58b62668fb16432030303ab
+  tests/test_l5_sst_like_isolated_runner.py: 3abdb1d58768cc4a1624ea4d0ce74a2c40d243e8b0047bdb7bd7a1bf0effbb6b
+  tests/test_l5_sst_like_registration_contract.py: 006d18dcc429ac928a2df3b4109148bd9f40be8d5dba1f34173c311918fdc904
+  docs/validation-results/post2008-l5-sst-like-isolated-recruitment-registration-989.yaml: ab92460ec69d9ecaae398fdc8d1ff05a899f032a0454a60171fa988c342179cc
+  docs/validation-results/post2008-l5-sst-like-exact-null-assessment-988.yaml: cb8349a25a6f82d28a6738a7db5ef87a3ab28cdc43d80843a74a69ccfbb5f67f
+  docs/validation-results/post2008-l5-sst-like-functional-grid-registration-985.yaml: a5088a08d9ebdc94c65f7144be7e9decfcd0913ce8594f4ea741b7a1deaecd2d
+  docs/validation-results/post2008-l5-sst-like-source-supplement-984.yaml: f0575e0903680659576a5aa49846eedbb9b96ae378a0e5aaa308d2db280320d8
+  configs/baselines/classic_smart_calibrated_v1.yaml: d8a11933e4ed6a41a72647e4c9ce88f88fd870908bd9a086bbc67b75cff2a5fb
+
+promotion_gates:
+  - all 48 registered isolated runs complete
+  - every source train and synaptic delivery count equals five
+  - requested and realized total conductance differ by no more than 1e-12 nS
+  - every recorded numeric array is finite
+  - distal gate and distal current are nonzero under the registered clamp
+  - the clamped target emits no spikes
+  - both repetitions are raw-array exact at every point and time step
+  - every coarse-versus-fine convergence comparison satisfies registration 989
+
+stopping_rules:
+  - Stop on any seal, baseline, checkpoint, path-containment, raw-hash or reconstructed-summary mismatch.
+  - Stop on the first failed per-run engineering gate and retain the failure without tuning.
+  - Do not change resource, delay, kinetics, event train, duration, clamp, time step, tolerance or execution order after outcomes.
+  - This seal authorizes no SMART network construction, behavior, learning, spectrum or interaction experiment.
+  - A pass requires an independently committed assessment before Stage 3 can be registered or sealed.
+  - Do not modify the frozen classic baseline or any archived control.

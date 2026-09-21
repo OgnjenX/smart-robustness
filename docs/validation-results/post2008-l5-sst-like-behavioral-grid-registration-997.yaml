@@ -1,0 +1,137 @@
+schema_version: 1
+artifact_id: 997
+artifact_type: pre-outcome-layer5-sst-like-stage3-behavioral-grid-registration
+date: 2026-09-22
+status: registered-before-stage3-runner-and-nonzero-network-outcomes
+parent_registration: docs/validation-results/post2008-l5-sst-like-functional-grid-registration-985.yaml
+isolated_assessment: docs/validation-results/post2008-l5-sst-like-isolated-recruitment-assessment-996.yaml
+legacy_control_assessment: docs/validation-results/post2008-inhibitory-routing-null-assessment-974.yaml
+source_supplement: docs/validation-results/post2008-l5-sst-like-source-supplement-984.yaml
+frozen_baseline_modified: false
+network_execution_authorized: false
+
+question: >-
+  Across the complete prospectively fixed nonzero L5 SST-like distal-feedback
+  grid, which coordinates exactly preserve, robustly change while preserving,
+  or disrupt the frozen SMART match/mismatch and reset behavior?
+
+intervention:
+  kind: collapsed-disynaptic-functional-route
+  source_events: layer5_excitatory_v1 spikes
+  omitted_intermediate: L5 SST-like interneuron
+  target: layer5_excitatory_v1.distal_dendrite
+  source_target_mapping: same-spatial-index
+  receptor: GABA_A
+  reversal_mV: -70.0
+  rise_ms: 1.0
+  fall_ms: 7.0
+  plastic: false
+  biological_scope: >-
+    Functional sensitivity test of delayed recurrent distal inhibition; this
+    stage does not claim an explicit SST subtype, prevalence or fitted circuit.
+
+fixed_grid:
+  order: delay-major-then-resource-fraction-ascending
+  resource_anchor_nS: 193.28648801211204
+  delays_ms: [1.0, 3.0, 7.0]
+  resource_fractions: [0.125, 0.25, 0.5, 1.0]
+  realized_total_conductance_nS:
+    0.125: 24.160811001514005
+    0.25: 48.32162200302801
+    0.5: 96.64324400605602
+    1.0: 193.28648801211204
+  point_count: 12
+  repetitions_per_point: 2
+  execute_every_point: true
+  early_stop_on_behavioral_failure: false
+
+sealed_inputs:
+  baseline_manifest: configs/frozen-classic-smart-baseline.yaml
+  archived_control: results/inhibitory-routing-null-973.yaml
+  archived_control_sha256: 4ad5dc017a0112dbad1434846c4542caa2bc48e2d3a6ae784499924a5d3b133e
+  learned_weights: results/direct-visual-thalamus-layer5-figure6-940.yaml
+  learned_weights_sha256: 3150721f19b1e3d4c2a60767eb8f6318ab42a06f2c4a741c2dfcb8149d3ce6d3
+  learned_weight_arm: ratio_0
+  learned_weight_rule: exact weights shared by both archived trials
+  result_target: results/l5-sst-like-behavioral-grid-1000.yaml
+
+execution_contract:
+  figure7:
+    required_for_every_repetition: true
+    protocol_and_gates: inherited-unchanged-from-frozen-calibrated-profile
+  figure10:
+    required_only_if_same-repetition-figure7-passes: true
+    protocol_and_gates: inherited-unchanged-from-sealed-search-cycle-runner
+  exact_repeat:
+    required: true
+    definition: retained summaries after removing repetition index are exactly equal
+  legacy_comparison:
+    required_for_every_point: true
+    reference: one exact normalized outcome from all four archived null-control outcomes
+    definition: retained point summary after removing repetition index is exactly equal to reference
+  reporting:
+    report_all_12_points: true
+    retain_gate_values: true
+    retain_exact_differences_from_legacy: true
+    no_point_selection: true
+
+checkpoint_contract:
+  atomic_write_after_every_repetition: true
+  single_process_lock: true
+  resume_identity_must_match_seal_and_runtime: true
+  resume_order_must_match_registered_grid: true
+  completed_points_may_not_be_recomputed: true
+  incomplete_point_resumes_at_next_repetition: true
+  completed_result_replay_must_be_noop: true
+  checkpoint_does_not_authorize_unregistered_points: true
+
+prospective_point_classification:
+  exact_survival: >-
+    Both repetitions pass Figure 7 and conditional Figure 10, are exact repeats,
+    and the retained normalized summary is exactly equal to the archived legacy reference.
+  robust_changed_survival: >-
+    Both repetitions pass Figure 7 and conditional Figure 10 and are exact repeats,
+    but at least one retained value differs from the archived legacy reference.
+  failure: >-
+    A required Figure-7 or Figure-10 gate fails in either repetition, or the two
+    retained summaries are not exact repeats.
+  engineering_stop: >-
+    A seal, identity, construction, finite-value, checkpoint, or registered-order
+    requirement fails. An engineering stop makes the region result indeterminate.
+
+prospective_region_classification:
+  invariant_region: all 12 points are exact_survival
+  robust_region: all 12 points survive and at least one is robust_changed_survival
+  mixed_region: at least one point survives and at least one point is failure
+  no_survival_in_registered_region: all 12 points are failure
+  indeterminate: any point is incomplete or has an engineering_stop
+
+fixed_fields:
+  - frozen classic baseline, profile and learned weights
+  - existing populations, projections, intrinsic equations and external inputs
+  - source population, target population, distal compartment and same-index topology
+  - receptor reversal, rise and fall kinetics
+  - all 12 resource-delay coordinates and their execution order
+  - Figure-7 and Figure-10 protocols, analyses and gates
+  - exact-repeat and legacy-comparison definitions
+
+forbidden:
+  - changing any resource, delay, gate or protocol after observing an outcome
+  - stopping after a behavioral failure or reporting only surviving points
+  - ranking or selecting a preferred point from network outcomes
+  - interpreting coordinates as estimates of biological SST parameters
+  - adding an explicit SST intrinsic neuron or another post-2008 intervention
+  - combining PV-like, VIP-like, apical, thalamic-L5 or pulvinar modules
+  - changing or overwriting the frozen classic baseline or archived controls
+
+promotion_rule: >-
+  Commit and test the checkpoint-resumable runner without executing a nonzero
+  SMART outcome, then create and commit a separate cryptographic seal covering
+  the runner, route implementation, registrations, controls, learned weights,
+  baseline and relevant tests. Only that seal may authorize result 1000.
+
+next_step:
+  - Implement the registered runner and zero-outcome unit tests.
+  - Pass focused tests, repository-wide Ruff and the full test suite.
+  - Commit implementation, then create a separate pre-outcome hash seal.
+  - Execute every registered point and assess the complete region without tuning.

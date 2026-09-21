@@ -1,0 +1,46 @@
+schema_version: 1
+artifact_id: 972
+artifact_type: exact-null-inhibitory-routing-behavioral-execution-seal
+date: 2026-09-21
+status: sealed-before-null-behavioral-outcomes
+network_execution_authorized: true
+biological_routing_execution_authorized: false
+frozen_baseline_modified: false
+source_audit: docs/validation-results/post2008-inhibitory-cell-class-source-audit-970.yaml
+registration: docs/validation-results/post2008-inhibitory-routing-null-registration-971.yaml
+baseline_manifest: configs/baselines/classic_smart_calibrated_v1.yaml
+baseline_manifest_fingerprint: 992fdd7c3bc9fa0f0d385b9e5a58ba317599357ca377145aba6f01c80d631cd2
+runtime_fingerprint: 7e654528a99f0b25b7148260a8d52021f6443fb992b210729a2475ae3cfcdaa4
+figure6_result: results/direct-visual-thalamus-layer5-figure6-940.yaml
+result: results/inhibitory-routing-null-973.yaml
+
+execution:
+  arm_order: [unwrapped_control, wrapped_legacy_aggregate]
+  repetitions_per_arm: 2
+  figure7_for_every_run: true
+  figure10_only_after_same-run-figure7-pass: true
+  checkpoint_after_every_run: true
+  exact_within_arm_repeats_required: true
+  exact_wrapped_vs_unwrapped_required: true
+
+files:
+  scripts/run_inhibitory_routing_null.py: 696ff3f7ff4f23bffab17daa02c76587f33d5149b802da1c527293ae68eff552
+  src/smart_robustness/models/inhibitory_routing.py: 2343795a4326928f72d5888e7461c37938a755356a2a2b839e121ce63d942203
+  scripts/run_layer5_distal_nak_stage3.py: ad7cab5abac701b83aa55cd232e556965e5068d666817777903ac079100f486e
+  src/smart_robustness/classic_sector.py: 6191cc09727220b363e9a82863d235010cc75b274e5cc5f3884e6158ce2e8a7e
+  src/smart_robustness/validation/figure7.py: e0bd31a01ea4f52df9d79c51bc93988d57badb6e87d7e3b98c1b846120e93af3
+  src/smart_robustness/validation/figure10_search_cycle_spread.py: 83c1802c12b4e1486a547a0543dd4d3010a45e5a66c4159b0a8020c7d3620906
+  docs/validation-results/post2008-inhibitory-cell-class-source-audit-970.yaml: b3337e0d9ae81c52df803a2140278076e963425e5c155cad0022b788fed0c468
+  docs/validation-results/post2008-inhibitory-routing-null-registration-971.yaml: b576fecdbfb9863c66650e54e9f4a8f23cface9759d17c1eb115b16826a37b0d
+  configs/baselines/classic_smart_calibrated_v1.yaml: d8a11933e4ed6a41a72647e4c9ce88f88fd870908bd9a086bbc67b75cff2a5fb
+  configs/calibration/figure6_7_10_projection025_source_control_v1.yaml: b2028a35666cb31645e91a741b00440b46a508558c5db8361404c2264041ffdf
+  results/direct-visual-thalamus-layer5-figure6-940.yaml: 3150721f19b1e3d4c2a60767eb8f6318ab42a06f2c4a741c2dfcb8149d3ce6d3
+  docs/validation-results/post2008-direct-visual-thalamus-layer5-figure6-assessment-940.yaml: e8869205b9f19fce5e977156ac3e802e36cb486eed52209a3d8d786a5c2f591a
+  tests/test_inhibitory_routing.py: 2a88ec095c41e15375fc8ac6d2df2ee4382edc34a2114f3f86860e2342d54efc
+  tests/test_inhibitory_routing_runner.py: ac87bef2cb96d2d5caf4235762d62e46efbe373faed8a958f8f6f7c78f9aee72
+
+stopping_rules:
+  - Any seal mismatch stops execution.
+  - Any nonexact repeat or wrapped-versus-unwrapped difference fails the scaffold.
+  - A null pass authorizes only a separately preregistered isolated routing assay.
+  - No PV-like, SST-like or VIP-like network route may be executed under this seal.

@@ -1,0 +1,70 @@
+schema_version: 1
+artifact_id: 980
+artifact_type: layer4-pv-like-somatic-routing-behavioral-execution-seal
+date: 2026-09-21
+status: sealed-before-network-outcomes
+network_execution_authorized: true
+frozen_baseline_modified: false
+source_audit: docs/validation-results/post2008-inhibitory-cell-class-source-audit-970.yaml
+registration: docs/validation-results/post2008-layer4-pv-like-somatic-routing-registration-979.yaml
+null_assessment: docs/validation-results/post2008-inhibitory-routing-null-assessment-974.yaml
+isolated_assessment: docs/validation-results/post2008-inhibitory-target-location-isolated-assessment-978.yaml
+baseline_manifest: configs/baselines/classic_smart_calibrated_v1.yaml
+baseline_manifest_fingerprint: 992fdd7c3bc9fa0f0d385b9e5a58ba317599357ca377145aba6f01c80d631cd2
+runtime_fingerprint: 7e654528a99f0b25b7148260a8d52021f6443fb992b210729a2475ae3cfcdaa4
+legacy_result: results/inhibitory-routing-null-973.yaml
+legacy_result_sha256: 4ad5dc017a0112dbad1434846c4542caa2bc48e2d3a6ae784499924a5d3b133e
+figure6_result: results/direct-visual-thalamus-layer5-figure6-940.yaml
+figure6_result_sha256: 3150721f19b1e3d4c2a60767eb8f6318ab42a06f2c4a741c2dfcb8149d3ce6d3
+result: results/layer4-pv-like-somatic-routing-981.yaml
+
+execution:
+  arm: layer4_pv_like_somatic_projection036
+  repetitions: 2
+  order: [repetition0, repetition1]
+  figure7_for_every_repetition: true
+  figure10_only_after_same-repetition-figure7-pass: true
+  checkpoint_after_every_repetition: true
+  exact_repeat_required: true
+  archived_legacy_reference_repetitions: 4
+
+sealed_transformation:
+  population: layer4_excitatory_v1
+  projection_id: modeldb112923.projection.036
+  source_population: layer4_inhibitory_v1
+  changed_field: target_compartment
+  original_value: proximal_dendrite
+  transformed_value: soma
+  total_receptor_conductance_exactly_preserved: true
+  all_other_fields_fixed: true
+
+files:
+  scripts/run_layer4_pv_like_somatic_routing.py: 542799080a79438f504ae12b51a2e3aaa8550a902c1bae8479c29e6689e567e5
+  src/smart_robustness/models/inhibitory_routing.py: e8c3234a618e658cc2d677fa143d12f20a60bd7543befffbb1f3a6028a509688
+  tests/test_inhibitory_routing.py: 2384c4065fcf041941536905fd14847eae3f9745f6bc1bbfb62830e40e13bc9b
+  tests/test_layer4_pv_like_somatic_routing_runner.py: 6fc6b102e22892f40a6abb5820434b72b680d9fd61c461f2d49556461021245c
+  docs/validation-results/post2008-layer4-pv-like-somatic-routing-registration-979.yaml: ef33a957c2f8fea001cc5155ad5c348c59ff1f5f8861215c7a898c9a4e515418
+  docs/validation-results/post2008-inhibitory-cell-class-source-audit-970.yaml: b3337e0d9ae81c52df803a2140278076e963425e5c155cad0022b788fed0c468
+  docs/validation-results/post2008-inhibitory-routing-null-assessment-974.yaml: b26643fbae5ea3c9bd5c8189c06d2212b8dda943f3e8c9c5a798eb2b0dbf145e
+  docs/validation-results/post2008-inhibitory-target-location-isolated-assessment-978.yaml: fe5c49cf69086c416c9b7cc9f2d20d72a19839c20c5cea043aa0ccd476977127
+  configs/baselines/classic_smart_calibrated_v1.yaml: d8a11933e4ed6a41a72647e4c9ce88f88fd870908bd9a086bbc67b75cff2a5fb
+  configs/calibration/figure6_7_10_projection025_source_control_v1.yaml: b2028a35666cb31645e91a741b00440b46a508558c5db8361404c2264041ffdf
+  results/inhibitory-routing-null-973.yaml: 4ad5dc017a0112dbad1434846c4542caa2bc48e2d3a6ae784499924a5d3b133e
+  results/direct-visual-thalamus-layer5-figure6-940.yaml: 3150721f19b1e3d4c2a60767eb8f6318ab42a06f2c4a741c2dfcb8149d3ce6d3
+  scripts/run_layer5_distal_nak_stage3.py: ad7cab5abac701b83aa55cd232e556965e5068d666817777903ac079100f486e
+  src/smart_robustness/classic_sector.py: 6191cc09727220b363e9a82863d235010cc75b274e5cc5f3884e6158ce2e8a7e
+  src/smart_robustness/validation/figure7.py: e0bd31a01ea4f52df9d79c51bc93988d57badb6e87d7e3b98c1b846120e93af3
+  src/smart_robustness/validation/figure10_search_cycle_spread.py: 83c1802c12b4e1486a547a0543dd4d3010a45e5a66c4159b0a8020c7d3620906
+
+classification:
+  exact_survival: all gates and exact repeats pass, with exact equality to the archived legacy summary
+  robust_changed_survival: all gates and exact repeats pass, with one or more reported legacy-summary differences
+  failure: any behavioral gate or exact-repeat requirement fails
+  engineering_stop: seal, structural, identity or checkpoint verification fails before classification
+
+stopping_rules:
+  - Any seal mismatch stops execution before a network outcome.
+  - Do not alter the archived control, frozen baseline, registered gates or transformation.
+  - Do not tune any parameter or add a rescue arm from observed outcomes.
+  - Report every retained-summary difference from the archived legacy reference.
+  - This seal authorizes only the registered projection-036 target-location experiment.

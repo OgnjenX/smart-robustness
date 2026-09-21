@@ -1,0 +1,50 @@
+schema_version: 1
+artifact_id: 976
+artifact_type: isolated-inhibitory-target-location-execution-seal
+date: 2026-09-21
+status: sealed-before-isolated-outcomes
+sealed_commit: cbec995
+isolated_execution_authorized: true
+network_execution_authorized: false
+frozen_baseline_modified: false
+source_audit: docs/validation-results/post2008-inhibitory-cell-class-source-audit-970.yaml
+null_assessment: docs/validation-results/post2008-inhibitory-routing-null-assessment-974.yaml
+registration: docs/validation-results/post2008-inhibitory-target-location-isolated-registration-975.yaml
+baseline_manifest: configs/baselines/classic_smart_calibrated_v1.yaml
+baseline_manifest_fingerprint: 992fdd7c3bc9fa0f0d385b9e5a58ba317599357ca377145aba6f01c80d631cd2
+runtime_fingerprint: 7e654528a99f0b25b7148260a8d52021f6443fb992b210729a2475ae3cfcdaa4
+result: results/inhibitory-target-location-isolated-977.yaml
+
+execution:
+  protocols: [all_compartments_clamped_minus55, free_membrane]
+  arms: [legacy_proximal, pv_like_somatic, sst_like_distal]
+  dt_ms: [0.01, 0.005]
+  repetitions_per_condition: 2
+  expected_runs: 24
+  checkpoint_after_every_run: true
+  exact_raw_repeats_required: true
+  raw_hash_and_summary_verification_on_resume: true
+
+files:
+  scripts/run_inhibitory_target_location_isolated.py: b0fb48fccaa1f929afd6fa1b309fe4dc0642536b4e042d760980a1be35a88962
+  src/smart_robustness/validation/inhibitory_target_location.py: 5de0f0973d4ed63e49ca54103d8fa092876e4e221b39d0d73e481b44163bcff8
+  tests/test_inhibitory_target_location.py: 2fe20e15f5b02d25e35afb07ac5762b5b854998a540e732328a5e04573ab7408
+  tests/test_inhibitory_target_location_runner.py: 7760e3f85064d71341d637dbfd58cc2d2ee625caba7715fb1c2429a2c639a21d
+  docs/validation-results/post2008-inhibitory-target-location-isolated-registration-975.yaml: e8d91eaf038cd5c4423fa665867ef56d24f6355f9cee0945f2a980792f5a0aa8
+  docs/validation-results/post2008-inhibitory-cell-class-source-audit-970.yaml: b3337e0d9ae81c52df803a2140278076e963425e5c155cad0022b788fed0c468
+  docs/validation-results/post2008-inhibitory-routing-null-assessment-974.yaml: b26643fbae5ea3c9bd5c8189c06d2212b8dda943f3e8c9c5a798eb2b0dbf145e
+  configs/baselines/classic_smart_calibrated_v1.yaml: d8a11933e4ed6a41a72647e4c9ce88f88fd870908bd9a086bbc67b75cff2a5fb
+
+sealed_claims:
+  - Only target compartment changes across arms.
+  - Total compiled port conductance, gate waveform, receptor kinetics, reversal and source weight are fixed.
+  - The clamp protocol tests realized-resource equality independently of location effects.
+  - The free protocol measures location effects without external current or network feedback.
+  - No directional arm ordering is a promotion requirement.
+
+stopping_rules:
+  - Any file-hash or baseline-identity mismatch stops execution.
+  - Any nonfinite trace, repeat mismatch, resource inequality or registered numerical failure blocks promotion.
+  - Results may not be used to retune event timing, conductance, kinetics, reversal, cell parameters or thresholds.
+  - A pass authorizes only a separately preregistered one-layer routing design, not network execution under this seal.
+  - Do not alter the frozen classic baseline or overwrite raw results.

@@ -1,0 +1,92 @@
+schema_version: 1
+artifact_id: 969
+artifact_type: source-identity-rest-assessment
+date: 2026-09-21
+status: source-faithful-candidate-failed-rest-prerequisite
+design: docs/validation-results/post2008-pulvinar-relay-source-identity-design-966.yaml
+seal: docs/validation-results/post2008-pulvinar-relay-source-identity-seal-967.yaml
+sealed_commit: 891e550
+raw_result: results/pulvinar-relay-source-identity-968.yaml
+raw_result_sha256: 2f80056dc174b1d701a9a6734ffe33ab1be1592e208c0082a61c363d37892b19
+raw_directory: results/pulvinar-relay-source-identity-968
+raw_archive_total_bytes: 2613984
+network_execution: false
+source_faithful_transfer_execution_authorized: false
+frozen_baseline_modified: false
+
+execution:
+  expected_runs: 4
+  completed_runs: 4
+  exact_raw_repeat_pairs: 2
+  raw_hashes_and_recomputed_summaries_verified_on_resume: true
+  dt_ms: [0.01, 0.005]
+  all_recorded_values_finite: true
+  source_faithful_numerical_gate_passed: false
+  common_failure: source-faithful-cell-is-not-quiescent-at-zero-input
+
+frozen_dispatch_control:
+  coarse_dt_ms_0_01:
+    soma_mean_mV: -57.986500579604254
+    soma_peak_to_peak_mV: 126.32502090037066
+    total_spikes_in_1000_ms: 171
+    recorded_window_spikes: 17
+  fine_dt_ms_0_005:
+    soma_mean_mV: -57.98665825038708
+    soma_peak_to_peak_mV: 126.32667281780664
+    total_spikes_in_1000_ms: 171
+    recorded_window_spikes: 17
+    recorded_soma_range_mV: [-82.58275468448349, 43.74391813332315]
+  late_interspike_interval_ms:
+    coarse_range: [5.809999999999945, 5.82000000000005]
+    fine_range: [5.814999999999941, 5.819999999999936]
+
+source_faithful_candidate:
+  registered_requirements:
+    maximum_soma_peak_to_peak_mV: 0.1
+    spike_count: 0
+  coarse_dt_ms_0_01:
+    soma_mean_mV: -67.0443294919044
+    soma_peak_to_peak_mV: 141.4456881457876
+    proximal_peak_to_peak_mV: 41.37028450171092
+    distal_peak_to_peak_mV: 18.720227618286614
+    total_spikes_in_1000_ms: 10
+    recorded_window_spikes: 1
+    recorded_window_spike_time_ms: 917.82
+  fine_dt_ms_0_005:
+    soma_mean_mV: -67.044353442961
+    soma_peak_to_peak_mV: 141.44864189096583
+    proximal_peak_to_peak_mV: 41.370275114537726
+    distal_peak_to_peak_mV: 18.720229161967872
+    total_spikes_in_1000_ms: 10
+    recorded_window_spikes: 1
+    recorded_window_spike_time_ms: 917.82
+    recorded_soma_range_mV: [-96.12354264728306, 45.32509924368278]
+  late_interspike_interval_ms:
+    coarse_range: [96.1099999999999, 96.15000000000009]
+    fine_range: [96.10500000000002, 96.1450000000001]
+  coarse_vs_fine:
+    soma_mean_absolute_difference_mV: 0.000023951056597581788
+    soma_peak_to_peak_absolute_difference_mV: 0.002953745178232437
+    convergence_tolerances_satisfied: true
+  failed_requirements:
+    - soma_not_quiet
+    - spikes
+
+interpretation:
+  - The source-faithful ModelDB convention changes the zero-input autonomous regime but does not make the V2 relay quiescent.
+  - The source-faithful candidate oscillates much more slowly than the frozen-dispatch control, with approximately 96.11 ms late interspike intervals rather than approximately 5.82 ms.
+  - Exact repeats and close coarse-versus-fine agreement show that both autonomous regimes are reproducible and are not explained by timestep instability.
+  - Because the prospectively registered quiet-rest gate failed, no source-faithful conductance-transfer or SMART network execution is authorized.
+  - This result does not establish whether the autonomous activity is a faithful biological relay mode, an initialization issue, or an unresolved implementation/source convention issue.
+  - The immutable classic baseline and its prior calibrated behavioral result remain unchanged.
+
+prohibited_actions:
+  - Do not tune calcium density, leak, axial coupling, initialization, holding current or synaptic gain from this outcome.
+  - Do not execute or interpret the source-faithful response-transfer protocol after this failed prerequisite.
+  - Do not promote either V2 relay arm into the post-2008 SMART network.
+  - Do not silently change the frozen baseline tag or overwrite the raw result.
+
+next_step:
+  - Audit the original V2 relay initialization and autonomous-mode assumptions against the serialized source and cited implementation records.
+  - Register any initialization-only or protocol-only diagnostic before observing its outcomes, without parameter fitting.
+  - If no source-grounded quiescent-rest protocol exists, record the relay-cell prerequisite as an unresolved implementation boundary and move to the next independent post-2008 module rather than tuning through it.

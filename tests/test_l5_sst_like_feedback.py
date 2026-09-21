@@ -10,8 +10,10 @@ from smart_robustness.classic_sector import first_order_population_parameters
 from smart_robustness.models.compartmental_hh import create_compartmental_hh_population
 from smart_robustness.models.modeldb112923 import first_order_population_facts
 from smart_robustness.models.sst_like_feedback import (
+    L5_SST_LIKE_PORT_NAME,
     L5_SST_LIKE_ROUTE_ID,
     connect_l5_sst_like_feedback,
+    create_l5_sst_like_synapse,
     make_l5_sst_like_population_factory,
     make_l5_sst_like_sector_builder,
 )
@@ -116,7 +118,37 @@ def test_nonzero_route_is_same_index_and_registered_on_network() -> None:
     assert list(synapse.i[:]) == [0, 1, 2]
     assert list(synapse.j[:]) == [0, 1, 2]
     assert all(synapse.delay[:] == 3.0 * brian.ms)
+    assert "delivered" in synapse.variables
+    assert "pre_signal" in synapse.variables
+    assert f"{L5_SST_LIKE_PORT_NAME}_rise_post" not in synapse.variables
+    assert f"{L5_SST_LIKE_PORT_NAME}_fall_post" not in synapse.variables
     assert synapse in network.objects
+    network.run(0 * brian.ms)
+
+
+def test_connector_rejects_an_unregistered_port() -> None:
+    brian.start_scope()
+    brian.prefs.codegen.target = "numpy"
+    factory = make_l5_sst_like_population_factory(
+        total_conductance_nS=24.160811001514005,
+        base_factory=create_compartmental_hh_population,
+    )
+    population = factory(
+        name="test_layer5_excitatory_v1",
+        size=1,
+        params=_l5_parameters(),
+        brian=brian,
+    )
+    unrelated = _l5_parameters()["synaptic_ports"][0]
+    with pytest.raises(ValueError, match="registered port"):
+        create_l5_sst_like_synapse(
+            pre_group=population.group,
+            post_population=population,
+            port=unrelated,
+            delay_ms=3.0,
+            brian=brian,
+            name="invalid_sst_like_connector",
+        )
 
 
 @pytest.mark.parametrize(

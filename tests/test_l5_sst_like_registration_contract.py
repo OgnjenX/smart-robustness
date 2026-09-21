@@ -56,3 +56,25 @@ def test_nonzero_network_execution_requires_null_and_isolated_stages() -> None:
     assert stages["stage1_exact_null"]["promotion"].startswith("all zero-resource")
     assert stages["stage2_isolated_recruitment"]["promotion"].startswith("all engineering")
     assert stages["stage3_behavioral_grid"]["figure10_only_after_same-run-figure7-pass"] is True
+
+
+def test_isolated_recruitment_design_fixes_all_pre_outcome_choices() -> None:
+    registration = _yaml(
+        "docs/validation-results/"
+        "post2008-l5-sst-like-isolated-recruitment-registration-989.yaml"
+    )
+    assert registration["isolated_execution_authorized"] is False
+    assert registration["nonzero_network_execution_authorized"] is False
+    protocol = registration["fixed_protocol"]
+    assert protocol["emission_times_ms"] == [50.0, 70.0, 90.0, 110.0, 130.0]
+    assert protocol["expected_deliveries_per_run"] == 5
+    grid = registration["registered_grid"]
+    assert grid["delays_ms"] == [1.0, 3.0, 7.0]
+    assert grid["dt_ms"] == [0.01, 0.005]
+    assert grid["nonzero_points"] == 12
+    assert grid["total_runs"] == 48
+    assert registration["repeat_gate"]["required"] is True
+    assert registration["numerical_convergence_gate"]["required"] is True
+    assert registration["promotion"]["does_not_authorize"].startswith(
+        "nonzero-network-execution"
+    )

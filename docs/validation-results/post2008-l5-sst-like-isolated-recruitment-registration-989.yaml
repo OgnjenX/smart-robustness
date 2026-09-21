@@ -1,0 +1,148 @@
+schema_version: 1
+artifact_id: 989
+artifact_type: pre-outcome-layer5-sst-like-isolated-recruitment-registration
+date: 2026-09-21
+status: design-registered-before-implementation-and-nonzero-outcomes
+parent_registration: docs/validation-results/post2008-l5-sst-like-functional-grid-registration-985.yaml
+null_assessment: docs/validation-results/post2008-l5-sst-like-exact-null-assessment-988.yaml
+isolated_execution_authorized: false
+nonzero_network_execution_authorized: false
+frozen_baseline_modified: false
+
+question: >-
+  Does every prospectively registered nonzero L5 SST-like route coordinate
+  deliver a fixed source event train to the distal GABA-A port with exact
+  conductance-resource normalization, finite dynamics, deterministic repeats
+  and time-step convergence before any SMART network outcome is observed?
+
+boundary:
+  kind: network-blind-fixed-event-isolated-target-assay
+  source: one independent SpikeGeneratorGroup cell
+  target: one frozen-classic layer5_excitatory_v1 cell
+  target_compartment: distal_dendrite
+  receptor: GABA_A
+  reversal_mV: -70.0
+  rise_ms: 1.0
+  fall_ms: 7.0
+  same_index_mapping: true
+  explicit_sst_intrinsic_neuron: false
+  smart_network_constructed: false
+  smart_behavior_observed: false
+
+fixed_protocol:
+  emission_times_ms: [50.0, 70.0, 90.0, 110.0, 130.0]
+  expected_emissions_per_run: 5
+  expected_deliveries_per_run: 5
+  duration_ms: 220.0
+  target_voltage_clamps_mV:
+    soma: -55.0
+    proximal_dendrite: -55.0
+    distal_dendrite: -55.0
+  synaptic_weight: 1.0
+  event_update: >-
+    Increment the registered distal port rise and fall states by unit weight
+    and increment a per-synapse integer delivery counter.
+  rationale: >-
+    Event times are exact multiples of both registered time steps, remain
+    separated by more than the rise constant, and leave at least 83 ms after
+    the latest registered arrival for the slowest 7-ms fall kernel to decay.
+    Clamping removes intrinsic-state and spike-threshold variation so this
+    stage tests route construction, resource realization and numerical
+    delivery only; free SMART behavior remains reserved for Stage 3.
+
+registered_grid:
+  resource_anchor_nS: 193.28648801211204
+  points:
+    - {resource_fraction: 0.125, total_conductance_nS: 24.160811001514005}
+    - {resource_fraction: 0.25, total_conductance_nS: 48.32162200302801}
+    - {resource_fraction: 0.5, total_conductance_nS: 96.64324400605602}
+    - {resource_fraction: 1.0, total_conductance_nS: 193.28648801211204}
+  delays_ms: [1.0, 3.0, 7.0]
+  dt_ms: [0.01, 0.005]
+  repetitions_per_point_per_dt: 2
+  nonzero_points: 12
+  total_runs: 48
+  execution_order: delay-major-then-resource-ascending-then-dt-coarse-to-fine-then-repeat
+
+recorded_raw_arrays:
+  - time_ms
+  - source_spike_times_ms
+  - source_spike_indices
+  - target_spike_times_ms
+  - target_spike_indices
+  - distal_gate
+  - distal_synaptic_current_pA
+  - v_soma_mV
+  - v_proximal_dendrite_mV
+  - v_distal_dendrite_mV
+  - delivery_count
+  - requested_total_conductance_nS
+  - realized_total_conductance_nS
+  - delay_ms
+  - dt_ms
+  - resource_fraction
+
+per_run_gates:
+  exact_source_event_delivery:
+    source_events: 5
+    delivered_events: 5
+    source_times_exact: true
+  exact_resource_normalization:
+    rule: target_lateral_area_cm2_times_density_mS_cm2_times_1e6
+    absolute_tolerance_nS: 1.0e-12
+  finite_recorded_numeric_arrays: true
+  nonzero_distal_gate: true
+  nonzero_distal_current: true
+  no_target_spikes_under_clamp: true
+
+repeat_gate:
+  rule: >-
+    For each point and dt, every named raw array must have identical keys,
+    dtype, shape and values across the two repetitions.
+  required: true
+
+numerical_convergence_gate:
+  comparison: dt_0.01_ms_repeat0_versus_dt_0.005_ms_repeat0
+  metrics:
+    - peak_distal_gate
+    - integral_distal_gate_ms
+    - peak_absolute_distal_current_pA
+    - integral_absolute_distal_current_pA_ms
+  relative_error_tolerances:
+    peak_distal_gate: 0.001
+    integral_distal_gate_ms: 0.001
+    peak_absolute_distal_current_pA: 0.01
+    integral_absolute_distal_current_pA_ms: 0.01
+  clamp_voltage_maximum_absolute_error_mV: 1.0e-12
+  zero_scale_rule: max-absolute-value-or-machine-tiny
+  required: true
+
+archive_and_resume:
+  one_npz_per_run: true
+  object_arrays_forbidden: true
+  atomic_exclusive_publication: true
+  sha256_each_raw_trace: true
+  atomic_yaml_checkpoint_after_each_run: true
+  verify_every_archived_trace_and-summary_before_resume: true
+  lock_prevents_concurrent_identical_runner: true
+
+promotion:
+  required: >-
+    All 48 runs complete; every per-run gate, exact-repeat gate and all 12
+    convergence gates pass; the raw result and traces are independently
+    assessed.
+  authorizes: separately-registered-and-sealed-stage3-behavioral-grid-only
+  does_not_authorize: nonzero-network-execution-under-this-registration
+
+stopping_rules:
+  - Seal the runner, model module, metrics, tests, this registration, null assessment and frozen baseline before the first nonzero run.
+  - Stop on any seal, checkpoint identity, raw-trace hash, path-containment or summary-reconstruction mismatch.
+  - Stop on the first nonfinite recording or failed event-delivery/resource-normalization gate; retain and report the point without changing parameters.
+  - Report convergence or repeat failure for every completed point; do not tune or replace a registered coordinate.
+  - Do not inspect or execute Figure-7, Figure-10, learning, spectra or any other SMART network outcome in this stage.
+  - Do not modify the frozen classic baseline or combine this route with another post-2008 intervention.
+
+next_step: >-
+  Implement construction, recording, metrics, checkpoint-resume and contract
+  tests; run focused and full static verification; then commit a hash seal
+  before executing the first nonzero isolated trace.

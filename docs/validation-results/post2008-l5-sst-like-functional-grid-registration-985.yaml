@@ -56,9 +56,19 @@ staged_execution:
     - total conductance is normalized exactly to the registered nS value at every point
   stage1_exact_null:
     resource_fraction: 0.0
-    delays_ms: [1.0, 3.0, 7.0]
-    required_result: exact equality across delays, repeats and archived legacy summary
-    repetitions_per_delay: 2
+    canonical_network_delay_ms: 3.0
+    structurally_inert_delay_labels_ms: [1.0, 3.0, 7.0]
+    network_repetitions: 2
+    required_result: >-
+      Exact equality across the two canonical-delay repetitions and the
+      archived legacy summary, plus a static proof that zero resource returns
+      the unmodified base builder before delay is read for every registered
+      delay label.
+    rationale: >-
+      At zero resource the route does not create a port, synapse or state
+      variable, so delay has no executable object on which to act. Repeating
+      the same unmodified network under three inert labels would add no
+      evidence beyond the branch proof and exact network repetitions.
     promotion: all zero-resource runs must be exact before any nonzero point executes
   stage2_isolated_recruitment:
     purpose: >-

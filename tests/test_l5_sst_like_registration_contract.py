@@ -38,7 +38,11 @@ def test_sst_grid_is_complete_prospective_and_non_fitted() -> None:
     assert region["realized_total_conductance_nS"] == [
         anchor * fraction for fraction in region["resource_fractions"]
     ]
-    assert registration["staged_execution"]["stage1_exact_null"]["resource_fraction"] == 0.0
+    null = registration["staged_execution"]["stage1_exact_null"]
+    assert null["resource_fraction"] == 0.0
+    assert null["canonical_network_delay_ms"] == 3.0
+    assert null["structurally_inert_delay_labels_ms"] == [1.0, 3.0, 7.0]
+    assert null["network_repetitions"] == 2
     assert registration["staged_execution"]["stage3_behavioral_grid"]["report_all_points"] is True
     assert "fitting resource or delay to any SMART network outcome" in registration["forbidden"]
 

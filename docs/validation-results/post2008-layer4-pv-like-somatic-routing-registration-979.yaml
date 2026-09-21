@@ -1,0 +1,131 @@
+schema_version: 1
+artifact_id: 979
+artifact_type: pre-outcome-layer4-pv-like-somatic-routing-registration
+date: 2026-09-21
+status: design-registered-before-implementation-and-network-outcomes
+network_execution_authorized: false
+frozen_baseline_modified: false
+source_audit: docs/validation-results/post2008-inhibitory-cell-class-source-audit-970.yaml
+null_assessment: docs/validation-results/post2008-inhibitory-routing-null-assessment-974.yaml
+isolated_assessment: docs/validation-results/post2008-inhibitory-target-location-isolated-assessment-978.yaml
+
+question: >-
+  Does the frozen calibrated SMART match/mismatch and search/reset behavior
+  survive when the single represented layer-4 inhibitory output to layer-4
+  pyramidal cells is rerouted from proximal dendrite to soma as a PV-like
+  perisomatic abstraction, with every other model field unchanged?
+
+anatomical_and_implementation_basis:
+  presynaptic_population: layer4_inhibitory_v1
+  target_population: layer4_excitatory_v1
+  projection_id: modeldb112923.projection.036
+  archived_target_compartment: proximal_dendrite
+  transformed_target_compartment: soma
+  source_support:
+    - V1 layer-4 PV cells receive strong direct dLGN input.
+    - PV cells inhibit pyramidal cells and are represented here only by a perisomatic routing abstraction.
+  existing_recruitment:
+    projection_id: modeldb112923.projection.027
+    route: thalamic_relay-to-layer4_inhibitory_v1
+    unchanged: true
+  exact_area_control:
+    soma_area_cm2: 0.00007853981633974484
+    proximal_dendrite_area_cm2: 0.00007853981633974484
+    equal: true
+    consequence: >-
+      Retargeting projection 036 with its unchanged 2.461 mS/cm2 channel
+      density preserves total compiled receptor conductance exactly; no
+      compartment-specific gain or normalization is introduced.
+
+single_factor_transformation:
+  changed:
+    projection036_target_compartment: [proximal_dendrite, soma]
+  fixed:
+    - all populations, cell counts and intrinsic equations
+    - projection036 source, topology, edge set and variance-spread weights
+    - projection036 receptor, reversal, kinetics, delay and density
+    - all other projections, ports, external inputs and current protocols
+    - learned Figure-6 weights and frozen projection scales
+    - Figure-7 and Figure-10 analysis and pass gates
+  forbidden:
+    - adding a PV intrinsic neuron class
+    - changing thalamic recruitment or inhibitory population prevalence
+    - changing any weight, delay, topology, kinetics, reversal or density
+    - tuning from observed network outcomes
+
+control:
+  type: archived-sealed-exact-legacy-reference
+  result: results/inhibitory-routing-null-973.yaml
+  result_sha256: 4ad5dc017a0112dbad1434846c4542caa2bc48e2d3a6ae784499924a5d3b133e
+  source_arms: [unwrapped_control, wrapped_legacy_aggregate]
+  exact_legacy_repetitions: 4
+  all_behavioral_gates_passed: true
+  rationale: >-
+    The null assessment proved exact equality of wrapped and unwrapped legacy
+    builders. Reusing that sealed reference avoids two additional expensive
+    control simulations while retaining four exact source-identical controls.
+
+transformed_execution:
+  arm: layer4_pv_like_somatic_projection036
+  repetitions: 2
+  order: [repetition0, repetition1]
+  checkpoint_after_every_repetition: true
+  exact_repeat_required: true
+  figure7_for_every_repetition: true
+  figure10_only_after_same-repetition-figure7-pass: true
+
+prospective_structural_gates:
+  - only layer4_excitatory_v1 projection036 port changes compartment
+  - projection036 compiled total receptor conductance is exactly preserved
+  - every non-compartment field of projection036 is exactly equal
+  - every other synaptic port and population parameter is exactly equal
+  - the source projection inventory remains unchanged
+
+prospective_behavioral_gates:
+  figure7:
+    - match_relay_active_indices
+    - match_relay_events
+    - mismatch_relay_allowed_indices
+    - match_more_active_relay_cells
+    - match_more_trn_events
+    - match_more_trn_to_nonspecific_gaba
+    - match_nonspecific_events
+    - mismatch_nonspecific_events
+  figure10:
+    - identical_nonempty_prestate
+    - alternatives_quiet_before_release
+    - full_input_delivery
+    - intact_reset_chain
+    - aggregate_winner_suppression
+    - intact_replacement_winner
+    - reset_favors_replacement_margin
+  repeatability:
+    - exact equality of retained summaries across the two transformed repetitions
+
+prospective_classification:
+  exact_survival: >-
+    All gates pass, transformed repeats are exact, and the transformed summary
+    is exactly equal to the archived legacy summary after removing arm and
+    repetition labels.
+  robust_changed_survival: >-
+    All gates pass and transformed repeats are exact, but one or more retained
+    values differ from the archived legacy summary. Report every difference;
+    do not call it compensation because no parameter was adjusted.
+  failure: >-
+    Any Figure-7 or conditional Figure-10 gate fails, or transformed repeats
+    are not exact.
+  engineering_stop: >-
+    Any seal, structural, identity or checkpoint verification fails before a
+    scientific classification can be made.
+
+interpretive_boundaries:
+  - This is a routing-only abstraction, not an explicit PV-cell replacement.
+  - A pass would show robustness to perisomatic retargeting of one L4 inhibitory route, not general robustness to PV biology.
+  - A failure would localize sensitivity to this target-location transformation, not establish that biological PV circuits are incompatible with ART.
+  - SST-like distal and VIP-like disinhibitory mechanisms remain outside this experiment.
+
+stopping_rules:
+  - Implement structural tests and a checkpoint-resumable runner, then seal all dependencies before network execution.
+  - Do not observe transformed network outcomes before the implementation seal is committed.
+  - Do not alter the frozen baseline, archived control or registered gates.
+  - Do not tune or add a rescue arm from any observed result.

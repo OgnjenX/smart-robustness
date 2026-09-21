@@ -16,7 +16,7 @@ from smart_robustness.models.pulvinar_stp import STPParameters
 
 ROOT = Path(__file__).resolve().parents[1]
 REGISTRATION = (
-    ROOT / "docs/validation-results/post2008-pulvinar-conductance-isolated-registration-959.yaml"
+    ROOT / "docs/validation-results/post2008-pulvinar-conductance-isolated-registration-959a.yaml"
 )
 
 
@@ -67,20 +67,21 @@ def main():
     for relative, expected in spec["implementation_sha256"].items():
         if _sha256(ROOT / relative) != expected:
             raise ValueError(f"sealed implementation mismatch: {relative}")
+    grid = spec["scope"]
 
     raw_dir = args.output.with_suffix("")
     raw_dir.mkdir(parents=True, exist_ok=False)
     rows = []
     try:
-        for dt_ms in spec["dt_ms"]:
-            for frequency_hz in spec["frequencies_hz"]:
+        for dt_ms in grid["dt_ms"]:
+            for frequency_hz in grid["frequencies_hz"]:
                 first = build_condition(
                     frequency_hz=frequency_hz, dt_ms=dt_ms,
-                    events=spec["events_per_train"], tail_ms=spec["tail_ms"],
+                    events=grid["events_per_train"], tail_ms=grid["tail_ms"],
                 )
                 second = build_condition(
                     frequency_hz=frequency_hz, dt_ms=dt_ms,
-                    events=spec["events_per_train"], tail_ms=spec["tail_ms"],
+                    events=grid["events_per_train"], tail_ms=grid["tail_ms"],
                 )
                 if first.keys() != second.keys() or any(
                     not np.array_equal(first[key], second[key]) for key in first

@@ -4,6 +4,7 @@ import importlib.util
 from pathlib import Path
 
 import numpy as np
+import yaml
 
 
 def _runner():
@@ -33,3 +34,13 @@ def test_frequency_changes_emission_schedule_not_registered_mechanisms():
     np.testing.assert_array_equal(low["emissions_ms"], [0, 200, 400])
     np.testing.assert_array_equal(high["emissions_ms"], [0, 50, 100])
     assert set(low) == set(high)
+
+
+def test_sealed_registration_grid_is_at_runner_expected_location():
+    runner = _runner()
+    registration = yaml.safe_load(runner.REGISTRATION.read_text())
+    grid = registration["scope"]
+    assert grid["frequencies_hz"] == [0.5, 2, 5, 10, 20]
+    assert grid["dt_ms"] == [0.01, 0.005]
+    assert grid["events_per_train"] == 10
+    assert grid["tail_ms"] == 100.0

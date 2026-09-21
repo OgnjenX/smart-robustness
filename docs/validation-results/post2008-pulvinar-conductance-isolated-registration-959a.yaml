@@ -1,0 +1,45 @@
+schema_version: 1
+artifact_id: 959a
+artifact_type: immutable-pre-outcome-seal-amendment
+date: 2026-09-21
+amends: docs/validation-results/post2008-pulvinar-conductance-isolated-registration-959.yaml
+status: sealed-before-scientific-output
+network_execution_authorized: false
+isolated_conductance_execution_authorized: true
+frozen_baseline_modified: false
+
+failure_record:
+  attempted_result: results/pulvinar-conductance-isolated-960.yaml
+  observed_outcomes: none
+  completed_conditions: 0
+  retained_state: results/pulvinar-conductance-isolated-960/INCOMPLETE
+  cause: runner-read-grid-from-document-root-instead-of-scope
+  scientific_design_changed: false
+
+amendment:
+  changes:
+    - Read the four already sealed grid fields from the scope mapping.
+    - Add a regression test for the registration layout.
+    - Point the runner to this amendment and use result identifier 960a.
+  prohibited_changes:
+    - No frequency, time step, event count, tail, model parameter, control or readout changed.
+    - No result was inspected because execution stopped before the first condition.
+  inherited_unchanged: all-registration959-fields-except-implementation-hash-and-result-identifier
+
+# Repeated verbatim because the runner consumes these fields directly.
+scope:
+  pathway_reference: modeldb112923.projection.065
+  physical_quantity: dimensionless-conductance-gate-before-density-weight-and-driving-force
+  frequencies_hz: [0.5, 2, 5, 10, 20]
+  events_per_train: 10
+  dt_ms: [0.01, 0.005]
+  tail_ms: 100.0
+  repetitions: 2
+  raw_trace_retention: every-condition-first-exact-copy
+  repetition_verification: every-raw-array-exact-equality
+
+implementation_sha256:
+  scripts/run_pulvinar_conductance_isolated.py: f5c2b74ef9b4438ed7c24aa108c1e65f8ced00278f8cfda78daeb82d05f504dd
+  src/smart_robustness/models/pulvinar_conductance.py: 854e3e144ddf6a1c2ee3a99edcb8169331b9ba424af6dda050b13c7f3ef04bea
+  src/smart_robustness/models/pulvinar_matching.py: 1fdd12e6c7e3d6f2a2f030eb4cbdba7ebd9dda62c6ef2ed786b204913152e3dd
+  src/smart_robustness/models/pulvinar_stp.py: cffba31c086370b6da202699a61f0bde81429ab4a5ccf69011c7c27691727f29

@@ -1,0 +1,73 @@
+schema_version: 1
+artifact_id: 959
+artifact_type: pre-outcome-isolated-conductance-assay-seal
+date: 2026-09-21
+predecessor: docs/validation-results/post2008-pulvinar-conductance-matching-design-958.yaml
+status: sealed-before-scientific-output
+network_execution_authorized: false
+isolated_conductance_execution_authorized: true
+frozen_baseline_modified: false
+
+scope:
+  pathway_reference: modeldb112923.projection.065
+  physical_quantity: dimensionless-conductance-gate-before-density-weight-and-driving-force
+  frequencies_hz: [0.5, 2, 5, 10, 20]
+  events_per_train: 10
+  dt_ms: [0.01, 0.005]
+  tail_ms: 100.0
+  repetitions: 2
+  raw_trace_retention: every-condition-first-exact-copy
+  repetition_verification: every-raw-array-exact-equality
+
+fixed_classic_parameters:
+  alpha_tau_ms: 2.0
+  delay_ms: 0.1
+  source_depletion_fraction: 0.5
+  source_recovery_ms: 100.0
+fixed_type2_parameters:
+  utilization: 0.8
+  facilitation_decay_per_s: 2.0
+  resource_recovery_per_s: 3.33
+
+controls:
+  - name: classic_union_continuous_resource
+    temporal_summation: two-most-recent-probabilistic-union
+    amplitude: continuously-sampled-classic-source-resource
+  - name: additive_continuous_resource
+    temporal_summation: all-event-addition
+    amplitude: continuously-sampled-classic-source-resource
+  - name: additive_emission_snapshot
+    temporal_summation: all-event-addition
+    amplitude: classic-resource-immediately-before-emission-depletion
+  - name: type2_peak_matched
+    temporal_summation: all-event-addition
+    amplitude: type2-release-times-fixed-first-event-peak-match-gain
+  - name: type2_area_matched
+    temporal_summation: all-event-addition
+    amplitude: type2-release-times-fixed-first-event-area-match-gain
+
+readouts_per_control:
+  - complete-time-and-gate-arrays
+  - full-train-peak
+  - full-train-trapezoidal-area-ms
+  - finite-and-nonnegative-checks
+numerical_contract:
+  - two-fixed-time-steps-with-no-adaptive-refinement
+  - exact-repeat-at-each-time-step-and-frequency
+  - source-resource-reference-matches-Brian-event-scheduling-in-focused-tests
+  - first-event-matching-reference-checked-by-independent-quadrature-and-optimization
+  - no-output-dependent-parameter-change
+
+interpretation_boundaries:
+  - This assay does not contain a neuron, membrane voltage, current, spike or network.
+  - Peak and area matching are separate sensitivity arms; neither is privileged after outcomes.
+  - The long 0.5-Hz interval is retained rather than compressed or removed.
+  - The final 100-ms tail captures 50 alpha time constants but is still a finite integral.
+  - Type2 parameters remain model-derived and cross-species, not modern mouse measurements.
+  - Passing this assay can authorize a separately sealed relay-voltage assay, never direct network promotion.
+
+implementation_sha256:
+  scripts/run_pulvinar_conductance_isolated.py: 9a39e58103d9eaa14ebe48757738282928db056c6fafd4dd8a507259e7089ec3
+  src/smart_robustness/models/pulvinar_conductance.py: 854e3e144ddf6a1c2ee3a99edcb8169331b9ba424af6dda050b13c7f3ef04bea
+  src/smart_robustness/models/pulvinar_matching.py: 1fdd12e6c7e3d6f2a2f030eb4cbdba7ebd9dda62c6ef2ed786b204913152e3dd
+  src/smart_robustness/models/pulvinar_stp.py: cffba31c086370b6da202699a61f0bde81429ab4a5ccf69011c7c27691727f29

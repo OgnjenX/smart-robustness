@@ -1,0 +1,92 @@
+schema_version: 1
+artifact_id: 965
+artifact_type: isolated-relay-assessment
+date: 2026-09-21
+status: prerequisite-failed-no-transfer-interpretation
+design: docs/validation-results/post2008-pulvinar-relay-isolated-design-962.yaml
+seal: docs/validation-results/post2008-pulvinar-relay-isolated-seal-963.yaml
+sealed_commit: e14d839
+raw_result: results/pulvinar-relay-isolated-964.yaml
+raw_result_sha256: f1d5612dd4ddef70158a3101963edbfbf84aa6c9d7d490f69bdfc00934390c67
+raw_directory: results/pulvinar-relay-isolated-964
+raw_archive_total_bytes: 542712636
+network_execution: false
+frozen_baseline_modified: false
+
+execution:
+  expected_runs: 20
+  completed_runs: 20
+  exact_raw_repeat_pairs: 10
+  raw_hashes_and_recomputed_summaries_verified_on_resume: true
+  frequencies_hz: [0.5, 2, 5, 10, 20]
+  dt_ms: [0.01, 0.005]
+  all_recorded_values_finite: true
+  realized_gate_exact_at_all_retained_samples: true
+  five_cells_exactly_identical_at_rest: true
+  numerical_gates_passed: 0
+  numerical_gates_failed: 5
+  common_failure: rest-or-integrity-prerequisite
+
+rest_failure:
+  registered_requirements:
+    maximum_soma_peak_to_peak_mV: 0.1
+    spike_count: 0
+  coarse_dt_ms_0_01:
+    soma_peak_to_peak_mV: 126.32502090037065
+    total_spikes_across_five_cells_in_100_ms: 85
+    spikes_per_cell: 17
+    cell0_mean_interspike_interval_ms: 5.816874999999996
+    cell0_interspike_interval_range_ms: [5.809999999999945, 5.82000000000005]
+  fine_dt_ms_0_005:
+    soma_peak_to_peak_mV: 126.32667281780665
+    total_spikes_across_five_cells_in_100_ms: 85
+    spikes_per_cell: 17
+    cell0_mean_interspike_interval_ms: 5.816875000000003
+    cell0_interspike_interval_range_ms: [5.814999999999941, 5.82000000000005]
+    recorded_soma_range_mV: [-82.6813445749193, 44.014534259931565]
+  frequency_independence: >-
+    The same rest failure occurs at every frequency because all inputs are
+    exactly zero before 1000 ms. It is an intrinsic frozen-cell prerequisite
+    failure, not a response to any conductance arm.
+
+post_outcome_source_dispatch_audit:
+  classification: implementation-convention-mismatch-requiring-separate-diagnostic
+  frozen_v1_relay:
+    intrinsic_cell: modeldb112923_relay
+    axial_convention: kinness_serialized_edge
+    calcium_density_mS_cm2: {soma: 0.1, proximal_dendrite: 0.1, distal_dendrite: 0.1}
+  frozen_v2_relay_as_instantiated:
+    intrinsic_cell: paper-table3-thalamic-relay
+    axial_convention: paper_literal
+    calcium_density_mS_cm2: {soma: null, proximal_dendrite: 10.0, distal_dendrite: 10.0}
+  serialized_modeldb_v2_relay:
+    source: src/smart_robustness/data/modeldb112923_full.yaml
+    calcium_density_mS_cm2: {soma: 0.1, proximal_dendrite: 0.1, distal_dendrite: 0.1}
+  cause: >-
+    Runtime convention dispatch in first_order_population_parameters special
+    cases the exact canonical name thalamic_relay but not the semantically
+    corresponding thalamic_relay_v2 name. Its axial hybrid special case has the
+    same exact-name boundary.
+  boundary: >-
+    This audit was performed after observing the failed rest prerequisite. It
+    may motivate a separately preregistered source-identity diagnostic but may
+    not be used to rewrite, discard or reinterpret these sealed outcomes.
+
+interpretation:
+  - The registered rest prerequisite failed overwhelmingly and reproducibly at both time steps.
+  - Therefore no current-to-voltage, spike-transfer or control comparison from the response epoch is scientifically interpreted.
+  - The failure does not show that type2 dynamics fail, that relay cells physiologically oscillate at this rate, or that ART depends on a given pulvinar synapse.
+  - The result exposes a higher-order cell-dispatch asymmetry in the frozen reconstruction.
+  - The immutable classic baseline remains unchanged; its prior Figure16 result must retain this implementation boundary.
+
+prohibited_actions:
+  - Do not tune calcium density, leak, axial coupling, holding current or synaptic gain from these response outcomes.
+  - Do not select a conductance arm using the uninterpretable response summaries.
+  - Do not silently change the frozen baseline tag or overwrite this raw result.
+  - Do not proceed to a SMART network type2 comparison from this failed assay.
+
+next_step:
+  - Register a rest-only source-identity diagnostic before executing it.
+  - Compare the frozen-dispatch V2 relay with an opt-in source-faithful ModelDB V2 relay under identical zero input and time steps.
+  - Keep any source-faithful correction outside the frozen baseline and label it as a separate candidate.
+  - Only a prospectively gated quiet source-faithful candidate may receive the already sealed conductance transfer protocol.

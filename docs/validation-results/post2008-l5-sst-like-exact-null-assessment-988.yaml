@@ -1,0 +1,113 @@
+schema_version: 1
+artifact_id: 988
+artifact_type: layer5-sst-like-functional-route-exact-null-assessment
+date: 2026-09-21
+status: exact-null-passed-isolated-nonzero-assay-authorized
+source_supplement: docs/validation-results/post2008-l5-sst-like-source-supplement-984.yaml
+representation_audit: docs/validation-results/post2008-sst-like-routing-representation-audit-983.yaml
+registration: docs/validation-results/post2008-l5-sst-like-functional-grid-registration-985.yaml
+seal: docs/validation-results/post2008-l5-sst-like-exact-null-seal-986.yaml
+raw_result: results/l5-sst-like-exact-null-987.yaml
+raw_result_sha256: 22033adbfee65c1fa70661eae825b33cdc7c00a9826cca0668e44fe3b70712ed
+raw_result_bytes: 9145
+null_network_execution: true
+isolated_nonzero_execution_authorized: true
+nonzero_network_execution_authorized: false
+frozen_baseline_modified: false
+
+identity:
+  baseline_manifest_fingerprint: 992fdd7c3bc9fa0f0d385b9e5a58ba317599357ca377145aba6f01c80d631cd2
+  runtime_fingerprint: 7e654528a99f0b25b7148260a8d52021f6443fb992b210729a2475ae3cfcdaa4
+  seal_sha256: b3e31c31a446016284e331b766e9ac2748612aaf2f65916c6266cc22036c2c9a
+  archived_legacy_result_sha256: 4ad5dc017a0112dbad1434846c4542caa2bc48e2d3a6ae784499924a5d3b133e
+  figure6_result_sha256: 3150721f19b1e3d4c2a60767eb8f6318ab42a06f2c4a741c2dfcb8149d3ce6d3
+
+execution:
+  resource_nS: 0.0
+  canonical_network_delay_ms: 3.0
+  structurally_inert_delay_labels_ms: [1.0, 3.0, 7.0]
+  completed_network_repetitions: 2
+  exact_repeat: true
+  exact_to_archived_legacy: true
+  all_behavioral_gates_pass: true
+  checkpoint_resume_reverified: true
+  result_hash_stable_after_resume: true
+  classification: exact_null_pass
+
+structural_noop_proof:
+  all_registered_delay_labels_checked: true
+  same_return_identity: true
+  arguments_preserved: true
+  population_factory_not_injected: true
+  receptor_port_created: false
+  synapse_created: false
+  state_variable_created: false
+  all_gates_pass: true
+
+behavioral_invariants:
+  figure7:
+    match_relay_events: 20
+    mismatch_relay_events: 3
+    match_trn_events: 690
+    mismatch_trn_events: 611
+    match_nonspecific_events: 4
+    mismatch_nonspecific_events: 7
+    match_trn_to_nonspecific_gaba_integral_ms: 1243.575428743736
+    mismatch_trn_to_nonspecific_gaba_integral_ms: 1182.9799912086974
+    match_relay_active_indices: [38, 39, 40, 41, 42]
+    mismatch_relay_active_indices: [40]
+    registered_gates_per_repetition: 8
+  figure10:
+    intact_late_alternative_margin: 3
+    disconnected_late_alternative_margin: -2
+    intact_replacement_winner_candidates: [31, 49]
+    disconnected_replacement_winner_candidates: []
+    intact_layer5_post_events: 240
+    disconnected_layer5_post_events: 187
+    intact_layer6i_post_events: 182
+    disconnected_layer6i_post_events: 129
+    registered_gates_per_repetition: 7
+
+classification:
+  scaffold_result: exact-null
+  classic_behavior: survives-zero-resource-wrapper-exactly
+  l5_sst_like_nonzero_result: not-tested
+  compensation: none
+  failure: none-at-exact-null-stage
+
+interpretation:
+  - The zero-resource branch is an exact structural identity transformation for every registered delay label.
+  - Two complete network repetitions exactly reproduce each other and the archived legacy Figure-7 and Figure-10 summaries.
+  - The result validates the opt-in extension boundary and checkpoint machinery; it is not evidence that nonzero SST-like distal inhibition preserves SMART behavior.
+  - No resource fraction or delay was selected or changed from any network outcome.
+  - The pass promotes only the preregistered fixed-event isolated recruitment, resource-normalization and numerical-convergence assay over all 12 nonzero points.
+  - The immutable classic baseline and all archived control results remain unchanged.
+
+authorized_next_stage:
+  name: stage2_isolated_recruitment
+  network_outcome_observation: false
+  nonzero_grid_points: 12
+  resource_fractions: [0.125, 0.25, 0.5, 1.0]
+  delays_ms: [1.0, 3.0, 7.0]
+  dt_ms: [0.01, 0.005]
+  repetitions_per_point_per_dt: 2
+  required_gates:
+    - fixed source-event delivery
+    - exact total-conductance normalization
+    - finite currents and states
+    - preregistered numerical convergence
+    - exact repeats
+  seal_required_before_outcomes: true
+
+prohibited_actions:
+  - Do not interpret the null pass as biological support for SST-like circuitry.
+  - Do not execute any nonzero SST-like route in the SMART network under the null seal or this assessment.
+  - Do not tune resource, delay, kinetics, topology or targets from isolated or network outcomes.
+  - Do not combine this module with PV-like, VIP-like, apical, thalamic-L5 or pulvinar interventions.
+  - Do not modify the frozen classic baseline or overwrite archived raw results.
+
+next_step:
+  - Implement the registered fixed-event isolated assay without invoking a SMART network protocol.
+  - Add contract tests for all 12 points, both dt values, exact repeats, event delivery, resource normalization, finite values and convergence.
+  - Hash-seal the isolated runner and every dependency before observing its first nonzero outcome.
+  - Assess every point before considering a separately sealed Stage-3 behavioral grid.

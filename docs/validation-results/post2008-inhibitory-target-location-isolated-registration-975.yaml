@@ -1,0 +1,163 @@
+schema_version: 1
+artifact_id: 975
+artifact_type: pre-outcome-isolated-inhibitory-target-location-registration
+date: 2026-09-21
+status: design-registered-before-implementation-and-outcomes
+network_execution_authorized: false
+isolated_execution_authorized: false
+frozen_baseline_modified: false
+source_audit: docs/validation-results/post2008-inhibitory-cell-class-source-audit-970.yaml
+null_assessment: docs/validation-results/post2008-inhibitory-routing-null-assessment-974.yaml
+
+question: >-
+  With a fixed source-derived GABA-A event replay and exactly conserved total
+  nominal conductance, how does target location alone change the realized
+  current and compartmental voltage response of one frozen classic layer-5
+  pyramidal cell?
+
+scope:
+  execution_boundary: isolated-single-cell-only
+  postsynaptic_population_identity: layer5_excitatory_v1
+  postsynaptic_cells_per_run: 1
+  changed_factor: target-compartment-only
+  arms:
+    legacy_proximal:
+      target_compartment: proximal_dendrite
+      interpretation: location control, not an extant L5 SMART inhibitory projection
+    pv_like_somatic:
+      target_compartment: soma
+      interpretation: perisomatic-routing abstraction only
+    sst_like_distal:
+      target_compartment: distal_dendrite
+      interpretation: dendritic-routing abstraction only
+  excluded:
+    - SMART network behavior
+    - added inhibitory populations
+    - PV, SST or VIP intrinsic neuron models
+    - VIP-like disinhibition
+    - thalamic or cortical recruitment differences
+    - population prevalence or connection-probability claims
+
+source_receptor_template:
+  projection_id: modeldb112923.projection.036
+  archived_route: layer4_inhibitory_v1-to-layer4_excitatory_v1
+  receptor: GABA_A
+  reversal_mV: -70.0
+  rise_ms: 0.1
+  fall_ms: 2.0
+  serialized_weight: 2.0
+  delay_ms: 0.1
+  channel_conductance_density_mS_cm2: 2.461
+  source_target_area_cm2: 0.00007853981633974484
+  reference_port_conductance_nS: 193.28648801211204
+  reference_weighted_peak_resource_nS: 386.5729760242241
+
+resource_conservation:
+  rule: >-
+    Each arm receives one cloned receptor port whose density is divided by its
+    target compartment area so that the compiled total port conductance is
+    exactly 193.28648801211204 nS. The common serialized weight 2.0 remains in
+    the replayed gate. This area normalization is mandatory conservation, not
+    an arm-specific fitted compensation.
+  fixed_across_arms:
+    - postsynaptic cell specification and intrinsic parameters
+    - presynaptic emission and arrival times
+    - event resource amplitudes
+    - receptor rise, fall and normalization
+    - reversal potential
+    - weighted nominal conductance resource
+    - integration method, initial state and observation windows
+  forbidden:
+    - choosing an arm-specific gain from observed voltage or current
+    - converting source response incidence into a weight
+    - retuning leak, axial coupling, channels or event timing
+
+fixed_event_replay:
+  emissions_ms: [100.0, 120.0, 140.0, 160.0, 180.0]
+  arrivals_ms: [100.1, 120.1, 140.1, 160.1, 180.1]
+  depletion_epsilon: 0.5
+  depletion_recovery_ms: 100.0
+  pre_depletion_resource_amplitudes:
+    - 1.0
+    - 0.5906346234610091
+    - 0.42305461195209926
+    - 0.354453157440346
+    - 0.3263700971830197
+  gate_semantics: >-
+    Analytically replay the archived normalized dual-exponential waveform and
+    its last-two-arrival union expression. Multiply the common gate by the
+    serialized weight 2.0. No presynaptic neuron is simulated.
+  duration_ms: 250.0
+
+postsynaptic_protocols:
+  all_compartments_clamped_minus55:
+    purpose: realized-resource and current equality control
+    clamps_mV: {soma: -55.0, proximal_dendrite: -55.0, distal_dendrite: -55.0}
+  free_membrane:
+    purpose: target-location effect under unchanged classic intrinsic dynamics
+    initial_state: frozen-baseline-source-initialization
+    injected_current_pA: 0.0
+
+execution:
+  dt_ms: [0.01, 0.005]
+  repetitions_per_condition: 2
+  expected_runs: 24
+  retain_full_raw_traces: true
+  checkpoint_after_every_run: true
+  exact_raw_repeats_required: true
+  resume_requires_raw_hash_and-summary-verification: true
+
+recordings:
+  - time_ms
+  - v_soma_mV
+  - v_proximal_dendrite_mV
+  - v_distal_dendrite_mV
+  - target_gate
+  - target_effective_conductance_nS
+  - target_synaptic_current_pA
+  - spike_times_ms
+
+prospective_gates:
+  integrity:
+    - all recorded numeric values are finite
+    - exact raw repeats at each arm, protocol and time step
+    - event schedule, amplitudes, receptor constants and nominal resource are identical across arms
+    - all free-membrane arms have identical traces before the first arrival
+  realized_resource_control:
+    - clamped effective-conductance traces are exactly equal across arms at each time step
+    - clamped synaptic-current traces are equal within 1e-9 pA across arms at each time step
+    - peak and integral effective conductance differ by at most 0.1 percent between time steps
+    - peak and absolute integral current differ by at most 0.1 percent between time steps
+  free_membrane_numerics:
+    - compartment-voltage extrema differ by at most 0.5 mV between time steps
+    - target-current peak and absolute integral differ by at most 1 percent between time steps
+  location_effect_detection:
+    - at least one pair of free-membrane arms differs in soma voltage by at least 0.01 mV after the first arrival
+    - at least one pair differs in target-compartment voltage by at least 0.01 mV after the first arrival
+  note: >-
+    No directional ordering among PV-like, legacy-proximal and SST-like arms is
+    preregistered. Direction and magnitude are descriptive outcomes, not tuning
+    targets.
+
+decision_rules:
+  pass: >-
+    All integrity, realized-resource, numerical and location-effect gates pass.
+    This authorizes a separately preregistered one-layer-at-a-time routing
+    design; it does not itself authorize a network execution.
+  null_location_effect: >-
+    Integrity and numerical gates pass but both location-effect gates fail.
+    Record target location as ineffective under this protocol and do not tune.
+  prerequisite_failure: >-
+    Any nonfinite value, repeat mismatch, resource inequality or numerical
+    failure stops interpretation and blocks network routing.
+
+stopping_rules:
+  - Implement tests and a checkpoint-resumable runner, then seal every dependency before execution.
+  - Do not observe any assay outcome before the implementation seal is committed.
+  - Do not alter this design, event train or gate thresholds after outcomes.
+  - Do not modify the frozen classic baseline.
+
+next_step_if_sealed_passes:
+  - Assess raw traces and classify the target-location effect without parameter selection.
+  - Register one cortical layer and one routing change at a time.
+  - Keep VIP-like disinhibition and intrinsic interneuron diversity for later independent seals.

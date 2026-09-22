@@ -40,16 +40,27 @@ def test_structural_noop_proof_covers_every_registered_delay() -> None:
     }
 
 
-def test_archived_legacy_reference_contains_four_exact_passes() -> None:
-    runner = load_runner()
-    path = ROOT / "results/inhibitory-routing-null-973.yaml"
-    reference = runner.load_legacy_reference(
-        path,
-        "4ad5dc017a0112dbad1434846c4542caa2bc48e2d3a6ae784499924a5d3b133e",
+def test_archived_legacy_assessment_records_four_exact_passes() -> None:
+    path = (
+        ROOT
+        / "docs/validation-results/post2008-inhibitory-routing-null-assessment-974.yaml"
     )
-    assert reference["behavioral_pass"] is True
-    assert reference["figure7"]["pass"] is True
-    assert reference["figure10"]["pass"] is True
+    assessment = yaml.safe_load(path.read_text())
+    execution = assessment["execution"]
+
+    assert assessment["raw_result_sha256"] == (
+        "4ad5dc017a0112dbad1434846c4542caa2bc48e2d3a6ae784499924a5d3b133e"
+    )
+    assert execution["completed_runs"] == 4
+    assert execution["exact_within_arm_repeats"] == {
+        "unwrapped_control": True,
+        "wrapped_legacy_aggregate": True,
+    }
+    assert execution["exact_wrapped_vs_unwrapped"] is True
+    assert execution["all_behavioral_gates_passed"] == {
+        "unwrapped_control": True,
+        "wrapped_legacy_aggregate": True,
+    }
 
 
 def test_runner_rejects_unsealed_status(tmp_path: Path) -> None:

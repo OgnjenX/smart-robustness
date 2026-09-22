@@ -1,0 +1,114 @@
+schema_version: 1
+artifact_id: 1003
+artifact_type: layer5-sst-like-stage4a-learning-first-order-execution-seal
+date: 2026-09-22
+status: sealed-before-stage4a-network-outcomes
+implementation_commit: ce78763eaa46c528ab2ad05bccdec5833454a2c1
+network_execution_authorized: true
+frozen_baseline_modified: false
+stage4_registration: docs/validation-results/post2008-l5-sst-like-stage4-progression-registration-1002.yaml
+stage4_registration_sha256: b81d6efbebeaee5c32f5ca65d4716060203b82982455d6e09e6996300a2b4055
+stage3_assessment: docs/validation-results/post2008-l5-sst-like-behavioral-grid-assessment-1001.yaml
+stage3_assessment_sha256: 7a729595345e380ba42315b251787e7b13348b0392d5a2054b8990034fc67642
+stage3_seal: docs/validation-results/post2008-l5-sst-like-behavioral-grid-seal-999.yaml
+baseline_manifest: configs/baselines/classic_smart_calibrated_v1.yaml
+baseline_manifest_fingerprint: 992fdd7c3bc9fa0f0d385b9e5a58ba317599357ca377145aba6f01c80d631cd2
+runtime_fingerprint: 7e654528a99f0b25b7148260a8d52021f6443fb992b210729a2475ae3cfcdaa4
+result: results/l5-sst-like-stage4a-learning-first-order-1004.yaml
+
+execution:
+  smart_network_constructed: true
+  point_order:
+    - delay1p0-resource0p125
+    - delay1p0-resource0p25
+    - delay3p0-resource0p25
+    - delay3p0-resource0p5
+    - delay7p0-resource0p25
+    - delay7p0-resource0p5
+    - delay7p0-resource1p0
+  point_count: 7
+  repetitions_per_point: 2
+  fresh_figure6_learning_per_repetition: true
+  same_repetition_learned_weights_used_for_figure7_and_figure10: true
+  retained_learning_state:
+    - bottom_up_weights
+    - top_down_wide_weights
+    - top_down_narrow_weights
+  figure7_for_every_repetition: true
+  figure10_only_after_same-repetition-figure7-pass: true
+  checkpoint_after_every_repetition_and_point_classification: true
+  exact_repeat_required: true
+  report_all_points: true
+  early_stop_on_failure: false
+
+sealed_intervention:
+  route: post2008.l5_sst_like.collapsed_feedback.v1
+  source_population: layer5_excitatory_v1
+  target_population: layer5_excitatory_v1
+  target_compartment: distal_dendrite
+  source_target_mapping: same-spatial-index
+  receptor: GABA_A
+  reversal_mV: -70.0
+  rise_ms: 1.0
+  fall_ms: 7.0
+  plastic: false
+  point_parameters_inherited_unchanged_from_stage3: true
+  all_other_network_fields_fixed: true
+
+pre_outcome_verification:
+  focused_tests:
+    command: >-
+      .venv/bin/pytest -q tests/test_l5_sst_like_stage4a_runner.py
+      tests/test_l5_sst_like_registration_contract.py
+      tests/test_l5_sst_like_behavioral_grid_runner.py
+      tests/test_l5_sst_like_feedback.py
+    passed: 31
+    failed: 0
+  full_suite:
+    command: MPLCONFIGDIR=/private/tmp/mpl .venv/bin/pytest -q
+    collected: 1413
+    passed: 1413
+    failed: 0
+  ruff:
+    command: .venv/bin/ruff check .
+    passed: true
+  diff_check:
+    command: git diff --check
+    passed: true
+  runner_import_and_point_audit: true
+  nonzero_smart_outcome_observed_before_seal: false
+
+files:
+  scripts/run_l5_sst_like_stage4a.py: 38d6cb81e0d01ce11e7d8aa3da4d9b7e03921b025beb210647e35d50ba3bae1b
+  scripts/run_l5_sst_like_behavioral_grid.py: c18b7ffc07279b846235266b599bc4e7b7ee378115a36d7456f283f27ef5acd4
+  scripts/run_layer5_distal_nak_stage3.py: ad7cab5abac701b83aa55cd232e556965e5068d666817777903ac079100f486e
+  src/smart_robustness/models/sst_like_feedback.py: d540c6ae2e88d3602a8fdf246aff1b06e6b6d60fb54f6d4021ad89682fc8e1a5
+  src/smart_robustness/classic_sector.py: 6191cc09727220b363e9a82863d235010cc75b274e5cc5f3884e6158ce2e8a7e
+  src/smart_robustness/validation/figure6.py: 2743351e32e4bc6dbd1276b970cecefa3ffa783660dfebe35a201332b2492d2d
+  src/smart_robustness/validation/figure7.py: e0bd31a01ea4f52df9d79c51bc93988d57badb6e87d7e3b98c1b846120e93af3
+  src/smart_robustness/validation/figure10_search_cycle_spread.py: 83c1802c12b4e1486a547a0543dd4d3010a45e5a66c4159b0a8020c7d3620906
+  tests/test_l5_sst_like_stage4a_runner.py: 34a744cb888eef6cdf63fc7605a80f5d6b19b2a56858247c0a08c8515be7bc34
+  tests/test_l5_sst_like_registration_contract.py: 827c2f7f443dea8880b5166d1c9d5d94797121877a2f1ea88dc3e3632d7b29a0
+  tests/test_l5_sst_like_feedback.py: 1a4167416cb3bb1856b80570ac86c19ce29a933e4992555d403afd7908625f51
+  docs/validation-results/post2008-l5-sst-like-stage4-progression-registration-1002.yaml: b81d6efbebeaee5c32f5ca65d4716060203b82982455d6e09e6996300a2b4055
+  docs/validation-results/post2008-l5-sst-like-behavioral-grid-assessment-1001.yaml: 7a729595345e380ba42315b251787e7b13348b0392d5a2054b8990034fc67642
+  docs/validation-results/post2008-l5-sst-like-behavioral-grid-seal-999.yaml: 26e07f1ec3fdc5b5f5a080889591a3c608ac3ef1e4e5e0f679849919c133d60f
+  configs/baselines/classic_smart_calibrated_v1.yaml: d8a11933e4ed6a41a72647e4c9ce88f88fd870908bd9a086bbc67b75cff2a5fb
+  configs/calibration/figure6_7_10_projection025_source_control_v1.yaml: b2028a35666cb31645e91a741b00440b46a508558c5db8361404c2264041ffdf
+  configs/calibration/figure6_legacy_detector_paper_nonspecific_paper_kinetics_v1.yaml: 1ca78d427f71af1972d2a3fc12c754095d11eba9f11bd8e32f68dddefe4e1020
+
+point_classification:
+  learning_first_order_survival: >-
+    Both repetitions are exactly equal after removing the repetition index,
+    every Figure-6 and Figure-7 gate passes, and every conditionally executed
+    Figure-10 gate passes.
+  failure: any progression gate or exact-repeat requirement fails
+  engineering_stop: seal, identity, construction, checkpoint or order verification fails
+
+stopping_rules:
+  - Stop before a network outcome on any seal, baseline, identity or checkpoint mismatch.
+  - Do not alter the seven points, order, route, gates, learned-state transfer or repetition count.
+  - Do not tune any parameter, omit a point or add a rescue arm from observed outcomes.
+  - Continue through failures so all seven registered points are reported.
+  - This seal authorizes only result 1004 and no Stage-4B, Stage-4C or Stage-4D execution.
+  - Independently verify and assess the complete raw result before implementing Stage 4B.

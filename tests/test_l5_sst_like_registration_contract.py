@@ -124,3 +124,41 @@ def test_stage3_registration_fixes_complete_grid_and_classifications() -> None:
         "no_survival_in_registered_region": "all 12 points are failure",
         "indeterminate": "any point is incomplete or has an engineering_stop",
     }
+
+
+def test_stage4_registration_preserves_every_stage3_survivor_without_selection() -> None:
+    registration = _yaml(
+        "docs/validation-results/"
+        "post2008-l5-sst-like-stage4-progression-registration-1002.yaml"
+    )
+    assert registration["network_execution_authorized"] is False
+    eligible = registration["fixed_eligible_points"]
+    assert eligible["count"] == len(eligible["points"]) == 7
+    assert [point["point_id"] for point in eligible["points"]] == [
+        "delay1p0-resource0p125",
+        "delay1p0-resource0p25",
+        "delay3p0-resource0p25",
+        "delay3p0-resource0p5",
+        "delay7p0-resource0p25",
+        "delay7p0-resource0p5",
+        "delay7p0-resource1p0",
+    ]
+    design = registration["execution_design"]
+    assert design["substage_order"] == [
+        "stage4a_learning_first_order",
+        "stage4b_figure14",
+        "stage4c_figure15",
+        "stage4d_figure16",
+    ]
+    assert design["repetitions_per_point_per_substage"] == 2
+    assert design["execute_all_seven_points_in_every_substage"] is True
+    assert design["no_point_dropped_after_a_failed_substage"] is True
+    assert design["failed_earlier_substage_cannot_be_compensated_by_later_pass"] is True
+    figure15 = registration["stage4c_figure15"]
+    assert figure15["source_identifiable_gate"]["peak_in_published_gamma_band_hz"] == [
+        20.0,
+        70.0,
+    ]
+    assert figure15["retained_noncompensatory_numeric_diagnostic"][
+        "classic_baseline_status"
+    ] == "fail"

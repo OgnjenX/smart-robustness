@@ -131,7 +131,12 @@ def test_resource_reference_matches_brian_event_scheduling(dt_ms):
     expected, _ = resource_history(
         times, emissions, depletion_fraction=0.5, recovery_ms=100,
     )
-    np.testing.assert_allclose(np.asarray(monitor.z)[0], expected, rtol=0, atol=2e-14)
+    # Brian's exact updater and the analytical reference can accumulate a small
+    # platform-dependent operation-order difference over 800 time steps.
+    numerical_atol = 128 * np.finfo(float).eps
+    np.testing.assert_allclose(
+        np.asarray(monitor.z)[0], expected, rtol=0, atol=numerical_atol,
+    )
 
 
 @pytest.mark.parametrize("times,emissions", [

@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 from collections import Counter
+from copy import deepcopy
 from pathlib import Path
 from typing import Any
 
@@ -21,6 +22,53 @@ def _failed_gates(outcome: dict[str, Any], figure: str) -> list[str]:
     if not isinstance(gates, dict):
         return []
     return [name for name, passed in gates.items() if passed is False]
+
+
+def _figure_pass(outcome: dict[str, Any], figure: str) -> bool | None:
+    result = outcome.get(figure)
+    if result is None and figure == "figure10":
+        return None
+    if not isinstance(result, dict):
+        raise TypeError(f"missing {figure} summary")
+    gates = result.get("gates")
+    if not isinstance(gates, dict) or not gates or any(
+        type(value) is not bool for value in gates.values()
+    ):
+        raise ValueError(f"invalid {figure} gates")
+    passed = all(gates.values())
+    if result.get("pass") is not passed:
+        raise ValueError(f"inconsistent {figure} pass flag")
+    return passed
+
+
+def _independent_point_assessment(outcomes: list[dict[str, Any]]) -> dict[str, Any]:
+    if len(outcomes) != 2:
+        raise ValueError("Stage-4A point needs exactly two repetitions")
+    for outcome in outcomes:
+        figure6 = _figure_pass(outcome, "figure6")
+        figure7 = _figure_pass(outcome, "figure7")
+        figure10 = _figure_pass(outcome, "figure10")
+        if (figure7 and figure10 is None) or (not figure7 and figure10 is not None):
+            raise ValueError("Figure-10 conditional execution mismatch")
+        progression = bool(figure6 and figure7 and figure10)
+        if outcome.get("progression_pass") is not progression:
+            raise ValueError("stored progression flag contradicts figure gates")
+    normalized = []
+    for outcome in outcomes:
+        copy = deepcopy(outcome)
+        copy.pop("repetition", None)
+        normalized.append(copy)
+    exact_repeat = normalized[0] == normalized[1]
+    gates_pass = all(outcome["progression_pass"] is True for outcome in outcomes)
+    return {
+        "exact_repeat": exact_repeat,
+        "all_progression_gates_pass": gates_pass,
+        "classification": (
+            "learning_first_order_survival"
+            if exact_repeat and gates_pass
+            else "failure"
+        ),
+    }
 
 
 def verify_result(result_path: Path, seal_path: Path) -> dict[str, Any]:
@@ -64,7 +112,7 @@ def verify_result(result_path: Path, seal_path: Path) -> dict[str, Any]:
 
     point_evidence: list[dict[str, Any]] = []
     for point in points:
-        independently_computed = runner.classify_point(point["outcomes"])
+        independently_computed = _independent_point_assessment(point["outcomes"])
         for name, expected in independently_computed.items():
             if point.get(name) != expected:
                 raise ValueError(

@@ -56,7 +56,7 @@ def completed_payload(verifier) -> dict:
     }
 
 
-def install_fakes(monkeypatch, verifier, payload: dict) -> None:
+def install_fakes(monkeypatch, verifier) -> None:
     seal = {
         "stage4_registration_sha256": "registration",
         "stage3_assessment_sha256": "assessment",
@@ -65,21 +65,6 @@ def install_fakes(monkeypatch, verifier, payload: dict) -> None:
     }
     monkeypatch.setattr(verifier.runner, "verify_seal", lambda path: seal)
     monkeypatch.setattr(verifier, "file_sha256", lambda path: f"hash:{Path(path).name}")
-
-    expected_in_order = [
-        {
-            name: point[name]
-            for name in (
-                "exact_repeat",
-                "all_progression_gates_pass",
-                "classification",
-            )
-        }
-        for point in payload["points"]
-    ]
-    calls = iter(expected_in_order)
-    monkeypatch.setattr(verifier.runner, "classify_point", lambda outcomes: next(calls))
-
 
 def write_payload(tmp_path: Path, payload: dict) -> Path:
     path = tmp_path / "result.yaml"
@@ -90,7 +75,7 @@ def write_payload(tmp_path: Path, payload: dict) -> Path:
 def test_verifier_recomputes_complete_registered_result(monkeypatch, tmp_path: Path) -> None:
     verifier = load_verifier()
     payload = completed_payload(verifier)
-    install_fakes(monkeypatch, verifier, payload)
+    install_fakes(monkeypatch, verifier)
     payload["identity"] = {
         "seal_sha256": "hash:seal.yaml",
         "stage4_registration_sha256": "registration",
@@ -125,6 +110,24 @@ def test_verifier_recomputes_complete_registered_result(monkeypatch, tmp_path: P
             lambda payload: payload.update(classification_counts={"failure": 7}),
             "classification counts mismatch",
         ),
+        (
+            lambda payload: payload["points"][0]["outcomes"][0]["figure6"][
+                "gates"
+            ].update(learning=False),
+            "inconsistent figure6 pass flag",
+        ),
+        (
+            lambda payload: payload["points"][0]["outcomes"][0].update(
+                progression_pass=False
+            ),
+            "stored progression flag contradicts figure gates",
+        ),
+        (
+            lambda payload: payload["points"][0]["outcomes"][0].update(
+                figure10=None
+            ),
+            "Figure-10 conditional execution mismatch",
+        ),
     ],
 )
 def test_verifier_rejects_incomplete_or_inconsistent_results(
@@ -132,7 +135,7 @@ def test_verifier_rejects_incomplete_or_inconsistent_results(
 ) -> None:
     verifier = load_verifier()
     payload = completed_payload(verifier)
-    install_fakes(monkeypatch, verifier, payload)
+    install_fakes(monkeypatch, verifier)
     payload["identity"] = {
         "seal_sha256": "hash:seal.yaml",
         "stage4_registration_sha256": "registration",

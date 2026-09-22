@@ -1,0 +1,248 @@
+schema_version: 1
+artifact_id: 1001
+artifact_type: layer5-sst-like-stage3-behavioral-grid-assessment
+date: 2026-09-22
+status: completed-mixed-region-with-seven-robust-changed-survivors
+registration: docs/validation-results/post2008-l5-sst-like-behavioral-grid-registration-997.yaml
+seal: docs/validation-results/post2008-l5-sst-like-behavioral-grid-seal-999.yaml
+implementation_commit: e75970a
+raw_result: results/l5-sst-like-behavioral-grid-1000.yaml
+raw_result_sha256: 1fadf447cdade47af98255f1e1ad129b9334393ef934c88e5b38d31271b7230a
+raw_result_bytes: 166456
+raw_result_committed: false
+frozen_baseline_modified: false
+
+provenance:
+  seal_sha256: 26e07f1ec3fdc5b5f5a080889591a3c608ac3ef1e4e5e0f679849919c133d60f
+  baseline_manifest_fingerprint: 992fdd7c3bc9fa0f0d385b9e5a58ba317599357ca377145aba6f01c80d631cd2
+  runtime_fingerprint: 7e654528a99f0b25b7148260a8d52021f6443fb992b210729a2475ae3cfcdaa4
+  legacy_result_sha256: 4ad5dc017a0112dbad1434846c4542caa2bc48e2d3a6ae784499924a5d3b133e
+  figure6_result_sha256: 3150721f19b1e3d4c2a60767eb8f6318ab42a06f2c4a741c2dfcb8149d3ce6d3
+  python: 3.11.9
+  brian2: 2.9.0
+  platform: macOS-27.0-arm64-arm-64bit
+  process_exit_code: 0
+
+execution:
+  completed_points: 12
+  completed_repetitions: 24
+  repetitions_per_point: 2
+  all_registered_points_reported_in_order: true
+  all_points_exact_repeat: true
+  all_figure7_gate_sets_pass: true
+  figure10_executions: 24
+  early_stop_used: false
+  result_guided_tuning_or_rescue_used: false
+  checkpoint_resume_used: true
+  network_execution: true
+
+independent_verification:
+  command: >-
+    .venv/bin/python scripts/verify_l5_sst_like_behavioral_grid.py
+    --result results/l5-sst-like-behavioral-grid-1000.yaml
+  passed: true
+  result_identity_recomputed: true
+  registered_order_and_inventory_recomputed: true
+  point_classifications_recomputed: true
+  exact_repeat_comparisons_recomputed: true
+  legacy_differences_recomputed: true
+  region_classification_recomputed: true
+
+region_result:
+  classification: mixed_region
+  exact_survival_points: 0
+  robust_changed_survival_points: 7
+  failure_points: 5
+  engineering_stop_points: 0
+
+point_evidence:
+  - point_id: delay1p0-resource0p125
+    delay_ms: 1.0
+    resource_fraction: 0.125
+    total_conductance_nS: 24.160811001514006
+    classification: robust_changed_survival
+    exact_repeat: true
+    legacy_exact: false
+    legacy_difference_count: 33
+    failed_figure7_gates: []
+    failed_figure10_gates: []
+  - point_id: delay1p0-resource0p25
+    delay_ms: 1.0
+    resource_fraction: 0.25
+    total_conductance_nS: 48.32162200302801
+    classification: robust_changed_survival
+    exact_repeat: true
+    legacy_exact: false
+    legacy_difference_count: 38
+    failed_figure7_gates: []
+    failed_figure10_gates: []
+  - point_id: delay1p0-resource0p5
+    delay_ms: 1.0
+    resource_fraction: 0.5
+    total_conductance_nS: 96.64324400605602
+    classification: failure
+    exact_repeat: true
+    legacy_exact: false
+    legacy_difference_count: 59
+    failed_figure7_gates: []
+    failed_figure10_gates: [intact_replacement_winner]
+  - point_id: delay1p0-resource1p0
+    delay_ms: 1.0
+    resource_fraction: 1.0
+    total_conductance_nS: 193.28648801211204
+    classification: failure
+    exact_repeat: true
+    legacy_exact: false
+    legacy_difference_count: 49
+    failed_figure7_gates: []
+    failed_figure10_gates: [intact_replacement_winner]
+  - point_id: delay3p0-resource0p125
+    delay_ms: 3.0
+    resource_fraction: 0.125
+    total_conductance_nS: 24.160811001514006
+    classification: failure
+    exact_repeat: true
+    legacy_exact: false
+    legacy_difference_count: 36
+    failed_figure7_gates: []
+    failed_figure10_gates: [intact_replacement_winner]
+  - point_id: delay3p0-resource0p25
+    delay_ms: 3.0
+    resource_fraction: 0.25
+    total_conductance_nS: 48.32162200302801
+    classification: robust_changed_survival
+    exact_repeat: true
+    legacy_exact: false
+    legacy_difference_count: 32
+    failed_figure7_gates: []
+    failed_figure10_gates: []
+  - point_id: delay3p0-resource0p5
+    delay_ms: 3.0
+    resource_fraction: 0.5
+    total_conductance_nS: 96.64324400605602
+    classification: robust_changed_survival
+    exact_repeat: true
+    legacy_exact: false
+    legacy_difference_count: 49
+    failed_figure7_gates: []
+    failed_figure10_gates: []
+  - point_id: delay3p0-resource1p0
+    delay_ms: 3.0
+    resource_fraction: 1.0
+    total_conductance_nS: 193.28648801211204
+    classification: failure
+    exact_repeat: true
+    legacy_exact: false
+    legacy_difference_count: 42
+    failed_figure7_gates: []
+    failed_figure10_gates: [intact_replacement_winner]
+  - point_id: delay7p0-resource0p125
+    delay_ms: 7.0
+    resource_fraction: 0.125
+    total_conductance_nS: 24.160811001514006
+    classification: failure
+    exact_repeat: true
+    legacy_exact: false
+    legacy_difference_count: 36
+    failed_figure7_gates: []
+    failed_figure10_gates: [intact_replacement_winner]
+  - point_id: delay7p0-resource0p25
+    delay_ms: 7.0
+    resource_fraction: 0.25
+    total_conductance_nS: 48.32162200302801
+    classification: robust_changed_survival
+    exact_repeat: true
+    legacy_exact: false
+    legacy_difference_count: 31
+    failed_figure7_gates: []
+    failed_figure10_gates: []
+  - point_id: delay7p0-resource0p5
+    delay_ms: 7.0
+    resource_fraction: 0.5
+    total_conductance_nS: 96.64324400605602
+    classification: robust_changed_survival
+    exact_repeat: true
+    legacy_exact: false
+    legacy_difference_count: 36
+    failed_figure7_gates: []
+    failed_figure10_gates: []
+  - point_id: delay7p0-resource1p0
+    delay_ms: 7.0
+    resource_fraction: 1.0
+    total_conductance_nS: 193.28648801211204
+    classification: robust_changed_survival
+    exact_repeat: true
+    legacy_exact: false
+    legacy_difference_count: 39
+    failed_figure7_gates: []
+    failed_figure10_gates: []
+
+interpretation:
+  - >-
+    The preregistered L5 SST-like distal-feedback abstraction preserves every
+    frozen Figure-7 match/mismatch gate at every tested nonzero coordinate.
+  - >-
+    Seven coordinates also preserve every conditional Figure-10 reset/search
+    gate, but none is exactly equal to the legacy trajectory; these are robust
+    changed survivals rather than invariance or fitted compensation.
+  - >-
+    Five coordinates fail deterministically and exclusively at the
+    intact_replacement_winner Figure-10 gate. The disconnected control and all
+    other retained Figure-10 gates pass, localizing the registered failure to
+    winner replacement in the intact search cycle rather than to Figure-7
+    resonance/mismatch organization.
+  - >-
+    Survival is nonmonotonic over the prospective delay-resource grid. The
+    observed checkerboard cannot support interpolation, a monotone threshold,
+    a preferred coordinate, or selection of one best SST-like parameter set.
+  - >-
+    Exact repeats establish deterministic reproducibility for this runtime and
+    retained summaries. They are not independent seeds, biological replicates,
+    or evidence that discarded time series are bitwise identical.
+  - >-
+    The route is a collapsed functional sensitivity test. It does not contain
+    an explicit SST interneuron, subtype prevalence, intrinsic SST dynamics,
+    fitted anatomy, plasticity of the added route, or developmental compensation.
+  - >-
+    The frozen classic SMART baseline, archived legacy control, learned
+    Figure-6 weights, gates and all other modern-anatomy modules were unchanged.
+
+stage4_eligibility:
+  required_by_parent_registration: true
+  eligible_points:
+    - delay1p0-resource0p125
+    - delay1p0-resource0p25
+    - delay3p0-resource0p25
+    - delay3p0-resource0p5
+    - delay7p0-resource0p25
+    - delay7p0-resource0p5
+    - delay7p0-resource1p0
+  excluded_failed_points:
+    - delay1p0-resource0p5
+    - delay1p0-resource1p0
+    - delay3p0-resource0p125
+    - delay3p0-resource1p0
+    - delay7p0-resource0p125
+  selection_rule: execute-every-eligible-point-without-ranking-or-refinement
+  stage4_execution_authorized_by_this_assessment: false
+
+prohibited_actions:
+  - Do not select one surviving point as a fitted or preferred biological SST parameter set.
+  - Do not interpolate a survival boundary or infer a monotonic resource or delay effect from this grid.
+  - Do not tune, rescue or rerun the five failed coordinates under this registration.
+  - Do not generalize the collapsed route to biological SST cells or claim full inhibitory cell-class fidelity.
+  - Do not combine SST-like routing with PV-like, VIP-like, apical, thalamic-L5 or pulvinar interventions yet.
+  - Do not modify the frozen baseline or commit the ignored raw result.
+
+next_step:
+  - >-
+    Preregister and seal Stage 4 learning and extended progression for all seven
+    eligible points, retaining the complete eligible set without outcome-guided
+    selection or refinement.
+  - >-
+    Specify VIP-like disinhibition only after the SST-like Stage-4 result is
+    assessed and an explicit functional SST target plus independently sourced
+    VIP recruitment protocol are fixed.
+  - >-
+    Keep all module interactions locked until the remaining single-module
+    inhibitory work is independently sealed and assessed.

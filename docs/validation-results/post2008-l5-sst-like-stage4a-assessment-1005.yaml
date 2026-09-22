@@ -1,0 +1,116 @@
+schema_version: 1
+artifact_id: 1005
+artifact_type: layer5-sst-like-stage4a-learning-first-order-assessment
+date: 2026-09-22
+status: completed-mixed-stage4a-six-survivors-one-failure
+registration: docs/validation-results/post2008-l5-sst-like-stage4-progression-registration-1002.yaml
+registration_sha256: b81d6efbebeaee5c32f5ca65d4716060203b82982455d6e09e6996300a2b4055
+seal: docs/validation-results/post2008-l5-sst-like-stage4a-seal-1003.yaml
+seal_sha256: a9bfaa69d1a8b048b687192b201741606804054c27d666bc8214e3e3bea48431
+implementation_commit: ce78763
+raw_result: results/l5-sst-like-stage4a-learning-first-order-1004.yaml
+raw_result_sha256: 389f05b155dcc082f030690f5d29a7aec845e7926bf3e192c454bb1495b15c17
+raw_result_bytes: 3459361
+raw_result_committed: false
+frozen_baseline_modified: false
+
+provenance:
+  baseline_manifest_fingerprint: 992fdd7c3bc9fa0f0d385b9e5a58ba317599357ca377145aba6f01c80d631cd2
+  runtime_fingerprint: 7e654528a99f0b25b7148260a8d52021f6443fb992b210729a2475ae3cfcdaa4
+  python: 3.11.9
+  brian2: 2.9.0
+  platform: macOS-27.0-arm64-arm-64bit
+  process_exit_code: 0
+
+execution:
+  completed_points: 7
+  completed_repetitions: 14
+  repetitions_per_point: 2
+  all_registered_points_reported_in_order: true
+  all_points_exact_repeat: true
+  all_figure6_gate_sets_pass: true
+  all_figure7_gate_sets_pass: true
+  figure10_executions: 14
+  early_stop_used: false
+  point_dropped_after_failure: false
+  result_guided_tuning_or_rescue_used: false
+  checkpoint_resume_used: not-claimed
+  network_execution: true
+
+independent_verification:
+  command: >-
+    .venv/bin/python scripts/verify_l5_sst_like_stage4a.py
+    --result results/l5-sst-like-stage4a-learning-first-order-1004.yaml
+  passed: true
+  result_identity_recomputed: true
+  registered_order_and_inventory_recomputed: true
+  figure_gate_conjunctions_recomputed: true
+  conditional_figure10_execution_checked: true
+  progression_flags_recomputed: true
+  exact_repeat_comparisons_recomputed: true
+  point_classifications_recomputed: true
+  classification_counts_recomputed: true
+
+stage4a_result:
+  classification: mixed_stage4a_region
+  learning_first_order_survival_points: 6
+  failure_points: 1
+  engineering_stop_points: 0
+  full_stage4_progression_claimed: false
+
+point_evidence:
+  - {point_id: delay1p0-resource0p125, delay_ms: 1.0, resource_fraction: 0.125, total_conductance_nS: 24.160811001514006, classification: learning_first_order_survival, exact_repeat: true, failed_figure6_gates: [], failed_figure7_gates: [], failed_figure10_gates: []}
+  - {point_id: delay1p0-resource0p25, delay_ms: 1.0, resource_fraction: 0.25, total_conductance_nS: 48.32162200302801, classification: learning_first_order_survival, exact_repeat: true, failed_figure6_gates: [], failed_figure7_gates: [], failed_figure10_gates: []}
+  - {point_id: delay3p0-resource0p25, delay_ms: 3.0, resource_fraction: 0.25, total_conductance_nS: 48.32162200302801, classification: learning_first_order_survival, exact_repeat: true, failed_figure6_gates: [], failed_figure7_gates: [], failed_figure10_gates: []}
+  - {point_id: delay3p0-resource0p5, delay_ms: 3.0, resource_fraction: 0.5, total_conductance_nS: 96.64324400605602, classification: learning_first_order_survival, exact_repeat: true, failed_figure6_gates: [], failed_figure7_gates: [], failed_figure10_gates: []}
+  - {point_id: delay7p0-resource0p25, delay_ms: 7.0, resource_fraction: 0.25, total_conductance_nS: 48.32162200302801, classification: learning_first_order_survival, exact_repeat: true, failed_figure6_gates: [], failed_figure7_gates: [], failed_figure10_gates: []}
+  - {point_id: delay7p0-resource0p5, delay_ms: 7.0, resource_fraction: 0.5, total_conductance_nS: 96.64324400605602, classification: learning_first_order_survival, exact_repeat: true, failed_figure6_gates: [], failed_figure7_gates: [], failed_figure10_gates: []}
+  - point_id: delay7p0-resource1p0
+    delay_ms: 7.0
+    resource_fraction: 1.0
+    total_conductance_nS: 193.28648801211204
+    classification: failure
+    exact_repeat: true
+    failed_figure6_gates: []
+    failed_figure7_gates: []
+    failed_figure10_gates: [intact_replacement_winner]
+    failed_in_both_repetitions: true
+
+interpretation:
+  - >-
+    With the added L5 SST-like route present during fresh expectation learning,
+    all seven coordinates preserve the registered Figure-6 learning and
+    Figure-7 match/mismatch gates. Six also preserve every Figure-10 gate.
+  - >-
+    The 7-ms, full-resource coordinate fails the intact replacement-winner
+    gate in both exact repetitions despite passing the remaining Figure-10
+    gates. Its earlier Stage-3 success with an imported route-free learned
+    snapshot does not establish survival under fresh route-present learning.
+  - >-
+    This is a localized first-order search-cycle failure, not evidence that
+    all ART resonance or reset dynamics fail at that coordinate. No causal
+    attribution to an individual synaptic or plasticity mechanism is proven.
+  - >-
+    Exact repeats demonstrate deterministic reproducibility for this runtime
+    and retained summaries, not independent seeds or biological replication.
+    Stage-4A is not the complete classic SMART or full Stage-4 progression.
+  - >-
+    The intervention is a collapsed functional distal-inhibitory route, not
+    an explicit SST neuron subtype or a fitted post-2008 cell-class circuit.
+
+stage4b_authorization:
+  authorized: true
+  scope: implement-and-seal-stage4b-figure14-only
+  all_seven_points_required: true
+  use_corresponding_stage4a_repetition_learned_weights: true
+  retain_failed_stage4a_point: true
+  later_pass_cannot_rescue_stage4a_failure: true
+  no_result_guided_parameter_or_analysis_changes: true
+  assess_stage4b_before_implementing_stage4c: true
+
+prohibited_actions:
+  - Do not select a preferred surviving coordinate or drop the Stage-4A failure.
+  - Do not interpret later phenotype passes as rescuing the Stage-4A failure.
+  - Do not tune the SST-like route, learned weights, gates, bands or Figure-14 analysis after this result.
+  - Do not combine this module with other modern-anatomy interventions yet.
+  - Do not alter the frozen classic baseline or commit the ignored raw result.

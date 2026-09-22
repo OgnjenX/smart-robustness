@@ -1,0 +1,109 @@
+schema_version: 1
+artifact_id: 1007
+artifact_type: layer5-sst-like-stage4b-figure14-execution-seal
+date: 2026-09-23
+status: sealed-before-stage4b-network-outcomes
+implementation_commit: 60226b9ead823f8d6d3fb505f1799256ab8e32a4
+network_execution_authorized: true
+frozen_baseline_modified: false
+
+stage4_registration: docs/validation-results/post2008-l5-sst-like-stage4-progression-registration-1002.yaml
+stage4_registration_sha256: b81d6efbebeaee5c32f5ca65d4716060203b82982455d6e09e6996300a2b4055
+parent_figure14_registration: docs/validation-results/calibrated-figure14-holdout-registration-807.yaml
+parent_figure14_registration_sha256: 691a3951acec32dc25cfb5ac0bf21576c75203485cf61e4a994b893b4cbb7da0
+stage4a_assessment: docs/validation-results/post2008-l5-sst-like-stage4a-assessment-1005.yaml
+stage4a_assessment_sha256: f864f9c1061f3604707a9ee9d9adbbc6a7a16b6dc38fc627a013b47775db5983
+stage4a_seal: docs/validation-results/post2008-l5-sst-like-stage4a-seal-1003.yaml
+stage4a_seal_sha256: a9bfaa69d1a8b048b687192b201741606804054c27d666bc8214e3e3bea48431
+stage4a_result: results/l5-sst-like-stage4a-learning-first-order-1004.yaml
+stage4a_result_sha256: 389f05b155dcc082f030690f5d29a7aec845e7926bf3e192c454bb1495b15c17
+stage4a_result_committed: false
+baseline_manifest: configs/baselines/classic_smart_calibrated_v1.yaml
+baseline_manifest_fingerprint: 992fdd7c3bc9fa0f0d385b9e5a58ba317599357ca377145aba6f01c80d631cd2
+runtime_fingerprint: 7e654528a99f0b25b7148260a8d52021f6443fb992b210729a2475ae3cfcdaa4
+result: results/l5-sst-like-stage4b-figure14.yaml
+
+execution:
+  point_order:
+    - delay1p0-resource0p125
+    - delay1p0-resource0p25
+    - delay3p0-resource0p25
+    - delay3p0-resource0p5
+    - delay7p0-resource0p25
+    - delay7p0-resource0p5
+    - delay7p0-resource1p0
+  point_count: 7
+  repetitions_per_point: 2
+  stage4a_failure_retained: delay7p0-resource1p0
+  learning_state: corresponding-stage4a-point-and-repetition
+  conditions_per_repetition: [match, mismatch]
+  duration_ms: 1000.0
+  integration_dt_ms: 0.01
+  histogram_bin_ms: 1.0
+  hamming_window_ms: 200.0
+  hamming_overlap_ms: 0.0
+  signal: cumulative-spikes-all-v1-cortical-populations
+  gates:
+    - match_dominant_frequency_in_20_70_hz
+    - mismatch_dominant_frequency_in_2_20_hz
+    - mismatch_gamma_power_strictly_below_match
+  cortical_spike_times_retained_for_independent_spectral_recomputation: true
+  checkpoint_after_every_repetition_and_point_classification: true
+  exact_repeat_required: true
+  report_all_points: true
+  early_stop_on_behavioral_failure: false
+  early_stop_on_exact_repeat_failure: true
+
+pre_outcome_verification:
+  focused_tests:
+    command: >-
+      MPLCONFIGDIR=/private/tmp/mpl .venv/bin/pytest -q
+      tests/test_l5_sst_like_stage4b_runner.py
+      tests/test_l5_sst_like_stage4b_verifier.py
+    passed: 8
+    failed: 0
+  full_suite:
+    command: MPLCONFIGDIR=/private/tmp/mpl .venv/bin/pytest -q --disable-warnings
+    collected: 1429
+    passed: 1429
+    failed: 0
+  ruff:
+    command: .venv/bin/ruff check .
+    passed: true
+  format:
+    command: >-
+      .venv/bin/ruff format --check scripts/run_l5_sst_like_stage4b.py
+      scripts/verify_l5_sst_like_stage4b.py
+      tests/test_l5_sst_like_stage4b_runner.py
+      tests/test_l5_sst_like_stage4b_verifier.py
+    passed: true
+  stage4a_input_independently_verified: true
+  stage4b_network_outcome_observed_before_seal: false
+
+files:
+  scripts/run_l5_sst_like_stage4b.py: f402fe0c446167d6e9dbac53f62de55cc65240fc9d68e0c368bfaafb709a92e8
+  scripts/verify_l5_sst_like_stage4b.py: d394e3e07fec16eac5fceb873b73e20e0dd9bfc42d51781a526df2ae200ce1fd
+  scripts/run_l5_sst_like_stage4a.py: 38d6cb81e0d01ce11e7d8aa3da4d9b7e03921b025beb210647e35d50ba3bae1b
+  scripts/verify_l5_sst_like_stage4a.py: ddc039ecb292b0f170f022a9db7c37ab579deb7aa719626de6f53c84fe993fe1
+  src/smart_robustness/models/sst_like_feedback.py: d540c6ae2e88d3602a8fdf246aff1b06e6b6d60fb54f6d4021ad89682fc8e1a5
+  src/smart_robustness/classic_sector.py: 6191cc09727220b363e9a82863d235010cc75b274e5cc5f3884e6158ce2e8a7e
+  src/smart_robustness/validation/figure7.py: e0bd31a01ea4f52df9d79c51bc93988d57badb6e87d7e3b98c1b846120e93af3
+  src/smart_robustness/validation/figure14.py: e4f00b4c6bcd352d542508072267b2b3b24da45f7b2d6eebba57a8660fbc2ab9
+  src/smart_robustness/analysis/figure14.py: 011e3d31129ec27662b5d985148abeda430598bc9d03e4e0b939990b92f03335
+  tests/test_l5_sst_like_stage4b_runner.py: 9302dc376f5c016cad2ca9237ec5c52f56acb362a51b69006f285fe5379b4599
+  tests/test_l5_sst_like_stage4b_verifier.py: e0b5299b46ed52d361a84b20572cd28219544d8d455c41f6a411e1efca814bd4
+  docs/validation-results/post2008-l5-sst-like-stage4-progression-registration-1002.yaml: b81d6efbebeaee5c32f5ca65d4716060203b82982455d6e09e6996300a2b4055
+  docs/validation-results/post2008-l5-sst-like-stage4a-assessment-1005.yaml: f864f9c1061f3604707a9ee9d9adbbc6a7a16b6dc38fc627a013b47775db5983
+  docs/validation-results/post2008-l5-sst-like-stage4a-seal-1003.yaml: a9bfaa69d1a8b048b687192b201741606804054c27d666bc8214e3e3bea48431
+  docs/validation-results/calibrated-figure14-holdout-registration-807.yaml: 691a3951acec32dc25cfb5ac0bf21576c75203485cf61e4a994b893b4cbb7da0
+  configs/baselines/classic_smart_calibrated_v1.yaml: d8a11933e4ed6a41a72647e4c9ce88f88fd870908bd9a086bbc67b75cff2a5fb
+  configs/calibration/figure6_7_10_projection025_source_control_v1.yaml: b2028a35666cb31645e91a741b00440b46a508558c5db8361404c2264041ffdf
+
+stopping_rules:
+  - Stop before any Stage-4B network outcome on seal, source, baseline, Stage-4A input or checkpoint identity mismatch.
+  - Do not change points, order, learned weights, route, gates, spectral bands, window, comparator or repetition count.
+  - Execute both conditions twice at every point, including the Stage-4A failure; do not stop on a spectral gate failure.
+  - Stop on an exact-repeat engineering failure and preserve the checkpoint for diagnosis.
+  - Do not tune, rescue, omit a point or reinterpret an earlier failure after observing spectra.
+  - Independently verify and assess all Stage-4B points before implementing Stage 4C.
+  - Do not modify the frozen baseline, combine modern modules or commit the ignored raw result.

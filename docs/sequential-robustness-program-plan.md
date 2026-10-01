@@ -13,7 +13,11 @@ bit-identical recovery of the unavailable 2008 execution. Its documented
 Figure-8 source boundary and Figure-15 44-Hz numeric failure remain part of
 every comparison.
 
-## Current starting point
+## Current status — 2026-10-02
+
+This is a navigational status snapshot, not a new registration or permission to
+change a sealed experiment. The linked assessments control result claims; the
+phase specifications below retain the full intended program scope.
 
 - The frozen classic control passes the registered Figure 6 learning gates and
   the calibrated Figure 7, 10, 14, and 16 behavioral targets.
@@ -24,8 +28,52 @@ every comparison.
 - Relay/TRN replacement is blocked under the registered rebound-matching
   contract because the classic relay itself does not express the required
   source-port rebound target.
-- Alternative conductance-based HH and compartment/mechanism interventions
-  remain untested.
+- The registered alternative-HH and compartment/mechanism study is closed in
+  [assessment 936](validation-results/neuron-model-mechanism-phase-assessment-936.yaml).
+  The independently fitted alternative HH candidate failed isolated promotion
+  in five of seven cortical classes and was not run in the network. Point-HH,
+  distal Na/K ablation, and branched-L5 controls preserved broad match/mismatch
+  organization but did not preserve every calibrated Figure-7 gate. This is
+  completion of the registered comparison, not proof that all neuron families
+  or parameterizations have been exhausted.
+
+### Contemporary anatomy: completed evidence and remaining scope
+
+- **Direct visual thalamus-to-L5:** the finite parallel-route experiment is
+  [assessed](validation-results/post2008-direct-visual-thalamus-layer5-parallel-route-assessment-943.yaml).
+  Its nonzero arms did not preserve the exact behavioral prerequisites;
+  downstream reset tests were not authorized for those arms. Qualitative
+  preservation over a bounded interval is not full progression survival.
+- **Active apical integration:** the initial isolated mapping is
+  [assessed but not promoted](validation-results/post2008-active-apical-isolated-assessment-952.yaml).
+  The program-level branch-resolved mechanism and context endpoints remain
+  untested; the failed mapping must not be treated as a validated network
+  module or repaired through result-guided tuning.
+- **Pulvinar/transthalamic routing:** the source-faithful relay candidate
+  [failed its quiet-rest prerequisite](validation-results/post2008-pulvinar-relay-source-identity-assessment-969.yaml).
+  The source/initialization boundary remains unresolved. This is not a completed
+  test of the modern routing network or evidence that the anatomy fails ART.
+- **PV-like routing:** the somatic-routing abstraction has a
+  [sealed Figure-7 failure](validation-results/post2008-layer4-pv-like-somatic-routing-assessment-982.yaml).
+  It is not an explicit biological PV cell-class model.
+- **SST-like routing:** Stage 4A learning/first-order behavior and Stage 4B
+  spectra are assessed. [Stage 4B](validation-results/post2008-l5-sst-like-stage4b-assessment-1014.yaml)
+  has three spectral-pass points among seven, with only two also passing
+  Stage 4A. The Stage-4C runner and independent verifier are implemented in
+  commit `67ae368`, but remain unsealed and unexecuted at this snapshot while
+  full regression checks run. Stage 4D inter-area behavior and the final joint
+  classification remain outstanding. All seven registered points must remain
+  in both stages; a later pass cannot rescue an earlier failure.
+- **VIP-like disinhibition:** implementation and registered testing remain
+  outstanding.
+- **Final synthesis:** eligible sealed interactions, independent multi-seed
+  confirmation, closure of source/representation limitations, reproducible
+  release artifacts, and the program-wide completion audit remain outstanding.
+
+An assessed negative candidate closes that candidate under its contract. It
+does not by itself complete all broader anatomy endpoints. Missing or
+unidentifiable endpoints must remain explicit in the final synthesis rather
+than being reclassified as successful experiments.
 
 ## Rules shared by every phase
 

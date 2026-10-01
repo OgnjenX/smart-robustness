@@ -1,0 +1,49 @@
+schema_version: 1
+artifact_id: 1012
+date: 2026-10-01
+status: registered-before-derived-continuation-implementation-and-outcomes
+bridge_assessment: docs/validation-results/post2008-l5-sst-like-stage4b-os-bridge-assessment-1011.yaml
+bridge_assessment_sha256: 28ecbc06d535b7776fd293f5a5cf8480bf7c05cbf712c8f1c69efd646688382d
+original_checkpoint: results/l5-sst-like-stage4b-figure14.yaml
+original_checkpoint_sha256: 1fa52cff914e0c2570639ab6adbd498c6267742aac854241bdcb13a0228c5db0
+bridge_result: results/l5-sst-like-stage4b-os-bridge.yaml
+bridge_result_sha256: c2627e8154957b5a381ab264f83a0b471d00856f25e64c29a0e6e3966b8780a2
+parent_seal: docs/validation-results/post2008-l5-sst-like-stage4b-seal-1007.yaml
+old_environment: {python: 3.11.9, brian2: 2.9.0, platform: macOS-27.0-arm64-arm-64bit}
+new_environment: {python: 3.11.9, brian2: 2.9.0, platform: macOS-27.0.1-arm64-arm-64bit}
+result: results/l5-sst-like-stage4b-continuation.yaml
+preserved_repetitions: 10
+new_repetitions: 4
+fixed_remaining_order:
+  - {point_index: 5, point_id: delay7p0-resource0p5, repetition: 0}
+  - {point_index: 5, point_id: delay7p0-resource0p5, repetition: 1}
+  - {point_index: 6, point_id: delay7p0-resource1p0, repetition: 0}
+  - {point_index: 6, point_id: delay7p0-resource1p0, repetition: 1}
+design:
+  original_checkpoint_write_allowed: false
+  original_identity_retained_as: source_identity
+  original_points_and_outcomes_copied_without_change: true
+  explicit_environment_segment_per_repetition: true
+  outcomes_from_original_environment: first-five-points-both-repetitions
+  outcomes_from_new_environment: last-two-points-both-repetitions
+  learned_state: same-point-and-repetition-from-original-stage4a
+  execution_and_analysis_functions: original-sealed-stage4b-functions
+  parameters_stimuli_protocols_gates_and_order: unchanged
+  exact_repeats_required: true
+  checkpoint_after_each_repetition: true
+  hold_original_and_derived_result_locks: true
+  verify_bridge_assessment_raw_result_and_original_checkpoint_before_execution: true
+  verify_complete_derived_result_independently_before_stage4c: true
+execution_authorized: false
+promotion_rule: >-
+  Commit a derived runner, its independent verifier and zero-outcome tests.
+  Seal their hashes and this registration separately before executing any
+  remaining repetition. Assess all seven points under the original scientific
+  gates and explicitly report the two OS environments and the bridge limit.
+stopping_rules:
+  - Stop on any changed seal, source input, runtime fingerprint, environment or checkpoint identity.
+  - Stop on any failure of exact repeats; preserve the derived checkpoint.
+  - Continue through scientific gate failures and retain the Stage-4A failure point.
+  - Do not tune, drop points, alter tolerances or redefine earlier scientific failures.
+  - Keep the frozen classic baseline and every earlier raw result unchanged.
+limitations: A passing single-point OS replay does not establish all-coordinate OS equivalence.

@@ -1,0 +1,38 @@
+schema_version: 1
+artifact_id: 1009
+date: 2026-10-01
+status: registered-before-os-bridge-implementation-and-outcome
+question: Does the first saved Stage-4B repetition replay exactly after the macOS patch update?
+parent_seal: docs/validation-results/post2008-l5-sst-like-stage4b-seal-1007.yaml
+parent_seal_sha256: 98f8d19ff85ae5cc499bec4d3c2e662d1355f05c54c154129ef736a634d1c9a7
+checkpoint: results/l5-sst-like-stage4b-figure14.yaml
+checkpoint_sha256: 1fa52cff914e0c2570639ab6adbd498c6267742aac854241bdcb13a0228c5db0
+old_environment: {python: 3.11.9, brian2: 2.9.0, platform: macOS-27.0-arm64-arm-64bit}
+new_environment: {python: 3.11.9, brian2: 2.9.0, platform: macOS-27.0.1-arm64-arm-64bit}
+point_index: 0
+point_id: delay1p0-resource0p125
+repetition: 0
+selection_rule: earliest-completed-point-and-earliest-repetition-by-original-execution-order
+conditions: [match, mismatch]
+result: results/l5-sst-like-stage4b-os-bridge.yaml
+comparison: exact-equality-of-entire-retained-repetition-including-spike-times-counts-spectra-and-gates
+independent_spectral_recomputation_required: true
+network_guided_tuning_allowed: false
+frozen_baseline_modified: false
+original_checkpoint_write_allowed: false
+execution_authorized: false
+promotion_rule: >-
+  Commit a separate implementation and hash seal before replay. Independently
+  verify and assess the complete replay before implementing a derived
+  continuation with explicit environment provenance. A bridge pass authorizes
+  considering that continuation, not an automatic amendment of the old seal.
+stopping_rules:
+  - Stop on any input hash, source seal, baseline, environment or protocol mismatch.
+  - Stop on any exact replay disagreement; do not change tolerances, point or analysis.
+  - Preserve the old raw checkpoint and use a separate replay result with its own lock.
+  - Hold the old checkpoint lock during replay so the two runners cannot overlap.
+limitations: >-
+  One deterministic replay is an engineering compatibility sentinel. It does
+  not establish cross-platform numerical equivalence for every coordinate or
+  provide independent biological replication. Earlier known scientific
+  outcomes are not hidden; the new unknown outcome is replay agreement.

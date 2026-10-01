@@ -1,0 +1,42 @@
+schema_version: 1
+artifact_id: 1008
+artifact_type: stage4b-checkpoint-environment-engineering-stop
+date: 2026-10-01
+status: stopped-before-new-network-outcome
+execution_seal: docs/validation-results/post2008-l5-sst-like-stage4b-seal-1007.yaml
+execution_seal_sha256: 98f8d19ff85ae5cc499bec4d3c2e662d1355f05c54c154129ef736a634d1c9a7
+raw_checkpoint: results/l5-sst-like-stage4b-figure14.yaml
+raw_checkpoint_sha256: 1fa52cff914e0c2570639ab6adbd498c6267742aac854241bdcb13a0228c5db0
+raw_checkpoint_committed: false
+completed_repetitions: 10
+planned_repetitions: 14
+recorded_environment:
+  python: 3.11.9
+  brian2: 2.9.0
+  platform: macOS-27.0-arm64-arm-64bit
+current_environment:
+  python: 3.11.9
+  brian2: 2.9.0
+  platform: macOS-27.0.1-arm64-arm-64bit
+observed_error: checkpoint identity mismatch
+cause: platform.patch-version-changed
+verification:
+  all_17_sealed_file_hashes_match: true
+  checkpoint_point_and_repetition_order_valid: true
+  all_10_retained_outcomes_independently_recomputed: true
+  resume_process_exit_code: 1
+  failure_before_new_network_execution: true
+  checkpoint_modified_by_resume: false
+scientific_interpretation: >-
+  This is an environment identity failure, not a behavioral or spectral
+  failure. The incomplete checkpoint cannot support a complete Stage-4B
+  assessment. Previously retained outcomes remain available under their
+  recorded environment and original seal.
+frozen_baseline_modified: false
+next_step:
+  - Preregister an environment-migration bridge before generating new outcomes.
+  - Preserve the original runner, seal, checkpoint, and recorded environment.
+  - Require exact replay of a prospectively fixed completed point in the new environment before authorizing any continuation.
+  - Record both environments explicitly in any derived execution; never overwrite or spoof the original platform identity.
+  - Stop on replay disagreement and retain both outcomes without parameter or analysis tuning.
+  - Complete and independently assess Stage 4B before implementing Stage 4C.

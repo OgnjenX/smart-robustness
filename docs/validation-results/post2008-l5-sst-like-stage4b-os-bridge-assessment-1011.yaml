@@ -1,0 +1,40 @@
+schema_version: 1
+artifact_id: 1011
+date: 2026-10-01
+status: completed-exact-os-replay
+registration: docs/validation-results/post2008-l5-sst-like-stage4b-os-bridge-registration-1009.yaml
+execution_seal: docs/validation-results/post2008-l5-sst-like-stage4b-os-bridge-seal-1010.yaml
+execution_seal_sha256: 33ff64b755b2e36d2f50dc54391849c7a1f5a4c4bc9fa0129ffcdda5ff7a4251
+raw_result: results/l5-sst-like-stage4b-os-bridge.yaml
+raw_result_sha256: c2627e8154957b5a381ab264f83a0b471d00856f25e64c29a0e6e3966b8780a2
+raw_result_committed: false
+original_checkpoint_sha256: 1fa52cff914e0c2570639ab6adbd498c6267742aac854241bdcb13a0228c5db0
+verifier: scripts/verify_l5_sst_like_stage4b_os_bridge.py
+verifier_sha256: f34c647c342e26a881cd91a31382557eabf492f84f55d31e2a0e7863b4d408d4
+point_id: delay1p0-resource0p125
+repetition: 0
+old_environment: {python: 3.11.9, brian2: 2.9.0, platform: macOS-27.0-arm64-arm-64bit}
+new_environment: {python: 3.11.9, brian2: 2.9.0, platform: macOS-27.0.1-arm64-arm-64bit}
+verification:
+  execution_process_exit_code: 0
+  input_hashes_and_source_seals_valid: true
+  original_checkpoint_unchanged: true
+  full_retained_outcome_exact: true
+  spectra_and_gates_independently_recomputed: true
+  match_dominant_frequency_hz: 55.0
+  mismatch_dominant_frequency_hz: 10.0
+  match_gamma_power: 9.635840579704801
+  mismatch_gamma_power: 9.937314573143464
+  original_spectral_failure_reproduced: mismatch_gamma_power_strictly_below_match
+  ci: {run: 36868916157, conclusion: success, commit: bbe585f}
+interpretation: >-
+  The fixed replay supports engineering compatibility for this sentinel
+  across the OS patch update. It reproduces an earlier spectral failure;
+  it does not rescue that outcome or establish all-coordinate cross-platform
+  equivalence. All subsequent repetitions still require exact repeat checks.
+authorization:
+  derived_continuation_registration_and_implementation: true
+  derived_network_execution_before_separate_seal: false
+  original_checkpoint_mutation: false
+  original_platform_identity_override: false
+frozen_baseline_modified: false

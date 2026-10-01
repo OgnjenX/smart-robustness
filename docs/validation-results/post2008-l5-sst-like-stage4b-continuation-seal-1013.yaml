@@ -1,0 +1,30 @@
+schema_version: 1
+artifact_id: 1013
+date: 2026-10-01
+status: sealed-before-stage4b-continuation
+implementation_commit: d0dda78
+registration: docs/validation-results/post2008-l5-sst-like-stage4b-continuation-registration-1012.yaml
+execution_authorized: true
+new_continuation_outcome_observed_before_seal: false
+frozen_baseline_modified: false
+original_checkpoint_write_allowed: false
+result: results/l5-sst-like-stage4b-continuation.yaml
+files:
+  scripts/run_l5_sst_like_stage4b_continuation.py: 35d37918ee8d5df8a5823dd9e32d6e5e5e2d04f0afa4c7619df2753205513426
+  scripts/verify_l5_sst_like_stage4b_continuation.py: a955f8c31e30f0cf8f58c108f130bf2b301ae2fc7bf23c01207924b66879fc15
+  tests/test_l5_sst_like_stage4b_continuation.py: 8b6322510009e8e1d6fd8c27f40e53a290b63df997469fbebcd7b7ef9fa28594
+  docs/validation-results/post2008-l5-sst-like-stage4b-continuation-registration-1012.yaml: ddc193fa1281a607ecd2e78c2736694ca158be6ea2a898eee1996241e4385ec1
+  scripts/verify_l5_sst_like_stage4b_os_bridge.py: f34c647c342e26a881cd91a31382557eabf492f84f55d31e2a0e7863b4d408d4
+  docs/validation-results/post2008-l5-sst-like-stage4b-os-bridge-assessment-1011.yaml: 28ecbc06d535b7776fd293f5a5cf8480bf7c05cbf712c8f1c69efd646688382d
+verification:
+  focused_tests_passed: 21
+  focused_tests_failed: 0
+  repository_ruff_passed: true
+  diff_whitespace_passed: true
+  source_checkpoint_bridge_and_learning_inputs_verified_before_execution: true
+  zero_new_network_outcomes_in_tests: true
+command: >-
+  MPLCONFIGDIR=/private/tmp/mpl .venv/bin/python
+  scripts/run_l5_sst_like_stage4b_continuation.py
+  --output results/l5-sst-like-stage4b-continuation.yaml
+next_step: Independently verify and assess all fourteen outcomes before Stage 4C implementation.

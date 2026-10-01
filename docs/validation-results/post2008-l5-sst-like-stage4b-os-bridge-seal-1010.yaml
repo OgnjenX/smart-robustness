@@ -1,0 +1,28 @@
+schema_version: 1
+artifact_id: 1010
+date: 2026-10-01
+status: sealed-before-os-bridge-replay
+implementation_commit: 4caeba3
+registration: docs/validation-results/post2008-l5-sst-like-stage4b-os-bridge-registration-1009.yaml
+execution_authorized: true
+continuation_authorized: false
+new_network_outcome_observed_before_seal: false
+frozen_baseline_modified: false
+result: results/l5-sst-like-stage4b-os-bridge.yaml
+files:
+  scripts/run_l5_sst_like_stage4b_os_bridge.py: f2c050a89d7b36ab5ce8989fb559edb8ab27e3d0dda8d51895f5dd1c82869035
+  tests/test_l5_sst_like_os_bridge.py: d0ac5e12ef12b4363d519189e071181531f523105561842ff8d296092c85e2d3
+  docs/validation-results/post2008-l5-sst-like-stage4b-os-bridge-registration-1009.yaml: c433be96c6ec7fd66bf5f6f6bb46fe75b237ddf6f777c78693b1ea25fbe44d41
+  docs/validation-results/post2008-l5-sst-like-stage4b-seal-1007.yaml: 98f8d19ff85ae5cc499bec4d3c2e662d1355f05c54c154129ef736a634d1c9a7
+verification:
+  focused_tests_passed: 11
+  focused_tests_failed: 0
+  repository_ruff_check_passed: true
+  diff_whitespace_check_passed: true
+  parent_sealed_source_inventory_rechecked_by_runner: true
+  parent_checkpoint_write_allowed: false
+command: >-
+  MPLCONFIGDIR=/private/tmp/mpl .venv/bin/python
+  scripts/run_l5_sst_like_stage4b_os_bridge.py
+  --output results/l5-sst-like-stage4b-os-bridge.yaml
+next_step: Independently assess exact replay before implementing or authorizing derived continuation.

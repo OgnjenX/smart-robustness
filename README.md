@@ -160,17 +160,34 @@ values must be labeled as such and must not be described as published values.
 
 ## Scope and next steps
 
-The immediate next phase is deliberately controlled:
+The registered neuron-model and compartment/mechanism comparison is closed in
+[`assessment 936`](docs/validation-results/neuron-model-mechanism-phase-assessment-936.yaml).
+That finite study does not establish that ART requires HH neurons or that
+AdEx/GIF cannot support ART under other independently specified mappings.
+Qualitative match/mismatch preservation and exact calibrated-gate survival
+remain distinct outcomes.
+
+The ongoing contemporary-anatomy phase is deliberately controlled:
 
 - preserve both immutable classic releases and the failed Figure 15 numeric
   holdout;
-- compare AdEx, GIF, alternative HH, and multicompartment variants against the
-  frozen behavioral control, changing one preregistered neuron-model factor at
-  a time;
-- keep topology, stimuli, learning, projection scales, seeds, analysis, and
-  acceptance gates unchanged across the first comparison matrix;
-- evaluate post-2008 anatomical revisions only in a later, separately labeled
-  robustness phase.
+- test direct visual thalamus-to-L5 input, active apical integration, updated
+  pulvinar routing, and PV/SST/VIP-like inhibitory specificity one module at a
+  time, with independently justified parameter ranges;
+- distinguish an assessed negative candidate from a completed broader anatomy
+  question, retaining source/representation boundaries and untested endpoints;
+- preserve the registered stimuli, learning, seeds, analyses, and acceptance
+  gates; change topology or receptor placement only when it is the explicitly
+  registered intervention;
+- test only eligible, separately sealed interactions after single-module
+  characterization, then complete multi-seed confirmation and staged releases.
+
+The [sequential program plan](docs/sequential-robustness-program-plan.md) maps
+completed assessments and remaining work. The SST-like local-synchrony runner
+is authorized by its separate
+[pre-outcome execution seal](docs/validation-results/post2008-l5-sst-like-stage4c-seal-1015.yaml);
+authorization or a running process is not evidence that its scientific gates
+passed. No later phenotype pass may rescue an earlier failed prerequisite.
 
 Contributions should preserve the distinction between **published**, **derived**,
 **calibrated**, and **exploratory** parameters.

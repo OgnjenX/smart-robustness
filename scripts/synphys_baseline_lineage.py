@@ -24,6 +24,32 @@ def same_identity(left, right):
     return positive(left) and positive(right) and left == right
 
 
+def summarize_original_pulse_baselines(pulse_ids, context, tables):
+    """Separate retained raw diagnostics from a lineage-supported source mean.
+
+    No contributors are removed on identity, rest-state or QC failure. The
+    original trace-duration gate cannot be recovered from this metadata.
+    """
+    from synphys_baseline_statistics import pulse_baseline_statistics
+
+    lineage = join_original_pulse_metadata(pulse_ids, context, tables)
+    records = lineage["records"]
+    statistics = pulse_baseline_statistics(row["baseline_value"] for row in records)
+    identity_complete = lineage["all_contributor_identities_complete"]
+    state_complete = all(all(row["source_state_metadata_flags"].values()) for row in records)
+    mean_supported = identity_complete and state_complete and statistics["source_nanmean_unambiguous"]
+    return {
+        "lineage": lineage,
+        "raw_projected_baseline_diagnostics": statistics,
+        "all_source_state_metadata_flags_pass": state_complete,
+        "metadata_supported_source_mean_volts": statistics["source_nanmean_reference_volts"] if mean_supported else None,
+        "complete_identity_state_and_finite_baseline_coverage": (
+            identity_complete and state_complete and statistics["complete_finite_baseline_coverage"]),
+        "historical_waveform_selection_verified": False,
+        "biological_eligibility_established": False,
+    }
+
+
 def join_original_pulse_metadata(pulse_ids, context, tables):
     """Keep every original contributor and all ambiguous parents.
 

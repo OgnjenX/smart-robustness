@@ -1,0 +1,37 @@
+schema_version: 1
+artifact_id: 1141
+artifact_type: synthetic-lineage-and-baseline-statistics-integration
+date: 2026-10-09
+status: metadata-supported-mean-contract-tested-real-execution-pending
+supersedes_implementation_only: docs/validation-results/post2008-synphys-baseline-lineage-scaffold-1140.yaml
+source_hashes:
+  scripts/synphys_baseline_lineage.py: 5ba493ea9402d6fbe5a354c14a92281675687b6cb33fb11fd13312dfe28ede0b
+  tests/test_synphys_baseline_lineage.py: 8beaa41138a2655679866195c568ee792d9973902e8ec7413103838e20574bdb
+  scripts/synphys_baseline_statistics.py: 4004fd28fb20843f84d906a49d6114482462b654d6813a0fe95161e8252f0ff2
+verification:
+  command: .venv/bin/python -m pytest -q tests/test_synphys_baseline_lineage.py tests/test_synphys_baseline_statistics.py
+  tests_passed: 74
+  duration_seconds: 0.18
+  exit_code: 0
+  focused_ruff: passed
+  active_full_regression_includes_latest_lineage_source: false
+contract:
+  raw_diagnostics: retain-projected-values-and-all-original-contributors-even-on-identity-or-state-failure
+  metadata_supported_source_mean: requires-all-identities-all-IC-and-rest-state-flags-and-unambiguous-source-nanmean
+  complete_coverage: additionally-requires-finite-baseline-for-every-original-contributor
+  extra_QC_selection: none-original-failed-flags-retained-without-adding-historical-selection-gates
+  historical_trace_selection_verified: false
+  biological_eligibility_established: false
+new_synthetic_cases:
+  - Correct metadata supports a mean but never proves historical waveform selection or biology.
+  - Wrong pair or presynaptic cell keeps a finite raw diagnostic but blocks a supported mean.
+  - VC mode or preceding interval of exactly eight seconds blocks a supported mean.
+  - Missing original contributors remain in the pulse count and block complete coverage.
+  - Failed original recording QC remains visible without new source-pulse filtering.
+  - Null, NaN, infinity and bool baselines cannot establish a supported mean even with complete identity.
+required_next_boundary: verified-medium-acquisition-then-registered-selected-reconciliation-before-real-baseline-joins
+database_rows_read: false
+parameter_fitting_performed: false
+network_outcomes_inspected: false
+frozen_baseline_modified: false
+raw_results_committed: false

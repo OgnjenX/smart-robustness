@@ -135,3 +135,58 @@ def test_repeated_recording_keeps_pulse_weights_and_missing_contributor():
     assert [row["baseline_value"] for row in result["records"]] == [-0.068, -0.068, None]
     assert [row["identity_complete"] for row in result["records"]] == [True, True, False]
     assert not result["all_contributor_identities_complete"]
+
+
+def summary(context, tables, monkeypatch, ids=(1,)):
+    monkeypatch.syspath_prepend(str(SCRIPT.parent))
+    return module.summarize_original_pulse_baselines(ids, context, tables)
+
+
+def test_integrated_metadata_mean_remains_nonbiological(monkeypatch):
+    context, tables = fixture()
+    result = summary(context, tables, monkeypatch)
+    assert result["metadata_supported_source_mean_volts"] == -0.068
+    assert result["complete_identity_state_and_finite_baseline_coverage"]
+    assert not result["historical_waveform_selection_verified"]
+    assert not result["biological_eligibility_established"]
+
+
+@pytest.mark.parametrize("table,field,value", [
+    ("pulse_response", "pair_id", 99), ("stim_pulse", "cell_id", 99),
+    ("stim_pulse", "previous_pulse_dt", 8.0), ("patch_clamp_recording", "clamp_mode", "vc"),
+])
+def test_wrong_identity_or_state_cannot_certify_raw_finite_mean(table, field, value, monkeypatch):
+    context, tables = fixture()
+    tables[table][0][field] = value
+    result = summary(context, tables, monkeypatch)
+    assert result["raw_projected_baseline_diagnostics"]["finite_only_mean_volts"] == -0.068
+    assert result["metadata_supported_source_mean_volts"] is None
+    assert not result["complete_identity_state_and_finite_baseline_coverage"]
+
+
+def test_missing_original_pulse_does_not_become_complete_finite_mean(monkeypatch):
+    context, tables = fixture()
+    result = summary(context, tables, monkeypatch, ids=(1, 2))
+    assert result["raw_projected_baseline_diagnostics"]["pulse_count"] == 2
+    assert result["raw_projected_baseline_diagnostics"]["null_count"] == 1
+    assert result["metadata_supported_source_mean_volts"] is None
+
+
+def test_original_failed_QC_is_retained_without_new_selection(monkeypatch):
+    context, tables = fixture()
+    tables["patch_clamp_recording"][0]["qc_pass"] = 0
+    result = summary(context, tables, monkeypatch)
+    assert result["metadata_supported_source_mean_volts"] == -0.068
+    assert result["lineage"]["records"][0]["parents"]["patch_clamp_recording"][0]["qc_pass"] == 0
+    assert not result["biological_eligibility_established"]
+
+
+@pytest.mark.parametrize("value", [None, float("nan"), float("inf"), True])
+def test_invalid_or_missing_baseline_not_supported_by_valid_identity(value, monkeypatch):
+    context, tables = fixture()
+    tables["patch_clamp_recording"][0]["baseline_potential"] = value
+    result = summary(context, tables, monkeypatch)
+    assert result["lineage"]["all_contributor_identities_complete"]
+    assert result["all_source_state_metadata_flags_pass"]
+    assert result["metadata_supported_source_mean_volts"] is None
+    assert not result["complete_identity_state_and_finite_baseline_coverage"]

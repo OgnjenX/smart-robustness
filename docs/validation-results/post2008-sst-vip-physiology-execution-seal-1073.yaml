@@ -1,0 +1,57 @@
+schema_version: 1
+artifact_id: 1073
+artifact_type: full-primary-cohort-physiology-execution-seal
+date: 2026-10-09
+registration: docs/validation-results/post2008-sst-vip-physiology-protocol-registration-1068.yaml
+registration_sha256: 22463d5613cc7fd3578c7e3d3a482b78b04eb29c0749e590a9031a761e9ada33
+runner_commit: 91fb2c6
+implementation_sha256:
+  scripts/run_sst_vip_physiology.py: 2938713b66cdddba8ce30559cf00ff598db12515cc267da08d73debbe498ab31
+  scripts/run_sst_vip_glif_parity.py: 5a18725093cb591ff40bb4745297802aac20945e0693902bd5edada2fadee8fc
+  scripts/collect_sst_vip_native_resources.py: 1dd4616066c04ce5c7b41331859c0fca82526e1927e199639ce8cf9bf337c9c4
+  src/smart_robustness/validation/physiology_storage.py: fd1ad1d2d5a8d65a3f734734a32dbe79f3b2dfd70ee02986f259b04ebc7f13b8
+  src/smart_robustness/validation/physiology_attempts.py: 5756faf7ed82142edd8f5183e9b26dd03df745ba119cd2f8b7c8232a8491d4b7
+  src/smart_robustness/validation/physiology_recordings.py: 29c204abfeb94b7c94210336bf8cbc9b528d287887a3b4594d6deacfa5fcb723
+  src/smart_robustness/validation/physiology_metrics.py: 7a937e246e2c7994a4947dd35c7ab25ecaa7f7352eae23ebced690fb78256ad9
+  src/smart_robustness/validation/native_glif_parity.py: c6ca361d97049566b9c9519c0f3dbfe15423a0204e6b9429cd3456bf8be90f53
+  src/smart_robustness/validation/native_glif_state_machine.py: f2bc0062cf0465b11e7008879b83611cdc1a56ca34bc2c55f0337a3694333e1e
+  src/smart_robustness/validation/sst_vip_glif_source.py: bba8cd123367b767ee7c968c2da6adde0c637a4e014e214b671fd67330ecc15d
+  src/smart_robustness/validation/sst_vip_nwb_schema.py: 8d804d1030f8f995df979caef0ad45eac3eb825079cde81910a0aa01fa456ac5
+  src/smart_robustness/validation/sst_vip_nwb_metadata.py: 032220bce7cc37a46bff3cc806a12f696aeb15258da8c83d40158272abd44c9d
+  docs/validation-results/post2008-sst-vip-physiology-eligibility-registration-1065.yaml: 4995a7a71746394084d8dcf10cac985bb763008c9b1460573e59df7d62b5e55c
+  docs/validation-results/post2008-sst-vip-glif-parity-registration-1061.yaml: 88161c7cfb2f04ef021e9552832763d0ad00ad8eadc7a3d3ef4db0e20a80a20c
+response_trace_read_authorized: true
+cell_simulation_authorized: true
+parameter_fitting_authorized: false
+network_execution_authorized: false
+scope:
+  primary_specimens: 41
+  model_sweep_cases: 509
+  all_attached_GLIF_families_retained: true
+  attempts_per_case: 4
+  parameter_changes: only-dt-to-native-inverse-acquisition-rate
+  scoring_and_promotion_gates: unchanged-registration-1068
+  independent_unseen_holdout_claim_authorized: false
+disk_reserve_bytes: 107374182400
+storage_contract: docs/validation-results/post2008-sst-vip-physiology-storage-design-1070.yaml
+interrupted_attempt_policy: assess-started-marker-before-authorizing-rerun
+validation_before_execution:
+  focused_tests_passed: 188
+  repository_ruff_check_passed: true
+  full_regression_suite_rerun: false
+  plan_reconstructed_from_source_metadata: true
+  experimental_response_values_observed_at_seal: false
+output_directory: results/sst-vip-physiology-validation-1072
+independent_array_reconstruction_required_before_scientific_assessment: true
+outcome_guided_parameter_scoring_or_cohort_changes: prohibited
+frozen_baseline_modified: false
+raw_outputs_committed: false
+supersedes_failed_seal: docs/validation-results/post2008-sst-vip-physiology-execution-seal-1071.yaml
+superseded_seal_sha256: 2ad22999afe5b398e5d8242b06ea6e2ce49b370e5a4a99c0c7bf798ea941993c
+failed_launch:
+  exit_code: 1
+  error: "KeyError: native_reader_source_sha256"
+  stage: verify-seal-before-native-import-and-trace-access
+  experimental_responses_read: false
+  correction: Use registered native_reader_sha256 and native_simulation_sha256 names; no equations, parameters, scoring or cohorts changed.
+  original_failure_and_seal_retained: true

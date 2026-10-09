@@ -1,0 +1,42 @@
+schema_version: 1
+artifact_id: 1074
+artifact_type: partial-physiology-array-verifier-engineering-checkpoint
+date: 2026-10-09
+execution_seal: docs/validation-results/post2008-sst-vip-physiology-execution-seal-1073.yaml
+runner_status_at_checkpoint: live-process-confirmed-by-session-poll
+completed_case_checkpoints_observed: 3
+verifier: scripts/verify_sst_vip_physiology_arrays.py
+verification_command: .venv/bin/python scripts/verify_sst_vip_physiology_arrays.py --checkpoints
+verification_exit_code: 0
+verification_snapshot:
+  completed_cases_verified: 2
+  parity_passed_cases: 2
+  partial_checkpoint_mode: true
+  physiological_scoring_independently_verified: false
+  recorded_stop_flags_not_independently_reexecuted: true
+scope: >-
+  Independently reconstruct saved NPZ content identities, dtype/shape, archive
+  and uncompressed sizes, exact source-file hashes, attempt/case receipt
+  agreement and saved stimulus identity. Reconstruct all numerical comparison
+  fields and native/candidate exact-repeat gates without importing simulators,
+  array storage or runner scoring code. Uses the existing independent synthetic
+  parity verifier's fixed gate reconstruction. No new experimental traces are
+  read from NWB files and no simulations are launched by verification.
+limitations:
+  - Partial checkpoint verification is not terminal 509-case coverage.
+  - Native stop flags and exception messages remain recorded execution evidence.
+  - Physiological spike extraction, repeat reliability and promotion summary still require independent reconstruction.
+  - Complete source model/recording alignment reconstruction remains required for terminal assessment.
+  - No inference about physiological success or ART/SMART network preservation follows from two numerical parity cases.
+validation:
+  focused_tests_passed: 193
+  repository_ruff_check_passed: true
+  full_regression_suite_rerun: false
+  github_ci_verified: false
+  synthetic_verifier_tests_passed: 5
+  synthetic_controls: exact-numeric-bits-endianness-scalar-empty-nan-and-corrupt-metadata-content
+sealed_runner_or_metric_components_modified: false
+physiological_validation_complete: false
+network_execution_performed: false
+frozen_baseline_modified: false
+raw_outputs_committed: false

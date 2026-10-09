@@ -1,0 +1,56 @@
+schema_version: 1
+artifact_id: 1129
+artifact_type: independently-checked-pulse-storage-and-release-coverage-assessment
+date: 2026-10-09
+implementation_commit: 243e9c5
+registration: docs/validation-results/post2008-synphys-pulse-cardinality-registration-1127.yaml
+result: results/synphys-pulse-cardinality-1128/manifest.yaml
+result_sha256: c6cf4ca84044f7d8626d5eb07d725b27262aabbc6dc2c6fc78ffac8d26cbb4be
+status: original-pulse-IDs-retained-small-release-recording-metadata-absent
+execution_exit_code: 0
+independent_verification:
+  collector_imported: false
+  verification_exit_code: 0
+  source_parent_registration_collector_and_inventory_hashes: passed
+  all_original_blob_bytes_and_hashes: passed
+  all_decoded_IDs_shapes_and_integer_dtypes: independently-reconstructed-and-equal
+  every_missing_or_empty_ID_blob: independently-verified
+  all_metadata_table_cardinalities: independently-reconstructed-and-equal
+  method: >-
+    Independently reread every selected resting ID blob and all four explicit
+    metadata ID projections through a separate read-only immutable SQLite
+    connection with exact columns and narrowly bounded cardinality permission.
+    Compare archived bytes/hashes, decode NumPy arrays with allow_pickle=False,
+    compare every ID, integer dtype and original shape, and check positive
+    unique IDs and bounds. Verify all retained failures are null/empty blobs;
+    no imported collector functions or physiological waveform reads.
+observations:
+  original_selected_resting_records: 92
+  decoded_numeric_ID_records: 78
+  null_or_empty_ID_records_retained: 14
+  total_pulse_ID_occurrences: 2745
+  pulse_response_rows: 0
+  recording_rows: 0
+  patch_clamp_recording_rows: 0
+  stim_pulse_rows: 0
+preserved_engineering_stops:
+  - docs/validation-results/post2008-synphys-pulse-storage-engineering-stop-1123.yaml
+  - docs/validation-results/post2008-synphys-pulse-storage-second-stop-1126.yaml
+source_boundaries:
+  - Actual zero row counts corroborate the pinned small-release omission recipe; historical generation remains unverified.
+  - Column existence did not imply stored recording metadata; missing baseline reconstruction cannot be done in this small release.
+  - Numeric NPY metadata is decoded without pickle or downloaded-source execution.
+  - The medium recipe retains recording metadata while dropping raw pulse/stimulus data columns; actual medium contents still require verification.
+  - Stored pulse IDs identify contributing responses but do not establish baseline values, QC fidelity or reconstructed target eligibility.
+next_step: >-
+  Register acquisition of the documented r2.1 medium object under exact byte,
+  TLS, ETag, storage and failure-retention limits. Require schema and selected
+  summary-ID/value reconciliation before joining the 2745 original pulse
+  references to recording baselines. Independently reconstruct source mean
+  and dispersion; preserve all failed contracts and experiment partitions.
+  No automatic full-release fallback, new fitting or network execution.
+waveform_values_read: false
+parameter_fitting_performed: false
+cell_or_network_execution_performed: false
+frozen_baseline_modified: false
+raw_outputs_committed: false

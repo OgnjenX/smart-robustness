@@ -214,6 +214,14 @@ phase specifications below retain the full intended program scope.
   baseline coverage. Original missing latency fields and failed gates remain
   unchanged. Recovery of original rested-pulse baseline metadata is a possible
   next source audit, not authorization for fitting or network promotion.
+  [Pulse-storage assessment 1129](validation-results/post2008-synphys-pulse-storage-assessment-1129.yaml)
+  independently verifies safe numeric decoding for 78 original rested records
+  with 2,745 pulse references, retaining 14 missing/empty ID records. The four
+  required recording-metadata tables have zero rows in the actual small
+  release. A separately registered medium-release acquisition and selected
+  summary reconciliation are required before baseline reconstruction. Two
+  metadata-authorizer engineering stops remain documented and preserved;
+  neither changes scientific gates or licenses network fitting.
 - **Final synthesis:** eligible sealed interactions, independent multi-seed
   confirmation, closure of source/representation limitations, reproducible
   release artifacts, and the program-wide completion audit remain outstanding.

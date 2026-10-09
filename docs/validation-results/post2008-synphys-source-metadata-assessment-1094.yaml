@@ -1,0 +1,66 @@
+schema_version: 1
+artifact_id: 1094
+artifact_type: independently-checked-external-source-documentation-assessment
+date: 2026-10-09
+registration: docs/validation-results/post2008-synphys-verified-curl-retry-registration-1092.yaml
+registration_sha256: 1e96e3f23f2a133454244f616ce2367ed5fca59eb85eeacf9d871ba65f95e55d
+result: results/synphys-source-metadata-verified-curl-1093/manifest.yaml
+result_sha256: 57a61a583b5187e94e36dc98db739f7cd8bc09565e6ea00b2e8fd99bed94ee90
+collector_sha256: 758ee522c55b208ff7779953a3f34b0ac6b2b038ee4b20b0576b6d06840b44c3
+implementation_commit: 32584fa
+status: documentation-archived-resource-catalog-unresolved
+acquisition:
+  runner_session: 97545
+  exit_code: 0
+  resources_requested: 5
+  documentation_pages_archived: 4
+  archived_bytes: 180021
+  listing_failures_retained: 1
+  listing_failure: certificate-verified-system-curl-HTTP-403-from-Amazon-S3
+  TLS_verification_disabled: false
+  certificate_authority_bundle: /etc/ssl/cert.pem
+  certificate_authority_sha256: 9dae8d76e55cb08991f2b672d58999ea15560d910759c16b544f843bdffbb994
+  global_trust_configuration_modified: false
+prior_attempts:
+  results/synphys-source-metadata-1088/manifest.yaml: 8b75d9efb76cfac23a2744f7b0eeb1f751716efcf7d9f47329351fdf21bc62f9
+  results/synphys-source-metadata-system-ca-1091/manifest.yaml: ae2abbf17d4aef5583eb62e717a846ae2a8cf13cde95afdd007186b92027ab27
+  original_errors_preserved: true
+independent_verification:
+  collector_imported: false
+  method: >-
+    Independently hash registration, collector, trusted CA and each archived
+    resource; join every resource to the original five-entry registration,
+    compare exclusive sidecars with the terminal manifest, and check URL,
+    exact byte counts and bounds. Parse each HTML title and require its
+    expected Introduction, Dataset Structure, Database Access or Database
+    Schema identity and aisynphys attribution. Verify the one retained S3
+    denial separately, without inferring a resource inventory or downloading
+    a database. Check CA/hostname verification remains enabled.
+  verification_exit_code: 0
+  documentation_pages_verified: 4
+  denied_listing_verified_as_recorded_failure: true
+  numerical_synaptic_result_tables_read: false
+checks:
+  latest_focused_tests_passed: 17
+  repository_ruff: passed
+  diff_check: passed
+  full_regression_rerun_for_transport_changes: false
+source_boundaries:
+  - Official documentation describes a potentially relevant mouse visual-cortex synaptic physiology source, not recordings from our two SST specimens.
+  - The archived current-release documentation is byte-frozen here; its label does not identify a pinned database release.
+  - No SQLite or NWB object was downloaded; actual class/layer/QC counts and numeric target distributions remain unknown.
+  - Schema definitions alone do not establish biological conductance-response fidelity or VIP intrinsic-cell validation.
+  - A denied root listing does not prove that documented public database objects are inaccessible.
+next_step: >-
+  Register a metadata-only audit of the official database-access implementation
+  or public version catalog to identify an explicit release and object sizes
+  without querying numerical results. Then preregister schema, class/layer and
+  QC selection, fitting versus validation splits and target uncertainty before
+  database use. Do not guess private objects, authenticate around S3 denial,
+  or substitute connectivity observations for isolated VIP physiology.
+new_database_or_response_reads_authorized: false
+new_parameter_fitting_authorized: false
+cell_or_network_simulation_authorized: false
+VIP_prerequisite_resolved: false
+frozen_baseline_modified: false
+raw_outputs_committed: false

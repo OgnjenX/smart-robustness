@@ -1,0 +1,39 @@
+schema_version: 1
+artifact_id: 1054
+artifact_type: full-cohort-checkpointed-physiology-body-acquisition-registration
+date: 2026-10-09
+parent: docs/validation-results/post2008-sst-vip-physiology-size-assessment-1053.yaml
+parent_sha256: 244763784134e1d55f98d5d252a5dc113f0580ec967e3f3617c9133b3557b2ac
+preflight: results/sst-vip-physiology-size-preflight-1052/manifest.yaml
+preflight_sha256: 6919e60ab0074e89f31984060cf3237bc494d8bbf819cc64d48d63b64ee28e4c
+source_base: https://api.brain-map.org
+expected_files: 146
+expected_nwb_files: 111
+expected_morphology_files: 35
+expected_total_bytes: 5144045706
+maximum_nwb_bytes: 1073741824
+maximum_morphology_bytes: 10485760
+minimum_free_disk_bytes: 107374182400
+workers: 4
+timeout_seconds: 30
+chunk_bytes: 1048576
+retries: 0
+receipt_policy: >-
+  Download all resolved preflight resources without response-guided selection.
+  Require HTTP 200, exact final source URL, matching Content-Length and any
+  preflight ETag/Last-Modified header. Request identity encoding and reject
+  other content encoding. Stream only sealed length plus one sentinel byte.
+  Preserve incomplete or failed receipts and per-file provenance; never retry
+  a saved failure, overwrite bytes, or resume an incomplete file's contents.
+  Reject orphan receipts and changed checkpoints for explicit assessment.
+  Exclusive process lock forbids concurrent collectors. Hash-validate saved
+  receipts before reuse; a terminal checkpoint makes no new requests.
+  Acquisition hashes prove local identity, not physiological or format validity.
+output_directory: results/sst-vip-physiology-acquisition-1055
+raw_files_committed: false
+physiology_body_download_authorized: true
+network_execution_authorized: false
+isolated_simulation_authorized: false
+parameter_fitting_authorized: false
+frozen_baseline_modified: false
+next_gate: Independently verify all receipts and file formats before registering isolated physiological validation.

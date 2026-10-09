@@ -1,0 +1,57 @@
+schema_version: 1
+artifact_id: 1076
+artifact_type: complete-local-test-suite-partitioned-verification
+date: 2026-10-09
+software_commit_tested: 6bc16e4652585f60958054e47de789ace4517733
+status: both-local-partitions-pass-github-ci-not-yet-terminal
+partitions:
+  lightweight:
+    command: >-
+      .venv/bin/pytest -q --ignore=tests/test_calibration_contract.py
+      --ignore=tests/test_joint_calibrated_reconstruction_contract.py
+      --ignore=tests/test_classic_sector.py --ignore=tests/test_classic_synapses.py
+      --ignore=tests/test_figure19_validation.py
+    exit_code: 0
+    passed: 1096
+    warnings: 130478
+    elapsed_seconds: 707.93
+  separately_configured_files:
+    command: >-
+      .venv/bin/pytest -q tests/test_calibration_contract.py
+      tests/test_joint_calibrated_reconstruction_contract.py
+      tests/test_classic_sector.py tests/test_classic_synapses.py
+      tests/test_figure19_validation.py
+    exit_code: 0
+    passed: 603
+    warnings: 49722
+    elapsed_seconds: 153.41
+combined_passed: 1699
+combined_pytest_warning_count: 180200
+scope: >-
+  Complementary partitions cover the configured local test suite. The five
+  excluded files in the first partition are precisely the files passed to the
+  second partition. No failing tests were removed, xfailed or retuned to obtain
+  this result. This is software regression evidence, not complete scientific
+  reproduction, physiological promotion or final SMART program completion.
+warnings:
+  suppressed_or_repaired_for_this_run: false
+  observed: >-
+    Brian2/pyparsing deprecation warnings and logged unused Brian-object
+    warnings remain visible. The pytest warning totals above do not assert
+    that every separately logged message is included in those counts.
+repository_ruff_check_passed: true
+github_ci:
+  run_id: 37904203703
+  url: https://github.com/OgnjenX/smart-robustness/actions/runs/37904203703
+  status_at_recording: in-progress
+  completed_successfully_at_recording: false
+  lint_passed: true
+  calibration_and_provenance_contracts_passed: true
+sealed_physiology_run:
+  status_at_recording: live-session-confirmed
+  completed_case_checkpoints_observed: 26
+  target_case_count: 509
+  physiological_assessment_complete: false
+sealed_experiment_components_modified: false
+frozen_baseline_modified: false
+raw_outputs_committed: false

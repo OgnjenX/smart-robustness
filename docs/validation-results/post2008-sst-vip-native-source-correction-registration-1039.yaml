@@ -1,0 +1,41 @@
+schema_version: 1
+artifact_id: 1039
+artifact_type: explicit-pinned-native-source-path-correction
+date: 2026-10-09
+status: registered-before-corrected-source-acquisition
+parent: docs/validation-results/post2008-sst-vip-native-resource-inventory-assessment-1038.yaml
+parent_sha256: ee4dd2afef5e9ebcb416ccdb137488239425e0bc7b4b94d02b51b825d173d6a4
+original_manifest: results/sst-vip-native-resource-audit-1037/manifest.yaml
+original_manifest_sha256: 8bd4b1e27f6bc762257b20e05c42d47c1a62307ccdeb4ed02145767988dd5bb4
+original_http404_records_preserved: true
+network_execution_authorized: false
+isolated_simulation_authorized: false
+parameter_fitting_authorized: false
+frozen_baseline_modified: false
+
+source:
+  repository: https://github.com/AllenInstitute/AllenSDK
+  revision: a56bd8ea7613a812334602b64746cdd30c325a96
+  tree_request: https://api.github.com/repos/AllenInstitute/AllenSDK/git/trees/a56bd8ea7613a812334602b64746cdd30c325a96?recursive=1
+  tree_completeness_required: true
+  tree_preinspection: read-only-official-tree-response-path-discovery-before-registration
+  raw_source_base: https://raw.githubusercontent.com/AllenInstitute/AllenSDK/a56bd8ea7613a812334602b64746cdd30c325a96/
+  corrected_path: allensdk/model/biophysical/utils.py
+  replaces_missing_path_references:
+    - allensdk/model/biophys_sim/utils.py
+    - allensdk/model/biophys_sim/all_active_utils.py
+  prove_corrected_file_exists_in_pinned_tree: true
+  inspect_before_claiming_both_setup_roles_resolved: true
+  maximum_bytes_per_file: 2097152
+  preserve_tree_and_source_bytes_hashes_request_and_retrieval_time: true
+  execute_or_import_source: false
+
+mechanism_boundary:
+  - The pinned SDK tree contains example and test NMODL files with the fifteen configured mechanism names.
+  - Matching example filenames does not establish identity with the model-specific mechanism resources used by the 25 acquired parameter sets.
+  - Do not silently substitute SDK example/test mechanisms for the native model package; model-template resource identity remains a separate prerequisite.
+  - The corrected setup source may identify required native resources, but source availability is not numerical reproduction.
+
+output_directory: results/sst-vip-native-source-correction-1040
+raw_outputs_committed: false
+next_gate: Inspect corrected setup roles and dependencies, then resolve model-specific mechanism resources and register physiology acquisition without altering earlier records.

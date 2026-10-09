@@ -82,3 +82,28 @@ tests passed across reconciliation, acquisition, pulse storage, numeric
 targets, identity inventories, rested targets and composite latency. These
 checks use only synthetic reconciliation databases; repository Ruff and diff
 whitespace checks also passed. They do not establish real-release equality.
+
+## Independent acquisition verifier
+
+`scripts/verify_synphys_medium_acquisition.py` now supplies a separate streamed
+hash/signature and complete schema reconstruction, without importing any
+acquisition helper. It checks registration, collector, schema-inspector,
+header-manifest and CA hashes; source scope; terminal transport status; exact
+length; and source stability throughout verification. Its SQLite guard allows
+only schema reads and `table_info`, not physiological data rows.
+
+Run it only after the terminal acquisition manifest exists. It writes the
+exclusive `results/synphys-medium-verification-1132` evidence directory and
+returns a nonzero exit for a retained verification failure. A premature
+observation creates no verification directory, and an existing directory is
+never overwritten or rerun. This verifier does not download anything, repair
+an incomplete object, authorize reconciliation row reads, or establish the
+biological usefulness of the source. Its own tests use synthetic SQLite
+objects and registration fixtures, including changed schema/hash/permissions,
+quoted table identifiers and explicit denial of data reads.
+
+With the independent verifier included, all 157 Synphys-focused tests pass;
+repository Ruff and diff whitespace checks pass. The real acquisition has not
+been verified by this newly implemented script yet. This is still engineering
+evidence, not real-source equivalence, physiological validation or a full
+repository regression result.

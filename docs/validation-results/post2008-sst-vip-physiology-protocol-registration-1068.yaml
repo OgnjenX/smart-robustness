@@ -1,0 +1,90 @@
+schema_version: 1
+artifact_id: 1068
+artifact_type: source-protocol-physiology-validation-registration
+date: 2026-10-09
+parent: docs/validation-results/post2008-sst-vip-physiology-eligibility-assessment-1067.yaml
+parent_sha256: a596ab895eb42fa9a15637b84f6861b0e3b050060ead97c13b695a06c5b8d4f4
+eligibility_result: results/sst-vip-physiology-eligibility-1066.yaml
+eligibility_result_sha256: df95b66f76974ce0e2a95e1bf59a4383cf6fddc215be63dd04ea145a0d4f1f73
+native_reader_source: results/sst-vip-native-resource-audit-1037/source-07.txt
+native_reader_sha256: 5b1eb5ecb3d99c7778c097a2677ef02c80fc2146ef62209770d628db4b1ee31c
+native_simulation_source: results/sst-vip-native-resource-audit-1037/source-02.txt
+native_simulation_sha256: 7749eb812fca1c1428acc23e1c670cbf3e6ad2061f5a72efa7bce81ad7172bd6
+metric_implementation_sha256:
+  src/smart_robustness/validation/physiology_metrics.py: 7a937e246e2c7994a4947dd35c7ab25ecaa7f7352eae23ebced690fb78256ad9
+  tests/test_physiology_metrics.py: 25e173fc6c36309298314d2464b2aefd5e55262b44be0b5739500116c020f63d
+scientific_scope:
+  primary: all-41-metadata-selected-primary-candidate-specimens
+  model_scope: all-retained-GLIF-families-per-primary-specimen-no-best-family-selection
+  protocol: every-eligible-Noise-2-sweep-for-primary-specimens
+  exploratory_identity_stratum: retain-not-promote-not-authorized-for-response-reading-in-this-phase
+  source_holdout_reference: https://www.nature.com/articles/s41467-017-02717-4
+  historical_per_model_training_provenance_verified: false
+  independent_unseen_holdout_claim_authorized: false
+  fitting_or_family_selection_from_Noise_2: prohibited
+trace_policy:
+  access: read-only-raw-hashes-before-and-after-HDF5-plugin-preload-disabled-no-external-storage
+  units: exact-Amps-stimulus-and-Volts-response-as-registered
+  conversion: >-
+    Pinned reader multiplies by the dataset conversion only for major greater
+    than 1 or major equal to 1 with minor greater than 0. Record decoded and
+    literal versions and require matching conversion branches. Do not infer
+    extra scaling or subtract current baseline. Non-unit conversion in an
+    old-version file is an unresolved scaling case, not a promoted result.
+  simulation: >-
+    Fresh model per sweep, complete acquired sweep stimulus, dt exactly inverse
+    acquisition rate as native simulate_sweep_from_file. Preserve source
+    spike_cut_length, coefficients and initial states; no resampling or state
+    fitting. Record source dt and run dt, and native/candidate parity on each
+    actual stimulus before physiological promotion. Keep simulated arrays in
+    separate ignored outputs, never write simulated voltages into source NWB.
+  voltage_coordinates: >-
+    Compare experimental spikes in absolute Volts. Candidate subthreshold
+    voltage plus source El_reference is descriptive only; retain NaN cut masks
+    without 50-mV filling or waveform-fit claims.
+  analysis_epoch: >-
+    Simulate full sweep. Score only Experiment index_start through
+    index_start+count exclusive; timestamps are sweep-relative. Do not add a
+    response-selected warmup or change boundaries from observed spikes.
+  failures: retain-nonfinite-arrays-missing-fields-native-exceptions-bad-resets-and-parity-failures
+spike_metrics:
+  detector: linear-interpolated-upward-crossing-no-filter-no-adaptive-threshold
+  primary_threshold_volts: 0.0
+  refractory_seconds: 0.001
+  fixed_diagnostic_thresholds_volts: [-0.01, 0.01]
+  diagnostic_thresholds_can_replace_primary: false
+  model_events: native-interpolated-spike-times-and-candidate-interpolated-spike-times
+  coincidence_window_seconds: 0.005
+  matching: maximum-cardinality-monotonic-one-to-one
+  f1: twice-matches-divided-by-total-observed-and-predicted-events
+  both_silent: undefined-not-a-passing-recruitment-case
+  source_explained_variance_score_reproduced: false
+repeat_reliability:
+  group_by: exact-full-stimulus-bytes-rate-and-analysis-epoch
+  minimum_repeats: 2
+  minimum_observed_spikes_each_repeat: 4
+  metric: arithmetic-mean-of-all-pairwise-experimental-spike-F1-at-fixed-window
+  minimum_mean_F1: 0.5
+  singleton_or_low_reliability: retained-inconclusive-not-removed-as-bad-data
+physiological_promotion_gates:
+  origin: project-operational-thresholds-not-claimed-as-paper-cutoffs
+  every_repeat_minimum_model_vs_recording_F1: 0.7
+  every_repeat_rate_error_hz: at-most-max-5-Hz-or-20-percent-observed-rate
+  native_candidate_parity: registered-1061-tolerances-and-exact-repeat-gates
+  model_group_pass: all-repeats-pass-and-recording-group-reliability-pass
+  specimen_model_pass: every-eligible-Noise-2-group-passes-no-cherry-picked-group
+  ineligible_singleton_groups: prevent-specimen-model-promotion-retain-descriptive-metrics
+  cell_class_generalization: not-established-by-one-specimen-pass
+  conductance_input_validation: separately-required-before-network-promotion
+  family_or_synapse_tuning_from_observed_results: prohibited
+execution:
+  runner_implementation_and_separate_hash_seal_required: true
+  trace_reads_authorized_now: false
+  cell_simulation_authorized_now: false
+  parameter_fitting_authorized: false
+  network_execution_authorized: false
+  outcomes_observed_at_registration: false
+validation_before_registration:
+  synthetic_metric_tests_passed: 8
+  experimental_responses_read: false
+frozen_baseline_modified: false

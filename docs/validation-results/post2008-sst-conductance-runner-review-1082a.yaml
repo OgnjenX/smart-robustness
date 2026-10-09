@@ -1,0 +1,38 @@
+schema_version: 1
+artifact_id: 1082a
+artifact_type: pre-outcome-conductance-runner-contract-review
+date: 2026-10-09
+parent: docs/validation-results/post2008-sst-conductance-runner-preflight-1082.yaml
+historical_parent_preserved: true
+current_reviewed_source_sha256:
+  scripts/run_sst_conductance_translation.py: 853843b5a0c50eb5b0035992da40358455ecba680253826adb468eb164ed07c6
+  tests/test_sst_conductance_runner.py: 7aaf11e188becc9d8c032a299a97e732263673252eff1b1308118f96eb254284
+  scripts/verify_sst_conductance_translation.py: 95731c9c017ae4c9ce035a5697f330ecfbcd3eed30dfdc4d6a684503493c43a3
+review:
+  native_from_dict: inspected-pinned-source-no-input-dictionary-rewriting
+  native_run_dynamics_signature: positional-wrapper-contract-matches-pinned-native-loop
+  new_controls:
+    - Both native failures are retained while both candidate attempts still execute.
+    - Both candidate failures are retained after both native attempts execute.
+    - Current-only null diagnostic failure is retained and cannot promote a case.
+    - Independent verifier reconstructs success and all registered failure routes.
+    - Full mocked 90-case orchestration writes every record and terminal summary.
+    - Terminal mocked matrix does not load native code or reexecute attempts.
+  source_adjustment: main-passes-output-root-explicitly-to-checkpoint-for-controlled-mock-tests
+  numerical_or_protocol_adjustment: none
+checks:
+  focused_passed: 75
+  repository_ruff: passed
+  diff_check: passed
+  full_regression_session: 31402
+  full_regression_result: pending-not-yet-claimed
+execution_seal_created: false
+acquired_cell_conductance_outcomes_observed: false
+native_reference_executed_this_review: false
+frozen_baseline_modified: false
+raw_outputs_committed: false
+next_step: >-
+  Assess existing regression session 31402 on terminal completion without
+  duplicate runs. Seal current reviewed source hashes, all transitive numerical
+  dependencies, and source registrations before any acquired-cell conductance
+  execution. Keep the full SST/VIP endpoint and unresolved biological prerequisites.

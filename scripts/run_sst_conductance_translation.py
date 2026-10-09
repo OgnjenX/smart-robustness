@@ -248,14 +248,14 @@ def main():
                 all((ROOT / f"case-{n:03d}.yaml").exists() for n in range(90)),
                 "terminal sidecar missing; do not rerun",
             )
-            records = [checkpoint(n, c, context, None) for n, c in enumerate(cases)]
+            records = [checkpoint(n, c, context, None, root=ROOT) for n, c in enumerate(cases)]
             require(saved["records"] == records, "terminal records changed")
             print("Already terminal; no simulations restarted", flush=True)
             return
         klass = load_native(native)
         records = []
         for number, case in enumerate(cases):
-            records.append(checkpoint(number, case, context, klass))
+            records.append(checkpoint(number, case, context, klass, root=ROOT))
             print(f"Completed {number + 1}/90", flush=True)
         save(
             terminal,

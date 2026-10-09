@@ -203,6 +203,38 @@ def test_terminal_missing_sidecar_cannot_restart(modules, monkeypatch, tmp_path)
         runner.main()
 
 
+def test_complete_mock_matrix_resumes_without_loading_or_reexecuting(
+    modules, monkeypatch, tmp_path
+):
+    runner, _ = modules
+    case = {"parameters": parameters(), "arm": arm()}
+    cases = [dict(case, fixture_case=n) for n in range(90)]
+    calls = []
+    monkeypatch.setattr(runner, "ROOT", tmp_path)
+    monkeypatch.setattr(runner, "prepare", lambda: (cases, {}, {"fixture": True}))
+    monkeypatch.setattr(runner, "load_native", lambda _: object())
+
+    def evaluate(*args):
+        calls.append(1)
+        bias, ge, gi = runner.inputs(parameters(), arm())
+        return {"passed": False}, {"bias": bias, "excitation": ge, "inhibition": gi}
+
+    monkeypatch.setattr(runner, "evaluate", evaluate)
+    runner.main()
+    assert len(calls) == 90
+    terminal = yaml.safe_load((tmp_path / "manifest.yaml").read_text())
+    assert terminal["cases"] == 90 and terminal["attempts"] == 360
+    assert len(terminal["records"]) == 90 and terminal["passed_cases"] == 0
+
+    def forbidden(*args):
+        raise AssertionError("terminal mock matrix must not execute native or candidate code")
+
+    monkeypatch.setattr(runner, "load_native", forbidden)
+    monkeypatch.setattr(runner, "evaluate", forbidden)
+    runner.main()
+    assert len(calls) == 90
+
+
 def saved_arrays(verifier, tmp_path, *, null=False):
     report = {
         "errors": {},
@@ -276,3 +308,42 @@ def test_independent_rejects_promoted_error(modules, tmp_path):
         pytest.raises(ValueError, match="error case promoted"),
     ):
         verifier.verify_report(arrays, report, null=False)
+
+
+@pytest.mark.parametrize("failed", ["native", "candidate", "current_only", None])
+def test_evaluate_retains_failures_and_all_attempts(modules, monkeypatch, tmp_path, failed):
+    runner, verifier = modules
+    called = []
+    out = {field: np.array([0.0]) for field in verifier.FIELDS}
+
+    class Reference:
+        @classmethod
+        def from_dict(cls, parameters):
+            return cls()
+
+    def response(kind):
+        def run(*args, **kwargs):
+            called.append(kind)
+            if kind == failed:
+                raise RuntimeError("retained fixture failure")
+            return {k: v.copy() for k, v in out.items()}, {"bad_reset_stop": False}
+
+        return run
+
+    monkeypatch.setattr(runner, "run_extended_native", response("native"))
+    monkeypatch.setattr(runner, "simulate_conductance_glif", response("candidate"))
+    monkeypatch.setattr(runner, "simulate_glif", response("current_only"))
+    case_arm = dict(
+        arm(), name="zero-conductance-null", excitation_leak_multiple=0, inhibition_leak_multiple=0
+    )
+    report, arrays = runner.evaluate({"parameters": parameters(), "arm": case_arm}, Reference)
+    assert called[:4] == ["native", "native", "candidate", "candidate"]
+    assert report["passed"] == (failed is None)
+    path = tmp_path / "attempts.npz"
+    np.savez(path, report_json=np.asarray(json.dumps(report)), **arrays)
+    with np.load(path, allow_pickle=False) as data:
+        assert verifier.verify_report(data, report, null=True) == (failed is None)
+    if failed:
+        assert report["errors"] and all(
+            e["message"] == "retained fixture failure" for e in report["errors"].values()
+        )

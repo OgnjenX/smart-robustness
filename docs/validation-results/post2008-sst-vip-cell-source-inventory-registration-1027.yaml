@@ -1,0 +1,73 @@
+schema_version: 1
+artifact_id: 1027
+artifact_type: network-blind-sst-vip-cell-source-inventory-registration
+date: 2026-10-09
+status: registered-before-source-inventory-and-recruitment-fitting
+parent: docs/validation-results/post2008-vip-target-representation-audit-1026.yaml
+network_execution_authorized: false
+isolated_simulation_authorized: false
+parameter_fitting_authorized: false
+frozen_baseline_modified: false
+
+question: >-
+  Which independently characterized mouse primary visual cortex SST and VIP
+  cells have public electrophysiology and model resources suitable for a
+  separately registered explicit recruitment representation?
+
+sources:
+  metadata_model: ApiCellTypesSpecimenDetail
+  endpoint: https://api.brain-map.org/api/v2/data/query.json
+  metadata_query: model::ApiCellTypesSpecimenDetail,rma::options[num_rows$eq'all']
+  documentation: https://alleninstitute.github.io/AllenSDK/cell_types.html
+  model_documentation: https://alleninstitute.github.io/AllenSDK/biophysical_models.html
+  modeling_reference: https://doi.org/10.1038/s41467-017-02718-3
+  connectivity_reference: https://doi.org/10.1038/nn.3446
+
+inventory_rules:
+  raw_metadata_response_required: true
+  record_response_sha256_bytes_retrieval_time_and_exact_request: true
+  require_success_and_complete_row_count: true
+  reject_duplicate_specimen_ids: true
+  inspect_schema_before_filter_implementation: true
+  species: Mus musculus
+  area: VISp
+  layers: ['2/3', '5']
+  reporter: positive
+  marker_policy: >-
+    Use the reported driver-line metadata to identify Sst or Vip targeting.
+    Retain the exact line and intersectional markers; a targeting line is not
+    proof of transcriptomic subtype identity. Never merge Htr3a into Vip.
+  dendrite_type: aspiny
+  include_all_matching_specimens: true
+  retain_missing_model_and_missing_morphology_candidates: true
+  exclusions_require_explicit_reason_per_specimen: true
+  sort: ascending-specimen-id
+  no_selection_by_model_fit_score_or_smart_network_outcome: true
+  layers_may_not_be_pooled_quantitatively: true
+  model_availability_may_not_be_inferred_from_generic_cell_class: true
+
+required_inventory_fields:
+  - specimen-id
+  - species-and-area
+  - layer
+  - exact-driver-line-and-reporter-status
+  - dendrite-type
+  - electrophysiology-resource-availability
+  - reconstructed-morphology-availability
+  - public-model-type-and-id-when-resolved
+  - unavailable-or-ambiguous-metadata
+
+followup_boundary:
+  - Freeze the metadata inventory and availability assessment before selecting a fitting protocol.
+  - Register isolated training and held-out current-injection protocols and candidate selection independently of SMART outcomes.
+  - Do not silently replace a failed or unavailable candidate with another cell.
+  - Verify source model behavior before any Brian2 translation, reduction or network promotion.
+  - Keep external model execution in a separate environment; do not change the frozen Brian2 dependencies to install legacy AllenSDK requirements.
+  - Register recruitment, population mapping and synapse parameters separately; current-step fits do not identify network connectivity.
+  - If resources are unavailable or insufficient, report the exact source boundary rather than inventing a biological calibration.
+
+not_authorized:
+  - SMART network execution or VIP-to-SST interaction testing
+  - selecting cells or gains to recover the two observed SST progression survivors
+  - treating a catalog inventory as validation of explicit SST or VIP dynamics
+  - changing earlier scientific gates or the frozen classic baseline

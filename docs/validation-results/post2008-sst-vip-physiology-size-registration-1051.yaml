@@ -1,0 +1,40 @@
+schema_version: 1
+artifact_id: 1051
+artifact_type: full-cohort-physiology-resource-size-preflight-registration
+date: 2026-10-09
+parent: docs/validation-results/post2008-sst-vip-native-launch-audit-assessment-1050.yaml
+parent_sha256: b8aa7fdb5a993ed4525d997b3a58b80469f39be571596620c23bccc3f7478fe5
+physiology_manifest: results/sst-vip-native-resource-audit-1037/manifest.yaml
+physiology_manifest_sha256: 8bd4b1e27f6bc762257b20e05c42d47c1a62307ccdeb4ed02145767988dd5bb4
+source_base: https://api.brain-map.org
+expected_specimens: 111
+expected_nwb_files: 111
+expected_morphology_files: 35
+expected_missing_morphology_specimens: 80
+resource_types: [NWBDownload, 3DNeuronReconstruction]
+selection: >-
+  Keep every NWBDownload file and every 3DNeuronReconstruction file linked to
+  the complete registered cohort. Retain multiple reconstructions and all
+  attachment identities; do not rank by physiology or model performance.
+request_method: HEAD
+response_body_read: false
+workers: 4
+timeout_seconds: 30
+retries: 0
+unknown_redirect_hosts: reject
+missing_or_invalid_content_length: unresolved-not-zero
+per_resource_failures: preserve-no-replacement
+output_directory: results/sst-vip-physiology-size-preflight-1052
+download_admission_for_later_protocol:
+  maximum_total_bytes: 68719476736
+  maximum_nwb_bytes: 1073741824
+  maximum_morphology_bytes: 10485760
+  minimum_free_disk_after_download_bytes: 107374182400
+  complete_positive_lengths_required: true
+  uncertainty_or_limit_failure: assess-and-register-change-before-body-acquisition
+  size_is_not_integrity_or_physiology_validation: true
+physiology_body_download_authorized: false
+network_execution_authorized: false
+isolated_simulation_authorized: false
+parameter_fitting_authorized: false
+frozen_baseline_modified: false

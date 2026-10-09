@@ -1,0 +1,61 @@
+schema_version: 1
+artifact_id: 1033
+artifact_type: complete-sst-vip-parameter-json-acquisition-registration
+date: 2026-10-09
+status: registered-before-parameter-downloads
+parent: docs/validation-results/post2008-sst-vip-model-identity-assessment-1032.yaml
+parent_sha256: c96862658b4caafc6434bf5cc1c2b69a6f0aedc8285cc248d098200ae114e132
+source_manifest: results/sst-vip-model-identity-1031/manifest.yaml
+source_manifest_sha256: c1b80ead6b26d1f412974a2a294d591ebfa84f41ecd24d44ce197ef7c8e65196
+network_execution_authorized: false
+isolated_simulation_authorized: false
+parameter_fitting_authorized: false
+frozen_baseline_modified: false
+
+acquisition:
+  expected_model_count: 252
+  expected_unique_file_count: 252
+  source_base: https://api.brain-map.org
+  path_format: /api/v2/well_known_file_download/{file_id}
+  required_file_type: NeuronalModelParameters
+  require_model_attachment_identity: true
+  order: ascending-model-id-then-file-id
+  workers: 4
+  timeout_seconds: 30
+  maximum_bytes_per_file: 2097152
+  retries_per_execution: 0
+  unknown_source_or_redirect_host: reject
+  tls_verification_required: true
+  preserve_received_bytes_before_json_validation: true
+  json_requirement: top-level-object
+  parse_json_is_not_execute_code: true
+  missing_or_invalid_file: retain-error-provenance-and-report-without-replacement
+  preserve_all_model_and_specimen_references: true
+  source_model_parameters_may_be_edited: false
+  candidate_selection_from_parameters: not-authorized
+  explicit_no_model_specimens: retain-all-42-in-manifest
+  output_directory: results/sst-vip-parameter-acquisition-1034
+  resume: >-
+    Reuse only raw files with matching request, registration, source and
+    collector identities and recomputed hashes. Do not overwrite artifacts or
+    retry failed requests silently; a separately documented retry is required.
+
+required_provenance:
+  - registration-and-source-manifest-hashes
+  - collector-and-validation-source-hashes
+  - exact-model-specimen-template-and-file-identities
+  - request-and-final-url-and-retrieval-time
+  - received-byte-count-and-sha256
+  - parse-status-and-explicit-request-errors
+  - all-252-records-and-all-missing-model-specimens
+
+license_boundary:
+  - Source parameter files remain ignored local research artifacts, not relicensed as repository MIT code.
+  - Review source data and model terms before redistribution or release packaging; downloading does not establish redistribution permission.
+  - Do not copy or execute native source code under this parameter-only acquisition protocol.
+
+next_gate:
+  - Independently verify every saved parameter hash, JSON shape, identity and completeness before assessing acquisition.
+  - Inspect the distinct native equations and model requirements before proposing any Brian2 translation.
+  - Separately register electrophysiology and morphology acquisition and held-out native-model reproduction.
+  - No physiological or network survival claim follows from a successful parameter download.

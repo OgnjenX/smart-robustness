@@ -1,0 +1,69 @@
+schema_version: 1
+artifact_id: 1018
+artifact_type: layer5-sst-like-stage4d-engineering-stop-assessment
+date: 2026-10-09
+status: stopped-first-repetition-independent-raw-correlation-disagreement
+registration: docs/validation-results/post2008-l5-sst-like-stage4-progression-registration-1002.yaml
+seal: docs/validation-results/post2008-l5-sst-like-stage4d-seal-1017.yaml
+implementation_commit: 98bc8a5077209e98777184dc17b43c0e63a5dd5e
+pre_outcome_seal_commit: 690bfa44ec00aa6565d8c53b4a618e07999cde5d
+raw_result: results/l5-sst-like-stage4d-figure16.yaml
+raw_result_sha256: d949391b2ef505df892ea50fe438fdb87e1a4547953b6de06e3567a6c242e7f2
+raw_result_bytes: 8879238
+raw_result_committed: false
+raw_checkpoint_status: running-stage4d
+process_exit_code: 1
+saved_repetitions: 1
+completed_points: 0
+point_id: delay1p0-resource0p125
+repetition: 0
+frozen_baseline_modified: false
+sealed_sources_modified: false
+automatic_restart_performed: false
+failure: 'ValueError: Stage-4D correlation contradicts independent reconstruction: raw'
+
+diagnosis:
+  script: scripts/diagnose_l5_sst_like_stage4d_stop.py
+  command: .venv/bin/python scripts/diagnose_l5_sst_like_stage4d_stop.py
+  network_rerun: false
+  gate_or_tolerance_changed: false
+  method: Reapply the sealed full-complex Fourier filtering and direct circular dot products to the retained regional field means.
+  sealed_rtol: 1.0e-12
+  sealed_atol: 1.0e-12
+  raw_failed_sample_count: 1
+  failing_band_hz: [20.0, 100.0]
+  failing_sample:
+    index: 500
+    lag_ms: 0.0
+    stored_value: -0.7335391921857081
+    reconstructed_value: -0.7335391921882374
+    absolute_error: 2.5293100947010316e-12
+    allowed_error: 1.7335391921882374e-12
+  maximum_raw_absolute_error_by_band:
+    - {band_hz: [2.0, 4.0], value: 9.094947017729282e-13}
+    - {band_hz: [4.0, 8.0], value: 7.389644451905042e-13}
+    - {band_hz: [8.0, 12.0], value: 1.1937117960769683e-12}
+    - {band_hz: [12.0, 20.0], value: 5.229594535194337e-12}
+    - {band_hz: [20.0, 100.0], value: 9.094947017729282e-12}
+  all_normalized_curves_agree_at_sealed_tolerance: true
+  maximum_normalized_absolute_error: 2.55351295663786e-15
+  stored_peaks: [0.9804802384893333, 0.866850953503214, 0.6934992537175486, 0.4732577297765853, 0.22709845596917502]
+  reconstructed_peaks: [0.9804802384893317, 0.866850953503215, 0.6934992537175488, 0.47325772977658526, 0.2270984559691749]
+  lower_frequency_gate_agrees: true
+
+interpretation:
+  - The registered verifier rejected a raw-correlation sample; the engineering stop is retained regardless of apparent behavioral gate agreement.
+  - The discrepancy is consistent with floating-point roundoff between Fourier-product and direct-dot-product correlation, especially for a small sample value within a much larger-amplitude curve. This is a diagnostic interpretation, not a verified floating-point error bound.
+  - Normalized curves and peaks agree at the sealed tolerance. This does not authorize treating the stopped point or the remaining six points as progression survivors.
+  - There is no exact repeat, completed Stage-4D point, joint assessment or independent-seed result.
+  - The raw checkpoint still says running because evidence was saved before verifier rejection; process exit code 1, not that status string, establishes the stop.
+
+engineering_followup:
+  authorized_scope: isolated-synthetic-numerical-verification-audit-only
+  network_execution_authorized: false
+  requirements:
+    - Preserve result 1018, its raw hash, seal 1017 and all original sources unchanged.
+    - Test precision across prospectively specified synthetic signal amplitudes, bands, shifts and near-zero correlation samples without fitting a tolerance to network results.
+    - Derive any proposed numerical bound from floating-point operations and signal scale, and test rejection of material corruption.
+    - Commit and separately seal any continuation method before further network execution; distinguish it from the failed original verification contract.
+    - Do not change network parameters, scientific gates, field reduction, registered points or earlier failures.

@@ -72,7 +72,12 @@ phase specifications below retain the full intended program scope.
   [Seal 1017](validation-results/post2008-l5-sst-like-stage4d-seal-1017.yaml)
   records the separate pre-outcome execution boundary. The inherited geometry seeds 16 and 17
   belong to V1 and V2 within each run, not two additional seed arms. Stage 4D
-  inter-area behavior and the final joint assessment remain outstanding.
+  stopped on its first saved repetition because the independent verifier
+  rejected one raw-correlation sample; [assessment 1018](validation-results/post2008-l5-sst-like-stage4d-engineering-stop-1018.yaml)
+  preserves that engineering stop. Normalized curves and peaks agree, but no
+  exact repeat or complete point exists. Only a synthetic numerical audit is
+  authorized next, not network execution or a scientific survival claim.
+  Inter-area behavior and the final joint assessment remain outstanding.
   All seven registered points must remain
   in both stages; a later pass cannot rescue an earlier failure.
 - **VIP-like disinhibition:** implementation and registered testing remain

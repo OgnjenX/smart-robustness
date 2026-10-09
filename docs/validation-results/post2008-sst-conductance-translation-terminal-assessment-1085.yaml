@@ -1,0 +1,72 @@
+schema_version: 1
+artifact_id: 1085
+artifact_type: independently-verified-isolated-sst-conductance-engineering-assessment
+date: 2026-10-09
+registration: docs/validation-results/post2008-sst-conductance-translation-registration-1080.yaml
+registration_sha256: c8339ceee050b38b1cd840ceafaa64fa9654d5454b92f91486f5c9ec580663b1
+execution_seal: docs/validation-results/post2008-sst-conductance-translation-execution-seal-1083.yaml
+execution_seal_sha256: c199a78bb17ac7342cd7d3b4292ad84fa5625ffa8f69ddf029f3f1bba7e3b458
+result: results/sst-conductance-translation-1084/manifest.yaml
+result_sha256: 50ac1610a73bc6b4961388cac0978a338ee3a0910ad682f5af1b4da4ba3c5b3c
+status: engineering-translation-verified-not-biologically-or-network-promoted
+assessment_environment:
+  python: 3.11.9
+  numpy: 1.26.4
+  pyyaml: 6.0.3
+  inspected_at_assessment_not_saved_by_runner: true
+execution:
+  session_id: 14198
+  exit_code: 0
+  model_ids: [566282072, 566282080, 484628263, 484628267, 484628269]
+  dt_seconds: [0.00005, 0.000005]
+  arms_per_model_and_dt: 9
+  complete_cases: 90
+  registered_backend_attempts: 360
+  additional_current_only_null_diagnostics: 10
+  parity_passed_cases: 90
+  native_exact_repeat_passes: 90
+  candidate_exact_repeat_passes: 90
+  zero_conductance_null_cases: 10
+  zero_conductance_null_passes: 10
+  exceptions: 0
+  recorded_bad_reset_stops: 0
+  failed_cases: []
+independent_verification:
+  command: .venv/bin/python scripts/verify_sst_conductance_translation.py
+  session_id: 25231
+  implementation_sha256: 95731c9c017ae4c9ce035a5697f330ecfbcd3eed30dfdc4d6a684503493c43a3
+  exit_code: 0
+  cases_verified: 90
+  passed_cases: 90
+  nonpassing_case_indices: []
+  source_and_implementation_hashes_checked: true
+  inputs_reconstructed_from_source_parameters: true
+  exact_repeats_and_all_eight_field_gates_reconstructed: true
+  dimensions_spike_indices_and_grid_timing_checked: true
+  recorded_stop_flags_independently_reexecuted: false
+  biological_validation: false
+interpretation: >-
+  For all five current-input-qualified SST parameter maps, both timestep arms
+  and all nine prescribed input arms, the separate step-held conductance
+  candidate agrees with the extended pinned native reference within the sealed
+  tolerances, preserves NaN masks and exact spike/grid identities, and repeats
+  exactly. This verifies an engineering extension, not native Allen conductance
+  support, continuous conductance-threshold accuracy, biological synaptic-response
+  fidelity, or SMART resonance/reset behavior. Retain all five maps; no family
+  winner selection or response-guided refitting follows from this result.
+limitations:
+  - Reversal potentials and input strengths are engineering fixtures, not measured specimen-specific synaptic parameters.
+  - Source integer spike cuts were preserved across timestep arms; this is not physical refractory-matched convergence.
+  - Adaptive threshold dynamics hold the effective input current fixed within each integration step.
+  - Current-injection physiological gates and synthetic conductance parity do not establish biological recruitment targets or circuit identity.
+  - All current-input survivors are two SST-labelled specimens; no VIP candidate or class-wide generalization is established.
+  - No inhibitory SMART network intervention ran in this matrix.
+next_step: >-
+  Identify and preregister independently justified biological conductance-response
+  or recruitment targets and source identity before biological promotion. Keep
+  separate the unresolved VIP source/fitting route and the full explicit SST/VIP
+  network endpoint. Published connectivity alone is not isolated-cell response
+  validation. Do not tune any neuron or synapse from SMART network outcomes.
+sealed_implementations_modified_after_outcomes: false
+frozen_baseline_modified: false
+raw_outputs_committed: false

@@ -159,9 +159,18 @@ phase specifications below retain the full intended program scope.
   recordings but fail model-response gates and 49 lack recording reliability;
   the latter remain inconclusive, not discarded. Historical model training
   provenance remains unverified, so this is not an independently unseen holdout
-  claim. No parameters were fitted and no network was executed. Conductance-input
-  validation, explicit SST recruitment and VIP network tests remain outstanding;
-  current-injection passes do not establish cell-class or network equivalence.
+  claim. No parameters were fitted and no network was executed.
+  [Conductance engineering assessment 1085](validation-results/post2008-sst-conductance-translation-terminal-assessment-1085.yaml)
+  verifies all 90 registered cases across five SST maps, two timestep arms and
+  nine inputs: native-extension parity, exact repeats, array dimensions and all
+  ten current-only null diagnostics pass. That closes numerical translation,
+  not biological synaptic-input fidelity or SMART circuit survival. Biological
+  conductance/recruitment validation, explicit SST recruitment and VIP network
+  tests remain outstanding. [VIP source audit 1086](validation-results/post2008-vip-source-availability-audit-1086.yaml)
+  retains 36 VIP specimens and 61 GLIF maps but identifies no public biophysical
+  VIP maps in this cohort; a separate justified source or independently fitted
+  route is needed. Current-injection and engineering passes do not establish
+  cell-class or network equivalence.
 - **Final synthesis:** eligible sealed interactions, independent multi-seed
   confirmation, closure of source/representation limitations, reproducible
   release artifacts, and the program-wide completion audit remain outstanding.

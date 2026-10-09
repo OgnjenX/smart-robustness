@@ -1,0 +1,59 @@
+schema_version: 1
+artifact_id: 1069
+artifact_type: metadata-only-physiology-runner-engineering-preflight
+date: 2026-10-09
+parent: docs/validation-results/post2008-sst-vip-physiology-protocol-registration-1068.yaml
+status: loader-and-repeat-scoring-tested-storage-design-required-before-execution
+scope:
+  primary_specimens: 41
+  model_sweep_cases: 509
+  full_sweep_samples_per_simulator_attempt: 2186831374
+  four_attempt_sample_updates: 8747325496
+storage:
+  estimate_method: >-
+    Read only the hashed eligibility/schema/parameter manifests. For each
+    eligible Noise 2 sweep of every primary specimen and each attached GLIF
+    model, use source full-sweep sample count and afterspike-current dimension.
+    Four attempts store voltage, threshold and each ASC state in float64;
+    stimulus and response are included twice in the conservative case estimate.
+    Estimate excludes spike-event arrays, headers and manifests and does not
+    assume any compression benefit. No recorded trace was read to estimate it.
+  core_uncompressed_array_bytes_excluding_events: 314903717856
+  core_uncompressed_array_GiB: 293.27694126963615
+  observed_workspace_free_GiB_at_preflight: 279.6173095703125
+  estimate_exceeds_observed_free_space: true
+  static_whole_matrix_uncompressed_layout_safe: false
+  next_design: >-
+    Implement lossless checkpoint storage with exact-byte content deduplication
+    across repeat attempts, not discarded repeats or assumed identical outputs.
+    Hash every attempt's fields independently, retain distinct content on any
+    mismatch and reference saved identical content explicitly. Preserve all
+    reports, errors and case coverage. Use a per-case conservative disk guard
+    and resumable stop before reserve exhaustion; no deletion of prior science
+    or reduction of the 509-case matrix to make storage fit. Seal that layout
+    and reserve policy before real trace access. A successful compressed layout
+    is not guaranteed by this estimate.
+trace_scaling_preflight:
+  primary_eligible_sweeps_with_nonunit_conversion: 0
+  response_values_or_physical_voltage_validated: false
+engineering_validation:
+  focused_tests_passed: 167
+  repository_ruff_check_passed: true
+  full_regression_suite_rerun: false
+  tests_use_only_synthetic_HDF5_and_synthetic_waveforms: true
+  covers:
+    - Read-only loader denies access without explicit caller authorization.
+    - Source hash and exact inventory metadata guards.
+    - Source pipeline conversion branch and old-version scaling ambiguity.
+    - Raw immutability on successful access and nonfinite trace failure.
+    - Half-open Experiment epoch boundaries without response-selected warmup.
+    - Exact stimulus/rate/epoch grouping and one-to-one spike matching.
+    - Singleton, silence, minimum spike count and native parity promotion controls.
+  external_link_and_filter_guards: inherited-from-tested-metadata-reader
+  separate_runner_execution_seal_enforcement: not-yet-implemented
+experimental_responses_read: false
+cell_simulations_performed: false
+parameter_fitting_performed: false
+network_execution_performed: false
+frozen_baseline_modified: false
+physiological_validation_complete: false

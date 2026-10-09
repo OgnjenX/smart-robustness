@@ -1,0 +1,71 @@
+schema_version: 1
+artifact_id: 1032
+artifact_type: complete-cohort-sst-vip-model-identity-assessment
+date: 2026-10-09
+status: complete-counts-reconciled-native-models-not-executed
+registration: docs/validation-results/post2008-sst-vip-model-identity-registration-1030.yaml
+implementation_commit: 4a6590d
+manifest: results/sst-vip-model-identity-1031/manifest.yaml
+manifest_sha256: c1b80ead6b26d1f412974a2a294d591ebfa84f41ecd24d44ce197ef7c8e65196
+manifest_bytes: 272751
+raw_outputs_committed: false
+network_execution: false
+isolated_simulation: false
+parameter_fitting: false
+frozen_baseline_modified: false
+
+inventory:
+  batches: 6
+  specimens: 111
+  model_records: 252
+  specimens_with_no_model: 42
+  all_active_biophysical_models: 11
+  perisomatic_biophysical_models: 14
+  glif_models: 227
+  template_counts:
+    '1 Leaky Integrate and Fire (LIF)': 64
+    '2 LIF + Reset Rules (LIF-R)': 33
+    '3 LIF + Afterspike Currents (LIF-ASC)': 64
+    '4 LIF-R + Afterspike Currents (LIF-R-ASC)': 33
+    '5 LIF-R-ASC + Threshold Adaptation (LIF-R-ASC-A)': 33
+    'Biophysical - all active': 11
+    'Biophysical - perisomatic': 14
+  parameter_file_records: 252
+  parameter_file_type: NeuronalModelParameters
+  count_discrepancies: 0
+  unknown_templates: 0
+  incomplete_resource_metadata: 0
+  no_model_specimens_retained: true
+
+verification:
+  collector_process_exit_code: 0
+  focused_tests_passed: 24
+  repository_ruff_check_passed: true
+  independent_raw_response_hash_and_identity_check_passed: true
+  independent_method: >-
+    Reparse all six preserved JSON responses, check each response's success,
+    complete row count and exact requested specimen-id set, and verify its
+    recorded hash. Sort raw records by specimen id and compare the complete
+    records with the manifest. Independently count unique specimens and model
+    identities, model-template names and parameter-file types. The API response
+    order differs from the sorted manifest; the first unnormalized-order
+    comparison failed and the declared ascending-id comparison passed.
+  model_parameters_downloaded: false
+  native_model_reproduction_verified: false
+
+interpretation:
+  - Exact specimen, template, model and parameter-file identities are now recoverable from the hash-pinned raw metadata.
+  - Counts reconcile with the previous catalog snapshot without dropping missing-model cells or choosing models by fit or SMART outcomes.
+  - The five GLIF families are distinct equation families; none may silently alias the existing GIF backend.
+  - These catalog records do not establish resource downloadability, equation portability, held-out physiological accuracy or successful SST/VIP recruitment.
+  - The lack of indicated VIP biophysical models under the registered filters remains explicit.
+
+next_step:
+  scope: separately-register-parameter-and-physiology-resource-acquisition
+  requirements:
+    - Acquire all identified parameter JSON records without selecting a network-performing candidate.
+    - Record exact bytes, hashes, source links and license boundaries; do not execute retrieved code.
+    - Resolve native morphology and electrophysiology requirements separately before reference simulations.
+    - Register native-model verification and held-out recruitment mapping before any fitting or network promotion.
+  simulation_or_fitting_authorized: false
+  vip_network_execution_authorized: false

@@ -1,0 +1,54 @@
+schema_version: 1
+artifact_id: 1083
+artifact_type: isolated-sst-conductance-translation-preexecution-seal
+date: 2026-10-09
+registration: docs/validation-results/post2008-sst-conductance-translation-registration-1080.yaml
+registration_sha256: c8339ceee050b38b1cd840ceafaa64fa9654d5454b92f91486f5c9ec580663b1
+review: docs/validation-results/post2008-sst-conductance-runner-review-1082a.yaml
+review_sha256: 984887dabba1910f72e95f4a7e740667945608084d440b07394870bcebe5f7e5
+native_registration: docs/validation-results/post2008-sst-vip-glif-parity-registration-1061.yaml
+native_registration_sha256: 88161c7cfb2f04ef021e9552832763d0ad00ad8eadc7a3d3ef4db0e20a80a20c
+implementation_sha256:
+  src/smart_robustness/validation/conductance_glif_state_machine.py: 00ee8223723819ee4a7e51a3cd3f38a32a0b71319e97b96e856f2921134ae299
+  src/smart_robustness/validation/glif_conductance_input.py: b2e785bc0d8359108d90bdc0c9dec23e4092fcb7fb0f1562207aea4d354af651
+  src/smart_robustness/validation/native_glif_parity.py: c6ca361d97049566b9c9519c0f3dbfe15423a0204e6b9429cd3456bf8be90f53
+  src/smart_robustness/validation/native_glif_state_machine.py: f2bc0062cf0465b11e7008879b83611cdc1a56ca34bc2c55f0337a3694333e1e
+  src/smart_robustness/validation/sst_vip_glif_source.py: bba8cd123367b767ee7c968c2da6adde0c637a4e014e214b671fd67330ecc15d
+  scripts/run_sst_conductance_translation.py: 853843b5a0c50eb5b0035992da40358455ecba680253826adb468eb164ed07c6
+  scripts/verify_sst_conductance_translation.py: 95731c9c017ae4c9ce035a5697f330ecfbcd3eed30dfdc4d6a684503493c43a3
+  scripts/verify_sst_vip_glif_parity.py: 37487cdd0030eb6f950c0c1ec2dae2eb60f429b8e18c26d15fcd0f67f68dcd38
+  tests/test_sst_conductance_runner.py: 7aaf11e188becc9d8c032a299a97e732263673252eff1b1308118f96eb254284
+  tests/test_conductance_glif_state_machine.py: 556cd9accf45484c96f8e333e5d8a70db87446da3bb1cfcae8ce9fb8de0233df
+reviewed_controls:
+  full_regression:
+    session_id: 31402
+    exit_code: 0
+    passed: 1750
+    warnings: 179378
+    duration_seconds: 857.26
+    collection_timing: started-before-five-additional-mock-failure-and-resume-tests
+    warnings_not_claimed_resolved: true
+  latest_focused_checks: {passed: 75, exit_code: 0}
+  repository_ruff: passed
+  diff_check: passed
+  test_scope_limit: >-
+    The full suite finished successfully, but its collection preceded the five
+    additional review controls and explicit output-root adjustment. The latest
+    focused 75-test suite covers those reviewed changes; no claim is made that
+    the original full run collected those later tests. Neither suite constitutes
+    biological conductance-response or SMART intervention validation.
+synthetic_execution_authorized: true
+native_reference_execution_authorized: true
+parameter_fitting_authorized: false
+experimental_conductance_response_reads_authorized: false
+network_execution_authorized: false
+output_directory: results/sst-conductance-translation-1084
+cases: 90
+registered_backend_attempts: 360
+additional_current_only_null_diagnostics: 10
+outcome_state_at_seal: acquired-cell-conductance-outcomes-not-yet-observed
+failure_policy: retain-every-error-parity-failure-and-bad-reset-no-tuning
+promotion_scope: engineering-translation-only
+VIP_prerequisite_resolved: false
+frozen_baseline_modified: false
+raw_outputs_committed: false

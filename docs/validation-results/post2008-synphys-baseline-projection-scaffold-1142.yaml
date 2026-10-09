@@ -1,0 +1,54 @@
+schema_version: 1
+artifact_id: 1142
+artifact_type: synthetic-tested-bounded-baseline-metadata-reader
+date: 2026-10-09
+status: reader-tested-on-synthetic-databases-real-execution-not-authorized
+design_parent: docs/validation-results/post2008-synphys-baseline-lineage-design-1138.yaml
+source_hashes:
+  scripts/synphys_baseline_projection.py: e51f320937ceb763b091d524b6f45656901ca6a3fbf8bac4db4308074dd710f4
+  tests/test_synphys_baseline_projection.py: 3fcb188a5f322ad48d0ea6980c33601e904251ca1a7daa3942a5b34162a0d1b8
+  scripts/synphys_baseline_lineage.py: 5ba493ea9402d6fbe5a354c14a92281675687b6cb33fb11fd13312dfe28ede0b
+reader_contract:
+  entry_point: callable-only-no-CLI
+  input_membership: fixed-original-pulse-response-IDs-and-selected-pre-post-cell-IDs
+  tables: seven-exact-projections-from-lineage-design-1138
+  relationships: pulse-response-to-stimulus-and-post-recording-then-pre-recording-patch-electrode-and-sync
+  database_access: read-only-immutable-query-only
+  authorization: exact-main-table-columns-no-views-or-trigger-reads
+  SQL_functions: [typeof, substr]
+  numeric_type_guard: SQL-CASE-rejects-text-and-blob-before-Python-allocation
+  text_guard: bounded-clamp-mode-substr-then-type-and-UTF8-byte-check-no-truncated-value-accepted
+  waveform_schema_write_and_extra_function_reads: denied
+  missing_parents: remain-absent-for-downstream-lineage-classification-without-dropping-original-pulses
+  multiple_patch_parents: all-retained-within-fixed-bounds-never-first-row-selection
+  new_QC_or_outcome_selection: none
+bounds:
+  maximum_input_IDs: 10000
+  maximum_rows_per_table: 10000
+  maximum_rows_per_parent: 1000
+  maximum_scalar_payload_bytes: 33554432
+  maximum_clamp_mode_UTF8_bytes: 4096
+  failure_policy: stop-no-automatic-bound-expansion-or-partial-promotion
+verification:
+  focused_reader_tests: 24
+  command: .venv/bin/python -m pytest -q tests/test_synphys_baseline_projection.py
+  exit_code: 0
+  duration_seconds: 0.08
+  repository_ruff: passed
+  diff_whitespace: passed
+  active_full_regression_includes_reader: false
+  source_and_tests_collected_by_active_full_regression_modified: false
+execution_boundary:
+  - Independently verify terminal medium acquisition before any scientific row access.
+  - Seal and independently assess selected-summary required-ID and exact-value reconciliation first.
+  - Separately reconcile cell-electrode identity extensions and register baseline metadata joins.
+  - Hash-pin reader, lineage, statistics, inputs, projections, original selection and bounds before execution.
+  - Preserve original experiment partitions and every earlier insufficient stratum.
+  - Independent reconstruction and numeric assessment remain required before source or model promotion.
+real_database_rows_read: false
+waveform_values_read: false
+parameter_fitting_performed: false
+cell_or_network_execution_performed: false
+biological_eligibility_established: false
+frozen_baseline_modified: false
+raw_results_committed: false

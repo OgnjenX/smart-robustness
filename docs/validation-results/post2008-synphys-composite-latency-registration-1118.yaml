@@ -1,0 +1,38 @@
+schema_version: 1
+artifact_id: 1118
+artifact_type: distinct-composite-target-shared-latency-coverage-registration
+date: 2026-10-09
+database: results/synphys-small-schema-1102/synphys_r2.1_small.sqlite
+database_sha256: 7372499fdd874f057565080d5769baaf2659ef39d9f3bc3c7147dd1e1c280a53
+resting_inventory: results/synphys-resting-targets-1115/manifest.yaml
+resting_inventory_sha256: d10df161e07278660ec4a733cea1b45f8164c66b467cfabbc45e46b0afef3a1e
+output_directory: results/synphys-composite-latency-1119
+allowed_columns:
+  synapse: [id, latency]
+selection: all-92-unique-synapse-IDs-in-unchanged-resting-inventory-no-response-based-selection
+new_numeric_reads_authorized: true
+parameter_fitting_authorized: false
+cell_or_network_execution_authorized: false
+trace_reads_authorized: false
+coverage_contract: >-
+  Require exactly one shared synapse latency row, finite nonnegative latency,
+  exactly one rested record with finite correctly signed ic_amp, positive
+  ic_rise_time and ic_decay_tau, and finite nonnegative ic_nrmse, and exactly
+  one finite measured baseline in [-0.1,0] volts. Keep all original rows and
+  failures. Original missing ic_latency remains null and its old gate remains
+  failed. Attach the shared-latency source and a plus/minus 100 microsecond
+  source-fit search interval, not a confidence interval or recovered datum.
+partition_and_strata: >-
+  Preserve original global experiment assignments and project, route and
+  measured pre/post layer strata. Rested responses pool holding conditions;
+  old nominal holding labels are lineage only, not new rested-state bins.
+  Count distinct pairs and experiments, not duplicated original fit records.
+minimum_units: {fitting_experiments: 5, validation_experiments: 3}
+claim_boundary: >-
+  A coverage pass establishes availability of a composite, uncertainty-labelled
+  source target only. It does not resolve historical source code, baseline
+  dispersion, the true rested xoffset, waveform fitting-function semantics,
+  cell-specific synapses, biological fidelity or network promotion. All earlier
+  contracts remain intact; neither missing baselines nor sparse strata are
+  rescued by pooling or nominal holding substitution.
+frozen_baseline_modified: false

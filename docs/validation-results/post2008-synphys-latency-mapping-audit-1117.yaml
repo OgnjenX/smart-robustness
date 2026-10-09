@@ -1,0 +1,31 @@
+schema_version: 1
+artifact_id: 1117
+artifact_type: static-source-latency-provenance-audit
+date: 2026-10-09
+source_revision: 545a990ee171e6c0d23dd4bba413e1ccbf2f0853
+status: static-naming-mismatch-confirmed-historical-generation-unverified
+primary_sources:
+  schema: https://raw.githubusercontent.com/AllenInstitute/aisynphys/545a990ee171e6c0d23dd4bba413e1ccbf2f0853/aisynphys/database/schema/resting_state_fit.py
+  writer: https://raw.githubusercontent.com/AllenInstitute/aisynphys/545a990ee171e6c0d23dd4bba413e1ccbf2f0853/aisynphys/pipeline/multipatch/resting_state.py
+  synapse_latency: https://raw.githubusercontent.com/AllenInstitute/aisynphys/545a990ee171e6c0d23dd4bba413e1ccbf2f0853/aisynphys/pipeline/multipatch/synapse.py
+  resting_fit_constraint: https://raw.githubusercontent.com/AllenInstitute/aisynphys/545a990ee171e6c0d23dd4bba413e1ccbf2f0853/aisynphys/resting_state.py
+static_findings:
+  schema_lines_14_17: declares-ic_latency-no-ic_xoffset-column
+  writer_lines_58_59: writes-mode-underscore-best_values_key-without-xoffset-to-latency-translation
+  synapse_lines_187_191_224_232: >-
+    Latency is a response-count-weighted mean of xoffset from QC-passed fits
+    across holding/clamp categories; it is recorded only when every component
+    differs from that mean by less than 200 microseconds.
+  resting_selection_lines_26_30: >-
+    Rested fitting returns no result when synapse.latency is absent; otherwise
+    it constrains fitting to synapse.latency plus or minus 100 microseconds.
+interpretation:
+  - Static naming mismatch is established for the pinned revision, not the historical database execution.
+  - synapse.latency is a QC-filtered shared latency, not a recovered rested-fit xoffset.
+  - A composite rested-amplitude plus shared-latency target is a new source contract, not correction of ic_latency.
+  - The 100-microsecond interval is a fitting-search constraint, not a statistical confidence interval or observed error bound.
+  - Separate failure 1116, missing baselines and unknown historical fitting dependency remain preserved.
+next_step: independently-audit-shared-latency-coverage-under-separate-registration-before-any-fitting
+database_values_newly_read: false
+source_code_executed: false
+frozen_baseline_modified: false

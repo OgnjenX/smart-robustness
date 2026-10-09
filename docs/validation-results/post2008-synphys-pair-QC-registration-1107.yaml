@@ -1,0 +1,55 @@
+schema_version: 1
+artifact_id: 1107
+artifact_type: preregistered-pair-QC-and-summary-availability-inventory
+date: 2026-10-09
+database: results/synphys-small-schema-1102/synphys_r2.1_small.sqlite
+database_sha256: 7372499fdd874f057565080d5769baaf2659ef39d9f3bc3c7147dd1e1c280a53
+identity_inventory: results/synphys-identity-inventory-1105/manifest.yaml
+identity_inventory_sha256: c552df2ac95c8b5a248d706cb74d311906325cc06a683e6aeb0d8a6c5ec344c3
+output_directory: results/synphys-pair-QC-1108
+allowed_columns:
+  pair: [id, experiment_id, pre_cell_id, post_cell_id, n_ex_test_spikes, n_in_test_spikes]
+  synapse: [id, pair_id]
+  avg_response_fit: [id, synapse_id, poly_synapse_id, clamp_mode, holding, manual_qc_pass, n_averaged_responses]
+  dynamics: [id, pair_id, qc_pass, n_source_events]
+QC_and_summary_availability_reads_authorized: true
+numeric_response_values_reads_authorized: false
+trace_reads_authorized: false
+parameter_fitting_authorized: false
+network_execution_authorized: false
+source_definitions: >-
+  Archived official schema defines n_ex_test_spikes and n_in_test_spikes as
+  QC-passed spike-response counts at their respective holding potentials;
+  manual_qc_pass indicates manually verified average fits. Reading synapse
+  IDs reveals summary availability, and may imply a detected connection; it
+  is explicitly authorized here, not described as completely outcome-blind.
+identity_contract: >-
+  Keep every pair and every QC/availability row. Classify only pairs whose
+  pre/post identities share the pair experiment ID, mouse species, intended
+  VisP region and one of the two separate projects mouse V1 coarse matrix or
+  mouse V1 pre-production. Require exactly one non-null measured layer for
+  each cell; never fall back to target_layer. Use nonsynaptic ex/in classes.
+  SST, VIP and PV identities require exact single cre_type sst/vip/pvalb and
+  nonsynaptic in. Mixed, missing or conflicting identities are retained as
+  unclassified. Keep pre-layer, post-layer and project as separate strata.
+registered_routes:
+  - E-to-SST5: nonsynaptic ex to exact sst/in measured layer 5
+  - VIP-to-SST5: exact vip/in to exact sst/in measured layer 5
+  - SST5-to-E5: exact sst/in measured layer 5 to nonsynaptic ex measured layer 5
+  - PV-to-E5: exact pvalb/in to nonsynaptic ex measured layer 5
+availability_contract: >-
+  Report all raw probe counts and QC statuses, their nulls, and independently
+  reconstruct summary joins. A descriptive support flag requires the relevant
+  probe count strictly positive (ex for E presynaptic, in for inhibitory),
+  exactly one synapse record and at least one manually QC-passed IC fit with
+  positive n_averaged_responses. This is availability, not physiological
+  fidelity, a validated detection threshold or approval to fit a model.
+  Preserve multiple fits and holding strata. Report duplicate primary IDs,
+  orphan references and multiple synapse records; do not silently pick rows.
+next_gate: >-
+  Independently reconstruct every projection, route assignment, QC/availability
+  flag and project/layer stratum. Register numeric endpoints, experimental
+  units, experiment-level fit/validation partitions, uncertainty and isolated
+  acceptance tests before any amplitude, latency, kinetics, conductance or
+  short-term-plasticity values are read. No isolated VIP model is promoted.
+frozen_baseline_modified: false

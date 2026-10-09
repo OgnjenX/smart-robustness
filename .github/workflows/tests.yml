@@ -21,7 +21,7 @@ jobs:
         with:
           python-version: "3.11"
           cache: pip
-      - run: python -m pip install -e '.[dev]'
+      - run: python -m pip install -e '.[dev,nwb]'
       - run: ruff check .
       - name: Calibration and provenance contracts
         run: >-

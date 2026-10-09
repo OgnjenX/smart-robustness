@@ -1,0 +1,55 @@
+schema_version: 1
+artifact_id: 1121
+artifact_type: source-serialization-and-small-release-pulse-metadata-audit-registration
+date: 2026-10-09
+database: results/synphys-small-schema-1102/synphys_r2.1_small.sqlite
+database_sha256: 7372499fdd874f057565080d5769baaf2659ef39d9f3bc3c7147dd1e1c280a53
+resting_inventory: results/synphys-resting-targets-1115/manifest.yaml
+resting_inventory_sha256: d10df161e07278660ec4a733cea1b45f8164c66b467cfabbc45e46b0afef3a1e
+output_directory: results/synphys-pulse-storage-1122
+primary_sources:
+  serialization: https://raw.githubusercontent.com/AllenInstitute/aisynphys/545a990ee171e6c0d23dd4bba413e1ccbf2f0853/aisynphys/database/database.py
+  release_recipe: https://raw.githubusercontent.com/AllenInstitute/aisynphys/545a990ee171e6c0d23dd4bba413e1ccbf2f0853/util/bake_sqlite.py
+source_findings:
+  serialization: NDArray-uses-numpy-save-and-load-with-allow_pickle-False
+  small_omits_rows: [pulse_response, recording, patch_clamp_recording, stim_pulse]
+  medium_omits_columns:
+    pulse_response: [data, meta]
+    baseline: [data, meta]
+    stim_pulse: [data, meta]
+  historical_release_generation_verified: false
+allowed_columns:
+  resting_state_fit: [id, synapse_id, ic_pulse_ids]
+  pulse_response: [id]
+  recording: [id]
+  patch_clamp_recording: [id]
+  stim_pulse: [id]
+metadata_reads_authorized: true
+waveform_reads_authorized: false
+database_download_authorized: false
+parameter_fitting_authorized: false
+cell_or_network_execution_authorized: false
+decoder:
+  maximum_blob_bytes: 1048576
+  maximum_header_bytes: 10000
+  maximum_ids: 100000
+  allowed_dtype_kinds: [i, u]
+  allowed_shapes: one-dimensional-or-singleton-leading-two-dimensional
+  numpy_versions: [1, 2]
+  pickle_allowed: false
+  object_arrays_allowed: false
+  positive_unique_IDs_required: true
+execution_contract: >-
+  Inspect every original selected synapse; preserve raw blobs separately with
+  hashes, lengths and decoded IDs. Null/empty, oversized, malformed, duplicate,
+  noninteger or object arrays are recorded failures, never repaired. Bound and
+  validate NPY headers and dimensions before allocation, then decode with
+  allow_pickle=False. Count only id columns in the four metadata tables to
+  verify whether the small release contains rows; no response or baseline
+  values are read. Use read-only immutable SQLite with exact column guard.
+next_step: >-
+  If original pulse IDs are available but recording tables are absent, register
+  bounded medium-release acquisition and summary-ID reconciliation before
+  measured-baseline reconstruction. Preserve original experiment partitions
+  and failed gates; no full-release fallback or automatic download is authorized.
+frozen_baseline_modified: false

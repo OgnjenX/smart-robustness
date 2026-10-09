@@ -43,6 +43,8 @@ def decode_ids(raw):
 
 def authorizer(action, table, column, database, trigger):
     if action == sqlite3.SQLITE_READ:
+        if column == "" and table in {"pulse_response", "recording", "patch_clamp_recording", "stim_pulse"}:
+            return sqlite3.SQLITE_OK
         return sqlite3.SQLITE_OK if column in COLUMNS.get(table, []) else sqlite3.SQLITE_DENY
     if action == sqlite3.SQLITE_FUNCTION:
         return sqlite3.SQLITE_OK if column == "count" else sqlite3.SQLITE_DENY
@@ -54,9 +56,14 @@ def main():
     parser.add_argument("--registration", type=Path, required=True)
     registration = parser.parse_args().registration
     continuation = yaml.safe_load(registration.read_text())
-    if (continuation["amendment"] != "count-by-iterating-SELECT-id-only-no-count-function-no-empty-column-permission"
+    if (continuation["amendment"] != "explicit-ID-cardinality-permission-for-four-registered-tables-only"
         or continuation["all_source_decoder_selection_and_read_boundaries_inherited"] is not True):
         raise ValueError("counting amendment changed")
+    if continuation["cardinality_tables"] != ["pulse_response", "recording", "patch_clamp_recording", "stim_pulse"]:
+        raise ValueError("cardinality tables changed")
+    for key in ("waveform_reads_authorized", "database_download_authorized", "parameter_fitting_authorized", "cell_or_network_execution_authorized"):
+        if continuation[key] is not False:
+            raise ValueError("continuation scope changed")
     parent = Path(continuation["parent_registration"])
     if parent != REGISTRATION or digest(parent) != continuation["parent_registration_sha256"]:
         raise ValueError("parent registration changed")

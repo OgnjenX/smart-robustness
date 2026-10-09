@@ -1,0 +1,23 @@
+schema_version: 1
+artifact_id: 1126
+artifact_type: preserved-ID-projection-engineering-stop
+date: 2026-10-09
+implementation_commit: 358f7b7
+registration: docs/validation-results/post2008-synphys-pulse-storage-continuation-registration-1124.yaml
+output_directory_preserved: results/synphys-pulse-storage-continuation-1125
+exit_code: 1
+error: sqlite3.DatabaseError-not-authorized-at-SELECT-id
+diagnostic: >-
+  The actual INTEGER PRIMARY KEY schema requests READ(table,id) and an
+  additional READ(table,empty-column) even for SELECT id. The previous
+  synthetic test used an ordinary INTEGER field and missed this behavior.
+  Empty-column authorization is cardinality/row-access bookkeeping here,
+  not authorization for all named columns; named payload reads have separate
+  authorizer callbacks and remain denied. Test the actual primary-key schema.
+observed_output: empty-exclusive-directory-no-manifest-or-ID-blobs
+waveform_values_read: false
+next_step: >-
+  Register empty-column cardinality authorization only for the four explicitly
+  inventoried metadata tables; keep all named-column restrictions and original
+  decoder limits. Preserve both stops and both output directories.
+frozen_baseline_modified: false

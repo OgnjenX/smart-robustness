@@ -51,7 +51,7 @@ def test_trailing_data_reject():
 
 def test_explicit_id_count_with_registered_guard():
     with sqlite3.connect(":memory:") as db:
-        db.execute("CREATE TABLE pulse_response (id INTEGER, data BLOB)")
+        db.execute("CREATE TABLE pulse_response (id INTEGER PRIMARY KEY, data BLOB)")
         db.set_authorizer(module.authorizer)
         assert sum(1 for _ in db.execute("SELECT id FROM pulse_response")) == 0
         with pytest.raises(sqlite3.DatabaseError):

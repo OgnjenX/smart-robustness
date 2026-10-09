@@ -1,0 +1,35 @@
+schema_version: 1
+artifact_id: 1065
+artifact_type: outcome-blind-physiology-eligibility-registration-and-implementation-seal
+date: 2026-10-09
+parent: docs/validation-results/post2008-sst-vip-glif-parity-assessment-1064.yaml
+parent_sha256: a70f24235780e8a3e21596a9f91f9c241725b04e92d6c1381a7013daf21a643b
+schema_manifest: results/sst-vip-nwb-schema-audit-1058/manifest.yaml
+schema_manifest_sha256: 79930d9552b278e9c6d584e165458be8305c9e4a6e141dbfd4348c32e5a91053
+parameter_manifest: results/sst-vip-parameter-acquisition-1034/manifest.yaml
+parameter_manifest_sha256: 76bfaee6321e97b3f0f2e9ab9237c8e84aef4b840fd4b239c6f5da4fe41d4fba
+implementation_sha256:
+  scripts/audit_sst_vip_physiology_eligibility.py: a999ca1d8776ea7bd2438ca396fa4a0d61c9a0245fc23f9b51ed5bc4ee937ac4
+primary_reference:
+  title: Generalized leaky integrate-and-fire models classify multiple neuron types
+  doi: 10.1038/s41467-017-02717-4
+  url: https://www.nature.com/articles/s41467-017-02717-4
+  source_protocol: Noise-1-fitting-and-Noise-2-holdout
+historical_per_model_training_provenance_verified: false
+policy:
+  - Retain all 111 specimens and 8380 source metadata sweeps, including ineligible and missing sweeps.
+  - Noise 1 is labelled source-fitting-protocol; Noise 2 is labelled source-holdout-protocol, not independently proven unseen data for every downloaded fit.
+  - Other protocols are potential source parameter-estimation data, never casually relabelled holdout.
+  - Eligible noise sweeps require source Amps, available error-free aligned Sweep and Experiment series, Amps stimulus and Volts response, equal shapes, rates, epoch starts and counts.
+  - Primary candidate specimens require recognized embedded identity matching the public attachment, at least one retained GLIF model, and at least two eligible Noise 2 repeats.
+  - Keep unresolved embedded identifiers in an exploratory stratum; never promote them by treating public attachment as independent embedded identity proof.
+  - No response quality, source fit score, response features, or SMART outcomes enter selection.
+  - No winner selection among model families and no refitting are authorized.
+output_path: results/sst-vip-physiology-eligibility-1066.yaml
+response_trace_read_authorized: false
+parameter_fitting_authorized: false
+cell_simulation_authorized: false
+network_execution_authorized: false
+physiological_gate_design_complete: false
+next_registration: Seal trace conversion, experimental spike extraction, repeat reliability, physiological metrics and promotion thresholds before response analysis.
+frozen_baseline_modified: false

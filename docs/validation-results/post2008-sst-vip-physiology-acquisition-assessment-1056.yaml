@@ -1,0 +1,80 @@
+schema_version: 1
+artifact_id: 1056
+artifact_type: full-cohort-physiology-acquisition-and-receipt-assessment
+date: 2026-10-09
+status: complete-receipts-verified-awaiting-nwb-schema-and-physiology-validation
+registration: docs/validation-results/post2008-sst-vip-physiology-acquisition-registration-1054.yaml
+collector_commit: bf7cb80
+initial_independent_verifier_commit: 32b1389
+manifest: results/sst-vip-physiology-acquisition-1055/manifest.yaml
+manifest_sha256: 784ee753409521637d0b8c34f138e64f556addbabd8fc8a3161807122b13d62b
+manifest_bytes: 580506
+raw_outputs_committed: false
+frozen_baseline_modified: false
+
+acquisition:
+  registered_resources: 146
+  complete_receipts: 146
+  failed_receipts: 0
+  preserved_bytes: 5144045706
+  nwb_files: 111
+  morphology_files: 35
+  missing_morphology_specimens_retained: 80
+  model_simulation_performed: false
+  parameter_fitting_performed: false
+
+independent_verification:
+  passed: true
+  command: .venv/bin/python scripts/verify_sst_vip_physiology_receipts.py
+  collector_exit_code: 0
+  verifier_exit_code_after_parser_correction: 0
+  terminal_no_request_checkpoint_exit_code: 0
+  method: >-
+    Recheck registration, preflight and every sealed acquisition implementation
+    hash. Compare the ordered full receipt cohort, missing morphologies and
+    per-file sidecars with the registered preflight. Independently stream-hash
+    all raw files and reconcile exact complete lengths and failure counts.
+    Verify HDF5 signatures for all 111 NWB files and parse all 35 SWC files,
+    checking numeric fields, finite coordinates/radii, unique nonnegative node
+    ids, root presence, parent existence and absence of parent cycles.
+    No collector receipt hashing or validation helper is reused.
+  hdf5_signatures_verified: 111
+  swc_structural_inventories_verified: 35
+  total_swc_nodes: 252428
+  swc_files_with_multiple_roots: 13
+  multiple_roots_reconnected_or_removed: false
+  nwb_schema_or_sweep_mapping_validated: false
+  physiological_morphology_validated: false
+  held_out_physiology_validated: false
+  focused_source_and_receipt_tests_passed: 109
+  repository_ruff_check_passed: true
+  full_regression_suite_rerun: false
+  github_ci_verified_for_this_commit: false
+
+verifier_engineering_correction:
+  original_exit_code: 1
+  original_error: duplicate or invalid SWC node id
+  original_predicate: node_id > 0
+  corrected_predicate: node_id >= 0
+  observed_example: results/sst-vip-physiology-acquisition-1055/491119396.swc
+  independent_source: https://allensdk.readthedocs.io/en/v1.3.1/_modules/allensdk/core/swc.html
+  explanation: >-
+    The original verifier incorrectly assumed one-based ids. Allen's SWC
+    implementation supports zero-based node indexing and remapping. A separate
+    synthetic zero-based parent-chain regression test now guards this parser
+    correction. No source file, byte hash, physiological gate or network
+    parameter was changed; the initial failed audit is explicitly retained.
+
+interpretation:
+  - The complete registered cohort is acquired locally without selecting files or replacing failures based on cell or network behavior.
+  - HDF5 signature checks are not NWB schema validation; sweep identities, units, conversion/version behavior and trace integrity still need validation.
+  - Thirteen SWC files contain multiple roots. Their source geometry is retained; native reconstruction behavior is not assumed from this structural parse.
+  - Successful receipts and morphology inventories do not establish SST/VIP physiological equivalence or promotion into the SMART network.
+
+next_step:
+  - Register read-only NWB schema, specimen/sweep identity, sampling-rate/unit and version-conversion inspection with explicit parser dependencies and no model execution.
+  - Resolve native GLIF equation/reset parity and separately register independent held-out physiology gates before fitting or promoting cell models.
+  - Keep biophysical axon provenance and native morphology/runtime validation explicit rather than silently repairing source geometries.
+network_execution_authorized: false
+isolated_simulation_authorized: false
+parameter_fitting_authorized: false

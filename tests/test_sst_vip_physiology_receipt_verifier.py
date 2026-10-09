@@ -56,6 +56,13 @@ def test_rooted_swc(verifier, tmp_path):
     assert not result["physiological_morphology_validated"]
 
 
+def test_allen_zero_based_node_ids(verifier, tmp_path):
+    p = tmp_path / "1.swc"
+    write_bytes(p, b"0 1 0 0 0 1 -1\n1 3 1 0 0 0.5 0\n")
+    result = verifier.swc_inventory(p)
+    assert result["nodes"] == 2 and result["roots"] == [0]
+
+
 @pytest.mark.parametrize(
     "raw",
     [

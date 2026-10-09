@@ -131,8 +131,12 @@ phase specifications below retain the full intended program scope.
   [Physiology size assessment 1053](validation-results/post2008-sst-vip-physiology-size-assessment-1053.yaml)
   verifies all 111 NWB and 35 morphology file sizes (5,144,045,706 bytes total)
   against the fixed storage limits, retaining 80 missing-morphology specimens.
-  This HEAD-only preflight does not download experimental traces.
-  Experimental resource acquisition, isolated reference and held-out
+  [Acquisition assessment 1056](validation-results/post2008-sst-vip-physiology-acquisition-assessment-1056.yaml)
+  records completed acquisition and independent raw-hash/length verification
+  of all 146 files. All 111 NWB files have HDF5 signatures; all 35 SWC structural
+  inventories pass after an explicitly recorded zero-based-id parser correction.
+  Thirteen morphologies contain multiple roots, preserved without repair.
+  NWB schema/sweep/unit inspection, isolated reference and held-out
   physiology validation, explicit SST recruitment and VIP network tests
   remain outstanding. No new cell execution or fitting has occurred.
 - **Final synthesis:** eligible sealed interactions, independent multi-seed

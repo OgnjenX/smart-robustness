@@ -33,7 +33,7 @@ def swc_inventory(path):
         require(len(fields) == 7, "SWC row must contain seven fields")
         nid, kind, parent = int(fields[0]), int(fields[1]), int(fields[6])
         values = [float(x) for x in fields[2:6]]
-        require(nid > 0 and nid not in nodes, "duplicate or invalid SWC node id")
+        require(nid >= 0 and nid not in nodes, "duplicate or invalid SWC node id")
         require(all(math.isfinite(x) for x in values), "nonfinite SWC coordinate or radius")
         require(values[-1] >= 0, "negative SWC radius")
         nodes[nid] = (parent, kind)

@@ -1,0 +1,59 @@
+schema_version: 1
+artifact_id: 1067
+artifact_type: outcome-blind-physiology-eligibility-assessment
+date: 2026-10-09
+registration: docs/validation-results/post2008-sst-vip-physiology-eligibility-registration-1065.yaml
+implementation_and_preexecution_seal_commit: 30b65d7
+status: registered-metadata-selection-complete-no-physiological-promotion
+result: results/sst-vip-physiology-eligibility-1066.yaml
+result_sha256: df95b66f76974ce0e2a95e1bf59a4383cf6fddc215be63dd04ea145a0d4f1f73
+cohort:
+  retained_specimens: 111
+  retained_metadata_sweeps: 8380
+  eligible_Noise_1_sweeps_full_cohort: 251
+  eligible_Noise_2_sweeps_full_cohort: 237
+  primary_candidate_specimens: 41
+  unresolved_embedded_identity_specimens: 49
+  specimens_without_retained_GLIF_model: 47
+  counts_are_not_disjoint: true
+ineligibility_reason_counts:
+  outside-noise-validation-scope: 7846
+  not-source-labelled-current-clamp: 1402
+  missing-file-sweep: 794
+  non-SI-labelled-series: 479
+  experiment_non-SI-labelled-series: 479
+  counts_are_not_disjoint: true
+independent_reconstruction:
+  performed_without_importing_classifier: true
+  scope: >-
+    Reconcile every retained sweep identity and stimulus label with the hashed
+    schema manifest; independently evaluate noise scope, current-clamp label,
+    missing/error-free series, exact SI labels, aligned shapes/rates/epoch
+    indices/counts and each specimen's eligible Noise 2 repeat count. Recompute
+    primary conjunction from recorded identity/model flags. Identity parsing
+    and parameter mapping were not independently reconstructed in this step.
+  verified_sweeps: 8380
+  exit_code: 0
+validation:
+  focused_tests_passed: 152
+  repository_ruff_check_passed: true
+  full_regression_suite_rerun: false
+  github_ci_verified: false
+claim_boundary: >-
+  This audit selects candidates using metadata alone, not recorded physiology
+  or SMART outcomes. Noise 2 is the published source holdout protocol, but the
+  exact training lineage of each downloaded model has not been independently
+  verified. SI-label failures are eligibility exclusions, not proof that the
+  recordings are invalid or incapable of documented conversion. The 47 cells
+  without GLIF models are not necessarily cells without any public model.
+  No response-derived model-family winner selection is authorized.
+next_step: >-
+  Seal trace unit conversion and baseline/epoch handling, spike extraction,
+  repeat reliability and physiological metrics/promotion gates before reading
+  responses. Resolve model-training provenance to qualify holdout claims.
+experimental_responses_read: false
+cell_simulations_performed: false
+parameter_fitting_performed: false
+network_execution_performed: false
+frozen_baseline_modified: false
+raw_outputs_committed: false

@@ -1,0 +1,64 @@
+schema_version: 1
+artifact_id: 1064
+artifact_type: native-glif-synthetic-reference-parity-assessment
+date: 2026-10-09
+status: all-registered-synthetic-cases-pass
+registration: docs/validation-results/post2008-sst-vip-glif-parity-registration-1061.yaml
+execution_seal: docs/validation-results/post2008-sst-vip-glif-parity-execution-seal-1063.yaml
+seal_commit: 19070e3
+implementation_commit: b8ee2b5
+manifest: results/sst-vip-glif-native-parity-1062/manifest.yaml
+manifest_sha256: e900c481ce18ce80c703858f89af4cd543f192b0d0951bba7f3030069be1d566
+outcomes:
+  source_parameter_maps: 227
+  controlled_fixture_maps: 10
+  stimuli_per_map: 4
+  total_cases: 948
+  passed_cases: 948
+  numerical_mismatch_cases: 0
+  exception_cases: 0
+  recorded_bad_reset_cases: 0
+  exact_repeat_failure_cases: 0
+  native_runs_per_case: 2
+  independent_candidate_runs_per_case: 2
+  finite_value_relative_tolerance: 1.0e-10
+  finite_value_absolute_tolerance: 1.0e-12
+  spike_indices_grid_times_and_nan_masks: exact
+  outcome_guided_changes: false
+independent_verification:
+  command: .venv/bin/python scripts/verify_sst_vip_glif_parity.py
+  exit_code: 0
+  imports_either_simulator_or_runner_gates: false
+  method: >-
+    Recheck sealed source and implementation hashes, registration and parent
+    lineage, all 227 parameter maps, 948 unique case/stimulus pairs, sidecars,
+    raw hashes, embedded reports and independently regenerated stimuli.
+    Reconstruct finite-value, NaN-mask, shape, spike-grid and exact-repeat
+    gates from all saved arrays. Stop flags and exceptions are recorded
+    execution evidence, not independently reexecuted reference events.
+  focused_tests_passed: 149
+  repository_ruff_check_passed: true
+  full_regression_suite_rerun: false
+  github_ci_verified: false
+claim_boundary: >-
+  The independent GLIF state machine agrees with the pinned native numerical
+  implementation for this finite registered synthetic matrix. This does not
+  establish physiological validity, coverage of every possible trajectory,
+  equivalence to the project's existing GIF backend, biological SST/VIP cell
+  identity, or preservation of SMART behavior. The native serialization imports
+  were omitted only under the sealed AST policy. No fitting or experimental
+  response analysis was performed.
+remaining_source_limits:
+  - Forty-nine NWB embedded identifiers remain unresolved despite retained public attachment provenance.
+  - Missing source-labelled voltage Test sweeps remain recorded; omission reason is unverified.
+  - Biophysical channel and morphology runtime validation is separate and incomplete.
+next_steps:
+  - Preregister current-clamp eligibility and training/holdout partition before reading experimental responses.
+  - Define physiology gates and source identity policy without using SMART network outcomes.
+  - Validate the candidate against eligible held-out recordings before explicit SST/VIP network promotion.
+experimental_responses_read: false
+parameter_fitting_performed: false
+physiological_validation_complete: false
+network_executed: false
+frozen_baseline_modified: false
+raw_outputs_committed: false

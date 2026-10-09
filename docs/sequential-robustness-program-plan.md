@@ -95,18 +95,17 @@ phase specifications below retain the full intended program scope.
   All 1,499 local regression tests now pass. The separately committed
   [continuation seal 1023](validation-results/post2008-l5-sst-like-stage4d-continuation-seal-1023.yaml)
   authorizes the unchanged network protocol under the explicitly amended
-  numerical check. The single continuation process is active with ten of
-  fourteen outcomes saved. Four complete exact-repeat pairs pass the
-  inter-area gates but remain bounded partial survivals because their earlier
-  spectral failures are retained. The fifth point (delay 7 ms, resource 0.25)
-  independently passes the inter-area gates in both exact repeats and has
-  passing Stage A/B/C classifications, yielding registered complete progression
-  survival at that point. This does not erase the separate 44-Hz numeric
-  diagnostic failure or establish biological SST cell-class equivalence.
-  Four outcomes and the final joint assessment remain outstanding.
+  numerical check. [Assessment 1025](validation-results/post2008-l5-sst-like-stage4d-continuation-assessment-1025.yaml)
+  records successful terminal execution and independent verification of all
+  fourteen outcomes and seven exact-repeat pairs. All seven points pass the
+  inter-area gates. The 7-ms resource-0.25 and resource-0.5 points pass the
+  complete registered Stage A-D conjunction. Four points remain bounded
+  partial survivals because earlier spectral failures are retained; the
+  full-resource point retains its earlier learning/first-order failure.
+  This does not erase the separate 44-Hz numeric diagnostic failure or
+  establish biological SST cell-class equivalence or multi-seed robustness.
   GitHub CI for commit `e409f08` passed (run `37876077216`).
   The original engineering-stop assessment remains intact.
-  Inter-area behavior and the final joint assessment remain outstanding.
   All seven registered points must remain
   in both stages; a later pass cannot rescue an earlier failure.
 - **VIP-like disinhibition:** implementation and registered testing remain

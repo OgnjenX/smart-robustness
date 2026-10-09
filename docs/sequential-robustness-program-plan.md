@@ -80,6 +80,11 @@ phase specifications below retain the full intended program scope.
   [Registration 1019](validation-results/post2008-l5-sst-like-stage4d-numerical-audit-registration-1019.yaml)
   fixes 120 synthetic cases, corruption controls and a dimensionless raw-error
   contract before that audit, without modifying seal 1017 or failure 1018.
+  [Assessment 1021](validation-results/post2008-l5-sst-like-stage4d-numerical-audit-assessment-1021.yaml)
+  records all 600 band comparisons passing and all 9,000 corruption controls
+  rejecting injected errors. Only design and implementation of a separately
+  registered numerical-contract continuation are authorized; no network replay
+  or further execution has occurred.
   Inter-area behavior and the final joint assessment remain outstanding.
   All seven registered points must remain
   in both stages; a later pass cannot rescue an earlier failure.

@@ -1,0 +1,84 @@
+schema_version: 1
+artifact_id: 1021
+artifact_type: synthetic-stage4d-numerical-verification-audit-assessment
+date: 2026-10-09
+status: completed-registered-synthetic-contract-pass
+registration: docs/validation-results/post2008-l5-sst-like-stage4d-numerical-audit-registration-1019.yaml
+registration_sha256: c609fb498ccb36c53481edec360307081dd537dcd328b1721b4eb1577720a835
+preregistration_commit: c1fa690
+initial_implementation_commit: 70cd82e
+implementation_commit: f622ed5cdce6272aa503ddfaf23c3b50f77bcbaa
+raw_result: results/l5-sst-like-stage4d-numerical-audit-1020.yaml
+raw_result_sha256: e53a3677bd36dabc2a59ca8bd9fb7ff1573ffecd9392901a631b56cbe2f2097d
+raw_result_bytes: 372147
+raw_result_committed: false
+network_execution: false
+preserved_network_artifact_read: false
+original_failure_1018_retained: true
+original_seal_1017_modified: false
+original_verifier_modified: false
+frozen_baseline_modified: false
+environment:
+  python: 3.11.9
+  numpy: 1.26.4
+  platform: macOS-27.0.1-arm64-arm-64bit
+
+execution:
+  command: .venv/bin/python scripts/run_l5_sst_like_stage4d_numerical_audit.py
+  pre_case_attempt:
+    implementation_commit: 70cd82e
+    exit_code: 1
+    generated_cases: 0
+    failure: Synthetic audit inventory or authorization changed
+    cause: PyYAML parsed positive-exponent amplitude literals 1.0e3 and 1.0e6 as strings.
+    correction_commit: f622ed5cdce6272aa503ddfaf23c3b50f77bcbaa
+    correction: Resolve each registered amplitude with float before comparing the inventory.
+    registration_changed: false
+    numerical_contract_changed: false
+  completed_attempt:
+    exit_code: 0
+    cases: 120
+    bands: 600
+    comparison_passes: 600
+    comparison_failures: 0
+    corruption_checks: 9000
+    corruption_rejections: 9000
+    missed_corruptions: 0
+    original_dimensional_raw_comparison_failures: 102
+    maximum_scaled_raw_error: 1.7763568394002505e-15
+    maximum_normalized_error: 8.881784197001252e-15
+    all_case_families_seeds_amplitudes_and_shifts_retained_in_registered_order: true
+    original_normalized_curve_and_peak_tolerances_changed: false
+    material_corruption_amplitude_selected_from_network_results: false
+
+verification:
+  all_raw_source_file_hashes_checked: true
+  registered_cartesian_case_order_independently_checked: true
+  all_600_band_results_and_9000_corruption_flags_checked: true
+  local_checker_tests: {passed: 14, failed: 0}
+  combined_focused_tests: {passed: 51, failed: 0}
+  repository_ruff_passed: true
+  new_source_format_check_passed: true
+  diff_whitespace_passed: true
+  full_suite_rerun_claimed: false
+  ci_completion_claimed: false
+
+interpretation:
+  - The fixed dimensionless raw consistency contract passes this finite synthetic grid while retaining the existing normalized checks and rejecting all registered material corruptions and malformed-input controls.
+  - The original raw dimensional allclose check fails on 102 synthetic band comparisons, despite normalized comparison agreement. This supports amplitude-sensitive floating-point verification as an engineering explanation, not a failure of the SMART anatomy.
+  - The source assay and independent Fourier-filter/direct-dot algorithm were both applied to synthetic arrays. No network artifact was read or relabeled, and no network parameters or scientific gates were tuned.
+  - This is not a formal all-input floating-point guarantee, independent-seed neural evidence, or Stage-4D progression survival.
+  - The original engineering stop 1018 remains a failed verification contract. A continuation must explicitly disclose its amended numerical verification rather than silently treating that failure as a pass.
+
+continuation_design_authorization:
+  authorized: true
+  scope: design-and-implement-separately-registered-numerical-contract-continuation-only
+  network_execution_authorized: false
+  preserved_network_artifact_replay_authorized_by_this_assessment: false
+  requirements:
+    - Preserve seal 1017, stop 1018, original verifier sources and the original raw artifact hash unchanged.
+    - Specify continuation artifact identity, original-checkpoint lineage, all seven points, learned-state mapping, strict scientific gates and exact repeats before additional outcomes.
+    - Change only raw numerical consistency to the registered dimensionless comparison. Retain normalized checks, field construction, signal reduction, bands, geometry and all network parameters.
+    - Retain explicit gate-agreement and no-rescue checks. Any numerical or exact-repeat failure stops the continuation.
+    - Commit the continuation implementation and then a separate hash seal before any replay or network execution.
+    - Do not claim a completed inter-area result before all fourteen repetitions and joint classification are independently assessed.

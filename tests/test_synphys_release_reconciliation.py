@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import copy
 import hashlib
 import importlib.util
 import sqlite3
@@ -73,3 +74,124 @@ def test_chunked_hash(tmp_path):
     for size in [0, -1, True, 0.5]:
         with pytest.raises(ValueError):
             module.stream_sha256(path, chunk_bytes=size)
+
+
+def inventories():
+    eid = 10
+    bucket = int(hashlib.sha256(f"synphys-voltage-target-v1:{eid}".encode()).hexdigest(), 16) % 3
+    targets = [{"fit_id": 4, "synapse_id": 3, "pair_id": 2, "experiment_id": eid,
+                "partition": "validation" if bucket == 0 else "fitting"}]
+    qc = {"pair": [{"id": 2, "experiment_id": eid, "pre_cell_id": 20, "post_cell_id": 21}],
+          "synapse": [{"id": 3, "pair_id": 2}],
+          "avg_response_fit": [{"id": 4, "synapse_id": 3}]}
+    identity = {"cell": [{"id": 20, "experiment_id": eid}, {"id": 21, "experiment_id": eid}],
+                "experiment": [{"id": eid, "slice_id": 30}], "slice": [{"id": 30}]}
+    return targets, qc, identity
+
+
+def test_selection_uses_original_parents_and_partition():
+    selected = module.build_selection(*inventories())
+    assert selected["cell"] == ("id", [20, 21])
+    assert selected["resting_state_fit"] == ("synapse_id", [3])
+    assert selected["cortical_cell_location"] == ("cell_id", [20, 21])
+    assert selected["avg_response_fit"] == ("id", [4])
+
+
+@pytest.mark.parametrize("mutation", ["duplicate-fit", "partition", "pair", "synapse", "cell", "slice"])
+def test_source_lineage_changes_rejected(mutation):
+    targets, qc, identity = copy.deepcopy(inventories())
+    if mutation == "duplicate-fit":
+        targets += targets
+    elif mutation == "partition":
+        targets[0]["partition"] = "changed"
+    elif mutation == "pair":
+        qc["pair"][0]["experiment_id"] = 11
+    elif mutation == "synapse":
+        qc["synapse"][0]["pair_id"] = 99
+    elif mutation == "cell":
+        identity["cell"][0]["experiment_id"] = 11
+    else:
+        identity["slice"] = []
+    with pytest.raises(ValueError):
+        module.build_selection(targets, qc, identity)
+
+
+def synthetic_database(path, selection):
+    with sqlite3.connect(path) as db:
+        for table, columns in module.COLUMNS.items():
+            definition = ','.join(f'"{name}" ' + ("INTEGER PRIMARY KEY" if name == "id"
+                                                    else "BLOB" if name == "ic_pulse_ids"
+                                                    else "INTEGER" if name.endswith("_id")
+                                                    else "TEXT") for name in columns)
+            db.execute(f'CREATE TABLE "{table}" ({definition})')
+            key, ids = selection[table]
+            for index, identity in enumerate(ids):
+                row = {name: None for name in columns}
+                row["id"] = identity if key == "id" else index + 100
+                row[key] = identity
+                if table == "resting_state_fit":
+                    row["ic_pulse_ids"] = b"synthetic-blob-no-decoding"
+                marks = ','.join("?" for _ in columns)
+                db.execute(f'INSERT INTO "{table}" VALUES ({marks})', [row[name] for name in columns])
+
+
+def test_two_synthetic_releases_and_retained_missing_rows(tmp_path):
+    selection = module.build_selection(*inventories())
+    small, medium = tmp_path / "small.sqlite", tmp_path / "medium.sqlite"
+    for path in (small, medium):
+        synthetic_database(path, selection)
+    result = module.reconcile_selected(small, medium, selection)
+    assert result["equal"]
+    assert result["small_tables"]["resting_state_fit"][0]["ic_pulse_ids"] == b"synthetic-blob-no-decoding"
+    with sqlite3.connect(medium) as db:
+        db.execute("DELETE FROM cortical_cell_location WHERE cell_id=20")
+        db.execute("UPDATE synapse SET latency='changed'")
+    result = module.reconcile_selected(small, medium, selection)
+    assert not result["equal"]
+    assert not result["comparisons"]["synapse"]["equal"]
+    assert not result["comparisons"]["cortical_cell_location"]["equal"]
+
+
+@pytest.mark.parametrize("mutation", ["table", "key", "ids", "relationship"])
+def test_projection_scope_rejected_before_open(tmp_path, mutation):
+    selection = module.build_selection(*inventories())
+    if mutation == "table":
+        selection["recording"] = ("id", [1])
+    elif mutation == "key":
+        selection["cell"] = ("data", [1])
+    elif mutation == "ids":
+        selection["cell"] = ("id", [21, 20])
+    else:
+        selection["cell"] = ("experiment_id", [10])
+    with pytest.raises(ValueError):
+        module.project_selected(tmp_path / "must-not-be-opened.sqlite", selection)
+
+
+def test_one_to_many_row_bound_is_failure_not_truncation(tmp_path):
+    selection = module.build_selection(*inventories())
+    path = tmp_path / "source.sqlite"
+    synthetic_database(path, selection)
+    with sqlite3.connect(path) as db:
+        db.executemany("INSERT INTO conductance (id,synapse_id) VALUES (?,3)",
+                       [(value,) for value in range(1000, 2000)])
+    with pytest.raises(ValueError, match="row bound"):
+        module.project_selected(path, selection)
+
+
+def test_integer_bool_collision_not_hidden_by_deduplication():
+    with pytest.raises(ValueError):
+        module.positive_ids([1, True])
+    targets, qc, identity = inventories()
+    targets[0]["experiment_id"] = 10.0
+    with pytest.raises(ValueError):
+        module.build_selection(targets, qc, identity)
+
+
+def test_oversized_blob_is_failure_not_truncation(tmp_path):
+    selection = module.build_selection(*inventories())
+    path = tmp_path / "source.sqlite"
+    synthetic_database(path, selection)
+    with sqlite3.connect(path) as db:
+        db.execute("UPDATE resting_state_fit SET ic_pulse_ids=?", (b"x" * 1048577,))
+    with pytest.raises(ValueError, match="blob bound"):
+        module.project_selected(path, selection)

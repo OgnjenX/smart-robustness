@@ -43,8 +43,22 @@ Keep the original global experiment partition and all insufficient strata.
 - Archive every changed value and missing row, not only a pass/fail flag.
 - SQLite is read-only, immutable and query-only before installing an exact
   column authorizer. Empty-column callbacks are permitted only on registered
-  tables to support INTEGER PRIMARY KEY reads. Functions, named waveform
-  columns, writes, and unregistered tables remain denied.
+  tables to support INTEGER PRIMARY KEY reads. Only `substr` is permitted as
+  a function: the pulse-ID projection retrieves at most 1 MiB plus one byte
+  inside SQLite and rejects an overlong blob, rather than allocating its full
+  extent in Python. Accepted blobs are unchanged, not truncated. Other
+  functions, named waveform columns, writes, and unregistered tables remain
+  denied.
+
+The selected reader and source-inventory selection are now implemented as
+callables without an execution entry point. Selection validates original
+fit/synapse/pair/cell/experiment/slice lineage and the original global partition
+algorithm using only the sealed small-release inventories. The same ID sets
+and relationship keys are used for both releases, including all selected
+one-to-many measured-location, rested-fit and conductance rows. Per-parent
+rows are capped at 1,000, each table at 10,000, and aggregate scalar/blob
+payload at 32 MiB per release. An exceeded limit is an engineering failure,
+not partial equivalence or authority to raise the limit after outcomes.
 
 Any difference closes the equivalence gate pending an independently assessed
 source explanation. It does not permit repairing IDs, accepting an approximate
@@ -62,3 +76,9 @@ releases are equal. A synthetic authorizer fixture initially failed at its
 transaction close because the guard correctly denied commit; committing its
 setup before installing the read-only guard resolved that fixture error
 without relaxing the guard.
+
+After adding source-selection and two-database projection tests, 91 focused
+tests passed across reconciliation, acquisition, pulse storage, numeric
+targets, identity inventories, rested targets and composite latency. These
+checks use only synthetic reconciliation databases; repository Ruff and diff
+whitespace checks also passed. They do not establish real-release equality.

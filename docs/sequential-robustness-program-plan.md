@@ -13,7 +13,7 @@ bit-identical recovery of the unavailable 2008 execution. Its documented
 Figure-8 source boundary and Figure-15 44-Hz numeric failure remain part of
 every comparison.
 
-## Current status — 2026-10-02
+## Current status — 2026-10-09
 
 This is a navigational status snapshot, not a new registration or permission to
 change a sealed experiment. The linked assessments control result claims; the
@@ -59,9 +59,11 @@ phase specifications below retain the full intended program scope.
 - **SST-like routing:** Stage 4A learning/first-order behavior and Stage 4B
   spectra are assessed. [Stage 4B](validation-results/post2008-l5-sst-like-stage4b-assessment-1014.yaml)
   has three spectral-pass points among seven, with only two also passing
-  Stage 4A. The Stage-4C runner and independent verifier are implemented in
-  commit `67ae368`, but remain unsealed and unexecuted at this snapshot while
-  full regression checks run. Stage 4D inter-area behavior and the final joint
+  Stage 4A. [Stage 4C](validation-results/post2008-l5-sst-like-stage4c-assessment-1016.yaml)
+  is complete: all fourteen repetitions independently verified, all seven
+  exact repeat pairs, and seven local-gamma gate passes. None passes the
+  separate 44-Hz numeric diagnostic. Only two points pass Stages A, B and C
+  together; earlier failures are retained. Stage 4D inter-area behavior and the final joint
   classification remain outstanding. All seven registered points must remain
   in both stages; a later pass cannot rescue an earlier failure.
 - **VIP-like disinhibition:** implementation and registered testing remain

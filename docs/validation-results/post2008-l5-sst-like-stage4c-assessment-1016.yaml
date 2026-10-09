@@ -1,0 +1,107 @@
+schema_version: 1
+artifact_id: 1016
+artifact_type: layer5-sst-like-stage4c-local-synchrony-assessment
+date: 2026-10-09
+status: completed-seven-source-identifiable-gamma-survivors
+registration: docs/validation-results/post2008-l5-sst-like-stage4-progression-registration-1002.yaml
+registration_sha256: b81d6efbebeaee5c32f5ca65d4716060203b82982455d6e09e6996300a2b4055
+seal: docs/validation-results/post2008-l5-sst-like-stage4c-seal-1015.yaml
+implementation_commit: 67ae36835f5ecc53484629dd1eea7d81de21415e
+pre_outcome_seal_commit: 7dc9611d15ebc9c033ea3af95382f1c53dd4c4d4
+raw_result: results/l5-sst-like-stage4c-figure15.yaml
+raw_result_sha256: 923dc2d018240906801c4a034f8f832a37f3524a5677f45019999f9d915c305c
+raw_result_bytes: 238355
+raw_result_committed: false
+frozen_baseline_modified: false
+
+provenance:
+  baseline_manifest_fingerprint: 992fdd7c3bc9fa0f0d385b9e5a58ba317599357ca377145aba6f01c80d631cd2
+  runtime_fingerprint: 7e654528a99f0b25b7148260a8d52021f6443fb992b210729a2475ae3cfcdaa4
+  python: 3.11.9
+  brian2: 2.9.0
+  platform: macOS-27.0.1-arm64-arm-64bit
+  backend: brian2_numpy
+  process_exit_code: 0
+  previous_assessment: docs/validation-results/post2008-l5-sst-like-stage4b-assessment-1014.yaml
+  previous_assessment_sha256: 5744c5baa1ff6667b218ffdac128962a4b485f363cef7d011f1ac4a7f57eb363
+
+execution:
+  completed_points: 7
+  completed_repetitions: 14
+  all_registered_points_reported_in_order: true
+  all_points_exact_repeat: true
+  point_dropped_after_failure: false
+  result_guided_tuning_or_rescue_used: false
+  network_execution: true
+  learned_weights: corresponding-stage4a-point-and-repetition
+  pair: [39, 40]
+  duration_ms: 1000.0
+  integration_dt_ms: 0.01
+  histogram_bin_ms: 1.0
+
+independent_verification:
+  command: >-
+    .venv/bin/python scripts/verify_l5_sst_like_stage4c.py
+    --result results/l5-sst-like-stage4c-figure15.yaml
+  passed: true
+  exit_code: 0
+  seals_inputs_order_environment_and_earlier_classifications_checked: true
+  completed_repetitions_reconstructed: 14
+  exact_repeat_pairs: 7
+  shared_figure15_analysis_helpers_used_for_reconstruction: false
+  method: >-
+    Reconstruct binary one-ms trains for cells 39 and 40 from retained raw
+    layer-4 indices and times; subtract each train mean; directly compute the
+    full linear cross-correlation; subtract its mean; apply the periodic
+    Hamming window 0.54 - 0.46*cos(2*pi*n/N); compute squared numpy rFFT
+    magnitudes and locate the maximum in the inclusive 20--70-Hz band.
+    Recomputed peaks agree at rtol=atol=1e-12; spike counts, gates, numeric
+    diagnostics, classifications and exact repetition equality all agree.
+    This reconstructs outputs; it does not rerun the network.
+
+stage4c_result:
+  source_identifiable_gamma_survival_points: 7
+  source_identifiable_gamma_failure_points: 0
+  engineering_stop_points: 0
+  numeric_44hz_diagnostic_pass_points: 0
+  numeric_44hz_diagnostic_is_survival_gate: false
+  points_passing_stages_a_b_c_together: 2
+  full_stage4_progression_claimed: false
+
+point_evidence:
+  - {point_id: delay1p0-resource0p125, stage4a_classification: learning_first_order_survival, stage4b_classification: figure14_failure, stage4c_classification: figure15_survival, exact_repeat: true, first_cell_spikes: 128, second_cell_spikes: 146, gamma_peak_hz: 53.026513256628306, numeric_44hz_diagnostic_pass: false}
+  - {point_id: delay1p0-resource0p25, stage4a_classification: learning_first_order_survival, stage4b_classification: figure14_failure, stage4c_classification: figure15_survival, exact_repeat: true, first_cell_spikes: 131, second_cell_spikes: 146, gamma_peak_hz: 53.026513256628306, numeric_44hz_diagnostic_pass: false}
+  - {point_id: delay3p0-resource0p25, stage4a_classification: learning_first_order_survival, stage4b_classification: figure14_failure, stage4c_classification: figure15_survival, exact_repeat: true, first_cell_spikes: 120, second_cell_spikes: 151, gamma_peak_hz: 53.026513256628306, numeric_44hz_diagnostic_pass: false}
+  - {point_id: delay3p0-resource0p5, stage4a_classification: learning_first_order_survival, stage4b_classification: figure14_failure, stage4c_classification: figure15_survival, exact_repeat: true, first_cell_spikes: 123, second_cell_spikes: 144, gamma_peak_hz: 52.52626313156578, numeric_44hz_diagnostic_pass: false}
+  - {point_id: delay7p0-resource0p25, stage4a_classification: learning_first_order_survival, stage4b_classification: figure14_survival, stage4c_classification: figure15_survival, exact_repeat: true, first_cell_spikes: 123, second_cell_spikes: 147, gamma_peak_hz: 53.526763381690834, numeric_44hz_diagnostic_pass: false}
+  - {point_id: delay7p0-resource0p5, stage4a_classification: learning_first_order_survival, stage4b_classification: figure14_survival, stage4c_classification: figure15_survival, exact_repeat: true, first_cell_spikes: 117, second_cell_spikes: 154, gamma_peak_hz: 53.526763381690834, numeric_44hz_diagnostic_pass: false}
+  - {point_id: delay7p0-resource1p0, stage4a_classification: failure, stage4b_classification: figure14_survival, stage4c_classification: figure15_survival, exact_repeat: true, first_cell_spikes: 117, second_cell_spikes: 151, gamma_peak_hz: 53.526763381690834, numeric_44hz_diagnostic_pass: false}
+
+interpretation:
+  - All seven points pass the two registered local-gamma gates, with band-constrained peaks between 52.52626313156578 and 53.526763381690834 Hz.
+  - None passes the separate 44-Hz plus-or-minus-5-Hz diagnostic; that failure remains explicit, as it does for the frozen classic control.
+  - A band-constrained spectral maximum and minimum spike count do not establish gamma dominance, statistically significant phase locking, or a causal synchrony mechanism.
+  - Only the 7-ms resource-0.25 and resource-0.5 points have passed all three completed substages. Their Stage-4D behavior remains untested.
+  - Four earlier Figure-14 failures and the full-resource point's earlier first-order failure remain failures. Local gamma cannot rescue them.
+  - Exact deterministic repeats establish reproducibility under this environment, not independent-seed robustness or biological replication.
+  - This is a collapsed functional distal-inhibitory sensitivity test, not an explicit biological SST cell-class model.
+  - These outcomes characterize the calibrated reconstruction, not exact recovery of the unavailable original SMART execution.
+
+stage4d_authorization:
+  authorized: true
+  scope: implement-and-seal-stage4d-figure16-only
+  all_seven_points_required: true
+  geometry_seeds: [16, 17]
+  repetitions_per_point: 2
+  use_corresponding_stage4a_repetition_learned_weights: true
+  retain_all_earlier_failures: true
+  later_pass_cannot_rescue_earlier_failure: true
+  implementation_and_separate_pre_outcome_seal_required: true
+  execution_authorized_by_this_assessment: false
+  no_result_guided_parameter_or_analysis_changes: true
+
+prohibited_actions:
+  - Do not rank, select, omit or tune points from observed outcomes.
+  - Do not change the route, learned weights, protocols, gates or estimators.
+  - Do not combine anatomy modules or alter the frozen baseline or earlier results.
+  - Do not commit ignored raw outputs or claim full progression before Stage 4D assessment.

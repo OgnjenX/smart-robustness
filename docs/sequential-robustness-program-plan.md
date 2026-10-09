@@ -187,6 +187,15 @@ phase specifications below retain the full intended program scope.
   the supported VIP source layers are 4 and 5. Amplitudes, kinetics,
   conductances and traces remain unread. This sparse support must not be
   pooled across projects/layers or treated as isolated VIP model validation.
+  [Voltage-target assessment 1112](validation-results/post2008-synphys-numeric-target-assessment-1112.yaml)
+  independently verifies 98 selected IC fits across 63 experiments, retaining
+  global experiment-level fitting/validation partitions and 22 separate
+  project/route/layer/holding strata. Only the E5-to-SST5 strata at nominal
+  -70 mV in each of the two separate V1 projects meet the registered minimum
+  independent-unit counts. No VIP, SST-output or PV-output stratum meets
+  those minimums. Numerical extraction is not fitting or cell validation.
+  The source's effective_conductance field is a dimensionless PSP-voltage
+  ratio and must not be used as a synaptic conductance in siemens.
 - **Final synthesis:** eligible sealed interactions, independent multi-seed
   confirmation, closure of source/representation limitations, reproducible
   release artifacts, and the program-wide completion audit remain outstanding.

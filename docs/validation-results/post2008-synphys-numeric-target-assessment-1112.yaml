@@ -1,0 +1,88 @@
+schema_version: 1
+artifact_id: 1112
+artifact_type: independently-checked-voltage-target-and-partition-assessment
+date: 2026-10-09
+implementation_commit: 40ec522
+registration: docs/validation-results/post2008-synphys-numeric-target-registration-1110.yaml
+result: results/synphys-numeric-targets-1111/manifest.yaml
+result_sha256: ddb70c6e64092f2c97047f4f38f392ab2eec9feebb9c1b31742f41fc4a1aa674
+status: voltage-targets-verified-two-strata-meet-minimum-units-no-model-fitting
+execution:
+  session: 89257
+  exit_code: 0
+independent_verification:
+  session: 11029
+  exit_code: 0
+  extractor_imported: false
+  source_registration_extractor_and_QC_hashes: passed
+  selected_fit_IDs_and_all_numeric_fields: independently-reconstructed-and-equal
+  numeric_quality_flags: independently-reconstructed-and-equal
+  global_experiment_partition: independently-hashed-and-equal
+  experiment_leakage: absent
+  all_stratified_counts_and_minimum_flags: independently-reconstructed-and-equal
+  method: >-
+    Reconstruct selected IC/manual-QC fits directly from sealed QC availability
+    records and the registered selection, independently assign experiments via
+    SHA256 modulo three, then reread each whitelisted fit through an independent
+    column-restricted read-only SQLite connection. Compare all raw values,
+    identities and quality flags, preserving invalid values; independently
+    reconstruct all project/route/layer/holding counts and check a single
+    global partition assignment per experiment. No extractor code imported.
+inventory:
+  selected_fits: 98
+  independent_experiments_across_all_strata: 63
+  project_route_layer_holding_strata: 22
+  quality_invalid_fits_retained: 1
+  strata_meeting_minimum_units: 2
+supported_target_strata:
+  - project: mouse V1 coarse matrix
+    route: E-to-SST5
+    pre_layer: '5'
+    post_layer: '5'
+    nominal_holding_mV: -70
+    fitting: {fits: 12, pairs: 12, independent_experiments: 9}
+    validation: {fits: 3, pairs: 3, independent_experiments: 3}
+  - project: mouse V1 pre-production
+    route: E-to-SST5
+    pre_layer: '5'
+    post_layer: '5'
+    nominal_holding_mV: -70
+    fitting: {fits: 12, pairs: 12, independent_experiments: 8}
+    validation: {fits: 4, pairs: 4, independent_experiments: 3}
+unsupported_under_registered_minimum:
+  strata: 20
+  VIP_to_SST5: all-strata-insufficient
+  SST5_to_E5: all-strata-insufficient
+  PV_to_E5: all-strata-insufficient
+source_dimensional_boundary:
+  reference: https://raw.githubusercontent.com/AllenInstitute/aisynphys/545a990ee171e6c0d23dd4bba413e1ccbf2f0853/aisynphys/pipeline/multipatch/conductance.py
+  equation: effective_conductance = -PSP_amplitude / (reversal_potential - average_baseline_potential)
+  units: dimensionless-voltage-ratio-not-siemens
+  conductance_table_numeric_values_read: false
+  direct_PSP_kinetics_to_synaptic_channel_constants_allowed: false
+checks:
+  focused_tests_passed: 63
+  repository_ruff: passed
+  diff_check: passed
+  full_regression_rerun: false
+claim_boundaries:
+  - Minimum-unit passes are operational availability gates, not a power calculation or biological fidelity evidence.
+  - The source is population/class evidence, not identified synaptic recordings from our two SST candidate specimens.
+  - Fit voltage amplitude and timing describe a filtered somatic response; synaptic conductance requires an explicit cell/synapse forward model.
+  - Nominal holding labels are recorded in mV here, while waveform amplitudes and timing must retain documented SI units in any future model contract.
+  - Both projects retain separate fitting and validation targets; no sparse-stratum pooling or partition reassignment occurred.
+  - Historical source-model training lineage is not proven unseen by this split.
+next_step: >-
+  Register an isolated forward-model study for the two independently partitioned
+  E5-to-SST5 voltage-response strata, fixing source unit interpretation,
+  postsynaptic-cell map, synaptic waveform, bounded parameter fit, experiment
+  aggregation, uncertainty and validation criteria before fitting. Preserve
+  all five SST maps and source-field failures without SMART-outcome tuning.
+  Explicit VIP physiology and inhibitory-output evidence remain separate
+  unresolved prerequisites, not repaired by SST recruitment success.
+parameter_fitting_performed: false
+cell_or_network_execution_performed: false
+VIP_prerequisite_resolved: false
+biological_conductance_fidelity_established: false
+frozen_baseline_modified: false
+raw_outputs_committed: false

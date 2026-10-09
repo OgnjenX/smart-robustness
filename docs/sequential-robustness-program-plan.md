@@ -85,6 +85,11 @@ phase specifications below retain the full intended program scope.
   rejecting injected errors. Only design and implementation of a separately
   registered numerical-contract continuation are authorized; no network replay
   or further execution has occurred.
+  [Registration 1022](validation-results/post2008-l5-sst-like-stage4d-continuation-registration-1022.yaml)
+  now fixes that continuation's lineage, separate output, unchanged scientific
+  gates, verbatim saved-outcome preservation and thirteen remaining runs.
+  Implementation, synthetic contract tests and a separate execution seal remain
+  required before replay or further network execution.
   Inter-area behavior and the final joint assessment remain outstanding.
   All seven registered points must remain
   in both stages; a later pass cannot rescue an earlier failure.

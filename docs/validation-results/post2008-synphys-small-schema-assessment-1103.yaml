@@ -1,0 +1,68 @@
+schema_version: 1
+artifact_id: 1103
+artifact_type: independently-checked-database-acquisition-and-schema-assessment
+date: 2026-10-09
+implementation_commit: 62f87e8
+registration: docs/validation-results/post2008-synphys-small-acquisition-registration-1101.yaml
+result: results/synphys-small-schema-1102/manifest.yaml
+result_sha256: eac346b228d8cd39c79e528ea318402fc4803a3d686b6481f9170a0a83406fe4
+status: object-acquired-schema-verified-metadata-selection-pending
+acquisition:
+  session: 80092
+  exit_code: 0
+  client_exit_code: 0
+  bytes: 176771072
+  database_sha256: 7372499fdd874f057565080d5769baaf2659ef39d9f3bc3c7147dd1e1c280a53
+  raw_path: results/synphys-small-schema-1102/synphys_r2.1_small.sqlite
+  source_declared_whole_file_checksum: unavailable
+  If_Match_ETag: '"46d336fbe4f8200e08d40e64c3dd5093-22"'
+  redirects_followed: false
+  TLS_verification_disabled: false
+independent_verification:
+  collector_imported: false
+  exact_length_and_streamed_SHA256: passed
+  registration_and_collector_hashes: passed
+  all_table_definitions_and_column_records: independently-reconstructed-and-equal
+  verification_exit_code: 0
+  method: >-
+    Independently stream-hash the downloaded object and check exact length;
+    compare registration and collector hashes against the manifest. Open a
+    separate read-only immutable SQLite connection, enable query_only and
+    restrict authorization to sqlite_master reads and table_info. Reconstruct
+    all 32 table definitions and every column tuple without importing the
+    collector or reading data rows. Compare the entire schema report exactly.
+schema_coverage:
+  tables: 32
+  cell_identity: cell
+  nonsynaptic_class_field: cell.cell_class_nonsynaptic
+  molecular_driver_field: cell.cre_type
+  species_field: slice.species
+  project_field: experiment.project_name
+  intended_region_field: experiment.target_region
+  measured_layer_field: cortical_cell_location.cortical_layer
+  placeholder_layer_not_primary: cell.target_layer
+  summary_tables_present: [synapse, dynamics, conductance, avg_response_fit, resting_state_fit]
+  populated_summary_fields_established: false
+  actual_metadata_db_version_value_read: false
+  catalog_schema_version_declaration: '22'
+checks:
+  focused_tests_passed: 33
+  repository_ruff: passed
+  diff_check: passed
+  full_regression_rerun: false
+claim_boundaries:
+  - Table presence does not establish row availability, usable QC or target coverage.
+  - Intended region and target layer must not be silently treated as measured anatomical identity.
+  - No cell values, physiological responses, synaptic summary values or row counts were read.
+  - Source checksum is unavailable; the verified SHA256 is a local content identity.
+  - Connectivity and synaptic summaries cannot replace isolated VIP intrinsic physiology.
+next_step: >-
+  Register metadata-only identity and join auditing. Retain every raw species,
+  project, intended region, molecular-driver, nonsynaptic class and measured
+  layer label, including nulls, mixed labels and missing joins. Do not choose
+  classes from synaptic signs or infer measured layers from placeholders.
+  Establish identity coverage before a separate QC/numerical-target contract.
+biological_conductance_fidelity_established: false
+VIP_prerequisite_resolved: false
+frozen_baseline_modified: false
+raw_outputs_committed: false

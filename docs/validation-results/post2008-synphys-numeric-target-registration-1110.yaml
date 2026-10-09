@@ -1,0 +1,64 @@
+schema_version: 1
+artifact_id: 1110
+artifact_type: sealed-voltage-response-target-extraction-and-partition-registration
+date: 2026-10-09
+database: results/synphys-small-schema-1102/synphys_r2.1_small.sqlite
+database_sha256: 7372499fdd874f057565080d5769baaf2659ef39d9f3bc3c7147dd1e1c280a53
+QC_inventory: results/synphys-pair-QC-1108/manifest.yaml
+QC_inventory_sha256: 9e8af574ddfbfe259f30251833b25ae093b26237bb8befc272a358ecf4240d30
+output_directory: results/synphys-numeric-targets-1111
+source_definition:
+  url: https://raw.githubusercontent.com/AllenInstitute/aisynphys/545a990ee171e6c0d23dd4bba413e1ccbf2f0853/aisynphys/pipeline/multipatch/conductance.py
+  dimensional_audit: >-
+    Lines 62-67 derive effective_conductance as negative PSP amplitude divided
+    by reversal minus baseline potential: volts divided by volts. Despite its
+    name this quantity is dimensionless, not a synaptic conductance in siemens.
+    PSP kinetics include membrane/dendritic filtering; neither PSP peak nor
+    PSP rise/decay constants may be copied directly into conductance weights
+    or synaptic channel time constants. Numeric conductance-table reads are
+    not authorized by this protocol.
+allowed_columns:
+  avg_response_fit: [id, synapse_id, fit_amp, fit_xoffset, fit_rise_time, fit_decay_tau, nrmse]
+selection: >-
+  Use only descriptive-support pairs in the sealed QC inventory, then every
+  linked IC average fit with manual_qc_pass exactly 1 and positive
+  n_averaged_responses. Retain each holding, fit ID, pair ID and experiment ID.
+  Preserve all raw numeric values, nulls, nonfinite values and sign disagreements
+  without repairing, switching summary rows or selecting the best fit.
+  No synapse aggregate, VC response, conductance, trace or dynamics reads.
+partition:
+  unit: experiment_id
+  algorithm: sha256-of-UTF8-synphys-voltage-target-v1-colon-decimal-experiment-id-modulo-3
+  validation_bucket: 0
+  fitting_buckets: [1, 2]
+  scope: global-across-all-project-route-layer-holding-strata
+  experiment_leakage_allowed: false
+strata: [project, route, pre_layer, post_layer, holding]
+minimum_units:
+  fitting_experiments: 5
+  validation_experiments: 3
+  interpretation: >-
+    Operational minimum for an independently partitioned target, not a power
+    calculation or guarantee of precision. An insufficient stratum remains
+    insufficient; no cross-project, cross-layer or cross-holding pooling,
+    reassignment or alternative salt is allowed.
+numeric_quality:
+  amplitude: finite-and-positive-for-E-presynaptic-negative-for-inhibitory-presynaptic
+  latency: finite-and-nonnegative
+  rise_and_decay: finite-and-strictly-positive
+  nrmse: finite-and-nonnegative-descriptive-no-new-error-threshold
+  interpretation: completeness-and-physical-sign-checks-only-not-biological-promotion
+numeric_extraction_authorized: true
+parameter_fitting_authorized: false
+cell_or_network_execution_authorized: false
+trace_reads_authorized: false
+analysis_contract: >-
+  This phase freezes raw IC-fit voltage targets and experiment assignments,
+  not parameter maps or acceptance gates. Report per-stratum raw/quality-valid
+  pair and independent-experiment counts in each partition. Fit targets must
+  remain separated from validation targets. Any future isolated-cell/synapse
+  fitting protocol must fix mechanism, loss, parameter bounds, experimental
+  aggregation, uncertainty and validation acceptance before fitting and must
+  not inspect SMART outcomes. No claim of independent unseen historical fit
+  data or recordings from our two SST candidate specimens is authorized.
+frozen_baseline_modified: false

@@ -1,0 +1,55 @@
+schema_version: 1
+artifact_id: 1082
+artifact_type: fixed-sst-conductance-runner-and-independent-verifier-preflight
+date: 2026-10-09
+registration: docs/validation-results/post2008-sst-conductance-translation-registration-1080.yaml
+registration_sha256: c8339ceee050b38b1cd840ceafaa64fa9654d5454b92f91486f5c9ec580663b1
+implementation_sha256:
+  scripts/run_sst_conductance_translation.py: 4ff0b64cbba596dcd6e62dc40298cc93e8101ff9ec207a8e11674700d0cdff16
+  scripts/verify_sst_conductance_translation.py: 95731c9c017ae4c9ce035a5697f330ecfbcd3eed30dfdc4d6a684503493c43a3
+  tests/test_sst_conductance_runner.py: fdd4c2a2f1fba23e75b64b6f5bdac7d2b5050226940915a8407e71ffe9241e6c
+  scripts/verify_sst_vip_glif_parity.py: 37487cdd0030eb6f950c0c1ec2dae2eb60f429b8e18c26d15fcd0f67f68dcd38
+  src/smart_robustness/validation/sst_vip_glif_source.py: bba8cd123367b767ee7c968c2da6adde0c637a4e014e214b671fd67330ecc15d
+runner:
+  cases: 90
+  registered_backend_attempts: 360
+  additional_current_only_null_diagnostics: 10
+  output_directory: results/sst-conductance-translation-1084
+  duplicate_prevention: exclusive-nonblocking-file-lock
+  checkpoint_checks: source-context-case-identity-raw-hash-report-and-input-arrays
+  orphan_policy: retain-and-stop-never-overwrite
+  terminal_policy: verify-existing-records-never-restart-terminal-matrix
+  error_policy: retain-all-backend-errors-and-bad-reset-flags-without-tuning
+  input_boundaries: integer-sample-half-open-window-avoids-floating-point-endpoint-drift
+independent_verifier:
+  imports_simulator_or_runner: false
+  parity_reconstruction: reuse-previous-independent-saved-array-verifier-not-runner-comparison
+  inputs: independently-reconstructed-from-source-parameters-and-registration
+  gates: all-eight-fields-exact-masks-indices-grid-times-and-repeats-finite-tolerances
+  additional_checks: expected-trace-and-ASC-dimensions-spike-field-lengths-index-bounds-and-grid-timing
+  null_gate: exact-saved-current-only-candidate-equivalence
+  stop_flags_independently_reexecuted: false
+checks:
+  focused_suite_passed: 70
+  runner_verifier_tests_passed_after_final_verifier_dimensions_update: 15
+  repository_ruff: passed
+  diff_check: passed
+  full_repository_regression:
+    status: running-not-yet-assessed
+    session_id: 31402
+    command: MPLCONFIGDIR=/private/tmp/mpl .venv/bin/python -m pytest -q
+    duplicate_run_authorized: false
+remaining_before_execution:
+  - Assess the existing full-regression session on terminal completion.
+  - Review runner and independent verification contracts and retain any pre-outcome repairs.
+  - Create and publish execution seal 1083 covering all transitive numerical dependencies and source registrations.
+  - Verify no identical runner is active before launching the sealed matrix.
+execution_seal: false
+acquired_cell_conductance_outcomes_observed: false
+native_reference_executed_this_stage: false
+network_execution_authorized: false
+parameter_fitting_authorized: false
+scientific_interpretation: engineering-infrastructure-only-no-biological-or-network-promotion
+VIP_prerequisite_resolved: false
+frozen_baseline_modified: false
+raw_outputs_committed: false

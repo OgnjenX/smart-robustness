@@ -1,0 +1,65 @@
+schema_version: 1
+artifact_id: 1097
+artifact_type: independently-checked-public-release-catalog-assessment
+date: 2026-10-09
+registration: docs/validation-results/post2008-synphys-release-catalog-registration-1095.yaml
+registration_sha256: 58be4e0e629240795b34da2ff6b99a11c11d5ee0ed10b2d890054521d8ac52c5
+implementation_commit: c2a5cdf
+result: results/synphys-release-catalog-1096/manifest.yaml
+result_sha256: 7e5c26804cf3e1b380b824cc7ab7aefc9a058f96d9829cd4d0fda3eb16a144a9
+collector_sha256: 3cb7b8a32c278fce92ee146b3debf6212c8c4611293ab0e9368c67625ed82533
+transport_sha256: 758ee522c55b208ff7779953a3f34b0ac6b2b038ee4b20b0576b6d06840b44c3
+status: official-release-catalog-verified-database-audit-pending
+acquisition:
+  session: 39143
+  exit_code: 0
+  resources_archived: 5
+  archived_bytes: 111789
+  source_revision: 545a990ee171e6c0d23dd4bba413e1ccbf2f0853
+  catalog_revision: 66d147da3bb4973b135ea33a479abe716d0e322b
+  TLS_verification_disabled: false
+independent_verification:
+  collector_imported: false
+  exit_code: 0
+  method: >-
+    Independently reconstruct SHA256 and exact byte lengths for all five raw
+    files, compare every sidecar to the manifest, join both revision requests
+    and all three immutable URLs to the registration, and compare returned
+    commit SHAs. AST-parse configuration and cache without executing code;
+    verify the literal official catalog URL. Reconstruct all twenty entries,
+    aliases, schemas and retained declared metadata directly from raw JSON.
+    Verify registration, collector, transport and pinned CA hashes.
+catalog:
+  database_entries: 20
+  aliases: 3
+  declared_release_families: [r2.1, r2.0, r2.0-pre5, r2.0-pre4, r2.0-pre3, r2.0-pre2, r2.0-pre1, r1.0]
+  declared_schema_versions: ['22', '21', '20', '19', '18', '16', '15']
+  r2_1_variants: [small, medium, full]
+  r2_1_schema_version: '22'
+  default_url_path: https://allen-synphys.s3-us-west-2.amazonaws.com
+  declared_object_sizes: absent
+  declared_object_checksums: absent
+checks:
+  focused_tests_passed: 24
+  repository_ruff: passed
+  diff_check: passed
+  full_regression_rerun: false
+claim_boundaries:
+  - Catalog provenance is resolved independently of the retained denied root listing.
+  - Release labels and schema declarations are not inspection of actual database contents.
+  - No SQLite or NWB object was downloaded and no numerical response table was read.
+  - No cell-class counts, QC eligibility or biological conductance targets are established.
+  - This source is not an isolated VIP physiology replacement or validation of our SST specimens.
+next_step: >-
+  Register bounded HEAD-only inspection of all three declared r2.1 variants
+  before any database download. Freeze object identity and available size,
+  checksum and modification metadata. Register schema and nonsynaptic
+  species/area/layer/class/QC selection before reading numeric endpoints.
+source_code_executed: false
+database_objects_downloaded: false
+parameter_fitting_performed: false
+cell_or_network_simulation_performed: false
+prior_S3_denial_preserved: true
+VIP_prerequisite_resolved: false
+frozen_baseline_modified: false
+raw_outputs_committed: false

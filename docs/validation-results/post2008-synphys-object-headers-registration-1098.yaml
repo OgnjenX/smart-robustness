@@ -1,0 +1,30 @@
+schema_version: 1
+artifact_id: 1098
+artifact_type: outcome-blind-public-object-header-registration
+date: 2026-10-09
+parent_assessment: docs/validation-results/post2008-synphys-release-catalog-assessment-1097.yaml
+catalog_manifest: results/synphys-release-catalog-1096/manifest.yaml
+catalog_manifest_sha256: 7e5c26804cf3e1b380b824cc7ab7aefc9a058f96d9829cd4d0fda3eb16a144a9
+objects:
+  - synphys_r2.1_small.sqlite
+  - synphys_r2.1_medium.sqlite
+  - synphys_r2.1_full.sqlite
+output_directory: results/synphys-object-headers-1099
+certificate_authority_bundle: /etc/ssl/cert.pem
+certificate_authority_sha256: 9dae8d76e55cb08991f2b672d58999ea15560d910759c16b544f843bdffbb994
+request_method: HEAD
+maximum_requests: 3
+maximum_seconds_per_request: 30
+maximum_header_bytes_per_object: 65536
+redirects_followed: false
+database_download_authorized: false
+numeric_response_reads_authorized: false
+parameter_fitting_authorized: false
+network_execution_authorized: false
+policy: >-
+  Derive the exact three URLs from the independently verified catalog, never
+  guess objects or follow redirects. Preserve HTTP failures and missing
+  metadata. Record Content-Length, ETag, Last-Modified and any declared
+  checksum without interpreting ETag as a content hash. Do not select a
+  variant based on physiological outcomes. No GET fallback is authorized.
+frozen_baseline_modified: false

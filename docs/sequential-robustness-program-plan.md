@@ -171,6 +171,14 @@ phase specifications below retain the full intended program scope.
   VIP maps in this cohort; a separate justified source or independently fitted
   route is needed. Current-injection and engineering passes do not establish
   cell-class or network equivalence.
+  A separate official synaptic-physiology release has now been acquired and
+  schema-checked without numerical outcome reads. [Identity assessment 1106](validation-results/post2008-synphys-identity-inventory-assessment-1106.yaml)
+  independently verifies all 24,739 cell records and their nonsynaptic
+  metadata joins. It retains 12,288 missing measured-location records and
+  13,484 null nonsynaptic-class assignments. Relevant SST/VIP driver-labelled
+  measured-layer strata exist, but usable pair QC and numerical target
+  support remain untested. This source does not replace isolated VIP
+  intrinsic physiology or establish biological conductance fidelity.
 - **Final synthesis:** eligible sealed interactions, independent multi-seed
   confirmation, closure of source/representation limitations, reproducible
   release artifacts, and the program-wide completion audit remain outstanding.

@@ -1,0 +1,89 @@
+schema_version: 1
+artifact_id: 1106
+artifact_type: independently-checked-nonsynaptic-identity-inventory-assessment
+date: 2026-10-09
+implementation_commit: 05f3793
+registration: docs/validation-results/post2008-synphys-identity-inventory-registration-1104.yaml
+result: results/synphys-identity-inventory-1105/manifest.yaml
+result_sha256: c552df2ac95c8b5a248d706cb74d311906325cc06a683e6aeb0d8a6c5ec344c3
+database_sha256: 7372499fdd874f057565080d5769baaf2659ef39d9f3bc3c7147dd1e1c280a53
+status: nonsynaptic-identity-inventory-verified-QC-and-numerical-targets-pending
+execution:
+  session: 19241
+  exit_code: 0
+  outcome_values_read: false
+independent_verification:
+  session: 96913
+  exit_code: 0
+  collector_imported: false
+  source_registration_collector_and_parent_hashes: passed
+  all_projected_rows: independently-read-and-exactly-equal
+  all_cell_joins_and_joint_labels: independently-reconstructed-and-exactly-equal
+  all_missing_multiple_and_orphan_counts: passed
+  method: >-
+    Read every registered metadata projection through a separate immutable
+    query_only connection with its own column-level authorizer. Compare all
+    source rows and ordering, independently reconstruct each cell's experiment,
+    slice and locations, compare every complete identity record and every
+    joint-label tuple/count, and check missing, multiple and orphan records.
+row_counts:
+  slice: 4276
+  experiment: 5058
+  cell: 24739
+  cortical_cell_location: 12451
+join_uncertainty:
+  missing_experiments: 0
+  missing_slices: 0
+  no_measured_location: 12288
+  multiple_locations: 0
+  orphan_locations: 0
+species_cells:
+  mouse: 21433
+  human: 3306
+nonsynaptic_class_cells:
+  in: 6679
+  ex: 4410
+  mixed: 166
+  null: 13484
+metadata_only_relevant_strata:
+  conditions:
+    species: mouse
+    intended_region: VisP
+    project_names: [mouse V1 coarse matrix, mouse V1 pre-production]
+    driver_match: exact-single-label-no-mixed-driver-inclusion
+    nonsynaptic_class: in
+  measured_layer_5:
+    sst: 647
+    vip: 283
+    pvalb: 495
+  measured_layer_2_3:
+    sst: 239
+    vip: 311
+    pvalb: 200
+  no_measured_location:
+    sst: 287
+    vip: 111
+    pvalb: 245
+  meaning: metadata-coverage-only-not-QC-passed-or-connected-pair-counts
+checks:
+  focused_tests_passed: 41
+  repository_ruff: passed
+  diff_check: passed
+  full_regression_rerun: false
+claim_boundaries:
+  - Driver labels are molecular identity evidence, not validated intrinsic model parameters or subtype equivalence.
+  - VisP here is intended region; no measured-area equivalence is inferred.
+  - Multiple-driver and mixed-class labels remain in the complete inventory, not silently collapsed.
+  - Missing measured locations and null class labels remain unresolved, not filled from target_layer or synaptic currents.
+  - No connectivity, QC outcomes, amplitudes, intrinsic responses or conductance values were read.
+  - Metadata availability does not validate the two SST model specimens or solve the VIP model prerequisite.
+next_step: >-
+  Register exact identity strata and QC-only pair inventory, keeping the two
+  V1 projects separate and measuring missingness explicitly. Establish usable
+  measured-layer/class pair support before numerical target extraction;
+  preregister fitting/validation split and uncertainty before any synaptic
+  summaries are used. No network fitting from SMART outcomes is authorized.
+VIP_prerequisite_resolved: false
+biological_conductance_fidelity_established: false
+frozen_baseline_modified: false
+raw_outputs_committed: false

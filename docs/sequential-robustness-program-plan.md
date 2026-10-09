@@ -65,9 +65,11 @@ phase specifications below retain the full intended program scope.
   separate 44-Hz numeric diagnostic. Only two points pass Stages A, B and C
   together; earlier failures are retained. Stage 4D now has synthetic-tested
   protocol, full-catalog builder and noncompensatory joint-classification
-  contracts in `validation/l5_sst_like_stage4d.py`. The checkpoint runner,
-  independent field/correlation verifier and separate pre-outcome seal remain
-  to be completed before execution. The inherited geometry seeds 16 and 17
+  contracts in `validation/l5_sst_like_stage4d.py`. The checkpoint runner and
+  independent field/correlation verifier are now implemented, with synthetic
+  interruption/resume, single-process locking, terminal no-op, raw-evidence
+  preservation and tampering tests. Full regression verification and a separate
+  pre-outcome seal remain required before execution. The inherited geometry seeds 16 and 17
   belong to V1 and V2 within each run, not two additional seed arms. Stage 4D
   inter-area behavior and the final joint assessment remain outstanding.
   All seven registered points must remain

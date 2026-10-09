@@ -1,0 +1,52 @@
+schema_version: 1
+artifact_id: 1087
+artifact_type: outcome-blind-external-synaptic-physiology-source-metadata-registration
+date: 2026-10-09
+scientific_question: >-
+  Does the independent Allen Synaptic Physiology source provide documented
+  mouse visual-cortex class/layer/protocol metadata and accessible resources
+  from which biological recruitment or synaptic targets could later be sealed?
+  Availability is not cell-model validation and is not a VIP replacement.
+primary_reference:
+  title: Local connectivity and synaptic dynamics in mouse and human neocortex
+  doi: 10.1126/science.abj5861
+  publication_year: 2022
+source_rationale: >-
+  Official documentation describes paired patch recordings and publicly
+  available connectivity, strength, kinetics and short-term plasticity data.
+  These can motivate a separate source audit, not conductance-response fidelity
+  or a quantitative SMART fitting target before protocol and provenance checks.
+resources:
+  - {name: introduction, url: 'https://aisynphys.readthedocs.io/en/current-release/introduction.html', maximum_bytes: 1048576}
+  - {name: dataset-structure, url: 'https://aisynphys.readthedocs.io/en/current-release/dataset_structure.html', maximum_bytes: 1048576}
+  - {name: database-access, url: 'https://aisynphys.readthedocs.io/en/current-release/database_access.html', maximum_bytes: 1048576}
+  - {name: database-schema, url: 'https://aisynphys.readthedocs.io/en/current-release/api_schema.html', maximum_bytes: 1048576}
+  - {name: bucket-listing, url: 'https://allen-synphys.s3.us-west-2.amazonaws.com/?list-type=2&max-keys=1000&delimiter=%2F', maximum_bytes: 2097152}
+bucket_endpoint_provenance: standard-S3-REST-endpoint-derived-from-official-AWS-registry-bucket-and-region-not-yet-verified
+allowed_hosts: [aisynphys.readthedocs.io, allen-synphys.s3.us-west-2.amazonaws.com]
+maximum_resources: 5
+maximum_total_bytes: 6291456
+output_directory: results/synphys-source-metadata-1088
+source_freeze: archive-exact-bytes-final-URL-status-length-SHA256-and-fetch-UTC-before-future-database-use
+inspection_scope:
+  - Read documentation only, including database table/field definitions.
+  - Read one bounded S3 root delimiter listing of resource names, sizes, timestamps and prefixes.
+  - Report truncation and unknown version/schema availability rather than claiming a full resource inventory.
+  - Do not execute source modules, install aisynphys, query numerical result tables or download SQLite/NWB files.
+future_gate_requirements:
+  - Separate mouse visual-cortex evidence from human MTG or other cortical areas.
+  - Resolve actual layer and subtype identifiers; target_layer placeholders are not confirmed histological layers.
+  - Use source nonsynaptic cell-class metadata for connectivity selection; do not condition class membership on observed currents.
+  - Distinguish PSP/PSC observations from conductance estimates and from suprathreshold recruitment.
+  - No peak-PSP-to-conductance point conversion without justified voltage, reversal, units and passive/dendritic transfer assumptions.
+  - Specify source QC, experimental conditions, data partition, uncertainty and biological gates before reading numerical synaptic outcomes.
+  - Different source cells cannot be claimed to be recordings from our two passing SST specimens without an explicit identity link.
+metadata_acquisition_authorized: true
+physiological_response_or_numeric_synaptic_result_reads_authorized: false
+database_download_authorized: false
+new_parameter_fitting_authorized: false
+cell_or_network_simulation_authorized: false
+completed_physiology_and_conductance_gates_modified: false
+VIP_prerequisite_resolved: false
+frozen_baseline_modified: false
+raw_outputs_committed: false

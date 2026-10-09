@@ -1,0 +1,43 @@
+schema_version: 1
+artifact_id: 1130
+artifact_type: bounded-medium-release-acquisition-and-schema-registration
+date: 2026-10-09
+url: https://allen-synphys.s3-us-west-2.amazonaws.com/synphys_r2.1_medium.sqlite
+expected_bytes: 11125997568
+expected_etag: '"d954cbad0d7c7b0002bf3a2879e40e90-1327"'
+output_directory: results/synphys-medium-schema-1131
+header_manifest: results/synphys-object-headers-1099/manifest.yaml
+header_manifest_sha256: 80b7f3ec8c890aabf3cbd1d9864ec206d12842bfb4c9d9a3b7540d499c1403c9
+parent_assessment: docs/validation-results/post2008-synphys-pulse-storage-assessment-1129.yaml
+certificate_authority_bundle: /etc/ssl/cert.pem
+certificate_authority_sha256: 9dae8d76e55cb08991f2b672d58999ea15560d910759c16b544f843bdffbb994
+maximum_seconds: 3600
+maximum_requests: 1
+minimum_free_bytes: 22251995136
+chunk_bytes: 1048576
+database_download_authorized: true
+schema_only_reads_authorized: true
+row_reads_authorized: false
+parameter_fitting_authorized: false
+cell_or_network_execution_authorized: false
+full_release_fallback_authorized: false
+transport_contract: >-
+  One verified-TLS GET with the observed ETag in If-Match, no redirects or
+  retries. Bound response bytes to expected length plus one and stream SHA256;
+  never load the 11 GB object into memory. Retain partial bytes, partial hash
+  and stderr on failure. Exclusive output directory prevents duplicate runs.
+  An observation timeout must not trigger a second runner or request.
+  Require exact length, successful client exit and SQLite signature before
+  renaming within the exclusive directory or schema inspection. ETag is not
+  a verified whole-file checksum; record local content SHA256 separately.
+schema_contract: >-
+  Reuse the tested read-only immutable/query_only schema inspector, limited
+  to sqlite_master and table_info. No database data rows may be queried in
+  this acquisition phase. Hash-pin that dependency in the result manifest.
+next_gate: >-
+  Independently verify complete object length/hash and schema, then separately
+  register reconciliation of selected summary IDs/values, pulse IDs and cell
+  identities against the small release before any baseline joins. Keep all
+  prior failures and experiment assignments. No full download, raw waveform
+  reads or fitting are authorized by medium acquisition.
+frozen_baseline_modified: false

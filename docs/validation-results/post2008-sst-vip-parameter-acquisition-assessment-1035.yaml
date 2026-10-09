@@ -1,0 +1,69 @@
+schema_version: 1
+artifact_id: 1035
+artifact_type: complete-sst-vip-parameter-resource-acquisition-assessment
+date: 2026-10-09
+status: complete-all-parameter-json-verified-no-model-execution
+registration: docs/validation-results/post2008-sst-vip-parameter-acquisition-registration-1033.yaml
+implementation_commit: 4b74ec2
+manifest: results/sst-vip-parameter-acquisition-1034/manifest.yaml
+manifest_sha256: 76bfaee6321e97b3f0f2e9ab9237c8e84aef4b840fd4b239c6f5da4fe41d4fba
+manifest_bytes: 382786
+raw_outputs_committed: false
+frozen_baseline_modified: false
+
+execution:
+  collector_exit_code: 0
+  requested_parameter_records: 252
+  valid_parameter_json_records: 252
+  failed_requests_or_invalid_json: 0
+  total_parameter_bytes: 407626
+  oversized_or_truncated_records: 0
+  workers: 4
+  tls_verification_disabled: false
+  certificate_environment: SSL_CERT_FILE=/etc/ssl/cert.pem
+  no_model_specimens_retained: 42
+  network_execution: false
+  isolated_simulation: false
+  parameter_fitting: false
+
+verification:
+  independent_all_record_checks_passed: true
+  method: >-
+    Build the complete set of specimen/model/file identity triples directly
+    from the earlier model metadata manifest. Reparse every downloaded raw
+    JSON, independently recompute SHA256 and byte count, check the size limit,
+    nontruncated receipt and JSON-object shape, compare each saved provenance
+    record with the terminal manifest, and verify that the exact identity set
+    contains all 252 resources without duplicates or exclusions.
+  collector_validation_helpers_reused_in_independent_check: false
+  focused_tests_passed: 39
+  repository_ruff_check_passed: true
+  terminal_resume_validation_exit_code: 0
+  native_model_reproduction_verified: false
+  held_out_physiological_validation_verified: false
+
+source_shapes:
+  biophysical_families:
+    model_count: 25
+    top_level_keys: [conditions, fitting, genome, passive]
+  glif_families:
+    model_count: 227
+    native_method_selectors_present: true
+    note: Method selectors, reset rules and coefficient fields require native-equation inspection; they may not silently alias the project GIF model.
+
+limitations:
+  - Byte integrity and parameter availability do not establish physiological accuracy, simulator parity or recruitment under synaptic inhibition.
+  - Biophysical parameter JSON alone omits the native morphology, mechanism implementations and simulation setup needed for faithful reproduction.
+  - The existing source boundary for VIP biophysical models remains; a GLIF model is not a biophysical HH model.
+  - Forty-two eligible cells have no public model in this catalog snapshot and remain explicitly reported.
+  - Source model/data redistribution permissions are not established by acquisition; raw parameters remain ignored local research artifacts.
+
+next_step:
+  scope: preregister-native-equation-and-physiology-resource-audit
+  requirements:
+    - Inspect the seven resolved native model families and enumerate implementation and stimulus requirements without selecting by SMART outcomes.
+    - Resolve electrophysiology, morphology and mechanism resources under a separate acquisition protocol.
+    - Declare native-reference and held-out current-step validation gates before any model execution or fitting.
+    - Validate the explicit SST-only recruitment representation before adding VIP inhibition.
+  simulation_or_fitting_authorized: false
+  vip_network_execution_authorized: false

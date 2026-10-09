@@ -1,0 +1,67 @@
+schema_version: 1
+artifact_id: 1036
+artifact_type: sst-vip-native-equation-and-physiology-resource-audit-registration
+date: 2026-10-09
+status: registered-before-native-resource-inventory
+parent: docs/validation-results/post2008-sst-vip-parameter-acquisition-assessment-1035.yaml
+parent_sha256: 17132c49448d80d1ddfd5ce6faa34f5ff2758ebed968c6671712a7d5f733af46
+cell_inventory: results/sst-vip-cell-source-inventory-1028.yaml
+cell_inventory_sha256: f6d4ef1e801b9dfc101b7e037b2f63f0d27ee2168b86ffd734976b5c9dd812ad
+parameter_manifest: results/sst-vip-parameter-acquisition-1034/manifest.yaml
+parameter_manifest_sha256: 76bfaee6321e97b3f0f2e9ab9237c8e84aef4b840fd4b239c6f5da4fe41d4fba
+network_execution_authorized: false
+isolated_simulation_authorized: false
+parameter_fitting_authorized: false
+frozen_baseline_modified: false
+
+physiology_metadata:
+  cohort: all-111-included-specimens-no-model-availability-exclusion
+  endpoint: https://api.brain-map.org/api/v2/data/query.json
+  model: Specimen
+  include: ephys_result(well_known_files(well_known_file_type)),neuron_reconstructions(well_known_files(well_known_file_type)),ephys_sweeps
+  batch_size: 20
+  options: all-rows
+  requirements:
+    - Preserve every raw response and exact request, receipt time, bytes and hash before validating it.
+    - Verify success, completeness, duplicates and the exact requested specimen-id set.
+    - Preserve all sweep metadata including units, stimulus identity and reported quality flags without response-guided selection.
+    - Report absent physiology or morphology explicitly; file identity is not a successful download.
+    - Reconcile electrophysiology and morphology identities against the earlier source inventory.
+  large_nwb_or_morphology_download_authorized: false
+
+native_source:
+  repository: https://github.com/AllenInstitute/AllenSDK
+  revision: a56bd8ea7613a812334602b64746cdd30c325a96
+  revision_resolution: official-GitHub-master-commit-metadata-read-before-registration
+  source_base: https://raw.githubusercontent.com/AllenInstitute/AllenSDK/a56bd8ea7613a812334602b64746cdd30c325a96/
+  paths:
+    - allensdk/model/glif/glif_neuron.py
+    - allensdk/model/glif/glif_neuron_methods.py
+    - allensdk/model/glif/simulate_neuron.py
+    - allensdk/model/biophys_sim/utils.py
+    - allensdk/model/biophys_sim/all_active_utils.py
+    - allensdk/model/biophys_sim/neuron/hoc_utils.py
+    - allensdk/api/queries/biophysical_api.py
+    - allensdk/core/nwb_data_set.py
+  maximum_bytes_per_source_file: 2097152
+  preserve_bytes_and_hash_and_license_headers: true
+  execute_or_import_downloaded_source: false
+  install_native_runtime_into_classic_environment: false
+  failed_or_missing_source: explicit-unresolved-requirement-no-silent-substitution
+  source_license_review_before_redistribution: required
+
+audit_questions:
+  - Resolve every configured dynamics and reset selector across all 227 GLIF parameter objects to inspected native definitions.
+  - Distinguish grid and interpolated spikes, spike-cut intervals, numerical scheme, reference voltage, coefficient transforms and stimulus sampling rules.
+  - Identify current-input versus conductance-input boundaries; do not assume current-clamp fits validate inhibitory synaptic responses.
+  - Inventory every configured mechanism and setup dependency in all 25 biophysical parameter objects, including morphology, temperature and voltage corrections.
+  - Identify training and held-out sweep provenance before registering native physiological validation; do not use model fit scores to choose winners.
+  - Record whether model-specific spike-cut intervals create a sampling or refractory boundary for a future Brian2 translation.
+  - Keep native-source parity, experimental physiological accuracy and SMART behavioral preservation as separate gates.
+
+output_directory: results/sst-vip-native-resource-audit-1037
+raw_outputs_committed: false
+next_gate: >-
+  Assess native equation/resource completeness and unresolved requirements,
+  then separately register bounded physiology/morphology acquisition and
+  native-model validation before executing or fitting any cell.

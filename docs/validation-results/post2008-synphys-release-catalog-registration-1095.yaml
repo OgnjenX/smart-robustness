@@ -1,0 +1,42 @@
+schema_version: 1
+artifact_id: 1095
+artifact_type: outcome-blind-official-release-catalog-registration
+date: 2026-10-09
+source_repository: AllenInstitute/aisynphys
+revision_queries:
+  source: https://api.github.com/repos/AllenInstitute/aisynphys/commits/current-release
+  catalog: https://api.github.com/repos/AllenInstitute/aisynphys/commits/download_urls
+immutable_resource_templates:
+  config: https://raw.githubusercontent.com/AllenInstitute/aisynphys/{source_revision}/aisynphys/config.py
+  cache: https://raw.githubusercontent.com/AllenInstitute/aisynphys/{source_revision}/aisynphys/synphys_cache.py
+  catalog: https://raw.githubusercontent.com/AllenInstitute/aisynphys/{catalog_revision}/download_urls.json
+discovery_basis: >-
+  Published SynphysDatabase.list_versions delegates to synphys_cache, which
+  reads config.download_info_url. The inspected official configuration names
+  the repository download_urls branch and download_urls.json. Archive public
+  commit metadata first, then fetch the three known files at those exact SHA
+  revisions. Do not execute any repository code or follow download links.
+output_directory: results/synphys-release-catalog-1096
+allowed_hosts: [api.github.com, raw.githubusercontent.com]
+certificate_authority_bundle: /etc/ssl/cert.pem
+certificate_authority_sha256: 9dae8d76e55cb08991f2b672d58999ea15560d910759c16b544f843bdffbb994
+maximum_requests: 5
+maximum_bytes_per_resource: 1048576
+maximum_total_bytes: 5242880
+metadata_acquisition_authorized: true
+TLS_verification_disabled: false
+database_download_authorized: false
+numerical_synaptic_result_reads_authorized: false
+source_code_execution_authorized: false
+parameter_fitting_authorized: false
+cell_or_network_simulation_authorized: false
+selection_policy: >-
+  Report every declared catalog entry and alias, release/schema labels and
+  download location. Do not select by neuronal model outcomes. If object sizes
+  or checksums are absent, report unknown rather than importing historical
+  example values. An explicit database release, its schema/QC audit and future
+  numerical validation gates require a separate registration before download.
+prior_S3_listing_denial_preserved: true
+VIP_prerequisite_resolved: false
+frozen_baseline_modified: false
+raw_outputs_committed: false

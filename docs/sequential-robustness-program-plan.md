@@ -109,7 +109,19 @@ phase specifications below retain the full intended program scope.
   All seven registered points must remain
   in both stages; a later pass cannot rescue an earlier failure.
 - **VIP-like disinhibition:** implementation and registered testing remain
-  outstanding.
+  outstanding. [Representation audit 1026](validation-results/post2008-vip-target-representation-audit-1026.yaml)
+  identifies the missing explicit SST target. The registered independent
+  source inventory retains 111 eligible SST/VIP cells, including 42 with no
+  public models. All 252 available parameter records are downloaded and
+  independently verified; this is source acquisition, not physiological
+  validation. [Assessment 1038](validation-results/post2008-sst-vip-native-resource-inventory-assessment-1038.yaml)
+  inventories 8,380 sweeps and resolves all configured GLIF selectors.
+  [Correction assessment 1041](validation-results/post2008-sst-vip-native-source-correction-assessment-1041.yaml)
+  explicitly resolves the two failed native setup paths in the pinned SDK,
+  while preserving the original 404 records. Native channel/hoc resources,
+  experimental resource acquisition, isolated reference and held-out
+  physiology validation, explicit SST recruitment and VIP network tests
+  remain outstanding. No new cell execution or fitting has occurred.
 - **Final synthesis:** eligible sealed interactions, independent multi-seed
   confirmation, closure of source/representation limitations, reproducible
   release artifacts, and the program-wide completion audit remain outstanding.

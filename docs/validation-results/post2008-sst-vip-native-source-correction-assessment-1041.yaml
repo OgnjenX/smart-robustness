@@ -1,0 +1,55 @@
+schema_version: 1
+artifact_id: 1041
+artifact_type: pinned-native-biophysical-setup-source-correction-assessment
+date: 2026-10-09
+status: setup-source-roles-resolved-native-model-validation-incomplete
+registration: docs/validation-results/post2008-sst-vip-native-source-correction-registration-1039.yaml
+implementation_commit: 10b8a73
+manifest: results/sst-vip-native-source-correction-1040/manifest.yaml
+manifest_sha256: be83cf1d183c1efd1a4fec8a4360f13cb315a762dbd4ac72a324a57d9a828f6b
+manifest_bytes: 2066
+raw_outputs_committed: false
+frozen_baseline_modified: false
+
+source_identity:
+  revision: a56bd8ea7613a812334602b64746cdd30c325a96
+  corrected_path: allensdk/model/biophysical/utils.py
+  corrected_source_sha256: 7d35ca03cbfd0fae79d4e9e8c3ee7b832377a20120ece5a00ad9b020122f213f
+  complete_pinned_repository_tree_archived: true
+  repository_blob_identity_verified: true
+  original_404_records_preserved: true
+  perisomatic_setup_class: Utils
+  all_active_setup_class: AllActiveUtils
+  native_source_imported_or_executed: false
+
+inspected_setup_requirements:
+  - Native setup depends on NEURON, morphology import, hoc initialization and compiled channel mechanisms, not parameter JSON alone.
+  - Perisomatic setup replaces reconstructed axons with two 30-micron segments of one-micron diameter; discretization uses an odd nseg determined by section length.
+  - All-active setup selects a stub or legacy truncated-axon path from the model description, with distinct diameter and connection handling; these modes may not silently interchange.
+  - The two setup classes apply passive and genome parameters differently, including capacitance and passive reversal assignment; they require separate parity controls.
+  - Native initialization sets temperature, initial voltage and optional integration controls from conditions via HocUtils.
+  - Current-clamp playback converts recorded current to NEURON units and uses distinct stimulus and simulation sampling controls.
+  - Model-description axon_type, morphology, hoc files, channel files and recorded stimuli still need model-specific identity resolution.
+
+verification:
+  independent_byte_hash_and_blob_check_passed: true
+  independent_method: >-
+    Recompute raw tree and source SHA256 values and sizes, verify the tree's
+    pinned revision and nontruncation flag, independently recompute the source
+    Git blob identity, and parse its top-level class definitions without
+    executing code. Compare class names with Utils and AllActiveUtils.
+  source_acquisition_exit_code: 0
+  focused_tests_passed: 52
+  repository_ruff_check_passed: true
+  model_specific_channel_equations_validated: false
+  numerical_reference_parity_validated: false
+  held_out_physiology_validated: false
+
+remaining_gates:
+  - Resolve model-template channel/hoc resources for all 25 biophysical models; SDK example channels are not assumed equivalent.
+  - Register bounded acquisition of experimental physiology and available morphology, preserving original NWB files immutably.
+  - Declare native-reference execution and held-out physiological gates before simulation or fitting.
+  - Validate explicit SST-only recruitment before a VIP intervention, preserving all earlier network failures.
+network_execution_authorized: false
+isolated_simulation_authorized: false
+parameter_fitting_authorized: false

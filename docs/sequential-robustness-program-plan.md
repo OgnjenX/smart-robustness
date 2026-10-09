@@ -151,9 +151,17 @@ phase specifications below retain the full intended program scope.
   preserved rather than inferred. Both observed version interpretations still
   select the same conversion branch. Independent metadata reconstruction is
   not physiological promotion.
-  Native isolated reference and held-out
-  physiology validation, explicit SST recruitment and VIP network tests
-  remain outstanding. No new cell execution or fitting has occurred.
+  [Terminal physiology assessment 1078](validation-results/post2008-sst-vip-physiology-terminal-assessment-1078.yaml)
+  now records all 509 model/sweep cases and 2,036 attempts complete, with
+  independently verified native parity and exact repeats. Independent scoring
+  reconstructs five current-input gate passes among 160 specimen/model
+  combinations, involving two specimens. Of the 155 nonpasses, 106 have reliable
+  recordings but fail model-response gates and 49 lack recording reliability;
+  the latter remain inconclusive, not discarded. Historical model training
+  provenance remains unverified, so this is not an independently unseen holdout
+  claim. No parameters were fitted and no network was executed. Conductance-input
+  validation, explicit SST recruitment and VIP network tests remain outstanding;
+  current-injection passes do not establish cell-class or network equivalence.
 - **Final synthesis:** eligible sealed interactions, independent multi-seed
   confirmation, closure of source/representation limitations, reproducible
   release artifacts, and the program-wide completion audit remain outstanding.

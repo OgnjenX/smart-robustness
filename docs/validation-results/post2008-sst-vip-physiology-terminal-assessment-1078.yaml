@@ -1,0 +1,83 @@
+schema_version: 1
+artifact_id: 1078
+artifact_type: independently-verified-primary-cohort-physiology-assessment
+date: 2026-10-09
+registration: docs/validation-results/post2008-sst-vip-physiology-protocol-registration-1068.yaml
+registration_sha256: 22463d5613cc7fd3578c7e3d3a482b78b04eb29c0749e590a9031a761e9ada33
+execution_seal: docs/validation-results/post2008-sst-vip-physiology-execution-seal-1073.yaml
+execution_seal_sha256: d5840b2fba22d02b4b1730c0dda5a458a05c429a878300a6a748552c3c499c16
+result: results/sst-vip-physiology-validation-1072/manifest.json
+result_sha256: a9f86c5bf24e7294ee579979992e93341c52ec8b16c47bbe7a81fbca4c020110
+status: terminal-current-input-validation-complete-limited-candidates-no-network-promotion
+execution:
+  runner_exit_code: 0
+  primary_specimens: 41
+  model_sweep_cases: 509
+  terminal_attempts: 2036
+  every_attempt_complete: true
+  native_candidate_parity_passes: 509
+  native_exact_repeat_passes: 509
+  candidate_exact_repeat_passes: 509
+  recorded_bad_reset_stops: 0
+  recording_failures: 0
+  fitting_performed: false
+  network_executed: false
+independent_verification:
+  arrays:
+    command: .venv/bin/python scripts/verify_sst_vip_physiology_arrays.py
+    implementation_sha256: edf99ec77b7fef1cd4bb9847803b70d37eb8cfb5c243041d60805f2d3b91c7b4
+    exit_code: 0
+    partial_checkpoint_mode: false
+    completed_cases_verified: 509
+    parity_passed_cases: 509
+    recorded_stop_flags_independently_reexecuted: false
+  scoring:
+    command: .venv/bin/python scripts/verify_sst_vip_physiology_scoring.py
+    implementation_sha256: 07de4dc9df3a2b8abea7691607c00e1e0d1b70f833475ec13d79f0c829f5d134
+    exit_code: 0
+    terminal_summary_reconstructed: true
+    groups: 160
+    models: 160
+    passing_models: 5
+  registered_source_and_implementation_seals_rechecked: true
+physiological_outcome:
+  specimen_model_combinations: 160
+  passing_combinations: 5
+  nonpassing_combinations: 155
+  distinct_passing_specimens: 2
+  group_outcomes:
+    passing: 5
+    reliable_recording_but_nonpassing_model: 106
+    recording_reliability_prerequisite_not_met: 49
+  current_input_candidates:
+    - {specimen_id: 313862134, model_id: 566282072}
+    - {specimen_id: 313862134, model_id: 566282080}
+    - {specimen_id: 482690728, model_id: 484628263}
+    - {specimen_id: 482690728, model_id: 484628267}
+    - {specimen_id: 482690728, model_id: 484628269}
+interpretation: >-
+  Native implementation parity and exact repetitions establish engineering
+  fidelity, not agreement with biological recordings. Five combinations pass
+  every registered current-input recording gate. The other 155 are not promoted:
+  106 have reliable recordings but fail model-response gates, while 49 lack the
+  registered recording-reliability prerequisite and remain inconclusive for
+  promotion rather than being discarded or counted as biological failures.
+  All five passing combinations must remain eligible for the separately sealed
+  next phase; no best-family selection or response-guided refitting is allowed.
+claim_boundaries:
+  - These are project operational gates, not the source paper explained-variance score.
+  - Historical per-model training provenance remains unverified; no independent unseen-holdout claim is made.
+  - Two passing specimens do not establish SST or VIP class-wide generalization or network readiness.
+  - Current injection does not validate conductance inputs, synaptic coupling, or explicit SST/VIP circuitry.
+  - Failed or inconclusive combinations and unresolved identity strata remain in the research record.
+  - No conclusion that ART requires Hodgkin-Huxley neurons follows from these results.
+next_step: >-
+  Reconcile candidate class/layer and source parameter identities; preregister
+  conductance-input translation and isolated validation for all eligible passing
+  combinations before any new simulations. Preserve source ordering and source
+  parameters, use independently specified inputs and gates, and seal the runner
+  before outcomes. Explicit inhibitory network execution requires that separate
+  prerequisite and must not substitute an unvalidated cell-class abstraction.
+sealed_experiment_components_modified: false
+frozen_baseline_modified: false
+raw_outputs_committed: false

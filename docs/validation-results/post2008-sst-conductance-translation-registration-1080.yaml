@@ -1,0 +1,94 @@
+schema_version: 1
+artifact_id: 1080
+artifact_type: isolated-sst-conductance-translation-engineering-registration
+date: 2026-10-09
+parent: docs/validation-results/post2008-sst-vip-current-input-candidate-identity-1079.yaml
+parent_sha256: 19c5819adaecb4e8350aeaea1c7fac617bef52be4d92f4ca8ec35c56bf12b605
+cohort:
+  model_ids: [566282072, 566282080, 484628263, 484628267, 484628269]
+  source_parameters: all-five-hash-pinned-payloads-in-parent-no-family-selection
+  source_specimens: [313862134, 482690728]
+  class_and_layer: mouse-VISp-layer5-Sst-reporter-positive
+  VIP_candidate_available: false
+scientific_question: >-
+  Can voltage-dependent conductance input be added as an explicit discretized
+  extension while preserving all native GLIF scheduling, reset, threshold and
+  afterspike conventions, and independently verifying the extension numerics?
+  This phase cannot answer biological conductance-response fidelity or SMART
+  behavioral survival; those require separately registered evidence.
+input_translation:
+  voltage_coordinates: absolute-voltage-equals-native-voltage-plus-source-El_reference
+  current_at_step_start: I_bias[n]+gE[n]*(EE-Vabs_before)+gI[n]*(EI-Vabs_before)
+  capacitance: source-C-times-source-coeffs-C
+  leak_conductance: source-coeffs-G-divided-by-source-R_input
+  native_dynamics_call: pass-identical-total-input-to-voltage-and-threshold-dynamics
+  temporal_contract: >-
+    Compute input from the pre-update native voltage only at each active native
+    integration sample. Hold that current fixed within the native voltage and
+    threshold update. Native spike cuts skip integration samples; prescribed
+    conductance envelopes still follow absolute sample time. Never fill NaN
+    voltage cuts to calculate an artificial synaptic current.
+  threshold_contract: >-
+    Retain the original current-driven analytical threshold update with the
+    step-held effective input. This is not claimed to be an exact continuous
+    solution of the conductance-driven adaptive-threshold differential equation.
+  source_changes: none-in-pinned-native-files-or-sealed-current-only-candidate
+  reference_extension: >-
+    A separate wrapper around the pinned native dynamics method computes the
+    effective current from the supplied pre-update voltage. Document and hash
+    this wrapper separately; it is an extended reference, not native conductance
+    support. Candidate extension must be separate from sealed current-only code.
+synthetic_protocol:
+  duration_seconds: 0.1
+  dt_seconds: [0.00005, 0.000005]
+  spike_cut_length: source-integer-unchanged-in-each-dt-arm
+  dt_arm_interpretation: separate-scheduling-cases-not-physical-refractory-matched-convergence
+  fresh_source_initial_states_each_attempt: true
+  excitation_reversal_volts: 0.0
+  inhibition_reversal_volts: -0.08
+  reversal_provenance: engineering-fixtures-not-cell-specific-measured-values
+  current_scale: leak_conductance*(source-th_inf*source-coeffs-th_inf-source-El)
+  envelope: zero-before-0.02s-and-from-0.08s-onward-unit-during-half-open-interval
+  arms:
+    - {name: zero-conductance-null, excitation_leak_multiple: 0, inhibition_leak_multiple: 0, bias_scale_multiple: 0}
+    - {name: E-half, excitation_leak_multiple: 0.5, inhibition_leak_multiple: 0, bias_scale_multiple: 2}
+    - {name: E-one, excitation_leak_multiple: 1, inhibition_leak_multiple: 0, bias_scale_multiple: 2}
+    - {name: E-two, excitation_leak_multiple: 2, inhibition_leak_multiple: 0, bias_scale_multiple: 2}
+    - {name: I-half, excitation_leak_multiple: 0, inhibition_leak_multiple: 0.5, bias_scale_multiple: 2}
+    - {name: I-one, excitation_leak_multiple: 0, inhibition_leak_multiple: 1, bias_scale_multiple: 2}
+    - {name: I-two, excitation_leak_multiple: 0, inhibition_leak_multiple: 2, bias_scale_multiple: 2}
+    - {name: mixed-one, excitation_leak_multiple: 1, inhibition_leak_multiple: 1, bias_scale_multiple: 2}
+    - {name: mixed-two, excitation_leak_multiple: 2, inhibition_leak_multiple: 2, bias_scale_multiple: 2}
+  bias_current: constant-for-full-sweep-as-arm-multiple-times-current_scale
+  model_dt_arm_cases: 90
+  backend_repeats_per_case: {extended_native: 2, independent_candidate: 2}
+  total_attempts: 360
+engineering_gates:
+  all_eight_native_output_fields: required
+  finite_value_tolerance: {relative: 1.0e-10, absolute: 1.0e-12}
+  nan_masks_shapes_and_spike_indices: exact
+  exact_repeats: all-fields-in-both-backends
+  zero_conductance_null: exact-equivalence-to-sealed-current-only-implementation
+  independent_step_controls:
+    - Absolute/native voltage coordinate shift gives the same effective input.
+    - Zero conductance recovers the current-only voltage update exactly.
+    - Reversal-equals-preupdate-voltage gives zero synaptic current.
+    - Positive conductance changes the passive Euler slope by minus-g-times-dt-over-C.
+    - A separate closed-form passive constant-conductance discrete recurrence checks nonspiking fixtures.
+    - Reject negative conductances, nonfinite inputs, shape mismatches and nonpositive timestep.
+  failures: retain-all-exceptions-bad-resets-parity-failures-and-null-failures-no-retuning
+  interpretation_of_gate_pass: engineering-translation-only-no-biological-or-network-promotion
+execution:
+  separate_implementation_tests_and_hash_seal_required: true
+  simulation_authorized_now: false
+  parameter_fitting_authorized: false
+  experimental_conductance_response_reads_authorized: false
+  network_execution_authorized: false
+  conductance_outcomes_observed_at_registration: false
+next_required_scientific_gate: >-
+  Identify independent biological conductance-response or explicitly justified
+  recruitment targets before biological promotion. Synthetic parity alone must
+  not authorize a claim of physiological synaptic-input fidelity. Preserve the
+  unresolved VIP prerequisite and the full inhibitory-network endpoint.
+frozen_baseline_modified: false
+raw_outputs_committed: false

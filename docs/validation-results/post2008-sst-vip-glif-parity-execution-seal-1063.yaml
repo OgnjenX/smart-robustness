@@ -1,0 +1,31 @@
+schema_version: 1
+artifact_id: 1063
+artifact_type: native-glif-synthetic-parity-execution-seal
+date: 2026-10-09
+registration: docs/validation-results/post2008-sst-vip-glif-parity-registration-1061.yaml
+registration_sha256: 88161c7cfb2f04ef021e9552832763d0ad00ad8eadc7a3d3ef4db0e20a80a20c
+implementation_commit: b8ee2b5
+implementation_sha256:
+  scripts/run_sst_vip_glif_parity.py: 5a18725093cb591ff40bb4745297802aac20945e0693902bd5edada2fadee8fc
+  src/smart_robustness/validation/native_glif_parity.py: c6ca361d97049566b9c9519c0f3dbfe15423a0204e6b9429cd3456bf8be90f53
+  src/smart_robustness/validation/native_glif_state_machine.py: f2bc0062cf0465b11e7008879b83611cdc1a56ca34bc2c55f0337a3694333e1e
+  src/smart_robustness/validation/sst_vip_glif_source.py: bba8cd123367b767ee7c968c2da6adde0c637a4e014e214b671fd67330ecc15d
+  scripts/collect_sst_vip_native_resources.py: 1dd4616066c04ce5c7b41331859c0fca82526e1927e199639ce8cf9bf337c9c4
+native_reference_execution_authorized: true
+scope: all-948-registered-synthetic-cases-only
+native_outcomes_observed_at_seal: false
+fixture_parameters: fixed-by-hashed-fixture-source-no-outcome-guided-changes
+reference_policy: >-
+  Omit only the two serialization imports after the registered AST audit.
+  Preserve all numerical definitions. The reset observer delegates to the
+  original reset and returns its exact tuple unchanged; it records stop flags
+  without altering dynamics. No serialization methods are called.
+validation_before_execution:
+  focused_tests_passed: 146
+  repository_ruff_check_passed: true
+  full_regression_suite_rerun: false
+outcome_policy: retain-all-failures-no-parameter-or-tolerance-rescue
+experimental_responses_read: false
+parameter_fitting_authorized: false
+network_execution_authorized: false
+frozen_baseline_modified: false

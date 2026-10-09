@@ -1,0 +1,47 @@
+schema_version: 1
+artifact_id: 1057
+artifact_type: full-cohort-read-only-nwb-schema-and-sweep-audit-registration
+date: 2026-10-09
+parent: docs/validation-results/post2008-sst-vip-physiology-acquisition-assessment-1056.yaml
+parent_sha256: d1a00ca4a0fe2bd37f436eeb9e3476692cf432c660bd02728a66b118ec66bad2
+receipt_manifest: results/sst-vip-physiology-acquisition-1055/manifest.yaml
+receipt_manifest_sha256: 784ee753409521637d0b8c34f138e64f556addbabd8fc8a3161807122b13d62b
+physiology_manifest: results/sst-vip-native-resource-audit-1037/manifest.yaml
+physiology_manifest_sha256: 8bd4b1e27f6bc762257b20e05c42d47c1a62307ccdeb4ed02145767988dd5bb4
+native_nwb_source: results/sst-vip-native-resource-audit-1037/source-07.txt
+expected_nwb_files: 111
+expected_metadata_sweeps: 8380
+parser_dependency: h5py==3.12.1
+dependency_installation:
+  binary_wheel_only: true
+  replace_existing_numpy_or_simulation_dependencies: false
+  source: https://pypi.org/project/h5py/3.12.1/
+  capture_h5py_numpy_hdf5_python_versions: true
+file_access: read-only
+external_hdf5_links: reject-before-following
+external_dataset_storage: reject-before-reading
+hdf5_plugin_preload: disabled
+trace_arrays_read: false
+maximum_epoch_names_per_file: 10000
+maximum_small_metadata_elements: 4096
+maximum_soft_link_resolution_steps: 32
+checks:
+  - Verify raw receipt hash before and after inspecting each file.
+  - Retain every metadata sweep, including failed quality records; do not select training or holdout sweeps.
+  - Enumerate Sweep and Experiment epoch numbers and compare exact sets with metadata; preserve missing and extra sweeps as discrepancies, never remove them.
+  - Inventory stimulus and response dataset shapes, numeric dtypes, units, conversion attributes, starting-time sampling rates and epoch index/count bounds.
+  - Record stimulus and response rates separately; disagreement is not silently corrected or resampled.
+  - Record file identifier and specimen/ephys metadata where available; missing identity is unresolved, not inferred from a filename alone.
+  - Inventory generated_by metadata and compute decoded pipeline version separately from the literal pinned SDK predicate. Preserve ambiguities and interpretation differences.
+  - Reject broken or external links, unsupported structures, invalid lengths/rates and nonfinite conversion metadata with per-file and per-sweep errors retained.
+outcome_policy: >-
+  This is a source/schema audit, not physiological promotion. Preserve original
+  failures and all affected specimens. Do not alter experimental files, version
+  metadata, rates, units or conversions to make the audit pass. A native parser
+  discrepancy requires explicit assessment before any reproduction protocol.
+output_directory: results/sst-vip-nwb-schema-audit-1058
+network_execution_authorized: false
+isolated_simulation_authorized: false
+parameter_fitting_authorized: false
+native_model_code_import_authorized: false
+frozen_baseline_modified: false

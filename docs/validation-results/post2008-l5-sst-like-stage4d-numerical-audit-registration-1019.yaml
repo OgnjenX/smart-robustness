@@ -1,0 +1,92 @@
+schema_version: 1
+artifact_id: 1019
+artifact_type: prospective-synthetic-stage4d-numerical-verification-audit
+date: 2026-10-09
+status: registered-before-synthetic-audit-outcomes
+authorization: docs/validation-results/post2008-l5-sst-like-stage4d-engineering-stop-1018.yaml
+network_execution_authorized: false
+network_artifact_replay_authorized: false
+original_failure_retained: true
+original_raw_result_sha256: d949391b2ef505df892ea50fe438fdb87e1a4547953b6de06e3567a6c242e7f2
+original_sealed_sources_may_be_modified: false
+
+question: >-
+  Can a dimensionless, signal-scale-aware raw-correlation consistency check
+  accept independently computed synthetic curves while rejecting material
+  corruption, with all original normalized-curve and peak checks unchanged?
+
+numerical_contract:
+  sample_count: 1000
+  sample_rate_hz: 1000.0
+  frequency_bands_hz: [[2.0, 4.0], [4.0, 8.0], [8.0, 12.0], [12.0, 20.0], [20.0, 100.0]]
+  mean_subtract_before_transforms: true
+  original_assay: rfft-masked-cross-spectrum-irfft
+  independent_method: full-complex-fft-band-filter-direct-circular-dot-products
+  raw_scale: E=norm2(mean-subtracted-x)*norm2(mean-subtracted-y)
+  raw_comparison_if_E_positive: allclose(stored_raw/E,independent_raw/E,rtol=1e-12,atol=1e-12)
+  raw_comparison_if_E_zero: both-raw-curves-exactly-zero
+  reject_nonfinite_or_negative_E: true
+  reject_nonfinite_curves: true
+  original_raw_dimensional_comparison_retained_as_diagnostic: true
+  normalized_curve_comparison: allclose(rtol=1e-12,atol=1e-12)-unchanged
+  normalized_peak_comparison: allclose(rtol=1e-12,atol=1e-12)-unchanged
+  lag_and_band_order_comparison: exact
+  scientific_gate_definition_changed: false
+  preserve_strict_low_frequency_vs_gamma_rule: true
+  meaningful_band_energy_rule_changed: false
+  rationale:
+    - Circular raw correlation is a dot product. By Cauchy-Schwarz, its absolute value is bounded by E; dividing by E yields a dimensionless error test that is invariant to positive rescaling of either input, apart from floating-point effects.
+    - A fixed dimensional absolute tolerance depends on the arbitrary units and amplitude of the recorded potentials and is particularly restrictive where a large-amplitude curve crosses zero.
+    - Retain the existing dimensionless 1e-12 tolerances rather than searching a tolerance grid. They are not fitted to the preserved network artifact.
+    - For a length-N dot product, gamma_(2N)=2N*u/(1-2N*u), with binary64 unit roundoff u=eps/2, supplies a conservative accumulation-error scale when expressed relative to E. At N=1000 this is approximately 2.22e-13.
+    - Fourier filtering contributes additional transform error. The complete FFT implementation is not formally error-bounded here; passing this finite audit is empirical engineering evidence, not a rigorous all-input guarantee.
+
+synthetic_design:
+  generator: numpy.random.default_rng
+  seeds: [19, 23]
+  amplitudes: [1.0e-6, 1.0e-3, 1.0, 1.0e3, 1.0e6]
+  circular_shifts_samples: [0, 7, 499]
+  families:
+    white_noise:
+      x: first-1000-standard-normal-draws-times-amplitude
+      y: roll(x,shift)+0.2*amplitude*next-1000-standard-normal-draws
+    band_boundaries:
+      x: amplitude*sum(sin(2*pi*f*t) for f in [2,4,8,12,20,99,100])
+      y: roll(x,shift)
+    mixed_phases:
+      x: amplitude*sum(sin(2*pi*f*t+phi) for f in [3,6,10,16,40])
+      y: amplitude*sum(cos(2*pi*f*(t-shift/1000)+phi) for f in [3,6,10,16,40])
+      phi: five-uniform-draws-in-zero-to-two-pi-from-each-case-seed
+    silent:
+      x: exactly-zero
+      y: exactly-zero
+  seconds: t=arange(1000)/1000
+  initialize_generator_fresh_per_case: true
+  positive_and_negative_lags_retained: all-1000
+  case_count: 120
+  band_comparison_count: 600
+  no_case_selection_or_retuning: true
+
+corruption_controls:
+  for_each_positive_E_case_and_each_band:
+    - Add 1e-4*E to raw sample at zero lag, retaining every other field; must reject.
+    - Add 1e-4 to normalized sample at zero lag, retaining every other field; must reject.
+    - Add 1e-4 to stored normalized peak; must reject.
+    - Reverse lag order; must reject.
+  silent_case:
+    - Change one raw sample from zero to 1e-30; must reject despite zero E.
+  malformed_inputs:
+    - NaN or infinity in curves or E; must reject.
+    - Negative E; must reject.
+    - Wrong curve length or frequency-band order; must reject.
+
+promotion_rule:
+  - Commit this registration before executing the synthetic audit.
+  - Implement a new checker and audit script; leave original verifier and runner unchanged.
+  - Run and report all 120 cases and all applicable corruption controls, including failures.
+  - A failed contract stops promotion. Do not vary the tolerance, amplitudes, families, energy definition or estimator to obtain a pass.
+  - Commit a complete synthetic assessment before proposing any continuation.
+  - A passing audit authorizes only design of a separately registered and sealed continuation with explicit numerical-contract amendment, not automatic network execution or retrospective relabeling of failure 1018.
+  - Network parameters, scientific gates, all seven point identities and earlier failures remain immutable.
+
+next_step: Implement synthetic-only checker and audit without reading the preserved network outcome.

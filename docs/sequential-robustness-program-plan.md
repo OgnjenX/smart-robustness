@@ -77,6 +77,9 @@ phase specifications below retain the full intended program scope.
   preserves that engineering stop. Normalized curves and peaks agree, but no
   exact repeat or complete point exists. Only a synthetic numerical audit is
   authorized next, not network execution or a scientific survival claim.
+  [Registration 1019](validation-results/post2008-l5-sst-like-stage4d-numerical-audit-registration-1019.yaml)
+  fixes 120 synthetic cases, corruption controls and a dimensionless raw-error
+  contract before that audit, without modifying seal 1017 or failure 1018.
   Inter-area behavior and the final joint assessment remain outstanding.
   All seven registered points must remain
   in both stages; a later pass cannot rescue an earlier failure.

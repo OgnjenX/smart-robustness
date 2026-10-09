@@ -1,0 +1,62 @@
+schema_version: 1
+artifact_id: 1120
+artifact_type: independently-checked-distinct-composite-target-assessment
+date: 2026-10-09
+implementation_commit: e80c0de
+registration: docs/validation-results/post2008-synphys-composite-latency-registration-1118.yaml
+result: results/synphys-composite-latency-1119/manifest.yaml
+result_sha256: ab3efe029a11a6a89634bdcd539ea3ef577812b2c2d5f4da2ea7d9a0bc0d9a22
+status: composite-source-targets-partially-available-independent-unit-gates-not-met
+execution_exit_code: 0
+independent_verification:
+  extractor_imported: false
+  verification_exit_code: 0
+  source_registration_extractor_and_parent_hashes: passed
+  original_records_and_partitions: preserved-verbatim
+  all_shared_latency_rows: independently-read-and-equal
+  all_source_fit_search_intervals: independently-reconstructed-and-equal
+  all_coverage_flags_and_stratum_counts: independently-reconstructed-and-equal
+  method: >-
+    Verify all hashes, read every registered latency by synapse ID through a
+    separate column-restricted read-only SQLite connection, compare every
+    copied source record exactly, reconstruct the labelled search interval,
+    all composite finite/sign/timing/baseline conditions, and every distinct
+    pair/experiment count by unchanged project/route/layer/partition.
+observations:
+  source_synapses: 92
+  shared_latency_nulls: 12
+  composite_coverage_passes: 51
+  separate_project_route_layer_strata: 17
+  strata_meeting_minimum_units: 0
+  E5_to_SST5:
+    mouse_V1_coarse_matrix: {covered_pairs: 10, fitting_experiments: 7, validation_experiments: 1}
+    mouse_V1_pre_production: {covered_pairs: 10, fitting_experiments: 7, validation_experiments: 1}
+unchanged_minimum_units: {fitting_experiments: 5, validation_experiments: 3}
+claim_boundaries:
+  - Composite coverage is distinct from original rested latency contract 1114, whose zero passes remain intact.
+  - The shared-latency interval is a source fitting constraint, not a recovered rested value or confidence interval.
+  - Baseline availability imposes additional selection; no nominal holding substitution or partition reassignment occurred.
+  - No project, measured-layer or response-state pooling was used to rescue sample gates.
+  - Source code mapping is statically established but actual historical database generation remains unverified.
+  - Partial target availability is not biological cell validation or SMART network survival.
+checks:
+  focused_tests_passed: 79
+  repository_ruff: passed
+  diff_check: passed
+  full_regression_rerun: false
+next_step: >-
+  Inspect the pinned source serialization and small-release column-retention
+  definitions before any new data reads. Determine whether the original IC
+  rested-pulse IDs and recording baseline metadata can be safely decoded and
+  independently joined, including baseline dispersion. If available,
+  separately register that reconstruction, retaining all earlier contracts,
+  source selections and global experiment partitions. Do not use generic
+  pickle loading or execute downloaded source to decode records. If evidence
+  cannot be recovered, report insufficient source support rather than change
+  gates or proceed with unsupported isolated recruitment fitting.
+parameter_fitting_performed: false
+cell_or_network_execution_performed: false
+VIP_prerequisite_resolved: false
+biological_conductance_fidelity_established: false
+frozen_baseline_modified: false
+raw_outputs_committed: false

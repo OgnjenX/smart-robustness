@@ -204,6 +204,16 @@ phase specifications below retain the full intended program scope.
   and 41 missing measured-baseline records. No target meets that distinct
   coverage contract. This source limitation does not establish biological
   failure or permit fitting from the earlier average-train availability pass.
+  [Static mapping audit 1117](validation-results/post2008-synphys-latency-mapping-audit-1117.yaml)
+  confirms the pinned writer/schema naming mismatch, not historical generating
+  execution. A separately registered shared-latency composite is
+  [assessed in 1120](validation-results/post2008-synphys-composite-latency-assessment-1120.yaml):
+  51 targets have composite coverage, but no project/route/layer stratum meets
+  the unchanged independent-unit minimums. Each E5-to-SST5 project retains
+  seven fitting experiments and only one validation experiment with measured
+  baseline coverage. Original missing latency fields and failed gates remain
+  unchanged. Recovery of original rested-pulse baseline metadata is a possible
+  next source audit, not authorization for fitting or network promotion.
 - **Final synthesis:** eligible sealed interactions, independent multi-seed
   confirmation, closure of source/representation limitations, reproducible
   release artifacts, and the program-wide completion audit remain outstanding.

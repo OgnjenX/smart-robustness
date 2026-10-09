@@ -136,7 +136,14 @@ phase specifications below retain the full intended program scope.
   of all 146 files. All 111 NWB files have HDF5 signatures; all 35 SWC structural
   inventories pass after an explicitly recorded zero-based-id parser correction.
   Thirteen morphologies contain multiple roots, preserved without repair.
-  NWB schema/sweep/unit inspection, isolated reference and held-out
+  [Terminal snapshot 1059](validation-results/post2008-sst-vip-nwb-schema-terminal-snapshot-1059.yaml)
+  records read-only metadata inspection of all 111 NWB files, pending independent
+  reconstruction. It retains 794 metadata sweeps absent from file epochs and
+  111 bytes/text version-interpretation disagreements. Both observed version
+  interpretations select the same conversion branch for this dataset.
+  Explicit specimen/ephys identity fields are absent; attachment/identifier
+  reconciliation remains required. No trace arrays or cell models were run.
+  Independent NWB schema/sweep/unit verification, isolated reference and held-out
   physiology validation, explicit SST recruitment and VIP network tests
   remain outstanding. No new cell execution or fitting has occurred.
 - **Final synthesis:** eligible sealed interactions, independent multi-seed

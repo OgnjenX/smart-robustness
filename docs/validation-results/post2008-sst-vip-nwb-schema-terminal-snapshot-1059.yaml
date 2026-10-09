@@ -1,0 +1,56 @@
+schema_version: 1
+artifact_id: 1059
+artifact_type: terminal-nwb-metadata-audit-snapshot-awaiting-independent-verification
+date: 2026-10-09
+status: terminal-source-discrepancies-observed-not-independently-validated
+registration: docs/validation-results/post2008-sst-vip-nwb-schema-registration-1057.yaml
+implementation_commit: 0866e53
+manifest: results/sst-vip-nwb-schema-audit-1058/manifest.yaml
+manifest_sha256: 79930d9552b278e9c6d584e165458be8305c9e4a6e141dbfd4348c32e5a91053
+manifest_bytes: 14587629
+collector_exit_code: 0
+raw_outputs_committed: false
+frozen_baseline_modified: false
+
+observed_terminal_inventory:
+  nwb_files_inspected: 111
+  files_rejected_by_inspector: 0
+  recorded_file_metadata_errors: 0
+  recorded_sweep_structure_errors: 0
+  metadata_sweeps: 8380
+  file_sweeps: 7586
+  metadata_sweeps_absent_from_file: 794
+  file_sweeps_without_metadata: 0
+  experiment_epochs_without_sweep: 0
+  stimulus_response_sampling_rate_disagreements: 0
+  decoded_pipeline_versions: {"1.0": 111}
+  literal_sdk_pipeline_versions: {"0.0": 111}
+  version_interpretation_disagreements: 111
+  files_missing_explicit_specimen_id_metadata: 111
+  files_missing_explicit_ephys_result_id_metadata: 111
+  observed_explicit_identity_disagreements: 0
+  all_raw_hashes_unchanged_after_inspection: true
+
+interpretation_boundaries:
+  - These counts summarize the sealed collector output; independent reconstruction is still outstanding.
+  - Missing sweeps remain in their full metadata records and are not discarded or assumed to have failed quality checks. Their causes remain unverified.
+  - Both observed version pairs select the same pinned SDK conversion predicate for this dataset (major greater than one, or major one and minor greater than zero, is false for both 1.0 and 0.0). Version disagreement alone does not establish changed physical trace scaling.
+  - Missing explicit specimen/ephys ids are unresolved identity fields. Public attachment metadata remains available, but absence cannot be reclassified as verified embedded identity.
+  - No full-trace integrity, physiological fit, native numerical parity or network promotion is established by this metadata audit.
+
+verification_state:
+  independent_full_cohort_nwb_reconstruction_performed: false
+  focused_source_and_schema_tests_passed: 124
+  repository_ruff_check_passed: true
+  full_regression_suite_rerun: false
+  github_ci_verified_for_this_commit: false
+  trace_arrays_read: false
+  cell_simulation_performed: false
+
+next_step:
+  - Independently reconstruct file sweep sets, shapes, rates, units, version metadata and raw immutability across all 111 files without reusing the inspector.
+  - Classify the 794 missing metadata sweeps from source identities and protocol metadata without discarding cells or choosing by model performance.
+  - Resolve how source attachment and embedded identifier metadata establish specimen identity before native-reference or held-out physiology protocols.
+network_execution_authorized: false
+isolated_simulation_authorized: false
+parameter_fitting_authorized: false

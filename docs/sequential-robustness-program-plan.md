@@ -179,6 +179,14 @@ phase specifications below retain the full intended program scope.
   measured-layer strata exist, but usable pair QC and numerical target
   support remain untested. This source does not replace isolated VIP
   intrinsic physiology or establish biological conductance fidelity.
+  [Pair-QC assessment 1109](validation-results/post2008-synphys-pair-QC-assessment-1109.yaml)
+  now verifies all 123,506 ordered-pair records and registered summary/QC
+  projections. Descriptive support includes 38 E-to-SST5 and 23 SST5-to-E5
+  pairs across the two separately retained V1 projects. Only six VIP-to-SST5
+  pairs meet the availability contract, with none from measured layer 2/3;
+  the supported VIP source layers are 4 and 5. Amplitudes, kinetics,
+  conductances and traces remain unread. This sparse support must not be
+  pooled across projects/layers or treated as isolated VIP model validation.
 - **Final synthesis:** eligible sealed interactions, independent multi-seed
   confirmation, closure of source/representation limitations, reproducible
   release artifacts, and the program-wide completion audit remain outstanding.

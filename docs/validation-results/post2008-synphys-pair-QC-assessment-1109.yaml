@@ -1,0 +1,79 @@
+schema_version: 1
+artifact_id: 1109
+artifact_type: independently-checked-pair-QC-and-summary-availability-assessment
+date: 2026-10-09
+implementation_commit: 7341682
+registration: docs/validation-results/post2008-synphys-pair-QC-registration-1107.yaml
+result: results/synphys-pair-QC-1108/manifest.yaml
+result_sha256: 9e8af574ddfbfe259f30251833b25ae093b26237bb8befc272a358ecf4240d30
+status: QC-availability-verified-numerical-targets-unread
+execution:
+  session: 22823
+  exit_code: 0
+independent_verification:
+  session: 38100
+  exit_code: 0
+  collector_imported: false
+  source_registration_collector_and_identity_hashes: passed
+  all_projected_source_rows: independently-read-and-exactly-equal
+  all_pair_routes_joins_and_support_flags: independently-reconstructed-and-exactly-equal
+  all_project_and_layer_strata: independently-reconstructed-and-exactly-equal
+  method: >-
+    Through a separate read-only immutable SQLite connection and independent
+    column authorizer, reread all registered QC/availability projections.
+    Independently reconstruct class and measured-layer identity conditions,
+    all four route assignments, relevant probe-count selection, every
+    synapse/fit/dynamics join, descriptive support flags and stratified counts.
+    Compare complete projected tables, all 123506 pair records and every
+    project/layer stratum. Reconstruct orphan and unlinked-fit lists exactly.
+row_counts:
+  pair: 123506
+  synapse: 3297
+  avg_response_fit: 9139
+  dynamics: 3287
+unclassified_pairs: 121471
+orphan_synapses: 0
+orphan_dynamics: 0
+unlinked_average_fits: 268
+unlinked_average_fits_with_polysynapse_reference: 268
+VIP_to_SST5_support_by_presynaptic_measured_layer:
+  mouse_V1_coarse_matrix: {'2/3': 0, '4': 3, '5': 2, '6a': 0}
+  mouse_V1_pre_production: {'4': 0, '5': 1, '6a': 0}
+support_experiment_counts:
+  mouse_V1_coarse_matrix: {E_to_SST5: 16, VIP_to_SST5: 5, SST5_to_E5: 8, PV_to_E5: 16}
+  mouse_V1_pre_production: {E_to_SST5: 14, VIP_to_SST5: 1, SST5_to_E5: 8, PV_to_E5: 6}
+project_route_counts:
+  mouse_V1_coarse_matrix:
+    E_to_SST5: {identity_pairs: 468, positive_probe: 291, single_synapse: 20, manual_QC_IC_fit: 19, descriptive_support: 19}
+    VIP_to_SST5: {identity_pairs: 234, positive_probe: 142, single_synapse: 7, manual_QC_IC_fit: 5, descriptive_support: 5}
+    SST5_to_E5: {identity_pairs: 310, positive_probe: 172, single_synapse: 20, manual_QC_IC_fit: 15, descriptive_support: 15}
+    PV_to_E5: {identity_pairs: 290, positive_probe: 186, single_synapse: 29, manual_QC_IC_fit: 19, descriptive_support: 19}
+  mouse_V1_pre_production:
+    E_to_SST5: {identity_pairs: 286, positive_probe: 157, single_synapse: 21, manual_QC_IC_fit: 19, descriptive_support: 19}
+    VIP_to_SST5: {identity_pairs: 53, positive_probe: 31, single_synapse: 2, manual_QC_IC_fit: 1, descriptive_support: 1}
+    SST5_to_E5: {identity_pairs: 252, positive_probe: 119, single_synapse: 8, manual_QC_IC_fit: 8, descriptive_support: 8}
+    PV_to_E5: {identity_pairs: 142, positive_probe: 85, single_synapse: 16, manual_QC_IC_fit: 6, descriptive_support: 6}
+checks:
+  focused_tests_passed: 52
+  repository_ruff: passed
+  diff_check: passed
+  full_regression_rerun: false
+claim_boundaries:
+  - This phase explicitly reads summary availability and QC, not completely outcome-blind metadata.
+  - No response amplitudes, latencies, kinetics, conductance values or traces were read.
+  - Positive probe and manual fit availability are descriptive, not a validated detection or biological fidelity gate.
+  - The six VIP-to-SST5 supported pairs across two projects may be insufficient for independent validation; neither project nor layer strata may be silently pooled.
+  - No descriptive support exists for measured-layer-2/3 VIP to SST5 in this registered source stratum; supported VIP pairs instead come from measured layers 4 and 5.
+  - Pair counts are not independent specimen or experiment counts; experimental clustering must control future partitions and uncertainty.
+  - Unclassified pairs, null QC, missing summaries, multiple records and unlinked fits remain in the raw inventory.
+  - Availability does not validate SST recruitment or the isolated VIP model prerequisite.
+next_step: >-
+  Preregister numeric targets and experiment-level fitting/validation partitions,
+  retaining project/layer strata and minimum independent-unit requirements.
+  Inspect source definitions before interpreting any effective conductance
+  estimate; do not infer conductance from PSP peak alone. Low-support strata
+  must remain insufficient rather than be rescued by pooling or network tuning.
+VIP_prerequisite_resolved: false
+biological_conductance_fidelity_established: false
+frozen_baseline_modified: false
+raw_outputs_committed: false

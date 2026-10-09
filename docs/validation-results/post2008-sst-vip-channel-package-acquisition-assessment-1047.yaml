@@ -1,0 +1,75 @@
+schema_version: 1
+artifact_id: 1047
+artifact_type: native-channel-and-package-static-acquisition-assessment
+date: 2026-10-09
+status: acquisition-complete-native-axon-setup-unresolved
+registration: docs/validation-results/post2008-sst-vip-channel-package-acquisition-registration-1045.yaml
+implementation_commit: 42c6876
+manifest: results/sst-vip-channel-package-acquisition-1046/manifest.yaml
+manifest_sha256: d32b19b553ef3bc535e8a84d414d367e9783ffada39e7dac0dc95158b44b683e
+manifest_bytes: 387626
+raw_outputs_committed: false
+frozen_baseline_modified: false
+
+inventory:
+  registered_resources: 41
+  acquired_and_statically_inspected: 41
+  failed_requests_or_inspections: 0
+  unique_channel_files: 16
+  model_packages: 25
+  total_raw_bytes: 3913924
+  package_declared_types: {Biophysical - perisomatic: 14, Biophysical - all active: 11}
+  unique_manifest_candidates_per_package: 1
+  packages_with_declared_axon_type: 0
+  packages_without_authoritative_axon_type: 25
+  native_code_executed: false
+  archives_extracted: false
+
+independent_verification:
+  passed: true
+  command: .venv/bin/python scripts/verify_sst_vip_channels_and_packages.py
+  method: >-
+    Independently reconstruct all 16 channel reference lists and 25 model
+    identities from the hash-pinned dependency manifest. Check each raw file
+    hash, length, exact source URL and sidecar against the acquisition manifest.
+    Reopen each ZIP and compare all member names, declared sizes and CRC metadata;
+    read only its unique manifest.json and compare the full decoded description,
+    model types and axon declarations. All package model types match their
+    registered templates. No collector inspection functions are reused.
+  limits: >-
+    Member CRC values are central-directory metadata, not independent integrity
+    checks of every member's decompressed contents. Only manifest.json is read
+    within each archive. Source-text mechanism inventory is not channel-equation
+    validation. No physiological or numerical reproduction is claimed.
+  collector_exit_code: 0
+  independent_verifier_exit_code: 0
+  focused_source_acquisition_tests_passed: 70
+  repository_ruff_check_passed: true
+  full_regression_suite_rerun: false
+  github_ci_verified_for_this_commit: false
+
+setup_boundary:
+  observed: >-
+    All 25 native manifests contain one biophys record with model_type and
+    model_file, but no axon_type. This does not satisfy the previously inspected
+    pinned SDK's all-active dispatch access to biophys[1].axon_type. The packages
+    therefore do not resolve the authoritative all-active axon mode. Perisomatic
+    Utils has a separately documented stub construction; absence of this field
+    is not by itself proof that every perisomatic package is unusable.
+  default_or_source_patch_inferred: false
+  native_setup_compatibility_validated: false
+
+interpretation:
+  - All registered channels and packages are preserved locally without selecting a model by physiological fit or SMART network performance.
+  - Source availability is now established, but equations, native runtime identity and isolated physiology remain unvalidated.
+  - Missing axon configuration is retained as a source/setup uncertainty, not evidence that SST or VIP biology fails SMART.
+  - The 227 GLIF models and all 111 eligible source cells, including 42 with no public models, remain in the program.
+  - Neither an explicit SST recruitment experiment nor a VIP network experiment has occurred in this acquisition step.
+
+next_step:
+  - Resolve the native all-active axon convention through pinned source history or authoritative model documentation before executing that reference.
+  - Separately preregister experimental physiology and morphology acquisition and held-out validation, with source NWB files preserved immutably.
+  - Audit downloaded native channel equations and runtime requirements before compiling or importing native code.
+network_execution_authorized: false
+isolated_simulation_authorized: false
+parameter_fitting_authorized: false

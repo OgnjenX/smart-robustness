@@ -118,8 +118,13 @@ phase specifications below retain the full intended program scope.
   inventories 8,380 sweeps and resolves all configured GLIF selectors.
   [Correction assessment 1041](validation-results/post2008-sst-vip-native-source-correction-assessment-1041.yaml)
   explicitly resolves the two failed native setup paths in the pinned SDK,
-  while preserving the original 404 records. Native channel/hoc resources,
-  experimental resource acquisition, isolated reference and held-out
+  while preserving the original 404 records.
+  [Acquisition assessment 1047](validation-results/post2008-sst-vip-channel-package-acquisition-assessment-1047.yaml)
+  independently verifies all 16 native channel files and 25 model packages.
+  None of the package manifests declares an axon mode; the all-active native
+  setup boundary remains unresolved rather than defaulted. Downloaded channel
+  equations and native runtime compatibility remain unvalidated.
+  Experimental resource acquisition, isolated reference and held-out
   physiology validation, explicit SST recruitment and VIP network tests
   remain outstanding. No new cell execution or fitting has occurred.
 - **Final synthesis:** eligible sealed interactions, independent multi-seed

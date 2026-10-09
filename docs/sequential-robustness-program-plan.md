@@ -91,7 +91,13 @@ phase specifications below retain the full intended program scope.
   The separate continuation runner and verifier are implemented with synthetic
   source-preservation, resume, terminal-no-op, dual-lock, tampering and rejected-
   outcome-persistence tests. Full regression verification and a separate
-  execution seal remain required before replay or further network execution.
+  execution seal were required before replay or further network execution.
+  All 1,499 local regression tests now pass. The separately committed
+  [continuation seal 1023](validation-results/post2008-l5-sst-like-stage4d-continuation-seal-1023.yaml)
+  authorizes the unchanged network protocol under the explicitly amended
+  numerical check. The single continuation process is active and has saved
+  the verbatim source outcome; no new exact pair or complete point has yet
+  been established. The original engineering-stop assessment remains intact.
   Inter-area behavior and the final joint assessment remain outstanding.
   All seven registered points must remain
   in both stages; a later pass cannot rescue an earlier failure.

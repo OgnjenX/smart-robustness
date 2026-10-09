@@ -1,0 +1,69 @@
+schema_version: 1
+artifact_id: 1116
+artifact_type: independently-checked-rested-response-state-coverage-assessment
+date: 2026-10-09
+implementation_commit: 09f3247
+registration: docs/validation-results/post2008-synphys-resting-target-registration-1114.yaml
+result: results/synphys-resting-targets-1115/manifest.yaml
+result_sha256: d10df161e07278660ec4a733cea1b45f8164c66b467cfabbc45e46b0afef3a1e
+status: source-state-coverage-insufficient-no-fitting-authorized
+execution_exit_code: 0
+independent_verification:
+  extractor_imported: false
+  verification_exit_code: 0
+  source_registration_extractor_and_parent_hashes: passed
+  all_selected_source_rows_and_lineage: independently-reconstructed-and-equal
+  all_coverage_flags: independently-reconstructed-and-equal
+  method: >-
+    Reconstruct every unique synapse from the unchanged numerical-target
+    inventory; compare exact source lineage and global experiment partitions.
+    Independently read every whitelisted rested and measured-baseline record
+    through a separate read-only immutable SQLite connection and column guard.
+    Recompute all finite, sign, timing, baseline and unique-row conditions;
+    retain missing rows and independently count experiment support without
+    assigning nominal holding bins to pooled resting responses.
+observations:
+  unique_synapses_selected: 92
+  synapses_with_exactly_one_resting_record: 92
+  synapses_with_exactly_one_measured_baseline_record: 51
+  synapses_without_measured_baseline_record: 41
+  measured_baseline_nulls_among_available_rows: 0
+  ic_latency_nulls: 92
+  ic_amp_nulls: 14
+  ic_rise_time_nulls: 14
+  ic_decay_tau_nulls: 14
+  ic_nrmse_nulls: 14
+  descriptive_coverage_passes: 0
+  project_route_layer_strata: 17
+  strata_meeting_independent_unit_minimums: 0
+source_mapping_hypothesis:
+  observation: >-
+    The inspected resting pipeline writes each fitting-function best_values
+    key to mode plus underscore plus key. Other inspected fitting code calls
+    its latency parameter xoffset, whereas the database schema declares
+    ic_latency. This may explain the null latency field, but the generating
+    execution and actual historical fitting dependency are not verified.
+  classification: source-code-based-hypothesis-not-confirmed-historical-cause
+  next_safe_check: inspect-pinned-schema-and-source-parameter-name-mapping-without-running-original-pipeline-or-changing-data
+checks:
+  focused_tests_passed: 70
+  repository_ruff: passed
+  diff_check: passed
+  full_regression_rerun: false
+claim_boundaries:
+  - Coverage failure is missing source evidence, not biological failure of SST cells or SMART.
+  - No latency was copied from the average-train fit or inferred from nominal stimulus timing.
+  - No baseline was substituted with nominal holding, and no original split was changed.
+  - The earlier average-fit availability pass cannot authorize rested single-pulse fitting.
+  - No neuron, synapse or network parameter was fitted and no cell or network was simulated.
+next_step: >-
+  Resolve the source latency-field naming/serialization boundary through static
+  source evidence. If a separately defined source latency target is justified,
+  preregister that distinct provenance and its uncertainty before reading it;
+  retain this failed coverage contract verbatim. Do not reinterpret absent
+  values as zero or loosen any existing gate. Measured-baseline missingness
+  and historical waveform-function semantics remain separate prerequisites.
+VIP_prerequisite_resolved: false
+biological_conductance_fidelity_established: false
+frozen_baseline_modified: false
+raw_outputs_committed: false

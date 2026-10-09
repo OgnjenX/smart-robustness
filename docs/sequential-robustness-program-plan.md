@@ -196,6 +196,14 @@ phase specifications below retain the full intended program scope.
   those minimums. Numerical extraction is not fitting or cell validation.
   The source's effective_conductance field is a dimensionless PSP-voltage
   ratio and must not be used as a synaptic conductance in siemens.
+  [Source-state audit 1113](validation-results/post2008-synphys-response-state-audit-1113.yaml)
+  identifies that the extracted amplitudes average train pulses rather than
+  rested single events; nominal holding labels are broad bins. The separate
+  [rested-target assessment 1116](validation-results/post2008-synphys-resting-target-assessment-1116.yaml)
+  verifies all 92 selected rested records and retains 92 null latency fields
+  and 41 missing measured-baseline records. No target meets that distinct
+  coverage contract. This source limitation does not establish biological
+  failure or permit fitting from the earlier average-train availability pass.
 - **Final synthesis:** eligible sealed interactions, independent multi-seed
   confirmation, closure of source/representation limitations, reproducible
   release artifacts, and the program-wide completion audit remain outstanding.

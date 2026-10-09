@@ -1,0 +1,63 @@
+schema_version: 1
+artifact_id: 1045
+artifact_type: native-channel-and-package-static-acquisition-registration
+date: 2026-10-09
+status: registered-before-native-channel-and-package-acquisition
+parent: docs/validation-results/post2008-sst-vip-biophysical-dependency-assessment-1044.yaml
+parent_sha256: 39665ca7464eb5db8dea2150dee5650c0c8a8cd0215bd8f7356eb3f475981a9f
+dependency_manifest: results/sst-vip-biophysical-dependencies-1043/manifest.yaml
+dependency_manifest_sha256: cf9da60df08e7e7da9a076d4443c3b864399a97a33d0853edaea8a891ae93b96
+network_execution_authorized: false
+isolated_simulation_authorized: false
+parameter_fitting_authorized: false
+compile_or_import_native_code_authorized: false
+frozen_baseline_modified: false
+
+channels:
+  expected_unique_resources: 16
+  file_type: BiophysicalModelDescription
+  source_base: https://api.brain-map.org
+  path_format: /api/v2/well_known_file_download/{file_id}
+  order: ascending-file-id
+  maximum_bytes_per_file: 1048576
+  preserve_all_template_reference_metadata: true
+  native_attachment_policy: >-
+    Retain Product attachments and ar_association_key_name template references
+    exactly as returned. Do not reinterpret them as direct per-model attachments.
+  decode: UTF-8-source-text-only
+  inspection: inventory-NEURON-block-SUFFIX-or-POINT_PROCESS-and-dependency-constructs
+  source_text_inspection_is_not_channel_equation_validation: true
+
+packages:
+  models: all-25-registered-biophysical-model-ids
+  endpoint_format: https://api.brain-map.org/neuronal_model/download/{model_id}
+  order: ascending-model-id
+  maximum_compressed_bytes_per_package: 16777216
+  maximum_archive_entries: 1000
+  maximum_total_uncompressed_bytes: 67108864
+  maximum_manifest_json_bytes: 2097152
+  inspect_manifest_json_candidates_only: true
+  expected_manifest_basename: manifest.json
+  extract_archive_members: false
+  read_or_execute_native_script_members: false
+  reject_duplicate_absolute_or_parent_traversal_member_paths: true
+  require_unique_manifest_candidate_for_setup_resolution: true
+  record_model_type_axon_type_and_hoc_declarations_verbatim: true
+  missing_axon_mode: unresolved-not-a-default
+  archive_setup_identity_is_not_numerical_parity: true
+
+transport:
+  workers: 4
+  timeout_seconds: 30
+  retries_per_execution: 0
+  tls_verification_required: true
+  allowed_https_host: api.brain-map.org
+  unknown_redirect_host: reject
+  preserve_received_bytes_before_decoding_or_archive_validation: true
+  preserve_errors_for_every_attempt: true
+  failed_resource_replacement: prohibited
+
+output_directory: results/sst-vip-channel-package-acquisition-1046
+raw_outputs_committed: false
+license_boundary: Preserve source licenses and do not redistribute or relicense downloaded code or packages without an explicit source-terms review.
+next_gate: Independently verify all resource hashes and archive inventories, assess native setup completeness, then separately register native execution and physiology acquisition.

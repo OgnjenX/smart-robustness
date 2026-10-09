@@ -1,0 +1,43 @@
+schema_version: 1
+artifact_id: 1081
+artifact_type: isolated-sst-conductance-translation-implementation-preflight
+date: 2026-10-09
+parent: docs/validation-results/post2008-sst-conductance-translation-registration-1080.yaml
+parent_sha256: c8339ceee050b38b1cd840ceafaa64fa9654d5454b92f91486f5c9ec580663b1
+implementation_sha256:
+  src/smart_robustness/validation/conductance_glif_state_machine.py: 00ee8223723819ee4a7e51a3cd3f38a32a0b71319e97b96e856f2921134ae299
+  src/smart_robustness/validation/glif_conductance_input.py: b2e785bc0d8359108d90bdc0c9dec23e4092fcb7fb0f1562207aea4d354af651
+  tests/test_conductance_glif_state_machine.py: 556cd9accf45484c96f8e333e5d8a70db87446da3bb1cfcae8ce9fb8de0233df
+unchanged_current_only_source:
+  path: src/smart_robustness/validation/native_glif_state_machine.py
+  sha256: f2bc0062cf0465b11e7008879b83611cdc1a56ca34bc2c55f0337a3694333e1e
+implementation:
+  candidate: separate-explicit-copy-of-pinned-scheduling-with-step-held-input
+  native_extension: separate-wrapper-no-native-source-edits
+  reference_input_arithmetic: independent-of-candidate-effective-current-helper
+  reference_method_restoration: tested-on-success-and-exception
+  independent_control: closed-form-constant-conductance-passive-discrete-recurrence
+  adaptive_threshold: original-current-driven-method-with-same-step-held-input
+  native_execution_during_preflight: false
+checks:
+  command: .venv/bin/python -m pytest -q tests/test_conductance_glif_state_machine.py tests/test_native_glif_state_machine.py tests/test_native_glif_parity.py
+  passed: 52
+  repository_ruff: passed
+  diff_check: passed
+  full_regression_executed_this_stage: false
+interpretation: >-
+  Hand-derived and synthetic-fixture tests support the engineering translation.
+  They are not acquired-cell native-reference parity, biological response
+  validation, or SMART circuit survival evidence. The native wrapper contract
+  is tested with probes only at this stage. Retain all five SST candidates and
+  the unresolved VIP prerequisite.
+remaining_before_registered_execution:
+  - Implement the fixed 90-case checkpointed runner with all 360 attempts.
+  - Implement independent array reconstruction and exact-repeat verification.
+  - Test runner authorization, locking, source hashes and checkpoint integrity.
+  - Hash-seal the complete runner and verifier before acquired-cell outcomes.
+execution_seal: false
+acquired_cell_conductance_outcomes_observed: false
+network_execution_authorized: false
+frozen_baseline_modified: false
+raw_outputs_committed: false

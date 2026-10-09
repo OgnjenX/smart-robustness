@@ -1,0 +1,49 @@
+schema_version: 1
+artifact_id: 1042
+artifact_type: complete-biophysical-model-native-dependency-inventory-registration
+date: 2026-10-09
+status: registered-before-template-dependency-query
+parent: docs/validation-results/post2008-sst-vip-native-source-correction-assessment-1041.yaml
+parent_sha256: dc1d1f9d35935486e728f6e929f1f774ba0a63b1ca683c203f22b4781a26973a
+model_manifest: results/sst-vip-model-identity-1031/manifest.yaml
+model_manifest_sha256: c1b80ead6b26d1f412974a2a294d591ebfa84f41ecd24d44ce197ef7c8e65196
+parameter_manifest: results/sst-vip-parameter-acquisition-1034/manifest.yaml
+parameter_manifest_sha256: 76bfaee6321e97b3f0f2e9ab9237c8e84aef4b840fd4b239c6f5da4fe41d4fba
+network_execution_authorized: false
+isolated_simulation_authorized: false
+parameter_fitting_authorized: false
+frozen_baseline_modified: false
+
+scope:
+  models: all-25-inventoried-biophysical-models
+  selection: exact-previously-resolved-all-active-and-perisomatic-template-names
+  order: ascending-model-id
+  no_response_or_fit_based_exclusions: true
+  glif_models_are_not_dropped_from_program: true
+  original_111_specimen_cohort_and_42_no_model_cells_retained: true
+
+query:
+  endpoint: https://api.brain-map.org/api/v2/data/query.json
+  model: NeuronalModel
+  include: neuronal_model_template(well_known_files(well_known_file_type)),specimen(ephys_result(well_known_files(well_known_file_type)),neuron_reconstructions(well_known_files(well_known_file_type)),ephys_sweeps),well_known_files(well_known_file_type)
+  criteria: exact-25-model-ids-from-pinned-model-manifest
+  batch_size: 20
+  options: all-rows
+  schema_source: archived-BiophysicalApi.build_rma-from-pinned-SDK
+
+requirements:
+  - Archive each raw response and exact request, time, bytes and hash before validation.
+  - Require success, complete row counts, unique model identities and the exact requested model-id set.
+  - Reconcile specimen, template and parameter-file identity against the previous model inventory.
+  - Preserve all model-template file ids, types, paths and download links without importing or executing any file.
+  - Map each configured mechanism name to candidate template files by basename and report missing or ambiguous matches explicitly.
+  - Filename matching establishes a resource candidate, not equation equivalence; channel bytes must later be independently acquired and inspected.
+  - Record standard hoc dependencies from the inspected SDK, and do not assume that SDK-generated descriptions equal downloadable model package descriptions.
+  - Resolve axon_type from an authoritative native package/configuration before any reference execution; the corrected create_utils reads this field but the inspected create_manifest does not populate it.
+  - Template sharing must remain explicit; do not count shared mechanism files as independent model-specific physiological evidence.
+
+output_directory: results/sst-vip-biophysical-dependencies-1043
+raw_outputs_committed: false
+downloads_authorized_by_registration: metadata-only
+native_code_execution_authorized: false
+next_gate: Assess dependency identities and setup ambiguities, then register bounded channel/morphology/physiology acquisition and native-reference validation separately.

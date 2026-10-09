@@ -1,0 +1,58 @@
+schema_version: 1
+artifact_id: 1086
+artifact_type: retained-vip-source-availability-metadata-audit
+date: 2026-10-09
+sources:
+  results/sst-vip-cell-source-inventory-1028.yaml: f6d4ef1e801b9dfc101b7e037b2f63f0d27ee2168b86ffd734976b5c9dd812ad
+  results/sst-vip-parameter-acquisition-1034/manifest.yaml: 76bfaee6321e97b3f0f2e9ab9237c8e84aef4b840fd4b239c6f5da4fe41d4fba
+  results/sst-vip-physiology-eligibility-1066.yaml: df95b66f76974ce0e2a95e1bf59a4383cf6fddc215be63dd04ea145a0d4f1f73
+method: >-
+  Filter the retained inventory by included=true and targeting_class=Vip.
+  Join parameter-manifest source specimen IDs to that inventory, count all
+  published template families without using model outcomes, and check every
+  joined parameter payload hash. Join the preserved eligibility metadata by
+  specimen ID; count repeat and identity flags without reading response arrays.
+metadata_counts:
+  retained_Vip_specimens: 36
+  layers: {'2/3': 25, '5': 11}
+  specimens_with_retained_GLIF_maps: 23
+  specimens_without_public_model: 13
+  public_biophysical_all_active_models: 0
+  public_biophysical_perisomatic_models: 0
+  retained_GLIF_parameter_maps: 61
+  GLIF_template_counts:
+    1 Leaky Integrate and Fire (LIF): 23
+    3 LIF + Afterspike Currents (LIF-ASC): 23
+    2 LIF + Reset Rules (LIF-R): 5
+    4 LIF-R + Afterspike Currents (LIF-R-ASC): 5
+    5 LIF-R-ASC + Threshold Adaptation (LIF-R-ASC-A): 5
+  recognized_embedded_recording_identity: 13
+  primary_eligible_specimens: 13
+  primary_eligible_layers: {'2/3': 11, '5': 2}
+  eligible_Noise_2_sweep_counts:
+    0: 7
+    1: 2
+    2: 12
+    3: 4
+    4: 11
+scientific_boundary: >-
+  This is availability metadata, not physiological qualification. The completed
+  assessment 1078/1079 remains unchanged: no Vip combination passed its registered
+  gates, and nonpasses include reliability inconclusives as well as model-response
+  failures. No public biophysical VIP reference can be selected from this retained
+  cohort. The downloaded biophysical packages must not be mislabeled as VIP or
+  silently substituted because they are available for another targeting class.
+future_VIP_route_requirements:
+  - Identify an independently justified external VIP source or preregister an independent isolated-cell fitting protocol.
+  - Specify source identity, units, training/validation split, fixed fitting objective and physiological gates before new fitting.
+  - Do not select a source, family, objective or fit by SMART network performance.
+  - Keep original nonpassing and inconclusive outcomes immutable; do not lower their completed gates.
+  - Validate conductance translation and biological recruitment separately before explicit network use.
+  - Retain the full explicit SST/VIP endpoint; SST-only success cannot close it.
+response_arrays_read_for_this_audit: false
+new_source_downloaded: false
+new_parameter_fit_authorized: false
+new_VIP_simulation_authorized: false
+network_execution_authorized: false
+frozen_baseline_modified: false
+raw_outputs_committed: false

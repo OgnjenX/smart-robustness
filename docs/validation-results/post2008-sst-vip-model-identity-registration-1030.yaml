@@ -1,0 +1,62 @@
+schema_version: 1
+artifact_id: 1030
+artifact_type: sst-vip-complete-model-and-resource-identity-registration
+date: 2026-10-09
+status: registered-before-model-identity-resolution
+parent: docs/validation-results/post2008-sst-vip-source-inventory-assessment-1029.yaml
+parent_sha256: 0b332aad969d3811febdd76634ffc3d540db3c3d6a010c3af4fb9cab2a7d0a1d
+inventory: results/sst-vip-cell-source-inventory-1028.yaml
+inventory_sha256: f6d4ef1e801b9dfc101b7e037b2f63f0d27ee2168b86ffd734976b5c9dd812ad
+expected_specimens: 111
+network_execution_authorized: false
+isolated_simulation_authorized: false
+parameter_fitting_authorized: false
+frozen_baseline_modified: false
+
+source:
+  endpoint: https://api.brain-map.org/api/v2/data/query.json
+  query_model: Specimen
+  criteria: all-111-included-specimen-ids-from-hash-pinned-inventory
+  include: neuronal_models(neuronal_model_template,well_known_files(well_known_file_type))
+  options: all-rows
+  documentation: https://github.com/AllenInstitute/AllenSDK/blob/master/allensdk/api/queries/glif_api.py
+  template_filter: none
+  rationale: Resolve every model family rather than assuming that a generic GLIF count identifies a specific recruitment equation.
+
+protocol:
+  specimen_order: ascending-id
+  batch_size: 20
+  final_batch_size: 11
+  preserve_every_raw_response_before_validation: true
+  hash_and_record_exact_request_and_retrieval_time: true
+  require_success_and_complete_response_counts: true
+  require_exact_requested_specimen_id_set: true
+  duplicate_specimen_or_model_id: reject
+  no_model_specimens: retain-with-empty-model-list
+  template_identity: preserve-id-and-name-verbatim
+  model_identity: preserve-id-name-specimen-id-and-template
+  resource_identity: preserve-file-id-type-download-link-and-source-metadata
+  model_file_ids_are_not_successful_downloads: true
+  ambiguous_or_missing_fields: report-explicitly-never-infer-a-replacement
+  model_fit_or_explained_variance_values: not-used-for-selection
+  resource_presence_may_not_exclude_specimens: true
+  expected_strata: {Sst-L2/3: 16, Sst-L5: 59, Vip-L2/3: 25, Vip-L5: 11}
+  compare_resolved_model_counts_with_inventory: true
+  count_disagreement: report-source-drift-and-stop-before-candidate-selection
+  no_outcome_based_candidate_selection: true
+
+outputs:
+  directory: results/sst-vip-model-identity-1031
+  raw_response_per_batch: true
+  complete_manifest: true
+  ignored_raw_outputs_must_not_be_committed: true
+  assessment_required_before_candidate_protocol: true
+
+execution_boundaries:
+  - This registration authorizes read-only model and file metadata acquisition, not download or execution of untrusted model code.
+  - Large electrophysiology, morphology and model archives require a separate resource acquisition manifest after model identities are resolved.
+  - Downloaded native model code must be inspected and isolated before any separately registered reference execution.
+  - GLIF recruitment models must not be described as biophysical HH or assumed equivalent to the existing GIF backend.
+  - No model from another cortical area, layer or targeting class may silently fill a missing resource.
+  - Explicit SST-only representation validation precedes VIP-to-SST network intervention.
+  - All prior SST failures and the frozen baseline remain unchanged.

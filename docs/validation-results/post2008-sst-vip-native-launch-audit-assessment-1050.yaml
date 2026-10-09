@@ -1,0 +1,74 @@
+schema_version: 1
+artifact_id: 1050
+artifact_type: pinned-native-launch-static-audit-assessment
+date: 2026-10-09
+status: official-launch-contract-resolved-model-specific-fit-mode-unverified
+registration: docs/validation-results/post2008-sst-vip-native-launch-audit-registration-1048.yaml
+implementation_commit: bc46569
+manifest: results/sst-vip-native-launch-audit-1049/manifest.yaml
+manifest_sha256: b9227874296ed1c2e5fcfa8f77384c668bd67048e54d8a32f3a0a78090ae7209
+manifest_bytes: 6625
+source_revision: a56bd8ea7613a812334602b64746cdd30c325a96
+source_files: 6
+source_raw_bytes: 44675
+failed_files: 0
+frozen_baseline_modified: false
+native_source_executed: false
+raw_outputs_committed: false
+
+independent_verification:
+  passed: true
+  method: >-
+    Independently reparse the pinned tree, check the complete revision and each
+    exact source path, recompute all six raw SHA256 hashes and Git blob SHA1
+    identities, verify byte limits, exact request/final URLs and provenance
+    sidecars, and parse Python syntax without importing the sources.
+  focused_launch_archive_and_source_tests_passed: 19
+  repository_ruff_check_passed: true
+  full_regression_suite_rerun: false
+  native_runtime_or_physiology_validated: false
+
+launch_contract:
+  runner_source: results/sst-vip-native-launch-audit-1049/source-00.txt
+  runner_load_description_lines: [196, 225]
+  cli_axon_setting_lines: [233, 234]
+  description_source: results/sst-vip-native-launch-audit-1049/source-01.txt
+  append_semantics_lines: [49, 70]
+  documented_usage_source: results/sst-vip-native-launch-audit-1049/source-04.txt
+  documented_usage_lines: [103, 107]
+  default_axon_type: truncated
+  explicit_supported_axon_types: [stub, truncated]
+  mechanism: >-
+    The official runner calls load_description before execution. After loading
+    the manifest/parameter description, it appends an axon_type dictionary to
+    the biophys section. Description.update_data appends the supplied dictionary
+    as a new section entry. Thus a package with one biophys record gains the
+    second entry required by create_utils. This occurs for perisomatic dispatch
+    too, even though Utils does not use the all-active axon selector.
+  documentation_distinction: >-
+    The pinned documentation runs perisomatic and legacy all-active models with
+    no axon flag, and describes newer all-active models with an explicit stub
+    flag. This establishes supported launch behavior, not which convention
+    generated every registered model's fit.
+  direct_factory_call_on_unprepared_manifest_is_not_official_launch: true
+  downloaded_manifest_mutation_required: false
+  model_specific_historical_fit_mode_verified: false
+  source_code_patch_required: false
+
+additional_source_limitations:
+  - The pinned all-active test file calls AllActiveUtils(description) without the required axon_type argument in the inspected current constructor. It cannot be treated as an executable parity test without auditing its fixture and version lineage.
+  - The public launch contract resolves the missing-manifest-field question; it does not validate native runtime versions, morphology reconstruction, channel equations or held-out physiology.
+  - Source NWB files must remain immutable because the runner prepares separate output files and later saves simulated traces.
+
+interpretation:
+  - Assessment 1047's missing fields remain a true package observation; the broader implication that absence alone blocks official launch is narrowed by this complete source trace.
+  - Explicitly registering an official legacy-launch reference would be different from claiming recovery of each model's historical fitted axon convention.
+  - No runtime default is silently substituted, no fit is performed, and no SMART network result is used to choose an axon mode.
+
+next_step:
+  - Preregister bounded experimental physiology acquisition for the complete eligible cohort and preserve sweeps, identities and failures without selecting by model performance.
+  - Keep independently testable GLIF native reproduction separate from the unresolved all-active historical fit convention.
+  - Before biophysical execution, audit channel equations/runtime and register explicit launch modes and interpretation limits, resolving model-specific provenance where available.
+network_execution_authorized: false
+isolated_simulation_authorized: false
+parameter_fitting_authorized: false

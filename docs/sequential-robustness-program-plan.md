@@ -121,8 +121,12 @@ phase specifications below retain the full intended program scope.
   while preserving the original 404 records.
   [Acquisition assessment 1047](validation-results/post2008-sst-vip-channel-package-acquisition-assessment-1047.yaml)
   independently verifies all 16 native channel files and 25 model packages.
-  None of the package manifests declares an axon mode; the all-active native
-  setup boundary remains unresolved rather than defaulted. Downloaded channel
+  None of the package manifests declares an axon mode.
+  [Launch audit 1050](validation-results/post2008-sst-vip-native-launch-audit-assessment-1050.yaml)
+  resolves the official configuration path: the runner appends an axon setting
+  before dispatch. Its documented legacy default is not proof of each model's
+  historical fit mode, which remains unverified. No native code was executed
+  and no default was silently substituted. Downloaded channel
   equations and native runtime compatibility remain unvalidated.
   Experimental resource acquisition, isolated reference and held-out
   physiology validation, explicit SST recruitment and VIP network tests

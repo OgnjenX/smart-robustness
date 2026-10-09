@@ -1,0 +1,42 @@
+schema_version: 1
+artifact_id: 1101
+artifact_type: outcome-blind-database-acquisition-and-schema-only-registration
+date: 2026-10-09
+parent_assessment: docs/validation-results/post2008-synphys-object-headers-assessment-1100.yaml
+url: https://allen-synphys.s3-us-west-2.amazonaws.com/synphys_r2.1_small.sqlite
+expected_bytes: 176771072
+expected_etag: '"46d336fbe4f8200e08d40e64c3dd5093-22"'
+output_directory: results/synphys-small-schema-1102
+certificate_authority_bundle: /etc/ssl/cert.pem
+certificate_authority_sha256: 9dae8d76e55cb08991f2b672d58999ea15560d910759c16b544f843bdffbb994
+maximum_seconds: 180
+minimum_free_bytes: 1073741824
+maximum_requests: 1
+database_download_authorized: true
+schema_only_reads_authorized: true
+numerical_or_response_row_reads_authorized: false
+parameter_fitting_authorized: false
+network_execution_authorized: false
+selection_basis: >-
+  The exact r2.1 small variant is the smallest catalogued r2.1 object and
+  therefore the first bounded schema audit, not a choice based on outcomes.
+  Table coverage is unresolved; presence alone cannot establish populated
+  fields or suitability. No automatic medium/full fallback is authorized.
+transport_policy: >-
+  Verified TLS; one GET with If-Match for the observed object ETag, no redirects
+  or retry. Stream at most expected_bytes plus one byte, retain partial data
+  and failures, require exact length and SQLite signature before schema reads.
+  ETag is not a cryptographic checksum. Freeze an independently checked local
+  SHA256; no source-declared whole-file checksum is available.
+schema_policy: >-
+  Open SQLite read-only immutable with query_only. List table definitions and
+  PRAGMA table_info only. Authorizer rejects every non-schema table read.
+  No row counts, metadata-table values, cell classifications, QC values,
+  synaptic amplitudes, dynamics or trace arrays may be queried in this phase.
+next_gate: >-
+  After schema audit, register exact nonsynaptic species/area/layer/class and
+  QC inventory fields and queries before reading values. Numerical outcome
+  extraction, fitting/validation split, uncertainty and isolated recruitment
+  tests require a subsequent preregistration. Missing fields stop promotion.
+VIP_prerequisite_resolved: false
+frozen_baseline_modified: false

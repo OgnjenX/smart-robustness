@@ -1,0 +1,65 @@
+schema_version: 1
+artifact_id: 1070
+artifact_type: preexecution-lossless-storage-and-attempt-checkpoint-design
+date: 2026-10-09
+parent: docs/validation-results/post2008-sst-vip-physiology-runner-preflight-1069.yaml
+status: implemented-and-synthetic-tested-not-authorized-for-real-response-execution
+storage_policy:
+  representation: lossless-compressed-numeric-NPZ-allow-pickle-false
+  identity: SHA256-of-dtype-shape-and-exact-C-order-array-bytes
+  dtype_shape_endianness_nan_payload_and_signed_zero: preserved
+  repeat_deduplication: >-
+    Independently hash each attempt's fields. Reuse an existing blob only after
+    verifying stored archive fields, content identity and exact array bytes.
+    Different contents retain separate blobs. Every attempt has its own receipt
+    even when all referenced blobs are shared. Do not infer repeat equivalence
+    from a saved native0 result or replace native1 execution with a copy.
+  publication: same-filesystem-exclusive-hard-link-after-file-fsync-and-directory-fsync
+  previous_results_overwritten: prohibited
+  concurrent_writers: exclusive-nonblocking-directory-lock
+  disk_reserve_GiB: 100
+  guard: >-
+    Before starting each simulator attempt, require free space for reserve plus
+    a conservative full-length float64 voltage/threshold/ASC and five spike
+    arrays estimate, 1 percent overhead and 1 MiB header/receipt allowance.
+    Check space again before every blob and receipt publication. Assume neither
+    deduplication nor compression benefit in admission checks. Stop resumably
+    before reserve exhaustion; preserve cases and previously committed evidence.
+  space_for_entire_509_case_matrix_guaranteed: false
+attempt_policy:
+  parameter_and_stimulus_isolation: fresh-copies-per-simulator-invocation
+  receipt_identity: sealed-context-full-parameters-and-exact-stimulus-content-hash
+  complete_resume: validate-context-field-coverage-and-every-array-without-resimulation
+  simulator_exception: retained-terminal-attempt-not-retried
+  started_marker: published-before-simulator-call
+  interrupted_attempt_without_terminal_receipt: >-
+    Preserve started marker and any blobs. Reject automatic rerun; assess the
+    interruption before separately authorizing another attempt. A checkpoint
+    interruption does not establish a scientific model failure.
+  corrupt_receipt_or_blob: reject-never-overwrite-or-resimulate-to-hide-it
+validation:
+  focused_tests_passed: 181
+  storage_and_attempt_tests_passed: 14
+  repository_ruff_check_passed: true
+  full_regression_suite_rerun: false
+  synthetic_only: true
+  controls:
+    - Exact repeat deduplication retains distinct attempt identities.
+    - Different NaN payloads, signed zero, shapes and dtypes have different identities.
+    - Scalars, empty arrays, strided arrays and big-endian arrays round-trip bitwise.
+    - Corrupt blobs are rejected and not overwritten.
+    - Low disk capacity prevents new blob creation.
+    - Exclusive writer locks and immutable checkpoint context guards.
+    - Completed attempts resume without invoking the simulator.
+    - Simulator exceptions are preserved without retries.
+    - Interrupted writes retain started markers and reject automatic resimulation.
+next_step: >-
+  Integrate the complete 509-case physiology runner, native/candidate repeats,
+  fixed grouping/scoring and independent raw-array reconstruction. Seal runner
+  and this exact storage implementation before any experimental response read.
+  Do not shrink specimen/model/sweep coverage to fit capacity or recover a pass.
+experimental_responses_read: false
+native_model_execution_performed: false
+physiological_validation_complete: false
+network_execution_authorized: false
+frozen_baseline_modified: false

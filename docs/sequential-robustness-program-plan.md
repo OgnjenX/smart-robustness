@@ -128,6 +128,10 @@ phase specifications below retain the full intended program scope.
   historical fit mode, which remains unverified. No native code was executed
   and no default was silently substituted. Downloaded channel
   equations and native runtime compatibility remain unvalidated.
+  [Physiology size assessment 1053](validation-results/post2008-sst-vip-physiology-size-assessment-1053.yaml)
+  verifies all 111 NWB and 35 morphology file sizes (5,144,045,706 bytes total)
+  against the fixed storage limits, retaining 80 missing-morphology specimens.
+  This HEAD-only preflight does not download experimental traces.
   Experimental resource acquisition, isolated reference and held-out
   physiology validation, explicit SST recruitment and VIP network tests
   remain outstanding. No new cell execution or fitting has occurred.

@@ -1,0 +1,64 @@
+schema_version: 1
+artifact_id: 1053
+artifact_type: full-cohort-physiology-size-preflight-assessment
+date: 2026-10-09
+status: complete-size-admission-passed-awaiting-body-acquisition
+registration: docs/validation-results/post2008-sst-vip-physiology-size-registration-1051.yaml
+implementation_commit: f846ed7
+manifest: results/sst-vip-physiology-size-preflight-1052/manifest.yaml
+manifest_sha256: 6919e60ab0074e89f31984060cf3237bc494d8bbf819cc64d48d63b64ee28e4c
+manifest_bytes: 310070
+raw_outputs_committed: false
+frozen_baseline_modified: false
+
+inventory:
+  specimens: 111
+  nwb_files: 111
+  morphology_files: 35
+  morphology_available_specimens: 31
+  missing_morphology_specimens: 80
+  head_requests: 146
+  sizes_resolved: 146
+  unresolved_or_failed_requests: 0
+  total_content_length_bytes: 5144045706
+  largest_nwb_bytes: 126899190
+  largest_morphology_bytes: 761520
+  free_disk_bytes_at_preflight: 306080661504
+  size_admission_passed: true
+  physiology_bodies_downloaded: false
+  cell_models_executed: false
+
+independent_verification:
+  passed: true
+  method: >-
+    Reparse the preserved physiology metadata and independently reconstruct all
+    NWBDownload and 3DNeuronReconstruction references. Compare the full sorted
+    resource records, all 111 specimen ids and the 80 missing-morphology records
+    against the preflight plan. Check all 146 sidecars, exact source/final URLs,
+    HEAD methods, HTTP 200 statuses and single positive Content-Length headers.
+    Independently recompute counts, total bytes, per-type maxima and every
+    registered storage admission condition. No resource selector or content
+    length helper is reused in this independent reconstruction.
+  manifest_identity_verified: true
+  preflight_exit_code: 0
+  focused_source_and_receipt_tests_passed: 93
+  receipt_safeguard_tests_passed: 9
+  repository_ruff_check_passed: true
+  full_regression_suite_rerun: false
+  github_ci_verified_for_this_commit: false
+
+interpretation:
+  - The complete resource cohort fits the fixed download bounds without dropping a specimen or choosing a reconstruction by biological response.
+  - Content-Length and ETag headers are acquisition metadata, not cryptographic source-integrity guarantees or physiological validation.
+  - Multiple reconstructions remain separate records, not independent cell samples.
+  - Server resources can change after preflight; the later downloader must compare fresh headers, enforce byte limits and preserve failed receipts rather than silently accept changed evidence.
+  - No recorded trace, morphology body, native model execution or physiological fit is produced by this HEAD-only step.
+
+next_step:
+  - Register checkpointed body acquisition of every resolved resource, keeping experimental NWB files immutable and preserving incomplete receipts, failures and all missing morphologies.
+  - Validate raw hashes, complete lengths, NWB structure and morphology identities independently before registering held-out physiological validation.
+  - Keep source acquisition separate from isolated-cell promotion and later SST/VIP network execution.
+physiology_body_download_authorized: false
+network_execution_authorized: false
+isolated_simulation_authorized: false
+parameter_fitting_authorized: false

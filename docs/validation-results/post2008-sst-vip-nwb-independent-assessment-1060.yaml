@@ -1,0 +1,101 @@
+schema_version: 1
+artifact_id: 1060
+artifact_type: independently-reconstructed-nwb-metadata-and-source-limits-assessment
+date: 2026-10-09
+status: metadata-reconstructed-embedded-identity-partially-unresolved
+registration: docs/validation-results/post2008-sst-vip-nwb-schema-registration-1057.yaml
+inspector_commit: 0866e53
+terminal_snapshot: docs/validation-results/post2008-sst-vip-nwb-schema-terminal-snapshot-1059.yaml
+manifest: results/sst-vip-nwb-schema-audit-1058/manifest.yaml
+manifest_sha256: 79930d9552b278e9c6d584e165458be8305c9e4a6e141dbfd4348c32e5a91053
+manifest_bytes: 14587629
+frozen_baseline_modified: false
+raw_outputs_committed: false
+
+independent_verification:
+  metadata_reconstruction_passed: true
+  command: .venv/bin/python scripts/verify_sst_vip_nwb_schema.py
+  terminal_exit_code: 0
+  method: >-
+    Without importing the inspector or its metadata helpers, recheck lineage,
+    sealed implementation hashes, file sidecars and full source-cohort coverage.
+    Reopen every NWB file read-only, independently enumerate Sweep and Experiment
+    epochs, reconstruct all available series shapes/dtypes, units, conversions,
+    starting-time rates and index/count values, and compare against the complete
+    audit. Reconstruct generated_by metadata and literal/decoded pipeline
+    interpretations. Hash all files before and after inspection. Retain every
+    source sweep and independently classify the missing records.
+  files: 111
+  available_sweeps: 7586
+  missing_metadata_sweeps: 794
+  all_raw_hashes_unchanged: true
+  trace_arrays_read: false
+  focused_source_and_schema_tests_passed: 127
+  repository_ruff_check_passed: true
+  full_regression_suite_rerun: false
+  github_ci_verified_for_this_commit: false
+
+missing_sweep_classification:
+  source_stimulus_name: {Test: 794}
+  source_stimulus_units: {Volts: 716, mV: 78}
+  affected_specimens: 111
+  non_Test_metadata_sweeps_absent_from_files: 0
+  available_Test_sweeps: 117
+  omitted_records_removed_or_replaced: false
+  omission_reason_or_quality_status_verified: false
+  interpretation: >-
+    All missing records are source-labelled voltage Test sweeps. This narrows
+    the missing-data boundary; it does not prove why they were omitted or that
+    they failed quality checks. A later physiological protocol must explicitly
+    define stimulus/units eligibility before reading responses or selecting
+    training/holdout data. Missing and available Test records remain preserved.
+
+available_source_protocol_counts:
+  Long Square: 2326
+  Short Square: 1533
+  Ramp: 315
+  Noise 1: 277
+  Noise 2: 257
+  Test: 117
+  Short Square - Triple: 1145
+  Short Square - Hold -60mV: 260
+  Square - 2s Suprathreshold: 627
+  Short Square - Hold -80mV: 310
+  Square - 0.5ms Subthreshold: 227
+  Short Square - Hold -70mV: 94
+  Ramp to Rheobase: 98
+
+embedded_identity:
+  explicit_specimen_and_ephys_fields_missing_files: 111
+  recognized_identifier_ephys_ids_matching_public_attachments: 62
+  unresolved_opaque_or_P_edit_identifiers: 49
+  recognized_identifier_attachment_mismatches: 0
+  public_attachment_provenance_retained_for_all_files: true
+  embedded_identity_validation_complete: false
+  identifier_pattern: 'Allen Institute for Brain Science, Ephys Result (digits)'
+  first_independent_attempt_exit_code: 1
+  first_independent_attempt_error: unrecognized embedded identifier
+  resolution: >-
+    The initial identity interpretation incorrectly demanded a recognizable
+    embedded id from every file. The complete registered metadata audit requires
+    missing identities to remain unresolved, not inferred. The verifier now
+    records all 49 unrecognized identifiers alongside their public attachment
+    provenance, while still rejecting any recognized id that disagrees with its
+    attachment. This is not a relaxation of a physiological promotion gate and
+    does not claim that opaque ids independently validate specimen identity.
+
+pipeline_version:
+  decoded: {"1.0": 111}
+  literal_pinned_SDK: {"0.0": 111}
+  interpretations_differ: true
+  conversion_branch_differs_for_observed_versions: false
+  experimental_metadata_or_scaling_modified: false
+
+next_step:
+  - Preregister native GLIF synthetic equation/reset/reference parity before any cell execution, separately from fitting and SMART network behavior.
+  - Specify current-clamp stimulus eligibility, source-attachment identity policy and held-out physiology gates before response-based analysis or parameter fitting.
+  - Keep voltage Test omissions, 49 unresolved embedded identifiers and biophysical axon/morphology provenance limitations visible in all later assessments.
+cell_simulation_performed: false
+parameter_fitting_performed: false
+physiological_validation_performed: false
+network_execution_authorized: false

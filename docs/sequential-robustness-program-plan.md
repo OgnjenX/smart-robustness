@@ -143,7 +143,15 @@ phase specifications below retain the full intended program scope.
   interpretations select the same conversion branch for this dataset.
   Explicit specimen/ephys identity fields are absent; attachment/identifier
   reconciliation remains required. No trace arrays or cell models were run.
-  Independent NWB schema/sweep/unit verification, isolated reference and held-out
+  [Independent assessment 1060](validation-results/post2008-sst-vip-nwb-independent-assessment-1060.yaml)
+  reconstructs all 7,586 available sweeps without reading trace arrays.
+  All 794 absent records are source-labelled voltage Test sweeps; no non-Test
+  metadata sweep is absent. Sixty-two embedded ephys identifiers match public
+  attachments; 49 opaque/P.edit identifiers remain unresolved, with provenance
+  preserved rather than inferred. Both observed version interpretations still
+  select the same conversion branch. Independent metadata reconstruction is
+  not physiological promotion.
+  Native isolated reference and held-out
   physiology validation, explicit SST recruitment and VIP network tests
   remain outstanding. No new cell execution or fitting has occurred.
 - **Final synthesis:** eligible sealed interactions, independent multi-seed

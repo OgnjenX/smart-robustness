@@ -222,6 +222,19 @@ phase specifications below retain the full intended program scope.
   summary reconciliation are required before baseline reconstruction. Two
   metadata-authorizer engineering stops remain documented and preserved;
   neither changes scientific gates or licenses network fitting.
+  [Medium acquisition registration 1130](validation-results/post2008-synphys-medium-acquisition-registration-1130.yaml)
+  is sealed and its single download has started. Independent streamed
+  object/schema verification and selected-record reconciliation are
+  [implemented and synthetic-tested](synphys-release-reconciliation-design.md),
+  but real-source equivalence and baseline joins are not established.
+  [PSP semantics audit 1136](validation-results/post2008-synphys-psp-semantics-audit-1136.yaml)
+  identifies the normalized PSP component, exponential baseline, and unpinned
+  manuscript dependency. A date-bounded reference and current dependency
+  agree on the analytic component but use different numerical inverse
+  implementations. The historical fitting dependency remains unresolved;
+  future forward fitting must declare its numerical contract explicitly.
+  Thirty-six independent synthetic peak-relation checks pass, not a
+  historical optimizer reproduction or biological promotion.
 - **Final synthesis:** eligible sealed interactions, independent multi-seed
   confirmation, closure of source/representation limitations, reproducible
   release artifacts, and the program-wide completion audit remain outstanding.

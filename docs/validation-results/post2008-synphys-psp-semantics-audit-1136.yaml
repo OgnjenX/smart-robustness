@@ -1,0 +1,94 @@
+schema_version: 1
+artifact_id: 1136
+artifact_type: static-PSP-component-and-dependency-provenance-audit
+date: 2026-10-09
+status: analytic-component-semantics-established-historical-dependency-unresolved
+parent_audits:
+  - docs/validation-results/post2008-synphys-response-state-audit-1113.yaml
+  - docs/validation-results/post2008-synphys-latency-mapping-audit-1117.yaml
+primary_sources:
+  manuscript_environment:
+    url: https://github.com/AllenInstitute/aisynphys/blob/545a990ee171e6c0d23dd4bba413e1ccbf2f0853/manuscript-environment.yml
+    sha256: 281267d1a35bd0cf1075e05bc3ab2b683506c4c4fe8a3bb94a60f01dd49937d6
+  average_fit:
+    url: https://github.com/AllenInstitute/aisynphys/blob/545a990ee171e6c0d23dd4bba413e1ccbf2f0853/aisynphys/avg_response_fit.py
+    sha256: bf14570a605082d4943e941c0c0b1c7c8ed2584076342f447313414472ae957a
+  resting_selection:
+    url: https://github.com/AllenInstitute/aisynphys/blob/545a990ee171e6c0d23dd4bba413e1ccbf2f0853/aisynphys/resting_state.py
+    sha256: d9d09574416afe640ab30d7d0fa993ee5144825a093b04621e0e856222d11d9d
+  contemporary_PSP_implementation:
+    revision: 9711704cb4ecfab82905a88c4f96e10587a11fa6
+    url: https://github.com/AllenInstitute/neuroanalysis/blob/9711704cb4ecfab82905a88c4f96e10587a11fa6/neuroanalysis/fitting/psp.py
+    sha256: a9d72f690d635b6f901d15e08e647dd6afc709ac20fe59c81ae95317b79030fe
+  date_bounded_PSP_reference:
+    revision: e5b412873a02edb64afa53d70409bc9d097ecd9c
+    commit_date_UTC: '2022-02-03T00:56:34Z'
+    selection_query: latest-default-branch-commit-before-2023-01-26T00:00:00Z
+    selection_is_historical_dependency_proof: false
+    url: https://github.com/AllenInstitute/neuroanalysis/blob/e5b412873a02edb64afa53d70409bc9d097ecd9c/neuroanalysis/fitting/psp.py
+    sha256: e4f81c9485490a89d262d43731e04c351cd4b7bc09e25eb4452389e225e05b43
+static_findings:
+  component:
+    elapsed_time: u-equals-time-minus-xoffset
+    for_u_negative: PSP-component-zero
+    for_u_nonnegative: amplitude-times-f-of-u-divided-by-f-of-rise_time
+    shape_f: '(1-exp(-u/rise_tau))**rise_power * exp(-u/decay_tau)'
+    peak_time_relation: 'rise_time = rise_tau * log(1 + rise_power * decay_tau / rise_tau)'
+    amplitude: signed-peak-of-normalized-PSP-component-not-necessarily-peak-of-total-fitted-trace
+    response_rise_time: onset-to-component-peak-not-rise_tau-or-conductance-rise-time
+    finite_positive_tau_domain: '0 < rise_time < rise_power * decay_tau'
+  fitting_defaults_at_both_inspected_revisions:
+    rise_power: fixed-at-2
+    exponential_baseline_enabled_by_default: true
+    stacked_trace: constant-offset-plus-PSP-component-plus-exponential-baseline
+    baseline_term: 'exp_amp * exp(-(time-xoffset)/exp_tau)'
+  pinned_aisynphys_call:
+    alignment: presynaptic-spike-aligned-postsynaptic-traces
+    baseline_subtraction_requested: true
+    averaging: trace-list-mean
+    baseline_like_psp: true
+    baseline_consequence_for_inspected_dependencies: exp_tau-constrained-to-decay_tau-and-baseline-amplitude-sign-constrained-when-fit-sign-is-nonzero
+    weighting: factor-3-between-latency-window-start-and-window-end-plus-4ms
+    resting_init: inherited-synapse-PSP-or-PSC-rise-and-decay-guesses-when-present
+  dependency_boundary:
+    manuscript_neuroanalysis_requirement: unversioned-git-URL-without-commit-or-tag
+    historical_fitting_revision_recovered: false
+    older_inverse_rise_tau: scipy-fsolve-of-peak-time-relation
+    contemporary_inverse_rise_tau: Lambert-W-minus-one-branch-with-ratio-capped-at-0.99999
+    versions_numerically_identical: not-established
+    published_invalid_domain_values_repaired: false
+interpretation:
+  - Agreement of two inspected implementations on formula and defaults is useful provenance, not proof of the release-generation environment.
+  - Preserve missing ic_latency and the separate shared-latency composite; this audit does not recover a rested xoffset.
+  - Reconstructing a normalized PSP component is not reconstructing the full average waveform or identifying a unique synaptic conductance.
+  - Missing baseline exponential and constant-offset terms must not be silently set to zero for full-waveform comparisons.
+  - Actual recording baselines, their dispersion and experimental eligibility still require independently verified selected-release reconciliation and a separate baseline-join registration.
+  - Do not apply a numerical ratio cap to repair source kinetics; invalid or unresolved domains must be retained as failures under a future explicit contract.
+  - A future fit must declare its waveform semantics and numerical inverse explicitly rather than claiming historical optimizer parity.
+next_steps:
+  - Finish and independently verify the registered medium acquisition without duplicate downloads.
+  - Publish the acquisition assessment and seal selected-summary reconciliation before real medium row queries.
+  - Register original-pulse-to-recording baseline reconstruction without nominal-holding substitution.
+  - Only then seal a source-semantic forward-model fitting protocol, including component versus full-waveform endpoints and uncertainty.
+source_code_executed: false
+experimental_values_newly_read: false
+parameter_fitting_performed: false
+cell_or_network_execution_performed: false
+frozen_baseline_modified: false
+source_code_archived_locally: false
+source_identity_evidence: public-GitHub-API-base64-content-decoded-and-SHA256-hashed-with-static-AST-inspection-only
+independent_analytic_checks:
+  test: tests/test_synphys_psp_semantic_audit.py
+  synthetic_cases: 36
+  rise_powers: [1.0, 2.0, 3.0]
+  decay_seconds: [0.004, 0.02, 0.05]
+  rise_time_over_power_times_decay: [0.01, 0.1, 0.5, 0.9]
+  method: independent-dimensionless-bracketed-root-of-peak-time-relation-plus-zero-log-derivative-and-neighbor-peak-checks
+  source_function_imported: false
+  fit_to_experimental_data: false
+  historical_numerical_parity_claimed: false
+engineering_checks:
+  Synphys_focused_tests_passed: 211
+  repository_ruff: passed
+  diff_whitespace: passed
+  full_repository_regression_rerun: false

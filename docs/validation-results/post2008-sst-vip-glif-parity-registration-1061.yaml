@@ -1,0 +1,59 @@
+schema_version: 1
+artifact_id: 1061
+artifact_type: native-glif-synthetic-reference-parity-registration
+date: 2026-10-09
+parent: docs/validation-results/post2008-sst-vip-nwb-independent-assessment-1060.yaml
+parent_sha256: f045c1ccae29942c54492fbdf9a1956c9b5933e4b258ceb64ed89b1ebb229cea
+parameter_manifest: results/sst-vip-parameter-acquisition-1034/manifest.yaml
+parameter_manifest_sha256: 76bfaee6321e97b3f0f2e9ab9237c8e84aef4b840fd4b239c6f5da4fe41d4fba
+native_neuron_source: results/sst-vip-native-resource-audit-1037/source-00.txt
+native_neuron_sha256: 12361de0560ca350a8b6f4e32a18bff8c7372ff7c8e008f361a93859574fdcd8
+native_methods_source: results/sst-vip-native-resource-audit-1037/source-01.txt
+native_methods_sha256: f6df3a9c900c8a60fcb663a86aea1f5270c0ca5caecabbb3c27fdc97972e5106
+cohort: all-227-registered-GLIF-parameter-maps-without-refitting
+reference_import_policy: >-
+  Execute pinned numerical definitions only after a separate implementation
+  seal. The neuron module's two serialization imports (simplejson as json and
+  allensdk.core.json_utilities as ju) may be omitted only after an AST audit
+  confirms their names are used solely in GlifNeuron.__str__. Do not call
+  __str__ or serialization. Preserve every other AST node and all numerical
+  functions unchanged. Load the pinned methods in an isolated process-local
+  module namespace; do not install or alias a replacement AllenSDK package.
+candidate: independently-implemented-native-GLIF-state-machine-not-project-GIF-backend
+synthetic_protocol:
+  samples_per_stimulus: 2000
+  source_parameter_dt_and_spike_cut_length: unchanged
+  current_scale: (coeffs.G / R_input) * (coeffs.th_inf * th_inf - El)
+  stimuli:
+    zero: all-zero-current
+    subthreshold: constant-0.5-times-current-scale
+    step: zero-before-sample-200-then-2-times-current-scale
+    pulses: alternate-100-sample-blocks-of-2-times-current-scale-and-zero-starting-high
+  source_parameter_cases: 908
+  controlled_fixture_families: [LIF, LIF-R, LIF-ASC, LIF-R-ASC, LIF-R-ASC-A]
+  controlled_fixture_cut_lengths: [0, 3]
+  controlled_fixture_cases: 40
+  fixture_parameters_and_runner_must_be_sealed_before_execution: true
+gates:
+  finite_values: {relative_tolerance: 1.0e-10, absolute_tolerance: 1.0e-12}
+  nan_masks: exact
+  spike_sample_indices: exact
+  spike_grid_times: exact
+  interpolated_spike_fields: same-finite-tolerance-and-exact-nan-masks
+  deterministic_repeat: exact-all-fields
+  native_exception_or_bad_reset_stop: retain-not-replace-or-tune
+  native_exception: not-a-passing-numerical-parity-case
+  coverage: report-every-case-and-every-family-no-exclusion
+  native_quirks: >-
+    Preserve old-ASC voltage input, strict greater-than threshold, reset order,
+    cut-length-plus-one advancement, NaN windows, end-of-trace clipping,
+    native interpolated-time/voltage conventions and bad-reset tail/stop.
+    A physically preferable convention is not a parity fix.
+  tolerance_amendment_after_outcomes: prohibited
+output_directory: results/sst-vip-glif-native-parity-1062
+execution_requires_separate_seal: true
+native_reference_execution_authorized_now: false
+recorded_experimental_responses_read: false
+parameter_fitting_authorized: false
+network_execution_authorized: false
+frozen_baseline_modified: false

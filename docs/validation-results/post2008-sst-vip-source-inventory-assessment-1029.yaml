@@ -1,0 +1,66 @@
+schema_version: 1
+artifact_id: 1029
+artifact_type: sst-vip-independent-cell-source-availability-assessment
+date: 2026-10-09
+status: complete-metadata-inventory-model-identities-unresolved
+registration: docs/validation-results/post2008-sst-vip-cell-source-inventory-registration-1027.yaml
+implementation_commit: ec06e01
+inventory: results/sst-vip-cell-source-inventory-1028.yaml
+inventory_sha256: f6d4ef1e801b9dfc101b7e037b2f63f0d27ee2168b86ffd734976b5c9dd812ad
+raw_metadata: results/sst-vip-cell-source-inventory-1028.raw.json
+raw_metadata_sha256: c5e466bee1c9d0b112ef046929c68cae54846cdf8681cb5e059ae7284295669e
+raw_metadata_bytes: 3975943
+raw_results_committed: false
+network_execution: false
+isolated_simulation: false
+parameter_fitting: false
+frozen_baseline_modified: false
+
+execution:
+  initial_attempt: failed-before-response-certificate-verification
+  retry: success-with-existing-system-CA-bundle
+  tls_verification_disabled: false
+  certificate_environment: SSL_CERT_FILE=/etc/ssl/cert.pem
+  source_response_complete: true
+  total_records: 2333
+  included_records: 111
+  excluded_records_with_explicit_reasons: 2222
+
+availability:
+  # Counts are specimens with resources, not numbers of models or disjoint groups.
+  - {class: Sst, layer: '2/3', eligible: 16, ephys_file_ids: 16, morphology_file_ids: 9, all_active_model_available: 5, perisomatic_model_available: 6, glif_model_available: 9}
+  - {class: Sst, layer: '5', eligible: 59, ephys_file_ids: 59, morphology_file_ids: 16, all_active_model_available: 6, perisomatic_model_available: 8, glif_model_available: 32}
+  - {class: Vip, layer: '2/3', eligible: 25, ephys_file_ids: 25, morphology_file_ids: 6, all_active_model_available: 0, perisomatic_model_available: 0, glif_model_available: 17}
+  - {class: Vip, layer: '5', eligible: 11, ephys_file_ids: 11, morphology_file_ids: 0, all_active_model_available: 0, perisomatic_model_available: 0, glif_model_available: 6}
+
+independent_verification:
+  passed: true
+  method: >-
+    Reparse the preserved JSON independently of the collector. Split driver
+    lines at the intersectional delimiter and identify exact Sst/Vip prefixes;
+    apply the registered species, area, layer, reporter and dendrite filters.
+    Compare all sorted eligible specimen ids and four stratum counts with the
+    inventory, reconcile complete response length, and verify the raw hash.
+    Count resource-positive specimens separately within each stratum.
+  collector_classifier_reused_for_independent_selection: false
+  focused_tests_passed: 14
+  repository_ruff_check_passed: true
+  diff_check_passed: true
+
+limits:
+  - Metadata resource ids and model counts establish catalog availability, not successful downloads or validated physiology.
+  - Exact model ids and model-type records still require a separate NeuronalModel query.
+  - This inventory contains no publicly indicated biophysical VIP models under the registered filters; GLIF availability is not HH availability.
+  - Missing VIP biophysical models must not be silently replaced by Htr3a or generic inhibitory models.
+  - Marker-targeted driver lines do not establish exact transcriptomic subtype identity.
+  - Independent slice physiology does not determine SMART recruitment gain, population count or connectivity.
+
+next_step:
+  scope: preregister-model-id-resolution-and-resource-acquisition-for-all-included-specimens
+  exclude_by_observed_SMART_performance: false
+  model_simulation_or_fitting_authorized: false
+  subsequent_requirement: >-
+    After resolving resource identity, separately register native-model
+    reproduction and held-out isolated recruitment validation. A source-matched
+    reduced recruitment model may be considered only under a declared protocol,
+    not silently substituted for a missing biophysical VIP model.

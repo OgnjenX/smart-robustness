@@ -1,0 +1,40 @@
+schema_version: 1
+artifact_id: 1114
+artifact_type: source-state-rested-response-and-baseline-coverage-registration
+date: 2026-10-09
+database: results/synphys-small-schema-1102/synphys_r2.1_small.sqlite
+database_sha256: 7372499fdd874f057565080d5769baaf2659ef39d9f3bc3c7147dd1e1c280a53
+target_inventory: results/synphys-numeric-targets-1111/manifest.yaml
+target_inventory_sha256: ddb70c6e64092f2c97047f4f38f392ab2eec9feebb9c1b31742f41fc4a1aa674
+output_directory: results/synphys-resting-targets-1115
+allowed_columns:
+  resting_state_fit: [id, synapse_id, ic_amp, ic_latency, ic_rise_time, ic_decay_tau, ic_nrmse]
+  conductance: [id, synapse_id, avg_baseline_potential]
+selection: >-
+  Read all rested-fit and baseline records linked to each unique synapse ID
+  in the unchanged 1111 selected target inventory. Never switch synapse IDs
+  or choose from response values. Preserve every row, missing join, multiple
+  record, null and nonfinite value. Keep original experiment partition and
+  identity strata as lineage; do not assign the old nominal holding bin to
+  pooled resting responses. No original experiment reassignment is allowed.
+quality_and_counts: >-
+  Descriptive coverage requires one rested fit with finite correctly signed
+  amplitude, finite nonnegative latency, finite positive rise/decay times,
+  finite nonnegative nrmse and one finite actual baseline in [-0.1,0.0] volts.
+  Voltage bounds are a broad physical sanity check, not new fidelity gates.
+  Report per project/route/pre-layer/post-layer and original partition distinct
+  pair and experiment counts; original holding labels are retained only as
+  lineage. Minimum independent units remain five fitting and three validation
+  experiments. Missing baselines are not replaced by nominal holding values.
+numeric_extraction_authorized: true
+effective_conductance_numeric_reads_authorized: false
+parameter_fitting_authorized: false
+cell_or_network_execution_authorized: false
+trace_reads_authorized: false
+next_gate: >-
+  Independently verify all rows, coverage and original partition assignments.
+  Only a separately sealed source-semantic forward-model protocol can authorize
+  fitting. Rested averages may still contain residual short-term dynamics and
+  heterogeneous holding potentials; mean baseline does not establish identical
+  experimental states or response dispersion. No sample gate is relaxed.
+frozen_baseline_modified: false

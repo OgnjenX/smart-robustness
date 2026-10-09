@@ -1,0 +1,43 @@
+schema_version: 1
+artifact_id: 1113
+artifact_type: source-definition-and-experimental-state-audit
+date: 2026-10-09
+parent_assessment: docs/validation-results/post2008-synphys-numeric-target-assessment-1112.yaml
+status: isolated-rested-recruitment-fitting-not-yet-authorized
+source_revision: 545a990ee171e6c0d23dd4bba413e1ccbf2f0853
+primary_sources:
+  average_response: https://raw.githubusercontent.com/AllenInstitute/aisynphys/545a990ee171e6c0d23dd4bba413e1ccbf2f0853/aisynphys/avg_response_fit.py
+  resting_pipeline: https://raw.githubusercontent.com/AllenInstitute/aisynphys/545a990ee171e6c0d23dd4bba413e1ccbf2f0853/aisynphys/pipeline/multipatch/resting_state.py
+  resting_selection: https://raw.githubusercontent.com/AllenInstitute/aisynphys/545a990ee171e6c0d23dd4bba413e1ccbf2f0853/aisynphys/resting_state.py
+  measured_baseline: https://raw.githubusercontent.com/AllenInstitute/aisynphys/545a990ee171e6c0d23dd4bba413e1ccbf2f0853/aisynphys/pipeline/multipatch/conductance.py
+findings:
+  average_fit:
+    source_lines: avg_response_fit.py:8-28,132-179
+    pulses: QC-passed-train-pulses-at-induction-frequency-at-most-50Hz
+    amplitude: potentially-affected-by-short-term-facilitation-or-depression
+    resting_single_pulse_amplitude_equivalence: not-established
+    nominal_minus_70mV_bin: actual-baseline-minus-80-to-minus-60mV
+    rise_time: fitted-response-onset-to-peak-not-synaptic-channel-rise-constant
+  resting_fit:
+    source_lines: pipeline/multipatch/resting_state.py:7-20,48-76;resting_state.py:40-55,65-94
+    minimum_preceding_no_stimulus_interval_seconds: 8
+    incomplete_recovery_possible: true
+    pooling: by-clamp-mode-without-holding-bin-separation
+    amplitudes: updates-synapse-PSP-or-PSC-amplitudes-only-when-source-kinetics-present
+    numeric_values_not_yet_read: true
+  baseline:
+    source_lines: pipeline/multipatch/conductance.py:55-68
+    calculation: mean-baseline-potential-of-IC-pulses-contributing-to-resting-amplitude
+    field: conductance.avg_baseline_potential
+    availability: requires-additional-source-VC-and-PSP-prerequisites-may-be-missing
+    effective_conductance_still_not_siemens: true
+interpretation:
+  - Prior extraction and independent partitions remain valid records; their availability gates are not reclassified as biological promotion.
+  - Fitting a rested single-event synapse directly to average-train amplitude would confound synaptic dynamics with peak conductance.
+  - A nominal holding label cannot be treated as the measured resting baseline.
+  - Rested-fit amplitude and actual baseline coverage must be audited under a separate registration, retaining missing data and original experiment partitions.
+  - Full response reconstruction would also require source fitting-function semantics; no exponent is silently assumed.
+next_step: separately-register-resting-response-and-baseline-coverage-audit-before-forward-model-fitting
+parameter_fitting_performed: false
+cell_or_network_execution_performed: false
+frozen_baseline_modified: false

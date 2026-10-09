@@ -107,3 +107,36 @@ repository Ruff and diff whitespace checks pass. The real acquisition has not
 been verified by this newly implemented script yet. This is still engineering
 evidence, not real-source equivalence, physiological validation or a full
 repository regression result.
+
+## Registered execution entry point
+
+`scripts/run_synphys_release_reconciliation.py --registration <sealed-file>`
+now supplies the execution wrapper. No real execution registration exists yet;
+the wrapper has been exercised only on synthetic releases representing the
+98 selected fit IDs and 92 selected synapse IDs.
+
+A real registration must explicitly authorize selected-summary reconciliation
+and deny baseline joins, waveform reads, additional downloads, fitting, and
+cell/network execution. It must retain the exact projection, counts, bounds
+and sealed source paths; hash-pin the small release and existing identity,
+QC and numeric inventories; and pin the newly verified medium release,
+acquisition manifest, independent verifier manifest and published acquisition
+assessment. It must also pin the wrapper, projection helper and independent
+verifier implementations.
+
+The wrapper claims an exclusive result directory before hashing inputs,
+checks the actual medium length and every source hash, requires the exact
+independent acquisition checks and assessment, and then derives all selection
+IDs from the old inventories. Every source is checked for mutation across
+projection. All exact differences and source projections are archived;
+engineering failures are retained and return failure status. Even exact
+equivalence is labelled independent-assessment-pending, not biological
+promotion or permission for baseline joins.
+
+No actual release data were accessed while developing or testing this wrapper.
+All 174 Synphys-focused tests pass with the wrapper included; repository Ruff
+and diff whitespace checks pass. These include end-to-end synthetic equality,
+retained summary differences, duplicate invocation, source tampering, denied
+permission expansion, missing independent/published gates, and post-projection
+input mutation. This remains a focused engineering check, not full regression
+or actual-source equivalence.

@@ -27,7 +27,7 @@ from smart_robustness.validation.physiology_storage import ArrayStore, require_s
 REGISTRATION = Path(
     "docs/validation-results/post2008-sst-vip-physiology-protocol-registration-1068.yaml"
 )
-SEAL = Path("docs/validation-results/post2008-sst-vip-physiology-execution-seal-1071.yaml")
+SEAL = Path("docs/validation-results/post2008-sst-vip-physiology-execution-seal-1073.yaml")
 ELIGIBILITY_REG = Path(
     "docs/validation-results/post2008-sst-vip-physiology-eligibility-registration-1065.yaml"
 )
@@ -52,9 +52,12 @@ def verify_seal(registration_path, seal_path):
     for path, expected in seal["implementation_sha256"].items():
         if digest(path) != expected:
             raise ValueError("sealed implementation changed")
-    for key in ("parent", "eligibility_result", "native_reader_source", "native_simulation_source"):
+    for key in ("parent", "eligibility_result"):
         if digest(reg[key]) != reg[key + "_sha256"]:
             raise ValueError("protocol lineage changed")
+    for key in ("native_reader", "native_simulation"):
+        if digest(reg[key + "_source"]) != reg[key + "_sha256"]:
+            raise ValueError("protocol native source changed")
     for path, expected in reg["metric_implementation_sha256"].items():
         if digest(path) != expected:
             raise ValueError("registered metric implementation changed")

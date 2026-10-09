@@ -9,6 +9,7 @@ from pathlib import Path
 
 import numpy as np
 import pytest
+import yaml
 
 from smart_robustness.validation.native_glif_parity import fixtures
 from smart_robustness.validation.native_glif_state_machine import simulate_glif
@@ -127,6 +128,33 @@ def test_missing_seal_stops_before_trace_reads(tmp_path):
     registration.write_text("scope: synthetic\n")
     with pytest.raises(FileNotFoundError):
         RUNNER.verify_seal(registration, tmp_path / "absent-seal.yaml")
+
+
+def test_authorized_seal_uses_registered_native_source_hash_field_names(tmp_path):
+    source = tmp_path / "synthetic-source"
+    source.write_bytes(b"synthetic source")
+    reg = {"metric_implementation_sha256": {}}
+    for key in ("parent", "eligibility_result"):
+        reg[key], reg[key + "_sha256"] = str(source), RUNNER.digest(source)
+    for key in ("native_reader", "native_simulation"):
+        reg[key + "_source"], reg[key + "_sha256"] = str(source), RUNNER.digest(source)
+    registration = tmp_path / "reg.yaml"
+    registration.write_text(yaml.safe_dump(reg))
+    seal = {
+        "registration_sha256": RUNNER.digest(registration),
+        "response_trace_read_authorized": True,
+        "cell_simulation_authorized": True,
+        "network_execution_authorized": False,
+        "parameter_fitting_authorized": False,
+        "implementation_sha256": {str(source): RUNNER.digest(source)},
+    }
+    seal_path = tmp_path / "seal.yaml"
+    seal_path.write_text(yaml.safe_dump(seal))
+    assert RUNNER.verify_seal(registration, seal_path)[0] == reg
+    seal["cell_simulation_authorized"] = False
+    seal_path.write_text(yaml.safe_dump(seal))
+    with pytest.raises(ValueError, match="not authorized"):
+        RUNNER.verify_seal(registration, seal_path)
 
 
 def test_recording_checkpoint_resume_validates_source_without_rereading(tmp_path, monkeypatch):

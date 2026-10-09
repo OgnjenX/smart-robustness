@@ -1,0 +1,55 @@
+schema_version: 1
+artifact_id: 1100
+artifact_type: public-object-header-assessment
+date: 2026-10-09
+implementation_commit: 640b560
+registration: docs/validation-results/post2008-synphys-object-headers-registration-1098.yaml
+result: results/synphys-object-headers-1099/manifest.yaml
+result_sha256: 80b7f3ec8c890aabf3cbd1d9864ec206d12842bfb4c9d9a3b7540d499c1403c9
+status: three-public-objects-accessible-schema-audit-pending
+session: 36592
+exit_code: 0
+request_method: HEAD
+redirects_followed: false
+observed_headers:
+  synphys_r2.1_small.sqlite:
+    http_status: 200
+    content_length: 176771072
+    etag: '"46d336fbe4f8200e08d40e64c3dd5093-22"'
+    last_modified: Thu, 26 Jan 2023 02:29:36 GMT
+  synphys_r2.1_medium.sqlite:
+    http_status: 200
+    content_length: 11125997568
+    etag: '"d954cbad0d7c7b0002bf3a2879e40e90-1327"'
+    last_modified: Thu, 26 Jan 2023 02:25:26 GMT
+  synphys_r2.1_full.sqlite:
+    http_status: 200
+    content_length: 267676073984
+    etag: '"1965f01ac61663079ccf3dbd3a5a9a4e-7978"'
+    last_modified: Thu, 26 Jan 2023 00:55:20 GMT
+independent_check:
+  collector_imported: false
+  raw_header_hashes_and_lengths: passed
+  sidecar_manifest_equality: passed
+  terminal_HTTP_status_and_selected_headers: independently-parsed-from-raw
+  client_exit_codes: [0, 0, 0]
+  verification_exit_code: 0
+checks:
+  focused_tests_passed: 29
+  repository_ruff: passed
+  diff_check: passed
+boundaries:
+  - Multipart ETags are object identifiers, not verified whole-file content hashes.
+  - HEAD accessibility does not guarantee a subsequent download or database validity.
+  - Prior anonymous root-listing denial is preserved; no access control was bypassed.
+  - No database bodies or numerical physiology endpoints were read.
+next_step: >-
+  Register a bounded acquisition and schema-only audit of the r2.1 small
+  object, conditional on its documented table coverage being sufficient.
+  Freeze object headers and source metadata; preserve local content hashes
+  without claiming source-declared checksums. Define nonsynaptic class,
+  species, cortical area, layer and QC selection before numeric endpoints.
+VIP_prerequisite_resolved: false
+biological_conductance_fidelity_established: false
+frozen_baseline_modified: false
+raw_outputs_committed: false

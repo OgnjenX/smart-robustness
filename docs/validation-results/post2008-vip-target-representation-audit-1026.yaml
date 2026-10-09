@@ -1,0 +1,64 @@
+schema_version: 1
+artifact_id: 1026
+artifact_type: vip-like-disinhibition-target-representation-audit
+date: 2026-10-09
+status: representation-gap-identified-before-vip-outcomes
+network_execution_authorized: false
+frozen_baseline_modified: false
+predecessor: docs/validation-results/post2008-l5-sst-like-stage4d-continuation-assessment-1025.yaml
+predecessor_sha256: de3120230baec08fc39e2aa54e5af132577222b725abf828cc4be241c0593824
+
+primary_source:
+  citation: Pfeffer CK, Xue M, He M, Huang ZJ, Scanziani M (2013). Inhibition of inhibition in visual cortex.
+  doi: 10.1038/nn.3446
+  url: https://pmc.ncbi.nlm.nih.gov/articles/PMC3729586/
+  inspected_section: Interneurons targeted by VIP cells; Figure 6
+  preparation: mouse-visual-cortex-layers-2-3-and-5
+  supported:
+    - VIP preferentially inhibits SST cells among the tested classes.
+    - VIP-to-SST inhibition is stronger in L2/3 than in L5 in this preparation.
+  limits:
+    - Postsynaptic charge and normalized individual contributions do not identify a SMART conductance, delay or population size.
+    - The connectivity experiment does not identify a unique SST recruitment or intrinsic model.
+    - Preferential targeting does not imply exclusive targeting or one universal VIP circuit.
+
+implementation_evidence:
+  file: src/smart_robustness/models/sst_like_feedback.py
+  sha256: d540c6ae2e88d3602a8fdf246aff1b06e6b6d60fb54f6d4021ad89682fc8e1a5
+  presynaptic_population: layer5_excitatory_v1
+  postsynaptic_population: layer5_excitatory_v1
+  target_compartment: distal_dendrite
+  route: same-index-delayed-collapsed-inhibitory-feedback
+  explicit_sst_membrane_or_population: false
+  explicit_vip_population: false
+  sst_recruitment_transfer_function: absent
+  consequence: >-
+    There is no represented SST membrane, recruitment state or spike generator
+    for a VIP inhibitory current to target. Scaling the distal GABA port would
+    alter effective inhibition directly, not implement an interneuron-to-
+    interneuron circuit or establish biological cell-class specificity.
+
+decision:
+  direct_vip_network_execution_authorized: false
+  reinterpret_collapsed_route_as_explicit_sst_authorized: false
+  source_audit_and_network_blind_recruitment_design_authorized: true
+  required_next_preregistration:
+    - Specify an explicit functional SST recruitment representation and its independent parameter source or bounded sensitivity region.
+    - Specify VIP recruitment separately from SST output strength and SMART behavioral outcomes.
+    - Establish fixed-event isolated recruitment, inhibitory sign, timing, convergence and disinhibition controls before network promotion.
+    - Include the existing collapsed route as an unchanged reference and an SST-only explicit-representation control.
+    - Register matched-input and nominal-resource controls; report realized conductance, current and spike drive rather than assuming equality.
+    - Keep biological intrinsic-class claims separate from functional routing abstractions.
+    - Seal all gates and runners before any new network outcome, retaining every tested point and failure.
+  prohibited:
+    - Choosing only the two observed SST survivors as representation-calibration targets.
+    - Fitting SST or VIP recruitment to network resonance or reset outcomes.
+    - Changing the frozen classic baseline or reclassifying previous failures.
+    - Calling a direct reduction of distal inhibition a validated biological VIP-to-SST circuit.
+
+program_scope:
+  vip_experiment_complete: false
+  explicit_inhibitory_intrinsic_diversity_complete: false
+  multiseed_confirmation_complete: false
+  interaction_execution_authorized: false
+  note: This audit advances design constraints; it neither closes the VIP question nor substitutes a narrower endpoint for the program objective.

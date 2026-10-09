@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import importlib.util
+import io
 import ssl
 from pathlib import Path
 
@@ -180,3 +181,40 @@ def test_verified_context_uses_registered_bundle(monkeypatch, tmp_path):
         {"certificate_authority_bundle": str(ca), "certificate_authority_sha256": MODULE.digest(ca)}
     )
     assert calls == [{"cafile": str(ca)}]
+
+
+@pytest.mark.parametrize("status", [200, 403])
+def test_verified_curl_receipt_and_scope(monkeypatch, status):
+    commands = []
+
+    class Process:
+        stdout = io.BytesIO(
+            b"<html>fixture</html>\nhttps://aisynphys.readthedocs.io/fixture\n"
+            + str(status).encode()
+        )
+        stderr = io.BytesIO(b"")
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *args):
+            pass
+
+        def wait(self, **kwargs):
+            return 0
+
+    def create(command, **kwargs):
+        commands.append(command)
+        return Process()
+
+    monkeypatch.setattr(MODULE.subprocess, "Popen", create)
+    resource = {"maximum_bytes": 1024, "url": "https://aisynphys.readthedocs.io/fixture"}
+    if status == 200:
+        raw, final = MODULE.curl_receipt(resource, "pinned-public-ca.pem")
+        assert raw == b"<html>fixture</html>" and final == resource["url"]
+    else:
+        with pytest.raises(ValueError):
+            MODULE.curl_receipt(resource, "pinned-public-ca.pem")
+    assert "--insecure" not in commands[0] and "-k" not in commands[0]
+    assert commands[0][commands[0].index("--cacert") + 1] == "pinned-public-ca.pem"
+    assert "--max-filesize" in commands[0] and "--proto-redir" in commands[0]

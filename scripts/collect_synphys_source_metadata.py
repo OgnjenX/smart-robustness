@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import ssl
+import subprocess
 from datetime import UTC, datetime
 from pathlib import Path
 from urllib.parse import urlparse
@@ -88,6 +89,9 @@ def load_registration(path):
             )
         }
     )
+    parent["transport"] = reg.get("transport", "urllib")
+    if parent["transport"] not in ("urllib", "verified-system-curl"):
+        raise ValueError("unregistered transport")
     validate(parent)
     return parent
 
@@ -129,14 +133,57 @@ def inspect_listing(raw):
     }
 
 
-def acquire(resource, root, hosts, context=None):
+def curl_receipt(resource, ca):
+    """Bound stdout reads even if a server omits Content-Length. No insecure flags."""
+    command = [
+        "/usr/bin/curl",
+        "--silent",
+        "--show-error",
+        "--fail",
+        "--location",
+        "--proto",
+        "=https",
+        "--proto-redir",
+        "=https",
+        "--max-time",
+        "30",
+        "--max-filesize",
+        str(resource["maximum_bytes"]),
+        "--cacert",
+        ca,
+        "--write-out",
+        "\n%{url_effective}\n%{response_code}",
+        resource["url"],
+    ]
+    with subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE) as process:
+        receipt = process.stdout.read(resource["maximum_bytes"] + 1025)
+        if len(receipt) == resource["maximum_bytes"] + 1025:
+            process.kill()
+        stderr = process.stderr.read(4096)
+        code = process.wait(timeout=35)
+    if code != 0:
+        raise OSError(f"verified curl exit {code}: {stderr.decode(errors='replace')}")
+    try:
+        raw, final, status = receipt.rsplit(b"\n", 2)
+        final = final.decode("ascii")
+        if int(status) != 200:
+            raise ValueError("metadata HTTP status is not 200")
+    except (ValueError, UnicodeError) as exc:
+        raise ValueError("malformed bounded curl receipt") from exc
+    return raw, final
+
+
+def acquire(resource, root, hosts, context=None, *, transport="urllib", ca=None):
     record = {"resource": resource, "retrieved_at_utc": datetime.now(UTC).isoformat()}
     try:
-        with urlopen(resource["url"], timeout=30, context=context) as response:
-            record["final_url"] = response.geturl()
-            if urlparse(record["final_url"]).hostname not in hosts:
-                raise ValueError("redirect outside registered hosts")
-            raw = response.read(resource["maximum_bytes"] + 1)
+        if transport == "verified-system-curl":
+            raw, record["final_url"] = curl_receipt(resource, ca)
+        else:
+            with urlopen(resource["url"], timeout=30, context=context) as response:
+                record["final_url"] = response.geturl()
+                raw = response.read(resource["maximum_bytes"] + 1)
+        if urlparse(record["final_url"]).hostname not in hosts:
+            raise ValueError("redirect outside registered hosts")
         path = root / (resource["name"] + ".raw")
         with path.open("xb") as handle:
             handle.write(raw)
@@ -163,7 +210,18 @@ def main():
     context = tls_context(reg)
     root = Path(reg["output_directory"])
     root.mkdir()  # Exclusive snapshot. Never overwrite interrupted evidence.
-    records = [acquire(r, root, reg["allowed_hosts"], context) for r in reg["resources"]]
+    transport = reg.get("transport", "urllib")
+    records = [
+        acquire(
+            r,
+            root,
+            reg["allowed_hosts"],
+            context,
+            transport=transport,
+            ca=reg.get("certificate_authority_bundle"),
+        )
+        for r in reg["resources"]
+    ]
     save(
         root / "manifest.yaml",
         {
@@ -173,6 +231,7 @@ def main():
             "certificate_authority_bundle": reg.get("certificate_authority_bundle"),
             "certificate_authority_sha256": reg.get("certificate_authority_sha256"),
             "TLS_verification_disabled": False,
+            "transport": transport,
             "records": records,
             "response_or_database_reads": False,
             "network_simulation": False,

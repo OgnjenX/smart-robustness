@@ -1,0 +1,33 @@
+schema_version: 1
+artifact_id: 1092
+artifact_type: metadata-only-verified-system-client-retry-registration
+date: 2026-10-09
+parent_registration: docs/validation-results/post2008-synphys-source-metadata-registration-1087.yaml
+parent_registration_sha256: c91504ac2a49fa15f5a71a9afbe7c8b05180e4c2e1d957e49e6bccb94836f289
+previous_assessment: docs/validation-results/post2008-synphys-source-metadata-acquisition-assessment-1089.yaml
+previous_assessment_sha256: 5ca059016166d1125896cd72518e744859e40d00bbc0a82aabd2ce8f64fe8e26
+prior_result: results/synphys-source-metadata-system-ca-1091/manifest.yaml
+prior_result_sha256: ae2abbf17d4aef5583eb62e717a846ae2a8cf13cde95afdd007186b92027ab27
+output_directory: results/synphys-source-metadata-verified-curl-1093
+certificate_authority_bundle: /etc/ssl/cert.pem
+certificate_authority_sha256: 9dae8d76e55cb08991f2b672d58999ea15560d910759c16b544f843bdffbb994
+transport: verified-system-curl
+observations_before_retry:
+  - Python system-CA transport passed TLS but received HTTP 403 for all five resources.
+  - Certificate-verified system curl HEAD received HTTP 200 for the registered introduction URL.
+  - Certificate-verified system curl HEAD received HTTP 403 from Amazon S3 for the root listing.
+retry_scope: >-
+  Use the same five registered public URLs and byte bounds via system curl,
+  with the pinned trusted CA bundle, HTTPS-only protocols, certificate and
+  hostname checks enabled, and bounded stdout reads. Preserve both prior
+  failures. No credentials, cookies, authentication bypass, insecure TLS,
+  database download or numerical response inspection is authorized. If S3
+  listing remains denied, retain it as a metadata-access boundary rather than
+  attempting authentication or inferring full resource availability.
+insecure_transport_authorized: false
+database_download_authorized: false
+physiological_response_or_numeric_synaptic_result_reads_authorized: false
+new_parameter_fitting_authorized: false
+cell_or_network_simulation_authorized: false
+frozen_baseline_modified: false
+raw_outputs_committed: false

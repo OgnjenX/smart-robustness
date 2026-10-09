@@ -128,7 +128,9 @@ def run_audit():
     design = reg["synthetic_design"]
     if (
         design["seeds"] != list(SEEDS)
-        or design["amplitudes"] != list(AMPLITUDES)
+        # PyYAML reads positive-exponent forms such as 1.0e3 as strings.
+        # Resolve their numeric values without changing the hash-pinned protocol.
+        or [float(value) for value in design["amplitudes"]] != list(AMPLITUDES)
         or design["circular_shifts_samples"] != list(SHIFTS)
         or tuple(design["families"]) != FAMILIES
         or reg["network_execution_authorized"] is not False

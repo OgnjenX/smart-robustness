@@ -1,6 +1,8 @@
 """Local contract checks, separate from the registered 120-case audit."""
 
 from copy import deepcopy
+from importlib import import_module
+from pathlib import Path
 
 import numpy as np
 import pytest
@@ -74,3 +76,16 @@ def test_lag_order_band_and_inventory_remain_exact():
             value["raw"].pop()
         with pytest.raises(ValueError):
             compare_band(value, curves(), energy=1, band=(2.0, 4.0))
+
+
+def test_registered_positive_exponent_amplitudes_parse_before_any_case(monkeypatch):
+    root = Path(__file__).resolve().parents[1]
+    monkeypatch.syspath_prepend(str(root / "scripts"))
+    runner = import_module("run_l5_sst_like_stage4d_numerical_audit")
+
+    def stop_before_generating(*args):
+        raise RuntimeError("Inventory accepted; intentionally stop before synthetic case")
+
+    monkeypatch.setattr(runner, "signals", stop_before_generating)
+    with pytest.raises(RuntimeError, match="Inventory accepted"):
+        runner.run_audit()

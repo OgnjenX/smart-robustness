@@ -1,0 +1,38 @@
+schema_version: 1
+artifact_id: 1075
+artifact_type: independent-physiology-scoring-verifier-engineering-checkpoint
+date: 2026-10-09
+execution_seal: docs/validation-results/post2008-sst-vip-physiology-execution-seal-1073.yaml
+status: verifier-implemented-run-live-terminal-scoring-not-yet-observed
+independent_array_and_source_checkpoint:
+  completed_cases_verified: 7
+  parity_passed_cases: 7
+  reconstructed_full_source_plan_cases: 509
+  reconstructed_source_plan_specimens: 41
+  partial_verification_exit_code: 0
+  method: >-
+    Derive the deterministic case plan from hashed eligibility, schema and
+    parameter manifests without importing the runner. Reconcile each completed
+    case's specimen, model and sweep, source file/hash, full inventory, analysis
+    epoch, source/run dt, unchanged parameter map and exact stimulus identity.
+    Independently reconstruct saved blob identity, parity and repeat gates.
+physiological_scoring_verifier:
+  path: scripts/verify_sst_vip_physiology_scoring.py
+  imports_project_detector_or_scoring: false
+  imports_simulators_or_runner: false
+  reconstructed: fixed-crossings-epoch-clipping-one-to-one-coincidences-pairwise-reliability-rate-errors-parity-gates-group-and-model-promotion
+  real_terminal_summary_verified: false
+  terminal_usage:
+    - .venv/bin/python scripts/verify_sst_vip_physiology_arrays.py
+    - .venv/bin/python scripts/verify_sst_vip_physiology_scoring.py
+  both_commands_required_for_terminal_assessment: true
+validation:
+  focused_tests_passed: 200
+  repository_ruff_check_passed: true
+  full_regression_suite_rerun: false
+  controls: synthetic-passing-singleton-silence-parity-failure-spike-mismatch-epoch-boundaries-nonfinite-events-source-parameter-and-epoch-substitution
+sealed_experiment_components_modified: false
+physiological_outcomes_assessed: false
+physiological_validation_complete: false
+frozen_baseline_modified: false
+raw_outputs_committed: false

@@ -23,6 +23,93 @@ def digest(path):
     return h.hexdigest()
 
 
+def source_plan(reg):
+    eligibility_path = Path(
+        "docs/validation-results/post2008-sst-vip-physiology-eligibility-registration-1065.yaml"
+    )
+    er = yaml.safe_load(eligibility_path.read_text())
+    for label in ("schema_manifest", "parameter_manifest"):
+        require(digest(er[label]) == er[label + "_sha256"], "source manifest changed")
+    require(
+        digest(reg["eligibility_result"]) == reg["eligibility_result_sha256"], "eligibility changed"
+    )
+    eligibility = yaml.safe_load(Path(reg["eligibility_result"]).read_text())
+    schema = yaml.safe_load(Path(er["schema_manifest"]).read_text())
+    source = {r["source"]["specimen_ids"][0]: r for r in schema["records"]}
+    models = {}
+    for r in yaml.safe_load(Path(er["parameter_manifest"]).read_text())["records"]:
+        if r["source"]["template"]["name"].startswith("Biophysical"):
+            continue
+        require(digest(r["raw_path"]) == r["raw_sha256"], "parameter file changed")
+        models[r["source"]["model_id"]] = (
+            r["source"]["specimen_id"],
+            json.loads(Path(r["raw_path"]).read_text()),
+        )
+    plan = []
+    for specimen in sorted(eligibility["records"], key=lambda r: r["specimen_id"]):
+        if not specimen["primary_candidate"]:
+            continue
+        record = source[specimen["specimen_id"]]
+        sweeps = {s["sweep_number"]: s for s in record["inspection"]["sweeps"]}
+        for sweep in sorted(specimen["sweeps"], key=lambda s: s["sweep_number"]):
+            if not sweep["eligible_noise_sweep"] or sweep["stimulus_name"] != "Noise 2":
+                continue
+            for model in sorted(specimen["model_ids"]):
+                model_specimen, parameters = models[model]
+                require(model_specimen == specimen["specimen_id"], "model attachment differs")
+                plan.append(
+                    {
+                        "specimen_id": specimen["specimen_id"],
+                        "sweep_number": sweep["sweep_number"],
+                        "model_id": model,
+                        "source_path": record["inspection"]["path"],
+                        "source_sha256": record["raw_sha256"],
+                        "inventory": sweeps[sweep["sweep_number"]],
+                        "parameters": parameters,
+                    }
+                )
+    require(
+        len(plan) == 509 and len({p["specimen_id"] for p in plan}) == 41,
+        "registered source coverage differs",
+    )
+    return plan
+
+
+def verify_alignment(result, expected):
+    for label in ("specimen_id", "sweep_number", "model_id"):
+        require(result[label] == expected[label], "case source identity differs")
+    receipt = result["recording"]
+    require(
+        receipt["identity"]["path"] == expected["source_path"]
+        and receipt["identity"]["source_sha256"] == expected["source_sha256"]
+        and receipt["identity"]["inventory"] == expected["inventory"],
+        "recording source alignment differs",
+    )
+    if receipt["status"] != "complete":
+        return
+    inv = expected["inventory"]
+    meta = receipt["metadata"]
+    require(
+        meta["rate"] == inv["stimulus"]["sampling_rate"]
+        and meta["start"] == inv["experiment_stimulus"]["index_start"]
+        and meta["count"] == inv["experiment_stimulus"]["count"],
+        "recording analysis epoch differs",
+    )
+    parameters = {**expected["parameters"], "dt": 1.0 / meta["rate"]}
+    require(
+        result["source_dt"] == expected["parameters"]["dt"]
+        and result["run_dt"] == parameters["dt"],
+        "source/run dt differs",
+    )
+    for attempt in result["attempts"].values():
+        require(attempt["identity"]["parameters"] == parameters, "attempt source parameters differ")
+        require(
+            attempt["identity"]["stimulus_content_sha256"]
+            == receipt["arrays"]["stimulus"]["content_sha256"],
+            "attempt stimulus differs from recording",
+        )
+
+
 def read_array(directory, receipt):
     key = receipt["content_sha256"]
     require(re.fullmatch(r"[0-9a-f]{64}", key) is not None, "unsafe content key")
@@ -115,6 +202,8 @@ def main():
     for path, expected in seal["implementation_sha256"].items():
         require(digest(path) == expected, "sealed implementation changed")
     context = {"registration_sha256": digest(registration), "seal_sha256": digest(seal_path)}
+    reg = yaml.safe_load(registration.read_text())
+    plan = source_plan(reg)
     paths = sorted(p for p in ROOT.glob("case-*.json") if re.fullmatch(r"case-\d{4}", p.stem))
     terminal = ROOT / "manifest.json"
     if not args.checkpoints:
@@ -125,7 +214,12 @@ def main():
         )
         for path, record in zip(paths, manifest["records"], strict=True):
             require(json.loads(path.read_text()) == record, "terminal case record differs")
-    passed = sum(verify_case(ROOT, path, context) for path in paths)
+    passed = 0
+    for path in paths:
+        number = int(path.stem.removeprefix("case-"))
+        require(number < len(plan), "unexpected case number")
+        verify_alignment(json.loads(path.read_text()), plan[number])
+        passed += verify_case(ROOT, path, context)
     print(
         json.dumps(
             {

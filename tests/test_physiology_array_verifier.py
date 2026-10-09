@@ -1,5 +1,6 @@
 """Independent blob reconstruction from synthetic archives."""
 
+import copy
 import hashlib
 import importlib.util
 import json
@@ -57,3 +58,52 @@ def test_corrupt_metadata_and_content_rejected(tmp_path):
     receipt["file_sha256"] = hashlib.sha256(path.read_bytes()).hexdigest()
     with pytest.raises(ValueError, match="content digest"):
         MODULE.read_array(tmp_path, receipt)
+
+
+def test_source_alignment_and_parameter_substitution_control():
+    expected = {
+        "specimen_id": 1,
+        "model_id": 2,
+        "sweep_number": 3,
+        "source_path": "synthetic",
+        "source_sha256": "fixed",
+        "parameters": {"dt": 0.001, "C": 1.0},
+        "inventory": {
+            "stimulus": {"sampling_rate": 2000.0},
+            "experiment_stimulus": {"index_start": 10, "count": 20},
+        },
+    }
+    result = {
+        "specimen_id": 1,
+        "model_id": 2,
+        "sweep_number": 3,
+        "recording": {
+            "status": "complete",
+            "identity": {
+                "path": "synthetic",
+                "source_sha256": "fixed",
+                "inventory": expected["inventory"],
+            },
+            "metadata": {"rate": 2000.0, "start": 10, "count": 20},
+            "arrays": {"stimulus": {"content_sha256": "stimulus"}},
+        },
+        "source_dt": 0.001,
+        "run_dt": 0.0005,
+        "attempts": {
+            "native0": {
+                "identity": {
+                    "parameters": {"dt": 0.0005, "C": 1.0},
+                    "stimulus_content_sha256": "stimulus",
+                }
+            }
+        },
+    }
+    MODULE.verify_alignment(result, expected)
+    changed = copy.deepcopy(result)
+    changed["attempts"]["native0"]["identity"]["parameters"]["C"] = 2.0
+    with pytest.raises(ValueError, match="source parameters"):
+        MODULE.verify_alignment(changed, expected)
+    changed = copy.deepcopy(result)
+    changed["recording"]["metadata"]["start"] = 11
+    with pytest.raises(ValueError, match="analysis epoch"):
+        MODULE.verify_alignment(changed, expected)

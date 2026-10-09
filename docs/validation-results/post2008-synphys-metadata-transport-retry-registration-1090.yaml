@@ -1,0 +1,27 @@
+schema_version: 1
+artifact_id: 1090
+artifact_type: metadata-only-certificate-verified-transport-retry-registration
+date: 2026-10-09
+parent_registration: docs/validation-results/post2008-synphys-source-metadata-registration-1087.yaml
+parent_registration_sha256: c91504ac2a49fa15f5a71a9afbe7c8b05180e4c2e1d957e49e6bccb94836f289
+previous_assessment: docs/validation-results/post2008-synphys-source-metadata-acquisition-assessment-1089.yaml
+previous_assessment_sha256: 5ca059016166d1125896cd72518e744859e40d00bbc0a82aabd2ce8f64fe8e26
+prior_result: results/synphys-source-metadata-1088/manifest.yaml
+prior_result_sha256: 8b75d9efb76cfac23a2744f7b0eeb1f751716efcf7d9f47329351fdf21bc62f9
+output_directory: results/synphys-source-metadata-system-ca-1091
+certificate_authority_bundle: /etc/ssl/cert.pem
+certificate_authority_sha256: 9dae8d76e55cb08991f2b672d58999ea15560d910759c16b544f843bdffbb994
+transport_scope: >-
+  Inherit all five URLs, resource/byte limits, metadata-only restrictions and
+  scientific gates exactly from parent registration 1087. Change only the
+  explicitly trusted certificate bundle and output directory. Require CA bytes
+  to match the registered hash and keep hostname/certificate verification on.
+  Do not modify global Python configuration, original failures or prior source
+  records. This is a transport retry, not a new physiological experiment.
+insecure_transport_authorized: false
+database_download_authorized: false
+physiological_response_or_numeric_synaptic_result_reads_authorized: false
+new_parameter_fitting_authorized: false
+cell_or_network_simulation_authorized: false
+frozen_baseline_modified: false
+raw_outputs_committed: false

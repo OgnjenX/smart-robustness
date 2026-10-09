@@ -2,7 +2,9 @@
 
 from __future__ import annotations
 
+import argparse
 import hashlib
+import ssl
 from datetime import UTC, datetime
 from pathlib import Path
 from urllib.parse import urlparse
@@ -54,6 +56,53 @@ def validate(reg):
         names.add(r["name"])
 
 
+def load_registration(path):
+    reg = yaml.safe_load(path.read_text())
+    if "parent_registration" not in reg:
+        validate(reg)
+        return reg
+    for key in ("parent_registration", "previous_assessment", "prior_result"):
+        if digest(reg[key]) != reg[key + "_sha256"]:
+            raise ValueError("transport retry lineage changed")
+    if reg["insecure_transport_authorized"] is not False:
+        raise ValueError("insecure transport not allowed")
+    for key in (
+        "database_download_authorized",
+        "physiological_response_or_numeric_synaptic_result_reads_authorized",
+        "new_parameter_fitting_authorized",
+        "cell_or_network_simulation_authorized",
+    ):
+        if reg[key] is not False:
+            raise ValueError("retry metadata-only scope changed")
+    parent = yaml.safe_load(Path(reg["parent_registration"]).read_text())
+    if parent["output_directory"] == reg["output_directory"]:
+        raise ValueError("retry must preserve original output directory")
+    # Resource URLs, bounds and permissions are inherited, never overridden.
+    parent.update(
+        {
+            k: reg[k]
+            for k in (
+                "output_directory",
+                "certificate_authority_bundle",
+                "certificate_authority_sha256",
+            )
+        }
+    )
+    validate(parent)
+    return parent
+
+
+def tls_context(reg):
+    if "certificate_authority_bundle" not in reg:
+        return None
+    if digest(reg["certificate_authority_bundle"]) != reg["certificate_authority_sha256"]:
+        raise ValueError("registered CA bytes changed")
+    context = ssl.create_default_context(cafile=reg["certificate_authority_bundle"])
+    if not context.check_hostname or context.verify_mode != ssl.CERT_REQUIRED:
+        raise ValueError("TLS verification must remain enabled")
+    return context
+
+
 def inspect_listing(raw):
     tree = ElementTree.fromstring(raw)
     ns = {"s": "http://s3.amazonaws.com/doc/2006-03-01/"}
@@ -80,10 +129,10 @@ def inspect_listing(raw):
     }
 
 
-def acquire(resource, root, hosts):
+def acquire(resource, root, hosts, context=None):
     record = {"resource": resource, "retrieved_at_utc": datetime.now(UTC).isoformat()}
     try:
-        with urlopen(resource["url"], timeout=30) as response:
+        with urlopen(resource["url"], timeout=30, context=context) as response:
             record["final_url"] = response.geturl()
             if urlparse(record["final_url"]).hostname not in hosts:
                 raise ValueError("redirect outside registered hosts")
@@ -107,17 +156,23 @@ def acquire(resource, root, hosts):
 
 
 def main():
-    reg = yaml.safe_load(REGISTRATION.read_text())
-    validate(reg)
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--registration", type=Path, default=REGISTRATION)
+    path = parser.parse_args().registration
+    reg = load_registration(path)
+    context = tls_context(reg)
     root = Path(reg["output_directory"])
     root.mkdir()  # Exclusive snapshot. Never overwrite interrupted evidence.
-    records = [acquire(r, root, reg["allowed_hosts"]) for r in reg["resources"]]
+    records = [acquire(r, root, reg["allowed_hosts"], context) for r in reg["resources"]]
     save(
         root / "manifest.yaml",
         {
-            "registration": str(REGISTRATION),
-            "registration_sha256": digest(REGISTRATION),
+            "registration": str(path),
+            "registration_sha256": digest(path),
             "collector_sha256": digest(__file__),
+            "certificate_authority_bundle": reg.get("certificate_authority_bundle"),
+            "certificate_authority_sha256": reg.get("certificate_authority_sha256"),
+            "TLS_verification_disabled": False,
             "records": records,
             "response_or_database_reads": False,
             "network_simulation": False,

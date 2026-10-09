@@ -95,9 +95,14 @@ phase specifications below retain the full intended program scope.
   All 1,499 local regression tests now pass. The separately committed
   [continuation seal 1023](validation-results/post2008-l5-sst-like-stage4d-continuation-seal-1023.yaml)
   authorizes the unchanged network protocol under the explicitly amended
-  numerical check. The single continuation process is active and has saved
-  the verbatim source outcome; no new exact pair or complete point has yet
-  been established. The original engineering-stop assessment remains intact.
+  numerical check. The single continuation process is active with nine of
+  fourteen outcomes saved. Four complete exact-repeat pairs pass the
+  inter-area gates but remain bounded partial survivals because their earlier
+  spectral failures are retained. The fifth point's first outcome independently
+  passes the inter-area gates and has passing Stage A/B/C classifications;
+  its repeat remains outstanding, so complete progression survival is not yet
+  established. GitHub CI for commit `e409f08` passed (run `37876077216`).
+  The original engineering-stop assessment remains intact.
   Inter-area behavior and the final joint assessment remain outstanding.
   All seven registered points must remain
   in both stages; a later pass cannot rescue an earlier failure.

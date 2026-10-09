@@ -1,0 +1,23 @@
+schema_version: 1
+artifact_id: 1123
+artifact_type: preserved-metadata-audit-engineering-stop
+date: 2026-10-09
+implementation_commit: fe3da8f
+registration: docs/validation-results/post2008-synphys-pulse-storage-registration-1121.yaml
+registration_sha256: edab699cde15e4d60ac66809e6a0ffa858f962e465b46a724ae503a30235b808
+collector_sha256: 59b8e7ebff53c64f1d5291ecf0c140d7716f595ee0e6036cdcb799bb97109756
+output_directory_preserved: results/synphys-pulse-storage-1122
+exit_code: 1
+error: sqlite3.DatabaseError-not-authorized-at-count-id
+authorizer_diagnostic:
+  requested_actions: [SELECT, FUNCTION-count, READ-pulse_response-id, READ-pulse_response-empty-column]
+  rejected_action: READ-pulse_response-empty-column
+  outcome_or_waveform_values_read: false
+observed_output: empty-exclusive-directory-no-manifest-or-ID-blobs
+interpretation: engineering-stop-not-source-data-failure
+next_step: >-
+  Separately register counting explicit ID projection rows, without granting
+  table-wide or unlisted-column reads. Preserve this failed output directory
+  and all source/data/decoder/selection boundaries. Add a synthetic test using
+  the actual registered authorizer for an empty table.
+frozen_baseline_modified: false

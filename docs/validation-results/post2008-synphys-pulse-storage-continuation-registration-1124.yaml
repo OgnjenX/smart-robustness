@@ -1,0 +1,14 @@
+schema_version: 1
+artifact_id: 1124
+artifact_type: metadata-audit-counting-continuation-registration
+date: 2026-10-09
+parent_registration: docs/validation-results/post2008-synphys-pulse-storage-registration-1121.yaml
+parent_registration_sha256: edab699cde15e4d60ac66809e6a0ffa858f962e465b46a724ae503a30235b808
+output_directory: results/synphys-pulse-storage-continuation-1125
+amendment: count-by-iterating-SELECT-id-only-no-count-function-no-empty-column-permission
+all_source_decoder_selection_and_read_boundaries_inherited: true
+failed_output_directory_preserved: results/synphys-pulse-storage-1122
+waveform_reads_authorized: false
+database_download_authorized: false
+parameter_fitting_authorized: false
+cell_or_network_execution_authorized: false

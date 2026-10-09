@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import argparse
 import hashlib
 import io
 import sqlite3
@@ -49,7 +50,20 @@ def authorizer(action, table, column, database, trigger):
 
 
 def main():
-    reg = yaml.safe_load(REGISTRATION.read_text())
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--registration", type=Path, required=True)
+    registration = parser.parse_args().registration
+    continuation = yaml.safe_load(registration.read_text())
+    if (continuation["amendment"] != "count-by-iterating-SELECT-id-only-no-count-function-no-empty-column-permission"
+        or continuation["all_source_decoder_selection_and_read_boundaries_inherited"] is not True):
+        raise ValueError("counting amendment changed")
+    parent = Path(continuation["parent_registration"])
+    if parent != REGISTRATION or digest(parent) != continuation["parent_registration_sha256"]:
+        raise ValueError("parent registration changed")
+    reg = yaml.safe_load(parent.read_text())
+    if continuation["output_directory"] == reg["output_directory"]:
+        raise ValueError("original output must be preserved")
+    reg["output_directory"] = continuation["output_directory"]
     if reg["allowed_columns"] != COLUMNS or reg["metadata_reads_authorized"] is not True:
         raise ValueError("metadata scope changed")
     for key in ("waveform_reads_authorized", "database_download_authorized", "parameter_fitting_authorized", "cell_or_network_execution_authorized"):
@@ -72,7 +86,7 @@ def main():
         db.set_authorizer(authorizer)
         for name in COLUMNS:
             if name != "resting_state_fit":
-                counts[name] = db.execute(f'SELECT count(id) FROM "{name}"').fetchone()[0]
+                counts[name] = sum(1 for _ in db.execute(f'SELECT id FROM "{name}"'))
         for parent in source["records"]:
             sid = parent["synapse_id"]
             rows = db.execute("SELECT id,synapse_id,ic_pulse_ids FROM resting_state_fit WHERE synapse_id=? ORDER BY id", (sid,)).fetchall()
@@ -88,7 +102,7 @@ def main():
                 except (ValueError, OSError, EOFError) as exc:
                     record.update(status="decode-failure-retained", error=str(exc))
                 records.append(record)
-    save(root / "manifest.yaml", {"registration_sha256": digest(REGISTRATION), "collector_sha256": digest(__file__),
+    save(root / "manifest.yaml", {"registration_sha256": digest(registration), "collector_sha256": digest(__file__),
                                   "records": records, "metadata_table_row_counts": counts,
                                   "waveform_values_read": False, "status": "storage-audit-complete"})
     print("storage-audit-complete")

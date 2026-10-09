@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import importlib.util
 import io
+import sqlite3
 import sys
 from pathlib import Path
 
@@ -46,3 +47,12 @@ def test_invalid_blobs_reject(raw):
 def test_trailing_data_reject():
     with pytest.raises(ValueError):
         module.decode_ids(packed(np.array([1, 2])) + b"extra")
+
+
+def test_explicit_id_count_with_registered_guard():
+    with sqlite3.connect(":memory:") as db:
+        db.execute("CREATE TABLE pulse_response (id INTEGER, data BLOB)")
+        db.set_authorizer(module.authorizer)
+        assert sum(1 for _ in db.execute("SELECT id FROM pulse_response")) == 0
+        with pytest.raises(sqlite3.DatabaseError):
+            db.execute("SELECT data FROM pulse_response")

@@ -1,0 +1,75 @@
+schema_version: 1
+artifact_id: 1079
+artifact_type: current-input-candidate-source-identity-reconciliation
+date: 2026-10-09
+parent: docs/validation-results/post2008-sst-vip-physiology-terminal-assessment-1078.yaml
+parent_sha256: cb2dac24c90b51d8ea772f4de71de9c35d86b10b8998a2170d2990a0ac452fcf
+cell_inventory: results/sst-vip-cell-source-inventory-1028.yaml
+cell_inventory_sha256: f6d4ef1e801b9dfc101b7e037b2f63f0d27ee2168b86ffd734976b5c9dd812ad
+parameter_manifest: results/sst-vip-parameter-acquisition-1034/manifest.yaml
+parameter_manifest_sha256: 76bfaee6321e97b3f0f2e9ab9237c8e84aef4b840fd4b239c6f5da4fe41d4fba
+method: >-
+  Join every assessed specimen/model combination to the retained cell inventory
+  by specimen ID; join all five passing model IDs to the parameter manifest,
+  verify specimen attachment and recompute each parameter payload hash.
+cohort_by_reporter_target:
+  Sst: {passing_combinations: 5, nonpassing_combinations: 114}
+  Vip: {passing_combinations: 0, nonpassing_combinations: 41}
+passing_specimens:
+  - specimen_id: 313862134
+    targeting_class: Sst
+    species: Mus musculus
+    area: VISp5
+    layer: '5'
+    driver_line: Sst-IRES-Cre
+    reporter_status: positive
+    dendrite_type: aspiny
+    morphology_file_id: null
+    models:
+      - model_id: 566282072
+        source_family: LIF
+        file_id: 566295789
+        parameter_sha256: 506f7f4c811c092b89bfed34e7a3d2b2817c6ace97e1dedb3334636b57dc716e
+      - model_id: 566282080
+        source_family: LIF-R-ASC-A
+        file_id: 566296598
+        parameter_sha256: d80935bccdfde475c2888739c34f8b9129bb926c7b6f12d562e3a0c7446697ff
+  - specimen_id: 482690728
+    targeting_class: Sst
+    species: Mus musculus
+    area: VISp5
+    layer: '5'
+    driver_line: Sst-IRES-Cre
+    reporter_status: positive
+    dendrite_type: aspiny
+    morphology_file_id: 492101027
+    models:
+      - model_id: 484628263
+        source_family: LIF-R
+        file_id: 566446770
+        parameter_sha256: 3f0332b563fbdb1f6c7ef5cee99389e59eb905f44aa0e017bf37c7d6e119817a
+      - model_id: 484628267
+        source_family: LIF-R-ASC
+        file_id: 566445363
+        parameter_sha256: 6d4fd2127e44429d2a56e77c4a4a835ce544e7fd687d9509dfd029a39b56b81a
+      - model_id: 484628269
+        source_family: LIF-R-ASC-A
+        file_id: 566447209
+        parameter_sha256: f4cbbf9dae659189a2b9e5206666898e4d4fd9c91d92945dcd0e6e5522a82d0b
+interpretation: >-
+  Every current-input survivor is a source-labelled mouse visual layer-5 Sst
+  specimen. No Vip combination passes this registered protocol. Nonpassing
+  includes both response-gate failures and recording-reliability inconclusives;
+  this identity audit does not turn all Vip nonpasses into biological failures.
+  Reporter targeting is not proof of morphology, connectivity or subtype identity.
+next_phase_boundaries:
+  - Keep all five Sst model maps in a separately registered conductance-input validation; do not choose a response-derived family winner.
+  - Conductance injection adds a voltage-dependent input absent from the native current-only GLIF reference; numerical translation checks are not biological conductance validation.
+  - Do not label these candidates as validated VIP cells or silently substitute an SST candidate for VIP.
+  - VIP remains an unresolved prerequisite requiring a separate outcome-blind source or independently fitted protocol, not relaxation of the completed gates.
+  - Retain the full explicit SST/VIP endpoint; an SST-only experiment cannot close the complete inhibitory program.
+new_simulations_performed: false
+parameter_fitting_performed: false
+network_execution_performed: false
+frozen_baseline_modified: false
+raw_outputs_committed: false

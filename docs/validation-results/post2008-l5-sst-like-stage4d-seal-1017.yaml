@@ -1,0 +1,109 @@
+schema_version: 1
+artifact_id: 1017
+artifact_type: pre-outcome-layer5-sst-like-stage4d-execution-seal
+date: 2026-10-09
+status: sealed-before-stage4d-network-outcomes
+implementation_commit: 98bc8a5077209e98777184dc17b43c0e63a5dd5e
+execution_authorized: true
+network_outcome_observed_before_seal: false
+frozen_baseline_modified: false
+result: results/l5-sst-like-stage4d-figure16.yaml
+raw_result_committed: false
+baseline_manifest_fingerprint: 992fdd7c3bc9fa0f0d385b9e5a58ba317599357ca377145aba6f01c80d631cd2
+runtime_fingerprint: 7e654528a99f0b25b7148260a8d52021f6443fb992b210729a2475ae3cfcdaa4
+environment:
+  python: 3.11.9
+  brian2: 2.9.0
+  platform: macOS-27.0.1-arm64-arm-64bit
+
+execution:
+  point_count: 7
+  repetitions_per_point: 2
+  total_network_runs: 14
+  exact_repeats_required: true
+  all_earlier_failure_points_retained: true
+  learned_weights: corresponding-stage4a-point-and-repetition
+  network: complete_recovered_v1_pulvinar_v2_catalog
+  intervention_scope: v1-layer5-route-only
+  stimulus: horizontal_five_cell_bar
+  prestimulus_ms: 1000.0
+  recording_ms: 1000.0
+  integration_dt_ms: 0.01
+  recording_sample_ms: 1.0
+  inter_area_delay_ms: 10.0
+  geometry_seed_v1: 16
+  geometry_seed_v2: 17
+  geometry_interpretation: one-fixed-geometry-per-area-within-every-run-not-additional-seed-arms
+  frequency_bands_hz: [[2.0, 4.0], [4.0, 8.0], [8.0, 12.0], [12.0, 20.0], [20.0, 100.0]]
+  higher_area_signal: mean_v2_inferior_300um_electrode_tips
+  lower_area_signal: mean_v1_superior_300um_electrode_tips
+  backend: brian2_cpp_standalone
+  survival_gates:
+    - exactly_1000_recording_samples
+    - v1_and_v2_fields_finite
+    - strongest_lower_frequency_correlation_strictly_exceeds_20_100_hz
+  whole_and_regional_fields_and_all_correlation_curves_retained: true
+  independent_verifier: full-complex-fourier-band-filter-and-direct-circular-dot-products
+  independent_reconstruction_tolerance: {rtol: 1.0e-12, atol: 1.0e-12}
+  sample_time_absolute_tolerance_ms: 1.0e-8
+  unique_standalone_build_directory_per_attempt: true
+  checkpoint_after_every_repetition_and_point_classification: true
+  rejected_raw_outcome_preserved_before_verifier_stop: true
+  single_process_lock: true
+  stop_on_scientific_failure: false
+  stop_on_numerical_identity_or_exact_repeat_failure: true
+  later_pass_cannot_rescue_earlier_failure: true
+
+verification:
+  focused_tests:
+    passed: 37
+    failed: 0
+    warnings: 26
+    elapsed_seconds: 2.12
+    command: >-
+      .venv/bin/pytest -q tests/test_l5_sst_like_stage4d.py
+      tests/test_l5_sst_like_stage4d_runner.py tests/test_l5_sst_like_stage4c.py
+      --disable-warnings
+  full_suite:
+    passed: 1479
+    failed: 0
+    warnings: 179378
+    elapsed_seconds: 844.55
+    exit_code: 0
+    command: .venv/bin/pytest -q --disable-warnings
+  repository_ruff_passed: true
+  new_source_format_check_passed: true
+  diff_whitespace_passed: true
+  entrypoint_help_checks_passed: true
+  stage4c_inputs_independently_reverified: true
+  stage4c_raw_sha256: 923dc2d018240906801c4a034f8f832a37f3524a5677f45019999f9d915c305c
+  zero_stage4d_network_outcomes_in_tests: true
+  no_stage4d_result_before_seal: true
+  no_stage4d_process_active_before_seal: true
+  ci_completion_claimed: false
+
+files:
+  scripts/run_l5_sst_like_stage4d.py: 1f89a36f6bc1bb276b35a8202fe93f29c3d219c468fd33411abc034e26ee841c
+  scripts/verify_l5_sst_like_stage4d.py: 6718f7743e64b087b328044b6dee16a27840d94049e0612a9ec6c933d8073d0b
+  tests/test_l5_sst_like_stage4d.py: 0c66a79cf9a4127a1388478a5bf4fe45c3c356a89b568978ef7750afbec25b89
+  tests/test_l5_sst_like_stage4d_runner.py: d069272c5c888d852b29665c2faa2b4a9221ca799e55e271b28127bb928ab9cd
+  src/smart_robustness/validation/l5_sst_like_stage4d.py: a5a0842576565128b917cbdd48fb563d22ddfef56f2b3805c161c1bcd91eb21f
+  src/smart_robustness/validation/higher_order.py: af83ceae4ddaaa9991308ceb6152e5ab40b94230deb898657eb77d2da5bf5cc9
+  src/smart_robustness/analysis/cross_correlation.py: db637bccc97a9bd79e996474aae01ff5b5ca194edbfc8729a100384a873d6819
+  src/smart_robustness/analysis/lfp.py: 14ba4db071d935672f048248e2242fdb5ec64ccc394d0b0711624e905ee55aae
+  src/smart_robustness/models/sst_like_feedback.py: d540c6ae2e88d3602a8fdf246aff1b06e6b6d60fb54f6d4021ad89682fc8e1a5
+  src/smart_robustness/classic_sector.py: 6191cc09727220b363e9a82863d235010cc75b274e5cc5f3884e6158ce2e8a7e
+  docs/validation-results/post2008-l5-sst-like-stage4-progression-registration-1002.yaml: b81d6efbebeaee5c32f5ca65d4716060203b82982455d6e09e6996300a2b4055
+  docs/validation-results/calibrated-figure16-holdout-registration-813.yaml: a7bc85773c7e120fdd54db2b5b9ce4b14b3fc3e5acdf09970acf5a70f051b3a1
+  docs/validation-results/post2008-l5-sst-like-stage4c-assessment-1016.yaml: b579f666d46633fcdeec9078e541a0fca6a7db6bace3efba28f945ec01175bfb
+  docs/validation-results/post2008-l5-sst-like-stage4c-seal-1015.yaml: bd12160230da80a4eeae5de6c6499ade6e9c484053ca48180a4e0bc69b9adbb2
+
+command: >-
+  MPLCONFIGDIR=/private/tmp/mpl .venv/bin/python scripts/run_l5_sst_like_stage4d.py
+  --output results/l5-sst-like-stage4d-figure16.yaml
+next_step: Execute once under the result lock, independently verify all fourteen repeats, and assess the full joint progression.
+prohibited_actions:
+  - Do not change the frozen baseline, points, route, weights, geometry, field reduction, bands, delays or gates after outcomes.
+  - Do not select passing points or compensate for earlier failures.
+  - Do not combine anatomy modules or commit ignored raw results.
+  - Do not interpret deterministic exact repeats as independent-seed robustness or biological replication.

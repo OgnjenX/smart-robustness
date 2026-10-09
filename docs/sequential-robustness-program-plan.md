@@ -68,8 +68,9 @@ phase specifications below retain the full intended program scope.
   contracts in `validation/l5_sst_like_stage4d.py`. The checkpoint runner and
   independent field/correlation verifier are now implemented, with synthetic
   interruption/resume, single-process locking, terminal no-op, raw-evidence
-  preservation and tampering tests. Full regression verification and a separate
-  pre-outcome seal remain required before execution. The inherited geometry seeds 16 and 17
+  preservation and tampering tests. All 1,479 full regression tests pass.
+  [Seal 1017](validation-results/post2008-l5-sst-like-stage4d-seal-1017.yaml)
+  records the separate pre-outcome execution boundary. The inherited geometry seeds 16 and 17
   belong to V1 and V2 within each run, not two additional seed arms. Stage 4D
   inter-area behavior and the final joint assessment remain outstanding.
   All seven registered points must remain

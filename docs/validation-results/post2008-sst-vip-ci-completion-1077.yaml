@@ -1,0 +1,40 @@
+schema_version: 1
+artifact_id: 1077
+artifact_type: github-ci-terminal-software-verification
+date: 2026-10-09
+software_commit_tested: 6bc16e4652585f60958054e47de789ace4517733
+github_ci:
+  run_id: 37904203703
+  job_id: 113734038132
+  url: https://github.com/OgnjenX/smart-robustness/actions/runs/37904203703
+  conclusion: success
+  watcher_exit_code: 0
+  job_elapsed: 48m25s
+  all_configured_stages_passed: true
+  stages:
+    - ruff
+    - calibration-and-provenance-contracts
+    - unit-and-lightweight-integration
+    - full-first-order-intrinsic-sector
+    - full-first-order-connected-sector
+    - ahp-ach-long-duration-validation
+  annotation: ubuntu-latest-migration-notice-not-a-test-failure
+independent_array_checkpoint:
+  completed_cases_verified: 43
+  parity_passed_cases: 43
+  verifier_exit_code: 0
+  partial_checkpoint_mode: true
+  physiological_scoring_independently_verified: false
+sealed_physiology_run:
+  status_at_recording: live-session-confirmed
+  completed_case_checkpoints_observed: 58
+  target_case_count: 509
+  terminal_assessment_complete: false
+scope: >-
+  Terminal CI success establishes configured software regression checks for
+  the tested commit, not physiological validity, complete SMART reproduction,
+  or completion of the robustness program. Earlier partial records remain
+  historical snapshots and are not rewritten as terminal assessments.
+sealed_experiment_components_modified: false
+frozen_baseline_modified: false
+raw_outputs_committed: false

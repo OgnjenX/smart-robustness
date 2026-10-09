@@ -1,0 +1,86 @@
+schema_version: 1
+artifact_id: 1023
+artifact_type: pre-replay-stage4d-numerical-contract-continuation-seal
+date: 2026-10-09
+status: sealed-before-stage4d-continuation-replay-and-execution
+implementation_commit: 6005442af7bddbcfe26a352da83d7b06786c0d70
+execution_authorized: true
+checkpoint_replayed_before_seal: false
+new_network_outcomes_before_seal: false
+frozen_baseline_modified: false
+result: results/l5-sst-like-stage4d-continuation-1024.yaml
+raw_result_committed: false
+baseline_manifest_fingerprint: 992fdd7c3bc9fa0f0d385b9e5a58ba317599357ca377145aba6f01c80d631cd2
+runtime_fingerprint: 7e654528a99f0b25b7148260a8d52021f6443fb992b210729a2475ae3cfcdaa4
+environment:
+  python: 3.11.9
+  brian2: 2.9.0
+  platform: macOS-27.0.1-arm64-arm-64bit
+
+execution:
+  registration: docs/validation-results/post2008-l5-sst-like-stage4d-continuation-registration-1022.yaml
+  original_seal: docs/validation-results/post2008-l5-sst-like-stage4d-seal-1017.yaml
+  original_failure_assessment: docs/validation-results/post2008-l5-sst-like-stage4d-engineering-stop-1018.yaml
+  original_checkpoint_sha256: d949391b2ef505df892ea50fe438fdb87e1a4547953b6de06e3567a6c242e7f2
+  original_failure_retained: true
+  copied_saved_outcome_verbatim: true
+  point_count: 7
+  repetitions_per_point: 2
+  copied_saved_repetitions: 1
+  new_network_repetitions: 13
+  final_outcome_count: 14
+  all_original_protocol_values_inherited_unchanged: true
+  call_original_sealed_network_run_repetition_unchanged: true
+  geometry_seeds: {v1: 16, v2: 17}
+  geometry_is_not_independent_seed_ensemble: true
+  all_earlier_failure_points_retained: true
+  strict_scientific_gates_unchanged: true
+  exact_whole_outcome_repeats_required: true
+  only_numerical_amendment: compare-raw-correlation-relative-to-centered-input-L2-energy
+  synthetic_audit_assessment: docs/validation-results/post2008-l5-sst-like-stage4d-numerical-audit-assessment-1021.yaml
+  normalized_curves_and_peaks_tolerance: {rtol: 1.0e-12, atol: 1.0e-12}
+  independent_gate_agreement_required: true
+  numerical_diagnostics_separate_from_raw_outcomes: true
+  original_dimensional_raw_check_retained_as_nonpromoting_diagnostic: true
+  source_and_output_locks_required: true
+  rejected_raw_outcome_preserved_before_stop: true
+  stop_on_numerical_identity_or_exact_repeat_failure: true
+  later_pass_cannot_rescue_earlier_failure: true
+
+verification:
+  focused_tests: {passed: 57, failed: 0, warnings: 26, elapsed_seconds: 2.75}
+  full_suite:
+    passed: 1499
+    failed: 0
+    warnings: 179378
+    elapsed_seconds: 847.78
+    exit_code: 0
+    command: .venv/bin/pytest -q --disable-warnings
+  repository_ruff_passed: true
+  new_source_format_check_passed: true
+  diff_whitespace_passed: true
+  entrypoint_help_checks_passed: true
+  no_continuation_result_before_seal: true
+  no_stage4d_or_regression_process_active_before_seal: true
+  ci_completion_claimed: false
+  ci_run: https://github.com/OgnjenX/smart-robustness/actions/runs/37874591530
+  ci_last_observed_status: in_progress
+
+files:
+  scripts/run_l5_sst_like_stage4d_continuation.py: 02621259b9ff95a0ea03d98f35a3b66f40e0154954c4a6c08c2f6259098a86af
+  scripts/verify_l5_sst_like_stage4d_continuation.py: 1df0db8a3b99691fad3dd954d826778131939159e6a6c28cd430d384cb5022f7
+  tests/test_l5_sst_like_stage4d_continuation.py: 2146db3ba5c92ac1570bf500aa63383495d7f27990844fa785fe1290f0fd2e18
+  src/smart_robustness/validation/stage4d_precision.py: 4e538784e9e778f862db919085bc142d684a16557ff56070274d00082dfc3086
+  docs/validation-results/post2008-l5-sst-like-stage4d-continuation-registration-1022.yaml: 860487b3933888fb5d3b91197e873c2242968967aef59f7fecde73e0e030897f
+  docs/validation-results/post2008-l5-sst-like-stage4d-seal-1017.yaml: 957e5fa1ee1508c46b99265ab7aa2d403793d0ee534eaa55522a1d5c69c8be93
+  docs/validation-results/post2008-l5-sst-like-stage4d-numerical-audit-assessment-1021.yaml: fe3530d61732d93031bc79941799c186f6f98f384f2d2118fa53f127d9a0e050
+
+command: >-
+  MPLCONFIGDIR=/private/tmp/mpl .venv/bin/python scripts/run_l5_sst_like_stage4d_continuation.py
+  --output results/l5-sst-like-stage4d-continuation-1024.yaml
+next_step: Commit this seal separately before replay, execute once under both locks, verify fourteen outcomes and seven exact repeat pairs, then assess joint progression.
+prohibited_actions:
+  - Do not modify the original failure, raw checkpoint, original seal or original sources.
+  - Do not alter the baseline, network, parameter grid, weights, geometry, scientific gates or registered order.
+  - Do not select survivors, compensate for earlier failures, or interpret exact repeats as independent-seed robustness.
+  - Do not claim this continuation makes the original dimensional verification contract successful.

@@ -1,0 +1,49 @@
+schema_version: 1
+artifact_id: 1089
+artifact_type: retained-external-source-metadata-transport-failure-assessment
+date: 2026-10-09
+registration: docs/validation-results/post2008-synphys-source-metadata-registration-1087.yaml
+registration_sha256: c91504ac2a49fa15f5a71a9afbe7c8b05180e4c2e1d957e49e6bccb94836f289
+result: results/synphys-source-metadata-1088/manifest.yaml
+result_sha256: 8b75d9efb76cfac23a2744f7b0eeb1f751716efcf7d9f47329351fdf21bc62f9
+collector: scripts/collect_synphys_source_metadata.py
+collector_sha256: f7496a7657763747171493123e502c39bbe9f8608c5deb978c23f9f391b204b0
+implementation_commit: b785339
+execution:
+  exit_code: 0
+  interpretation_of_exit_code: collector-recorded-all-failures-not-acquisition-success
+  requested_resources: 5
+  archived_resources: 0
+  failures_retained: 5
+  failure_type: URLError
+  shared_cause: SSL-CERTIFICATE_VERIFY_FAILED-unable-to-get-local-issuer-certificate
+verification:
+  inspect_each_registered_resource_in_terminal_manifest: performed
+  source_coverage: all-five-registered-names-retained
+  focused_tests_passed: 10
+  repository_ruff: passed
+  diff_check: passed
+  full_regression_rerun_for_metadata_collector: false
+transport_diagnostic:
+  python_default_CA_file: /Library/Frameworks/Python.framework/Versions/3.11/etc/openssl/cert.pem
+  python_default_CA_file_available: false
+  alternate_system_CA_file_exists: /etc/ssl/cert.pem
+  alternate_CA_transport_verified: false
+  TLS_verification_disabled: false
+scientific_interpretation: >-
+  Public source documentation was located, but this archival attempt did not
+  retrieve any resource. The failures concern this local HTTPS trust setup,
+  not dataset availability, invalid physiology or SMART behavior. No numerical
+  synaptic responses, database records or new cell outcomes were inspected.
+next_step: >-
+  Register a transport-only retry into a separate result directory using an
+  explicitly identified trusted certificate bundle or certificate-verified
+  system transport. Preserve the original five failures and registration,
+  keep endpoints and byte bounds unchanged, and independently verify successful
+  metadata receipts before defining a source-schema/data acquisition protocol.
+insecure_transport_authorized: false
+response_or_database_reads_authorized: false
+parameter_fitting_authorized: false
+network_execution_authorized: false
+frozen_baseline_modified: false
+raw_outputs_committed: false

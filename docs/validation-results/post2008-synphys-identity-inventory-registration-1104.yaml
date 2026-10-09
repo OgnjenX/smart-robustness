@@ -1,0 +1,39 @@
+schema_version: 1
+artifact_id: 1104
+artifact_type: outcome-blind-nonsynaptic-identity-inventory-registration
+date: 2026-10-09
+database: results/synphys-small-schema-1102/synphys_r2.1_small.sqlite
+database_sha256: 7372499fdd874f057565080d5769baaf2659ef39d9f3bc3c7147dd1e1c280a53
+parent_manifest: results/synphys-small-schema-1102/manifest.yaml
+parent_manifest_sha256: eac346b228d8cd39c79e528ea318402fc4803a3d686b6481f9170a0a83406fe4
+output_directory: results/synphys-identity-inventory-1105
+allowed_columns:
+  slice: [id, ext_id, species]
+  experiment: [id, ext_id, slice_id, project_name, target_region]
+  cell: [id, ext_id, experiment_id, cre_type, cell_class_nonsynaptic, target_layer]
+  cortical_cell_location: [id, cell_id, cortical_layer]
+metadata_values_authorized: true
+synaptic_or_intrinsic_outcome_reads_authorized: false
+QC_outcome_reads_authorized: false
+parameter_fitting_authorized: false
+network_execution_authorized: false
+inventory_contract: >-
+  Read every row from the four explicitly whitelisted metadata projections,
+  without filtering on class, region, layer, synaptic signs or availability of
+  response records. Retain raw values and nulls. Reconstruct cell-to-experiment,
+  experiment-to-slice and measured-location joins; reject duplicate primary
+  IDs, retain missing parents, orphan locations and multiple locations as
+  unresolved rather than selecting the first. Inventory exact joint label
+  tuples without assigning biological eligibility or collapsing mixed labels.
+  Cell target_layer is a separate placeholder, not a measured layer fallback.
+execution_contract: >-
+  Hash-check source and parent manifest first. SQLite read-only immutable and
+  query_only; an exact table/column authorizer rejects all unlisted reads and
+  mutations. Exclusive output directory prevents duplicate or overwritten
+  snapshots. Preserve metadata failures without changing the source database.
+next_gate: >-
+  Independently verify all projected rows, joins, counts and joint labels.
+  Then register exact species/area/class/layer interpretation and QC fields
+  before outcome access; source fields alone cannot establish biological
+  conductance validation or replace isolated VIP intrinsic physiology.
+frozen_baseline_modified: false

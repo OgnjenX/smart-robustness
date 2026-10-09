@@ -1,0 +1,67 @@
+schema_version: 1
+artifact_id: 1044
+artifact_type: complete-biophysical-native-dependency-metadata-assessment
+date: 2026-10-09
+status: dependency-identities-resolved-channel-equations-and-setup-unvalidated
+registration: docs/validation-results/post2008-sst-vip-biophysical-dependency-registration-1042.yaml
+implementation_commit: cd6b821
+manifest: results/sst-vip-biophysical-dependencies-1043/manifest.yaml
+manifest_sha256: cf9da60df08e7e7da9a076d4443c3b864399a97a33d0853edaea8a891ae93b96
+manifest_bytes: 1956895
+raw_outputs_committed: false
+frozen_baseline_modified: false
+
+inventory:
+  biophysical_models: 25
+  metadata_batches: 2
+  template_count: 2
+  template_model_counts: {329230710: 14, 491455321: 11}
+  unique_template_channel_file_records: 16
+  configured_model_mechanism_mappings: 275
+  missing_mechanism_mappings: 0
+  ambiguous_mechanism_mappings: 0
+  configured_distinct_mechanism_names: 15
+  unconfigured_additional_template_mechanism: NaTa
+  channel_file_type: BiophysicalModelDescription
+  shared_resources_counted_as_independent_physiology: false
+  original_no_model_specimens_retained: 42
+
+independent_verification:
+  passed: true
+  method: >-
+    Reparse both raw API responses, verify their hashes, complete counts and
+    exact requested model identities, and compare sorted full records with
+    the manifest. Independently enumerate configured mechanism names from
+    all 25 preserved parameter JSON objects, match basenames and file types
+    against template metadata, and compare every candidate id with the
+    recorded mapping. All 275 mappings have exactly one native resource id.
+    Count unique template file identities separately from model references.
+  collector_exit_code: 0
+  focused_tests_passed: 59
+  repository_ruff_check_passed: true
+
+resolved_resources:
+  channel_basenames: [CaDynamics.mod, Ca_HVA.mod, Ca_LVA.mod, Ih.mod, Im.mod,
+    Im_v2.mod, K_P.mod, K_T.mod, Kd.mod, Kv2like.mod, Kv3_1.mod, NaTa.mod,
+    NaTs.mod, NaV.mod, Nap.mod, SK.mod]
+  channel_bytes_downloaded: false
+  channel_equations_validated: false
+  example_channel_files_substituted: false
+  standard_hoc_dependencies_from_inspected_SDK: [stdgui.hoc, import3d.hoc]
+  hoc_runtime_version_validated: false
+  authoritative_axon_type_resolved: false
+
+interpretation:
+  - Native template-file identities are resolved for all registered biophysical models without selecting a model by fit or SMART performance.
+  - The 16 files are shared template resources; 275 model references do not imply 275 independent channel measurements.
+  - A unique basename match is not proof of equation identity, native numerical reproduction or isolated physiological accuracy.
+  - Native model-description axon_type remains unresolved; no default mode or source-code patch is authorized to conceal this setup boundary.
+  - The 227 GLIF models and all 111 source cells remain in the program; this dependency substep does not replace the VIP or broader cell-class study.
+
+next_step:
+  - Register bounded acquisition and static inspection of all 16 native channel resources, preserving file bytes and source attachment identities.
+  - Resolve authoritative native package/configuration setup before any biophysical reference execution.
+  - Preregister bounded physiology and morphology acquisition and held-out native validation; preserve experimental NWB files immutably.
+network_execution_authorized: false
+isolated_simulation_authorized: false
+parameter_fitting_authorized: false

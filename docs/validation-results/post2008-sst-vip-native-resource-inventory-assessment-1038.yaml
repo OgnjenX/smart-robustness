@@ -1,0 +1,92 @@
+schema_version: 1
+artifact_id: 1038
+artifact_type: sst-vip-native-resource-inventory-partial-audit-assessment
+date: 2026-10-09
+status: physiology-inventory-verified-native-equation-audit-incomplete
+registration: docs/validation-results/post2008-sst-vip-native-resource-audit-registration-1036.yaml
+implementation_commit: 198af68
+manifest: results/sst-vip-native-resource-audit-1037/manifest.yaml
+manifest_sha256: 8bd4b1e27f6bc762257b20e05c42d47c1a62307ccdeb4ed02145767988dd5bb4
+manifest_bytes: 6324071
+raw_outputs_committed: false
+frozen_baseline_modified: false
+
+physiology_inventory:
+  specimens: 111
+  batches: 6
+  sweep_records: 8380
+  nwb_available_specimens: 111
+  morphology_available_specimens: 31
+  morphology_unavailable_specimens: 80
+  prior_inventory_identity_discrepancies: 0
+  response_guided_sweep_selection: false
+  large_physiology_or_morphology_files_downloaded: false
+
+native_source:
+  revision: a56bd8ea7613a812334602b64746cdd30c325a96
+  requested_files: 8
+  archived_and_statically_parsed_files: 6
+  unresolved_files: 2
+  unresolved_paths:
+    - {path: allensdk/model/biophys_sim/utils.py, error: HTTP-404}
+    - {path: allensdk/model/biophys_sim/all_active_utils.py, error: HTTP-404}
+  original_failed_paths_preserved: true
+  source_code_imported_or_executed: false
+  native_source_audit_complete: false
+
+static_parameter_inspection:
+  glif_parameter_objects: 227
+  dynamics_and_reset_selectors_checked: 1362
+  unresolved_selectors_in_inspected_method_library: 0
+  selector_resolution_method: >-
+    Parse the archived glif_neuron_methods.py AST without executing it;
+    read literal METHOD_LIBRARY keys and referenced function names and
+    match the six configured selectors in every retained GLIF parameter file.
+  biophysical_parameter_objects: 25
+  configured_mechanism_names:
+    - CaDynamics
+    - Ca_HVA
+    - Ca_LVA
+    - Ih
+    - Im
+    - Im_v2
+    - K_P
+    - K_T
+    - Kd
+    - Kv2like
+    - Kv3_1
+    - NaTs
+    - NaV
+    - Nap
+    - SK
+  mechanism_equations_and_native_setup_validated: false
+  observations:
+    - The inspected GLIF voltage update receives injected current and old afterspike currents, uses forward Euler and applies capacitance/conductance coefficients.
+    - GLIF selector-name resolution is not proof of numerical parity, physiological accuracy or response to conductance-based synaptic inhibition.
+    - Native GLIF reference sweeps set dt from stimulus sampling_rate and write simulated responses to the output file; a future reference protocol must keep acquired experimental NWB files immutable.
+    - Spike cutting, threshold and afterspike reset ordering require explicit parity gates before a Brian2 implementation can be promoted.
+
+independent_verification:
+  passed_for_collected_scope: true
+  method: >-
+    Independently reparse all six raw physiology JSON responses, reconcile
+    exact requested specimen-id sets and complete row counts, verify raw
+    SHA256 values and compare sorted complete records with the manifest.
+    Recompute the 111 distinct specimens and 8,380 sweep count. Recompute
+    each received source-file hash. Preserve both HTTP-404 records rather
+    than treating a successful collector exit as complete source coverage.
+  collector_exit_code: 0
+  focused_tests_passed: 46
+  repository_ruff_check_passed: true
+  native_model_simulation_performed: false
+  held_out_physiological_validation_performed: false
+
+next_step:
+  - Resolve both missing native paths against the same pinned repository tree and record an explicit source-path correction before acquiring replacements.
+  - Inspect native setup and all configured mechanisms; do not infer them from parameter names.
+  - Preregister bounded acquisition of physiology/morphology resources with immutable experimental files.
+  - Register native-reference and held-out recruitment validation before any cell execution or fitting.
+  - Keep explicit SST-only representation and later VIP network gates separate.
+network_execution_authorized: false
+isolated_simulation_authorized: false
+parameter_fitting_authorized: false

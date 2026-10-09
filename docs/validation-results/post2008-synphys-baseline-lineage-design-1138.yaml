@@ -1,0 +1,62 @@
+schema_version: 1
+artifact_id: 1138
+artifact_type: baseline-metadata-lineage-design-not-execution-registration
+date: 2026-10-09
+status: additional-metadata-identity-contract-required-before-baseline-joins
+source_schema:
+  manifest: results/synphys-small-schema-1102/manifest.yaml
+  manifest_sha256: eac346b228d8cd39c79e528ea318402fc4803a3d686b6481f9170a0a83406fe4
+  evidence_read: previously-verified-schema-column-names-only
+  physiological_or_metadata_row_values_newly_read: false
+prospective_projections:
+  cell: [id, experiment_id, electrode_id]
+  electrode: [id, experiment_id]
+  sync_rec: [id, experiment_id]
+  recording: [id, sync_rec_id, electrode_id]
+  pulse_response: [id, recording_id, stim_pulse_id, pair_id, ex_qc_pass, in_qc_pass]
+  patch_clamp_recording: [id, recording_id, clamp_mode, baseline_potential, qc_pass]
+  stim_pulse: [id, recording_id, cell_id, previous_pulse_dt, qc_pass, n_spikes, first_spike_time]
+required_identity_design:
+  original_contributors: every-decoded-original-rested-IC-pulse-response-ID-without-availability-based-selection
+  pulse_pair: pulse_response-pair_id-matches-sealed-selected-pair
+  postsynaptic_recording: pulse_response-recording_id-identifies-exactly-one-recording
+  patch_clamp: exactly-one-patch-clamp-record-for-that-postsynaptic-recording
+  postsynaptic_cell: recording-electrode_id-equals-selected-postsynaptic-cell-electrode_id
+  electrode_experiment: both-presynaptic-and-postsynaptic-electrodes-belong-to-selected-experiment
+  synchronized_experiment: recording-sync_rec_id-identifies-selected-experiment
+  stimulus: pulse_response-stim_pulse_id-identifies-exactly-one-stimulus-pulse
+  presynaptic_cell: stim_pulse-cell_id-equals-selected-presynaptic-cell-ID
+  presynaptic_recording: stim_pulse-recording_id-identifies-presynaptic-cell-electrode-in-same-sync-record
+  cell_electrode_mapping:
+    current_selected_release_comparison_includes_this_field: false
+    next_required_boundary: reconcile-cell-electrode_id-before-using-it-to-establish-contributor-identity
+retention_design:
+  missing_parent: retain-original-ID-and-unresolved-link-do-not-drop-from-denominator
+  multiple_parents: retain-every-row-and-mark-ambiguous-never-select-first
+  wrong_pair_cell_experiment_or_sync: retain-conflict-do-not-use-mismatched-baseline-as-complete-source-state
+  original_pulse_weighting: preserve-repeated-recording-weight-across-distinct-pulse-response-IDs
+  source_nanmean_and_complete_coverage: separate-as-in-audit-1137
+  missing_baseline: no-nominal-holding-or-access-adjusted-field-substitution
+  raw_QC_flags: retain-response-recording-and-stimulus-flags-before-any-new-eligibility-classification
+  original_experiment_partition: unchanged-global-assignment
+source_semantics_to_preserve:
+  IC_mode: verify-mode-without-reclassifying-VC-records
+  preceding_rest_interval: source-selection-uses-previous_pulse_dt-strictly-greater-than-8-seconds
+  infinite_preceding_interval: may-satisfy-source-greater-than-condition-do-not-assume-it-is-a-failed-baseline-value
+  response_duration: source-required-at-least-10ms-not-proven-by-retained-medium-metadata-alone
+  single_spike_or_extra_recording_QC_gates: do-not-retroactively-add-to-historical-contributor-selection
+  quality_and_biological_eligibility_thresholds: must-be-separately-fixed-before-reading-outcomes
+  presynaptic_cell_class: retain-nonsynaptic-identity-never-infer-cell-type-from-response-sign
+next_gate: >-
+  First complete independently verified acquisition and required-ID/value
+  reconciliation. Then seal a distinct metadata-only identity-extension and
+  baseline-reconstruction registration with exact input hashes, all projected
+  columns, bounded selection, numerical comparison, raw-QC handling and
+  independent verification. This design grants no database row access.
+metadata_joins_authorized: false
+baseline_values_newly_read_authorized: false
+waveform_reads_authorized: false
+database_download_authorized: false
+parameter_fitting_authorized: false
+cell_or_network_execution_authorized: false
+frozen_baseline_modified: false

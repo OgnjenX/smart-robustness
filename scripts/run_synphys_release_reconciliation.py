@@ -11,9 +11,9 @@ import yaml
 from synphys_release_reconciliation import (
     COLUMNS,
     build_selection,
-    reconcile_selected,
     stream_sha256,
 )
+from synphys_required_identity import reconcile_with_required_ids
 
 SOURCE_PATHS = {
     "small_database": "results/synphys-small-schema-1102/synphys_r2.1_small.sqlite",
@@ -66,6 +66,7 @@ def validate_scope(reg):
         raise ValueError("exclusive result output scope differs")
     if (stream_sha256(Path(__file__)) != reg["runner_sha256"]
         or stream_sha256(Path(__file__).with_name("synphys_release_reconciliation.py")) != reg["helper_sha256"]
+        or stream_sha256(Path(__file__).with_name("synphys_required_identity.py")) != reg["identity_guard_sha256"]
         or stream_sha256(Path(__file__).with_name("verify_synphys_medium_acquisition.py")) != reg["verifier_sha256"]):
         raise ValueError("sealed implementation changed")
 
@@ -117,6 +118,7 @@ def run(registration):
     root.mkdir()
     report = {"registration_sha256": stream_sha256(registration),
               "runner_sha256": stream_sha256(Path(__file__)), "helper_sha256": reg["helper_sha256"],
+              "identity_guard_sha256": reg["identity_guard_sha256"],
               "started_at_utc": datetime.now(UTC).isoformat(), "status": "engineering-failure-retained",
               "baseline_joins_performed": False, "waveform_values_read": False,
               "parameter_fitting_performed": False, "cell_or_network_execution_performed": False}
@@ -139,12 +141,15 @@ def run(registration):
             raise ValueError("selected source counts differ")
         report["selection"] = selection
         report["original_target_lineage"] = targets
-        report.update(reconcile_selected(Path(SOURCE_PATHS["small_database"]),
-                                         Path(SOURCE_PATHS["medium_database"]), selection))
+        report.update(reconcile_with_required_ids(Path(SOURCE_PATHS["small_database"]),
+                                                 Path(SOURCE_PATHS["medium_database"]), selection))
         if any(stamp(source["path"]) != before[key] for key, source in reg["sources"].items()):
             raise ValueError("input changed during reconciliation")
-        report["status"] = ("exact-selected-equivalence-independent-assessment-pending"
-                            if report["equal"] else "selected-release-differences-retained")
+        if not report["required_primary_id_coverage"]["complete"]:
+            report["status"] = "required-primary-identity-failure-retained"
+        else:
+            report["status"] = ("exact-selected-equivalence-independent-assessment-pending"
+                                if report["equal"] else "selected-release-differences-retained")
     except (ValueError, OSError, KeyError, TypeError, sqlite3.Error, yaml.YAMLError) as exc:
         report["error"] = str(exc)
     report["finished_at_utc"] = datetime.now(UTC).isoformat()

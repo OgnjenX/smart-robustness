@@ -93,6 +93,7 @@ def source_fixture(tmp_path, monkeypatch):
                       "payload_bytes_per_release": 33554432},
            "runner_sha256": module.stream_sha256(SCRIPTS / "run_synphys_release_reconciliation.py"),
            "helper_sha256": module.stream_sha256(SCRIPTS / "synphys_release_reconciliation.py"),
+           "identity_guard_sha256": module.stream_sha256(SCRIPTS / "synphys_required_identity.py"),
            "verifier_sha256": module.stream_sha256(SCRIPTS / "verify_synphys_medium_acquisition.py"),
            "output_directory": "results/synphys-selected-reconciliation-synthetic"}
     registration = tmp_path / "registration.yaml"
@@ -182,7 +183,7 @@ def test_acquisition_assessment_gate_required(tmp_path, monkeypatch, field, valu
 
 def test_input_mutation_during_projection_cannot_promote_equality(tmp_path, monkeypatch):
     registration, _, _, _ = source_fixture(tmp_path, monkeypatch)
-    original = module.reconcile_selected
+    original = module.reconcile_with_required_ids
 
     def mutate_after_projection(small, medium, selection):
         result = original(small, medium, selection)
@@ -190,9 +191,36 @@ def test_input_mutation_during_projection_cannot_promote_equality(tmp_path, monk
             handle.write(b"mutation-after-projection")
         return result
 
-    monkeypatch.setattr(module, "reconcile_selected", mutate_after_projection)
+    monkeypatch.setattr(module, "reconcile_with_required_ids", mutate_after_projection)
     report = module.run(registration)
     assert report["status"] == "engineering-failure-retained"
     assert report["equal"] is True
     assert "changed during reconciliation" in report["error"]
     assert report["baseline_joins_performed"] is False
+
+
+def test_both_missing_selected_identity_fail_after_resealed_synthetic_inputs(tmp_path, monkeypatch):
+    registration, reg, acquisition, verification = source_fixture(tmp_path, monkeypatch)
+    for key in ("small_database", "medium_database"):
+        with sqlite3.connect(module.SOURCE_PATHS[key]) as db:
+            db.execute("DELETE FROM cell WHERE id=20")
+    acquisition["sha256"] = module.stream_sha256(Path(module.SOURCE_PATHS["medium_database"]))
+    save(Path(module.SOURCE_PATHS["acquisition"]), acquisition)
+    verification["identity"]["sha256"] = acquisition["sha256"]
+    verification["acquisition_manifest_sha256"] = module.stream_sha256(Path(module.SOURCE_PATHS["acquisition"]))
+    save(Path(module.SOURCE_PATHS["verification"]), verification)
+    assessment_path = Path(module.SOURCE_PATHS["acquisition_assessment"])
+    assessment = yaml.safe_load(assessment_path.read_text())
+    assessment["result_sha256"] = module.stream_sha256(Path(module.SOURCE_PATHS["acquisition"]))
+    assessment["verification_result_sha256"] = module.stream_sha256(Path(module.SOURCE_PATHS["verification"]))
+    save(assessment_path, assessment)
+    for key, source in reg["sources"].items():
+        source["sha256"] = module.stream_sha256(Path(source["path"]))
+        module.KNOWN_HASHES[key] = source["sha256"]
+    save(registration, reg)
+    report = module.run(registration)
+    assert report["status"] == "required-primary-identity-failure-retained"
+    assert report["projected_values_equal"] is True
+    assert report["equal"] is False
+    assert report["required_primary_id_coverage"]["small"]["tables"]["cell"]["missing_ids"] == [20]
+    assert report["required_primary_id_coverage"]["medium"]["tables"]["cell"]["missing_ids"] == [20]

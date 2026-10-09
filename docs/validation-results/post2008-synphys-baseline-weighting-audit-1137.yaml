@@ -1,0 +1,60 @@
+schema_version: 1
+artifact_id: 1137
+artifact_type: static-baseline-weighting-and-synthetic-statistics-audit
+date: 2026-10-09
+status: pulse-weighting-confirmed-metadata-joins-not-authorized
+primary_source:
+  url: https://github.com/AllenInstitute/aisynphys/blob/545a990ee171e6c0d23dd4bba413e1ccbf2f0853/aisynphys/pipeline/multipatch/conductance.py
+  sha256: 13e746dc4ab022bd15e6e58dc9d077afe19723b20cfc5adf06e244c9a856f712
+static_findings:
+  source_contributors: PulseResponse-rows-selected-by-original-resting_state_fit-ic_pulse_ids
+  baseline_field: PulseResponse.recording.patch_clamp_recording.baseline_potential
+  aggregation: numpy-nanmean-over-contributing-pulse-responses
+  unique_recording_deduplication: not-performed
+  access_adjusted_baseline_used_for_IC_mean: false
+  historical_generating_execution_proven: false
+engineering_scaffold:
+  pure_statistics: scripts/synphys_baseline_statistics.py
+  tests: tests/test_synphys_baseline_statistics.py
+  tests_passed: 20
+  database_execution_entry_point: absent
+  source_mean_reference: math-fsum-divided-by-finite-pulse-count
+  identity_weight: one-observation-per-contributing-pulse-not-per-unique-recording
+  retained_counts: [pulse_count, finite_count, nan_count, null_count, infinity_count, invalid_type_count]
+  finite_only_descriptors: [mean_volts, population_std_volts, min_volts, max_volts]
+  source_nanmean_reference:
+    numeric_NaN_omission: explicitly-labelled
+    null_to_NaN_conversion: forbidden
+    missing_or_invalid_reference: null
+  complete_finite_coverage: requires-every-original-pulse-baseline-finite-and-nonempty
+  biological_eligibility_automatically_established: false
+numerical_comparison_design:
+  implemented_as: pure-binary64-mean-roundoff-bound
+  gamma_n: 'n*epsilon / (1-n*epsilon)'
+  mean_discrepancy_bound_volts: '2*gamma_n*mean(abs(values)) + 2*ulp(fsum(values)/n)'
+  maximum_values: 100000
+  scope: nonempty-finite-numeric-baselines-only
+  historical_NumPy_summation_order_recovered: false
+  biological_error_tolerance: not-defined
+  exercised_counts: [1, 3, 100, 10000]
+  controls: NumPy-forward-and-reversed-orders-pass-and-one-microvolt-injection-rejected
+interpretation:
+  - Pulse-response weighting can differ from a unique-recording mean; repeating a recording baseline is not accidental duplication in this source statistic.
+  - Pulse counts do not become independent experiment counts; preserve the original global experiment partitions and operational unit gates.
+  - A finite-only diagnostic mean does not repair missing baselines or establish source-complete state coverage.
+  - SQLite nulls cannot be assumed to preserve the pre-serialization distinction between absent values and numeric NaN.
+  - A reconstructed baseline for a record absent from the conductance table would be a new labelled artifact, not a repaired historical conductance record.
+  - Comparison to the 51 available source means requires a separately sealed numerical contract before outcomes, while all 41 missing source rows remain missing.
+  - Dispersion is descriptive until a separate fitting/validation protocol fixes how experimental-state uncertainty enters the loss and eligibility gates.
+next_gate: >-
+  Independently assess the medium acquisition, complete exact selected-ID/value
+  reconciliation with required primary identity coverage, and then preregister
+  original-pulse-to-recording/patch-clamp/stimulus joins, QC, bounds and failure
+  retention. Do not read baseline values or fit parameters under this audit.
+source_code_executed: false
+experimental_values_newly_read: false
+metadata_joins_executed: false
+parameter_fitting_performed: false
+cell_or_network_execution_performed: false
+frozen_baseline_modified: false
+full_repository_regression_completed_for_this_scaffold: false

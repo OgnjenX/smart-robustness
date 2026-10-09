@@ -140,3 +140,24 @@ retained summary differences, duplicate invocation, source tampering, denied
 permission expansion, missing independent/published gates, and post-projection
 input mutation. This remains a focused engineering check, not full regression
 or actual-source equivalence.
+
+## Required primary identity coverage
+
+The execution wrapper now uses `scripts/synphys_required_identity.py` and must
+pin its hash as `identity_guard_sha256`. In addition to value equality, each
+release must contain every selected primary ID in slice, experiment, cell,
+pair, synapse and average-fit projections. Missing or unexpected IDs are
+archived by table and release. Two equally empty projections cannot pass.
+Missing optional measured-location/rested-fit/conductance child records remain
+explicit source evidence; they are not fabricated to satisfy primary coverage.
+An incomplete primary identity set has a distinct failure status, regardless
+of whether the remaining values match. The end-to-end synthetic runner test
+includes two resealed synthetic releases both missing the same selected cell.
+
+The fixed-source full repository run on revision `2a4d76f` completed with 1,966
+tests passing in 855.05 seconds, before this integration and the new baseline
+statistics tests. Its 179,378 warnings are retained in the execution output;
+passing tests do not erase those warnings or establish scientific survival.
+The current integrated source passes 259 Synphys-focused tests, repository
+Ruff and diff whitespace checks. It still needs its own full regression and
+completed CI before real reconciliation execution is sealed.

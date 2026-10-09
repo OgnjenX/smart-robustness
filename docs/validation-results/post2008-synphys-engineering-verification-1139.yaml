@@ -1,0 +1,44 @@
+schema_version: 1
+artifact_id: 1139
+artifact_type: fixed-revision-regression-and-integrated-synthetic-gate-receipt
+date: 2026-10-09
+fixed_source_full_regression:
+  source_revision: 2a4d76f389c1851f63aeaca01b8e46ba913a7817
+  session: 80875
+  command: MPLCONFIGDIR=/private/tmp/mpl .venv/bin/python -m pytest -q
+  exit_code: 0
+  tests_passed: 1966
+  warnings_reported: 179378
+  duration_seconds: 855.05
+  required_identity_and_baseline_helpers_included: false
+  evidence: terminal-session-completion-output
+  full_output_artifact_hash: unavailable
+integrated_source_checks:
+  Synphys_focused_tests_passed: 259
+  repository_ruff: passed
+  diff_whitespace: passed
+  required_primary_identity_guard_integrated: true
+  identical_missing_primary_IDs_promoted: false
+  baseline_statistics_queries_real_data: false
+  full_repository_regression_completed_for_integrated_source: false
+CI_snapshot:
+  run: https://github.com/OgnjenX/smart-robustness/actions/runs/37976679686
+  source_revision: 2a4d76f389c1851f63aeaca01b8e46ba913a7817
+  observed_at_UTC: '2026-10-09T19:15:31Z'
+  status: in_progress
+  lint: success
+  calibration_and_provenance_contracts: success
+  remaining_stages: not-yet-verified
+  previous_push_runs_cancelled: true
+  workflow_cancellation_rule: same-workflow-and-ref-cancel-in-progress
+  latest_CI_green_claimed: false
+boundaries:
+  - A passing fixed-source regression does not cover code introduced afterward.
+  - Primary-ID coverage and optional source-state availability remain different gates.
+  - Baseline weighting helpers and lineage designs have no real metadata-join authorization.
+  - No full-suite or CI result establishes exact 2008 execution recovery or completion of the scientific program.
+  - Do not publish a new push while the current CI run is active merely to replace its pending evidence.
+parameter_fitting_performed: false
+real_medium_row_values_read: false
+frozen_baseline_modified: false
+raw_results_committed: false

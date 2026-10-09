@@ -1,0 +1,47 @@
+schema_version: 1
+artifact_id: 1140
+artifact_type: synthetic-metadata-lineage-scaffold-verification
+date: 2026-10-09
+status: synthetic-lineage-contract-tested-real-data-execution-not-authorized
+design:
+  path: docs/validation-results/post2008-synphys-baseline-lineage-design-1138.yaml
+  sha256: 8fb45874506dffbe3d08fce88952cef74699bd6374a4f7d818284600cb9177c3
+implementation:
+  path: scripts/synphys_baseline_lineage.py
+  sha256: 2c14878df8429e1551e7f9b68f33892967ed10ead3d58ddcdd01b859f036daec
+  database_entry_point: false
+  input_scope: supplied-seven-table-projected-metadata-only
+  maximum_original_pulse_IDs: 100000
+  maximum_rows_per_table: 100000
+tests:
+  path: tests/test_synphys_baseline_lineage.py
+  sha256: 05bb9ce26236e11639214de4823b6768af20cbd40fc733ac9273b7f4bdf55ecf
+  command: .venv/bin/python -m pytest -q tests/test_synphys_baseline_lineage.py
+  passed: 43
+  duration_seconds: 0.03
+  exit_code: 0
+  focused_ruff: passed
+  cases:
+    - Complete pre/post cell-electrode-experiment and synchronized-recording lineage.
+    - Missing and ambiguous parents in each of the seven projected tables.
+    - Conflicting pair, cell, electrode, experiment and synchronization identity.
+    - Numerically equal float identities do not certify integer identity links.
+    - Bool, float, string, null and nonpositive identity coercion rejected.
+    - Rest interval strictly greater than eight seconds, including positive infinity.
+    - Raw failed QC, multiple spikes and missing baselines retained without reselection.
+    - Distinct pulses sharing a recording retain repeated baseline weighting.
+    - Unavailable original pulse remains in the contributor denominator and input order.
+    - Waveform columns and duplicate original pulse IDs rejected.
+scope_limits:
+  - Identity completeness is not complete baseline coverage or biological eligibility.
+  - Response duration remains unconfirmed without original waveform evidence.
+  - No real metadata rows were read or joined by these tests.
+  - The active full regression session 71826 collected before these files existed and does not cover them.
+  - Existing source and tests collected by that full regression were not modified.
+  - A separate sealed execution registration is still required after verified acquisition and reconciliation.
+real_database_queries_performed: false
+baseline_statistics_on_real_data_performed: false
+parameter_fitting_performed: false
+cell_or_network_execution_performed: false
+frozen_baseline_modified: false
+raw_results_committed: false

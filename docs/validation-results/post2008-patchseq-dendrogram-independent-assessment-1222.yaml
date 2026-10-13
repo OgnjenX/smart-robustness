@@ -1,0 +1,63 @@
+schema_version: 1
+artifact_id: 1222
+artifact_type: independently-reconstructed-original-reference-tree-projection-assessment
+date: 2026-10-14
+registration: docs/validation-results/post2008-patchseq-dendrogram-read-registration-1220.yaml
+registration_sha256: a5cf1562e92df7b5599005729968c68a314f24e697d8e092bf3ce109d5c3c719
+sealed_commit: 1e8cfd9
+collector: scripts/read_patchseq_dendrogram.py
+collector_sha256: e556a4269cfe55b74416edcb3b45a397760182b22894aaf373204b4b33485171
+result: results/patchseq-reference-dendrogram-1221/manifest.yaml
+result_sha256: e326a0582a201aa388bfca3aca98cdd2d9791a518c51aba11775cefd3792b1c3
+source_member_sha256: 7cde2f457b7b007ba2819ffb76e4f0927900f76a8984b4a5c5f094c6ddb9e077
+source_member_bytes: 517992
+status: original-reference-tree-topology-and-selected-attributes-independently-reconstructed
+independent_check:
+  method: >-
+    Re-read the exact original JSON member from the pinned archive. Independently
+    traverse breadth-first with a queue, then restore source child ordering using
+    numeric child-index paths. Compare every node's path, depth, leaf status,
+    attribute encoding, key set, six whitelisted raw attribute values/types and
+    child list, plus all summary counts, with type-preserving JSON equality. No
+    collector import or interpretation of marker/physiology attributes.
+  terminal_exit_code: 0
+  outcome: passed
+results:
+  nodes: 253
+  leaves: 133
+  maximum_depth: 13
+  taxonomy_id: CCN201810310
+observed_source_group_identifiers:
+  GABAergic: CS201810310_187
+  Lamp5: CS201810310_190
+  Sncg: CS201810310_197
+  Vip: CS201810310_201
+  Sst: CS201810310_218
+  Pvalb: CS201810310_230
+engineering_checks:
+  focused_tests_passed: 14
+  focused_tests_seconds: 0.03
+  repository_ruff: passed
+  git_diff_whitespace_check: passed
+claim_boundary: >-
+  The original tree and selected identifiers are independently reconstructed.
+  Observing named source group nodes does not yet establish any aligned leaf's
+  membership, complete group coverage, exclusive broad class, per-cell transcriptomic
+  confidence or physiology eligibility. No class has been assigned to specimens.
+  Source node names and ancestry must be used together; do not classify by marker
+  substrings or silently merge Sncg with Vip. Unknown or uncovered leaves must
+  remain explicit rather than being forced into a requested population.
+next_gate: >-
+  Register exact group-node identifiers and ancestor-based leaf membership rules.
+  Require unique aligned reference leaf IDs, exact source alias agreement and
+  source taxonomy identity; preserve unresolved and overlapping memberships.
+  Independently reconstruct the resulting memberships before applying them to
+  source specimens. The modern file-manifest coverage, internal recording identity,
+  class-confidence limits and physiology validation gates remain separate.
+archive_extracted: false
+R_objects_executed: false
+physiological_arrays_read: false
+parameter_fitting_performed: false
+biological_eligibility_established: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

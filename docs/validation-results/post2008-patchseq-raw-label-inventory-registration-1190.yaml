@@ -1,0 +1,23 @@
+schema_version: 1
+artifact_id: 1190
+artifact_type: nonqualifying-raw-annotation-availability-inventory-registration
+date: 2026-10-14
+identity_result: results/patchseq-identity-annotations-1176/manifest.yaml
+identity_result_sha256: ed51183655f1ecca7a2fe0d6c1c3e00ae8657862a9d67e5ef585bb3942fbd8b0
+cross_reference: results/patchseq-file-cross-reference-1186/manifest.yaml
+cross_reference_sha256: 0836ab32c4fe94ef1428f8d8a7249a35d8ab8f291014d665af08aa5938599af5
+verification: results/patchseq-file-cross-reference-independent-1187/manifest.yaml
+verification_sha256: 6ff12eaa45712fa9ad7ac128f6e1caea5d2635599d1772a0081482e7e0610819
+fields: [structure, corresponding_AIT2.3.1_ID, corresponding_AIT2.3.1_alias]
+output: results/patchseq-raw-label-inventory-1191.yaml
+rules:
+  - Count exact unmodified raw strings, including empty strings, for all source rows.
+  - Separately count rows whose canonical cell specimen IDs have agreeing official file-manifest cross-references.
+  - Retain the full-source and covered-source counts; no source-coverage exclusion from the evidence inventory.
+  - Do not infer subclass from a label prefix or measured layer from structure, depth, genotype or subtype enrichment.
+  - Do not derive or impute mapping confidence.
+external_requests_authorized: false
+physiological_array_reads_authorized: false
+parameter_fitting_authorized: false
+cell_class_or_layer_qualification_authorized: false
+frozen_baseline_modified: false

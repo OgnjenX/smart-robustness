@@ -1,0 +1,58 @@
+schema_version: 1
+artifact_id: 1189
+artifact_type: primary-cell-class-and-measured-laminar-annotation-definition-audit
+date: 2026-10-14
+primary_paper:
+  doi: 10.1016/j.cell.2020.09.057
+  full_text_endpoint: https://www.ncbi.nlm.nih.gov/research/bionlp/RESTful/pmcoa.cgi/BioC_xml/PMC7781065/unicode
+  access: retrieved-through-NCBI-BioC-after-browser-page-challenges
+  methods_findings:
+    - Transcriptomes are mapped hierarchically to classes, subclasses and types using a VISp reference taxonomy and bootstrapping.
+    - Mapping quality is separately categorized as highly consistent, moderately consistent or inconsistent; a type label alone does not encode that quality.
+    - Laminar and regional positions are measured from DAPI tissue images and manual CCF placement; normalized soma depth and type-associated layer preference are distinct from an individual measured-layer assignment.
+    - Recorded voltages are reported without correction for the measured minus-14-mV liquid junction potential.
+  implication: >-
+    Source-defined confidence and measured anatomy must be kept distinct from
+    targeting genotype, raw taxonomy alias, depth and typical type location.
+official_analysis_source:
+  repository: AllenInstitute/coupledAE-patchseq
+  revision: 6c0be92e7a919321a4b877623354ee48d5f75921
+  notebook: notebooks/data_proc_T.ipynb
+  notebook_git_blob_sha1: 27fafad376c4392ed0f128f0529f6f0c364beae2
+  code_only_inspection: true
+  saved_outputs_interpreted: false
+  source_fields: [spec_id_label, sample_id, topLeaf_id, topLeaf_label, Tree_call_label]
+  documented_mapping:
+    Core: highly_consistent
+    I1: highly_consistent
+    I2: mod_consistent
+    I3: mod_consistent
+    PoorQ: inconsistent
+  provenance_limit: >-
+    The source annotation feather path is an author's local filesystem path,
+    not an accessible authoritative download endpoint. The notebook's published
+    processed cohort is filtered, including removal of inconsistent calls and
+    types with fewer than ten cells; it is not a complete raw annotation inventory.
+    Do not copy its default np.select label to fill unknown confidence calls.
+saved_June_header_limit:
+  assessment: docs/validation-results/post2008-patchseq-annotation-schema-independent-assessment-1174.yaml
+  present_raw_fields: [structure, full_genotype, corresponding_AIT2.3.1_ID, corresponding_AIT2.3.1_alias]
+  explicit_layer_column_present: false
+  mapping_confidence_column_present: false
+  source_structure_to_measured_layer_correspondence_proven_per_record: false
+available_route:
+  official_NeMO_directory: https://data.nemoarchive.org/other/AIBS/AIBS_patchseq/transcriptome/scell/SMARTseq/processed/analysis/20200611/
+  finding: >-
+    The public directory lists count, CPM, exon and intron archives and the June
+    metadata archive. No separate mapping-confidence annotation file is listed.
+    This directory inventory is not proof that no public confidence source exists.
+decision: >-
+  First inventory exact raw structural and taxonomy labels over all saved June
+  records and the independently manifest-covered subset. Keep missingness and
+  source coverage visible without deriving class, layer or confidence eligibility.
+  Then trace authoritative per-cell confidence and anatomical correspondence
+  before registering a qualified physiology cohort. Do not download processed
+  physiological arrays or infer confidence from a nonempty type alias.
+biological_eligibility_established: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

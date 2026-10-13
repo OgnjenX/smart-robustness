@@ -1,0 +1,61 @@
+schema_version: 1
+artifact_id: 1203
+artifact_type: independently-checked-official-workbook-object-and-header-assessment
+date: 2026-10-14
+registration: docs/validation-results/post2008-patchseq-2021-workbook-acquisition-registration-1201.yaml
+registration_sha256: 09888cc4044d0bc115c7109dfcc27ccf3d8eb2dbdd91de90bdc5c8bed58b44bc
+sealed_commit: a070ff2
+collector: scripts/acquire_patchseq_workbook_schema.py
+collector_sha256: 4928e28d4ebf0d8e913454d3b70f8ee3d9bd975e6cfbac2a221213c5d793c12e
+result: results/patchseq-2021-workbook-schema-1202/manifest.yaml
+result_sha256: ec91337dbc444e79d30f14824930153d7b1595b19351575d73a40e8e31e61867
+raw_workbook: results/patchseq-2021-workbook-schema-1202/manifest.xlsx
+raw_workbook_sha256: 84078977810f76ccf83cf94d110d664f349c8b69166b0ac5e71fea944012f7be
+bytes: 2889514
+request_count: 1
+http_status: 200
+client_exit_code: 0
+status: official-workbook-object-and-first-row-schema-independently-checked
+workbook_structure:
+  ZIP_members: 10
+  worksheet_count: 1
+  worksheet_name: 2021-09-13_mouse_file_manifest
+  worksheet_part: xl/worksheets/sheet1.xml
+  declared_dimension: A1:K19464
+  header_range: A1:K1
+  header_columns: [file_id, file_name, file_size, sha256_checksum, md5_checksum, technique, file_type, archive, archive_uri, project, cell_specimen_id]
+independent_checks:
+  - Separate shasum invocation reproduced the raw workbook SHA-256.
+  - Raw ZIP metadata independently reproduced member names and uncompressed sizes.
+  - Separately inspected workbook XML confirmed one sheet and its exact name.
+  - Literal first-row extraction from a bounded worksheet prefix independently reproduced coordinates A1 through K1 and shared-string indices zero through ten, rejecting formula headers.
+  - Parsed only the eleven referenced shared-string fragments and matched each header label; unrelated data strings were not interpreted.
+  - Independently reproduced the declared worksheet dimension without interpreting data rows.
+  - HTTP response headers matched the registered ETag, version ID and content length.
+engineering_checks:
+  focused_tests_passed: 11
+  focused_tests_seconds: 0.05
+  repository_ruff: passed
+  git_diff_whitespace_check: passed
+claim_boundary: >-
+  The immutable acquired object and its first-row schema are checked. The
+  declared A1:K19464 extent is source worksheet metadata, not proof that 19463
+  valid data records exist. No data row, numerical identifier, checksum reference,
+  recording URL or per-cell coverage has yet been interpreted. This acquisition
+  does not resolve the 595 June-manifest-uncovered recordings or biological
+  qualification by itself. The source workbook remains unchanged.
+next_gate: >-
+  Register a bounded original-workbook row reader preserving cell storage types,
+  exact values, row numbers, missing fields, formula presence and all modalities.
+  Do not normalize Excel numerical IDs silently. Match only separately specified
+  canonical file/session and cell IDs to verified catalog and July annotations,
+  retaining unresolved paths and all candidate references. Independently rebuild
+  rows and cross-references before accepting complete provenance coverage.
+data_rows_interpreted: false
+workbook_modified: false
+formulas_evaluated: false
+external_links_followed: false
+physiological_arrays_read: false
+biological_eligibility_established: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

@@ -1,0 +1,68 @@
+schema_version: 1
+artifact_id: 1152
+artifact_type: retrospective-fixed-cohort-source-support-upper-bound-audit
+date: 2026-10-13
+status: baseline-only-recovery-cannot-open-existing-rested-composite-fitting-gate
+sources:
+  results/synphys-composite-latency-1119/manifest.yaml: ab3efe029a11a6a89634bdcd539ea3ef577812b2c2d5f4da2ea7d9a0bc0d9a22
+  results/synphys-pulse-cardinality-1128/manifest.yaml: c6cf4ca84044f7d8626d5eb07d725b27262aabbc6dc2c6fc78ffac8d26cbb4be
+parent_contract: docs/validation-results/post2008-synphys-composite-latency-registration-1118.yaml
+analysis_scope:
+  preregistered_new_experiment: false
+  classification: retrospective-optimistic-availability-bound-not-a-new-eligibility-gate
+  archived_source_results_read: true
+  database_rows_newly_queried: false
+  source_selection_or_global_experiment_partition_changed: false
+  new_baselines_or_waveforms_read: false
+optimistic_bound:
+  assumption: all-original-contributing-pulse-baselines-recoverable-with-complete-identity-and-finite-source-state
+  retained_nonbaseline_requirements:
+    - Exactly one original rested record and exactly one shared latency row.
+    - Finite correctly signed rested amplitude and positive finite rise and decay constants.
+    - Finite nonnegative rested fit error and shared latency.
+    - Original pulse IDs successfully decoded under the preserved no-pickle contract.
+  independent_units: distinct-experiments-and-pairs-not-duplicate-fit-records
+  strata: original-project-route-measured-pre-layer-and-post-layer-without-nominal-holding-bins
+  unchanged_minimums: {fitting_experiments: 5, validation_experiments: 3}
+observations:
+  original_selected_synapses: 92
+  optimistic_nonbaseline_available_synapses: 78
+  strata: 17
+  strata_potentially_meeting_both_minimums: 0
+  E5_to_SST5:
+    mouse_V1_coarse_matrix: {pairs: 13, fitting_experiments: 9, validation_experiments: 2}
+    mouse_V1_pre_production: {pairs: 15, fitting_experiments: 9, validation_experiments: 2}
+independent_checks:
+  archived_input_hashes: match-assessed-sources
+  original_synapse_IDs_unique: true
+  pulse_inventory_records_and_composite_records: both-92
+  all_lineage_experiment_pair_partition_excitatory_and_nonholding_strata_signatures: internally-consistent
+  method_one: classify-each-archived-record-then-group-original-strata-and-distinct-units
+  method_two: independently-build-decoded-ID-membership-and-lineage-signature-sets-then-recompute-nonbaseline-conditions-and-unit-sets
+  methods_agree_on_all_upper_bound_counts: true
+interpretation:
+  - An optimistic availability bound cannot establish actual baseline quality or biological conductance fidelity.
+  - Actual metadata recovery can only reduce this fixed-cohort support bound, not add independent experiments.
+  - Therefore the range continuation cannot by itself authorize fitting under the existing rested-composite contract.
+  - This is insufficient fixed-cohort support, not a biological failure of SST or VIP cells or SMART.
+  - The inference is conditional on exact selected-release reconciliation; a release difference requires a separate source assessment, not silent substitution.
+operational_decision:
+  range_continuation_registration_1145_changed: false
+  original_partial_object_and_transport_failure_preserved: true
+  execution_seal_1147_created: false
+  new_download_started: false
+  priority: identify-distinct-justified-source-or-separately-register-a-different-source-cohort-before-expensive-baseline-recovery
+  reason: fixed-cohort-sample-support-ceiling-not-network-outcome-guided-tuning
+next_boundary: >-
+  Preserve every original failed contract and partition. Assess whether a
+  independently justified rested-state-first source cohort or a separate
+  same-species/area source can provide the missing independent units, and
+  preregister membership, QC, partitions, minimums and source-state mapping
+  before new numerical queries. Do not pool projects or layers, relabel old
+  validation experiments, lower their minimums, or count repeated responses
+  as new independent experiments. An alternative isolated VIP fitting route
+  remains separate from biological synaptic recruitment qualification.
+parameter_fitting_performed: false
+cell_or_network_execution_performed: false
+frozen_baseline_modified: false
+raw_results_committed: false

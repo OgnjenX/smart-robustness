@@ -1,0 +1,63 @@
+schema_version: 1
+artifact_id: 1219
+artifact_type: independently-reconstructed-provenance-constrained-exact-name-alignment-assessment
+date: 2026-10-14
+registration: docs/validation-results/post2008-patchseq-reference-crosswalk-registration-1217.yaml
+registration_sha256: ab5a54357b89a670a08d0642781e9e3870519c66fcde3e6b5eec1a9ac8e4b08f
+sealed_commit: 9d21275
+collector: scripts/crosswalk_patchseq_reference.py
+collector_sha256: 9c3ef4bd617714a77e57ac718d76392abd1ef7e60a9532f40f7a2c471a8847b8
+result: results/patchseq-reference-crosswalk-1218/manifest.yaml
+result_sha256: b63c2c2219b9c98cf50d1bafb5e92268fd8e5679828d1e9d2a17740f59dffeb3
+status: provenance-constrained-exact-name-alignments-independently-reconstructed
+independent_check:
+  method: >-
+    Load the previously independently verified typed reference and July projections,
+    without importing the alignment collector. Require one exact provenance row.
+    Build in-memory SQLite reference and legacy-pair tables; query all candidates
+    by exact taxonomy and preferred-alias equality, independently count target
+    accessions and conflicting legacy labels, and reconstruct every candidate
+    metadata field and acceptance flag. Compare full alignment records and the
+    complete summary with type-preserving JSON equality. Independently query all
+    duplicate/conflicting-ID diagnostics and target collisions.
+  terminal_exit_code: 0
+  outcome: passed
+results:
+  source_taxonomy: CCN201810310
+  source_provenance_row_number: 2
+  legacy_pairs_including_empty: 63
+  selected_reference_rows: 253
+  supported_exact_name_alignments: 62
+  nonempty_pairs_without_candidates: 0
+  ambiguous_pairs: 0
+  direct_accession_equalities: 0
+  conflicting_legacy_labels: 0
+  duplicate_reference_accessions: 0
+  reference_targets_with_multiple_legacy_accessions: 0
+engineering_checks:
+  focused_tests_passed: 16
+  focused_tests_seconds: 0.03
+  repository_ruff: passed
+  git_diff_whitespace_check: passed
+claim_boundary: >-
+  All 62 nonempty legacy label pairs have a unique exact-name alignment within
+  the justified Tasic 2018 mouse reference. This is an explicit reference/version
+  crosswalk, not a proof that legacy and CCN accession identifiers are identical
+  or an independently confirmed historical identifier-equivalence relation.
+  The prior zero direct-ID matches remain correct and unchanged. The empty pair
+  remains unresolved. No biological class, mapping confidence, measured anatomy,
+  donor namespace equivalence or physiological eligibility is established by
+  this alignment alone. Cross-reference success is not neuron-model robustness.
+next_gate: >-
+  Register bounded inspection and validation of the pinned CCN201810310 JSON
+  dendrogram schema, then independently verify source group memberships for
+  aligned leaf sets before applying class labels. Preserve exclusions and
+  unknown/conflicting memberships without marker substring rules. Continue the
+  separate 2021 manifest and internal-recording identity gates before physiology
+  selection and independently fitted isolated-cell validation.
+network_requests: 0
+physiological_arrays_read: false
+parameter_fitting_performed: false
+biological_eligibility_established: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

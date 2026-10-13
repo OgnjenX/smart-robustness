@@ -1,0 +1,78 @@
+schema_version: 1
+artifact_id: 1213
+artifact_type: independently-checked-historical-reference-workbook-first-row-assessment
+date: 2026-10-14
+registration: docs/validation-results/post2008-patchseq-CCN-workbook-schema-registration-1211.yaml
+registration_sha256: 98e6d41f7b719f9ec16016dafcc2531272f319802b00c9451de7655d7b5aab6d
+sealed_commit: 12b4308
+collector: scripts/inspect_patchseq_ccn_workbook.py
+collector_sha256: d65420e3987d60b8a6e2d2c3fea8d71145ef9fef4089cb4a1a8722ed70151566
+header_reader: scripts/acquire_patchseq_workbook_schema.py
+header_reader_sha256: 4928e28d4ebf0d8e913454d3b70f8ee3d9bd975e6cfbac2a221213c5d793c12e
+result: results/patchseq-CCN-workbook-schema-1212/manifest.yaml
+result_sha256: ff007019d2abccbf60fc087a8dacef4b9be92dc25c608079dca9bb79f0c119fb
+exact_source_copy: results/patchseq-CCN-workbook-schema-1212/reference.xlsx
+exact_source_copy_sha256: 1a2f8f47bb4fb44eb3dc97db9a6b97c0fb96c1c59bac40afed09bdd6c81a2722
+source_member_bytes: 127093
+status: exact-reference-workbook-bytes-and-all-first-row-headers-independently-checked
+sheets:
+  taxonomy ids:
+    path: xl/worksheets/sheet1.xml
+    declared_dimension: A1:F40
+    header_range: A1:F1
+    headers: [Taxonomy id, Description, Reference, Generated, 'Dend?', 'Cell matrix?']
+  aligned aliases:
+    path: xl/worksheets/sheet2.xml
+    declared_dimension: A1:B39
+    header_range: A1:B1
+    headers: [Preferred aliases, Alternative aliases / Description / Notes]
+  cell set nomenclature:
+    path: xl/worksheets/sheet3.xml
+    declared_dimension: A1:L1532
+    header_range: A1:L1
+    headers:
+      - cell_set_preferred_alias
+      - 'cell_set_ label'
+      - 'cell_set_ accession'
+      - 'cell_set_ aligned_alias'
+      - 'cell_set_  additional_alias'
+      - 'cell_set_ alias_assignee'
+      - 'cell_set_ alias_citation'
+      - 'cell_set_ structure'
+      - 'cell_set_ ontology_tag'
+      - taxonomy_id
+      - species
+      - modality
+    child_accession_column_present: false
+independent_checks:
+  - Direct byte equality confirmed the saved copy matches the exact nested member of the pinned archive.
+  - Separate shasum invocation confirmed the nested workbook SHA-256.
+  - Independent ZIP member names/sizes and workbook sheet-name inspection reproduced the source structure.
+  - Literal first-row extraction, separate cell-reference/shared-string decoding and dimension extraction reproduced every header on all three sheets without collector import.
+  - Only selected header shared-string fragments were decoded; unrelated cell values were not interpreted.
+engineering_checks:
+  wrapper_and_header_tests_passed: 16
+  wrapper_and_header_tests_seconds: 0.06
+  repository_ruff: passed
+  git_diff_whitespace_check: passed
+claim_boundary: >-
+  Workbook structure and exact first-row fields are verified, not reference
+  record contents or valid record counts. Some source field names contain
+  embedded spaces, including a doubled space; do not silently normalize them.
+  The historical workbook has no child-accession field even though the newer
+  source instructions describe one. Later membership rules must use verified
+  historical table or dendrogram evidence rather than assuming that newer
+  schema. No legacy accession match, cell-class qualification, mapping confidence
+  or anatomical per-specimen validation is established here.
+next_gate: >-
+  Register exact field projections for taxonomy provenance and cell-set
+  annotation rows using these literal headers, preserving original storage
+  types, missingness, duplicates and all version identities. Identify the
+  relevant source taxonomy and any explicit legacy-ID bridge before inspecting
+  hierarchy membership. Separately retain the 2021 manifest coverage gate.
+network_requests: 0
+reference_data_rows_interpreted: false
+workbook_modified: false
+physiological_arrays_read: false
+biological_eligibility_established: false
+frozen_baseline_modified: false

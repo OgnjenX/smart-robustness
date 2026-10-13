@@ -1,0 +1,38 @@
+schema_version: 1
+artifact_id: 1217
+artifact_type: exact-preferred-alias-and-source-taxonomy-constrained-crosswalk-registration
+date: 2026-10-14
+reference_records: results/patchseq-CCN-reference-records-1215/manifest.yaml
+reference_records_sha256: 8a699fecedbb52c3b02412c302de24c0b01b983bed2dbfcae1b23a200f3d62e2
+July_comparison: results/patchseq-July-June-comparison-1198/manifest.yaml
+July_comparison_sha256: 4c31f9b2cf447b0c82388795417402563c979291b4a223c3fb6e2d109302bcb3
+reference_taxonomy_id: CCN201810310
+expected_description: Mouse VISp + ALM (from the Allen Institute website and Tasic et al 2018)
+expected_reference: (Tasic et al., 2018)
+scientific_source:
+  paper_DOI: 10.1016/j.cell.2020.09.057
+  methods: Preparation of reference cells and taxonomy tree; Mapping on the reference taxonomy tree.
+  justification: >-
+    The original Patch-seq paper uses the Tasic 2018 taxonomy and a VISp neuronal
+    subset. The official CCN provenance row identifies its mouse VISp+ALM source
+    as Tasic 2018. Therefore this reference restriction is specified from source
+    provenance, not from neuronal or network outcome performance.
+output_directory: results/patchseq-reference-crosswalk-1218
+rules:
+  - Require exactly one literal matching taxonomy-provenance row with the registered ID, description and reference.
+  - Retain every July legacy accession/label pair, including empty strings and conflicting aliases for one accession.
+  - Restrict candidate cell sets only by exact literal taxonomy_id equality to CCN201810310.
+  - Require exact preferred-alias equality, not substring, prefix, case folding, whitespace repair or fuzzy matching.
+  - Retain every candidate with source row number, exact reference accession, species and modality.
+  - A name-based alignment requires one candidate with a nonempty literal accession unique within the reference, and an unambiguous nonempty legacy accession/label pair.
+  - Report reference accession collisions and conflicting legacy accession labels without silently merging them.
+  - Label every accepted correspondence as a provenance-constrained exact-name alignment, not direct accession equality or independently confirmed historical identifier equivalence.
+  - Do not infer broad class, measured layer, mapping confidence, specimen independence or physiological eligibility.
+  - Leave the earlier failed direct-accession lookup unchanged.
+external_requests_authorized: false
+new_reference_row_reads_authorized: false
+physiological_array_reads_authorized: false
+biological_qualification_authorized: false
+parameter_fitting_authorized: false
+next_gate: Independently reconstruct the restricted alignment and verify reference hierarchy memberships in a separately sealed protocol before class assignment.
+frozen_baseline_modified: false

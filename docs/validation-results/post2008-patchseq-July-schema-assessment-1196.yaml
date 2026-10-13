@@ -1,0 +1,53 @@
+schema_version: 1
+artifact_id: 1196
+artifact_type: official-migrated-July-metadata-object-and-header-assessment
+date: 2026-10-14
+registration: docs/validation-results/post2008-patchseq-July-metadata-acquisition-registration-1194.yaml
+registration_sha256: 9fcf9bdf71505d80584da94d23fd581507c806ab39762462258d1f3bdc1e14b9
+sealed_commit: dfbd5a9
+collector: scripts/acquire_patchseq_july_metadata.py
+collector_sha256: fff75631014a36daa105cb7c3402c2261d92ce029f19f1c6c4dcc7422bdda1dc
+result: results/patchseq-July-metadata-schema-1195/manifest.yaml
+result_sha256: 021e2d5f4d24a116600a5ecc562c5b45c7cb996e5091f967e5cca7727d88182f
+raw_metadata: results/patchseq-July-metadata-schema-1195/metadata.csv
+raw_metadata_sha256: 2eb2a02ee1dd275b457055d6d4d57f2942d8c6d3cf329e820002010c7943c142
+raw_bytes: 1090285
+request_count: 1
+client_exit_code: 0
+http_status: 200
+header_bytes: 370
+header_sha256: ce7ffdac9ff39bdf6b2d6bbc3679bd934921e9e210212d7a9d83869937903f7a
+header_columns: 23
+explicit_taxonomy_columns: [T-type Accession ID, T-type Label, MET-type Label]
+explicit_layer_column_present: false
+explicit_mapping_confidence_column_present: false
+independent_checks:
+  - shasum independently reproduced the saved object's SHA-256.
+  - Separate ASCII header splitting reproduced all 23 columns and the header SHA-256 without importing the collector or reading source row values.
+  - Independent response-header inspection confirmed status 200, content-length, ETag and version ID against the sealed HEAD observations.
+  - Terminal receipt retained the row-interpretation and physiological-array prohibitions.
+engineering_checks:
+  focused_tests_passed: 12
+  focused_tests_seconds: 0.04
+  repository_ruff: passed
+  git_diff_whitespace_check: passed
+status: official-July-metadata-object-and-header-independently-verified
+claim_boundary: >-
+  The current official Allen landing page provides an accessible July annotation
+  object through its replacement CDN, removing the earlier access obstacle.
+  That does not establish equality with the original historical-host bytes or
+  June annotations. July has explicit t-type and MET-type fields but no explicit
+  mapping-confidence or layer column. Rows remain uninterpreted; no taxonomy,
+  anatomy or physiology qualification is claimed from the header alone.
+next_gate: >-
+  Separately register whitelisted July row projections and exact per-cell and
+  per-session comparison against June before reading row values. Preserve every
+  missing, changed or ambiguous identifier and annotation. Do not silently
+  equate the differently named taxonomy fields or impute confidence from MET
+  labels. Obtain and register the separately hosted September 2021 workbook
+  before using it to address the June manifest's 595 uncovered recordings.
+row_values_interpreted: false
+physiological_arrays_read: false
+biological_eligibility_established: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

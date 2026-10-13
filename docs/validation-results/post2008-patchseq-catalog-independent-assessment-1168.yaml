@@ -1,0 +1,72 @@
+schema_version: 1
+artifact_id: 1168
+artifact_type: independently-reconstructed-complete-public-Patchseq-catalog-assessment
+date: 2026-10-14
+status: asset-catalog-verified-cell-annotation-and-physiology-qualification-pending
+registration: docs/validation-results/post2008-patchseq-nullable-pagination-registration-1164.yaml
+acquisition:
+  result: results/patchseq-nullable-page-catalog-1165/manifest.yaml
+  result_sha256: b26226cc1a9bbe42c20740d19314095d070664e0d45134e7d6fe33c768050571
+  implementation_commit: d571f06
+  exit_code: 0
+  original_version_and_two_pages_reused: true
+  new_asset_page_requests: 7
+independent_verification:
+  result: results/patchseq-catalog-independent-1167/manifest.yaml
+  result_sha256: 8a53db830724723de66d3a51aaffa21d0c71e5d6e10e2a55f8862c74918bcf60
+  implementation_commit: 9602659
+  script: scripts/verify_patchseq_catalog.py
+  script_sha256: d7b8cab9c67f05cb8e110314c772871c8c6eeee71d6ca2b1cbf7b916996f478e
+  collector_or_helpers_imported: false
+  extra_network_requests: 0
+  exit_code: 0
+  raw_JSON_duplicate_key_guard: enabled
+  complete_version_asset_and_missingness_projections: independently-reconstructed-and-typed-equal
+  unique_UUIDs_paths_page_extents_and_pagination: passed
+  all_pinned_raw_response_and_source_hashes: passed
+  original_and_new_source_snapshots_unchanged: passed
+  complete_declared_byte_sum: passed
+observations:
+  published_version: 0.210913.1639
+  assets: 4435
+  pages: 9
+  total_asset_bytes: 141856436428
+  archive_declared_subjects: 1040
+  numeric_path_subject_hints: 1040
+  unresolved_numeric_subject_hint_asset_paths: 0
+  pages_reporting_total_count: [1]
+  later_page_total_counts_unreported: 8
+  potential_numeric_subject_hint_matches_to_prior_2333_specimen_IDs: 0
+  potential_numeric_subject_hint_matches_to_prior_111_included_specimen_IDs: 0
+claim_boundaries:
+  - A complete asset catalog is not physiological qualification or a validated neuron model.
+  - Numeric path subject IDs and archive subject counts are not automatically individual specimen or animal identities.
+  - Zero numeric subject-hint matches do not establish independence from prior cells or recordings.
+  - Actual specimen/session identifiers and molecular Sst/Vip and measured-layer annotations require independent source joins.
+  - Later-page counts remain unreported; no raw count was fabricated or presented as a source observation.
+  - No NWB recording, intracellular trace, morphology or model parameter file was downloaded in this acquisition.
+  - The complete archive is not approved for wholesale download or response-guided model selection.
+  - The separate paired-synaptic recruitment evidence gap and fixed-cohort support ceiling remain unresolved.
+preserved_stops:
+  - docs/validation-results/post2008-patchseq-metadata-schema-stop-1158.yaml
+  - docs/validation-results/post2008-patchseq-pagination-schema-stop-1163.yaml
+engineering_verification:
+  independent_verifier_tests_passed: 21
+  test: tests/test_patchseq_catalog_verifier.py
+  test_sha256: 4eb69d9956dc310230713e2e1cd99088ab667b262e241a8af1b519449856ff3a
+  repository_ruff: passed
+  diff_whitespace: passed
+  full_repository_regression_for_latest_source_claimed: false
+next_gate: >-
+  Locate official source cell annotations and register bounded acquisition,
+  exact schema and joins to catalog assets, missing/ambiguous identity retention,
+  source overlap checks and species/area/measured-layer/subclass criteria before
+  interpreting new biological features. Independently verify that inventory
+  before registering recording acquisition or isolated fitting. Keep original
+  nonpassing native maps, partitions and frozen SMART control unchanged.
+raw_recordings_downloaded: false
+physiological_arrays_read: false
+parameter_fitting_performed: false
+cell_or_network_execution_performed: false
+frozen_baseline_modified: false
+raw_results_committed: false

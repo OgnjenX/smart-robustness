@@ -1,0 +1,34 @@
+schema_version: 1
+artifact_id: 1220
+artifact_type: bounded-pinned-reference-dendrogram-structure-and-identifier-projection-registration
+date: 2026-10-14
+archive: results/patchseq-CCN-archive-directory-1206/reference.zip
+archive_sha256: 07634d0164812eead01bd854b586ac28d5a72cc449d1bc0015b9b73c2903da9f
+member: dendrogram_CCN201810310.json
+expected_bytes: 517992
+maximum_bytes: 1048576
+maximum_nodes: 5000
+maximum_depth: 64
+source_serializer: https://github.com/AllenInstitute/nomenclature/blob/ffe8770d19b4bea68d82ef23a5e93c924bea57bc/scripts/required_scripts.R
+source_function: dend_to_list
+source_definition: >-
+  Leaves contain leaf_attributes; internal nodes contain node_attributes and
+  children. Attribute records are formed from dendrogram attributes as an R
+  data frame. The original data objects will not be executed.
+allowed_attribute_fields: [label, cell_set_accession, cell_set_preferred_alias, cell_set_aligned_alias, taxonomy_id, cell_set_label]
+output_directory: results/patchseq-reference-dendrogram-1221
+rules:
+  - Require the exact regular JSON member in the pinned archive, within declared and actual byte bounds.
+  - Reject duplicate JSON object keys, nonfinite constants and unsupported tree shapes.
+  - Preserve paths, branch-to-child relationships, leaf status and source attribute-key sets.
+  - Permit a dictionary attribute record or a one-record array; do not coerce other shapes into these forms.
+  - Project only the six named identifier/alias attributes, preserving missingness, raw JSON values and value types without normalizing text or scalar arrays.
+  - Do not interpret marker matrices, physiological features or other attribute values.
+  - No broad class, hierarchy membership for specimens, mapping confidence or biological eligibility is assigned in this structural read.
+external_requests_authorized: false
+archive_extraction_authorized: false
+code_or_R_object_execution_authorized: false
+physiological_array_reads_authorized: false
+biological_qualification_authorized: false
+next_gate: Independently reconstruct the tree projection, then register exact source group-node and leaf matching rules using observed identifiers and documented provenance.
+frozen_baseline_modified: false

@@ -55,6 +55,12 @@ engineering_checks:
   wrapper_and_header_tests_seconds: 0.06
   repository_ruff: passed
   git_diff_whitespace_check: passed
+  complete_Patchseq_metadata_suite:
+    command: .venv/bin/pytest -q tests/test_patchseq*.py
+    source_code_revision: 12b4308
+    passed: 320
+    seconds: 13.48
+    scope: Metadata readers, source projections, schema checks and identity verifiers; not neuronal or network validation.
 claim_boundary: >-
   Workbook structure and exact first-row fields are verified, not reference
   record contents or valid record counts. Some source field names contain

@@ -1,0 +1,69 @@
+schema_version: 1
+artifact_id: 1174
+artifact_type: independently-reconstructed-official-annotation-archive-schema
+date: 2026-10-14
+status: annotation-archive-and-header-verified-whitelisted-row-interpretation-pending
+registration: docs/validation-results/post2008-patchseq-annotation-archive-registration-1170.yaml
+acquisition:
+  result: results/patchseq-annotation-archive-schema-1171/manifest.yaml
+  result_sha256: 4e28586ab2b1728d3812110ef5c9d468b36a0470f9d95db75f5488bfa8b10869
+  archive: results/patchseq-annotation-archive-schema-1171/annotations.csv.tar
+  archive_sha256: 6854981d0cdf24f837b8d2b8adf0243aaa53871f4f1cc19f89f56d7430d15c0a
+  archive_bytes: 1075200
+independent_verification:
+  result: results/patchseq-annotation-schema-independent-1173/manifest.yaml
+  result_sha256: 1f2348be5fd030251cb8c73248f090149298eca47b084c74e55d85be235d3791
+  implementation_commit: ff82f22
+  script: scripts/verify_patchseq_annotation_schema.py
+  script_sha256: 1921cdb9125664e90e2e23bd7f4c8fa55c98719e69a22a53efe2d86439cfffb6
+  collector_imported: false
+  TAR_library_used: false
+  method: independent-512-byte-block-checksums-octal-fields-member-paths-terminators-and-first-CSV-header-only
+  archive_and_source_SHA256: passed
+  complete_member_inventory_and_declared_sizes: typed-equal
+  header_bytes_SHA256_and_column_names: typed-equal
+  exact_HTTP_identity_and_header_projection: passed
+  source_snapshots_unchanged: passed
+  exit_code: 0
+observations:
+  source_revision: 20200625-June-annotation
+  regular_members: 1
+  CSV_member: 20200625_patchseq_metadata_mouse/20200625_patchseq_metadata_mouse.csv
+  CSV_member_bytes: 1064422
+  CSV_header_bytes: 376
+  CSV_header_sha256: 4b187670b00abdf937fb49b15ad17642153d9e3bc0a47dcd869b41667eca5e88
+  column_count: 22
+  available_identity_field_names: [cell_specimen_id, donor_id, ephys_session_id, transcriptomics_sample_id]
+  available_genetic_annotation_field_names: [full_genotype, corresponding_AIT2.3.1_ID, corresponding_AIT2.3.1_alias]
+  available_anatomical_field_names: [structure, cell_soma_normalized_depth, depth_from_pia_um]
+  explicit_layer_column: false
+claim_boundaries:
+  - No annotation row values or numerical physiological features were interpreted.
+  - CSV row bytes were skipped rather than classified by the independent verifier.
+  - Availability of identity field names is not correctness or completeness of their joins.
+  - A structure or depth value is not automatically a verified measured cortical layer.
+  - A path subject ID is not a confirmed specimen ID, and a session ID requires source-backed reconciliation.
+  - Transcriptomic aliases and genotype fields must not be interpreted through a morphology or spike-response proxy.
+  - June annotations are not established identical to final July-paper labels.
+  - Verification does not establish VIP/SST eligibility, neuron-model fit quality or synaptic recruitment fidelity.
+engineering_checks:
+  independent_verifier_tests_passed: 23
+  acquisition_and_verifier_tests_passed: 52
+  combined_command: .venv/bin/python -m pytest -q tests/test_patchseq_annotation_schema.py tests/test_patchseq_annotation_verifier.py
+  duration_seconds: 0.10
+  repository_ruff: passed
+  latest_full_repository_regression_claimed: false
+next_gate: >-
+  Register a bounded whitelist of identity and source annotation fields and
+  raw-string handling, with all missing/duplicate/conflicting values retained.
+  Reconcile exact catalog path subject/session identifiers against explicit
+  annotation specimen, donor and ephys-session fields without selecting a
+  convenient match. Report overlap at confirmed specimen/recording levels,
+  not merely subject hints. Separately establish source meaning of molecular
+  class and measured layer before any qualified cohort or recording download.
+annotation_row_values_interpreted: false
+physiological_arrays_read: false
+parameter_fitting_performed: false
+cell_or_network_execution_performed: false
+frozen_baseline_modified: false
+raw_results_committed: false

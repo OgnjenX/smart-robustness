@@ -1,0 +1,23 @@
+schema_version: 1
+artifact_id: 1205
+artifact_type: immutable-historical-CCN-archive-directory-acquisition-registration
+date: 2026-10-14
+source_url: https://raw.githubusercontent.com/AllenInstitute/nomenclature/ffe8770d19b4bea68d82ef23a5e93c924bea57bc/data/Supplementary_File_1_from_Miller_et_al_2020.zip
+expected_bytes: 844341
+expected_git_blob_sha1: 7385f510b79c6559092425367fa9f6426f8b1465
+maximum_requests: 1
+maximum_seconds: 120
+maximum_ZIP_entries: 1000
+maximum_uncompressed_bytes: 67108864
+output_directory: results/patchseq-CCN-archive-directory-1206
+allowed_interpretation: ZIP member names, sizes and compression/entry metadata only; no file contents or reference table rows.
+redirects_authorized: false
+retries_authorized: false
+archive_extraction_authorized: false
+code_or_R_object_execution_authorized: false
+reference_table_row_reads_authorized: false
+recording_download_authorized: false
+physiological_array_reads_authorized: false
+biological_qualification_authorized: false
+next_gate: Independently verify the object and directory; identify the matching taxonomy and register bounded field projections before reading reference tables.
+frozen_baseline_modified: false

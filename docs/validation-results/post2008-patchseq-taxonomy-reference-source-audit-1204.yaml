@@ -1,0 +1,45 @@
+schema_version: 1
+artifact_id: 1204
+artifact_type: primary-versioned-taxonomy-reference-route-audit
+date: 2026-10-14
+source_question: How can published t-type accessions be assigned to source-defined broad groups without substring marker matching?
+sources:
+  - url: https://brain-map.org/our-research/cell-types-taxonomies/consensus-cell-type-nomenclature
+    finding: >-
+      CCN distinguishes versioned taxonomies from cell sets. Internal nodes may
+      represent explicitly annotated groups of provisional cell types. Gene-based
+      aliases are labels, not per-record measured physiology or layer assignments.
+  - url: https://github.com/AllenInstitute/nomenclature/blob/ffe8770d19b4bea68d82ef23a5e93c924bea57bc/README.md
+    finding: >-
+      The official repository links Supplementary File 1 containing historical
+      nomenclature outputs from Miller et al. 2020, covering multiple taxonomies.
+  - url: https://github.com/AllenInstitute/nomenclature/blob/ffe8770d19b4bea68d82ef23a5e93c924bea57bc/scripts/build_annotation_tables.rmd
+    finding: >-
+      The historical schema defines cell_set_accession, preferred and aligned
+      aliases, taxonomy_id and child_cell_set_accessions. The child accession
+      field enumerates leaf memberships for annotated groups. These relationships
+      offer a source-backed membership rule rather than arbitrary marker matching.
+reference_archive:
+  repository: AllenInstitute/nomenclature
+  revision: ffe8770d19b4bea68d82ef23a5e93c924bea57bc
+  path: data/Supplementary_File_1_from_Miller_et_al_2020.zip
+  bytes: 844341
+  git_blob_sha1: 7385f510b79c6559092425367fa9f6426f8b1465
+  acquired: false
+existing_annotation_example:
+  accession: CS180626100001
+  raw_alias: Lamp5 Krt73
+  source: results/patchseq-July-June-comparison-1198/manifest.yaml
+  claim: Example of a raw accession to locate in a reference, not a verified hierarchy match.
+decision: >-
+  Acquire the immutable supplementary archive under a bounded directory-only
+  protocol, identify the matching historical taxonomy from member metadata,
+  then separately authorize exact reference-table fields and accession joins.
+  Do not apply a modern taxonomy by approximate label resemblance, borrow the
+  unrelated human MTG example, execute R objects or contact authors implicitly.
+anatomy_boundary: >-
+  A type's hierarchy or preferred layer distribution does not replace the
+  specimen's source structural annotation and its measured anatomical provenance.
+  Anatomical acronym definitions must be verified separately.
+biological_eligibility_established: false
+frozen_baseline_modified: false

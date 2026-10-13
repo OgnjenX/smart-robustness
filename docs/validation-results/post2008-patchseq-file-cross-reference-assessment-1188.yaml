@@ -1,0 +1,63 @@
+schema_version: 1
+artifact_id: 1188
+artifact_type: independent-official-file-to-cell-cross-reference-assessment
+date: 2026-10-14
+registration: docs/validation-results/post2008-patchseq-file-cross-reference-registration-1185.yaml
+registration_sha256: 3a4e1000ba72d893f4b01951f9631dec6156ff35497a413245313175badfc659
+sealed_commit: 7f8bd1e
+collector: scripts/cross_reference_patchseq_files.py
+collector_sha256: ff6bfd94c8f4216af02a4a43e505dd16b95db4dad04657b245728e8086099c0e
+raw_result: results/patchseq-file-cross-reference-1186/manifest.yaml
+raw_result_sha256: 0836ab32c4fe94ef1428f8d8a7249a35d8ab8f291014d665af08aa5938599af5
+verifier: scripts/verify_patchseq_file_cross_reference.py
+verifier_sha256: 17ece185ae04711595cfaa846db9a5604bc5f9520aca8ad2b4566c48e88bee72
+verification_result: results/patchseq-file-cross-reference-independent-1187/manifest.yaml
+verification_result_sha256: 6ff12eaa45712fa9ad7ac128f6e1caea5d2635599d1772a0081482e7e0610819
+verifier_tests: tests/test_patchseq_file_cross_reference_verifier.py
+verifier_tests_sha256: d5e90bb852f2b47682a2e07fc65d3ed74b9651dd85afaf0875902a341890427d
+status: file-cross-references-independently-verified
+verification_method:
+  - Original raw manifest independently read with DictReader; no collector import.
+  - Filename sessions independently reconstructed by string decomposition, not collector regular expressions.
+  - Candidate references independently joined using SQLite, retaining every match.
+  - All raw rows, candidates, canonical IDs, missing fields, category counts, duplicates, unmatched references and agreement flags compared with type-preserving JSON equality.
+  - Pinned sources and terminal result hashes checked before and after reconstruction.
+results:
+  all_source_rows: 16978
+  intracellular_electrophysiology_rows: 3840
+  morphology_rows: 1614
+  transcriptomics_rows: 11524
+  current_catalog_recordings: 4435
+  agreeing_official_cell_references: 3840
+  unmatched_catalog_recordings: 595
+  ambiguous_manifest_matches: 0
+  unique_candidate_cell_conflicts: 0
+  missing_cell_ID_fields_across_all_modalities: 4
+engineering_checks:
+  focused_tests_passed: 34
+  focused_tests_seconds: 0.05
+  repository_ruff: passed
+  git_diff_whitespace_check: passed
+claim_boundary: >-
+  The official June release manifest independently supports 3840 recording-to-cell
+  references, consistent with the annotation session joins. The 595 additional
+  catalog recordings have no reference under the sealed matching rules and
+  remain unresolved; their absence is not biological failure or proof of
+  corrupt recordings. This report does not establish donor namespace identity,
+  unseen training data, internal NWB identity, cell class, measured layer or
+  physiological suitability. Four missing cell-ID fields across all modalities
+  are retained without repairs. No previous failed identity gate is overwritten.
+next_gate: >-
+  Establish primary-source definitions for molecular cell-class and measured-layer
+  annotations before registering a qualified intrinsic-physiology cohort. If a
+  cohort is restricted to official-manifest-covered records, preregister that
+  source-coverage restriction and retain the 595 unresolved recordings in the
+  evidence inventory. Register bounded internal NWB metadata checks before
+  downloading recordings; do not infer identity or independence from path tokens.
+network_requests: 0
+recordings_downloaded: false
+physiological_arrays_read: false
+parameter_fitting_performed: false
+biological_eligibility_established: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

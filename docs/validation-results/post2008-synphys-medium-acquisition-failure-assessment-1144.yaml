@@ -1,0 +1,63 @@
+schema_version: 1
+artifact_id: 1144
+artifact_type: independently-hashed-terminal-medium-acquisition-failure
+date: 2026-10-13
+status: registered-time-limit-reached-partial-object-retained-no-row-access
+registration:
+  path: docs/validation-results/post2008-synphys-medium-acquisition-registration-1130.yaml
+  sha256: e3901074439815cc067c24f62b43ef6f16b0e68f2bdefbe266f666ff2a1030a6
+result:
+  path: results/synphys-medium-schema-1131/manifest.yaml
+  sha256: 63dde91bb1a8eb5d54f18b7226cc2fcc16502318590d9a91fc4a3939f4e42906
+  started_at_UTC: '2026-10-09T18:31:53.585630+00:00'
+  finished_at_UTC: '2026-10-09T19:31:55.004336+00:00'
+  client_exit_code: 28
+  transport_error: Operation timed out after 3600005 milliseconds
+partial_object:
+  path: results/synphys-medium-schema-1131/synphys_r2.1_medium.sqlite.partial
+  bytes: 3573501533
+  expected_complete_bytes: 11125997568
+  sha256: f2f24c87df8539e2d05e0011ca8ab276cf0f29d6dbf74e7ba72d8b62c77cd001
+  preserved_in_place: true
+independent_checks:
+  method: independent-streaming-shasum-and-filesystem-byte-count-without-importing-collector
+  partial_hash_matches_manifest: true
+  partial_byte_count_matches_manifest: true
+  registration_hash_matches_manifest: true
+  collector_hash_matches_manifest: true
+  schema_inspector_hash_matches_manifest: true
+  stderr_confirms_registered_transport_timeout: true
+  terminal_session_handle: unavailable
+  terminal_manifest_and_transport_evidence_present: true
+  complete_object_verified: false
+  schema_inspected_for_partial_object: false
+  database_rows_read: false
+CI:
+  source_revision: 2a4d76f389c1851f63aeaca01b8e46ba913a7817
+  run: https://github.com/OgnjenX/smart-robustness/actions/runs/37976679686
+  job: 113977033567
+  status: completed
+  conclusion: success
+  every_step_individually_verified: true
+  newer_local_commits_covered_by_this_run: false
+latest_local_regression_boundary:
+  completed_2014_test_receipt: docs/validation-results/post2008-synphys-integrated-regression-receipt-1143.yaml
+  subsequent_session_54385_handle: unavailable
+  subsequent_terminal_output_recovered: false
+  subsequent_full_suite_pass_claimed: false
+next_gate: >-
+  Preserve registration 1130 and its failure, partial bytes and hash. Do not
+  invoke the original downloader again, query the incomplete database, create
+  a success assessment, or attempt a full-release fallback. Any continuation
+  of acquisition needs a distinct bounded registration and tested transport
+  implementation that validates the fixed object identity and byte ranges,
+  preserves the original evidence, and independently verifies the complete
+  assembled object before schema or selected-row reconciliation. Observation
+  timeout alone is not the reason for a new request; this manifest proves the
+  actual registered transport attempt ended unsuccessfully.
+scientific_interpretation: transport-failure-not-biological-failure-or-SMART-model-failure
+new_download_performed: false
+parameter_fitting_performed: false
+cell_or_network_execution_performed: false
+frozen_baseline_modified: false
+raw_results_committed: false

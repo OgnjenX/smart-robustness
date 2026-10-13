@@ -3,6 +3,7 @@ artifact_id: 1170
 artifact_type: official-June-annotation-archive-and-header-only-acquisition-registration
 date: 2026-10-14
 parent_route_audit: docs/validation-results/post2008-patchseq-annotation-source-route-audit-1169.yaml
+parent_route_audit_sha256: 2f77db317ab618de12909f799616c2502e93eaf38de62e3c5a2778573754c93f
 catalog_assessment: docs/validation-results/post2008-patchseq-catalog-independent-assessment-1168.yaml
 catalog_assessment_sha256: 2f9371984cdd663bd69ff2849cfa57cb8196a1f5acbcec0363a4c29fb810e2b4
 url: https://data.nemoarchive.org/other/AIBS/AIBS_patchseq/transcriptome/scell/SMARTseq/processed/analysis/20200611/20200625_patchseq_metadata_mouse.csv.tar

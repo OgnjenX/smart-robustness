@@ -1,0 +1,50 @@
+schema_version: 1
+artifact_id: 1148
+artifact_type: range-continuation-synthetic-engineering-verification
+date: 2026-10-13
+status: tested-implementation-awaiting-full-regression-and-execution-seal
+registration:
+  path: docs/validation-results/post2008-synphys-medium-range-continuation-registration-1145.yaml
+  sha256: 3e257898ad2c729c190285d7a195e4d58ea40b63874ec0bed93dddd0d0e73f9a
+implementation:
+  path: scripts/acquire_synphys_medium_ranges.py
+  sha256: 7bc64fa654f44bdc7866c23d0453d2bd3a85474f457eb4b5a5bf947a7e8c7991
+  execution_seal_required: docs/validation-results/post2008-synphys-medium-range-continuation-seal-1147.yaml
+tests:
+  path: tests/test_synphys_medium_ranges.py
+  sha256: 461f876af6c666a1503865d1b628d7eee17a540efbb3e5277a9bff4c39dc8251
+  focused_tests_passed: 42
+  focused_duration_seconds: 0.13
+  all_Synphys_tests_passed: 379
+  all_Synphys_duration_seconds: 2.34
+  repository_ruff: passed
+  diff_whitespace: passed
+  cases:
+    - Exact range geometry covers remaining bytes once within fifteen requests.
+    - Exact 206, ETag, total length and content range required after interim/proxy responses.
+    - Wrong or duplicate identity headers, changed encoding, redirects and header bounds rejected.
+    - Bounded body reads and short/overlong response bytes retain streamed hashes.
+    - Original prefix length, signature and hash validated while preserving source bytes and timestamp.
+    - Synthetic complete orchestration appends only validated ranges and hashes complete assembly.
+    - Timeout, ignored range, changed ETag and overlong bodies stop without append or retry.
+    - Duplicate output directory rejects invocation before a second request.
+    - Missing execution seal rejects invocation before network access.
+    - Fixed request/time/storage/object/read-scope contract rejects expansion and bool/int coercion.
+scientific_and_operational_boundaries:
+  - Synthetic orchestration substitutes tiny fixtures and a fake client; it is not a real transport result.
+  - No new HTTP request or scientific database read has occurred.
+  - A full regression and separate implementation-hash execution seal remain required.
+  - Original registration 1130 and failure assessment 1144 are unchanged.
+  - A separate independent complete-object/range/schema verification must follow acquisition.
+  - Existing original-path success verifiers and reconciliation runners must not be bypassed or supplied fabricated success manifests.
+CI_snapshot:
+  run: https://github.com/OgnjenX/smart-robustness/actions/runs/38470311655
+  source_revision: cb463bde2a303a2afb515af6dd27eec0e3bb2a83
+  status: in_progress
+  continuation_code_covered_by_this_run: false
+  new_push_held_to_avoid_cancellation: true
+database_download_performed: false
+parameter_fitting_performed: false
+cell_or_network_execution_performed: false
+frozen_baseline_modified: false
+raw_results_committed: false

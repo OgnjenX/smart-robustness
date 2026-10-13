@@ -1,0 +1,52 @@
+schema_version: 1
+artifact_id: 1145
+artifact_type: distinct-bounded-range-acquisition-continuation-registration
+date: 2026-10-13
+status: design-registered-execution-requires-tested-implementation-and-separate-seal
+parent_assessment: docs/validation-results/post2008-synphys-medium-acquisition-failure-assessment-1144.yaml
+parent_assessment_sha256: c52fd3831ec479efe6564d3033e2da75fdef90f3ce2786630ede541b43c86494
+parent_manifest: results/synphys-medium-schema-1131/manifest.yaml
+parent_manifest_sha256: 63dde91bb1a8eb5d54f18b7226cc2fcc16502318590d9a91fc4a3939f4e42906
+prefix_path: results/synphys-medium-schema-1131/synphys_r2.1_medium.sqlite.partial
+prefix_bytes: 3573501533
+prefix_sha256: f2f24c87df8539e2d05e0011ca8ab276cf0f29d6dbf74e7ba72d8b62c77cd001
+url: https://allen-synphys.s3-us-west-2.amazonaws.com/synphys_r2.1_medium.sqlite
+expected_bytes: 11125997568
+expected_etag: '"d954cbad0d7c7b0002bf3a2879e40e90-1327"'
+certificate_authority_bundle: /etc/ssl/cert.pem
+certificate_authority_sha256: 9dae8d76e55cb08991f2b672d58999ea15560d910759c16b544f843bdffbb994
+output_directory: results/synphys-medium-range-continuation-1146
+range_bytes: 536870912
+stream_chunk_bytes: 1048576
+maximum_requests: 15
+maximum_seconds_per_request: 1200
+maximum_total_seconds: 18000
+minimum_free_bytes: 22251995136
+database_download_authorized: true
+schema_only_reads_authorized: true
+row_reads_authorized: false
+parameter_fitting_authorized: false
+cell_or_network_execution_authorized: false
+full_release_fallback_authorized: false
+transport_contract:
+  - Exclusive output directory, one runner, no concurrent requests or automatic retries.
+  - Copy and independently hash the original prefix into the new directory without altering it.
+  - Require unchanged prefix length, SHA256 and SQLite signature before requests.
+  - Use verified TLS, fixed HTTPS URL, If-Match, explicit byte Range and identity encoding.
+  - Do not follow redirects, disable TLS verification, or restart the original acquisition.
+  - Each range must return 206 with exactly matching Content-Range, total length, ETag and Content-Length.
+  - Retain headers, stderr, raw range bytes and streamed hashes for every attempted range.
+  - Bound each body to registered range length plus one byte; kill an overlong transfer.
+  - Reject short bodies, changed object identity, compressed bodies, duplicate identity headers and nonzero client exits.
+  - Append only fully validated ranges, retaining unsuccessful bytes separately and stopping on first failure.
+  - Enforce the total monotonic time budget, including copying, and do not exceed fifteen requests.
+  - Record each accepted range and its prefix boundary; failure retains all evidence without automatic restart.
+  - Finalize only exact full length and SQLite signature; stream a new whole-object SHA256 and inspect schema only.
+next_gate: >-
+  Independently reconstruct original prefix and every accepted range, hashes,
+  response identity, complete assembled bytes and schema. Register selected
+  summary and cell identity reconciliation separately before any baseline
+  joins. The existing success-only verifier and selected reconciliation entry
+  point must not be invoked with falsely substituted original acquisition paths.
+scientific_selection_and_partitions_changed: false
+frozen_baseline_modified: false

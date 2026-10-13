@@ -1,0 +1,42 @@
+schema_version: 1
+artifact_id: 1193
+artifact_type: official-replacement-download-route-audit
+date: 2026-10-14
+official_landing_page: https://brain-map.org/our-research/cell-types-taxonomies/multimodal-characterization-of-individual-neurons
+link_section: Integrated Morphoelectric and Transcriptomic Classification of Cortical GABAergic Cells
+discovery_method: Extract exact labeled hyperlinks from official landing-page HTML, without requesting linked file bodies.
+metadata:
+  link_label: Download cell metadata
+  url: https://cdn.prod.website-files.com/689cfbd308fa7373b604d290/68d61b068b5cfcfd77c92050_20200711_patchseq_metadata_mouse.csv
+  HEAD_UTC: '2026-10-13T23:11:59Z'
+  status: 200
+  content_length: 1090285
+  content_type: text/csv
+  etag: '"0cb8a0332f10d7bd07b5d58cf46344ca"'
+  version_id: TYNU8gtvxuwf6zCjmIrxsDtd658n298E
+  last_modified: Fri, 26 Sep 2025 04:48:07 GMT
+  body_acquired: false
+manifest:
+  link_label: Download raw data manifest for individual cells
+  url: https://cdn.prod.website-files.com/689cfbd308fa7373b604d290/68d61b4a9560fc6f223d80f1_2021-09-13_mouse_file_manifest.xlsx
+  HEAD_UTC: '2026-10-13T23:12:01Z'
+  status: 200
+  content_length: 2889514
+  content_type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+  etag: '"4f743c6db4f5a357dbbdd6db4c9f4544"'
+  version_id: FYv_W9AHLNxFNOkiCDYQ6ac1rFl5rZYh
+  last_modified: Fri, 26 Sep 2025 04:49:15 GMT
+  body_acquired: false
+interpretation: >-
+  The current official landing page explicitly links replacement-host July
+  annotations and a September 2021 manifest. The hosting timestamp is not the
+  scientific data revision. The earlier original-host DNS failure remains
+  accurate for that request but is not a current inability to acquire official
+  metadata. No file contents or source agreement have yet been established.
+next_gate: >-
+  Register and perform conditional bounded July metadata acquisition and
+  header-only inspection. Preserve the June evidence and prior failed identity
+  flags. Register the workbook separately before downloading or inspecting it.
+physiological_arrays_read: false
+biological_eligibility_established: false
+frozen_baseline_modified: false

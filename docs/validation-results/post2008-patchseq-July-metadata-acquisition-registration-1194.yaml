@@ -1,0 +1,23 @@
+schema_version: 1
+artifact_id: 1194
+artifact_type: conditional-official-July-metadata-header-acquisition-registration
+date: 2026-10-14
+source_audit: docs/validation-results/post2008-patchseq-official-migrated-source-audit-1193.yaml
+source_url: https://cdn.prod.website-files.com/689cfbd308fa7373b604d290/68d61b068b5cfcfd77c92050_20200711_patchseq_metadata_mouse.csv
+expected_bytes: 1090285
+expected_etag: '"0cb8a0332f10d7bd07b5d58cf46344ca"'
+expected_version_id: TYNU8gtvxuwf6zCjmIrxsDtd658n298E
+maximum_requests: 1
+maximum_seconds: 120
+maximum_header_bytes: 65536
+output_directory: results/patchseq-July-metadata-schema-1195
+redirects_authorized: false
+retries_authorized: false
+allowed_interpretation: Exact CSV header only; save raw bytes without interpreting rows.
+row_interpretation_authorized: false
+recording_download_authorized: false
+physiological_array_reads_authorized: false
+parameter_fitting_authorized: false
+cell_class_or_layer_qualification_authorized: false
+next_gate: Independently verify object headers, body hash and CSV schema, then separately register source row comparisons.
+frozen_baseline_modified: false

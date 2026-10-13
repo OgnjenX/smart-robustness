@@ -1,0 +1,64 @@
+schema_version: 1
+artifact_id: 1172
+artifact_type: official-June-annotation-archive-and-header-acquisition-receipt
+date: 2026-10-14
+status: archive-and-header-acquired-independent-verification-pending
+registration:
+  path: docs/validation-results/post2008-patchseq-annotation-archive-registration-1170.yaml
+  sha256: adc82b4ff911a23ad1d4cb71158e385d367958dada89059ed590a9d46f00722e
+result:
+  path: results/patchseq-annotation-archive-schema-1171/manifest.yaml
+  sha256: 4e28586ab2b1728d3812110ef5c9d468b36a0470f9d95db75f5488bfa8b10869
+  collector_commit: 694c4ea
+  collector_sha256: a9ca595fb792dc78bb204bd3fbf63ff6404db3069349295ababd73b9f54d80b4
+  exit_code: 0
+  requests: 1
+  client_exit_code: 0
+archive:
+  path: results/patchseq-annotation-archive-schema-1171/annotations.csv.tar
+  bytes: 1075200
+  sha256: 6854981d0cdf24f837b8d2b8adf0243aaa53871f4f1cc19f89f56d7430d15c0a
+  independent_streaming_hash_and_filesystem_length_check: match-acquisition-receipt
+  HTTP_status: 200
+  ETag: '"106800-5a9f4c80e2eec"'
+  source_revision: 20200625-June-not-verified-equivalent-to-final-July-metadata
+header_observations:
+  reported_member_count: 1
+  reported_CSV_member: 20200625_patchseq_metadata_mouse/20200625_patchseq_metadata_mouse.csv
+  reported_CSV_member_bytes: 1064422
+  header_bytes: 376
+  header_sha256: 4b187670b00abdf937fb49b15ad17642153d9e3bc0a47dcd869b41667eca5e88
+  columns: 22
+  prospective_identity_fields: [cell_specimen_id, donor_id, ephys_session_id, transcriptomics_sample_id]
+  prospective_anatomical_and_genetic_fields: [project, structure, full_genotype, corresponding_AIT2.3.1_ID, corresponding_AIT2.3.1_alias]
+  remaining_header_fields_interpreted_as_row_values: false
+claim_boundaries:
+  - These are field names and acquisition metadata, not observed cell labels or qualified models.
+  - Header availability does not establish that each field is complete, unique or authoritative for specimen identity or measured layer.
+  - A structure label must not silently be treated as measured soma layer without source evidence.
+  - Transcriptomic aliases and genotype fields require a separately fixed class/quality/ambiguity contract before row interpretation.
+  - The June annotation is not claimed identical to the final July paper annotation.
+  - Physical bytes were acquired as metadata source material; annotation row values and numerical features remain uninterpreted.
+  - No TAR file was extracted to disk and no downloaded source was executed.
+engineering_checks:
+  safety_tests_passed: 29
+  tests: tests/test_patchseq_annotation_schema.py
+  tests_sha256: decbe598714936922be4d0e0f3eb33cafcf17da107a7bbdad80bbfac64a10ee8
+  repository_ruff: passed
+  diff_whitespace: passed
+  independent_TAR_and_header_reconstruction_complete: false
+  latest_full_repository_regression_claimed: false
+next_gate: >-
+  Independently reconstruct TAR headers/member safety, declared sizes, exact
+  CSV header and source hashes without importing the collector. Then register
+  only explicit identity/anatomical/genetic annotation fields and all joins to
+  the independently verified asset catalog, retaining missing, duplicate and
+  conflicting records. Do not infer independence from subject IDs or layer
+  from genotype or transcriptomic type; physiological qualification remains
+  a separate later gate.
+annotation_row_values_interpreted: false
+physiological_arrays_read: false
+parameter_fitting_performed: false
+cell_or_network_execution_performed: false
+frozen_baseline_modified: false
+raw_results_committed: false

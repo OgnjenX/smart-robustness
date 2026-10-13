@@ -1,0 +1,71 @@
+schema_version: 1
+artifact_id: 1154
+artifact_type: primary-literature-source-route-screening-not-model-promotion
+date: 2026-10-13
+status: promising-intrinsic-source-identified-synaptic-recruitment-source-still-unresolved
+parents:
+  - docs/validation-results/post2008-vip-source-availability-audit-1086.yaml
+  - docs/validation-results/post2008-synphys-baseline-recovery-support-ceiling-1152.yaml
+  - docs/validation-results/post2008-synphys-rested-cohort-dependency-audit-1153.yaml
+candidates:
+  Gouwens_2020:
+    title: Integrated Morphoelectric and Transcriptomic Classification of Cortical GABAergic Cells
+    DOI: 10.1016/j.cell.2020.09.057
+    primary_article: https://pmc.ncbi.nlm.nih.gov/articles/PMC7781065/
+    official_source_routes: https://brain-map.org/our-research/cell-types-taxonomies/multimodal-characterization-of-individual-neurons/gouwens-sorensen-et-al-cell-2020---more-downloads
+    published_electrophysiology_version: https://dandiarchive.org/dandiset/000020/0.210913.1639
+    version_DOI: 10.48324/dandi.000020/0.210913.1639
+    source_scope: adult-mouse-visual-cortex-whole-cell-Patch-seq-intrinsic-recordings
+    linked_modalities: [electrophysiology-NWB, transcriptomic-identity, morphological-reconstruction]
+    prospective_use: independently-fitted-and-held-out-validated-VIP-or-SST-intrinsic-models
+    direct_paired_synaptic_target_source: false
+    assessment: plausible-source-route-not-yet-inventoried-or-qualified
+    requirements_before_use:
+      - Verify pinned version metadata and bounded asset inventory without raw physiology download.
+      - Resolve original specimen identifiers and exclude or explicitly retain overlaps with the old source cohort.
+      - Join independent transcriptomic subclass and measured layer identities; do not infer VIP identity from a fitted firing pattern.
+      - Verify electrophysiology QC, protocol definitions, repeated trials and trace availability before selecting models.
+      - Fix training/validation units, family, objective, physiological gates and uncertainty before trace fitting.
+      - Audit morphology, axon and compartment assumptions before any morphology-preserving conductance model.
+      - Do not claim a raw-data archive provides ready-qualified parameter maps or synaptic input fidelity.
+  Pfeffer_2013:
+    title: 'Inhibition of inhibition in visual cortex: the logic of connections between molecularly distinct interneurons'
+    DOI: 10.1038/nn.3446
+    primary_article: https://www.nature.com/articles/nn.3446
+    source_scope: mouse-visual-cortex-interneuron-connectivity-including-layers-2-3-and-5
+    prospective_use: source-specific-routing-and-layer-distinction-audit
+    limitations:
+      - Keep population optogenetic currents separate from unitary paired-recording targets.
+      - Somatically measured currents do not directly specify contact-site conductance.
+      - Raw experiment and animal identity availability and suitable independent target support remain unverified.
+      - Layer-2-3 and layer-5 observations must not be pooled to rescue the existing layer-5 gate.
+    biological_fitting_source_promoted: false
+  Preuss_2026:
+    title: Cortical PV and VIP interneurons similarly influence SST neuron output despite distinct unitary properties
+    DOI: 10.1038/s42003-026-10418-2
+    primary_article: https://www.nature.com/articles/s42003-026-10418-2
+    source_scope: mouse-barrel-cortex-layer-2-3-paired-recordings
+    public_data_scope: graph-source-numerical-data-and-analysis-code-raw-recordings-by-author-request
+    primary_V1_layer5_parameter_source: false
+    reason: cortical-area-layer-and-assay-boundaries-do-not-match-the-current-primary-arm
+    permitted_role: contextual-and-separately-labelled-mechanistic-comparison-only
+source_review_limits:
+  - Primary publications and official data landing pages were screened, not experimental arrays or model outcomes.
+  - A different publication or archive does not prove independence from the already inspected cells.
+  - Whole-archive sizes and candidate subclass counts are not acquisition or eligibility commitments.
+  - Public availability and correct species/area are prerequisites, not successful physiological validation.
+  - The existing failing and inconclusive native VIP models and insufficient synaptic strata remain immutable.
+next_step: >-
+  Register a bounded metadata-only inventory of the pinned Patch-seq version
+  and its official cell annotations, including source URLs, permitted fields,
+  overlap checks, request and byte limits, exact identity joins and retention
+  of missing classifications. Do not download the entire archive, import
+  network-fitted weights, fit a neuron, transfer barrel-cortex parameters or
+  open SMART network outcomes. Continue a distinct visual-cortex recruitment
+  source assessment; intrinsic Patch-seq data cannot close that separate gate.
+new_source_files_acquired: false
+experimental_arrays_read: false
+parameter_fitting_performed: false
+cell_or_network_execution_performed: false
+frozen_baseline_modified: false
+raw_results_committed: false

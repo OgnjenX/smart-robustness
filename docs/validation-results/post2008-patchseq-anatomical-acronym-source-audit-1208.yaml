@@ -1,0 +1,63 @@
+schema_version: 1
+artifact_id: 1208
+artifact_type: authoritative-anatomical-acronym-definition-audit
+date: 2026-10-14
+retrieved_UTC_date: 2026-10-13
+source: Allen Institute Structure ontology API
+records:
+  - url: https://api.brain-map.org/api/v2/data/Structure/821.json
+    success: true
+    num_rows: 1
+    total_rows: 1
+    id: 821
+    acronym: VISp2/3
+    name: Primary visual area, layer 2/3
+    graph_id: 1
+    ontology_id: 1
+    parent_structure_id: 385
+    structure_id_path: /997/8/567/688/695/315/669/385/821/
+  - url: https://api.brain-map.org/api/v2/data/Structure/778.json
+    success: true
+    num_rows: 1
+    total_rows: 1
+    id: 778
+    acronym: VISp5
+    name: Primary visual area, layer 5
+    graph_id: 1
+    ontology_id: 1
+    parent_structure_id: 385
+    structure_id_path: /997/8/567/688/695/315/669/385/778/
+  - url: https://api.brain-map.org/api/v2/data/Structure/385.json
+    success: true
+    num_rows: 1
+    total_rows: 1
+    id: 385
+    acronym: VISp
+    name: Primary visual area
+    graph_id: 1
+    ontology_id: 1
+    parent_structure_id: 669
+    structure_id_path: /997/8/567/688/695/315/669/385/
+verified_definition:
+  VISp2/3: primary-visual-cortex-layer-2-3
+  VISp5: primary-visual-cortex-layer-5
+  VISp: primary-visual-cortex-without-a-layer-specific-label
+claim_boundary: >-
+  These authoritative records establish anatomical acronym semantics and common
+  region ancestry. They do not independently verify each source specimen's
+  tissue image, CCF placement, layer-boundary precision or annotation quality.
+  Do not interpret ontology-tree depth or st_level as measured soma depth or
+  cortical layer. Do not interpret bare VISp as L2/3 or L5, or include another
+  visual area by a VIS prefix match. T-type layer enrichment is not an alternative
+  source of per-cell layer assignment.
+next_gate: >-
+  A later sealed cohort may use exact author-provided structure labels with these
+  definitions, retaining their source anatomical-provenance limits. Require
+  source-supported class membership and independent recording identity before
+  fitting; donor grouping, mapping confidence and source-coverage limitations
+  remain distinct gates and must not be silently inferred from anatomy.
+source_specimen_records_queried: false
+physiological_arrays_read: false
+parameter_fitting_performed: false
+biological_eligibility_established: false
+frozen_baseline_modified: false

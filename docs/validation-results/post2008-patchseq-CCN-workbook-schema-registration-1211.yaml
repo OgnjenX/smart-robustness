@@ -1,0 +1,29 @@
+schema_version: 1
+artifact_id: 1211
+artifact_type: bounded-nested-reference-workbook-header-inspection-registration
+date: 2026-10-14
+archive: results/patchseq-CCN-archive-directory-1206/reference.zip
+archive_sha256: 07634d0164812eead01bd854b586ac28d5a72cc449d1bc0015b9b73c2903da9f
+member: cell_set_nomenclature.xlsx
+expected_member_bytes: 127093
+maximum_member_bytes: 1048576
+header_reader: scripts/acquire_patchseq_workbook_schema.py
+header_reader_sha256: 4928e28d4ebf0d8e913454d3b70f8ee3d9bd975e6cfbac2a221213c5d793c12e
+output_directory: results/patchseq-CCN-workbook-schema-1212
+allowed_interpretation:
+  - Exact regular nested workbook member, source bytes, hash and ZIP structure.
+  - Sheet names, declared dimensions and first-row header strings only, within the previously tested reader bounds.
+  - Save an exact byte-for-byte source workbook copy for inspection provenance; do not edit or recalculate it.
+external_requests_authorized: false
+reference_data_row_reads_authorized: false
+cell_assignment_reads_authorized: false
+formulas_evaluated: false
+external_links_followed: false
+code_or_R_objects_executed: false
+physiological_array_reads_authorized: false
+biological_qualification_authorized: false
+next_gate: >-
+  Independently verify exact source-member identity and all sheet header projections;
+  register taxonomy provenance and cell-set field projections using the actual
+  schema before interpreting any reference records or performing accession joins.
+frozen_baseline_modified: false

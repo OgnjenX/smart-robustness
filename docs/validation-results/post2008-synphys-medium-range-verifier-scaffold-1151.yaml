@@ -1,0 +1,52 @@
+schema_version: 1
+artifact_id: 1151
+artifact_type: independent-range-assembly-verifier-engineering-receipt
+date: 2026-10-13
+status: independently-implemented-synthetic-verifier-real-acquisition-not-yet-executed
+registration: docs/validation-results/post2008-synphys-medium-range-continuation-registration-1145.yaml
+verifier:
+  path: scripts/verify_synphys_medium_ranges.py
+  sha256: a0aa89632a5f36618f44a29a05af4ede261217d7fffedd97b9e96a0923a8e418
+  acquisition_helpers_imported: false
+  schema_verifier_dependency: scripts/verify_synphys_medium_acquisition.py
+  schema_verifier_dependency_sha256: 05f965a3164f278c3e03461dc9eae34a687184cec499badd24a22cb1c2d91742
+  terminal_result_required: results/synphys-medium-range-continuation-1146/manifest.yaml
+  exclusive_output: results/synphys-medium-range-verification-1150
+verification_contract:
+  - Independently parse every accepted terminal HTTP response and require 206 with exact ETag and range identity.
+  - Require typed contiguous range ledger, complete bounded request count and exclusive source paths.
+  - Compare original prefix and every retained range byte to its exact position in assembled object.
+  - Independently stream component SHA256 and complete-object SHA256 with bounded memory.
+  - Verify full length, SQLite signature and immutable source snapshots including headers and stderr.
+  - Check registration, execution seal, collector, inspector, parent evidence and certificate source hashes.
+  - Retain elapsed-time and copied-prefix identity gates before successful verification.
+  - Reconstruct complete schema through the independent schema-only guard, with data reads denied.
+  - Missing terminal evidence creates no output; existing verification directory is never overwritten.
+  - Any mismatch retains failure evidence and cannot authorize reconciliation, baseline joins or fitting.
+tests:
+  path: tests/test_synphys_medium_range_verifier.py
+  sha256: db7575eaa526ac7789daf086e703a3862ebede1aed9e5fea637abca43271c0a4
+  verifier_tests_passed: 24
+  combined_downloader_and_verifier_tests_passed: 66
+  combined_command: .venv/bin/python -m pytest -q tests/test_synphys_medium_ranges.py tests/test_synphys_medium_range_verifier.py
+  duration_seconds: 0.16
+  exit_code: 0
+  repository_ruff: passed
+  diff_whitespace: passed
+  cases: [complete-assembly, source-component-corruption, assembly-corruption, resealed-whole-hash,
+          gap-overlap-and-typed-ledger-errors, changed-client-exit, missing-terminal-success,
+          changed-source-scope, changed-HTTP-identity, tampered-header-projection,
+          mutation-during-verification, premature-invocation]
+active_regression_boundary:
+  session: 83578
+  source_revision_abbreviated: 6c004c2
+  new_verifier_tests_collected_by_that_run: false
+  existing_collected_source_or_tests_modified: false
+  verifier_full_repository_regression_claimed: false
+real_complete_object_or_schema_verified: false
+new_database_download_performed: false
+database_data_rows_read: false
+parameter_fitting_performed: false
+cell_or_network_execution_performed: false
+frozen_baseline_modified: false
+raw_results_committed: false

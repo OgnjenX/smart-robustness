@@ -1,0 +1,55 @@
+schema_version: 1
+artifact_id: 1180
+artifact_type: independent-raw-annotation-and-catalog-identity-assessment
+date: 2026-10-14
+registration: docs/validation-results/post2008-patchseq-identity-join-registration-1175.yaml
+registration_sha256: 4eed2c338f08dedc397b9536c923b2b20ac428bc89bafa962779651290479caf
+acquisition_result: results/patchseq-identity-annotations-1176/manifest.yaml
+acquisition_result_sha256: ed51183655f1ecca7a2fe0d6c1c3e00ae8657862a9d67e5ef585bb3942fbd8b0
+verifier: scripts/verify_patchseq_identity.py
+verifier_sha256: 382eae7d894924bf13f789123d2a22860391a551d585b8e394261f27f24a00c9
+verification_result: results/patchseq-identity-independent-1179/manifest.yaml
+verification_result_sha256: 46e5317586fed3a4e371916a17facdc07544f09fd82820617060c65086354fa0
+tests: tests/test_patchseq_identity_verifier.py
+tests_sha256: 9bce4a013ed0fbbf18641cac80e87d946a9eb95d29259d9a905e8966d7abce45
+terminal_status: identity-annotations-independently-verified
+verification_method:
+  - Re-read the pinned original CSV archive, not the collector's projected annotation rows.
+  - Use CSV DictReader and explicit ASCII digit checks; no import of the acquisition collector.
+  - Reconstruct path tokens by decomposition and relational joins with in-memory SQLite.
+  - Compare every projected raw row, canonical ID, annotation candidate, identity flag, missingness list, duplicate list, prior-ID equality list and summary using type-preserving JSON comparison.
+  - Verify all pinned source and result hashes before and after reconstruction.
+results:
+  checked_assets: 4435
+  checked_annotation_rows: 4435
+  unmatched_assets: 0
+  assets_with_multiple_annotation_candidates: 0
+  literal_donor_path_subject_equality_passes: 0
+  path_annotation_consistent_assets: 0
+  biological_eligibility_established: false
+engineering_checks:
+  focused_command: .venv/bin/pytest -q tests/test_patchseq_identity_verifier.py tests/test_patchseq_identity_join.py
+  passed: 48
+  seconds: 7.56
+  repository_ruff_check: passed
+claim_boundary: >-
+  The structural reconstruction is independently verified, including the failed
+  literal donor/path-subject equality gate. Verification of a faithful report
+  is not a passing recording-identity or biological qualification gate. These
+  findings neither prove source corruption nor establish distinct animals or
+  independence from earlier data. The apparent namespace difference must be
+  resolved with primary source definitions, not accepted solely because the
+  observed grouping is bijective. June metadata remains a distinct revision
+  whose agreement with final July annotations is unresolved.
+next_gate: >-
+  Trace authoritative conversion definitions for subject and donor identifiers;
+  register any justified namespace mapping separately before applying it.
+  Establish internal recording identity and source-backed molecular class and
+  measured-layer qualification before any independent physiology fitting.
+network_requests: 0
+recording_downloaded: false
+physiological_arrays_read: false
+parameter_fitting_performed: false
+network_execution_performed: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

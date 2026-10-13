@@ -1,0 +1,36 @@
+schema_version: 1
+artifact_id: 1197
+artifact_type: bounded-whitelisted-July-June-annotation-comparison-registration
+date: 2026-10-14
+July_assessment: docs/validation-results/post2008-patchseq-July-schema-assessment-1196.yaml
+July_assessment_sha256: e1118031b6b6cf2b4307295e01c9eb4c1b10298ae7567b9ff245581ec4bf4088
+July_csv: results/patchseq-July-metadata-schema-1195/metadata.csv
+July_csv_sha256: 2eb2a02ee1dd275b457055d6d4d57f2942d8c6d3cf329e820002010c7943c142
+July_schema: results/patchseq-July-metadata-schema-1195/manifest.yaml
+July_schema_sha256: 021e2d5f4d24a116600a5ecc562c5b45c7cb996e5091f967e5cca7727d88182f
+June_identity: results/patchseq-identity-annotations-1176/manifest.yaml
+June_identity_sha256: ed51183655f1ecca7a2fe0d6c1c3e00ae8657862a9d67e5ef585bb3942fbd8b0
+June_verification: results/patchseq-identity-independent-1179/manifest.yaml
+June_verification_sha256: 46e5317586fed3a4e371916a17facdc07544f09fd82820617060c65086354fa0
+fields: [project, cell_specimen_id, donor_id, ephys_session_id, transcriptomics_sample_id, structure, full_genotype, T-type Accession ID, T-type Label, MET-type Label]
+maximum_bytes: 2097152
+maximum_rows: 10000
+maximum_field_characters: 4096
+output_directory: results/patchseq-July-June-comparison-1198
+row_reads_authorized: true
+external_requests_authorized: false
+physiological_array_reads_authorized: false
+cell_class_or_layer_qualification_authorized: false
+parameter_fitting_authorized: false
+rules:
+  - Read the exact verified July header and retain only ten whitelisted raw fields and source row numbers.
+  - Canonical cell, donor and session IDs are positive ASCII decimal strings; retain malformed values without repairs.
+  - Independently index June records by canonical cell and session IDs; preserve every candidate and ambiguity.
+  - A cell-session correspondence requires exactly one June cell candidate and one June session candidate referencing the same June source row.
+  - Compare seven identically named fields by literal raw equality only when a unique June cell candidate exists.
+  - Explicitly compare July T-type Accession ID with June corresponding_AIT2.3.1_ID, and July T-type Label with June corresponding_AIT2.3.1_alias as raw strings; equality is not proof of schema-semantic equivalence.
+  - Report source-only rows, duplicate IDs, per-field changes, unknown identifiers, MET-label missingness and raw MET label counts without deriving biological class or confidence.
+  - Missing or nonempty MET labels do not establish confidence, cell class or physiological eligibility.
+  - Preserve all prior failed donor-equality flags and all June evidence without updates.
+next_gate: Independently rebuild the source projections and comparisons before using July references in a separately registered cohort.
+frozen_baseline_modified: false

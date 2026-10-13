@@ -1,0 +1,32 @@
+schema_version: 1
+artifact_id: 1201
+artifact_type: conditional-official-2021-manifest-workbook-structural-acquisition-registration
+date: 2026-10-14
+source_audit: docs/validation-results/post2008-patchseq-official-migrated-source-audit-1193.yaml
+source_url: https://cdn.prod.website-files.com/689cfbd308fa7373b604d290/68d61b4a9560fc6f223d80f1_2021-09-13_mouse_file_manifest.xlsx
+expected_bytes: 2889514
+expected_etag: '"4f743c6db4f5a357dbbdd6db4c9f4544"'
+expected_version_id: FYv_W9AHLNxFNOkiCDYQ6ac1rFl5rZYh
+maximum_requests: 1
+maximum_seconds: 120
+maximum_ZIP_entries: 100
+maximum_uncompressed_bytes: 134217728
+maximum_sheets: 10
+maximum_header_columns: 256
+maximum_header_string_index: 10000
+output_directory: results/patchseq-2021-workbook-schema-1202
+redirects_authorized: false
+retries_authorized: false
+allowed_interpretation:
+  - ZIP member names, sizes and workbook worksheet relationship metadata.
+  - Worksheet names, declared dimensions and exact first-row header cells only.
+  - Only shared strings referenced by first-row header cells; skip unrelated strings without interpreting their values.
+prohibited:
+  - No interpretation of data rows after the first header row.
+  - No formula evaluation, macro execution, external-link following or workbook edits.
+  - No recording downloads, physiological array reads, fitting or biological qualification.
+next_gate: >-
+  Independently verify object identity and workbook structure/header evidence;
+  then register source record fields, numeric-ID handling and exact file-to-cell
+  matching rules before interpreting rows. Preserve June and July evidence.
+frozen_baseline_modified: false

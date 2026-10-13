@@ -1,0 +1,62 @@
+schema_version: 1
+artifact_id: 1207
+artifact_type: independently-checked-historical-taxonomy-archive-directory-assessment
+date: 2026-10-14
+registration: docs/validation-results/post2008-patchseq-CCN-archive-acquisition-registration-1205.yaml
+registration_sha256: dd69708e4bf20b5fce45fc422ff718278cb3a7f313f6058482f8899e5fa19562
+sealed_commit: b8cfbf7
+collector: scripts/acquire_patchseq_ccn_directory.py
+collector_sha256: 71240b76654be868f7bf28b53f6c88878a234a61c54a0375402fc01e18029b10
+result: results/patchseq-CCN-archive-directory-1206/manifest.yaml
+result_sha256: aa29090b2adb471a5d36dbdd81268d6d560ca75901e3291954454008b51c175b
+raw_archive: results/patchseq-CCN-archive-directory-1206/reference.zip
+raw_archive_sha256: 07634d0164812eead01bd854b586ac28d5a72cc449d1bc0015b9b73c2903da9f
+raw_archive_git_blob_sha1: 7385f510b79c6559092425367fa9f6426f8b1465
+bytes: 844341
+http_status: 200
+client_exit_code: 0
+request_count: 1
+status: official-CCN-archive-object-and-directory-independently-checked
+directory_findings:
+  member_count: 14
+  declared_uncompressed_bytes: 28237661
+  nomenclature_workbook: cell_set_nomenclature.xlsx
+  nomenclature_workbook_bytes: 127093
+  README: README.txt
+  README_bytes: 1549
+  JSON_dendrograms:
+    - dendrogram_CCN201810310.json
+    - dendrogram_CCN201908210.json
+    - dendrogram_CCN201908211.json
+    - dendrogram_CCN202002013.json
+  R_objects_present_but_not_read_or_executed: true
+  cell_assignment_tables_present_but_not_read: true
+independent_checks:
+  - git hash-object --no-filters reproduced the exact official revision's Git blob identity.
+  - Separate shasum invocation reproduced the archive SHA-256.
+  - Independent ZIP directory listing reproduced every member's name, size, compression metadata and directory flag; no member body was opened.
+engineering_checks:
+  focused_tests_passed: 7
+  focused_tests_seconds: 0.04
+  repository_ruff: passed
+  git_diff_whitespace_check: passed
+claim_boundary: >-
+  The official reference object and directory are independently checked. Exact
+  correspondence between this archive's taxonomies and the saved legacy t-type
+  accessions is still unproven. The directory names do not authorize treating
+  different accession namespaces as interchangeable or imply that a candidate
+  taxonomy covers every Patch-seq label. No hierarchy, alias table or cell-assignment
+  content has yet been read. Archive R objects will not be executed.
+next_gate: >-
+  Register bounded README and nomenclature-workbook structural/header inspection
+  to locate the historical taxonomy and exact schema. Register reference-table
+  projections and any explicitly justified crosswalk before reading membership
+  records. Keep unknown accessions and contradictory aliases visible. Continue
+  the separate anatomical-provenance audit; taxonomy membership alone is not a
+  measured layer or an independent physiology validation.
+archive_extracted: false
+member_contents_interpreted: false
+physiological_arrays_read: false
+biological_eligibility_established: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

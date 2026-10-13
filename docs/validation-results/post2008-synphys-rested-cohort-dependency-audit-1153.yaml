@@ -1,0 +1,70 @@
+schema_version: 1
+artifact_id: 1153
+artifact_type: static-source-dependency-and-archived-metadata-candidate-audit
+date: 2026-10-13
+status: alternative-rested-cohort-not-yet-justified-for-biological-fitting
+parent: docs/validation-results/post2008-synphys-baseline-recovery-support-ceiling-1152.yaml
+primary_sources:
+  rested_selection:
+    url: https://github.com/AllenInstitute/aisynphys/blob/545a990ee171e6c0d23dd4bba413e1ccbf2f0853/aisynphys/resting_state.py
+    sha256: d9d09574416afe640ab30d7d0fa993ee5144825a093b04621e0e856222d11d9d
+  rested_pipeline:
+    url: https://github.com/AllenInstitute/aisynphys/blob/545a990ee171e6c0d23dd4bba413e1ccbf2f0853/aisynphys/pipeline/multipatch/resting_state.py
+    sha256: aefebe64b050c9409b603bc2c4b9ce4c248af668d71ea99e1b67abd9a822338b
+  upstream_synapse_pipeline:
+    url: https://github.com/AllenInstitute/aisynphys/blob/545a990ee171e6c0d23dd4bba413e1ccbf2f0853/aisynphys/pipeline/multipatch/synapse.py
+    sha256: 7b00d89b0e34894af68ca6421553440aa9e94489deebe02cb7d0b6caa8a98f13
+archived_metadata:
+  path: results/synphys-pair-QC-1108/manifest.yaml
+  assessed_sha256: 9e8af574ddfbfe259f30251833b25ae093b26237bb8befc272a358ecf4240d30
+  earlier_authorization: docs/validation-results/post2008-synphys-pair-QC-registration-1107.yaml
+static_findings:
+  - Rested fitting returns no target if upstream shared latency is absent.
+  - The source latency window is inherited shared latency plus or minus 100 microseconds.
+  - IC initialization inherits aggregate PSP rise and decay when available.
+  - Original rested contributors require response-sign-specific pulse QC, preceding rest greater than eight seconds and at least ten milliseconds of response data.
+  - The source excludes pairs with simultaneously identified mono- and polysynapses from rested fitting.
+  - Upstream latency and kinetics summarize manually QC-passed average fits, weighted by contributor counts.
+  - The source warns against relying on rested fits when the all-pulse PSP kinetics failed upstream quality checks.
+  - Therefore a rested-state-first selection is not evidence of independent measurement or absent upstream QC dependencies.
+metadata_only_upper_counts:
+  meaning: candidate-experiment-counts-before-reading-any-new-rested-values-not-qualified-physiological-targets
+  membership: preserve-existing-mouse-V1-route-and-measured-layer-identities-positive-relevant-probe-and-exactly-one-synapse
+  partitions: unchanged-global-synphys-voltage-target-v1-experiment-hash
+  E5_to_SST5:
+    mouse_V1_coarse_matrix:
+      single_probed_synapse: {fitting_experiments: 10, validation_experiments: 3}
+      any_clamp_manual_QC_average: {fitting_experiments: 10, validation_experiments: 3}
+      original_IC_manual_QC_support: {fitting_experiments: 9, validation_experiments: 3}
+    mouse_V1_pre_production:
+      single_probed_synapse: {fitting_experiments: 9, validation_experiments: 4}
+      any_clamp_manual_QC_average: {fitting_experiments: 9, validation_experiments: 4}
+      original_IC_manual_QC_support: {fitting_experiments: 9, validation_experiments: 3}
+  interpretation: >-
+    Wider identity/QC availability does not contradict ceiling 1152. That
+    ceiling additionally requires the already archived usable rested kernels,
+    shared latency and original decoded contributors. Candidate counts do not
+    establish that extra experiments contain valid rested-state targets.
+claim_boundaries:
+  - This is a retrospective metadata preflight and pinned-source audit, not a new experimental registration.
+  - No wider-cohort numerical database values or waveforms were queried.
+  - VC QC cannot silently substitute for IC PSP quality, or missing aggregate kinetics be declared harmless.
+  - Shared source fitting dependencies do not invalidate the original experiment-level split, but preclude an independent-source or unseen-historical-fit claim.
+  - The previously tested lineage helper retains raw QC flags; it does not verify historical response duration or complete original waveform selection.
+  - Pinned source code establishes implementation intent, not the actual historical release-generation environment.
+  - Current-injection VIP fitting and source synaptic-recruitment qualification remain separate prerequisites.
+next_gate: >-
+  Use nonsynaptic metadata to define any distinct candidate cohort, preserve
+  exact species, area, measured layer and project boundaries, and fix upstream
+  QC dependencies and response-state completeness before new numerical reads.
+  Keep the original failed cohort and sample minimums intact. A new source
+  inventory may assess availability but cannot authorize model fitting until
+  adequate independent units, waveform semantics, baselines and physiological
+  acceptance are independently established. Continue external primary-source
+  assessment rather than promote a broader cohort solely to meet a count.
+downloaded_source_executed: false
+experimental_numerical_database_values_newly_read: false
+parameter_fitting_performed: false
+cell_or_network_execution_performed: false
+frozen_baseline_modified: false
+raw_results_committed: false

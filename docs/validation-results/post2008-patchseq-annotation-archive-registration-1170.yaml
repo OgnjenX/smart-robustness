@@ -1,0 +1,37 @@
+schema_version: 1
+artifact_id: 1170
+artifact_type: official-June-annotation-archive-and-header-only-acquisition-registration
+date: 2026-10-14
+parent_route_audit: docs/validation-results/post2008-patchseq-annotation-source-route-audit-1169.yaml
+catalog_assessment: docs/validation-results/post2008-patchseq-catalog-independent-assessment-1168.yaml
+catalog_assessment_sha256: 2f9371984cdd663bd69ff2849cfa57cb8196a1f5acbcec0363a4c29fb810e2b4
+url: https://data.nemoarchive.org/other/AIBS/AIBS_patchseq/transcriptome/scell/SMARTseq/processed/analysis/20200611/20200625_patchseq_metadata_mouse.csv.tar
+expected_bytes: 1075200
+expected_etag: '"106800-5a9f4c80e2eec"'
+maximum_requests: 1
+maximum_seconds: 60
+stream_chunk_bytes: 65536
+certificate_authority_bundle: /etc/ssl/cert.pem
+certificate_authority_sha256: 9dae8d76e55cb08991f2b672d58999ea15560d910759c16b544f843bdffbb994
+output_directory: results/patchseq-annotation-archive-schema-1171
+archive_acquisition_authorized: true
+TAR_and_CSV_header_inspection_authorized: true
+annotation_row_interpretation_authorized: false
+NWB_or_morphology_download_authorized: false
+experimental_array_reads_authorized: false
+parameter_fitting_authorized: false
+cell_or_network_execution_authorized: false
+archive_contract:
+  - Exactly one verified-TLS GET with If-Match and no redirects or retries.
+  - Stream length and SHA256 with at most expected bytes plus one failure-detection byte.
+  - Retain any failed object and transport evidence in an exclusive output directory.
+  - Inspect only uncompressed TAR metadata; never extract to disk or execute source content.
+  - Reject links, devices, FIFOs, absolute paths, traversal names and ambiguous CSV candidates.
+  - At most twenty regular-file or directory members and at most 2097152 declared member bytes.
+  - CSV candidates are the declared filename at root or its same-named directory; exactly one required.
+  - Read only the first bounded CSV header line, at most 65536 bytes and 256 columns, with duplicate/empty names rejected.
+  - Additional safe member names remain inventory entries, not permission to interpret their contents.
+  - Row data and numerical features remain uninterpreted source bytes; no specimens or classes are selected.
+source_version: explicit-20200625-June-metadata-not-verified-equivalent-to-July-final-paper-annotations
+next_gate: independently-verify-archive-members-and-header-before-registering-whitelisted-identity-taxonomy-row-joins
+frozen_baseline_modified: false

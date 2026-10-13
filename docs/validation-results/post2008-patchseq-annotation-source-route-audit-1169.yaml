@@ -1,0 +1,44 @@
+schema_version: 1
+artifact_id: 1169
+artifact_type: official-annotation-route-and-version-boundary-audit
+date: 2026-10-14
+status: official-June-annotation-archive-reachable-final-paper-July-link-unresolved
+parent_catalog_assessment: docs/validation-results/post2008-patchseq-catalog-independent-assessment-1168.yaml
+paper_link:
+  URL: https://brainmapportal-live-4cc80a57cd6e400d854-f7fdcae.divio-media.net/filer_public/5e/2a/5e2a5936-61da-4e09-b6da-74ab97ce1b02/20200711_patchseq_metadata_mouse.csv
+  source: Gouwens-2020-primary-paper-Key-Resources-Table
+  read_only_check: verified-TLS-HEAD-no-redirect-following
+  result: hostname-resolution-failure-on-current-host
+  client_exit_code: 6
+  CSV_content_downloaded: false
+  global_permanent_unavailability_claimed: false
+official_alternative:
+  tutorial_revision: 2bb8a2ece212cdbd4ef38f4c4a0c826c0b170e30
+  tutorial: https://github.com/AllenInstitute/scrattch.patchseq/blob/2bb8a2ece212cdbd4ef38f4c4a0c826c0b170e30/examples/build_patchseq_taxonomy.md
+  tutorial_SHA256: 17cdf0d43000a9f352617a88178f04da956251f6da512f601dd21ede510fb5f3
+  archive: https://data.nemoarchive.org/other/AIBS/AIBS_patchseq/transcriptome/scell/SMARTseq/processed/analysis/20200611/20200625_patchseq_metadata_mouse.csv.tar
+  official_directory: https://data.nemoarchive.org/other/AIBS/AIBS_patchseq/transcriptome/scell/SMARTseq/processed/analysis/20200611/
+  HEAD_observed_at_UTC: '2026-10-13T22:13:58Z'
+  HTTP_status: 200
+  content_type: application/x-tar
+  content_length: 1075200
+  ETag: '"106800-5a9f4c80e2eec"'
+  Last_Modified: Wed, 08 Jul 2020 21:27:57 GMT
+  archive_content_downloaded: false
+version_boundary:
+  June_filename_and_July_paper_filename_distinct: true
+  contents_identical_established: false
+  final_paper_annotations_recovered: false
+  source_code_executed_or_mapping_recomputed: false
+  third_party_mirror_silently_substituted: false
+next_gate: >-
+  Register the exact official archive's bounded acquisition and TAR/member/CSV
+  header inspection without extracting files or interpreting annotation rows.
+  Keep this June revision explicit. Require member and schema verification,
+  then separately register allowed identity and taxonomy fields and all joins
+  to the pinned DANDI assets, retaining absent or contradictory annotations.
+  Do not claim agreement with final July labels or native-model qualification.
+biological_row_values_interpreted: false
+physiological_arrays_read: false
+parameter_fitting_performed: false
+frozen_baseline_modified: false

@@ -1,0 +1,65 @@
+schema_version: 1
+artifact_id: 1200
+artifact_type: independent-original-CSV-annotation-revision-comparison-assessment
+date: 2026-10-14
+registration: docs/validation-results/post2008-patchseq-July-June-comparison-registration-1197.yaml
+registration_sha256: 527859a8bb2966e04f21c21409110af7207b5e7c7582b3ec05d021a1eac31520
+sealed_commit: d8f19bd
+collector: scripts/compare_patchseq_annotation_revisions.py
+collector_sha256: 0d390967da3ce9355a44e025e2c5464ea2265cc26f98b1f6f25ab52215b26c03
+result: results/patchseq-July-June-comparison-1198/manifest.yaml
+result_sha256: 4c31f9b2cf447b0c82388795417402563c979291b4a223c3fb6e2d109302bcb3
+verifier: scripts/verify_patchseq_annotation_revisions.py
+verifier_sha256: 2f28762c783af5da72409e24f5f1b3270074df5019202ffc870b2d8ea897b3f3
+verification_result: results/patchseq-July-June-comparison-independent-1199/manifest.yaml
+verification_result_sha256: 1e9c0e5eef489922da20eaa3b540af3e3c15322452b429cc4ff38f3a9e5275cb
+verifier_tests: tests/test_patchseq_annotation_revision_verifier.py
+verifier_tests_sha256: 5378d5e5c1fd11d1d20f8b56c0e5bd7ace00af12823ed2fd30caee0c8ed7421d
+status: annotation-revisions-independently-verified
+verification_method:
+  - Re-read the original June CSV from its pinned archive, rather than trusting collector projections.
+  - Re-read the pinned July CSV with DictReader; independently project only registered fields and canonical IDs.
+  - Independently reconstruct cell and session candidates with SQLite queries, retaining all ambiguity.
+  - Compare every July projection, raw field difference, candidate reference, duplicate list, noncanonical-ID count, unreferenced June row and raw MET label count with type-preserving JSON equality.
+  - Verify all pinned source hashes before and after reconstruction; no collector imports or external requests.
+results:
+  June_rows: 4435
+  July_rows: 4435
+  exact_unique_cell_and_session_correspondences: 4435
+  unmatched_July_cells: 0
+  unmatched_July_sessions: 0
+  ambiguous_June_cell_matches: 0
+  unreferenced_June_rows_by_cell: 0
+  duplicate_July_cell_IDs: 0
+  duplicate_July_session_IDs: 0
+  noncanonical_July_cell_donor_or_session_IDs: 0
+  compared_fields_with_any_raw_changes: 0
+  July_literal_NULL_MET_labels: 3940
+  July_other_MET_labels: 495
+  July_non_NULL_MET_label_values: 28
+engineering_checks:
+  focused_tests_passed: 35
+  focused_tests_seconds: 0.06
+  repository_ruff: passed
+claim_boundary: >-
+  The ten-field July projection and seven common plus two explicitly paired
+  taxonomy-field comparisons are verified for all 4435 rows. This establishes
+  literal agreement for these fields, not complete file equality, inferred
+  taxonomy semantics, internal recording identity, donor namespace equivalence
+  or biological eligibility. The additional MET field contains literal NULL
+  strings for 3940 records, not empty strings; do not silently normalize them.
+  Repeated donor IDs are expected for multiple cells from an animal and are
+  reported separately, not treated as duplicate-cell defects. All old failed
+  gates and the 595 June-manifest-uncovered recordings remain unchanged.
+next_gate: >-
+  Register bounded acquisition and structural inspection of the official
+  September 2021 workbook manifest to establish complete catalog file-to-cell
+  provenance. Establish authoritative taxonomy and anatomical label semantics
+  before a separately sealed qualified-cohort protocol. Missing mapping confidence
+  remains unknown; do not infer it solely from a type or MET label.
+network_requests: 0
+physiological_arrays_read: false
+parameter_fitting_performed: false
+biological_eligibility_established: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

@@ -1,0 +1,40 @@
+schema_version: 1
+artifact_id: 1185
+artifact_type: official-file-manifest-row-and-session-cross-reference-registration
+date: 2026-10-14
+raw_manifest: results/patchseq-file-manifest-schema-1183/file-manifest.csv
+raw_manifest_sha256: 823edc909ef07f577b863ba72a41458823bb1c87673515d83d4024340066620c
+identity_result: results/patchseq-identity-annotations-1176/manifest.yaml
+identity_result_sha256: ed51183655f1ecca7a2fe0d6c1c3e00ae8657862a9d67e5ef585bb3942fbd8b0
+identity_verification: results/patchseq-identity-independent-1179/manifest.yaml
+identity_verification_sha256: 46e5317586fed3a4e371916a17facdc07544f09fd82820617060c65086354fa0
+fields: [file_id, file_name, file_size, sha256_checksum, md5_checksum, technique, file_type, archive, archive_uri, project, cell_specimen_id]
+maximum_rows: 50000
+maximum_field_characters: 4096
+maximum_bytes: 6000000
+output_directory: results/patchseq-file-cross-reference-1186
+annotation_row_reads_authorized: true
+external_requests_authorized: false
+recording_download_authorized: false
+physiological_array_reads_authorized: false
+cell_class_or_layer_qualification_authorized: false
+parameter_fitting_authorized: false
+cell_or_network_execution_authorized: false
+rules:
+  - Preserve every source row and all eleven raw fields, including every modality and unknown filename shape.
+  - Canonical IDs are positive ASCII decimal strings; do not repair whitespace, floats, zero-padding or missing values.
+  - Recognize only exact positive-decimal.nwb filenames or exact sub-positive-decimal_ses-positive-decimal_icephys.nwb basenames.
+  - Numeric NWB filenames are ephys ROI result IDs according to the pinned official IPFX LIMS query get_input_nwb_file; organized ses tokens are session IDs according to DANDI naming documentation.
+  - Cross-reference only exact intracellular_electrophysiology technique rows with recognized session IDs to existing catalog session tokens.
+  - Retain every candidate row and report ambiguity; do not pick a preferred record or checksum.
+  - A cross-reference agrees only when it has exactly one manifest candidate and one annotation candidate with equal canonical cell_specimen_id values.
+  - Agreement does not establish internal recording identity, molecular class, measured layer, donor namespace identity or biological eligibility.
+  - Preserve URLs and checksums verbatim without fetching, trusting, rewriting or interpreting remote recording contents.
+  - Report raw technique, archive and file-type counts and missing-field counts over all rows.
+  - Report all unmatched source rows, unmatched assets, multiple candidates, cell-ID conflicts and source-file-session duplicates.
+  - Do not change the old failed donor/path-subject equality gate.
+next_gate: >-
+  Independently reconstruct these raw projections and cross-references. Resolve
+  unsupported filename and URI shapes from official sources before any new
+  parsing rule; no post-outcome rule may silently replace this sealed report.
+frozen_baseline_modified: false

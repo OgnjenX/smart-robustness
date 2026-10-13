@@ -1,0 +1,56 @@
+schema_version: 1
+artifact_id: 1163
+artifact_type: retained-asset-pagination-total-count-schema-stop
+date: 2026-10-14
+status: two-raw-pages-retained-global-count-field-omitted-on-second-page
+registration: docs/validation-results/post2008-patchseq-catalog-continuation-registration-1159.yaml
+result:
+  path: results/patchseq-catalog-continuation-1160/manifest.yaml
+  sha256: d1a255ee110189d5f60eeeb8159aa82d7747f2c1530cd4bcabbebefff08b80b3
+  terminal_exit_code: 1
+  accepted_asset_rows: 500
+  asset_page_requests: 2
+raw_pages:
+  - path: results/patchseq-catalog-continuation-1160/assets-01.json
+    sha256: 2f4266712c1b665fe7cd51353d4ec24de94386da08bdf33e36073dec99bd9735
+    bytes: 135193
+    client_exit_code: 0
+  - path: results/patchseq-catalog-continuation-1160/assets-02.json
+    sha256: 04e3f47b83c6a30fc09e3f329e8c5383712beb845a1685d5887b9e38daa5c75b
+    bytes: 135297
+    client_exit_code: 0
+    returned_rows: 500
+mapped_saved_version_metadata:
+  identifier: DANDI:000020
+  version: 0.210913.1639
+  asset_count: 4435
+  total_asset_bytes: 141856436428
+  archive_subject_count: 1040
+  subject_count_is_confirmed_cell_count: false
+engineering_observation:
+  original_contract: require-explicit-integer-total-count-on-every-page
+  observed_second_page: count-field-unreported-as-null-or-absent
+  count_change_proven: false
+  first_page_and_saved_version_counts_agree: true
+  full_catalog_completeness_established: false
+  cause_of_server_field_omission: unverified
+independent_checks:
+  both_page_and_manifest_SHA256: recomputed-with-independent-streaming-hash-tool
+  original_saved_version_response_reused: true
+  earlier_version-schema-stop_overwritten: false
+  automatic_retry_or_extra_asset_page_request: false
+next_gate: >-
+  Preserve both schema stops and all raw bytes. Separately register whether
+  omitted subsequent-page counts may remain explicitly unreported while exact
+  published-version and first-page counts, complete nine-page cardinality,
+  unique IDs and paths, pagination boundaries and total byte sum jointly prove
+  completeness. Reuse existing pages rather than fetch them again. Reject any
+  actually reported conflicting count; never label an absent page count as a
+  source observation. Independently verify the complete archive projection
+  before specimen annotations or recording acquisition.
+raw_recordings_downloaded: false
+physiological_arrays_read: false
+parameter_fitting_performed: false
+cell_or_network_execution_performed: false
+frozen_baseline_modified: false
+raw_results_committed: false

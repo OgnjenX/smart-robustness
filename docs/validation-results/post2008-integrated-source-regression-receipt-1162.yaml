@@ -1,0 +1,40 @@
+schema_version: 1
+artifact_id: 1162
+artifact_type: completed-fixed-revision-regression-and-later-focused-verification
+date: 2026-10-14
+completed_full_regression:
+  source_revision: 6c004c21011e0927dddc39b8b61d2c7e5e0bfcb3
+  session: 83578
+  command: MPLCONFIGDIR=/private/tmp/mpl .venv/bin/python -m pytest -q
+  terminal_observed_at_UTC: '2026-10-13T21:59:34Z'
+  exit_code: 0
+  tests_passed: 2134
+  warnings_reported: 179378
+  duration_seconds: 938.52
+  new_range_acquisition_tests_included: true
+  later_independent_range_verifier_and_Patchseq_catalog_tests_included: false
+  full_output_artifact_hash: unavailable
+latest_focused_verification:
+  command: .venv/bin/python -m pytest -q tests/test_synphys*.py tests/test_patchseq*.py
+  source_revision_abbreviated: 90b20ca
+  passed: 463
+  exit_code: 0
+  duration_seconds: 5.24
+  repository_ruff: passed
+  diff_whitespace: passed
+  biological_or_network_promotion_established: false
+completed_CI:
+  run: https://github.com/OgnjenX/smart-robustness/actions/runs/38470311655
+  source_revision: cb463bde2a303a2afb515af6dd27eec0e3bb2a83
+  status: completed
+  conclusion: success
+  observed_at_UTC: '2026-10-13T21:59:34Z'
+  pending_local_commits_covered_by_this_run: false
+boundaries:
+  - Fixed-revision regression and earlier CI do not prove later source changes passed the full suite.
+  - New public metadata readers and independent verifiers have focused evidence and still require current-revision CI.
+  - Warnings remain recorded; passing tests do not erase source-support limitations.
+  - No range-acquisition execution seal was issued after support ceiling 1152.
+  - Catalog acquisition remains incomplete and must not authorize annotations, recordings or fitting.
+frozen_baseline_modified: false
+raw_results_committed: false

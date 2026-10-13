@@ -1,0 +1,34 @@
+schema_version: 1
+artifact_id: 1223
+artifact_type: exact-reference-node-and-ancestor-based-type-membership-registration
+date: 2026-10-14
+tree: results/patchseq-reference-dendrogram-1221/manifest.yaml
+tree_sha256: e326a0582a201aa388bfca3aca98cdd2d9791a518c51aba11775cefd3792b1c3
+crosswalk: results/patchseq-reference-crosswalk-1218/manifest.yaml
+crosswalk_sha256: b63c2c2219b9c98cf50d1bafb5e92268fd8e5679828d1e9d2a17740f59dffeb3
+taxonomy_id: CCN201810310
+source_groups:
+  Glutamatergic: CS201810310_138
+  GABAergic: CS201810310_187
+  Lamp5: CS201810310_190
+  Sncg: CS201810310_197
+  Vip: CS201810310_201
+  Sst: CS201810310_218
+  Pvalb: CS201810310_230
+output_directory: results/patchseq-source-group-memberships-1224
+rules:
+  - Validate a connected acyclic rooted tree with unique node paths, accessions and parent references, literal taxonomy identity and Boolean leaf flags.
+  - Require each exact registered group accession to identify a nonleaf with its exact source preferred alias and taxonomy.
+  - Require each supported alignment to match exactly one source leaf accession and its exact preferred alias; keep unsupported alignments unresolved.
+  - Derive membership only by traversing registered child edges from a group node to the source leaf.
+  - Preserve all group memberships and distinguish transmitter-root membership from named inhibitory subgroup membership.
+  - Report uncovered or overlapping subgroup memberships without assigning a fallback or merging Sncg with Vip.
+  - The resulting label is a source-taxonomy group membership, not gene-expression validation, measured transcriptomic confidence or per-specimen physiological eligibility.
+  - Do not reinterpret the name-based crosswalk as historical identifier equality or overwrite prior failed identity gates.
+external_requests_authorized: false
+new_source_member_reads_authorized: false
+physiological_array_reads_authorized: false
+specimen_qualification_authorized: false
+parameter_fitting_authorized: false
+next_gate: Independently reconstruct source-leaf memberships, then register specimen annotation and qualified-cohort criteria while retaining all confidence, anatomy, source coverage and internal recording identity limitations.
+frozen_baseline_modified: false

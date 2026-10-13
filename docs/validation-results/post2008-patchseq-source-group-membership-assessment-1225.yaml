@@ -1,0 +1,82 @@
+schema_version: 1
+artifact_id: 1225
+artifact_type: independently-reconstructed-source-ancestor-membership-assessment
+date: 2026-10-14
+registration: docs/validation-results/post2008-patchseq-source-group-membership-registration-1223.yaml
+registration_sha256: 9d1e2fba67df4d7bb2861614afc6efa67e4d7f89bf8b12414708f979f4c15eed
+sealed_commit: 505b50a
+collector: scripts/trace_patchseq_group_memberships.py
+collector_sha256: e75edb5b3a6ea0367f8389a94b4c20bbac163f6e6da459b949811ecf8c0221fa
+result: results/patchseq-source-group-memberships-1224/manifest.yaml
+result_sha256: 94afd5110e80b39c8b1ab1f5aba8d4a4ecb94ddf23d38d6c9ffd3c11cedd5035
+status: original-reference-descendant-memberships-independently-reconstructed
+independent_check:
+  method: >-
+    Re-read the original pinned JSON tree from the reference archive, not the
+    projected child/parent arrays. Traverse forward from each exact source group
+    node to collect descendant leaf IDs, independently matching leaf identity,
+    source alias and taxonomy against the explicit name crosswalk. Reconstruct
+    every membership record, exact group path and all summary counts with
+    type-preserving JSON equality. No collector import, marker matching or
+    source waveform interpretation.
+  terminal_exit_code: 0
+  outcome: passed
+results:
+  legacy_pairs_including_empty: 63
+  source_leaf_identity_agreements: 62
+  source_group_type_counts:
+    Glutamatergic: 1
+    GABAergic: 60
+    Lamp5: 7
+    Sncg: 4
+    Vip: 16
+    Sst: 20
+    Pvalb: 10
+  exclusive_named_inhibitory_subgroup_type_counts:
+    Lamp5: 7
+    Pvalb: 10
+    Sncg: 4
+    Sst: 20
+    Vip: 16
+  GABAergic_types_outside_named_subgroups:
+    - Serpinf1 Clrn1
+    - Serpinf1 Aqp5 Vip
+    - Sst Chodl
+  aligned_types_outside_both_registered_transmitter_roots:
+    - Meis2 Adamts19
+  overlapping_named_subgroup_memberships: 0
+engineering_checks:
+  focused_tests_passed: 15
+  focused_tests_seconds: 0.04
+  repository_ruff: passed
+  git_diff_whitespace_check: passed
+  complete_Patchseq_metadata_suite:
+    command: .venv/bin/pytest -q tests/test_patchseq*.py
+    source_code_revision: 505b50a
+    passed: 383
+    seconds: 13.25
+    scope: Metadata and provenance software checks, not isolated-cell or network validation.
+claim_boundary: >-
+  These are exact memberships in registered named nodes of a particular source
+  reference tree, not an exhaustive biological neurotransmitter or marker-class
+  classification. The three uncovered GABAergic types and Meis2 Adamts19 remain
+  explicit; do not conclude they lack their molecular identities because a
+  selected tree node excludes them. In particular, do not force Sst Chodl into
+  the registered Sst subtree or Serpinf1 Aqp5 Vip into Vip from name substrings.
+  This gate supports source-core group annotation only, not per-specimen
+  transcriptomic confidence, measured anatomy, independent training provenance,
+  recording identity or physiological eligibility. The empty pair remains
+  unresolved. Old direct-ID and donor-namespace failures are unchanged.
+next_gate: >-
+  Register specimen-level source-core group annotation with every uncovered
+  type, confidence unknown, exact anatomical label and source coverage retained.
+  Close the separately registered 2021 manifest and internal recording identity
+  gates before choosing independent fitting/validation cells. Any broader biological
+  interpretation of the uncovered types requires separately documented source
+  evidence and a new protocol, not a retrospective change to this result.
+network_requests: 0
+physiological_arrays_read: false
+parameter_fitting_performed: false
+specimen_qualification_established: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

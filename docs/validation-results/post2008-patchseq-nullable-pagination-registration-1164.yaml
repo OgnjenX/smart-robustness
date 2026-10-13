@@ -1,0 +1,56 @@
+schema_version: 1
+artifact_id: 1164
+artifact_type: explicitly-unreported-page-count-catalog-continuation
+date: 2026-10-14
+parent_stop: docs/validation-results/post2008-patchseq-pagination-schema-stop-1163.yaml
+parent_stop_sha256: 7b7da715d2d5cfc5f27d3b24e85c7c63c08d2102a5b8abef6280818fd4a0148e
+parent_manifest: results/patchseq-catalog-continuation-1160/manifest.yaml
+parent_manifest_sha256: d1a255ee110189d5f60eeeb8159aa82d7747f2c1530cd4bcabbebefff08b80b3
+saved_version_response: results/patchseq-asset-metadata-1156/version.json
+saved_version_response_sha256: bf637119b3e254e70ca2847cf138d04a001e8c9fa5d8c27edcbf2cd7da8b884f
+saved_pages:
+  - page: 1
+    path: results/patchseq-catalog-continuation-1160/assets-01.json
+    sha256: 2f4266712c1b665fe7cd51353d4ec24de94386da08bdf33e36073dec99bd9735
+  - page: 2
+    path: results/patchseq-catalog-continuation-1160/assets-02.json
+    sha256: 04e3f47b83c6a30fc09e3f329e8c5383712beb845a1685d5887b9e38daa5c75b
+previous_specimen_inventory: results/sst-vip-cell-source-inventory-1028.yaml
+previous_specimen_inventory_sha256: f6d4ef1e801b9dfc101b7e037b2f63f0d27ee2168b86ffd734976b5c9dd812ad
+catalog_helper: scripts/inventory_patchseq_assets.py
+catalog_helper_sha256: 5e6e3f27280b91f0c1294b973e51a09aaba620f57552aced0048af6c59263dd9
+version_mapper: scripts/continue_patchseq_catalog.py
+version_mapper_sha256: 8c613bb010e23a7071d4ca0b7643f4b6b4275aa7395e4cf1799e0ee905279fd5
+dandiset: '000020'
+version: 0.210913.1639
+expected_assets: 4435
+page_size: 500
+new_page_numbers: [3, 4, 5, 6, 7, 8, 9]
+maximum_requests: 7
+maximum_response_bytes: 2097152
+maximum_aggregate_response_bytes: 14680064
+maximum_seconds_per_request: 60
+maximum_total_seconds: 1200
+certificate_authority_bundle: /etc/ssl/cert.pem
+certificate_authority_sha256: 9dae8d76e55cb08991f2b672d58999ea15560d910759c16b544f843bdffbb994
+output_directory: results/patchseq-nullable-page-catalog-1165
+metadata_acquisition_authorized: true
+saved_metadata_mapping_reads_authorized: true
+asset_binary_download_authorized: false
+experimental_array_reads_authorized: false
+parameter_fitting_authorized: false
+cell_or_network_execution_authorized: false
+count_contract:
+  first_page: explicit-integer-4435-required-and-equal-to-published-version-numberOfFiles
+  later_page_reported_count: if-present-and-nonnull-must-be-exact-integer-4435
+  later_page_absent_or_null_count: retain-as-unreported-not-as-an-observed-4435
+  proof_of_completeness: exact-nine-page-extents-all-4435-unique-IDs-and-paths-valid-pagination-and-exact-declared-byte-sum
+  scientific_sample_gates_or_partitions_changed: false
+transport_contract:
+  - Reuse and hash-check the original version and first two raw pages without modifying or fetching them again.
+  - Fetch only fixed published-version metadata pages three through nine, sequentially, without retry or redirect.
+  - Preserve every raw response and source-count missingness in a separate exclusive output directory.
+  - Bound each new raw body plus one failure-detection byte and stop on any transfer, scope or completeness failure.
+  - Do not follow server-provided download links or infer classes, layer, specimen or animal identity from paths.
+next_gate: independent-complete-catalog-reconstruction-before-annotation-or-recording-acquisition
+frozen_baseline_modified: false

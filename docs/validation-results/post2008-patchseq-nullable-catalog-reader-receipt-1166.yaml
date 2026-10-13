@@ -1,0 +1,42 @@
+schema_version: 1
+artifact_id: 1166
+artifact_type: explicit-page-count-missingness-engineering-verification
+date: 2026-10-14
+status: tested-metadata-completeness-contract-real-continuation-not-yet-executed
+registration:
+  path: docs/validation-results/post2008-patchseq-nullable-pagination-registration-1164.yaml
+  sha256: ad6858cc534f80a0c3308ed8c2ca5c08fb006d9e4a2d628fdcda7499893b4f78
+implementation:
+  path: scripts/complete_patchseq_catalog.py
+  sha256: 9f0882fc82ef91bfc30f7d998b3910379cf8903e3ab1fd5dc466541b918f4748
+tests:
+  path: tests/test_patchseq_nullable_catalog.py
+  sha256: 9327eb83091eb43f6267a30e25b673bd97c1722389c3f9f36f548f01ceca2476
+  new_tests_passed: 23
+  new_test_duration_seconds: 3.00
+  exit_code: 0
+  repository_ruff: passed
+  diff_whitespace: passed
+  cases:
+    - Null and absent subsequent-page counts remain explicitly unreported and raw documents unchanged.
+    - First page still requires exact integer 4435 and later reported conflicting counts reject.
+    - Missing counts cannot bypass complete page extents, fixed links or UUID validation.
+    - Seven fixed requests and unexpanded acquisition permissions are enforced.
+    - Synthetic complete catalog reuses version and two saved pages without requests or modifications.
+    - Duplicate invocation and duplicate catalog IDs reject without promotion.
+    - Changed saved evidence and count conflicts retain failure evidence without retry.
+completeness_contract:
+  original_scientific_selection_or_partition_changed: false
+  global_asset_count_required: 4435
+  unique_IDs_and_paths_required: true
+  declared_bytes_equal_complete_asset_size_sum_required: true
+  unreported_page_counts_as_observed_values: false
+  cell_identity_or_class_or_layer_established: false
+  final_independent_reconstruction_required: true
+original_stops_and_raw_metadata_modified: false
+raw_recordings_downloaded: false
+physiological_arrays_read: false
+parameter_fitting_performed: false
+cell_or_network_execution_performed: false
+frozen_baseline_modified: false
+raw_results_committed: false

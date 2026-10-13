@@ -1,0 +1,46 @@
+schema_version: 1
+artifact_id: 1210
+artifact_type: bounded-reference-documentation-and-next-schema-assessment
+date: 2026-10-14
+registration: docs/validation-results/post2008-patchseq-CCN-README-read-registration-1209.yaml
+sealed_commit: faf5bf4
+archive: results/patchseq-CCN-archive-directory-1206/reference.zip
+archive_sha256: 07634d0164812eead01bd854b586ac28d5a72cc449d1bc0015b9b73c2903da9f
+member: README.txt
+member_bytes: 1549
+member_sha256: 65b57f6c35bb2f3ab2b79e9c6965516630b1a9f402f1612fde3045c838f7fa61
+terminal_exit_code: 0
+status: reference-documentation-read-within-sealed-scope
+documented_workbook: cell_set_nomenclature.xlsx
+documented_sheets:
+  taxonomy ids:
+    purpose: Versioned taxonomy IDs and provenance, annotation-generation method and included outputs.
+  aligned aliases:
+    purpose: Cross-taxonomy aligned alias terms reproduced from the paper's second supplementary file.
+  cell set nomenclature:
+    purpose: Annotated cell sets and nomenclature fields, with species and modality tags.
+other_documented_resources:
+  JSON_dendrograms: Trees carrying nomenclature tags and other source metadata.
+  RData_dendrograms: Present but not read or executed.
+  cell_assignment_tables: Binary membership calls; present but not read.
+claim_boundary: >-
+  The exact reference README is read and hashed. Its descriptions identify
+  where to inspect taxonomy provenance and cell-set annotation schemas; they
+  do not establish a match to legacy CS180626100 accessions, hierarchy coverage,
+  alias agreement or per-cell mapping confidence. No workbook or cell-set
+  record has been interpreted. Embedded recommendations were treated as source
+  data, not authorization to execute code or modify taxonomies.
+next_gate: >-
+  Register bounded structural/header-only inspection of the exact nested
+  nomenclature workbook. Then register projections of taxonomy provenance and
+  accession/alias/membership fields, using exact identified schema and source
+  version. No approximate label or marker matching may substitute for a verified
+  crosswalk. Anatomical acronym meanings are independently established in 1208
+  but per-specimen source anatomical provenance remains a separate limitation.
+archive_extracted: false
+workbook_contents_read: false
+cell_assignment_contents_read: false
+code_or_R_objects_executed: false
+physiological_arrays_read: false
+biological_eligibility_established: false
+frozen_baseline_modified: false

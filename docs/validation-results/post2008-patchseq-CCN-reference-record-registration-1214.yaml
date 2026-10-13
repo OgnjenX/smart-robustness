@@ -1,0 +1,47 @@
+schema_version: 1
+artifact_id: 1214
+artifact_type: typed-historical-taxonomy-provenance-and-exact-accession-lookup-registration
+date: 2026-10-14
+workbook: results/patchseq-CCN-workbook-schema-1212/reference.xlsx
+workbook_sha256: 1a2f8f47bb4fb44eb3dc97db9a6b97c0fb96c1c59bac40afed09bdd6c81a2722
+schema: results/patchseq-CCN-workbook-schema-1212/manifest.yaml
+schema_sha256: ff007019d2abccbf60fc087a8dacef4b9be92dc25c608079dca9bb79f0c119fb
+July_comparison: results/patchseq-July-June-comparison-1198/manifest.yaml
+July_comparison_sha256: 4c31f9b2cf447b0c82388795417402563c979291b4a223c3fb6e2d109302bcb3
+header_reader: scripts/acquire_patchseq_workbook_schema.py
+header_reader_sha256: 4928e28d4ebf0d8e913454d3b70f8ee3d9bd975e6cfbac2a221213c5d793c12e
+output_directory: results/patchseq-CCN-reference-records-1215
+sheets:
+  taxonomy ids: [Taxonomy id, Description, Reference, Generated, 'Dend?', 'Cell matrix?']
+  cell set nomenclature:
+    - cell_set_preferred_alias
+    - 'cell_set_ label'
+    - 'cell_set_ accession'
+    - 'cell_set_ aligned_alias'
+    - 'cell_set_  additional_alias'
+    - 'cell_set_ alias_assignee'
+    - 'cell_set_ alias_citation'
+    - 'cell_set_ structure'
+    - 'cell_set_ ontology_tag'
+    - taxonomy_id
+    - species
+    - modality
+maximum_explicit_rows_per_sheet: 5000
+maximum_shared_string_index: 10000
+maximum_field_characters: 4096
+rules:
+  - Read only the two registered sheets and their exact literal header fields; the aligned aliases sheet remains unopened.
+  - Preserve sheet names, row numbers, cell coordinates, storage type, raw value lexemes, missing cells and formula-presence flags.
+  - Decode only referenced shared strings and inline strings; do not convert numerical, Boolean or error values into text identifiers.
+  - Never evaluate formulas or use a cached formula result as a literal reference identifier.
+  - Preserve blank explicit rows and report gaps in row numbering; do not treat declared worksheet dimensions as valid record counts.
+  - Match unique nonempty July accession/label pairs to every cell-set row with an exactly equal literal accession; retain all candidates.
+  - Separately retain all exact preferred-alias candidates as descriptive evidence only, not a substitute accession crosswalk.
+  - Report per-candidate exact preferred-alias agreement but do not apply class, subtype, confidence or hierarchy membership.
+  - Do not normalize embedded header spaces, strip source labels, execute R objects or follow links.
+external_requests_authorized: false
+physiological_array_reads_authorized: false
+class_or_layer_qualification_authorized: false
+parameter_fitting_authorized: false
+next_gate: Independently reconstruct typed source records and lookup results; then verify taxonomy provenance and an explicit source membership rule before class qualification.
+frozen_baseline_modified: false

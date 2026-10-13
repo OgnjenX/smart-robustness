@@ -1,0 +1,40 @@
+schema_version: 1
+artifact_id: 1161
+artifact_type: saved-version-catalog-continuation-synthetic-verification
+date: 2026-10-13
+status: bounded-metadata-continuation-tested-acquisition-not-yet-executed
+registration:
+  path: docs/validation-results/post2008-patchseq-catalog-continuation-registration-1159.yaml
+  sha256: 28e93a3b34d251a118c042cd74d399ebf0a866824811ef2f2a3858bd10fc7d56
+implementation:
+  path: scripts/continue_patchseq_catalog.py
+  sha256: 8c613bb010e23a7071d4ca0b7643f4b6b4275aa7395e4cf1799e0ee905279fd5
+tests:
+  path: tests/test_patchseq_catalog_continuation.py
+  sha256: 78e1cb146520bf6d344f587fd400125808d23f98839b917efe136f93ba506575
+  continuation_tests_passed: 21
+  combined_catalog_tests_passed: 60
+  command: .venv/bin/python -m pytest -q tests/test_patchseq_catalog_continuation.py tests/test_patchseq_asset_inventory.py
+  duration_seconds: 3.47
+  exit_code: 0
+  repository_ruff: passed
+  cases:
+    - Explicit identifier, published version and nested assetsSummary mapping.
+    - Typed bounded file, byte and archive-subject counts with no cell-count inference.
+    - Wrong identity, container, scopes and counts rejected before requests.
+    - Saved version bytes reused without requesting the version endpoint again.
+    - Exactly nine synthetic asset-list requests produce a complete unique catalog.
+    - Original saved response preserved and duplicate output directory denied.
+    - Failed page retains raw evidence and stops without retry or baseline-data reads.
+boundaries:
+  - The old collector, registration, raw response and engineering stop remain unchanged.
+  - This is metadata acquisition, not confirmation of cell identity, class, layer or independence.
+  - Aggregate archive subjects and numeric path subject hints are not automatically individual cell identifiers.
+  - New collector and tests were introduced after active regression session 83578 collected its source.
+  - Independent catalog reconstruction and official annotation joins remain required before recordings or fitting.
+raw_recordings_downloaded: false
+physiological_arrays_read: false
+parameter_fitting_performed: false
+cell_or_network_execution_performed: false
+frozen_baseline_modified: false
+raw_results_committed: false

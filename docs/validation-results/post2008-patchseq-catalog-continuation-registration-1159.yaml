@@ -1,0 +1,54 @@
+schema_version: 1
+artifact_id: 1159
+artifact_type: saved-version-metadata-mapping-and-bounded-asset-catalog-continuation
+date: 2026-10-13
+parent_stop: docs/validation-results/post2008-patchseq-metadata-schema-stop-1158.yaml
+parent_stop_sha256: a8f83430c626879a2e783c1d220f337847506790e069927aee0ce21890525cb0
+parent_manifest: results/patchseq-asset-metadata-1156/manifest.yaml
+parent_manifest_sha256: a98bee0008d7f7de88fbfbd16c7363667a2189df9f739de866bf5eac61271da3
+saved_version_response: results/patchseq-asset-metadata-1156/version.json
+saved_version_response_sha256: bf637119b3e254e70ca2847cf138d04a001e8c9fa5d8c27edcbf2cd7da8b884f
+saved_version_response_bytes: 3192
+previous_specimen_inventory: results/sst-vip-cell-source-inventory-1028.yaml
+previous_specimen_inventory_sha256: f6d4ef1e801b9dfc101b7e037b2f63f0d27ee2168b86ffd734976b5c9dd812ad
+catalog_helper: scripts/inventory_patchseq_assets.py
+catalog_helper_sha256: 5e6e3f27280b91f0c1294b973e51a09aaba620f57552aced0048af6c59263dd9
+dandiset: '000020'
+version: 0.210913.1639
+metadata_mapping:
+  identifier: DANDI:000020
+  version: 0.210913.1639
+  file_count: assetsSummary.numberOfFiles
+  total_asset_bytes: assetsSummary.numberOfBytes
+  archive_subject_count: assetsSummary.numberOfSubjects
+  subject_count_is_specimen_count: false
+expected_assets: 4435
+maximum_declared_asset_bytes: 200000000000
+page_size: 500
+maximum_asset_pages: 9
+maximum_requests: 9
+maximum_response_bytes: 2097152
+maximum_aggregate_response_bytes: 18874368
+maximum_seconds_per_request: 60
+maximum_total_seconds: 1200
+certificate_authority_bundle: /etc/ssl/cert.pem
+certificate_authority_sha256: 9dae8d76e55cb08991f2b672d58999ea15560d910759c16b544f843bdffbb994
+output_directory: results/patchseq-catalog-continuation-1160
+metadata_acquisition_authorized: true
+saved_version_mapping_reads_authorized: true
+asset_binary_download_authorized: false
+experimental_array_reads_authorized: false
+parameter_fitting_authorized: false
+cell_or_network_execution_authorized: false
+continuation_contract:
+  - Verify and map only the pinned saved version response; no additional version request.
+  - Require exact identifier, published version and file count before asset requests.
+  - Treat aggregate archive subject count as metadata, never as confirmed cell or animal identity.
+  - Use the previously tested fixed-scope pagination, metadata projection and overlap-hint helpers.
+  - Nine sequential asset-list GETs at most, metadata=false and unchanged fixed path ordering.
+  - Bound raw bodies plus one failure-detection byte, preserve every attempted response and stop without retry on failure.
+  - Exclusive separate output; never overwrite, repair or rerun original stop 1156.
+  - Require complete unique catalog and equality of declared bytes with projected asset-size sum.
+  - Confirm no specimen, class, layer, source independence or biological eligibility from catalog alone.
+next_gate: independently-verify-original-version-mapping-and-complete-catalog-before-annotation-or-recording-acquisition
+frozen_baseline_modified: false

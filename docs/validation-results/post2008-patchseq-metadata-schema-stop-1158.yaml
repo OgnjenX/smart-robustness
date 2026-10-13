@@ -1,0 +1,43 @@
+schema_version: 1
+artifact_id: 1158
+artifact_type: retained-metadata-response-schema-engineering-stop
+date: 2026-10-13
+status: version-response-retained-asset-requests-not-started
+registration: docs/validation-results/post2008-patchseq-asset-metadata-registration-1155.yaml
+result:
+  path: results/patchseq-asset-metadata-1156/manifest.yaml
+  sha256: a98bee0008d7f7de88fbfbd16c7363667a2189df9f739de866bf5eac61271da3
+version_response:
+  path: results/patchseq-asset-metadata-1156/version.json
+  sha256: bf637119b3e254e70ca2847cf138d04a001e8c9fa5d8c27edcbf2cd7da8b884f
+  bytes: 3192
+  requests: 1
+  client_exit_code: 0
+  version_field_matches: true
+engineering_cause:
+  expectation: top-level-asset_count-and-size
+  observed_structure: published-version-metadata-with-assetsSummary
+  nested_summary_field_names: [numberOfFiles, numberOfBytes, numberOfSubjects]
+  structural_fields_only_inspected_after_stop: true
+  source_version_or_asset_count_failure_established: false
+  cause: collector-response-shape-assumption-not-a-biological-or-source-data-failure
+official_API_reference: https://dandi.readme.io/reference/dandisets_versions_read
+independent_checks:
+  raw_version_and_manifest_SHA256: independently-recomputed
+  registration_and_collector_hashes_match_committed_source: true
+  terminal_collector_exit_code: 1
+  asset_pages_requested: 0
+  partial_output_overwritten_or_rerun: false
+next_gate: >-
+  Preserve this stop, the original collector, registration and raw response.
+  Register a distinct parser of the saved version metadata's identifier,
+  version and assetsSummary fields; pin parent hashes and retain fixed
+  published version and 4435-asset expectation. Only then authorize at most
+  nine asset-list requests in a separate output directory. Reuse the saved
+  version response rather than redownload it. Never infer specimen identity,
+  cell class, layer or physiological quality from aggregate archive metadata.
+new_recordings_downloaded: false
+experimental_arrays_read: false
+parameter_fitting_performed: false
+frozen_baseline_modified: false
+raw_results_committed: false

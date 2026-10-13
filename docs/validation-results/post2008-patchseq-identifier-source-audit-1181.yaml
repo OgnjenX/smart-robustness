@@ -1,0 +1,56 @@
+schema_version: 1
+artifact_id: 1181
+artifact_type: primary-source-identifier-cross-reference-route-audit
+date: 2026-10-14
+official_repository: AllenInstitute/ipfx
+revision: c607a36e25618a6bb8ba5438c1cd945fb429e659
+sources:
+  - url: https://github.com/AllenInstitute/ipfx/blob/c607a36e25618a6bb8ba5438c1cd945fb429e659/docs/download_data.rst
+    finding: >-
+      Official instructions define archive_uri as the file location and
+      cell_specimen_id as the corresponding cell, with intracellular_electrophysiology
+      identified by the technique column. Metadata selection is then joined to
+      the file manifest. The prose calls the metadata key specimen_id, so the
+      actual header must remain authoritative rather than silently renamed.
+  - url: https://github.com/AllenInstitute/ipfx/blob/c607a36e25618a6bb8ba5438c1cd945fb429e659/ipfx/data_access.py
+    finding: >-
+      ARCHIVE_INFO pairs mouse DANDI 000020 with
+      2020-06-26_mouse_file_manifest.csv and 20200625_patchseq_metadata_mouse.csv.
+  - url: https://github.com/AllenInstitute/ipfx/issues/547
+    finding: >-
+      The 2022 issue documents distinct DANDI ephys-session and cell-specimen
+      identifiers. It does not define the numerical subject-to-donor mapping.
+  - url: https://dandi.readthedocs.io/en/latest/cmdline/organize.html
+    finding: >-
+      DANDI organization derives sub from NWB subject_id and ses from session_id.
+      This general naming rule does not establish that subject_id is the donor_id
+      column used in the separate Allen annotations.
+  - url: https://github.com/AllenInstitute/ipfx/blob/c607a36e25618a6bb8ba5438c1cd945fb429e659/ipfx/attach_metadata/sink/nwb2_sink.py
+    finding: >-
+      Metadata attachment writes supplied subject_id and session_id into NWB.
+      The sink alone does not identify the upstream source of subject_id.
+official_file_objects:
+  annotation:
+    path: ipfx/data_release/20200625_patchseq_metadata_mouse.csv
+    bytes: 1064422
+    git_blob_sha1: d61d5185517f25c79ef358b269c3469692244535
+    saved_CSV_git_blob_sha1: d61d5185517f25c79ef358b269c3469692244535
+    saved_CSV_sha256: 91bd957205880ee7d0f6823b46ddde27a2a499bedf19f978af70164994bbde10
+    exact_object_match: true
+  file_manifest:
+    path: ipfx/data_release/2020-06-26_mouse_file_manifest.csv
+    bytes: 5783047
+    git_blob_sha1: 91c19126fce62de427707fb70829d9eb84cfd743
+    row_values_read: false
+conclusion: >-
+  A primary-source archive-file-to-cell cross-reference exists, paired with the
+  same June annotation object already acquired. This enables a separately
+  registered cross-reference check; it does not justify changing the failed
+  donor equality condition or certify any recording's internal metadata.
+next_gate: >-
+  Bounded immutable manifest acquisition and header-only inspection, followed
+  by separately specified row projections and independent cross-reference
+  reconstruction. Preserve source revision and modality distinctions.
+donor_namespace_resolved: false
+biological_eligibility_established: false
+frozen_baseline_modified: false

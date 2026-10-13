@@ -1,0 +1,26 @@
+schema_version: 1
+artifact_id: 1182
+artifact_type: bounded-official-file-manifest-header-acquisition-registration
+date: 2026-10-14
+source_audit: docs/validation-results/post2008-patchseq-identifier-source-audit-1181.yaml
+source_url: https://raw.githubusercontent.com/AllenInstitute/ipfx/c607a36e25618a6bb8ba5438c1cd945fb429e659/ipfx/data_release/2020-06-26_mouse_file_manifest.csv
+expected_bytes: 5783047
+expected_git_blob_sha1: 91c19126fce62de427707fb70829d9eb84cfd743
+maximum_header_bytes: 65536
+output_directory: results/patchseq-file-manifest-schema-1183
+maximum_requests: 1
+maximum_seconds: 120
+redirects_authorized: false
+retries_authorized: false
+annotation_row_values_interpreted: false
+allowed_interpretation: CSV header names only; save the immutable raw manifest without interpreting rows.
+recording_download_authorized: false
+physiological_array_reads_authorized: false
+cell_class_or_layer_qualification_authorized: false
+parameter_fitting_authorized: false
+cell_or_network_execution_authorized: false
+next_gate: >-
+  Independent object-size, Git-blob hash and header verification; then register
+  exact cross-reference row fields and matching rules from the observed schema
+  before interpreting rows. Do not repair the failed donor equality gate.
+frozen_baseline_modified: false

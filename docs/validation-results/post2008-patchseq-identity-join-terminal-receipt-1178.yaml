@@ -1,0 +1,58 @@
+schema_version: 1
+artifact_id: 1178
+artifact_type: terminal-identity-only-annotation-join-receipt-not-independent-assessment
+date: 2026-10-14
+status: unique-session-links-available-subject-donor-namespace-meaning-unresolved
+registration: docs/validation-results/post2008-patchseq-identity-join-registration-1175.yaml
+result:
+  path: results/patchseq-identity-annotations-1176/manifest.yaml
+  sha256: ed51183655f1ecca7a2fe0d6c1c3e00ae8657862a9d67e5ef585bb3942fbd8b0
+  implementation_commit: 4ce389b
+  collector_sha256: d339e934564cba34f2c4a3fb3ed46dc01ccf177eb8e81f868791129d55736cd2
+  exit_code: 0
+observations:
+  assets_retained: 4435
+  annotation_rows_retained: 4435
+  assets_with_exactly_one_session_annotation_candidate: 4435
+  assets_without_annotation_candidates: 0
+  multiple_annotation_candidates: 0
+  unreferenced_annotation_rows: 0
+  duplicate_specimen_IDs: 0
+  duplicate_annotation_session_IDs: 0
+  duplicate_catalog_session_tokens: 0
+  noncanonical_specimen_donor_or_session_IDs: 0
+  conditional_path_annotation_consistency_passes: 0
+  literal_path_subject_equals_annotation_donor_ID: 0
+  other_seven_identity_flags_passes_each: 4435
+  distinct_path_subject_tokens: 1040
+  distinct_annotation_donor_IDs: 1040
+  path_subject_groups_with_multiple_annotation_donors: 0
+  annotation_donors_with_multiple_path_subject_groups: 0
+  raw_specimen_ID_equalities_to_prior_2333_records: 0
+  raw_specimen_ID_equalities_to_prior_111_included_records: 0
+interpretation:
+  - Exact ephys-session linkage is available for every catalog asset, with all source rows retained.
+  - The original literal donor/path-subject equality condition remains failed, not relaxed or repaired.
+  - A bijection between two identifier sets does not establish their entity meaning or authorize replacing one with the other.
+  - The dataset is not declared corrupt solely because different identifier namespaces may represent related entities.
+  - Zero raw specimen-ID matches are metadata observations, not a completed recording-overlap or unseen-data claim.
+  - No genotype, transcriptomic alias, anatomical structure or depth was turned into a qualified class or measured layer.
+  - The June annotation source remains explicitly distinct from final-paper July annotations.
+verification_boundary:
+  result_SHA256_independently_recomputed: true
+  descriptive_flag_and_bijection_counts_recomputed_from_saved_result: true
+  independent_reconstruction_from_original_CSV_and_catalog: pending
+  physiological_arrays_read: false
+  parameter_fitting_performed: false
+next_gate: >-
+  Independently reconstruct whitelisted source rows, canonical IDs, every
+  session join, flag, missingness and duplicate count directly from the unchanged
+  archive and catalog. Then inspect primary conversion/source definitions for
+  the path subject and donor identifiers before defining any separately
+  registered namespace mapping. Do not select a convenient mapping or claim
+  qualified cells from statistical correspondence alone.
+source_rows_dropped: false
+scientific_partitions_or_sample_gates_changed: false
+cell_or_network_execution_performed: false
+frozen_baseline_modified: false
+raw_results_committed: false

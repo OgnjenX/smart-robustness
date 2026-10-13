@@ -1,0 +1,63 @@
+schema_version: 1
+artifact_id: 1184
+artifact_type: official-file-manifest-acquisition-and-independent-schema-assessment
+date: 2026-10-14
+registration: docs/validation-results/post2008-patchseq-file-manifest-acquisition-registration-1182.yaml
+registration_sha256: 5f7225a217ea88d61223512a08fe599989c5f9d8c541375af4b559c7a25433ed
+sealed_commit: 0e8c7ea
+collector: scripts/acquire_patchseq_file_manifest.py
+collector_sha256: 74ab2c9769c3691f6e411f33d564a74bb68832c7afc5e3a9b9183444a72cb338
+result: results/patchseq-file-manifest-schema-1183/manifest.yaml
+result_sha256: 4d97425d9148277dfaece1471dc3e1ef9695c60d86c3808f4bb46524d63d3efa
+raw_manifest: results/patchseq-file-manifest-schema-1183/file-manifest.csv
+raw_manifest_sha256: 823edc909ef07f577b863ba72a41458823bb1c87673515d83d4024340066620c
+raw_manifest_git_blob_sha1: 91c19126fce62de427707fb70829d9eb84cfd743
+bytes: 5783047
+http_status: 200
+client_exit_code: 0
+request_count: 1
+redirects_followed: 0
+header_bytes: 123
+header_sha256: 6d6740933ade02d46b96cf51ef63843f30602bbfd5aef253e94df8fd6845a33e
+columns:
+  - file_id
+  - file_name
+  - file_size
+  - sha256_checksum
+  - md5_checksum
+  - technique
+  - file_type
+  - archive
+  - archive_uri
+  - project
+  - cell_specimen_id
+independent_checks:
+  - git hash-object --no-filters reproduced the official revision's Git blob SHA-1.
+  - shasum -a 256 independently reproduced the collector's complete-object SHA-256.
+  - Separate ASCII header splitting reproduced all eleven fields and header hash without importing the collector or reading row values.
+  - HTTP response headers independently confirmed status 200 and exact content-length 5783047.
+  - Terminal receipt retained array-read and annotation-row-interpretation prohibitions.
+engineering_checks:
+  schema_tests_passed: 7
+  schema_tests_seconds: 0.04
+  repository_ruff: passed
+status: official-file-manifest-object-and-header-independently-verified
+claim_boundary: >-
+  This confirms the acquisition of the immutable official archive-to-cell
+  manifest paired with June annotations, not the correctness of individual
+  source rows or the identity of internal NWB recordings. Source row values
+  have not yet been interpreted. The donor namespace mismatch remains
+  unresolved and is not replaced with a fitted or empirically inferred map.
+next_gate: >-
+  Register bounded raw file-manifest row projections and exact cross-reference
+  rules before reading row values. Retain all modalities, duplicate references,
+  URI shapes, missing checksums and unresolved matches. Compare official
+  archive-to-cell references to the independently verified session-based
+  annotation joins without altering the old failed donor-equality condition.
+annotation_row_values_interpreted: false
+recordings_downloaded: false
+physiological_arrays_read: false
+parameter_fitting_performed: false
+cell_class_or_layer_qualification_performed: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

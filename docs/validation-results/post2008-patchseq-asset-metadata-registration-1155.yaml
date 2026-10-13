@@ -1,0 +1,53 @@
+schema_version: 1
+artifact_id: 1155
+artifact_type: bounded-published-Patchseq-version-and-asset-catalog-registration
+date: 2026-10-13
+parent_audit: docs/validation-results/post2008-inhibitory-alternative-primary-source-audit-1154.yaml
+parent_audit_sha256: 71a25804a69345b223f64208d374ad8dfd69658c0c5e4b002e1e9b0ff02898f2
+previous_specimen_inventory: results/sst-vip-cell-source-inventory-1028.yaml
+previous_specimen_inventory_sha256: f6d4ef1e801b9dfc101b7e037b2f63f0d27ee2168b86ffd734976b5c9dd812ad
+dandiset: '000020'
+version: 0.210913.1639
+version_url: https://api.dandiarchive.org/api/dandisets/000020/versions/0.210913.1639/
+asset_list_url: https://api.dandiarchive.org/api/dandisets/000020/versions/0.210913.1639/assets/
+expected_assets: 4435
+page_size: 500
+maximum_asset_pages: 9
+maximum_requests: 10
+maximum_response_bytes: 2097152
+maximum_aggregate_response_bytes: 20971520
+maximum_seconds_per_request: 60
+maximum_total_seconds: 1200
+certificate_authority_bundle: /etc/ssl/cert.pem
+certificate_authority_sha256: 9dae8d76e55cb08991f2b672d58999ea15560d910759c16b544f843bdffbb994
+output_directory: results/patchseq-asset-metadata-1156
+metadata_acquisition_authorized: true
+asset_binary_download_authorized: false
+experimental_array_reads_authorized: false
+parameter_fitting_authorized: false
+cell_or_network_execution_authorized: false
+transport:
+  - Exclusive output directory; one version GET and at most nine sequential asset-list GETs.
+  - Fixed published version; no draft, fallback version, retry, redirect or authenticated request.
+  - Asset query is metadata=false, order=path, page_size=500 and explicit sequential page number.
+  - Construct each request locally; validate but never follow server-provided pagination or download URLs.
+  - Verified TLS with pinned CA; bound and hash every raw response, preserving terminal failures.
+  - Require exact version and asset count, complete pages, unique asset IDs and paths, and unchanged global count.
+  - No per-asset details, contentUrl fetches, binary endpoints, NWB reads or specimen response features.
+interpreted_fields:
+  version_response: [version, asset_count, size, name]
+  asset_page: [count, next, previous, results]
+  asset_row: [asset_id, path, size]
+retention:
+  - Archive complete bounded responses; unlisted fields remain uninterpreted source bytes.
+  - Retain all assets rather than selecting a model or cell by physiological outcome.
+  - A numeric sub-directory subject ID is a path hint, not confirmed specimen identity.
+  - Report potential matches to all 2333 prior specimen records and separately the 111 prior included records.
+  - Missing subject IDs and unknown Sst/Vip, layer or area labels remain unresolved, never inferred from paths or firing.
+next_gate: >-
+  Independently reconstruct version identity, complete catalog, raw hashes,
+  counts, pagination boundaries and potential overlap flags. Separately locate
+  and register official cell annotation joins and source identity reconciliation
+  before any physiological qualification, raw recording acquisition or fitting.
+  This catalog cannot resolve the separate paired-synaptic recruitment gate.
+frozen_baseline_modified: false

@@ -1,0 +1,68 @@
+schema_version: 1
+artifact_id: 1216
+artifact_type: independently-reconstructed-typed-reference-record-and-exact-lookup-assessment
+date: 2026-10-14
+registration: docs/validation-results/post2008-patchseq-CCN-reference-record-registration-1214.yaml
+registration_sha256: c649794fd689d78d3163fadd82d62563ae80f88d18f42e2469d6935cb0a0a19a
+sealed_commit: 922a6bd
+collector: scripts/read_patchseq_ccn_reference.py
+collector_sha256: 26c2d35626ab1e3104c83d1a0848ffe7791fe82b62ab45cd8da975a26a0b7e29
+result: results/patchseq-CCN-reference-records-1215/manifest.yaml
+result_sha256: 8a699fecedbb52c3b02412c302de24c0b01b983bed2dbfcae1b23a200f3d62e2
+status: typed-original-member-reference-records-and-exact-lookups-independently-reconstructed
+independent_check:
+  method: >-
+    Read the exact nested workbook from the original pinned archive, not the
+    saved projected records. Independently parse the two registered worksheets
+    with whole-sheet XML DOM traversal, preserving coordinates, storage types,
+    raw lexemes, formula flags, missing cells and row-number gaps. Decode only
+    referenced strings, then compare every typed record and every exact accession
+    and alias candidate list with type-preserving JSON equality. No collector
+    import, workbook edits, formula evaluation, third-sheet row interpretation
+    or external requests.
+  terminal_exit_code: 0
+  outcome: passed
+results:
+  explicit_taxonomy_provenance_rows_including_blanks: 39
+  explicit_cell_set_rows_including_blanks: 1531
+  raw_July_accession_label_pairs_including_empty: 63
+  nonempty_July_accessions: 62
+  exact_legacy_accession_matches: 0
+  nonempty_labels_with_exact_preferred_alias_candidates: 62
+  labels_with_multiple_exact_alias_candidates: 5
+source_provenance_observed:
+  taxonomy_id: CCN201810310
+  description: Mouse VISp + ALM (from the Allen Institute website and Tasic et al 2018)
+  reference: (Tasic et al., 2018)
+  generated: GitHub
+  dendrogram_available: Yes
+  cell_matrix_available: Yes
+engineering_checks:
+  focused_tests_passed: 18
+  focused_tests_seconds: 0.05
+  repository_ruff: passed
+  git_diff_whitespace_check: passed
+claim_boundary: >-
+  The source-record and lookup reconstruction is verified, including failure
+  of direct legacy accession equality. The 62 exact label matches are not an
+  accession crosswalk and cannot choose among the five ambiguities across
+  taxonomies. Repeated aliases from unrelated regions, modalities, species or
+  reference versions must not be silently merged. Counts of explicit XML rows
+  include blanks and are not counts of valid taxonomies or biological cell types.
+  The provenance row identifies a relevant source reference, but does not by
+  itself prove hierarchy membership or per-cell mapping confidence.
+next_gate: >-
+  Separately register a provenance-constrained legacy-to-CCN crosswalk using the
+  original Patch-seq paper's Tasic 2018 reference and the exact CCN201810310 table
+  and dendrogram, retaining every unresolved accession, contradictory label or
+  candidate. Do not alter the failed direct-ID result. Require a unique exact
+  preferred-alias candidate within the justified reference and source-supported
+  group membership before assigning broad class. Keep confidence and measured
+  anatomy provenance limits distinct. The 2021 file-manifest coverage gate remains
+  unexecuted and must be closed before recording selection.
+workbook_modified: false
+formulas_evaluated: false
+physiological_arrays_read: false
+biological_eligibility_established: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

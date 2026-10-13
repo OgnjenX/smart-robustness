@@ -1,0 +1,41 @@
+schema_version: 1
+artifact_id: 1177
+artifact_type: whitelisted-identity-join-synthetic-verification
+date: 2026-10-14
+status: identity-join-tested-source-row-execution-not-yet-performed
+registration:
+  path: docs/validation-results/post2008-patchseq-identity-join-registration-1175.yaml
+  sha256: 4eed2c338f08dedc397b9536c923b2b20ac428bc89bafa962779651290479caf
+implementation:
+  path: scripts/join_patchseq_identity.py
+  sha256: d339e934564cba34f2c4a3fb3ed46dc01ccf177eb8e81f868791129d55736cd2
+tests:
+  path: tests/test_patchseq_identity_join.py
+  sha256: e10d66ea26d6f09303eca1104a0161e92c9a00c316506c86e4aa1902ac02b43b
+  identity_join_tests_passed: 22
+  command: .venv/bin/python -m pytest -q tests/test_patchseq_identity_join.py
+  duration_seconds: 0.11
+  exit_code: 0
+  repository_ruff: passed
+  diff_whitespace: passed
+  cases:
+    - Consistent metadata preserves raw prior-ID matches without asserting confirmed recording identity or eligibility.
+    - Noncanonical, null, float-formatted and non-ASCII IDs remain unresolved rather than coerced.
+    - Multiple annotation candidates and repeated cell or session references remain retained conflicts.
+    - Donor conflicts, missing cells, unmatched sessions and inconsistent path subject tokens are not promoted.
+    - Unreferenced source rows remain in the denominator.
+    - Extra fields and duplicated source-row numbers reject the projection.
+    - Only whitelisted fields are emitted; irrelevant medical and response-feature fields are discarded without interpretation.
+interpretation_boundary:
+  structural_path_annotation_consistency_is_biological_qualification: false
+  RNA_or_genotype_class_assigned: false
+  measured_layer_assigned: false
+  internal_NWB_identity_verified: false
+  exact_registration_SHA256_guard: enabled
+  source_and_prior_records_hash_guards: enabled
+  any_new_network_request_authorized: false
+physiological_arrays_read: false
+parameter_fitting_performed: false
+cell_or_network_execution_performed: false
+frozen_baseline_modified: false
+raw_results_committed: false

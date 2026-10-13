@@ -1,0 +1,46 @@
+schema_version: 1
+artifact_id: 1175
+artifact_type: bounded-official-June-identity-and-raw-annotation-join-registration
+date: 2026-10-14
+schema_assessment: docs/validation-results/post2008-patchseq-annotation-schema-independent-assessment-1174.yaml
+schema_assessment_sha256: b516659eb17f7f883d5cac311b8c6e9eda6d3c6c106b6c5eb41518b5eada6178
+annotation_archive: results/patchseq-annotation-archive-schema-1171/annotations.csv.tar
+annotation_archive_sha256: 6854981d0cdf24f837b8d2b8adf0243aaa53871f4f1cc19f89f56d7430d15c0a
+schema_verification: results/patchseq-annotation-schema-independent-1173/manifest.yaml
+schema_verification_sha256: 1f2348be5fd030251cb8c73248f090149298eca47b084c74e55d85be235d3791
+catalog_verification: results/patchseq-catalog-independent-1167/manifest.yaml
+catalog_verification_sha256: 8a53db830724723de66d3a51aaffa21d0c71e5d6e10e2a55f8862c74918bcf60
+previous_specimen_inventory: results/sst-vip-cell-source-inventory-1028.yaml
+previous_specimen_inventory_sha256: f6d4ef1e801b9dfc101b7e037b2f63f0d27ee2168b86ffd734976b5c9dd812ad
+allowed_fields: [project, cell_specimen_id, donor_id, ephys_session_id, transcriptomics_sample_id, structure, full_genotype, corresponding_AIT2.3.1_ID, corresponding_AIT2.3.1_alias]
+maximum_rows: 10000
+maximum_field_characters: 4096
+maximum_CSV_bytes: 2097152
+output_directory: results/patchseq-identity-annotations-1176
+whitelisted_annotation_row_reads_authorized: true
+external_requests_authorized: false
+recording_download_authorized: false
+physiological_array_reads_authorized: false
+cell_class_or_layer_qualification_authorized: false
+parameter_fitting_authorized: false
+cell_or_network_execution_authorized: false
+join_contract:
+  - Read only the independently verified CSV member and exact previously verified header.
+  - Project only whitelisted fields; discard irrelevant and sensitive source columns without interpretation.
+  - Preserve raw strings, source row numbers, empty and malformed IDs without repairing or normalizing them.
+  - Join only canonical positive ASCII decimal ephys-session IDs to the exact matching session token in the catalog path.
+  - Require repeated path subject tokens to agree and preserve unknown path shapes as unresolved.
+  - Retain all annotation candidates for each asset; never choose the first or most complete record.
+  - Require unique source row, canonical specimen and donor IDs, unique specimen and session references, and matching donor/path-subject tokens for a structural consistency flag.
+  - A structurally consistent path/annotation join is not confirmed internal NWB identity or biological eligibility.
+  - Report unmatched source rows, unmapped assets, duplicates and donor conflicts without outcome-based exclusion.
+  - Report raw canonical specimen-ID equality with all prior and previously included cells; do not infer overlap or independence solely from subject IDs.
+  - Genetic aliases and structure values remain raw annotations, with no derived molecular class or measured-layer assignment.
+  - Preserve the June revision and unresolved agreement with final July annotations.
+next_gate: >-
+  Independently reconstruct all projected rows, joins, missingness, conflicts,
+  counts and overlap references. Then establish source meanings and internal
+  recording identity before separately registering a qualified cohort. No
+  genotype, transcriptomic enrichment or depth proxy may substitute for
+  verified cell class, measured layer or physiological fidelity.
+frozen_baseline_modified: false

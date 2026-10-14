@@ -1,0 +1,77 @@
+schema_version: 1
+artifact_id: 1369
+artifact_type: independently-verified-protocol-specific-recording-quality
+date: 2026-10-14
+status: bounded-mandatory-measurement-gate-verified-not-fitting-eligibility
+original_registration: docs/validation-results/post2008-patchseq-recording-quality-registration-1364.yaml
+original_preexecution_commit: 7c070a5
+result: results/patchseq-recording-quality-1365/manifest.yaml
+result_sha256: 431dfe8c5a0378a525a04143bd3dc82bfafda93a5d8b810f07f1b432a5896b1c
+verification_contract: docs/validation-results/post2008-patchseq-quality-verification-registration-1367.yaml
+verification_preexecution_commit: 3aff2ee
+verifier: scripts/verify_patchseq_recording_quality.py
+verifier_sha256: f443fb7ef4786db07a070cf9b28d5dae6580edd07b77aa1122dd467c2464680c
+independent_result: results/patchseq-recording-quality-independent-1368/manifest.yaml
+independent_result_sha256: a49a7928668e86dba714ed4f006063d89aa3592d6c44ec73e9c869f52b1de427
+terminal_collector_and_verifier_exit_codes: [0, 0]
+verified:
+  fixed_files: 48
+  measured_trials: 160
+  bounded_mandatory_gate_passes: 45
+  bounded_mandatory_gate_failures: 0
+  bounded_mandatory_gate_unknowns: 3
+  missing_required_protocol_slots: [7, 38, 46]
+  all_source_arrays_pulse_indices_windows_peaks_measurements_selected_trials_and_gates: independently-reconstructed
+  charged_float64_decoded_bytes_per_execution: 120168000
+  per_slot_receipts: exact-match-to-global-result
+  source_and_recording_hashes: unchanged
+  blowout: unassessed-all-48-not-imputed
+method: >-
+  Separate bounded hard-link decoder and adjacent-sample pulse detection, fsum
+  window means and first-current-maximum peak selection. Reconstruct every trial
+  and largest-sweep-number selection, numeric results under the precommitted
+  arithmetic contract, and discrete scientific decisions exactly. Missing
+  required measurements remain unknown; numerical tolerance never changes gates.
+engineering_checks:
+  independent_equivalence_missingness_and_corruption_tests_passed: 20
+  aggregate_patchseq_tests_passed: 944
+  aggregate_patchseq_tests_seconds: 16.78
+  repository_ruff: passed
+descriptive_joint_coverage_not_new_eligibility_rules:
+  source_selection: results/patchseq-intrinsic-subset-1309/manifest.yaml
+  source_selection_sha256: dcf2bdf39e44c82190b63aa62de46df84314ffec47f76e01e85726cdbd9088d3
+  sweep_QC: results/patchseq-waveform-QC-1328/manifest.yaml
+  sweep_QC_sha256: 13e054b090b22b45196bb2571d63cee4577c4e169a2a3c788fb4efbef3683564
+  columns: [class, layer, partition, selected, mandatory_gate_pass, plus_any_sweep_QC_pass, plus_both_command_signs]
+  rows:
+    - [Pvalb, L23, fitting, 5, 5, 2, 1]
+    - [Pvalb, L23, held-out, 3, 2, 0, 0]
+    - [Pvalb, L5, fitting, 5, 5, 4, 2]
+    - [Pvalb, L5, held-out, 3, 3, 1, 0]
+    - [Sst, L23, fitting, 5, 5, 5, 3]
+    - [Sst, L23, held-out, 3, 3, 3, 2]
+    - [Sst, L5, fitting, 5, 5, 3, 2]
+    - [Sst, L5, held-out, 3, 3, 2, 1]
+    - [Vip, L23, fitting, 5, 5, 3, 3]
+    - [Vip, L23, held-out, 3, 2, 1, 0]
+    - [Vip, L5, fitting, 5, 5, 4, 4]
+    - [Vip, L5, held-out, 3, 2, 2, 1]
+  boundaries:
+    - Both command signs is descriptive, not a newly imposed or waived fitting gate.
+    - A positive command is not proof of suprathreshold firing; a passing sweep is not enough to establish fit-target diversity.
+    - These counts retain the original cells and partitions; independent group and required response-target coverage still need explicit assessment.
+limits:
+  - The mandatory gate follows published required-measurement limits with explicit optional-blowout handling; it is not complete cell health or recovery of original historical QC execution.
+  - This source-preparation result does not modify the closed neuron-family comparisons or earlier post-2008 module negatives.
+  - The independent synaptic-recruitment source ceiling cannot be rescued by these intrinsic recordings.
+  - No neuron model fit, phenotype pooling, replacement cell, network tuning or SMART promotion occurred.
+next_gate: >-
+  Define and seal intrinsic response targets and input conventions before
+  feature/fit outcomes, retaining all source failures and frozen partitions.
+  Independently audit target and group coverage before fits. If the fixed subset
+  cannot support the complete class/layer scope, explicitly assess that limitation
+  rather than shrinking the scientific program to SST-only or relaxing minimums.
+model_fitting_performed: false
+specimen_eligibility_established: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

@@ -1,0 +1,44 @@
+schema_version: 1
+artifact_id: 1415
+date: 2026-10-14
+status: primary-holding-control-and-unit-logic-audited-not-per-sweep-input-qualification
+primary_repository: AllenInstitute/MIES
+revisions: [061c3b5f56c2f43b9579aa0933af85fd1a360ab6, 33b63e3b]
+primary_source:
+  amplifier_path: Packages/MIES/MIES_AmplifierInteraction.ipf
+  amplifier_blob_SHA1: [75d74d36bda19ab9d0847b3631a29a40aaab38af, ed2ff18fd013b40120952261857f5377611d1f81]
+  amplifier_body_SHA256: [9f817b221cb82c4dc2de09d4323341398fb43d7b319503af5ebf594baedf7a43, e617e4a0f7cadfd5886a846ffe84afc364e1482cc20625ca8dbbee5a8b5f9fc1]
+  acquisition_path: Packages/MIES/MIES_DataAcquisition.ipf
+  acquisition_blob_SHA1: [2947724a63a76bb4f991185a533a35d2fb1ffd0c, 0371dc69b1fd282a94c57bf9329e2ba6d2de7b2a]
+  exporter_path: Packages/MIES/MIES_NeuroDataWithoutBorders.ipf
+  exporter_061_blob_SHA1: b08ff16fa80c20db01808a8505d72d0c676945fe
+  urls:
+    - https://github.com/AllenInstitute/MIES/blob/061c3b5f56c2f43b9579aa0933af85fd1a360ab6/Packages/MIES/MIES_AmplifierInteraction.ipf
+    - https://github.com/AllenInstitute/MIES/blob/33b63e3b/Packages/MIES/MIES_AmplifierInteraction.ipf
+    - https://github.com/AllenInstitute/MIES/blob/061c3b5f56c2f43b9579aa0933af85fd1a360ab6/Packages/MIES/MIES_DataAcquisition.ipf
+    - https://github.com/AllenInstitute/MIES/blob/061c3b5f56c2f43b9579aa0933af85fd1a360ab6/Packages/MIES/MIES_NeuroDataWithoutBorders.ipf
+verified_source_logic:
+  IClamp_holding_get_scale: 1000000000000
+  IClamp_holding_set_scale: 0.000000000001
+  controls: hardware-MultiClamp-holding-level-and-enable-calls
+  disabled_holding_query: source-branch-returns-zero-when-hardware-holding-is-disabled
+  exported_stimulus: DAC-channel-data-extracted-from-recorded-sweep-not-bias-property-added-in-exporter-branch
+  exported_bias_property: separate-enabled-native-I-Clamp-Holding-Level-metadata
+  separate_setting: amplifier-slow-current-injection-enable-level-and-settling-time
+  identical_function_text_across_both_revisions:
+    AI_GetMCCScale_sha256: d2759e291ce358f33e40d9a9522ccf226259d4c3a0e00d1163a4821136df1c8b
+    AI_UpdateAmpModel_sha256: f79099bc4522c761e773155d8098e37c539ef313af79ae6375e088028c729786
+    AI_SendToAmp_function_branch_sha256: [58edc659d0791e0b7c5b99911a49d58a3ea8b72689a41d04452faafc00406aad, f4043ee5cd6033553f9e2af6189a28fcba9495d5cf2481cf804ac496cca2fdb6]
+verification: GitHub-primary-blob-bodies-Git-SHA1-checked-before-function-text-comparison
+inference_not_yet_a_fitting_rule: >-
+  Hardware holding is a distinct command path from the stored DAC stimulus.
+  This supports investigating an additive enabled holding-current term for a
+  physical fitting-input convention, but does not authorize adding bias_current
+  to the existing analysis/QC traces. Per-sweep explicit mode/headstage and native
+  enabled values must be reconstructed first; missing metadata is not a zero.
+  Separately enabled slow-current injection and possible within-sweep changes
+  must not be silently modeled as a known constant current.
+existing_QC_and_analysis_convention: unchanged-as-recorded-exact-scaling-no-bias-addition-no-junction-correction
+models_fitted: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

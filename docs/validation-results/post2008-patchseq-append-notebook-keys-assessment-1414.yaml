@@ -1,0 +1,30 @@
+schema_version: 1
+artifact_id: 1414
+date: 2026-10-14
+status: all-96-append-key-unit-headers-independently-reconstructed
+result: results/patchseq-append-notebook-keys-1412/manifest.yaml
+result_sha256: 75695aec6e1854b0d3d9454bdfeaa2a9e56bd46e230bc1dc24bc69285584f0eb
+independent_result: results/patchseq-append-notebook-keys-independent-1413/manifest.yaml
+independent_result_sha256: ecb28060dca9605009efa8b58eac9759dfc71f91583d49b39ba6e2ae86abb2a3
+verified:
+  recordings: 48
+  key_tables: 96
+  header_read_errors: 0
+  decoded_header_text_bytes: 219478
+native_header_units_all_48_numeric_tables:
+  I-Clamp Holding Level: pA
+  I-Clamp Holding Enable: On/Off
+  Slow current injection: On/Off
+  Slow current injection level: V
+  Slow current injection settling time: s
+interpretation: >-
+  These are native source key/unit labels, not measurements of delivered total
+  current, cell parameters or enabled states. A volts-labelled slow-injection
+  level must not be treated as a holding-current value in pA. Trial numbers,
+  headstage mapping, explicit-mode blocks and enable flags still require bounded
+  extraction and independent reconstruction. All original header rejections and
+  continuations remain unchanged; no original source result was overwritten.
+notebook_trial_values_read: false
+models_fitted: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

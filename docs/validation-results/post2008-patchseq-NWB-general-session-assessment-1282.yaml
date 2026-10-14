@@ -1,0 +1,56 @@
+schema_version: 1
+artifact_id: 1282
+artifact_type: independently-verified-single-file-session-provenance
+date: 2026-10-14
+registration: docs/validation-results/post2008-patchseq-NWB-general-session-registration-1279.yaml
+registration_sha256: 63ee2640e1122e1b8c9575ce2d633665092e04fd121f01eaa2041f54aed2793c
+sealed_commit: 4146127
+reader: scripts/read_patchseq_NWB_general_session.py
+reader_sha256: 74d7e1122e0cfccce0a5c107d83d8cc6edef113b45c637bd9fbaf0afce07b2e5
+result: results/patchseq-NWB-general-session-1280/manifest.yaml
+result_sha256: 871b1cfda6560119d096c3400487464d2d4d99e4bc4332b941fd82fd4c8ceb3e
+verifier: scripts/verify_patchseq_NWB_general_session.py
+verifier_sha256: 5e022d41197424637b4bb749b015569f8fd27b6d8f89787b3da46ef469b5f4fb
+independent_result: results/patchseq-NWB-general-session-independent-1281/manifest.yaml
+independent_result_sha256: 99b00d65a43ae7afe2deb91416f58be0baf27b8c5ee7f936de1eb16c63fbd976
+status: one-file-internal-session-provenance-verified-not-qualified-physiology
+terminal_reader_and_verifier_exit_codes: [0, 0]
+verified:
+  asset_id: f7af39a7-3837-4635-ba76-9c96643405d0
+  path: sub-1001658946/sub-1001658946_ses-1003020741_icephys.nwb
+  internal_metadata_path: /general/session_id
+  shape: []
+  raw_type: bytes
+  raw_hex: '31303033303230373431'
+  decoded_value: '1003020741'
+  exact_literal_path_session_match: true
+  network_requests: 0
+  new_bytes: 0
+  logical_dataset_reads: [/general/session_id]
+  input_hashes_unchanged_before_and_after_verification: true
+engineering_checks:
+  scalar_comparison_tests_passed: 8
+  aggregate_patchseq_tests_before_independent_scalar_tests_passed: 620
+  aggregate_patchseq_tests_seconds: 13.81
+  repository_ruff: passed
+claim_boundary: >-
+  An independently reconstructed internal session scalar matches the literal
+  file-path session token for the original source-blind pilot. The verifier does
+  not import the scalar reader. It shares only pinned sparse I/O and exact
+  comparison/hash helpers. This demonstrates a nonstandard internal session
+  path, not absence correction at root/session_id and not a cohort-wide result.
+  It establishes neither internal cell/donor identity, whole-file checksum,
+  RNA sample aliases, physiological quality, fitting independence nor eligibility.
+  Both earlier naming failures and incomplete structural outcomes remain intact.
+next_gate: >-
+  Audit the remaining cohort qualification gates against this one-file evidence.
+  Register a source-manifest-anchored acquisition/identity route before any wider
+  recording access, keeping archive subject, source donor, source cell, recording
+  session and RNA sample namespaces distinct. Then qualify independent physiology
+  and donor splits before fitting neuron models. Do not extrapolate one-file
+  metadata to all assets or tune from SMART network outcomes.
+full_recording_digest_independently_verified: false
+specimen_eligibility_established: false
+prior_failed_name_gates_modified: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

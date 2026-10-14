@@ -1,0 +1,70 @@
+schema_version: 1
+artifact_id: 1416
+date: 2026-10-14
+status: before-additional-current-context-numeric-values
+purpose: Preserve native holding and slow-injection context for later source-backed sweep mapping, not infer current from amplifier labels.
+prior_exposure: original-19-numeric-fields-already-archived-and-header-unit-labels-known-no-slow-injection-trial-value-audit
+batches:
+  - name: original
+    headers: results/patchseq-notebook-keys-continuation-1341/manifest.yaml
+    headers_sha256: b306314d8ca2f916300dac5733cd6a47ba67f417a95819b8a567ddc7b2e56835
+    independent_headers: results/patchseq-notebook-keys-independent-1342/manifest.yaml
+    independent_headers_sha256: 64d64592a5e63445fbac968b4a269406a0648b3a759ef5071a2e68abefd0d065
+    acquisition: results/patchseq-intrinsic-acquisition-1314/manifest.yaml
+    acquisition_sha256: 93fa9b6b3ba01fc1b47323bda84d3610ad56108b84a831b78a899acff6ee210e
+  - name: append
+    headers: results/patchseq-append-notebook-keys-1412/manifest.yaml
+    headers_sha256: 75695aec6e1854b0d3d9454bdfeaa2a9e56bd46e230bc1dc24bc69285584f0eb
+    independent_headers: results/patchseq-append-notebook-keys-independent-1413/manifest.yaml
+    independent_headers_sha256: ecb28060dca9605009efa8b58eac9759dfc71f91583d49b39ba6e2ae86abb2a3
+    acquisition: results/patchseq-append-acquisition-1376/manifest.yaml
+    acquisition_sha256: b2ee66404d40180a6cf401f1d7f7790c40a46758b4623af7e1e3e8a0830ccc20
+scope:
+  cases: all-96-with-source-batch-and-original-slot-no-substitution
+  fields:
+    - SweepNum
+    - EntrySourceType
+    - Headstage Active
+    - ADC
+    - DAC
+    - Clamp Mode
+    - Operating Mode
+    - I-Clamp Holding Level
+    - I-Clamp Holding Enable
+    - Bridge Bal Value
+    - Bridge Bal Enable
+    - Neut Cap Value
+    - Neut Cap Enabled
+    - Series Resistance
+    - TP Baseline Vm
+    - TP Baseline pA
+    - TP Peak Resistance
+    - TP Steady State Resistance
+    - TP Pulse Duration
+    - Slow current injection
+    - Slow current injection level
+    - Slow current injection settling time
+  rows_pages: all-source-rows-all-nine-pages-only-whitelisted-columns
+  value_paths: numericalValues-sibling-of-independently-verified-numericalKeys
+  source_dtype: float64-historical-observed-native-table-format
+  maximum_rows_per_table: 20000
+  maximum_columns_per_table: 512
+  maximum_total_float64_bytes: 268435456
+  links: every-component-hard-only
+  storage: no-virtual-or-external-only-deflate-shuffle-fletcher32
+  parser: h5py==3.12.1
+  plugins_disabled: '::'
+  unselected_values: prohibited-including-textualValues-waveforms-and-script-bodies
+  duplicates_missing_nan_infinity_signed_zero: preserve-with-source-coordinates-no-filling-or-favorable-selection
+interpretation:
+  native_holding_level_unit: pA-from-source-header-no-schema-SI-reinterpretation
+  slow_injection_level_unit: V-not-a-current
+  enable_flags: not-inferred-from-presence-or-absence-of-bias_current
+  raw_archives: no-sweep-headstage-mapping-or-total-current-calculation-at-this-stage
+  old_19_field_archives_and_QC: untouched-new-supplemental-archive-does-not-overwrite-original-results
+output: results/patchseq-current-context-numeric-1417/manifest.yaml
+independent_output: results/patchseq-current-context-numeric-independent-1418/manifest.yaml
+execution_gate: commit-bounded-reader-independent-bitwise-checker-and-column-access-tests-before-new-values
+model_fitting_authorized: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

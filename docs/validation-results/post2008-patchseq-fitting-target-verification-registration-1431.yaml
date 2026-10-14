@@ -1,0 +1,29 @@
+schema_version: 1
+artifact_id: 1431
+date: 2026-10-14
+status: before-independent-training-response-reconstruction
+result: results/patchseq-fitting-targets-1430/manifest.yaml
+result_sha256: 12ca6e6e380e00616bfd0532ca1ad97488fba6e7960ca01a628cf26483178c7f
+original_protocol: docs/validation-results/post2008-patchseq-fitting-target-registration-1429.yaml
+collector: scripts/build_patchseq_fitting_targets.py
+collector_sha256: 6bb4a61451a8e5706018b2508632fb3f6acfdbbf09036da4c7757abafbeb004f
+feature_code: scripts/patchseq_response_features.py
+feature_code_sha256: 1fe052c0b366f221c3c1423a49483a748474aa62a55d218df8a752757e227a14
+prior_exposure: completion-message-and-source-result-hashes-no-response-feature-audit
+method:
+  collector_or_feature_module_import: prohibited
+  data: independently-reread-original-training-only-hard-link-standard-filter-arrays
+  events: independent-forward-derivative-crossing-enumeration-raw-peak-membership-and-threshold-checks
+  means: math-fsum-divided-by-exact-sample-count
+  discrete_results: exact-event-index-membership-status-counts-and-source-gate-comparisons
+  numeric_tolerance: absolute-1e-9-plus-relative-1e-10-times-independent-value
+  numerical_tolerance_role: arithmetic-equivalence-not-event-threshold-or-quality-relaxation
+  held_out: no-HDF5-open-or-feature-reconstruction-explicitly-verify-all-withheld-markers
+  source_integrity: all-pinned-files-before-and-after-body-before-and-after-each-training-case
+  accounting: exact-float64-decoded-byte-and-opened-training-case-reconstruction
+failure: stop-and-retain-uncertainty-no-detector-or-QC-tuning-or-favorable-replacement
+output: results/patchseq-fitting-targets-independent-1432/manifest.yaml
+execution_gate: commit-independent-checker-and-synthetic-equivalence-corruption-no-held-out-access-tests-before-execution
+model_fitting_authorized: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

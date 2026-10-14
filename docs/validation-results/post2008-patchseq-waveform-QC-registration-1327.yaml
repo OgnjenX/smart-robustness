@@ -1,0 +1,72 @@
+schema_version: 1
+artifact_id: 1327
+artifact_type: prospective-array-storage-and-long-square-sweep-QC
+date: 2026-10-14
+status: before-biological-waveform-outcomes
+pairing: results/patchseq-pairing-1324/manifest.yaml
+pairing_sha256: 02777a5e9f76378d159eb3e4b75c10bd70d67dcfcb62db8ebfe66d6f71cb1a26
+independent_pairing: results/patchseq-pairing-independent-1325/manifest.yaml
+independent_pairing_sha256: c198094f9f042566e095599edf6e06f776a0e4b5aaf05dc8068b4d9804c73dcf
+acquisition: results/patchseq-intrinsic-acquisition-1314/manifest.yaml
+acquisition_sha256: 93fa9b6b3ba01fc1b47323bda84d3610ad56108b84a831b78a899acff6ee210e
+primary_QC_reference:
+  repository: AllenInstitute/ipfx
+  revision: c607a36e25618a6bb8ba5438c1cd945fb429e659
+  files: [ipfx/defaults/qc_criteria.json, ipfx/epochs.py, ipfx/qc_feature_extractor.py, ipfx/stim_features.py]
+  url: https://github.com/AllenInstitute/ipfx/tree/c607a36e25618a6bb8ba5438c1cd945fb429e659/ipfx
+  limit: source-inspired-sweep-QC-not-exact-IPFX-replay-or-complete-cell-QC
+scope:
+  files: fixed-48-no-replacements
+  pairs: all-2330-verified-current-clamp-pairs-retained
+  protocol_selection: waveform-defined-long-square-candidate-not-label-only
+  nonstep_protocols: retained-not-analyzed-as-long-square-no-favorable-reclassification
+read_policy:
+  parser: h5py==3.12.1
+  plugins_disabled: '::'
+  links: every-path-component-hard-only-never-follow-soft-or-external
+  version: exact-root-nwb_version-2.2.5
+  arrays: only-verified-pair-data-paths-1D-real-numeric
+  storage: reject-external-virtual-and-filters-other-than-deflate-shuffle-fletcher32
+  maximum_samples_per_array: 10000000
+  maximum_total_float64_decoded_bytes: 17179869184
+  instrument_scalar_names: [gain, bias_current, bridge_balance, capacitance_compensation]
+  instrument_scalar_limit: 4096-bytes-shape-scalar-or-singleton-no-filter-virtual-external
+  other_values: prohibited-no-timestamp-reference-or-unselected-array-reads
+  original_file_hash: before-and-after-each-file
+  failure: retain-case-error-no-retry-no-replacement
+conventions:
+  voltage_mV: raw-times-exact-source-conversion-times-1000
+  command_pA: raw-times-exact-source-conversion-times-1000000000000
+  time: sample-index-divided-by-exact-metadata-rate-no-interpolation
+  junction: as-recorded-no-correction-to-author-reported-uncorrected-minus-14-mV
+  bias: retain-source-scalar-or-unknown-do-not-add-or-subtract-from-command
+  gain_bridge_capacitance: context-only-not-biological-cell-parameters
+  missing_or_nonfinite_metadata: retain-undefined-no-zero-default
+waveform_rules:
+  all_samples: finite-current-and-voltage-before-any-feature
+  transition_detection: exact-nonzero-difference-in-as-recorded-command
+  allowed_transitions: two-main-step-edges-or-four-with-one-early-test-pulse
+  test_pulse_if_four_edges: first-onset-before-0.4s-and-duration-below-0.4s-return-to-same-baseline
+  main_step: nonzero-constant-level-return-to-exact-initial-baseline-duration-at-least-0.5s
+  baseline_windows: full-0.5s-before-onset-and-last-0.5s-before-final-sample
+  baseline_command: both-windows-constant-at-initial-command-no-hidden-subtraction
+  noise_windows: first-1.5ms-of-pre-window-and-last-1.5ms-before-final-sample
+  slow_noise: centered-RMS-over-full-pre-window
+  pre_and_post_noise_RMS_mV_max: 0.07
+  slow_noise_RMS_mV_max: 0.5
+  absolute_pre_post_mean_drift_mV_max: 1.0
+  incomplete_windows: nonpass-no-padding-or-shortened-window
+  endpoints: half-open-index-windows-final-sample-excluded-explicit-adaptation-not-IPFX-equivalence
+output: results/patchseq-waveform-QC-1328/manifest.yaml
+execution_gate: commit-registration-reader-and-synthetic-tests-before-first-sample-read
+scientific_claims:
+  accepted_sweeps: finite-step-and-baseline-quality-only
+  complete_cell_QC: unestablished-blowout-seal-access-resistance-not-tested-here
+  stimulus_current_bias_semantics: unresolved-for-future-fit-contract
+  intrinsic_response_features_or_model_fits: not-authorized
+  minimum_usable_cell_and_group_gates: not-established-by-sweep-pass-counts
+  frozen_partitions_and_prior_negatives: unchanged
+next_gate: independent-array-QC-reconstruction-then-cell-health-input-semantics-and-isolated-fit-registration
+specimen_eligibility_established: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

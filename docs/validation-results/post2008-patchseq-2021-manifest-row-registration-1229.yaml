@@ -1,0 +1,32 @@
+schema_version: 1
+artifact_id: 1229
+artifact_type: typed-official-2021-manifest-source-row-registration
+date: 2026-10-14
+workbook: results/patchseq-2021-workbook-schema-1202/manifest.xlsx
+workbook_sha256: 84078977810f76ccf83cf94d110d664f349c8b69166b0ac5e71fea944012f7be
+schema: results/patchseq-2021-workbook-schema-1202/manifest.yaml
+schema_sha256: ec91337dbc444e79d30f14824930153d7b1595b19351575d73a40e8e31e61867
+header_reader: scripts/acquire_patchseq_workbook_schema.py
+header_reader_sha256: 4928e28d4ebf0d8e913454d3b70f8ee3d9bd975e6cfbac2a221213c5d793c12e
+sheet_name: 2021-09-13_mouse_file_manifest
+fields: [file_id, file_name, file_size, sha256_checksum, md5_checksum, technique, file_type, archive, archive_uri, project, cell_specimen_id]
+maximum_rows: 50000
+maximum_row_coordinate: 50001
+maximum_shared_string_index: 200000
+maximum_field_characters: 4096
+output_directory: results/patchseq-2021-manifest-records-1230
+rules:
+  - Read only the verified manifest sheet and all eleven exact header fields, preserving every explicit row and row-number gaps.
+  - Preserve missing cells, storage types, raw value lexemes, shared-string indices, decoded literal strings and formula-presence flags.
+  - Do not evaluate formulas or use cached formula results as literal identifiers.
+  - Canonical cell and file IDs and file sizes require a positive ASCII decimal lexeme without whitespace, padding, decimal point or exponent, from a literal string or numerical cell.
+  - Numerical cells additionally require at most fifteen decimal digits; never pass values through floating-point conversion.
+  - Retain rejected or absent IDs as unresolved, without dropping their source rows or changing raw values.
+  - Preserve all modalities and recording URLs without fetching or interpreting linked contents.
+  - This read does not match recordings, assign eligibility, select cells or create donor splits.
+external_requests_authorized: false
+recording_download_authorized: false
+physiological_array_reads_authorized: false
+specimen_qualification_authorized: false
+next_gate: Independently reconstruct typed source rows, then seal exact catalog/July reference comparisons before using this manifest to select recording files.
+frozen_baseline_modified: false

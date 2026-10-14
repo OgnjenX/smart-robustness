@@ -1,0 +1,49 @@
+schema_version: 1
+artifact_id: 1312
+artifact_type: independently-reconstructed-finite-intrinsic-source-subset
+date: 2026-10-14
+registration: docs/validation-results/post2008-patchseq-intrinsic-subset-registration-1308.yaml
+sealed_commit: ab18ad6
+result: results/patchseq-intrinsic-subset-1309/manifest.yaml
+result_sha256: dcf2bdf39e44c82190b63aa62de46df84314ffec47f76e01e85726cdbd9088d3
+verifier: scripts/verify_patchseq_intrinsic_subset.py
+verifier_sha256: 9bd8b545a7a0095bfe60aaf3b6e5c6a0edec68712f6f5c8a6857c14a7b5727b3
+independent_result: results/patchseq-intrinsic-subset-independent-1311/manifest.yaml
+independent_result_sha256: 50c34177f19671beaee5d8c1568578d413334b7ff1a07e7ab8b8d028dd90a230
+status: finite-subset-and-author-resource-preflight-independently-verified
+terminal_verifier_exit_code: 0
+verified:
+  selected_slots: 48
+  unique_recordings: 48
+  unique_conservative_source_groups: 41
+  exact_group_ranks_and_numeric_cell_choices: passed
+  exact_author_row_filename_cell_size_and_SHA256: passed
+  exact_stratum_support_and_selected_group_lists: passed
+  aggregate_expected_recording_bytes: 1566173329
+  all_declared_size_and_unique_recording_limits: passed
+  source_hashes_unchanged_before_and_after: true
+  qualified_specimens: 0
+independent_method: >-
+  Populate a relational candidate table, select distinct frozen group IDs in
+  binary lexicographic order and select within-group cells using numeric and
+  file-path SQL ordering. Interpret author positive-decimal lexemes with the
+  separately implemented independent parser, reconcile canonical projections
+  with type-preserving equality and validate literal filename/size/hash anchors.
+  Reconstruct every retained slot, stratum and summary without importing the
+  selector or its numeric parser. Do not read recordings or choose replacements.
+engineering_checks:
+  independent_ranking_tests_passed: 7
+  repository_ruff: passed
+claim_boundary: >-
+  Selection and declared-resource preflight are independently verified, not
+  actual recording contents, identity inside all selected NWBs, trace quality,
+  independent biological donors or fitted response/recruitment behavior. The
+  subset is finite and deterministically selected, not claimed representative.
+  Global partitions and selection slots remain fixed through subsequent failures.
+  No physiological or model eligibility is inferred from source declarations alone.
+next_gate: separately-seal-bounded-checkpointed-recording-acquisition-and-identity-only-inspection
+recording_downloaded: false
+physiology_accessed: false
+specimen_eligibility_established: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

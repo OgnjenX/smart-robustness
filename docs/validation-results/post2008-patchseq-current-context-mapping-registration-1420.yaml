@@ -1,0 +1,48 @@
+schema_version: 1
+artifact_id: 1420
+date: 2026-10-14
+status: before-current-context-sweep-mapping-outcomes
+numeric: results/patchseq-current-context-numeric-1417/manifest.yaml
+numeric_sha256: 1b87dff69dcd9037dc3df73990943c127cec02a9aece1c43a0a900332ee33361
+independent_numeric: results/patchseq-current-context-numeric-independent-1418/manifest.yaml
+independent_numeric_sha256: c4cfb1bda710827c1b93df0215c9466bccc95f6f18298da063f06fcb09c1b53c
+batches:
+  - name: original
+    pairing: results/patchseq-pairing-1324/manifest.yaml
+    pairing_sha256: 02777a5e9f76378d159eb3e4b75c10bd70d67dcfcb62db8ebfe66d6f71cb1a26
+    independent_pairing: results/patchseq-pairing-independent-1325/manifest.yaml
+    independent_pairing_sha256: c198094f9f042566e095599edf6e06f776a0e4b5aaf05dc8068b4d9804c73dcf
+    instrument_metadata: results/patchseq-waveform-QC-1328/manifest.yaml
+    instrument_metadata_sha256: 13e054b090b22b45196bb2571d63cee4577c4e169a2a3c788fb4efbef3683564
+  - name: append
+    pairing: results/patchseq-append-pairing-1385/manifest.yaml
+    pairing_sha256: 80b2583be9c1ba8d0175ca212161c4f9829ec8a8db4bbbd5b0d411485dd1b971
+    independent_pairing: results/patchseq-append-pairing-independent-1386/manifest.yaml
+    independent_pairing_sha256: 1b2b85758c71728f7aee7a9a671a0bb221db89cc6344cf6a726e03d4b3beb34f
+    instrument_metadata: results/patchseq-append-waveform-QC-1389/manifest.yaml
+    instrument_metadata_sha256: 783a4ba5bbbe8f7fc0122152a002f61ab907c8ff7586d7cd4c3426a3f109f15b
+rules:
+  scope: all-96-cases-all-4880-current-clamp-pairs-no-filter-or-replacement
+  row_selection: source-defined-last-contiguous-matching-sweep-and-explicit-acquisition-mode-0-block
+  field_lookup: last-vector-not-all-NaN-in-selected-block-then-requested-headstage-not-last-finite-headstage
+  channel_identity: ADC-DAC-template-and-native-clamp-mode-1-one-unique-active-headstage
+  native_row_column_page_coordinates: preserved-no-renumbering
+  exported_fields: unchanged-bias-bridge-capacitance-native-units-and-exact-float32-export-comparison
+  holding_enable: explicit-native-state-0-or-1-unknown-otherwise
+  slow_injection_fields:
+    Slow current injection: On/Off
+    Slow current injection level: V
+    Slow current injection settling time: s
+  enable_classification: disabled-if-explicit-0-enabled-if-explicit-1-unknown-otherwise
+  missing_unit_mismatch_nonfinite_ambiguous_column: unknown-no-default
+  no_explicit_block_or_inactive_headstage: unknown-no-legacy-fixup-or-older-fallback
+  raw_archives_and_old_mapping_results: unchanged
+independent_method: forward-contiguous-run-enumeration-and-direct-source-row-selection-without-mapping-collector-import
+output: results/patchseq-current-context-mapping-1421/manifest.yaml
+independent_output: results/patchseq-current-context-mapping-independent-1422/manifest.yaml
+execution_gate: commit-collector-independent-checker-and-mode-headstage-row-unit-unknown-corruption-tests-before-mapping
+interpretation: documented-native-context-and-export-concordance-not-delivered-total-current-or-intrinsic-fit-eligibility
+current_waveform_adjustment_authorized: false
+model_fitting_authorized: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

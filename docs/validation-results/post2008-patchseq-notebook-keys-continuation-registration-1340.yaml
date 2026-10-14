@@ -1,0 +1,42 @@
+schema_version: 1
+artifact_id: 1340
+artifact_type: standard-filter-header-continuation-before-header-values
+date: 2026-10-14
+status: preserve-original-storage-rejections-separate-header-outcome
+original_registration: docs/validation-results/post2008-patchseq-notebook-keys-registration-1338.yaml
+original_preexecution_commit: 97244b5
+original_result: results/patchseq-notebook-keys-1339/manifest.yaml
+original_result_sha256: 48f9415b6ad4801684fb8c6e0bae0c2df8b374720ef42a6ec203fd32598c65cc
+original_outcome: 96-unsupported-storage-rejections-across-48-files-no-header-values-read
+prior_diagnostic: first-file-both-tables-use-built-in-shuffle-and-deflate-no-value-reads
+engineering_amendment:
+  filters: allow-only-HDF5-deflate-1-shuffle-2-fletcher32-3
+  plugin_filters: prohibited-plugins-disabled
+  scope: header-storage-decoding-only-not-physiology-threshold-or-cohort-change
+  original_failures: retain-verbatim-do-not-overwrite-or-call-original-attempt-successful
+unchanged_rules:
+  paths: exact-original-registered-key-table-paths
+  shape: 3-rows-by-positive-at-most-512-columns
+  dtype: text-only
+  decoded_bytes_per_cell: 512
+  decoded_bytes_per_file: 65536
+  links: every-component-hard-only
+  external_or_virtual_storage: prohibited
+  header_reads: individual-text-cells-only
+  other_values: prohibited-including-numericalValues-textualValues-waveforms-and-script-bodies
+  normalization_or_duplicate_column_selection: prohibited
+original_storage_verification:
+  files: all-48-verified-recordings
+  checks: independently-reproduce-original-filter-rejection-before-new-value-read
+  saved_evidence: actual-header-shape-dtype-and-filter-IDs-in-new-result
+  unexpected_original_failure: stop-no-value-read
+parser: h5py==3.12.1
+plugins_disabled: '::'
+output: results/patchseq-notebook-keys-continuation-1341/manifest.yaml
+execution_gate: commit-continuation-contract-reader-and-standard-filter-whitelist-tests-before-values
+next_gate: independent-header-reconstruction-and-source-backed-health-extraction-contract
+notebook_trial_values_authorized: false
+model_fitting_authorized: false
+specimen_eligibility_established: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

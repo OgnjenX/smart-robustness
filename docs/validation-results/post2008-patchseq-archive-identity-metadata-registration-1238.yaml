@@ -1,0 +1,71 @@
+schema_version: 1
+artifact_id: 1238
+artifact_type: bounded-full-catalog-archive-extracted-identity-metadata-registration
+date: 2026-10-14
+prerequisite:
+  assessment: docs/validation-results/post2008-patchseq-2021-file-reference-assessment-1237.yaml
+  result: results/patchseq-2021-file-reference-independent-1236/manifest.yaml
+  result_sha256: 9306dde9013a3979fb050515c43a68fa2785b173b9538e1293eacec8d7981ebe
+catalog: results/patchseq-catalog-independent-1167/manifest.yaml
+catalog_sha256: 8a53db830724723de66d3a51aaffa21d0c71e5d6e10e2a55f8862c74918bcf60
+dandiset: '000020'
+version: '0.210913.1639'
+source_documentation:
+  - https://docs.dandiarchive.org/api/rest-api/
+  - https://dandi.readme.io/reference/dandisets_versions_assets_read
+  - https://docs.dandiarchive.org/example-notebooks/tutorials/neurodatarehack_2024/simple_dandiset_search/
+documentation_basis: >-
+  The official API documentation provides a version-specific asset metadata
+  endpoint. The DANDI tutorial identifies asset metadata as extracted from NWB
+  files and describes wasAttributedTo participant records, while warning that
+  older datasets may lack these fields. This supports inspecting archive
+  projections, not assuming they contain cell IDs, equating participant IDs with
+  annotation donors, or claiming independent internal NWB verification.
+selection:
+  expected_assets: 4435
+  order: ascending literal catalog path, then asset UUID
+  excluded_assets: none
+  phenotype_or_network_outcome_selection: false
+endpoint_template: https://api.dandiarchive.org/api/dandisets/000020/versions/0.210913.1639/assets/{asset_id}/
+output_directory: results/patchseq-archive-identity-metadata-1239
+limits:
+  maximum_response_bytes: 262144
+  timeout_seconds_per_request: 30
+  maximum_requests_per_asset: 1
+  redirects_authorized: false
+  retries_authorized: false
+  maximum_json_depth: 32
+  maximum_json_nodes: 10000
+  maximum_projected_string_characters: 4096
+  maximum_projected_list_entries: 100
+permitted_projection:
+  top_level_fields: [asset_id, identifier, path, contentSize, size, encodingFormat, schemaKey, schemaVersion, digest, blob]
+  metadata_container_fields: [identifier, path, contentSize, encodingFormat, schemaKey, schemaVersion, digest]
+  participant_fields: [identifier, schemaKey]
+  activity_fields: [identifier, name, schemaKey]
+  participant_container: wasAttributedTo
+  activity_container: wasGeneratedBy
+rules:
+  - Fetch only the exact version-specific public asset metadata URL for each pinned catalog UUID. Do not follow contentUrl, archive_uri or any other returned link.
+  - Retain raw response bytes, HTTP status, relevant identity/cache headers, endpoint, timing and SHA256 receipt separately from the bounded whitelisted projection.
+  - Read participant and activity projections only at the top level or inside a literal metadata object. Do not guess alternative field paths or infer identities from free text.
+  - Preserve missing, null, unexpected type, multiple participant/activity and conflicting identifier evidence without selecting a first value.
+  - Reject duplicate JSON keys, nonfinite values, oversized responses or projection bounds, retaining failure evidence. No repairing source values.
+  - Preserve digest algorithms and string values exactly. Do not equate dandi-etag or MD5 with SHA256 or assume contentSize is independently verified file content.
+  - Persist one receipt per attempted asset and validate its source and raw-byte hash before checkpoint reuse. Completed or failed attempts are not automatically retried.
+  - A missing terminal handle or timed-out observation is not permission to start a duplicate collector. Verify process state before resuming incomplete work.
+  - Metadata absent from the archive projection is unresolved, not a biological or physiological failure. No specimen becomes eligible in this stage.
+  - Independently reconstruct projections from all retained raw responses and compare exact results before using archive identity fields in an internal-recording acquisition protocol.
+external_requests_authorized: true
+recording_body_download_authorized: false
+physiological_array_reads_authorized: false
+class_layer_confidence_qualification_authorized: false
+donor_namespace_equivalence_inference_authorized: false
+parameter_fitting_authorized: false
+network_execution_authorized: false
+frozen_baseline_modified: false
+next_gate: >-
+  Determine which identity and digest fields are actually available. Independently
+  verify archive metadata and explicitly separate external catalog consistency
+  from internal NWB identity. Register bounded internal NWB metadata acquisition
+  for missing required fields before any physiological arrays or fitted cohorts.

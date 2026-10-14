@@ -1,0 +1,55 @@
+schema_version: 1
+artifact_id: 1317
+artifact_type: independently-verified-selected-recording-content-and-identity
+date: 2026-10-14
+registration: docs/validation-results/post2008-patchseq-intrinsic-acquisition-registration-1313.yaml
+execution_seal: docs/validation-results/post2008-patchseq-intrinsic-acquisition-execution-seal-1315.yaml
+sealed_implementation_commit: a9c4416
+acquisition: results/patchseq-intrinsic-acquisition-1314/manifest.yaml
+acquisition_sha256: 93fa9b6b3ba01fc1b47323bda84d3610ad56108b84a831b78a899acff6ee210e
+verifier: scripts/verify_patchseq_intrinsic_acquisition.py
+verifier_sha256: f13cba1a8723ef0c0c5c4f3b3a648dd8e9232874126e28e8634091d5033688de
+independent_result: results/patchseq-intrinsic-acquisition-independent-1316/manifest.yaml
+independent_result_sha256: 67f2dbdd160b50574781346f6d8a96cc771d8054b4355bcf15fccb9314524944
+status: all-selected-content-and-identity-verified-not-qualified-physiology
+terminal_acquisition_and_verifier_exit_codes: [0, 0]
+verified:
+  sealed_selection_slots: 48
+  attempted_slots: 48
+  unattempted_slots: 0
+  independently_reproduced_content_and_identity_passes: 48
+  retained_nonpasses_or_unknowns: 0
+  charged_recording_bytes: 1566173329
+  raw_receipt_and_complete_body_hashes: passed
+  author_archive_content_size_SHA256_and_locator_anchors: passed
+  exact_immutable_HEAD_and_complete_206_GET_responses: passed
+  per_slot_attempt_limits_and_no_GET_retries: passed
+  immutable_GET_byte_admission_and_original_absolute_deadline_checks: passed
+  all_whitelisted_metadata_interpretations_and_identity_flags: passed
+  all_source_and_retained_artifact_hashes_unchanged_after_verification: true
+  physiological_arrays_interpreted: false
+  specimen_eligibility_established: false
+independent_method: >-
+  Re-read original saved HTTP headers and bodies, raw archive JSON, immutable
+  attempt/admission markers and terminal receipts. Independently compute body
+  hashes, validate original locators and redirect rules, strong ETags, exact
+  sizes/ranges, one-GET limits, charged bytes and deadline admissions. Reconstruct
+  whitelisted metadata using the separate hard-link/scalar reader, not the
+  acquisition collector. Compare all present session fields and the subject
+  without normalization or favorable-field selection, and rehash all evidence.
+engineering_checks:
+  independent_receipt_identity_and_deadline_tests_passed: 16
+  aggregate_patchseq_tests_passed: 740
+  aggregate_patchseq_tests_seconds: 13.99
+  repository_ruff: passed
+limits:
+  - Content/identity provenance does not establish waveform reliability or model response fidelity.
+  - Source class/anatomy/quality labels remain author-provided; no RNA alias or independently recomputed typing confidence is inferred.
+  - Conservative source partitions are unchanged; biological donor equivalence and historical model training independence are not claimed.
+  - The passing storage guard is implemented and tested, but historical free-space readings on successful slots were not persisted as separate measurements.
+  - Current/voltage arrays, descriptive text, model fits and SMART networks were not interpreted or executed in this phase.
+next_gate: separately-register-local-trace-schema-units-and-timebase-inventory-before-waveform-QC
+specimen_eligibility_established: false
+prior_failed_gates_modified: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

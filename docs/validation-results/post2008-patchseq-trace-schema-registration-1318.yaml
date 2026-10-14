@@ -1,0 +1,60 @@
+schema_version: 1
+artifact_id: 1318
+artifact_type: local-trace-schema-units-and-timebase-metadata-registration
+date: 2026-10-14
+status: registration-before-new-schema-metadata-outcomes-or-waveform-reads
+purpose: >-
+  Inventory where stimulus/response series, units, scaling and timebase metadata
+  are stored in the fixed 48 verified binaries before defining array-level QC.
+  Metadata only: do not read current/voltage or timestamp vectors, calculate
+  neuronal features, infer successful physiology or select replacement files.
+acquisition: results/patchseq-intrinsic-acquisition-1314/manifest.yaml
+acquisition_sha256: 93fa9b6b3ba01fc1b47323bda84d3610ad56108b84a831b78a899acff6ee210e
+independent_acquisition: results/patchseq-intrinsic-acquisition-independent-1316/manifest.yaml
+independent_acquisition_sha256: 67f2dbdd160b50574781346f6d8a96cc771d8054b4355bcf15fccb9314524944
+subset: results/patchseq-intrinsic-subset-1309/manifest.yaml
+subset_sha256: dcf2bdf39e44c82190b63aa62de46df84314ffec47f76e01e85726cdbd9088d3
+documentation:
+  sources:
+    - https://pynwb.readthedocs.io/en/stable/tutorials/domain/plot_icephys.html
+    - https://nwb-schema.readthedocs.io/en/stable/format.html
+  role: general-NWB-type-and-storage-guidance-not-proof-of-historical-file-generation
+  caution: optional-current-metadata-tables-must-not-be-imputed-to-older-NWB-files
+parser_dependency: h5py==3.12.1
+HDF5_plugin_preload: '::'
+scope:
+  slots: same-48-no-case-filter-or-substitution
+  read_only_roots: [/acquisition, /stimulus/presentation]
+  maximum_group_depth_below_root: 3
+  maximum_structural_objects_per_file: 8192
+  maximum_name_utf8_bytes: 1024
+  links: hard-only-soft-or-external-record-unsupported-never-follow
+  structure: names-object-types-shapes-dtypes-chunking-compression-and-attribute-names
+  allowed_group_attribute_values: [neurodata_type, namespace, sweep_number, stimulus_description]
+  allowed_dataset_attribute_values: [unit, conversion, offset, resolution, rate]
+  allowed_scalar_dataset_names: [starting_time, sweep_number, stimulus_description]
+  maximum_scalar_or_attribute_decoded_bytes: 4096
+  scalar_shapes: [scalar, singleton]
+  scalar_storage: no-compressed-virtual-or-external-dataset-value-reads
+  nonfinite_or_unsupported_metadata: preserve-type-and-undefined-marker-no-value-imputation
+  all_other_dataset_values: prohibited-including-data-timestamps-reference-tables
+interpretation:
+  classify_series_roles: declared-neurodata_type-only-no-waveform-based-guessing
+  stimulus_response_pairing: inventory-explicit-sweep-metadata-only-no-accepted-pairing-claim
+  SI_conversion: preserve-raw-unit-scale-offset-no-silent-defaults-or-conversion-yet
+  legacy_missing_metadata: retained-as-unknown-not-dropped-or-inferred-from-filenames
+  frozen_partitions: unchanged
+  physiology_quality_and_model_eligibility: not-established
+output: results/patchseq-trace-schema-1319/manifest.yaml
+execution_gate: commit-registration-reader-and-no-waveform-access-tests-before-metadata-read
+network_requests_allowed: 0
+waveform_or_timestamp_vector_access_authorized: false
+source_model_fitting_authorized: false
+next_gate: >-
+  Independently reconstruct every metadata descriptor and source hash. Then seal
+  stimulus/response pairing, units/conversion/timebase rules, the source minus-
+  14-mV junction convention and array-level QC, retaining all selected cases and
+  failures before any current/voltage samples or fitted model outcomes are read.
+specimen_eligibility_established: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

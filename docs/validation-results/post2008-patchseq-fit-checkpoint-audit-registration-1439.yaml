@@ -1,0 +1,29 @@
+schema_version: 1
+artifact_id: 1439
+date: 2026-10-14
+status: before-checkpoint-audit-not-before-training-execution
+protocol: docs/validation-results/post2008-patchseq-isolated-fit-registration-1436.yaml
+seal: docs/validation-results/post2008-patchseq-isolated-fit-execution-seal-1437.yaml
+implementation: scripts/audit_patchseq_fit_checkpoint.py
+tests: tests/test_patchseq_fit_checkpoint_audit.py
+input_after_terminal_completion: results/patchseq-isolated-fit-1438/checkpoint.json
+purpose: independent-structural-and-accounting-check-without-importing-runner-model-or-objective
+checks:
+  - Exact six-stratum scope and complete sealed candidate counts.
+  - Independently regenerated fixed Sobol parameter table.
+  - Source-independent-group coverage and arithmetic group-loss aggregation.
+  - Deterministic selection from the complete candidate table.
+  - Fitting-only opened-file ledger matching characterized source cases.
+  - Failure keys confined to exact training source sweeps with failures retained.
+  - Complete selected-control keys and diagnostic threshold and conjunction checks.
+  - Execution seal and held-out, network and frozen-baseline claim boundaries.
+limitations:
+  - This is not independent verification of each forward simulation or sweep-feature loss.
+  - Numerical gate booleans are checked for consistency, not independently replayed here.
+  - This callable does not itself establish runtime termination or validate live source file hashes.
+  - Successful structural audit does not authorize held-out responses or network promotion.
+next_gate: terminal-process-and-file-integrity-check-then-independent-forward-and-scoring-reconstruction-under-separate-sealed-protocol
+running_experiment_source_modified: false
+real_checkpoint_opened_for_this_preparation: false
+held_out_response_features_read: false
+scientific_goal_complete: false

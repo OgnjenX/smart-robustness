@@ -1,0 +1,36 @@
+schema_version: 1
+artifact_id: 1456
+date: 2026-10-14
+status: optional-provenance-driver-tested-not-enabled-in-biological-verification
+implementation: scripts/patchseq_hh_compiled_driver.py
+tests: tests/test_patchseq_hh_compiled_driver.py
+equivalence_assessment: docs/validation-results/post2008-patchseq-compiled-equivalence-assessment-1455.yaml
+kernel_sha256: c53d113be1f16f580b18fb379ed44cf569fcc49139a505256e6a43057dd27721
+preserved:
+  live_fitting_runner: unchanged
+  original_numpy_verification_engine: unchanged
+  optional_prototype_and_equivalence_source: unchanged
+  scientific_equations_inputs_initialization_search_and_gates: unchanged
+provenance:
+  recorded: [kernel_sha256, driver_sha256, compiler, compiler_sha256, compiler_version, flags, platform, machine, numpy_version, binary_path, binary_sha256]
+  binary_retention: exact-built-library-and-build-receipt-in-explicit-artifact-directory
+  reuse: only-matching-source-compiler-driver-platform-flags-and-binary-provenance
+  partial_or_changed_build: reject-no-silent-overwrite-or-rebuild
+  fast_math: disabled
+  floating_contraction: disabled
+  source_and_binary_during_use: rechecked-on-context-exit
+synthetic_tests:
+  passed_locally: 4
+  controls: [exact-once-holding-and-warmup, retained-build-reuse, partial-build-rejection, changed-binary-rejection, unknown-kernel-rejection]
+  compiler_absence: optional-test-skip-not-a-provenance-or-equivalence-pass
+limitations:
+  - Compiler version and driver binary fingerprints do not fingerprint every external SDK or math-library component.
+  - Synthetic controls and retained build provenance do not establish biological validation.
+  - No existing verification runner automatically selects this driver.
+  - Scientific use still requires a prospective verifier-only amendment and adapter equivalence check.
+next_gate: seal-explicit-verifier-only-amendment-with-provenance-and-full-coverage-guards-before-biological-execution
+biological_data_used: false
+compiled_biological_replay_enabled: false
+live_fitting_source_modified: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

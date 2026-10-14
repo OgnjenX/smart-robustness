@@ -1,0 +1,63 @@
+schema_version: 1
+artifact_id: 1363
+artifact_type: independently-verified-health-protocol-metadata-coverage
+date: 2026-10-14
+status: metadata-coverage-verified-no-physical-health-measurements
+registration: docs/validation-results/post2008-patchseq-health-protocol-registration-1360.yaml
+preexecution_commit: c892c27
+collector: scripts/audit_patchseq_health_protocols.py
+collector_sha256: a2572e8c55a2b25f0e5641a37988edb816d7a29a36ad00c56904e30e83b2ecd1
+result: results/patchseq-health-protocols-1361/manifest.yaml
+result_sha256: f7989b5875b50e3d616a32ff24116f1823c6a14f1df574c5265ab04b42986e21
+verifier: scripts/verify_patchseq_health_protocols.py
+executed_verifier_commit: 9566413
+executed_verifier_sha256: d2fedfaf731419bf848a050edf53668181f94f5c935bdf0e46c17ec66b1c5486
+postexecution_source_change: equivalent-removesuffix-reformat-only-no-classification-change
+independent_result: results/patchseq-health-protocols-independent-1362/manifest.yaml
+independent_result_sha256: 63ce158365520450dd930231d41770791e541993dbf7206c358700401c7c10ed
+terminal_collector_and_verifier_exit_codes: [0, 0]
+verified:
+  fixed_files_retained: 48
+  bath_pairs: 45
+  seal_pairs: 52
+  breakin_pairs: 63
+  blowout_pairs_with_registered_codes: 0
+  compatible_health_pairs: 160
+  metadata_pair_or_series_failures: 0
+  files_with_bath_seal_and_breakin_coverage: 45
+  files_missing_recognized_bath_pairs: [7, 38, 46]
+  files_missing_recognized_breakin_pairs: [7]
+  files_missing_recognized_blowout_pairs: all-48
+  new_HDF5_or_waveform_reads: 0
+  raw_code_tags_units_clocks_descriptions_ids_roles_and_nontarget_retention: independently-matched
+  source_and_recording_hashes: unchanged-before-and-after
+method: >-
+  Separate scalar/location decoding and exact-code membership reconstruct every
+  recognized health series, declared VC role, metadata pair, nonhealth inventory
+  entry and missing-protocol list from the previously independently verified
+  descriptor inventory. No collector import. The checker explicitly covers the
+  observed valid VC pairs and bounded-code absence, not unobserved unsupported
+  health-series branches or a universal absence of alternative protocol aliases.
+engineering_checks:
+  exact_code_and_metadata_pairing_tests_passed: 6
+  independent_reconstruction_and_rejection_tests_passed: 5
+  aggregate_patchseq_tests_passed: 916
+  aggregate_patchseq_tests_seconds: 16.21
+  repository_ruff_after_equivalent_formatting: passed
+limits:
+  - Coverage is not seal, access-resistance, electrode-zero or cell-health success.
+  - Missing blowout means no recognized paired code under the sealed ontology; it is not proof no other recorded protocol contains related information.
+  - Generic ontology name Test does not identify a bath/seal/breakin/blowout role; QC identifiers are exact code tags.
+  - Forty-five files with three protocols is only a measurement-availability ceiling, not a qualified fitting cohort.
+  - No favorable trial, replacement cell, lowered threshold, class pooling or changed source partition was chosen.
+next_gate: >-
+  Seal protocol-specific health array calculations, deterministic trial selection,
+  physical units, decoder bounds, pulse/window validity and explicit missingness
+  rules before new voltage-clamp samples. Audit the official optional-blowout
+  behavior explicitly before defining any bounded health gate; do not impute a
+  missing blowout or electrode-zero result as a successful measurement.
+health_measurements_performed: false
+model_fitting_performed: false
+specimen_eligibility_established: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

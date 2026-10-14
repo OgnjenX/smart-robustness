@@ -57,7 +57,7 @@ def reconstruct(records, codes):
             description = None
         parsed = None
         if description is not None:
-            normalized = description[:-5] if description.endswith('_DA_0') else description
+            normalized = description.removesuffix('_DA_0')
             parsed = normalized.partition('[')[0]
         roles = [name for name, members in codes.items() if parsed in members]
         if not roles:

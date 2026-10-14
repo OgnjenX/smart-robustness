@@ -1,0 +1,47 @@
+schema_version: 1
+artifact_id: 1350
+artifact_type: sealed-explicit-mode-mapping-receipt-independent-check-pending
+date: 2026-10-14
+registration: docs/validation-results/post2008-patchseq-setting-mapping-registration-1348.yaml
+preexecution_commit: 9e8dde5
+runner: scripts/map_patchseq_notebook_settings.py
+runner_sha256: 1af813bbc9a5bd8ced18cd0dcb15ed6c92b225182593cc721ecf551e5ecd67fd
+result: results/patchseq-setting-mapping-1349/manifest.yaml
+result_sha256: 6983192061afe2e6af5da377ea96b83ea28f18f99cc8f85530fa6003719688ff
+terminal_exit_code: 0
+status: complete-explicit-mode-outcomes-retained-independent-verification-pending
+collector_reported:
+  fixed_files: 48
+  current_clamp_pairs_retained: 2330
+  supported_mapped_pairs: 1014
+  unknown_pairs: 1316
+  unknown_reason: unresolved-channel-setting-due-to-legacy-or-missing-source-mode
+  raw_source_arrays_replaced_or_imputed: false
+  mapped_property_concordance:
+    bias_current: {agrees: 1014, discordant: 0, unknown: 0}
+    bridge_balance: {agrees: 1014, discordant: 0, unknown: 0}
+    capacitance_compensation: {agrees: 1014, discordant: 0, unknown: 0}
+engineering_checks:
+  explicit_mapping_ambiguity_and_serialization_tests_passed: 7
+  aggregate_patchseq_tests_passed: 891
+  aggregate_patchseq_tests_seconds: 16.85
+  repository_ruff: passed
+  whitespace_check: passed
+claim_boundary: >-
+  These are collector-reported supported explicit-mode mappings, not independent
+  acceptance or cell-health qualification. Unknowns preserve the stricter
+  registered branch's missing-mode boundary; they do not show failed ART, failed
+  source cells or incorrect exporter execution. Matching instrument metadata
+  does not establish physical total injected current or usable intrinsic fitting
+  targets. No source class, layer, partition, threshold or selected file changed.
+next_gate: >-
+  Independently reconstruct every supported and unknown mapping and property
+  comparison. Then audit the complete historical legacy-mode and sweep-range
+  rules before a separately sealed continuation; never reinterpret the 1316
+  original unknowns as successful explicit-mode results. Cell-health decisions
+  and fitting remain separately gated, with no favorable row or cell replacement.
+health_classification_performed: false
+model_fitting_performed: false
+specimen_eligibility_established: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

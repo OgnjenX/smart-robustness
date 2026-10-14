@@ -63,6 +63,54 @@ measurements, and validation criteria do not depend on a particular cell model.
 
 ## Architecture
 
+### Post-2008 intrinsic physiology screen
+
+The Patchseq screen is an **isolated-cell fitting study**, not a new validated
+SMART baseline. It fits one effective Na/K/M parameter vector per frozen
+Pvalb/Sst/Vip and L23/L5 stratum, using training recordings only. The current
+search, initialization, tolerances, and numerical controls are sealed in
+[`protocol 1436`](docs/validation-results/post2008-patchseq-isolated-fit-registration-1436.yaml).
+The calibrated classic baseline is unchanged.
+
+These commands require the pinned local recording artifacts and exact runtime
+versions in that protocol. Raw recordings/results are ignored and are not
+distributed with the repository:
+
+```bash
+# Start or resume only when no identical runner is active.
+MPLCONFIGDIR=/private/tmp/mpl HDF5_PLUGIN_PRELOAD=:: .venv/bin/python scripts/run_patchseq_isolated_fit.py --output results/patchseq-isolated-fit-1438
+
+# Only after the main runner is terminal-complete:
+.venv/bin/python scripts/verify_patchseq_fit_checkpoint_structure.py
+
+# Only after that terminal source/structure audit succeeds:
+.venv/bin/python scripts/verify_patchseq_isolated_fit_replay.py
+
+# Only after every independent candidate reconstruction agrees:
+.venv/bin/python scripts/verify_patchseq_selected_fit.py
+```
+
+The first audit checks completeness, hashes, source identities, accounting and
+selection; it does not verify simulated physiology. The next independently
+reconstructs every training candidate's forward response, features and losses.
+The final stage compares the selected waveforms/features and independently
+checks exact repeats, time-step refinement and initialization sensitivity.
+Each stage retains failures and disagreements; none permits refitting,
+candidate replacement, wider searches, or weakened gates after outcomes.
+
+**Even successful training verification does not authorize held-out response
+scoring or network promotion.** Those require a separately sealed access and
+assessment step. Earlier outcome-independent source QC is distinct from
+held-out response features used for model validation. A sparse stratum cannot
+become population-wide evidence through pooling. Experimental holding current
+is a conditional isolated-fit input, not extra background drive in SMART.
+
+Long computations are observed at the user's scheduled interval; an observation
+timeout is not permission to restart. Unit tests, CI and consistent checkpoints
+are engineering evidence, not proof that the scientific program is complete.
+
+### Circuit and model layout
+
 ```text
 configs/                 reproducible experiment definitions
 src/smart_robustness/

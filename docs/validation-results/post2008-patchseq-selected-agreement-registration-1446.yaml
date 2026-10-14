@@ -1,0 +1,32 @@
+schema_version: 1
+artifact_id: 1446
+date: 2026-10-14
+status: before-selected-biological-agreement-outcomes
+implementation: scripts/patchseq_selected_fit_agreement.py
+tests: tests/test_patchseq_selected_fit_agreement.py
+predecessor: docs/validation-results/post2008-patchseq-independent-fit-replay-registration-1444.yaml
+execution_gate: terminal-source-structure-audit-and-complete-independent-table-verification-required-before-selected-biological-checks
+selection: original-sealed-map-only-no-new-candidate-choice-or-refit
+scope: every-retained-training-sweep-of-each-selected-stratum-map
+checks:
+  - Regenerate primary selected waveform with unchanged sealed Brian2 source.
+  - Independently replay same nominal command and initialization.
+  - Compare every observed voltage sample at fixed 1e-5 mV absolute tolerance.
+  - Compare complete primary and independent feature dictionaries with exact discrete and null structure.
+  - Float feature and numerical diagnostic comparison uses 1e-5 absolute plus 1e-9 relative arithmetic tolerance.
+  - Independently repeat exact voltage arrays and half-dt and two-second-warmup controls.
+  - Numerical control thresholds remain 0.1 mV with identical event counts and exact repeats.
+  - Retain disagreement or failed reconstruction without repairing parameters or replacing candidates.
+scope_boundary:
+  agreement: engineering-reconstruction-check-not-biological-fit-acceptance
+  numerical_pass: separate-from-agreement-of-recorded-failed-controls
+  failed_primary_control: does-not-establish-that-independent-failure-matches
+  waveform_and_feature_results: retained-for-auditable-selected-model-comparison
+  missing_target_or_failed_model: never-filled-with-zero
+  source_access: callable-only-no-file-reads-or-held-out-data-in-this-module
+next_gate: connect-terminal-pinned-selected-control-runner-and-independent-assessment-before-held-out-scoring
+biological_execution_started: false
+held_out_response_features_read: false
+network_promotion: false
+running_experiment_source_modified: false
+scientific_goal_complete: false

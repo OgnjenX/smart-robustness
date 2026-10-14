@@ -1,0 +1,41 @@
+schema_version: 1
+artifact_id: 1379
+date: 2026-10-14
+status: all-48-append-recording-hashes-and-internal-identities-independently-verified
+acquisition: results/patchseq-append-acquisition-1376/manifest.yaml
+acquisition_sha256: b2ee66404d40180a6cf401f1d7f7790c40a46758b4623af7e1e3e8a0830ccc20
+independent_acquisition: results/patchseq-append-acquisition-independent-1377/manifest.yaml
+independent_acquisition_sha256: 0b8de00309ac91079065518224adec364db16fac1698e4e64fcf7626b2e24878
+selection: results/patchseq-append-selection-1373/manifest.yaml
+selection_sha256: 60db30d33739e3784c2a3f32b02fb82cf55159d59beff0a24d5397ce22f9e137
+independent_selection: results/patchseq-append-selection-independent-1374/manifest.yaml
+independent_selection_sha256: 509d8de82bb339737c13073e023d025d1b7dca475336002f92d61dd0665602a3
+observed:
+  selection_slots: 48
+  unique_additional_recordings: 48
+  distinct_groups_within_append: 45
+  attempted_slots: 48
+  unattempted_slots: 0
+  independently_verified_content_and_identity_passes: 48
+  retained_nonpasses_or_unknowns: 0
+  charged_recording_bytes: 1739316630
+  authorized_byte_cap: 4294967296
+  original_recordings_replaced: 0
+engineering:
+  all_patchseq_tests_passed: 968
+  ruff: passed
+  diff_whitespace: passed
+  original_and_append_transport_control_equivalence_tests: passed
+interpretation: >-
+  The metadata-ranked append batch has been acquired with all source content and
+  whitelisted internal identities independently verified. This is not evidence
+  that the recordings pass waveform or cell-health QC, repair the missing held-out
+  PV layer-2/3 support, validate a neuron model, or preserve SMART network behavior.
+  All original cases and failures remain in the study; no favorable replacements,
+  partition changes, threshold changes or retrospective confirmatory claims.
+next_gate: separately-sealed-metadata-inventory-pairing-waveform-QC-and-recording-quality-under-1378
+physiological_arrays_interpreted: false
+neuron_models_fitted: false
+synaptic_recruitment_ceiling_resolved: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

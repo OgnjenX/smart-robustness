@@ -20,6 +20,8 @@ def functions(path):
 @pytest.mark.parametrize(('original', 'append', 'exclude'), [
     ('acquire_patchseq_intrinsic_recordings.py', 'acquire_patchseq_append_recordings.py', set()),
     ('verify_patchseq_intrinsic_acquisition.py', 'verify_patchseq_append_acquisition.py', {'main'}),
+    ('inventory_patchseq_trace_schema.py', 'inventory_patchseq_append_trace_schema.py', set()),
+    ('verify_patchseq_trace_schema.py', 'verify_patchseq_append_trace_schema.py', {'main'}),
 ])
 def test_transport_and_independent_check_functions_are_unchanged(original, append, exclude):
     before = functions(ROOT/'scripts'/original)
@@ -44,3 +46,12 @@ def test_append_has_separate_evidence_but_identical_transport_and_identity_rules
     for key in ('subset', 'independent_subset'):
         assert append[key] != original[key]
     assert append['physiological_arrays_or_descriptive_text_interpretation_authorized'] is False
+
+
+def test_append_metadata_scope_and_interpretation_are_unchanged():
+    prefix = ROOT/'docs/validation-results'
+    original = yaml.safe_load((prefix/'post2008-patchseq-trace-schema-registration-1318.yaml').read_text())
+    append = yaml.safe_load((prefix/'post2008-patchseq-append-trace-schema-registration-1380.yaml').read_text())
+    for key in ('scope', 'interpretation', 'parser_dependency', 'HDF5_plugin_preload'):
+        assert append[key] == original[key]
+    assert append['waveform_or_timestamp_vector_access_authorized'] is False

@@ -1,0 +1,69 @@
+schema_version: 1
+artifact_id: 1371
+artifact_type: fixed-subset-necessary-coverage-ceiling-and-next-design-decision
+date: 2026-10-14
+status: current-long-square-source-route-cannot-support-all-six-class-layer-strata
+auditor: scripts/audit_patchseq_fixed_subset_ceiling.py
+auditor_sha256: 10fd425b39bd2a2275647e2cfd512ae2475429c35e22fca1652b7af7767a4b93
+result: results/patchseq-fixed-subset-ceiling-1370/manifest.yaml
+result_sha256: 1304e2e006edf87697f903f86d1ac796a9cf4624fc0224e1b80b6abc926a2a5a
+verified_necessary_limit:
+  source_group: Pvalb
+  layer: L23
+  partition: held-out
+  selected_independent_groups: 3
+  groups_with_any_passing_long_square_waveform: 0
+  groups_with_joint_waveform_and_mandatory_recording_support: 0
+  consequence: no-held-out-physiological-validation-for-this-stratum-under-the-sealed-long-square-route
+  scope: not-a-neuron-model-failure-not-universal-absence-of-usable-physiology
+minimum_count_correction:
+  five_fit_three_heldout: acquisition-design-counts-not-an-existing-intrinsic-fitting-minimum
+  source: docs/validation-results/post2008-patchseq-intrinsic-subset-registration-1308.yaml
+  necessary_condition_used: at-least-one-supported-held-out-group-not-a-sufficient-promotion-rule
+in_scope_alternative_metadata_check:
+  source: results/patchseq-pairing-1324/manifest.yaml
+  source_sha256: 02777a5e9f76378d159eb3e4b75c10bd70d67dcfcb62db8ebfe66d6f71cb1a26
+  authoritative_ontology:
+    revision: c607a36e25618a6bb8ba5438c1cd945fb429e659
+    path: ipfx/defaults/stimulus_ontology.json
+    git_blob_sha1: 7f5145ae52a7f14a8c759f5b5dfacbfd150df98d
+    url: https://github.com/AllenInstitute/ipfx/blob/c607a36e25618a6bb8ba5438c1cd945fb429e659/ipfx/defaults/stimulus_ontology.json
+  exact_codes:
+    Noise_1: [C1NSD1SHORT17110, C2NSD1SHORT17110]
+    Noise_2: [C1NSD2SHORT17110, C2NSD2SHORT17110]
+  Pvalb_L23_held_out_Noise_1_trials: 0
+  Pvalb_L23_held_out_Noise_2_trials: 0
+  limit: other-short-pulse-ramp-or-chirp-protocols-are-not-declared-absent-or-validated-substitutes
+  interpretation: documented-noise-protocols-do-not-repair-this-held-out-coverage-gap
+engineering_checks:
+  coverage_group_count_scope_and_absent_stratum_tests_passed: 4
+  repository_ruff: passed
+preserved:
+  original_48_cells_and_failures: true
+  source_partitions: unchanged
+  old_waveform_and_recording_quality_gates: unchanged
+  class_layer_or_partition_pooling: false
+  source_replacements: 0
+  fit_or_network_parameter_tuning: false
+next_design_proposal_not_authorized_acquisition:
+  kind: separately-preregistered-source-blind-append-cohort-not-favorable-replacements
+  maximum_additional_recordings: 48
+  maximum_additional_recording_bytes: 4294967296
+  selection: next-metadata-eligible-frozen-group-ranks-per-original-class-layer-partition-no-QC-or-network-outcome-based-choice
+  retain_original_cohort: all-48-including-failures
+  partitions_and_thresholds: unchanged
+  size_or_support_preflight_failure: stop-no-smaller-file-or-favorable-cell-substitution
+  promise_of_success: none
+  provenance: new-source-preparation-design-after-known-pilot-outcomes-not-retrospective-confirmatory-relabeling
+  approval_requested_before_additional_acquisition: true
+  separate_synaptic_recruitment_ceiling: not-resolved-by-intrinsic-data-expansion
+decision: >-
+  Do not fit only a better-supported class and call the full program complete,
+  weaken waveform QC, transfer fitting cases into held-out validation, or quietly
+  change protocol endpoints to obtain a pass. Request direction for a bounded
+  separately registered expansion while preserving the original study. Current
+  source preparation is reproducible, but the full scientific goal is not achieved.
+model_fitting_performed: false
+specimen_eligibility_established: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

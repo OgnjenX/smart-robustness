@@ -1,0 +1,50 @@
+schema_version: 1
+artifact_id: 1360
+artifact_type: prospective-health-protocol-metadata-coverage
+date: 2026-10-14
+status: before-health-protocol-classification-outcomes
+metadata: results/patchseq-trace-schema-1319/manifest.yaml
+metadata_sha256: 10dc2646f3d1ef9683f666228b73d518e44f7070611efcdcdfbd5fcd2e661bdf
+independent_metadata: results/patchseq-trace-schema-independent-1321/manifest.yaml
+independent_metadata_sha256: 207123a39f70643d8efaba95183611320cdab4e335e3c1c6568883c71957f6f4
+primary_ontology:
+  revision: c607a36e25618a6bb8ba5438c1cd945fb429e659
+  path: ipfx/defaults/stimulus_ontology.json
+  git_blob_sha1: 7f5145ae52a7f14a8c759f5b5dfacbfd150df98d
+  sha256: e9a3fa7e63a9c9ecb744d8f5cf7be4f66416d03bc6b2426d4b16d91311792737
+  url: https://github.com/AllenInstitute/ipfx/blob/c607a36e25618a6bb8ba5438c1cd945fb429e659/ipfx/defaults/stimulus_ontology.json
+  correction_to_audit_1359: protocol_name_tags-are-QC-code-aliases-not-generic-ontology-name-tags
+  generic_name_tag_for_these_codes: Test
+codes:
+  bath: [EXTPINBATH, EXTPINBATH141203, EXTPINBATH180424]
+  seal: [EXTPCllATT, EXTPCllATT141203, EXTPCllATT180424]
+  breakin: [EXTPBREAKN, EXTPBREAKN141203, EXTPBREAKN180424]
+  blowout: [EXTPBLWOUT, EXTPBLWOUT141203]
+rules:
+  cases: same-48-retain-all
+  descriptions: all-present-attribute-and-dataset-locations-must-agree
+  code_extraction: official-loader-remove-literal-terminal-_DA_0-then-split-at-first-opening-bracket
+  role_assignment: exact-ontology-code-membership-no-prefix-or-Test-name-guessing
+  sweeps: explicit-nonnegative-uint32-all-present-locations-agree
+  namespace: core
+  bath_seal_breakin_types: VoltageClampSeries-and-VoltageClampStimulusSeries
+  blowout_types: CurrentClampSeries-and-CurrentClampStimulusSeries
+  IZeroClampSeries: retain-unsupported-for-distinct-no-stimulus-contract
+  roots: response-acquisition-and-stimulus-stimulus-presentation
+  pairing: exactly-one-response-and-one-stimulus-per-protocol-and-sweep
+  clocks: finite-start-and-positive-rate-exact-start-rate-count-agreement
+  time_unit_literals: [seconds, Seconds]
+  units: VC-response-amperes-command-volts-CC-response-volts-command-amperes
+  conversions: explicit-finite-nonzero-no-nominal-rounding-no-offset
+  missing_conflicting_unsupported: retain-not-drop-or-default
+  nonhealth_series: retain-path-type-and-raw-description-in-inventory
+  selected_health_trial: none-all-trials-retained-no-value-based-selection
+scope_limit: metadata-only-not-safe-array-decoding-or-physical-health-qualification
+output: results/patchseq-health-protocols-1361/manifest.yaml
+execution_gate: commit-registration-reader-and-code-role-pairing-tests-before-outcomes
+next_gate: independent-protocol-and-pairing-reconstruction-then-separate-health-array-protocol
+new_HDF5_or_waveform_reads_authorized: false
+model_fitting_authorized: false
+specimen_eligibility_established: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

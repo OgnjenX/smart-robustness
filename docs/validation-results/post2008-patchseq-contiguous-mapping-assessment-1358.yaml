@@ -1,0 +1,48 @@
+schema_version: 1
+artifact_id: 1358
+artifact_type: independently-verified-historical-explicit-range-metadata
+date: 2026-10-14
+status: all-contiguous-block-and-instrument-mappings-verified-not-cell-health-QC
+registration: docs/validation-results/post2008-patchseq-contiguous-mapping-registration-1354.yaml
+preexecution_commit: 8300e4a
+result: results/patchseq-contiguous-mapping-1355/manifest.yaml
+result_sha256: 0c36a1f9bf7fbeb7547b4ecbd9052d4b8fe2246d697bda1c11b3c77ca7b95c08
+verifier: scripts/verify_patchseq_contiguous_mapping.py
+verifier_sha256: 19183ed363fad3c53ae1c0276a2ca4e07cfa3ae1dac385960b063a41aa6e6d13
+independent_property_checker: scripts/verify_patchseq_setting_mapping.py
+independent_property_checker_sha256: 7dd0fce9568e4325369df10de239efb1832be20048035b0fa1b6d88ca30e1295
+independent_result: results/patchseq-contiguous-mapping-independent-1357/manifest.yaml
+independent_result_sha256: ede08e8dd290b9d6ee5fb13ce54428477ad90e1af42625f68d275fe1ebea6023
+terminal_collector_and_verifier_exit_codes: [0, 0]
+verified:
+  fixed_files: 48
+  current_clamp_pairs: 2330
+  supported_headstage_mappings: 2330
+  instrument_field_comparisons_agree: 6990
+  original_strict_outcomes_preserved_verbatim: 2330
+  source_block_memberships_and_native_source_row_indices: independently-reconstructed
+  raw_archives_and_all_pinned_source_hashes: unchanged
+method: >-
+  Enumerate contiguous runs by forward scanning, independently of the collector's
+  reverse block search. Slice the actual raw rows rather than build a masked
+  identity lookup view. Translate output source-row indices into slice-local
+  indices and use the separate independent property checker to reconstruct
+  ADC/DAC/headstage, clamp mode, native/enabled values, unit labels and exact
+  float32 export comparisons. Compare every preserved original strict result.
+engineering_checks:
+  independent_block_and_source_index_corruption_tests_passed: 6
+  aggregate_patchseq_tests_passed: 905
+  aggregate_patchseq_tests_seconds: 16.27
+  repository_ruff: passed
+limits:
+  - The independent checker covers this observed all-mapped explicit-block result; legacy missing-block or headstage-fixup branches are not claimed.
+  - Original strict results remain 1014 supported and 1316 unknown; they were not overwritten or called successful strict results.
+  - Disabled instrument fields imply expected exporter omission, not physical zero holding current.
+  - Instrument correspondence is not successful seal/access-resistance QC or an intrinsic fitting objective.
+  - No waveform quality threshold, selected file, source class, layer, partition or frozen baseline changed.
+next_gate: protocol-specific-cell-health-source-audit-before-voltage-clamp-health-array-measurements
+health_classification_performed: false
+model_fitting_performed: false
+specimen_eligibility_established: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

@@ -1,0 +1,65 @@
+schema_version: 1
+artifact_id: 1359
+artifact_type: primary-source-health-measurement-semantics-not-eligibility
+date: 2026-10-14
+status: protocol-specific-measurements-required-no-health-classification
+historical_MIES:
+  revision: 061c3b5f56c2f43b9579aa0933af85fd1a360ab6
+  sources:
+    - path: Packages/MIES/MIES_TestPulse.ipf
+      git_blob_sha1: 820b362d5ebe796b14293195f135bf2618a5fbad
+      inspected_ranges: [[286, 336], [457, 471]]
+      url: https://github.com/AllenInstitute/MIES/blob/061c3b5f56c2f43b9579aa0933af85fd1a360ab6/Packages/MIES/MIES_TestPulse.ipf
+    - path: Packages/MIES/MIES_ExperimentDocumentation.ipf
+      git_blob_sha1: c27626128799056b6658456451c47600fcaa7424
+      inspected_ranges: [[641, 719]]
+      url: https://github.com/AllenInstitute/MIES/blob/061c3b5f56c2f43b9579aa0933af85fd1a360ab6/Packages/MIES/MIES_ExperimentDocumentation.ipf
+  findings:
+    resistance: current-clamp-delta-voltage-over-current-versus-voltage-clamp-command-over-current
+    units: native-MOhm
+    logging_mode: test-pulse-mode-1
+    logging_sweep: last-acquired-sweep-number-not-proof-of-pre-sweep-measurement
+    storage_context: TPStorage-values-capped-at-TP_MAX_VALID_RESISTANCE-with-separate-valid-state
+    implication: generic-TP-peak-or-series-resistance-label-cannot-alone-establish-seal-or-access-health
+official_IPFX:
+  revision: c607a36e25618a6bb8ba5438c1cd945fb429e659
+  sources:
+    - path: ipfx/qc_features.py
+      git_blob_sha1: 7db47347bd46844c942c65a58c9c9fc99b10d698
+      inspected_ranges: [[4, 30], [50, 141]]
+      url: https://github.com/AllenInstitute/ipfx/blob/c607a36e25618a6bb8ba5438c1cd945fb429e659/ipfx/qc_features.py
+    - path: ipfx/stimulus.py
+      git_blob_sha1: 562c269544ce7f2582d0c9ff5902a636cc762f17
+      inspected_ranges: [[26, 61], [123, 126]]
+      url: https://github.com/AllenInstitute/ipfx/blob/c607a36e25618a6bb8ba5438c1cd945fb429e659/ipfx/stimulus.py
+  protocol_name_tags:
+    bath: EXTPINBATH
+    seal: EXTPCllATT
+    breakin: EXTPBREAKN
+    blowout: EXTPBLWOUT
+  measurement_definitions:
+    electrode_zero: first-5-ms-mean-current-in-bath-protocol
+    seal: stable-pulse-delta-voltage-over-delta-current-in-GOhm
+    input_resistance: stable-pulse-delta-voltage-over-delta-current-in-MOhm
+    initial_access_resistance: positive-pulse-peak-current-ratio-in-MOhm
+    blowout: mean-voltage-after-test-epoch
+  pulse_rule:
+    edges: raw-voltage-difference-indices-with-positive-pulses-required
+    first_test_pulse: dropped
+    stable_window: 1-ms-before-onset-and-end-using-source-indices
+    no_pulse_or_truncated_window: cannot-impute-valid-resistance
+  limit: current-official-analysis-code-not-proof-of-original-2020-QC-execution
+decision: >-
+  First seal an exact ontology-code/protocol and metadata-pairing coverage audit
+  over all 48 files. Then register only source-defined health array calculations
+  with explicit storage, unit, clock, pulse and missingness guards before new
+  voltage-clamp samples are read. Do not replace measured seal/access resistance
+  with an amplifier setting or an arbitrary test-pulse label, infer an original
+  QC pass from archive membership, repair source pulse conventions after outcomes,
+  or reduce minimum usable-source requirements. Preserve source health unknowns.
+next_gate: prospective-health-protocol-metadata-coverage-before-new-health-array-reads
+health_classification_performed: false
+model_fitting_authorized: false
+specimen_eligibility_established: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

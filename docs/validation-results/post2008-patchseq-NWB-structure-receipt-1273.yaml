@@ -1,0 +1,47 @@
+schema_version: 1
+artifact_id: 1273
+artifact_type: sealed-offline-structural-discovery-incomplete-receipt
+date: 2026-10-14
+registration: docs/validation-results/post2008-patchseq-NWB-structure-registration-1271.yaml
+registration_sha256: b4a23dc9a9330a5a60c07eb60ef9436213ada6909de6a76db8dbfbf21203949d
+sealed_commit: 025442e
+runner: scripts/inspect_patchseq_NWB_structure.py
+runner_sha256: 13791b6a13c5670f33ab03a39ce969212406d1e243238afa47e6071cf976aa98
+result: results/patchseq-NWB-structure-1272/manifest.yaml
+result_sha256: 9cbcd5b4a9380928022d6ebffcd4936d8951b5032efef2b05dec3ab7da198b10
+status: terminal-incomplete-cached-byte-coverage-insufficient
+process_exit_code: 0
+scientific_or_structural_gate_passed: false
+observed:
+  root_name_descriptors: 11
+  metadata_object_descriptors: 1
+  last_described_metadata_object: /general
+  terminal_error_type: ValueError
+  terminal_error: offline replay attempted an uncovered byte span
+  new_network_requests: 0
+  dataset_values_read: false
+  attribute_values_read: false
+engineering_checks:
+  new_structural_tests_passed: 2
+  prior_aggregate_patchseq_tests_passed: 600
+  repository_ruff: passed
+claim_boundary: >-
+  Normal process exit signifies a retained terminal outcome, not successful
+  discovery. Only root names/link types and the general group's type/attribute
+  names were retained before the sparse reader refused an uncovered byte span.
+  Deeper metadata paths are unknown, not absent. No additional identity is proven,
+  no physiology is interpreted, and no specimen is qualified. The prior pilot's
+  independently verified missing standard ID fields remain unchanged. No sealed
+  runner was revised after observing this outcome.
+next_gate: >-
+  Register a separate bounded metadata-range acquisition, retaining the same
+  source-blind asset, immutable ETag, structural scope and no-value policy. It must
+  retain this failure, bound new reads and requests, and independently replay the
+  expanded cache. Alternatively an author-manifest/content-hash identity route
+  requires a separately justified protocol; neither route may invent RNA aliases
+  or silently promote the cell-ID-only associations to qualified physiology.
+independent_structural_reconstruction_pending: true
+specimen_eligibility_established: false
+prior_failed_name_tests_modified: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

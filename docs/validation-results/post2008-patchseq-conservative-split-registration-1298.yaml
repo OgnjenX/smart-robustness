@@ -1,0 +1,46 @@
+schema_version: 1
+artifact_id: 1298
+artifact_type: registered-conservative-source-group-partition-not-qualified-cohort
+date: 2026-10-14
+status: registration-before-group-and-partition-outcomes
+purpose: >-
+  Freeze a leakage-resistant metadata partition before physiology selection or
+  fitting. Treat author donor, author cell and archive subject as distinct keys;
+  sharing any key conservatively joins records without asserting biological
+  namespace equivalence. This does not qualify cells or assign RNA confidence.
+file_references: results/patchseq-2021-file-reference-1234/manifest.yaml
+file_references_sha256: 5c701da3f8d443a9e2a5fe488ddf59b4a7ea648058c0922aa373b2104027bb78
+independent_references: results/patchseq-2021-file-reference-independent-1236/manifest.yaml
+independent_references_sha256: 9306dde9013a3979fb050515c43a68fa2785b173b9538e1293eacec8d7981ebe
+July: results/patchseq-July-June-comparison-1198/manifest.yaml
+July_sha256: 4c31f9b2cf447b0c82388795417402563c979291b4a223c3fb6e2d109302bcb3
+scope: all-4435-existing-external-file-reference-records-no-class-or-outcome-filter
+registered_July_fields: [cell_specimen_id, ephys_session_id, donor_id]
+group_rules:
+  - Each asset contributes a namespaced asset_id node, literal archive-subject node, and all candidate author-cell and author-donor nodes linked through its session.
+  - Require original positive-decimal raw identifiers and exact canonical projection agreement; missing/noncanonical values are retained as unresolved, not normalized or silently removed.
+  - Ambiguous source joins retain all candidate source-row references and connect all available keys conservatively; ambiguity cannot create an eligibility pass.
+  - Record every component's sorted namespaced keys and source asset membership. Equal digits in different namespaces do not merge without an observed linking record.
+  - Group identifier is SHA256 of UTF8 JSON of the sorted node-name list with separators comma and colon and ensure_ascii true.
+partition:
+  domain: patchseq-conservative-source-group-split-v1
+  hashing: SHA256-of-UTF8-domain-NUL-group-identifier
+  decision: first-eight-digest-bytes-big-endian-less-than-floor-two-thirds-of-2-to-64-means-fitting-otherwise-held-out
+  unit: complete-connected-component-never-individual-cell
+  label_only: true
+  eligibility_filtering: subsequent-eligible-subsets-inherit-frozen-group-partition-never-recompute
+  rebalancing_or_seed_search: prohibited
+  source_class_layer_or_quality_used: false
+  group_minimums: not-evaluated-here-retain-separate-experiment-specific-gates
+output: results/patchseq-conservative-split-1299/manifest.yaml
+execution_gate: commit-registration-runner-tests-before-real-group-partition-outcomes
+next_gate: independent-graph-and-hash-reconstruction-before-source-annotation-cohort-contract
+physical_donor_equivalence_inference_allowed: false
+unseen_recording_or_model_training_independence_claim_allowed: false
+mapping_confidence_assignment_allowed: false
+physiological_array_access_allowed: false
+cohort_qualification_allowed: false
+network_requests_allowed: 0
+prior_failed_name_and_literal_donor_gates_modified: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

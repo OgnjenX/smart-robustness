@@ -1,0 +1,49 @@
+schema_version: 1
+artifact_id: 1310
+artifact_type: finite-source-subset-and-resource-preflight-receipt
+date: 2026-10-14
+registration: docs/validation-results/post2008-patchseq-intrinsic-subset-registration-1308.yaml
+registration_sha256: 8e26374dbd7a3e0876b18d85c2ff55854668ac7c43fb61f4c05e14777f772de7
+sealed_commit: ab18ad6
+runner: scripts/select_patchseq_intrinsic_subset.py
+runner_sha256: 44f8bfe95110bcee15098ab4f32fbbc8471c9ade4fb2b98560a5acf58ec8adb8
+result: results/patchseq-intrinsic-subset-1309/manifest.yaml
+result_sha256: dcf2bdf39e44c82190b63aa62de46df84314ffec47f76e01e85726cdbd9088d3
+status: fixed-subset-preflight-complete-independent-selection-verification-pending
+terminal_exit_code: 0
+collector_reported:
+  selection_slots: 48
+  unique_recordings: 48
+  unique_conservative_source_groups: 41
+  total_expected_recording_bytes: 1566173329
+  registered_total_byte_cap: 4294967296
+  selected_slot_preflight_failures: 0
+  problems: []
+  qualified_specimens: 0
+engineering_checks:
+  selector_and_no_replacement_tests_passed: 8
+  aggregate_patchseq_tests_passed: 704
+  aggregate_patchseq_tests_seconds: 14.54
+  repository_ruff: passed
+claim_boundary: >-
+  Five fitting and three held-out source groups are selected independently within
+  each of the six source-class/anatomy-label strata using the fixed identifier
+  order. Forty-one distinct groups occur across all forty-eight slots because a
+  group may contribute different source-class/layer specimens, always on its
+  original global partition. This is a finite deterministic source subset, not
+  a representative population sample, proof of biological donor independence,
+  qualified physiology, fulfilled response/recruitment counts or a fitted model.
+  Expected sizes and hashes are source declarations pending full content checks.
+  No recording download or trace interpretation occurred in this selector.
+next_gate: >-
+  Independently reconstruct all slots, group ranks, within-group cell selection,
+  author references, sizes/hashes and aggregate limits. Only then separately seal
+  bounded single-runner acquisition and local storage preflight. Retain any later
+  transport or QC failure without replacement or changing metadata selection.
+independent_selection_verification_pending: true
+recording_download_authorized_by_this_receipt: false
+physiological_array_access_authorized: false
+specimen_eligibility_established: false
+prior_failed_gates_modified: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

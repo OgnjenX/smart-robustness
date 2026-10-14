@@ -1,0 +1,50 @@
+schema_version: 1
+artifact_id: 1348
+artifact_type: prospective-explicit-mode-sweep-headstage-and-export-concordance
+date: 2026-10-14
+status: before-setting-mapping-outcomes
+numeric: results/patchseq-notebook-numeric-1345/manifest.yaml
+numeric_sha256: c134e8ffadc6c3f670fc229680b4a68b3534f79c54e83fca66474c3f25731f90
+independent_numeric: results/patchseq-notebook-numeric-independent-1346/manifest.yaml
+independent_numeric_sha256: 47587f6a6963474d3c1ac821e361bc03099bc8fbba09218986f852a1c2293169
+pairing: results/patchseq-pairing-1324/manifest.yaml
+pairing_sha256: 02777a5e9f76378d159eb3e4b75c10bd70d67dcfcb62db8ebfe66d6f71cb1a26
+instrument_metadata: results/patchseq-waveform-QC-1328/manifest.yaml
+instrument_metadata_sha256: 13e054b090b22b45196bb2571d63cee4577c4e169a2a3c788fb4efbef3683564
+scope: all-48-recordings-all-2330-current-clamp-pairs-no-HDF5-or-new-waveform-reads
+primary_exporter:
+  MIES_revisions: [061c3b5f, 33b63e3b]
+  IPNWB_revision: e66fdcebc7ab07338c96794d6b0672c250a0ede5
+  source: https://github.com/AllenInstitute/IPNWB/blob/e66fdcebc7ab07338c96794d6b0672c250a0ede5/IPNWB_Writer.ipf
+  series_template_lines: [397, 404]
+  property_serialization_line: 467
+  clamp_constants: {V_CLAMP_MODE: 0, I_CLAMP_MODE: 1, I_EQUAL_ZERO_MODE: 2}
+rules:
+  sweep_identity: verified-explicit-sweep-number-not-group-index-or-filename
+  channel_names: full-historical-data-numeric-index-AD-or-DA-channel-template-only
+  unsupported_channel_suffix: retained-unknown-no-guess
+  notebook: exactly-one-table-no-device-pooling
+  labels: exactly-one-column-per-required-label-duplicates-unknown
+  sweep_rows: exact-integer-matches-in-page-0-no-fractional-casting
+  mode: explicitly-finite-0-1-or-2-at-page-0-no-legacy-heuristic-if-any-missing-or-invalid
+  setting_vector: last-matching-acquisition-mode-0-row-not-all-NaN-across-nine-pages
+  headstage: unique-page-0-through-7-with-matching-ADC-DAC-and-I-Clamp-mode-1
+  headstage_active: explicit-1-required-inactive-or-missing-unknown-no-historical-fixup-imputation
+  enabled: separate-last-setting-explicit-0-or-1-only
+  disabled: expected-property-absent-not-physical-zero-bias
+  enabled_finite_value: exact-float32-serialization-equality-to-exported-property
+  native_unit_labels: retain-exact-pA-MOhm-pF-no-SI-reinterpretation
+  mapped_fields:
+    bias_current: [I-Clamp Holding Level, I-Clamp Holding Enable, pA]
+    bridge_balance: [Bridge Bal Value, Bridge Bal Enable, MOhm]
+    capacitance_compensation: [Neut Cap Value, Neut Cap Enabled, pF]
+  missing_nonfinite_ambiguous: retain-unknown-no-favorable-row-headstage-or-column-choice
+  disagreements: retain-discordant-do-not-change-archive-or-existing-QC
+claim_boundary: supported-explicit-mode-export-concordance-not-complete-historical-heuristic-replay-or-cell-health-QC
+output: results/patchseq-setting-mapping-1349/manifest.yaml
+execution_gate: commit-contract-runner-and-ambiguity-serialization-tests-before-outcomes
+next_gate: independently-reconstruct-mapping-then-source-backed-cell-health-assessment-and-fit-target-registration
+model_fitting_authorized: false
+specimen_eligibility_established: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

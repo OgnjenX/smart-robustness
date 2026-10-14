@@ -1,0 +1,60 @@
+schema_version: 1
+artifact_id: 1265
+artifact_type: independently-reconstructed-archive-identity-and-reported-checksum-assessment
+date: 2026-10-14
+registration: docs/validation-results/post2008-patchseq-archive-identity-evidence-registration-1260.yaml
+registration_sha256: 50d8406a11f393604a513ce196861c6c542631d3d76a426e299fd34ac8bcb2e7
+sealed_collector_commit: ef87c52
+result: results/patchseq-archive-identity-evidence-1261/manifest.yaml
+result_sha256: 9ea9fe950b604020c5f15098816ea8235b07ca2971e3068ce8efb669b1a99502
+verifier: scripts/verify_patchseq_archive_identity_evidence.py
+verifier_sha256: 954c71fcc37042f3d5625234815c721525a9b0ad6e0568db96e1cded434d02f7
+independent_result: results/patchseq-archive-identity-evidence-independent-1264/manifest.yaml
+independent_result_sha256: 3052da7d2925cf9adac621695c69adc9c8ad3efd2b312fa1b0f035637e6e8c9c
+status: all-archive-identity-and-digest-evidence-independently-reconstructed
+independent_check:
+  method: >-
+    Re-read each original raw response using the already pinned independent
+    JSON projection reader, not the identity inventory collector. Independently
+    compare raw JSON types and values against catalog path/size tokens and
+    original typed source checksum strings. Rebuild every actor candidate,
+    unknown comparison, digest diagnostic and complete evidence record. Derive
+    all summary counts through flattened comparison lists; compare full records
+    and summaries with type-preserving JSON equality and rehash all source pins.
+  terminal_exit_code: 0
+  outcome: passed
+results:
+  assets: 4435
+  literal_path_agreements: 4435
+  positive_integer_contentSize_agreements: 4435
+  participant_identifier_path_subject_agreements: 4435
+  Session_identifier_path_session_agreements: 4435
+  other_activity_candidate_comparisons_unknown: 4435
+  literal_reported_SHA256_agreements: 4435
+  dandi_etag_comparisons_unknown: 4435
+  independently_content_verified_assets: 0
+  eligible_specimens: 0
+engineering_checks:
+  focused_verifier_tests_passed: 14
+  focused_verifier_tests_seconds: 0.04
+  aggregate_patchseq_tests_passed: 571
+  aggregate_patchseq_tests_seconds: 14.04
+  repository_ruff: passed
+  git_diff_whitespace_check: passed
+claim_boundary: >-
+  Archive-extracted metadata agrees with the catalog and source manifest, including
+  its reported SHA256 values. File contents have not been downloaded or hashed
+  independently. Session and subject tokens are not annotation donor equivalence
+  or RNA sample aliases. Both failed name checks remain failed. This source
+  integrity milestone does not validate neuron physiology or SMART behavior.
+next_gate: >-
+  Seal a deterministic source-blind first-file NWB schema/identity metadata pilot
+  with HTTP range limits, immutable entity checks and a logical metadata whitelist.
+  Do not read trace arrays or select a physiology cohort. Independently validate
+  its saved ranges and interpretation before scaling or fitting any neurons.
+recording_bodies_fully_downloaded: false
+physiological_arrays_read: false
+specimen_qualification_performed: false
+prior_failed_name_tests_modified: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

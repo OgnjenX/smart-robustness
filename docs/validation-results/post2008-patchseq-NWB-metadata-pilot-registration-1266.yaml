@@ -1,0 +1,88 @@
+schema_version: 1
+artifact_id: 1266
+artifact_type: bounded-source-blind-NWB-schema-identity-metadata-pilot-registration
+date: 2026-10-14
+catalog: results/patchseq-catalog-independent-1167/manifest.yaml
+catalog_sha256: 8a53db830724723de66d3a51aaffa21d0c71e5d6e10e2a55f8862c74918bcf60
+archive_evidence: results/patchseq-archive-identity-evidence-1261/manifest.yaml
+archive_evidence_sha256: 9ea9fe950b604020c5f15098816ea8235b07ca2971e3068ce8efb669b1a99502
+independent_evidence: results/patchseq-archive-identity-evidence-independent-1264/manifest.yaml
+independent_evidence_sha256: 3052da7d2925cf9adac621695c69adc9c8ad3efd2b312fa1b0f035637e6e8c9c
+acquisition_manifest: results/patchseq-archive-identity-metadata-1239/manifest.yaml
+acquisition_manifest_sha256: 6143c5f38dee95355235728d6620313d4fa5e2cad255d7097de0d2875fcc1911
+selection:
+  count: 1
+  order: ascending literal catalog path, then asset UUID
+  class_anatomy_quality_or_network_outcome_selection: false
+purpose: Establish format and bounded metadata-read feasibility, not validate the whole cohort or choose a favorable cell.
+output_directory: results/patchseq-NWB-metadata-pilot-1267
+source_documentation:
+  - https://docs.dandiarchive.org/user-guide-using/accessing-data/streaming/
+  - https://docs.h5py.org/en/stable/high/file.html
+parser_dependency: h5py==3.12.1
+URL_resolution:
+  source: verified raw asset metadata response
+  newly_authorized_field: contentUrl
+  permitted_containers: [top_level, literal_metadata_object]
+  allowed_hosts: [dandiarchive.s3.amazonaws.com, dandiarchive.s3.us-east-1.amazonaws.com, dandiarchive.s3.us-east-2.amazonaws.com]
+  allowed_scheme: https
+  required_path_prefix: /blobs/
+  username_password_or_nonstandard_port_authorized: false
+  unique_exact_direct_object_URL_required: true
+  maximum_HEAD_requests: 2
+  maximum_HEAD_redirects: 1
+  redirect_requires_same_blob_path_and_allowed_host: true
+  returned_query_strings_in_user_facing_output_authorized: false
+HTTP_range_limits:
+  maximum_unique_downloaded_bytes: 4194304
+  cache_block_bytes: 65536
+  maximum_range_requests: 64
+  timeout_seconds_per_request: 30
+  maximum_run_seconds: 900
+  retries_authorized: false
+  range_redirects_authorized: false
+  require_HTTP_206: true
+  require_exact_Content_Range_and_catalog_total_size: true
+  require_identity_content_encoding: true
+  require_strong_HEAD_ETag_and_If_Match_for_every_range: true
+  require_HEAD_Content_Length_equals_catalog_size: true
+logical_metadata_reads:
+  root_attributes: [nwb_version]
+  datasets:
+    - /nwb_version
+    - /identifier
+    - /session_id
+    - /general/subject/subject_id
+    - /general/subject/specimen_id
+    - /general/subject/ephys_result_id
+    - /general/subject/cell_id
+  scalar_or_single_element_only: true
+  maximum_decoded_value_bytes: 4096
+  external_or_soft_links_authorized: false
+  virtual_or_external_datasets_authorized: false
+  compressed_scalar_dataset_reads_authorized: false
+  HDF5_plugin_preload: '::'
+rules:
+  - Seal the runner and fixture tests before resolving contentUrl or opening NWB metadata.
+  - Preserve every URL candidate and reject ambiguity; do not select a first candidate by availability or contents. Never access unapproved hosts or follow unvalidated redirects.
+  - Acquire immutable entity evidence with HEAD before ranges; retain HTTP headers, byte spans, timing and hashes for every requested block, including failures.
+  - Enforce byte/request/time limits in the backing file object and inspect only the logical metadata whitelist. Do not fall back to whole-file download or a driver that silently fetches the full body.
+  - Physical HDF5 blocks may contain incidental neighboring payload bytes; do not interpret them as physiological arrays. Report both fetched bytes and logical dataset reads explicitly.
+  - Close the HDF5 file before its backing file object. Open read-only and disable dynamic HDF5 plugins before import.
+  - Reject external and soft links at every traversed path component before dereferencing, and reject virtual/external datasets or unsupported value shapes/types.
+  - Preserve missing optional identity fields, raw scalar types and unexpected formats. Do not infer identities from free text or filenames.
+  - Compare available literal subject_id and session_id metadata against the expected path tokens as consistency diagnostics only. Optional specimen/cell/ephys fields remain raw until separately registered semantic comparisons.
+  - Partial ranges cannot independently establish the complete-file SHA256; retain the reported digest and mark full-content verification false.
+  - Stop and retain evidence on budget exhaustion or integrity failure. No automatic restart, retry, parameter fitting or favorable-cell substitution.
+  - Independently verify all range receipts, replay only saved ranges offline and reconstruct metadata interpretations before any cohort-wide read or physiological array acquisition.
+external_requests_authorized: true
+partial_recording_bytes_authorized: true
+whole_recording_download_authorized: false
+physiological_array_reads_authorized: false
+cohort_selection_authorized: false
+mapping_confidence_assignment_authorized: false
+specimen_qualification_authorized: false
+parameter_fitting_authorized: false
+network_execution_authorized: false
+frozen_baseline_modified: false
+next_gate: Independently validate range integrity and metadata-only replay, then separately register full-cohort or fitting-cohort provenance checks and physiological acquisition under the original staged scientific gates.

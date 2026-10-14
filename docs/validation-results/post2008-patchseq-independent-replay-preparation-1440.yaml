@@ -1,0 +1,43 @@
+schema_version: 1
+artifact_id: 1440
+date: 2026-10-14
+status: synthetic-independent-forward-engine-verified-biological-replay-not-started
+predecessors:
+  - docs/validation-results/post2008-patchseq-isolated-fit-registration-1436.yaml
+  - docs/validation-results/post2008-patchseq-fit-checkpoint-audit-registration-1439.yaml
+implementation: scripts/patchseq_hh_independent_replay.py
+tests: tests/test_patchseq_hh_independent_replay.py
+primary_equations:
+  revision: 8dfc13fb03c162f5ad1b5e13f94225c983391af7
+  Na_K: https://github.com/ModelDBRepository/123623/blob/8dfc13fb03c162f5ad1b5e13f94225c983391af7/HH_traub.mod
+  M: https://github.com/ModelDBRepository/123623/blob/8dfc13fb03c162f5ad1b5e13f94225c983391af7/IM_cortex.mod
+independence:
+  equations_and_integration: separately-written-NumPy-SciPy-RK4-no-Brian-parser-or-code-generator
+  production_imports: no-fitting-runner-objective-search-or-primary-model-imports
+  units: explicit-mV-ms-nS-pA-pF-with-current-and-capacitance-scaling-documented
+  initialization: equilibrium-at-candidate-leak-voltage-under-same-sealed-model-assumption
+  input: constant-native-holding-added-once-full-source-sample-zero-order-hold
+  refinement: repeat-current-samples-at-half-dt-and-return-original-grid-voltage
+  numerical_failures: explicit-error-no-clipping-of-voltage-or-gates-no-zero-filling
+  array_bound: at-most-20-million-output-voltage-values-per-call
+synthetic_verification:
+  tests_passed: 13
+  passive_step_and_sample_timing: analytic-RC-comparison-1e-9-mV
+  repeat: exact-array-equality
+  holding_and_warmup: independent-analytic-RC-comparison
+  source_rate_singularities: analytic-limits-at-shifted-13-15-40-mV
+  RK4_control: SciPy-DOP853-active-trajectory-0.1-mV-tolerance
+  RK4_control_scope: adaptive-integrator-check-shares-this-independent-derivative-not-an-additional-equation-proof
+  cross_engine_control: synthetic-Brian2-active-trajectory-1e-5-mV-absolute-tolerance
+  biological_response_features_used: false
+limitations:
+  - Biological forward reconstruction and independent sweep scoring have not been executed.
+  - Synthetic agreement does not prove convergence across the full parameter search.
+  - Effective voltages, total conductances, fixed reversals and temperature remain conditional model choices.
+  - Independent execution must reproduce retained failures, not silently omit unstable candidates.
+  - This preparation does not authorize held-out responses or network promotion.
+next_gate: terminal-main-screen-and-source-integrity-check-then-seal-checkpointed-independent-source-command-and-feature-loss-reconstruction
+running_experiment_source_modified: false
+main_checkpoint_outcomes_used_for_this_preparation: false
+held_out_response_features_read: false
+scientific_goal_complete: false

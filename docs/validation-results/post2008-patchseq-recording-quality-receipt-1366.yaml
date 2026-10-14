@@ -1,0 +1,50 @@
+schema_version: 1
+artifact_id: 1366
+artifact_type: protocol-specific-measurement-receipt-independent-verification-pending
+date: 2026-10-14
+registration: docs/validation-results/post2008-patchseq-recording-quality-registration-1364.yaml
+preexecution_commit: 7c070a5
+runner: scripts/measure_patchseq_recording_quality.py
+runner_sha256: 7822fb87dd05d3eebbef5d7ea269dd2c9bc888afdad0c9d7c3ad69c5c12f0e2d
+result: results/patchseq-recording-quality-1365/manifest.yaml
+result_sha256: 431dfe8c5a0378a525a04143bd3dc82bfafda93a5d8b810f07f1b432a5896b1c
+terminal_exit_code: 0
+status: all-fixed-measurement-outcomes-retained-independent-reconstruction-pending
+collector_reported:
+  fixed_recordings: 48
+  measured_bath_trials: 45
+  measured_seal_trials: 52
+  measured_breakin_trials: 63
+  trial_measurement_or_decoder_unknowns: 0
+  mandatory_measurement_gate_passes: 45
+  mandatory_measurement_gate_failures: 0
+  mandatory_measurement_gate_unknowns: 3
+  mandatory_unknown_cause: missing-recognized-bath-or-breakin-protocols
+  charged_float64_decoded_bytes: 120168000
+  blowout_state: unassessed-all-48-not-imputed
+  complete_cell_health_established: false
+engineering_checks:
+  synthetic_source_pulse_indices_ratios_missingness_and_no_favorable_fallback_tests_passed: 8
+  aggregate_patchseq_tests_passed: 924
+  aggregate_patchseq_tests_seconds: 16.62
+  repository_ruff: passed
+claim_boundary: >-
+  These are collector measurement outcomes under the prospectively sealed
+  mandatory IPFX-derived limits, not independent acceptance or source-model
+  promotion. Optional missing-blowout handling is explicitly grounded in the
+  official evaluator but does not establish an observed successful blowout or
+  complete cell health. Missing required protocols remain unknown. The largest
+  sweep-number trial is used without choosing a better earlier measurement.
+  No original historical QC execution, physical total-current convention,
+  minimum independent-unit count or adequate fitting-target coverage is inferred.
+next_gate: >-
+  Independently reconstruct all source arrays, pulse/window/peak indices,
+  numeric measurements, deterministic selected trials and mandatory gates.
+  Seal the numerical comparison contract before verification, keeping scientific
+  thresholds exact. Then assess retained source coverage with existing sweep-QC
+  and frozen partitions before separately preregistering any intrinsic fit.
+independent_measurements_pending: true
+model_fitting_performed: false
+specimen_eligibility_established: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

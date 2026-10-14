@@ -1,0 +1,51 @@
+schema_version: 1
+artifact_id: 1256
+artifact_type: primary-cell-ID-and-original-methods-object-provenance-audit
+date: 2026-10-14
+official_identifier_documentation:
+  sources:
+    - https://brain-map.org/support/documentation/documentation-cell-types-database
+    - https://allensdk.readthedocs.io/en/latest/allensdk.api.queries.cell_types_api.html
+  findings:
+    - Allen documentation uses the Specimen ID as a cell-level database identifier for linked electrophysiology and morphology resources.
+    - The NWB query example selects model Specimen by its id and follows the associated ephys_result resource.
+  limit: >-
+    This establishes the provider's cell identifier convention, not a complete
+    per-row proof of methods cell_id semantics or RNA sample alias equivalence.
+methods_source_history:
+  repository: AllenInstitute/patchseqtools
+  file: manuscript_data/metadata_mouse.csv
+  recent_file_commits:
+    - revision: 228dccc6f435737de10b738724ae41a9e23156e1
+      date: '2021-07-30T06:30:24Z'
+      message: Uploading additional manuscript data files.
+    - revision: c0781fcf5791603a67426af57e4c840988916e1d
+      date: '2021-07-27T18:44:05Z'
+      message: Uploading files associated with Lee, Budzillo et al 2021 (under review).
+  July_30_tree_object:
+    git_blob_sha1: adeb5ab7f7d73a3e3af2891a88562dc7e3c4eef8
+    bytes: 3130318
+  relation_to_acquired_current_pinned_object: exact-Git-blob-equality
+  implication: >-
+    The inspected confidence source object was already present in the methods
+    repository in July 2021; it is not a newly regenerated annotation table.
+    This strengthens publication-era provenance but does not normalize its sample
+    IDs or make either failed string test pass.
+observed_name_roles:
+  July_cell_specimen_name: donor-line-and-specimen-style-name
+  July_transcriptomics_sample_id: PS-prefixed-library-style-string
+  methods_sample_id: P-prefixed-plate-style-string
+  role_interpretation: tentative-from-literal-examples-not-proven-namespace-definitions
+decision: >-
+  A separately registered common-cell-ID-linked annotation coherence ledger can
+  preserve author-provided quality calls and compare source anatomy/class context
+  without claiming RNA sample alias equivalence. Label its link evidence as
+  canonical-cell-ID-only, carry both failed string flags, and leave recording
+  identity, confidence assignment and eligibility gates unresolved. Do not turn
+  an identifier analysis into an outcome-guided scientific cohort change.
+source_values_newly_interpreted: false
+physiological_arrays_read: false
+mapping_confidence_assigned: false
+specimen_eligibility_established: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

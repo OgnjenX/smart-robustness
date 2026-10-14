@@ -28,6 +28,8 @@ def functions(path):
     ('verify_patchseq_waveform_QC.py', 'verify_patchseq_append_waveform_QC.py', {'main'}),
     ('audit_patchseq_health_protocols.py', 'audit_patchseq_append_health_protocols.py', set()),
     ('verify_patchseq_health_protocols.py', 'verify_patchseq_append_health_protocols.py', {'main'}),
+    ('read_patchseq_exporter_provenance.py', 'read_patchseq_append_exporter_provenance.py', set()),
+    ('verify_patchseq_exporter_provenance.py', 'verify_patchseq_append_exporter_provenance.py', {'main'}),
 ])
 def test_transport_and_independent_check_functions_are_unchanged(original, append, exclude):
     before = functions(ROOT/'scripts'/original)
@@ -96,3 +98,12 @@ def test_append_recording_quality_measurement_and_gates_are_identical():
     for key in original['scope']:
         if key != 'trials':
             assert append['scope'][key] == original['scope'][key]
+
+
+def test_append_exporter_provenance_read_scope_is_unchanged():
+    prefix = ROOT/'docs/validation-results'
+    original = yaml.safe_load((prefix/'post2008-patchseq-exporter-provenance-registration-1333.yaml').read_text())
+    append = yaml.safe_load((prefix/'post2008-patchseq-append-exporter-provenance-registration-1407.yaml').read_text())
+    for key in ('scope', 'interpretation'):
+        assert append[key] == original[key]
+    assert append['waveform_reads_authorized'] is False

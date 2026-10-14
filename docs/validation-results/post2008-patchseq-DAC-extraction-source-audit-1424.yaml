@@ -1,0 +1,32 @@
+schema_version: 1
+artifact_id: 1424
+date: 2026-10-14
+status: historical-DAC-extraction-and-separate-holding-path-audited
+primary_repository: AllenInstitute/MIES
+revisions: [061c3b5f56c2f43b9579aa0933af85fd1a360ab6, 33b63e3b]
+source:
+  path: Packages/MIES/MIES_MiesUtilities.ipf
+  git_blobs: [f203fa3f16bc5dedc051569c4faeb8a3b7c035b6, 7ccbf7111668659a0858e31f5934aa2ed304f489]
+  function: ExtractOneDimDataFromSweep
+  inspected_lines: {061c3b5f: [3228, 3252], 33b63e3b: [3252, 3277]}
+  urls:
+    - https://github.com/AllenInstitute/MIES/blob/061c3b5f56c2f43b9579aa0933af85fd1a360ab6/Packages/MIES/MIES_MiesUtilities.ipf
+    - https://github.com/AllenInstitute/MIES/blob/33b63e3b/Packages/MIES/MIES_MiesUtilities.ipf
+findings:
+  channel_data: copy-the-selected-wave-reference-or-matrix-column
+  units_time_and_note: transfer-source-scale-channel-unit-and-wave-note
+  holding_property_added_or_subtracted_in_helper: false
+  exporter: writes-this-DAC-column-to-stimulus-presentation
+  hardware_holding: separate-MultiClamp-level-enable-control-path-from-audit-1415
+source_backed_nominal_inference: >-
+  A documented intended-current convention may combine the recorded DAC command
+  with the separately documented enabled amplifier holding level in native pA.
+  It must require matching channel/headstage and verified metadata, distinguish
+  explicit disabled flags from absent values, and state that a constant per-sweep
+  holding term is a nominal-input assumption rather than a direct measurement of
+  continuously delivered current. Contradictory source settings need an explicit
+  unsupported outcome, never an older favorable value or neuron-model failure.
+existing_analysis_QC_and_raw_traces: unchanged-no-retrospective-bias-addition-or-junction-correction
+all_models_and_circuit_parameters: unchanged
+frozen_baseline_modified: false
+scientific_goal_complete: false

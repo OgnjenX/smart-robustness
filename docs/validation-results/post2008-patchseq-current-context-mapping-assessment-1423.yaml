@@ -1,0 +1,38 @@
+schema_version: 1
+artifact_id: 1423
+date: 2026-10-14
+status: all-4880-current-context-mappings-and-source-coordinates-independently-verified
+result: results/patchseq-current-context-mapping-1421/manifest.yaml
+result_sha256: 0980bde1aa92b849caa310b27cd85402059384114c593967beafa8779d28855f
+independent_result: results/patchseq-current-context-mapping-independent-1422/manifest.yaml
+independent_result_sha256: 06525d03681cad35a3bee12b0a5b35405c4336dbbbcf93bcf51296935e609e9f
+verified:
+  cases_retained: 96
+  sweeps_retained: 4880
+  uniquely_mapped_active_current_clamp_headstages: 4880
+  holding_enabled_states: 4348
+  holding_disabled_states: 532
+  holding_unknown_states: 0
+  slow_injection_disabled_states: 4880
+  slow_injection_enabled_or_unknown_states: 0
+  bias_bridge_capacitance_export_comparisons_agree: 14640
+  slow_injection_native_unit_comparisons_agree: 14640
+independent_method: forward-contiguous-run-enumeration-actual-source-row-slices-independent-native-value-selection-and-exact-float32-export-checks
+engineering:
+  all_patchseq_tests_passed: 1175
+  ruff: passed
+  unknown_corruption_no_older_fallback_tests: 17
+interpretation: >-
+  Every sweep has source-documented holding and slow-injection context with verified
+  headstage, source coordinates and units. Slow-current injection is documented as
+  disabled throughout; this removes that metadata-level ambiguity, not every
+  possible recording artifact. Holding is enabled on most sweeps. A recorded DAC
+  waveform must not be assumed to be the complete intended current without tracing
+  the exporter and extraction path. These mappings are not delivered-current
+  measurements, within-sweep stability proof, neuron-model eligibility or fitting.
+next_gate: source-backed-nominal-current-contract-with-explicit-static-context-assumption-before-isolated-fitting
+command_waveforms_modified: false
+old_mapping_results_or_QC_changed: false
+models_fitted: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

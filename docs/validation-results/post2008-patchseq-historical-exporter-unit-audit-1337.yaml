@@ -1,0 +1,58 @@
+schema_version: 1
+artifact_id: 1337
+artifact_type: historical-exporter-native-instrument-unit-audit
+date: 2026-10-14
+status: historical-code-path-found-native-unit-labels-still-to-be-verified-per-file
+recorded_provenance: docs/validation-results/post2008-patchseq-exporter-provenance-assessment-1336.yaml
+primary_sources:
+  - repository: AllenInstitute/MIES
+    revision: 061c3b5f56c2f43b9579aa0933af85fd1a360ab6
+    path: Packages/MIES/MIES_NeuroDataWithoutBorders.ipf
+    git_blob_sha1: b08ff16fa80c20db01808a8505d72d0c676945fe
+    inspected_ranges: [[1486, 1500], [1517, 1551]]
+    url: https://github.com/AllenInstitute/MIES/blob/061c3b5f56c2f43b9579aa0933af85fd1a360ab6/Packages/MIES/MIES_NeuroDataWithoutBorders.ipf
+  - repository: AllenInstitute/MIES
+    revision: 33b63e3b
+    path: Packages/MIES/MIES_NeuroDataWithoutBorders.ipf
+    git_blob_sha1: c26f206bcd52e6cd5973aae2a77d8bce2d92d44c
+    inspected_ranges: [[1497, 1506], [1528, 1562]]
+    url: https://github.com/AllenInstitute/MIES/blob/33b63e3b/Packages/MIES/MIES_NeuroDataWithoutBorders.ipf
+  - repository: AllenInstitute/IPNWB
+    revision: e66fdcebc7ab07338c96794d6b0672c250a0ede5
+    path: IPNWB_Writer.ipf
+    git_blob_sha1: d206df33bc9669facc91bde3594a4bb37adab467
+    inspected_ranges: [[270, 278], [470, 477]]
+    url: https://github.com/AllenInstitute/IPNWB/blob/e66fdcebc7ab07338c96794d6b0672c250a0ede5/IPNWB_Writer.ipf
+  - repository: AllenInstitute/ipfx
+    revision: c607a36e25618a6bb8ba5438c1cd945fb429e659
+    path: ipfx/dataset/labnotebook.py
+    git_blob_sha1: ece0a961c78f684ce9ed4ca9a376305c4fec0e23
+    url: https://github.com/AllenInstitute/ipfx/blob/c607a36e25618a6bb8ba5438c1cd945fb429e659/ipfx/dataset/labnotebook.py
+findings:
+  matching_exporter_calls_in_both_MIES_revisions:
+    bias_current: I-Clamp-Holding-Level-with-I-Clamp-Holding-Enable-no-factor-supplied
+    bridge_balance: Bridge-Bal-Value-with-Bridge-Bal-Enable-no-factor-supplied
+    capacitance_compensation: Neut-Cap-Value-with-literal-Neut-Cap-Enabled-no-factor-supplied
+  matching_export_helper:
+    default_factor: 1
+    enabled_field: absent-or-disabled-causes-no-property-write
+    value_field: absent-or-nonfinite-causes-no-property-write
+    value_written: selected-headstage-last-setting-times-factor
+    units: notebook-key-unit-when-available-not-forced-to-schema-SI
+  modern_official_analysis_loader:
+    holding_context: stored-bias-current-read-as-leak_pa
+    bridge_context: stored-bridge-balance-read-as-bridge_balance_mohm
+    scope_limit: corroborating-analysis-convention-not-a-substitute-for-file-unit-headers
+decision: >-
+  Verify notebook unit headers directly under a separately sealed bounded text
+  read. Do not treat native holding-current values as amperes, apply an inferred
+  nominal correction, or infer missing properties as zero. The literal Enabled
+  versus Enable spelling for capacitance is preserved; do not silently repair
+  that historical lookup. Channel/headstage and last-setting semantics require
+  source-backed extraction before cell-health decisions. Existing waveform QC,
+  as-recorded command scaling and source partitions remain unchanged.
+next_gate: bounded-numerical-and-textual-key-header-read-not-notebook-values
+model_fitting_authorized: false
+specimen_eligibility_established: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

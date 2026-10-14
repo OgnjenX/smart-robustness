@@ -74,7 +74,7 @@ def reconstruct(file, h5py):
         elif isinstance(node, h5py.Group):
             layout.append({'path': path, 'object_type': 'group'})
             if depth < 2:
-                for name in reversed(sorted(node.keys())):
+                for name in sorted(node.keys(), reverse=True):
                     require(len(name.encode('utf-8')) <= 1024, 'name bound')
                     pending.append((path+'/'+name, node[name] if type(node.get(name, getlink=True)) is h5py.HardLink else None, depth+1))
         else:

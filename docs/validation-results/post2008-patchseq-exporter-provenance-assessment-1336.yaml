@@ -1,0 +1,42 @@
+schema_version: 1
+artifact_id: 1336
+artifact_type: independently-verified-recorded-exporter-provenance
+date: 2026-10-14
+registration: docs/validation-results/post2008-patchseq-exporter-provenance-registration-1333.yaml
+preexecution_commit: c86431a
+result: results/patchseq-exporter-provenance-1334/manifest.yaml
+result_sha256: a090c2b7aabe58b9fe1811de74008dd59518f0a93dc1f62e12e90bfc20ca7cae
+verifier: scripts/verify_patchseq_exporter_provenance.py
+executed_verifier_commit: 3d480a4
+executed_verifier_sha256: 736f147467aa7102e345ee989a31371be4c84881848309bbb4cc0494fe0e6ec2
+postexecution_source_change: reversed-sorted-to-sorted-reverse-True-lint-only-same-traversal
+independent_result: results/patchseq-exporter-provenance-independent-1335/manifest.yaml
+independent_result_sha256: 8d2f7362edd4e8a4bd58c07be09599b9215a13998bacffd35859c5406085f328
+status: all-48-source-declarations-and-notebook-layouts-exactly-reconstructed
+terminal_collector_and_verifier_exit_codes: [0, 0]
+verified:
+  files_retained: 48
+  provenance_tables_script_name_attributes_notebook_layouts: exact-match
+  original_recording_and_source_hashes: unchanged
+  notebook_values_or_waveforms_read: false
+  source_script_bodies_read: false
+  Igor_Pro_version: 8.0.5.1
+  declared_package: MIES
+  declared_labnotebook_version: '37'
+  declared_MIES_revision_counts:
+    061c3b5f: 46
+    33b63e3b: 2
+  shared_declared_IPNWB_revision: e66fdcebc7ab07338c96794d6b0672c250a0ede5
+engineering_checks:
+  focused_collector_tests_passed: 8
+  focused_independent_tests_passed: 5
+  repository_ruff_after_mechanical_lint_change: passed
+limits:
+  - The verifier is a strict successful-record checker; unsupported cases would require a distinct assessment.
+  - Recorded provenance declares software history but does not prove unmodified exporter execution.
+  - Script-name attributes are not reinterpreted as an RNA alias, genotype-based cell class or recovered internal specimen identity.
+  - Notebook presence and shape alone do not establish cell health, bias units or intrinsic-model eligibility.
+next_gate: historical-exporter-unit-audit-1337-then-bounded-unit-header-read-before-any-health-value-extraction
+specimen_eligibility_established: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

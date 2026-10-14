@@ -1,0 +1,45 @@
+schema_version: 1
+artifact_id: 1457
+date: 2026-10-14
+status: prospective-verifier-only-performance-amendment-before-independent-biological-execution
+verification_only_amendment: true
+implementation: scripts/verify_patchseq_compiled_fit.py
+driver: scripts/patchseq_hh_compiled_driver.py
+tests: tests/test_patchseq_compiled_fit_verifier.py
+original_numpy_route_preserved: scripts/verify_patchseq_isolated_fit_replay.py
+protocol: docs/validation-results/post2008-patchseq-isolated-fit-registration-1436.yaml
+seal: docs/validation-results/post2008-patchseq-isolated-fit-execution-seal-1437.yaml
+structure_result: results/patchseq-fit-structure-independent-1443/manifest.yaml
+equivalence_result: results/patchseq-compiled-synthetic-equivalence-1454/manifest.yaml
+equivalence_sha256: 045069bce7d969e74204e53edc57e95dab141b7803466aacb89fe2395196ade3
+equivalence_assessment: docs/validation-results/post2008-patchseq-compiled-equivalence-assessment-1455.yaml
+output_directory: results/patchseq-compiled-fit-independent-1458
+reason: reduce-independent-replay-cost-based-only-on-fixed-synthetic-equivalence-and-runtime-not-biological-or-network-fit-outcomes
+unchanged:
+  - Main fitting source, binary backend, dataset, partitions and checkpoint directory.
+  - All 128 parameter vectors per stratum and every characterized training sweep.
+  - Same Na/K/M equations, nominal currents, initial gates, warmup and RK4 sample hold.
+  - Same independent feature extractor and group-weighted loss calculation.
+  - Same arithmetic comparison tolerances and exact failure support.
+  - Failed or disagreeing candidates retained with no replacement, refit or search expansion.
+  - Held-out response access and network promotion remain closed.
+changed: independent-forward-loop-execution-only-from-NumPy-to-equivalence-tested-compiled-kernel
+execution_gate:
+  - Commit amended route and explicit-engine controls before biological verification.
+  - All 386 fixed synthetic equivalence cases must pass and their source hashes must remain intact.
+  - Exact main run must be terminal and protected by shared lock; matching source/structure audit is mandatory.
+  - Build once and retain source/compiler/version/flags/platform/driver/binary provenance.
+  - Reject changed or partial builds and incompatible resume checkpoints rather than silently recompiling.
+  - One exclusive compiled-verifier lock and one exact output directory.
+  - Do not launch this route concurrently with another biological experiment or substitute it into the live fitting run.
+limitations:
+  - Synthetic equivalence does not imply biological validity; actual disagreement remains unresolved verification evidence.
+  - Primary saved aggregates still require selected waveform/per-feature and numerical-control comparison before held-out design.
+  - The original NumPy route remains usable; compiled results have distinct output and provenance rather than overwriting it.
+next_gate: terminal-only-compiled-full-table-reconstruction-then-separately-pin-selected-verification-and-assessment-inputs
+biological_execution_started: false
+live_fitting_source_modified: false
+frozen_baseline_modified: false
+held_out_response_features_read: false
+network_promotion: false
+scientific_goal_complete: false

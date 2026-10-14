@@ -56,3 +56,12 @@ def test_unknown_kernel_rejected_before_build(tmp_path, monkeypatch):
     with pytest.raises(ValueError, match='source'):
         mod.prepare_build(tmp_path/'uncreated')
     assert not (tmp_path/'uncreated').exists()
+
+
+def test_receipt_location_must_match_actual_loaded_binary(tmp_path):
+    import yaml
+    _, receipt = mod.prepare_build(tmp_path)
+    receipt['binary_path'] = str(tmp_path/'other-location.so')
+    (tmp_path/'build.yaml').write_text(yaml.safe_dump(receipt))
+    with pytest.raises(ValueError, match='location'):
+        mod.prepare_build(tmp_path)

@@ -47,6 +47,8 @@ def prepare_build(directory):
         saved = yaml.safe_load(receipt.read_text())
         if any(saved.get(k) != v for k, v in signature.items()) or digest(library) != saved['binary_sha256']:
             raise ValueError('compiled build provenance changed; refusing rebuild')
+        if saved.get('binary_path') != str(library.resolve()):
+            raise ValueError('compiled receipt belongs to a different artifact location')
         return library, saved
     subprocess.run([compiler, *FLAGS, str(SOURCE), '-o', str(library)], check=True,
                    capture_output=True, timeout=60)

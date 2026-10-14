@@ -73,7 +73,7 @@ def test_failed_next_rank_is_retained_not_replaced():
 
 
 def test_missing_next_group_does_not_borrow_original_or_other_partition():
-    values = expanded()
+    values = list(expanded())
     values[1]['records'] = [r for r in values[1]['records'] if r['frozen_group_id'] != 'd']
     values[-1] = select(*values[:4])
     result = append_selection(*values)

@@ -1,0 +1,51 @@
+schema_version: 1
+artifact_id: 1463
+date: 2026-10-14
+status: prospective-synthetic-primary-backend-equivalence-before-fitting-transition
+user_authorization: prepare-faster-equivalent-fitting-route-switch-only-after-checks-and-sealed-amendment
+fit_protocol: docs/validation-results/post2008-patchseq-isolated-fit-registration-1436.yaml
+fit_protocol_sha256: ed44ed3c71f225fd611c36572cb213c3c812c5fda08138e83e902039cc4f0e71
+execution_seal: docs/validation-results/post2008-patchseq-isolated-fit-execution-seal-1437.yaml
+implementation: scripts/check_patchseq_compiled_fitting_equivalence.py
+output: results/patchseq-compiled-fitting-equivalence-1464
+short:
+  candidates: all-128-original-unscrambled-Sobol-vectors
+  currents_pA: [-110.0, 30.0, 500.0]
+  rate_hz: 50000
+  duration_s: 0.3
+  step_start_s: 0.05
+  step_stop_s: 0.25
+  pre_window_s: [0.01, 0.04]
+  holding_pA: 20.0
+  warmup_s: 0.02
+  batch_maximum: 4
+long:
+  parameters: {capacitance_pF: 100.0, leak_nS: 10.0, leak_reversal_mV: -65.0, sodium_nS: 2000.0, potassium_nS: 500.0, m_current_nS: 10.0, threshold_shift_mV: -60.0, m_tau_max_ms: 1000.0}
+  rates_hz: [50000, 100000]
+  duration_s: 0.4
+  step_start_s: 0.05
+  step_stop_s: 0.35
+  pre_window_s: [0.01, 0.04]
+  current_pA: 500.0
+  holding_pA: 20.0
+  warmup_s: 1.0
+  controls: [exact-repeat, half-dt-refinement, doubled-warmup]
+acceptance:
+  maximum_waveform_difference_mV: 0.00001
+  feature_comparison: exact-structure-discrete-null-and-1e-5-plus-1e-9-relative-floats
+  loss_comparison: existing-1e-6-absolute-plus-1e-8-relative
+  failure_support: exact-per-synthetic-candidate-case
+  selected_control_gates: exact-boolean-agreement-no-biological-gate-relaxation
+transition_not_authorized_by_synthetic_checks_alone:
+  - Seal a separate fitting amendment and runner before any compiled biological fitting.
+  - Preserve original checkpoint as an immutable hash-identified predecessor.
+  - No concurrent biological fitters; original lock must be released before transition.
+  - Independently replay every retained original candidate against compiled scoring before importing any rows.
+  - Any mismatch stops transition without parameter changes, replacement or weaker gates.
+  - Retain original source and failure records; no favorable subset selection.
+  - New backend provenance must be explicit; downstream verification registrations must identify it.
+biological_data_used: false
+live_fitting_source_modified: false
+held_out_response_features_read: false
+network_promotion: false
+frozen_baseline_modified: false

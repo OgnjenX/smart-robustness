@@ -1,0 +1,68 @@
+schema_version: 1
+artifact_id: 1303
+artifact_type: prospective-source-annotated-target-candidate-contract-not-qualified-cohort
+date: 2026-10-14
+status: registration-before-candidate-outcomes-or-physiology
+purpose: >-
+  Identify explicitly source-annotated PV/SST/VIP layer-label targets for subsequent
+  independently validated intrinsic fits. This later protocol authorizes raw
+  author-label stratification that was prohibited within the earlier coherence
+  inventory; it does not modify that inventory, repair name gates, independently
+  reconstruct RNA confidence or qualify any physiology specimen.
+sources:
+  source_ledger:
+    path: results/patchseq-specimen-source-ledger-1227/manifest.yaml
+    sha256: 27ec41298a4baf32ea52aafb36df26dcfcbf74de43ff1e4d8aaaff46caee9bd1
+  source_ledger_assessment:
+    path: docs/validation-results/post2008-patchseq-specimen-source-ledger-assessment-1228.yaml
+    sha256: 9c4c8c9fa559676e4569473c2a0b2c8548e9119ba959c33080f021c174939821
+  coherence:
+    path: results/patchseq-cell-ID-annotation-coherence-1258/manifest.yaml
+    sha256: 13b34a6e62cb11ede37c80e6088c49639eb4d9e96b187436831eb7e2306324f1
+  coherence_assessment:
+    path: docs/validation-results/post2008-patchseq-cell-ID-coherence-assessment-1259.yaml
+    sha256: 65050fdce30410100607479d52c82ea9d1876c10d3b61f80260f18267c5fbd16
+  split:
+    path: results/patchseq-conservative-split-1299/manifest.yaml
+    sha256: abc6a0a9859524df090d2ab00dda7bb24404104b13a435aea8a70fc47745608d
+  independent_split:
+    path: results/patchseq-conservative-split-independent-1301/manifest.yaml
+    sha256: 6d2f7e78be4b6d7678e957464944afbb4a2d59b4551e37cc03ad89c5671059bc
+  pilot_association:
+    path: results/patchseq-author-cell-association-independent-1296/manifest.yaml
+    sha256: 85135a5f0a14ad8df81266397935e12f496a89a01fdcdcce00213e75c259efb4
+scope: retain-all-4435-source-specimens-including-failures-and-unknowns
+target_groups: [Pvalb, Sst, Vip]
+target_anatomy_labels: {VISp2/3: L23, VISp5: L5}
+source_label_predicates:
+  agreeing_reference_leaf: true
+  unique_cell_ID_annotation_association: true
+  literal_methods_July_structure_agreement: true
+  raw_methods_class: inhibitory
+  raw_methods_Gouwens_etal_2020: 'True'
+  raw_methods_mapping_quality: highly consistent
+  frozen_group_membership: unique-and-unresolved-list-empty
+interpretation:
+  source_quality: raw-author-call-not-newly-assigned-or-independently-computed-RNA-confidence
+  source_anatomy: exact-author-label-not-depth-inferred-layer-or-new-image-reconstruction
+  class: source-reference-tree-subgroup-not-genotype-or-marker-substring-inference
+  per_recording_provenance: true-only-for-independently-verified-pilot-otherwise-unknown
+  missing_or_conflicting_labels: retain-explicit-reasons-never-normalize-or-reconcile-for-pass
+  RNA_names: carry-failed-flags-unchanged-no-alias-inference
+  partitions: inherit-frozen-full-catalog-group-ID-and-side-no-rebalancing-or-rehash-after-filter
+required_before_any_fitting:
+  - Complete per-recording manifest/content/internal-session association, not inferred from the pilot.
+  - Explicit trace schema/conversion, minus-14-mV junction convention, source quality and current-injection QC protocol.
+  - Experiment-specific independent-group minimum counts and isolated model-response gates; candidate counts do not satisfy them.
+  - Separately sealed fitting objective, parameter bounds, fit-only inputs and held-out evaluation with no network-guided tuning.
+synaptic_recruitment_gate: separate-unsatisfied-contract-not-rescued-by-intrinsic-source-candidates
+output: results/patchseq-source-candidates-1304/manifest.yaml
+selection_or_download_of_recordings_authorized: false
+physiological_arrays_or_new_source_fields_authorized: false
+model_fitting_authorized: false
+cohort_qualification_authorized: false
+execution_gate: commit-registration-runner-tests-before-real-candidate-label-outcomes
+next_gate: independent-candidate-reconstruction-then-separate-bounded-provenance-acquisition-and-intrinsic-fit-registration
+prior_failed_gates_modified: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

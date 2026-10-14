@@ -1,0 +1,36 @@
+schema_version: 1
+artifact_id: 1447
+date: 2026-10-14
+status: before-selected-biological-verification-outcomes
+protocol: docs/validation-results/post2008-patchseq-isolated-fit-registration-1436.yaml
+seal: docs/validation-results/post2008-patchseq-isolated-fit-execution-seal-1437.yaml
+structure_result: results/patchseq-fit-structure-independent-1443/manifest.yaml
+independent_checkpoint: results/patchseq-isolated-fit-independent-1445/checkpoint.json
+output_directory: results/patchseq-selected-fit-independent-1448
+implementation: scripts/verify_patchseq_selected_fit.py
+comparison_implementation: scripts/patchseq_selected_fit_agreement.py
+tests: tests/test_patchseq_selected_fit_verifier.py
+execution_gate:
+  - Commit selected-stage runner and synthetic prerequisite controls before biological execution.
+  - Require terminal-complete unchanged original main checkpoint under shared lock.
+  - Require terminal-source structure audit matching the exact main checkpoint hash.
+  - Require complete independently agreeing candidate tables for all six strata, with no dropped failures.
+  - Hold independent-verifier shared lock and verify its checkpoint hash has not changed during prerequisite inspection.
+  - Pin all prerequisite code and source chains; reject changed runtime or resume inputs.
+selection: exact-original-selected-candidate-for-each-stratum-no-replacement-or-refit
+source: independently-decoded-fitting-commands-only-unchanged-source-QC-and-group-partitions
+checks: waveform-feature-and-numerical-control-agreement-as-fixed-in-1446
+checkpoint: atomic-after-each-selected-training-sweep-one-exclusive-verifier-directory-lock
+summary:
+  reconstruction_agreement: every-retained-training-sweep
+  numerical_pass: every-selected-sweep-control-must-pass-separately-from-agreement
+  source_fit: original-selected-training-observable-gates-preserved
+  training_and_numerical_eligible: conjunction-of-all-three-requirements
+  failed_or_unresolved: retained-no-favorable-candidate-replacement
+  held_out_access: remains-false-even-if-training-eligible
+  network_promotion: remains-false
+next_gate: independently-assess-and-pin-complete-selected-training-map-then-separately-seal-held-out-source-access-and-scoring
+biological_execution_started: false
+held_out_response_features_read: false
+running_experiment_source_modified: false
+scientific_goal_complete: false

@@ -1,0 +1,32 @@
+schema_version: 1
+artifact_id: 1390
+artifact_type: independent-array-QC-reconstruction-contract
+date: 2026-10-14
+status: before-independent-array-reconstruction
+original_protocol: docs/validation-results/post2008-patchseq-append-waveform-QC-registration-1388.yaml
+original_preexecution_commit: 3812567
+collector: scripts/run_patchseq_append_waveform_QC.py
+collector_sha256: cf88e282ab635bf40ff026c78da2d9954d5d97fc1b5cf2bc2c7332b9d65a5507
+result: results/patchseq-append-waveform-QC-1389/manifest.yaml
+result_sha256: 783a4ba5bbbe8f7fc0122152a002f61ab907c8ff7586d7cd4c3426a3f109f15b
+prior_exposure: terminal-completion-and-body-hash-only-no-aggregate-or-individual-QC-metric-audit
+scope: all-48-files-all-2550-pairs-every-accepted-and-rejected-sweep
+method:
+  collector_import: prohibited
+  arrays: independently-read-original-hard-link-bounded-verified-pair-data
+  scaling: original-exact-decoded-conversions-as-recorded-voltage-and-command
+  instrument_metadata: independently-reconstruct-all-four-scalar-fields-including-undefined
+  step_epochs: independent-adjacent-sample-transition-comparison-and-explicit-indices
+  means_and_centered_RMS: math-fsum-float64-scaled-sample-values
+  discrete_classifications: exact-equality-no-tolerance-for-gate-failures-or-memberships
+  numeric_comparison: absolute-1e-10-plus-relative-1e-12-times-absolute-independent-value
+  numeric_contract_role: floating-arithmetic-equivalence-only-not-relaxed-physiology-threshold
+  source_integrity: every-pinned-source-before-and-after-each-recording-before-and-after
+  charged_bytes: independently-recompute-all-float64-array-sizes
+  per_slot_receipts: match-global-manifest-exactly
+failure: retain-uncertainty-stop-on-any-disagreement-no-tuning-no-replacement-no-replay
+output: results/patchseq-append-waveform-QC-independent-1391/manifest.yaml
+execution_gate: commit-verifier-contract-and-synthetic-equivalence-corruption-tests-before-execution
+specimen_eligibility_established: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

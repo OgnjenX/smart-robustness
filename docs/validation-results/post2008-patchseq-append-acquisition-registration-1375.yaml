@@ -1,0 +1,82 @@
+schema_version: 1
+artifact_id: 1375
+artifact_type: bounded-checkpointed-selected-recording-acquisition-and-identity-registration
+date: 2026-10-14
+status: approved-prospective-append-acquisition-before-transfer
+human_authorization: user-approved-additional-batch-in-this-chat-2026-10-14
+original_cohort_and_failures: retained-unchanged-no-replacement
+selection_registration: docs/validation-results/post2008-patchseq-append-selection-registration-1372.yaml
+subset: results/patchseq-append-selection-1373/manifest.yaml
+subset_sha256: 60db30d33739e3784c2a3f32b02fb82cf55159d59beff0a24d5397ce22f9e137
+independent_subset: results/patchseq-append-selection-independent-1374/manifest.yaml
+independent_subset_sha256: 509d8de82bb339737c13073e023d025d1b7dca475336002f92d61dd0665602a3
+archive_acquisition: results/patchseq-archive-identity-metadata-1239/manifest.yaml
+archive_acquisition_sha256: 6143c5f38dee95355235728d6620313d4fa5e2cad255d7097de0d2875fcc1911
+independent_archive: results/patchseq-archive-identity-independent-1241/manifest.yaml
+independent_archive_sha256: adcecc68047625e756421f04546212186c5fd4ffb212e5cea3030761e987e05e
+output_directory: results/patchseq-append-acquisition-1376
+execution:
+  ordering: sealed-slot-number-ascending-all-48-no-replacement
+  concurrency: one-master-process-with-exclusive-lock-no-concurrent-runner
+  checkpoint: immutable-per-slot-attempt-and-terminal-receipt-plus-atomic-global-manifest
+  terminal_restart: no-op-after-input-and-terminal-evidence-verification
+  interrupted_attempt: retain-incomplete-no-network-retry-for-that-slot
+  continuation: unattempted-slots-only-within-original-absolute-deadline
+  deadline_seconds_from_first_start: 7200
+  failures: retain-and-continue-unattempted-slots-no-substitution
+transport:
+  maximum_unique_recordings: 48
+  maximum_GET_attempts_per_slot: 1
+  maximum_HEAD_requests_per_slot: 2
+  maximum_HEAD_redirects_per_slot: 1
+  maximum_single_recording_bytes: 536870912
+  maximum_charged_recording_bytes: 4294967296
+  expected_sealed_total_recording_bytes: 1739316630
+  timeout_seconds_per_request: 600
+  charge_rule: full-expected-body-size-before-any-GET-attempt-including-failed-or-interrupted-attempt
+  no_http_retry_no_GET_redirect_no_partial_range_resume: true
+  required_response: exact-full-file-206-Content-Range-total-size-strong-HEAD-ETag-If-Match-identity-encoding
+URL_resolution:
+  allowed_scheme: https
+  allowed_hosts: [dandiarchive.s3.amazonaws.com, dandiarchive.s3.us-east-1.amazonaws.com, dandiarchive.s3.us-east-2.amazonaws.com]
+  required_path_prefix: /blobs/
+source_checks:
+  - Validate selected slot against its pinned original archive receipt and raw JSON hash before resolving the direct locator.
+  - Require exact metadata path, integer contentSize and dandi:sha2-256 to agree with the sealed selected author reference; preserve digest algorithm distinctions.
+  - Independently compute each retained complete binary SHA256 and require exact author literal equality before metadata inspection.
+  - Existing unrelated raw binaries are not silently substituted; no claim that all selected files inherit pilot validation.
+storage_preflight:
+  before_first_transfer: available-bytes-at-output-volume-at-least-two-times-sealed-total-plus-536870912
+  before_each_new_slot: available-bytes-at-least-slot-expected-body-bytes-plus-536870912
+  insufficiency: retained-stop-no-cleanup-or-substitution
+logical_metadata_reads:
+  root_attributes: [nwb_version]
+  datasets: [/general/session_id, /session_id, /general/subject/subject_id]
+  maximum_decoded_value_bytes: 4096
+  parser_dependency: h5py==3.12.1
+  HDF5_plugin_preload: '::'
+  link_and_storage_policy: hard-links-only-scalar-or-singleton-no-compression-virtual-or-external-storage
+identity_acceptance: >-
+  At least one whitelisted session field must be present as original bytes decoded
+  UTF8 or original string; all present session fields must match the sealed path
+  session exactly. Any present unsupported/nonmatching session is a failed or
+  unresolved identity outcome, never resolved by choosing a favorable field.
+  Subject scalar must match the archive path subject exactly without asserting
+  equivalence to the distinct author donor namespace. Preserve all raw types,
+  absent fields and unknowns; no numeric normalization or filename filling.
+physical_trace_bytes_included: true
+physiological_arrays_or_descriptive_text_interpretation_authorized: false
+source_model_parameter_fitting_authorized: false
+network_execution_authorized: false
+cohort_qualification_authorized: false
+execution_gate: commit-registration-runner-and-lock-resume-budget-tests-before-any-transfer
+next_gate: >-
+  Independently verify all terminal receipts, body hashes, metadata/session/subject
+  interpretations, per-slot attempt/byte/deadline budgets, complete case accounting
+  and source hashes. Then register trace schema/QC and voltage convention before
+  any current/voltage array reads or model fitting. Retain failed selected slots
+  without replacement and never alter the frozen source-group split.
+specimen_eligibility_established: false
+prior_failed_gates_modified: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

@@ -1,0 +1,40 @@
+schema_version: 1
+artifact_id: 1315
+artifact_type: selected-recording-acquisition-pre-outcome-execution-seal
+date: 2026-10-14
+registration: docs/validation-results/post2008-patchseq-intrinsic-acquisition-registration-1313.yaml
+registration_sha256: bfb669450fbb3354dcf9c2b00688e5fe180ccdfc1160b077ae765af8ee122eb4
+implementation_commit: a9c4416
+runner: scripts/acquire_patchseq_intrinsic_recordings.py
+runner_sha256: 8831a5ea371addcb92096a6710685cfcbfad31b7857bef830cb7829a37aeda3a
+output: results/patchseq-intrinsic-acquisition-1314
+status: sealed-before-first-selected-recording-transfer
+engineering_checks:
+  focused_lock_checkpoint_deadline_budget_disk_and_identity_tests_passed: 13
+  aggregate_patchseq_tests_passed: 724
+  aggregate_patchseq_tests_seconds: 14.19
+  repository_ruff: passed
+  git_diff_whitespace_check: passed
+scope:
+  selected_recordings: 48
+  expected_complete_body_bytes: 1566173329
+  original_absolute_deadline_seconds: 7200
+  GET_attempts_per_selected_slot: 1
+  replacements_after_transport_or_QC_failure: 0
+  identity_only_dataset_paths: [/general/session_id, /session_id, /general/subject/subject_id]
+  root_attribute_paths: [nwb_version]
+  physiological_array_interpretation: prohibited
+  source_model_fitting: prohibited
+  network_execution: prohibited
+claim_boundary: >-
+  Passing engineering checks authorizes only this sealed bounded acquisition and
+  identity-only inspection. A terminal process means retained case accounting,
+  not that every selected slot succeeds. Failed or interrupted attempts remain
+  immutable and are not retried or replaced; only unattempted slots may continue
+  within the original absolute deadline. Independent receipt/content/metadata
+  verification and separately registered trace QC are required before any
+  physiological or model qualification. The frozen baseline and partitions stay
+  unchanged, and the full scientific goal is not complete.
+specimen_eligibility_established: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

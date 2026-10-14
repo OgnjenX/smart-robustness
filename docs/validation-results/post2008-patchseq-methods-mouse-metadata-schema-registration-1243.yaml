@@ -1,0 +1,32 @@
+schema_version: 1
+artifact_id: 1243
+artifact_type: bounded-official-methods-mouse-metadata-header-acquisition-registration
+date: 2026-10-14
+source_url: https://raw.githubusercontent.com/AllenInstitute/patchseqtools/3c841b9fe8616cc0d88e4dc44b3048e8861c1687/manuscript_data/metadata_mouse.csv
+source_repository: AllenInstitute/patchseqtools
+source_revision: 3c841b9fe8616cc0d88e4dc44b3048e8861c1687
+source_path: manuscript_data/metadata_mouse.csv
+expected_git_blob_sha1: adeb5ab7f7d73a3e3af2891a88562dc7e3c4eef8
+expected_bytes: 3130318
+maximum_header_bytes: 65536
+maximum_columns: 512
+timeout_seconds: 60
+maximum_requests: 1
+redirects_authorized: false
+retries_authorized: false
+output_directory: results/patchseq-methods-mouse-metadata-schema-1244
+rules:
+  - Perform one bounded HTTPS GET of the exact pinned official CSV, retaining source bytes and HTTP receipt, with no redirects or retries.
+  - Verify expected byte size and Git blob SHA1 using the literal blob-length header plus exact downloaded bytes. Compute and retain SHA256 independently.
+  - Inspect only the first terminated CSV header record. Require nonempty unique literal column names; preserve spelling, spacing and order.
+  - Do not parse any data row, summarize values, read physiological features, join specimens or infer class confidence.
+  - Reject missing or malformed headers, unexpected object identity, oversized response or non-200 HTTP status, retaining failure evidence.
+  - Pin and independently verify the acquired object and header schema before separately authorizing whitelisted annotation reads.
+external_request_authorized: true
+source_row_reads_authorized: false
+physiological_array_reads_authorized: false
+cell_qualification_authorized: false
+parameter_fitting_authorized: false
+network_execution_authorized: false
+frozen_baseline_modified: false
+next_gate: Independently verify original source bytes and header, then trace exact confidence-field semantics and preregister any necessary cell/sample joins without physiological features.

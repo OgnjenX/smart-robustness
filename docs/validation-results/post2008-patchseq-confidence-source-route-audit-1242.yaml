@@ -1,0 +1,78 @@
+schema_version: 1
+artifact_id: 1242
+artifact_type: bounded-primary-confidence-source-route-audit
+date: 2026-10-14
+primary_paper:
+  doi: 10.1016/j.cell.2020.09.057
+  full_text_route: https://www.ncbi.nlm.nih.gov/research/bionlp/RESTful/pmcoa.cgi/BioC_xml/PMC7781065/unicode
+  retrieval: successful-bounded-curl-XML-read
+  retrieved_response_bytes: 228844
+  refreshed_findings:
+    - Mapping quality uses reference mapping probabilities, KL discrepancy and expression correlation, not merely a nonempty taxonomy label.
+    - Highly consistent, moderately consistent and inconsistent calls are separately defined.
+    - The original type-wise analyses generally restrict to highly consistent mappings; some multimodal analyses also include moderately consistent mappings.
+  source_limits:
+    - PMC browser requests encountered a challenge; this does not establish absence of full text or supplements.
+    - Europe PMC fullTextXML returned HTTP 500 in the observed request.
+    - The legacy NCBI OA metadata endpoint returned HTTP 404 in the observed request; no global availability claim follows.
+author_analysis_repository:
+  repository: https://github.com/AllenInstitute/coupledAE-patchseq
+  revision: 6c0be92e7a919321a4b877623354ee48d5f75921
+  transcriptomic_notebook: notebooks/data_proc_T.ipynb
+  transcriptomic_notebook_git_blob_sha1: 27fafad376c4392ed0f128f0529f6f0c364beae2
+  source_code_only_observations:
+    - Code cell 4 constructs mapping_confidence from Tree_call_label and contains a separate default label. Unknown calls must not inherit that default as verified confidence.
+    - Code cells 7 and 8 remove inconsistent calls and restrict to types with at least ten samples.
+    - Code cell 14 writes T_annotations.csv to an author's local filesystem, not a public acquisition endpoint.
+    - Code cell 11 uses the repository MAT dataset as an earlier Bioarxiv comparison dataset. It does not demonstrate that this MAT file contains the later confidence annotations.
+  inspected_source_values: false
+  notebook_outputs_interpreted: false
+  code_executed: false
+  earlier_processed_candidate:
+    path: data/proc/PS_v5_beta_0-4_pc_scaled_ipfx_eqTE.mat
+    git_blob_sha1: 6270922577fca6005225df719c4358b7c80ca01b
+    bytes_from_Git_tree: 10418681
+    downloaded: false
+    annotation_or_physiology_arrays_read: false
+    confidence_field_availability: unknown
+new_primary_metadata_candidate:
+  repository: https://github.com/AllenInstitute/patchseqtools
+  revision: 3c841b9fe8616cc0d88e4dc44b3048e8861c1687
+  README_git_blob_sha1: 4161770ad66387210a1c2adcf6fae419005a7587
+  metadata_path: manuscript_data/metadata_mouse.csv
+  metadata_git_blob_sha1: adeb5ab7f7d73a3e3af2891a88562dc7e3c4eef8
+  metadata_bytes_from_Git_tree: 3130318
+  associated_methods_paper: https://elifesciences.org/articles/65482
+  associated_source_notebook: manuscript_data/Patchseq_QC_for_methods_paper.Rmd
+  associated_source_notebook_git_blob_sha1: b27120ca395be218729e2fc5906ba7c3a7570783
+  provenance: >-
+    The official repository README links its associated optimized Patch-seq
+    methods paper and the mouse visual cortex paper/browser. Its source notebook
+    reads author-local raw annotation files and selects a methods-manuscript
+    subset. These links justify bounded schema investigation, not assuming the
+    CSV covers the complete Gouwens cohort or carries the required confidence.
+  downloaded: false
+  header_read: false
+  cell_rows_read: false
+  confidence_field_availability: unknown
+  correspondence_to_July_specimens: unestablished
+decision: >-
+  Register acquisition and header-only inspection of this pinned official mouse
+  metadata CSV. Verify its exact Git blob identity and retain source bytes before
+  authorizing any whitelisted per-cell annotation reads. If it exposes confidence,
+  trace its semantics and exact specimen/sample correspondence separately. No
+  fallback from genotype, class label, processed-cohort inclusion or a source
+  default is permitted. Do not read its physiological feature columns in this stage.
+parallel_work:
+  archive_metadata_collector_source_sealed_commit: 9dedfca
+  runner_poll_due_not_before_utc: '2026-10-14T00:46:33+00:00'
+  runner_polled_in_this_audit: false
+  preceding_published_CI_run: https://github.com/OgnjenX/smart-robustness/actions/runs/38488221461
+  preceding_published_CI_head: e6c15761be1d2821de7d39cee8c7e9dd90bdd86a
+  observed_CI_status: in_progress
+  additional_push_deferred_to_avoid_canceling_active_CI: true
+physiological_arrays_read: false
+specimen_qualification_performed: false
+parameter_fitting_performed: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

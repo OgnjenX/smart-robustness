@@ -1,0 +1,46 @@
+schema_version: 1
+artifact_id: 1240
+artifact_type: sealed-archive-metadata-acquisition-launch-checkpoint
+date: 2026-10-14
+registration: docs/validation-results/post2008-patchseq-archive-identity-metadata-registration-1238.yaml
+registration_sha256: 5f94fe6a58ad551be3ea09251750bc713e77de7dec4c64ff910b486873d0ca3f
+sealed_commit: 9dedfca
+collector: scripts/collect_patchseq_archive_identity_metadata.py
+collector_sha256: e82bfcb6b581f799244d9c8e6749d6f180a1efa07b0e4344f983330aea0d3d68
+output_directory: results/patchseq-archive-identity-metadata-1239
+session_id_at_launch: 69349
+launch_observed_at_utc: '2026-10-14T00:31:33+00:00'
+launch_status: process-returned-running-session-no-terminal-outcome-yet
+monitoring:
+  minimum_interval_between_runner_checks_seconds: 900
+  next_check_not_before_utc: '2026-10-14T00:46:33+00:00'
+  unchanged_state_notifications: false
+  independent_implementation_between_checks: authorized
+  restart_on_observation_timeout: false
+  duplicate_runner_authorized: false
+  stale_session_fallback: Inspect authoritative process and receipts before considering checkpoint resume.
+engineering_checks:
+  focused_tests_passed: 15
+  focused_tests_seconds: 0.08
+  aggregate_patchseq_tests_passed: 473
+  aggregate_patchseq_tests_seconds: 13.34
+  repository_ruff: passed
+  git_diff_whitespace_check: passed
+claim_boundary: >-
+  This records an executed launch and source/test provenance, not acquisition
+  completion or usable scientific identity evidence. The collector requests only
+  version-specific archive JSON metadata for all 4435 catalog assets. It rejects
+  redirects and retries, preserves failures and missing fields, and protects
+  checkpoint reuse with raw-byte hashes and source identity checks. It cannot
+  establish donor equivalence, internal NWB identity, physiological eligibility
+  or scientific robustness from metadata or passing engineering tests alone.
+next_work: >-
+  Implement and test independent reconstruction of all whitelisted projections
+  from retained raw metadata responses while acquisition computes. On terminal
+  completion, verify every attempt, receipt hash, source pin, failure and projection
+  before assessing identity fields and planning internal NWB metadata acquisition.
+physiological_arrays_read: false
+parameter_fitting_performed: false
+specimen_qualification_performed: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

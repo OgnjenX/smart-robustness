@@ -1,0 +1,66 @@
+schema_version: 1
+artifact_id: 1255
+artifact_type: independently-reconstructed-separate-specimen-name-bridge-failure
+date: 2026-10-14
+registration: docs/validation-results/post2008-patchseq-specimen-name-bridge-registration-1253.yaml
+registration_sha256: 1769ec1fcf846b340686a83f6e49500943f8f5ecb39ce66e4293c9f06e2a596c
+sealed_commit: 6c192e6
+collector: scripts/check_patchseq_specimen_name_bridge.py
+collector_sha256: 487ad9fb1a6d34fcb4deea098dad14d5a5d6768cfa76ce532a839cf4a64f9e30
+result: results/patchseq-specimen-name-bridge-1254/manifest.yaml
+result_sha256: eafd0d1abbcf5cea840bcf4a1cc017dc7a43e3eed202d13024be4e71223a0c02
+status: independently-reconstructed-name-bridge-not-established
+independent_check:
+  method: >-
+    Independently project the three registered fields from the original pinned
+    July CSV using DictReader and explicit ASCII digit checks. Reconcile every
+    cell and transcriptomic sample ID against the previous July projection.
+    Query all methods cell and name candidates via SQLite, retain source order,
+    reconstruct every full name-bridge record, duplicate list, unreferenced row
+    and summary, and compare type-preserving JSON. Rehash the original source
+    after reconstruction. No collector import or physiological fields interpreted.
+  terminal_exit_code: 0
+  outcome: passed
+results:
+  July_rows: 4435
+  methods_rows: 8172
+  unique_canonical_cell_matches: 4435
+  unique_explicit_specimen_name_bridges: 0
+  July_rows_without_methods_name: 4435
+  ambiguous_cell_candidates: 0
+  ambiguous_name_candidates: 0
+  unique_cell_name_conflicts: 0
+  literal_transcriptomics_sample_agreements: 0
+illustrative_raw_identifiers:
+  canonical_cell_id: 601506507
+  July_cell_specimen_name: Vip-IRES-Cre;Ai14-331294.04.01.01
+  July_transcriptomics_sample_id: PS0810_E1-50_S88
+  methods_sample_id: P8S4_170706_354_A01
+  equivalence_between_naming_fields: unestablished
+engineering_checks:
+  focused_tests_passed: 9
+  focused_tests_seconds: 0.03
+  aggregate_patchseq_tests_passed: 529
+  aggregate_patchseq_tests_seconds: 13.89
+  repository_ruff: passed
+  git_diff_whitespace_check: passed
+claim_boundary: >-
+  The extra official specimen-name field does not provide literal equality with
+  methods sample_id. Neither it nor July transcriptomics_sample_id is a proven
+  alias for the methods naming field. All canonical cell IDs nevertheless match
+  uniquely. Preserve both failed string tests, unknown transcriptomic identity
+  linkage and raw identifiers. Do not reinterpret this limitation as neuronal
+  failure or attach confidence by a guessed string conversion.
+next_gate: >-
+  Trace authoritative common-cell-ID semantics and any original specimen-to-RNA
+  sample mapping. A separate cell-ID-linked source-annotation inventory may
+  examine metadata coherence, but must not claim sample namespace equivalence,
+  recording identity or biological eligibility. Finish independent archive
+  metadata verification after terminal acquisition and preregister any required
+  internal NWB metadata reads before physiological arrays.
+failed_strict_sample_test_modified: false
+mapping_confidence_assigned: false
+specimen_eligibility_established: false
+physiological_features_interpreted: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

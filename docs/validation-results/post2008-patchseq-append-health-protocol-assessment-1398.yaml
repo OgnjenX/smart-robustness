@@ -1,0 +1,47 @@
+schema_version: 1
+artifact_id: 1398
+date: 2026-10-14
+status: all-48-mixed-health-protocol-outcomes-independently-reconstructed
+result: results/patchseq-append-health-protocols-1394/manifest.yaml
+result_sha256: 7ad719da0d9739bce138531db4491164e429ec0b6e42fe2b55f80cfdac27db37
+independent_result: results/patchseq-append-health-protocols-mixed-independent-1397/manifest.yaml
+independent_result_sha256: 7d4d12cf0be93d1d7d64e5893076bea367fcfc00a93a6ee4d18d9663b63545c4
+metadata_counts:
+  cases_retained: 48
+  bath_pairs: 52
+  seal_pairs: 54
+  breakin_pairs: 56
+  total_pairs_retained: 162
+  compatible_VC_pairs: 161
+  unsupported_pairs: 1
+  recognized_blowout_pairs: 0
+retained_unsupported_case:
+  slot: 4
+  source_cell_specimen_id: '654294107'
+  protocol: bath
+  sweep_number: 1
+  declared_clamp: CC
+  required_clamp: VC
+  series_failure: unsupported-health-series-type
+  pair_failure: series-metadata-failure
+  reinterpreted_or_removed: false
+  subsequent_metadata_supported_bath_sweep: 2
+independent_checker_scope:
+  legacy_all_valid_checker: not-applicable-to-mixed-result-preserved-without-promoting-nonpass
+  mixed_checker: separately-sealed-after-metadata-exposure-before-new-health-waveform-reads
+  verified: every-series-pair-failure-nontarget-and-missing-protocol
+  corruption_and_nonpass_controls_passed: 15
+interpretation: >-
+  All metadata outcomes are independently reproduced, including the unsupported
+  current-clamp bath trial. Compatible metadata is not proof of healthy recording
+  values. Blowout is unassessed for all 48 cases, not a zero or measured pass.
+  Future recording-quality measurement must retain the unsupported trial as
+  unknown without reading its arrays, and select the largest explicit sweep per
+  protocol across all retained trials, including unknowns. A later valid trial
+  may be selected by that existing rule; an earlier favorable result may never
+  replace an invalid latest trial. No class, partition, threshold or source changed.
+next_gate: separately-sealed-161-VC-pair-measurement-plus-one-unknown-trial-and-independent-reconstruction
+new_health_waveform_reads: 0
+models_fitted: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

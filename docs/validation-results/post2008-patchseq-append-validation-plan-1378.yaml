@@ -1,0 +1,48 @@
+schema_version: 1
+artifact_id: 1378
+date: 2026-10-14
+status: prospective-validation-plan-before-new-physiological-outcomes
+scope: approved-48-recording-append-cohort-in-addition-to-all-original-48
+purpose: Check whether additional independently partitioned recordings support the missing strata, without repairing pilot failures or weakening gates.
+acquisition: results/patchseq-append-acquisition-1376/manifest.yaml
+independent_acquisition: results/patchseq-append-acquisition-independent-1377/manifest.yaml
+immutable_selection: results/patchseq-append-selection-1373/manifest.yaml
+immutable_selection_sha256: 60db30d33739e3784c2a3f32b02fb82cf55159d59beff0a24d5397ce22f9e137
+inherited_protocols:
+  metadata_inventory:
+    registration: docs/validation-results/post2008-patchseq-trace-schema-registration-1318.yaml
+    sha256: 59408cad9a2c9cf8128f0cedfec2543c845e16e973b1424c18b38e55ac6d793f
+  stimulus_response_pairing:
+    registration: docs/validation-results/post2008-patchseq-pairing-registration-1323.yaml
+    sha256: f3304e4317495aaaec0d561100720cd5c1eb09060d74b045a571044bd4fd5e13
+  long_square_waveform_QC:
+    registration: docs/validation-results/post2008-patchseq-waveform-QC-registration-1327.yaml
+    sha256: 73b57c70ac2881e43e7c307fadc92aa9575fcf25e60b0ecc30c3d9a9536b064d
+  bounded_mandatory_recording_quality:
+    registration: docs/validation-results/post2008-patchseq-recording-quality-registration-1364.yaml
+    sha256: b23017224ccaa55130bb37ae15164ec9ed4081f0dafe93c9cf3c1410d4e6b649
+adaptation_policy:
+  allowed: separately-versioned-input-output-paths-and-exact-source-counts-derived-from-independent-metadata
+  unchanged: algorithms-physical-conventions-thresholds-storage-bounds-and-failure-retention
+  input_pins: require-terminal-acquisition-and-independent-result-hashes-in-each-executable-registration
+  sequencing: identity-verification-then-metadata-inventory-then-independent-pairing-then-waveform-QC-and-independent-reconstruction-then-recording-quality
+  implementation: seal-each-runner-and-tests-before-reading-its-new-outcomes
+  this_plan_is_not: executable-array-read-or-fitting-authorization
+  unknown_or_unsupported_file_or_protocol: retain-explicitly-no-imputation-or-replacement
+  incomplete_identity: retain-failure-stop-at-current-gate-no-silent-smaller-cohort-promotion
+  waveform_storage_failure: retain-error-no-relaxed-parser-or-invented-nominal-scales
+interpretation:
+  original_cohort: preserve-all-original-cases-and-QC-results-verbatim
+  new_cohort: report-separately-before-any-combined-source-coverage-table
+  group_counts: distinct-already-frozen-global-groups-not-recordings-or-sweeps
+  shared_groups: do-not-double-count-across-batches-within-a-stratum
+  support: keep-all-12-class-layer-partition-strata-explicit-including-zero-support
+  five_fit_three_held_out: acquisition-design-only-not-an-intrinsic-fit-promotion-threshold
+  physiological_pass: not-model-eligibility-not-full-cell-health-not-network-success
+  prospective_claim: append-design-follows-known-pilot-outcomes-not-retrospective-confirmatory-relabeling
+  inadequate_support: retained-negative-or-unresolved-source-outcome-not-neuron-model-failure
+  synaptic_recruitment_ceiling: separate-unresolved-gate-not-rescued-by-intrinsic-recordings
+model_fitting_performed: false
+network_execution_authorized: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

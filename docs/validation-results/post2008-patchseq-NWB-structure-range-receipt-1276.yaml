@@ -1,0 +1,53 @@
+schema_version: 1
+artifact_id: 1276
+artifact_type: bounded-structural-range-acquisition-terminal-receipt
+date: 2026-10-14
+registration: docs/validation-results/post2008-patchseq-NWB-structure-range-registration-1274.yaml
+registration_sha256: e5ad7da418565cc19da5a80e08d15fbc910922455b693d8f7a040a301939beee
+sealed_commit: 4ada2dc
+runner: scripts/run_patchseq_NWB_structure_ranges.py
+runner_sha256: 1f2168130e936b26a9cfef9db2fa9ed32f023434709001114a1500e4dcd97432
+result: results/patchseq-NWB-structure-range-1275/manifest.yaml
+result_sha256: 15a0b50a71e15772ed2803a0c5e7a5934185ede7928d7104c4fc6efb13d24700
+status: terminal-incomplete-fixed-range-budget-exhausted
+process_exit_code: 0
+structural_scope_completed: false
+reported_evidence:
+  new_range_requests: 32
+  charged_new_range_bytes: 2097152
+  combined_seed_and_new_cache_bytes: 2490368
+  retained_structure_records: 73
+  sources_unchanged: true
+  dataset_values_read: false
+  attribute_values_read: false
+  explicit_candidate:
+    path: /general/session_id
+    object_type: dataset
+    shape: []
+    dtype: object
+    value_read: false
+    identity_matches_recorded_session: null
+engineering_checks:
+  focused_tests_passed: 17
+  aggregate_patchseq_tests_passed: 607
+  aggregate_patchseq_tests_seconds: 13.87
+  repository_ruff: passed
+claim_boundary: >-
+  The run retained partial structural descriptors and stopped at the registered
+  budget without retry, fallback or budget expansion. The process exit records a
+  retained terminal outcome, not successful scope completion. The candidate
+  general/session_id is distinct from the previously absent root session_id.
+  Its presence and scalar shape do not prove its meaning, type, value or agreement
+  with the author session ID. Unvisited paths remain unknown. No attribute or
+  dataset values, physiological arrays, new fitted models or SMART behaviors were
+  interpreted. No specimen is qualified and no failed naming gate is changed.
+next_gate: >-
+  Independently verify every new HTTP receipt, ETag, size, span and source hash;
+  replay the retained partial structural scan from the expanded saved cache with
+  no network access. Only after that, separately register a bounded scalar read
+  of general/session_id; retain both incomplete structural outcomes and do not
+  extend this completed runner's budget or rewrite its result.
+independent_receipt_and_structure_verification_pending: true
+specimen_eligibility_established: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

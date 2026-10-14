@@ -1,0 +1,35 @@
+schema_version: 1
+artifact_id: 1252
+artifact_type: primary-methods-publication-quality-definition-audit
+date: 2026-10-14
+primary_publication:
+  title: Scaled, high fidelity electrophysiological, morphological, and transcriptomic cell characterization
+  article: https://elifesciences.org/articles/65482
+  PMC: PMC8428855
+  full_text_endpoint: https://www.ncbi.nlm.nih.gov/research/bionlp/RESTful/pmcoa.cgi/BioC_xml/PMC8428855/unicode
+  retrieved_response_bytes: 248640
+  access: successful-bounded-CLI-BioC-XML-read-after-browser-challenge
+methods:
+  - The methods explicitly use the Gouwens et al. 2020 reference-taxonomy mapping-quality procedure.
+  - Mapping uses a mouse VISp neuronal reference, hierarchical assignment and bootstrap sampling of cells and markers.
+  - Inconsistent quality is defined by KL divergence greater than two or expression correlation less than 0.5.
+  - Highly consistent quality requires the two highest mapping probabilities to sum above 70 percent and their ratio to exceed two; otherwise remaining calls are moderately consistent.
+data_provenance:
+  - The publication identifies AllenInstitute/patchseqtools as its consolidated public data, code and protocol resource.
+  - The publication cites its historical Software Heritage snapshot, swh:1:rev:d1afcd4d5203564979a29f2891e03cba7733b726.
+  - The inspected metadata CSV is pinned separately at current repository revision 3c841b9fe8616cc0d88e4dc44b3048e8861c1687; publication-level definitions do not prove every current row's historical identity.
+resolved: Publication-level semantics of the three raw quality categories.
+unresolved:
+  - Exact methods sample_id versus July transcriptomics_sample_id namespace correspondence.
+  - Per-cell confidence attachment under the failed sealed strict correspondence rule.
+decision: >-
+  Quality-category semantics now have primary-methods support, but no per-cell
+  labels are attached to the July physiology cohort until the identifier gate is
+  separately resolved. Do not substitute normalized marker sum, genotype or
+  processed-cohort inclusion for mapping quality, and do not overwrite the
+  failed strict sample-string correspondence result.
+physiological_arrays_read: false
+mapping_confidence_assigned: false
+specimen_eligibility_established: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

@@ -1,0 +1,62 @@
+schema_version: 1
+artifact_id: 1251
+artifact_type: independently-reconstructed-strict-correspondence-failure-assessment
+date: 2026-10-14
+registration: docs/validation-results/post2008-patchseq-methods-July-correspondence-registration-1249.yaml
+registration_sha256: 14b99dc2c2b4207a048447124ce245b79fa313feb6c49545250cf8c0a7866930
+sealed_commit: 44a6144
+collector: scripts/join_patchseq_methods_July.py
+collector_sha256: f3156ccfb43f29118a0c8c2c9975e7e3cb31712a848f97abd15c1ec6a094db87
+result: results/patchseq-methods-July-correspondence-1250/manifest.yaml
+result_sha256: e92567ed6c07e29d0788c5336c5deb53dbac34e9c1be29ac767f3b54e26df398
+status: all-correspondences-independently-rebuilt-strict-cell-and-sample-gate-not-met
+independent_check:
+  method: >-
+    Load independently verified methods and July projections into SQLite,
+    query every cell and sample candidate independently in original source order,
+    rebuild full candidate raw fields and literal structure flags, and compare
+    every correspondence, unreferenced row, duplicate list and summary using
+    type-preserving JSON equality. Rehash all input and output artifacts afterward.
+    No collector import, physiological features or new identity normalization.
+  terminal_exit_code: 0
+  outcome: passed
+results:
+  methods_rows: 8172
+  July_rows: 4435
+  July_rows_with_unique_methods_cell: 4435
+  July_rows_without_methods_sample: 4435
+  consistent_cell_and_sample_correspondences: 0
+  ambiguous_cell_candidates: 0
+  ambiguous_sample_candidates: 0
+  unique_cell_sample_conflicts: 0
+  unreferenced_methods_rows: 3737
+literal_identifier_discrepancy_example:
+  canonical_cell_id: 601506507
+  July_transcriptomics_sample_id: PS0810_E1-50_S88
+  methods_sample_id: P8S4_170706_354_A01
+  namespace_relationship: unestablished
+engineering_checks:
+  focused_tests_passed: 10
+  focused_tests_seconds: 0.03
+  aggregate_patchseq_tests_passed: 520
+  aggregate_patchseq_tests_seconds: 13.76
+  repository_ruff: passed
+  git_diff_whitespace_check: passed
+claim_boundary: >-
+  Every canonical cell ID matches uniquely but the registered independent sample
+  string check fails for every July record. This is an identifier-correspondence
+  limitation, not a physiological or biological failure. The strict sealed result
+  remains failed; no sample-string normalization, confidence assignment or
+  eligibility promotion follows from the cell-only agreement. The examples suggest
+  different naming schemes, but do not themselves prove namespace equivalence.
+next_gate: >-
+  Trace authoritative definitions or an explicit specimen-linked crosswalk for
+  these sample fields. If external documentation supports an alternative identity
+  rule, register it as a separate provenance analysis without rewriting this
+  failed strict test. Preserve all raw IDs and unknowns. Meanwhile complete
+  independent archive metadata verification when its acquisition becomes terminal.
+mapping_confidence_assigned: false
+specimen_eligibility_established: false
+physiological_features_interpreted: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

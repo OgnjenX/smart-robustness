@@ -1,0 +1,41 @@
+schema_version: 1
+artifact_id: 1428
+date: 2026-10-14
+status: all-4880-source-consistent-nominal-current-contexts-independently-reconstructed
+result: results/patchseq-nominal-current-context-1426/manifest.yaml
+result_sha256: e301dec7975eac821d5097d9fb5089a5aeeb204cb42bd912b1d60e2b533126c5
+independent_result: results/patchseq-nominal-current-context-independent-1427/manifest.yaml
+independent_result_sha256: 5cface307e4f4c917ccaf832c3d43366de84374dfb40ab785a733afabcbd3f97
+verified:
+  cases: 96
+  sweeps: 4880
+  supported_nominal_contexts: 4880
+  unsupported_or_conflicting_contexts: 0
+  zero_nominal_holding_terms: 560
+  nonzero_nominal_holding_terms: 4320
+convention: exact-source-DAC-command-pA-plus-separate-documented-enabled-native-holding-pA
+assumption: constant-per-sweep-holding-term-supported-by-consistent-recorded-settings-not-a-continuous-delivered-current-measurement
+distinctions:
+  explicit_disabled_flag: zero-nominal-term-from-documented-control-state-not-from-missing-bias-property
+  absent_or_unsupported_current: never-filled-with-zero
+  slow_target_voltage: never-added-to-current
+  raw_voltage: as-recorded-no-invented-junction-sign
+  amplifier_compensation_settings: context-not-cell-capacitance-or-resistance-parameters
+  native_holding_precision: source-float64-pA-not-replaced-by-rounded-float32-export-value-or-nominal-command-amplitude
+engineering:
+  all_patchseq_tests_passed: 1189
+  ruff: passed
+  unknown_zero_unit_rescaling_source-conflict_controls: passed
+interpretation: >-
+  The nominal input convention is now source-backed and independently reproduced
+  for both batches. It is a conditional modeling-input contract, not proof of
+  perfectly delivered current, complete cell health, biological parameter truth
+  or neuron-model validity. Original currents, voltages, QC results, failures,
+  partitions and baseline remain untouched. Holding metadata is an experimental
+  input term for isolated fitting, not authorization to add patch-clamp holding
+  currents as background drive in the SMART network.
+next_gate: fitting-partition-only-physiological-target-catalog-then-sealed-isolated-fitting-and-held-out-scoring-before-network-use
+models_fitted: false
+held_out_response_features_used_for_model_selection: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

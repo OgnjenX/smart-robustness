@@ -1,0 +1,58 @@
+schema_version: 1
+artifact_id: 1263
+artifact_type: sealed-archive-identity-inventory-receipt-not-independent-assessment
+date: 2026-10-14
+registration: docs/validation-results/post2008-patchseq-archive-identity-evidence-registration-1260.yaml
+registration_sha256: 50d8406a11f393604a513ce196861c6c542631d3d76a426e299fd34ac8bcb2e7
+sealed_commit: ef87c52
+collector: scripts/inventory_patchseq_archive_identity_evidence.py
+collector_sha256: b9f95a4ef8a508bd4f5a2ba0c40b21b83777e0e364fafb6587d5d0a819824dd0
+result: results/patchseq-archive-identity-evidence-1261/manifest.yaml
+result_sha256: 9ea9fe950b604020c5f15098816ea8235b07ca2971e3068ce8efb669b1a99502
+terminal_exit_code: 0
+status: sealed-inventory-complete-independent-evidence-reconstruction-pending
+collector_reported_results:
+  assets: 4435
+  successful_metadata_assets: 4435
+  metadata_branch_present: top_level
+  literal_path_agreements: 4435
+  positive_integer_contentSize_agreements: 4435
+  participant_literal_path_subject_agreements: 4435
+  Session_activity_literal_path_session_agreements: 4435
+  other_activity_candidate_comparisons_unknown: 4435
+  literal_reported_SHA256_agreements: 4435
+  dandi_etag_comparisons_unknown: 4435
+  unavailable_literal_asset_id_comparisons: 4435
+  unavailable_size_field_comparisons: 4435
+  independently_content_verified_assets: 0
+  eligible_specimens: 0
+engineering_checks:
+  focused_tests_passed: 15
+  focused_tests_seconds: 0.04
+  aggregate_patchseq_tests_passed: 557
+  aggregate_patchseq_tests_seconds: 13.43
+  repository_ruff: passed
+  git_diff_whitespace_check: passed
+claim_boundary: >-
+  These are sealed collector outputs over independently verified metadata
+  projections, not an independent reconstruction of the identity comparisons.
+  Reported SHA256 strings agree across the archive and 2021 source manifest;
+  no NWB file bodies have been downloaded and content hashes are not independently
+  computed. Participant/path-subject agreement does not resolve annotation donor
+  namespaces. Session/path agreement does not resolve RNA aliases or validate
+  physiological responses. Generic artifact identifiers and dandi-etag remain
+  outside the neuron identity and SHA256/MD5 comparisons. Every candidate and
+  unknown remains visible; no cell is qualified.
+next_gate: >-
+  Independently rebuild every raw branch, actor candidate, typed field comparison,
+  checksum diagnostic and count from the retained responses and original typed
+  source checksum records. Compare full records and all source pins, then register
+  bounded internal NWB metadata acquisition with explicit scope and byte limits
+  before physiological traces or a fitting cohort.
+network_requests: 0
+recording_bodies_downloaded: false
+physiological_arrays_read: false
+specimen_qualification_performed: false
+prior_failed_name_tests_modified: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

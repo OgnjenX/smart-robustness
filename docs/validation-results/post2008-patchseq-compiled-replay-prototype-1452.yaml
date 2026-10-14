@@ -1,0 +1,58 @@
+schema_version: 1
+artifact_id: 1452
+date: 2026-10-14
+status: synthetic-only-optional-compiled-verifier-prototype-not-enabled-for-scientific-runs
+implementation:
+  wrapper: scripts/patchseq_hh_compiled_prototype.py
+  kernel: scripts/patchseq_hh_replay_kernel.cpp
+  reference: scripts/patchseq_hh_independent_replay.py
+  tests: tests/test_patchseq_hh_compiled_prototype.py
+purpose: reduce-future-independent-verification-cost-without-changing-live-fitting-source-or-scientific-parameters
+compiler_observed: Apple-clang-21.0.0-arm64-apple-darwin27.0.0
+compiler_flags: [-std=c++17, -O2, -fPIC, -shared, -fno-fast-math, -ffp-contract=off]
+contract:
+  equations: same-unit-explicit-Na-K-M-effective-conductance-hypothesis
+  solver: same-four-stage-RK4-with-held-current-and-observed-grid-states
+  initial_gates: same-equilibrium-at-explicit-initial-voltage
+  failures: rejected-not-clipped-or-zero-filled
+  dependencies: standard-C++-math-and-ctypes-no-new-downloads
+  compilation: temporary-library-only-no-source-or-baseline-rewrites
+synthetic_controls:
+  tests_passed_locally: 7
+  optional_compiler_absence: tests-skip-not-an-equivalence-pass
+  passive_step_and_repeat: passed
+  mixed_active_passive_vector: passed-at-1e-5-mV-absolute-equivalence-tolerance
+  invalid_inputs_and_numerical_failure: rejected
+local_benchmark:
+  biological_data_used: false
+  simulated_duration_s: 1.0
+  cells: 2
+  sample_rate_hz: 50000.0
+  inputs_pA: [500.0, 50.0]
+  parameters:
+    capacitance_pF: 100.0
+    leak_nS: 10.0
+    leak_reversal_mV: -65.0
+    active_sodium_nS: 2000.0
+    active_potassium_nS: 500.0
+    active_m_current_nS: 10.0
+    passive_active_conductances_nS: 0.0
+    threshold_shift_mV: -60.0
+    m_tau_max_ms: 1000.0
+  reference_wall_s: 5.699120791861787
+  compiled_wall_s: 0.012206332990899682
+  wall_speed_ratio: 466.89868252084506
+  maximum_voltage_difference_mV: 1.2938006221929754e-10
+  interpretation: one-local-synthetic-measurement-not-full-study-throughput-or-biological-validation
+limitations:
+  - The current fitting runner and registered NumPy verification workflow remain unchanged.
+  - No real fitting predictions, checkpoint losses or held-out data were used.
+  - One-second synthetic equivalence does not establish all-parameter or long-recording equivalence.
+  - Scientific use requires separately sealed compiler/binary provenance and wider synthetic equivalence/failure controls before biological execution.
+  - No fast-math relaxation, changed tolerances, candidate bounds or numerical integration method is proposed.
+next_gate: additional-synthetic-long-recording-and-boundary-controls-then-prospective-verifier-only-performance-amendment-if-supported
+live_fitting_source_modified: false
+compiled_biological_replay_enabled: false
+held_out_response_features_read: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

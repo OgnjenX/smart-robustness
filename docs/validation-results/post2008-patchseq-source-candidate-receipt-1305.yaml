@@ -1,0 +1,57 @@
+schema_version: 1
+artifact_id: 1305
+artifact_type: sealed-source-annotated-target-candidate-receipt
+date: 2026-10-14
+registration: docs/validation-results/post2008-patchseq-source-candidate-registration-1303.yaml
+registration_sha256: 6054b152fa94dcfcf5470334cfbc9c3273ec0fbf2120117b7fe74cb5aaf40816
+sealed_commit: ca7588e
+runner: scripts/build_patchseq_source_candidates.py
+runner_sha256: f873aedae190cd4f79185526485fc3fefbbae7bad6324e2905b36aafdefd9893
+result: results/patchseq-source-candidates-1304/manifest.yaml
+result_sha256: 60b967d96923bec2bdf86c6ee841f74ea5913627fee34cccc32f6602610bb837
+status: source-candidate-ledger-built-independent-reconstruction-pending
+terminal_exit_code: 0
+collector_reported:
+  retained_specimens: 4435
+  source_annotation_candidates: 1180
+  qualified_specimens: 0
+  nonexclusive_failure_counts:
+    anatomy_label_not_target: 2167
+    literal_anatomy_agreement_not_established: 49
+    author_paper_indicator_not_required: 134
+    author_class_not_required: 152
+    author_mapping_quality_not_required: 1369
+    source_group_not_target: 1058
+    source_reference_leaf_not_agreeing: 165
+  candidate_group_counts_by_stratum:
+    Pvalb_L23: {fitting: 53, held_out: 32}
+    Pvalb_L5: {fitting: 85, held_out: 38}
+    Sst_L23: {fitting: 43, held_out: 26}
+    Sst_L5: {fitting: 155, held_out: 74}
+    Vip_L23: {fitting: 123, held_out: 57}
+    Vip_L5: {fitting: 25, held_out: 12}
+engineering_checks:
+  focused_tests_passed: 9
+  aggregate_patchseq_tests_passed: 688
+  aggregate_patchseq_tests_seconds: 13.98
+  repository_ruff: passed
+claim_boundary: >-
+  Candidate designation is a prospective filter of exact raw author calls and
+  source-reference labels, not independent RNA typing, newly computed mapping
+  confidence, measured-image revalidation or physiology qualification. All source
+  records and failure reasons remain. Group counts are metadata support, not
+  experiment-specific minimum coverage, independent biological donors, validated
+  intrinsic responses or synaptic recruitment evidence. Earlier failed name gates
+  remain carried unchanged. Only the original pilot has independently accepted
+  recording content/session/author-cell provenance; that is not copied to others.
+next_gate: >-
+  Independently reconstruct every candidate, raw label, failure reason, inherited
+  group and stratum count from pinned sources before defining bounded recording
+  acquisition and intrinsic fitting. Freeze per-recording provenance and trace-QC
+  rules, fit-only inputs and held-out evaluation before accessing physiology. No
+  outcome-guided source-label changes or later synaptic-gate rescue is authorized.
+independent_candidate_reconstruction_pending: true
+specimen_eligibility_established: false
+prior_failed_gates_modified: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

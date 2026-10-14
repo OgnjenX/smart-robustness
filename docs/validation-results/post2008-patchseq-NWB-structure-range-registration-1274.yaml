@@ -1,0 +1,65 @@
+schema_version: 1
+artifact_id: 1274
+artifact_type: bounded-structural-metadata-range-acquisition-registration
+date: 2026-10-14
+status: sealed-before-new-range-or-structural-outcomes
+purpose: >-
+  Complete the same names-only metadata scope that stopped on uncovered bytes in
+  1272, by requesting only HDF5-demanded aligned blocks under a new fixed budget.
+  Retain 1272 as incomplete; do not overwrite or reinterpret it as success.
+pilot: results/patchseq-NWB-metadata-pilot-1267/manifest.yaml
+pilot_sha256: c1953a806b1ce34aa10f0cbd3067c80486ca7bb8f594ba2b08ca8847d0e3a72a
+independent_replay: results/patchseq-NWB-metadata-pilot-independent-1269/manifest.yaml
+independent_replay_sha256: c4987ef57e35743e5bfb92c7ce2ff1567b14354e78b27077f10b19cad1a9e01e
+prior_structure: results/patchseq-NWB-structure-1272/manifest.yaml
+prior_structure_sha256: 9cbcd5b4a9380928022d6ebffcd4936d8951b5032efef2b05dec3ab7da198b10
+structural_registration: docs/validation-results/post2008-patchseq-NWB-structure-registration-1271.yaml
+structural_registration_sha256: b4a23dc9a9330a5a60c07eb60ef9436213ada6909de6a76db8dbfbf21203949d
+structure_runner: scripts/inspect_patchseq_NWB_structure.py
+structure_runner_sha256: 13791b6a13c5670f33ab03a39ce969212406d1e243238afa47e6071cf976aa98
+range_reader: scripts/patchseq_bounded_NWB.py
+range_reader_sha256: 722128c416bf640247e5eb9aac1284c16d570e3785452ed4037c1a7392019206
+transport_runner: scripts/run_patchseq_NWB_metadata_pilot.py
+transport_runner_sha256: c50fc863b901db0c179314c90f9730e1fba0aee9f759788da002d85817d5fa66
+offline_reader: scripts/verify_patchseq_NWB_metadata_pilot.py
+offline_reader_sha256: e1d4d3482106bc56d13114a25e95ac884ff96b600851556e54e27e5a97b69087
+selection: same-source-blind-pilot-asset-no-new-specimen-selection
+output_directory: results/patchseq-NWB-structure-range-1275
+parser_dependency: h5py==3.12.1
+URL_resolution:
+  allowed_scheme: https
+  allowed_hosts: [dandiarchive.s3.amazonaws.com, dandiarchive.s3.us-east-1.amazonaws.com, dandiarchive.s3.us-east-2.amazonaws.com]
+  required_path_prefix: /blobs/
+  maximum_HEAD_requests: 2
+  maximum_HEAD_redirects: 1
+HTTP_range_limits:
+  cache_block_bytes: 65536
+  maximum_unique_downloaded_bytes: 2097152
+  maximum_range_requests: 32
+  timeout_seconds_per_request: 30
+  maximum_run_seconds: 900
+seed_cache:
+  blocks: 6
+  bytes: 393216
+  new_transfer_accounting: exclude-seeded-blocks-include-all-new-attempts-before-fetch
+  maximum_combined_cache_bytes: 2490368
+  seed_etag_required_to_match_new_HEAD: true
+structural_scope: exactly-1271-no-additional-value-whitelist
+HTTP_policy: >-
+  Use pinned original contentUrl with unique allowed direct locator, strong
+  unchanged ETag and exact file size. GET must be 206 with exact Content-Range,
+  ETag and byte length; If-Match required. No range redirects, retries, full-body
+  fallback, outcome-based budget extension or repeated terminal runner.
+interpretation:
+  dataset_values: prohibited
+  attribute_values: prohibited
+  physiological_arrays: prohibited
+  full_recording_download: prohibited
+  full_recording_digest: not-established
+  missing_internal_IDs: retain-prior-evidence-do-not-infer-from-filenames
+  prior_failed_name_gates: unchanged
+  cell_ID_only_cohort: remains-nonqualifying
+execution_gate: commit-registration-runner-tests-before-new-network-or-structural-outcomes
+next_gate: independent-HTTP-receipt-verification-and-offline-structural-reconstruction
+frozen_baseline_modified: false
+scientific_goal_complete: false

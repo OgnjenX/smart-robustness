@@ -1,0 +1,76 @@
+schema_version: 1
+artifact_id: 1232
+artifact_type: independently-reconstructed-typed-2021-file-manifest-assessment
+date: 2026-10-14
+registration: docs/validation-results/post2008-patchseq-2021-manifest-row-registration-1229.yaml
+registration_sha256: b3250d23e6bb27a098a6e33aa852f77756202596246d9c1f2b295dc7bd546171
+sealed_collector_commit: 5ecc17b
+collector: scripts/read_patchseq_2021_manifest.py
+collector_sha256: 2518610d766da2c0765b2152037cd9e24ad44378132affba538ef3b6ffdee826
+result: results/patchseq-2021-manifest-records-1230/manifest.yaml
+result_sha256: 0bded4681367d9db7dd8de982b69cd57903a8d7dd2f0cf8f1d08a8cb79a1d7a1
+verifier: scripts/verify_patchseq_2021_manifest.py
+verifier_sha256: 2b213dfd1e63a7d18149cb960663e9f70e30dd9ed20cd94cea7e01b8f9e014b0
+independent_result: results/patchseq-2021-manifest-independent-1231/manifest.yaml
+independent_result_sha256: 0aefbfc2f2a1dfbd43f695be9aacda9313e4c2e1f2d626abf13e44feb2eb8dbf
+status: all-typed-source-records-independently-reconstructed
+independent_check:
+  method: >-
+    Parse the original pinned workbook's worksheet and shared-string XML using
+    a DOM parser, independently of the collector's streaming parser. Reconstruct
+    every explicit row, missing cell, storage type, raw value lexeme, shared-string
+    index, decoded literal, formula flag, canonical integer and coordinate gap.
+    Check the original header and use type-preserving JSON comparisons for every
+    complete row. No collector import, formula evaluation, recording acquisition
+    or physiological array read. Recheck source and result hashes after comparison.
+  terminal_exit_code: 0
+  outcome: passed
+  verified_at_utc: '2026-10-14T00:21:15.842777+00:00'
+results:
+  explicit_source_rows: 19463
+  missing_row_numbers_between_explicit_rows: []
+  source_technique_counts:
+    morphology: 1719
+    intracellular_electrophysiology: 4435
+    transcriptomics: 13309
+  unresolved_canonical_integers:
+    file_id: 0
+    file_size: 0
+    cell_specimen_id: 4
+  formula_cells: 0
+  storage_type_counts:
+    absent_type_attribute: 58385
+    shared_string: 155704
+engineering_checks:
+  focused_tests_passed: 37
+  focused_tests_seconds: 0.05
+  aggregate_patchseq_tests_passed: 428
+  aggregate_patchseq_tests_seconds: 13.38
+  repository_ruff: passed
+  git_diff_whitespace_check: passed
+claim_boundary: >-
+  The manifest's typed records are verified, not its recording contents or cell
+  eligibility. Its 4435 electrophysiology rows have not yet been independently
+  matched to the 4435 catalog assets and July annotations. Equal counts do not
+  prove one-to-one coverage or resolve the prior June manifest's 595 uncovered
+  recordings. All four unresolved cell IDs remain present. Mapping confidence,
+  internal NWB identity and physiological qualification remain unestablished.
+next_gate: >-
+  Seal exact file-to-catalog-to-July annotation comparisons before execution.
+  Retain all candidates, modalities, unmatched files and ID, size, path or checksum
+  conflicts. Do not follow recording URLs or acquire arrays in that comparison.
+  Only subsequently register internal recording metadata acquisition and a
+  separate eligible cohort, donor split and isolated-physiology fitting protocol.
+publication_checkpoint:
+  published_revision_CI: https://github.com/OgnjenX/smart-robustness/actions/runs/38488221461
+  published_revision_CI_head: e6c15761be1d2821de7d39cee8c7e9dd90bdd86a
+  observed_status: in_progress
+  latest_successful_CI: https://github.com/OgnjenX/smart-robustness/actions/runs/38481329249
+  latest_successful_CI_head: 0e8c7ea353bd6683ce66548ead598d59a02cb758
+  current_source_revision_CI_verified: false
+  additional_push_deferred_to_avoid_canceling_active_same_branch_CI: true
+physiological_arrays_read: false
+specimen_qualification_performed: false
+parameter_fitting_performed: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

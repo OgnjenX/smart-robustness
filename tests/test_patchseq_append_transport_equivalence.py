@@ -26,6 +26,8 @@ def functions(path):
     ('verify_patchseq_pairing.py', 'verify_patchseq_append_pairing.py', {'main'}),
     ('run_patchseq_waveform_QC.py', 'run_patchseq_append_waveform_QC.py', set()),
     ('verify_patchseq_waveform_QC.py', 'verify_patchseq_append_waveform_QC.py', {'main'}),
+    ('audit_patchseq_health_protocols.py', 'audit_patchseq_append_health_protocols.py', set()),
+    ('verify_patchseq_health_protocols.py', 'verify_patchseq_append_health_protocols.py', {'main'}),
 ])
 def test_transport_and_independent_check_functions_are_unchanged(original, append, exclude):
     before = functions(ROOT/'scripts'/original)
@@ -68,3 +70,12 @@ def test_append_waveform_rules_and_physical_conventions_are_unchanged():
     for key in ('read_policy', 'conventions', 'waveform_rules', 'scientific_claims'):
         assert append[key] == original[key]
     assert append['scope']['pairs'] == 'all-2550-verified-current-clamp-pairs-retained'
+
+
+def test_append_health_ontology_codes_and_pairing_rules_are_unchanged():
+    prefix = ROOT/'docs/validation-results'
+    original = yaml.safe_load((prefix/'post2008-patchseq-health-protocol-registration-1360.yaml').read_text())
+    append = yaml.safe_load((prefix/'post2008-patchseq-append-health-protocol-registration-1393.yaml').read_text())
+    for key in ('primary_ontology', 'codes', 'rules', 'scope_limit'):
+        assert append[key] == original[key]
+    assert append['new_HDF5_or_waveform_reads_authorized'] is False

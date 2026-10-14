@@ -1,0 +1,47 @@
+schema_version: 1
+artifact_id: 1392
+date: 2026-10-14
+status: all-2550-append-sweep-QC-outcomes-independently-reconstructed
+result: results/patchseq-append-waveform-QC-1389/manifest.yaml
+result_sha256: 783a4ba5bbbe8f7fc0122152a002f61ab907c8ff7586d7cd4c3426a3f109f15b
+independent_result: results/patchseq-append-waveform-QC-independent-1391/manifest.yaml
+independent_result_sha256: 24c1ca22b97a47dc5a53149a7074169b5205829fff4724d918095dde2fc1125b
+observed:
+  recordings_retained: 48
+  sweeps_retained_and_independently_verified: 2550
+  long_square_candidates: 904
+  sweep_QC_passes: 242
+  recordings_with_any_sweep_QC_pass: 32
+  decoded_float64_bytes: 10552002176
+  read_errors: 0
+  failures_nonexclusive:
+    absolute_mean_drift_mV-exceeds-limit: 475
+    incomplete-baseline-window: 184
+    not-long-square-returning-to-baseline: 643
+    not-supported-single-step-waveform: 1003
+    slow_noise_RMS_mV-exceeds-limit: 86
+    pre_noise_RMS_mV-exceeds-limit: 3
+    post_noise_RMS_mV-exceeds-limit: 1
+append_distinct_groups_with_any_sweep_pass_not_fit_eligibility:
+  Pvalb_L23: {fitting: 3, held-out: 1}
+  Pvalb_L5: {fitting: 0, held-out: 2}
+  Sst_L23: {fitting: 4, held-out: 3}
+  Sst_L5: {fitting: 5, held-out: 3}
+  Vip_L23: {fitting: 4, held-out: 3}
+  Vip_L5: {fitting: 2, held-out: 2}
+engineering:
+  all_patchseq_tests_passed: 1070
+  ruff: passed
+  unchanged_algorithm_and_physical_convention_checks: passed
+interpretation: >-
+  The append batch supplies one held-out PV L23 group with passing long-square
+  sweeps, unlike the original batch. This is necessary waveform support only;
+  recording-health checks, input conventions and an isolated fit/held-out scoring
+  contract remain unresolved. No biological suitability, neuron-model validation,
+  synaptic recruitment or SMART-behavior conclusion follows from these sweep counts.
+  Every original and new failure remains retained; no thresholds or partitions changed.
+next_gate: exact-health-protocol-metadata-then-independent-recording-quality-reads
+recording_quality_qualification: not-yet-established
+models_fitted: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

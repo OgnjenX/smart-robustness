@@ -1,0 +1,41 @@
+schema_version: 1
+artifact_id: 1278
+artifact_type: independent-partial-structural-replay-assessment
+date: 2026-10-14
+acquisition: results/patchseq-NWB-structure-range-1275/manifest.yaml
+acquisition_sha256: 15a0b50a71e15772ed2803a0c5e7a5934185ede7928d7104c4fc6efb13d24700
+verifier: scripts/verify_patchseq_NWB_structure_ranges.py
+verifier_sha256: fcb99fddb2a492444239f0c97a08f7613a85463bf513ea2f0c6cd5789a9e3c03
+independent_result: results/patchseq-NWB-structure-range-independent-1277/manifest.yaml
+independent_result_sha256: 3dad202eed60794f25baa943d9600c5f47b939f5c7ad5b302126a4dada6a90cd
+status: independently-verified-partial-structure-complete-scope-still-failed
+terminal_verifier_exit_code: 0
+verified:
+  new_HTTP_ranges: 32
+  new_payload_bytes: 2097152
+  exact_retained_structure_records: 73
+  raw_header_body_hashes_and_immutable_ETag: passed
+  range_size_alignment_and_no_seed_redownload: passed
+  request_byte_cache_and_deadline_accounting: passed
+  source_hashes_unchanged_before_and_after_replay: true
+  network_requests_in_verification: 0
+  offline_coverage_error_reproduced: true
+  candidate_general_session_id_shape: scalar
+  candidate_value_read: false
+engineering_checks:
+  new_independent_verifier_tests_passed: 5
+  repository_ruff: passed
+claim_boundary: >-
+  The independent traversal does not import either structural collector or
+  acquisition runner. It reuses only the pinned sparse offline I/O and comparison
+  helpers. All retained descriptors match, and the terminal uncovered read
+  independently confirms incomplete scope at the exhausted acquisition budget.
+  The unread candidate at general/session_id has structural presence, not proven
+  session meaning or value. No complete-file digest, biological identity,
+  physiological qualification or new fitted neuron follows.
+next_gate: separately-register-offline-scalar-read-of-general-session-id
+structural_scope_complete: false
+specimen_eligibility_established: false
+prior_failed_name_gates_modified: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

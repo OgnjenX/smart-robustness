@@ -1,0 +1,41 @@
+schema_version: 1
+artifact_id: 1279
+artifact_type: registered-offline-candidate-session-scalar-read
+date: 2026-10-14
+status: registration-before-value-outcome
+purpose: >-
+  Test the exact internal session value at a separately discovered path, without
+  altering the previous absent root/session_id result, failed RNA/name gates or
+  incomplete structural outcomes. One-file source provenance only, not cohort
+  physiology qualification.
+independent_structure: results/patchseq-NWB-structure-range-independent-1277/manifest.yaml
+independent_structure_sha256: 3dad202eed60794f25baa943d9600c5f47b939f5c7ad5b302126a4dada6a90cd
+independent_verifier: scripts/verify_patchseq_NWB_structure_ranges.py
+independent_verifier_sha256: fcb99fddb2a492444239f0c97a08f7613a85463bf513ea2f0c6cd5789a9e3c03
+offline_reader: scripts/verify_patchseq_NWB_metadata_pilot.py
+offline_reader_sha256: e1d4d3482106bc56d13114a25e95ac884ff96b600851556e54e27e5a97b69087
+selection: same-source-blind-pilot-asset-only
+input_cache: six-original-plus-32-new-hash-verified-blocks
+parser_dependency: h5py==3.12.1
+logical_metadata_reads:
+  root_attributes: []
+  datasets: [/general/session_id]
+  maximum_decoded_value_bytes: 4096
+  allowed_shape: scalar-or-singleton
+  link_policy: hard-links-only-at-every-component
+  storage_policy: no-compression-virtual-or-external-storage
+comparison: >-
+  Exact bytes decoded as UTF8 or original string versus literal path session
+  token. No integer conversion, trimming, inferred aliases or replacing absent
+  metadata with the filename. Preserve raw type and hex. Missing, numeric or
+  inaccessible value gives unknown; nonmatching text gives false.
+network_requests_allowed: 0
+new_bytes_allowed: 0
+uncovered_read: terminal-incomplete-no-fallback
+output: results/patchseq-NWB-general-session-1280/manifest.yaml
+eligibility_inference: prohibited
+physiological_array_reads: prohibited
+execution_gate: commit-registration-runner-tests-before-value-read
+next_gate: independently-reconstruct-scalar-and-compare-before-any-cohort-provenance-promotion
+frozen_baseline_modified: false
+scientific_goal_complete: false

@@ -1,0 +1,46 @@
+schema_version: 1
+artifact_id: 1300
+artifact_type: sealed-conservative-metadata-partition-receipt-not-independent-assessment
+date: 2026-10-14
+registration: docs/validation-results/post2008-patchseq-conservative-split-registration-1298.yaml
+registration_sha256: 7301888920c16954a390c0ba3a60f4b8ce5cd0007af4201d6ac1a94e464dd2e6
+sealed_commit: b6406f8
+runner: scripts/partition_patchseq_source_groups.py
+runner_sha256: 3e5927312ba6dbc076adbddcf0f81836ffa266ff05e095aec7edd3a53788331e
+result: results/patchseq-conservative-split-1299/manifest.yaml
+result_sha256: abc6a0a9859524df090d2ab00dda7bb24404104b13a435aea8a70fc47745608d
+status: metadata-groups-frozen-independent-graph-verification-pending
+terminal_exit_code: 0
+collector_reported:
+  records: 4435
+  conservative_groups: 1040
+  fitting_groups: 680
+  held_out_groups: 360
+  unresolved_metadata_records: 0
+engineering_checks:
+  focused_group_tests_passed: 7
+  aggregate_patchseq_tests_passed: 673
+  aggregate_patchseq_tests_seconds: 14.26
+  repository_ruff: passed
+claim_boundary: >-
+  Every source asset is retained in a fixed metadata component. Shared author
+  donor, author cell or archive-subject keys conservatively connect records, with
+  namespace prefixes preventing equality of unrelated numeric labels from being
+  treated as identity. Partition assignment is frozen globally before any class,
+  physiology or outcome selection; later subsets inherit rather than rebalance
+  it. The observed components are not proof of biological donor equivalence,
+  independent unseen recordings, source model training independence, transcriptomic
+  confidence, adequate per-stratum support or physiology eligibility. No fitting
+  occurred. The grouping and hash partition need independent reconstruction.
+next_gate: >-
+  Independently build the graph using a different traversal from original
+  registered metadata, reconstruct component memberships and domain-separated
+  hashes, verify every record/summary and absence of cross-partition shared keys,
+  and rehash sources. Then define source-annotation and physiology selection
+  contracts without changing frozen group assignments or earlier failed gates.
+independent_group_reconstruction_pending: true
+physical_donor_equivalence_established: false
+mapping_confidence_assigned: false
+specimen_eligibility_established: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

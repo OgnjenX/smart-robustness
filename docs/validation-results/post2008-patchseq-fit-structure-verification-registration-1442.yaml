@@ -1,0 +1,32 @@
+schema_version: 1
+artifact_id: 1442
+date: 2026-10-14
+status: before-terminal-structure-verification-not-before-training-execution
+protocol: docs/validation-results/post2008-patchseq-isolated-fit-registration-1436.yaml
+seal: docs/validation-results/post2008-patchseq-isolated-fit-execution-seal-1437.yaml
+input_directory: results/patchseq-isolated-fit-1438
+output: results/patchseq-fit-structure-independent-1443/manifest.yaml
+implementation: scripts/verify_patchseq_fit_checkpoint_structure.py
+tests: tests/test_patchseq_fit_structure_verifier.py
+execution_gate: commit-wrapper-and-terminal-and-integrity-controls-before-any-real-checkpoint-audit
+terminal_gate:
+  - Existing terminal-complete checkpoint is mandatory; absence is not success.
+  - Nonblocking shared runner lock rejects a live exclusive-lock holder.
+  - Retained shared lock prevents runner resume throughout inspection.
+  - Checkpoint hash must remain unchanged across inspection before report publication.
+source_gate:
+  - Execution seal, complete checkpoint source chain and independent catalog source chain must match files.
+  - Whole-file training-body hashes must match selected identities and acquisition receipts.
+  - Only ledger-authorized fitting recording bodies may be opened for digesting.
+  - No response arrays or held-out recording bodies are opened or decoded.
+audit_scope: independent-structural-accounting-1439-plus-terminal-lock-and-source-integrity
+limitations:
+  - Output is a pinned immutable checkpoint snapshot, not proof of future unchanged external state.
+  - This audit cannot establish that all forward simulations and feature losses were independently reproduced.
+  - Consistent numerical-control booleans are not independent numerical replay.
+  - The output explicitly leaves biological validation and held-out access incomplete.
+next_gate: separately-sealed-independent-command-decoding-forward-replay-feature-and-loss-reconstruction
+held_out_execution_authorized: false
+network_execution_authorized: false
+running_experiment_source_modified: false
+scientific_goal_complete: false

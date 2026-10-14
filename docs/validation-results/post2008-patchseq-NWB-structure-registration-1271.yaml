@@ -1,0 +1,49 @@
+schema_version: 1
+artifact_id: 1271
+artifact_type: preregistered-offline-structural-metadata-discovery
+date: 2026-10-14
+status: registration-before-structural-outcomes
+purpose: >-
+  Determine whether explicitly named identity metadata paths exist outside the
+  pilot's scalar whitelist. This is structural discovery, not identity assignment,
+  physiological selection or specimen qualification.
+pilot_result: results/patchseq-NWB-metadata-pilot-1267/manifest.yaml
+pilot_result_sha256: c1953a806b1ce34aa10f0cbd3067c80486ca7bb8f594ba2b08ca8847d0e3a72a
+independent_replay: results/patchseq-NWB-metadata-pilot-independent-1269/manifest.yaml
+independent_replay_sha256: c4987ef57e35743e5bfb92c7ce2ff1567b14354e78b27077f10b19cad1a9e01e
+offline_reader: scripts/verify_patchseq_NWB_metadata_pilot.py
+offline_reader_sha256: e1d4d3482106bc56d13114a25e95ac884ff96b600851556e54e27e5a97b69087
+parser_dependency: h5py==3.12.1
+output: results/patchseq-NWB-structure-1272/manifest.yaml
+selection: same-single-source-blind-pilot-asset-no-class-selection
+transport:
+  network_requests_allowed: 0
+  additional_bytes_allowed: 0
+  input: only-six-saved-hash-verified-range-blocks
+  uncovered_read: terminal-incomplete-preserve-partial-no-zero-fill-no-fallback
+structure_policy:
+  root_children_names_and_link_types: true
+  root_child_objects_not_dereferenced: true
+  inspect_metadata_roots: [/general, /general/subject, /general/lab_meta_data, /lab_meta_data]
+  maximum_descendant_depth_per_root: 2
+  maximum_unique_object_paths: 256
+  maximum_name_utf8_bytes: 1024
+  maximum_attribute_names_per_object: 128
+  order: literal-lexicographic-path
+  descriptors: [path, link_type, object_type, attribute_names, dataset_shape, dataset_dtype]
+  link_dereferencing: hard-links-only-at-every-path-component
+  soft_and_external_links: record-link-type-only-never-follow
+  dataset_and_attribute_values_allowed: false
+  excluded_descent: [acquisition, stimulus, processing, analysis, intervals, scratch, specifications]
+interpretation:
+  explicitly_named_identity_paths: report-structural-presence-only
+  absent_identity_paths: retain-absence-do-not-infer-from-file-name
+  generic_identifier: opaque-no-cell-session-or-checksum-inference
+  free_text_values: not-read
+  physiological_arrays: not-read
+  complete_file_digest: not-computed
+  earlier_name_gate_failures: unchanged
+  cohort_eligibility: not-established
+execution_gate: commit-registration-runner-and-tests-before-any-real-pilot-structural-scan
+frozen_baseline_modified: false
+scientific_goal_complete: false

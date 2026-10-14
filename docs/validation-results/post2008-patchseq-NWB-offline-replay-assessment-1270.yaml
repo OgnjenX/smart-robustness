@@ -1,0 +1,50 @@
+schema_version: 1
+artifact_id: 1270
+artifact_type: independent-bounded-NWB-metadata-replay-assessment
+date: 2026-10-14
+registration: docs/validation-results/post2008-patchseq-NWB-metadata-pilot-registration-1266.yaml
+pilot_result: results/patchseq-NWB-metadata-pilot-1267/manifest.yaml
+pilot_result_sha256: c1953a806b1ce34aa10f0cbd3067c80486ca7bb8f594ba2b08ca8847d0e3a72a
+independent_result: results/patchseq-NWB-metadata-pilot-independent-1269/manifest.yaml
+independent_result_sha256: c4987ef57e35743e5bfb92c7ce2ff1567b14354e78b27077f10b19cad1a9e01e
+verifier: scripts/verify_patchseq_NWB_metadata_pilot.py
+verifier_sha256: e1d4d3482106bc56d13114a25e95ac884ff96b600851556e54e27e5a97b69087
+status: independently-replayed-metadata-only-not-qualified-physiology
+terminal_exit_code: 0
+verified_evidence:
+  saved_range_count: 6
+  saved_range_bytes: 393216
+  new_network_requests: 0
+  receipt_headers_body_hashes_sizes_etags_and_budgets: passed
+  deterministic_source_blind_asset_choice: passed
+  whitelisted_scalar_interpretation_exactly_reconstructed: true
+  logical_dataset_reads: [/identifier, /general/subject/subject_id]
+  nwb_version: '2.2.5'
+  literal_subject_id_matches_path: true
+  session_id_present: false
+  optional_subject_cell_specimen_ephys_IDs_present: false
+  pinned_sources_unchanged_after_replay: true
+engineering_checks:
+  focused_offline_replay_tests_passed: 10
+  aggregate_patchseq_tests_passed: 600
+  aggregate_patchseq_tests_seconds: 14.05
+  repository_ruff: passed
+claim_boundary: >-
+  This independently verifies the pilot's bounded transport and metadata parsing
+  for one source-blind file. The offline reader fails on uncovered bytes; it
+  neither fills gaps nor falls back to the network. No pilot collector code is
+  imported. The file identifier remains opaque, not a specimen/session ID or
+  verified content digest. Subject-path agreement does not establish donor
+  namespace equivalence. Missing internal session/cell fields remain missing.
+  Cached physical blocks may contain incidental adjacent payload, but no
+  physiological array was logically accessed or interpreted. Neither whole-file
+  checksum verification nor cohort eligibility nor new physiology fits follows.
+next_gate: >-
+  Separately seal a structural-only offline metadata discovery protocol before
+  examining additional HDF5 names. Preserve both failed RNA/name gates and the
+  nonqualifying cell-ID-only ledger. Any later identity route or trace acquisition
+  requires its own explicit source and eligibility rules, not inferred aliases.
+prior_failed_name_tests_modified: false
+specimen_eligibility_established: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

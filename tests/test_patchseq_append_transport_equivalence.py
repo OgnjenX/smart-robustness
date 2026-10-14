@@ -22,6 +22,8 @@ def functions(path):
     ('verify_patchseq_intrinsic_acquisition.py', 'verify_patchseq_append_acquisition.py', {'main'}),
     ('inventory_patchseq_trace_schema.py', 'inventory_patchseq_append_trace_schema.py', set()),
     ('verify_patchseq_trace_schema.py', 'verify_patchseq_append_trace_schema.py', {'main'}),
+    ('check_patchseq_pairing.py', 'check_patchseq_append_pairing.py', set()),
+    ('verify_patchseq_pairing.py', 'verify_patchseq_append_pairing.py', {'main'}),
 ])
 def test_transport_and_independent_check_functions_are_unchanged(original, append, exclude):
     before = functions(ROOT/'scripts'/original)

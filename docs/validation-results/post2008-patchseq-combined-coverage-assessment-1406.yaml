@@ -1,0 +1,45 @@
+schema_version: 1
+artifact_id: 1406
+date: 2026-10-14
+status: necessary-joint-source-gap-closed-not-neuron-model-validation
+result: results/patchseq-combined-source-coverage-1405/manifest.yaml
+result_sha256: bf283baccd11da5fa61d39d3d9fab0f59df16df254d9dbc183e8249bb4d79bc2
+observed:
+  retained_recordings: 96
+  unique_frozen_global_groups: 84
+  original_recordings_or_failures_removed: 0
+  class_layer_partition_strata: 12
+  strata_with_no_joint_supported_group: 0
+combined_distinct_groups_with_joint_waveform_and_mandatory_recording_support:
+  Pvalb_L23: {fitting: 5, held-out: 1}
+  Pvalb_L5: {fitting: 4, held-out: 3}
+  Sst_L23: {fitting: 9, held-out: 6}
+  Sst_L5: {fitting: 7, held-out: 5}
+  Vip_L23: {fitting: 7, held-out: 4}
+  Vip_L5: {fitting: 6, held-out: 4}
+independent_recount:
+  method: separate-source-set-reconstruction-without-importing-auditor
+  inputs: exact-registered-selection-waveform-and-independent-quality-manifests
+  reproduced: all-12-combined-strata-both-batch-tables-and-all-96-case-flags
+  integrity: every-source-hash-before-and-after-recount
+  result: passed
+interpretation: >-
+  The specific zero-support ceiling in held-out PV L23 is closed at the necessary
+  joint waveform and bounded recording-quality level. The original zero remains
+  unchanged in the separately reported original batch. One supported held-out PV
+  L23 group is sparse evidence, not adequate population-wide validation by itself.
+  Nonempty source coverage does not establish fit-target diversity, sufficient
+  intrinsic protocol support, command/bias conventions, neuron-model eligibility,
+  synaptic recruitment, SMART resonance/reset survival, or the full scientific goal.
+  Counts are distinct frozen groups within each stratum; do not add cross-stratum
+  counts and call them independent specimens. All failed and unknown cases remain.
+next_steps:
+  - Validate append exporter and current/bias conventions without treating native amplifier settings as biological cell parameters.
+  - Seal fitting-only target extraction and an isolated model fitting/held-out scoring contract for all six source strata.
+  - Preserve sparse-held-out and separate synaptic-recruitment limitations; do not relax thresholds or tune from network outcomes.
+five_three_acquisition_counts_used_as_fit_minimum: false
+QC_or_partitions_changed: false
+models_fitted: false
+synaptic_recruitment_ceiling_resolved: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

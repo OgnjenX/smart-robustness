@@ -1,0 +1,71 @@
+schema_version: 1
+artifact_id: 1343
+artifact_type: independently-reconstructed-native-notebook-units
+date: 2026-10-14
+status: all-96-headers-verified-original-storage-rejections-preserved
+original_registration: docs/validation-results/post2008-patchseq-notebook-keys-registration-1338.yaml
+original_preexecution_commit: 97244b5
+original_result: results/patchseq-notebook-keys-1339/manifest.yaml
+original_result_sha256: 48f9415b6ad4801684fb8c6e0bae0c2df8b374720ef42a6ec203fd32598c65cc
+original_outcome: 96-standard-filter-storage-rejections-no-header-values-read
+continuation_registration: docs/validation-results/post2008-patchseq-notebook-keys-continuation-registration-1340.yaml
+continuation_preexecution_commit: 3a527f4
+continuation_runner: scripts/continue_patchseq_notebook_keys.py
+continuation_runner_sha256: f2183c92e90dd19e6cd8267565372f6c77c3cb9198d8ba5f1f6c89bd0f1ad568
+continuation_result: results/patchseq-notebook-keys-continuation-1341/manifest.yaml
+continuation_result_sha256: b306314d8ca2f916300dac5733cd6a47ba67f417a95819b8a567ddc7b2e56835
+verifier: scripts/verify_patchseq_notebook_keys.py
+verifier_sha256: 24a13957386a8f7bb196b88b426929ddb92747b95fa14cf61cb9acf0b1deda58
+independent_result: results/patchseq-notebook-keys-independent-1342/manifest.yaml
+independent_result_sha256: 64d64592a5e63445fbac968b4a269406a0648b3a759ef5071a2e68abefd0d065
+terminal_original_continuation_and_verifier_exit_codes: [0, 0, 0]
+verified:
+  fixed_files: 48
+  headers: 96
+  continuation_errors: 0
+  every_raw_text_cell_shape_dtype_and_filter_ID: independently-reconstructed
+  original_storage_rejection_and_verbatim_outcome: independently-reconstructed
+  original_source_and_recording_hashes: unchanged
+  notebook_trial_values_or_waveforms_read: false
+  original_QC_and_source_partitions: unchanged
+unit_labels_in_all_48_numerical_headers:
+  I-Clamp Holding Level: pA
+  I-Clamp Holding Enable: On/Off
+  Bridge Bal Value: MOhm
+  Bridge Bal Enable: On/Off
+  Neut Cap Value: pF
+  Neut Cap Enabled: On/Off
+  Series Resistance: MOhms
+  TP Peak Resistance: Mohm
+  TP Steady State Resistance: Mohm
+method: >-
+  Independently check every path component and standard filter, reconstruct
+  each text cell in column-major rather than collector row-major order, compare
+  exact raw bytes and decoded values, recheck byte bounds and file hashes, and
+  compare the preserved original rejection record and storage descriptors.
+engineering_amendment_boundary: >-
+  The original no-filter reader remains a failed engineering attempt. The separate
+  continuation permits only standard HDF5 deflate/shuffle/fletcher32 filters;
+  arbitrary plugin filters remain forbidden. This changes storage decoding only,
+  not source eligibility, physiological thresholds, fitting targets or network
+  outcomes. No original result was overwritten or relabeled as passing.
+engineering_checks:
+  original_header_tests_passed: 6
+  standard_filter_and_whitelist_tests_passed: 2
+  independent_reconstruction_corruption_tests_passed: 5
+  repository_ruff: passed
+limits:
+  - Native units support the historical export-helper interpretation, not blindly using schema SI for instrument scalars.
+  - Header presence does not prove a value was enabled, finite or measured on a particular sweep/headstage.
+  - Test-pulse and series-resistance labels alone do not establish seal, access resistance or membrane-health gates.
+  - No holding current was added/subtracted, voltage corrected, source cell replaced or prior sweep-QC outcome changed.
+  - No intrinsic response features, new model fit or SMART network result has been produced.
+next_gate: >-
+  Seal a source-backed numeric notebook extraction contract with explicit sweep
+  IDs, headstage mapping, enabled-state and last-setting semantics, preserving
+  duplicates/nonfinite/missingness before cell-health interpretation and fitting
+  targets. Do not treat every QC-named field as a verified health result.
+model_fitting_authorized: false
+specimen_eligibility_established: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

@@ -1,0 +1,31 @@
+schema_version: 1
+artifact_id: 1441
+date: 2026-10-14
+status: independent-synthetic-scoring-verified-biological-reconstruction-not-started
+implementation: scripts/patchseq_independent_fit_loss.py
+tests: tests/test_patchseq_independent_fit_loss.py
+sealed_objective: docs/validation-results/post2008-patchseq-fit-objective-registration-1434.yaml
+independence:
+  production_imports: no-primary-objective-model-fitting-runner-or-feature-extractor
+  observables: six-original-sealed-dimensions-no-added-or-dropped-targets
+  scaling: unchanged-2-mV-1-event-10-ms-and-0.25-interval-ratio
+  missing_candidate_observable: fixed-1000-loss-term-and-failed-gate
+  missing_event_dependent_target: explicit-null-inapplicable-never-zero-filled
+  aggregation: independent-mean-per-frozen-group-then-equal-group-mean
+  source_support: exact-prediction-key-set-duplicates-and-missing-keys-rejected
+  source_partition: fitting-only-held-out-rejected-before-feature-access
+  pooling: class-layer-pooling-rejected
+synthetic_verification:
+  tests_passed: 19
+  cross_implementation: silence-and-1-2-3-12-event-targets-with-identical-missing-and-error-predictions
+  equal_group_weighting: two-recordings-in-one-group-versus-one-recording-in-another
+  null_and_silence_boundaries: verified
+limitations:
+  - This is independent score arithmetic, not an independent biological feature extractor.
+  - No real checkpoint, fitted response, or held-out response was used in preparation.
+  - Full independent reconstruction still requires source-command reads, forward replay and independent feature reconstruction.
+  - Passing these controls does not authorize network promotion or imply study completion.
+next_gate: connect-terminal-source-integrity-forward-replay-and-independent-feature-reconstruction-before-assessing-fit-outcomes
+running_experiment_source_modified: false
+held_out_response_features_read: false
+scientific_goal_complete: false

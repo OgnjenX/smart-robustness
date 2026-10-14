@@ -1,0 +1,35 @@
+schema_version: 1
+artifact_id: 1354
+artifact_type: historical-explicit-range-metadata-continuation
+date: 2026-10-14
+status: before-contiguous-range-mapping-outcomes
+original_result: results/patchseq-setting-mapping-1349/manifest.yaml
+original_result_sha256: 6983192061afe2e6af5da377ea96b83ea28f18f99cc8f85530fa6003719688ff
+independent_original: results/patchseq-setting-mapping-independent-1351/manifest.yaml
+independent_original_sha256: 3edec50087c042bf394cf6c7c304669e680c39d431860297594e319ca9609814
+source_audit: docs/validation-results/post2008-patchseq-historical-range-audit-1353.yaml
+scope: all-48-files-all-2330-pairs-no-replacement-no-new-data-value-reads
+change:
+  selection: last-contiguous-sweep-and-explicit-acquisition-mode-0-block
+  original_rows: preserved-not-renumbered
+  implementation: derived-sweep-ID-lookup-view-with-only-selected-block-visible-to-unchanged-mapper
+  scratch_view: mask-outside-block-identities-only-not-source-value-imputation
+  raw_arrays_and_units: unchanged
+  original_mapper_and_explicit_selector_sources: unchanged-and-pinned
+  original_outcome: preserved-verbatim-for-every-sweep
+  missing_explicit_block: retain-unknown-no-legacy-heuristic
+  historical_active-headstage-fixups: not-implemented-retain-unknown
+unchanged:
+  channel_and_clamp_mapping: original-registration-1348
+  disabled_and_nonfinite_states: original-registration-1348
+  exported_property_comparison: exact-float32-serialization
+  unit_labels: raw-pA-MOhm-pF-no-SI-reinterpretation
+  physiological_QC_thresholds_source_classes_layers_and_partitions: unchanged
+output: results/patchseq-contiguous-mapping-1355/manifest.yaml
+execution_gate: commit-continuation-and-no-older-block-fallback-view-immutability-tests-before-execution
+next_gate: independent-contiguous-block-and-export-concordance-reconstruction-before-cell-health-assessment
+health_classification_authorized: false
+model_fitting_authorized: false
+specimen_eligibility_established: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

@@ -1,0 +1,55 @@
+schema_version: 1
+artifact_id: 1284
+artifact_type: same-source-blind-pilot-whole-file-integrity-registration
+date: 2026-10-14
+status: registration-before-complete-body-or-content-hash-outcomes
+purpose: >-
+  Compute complete-recording SHA256 for the same source-blind pilot against the
+  author manifest and independently verified reported archive digest. Transport
+  integrity only: do not open HDF5, interpret traces, select cells or fit models.
+asset:
+  asset_id: f7af39a7-3837-4635-ba76-9c96643405d0
+  path: sub-1001658946/sub-1001658946_ses-1003020741_icephys.nwb
+  size: 36804772
+expected_SHA256: e927d9cb77a44b84ebdb276e752fb71c14c6f31c92aed0128439f1220eba1a40
+typed_author_manifest: results/patchseq-2021-manifest-records-1230/manifest.yaml
+typed_author_manifest_sha256: 0bded4681367d9db7dd8de982b69cd57903a8d7dd2f0cf8f1d08a8cb79a1d7a1
+author_source_row_number: 19441
+file_reference: results/patchseq-2021-file-reference-1234/manifest.yaml
+file_reference_sha256: 5c701da3f8d443a9e2a5fe488ddf59b4a7ea648058c0922aa373b2104027bb78
+independent_session: results/patchseq-NWB-general-session-independent-1281/manifest.yaml
+independent_session_sha256: 99b00d65a43ae7afe2deb91416f58be0baf27b8c5ee7f936de1eb16c63fbd976
+original_archive_metadata: results/patchseq-archive-identity-metadata-1239/f7af39a7-3837-4635-ba76-9c96643405d0/response.json
+original_archive_metadata_sha256: e6cbe053ec0ddf1d2300296dde202e0cda1c1a2a51f0510ef705b53b5b63f94a
+pilot: results/patchseq-NWB-metadata-pilot-1267/manifest.yaml
+pilot_sha256: c1953a806b1ce34aa10f0cbd3067c80486ca7bb8f594ba2b08ca8847d0e3a72a
+transport_runner: scripts/run_patchseq_NWB_metadata_pilot.py
+transport_runner_sha256: c50fc863b901db0c179314c90f9730e1fba0aee9f759788da002d85817d5fa66
+URL_resolution:
+  allowed_scheme: https
+  allowed_hosts: [dandiarchive.s3.amazonaws.com, dandiarchive.s3.us-east-1.amazonaws.com, dandiarchive.s3.us-east-2.amazonaws.com]
+  required_path_prefix: /blobs/
+  maximum_HEAD_requests: 2
+  maximum_HEAD_redirects: 1
+HTTP_range_limits:
+  maximum_range_requests: 1
+  maximum_unique_downloaded_bytes: 36804772
+  timeout_seconds_per_request: 600
+  maximum_run_seconds: 900
+HTTP_policy: >-
+  One exact full-length Range GET bytes 0-36804771; require 206, exact total size,
+  unchanged quoted ETag from the pilot and new HEAD, If-Match, identity encoding,
+  exact retained length and checksum. No redirect on GET, retries, resume,
+  redownload or 200 fallback. Preserve failure/partial bytes in separate output.
+  This intentionally acquires the complete binary, not sparse metadata blocks.
+physical_trace_bytes_included: true
+physiological_array_interpretation_allowed: false
+HDF5_parser_access_allowed: false
+output_directory: results/patchseq-whole-file-integrity-1285
+selection: same-first-literal-catalog-file-no-class-or-physiology-selection
+execution_gate: commit-registration-runner-tests-before-network-acquisition
+next_gate: independent-complete-file-hash-and-header-verification-before-provenance-acceptance
+cohort_qualification_authorized: false
+prior_failed_name_gates_modified: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

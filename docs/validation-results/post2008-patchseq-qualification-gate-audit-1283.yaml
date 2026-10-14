@@ -1,0 +1,57 @@
+schema_version: 1
+artifact_id: 1283
+artifact_type: remaining-qualification-gate-audit-not-cohort-registration
+date: 2026-10-14
+status: partial-provenance-established-physiology-fitting-not-authorized
+program_scope: docs/sequential-robustness-program-plan.md
+frozen_control: classic-smart-calibrated-v1.0.0
+gates:
+  external_author_file_to_cell_session_reference:
+    evidence: docs/validation-results/post2008-patchseq-2021-file-reference-assessment-1237.yaml
+    status: independently-verified-for-4435-assets
+    limit: external-reference-not-internal-cell-identity
+  reported_archive_and_author_SHA256_agreement:
+    evidence: docs/validation-results/post2008-patchseq-archive-identity-evidence-assessment-1265.yaml
+    status: independently-verified-reported-digests-for-4435-assets
+    limit: not-a-computed-content-hash
+  internal_session_identity:
+    evidence: docs/validation-results/post2008-patchseq-NWB-general-session-assessment-1282.yaml
+    evidence_sha256: 68171437ad93de856f42efb84883d2d45855f2c3fe06c30abf7232681efaf153
+    status: verified-for-one-source-blind-file
+    limit: do-not-extrapolate-to-cohort-or-internal-cell-ID
+  complete_recording_content_integrity:
+    status: unestablished
+    next_action: separately-seal-same-pilot-whole-file-acquisition-and-author-SHA256-check
+  methods_annotation_cell_ID_link:
+    evidence: docs/validation-results/post2008-patchseq-cell-ID-coherence-assessment-1259.yaml
+    status: unique-external-association-not-qualified-confidence
+    limit: preserve-38-anatomy-conflicts-11-unknowns-and-unassigned-confidence
+  RNA_sample_or_name_correspondence:
+    evidence: docs/validation-results/post2008-patchseq-primary-ID-source-history-audit-1256.yaml
+    status: both-literal-name-gates-failed-no-alias-proven
+    next_action: authoritative-namespace-documentation-or-separately-justified-identity-route
+    prohibited_action: treating-filename-or-cell-ID-equality-as-RNA-alias-proof
+  donor_independence:
+    status: unestablished-namespace-equivalence
+    limit: path-subject-bijection-with-annotation-donor-is-not-literal-biological-ID-equality
+    next_action: define-author-source-donor-partitions-without-inferred-cross-namespace-labels
+  intrinsic_physiological_quality_and_voltage_convention:
+    status: not-tested-on-new-source
+    next_action: preregister-trace-QC-feature-targets-minus-14mV-junction-convention-and-isolated-fit-splits
+  biological_synaptic_recruitment:
+    status: independent-unsatisfied-source-contract
+    limit: Patchseq-intrinsic-traces-cannot-rescue-paired-synphys-coverage-ceiling
+  model_fit_and_SMART_promotion:
+    status: not-authorized-by-metadata-or-checksum-progress
+    limit: preserve-existing-neuron-model-and-anatomy-negatives-no-network-guided-tuning
+decision: >-
+  Resolve one-file computed content integrity next, then assess whether an explicit
+  manifest-anchored identity route is scientifically justified. A successful
+  checksum alone authorizes neither a new cohort nor physiological fitting.
+  Source eligibility, donor splitting, isolated response/recruitment validation
+  and sealed network gates remain distinct requirements of the full program.
+  Current progress must not be advertised as completion of that program.
+specimen_eligibility_established: false
+prior_failed_gates_modified: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

@@ -1,0 +1,34 @@
+schema_version: 1
+artifact_id: 1453
+date: 2026-10-14
+status: before-synthetic-boundary-and-long-trace-equivalence-outcomes
+implementation: scripts/check_patchseq_compiled_equivalence.py
+tests: tests/test_patchseq_compiled_equivalence_check.py
+fit_protocol: docs/validation-results/post2008-patchseq-isolated-fit-registration-1436.yaml
+fit_protocol_sha256: ed44ed3c71f225fd611c36572cb213c3c812c5fda08138e83e902039cc4f0e71
+parameter_table: all-128-original-unscrambled-eight-dimensional-Sobol-vectors-no-selection-from-real-outcomes
+sample_rate_hz: 50000
+short_currents_pA: [-110.0, 0.0, 500.0]
+short_protocol: zero-baseline-20ms-constant-step-40ms-zero-return-40ms
+long_rates_hz: [50000, 100000]
+long_protocol: four-seconds-baseline-20pA-step-plus500pA-then-minus110pA-then-baseline-return
+long_parameters:
+  capacitance_pF: 100.0
+  leak_nS: 10.0
+  leak_reversal_mV: -65.0
+  sodium_nS: 2000.0
+  potassium_nS: 500.0
+  m_current_nS: 10.0
+  threshold_shift_mV: -60.0
+  m_tau_max_ms: 1000.0
+comparison:
+  maximum_absolute_voltage_difference_mV: 1e-5
+  failures: both-engines-must-fail-same-case-no-failure-replacement-or-zero-fill
+  runtime: measured-not-a-portable-pass-threshold
+output: results/patchseq-compiled-synthetic-equivalence-1454/manifest.yaml
+execution_gate: commit-checker-and-synthetic-mismatch-controls-before-outcomes
+next_gate: assess-equivalence-honestly-then-seal-verifier-only-performance-amendment-if-all-fixed-controls-pass
+biological_data_used: false
+live_fitting_source_modified: false
+compiled_biological_replay_enabled: false
+scientific_goal_complete: false

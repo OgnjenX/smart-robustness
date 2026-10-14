@@ -1,0 +1,49 @@
+schema_version: 1
+artifact_id: 1288
+artifact_type: independently-verified-single-recording-content-integrity
+date: 2026-10-14
+registration: docs/validation-results/post2008-patchseq-whole-file-integrity-registration-1284.yaml
+sealed_commit: 7ec9f98
+acquisition: results/patchseq-whole-file-integrity-1285/manifest.yaml
+acquisition_sha256: a6b8c851bce7093182f8466800bbaaa318aea5f0e385823cb95895f0f4ad915d
+verifier: scripts/verify_patchseq_whole_file_integrity.py
+verifier_sha256: 22e40726389126ff7a875794138145d222ed5b87515e87a2ec9bccadce78c057
+independent_result: results/patchseq-whole-file-integrity-independent-1287/manifest.yaml
+independent_result_sha256: a29ae6adac6c52ed4dbd244a457ecdb55a538128fd941504ad8c2c0139aeedb8
+status: one-source-blind-complete-recording-integrity-independently-verified
+terminal_verifier_exit_code: 0
+verified:
+  complete_file_bytes: 36804772
+  complete_file_SHA256: e927d9cb77a44b84ebdb276e752fb71c14c6f31c92aed0128439f1220eba1a40
+  author_manifest_source_row: 19441
+  author_and_archive_reported_SHA256_match: true
+  complete_206_range_and_immutable_HEAD: passed
+  saved_header_body_hashes_sizes_ETags_and_target: passed
+  transport_deadline_and_byte_budget: passed
+  prior_cached_blocks_agree_at_exact_full_file_offsets: 38
+  all_pinned_sources_unchanged_before_and_after: true
+  acquisition_collector_imported_by_verifier: false
+  HDF5_opened: false
+  network_requests_during_verification: 0
+engineering_checks:
+  new_independent_tests_passed: 7
+  aggregate_patchseq_tests_passed: 638
+  aggregate_patchseq_tests_seconds: 13.87
+  repository_ruff: passed
+claim_boundary: >-
+  This closes computed content integrity for the original single source-blind
+  pilot, anchored to the author manifest's external file reference. It does not
+  extrapolate to other assets or establish internal cell identity, donor namespace
+  equivalence, RNA sample aliases, confidence eligibility or physiological
+  response quality. Hashing reads uninterpreted physical binary bytes, including
+  trace payload; no HDF5 or physiology array was parsed. The prior incomplete
+  sparse scans and both failed naming gates remain unchanged.
+next_gate: >-
+  Separately register completion of the same structural-only metadata scope from
+  this verified local binary, preserving earlier cache-budget failures. Then
+  assess explicit internal identity evidence and source-namespace documentation
+  before cohort selection, trace-QC protocols, donor partitioning or model fits.
+complete_file_digest_independently_verified: true
+specimen_eligibility_established: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

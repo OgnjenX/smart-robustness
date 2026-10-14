@@ -1,0 +1,40 @@
+schema_version: 1
+artifact_id: 1289
+artifact_type: registered-local-complete-binary-structural-metadata-continuation
+date: 2026-10-14
+status: registration-before-additional-structural-outcomes
+purpose: >-
+  Complete exactly the structural scope of 1271 on the same now fully acquired
+  and independently content-verified source-blind binary. This is a new local
+  continuation, not a rerun, budget extension or overwrite of 1272 or 1275.
+independent_integrity: results/patchseq-whole-file-integrity-independent-1287/manifest.yaml
+independent_integrity_sha256: a29ae6adac6c52ed4dbd244a457ecdb55a538128fd941504ad8c2c0139aeedb8
+integrity_verifier: scripts/verify_patchseq_whole_file_integrity.py
+integrity_verifier_sha256: 22e40726389126ff7a875794138145d222ed5b87515e87a2ec9bccadce78c057
+complete_binary: results/patchseq-whole-file-integrity-1285/001-body.bin
+complete_binary_sha256: e927d9cb77a44b84ebdb276e752fb71c14c6f31c92aed0128439f1220eba1a40
+complete_binary_bytes: 36804772
+structural_registration: docs/validation-results/post2008-patchseq-NWB-structure-registration-1271.yaml
+structural_registration_sha256: b4a23dc9a9330a5a60c07eb60ef9436213ada6909de6a76db8dbfbf21203949d
+structural_reader: scripts/inspect_patchseq_NWB_structure.py
+structural_reader_sha256: 13791b6a13c5670f33ab03a39ce969212406d1e243238afa47e6071cf976aa98
+parser_dependency: h5py==3.12.1
+structure_scope: exactly-1271-without-added-fields-depth-or-count-limits
+dataset_values_allowed: false
+attribute_values_allowed: false
+physiological_arrays_allowed: false
+network_requests_allowed: 0
+new_download_bytes_allowed: 0
+read_mode: local-read-only-HDF5-close-before-rehash
+HDF5_plugin_preload: '::'
+output: results/patchseq-local-structure-1290/manifest.yaml
+execution_gate: commit-registration-runner-tests-before-additional-structural-scan
+interpretation: >-
+  Report only names, links, object types, shapes/dtypes and attribute names under
+  the original structural bounds. Do not read descriptive text or infer identity
+  from cell markers. Preserve earlier absent root/session_id and both incomplete
+  structure outcomes. Full-file integrity does not grant cohort eligibility.
+next_gate: independently-reconstruct-local-structure-and-assess-explicit-ID-paths
+cohort_qualification_authorized: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

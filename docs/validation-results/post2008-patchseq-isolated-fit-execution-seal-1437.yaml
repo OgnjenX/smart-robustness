@@ -1,0 +1,34 @@
+schema_version: 1
+artifact_id: 1437
+date: 2026-10-14
+status: before-biological-fit-outcomes
+protocol: docs/validation-results/post2008-patchseq-isolated-fit-registration-1436.yaml
+source_sha256:
+  docs/validation-results/post2008-patchseq-isolated-fit-registration-1436.yaml: ed44ed3c71f225fd611c36572cb213c3c812c5fda08138e83e902039cc4f0e71
+  scripts/patchseq_fit_search.py: 4beeed08f89d30091e8c74db4d8f2a37ba096ff9d0f1538b6113071b6bb46a4c
+  scripts/run_patchseq_isolated_fit.py: 38740af6747ee072e7dadbd76c8aa0068d94366fc094c10efdabc4a23ec6324c
+  scripts/patchseq_fit_objective.py: b66b08bdf1ada03f394335255f2dc9beddbe74010d4b3fdb7143ed6726be4a40
+  scripts/patchseq_isolated_hh.py: 929d0f466fa13fa2dc234a65698f0c646f17762de748857ab979754c44bdc1f6
+output: results/patchseq-isolated-fit-1438
+runner:
+  resume: exact-input-and-code-hashes-and-candidate-table-required
+  concurrency: exclusive-nonblocking-file-lock-one-sealed-output-directory
+  checkpoint: fsync-then-atomic-replace-after-each-four-candidate-batch-and-selected-control
+  source_access: source-integrity-verified-before-fit-and-per-batch-training-records-only
+  waveform_reads: command-only-no-response-array-used-by-fitting-runner
+  source_targets: previously-independently-reconstructed-training-catalog-only
+  candidate_failure: explicit-sweep-failure-with-fixed-missing-penalty-not-dropped
+  numerical_control_failure: retained-no-favorable-candidate-replacement
+  held_out_response_features: not-opened-by-this-runner
+engineering:
+  patchseq_tests_passed_before_outcomes: 1268
+  focused_search_and_runner_tests_passed: 17
+  ruff: passed
+  diff_check: passed
+  known_warnings: Brian2-pyparsing-deprecation-warnings-not-scientific-evidence
+next_gate: independently-verify-complete-search-support-losses-selection-numerical-controls-and-source-integrity-before-held-out-response-scoring
+training_execution_authorized_after_commit: true
+held_out_execution_authorized: false
+network_execution_authorized: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

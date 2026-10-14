@@ -1,0 +1,78 @@
+schema_version: 1
+artifact_id: 1436
+date: 2026-10-14
+status: search-and-scoring-sealed-before-biological-fitting
+predecessors:
+  - docs/validation-results/post2008-patchseq-fit-objective-registration-1434.yaml
+  - docs/validation-results/post2008-patchseq-isolated-hh-implementation-1435.yaml
+training_catalog: results/patchseq-fitting-targets-1430/manifest.yaml
+training_catalog_sha256: 12ca6e6e380e00616bfd0532ca1ad97488fba6e7960ca01a628cf26483178c7f
+verified_catalog: results/patchseq-fitting-targets-independent-1432/manifest.yaml
+verified_catalog_sha256: 26848023bf125de5583cd94b97b465398bf2fdc5f3333ca22136dbb639df4db3
+strata: [Pvalb-L23, Pvalb-L5, Sst-L23, Sst-L5, Vip-L23, Vip-L5]
+runtime: {brian2: 2.9.0, numpy: 1.26.4, scipy: 1.17.1, h5py: 3.12.1}
+output: results/patchseq-isolated-fit-1438
+search:
+  method: scipy-Sobol-unscrambled-linear-bounds-fixed-field-order
+  candidates_per_stratum: 128
+  bounds:
+    capacitance_pF: [20.0, 400.0]
+    leak_nS: [1.0, 40.0]
+    leak_reversal_mV: [-85.0, -45.0]
+    sodium_nS: [200.0, 20000.0]
+    potassium_nS: [100.0, 5000.0]
+    m_current_nS: [0.0, 200.0]
+    threshold_shift_mV: [-75.0, -45.0]
+    m_tau_max_ms: [400.0, 2500.0]
+  bounds_scope: prospective-effective-model-search-choices-not-literature-confidence-intervals-or-measured-cell-parameters
+  expansion_after_outcomes: forbidden
+  class_specific_bounds: forbidden
+  candidate_batch_maximum: 4
+  selected_map: one-parameter-vector-per-frozen-class-layer-stratum
+  tie_break: loss-then-ascending-parameter-tuple-then-candidate-index
+  failed_simulation: explicit-candidate-sweep-failure-never-dropped-source-sweep
+  selection: fixed-objective-1434-equal-source-group-weight-no-held-out-response-input
+replay:
+  command: full-exact-source-command-array-plus-supported-native-holding-once
+  voltage: source-as-recorded-coordinate-no-junction-correction
+  initialization_voltage: candidate-leak-reversal-never-target-or-held-out-voltage
+  initialization_gates: equilibrium-at-initial-voltage
+  warmup_s: 1.0
+  warmup_current: exact-nominal-first-sample-baseline
+  integration_dt: exact-source-sample-interval
+  scheduling: zero-order-sample-hold-before-RK4-stages
+  feature_extraction: original-source-grid-and-full-recording-filter-same-fixed-extractor-as-1430
+  warmup_feature_samples: excluded
+  interpolate_observed_voltage: forbidden
+selected_numerical_controls:
+  exact_repeat: bitwise-identical-all-training-predicted-voltage-arrays
+  refinement: half-source-dt-repeat-each-current-sample-twice-downsample-to-original-grid
+  maximum_refinement_voltage_error_mV: 0.1
+  refinement_detected_event_counts: exactly-identical
+  initial_state_sensitivity: repeat-with-2-second-warmup
+  maximum_warmup_baseline_difference_mV: 0.1
+  warmup_detected_event_counts: exactly-identical
+  failed_control: no-network-promotion-no-refit-or-favorable-candidate-replacement
+held_out:
+  access_gate: complete-training-search-table-and-selected-map-sealed-and-independently-verified-before-held-out-response-feature-access
+  candidate_changes_after_opening: forbidden
+  eligibility: original-frozen-mandatory-quality-and-waveform-QC-and-supported-nominal-current-gates
+  initial_state_and_input: same-model-initialization-and-nominal-current-contract-as-training
+  objective_and_observable_gates: unchanged-1434
+  no_adaptation_target: explicitly-inapplicable-not-zero
+  failures_and_unknowns: all-retained-no-replacement-or-class-layer-pooling
+  sparse_stratum: report-per-case-support-not-population-wide-validity
+  independent_verification: repeat-source-feature-and-prediction-scoring-before-assessment
+interpretation: >-
+  This is a bounded screen of one representative effective conductance model
+  per gene-class/layer stratum. Failure can reflect within-class heterogeneity,
+  the minimal mechanism family, finite search or input assumptions. It cannot
+  show that all neurons in a gene class lack the phenotype, that all conductance
+  models fail, or that ART requires a particular neuron family. Observable passes
+  are necessary but not sufficient for a separately registered network transfer.
+runner_execution_gate: commit-checkpointed-reader-runner-and-partition-integrity-controls-before-outcomes
+training_fitting_authorized_after_runner_gate: true
+held_out_execution_authorized_now: false
+network_execution_authorized: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

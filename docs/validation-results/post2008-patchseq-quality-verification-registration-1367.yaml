@@ -1,0 +1,27 @@
+schema_version: 1
+artifact_id: 1367
+artifact_type: independent-recording-quality-array-reconstruction-contract
+date: 2026-10-14
+status: before-independent-measurement-reconstruction
+result: results/patchseq-recording-quality-1365/manifest.yaml
+result_sha256: 431dfe8c5a0378a525a04143bd3dc82bfafda93a5d8b810f07f1b432a5896b1c
+original_protocol: docs/validation-results/post2008-patchseq-recording-quality-registration-1364.yaml
+prior_exposure: aggregate-measurement-and-gate-counts-no-individual-numerical-discrepancy-audit
+method:
+  collector_import: prohibited
+  array_decoder: independent-hard-link-and-standard-filter-guards-original-files
+  pulse_edges: independent-adjacent-sample-comparison-source-derivative-indices
+  means: math-fsum-divided-by-exact-window-length
+  peak: first-maximum-current-position-in-source-window
+  trial_selection: independently-largest-sweep-number-no-favorable-fallback
+  discrete_comparisons: exact-indices-statuses-selected-trials-gates-and-missingness
+  numerical_tolerance: absolute-1e-9-plus-relative-1e-10-times-independent-value-magnitude
+  tolerance_role: arithmetic-equivalence-only-no-physiological-threshold-relaxation
+  evidence_integrity: source-body-and-per-slot-receipt-hashes-before-and-after
+scope: all-48-cases-all-160-trials-including-all-three-missing-protocol-unknowns
+failure: stop-and-retain-uncertainty-on-any-disagreement-no-source-or-threshold-tuning
+output: results/patchseq-recording-quality-independent-1368/manifest.yaml
+execution_gate: commit-contract-verifier-and-synthetic-equivalence-corruption-tests-before-execution
+specimen_eligibility_established: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

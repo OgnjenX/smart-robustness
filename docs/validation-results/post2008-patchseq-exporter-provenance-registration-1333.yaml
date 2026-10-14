@@ -1,0 +1,38 @@
+schema_version: 1
+artifact_id: 1333
+artifact_type: targeted-exporter-and-labnotebook-metadata-registration
+date: 2026-10-14
+status: before-new-provenance-values
+acquisition: results/patchseq-intrinsic-acquisition-1314/manifest.yaml
+acquisition_sha256: 93fa9b6b3ba01fc1b47323bda84d3610ad56108b84a831b78a899acff6ee210e
+independent_QC: results/patchseq-waveform-QC-independent-1330/manifest.yaml
+independent_QC_sha256: 7f2db295a590d818f0334684caa913e366b6452a76e7562274c3934ad2cefbeb
+scope:
+  files: same-48-no-filter-or-substitution
+  value_path: /general/generated_by
+  accepted_shape: positive-rows-at-most-32-by-2-columns
+  value_read: one-text-cell-at-a-time-max-4096-decoded-bytes-per-cell-32768-total-per-file
+  source_script: file_name-attribute-only-never-read-script-dataset-body
+  source_script_file_name: scalar-or-singleton-text-max-4096-decoded-bytes
+  notebook_path: /general/labnotebook
+  notebook_inspection: names-shapes-dtypes-only-max-depth-2-max-256-objects
+  notebook_values_and_attribute_values: prohibited
+  links: hard-only-never-follow-soft-or-external
+  storage: no-filter-virtual-or-external-value-reads
+  maximum_name_bytes: 1024
+  parser: h5py==3.12.1
+  plugins_disabled: '::'
+  source_integrity: pinned-evidence-before-and-after-each-file-before-and-after
+interpretation:
+  missing_or_unsupported: retained-unknown-no-exporter-inference
+  provenance_table: source-declaration-not-proof-of-executed-exporter-code
+  MIES_unit_mapping: requires-matching-source-implementation-no-automatic-unit-fix
+  labnotebook_presence: does-not-establish-amplifier-health-or-successful-cell-QC
+output: results/patchseq-exporter-provenance-1334/manifest.yaml
+execution_gate: commit-reader-registration-and-value-access-tests-before-execution
+next_gate: independently-reconstruct-metadata-then-source-backed-notebook-QC-interpretation
+waveform_reads_authorized: false
+model_fitting_authorized: false
+specimen_eligibility_established: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

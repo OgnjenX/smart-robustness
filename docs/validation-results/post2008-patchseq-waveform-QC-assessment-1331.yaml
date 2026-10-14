@@ -1,0 +1,81 @@
+schema_version: 1
+artifact_id: 1331
+artifact_type: independently-verified-sweep-QC-not-cell-or-model-qualification
+date: 2026-10-14
+protocol: docs/validation-results/post2008-patchseq-waveform-QC-registration-1327.yaml
+protocol_sha256: 73b57c70ac2881e43e7c307fadc92aa9575fcf25e60b0ecc30c3d9a9536b064d
+preexecution_commit: 0f32c3e
+collector: scripts/run_patchseq_waveform_QC.py
+collector_sha256: 63617dbe160137c99094c502cf5abeed9940be8d8e85cd3b2649291cc475ea47
+result: results/patchseq-waveform-QC-1328/manifest.yaml
+result_sha256: 13e054b090b22b45196bb2571d63cee4577c4e169a2a3c788fb4efbef3683564
+verification_contract: docs/validation-results/post2008-patchseq-waveform-QC-verification-registration-1329.yaml
+verification_contract_sha256: 34794458afeb4aeb70903b535fa88a45fb39aacfeef333cc680234ac9bb46a3c
+verification_preexecution_commit: 27bf5b7
+verifier: scripts/verify_patchseq_waveform_QC.py
+verifier_sha256: 41a83697e89ba6dc6cc1ced780adb2cc37249d8cf35dc20181da40f29202654b
+independent_result: results/patchseq-waveform-QC-independent-1330/manifest.yaml
+independent_result_sha256: 7f2db295a590d818f0334684caa913e366b6452a76e7562274c3934ad2cefbeb
+terminal_collector_and_verifier_exit_codes: [0, 0]
+status: all-sweep-outcomes-reconstructed-no-cell-or-model-promotion
+verified:
+  fixed_recordings: 48
+  current_clamp_pairs: 2330
+  long_square_shape_candidates: 908
+  shape_and_baseline_QC_passes: 186
+  read_or_QC_errors: 0
+  charged_float64_decoded_bytes_per_execution: 9054486880
+  every_acceptance_rejection_epoch_metric_and_instrument_scalar: independently-reconstructed
+  numerical_comparisons: within-sealed-contract-no-discrete-gate-tolerance
+  original_source_and_recording_hashes: unchanged
+  per_slot_receipts: exact-match-to-global-result
+failure_reason_counts_not_mutually_exclusive:
+  not-supported-single-step-waveform: 815
+  not-long-square-returning-to-baseline: 607
+  incomplete-baseline-window: 226
+  absolute_mean_drift_mV-exceeds-limit: 491
+  slow_noise_RMS_mV-exceeds-limit: 68
+  pre_noise_RMS_mV-exceeds-limit: 19
+  post_noise_RMS_mV-exceeds-limit: 3
+descriptive_coverage_not_a_promotion_gate:
+  columns: [source_class, layer, partition, selected_cells, cells_with_any_passing_sweep, frozen_groups_with_any_passing_sweep, passing_sweeps]
+  rows:
+    - [Pvalb, L23, fitting, 5, 2, 2, 11]
+    - [Pvalb, L23, held-out, 3, 0, 0, 0]
+    - [Pvalb, L5, fitting, 5, 4, 4, 22]
+    - [Pvalb, L5, held-out, 3, 1, 1, 1]
+    - [Sst, L23, fitting, 5, 5, 5, 23]
+    - [Sst, L23, held-out, 3, 3, 3, 19]
+    - [Sst, L5, fitting, 5, 3, 3, 17]
+    - [Sst, L5, held-out, 3, 2, 2, 6]
+    - [Vip, L23, fitting, 5, 3, 3, 30]
+    - [Vip, L23, held-out, 3, 2, 2, 12]
+    - [Vip, L5, fitting, 5, 4, 4, 34]
+    - [Vip, L5, held-out, 3, 2, 2, 11]
+  source_selection: results/patchseq-intrinsic-subset-1309/manifest.yaml
+  source_selection_sha256: dcf2bdf39e44c82190b63aa62de46df84314ffec47f76e01e85726cdbd9088d3
+  limitation: any-passing-sweep-is-not-enough-to-establish-required-passive-and-active-fitting-targets
+engineering_checks:
+  bounded_collector_tests_passed: 12
+  independent_equivalence_and_corruption_tests_passed: 54
+  aggregate_patchseq_tests_passed: 848
+  aggregate_patchseq_tests_seconds: 17.01
+  repository_ruff: passed
+limits:
+  - Source-inspired noise/drift checks are not an exact IPFX execution or complete cell-health QC.
+  - Long-square shape is not confirmation of the author's ontology or sufficient intrinsic response diversity.
+  - Stored bias_current scalars are raw context; their source-unit/input semantics are unresolved and must not be blindly added as amperes or imputed as zero.
+  - No liquid-junction correction, baseline subtraction or current normalization was applied.
+  - No source class, layer, group partition, selected file or threshold was changed after outcomes.
+  - This finite subset does not establish adequate complete PV/SST/VIP class-layer coverage or representative population prevalence.
+  - The independent negative synaptic-recruitment coverage gate remains unresolved and cannot be rescued by intrinsic traces.
+next_gate: >-
+  Establish source-backed command/bias and cell-health conventions and seal
+  required intrinsic fitting targets before any fits. Preserve every failure;
+  no reduced minimums, pooled layers/classes or favorable replacement cells.
+specimen_eligibility_established: false
+model_fitting_performed: false
+SMART_network_executed: false
+prior_failed_gates_modified: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

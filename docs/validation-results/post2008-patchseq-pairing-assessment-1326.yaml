@@ -1,0 +1,65 @@
+schema_version: 1
+artifact_id: 1326
+artifact_type: independently-verified-metadata-pairing-not-waveform-qualification
+date: 2026-10-14
+registration: docs/validation-results/post2008-patchseq-pairing-registration-1323.yaml
+registration_sha256: f3304e4317495aaaec0d561100720cd5c1eb09060d74b045a571044bd4fd5e13
+preexecution_commit: 125f921
+runner: scripts/check_patchseq_pairing.py
+runner_sha256: c7c2aa7c2c44cba52be1e4d2367dde69cd243f221152e5a7f9126dc6ad94fa45
+result: results/patchseq-pairing-1324/manifest.yaml
+result_sha256: 02777a5e9f76378d159eb3e4b75c10bd70d67dcfcb62db8ebfe66d6f71cb1a26
+verifier: scripts/verify_patchseq_pairing.py
+verifier_sha256: 1f9b8156e887c447f2f7f09f5010e35ecc139fab4e348bdf04e75d2936cf706b
+independent_result: results/patchseq-pairing-independent-1325/manifest.yaml
+independent_result_sha256: c198094f9f042566e095599edf6e06f776a0e4b5aaf05dc8068b4d9804c73dcf
+status: metadata-pairing-gate-passed-physiology-not-yet-assessed
+terminal_collector_and_verifier_exit_codes: [0, 0]
+verified:
+  fixed_recordings_retained: 48
+  current_clamp_metadata_pairs: 2330
+  metadata_pair_nonpasses: 0
+  unkeyed_target_series: 0
+  one_to_one_explicit_sweep_memberships: passed
+  exact_descriptions_sample_counts_start_times_and_rates: passed
+  exact_raw_SI_units_and_conversion_factors: passed
+  source_hashes_before_and_after: unchanged
+  nontarget_series_retention: independently-matched
+  new_HDF5_reads: 0
+  waveform_or_timestamp_vectors_read: false
+independent_method: >-
+  Without importing the pairing collector, reconstruct every targeted series
+  from the independently verified descriptor inventory. Check all present ID
+  and description locations, explicit roles/namespace/root, real numeric shapes,
+  finite exact conversions, units and clock metadata. Rebuild each unique sweep
+  membership and compare every output series value, pair and nontarget path.
+  This verifier is explicitly restricted to an all-pass result and fails closed
+  on any nonpass; it does not assert independent classification of mixed failures.
+engineering_checks:
+  pairing_collector_tests_passed: 22
+  independent_pairing_tests_passed: 8
+  aggregate_patchseq_tests_passed: 782
+  aggregate_patchseq_tests_seconds: 16.75
+  repository_ruff: passed
+  whitespace_check: passed
+limits:
+  - Seconds is a disclosed compatibility spelling, not NWB schema conformance.
+  - Exact clock agreement is metadata evidence, not an independent measurement of sample timing.
+  - Compression/virtual/external storage and safe decoder checks precede waveform reads.
+  - Instrument bias/gain/bridge/capacitance values have not been interpreted or imputed.
+  - No minus-14-mV junction correction has been applied; source voltage convention remains explicit.
+  - No long-square waveform detection, numerical reliability, intrinsic features or model fitting occurred.
+  - Forty-eight retained recordings do not imply the frozen minimum usable specimen gates are met.
+  - Source-label, conservative-partition and prior negative synaptic-recruitment gates remain unchanged.
+next_gate: >-
+  Seal waveform access/storage and array-QC protocol plus instrument metadata and
+  as-recorded input/voltage conventions before reading samples. Independently
+  assess that QC, then seal model fitting/held-out objectives and parameter bounds
+  before fitting. Do not infer total bias from undefined metadata or tune from
+  SMART network outcomes. No replacement cases or partition changes.
+specimen_eligibility_established: false
+model_fitting_performed: false
+SMART_network_executed: false
+prior_failed_gates_modified: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

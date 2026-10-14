@@ -1,0 +1,60 @@
+schema_version: 1
+artifact_id: 1323
+artifact_type: prospective-metadata-pairing-and-unit-contract
+date: 2026-10-14
+status: sealed-before-pairing-outcomes-not-before-prior-descriptive-metadata
+input: results/patchseq-trace-schema-1319/manifest.yaml
+input_sha256: 10dc2646f3d1ef9683f666228b73d518e44f7070611efcdcdfbd5fcd2e661bdf
+independent_input: results/patchseq-trace-schema-independent-1321/manifest.yaml
+independent_input_sha256: 207123a39f70643d8efaba95183611320cdab4e335e3c1c6568883c71957f6f4
+primary_schema:
+  version: 2.2.5
+  sources:
+    - https://raw.githubusercontent.com/NeurodataWithoutBorders/nwb-schema/2.2.5/core/nwb.base.yaml
+    - https://raw.githubusercontent.com/NeurodataWithoutBorders/nwb-schema/2.2.5/core/nwb.icephys.yaml
+  icephys_sha256: 5dd0e0b654937cd39264fef44e2b53976c78df032a3c8f152b801a76be1bdf7b
+prior_observations:
+  - Metadata inventory already exposed declared types, scalar sweep IDs and units.
+  - Literal Seconds time-unit spelling was observed before this contract.
+scope:
+  files: all-48-fixed-selected-recordings-no-replacement-or-partition-change
+  input_only: verified-descriptors-no-new-HDF5-value-reads
+pairing:
+  response_type: CurrentClampSeries
+  stimulus_type: CurrentClampStimulusSeries
+  namespace: core
+  response_root: /acquisition
+  stimulus_root: /stimulus/presentation
+  key: explicit-integer-sweep-number-within-file-0-through-4294967295
+  duplicate_ID_locations: require-all-present-attribute-and-dataset-values-to-agree
+  cardinality: exactly-one-response-and-one-stimulus-no-filename-inference
+  descriptions: nonempty-text-all-present-locations-and-both-series-exactly-agree
+  unknown_or_conflicting_metadata: retain-explicit-failure-never-impute
+  other_series: retain-nontarget-paths-no-current-clamp-inference
+units_and_clock:
+  data_shapes: positive-one-dimensional-integer-length
+  data_dtypes: real-integer-or-floating-no-bool-complex-object
+  response_unit: volts
+  stimulus_unit: amperes
+  conversion: explicitly-present-finite-nonzero-exact-decoded-source-value
+  scaling: data-SI-equals-data-times-conversion-no-nominal-rounding
+  offset: explicit-offset-unsupported-historical-schema-is-multiplicative
+  starting_time: finite-explicit-scalar-and-finite-positive-rate
+  accepted_time_unit_literals: [seconds, Seconds]
+  Seconds: explicitly-allowed-exporter-spelling-deviation-retain-flag-not-schema-conformance
+  pair_alignment: exact-start-rate-and-sample-count-agreement-no-tolerance-or-interpolation
+  timestamps: any-present-timestamps-unsupported-without-separate-clock-validation
+unresolved:
+  - This stage does not establish safe array storage or decoder eligibility.
+  - Gain/bias/bridge/capacitance values are not newly read or imputed.
+  - Do not add bias current to stimulus samples without establishing its source semantics.
+  - Author-reported uncorrected minus-14-mV junction potential is not corrected here.
+  - Stimulus descriptions do not establish usable long-square waveforms.
+execution_gate: commit-contract-runner-and-synthetic-tests-before-pairing-outcomes
+output: results/patchseq-pairing-1324/manifest.yaml
+waveform_reads_authorized: false
+physiology_QC_or_model_fitting_authorized: false
+next_gate: independent-pair-reconstruction-then-separate-array-QC-and-input-voltage-convention
+specimen_eligibility_established: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

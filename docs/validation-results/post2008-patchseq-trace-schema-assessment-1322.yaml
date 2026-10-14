@@ -1,0 +1,35 @@
+schema_version: 1
+artifact_id: 1322
+artifact_type: independent-trace-metadata-assessment
+date: 2026-10-14
+registration: docs/validation-results/post2008-patchseq-trace-schema-registration-1318.yaml
+collector_result: results/patchseq-trace-schema-1319/manifest.yaml
+collector_result_sha256: 10dc2646f3d1ef9683f666228b73d518e44f7070611efcdcdfbd5fcd2e661bdf
+verifier: scripts/verify_patchseq_trace_schema.py
+verifier_sha256: 3acfed5507cb3d792693c30a0657067cde2a7fa59e28666a20e52be7bb15e8d6
+independent_result: results/patchseq-trace-schema-independent-1321/manifest.yaml
+independent_result_sha256: 207123a39f70643d8efaba95183611320cdab4e335e3c1c6568883c71957f6f4
+status: all-48-metadata-inventories-independently-reconstructed
+verified:
+  retained_recordings: 48
+  structural_objects: 36583
+  whitelisted_scalar_dataset_reads: 5734
+  every_descriptor_and_read_whitelist: independently-matched
+  original_recording_and_source_hashes: unchanged-before-and-after
+  waveform_or_timestamp_vector_reads: false
+method: >-
+  Separate stack traversal and scalar decoding reconstruct all descriptors from
+  the verified binaries without importing the collector. Compare every record
+  and permitted read, retaining undefined values and refusing non-hard links.
+engineering_checks:
+  focused_independent_tests_passed: 6
+  repository_ruff: passed
+claim_boundary: >-
+  Metadata provenance is established, not usable physiology. Equal stimulus and
+  response counts do not establish unique sweep pairing, common clocks, valid
+  scaling, trace quality, minimum usable specimen counts or model eligibility.
+next_gate: separately-sealed-pairing-and-unit-contract-1323-before-pairing-outcomes
+specimen_eligibility_established: false
+model_fitting_performed: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

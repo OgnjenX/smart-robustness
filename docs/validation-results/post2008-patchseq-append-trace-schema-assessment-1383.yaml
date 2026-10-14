@@ -1,0 +1,33 @@
+schema_version: 1
+artifact_id: 1383
+date: 2026-10-14
+status: all-48-append-file-metadata-and-read-whitelists-independently-reconstructed
+result: results/patchseq-append-trace-schema-1381/manifest.yaml
+result_sha256: 7de14ca2a3ef2f42b20b82eaf7d5f3d3dbc6b6e8a2b813b41231fdde76f90aac
+independent_result: results/patchseq-append-trace-schema-independent-1382/manifest.yaml
+independent_result_sha256: 363027ecfb7d8ab25a3c7c557183180ca88e38c50e7c98c896aaab4a26b2238f
+observed_metadata_only:
+  retained_files: 48
+  completed_inventories: 48
+  structural_objects: 38443
+  whitelisted_scalar_dataset_reads: 6014
+  declared_CurrentClampSeries: 2550
+  declared_CurrentClampStimulusSeries: 2550
+  declared_VoltageClampSeries: 457
+  declared_VoltageClampStimulusSeries: 457
+  accepted_stimulus_response_pairs: not-yet-established
+engineering:
+  all_patchseq_tests_passed: 977
+  ruff: passed
+  original_and_append_metadata_algorithm_and_policy_equivalence: passed
+interpretation: >-
+  Metadata inventory is complete and independently reconstructed. Equal declared
+  response/stimulus counts do not establish unique pairs, valid waveforms, healthy
+  recordings or neuron-model eligibility. No waveform, timestamp vector or
+  physiological feature was read. Preserve source types, undefined metadata,
+  original partitions and every original recording and failure.
+next_gate: sealed-unique-sweep-pairing-and-independent-reconstruction-before-array-QC
+physiological_arrays_interpreted: false
+models_fitted: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

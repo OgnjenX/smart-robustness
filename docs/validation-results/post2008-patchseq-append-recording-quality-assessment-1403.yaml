@@ -1,0 +1,50 @@
+schema_version: 1
+artifact_id: 1403
+date: 2026-10-14
+status: all-48-append-quality-measurements-and-gates-independently-reconstructed
+result: results/patchseq-append-recording-quality-1400/manifest.yaml
+result_sha256: 0f3bf0c9fc8ed5de79f09292c6c1d9e3b499444bdd6683775299e8bacb6327d1
+independent_result: results/patchseq-append-recording-quality-independent-1402/manifest.yaml
+independent_result_sha256: 8ab64b153295950cb12f1aaccaf8a661a7d389a454ed1a1516cb3bb840c660fe
+observed:
+  retained_cases: 48
+  retained_trials: 162
+  independently_measured_VC_trials: 161
+  unsupported_CC_bath_unknown_no_array_reads: 1
+  mandatory_measurement_gate_passes: 46
+  mandatory_measurement_gate_failures: 2
+  mandatory_measurement_gate_unknowns: 0
+  decoded_float64_bytes: 106800000
+retained_failures:
+  - slot: 7
+    class: Pvalb
+    layer: L23
+    partition: held-out
+    failure: access-input-ratio-above-0.15
+    observed_ratio: 0.15556732810525073
+    unchanged_maximum: 0.15
+  - slot: 29
+    class: Sst
+    layer: L5
+    partition: fitting
+    failure: electrode-zero-outside-200-pA
+unsupported_trial:
+  slot: 4
+  protocol: bath
+  sweep: 1
+  measurement_state: unknown
+  selection: later-explicit-bath-sweep-2-selected-by-existing-largest-sweep-rule-not-value-based-fallback
+interpretation: >-
+  This is the original bounded mandatory recording-measurement gate, not complete
+  cell health or recovered historical QC. Blowout remains unassessed for all 48
+  recordings. Neither the near-threshold access-ratio failure nor the electrode
+  zero failure is rounded, tuned or replaced. Joint waveform/quality support must
+  be audited separately by frozen class, layer and partition before deciding
+  whether the necessary held-out source gap is closed. No model was fitted.
+engineering:
+  all_patchseq_tests_passed_before_combined_audit: 1126
+  ruff: passed
+  original_measurement_threshold_and_decoder_bounds: unchanged
+next_gate: distinct-global-group-joint-coverage-with-both-batches-and-all-original-failures-retained
+frozen_baseline_modified: false
+scientific_goal_complete: false

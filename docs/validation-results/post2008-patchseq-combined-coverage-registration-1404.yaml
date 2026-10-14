@@ -1,0 +1,42 @@
+schema_version: 1
+artifact_id: 1404
+date: 2026-10-14
+status: necessary-joint-coverage-before-combined-count-outcomes
+prior_exposure: independently-verified-per-batch-waveform-and-recording-quality-results
+purpose: Determine necessary availability, not invent fitting minimums or model eligibility.
+batches:
+  - name: original
+    selection: results/patchseq-intrinsic-subset-1309/manifest.yaml
+    selection_sha256: dcf2bdf39e44c82190b63aa62de46df84314ffec47f76e01e85726cdbd9088d3
+    waveforms: results/patchseq-waveform-QC-1328/manifest.yaml
+    waveforms_sha256: 13e054b090b22b45196bb2571d63cee4577c4e169a2a3c788fb4efbef3683564
+    independent_waveforms: results/patchseq-waveform-QC-independent-1330/manifest.yaml
+    independent_waveforms_sha256: 7f2db295a590d818f0334684caa913e366b6452a76e7562274c3934ad2cefbeb
+    independent_quality: results/patchseq-recording-quality-independent-1368/manifest.yaml
+    independent_quality_sha256: a49a7928668e86dba714ed4f006063d89aa3592d6c44ec73e9c869f52b1de427
+  - name: append
+    selection: results/patchseq-append-selection-1373/manifest.yaml
+    selection_sha256: 60db30d33739e3784c2a3f32b02fb82cf55159d59beff0a24d5397ce22f9e137
+    waveforms: results/patchseq-append-waveform-QC-1389/manifest.yaml
+    waveforms_sha256: 783a4ba5bbbe8f7fc0122152a002f61ab907c8ff7586d7cd4c3426a3f109f15b
+    independent_waveforms: results/patchseq-append-waveform-QC-independent-1391/manifest.yaml
+    independent_waveforms_sha256: 24c1ca22b97a47dc5a53149a7074169b5205829fff4724d918095dde2fc1125b
+    independent_quality: results/patchseq-append-recording-quality-independent-1402/manifest.yaml
+    independent_quality_sha256: 8ab64b153295950cb12f1aaccaf8a661a7d389a454ed1a1516cb3bb840c660fe
+rules:
+  cases: all-96-no-replacement-and-no-deletion-of-original-failures
+  strata: all-12-class-layer-partition-strata-including-zeros
+  counts: distinct-frozen-global-group-IDs-not-cells-recordings-or-sweeps
+  positive_joint_support: at-least-one-passing-long-square-sweep-and-mandatory-recording-gate-pass
+  global_independence: group-may-not-cross-fitting-held-out-partitions
+  shared_group: deduplicate-within-stratum-across-batches
+  source_body_duplicates: reject-path-or-asset-duplicates
+  source_labels_partitions_and_QC: unchanged
+  separate_batches: report-original-and-append-before-combined-table
+  five_three_design_counts: not-intrinsic-fitting-minimums
+  claim_limit: necessary-nonempty-support-not-fit-target-diversity-model-eligibility-or-network-success
+output: results/patchseq-combined-source-coverage-1405/manifest.yaml
+execution_gate: commit-auditor-and-duplicate-group-partition-failure-retention-tests-before-count-outcomes
+model_fitting_authorized: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

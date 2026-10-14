@@ -1,0 +1,56 @@
+schema_version: 1
+artifact_id: 1302
+artifact_type: independently-reconstructed-conservative-source-group-partition
+date: 2026-10-14
+registration: docs/validation-results/post2008-patchseq-conservative-split-registration-1298.yaml
+registration_sha256: 7301888920c16954a390c0ba3a60f4b8ce5cd0007af4201d6ac1a94e464dd2e6
+sealed_commit: b6406f8
+result: results/patchseq-conservative-split-1299/manifest.yaml
+result_sha256: abc6a0a9859524df090d2ab00dda7bb24404104b13a435aea8a70fc47745608d
+verifier: scripts/verify_patchseq_conservative_groups.py
+verifier_sha256: dfa7afabc3e4161ba98038601a6e7f8feaa99a8a49acaae1708697fb8fad0b52
+independent_result: results/patchseq-conservative-split-independent-1301/manifest.yaml
+independent_result_sha256: 6d2f7e78be4b6d7678e957464944afbb4a2d59b4551e37cc03ad89c5671059bc
+status: frozen-metadata-groups-and-partitions-independently-verified
+terminal_verifier_exit_code: 0
+verified:
+  records: 4435
+  groups: 1040
+  fitting_groups: 680
+  held_out_groups: 360
+  unresolved_metadata_records: 0
+  exact_record_membership_keys_group_hashes_and_partitions: passed
+  shared_key_cross_partition_leakage: 0
+  source_hashes_unchanged_before_and_after: true
+independent_method: >-
+  Parse source path tokens by string decomposition, independently index canonical
+  session keys, reconstruct all raw author-cell/donor keys and retained candidates,
+  and create an explicit undirected graph anchored on asset nodes. Traverse
+  connected components rather than importing the collector's union-find routine.
+  Independently serialize sorted nodes, recompute SHA256 component IDs and
+  domain-separated partition hashes, compare every record/group/summary with
+  type-preserving equality, then audit reported shared keys for leakage.
+engineering_checks:
+  independent_graph_and_leakage_tests_passed: 6
+  repository_ruff: passed
+claim_boundary: >-
+  This establishes separation of all declared source identifiers across the
+  frozen fitting/held-out metadata split. It does not prove biological equality
+  between author donor IDs and archive subjects, anatomical eligibility,
+  transcriptomic confidence, physiology quality, per-stratum minimum support,
+  historical model training independence or a qualified unseen recording claim.
+  No cells were fitted and no physiology or SMART network was executed. Eligible
+  subsets must inherit these assignments, not rebalance after observing results.
+next_gate: >-
+  Register a source-annotated candidate contract distinguishing raw author quality
+  calls from independently reconstructed transcriptomic confidence. Preserve
+  anatomy conflicts, missingness and both failed RNA-name tests. Before any
+  fitting, require per-recording author/content/session provenance, explicit
+  voltage/trace-QC rules and experiment-specific independent-unit counts. The
+  intrinsic-source route cannot rescue the separate synaptic recruitment ceiling.
+physical_donor_equivalence_established: false
+mapping_confidence_assigned: false
+specimen_eligibility_established: false
+prior_failed_gates_modified: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

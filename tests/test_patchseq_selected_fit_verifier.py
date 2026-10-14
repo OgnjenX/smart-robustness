@@ -12,7 +12,7 @@ names = ('verify_patchseq_whole_file_integrity', 'verify_patchseq_fitting_target
          'patchseq_fit_search', 'patchseq_hh_independent_replay', 'patchseq_independent_fit_inputs',
          'patchseq_independent_fit_loss', 'verify_patchseq_fit_checkpoint_structure',
          'verify_patchseq_isolated_fit_replay', 'patchseq_selected_fit_agreement',
-         'verify_patchseq_selected_fit')
+         'patchseq_verification_routes', 'verify_patchseq_selected_fit')
 for name in names:
     spec = importlib.util.spec_from_file_location(name, scripts/(name+'.py'))
     module = importlib.util.module_from_spec(spec)

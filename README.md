@@ -105,6 +105,25 @@ verification without requiring or running the selected stage. If it agrees,
 the assessment requires complete selected-stage evidence and separates numerical
 failure, observable-fit failure, and eligibility for a held-out study design.
 
+An explicitly separate verifier-only performance route is sealed in
+[`amendment 1457`](docs/validation-results/post2008-patchseq-compiled-verifier-amendment-1457.yaml).
+It uses the same independent equations and gates with a retained, fingerprinted
+compiled binary. The original NumPy route remains available. After the same
+terminal source/structure audit, choose **one** full-table verification route;
+do not run both concurrently:
+
+```bash
+.venv/bin/python scripts/verify_patchseq_compiled_fit.py
+.venv/bin/python scripts/verify_patchseq_selected_compiled_table.py
+.venv/bin/python scripts/assess_patchseq_compiled_training.py
+```
+
+These commands use distinct result directories and explicit backend matching.
+The selected waveform comparison still uses its original Brian2 and NumPy
+engines. The compiled route does not replace, speed up, restart, or alter the
+currently sealed fitting run, and numerical disagreement is retained rather
+than resolved by changing scientific parameters.
+
 **Even successful training verification does not authorize held-out response
 scoring or network promotion.** Those require a separately sealed access and
 assessment step. Earlier outcome-independent source QC is distinct from

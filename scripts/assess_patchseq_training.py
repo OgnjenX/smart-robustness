@@ -10,6 +10,7 @@ from pathlib import Path
 import yaml
 from audit_patchseq_fit_checkpoint import audit
 from patchseq_training_assessment_gate import assess_training
+from patchseq_verification_routes import require_backend
 from verify_patchseq_fit_checkpoint_structure import (
     digest,
     read_yaml,
@@ -63,16 +64,18 @@ def replay_disagreement(original, independent, protocol):
             'biological_validation_complete': False, 'scientific_goal_complete': False}
 
 
-def main():
-    reg = read_yaml(REG)
+def main(registration=REG):
+    reg = read_yaml(registration)
     protocol, seal = read_yaml(reg['protocol']), read_yaml(reg['seal'])
     catalog = read_yaml(protocol['training_catalog'])
     structure = read_yaml(reg['structure_result'])
-    pins = {str(REG): digest(REG), str(Path(__file__)): digest(__file__),
+    pins = {str(registration): digest(registration), str(Path(__file__)): digest(__file__),
             'scripts/patchseq_training_assessment_gate.py': digest('scripts/patchseq_training_assessment_gate.py'),
+            'scripts/patchseq_verification_routes.py': digest('scripts/patchseq_verification_routes.py'),
             reg['structure_result']: digest(reg['structure_result'])}
     with terminal_checkpoint(protocol['output']) as (original, original_sha), completed_verification(
         reg['independent_checkpoint'], 'all-candidate-forward-feature-loss-reconstruction-retained') as (independent, independent_sha):
+        require_backend(reg, independent)
         if structure['checkpoint_sha256'] != original_sha or independent['input_checkpoint_sha256'] != original_sha:
             raise ValueError('assessment snapshots refer to different main results')
         audit(original, protocol, catalog, seal)

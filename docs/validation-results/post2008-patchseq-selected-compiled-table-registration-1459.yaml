@@ -1,0 +1,26 @@
+schema_version: 1
+artifact_id: 1459
+date: 2026-10-14
+status: prospective-explicit-compiled-table-selected-route-before-biological-execution
+implementation: scripts/verify_patchseq_selected_compiled_table.py
+shared_implementation: scripts/verify_patchseq_selected_fit.py
+protocol: docs/validation-results/post2008-patchseq-isolated-fit-registration-1436.yaml
+seal: docs/validation-results/post2008-patchseq-isolated-fit-execution-seal-1437.yaml
+structure_result: results/patchseq-fit-structure-independent-1443/manifest.yaml
+independent_checkpoint: results/patchseq-compiled-fit-independent-1458/checkpoint.json
+expected_independent_backend: independent-compiled-RK4
+output_directory: results/patchseq-selected-compiled-table-independent-1460
+scientific_rules: all-original-1446-and-1447-selected-waveform-feature-and-numerical-gates-unchanged
+selected_engines: original-Brian-reference-and-independent-NumPy-replay-unchanged
+reason: route-complete-compiled-table-evidence-without-overwriting-original-NumPy-table-or-selected-results
+execution_gate:
+  - Commit explicit-route controls before biological selected execution.
+  - Complete terminal main/source audit and all-candidate compiled reconstruction must agree before access.
+  - Match exact main snapshot and every candidate/stratum; preserve source/compiler/binary hashes under shared locks.
+  - Use original selected parameters, exact fitting source commands and original selected engines.
+  - Do not substitute or refit a selected candidate when comparison fails.
+original_configuration_preserved: docs/validation-results/post2008-patchseq-selected-fit-verification-registration-1447.yaml
+held_out_access_authorized: false
+network_promotion: false
+live_fitting_source_modified: false
+scientific_goal_complete: false

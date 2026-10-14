@@ -10,6 +10,7 @@ from pathlib import Path
 from audit_patchseq_fit_checkpoint import audit
 from patchseq_independent_fit_inputs import inputs_for_training
 from patchseq_selected_fit_agreement import selected_agreement
+from patchseq_verification_routes import require_backend
 from verify_patchseq_fit_checkpoint_structure import (
     digest,
     read_yaml,
@@ -53,8 +54,8 @@ def selected_summary(original, results, expected_keys):
             'held_out_access_authorized': False, 'network_promotion': False}
 
 
-def main():
-    reg = read_yaml(REG)
+def main(registration=REG):
+    reg = read_yaml(registration)
     protocol, seal = read_yaml(reg['protocol']), read_yaml(reg['seal'])
     if any(version(package) != expected for package, expected in protocol['runtime'].items()):
         raise ValueError('selected verification runtime differs')
@@ -62,6 +63,7 @@ def main():
     structure = read_yaml(reg['structure_result'])
     independent_before = digest(reg['independent_checkpoint'])
     independent = json.loads(Path(reg['independent_checkpoint']).read_text())
+    require_backend(reg, independent)
     source = read_yaml('docs/validation-results/post2008-patchseq-fitting-target-registration-1429.yaml')
     nominal = read_yaml(source['nominal'])
     output = Path(reg['output_directory'])
@@ -83,7 +85,8 @@ def main():
             output.mkdir(parents=True, exist_ok=True)
             with (output/'verifier.lock').open('a') as lock:
                 fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
-                code = (REG, Path(__file__), Path('scripts/patchseq_selected_fit_agreement.py'))
+                code = (Path(registration), Path(__file__), Path('scripts/patchseq_selected_fit_agreement.py'),
+                        Path('scripts/patchseq_verification_routes.py'))
                 pins = {str(p): digest(p) for p in code}
                 pins.update(original['source_hashes'])
                 pins.update(structure['source_hashes'])

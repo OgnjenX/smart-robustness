@@ -9,7 +9,7 @@ import pytest
 
 scripts = Path(__file__).parents[1]/'scripts'
 for name in ('audit_patchseq_fit_checkpoint', 'patchseq_training_assessment_gate',
-             'verify_patchseq_fit_checkpoint_structure', 'assess_patchseq_training'):
+             'verify_patchseq_fit_checkpoint_structure', 'patchseq_verification_routes', 'assess_patchseq_training'):
     spec = importlib.util.spec_from_file_location(name, scripts/(name+'.py'))
     module = importlib.util.module_from_spec(spec)
     sys.modules[spec.name] = module

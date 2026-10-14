@@ -1,0 +1,62 @@
+schema_version: 1
+artifact_id: 1268
+artifact_type: bounded-NWB-metadata-pilot-receipt-not-independent-replay-assessment
+date: 2026-10-14
+registration: docs/validation-results/post2008-patchseq-NWB-metadata-pilot-registration-1266.yaml
+registration_sha256: 47b1b01cc3b3bb8cb6ec011e7b374a2fa5650e47221157b6cb1ec5850f1f9733
+sealed_commit: cd110e9
+runner: scripts/run_patchseq_NWB_metadata_pilot.py
+runner_sha256: c50fc863b901db0c179314c90f9730e1fba0aee9f759788da002d85817d5fa66
+bounded_reader: scripts/patchseq_bounded_NWB.py
+bounded_reader_sha256: 722128c416bf640247e5eb9aac1284c16d570e3785452ed4037c1a7392019206
+result: results/patchseq-NWB-metadata-pilot-1267/manifest.yaml
+result_sha256: c1953a806b1ce34aa10f0cbd3067c80486ca7bb8f594ba2b08ca8847d0e3a72a
+terminal_exit_code: 0
+status: metadata-only-pilot-complete-independent-range-and-replay-verification-pending
+asset:
+  asset_id: f7af39a7-3837-4635-ba76-9c96643405d0
+  path: sub-1001658946/sub-1001658946_ses-1003020741_icephys.nwb
+  complete_file_bytes: 36804772
+collector_reported_results:
+  unique_downloaded_range_bytes: 393216
+  range_requests: 6
+  registered_byte_limit: 4194304
+  nwb_version_root_attribute: '2.2.5'
+  logical_dataset_reads: [/identifier, /general/subject/subject_id]
+  literal_subject_id_matches_path: true
+  literal_session_id_comparison: null
+  session_id_dataset_present: false
+  optional_subject_specimen_id_present: false
+  optional_subject_ephys_result_id_present: false
+  optional_subject_cell_id_present: false
+  all_pinned_sources_unchanged: true
+engineering_checks:
+  focused_tests_passed: 19
+  focused_tests_seconds: 0.28
+  aggregate_patchseq_tests_passed: 590
+  aggregate_patchseq_tests_seconds: 13.79
+  repository_ruff: passed
+  git_diff_whitespace_check: passed
+claim_boundary: >-
+  This demonstrates bounded metadata-read feasibility for one source-blind file,
+  not cohort-wide validation. Only two whitelisted scalar datasets and the NWB
+  version attribute were logically interpreted. Downloaded HDF5 blocks can contain
+  incidental adjacent payload bytes; no physiological array was accessed or
+  interpreted. The subject ID agrees with the file path, but standard session_id
+  and the optional specimen/cell/ephys ID fields are absent. The generic file
+  identifier is preserved, not treated as a neuron ID, session ID or content hash.
+  Whole-file SHA256 is not independently computed, and no specimen is eligible.
+next_gate: >-
+  Verify every retained HEAD/range receipt, immutable ETag, byte span, total size,
+  request budget and raw hash. Replay HDF5 metadata strictly from saved ranges
+  offline, failing on uncovered reads, and independently reconstruct the complete
+  scalar interpretation. Then separately register any necessary structural
+  metadata discovery or manifest-anchored whole-file provenance route; do not
+  silently replace missing internal IDs with filenames or invent RNA aliases.
+whole_recording_downloaded: false
+physiological_arrays_interpreted: false
+complete_file_digest_independently_verified: false
+specimen_eligibility_established: false
+prior_failed_name_tests_modified: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

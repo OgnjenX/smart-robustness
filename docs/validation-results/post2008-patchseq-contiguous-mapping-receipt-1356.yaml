@@ -1,0 +1,43 @@
+schema_version: 1
+artifact_id: 1356
+artifact_type: historical-explicit-range-receipt-independent-check-pending
+date: 2026-10-14
+registration: docs/validation-results/post2008-patchseq-contiguous-mapping-registration-1354.yaml
+preexecution_commit: 8300e4a
+runner: scripts/continue_patchseq_contiguous_mapping.py
+runner_sha256: 085520d5859d30a5c794cce5647df490af1f6ddf1bc3c9e2a49e9395312580cd
+result: results/patchseq-contiguous-mapping-1355/manifest.yaml
+result_sha256: 0c36a1f9bf7fbeb7547b4ecbd9052d4b8fe2246d697bda1c11b3c77ca7b95c08
+terminal_exit_code: 0
+status: complete-continuation-outcomes-retained-independent-verification-pending
+collector_reported:
+  fixed_files: 48
+  all_pairs_retained: 2330
+  continuation_mapped_pairs: 2330
+  continuation_unknown_pairs: 0
+  bias_current_comparisons_agree: 2330
+  bridge_balance_comparisons_agree: 2330
+  capacitance_compensation_comparisons_agree: 2330
+  original_strict_outcomes_preserved_verbatim: 2330
+  original_strict_unknowns_not_reclassified_in_original_result: 1316
+  raw_archives_and_pinned_sources_modified: false
+engineering_checks:
+  contiguous_block_view_immutability_and_no_older_fallback_tests_passed: 3
+  aggregate_patchseq_tests_passed: 899
+  aggregate_patchseq_tests_seconds: 16.80
+  repository_ruff: passed
+  whitespace_check: passed
+claim_boundary: >-
+  Source-driven metadata row selection, not neuron/network calibration or a
+  physiological survival result. Collector agreement must still be independently
+  reconstructed. The old strict branch remains 1014 supported plus 1316 unknown;
+  these new outcomes belong only to the separately sealed contiguous-block
+  continuation. No original arrays, classes, partitions, units or QC thresholds
+  changed. Cell-health qualification and physical total-current semantics remain
+  distinct from successful metadata correspondence.
+next_gate: independent-block-membership-raw-view-provenance-and-export-concordance-verification-before-health-assessment
+health_classification_performed: false
+model_fitting_performed: false
+specimen_eligibility_established: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

@@ -1,0 +1,43 @@
+schema_version: 1
+artifact_id: 1260
+artifact_type: preregistered-archive-identity-and-digest-evidence-inventory
+date: 2026-10-14
+acquisition_registration: docs/validation-results/post2008-patchseq-archive-identity-metadata-registration-1238.yaml
+acquisition_registration_sha256: 5f94fe6a58ad551be3ea09251750bc713e77de7dec4c64ff910b486873d0ca3f
+acquisition_manifest: results/patchseq-archive-identity-metadata-1239/manifest.yaml
+independent_verification: results/patchseq-archive-identity-independent-1241/manifest.yaml
+independent_verifier: scripts/verify_patchseq_archive_identity_metadata.py
+independent_verifier_sha256: b9ea62511e5bd1c76c52908bc4f29dbe1ea69f32d9a9a93d97a71fbe7f31d5b9
+catalog: results/patchseq-catalog-independent-1167/manifest.yaml
+catalog_sha256: 8a53db830724723de66d3a51aaffa21d0c71e5d6e10e2a55f8862c74918bcf60
+typed_manifest: results/patchseq-2021-manifest-records-1230/manifest.yaml
+typed_manifest_sha256: 0bded4681367d9db7dd8de982b69cd57903a8d7dd2f0cf8f1d08a8cb79a1d7a1
+file_references: results/patchseq-2021-file-reference-1234/manifest.yaml
+file_references_sha256: 5c701da3f8d443a9e2a5fe488ddf59b4a7ea648058c0922aa373b2104027bb78
+expected_assets: 4435
+output_directory: results/patchseq-archive-identity-evidence-1261
+rules:
+  - Execute only after terminal acquisition and independent verification of all retained receipts. Bind to the verified terminal manifest hash and all per-asset receipt hashes; no new requests.
+  - Retain every catalog asset, including failed acquisitions. Failed or absent metadata is unknown evidence, not biological failure or an excluded cell.
+  - Analyze the top-level and literal metadata-object projections separately. Never silently choose one branch as the authoritative recording metadata.
+  - Compare present string asset_id and path to exact catalog values. Compare present positive integer size and contentSize to exact catalog byte size. Missing, null, Boolean, float or unexpected types remain unknown.
+  - Preserve generic identifier snapshots; do not interpret a generic artifact identifier as a neuron, cell, donor or session ID.
+  - Retain every participant identifier and schemaKey. Report literal string identifier equality to the path subject token as a metadata consistency diagnostic only; do not equate it with the annotation donor.
+  - Retain every activity identifier and schemaKey. Compare to the path session token only when the activity has literal schemaKey Session and a string identifier. Processing activities and missing schemas remain unknown for this comparison.
+  - Multiple participants or sessions remain multiple candidates; do not select a first candidate or promote an any-match aggregate to verified identity.
+  - Preserve all digest algorithm names and values. Compare only dandi:sha2-256 to typed source sha256_checksum and dandi:md5 to typed source md5_checksum when both are literal, correctly sized hexadecimal strings.
+  - Digest comparisons are literal and case-sensitive; no inferred hash, lowercasing or substitution. dandi-etag is never treated as MD5 or SHA256.
+  - A matching reported digest is cross-source metadata agreement, not independent validation of downloaded NWB file content.
+  - Raw digest/source values, actor candidates, missingness, unexpected types and contradictions remain visible. No specimen is qualified and no failed name-test outcome changes.
+  - Independently reconstruct all evidence records and counters before designing bounded internal NWB acquisition and physiology protocols.
+external_requests_authorized: false
+new_source_field_reads_authorized: false
+recording_body_download_authorized: false
+physiological_array_reads_authorized: false
+donor_namespace_equivalence_inference_authorized: false
+internal_recording_identity_confirmation_authorized: false
+specimen_qualification_authorized: false
+parameter_fitting_authorized: false
+network_execution_authorized: false
+frozen_baseline_modified: false
+next_gate: Independently verify available archive identity and digest evidence, then seal bounded internal NWB metadata acquisition with explicit unresolved identities before physiological arrays.

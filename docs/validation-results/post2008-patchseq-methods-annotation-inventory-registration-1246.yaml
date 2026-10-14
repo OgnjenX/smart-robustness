@@ -1,0 +1,29 @@
+schema_version: 1
+artifact_id: 1246
+artifact_type: whitelisted-raw-methods-annotation-inventory-registration
+date: 2026-10-14
+source: results/patchseq-methods-mouse-metadata-schema-1244/metadata.csv
+source_sha256: 15752eec2fc829a56322a8c3b498c79741927dce669fd60d5d4c9028180a7897
+schema: results/patchseq-methods-mouse-metadata-schema-1244/manifest.yaml
+schema_sha256: 6b900559ff8e48e9f3585b74da888fc49c10137a25d9a1b57c5d420056e42a05
+fields: [cell_id, sample_id, structure, class, dataset, Gouwens_etal_2020, mapping_quality]
+maximum_rows: 50000
+maximum_field_characters: 4096
+output_directory: results/patchseq-methods-annotation-inventory-1247
+rules:
+  - Require the exact verified 37-field header and preserve every CSV source row with its row number.
+  - Retain only the seven whitelisted raw annotation fields, with spelling, whitespace and missing values unchanged. Discard other columns without semantic interpretation.
+  - Preserve all mapping-quality and paper-indicator strings and their counts; do not infer confidence or coerce indicators to Boolean.
+  - Canonicalize cell_id only if it is an unpadded positive ASCII decimal lexeme. Preserve rejected raw identifiers without repairing or excluding rows.
+  - Inventory duplicate canonical cell IDs and duplicate nonempty sample IDs, preserving every candidate.
+  - No threshold on normalized_marker_sum, physiology, genotype, type frequency or network outcomes is used to select records.
+  - Do not parse or summarize physiological feature columns, recording durations, access resistances, cell health or other unregistered values.
+  - This inventory does not join datasets, establish mapping-quality semantics, assign eligibility, create donor splits or fit models.
+  - Independently reconstruct exact raw projections and counts before separately registering any cell/sample correspondence and confidence assignment.
+external_requests_authorized: false
+physiological_feature_reads_authorized: false
+cell_or_layer_qualification_authorized: false
+parameter_fitting_authorized: false
+network_execution_authorized: false
+frozen_baseline_modified: false
+next_gate: Verify the inventory independently, trace primary mapping-quality definitions, then seal exact specimen/sample correspondence to July annotations without physiological outcome selection.

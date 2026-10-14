@@ -1,0 +1,54 @@
+schema_version: 1
+artifact_id: 1245
+artifact_type: independently-verified-official-methods-metadata-header-assessment
+date: 2026-10-14
+registration: docs/validation-results/post2008-patchseq-methods-mouse-metadata-schema-registration-1243.yaml
+registration_sha256: 38364e56bb514363ed7b6c9569ec2db4e65df0a43c86b871044cdff79e3db9a1
+sealed_commit: e13bc1c
+collector: scripts/acquire_patchseq_methods_metadata_schema.py
+collector_sha256: 1d87d1a44f7d60d782e34c1cb780b027a8c0a150ec94615212a50a337fc8eece
+result: results/patchseq-methods-mouse-metadata-schema-1244/manifest.yaml
+result_sha256: 6b900559ff8e48e9f3585b74da888fc49c10137a25d9a1b57c5d420056e42a05
+raw_source: results/patchseq-methods-mouse-metadata-schema-1244/metadata.csv
+raw_source_sha256: 15752eec2fc829a56322a8c3b498c79741927dce669fd60d5d4c9028180a7897
+raw_source_git_blob_sha1: adeb5ab7f7d73a3e3af2891a88562dc7e3c4eef8
+status: original-source-and-literal-header-independently-reconstructed
+independent_check:
+  method: >-
+    Independently hash the complete retained source and reconstruct its Git blob
+    identity and byte size. Extract only the first LF-terminated header bytes;
+    confirm there are no quoted fields or CR bytes before independent literal
+    comma splitting. Rebuild every schema field and compare type-preserving JSON
+    with the collector's CSV-parser output. Verify HTTP 200 and raw header hash,
+    and rehash source after reconstruction. No collector import or data-row parsing.
+  terminal_exit_code: 0
+  outcome: passed
+results:
+  source_bytes: 3130318
+  columns: 37
+  header_bytes: 721
+  header_sha256: 028be274e98718b0e38c7dde2e5c335684d13245339bf086dab9ffb1bf820721
+  relevant_literal_header_names: [cell_id, sample_id, structure, class, dataset, Gouwens_etal_2020, mapping_quality]
+engineering_checks:
+  focused_tests_passed: 11
+  focused_tests_seconds: 0.04
+  aggregate_patchseq_tests_passed: 502
+  aggregate_patchseq_tests_seconds: 13.63
+  repository_ruff: passed
+  git_diff_whitespace_check: passed
+claim_boundary: >-
+  This establishes an authentic source object with a mapping_quality column and
+  an explicit Gouwens_etal_2020 indicator, not their cell-wise values, semantics
+  or correspondence to the saved July cohort. No cell rows or physiological
+  feature columns have been interpreted. These header names alone do not assign
+  confidence or qualify any specimen.
+next_gate: >-
+  Register a seven-field raw annotation inventory preserving every source row,
+  mapping-quality value, paper indicator and exact cell/sample ID. Trace the
+  methods-paper definitions and independently reconstruct all inventory values
+  before separately sealing exact July cell/sample joins and confidence eligibility.
+source_rows_interpreted: false
+physiological_arrays_read: false
+specimen_qualification_performed: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

@@ -1,0 +1,53 @@
+schema_version: 1
+artifact_id: 1477
+date: 2026-10-14
+status: retained-candidate-verification-disagreement-transition-stopped
+prospective_seal_commit: ec95c3b
+amendment: docs/validation-results/post2008-patchseq-compiled-fitting-amendment-1466.yaml
+seal: docs/validation-results/post2008-patchseq-compiled-fitting-execution-seal-1468.yaml
+synthetic_equivalence_assessment: docs/validation-results/post2008-patchseq-compiled-fitting-equivalence-assessment-1465.yaml
+original_checkpoint: results/patchseq-isolated-fit-1438/checkpoint.json
+predecessor_archive: results/patchseq-compiled-fit-1467/predecessor-checkpoint.json
+predecessor_sha256: 29539a6dc1feb29b3ba2d4d87a9324b91ead0681eddf6b6db80abad80aa7f105
+transition_checkpoint: results/patchseq-compiled-fit-1467/checkpoint.json
+transition_checkpoint_sha256: c1cea23528130e2b141f45062b6ebbd1dd57c3815ba3279ca51f3f2e85761600
+observations:
+  original_completed_candidate_rows: 20
+  stratum: Pvalb-L23
+  matching_retained_candidate_ids: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]
+  disagreeing_retained_candidate_id: 19
+  original_Brian2_loss: 227.33445114824977
+  compiled_forward_independent_feature_loss: 228.05602629412402
+  group_support_agrees: true
+  simulation_failure_support_agrees: true
+  aggregate_observable_gate_boolean_agrees: true
+  total_loss_agrees: false
+  group_losses_agree: false
+  recorded_failure_source_keys: []
+  independently_replayed_failure_source_keys: []
+  every_original_row_preserved_exactly: true
+  original_and_archive_bytes_identical: true
+  new_candidate_rows_added: 0
+  amended_runner_exit_code: 1
+  actual_failure: retained-original-score-disagreement-transition-stopped
+  checkpoint_has_terminal_completion_status: false
+interpretation: >-
+  Finite synthetic agreement did not establish scoring equivalence for this
+  retained training candidate. The check compares compiled forward predictions
+  through an independent feature/loss implementation with retained Brian2
+  aggregates. The discrepancy has not yet been localized to forward dynamics,
+  source scheduling, feature extraction, or numerical sensitivity. It is not a
+  biological fit conclusion and does not show that HH or SMART fails. The
+  prospective rejection gate operated without fitting any new candidates.
+actions:
+  - Preserve both checkpoint files and all original rows; do not overwrite or reinterpret either loss.
+  - Do not weaken tolerances, tune parameters, omit this candidate, or replace it.
+  - Do not resume the failed compiled runner; its retained disagreement will reject again.
+  - Original runner was deliberately stopped for the authorized transition, not because its source or simulation failed.
+  - Obtain user direction before original-run resume or a separately preregistered discrepancy-localization investigation.
+  - Stop periodic monitoring while no long-running computation is active.
+original_sources_modified: false
+held_out_response_features_read: false
+network_promotion: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

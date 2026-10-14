@@ -1,0 +1,36 @@
+schema_version: 1
+artifact_id: 1465
+date: 2026-10-14
+status: direct-primary-backend-synthetic-equivalence-passed-not-biological-validation
+registration_commit: e88f10a
+registration: docs/validation-results/post2008-patchseq-compiled-fitting-equivalence-registration-1463.yaml
+raw_result: results/patchseq-compiled-fitting-equivalence-1464/checkpoint.json
+raw_result_sha256: a9a7f620cde7a12f62a98b2fe107a10482409867324ff5bc86ca7e9002a1695e
+compiled_binary_sha256: 3d5f256c739d442411889f1df2c92cf14c428b0fa93631fe73312e5709ce9eaf
+checks:
+  exact_case_scope: 386
+  all_fixed_cases_pass: true
+  matching_numerical_failures: 7
+  maximum_voltage_difference_mV: 0.000000003264183590090397
+  fixed_voltage_tolerance_mV: 0.00001
+  full_successful_case_feature_and_scoring_checks_pass: true
+  both_long_case_repeat_refinement_warmup_control_comparisons_pass: true
+  registered_source_hashes_unchanged: true
+  build_receipt_matches_loaded_binary: true
+independent_inspection: >-
+  Reconstructed exact 128-by-3 short case keys and both long rate keys,
+  checked every failure/success flag and every arithmetic/control comparison,
+  hashed every retained source pin and the compiled binary, and compared the
+  retained build receipt with checkpoint provenance. This inspects retained
+  comparison evidence; it is not a second execution of all synthetic traces.
+limitations:
+  - Finite synthetic agreement does not guarantee equivalence on every biological command or model state.
+  - All retained Brian2 candidate scores must be checked again before importing them into the new output.
+  - The compiled fitter must not use its own compiled kernel as the sole independent forward verifier.
+  - Training support, search, gates, held-out partitions and frozen baseline remain unchanged.
+next_gate: seal-distinct-fitter-and-independent-NumPy-verification-route-before-checkpoint-transition
+biological_data_used: false
+fitting_transition_executed: false
+held_out_access_authorized: false
+network_promotion: false
+scientific_goal_complete: false

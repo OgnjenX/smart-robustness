@@ -1,0 +1,31 @@
+schema_version: 1
+artifact_id: 1475
+date: 2026-10-14
+status: before-real-terminal-training-assessment
+protocol: docs/validation-results/post2008-patchseq-compiled-fitting-amendment-1466.yaml
+seal: docs/validation-results/post2008-patchseq-compiled-fitting-execution-seal-1468.yaml
+structure_result: results/patchseq-amended-fit-structure-1470/manifest.yaml
+independent_checkpoint: results/patchseq-amended-fit-independent-1472/checkpoint.json
+selected_checkpoint: results/patchseq-amended-selected-fit-1474/checkpoint.json
+output: results/patchseq-amended-training-assessment-1476/manifest.yaml
+implementation: scripts/assess_patchseq_amended_training.py
+tests: tests/test_patchseq_terminal_training_assessment.py
+execution_gate: commit-assessment-caller-and-synthetic-controls-before-opening-real-terminal-evidence
+integrity:
+  - Main and verifier snapshots must be terminal and protected by retained shared locks.
+  - All completed evidence must refer to the same exact main checkpoint hash.
+  - Verify complete frozen candidate and selected support under earlier structural contracts.
+  - Verify source chains and recording body digests before publishing assessment.
+  - Publish only after snapshot-stability checks succeed.
+classification:
+  independent_disagreement: verification-unresolved-not-biological-failure-no-selected-snapshot-required
+  agreeing_replay: require-complete-selected-evidence-then-apply-sealed-1449-categories
+  eligible_training: only-eligibility-to-design-separately-sealed-held-out-study
+  unsupported_conclusions: ART-only-works-with-HH-or-all-alternative-models-fail-or-complete-program-achieved
+next_gate: assess-terminal-evidence-honestly-then-seal-held-out-access-only-for-eligible-training-map
+held_out_response_features_read: false
+network_promotion: false
+running_experiment_source_modified: false
+scientific_goal_complete: false
+
+expected_independent_backend: independent-NumPy-RK4

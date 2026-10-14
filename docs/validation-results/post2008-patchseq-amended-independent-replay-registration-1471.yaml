@@ -1,0 +1,49 @@
+schema_version: 1
+artifact_id: 1471
+date: 2026-10-14
+status: before-independent-biological-replay-not-before-main-fitting
+protocol: docs/validation-results/post2008-patchseq-compiled-fitting-amendment-1466.yaml
+seal: docs/validation-results/post2008-patchseq-compiled-fitting-execution-seal-1468.yaml
+structure_result: results/patchseq-amended-fit-structure-1470/manifest.yaml
+output_directory: results/patchseq-amended-fit-independent-1472
+implementation: scripts/verify_patchseq_amended_fit_replay.py
+command_reader: scripts/patchseq_independent_fit_inputs.py
+forward_engine: scripts/patchseq_hh_independent_replay.py
+feature_engine: scripts/verify_patchseq_fitting_targets.py
+loss_engine: scripts/patchseq_independent_fit_loss.py
+execution_gate: commit-reader-orchestrator-and-synthetic-controls-then-terminal-1443-source-audit-before-independent-replay
+scope:
+  candidates: every-sealed-candidate-in-every-six-stratum-table
+  source_sweeps: exact-characterized-training-support-no-held-out-or-pooling
+  command_decoding: independent-hard-link-standard-filter-reader-exact-conversion-no-response-decoding
+  current_context: supported-source-native-holding-once-no-missing-fill
+  forward: independent-RK4-1436-initialization-and-warmup-not-primary-Brian-engine
+  features: independent-1432-source-grid-feature-reconstruction
+  loss: independent-six-term-and-equal-group-weighted-scoring
+  failures: exact-source-key-set-must-agree-error-text-may-differ-no-omission-or-repair
+comparisons:
+  group_losses_and_total_loss: absolute-1e-6-plus-relative-1e-8-arithmetic-and-replay-tolerance-not-biological-gate
+  group_coverage: exact
+  aggregate_observable_gate: exact
+  failure_support: exact
+  mismatches: retained-with-flags-not-used-for-tuning-or-favorable-replacement
+concurrency:
+  main_run: terminal-shared-lock-required-held-through-verification
+  independent_run: exclusive-verifier-lock-one-checkpoint-directory
+  resume: exact-main-checkpoint-hash-and-source-code-chain-only
+  checkpoint: atomic-write-after-every-independently-reconstructed-candidate
+limitations:
+  - Primary checkpoint retains aggregate/group losses, not every predicted feature or voltage trace.
+  - Agreement here checks independent reconstruction against those saved aggregate claims, not bitwise primary waveform identity.
+  - Independently replayed selected numerical controls and raw per-feature comparisons remain necessary before held-out scoring.
+  - This verifier never changes candidate selection or declares biological or network promotion.
+  - Numerical mismatch is unresolved verification evidence, not proof of a biological failure.
+next_gate: seal-and-independently-repeat-selected-model-numerical-controls-and-selected-feature-agreement-before-held-out-access
+main_checkpoint_outcomes_used_for_this_preparation: false
+running_experiment_source_modified: false
+held_out_response_features_read: false
+network_execution_authorized: false
+scientific_goal_complete: false
+
+verification_backend: independent-NumPy-RK4
+self_verification_with_fitter_kernel: forbidden

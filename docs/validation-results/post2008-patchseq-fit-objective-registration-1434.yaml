@@ -1,0 +1,49 @@
+schema_version: 1
+artifact_id: 1434
+date: 2026-10-14
+status: objective-sealed-before-model-fit-outcomes-not-complete-execution-contract
+predecessor: docs/validation-results/post2008-patchseq-fitting-target-assessment-1433.yaml
+implementation: scripts/patchseq_fit_objective.py
+tests: tests/test_patchseq_fit_objective.py
+selection:
+  inputs: fitting-partition-characterized-sweeps-only
+  strata: separate-Pvalb-Sst-Vip-by-L23-L5-no-pooling
+  aggregation: mean-sweep-loss-within-frozen-independent-group-then-equal-group-mean
+  support: exact-source-sweep-key-set-no-dropped-candidate-failures
+  source_missing_event_features: null-and-inapplicable-not-observations-of-zero
+  candidate_missing_required_feature: fixed-1000-loss-term-and-failed-gate
+  dimensions: [baseline_mean_mV, early_step_mean_mV, steady_step_mean_mV, detected_event_count, first_event_latency_s, last_to_first_interval_ratio]
+  sweep_denominator: fixed-six-including-inapplicable-terms-with-no-contribution
+  loss: normalized-squared-error-per-applicable-term
+scales_and_observable_gates:
+  voltage_mV: 2.0
+  detected_event_count: 1.0
+  first_event_latency_s: 0.010
+  interval_ratio: 0.25
+  silence: exactly-zero-candidate-events-if-target-has-zero
+  adaptation_applicability: target-has-at-least-three-events
+  aggregate_observable_gate: every-applicable-term-in-every-retained-sweep
+  interpretation: fixed-study-design-tolerances-not-source-estimated-noise-or-biological-identifiability
+prior_design_relation: >-
+  Voltage, latency, adaptation and count tolerances mirror the existing isolated
+  comparison design, not SMART network results or held-out biological responses.
+  This independently acquired cohort has a different scientific target; passing
+  these observable gates alone cannot establish biological validity or network
+  promotion. Search budget, equations, bounds and eligibility must be sealed
+  separately before candidate fitting begins.
+model_family_to_implement:
+  candidate: standalone-Pospischil-type-Na-K-M-conductance-model
+  primary_reference: https://modeldb.science/123623
+  paper: https://pubmed.ncbi.nlm.nih.gov/19011929/
+  role: testable-minimal-conductance-hypothesis-not-assumed-gene-class-ground-truth
+  classic_target_parameters_reused: false
+  classic_network_parameters_tuned: false
+access:
+  held_out_records_in_training_objective: rejected
+  held_out_response_features: remain-unread-until-complete-fit-and-scoring-contract-sealed
+  network_outcomes: forbidden-fit-inputs
+next_gate: standalone-equation-port-and-synthetic-numerical-verification-then-seal-search-bounds-budget-and-held-out-scoring
+biological_fitting_execution_authorized: false
+network_execution_authorized: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

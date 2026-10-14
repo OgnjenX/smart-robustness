@@ -1,0 +1,33 @@
+schema_version: 1
+artifact_id: 1410
+date: 2026-10-14
+status: all-48-append-exporter-declarations-and-notebook-layouts-independently-reconstructed
+result: results/patchseq-append-exporter-provenance-1408/manifest.yaml
+result_sha256: 898aa74a493f0f381232c6b1005238a6351b534f20f786e8b65d998cb7a09f2a
+independent_result: results/patchseq-append-exporter-provenance-independent-1409/manifest.yaml
+independent_result_sha256: 6b9f6c29d60630fc244b86187d1141fc0bef510e6ae286b8f69ef76ab6211555
+declarations:
+  Igor_Pro_version: 8.0.5.1
+  MIES_061c3b5f_records: 47
+  MIES_33b63e3b_records: 1
+  common_IPNWB_revision: e66fdcebc7ab07338c96794d6b0672c250a0ede5
+  labnotebook_version: 37
+verified_scope: declared-generator-text-script-file-name-attribute-and-notebook-layout-only
+script_bodies_read_or_executed: false
+notebook_trial_values_read: false
+interpretation: >-
+  These match the two exporter revision declarations in the original batch, but
+  declarations are not proof of executed code. The existing analysis convention
+  still scales recorded commands exactly without adding bias_current. A physical
+  fitting-input convention needs separately verified per-sweep holding-enable and
+  native-unit values, and must not treat native amplifier settings as cell parameters.
+  Primary amplifier code also records a separate slow-current-injection setting;
+  its absence or missing metadata must not be silently treated as zero. No waveform
+  QC outcome or original source archive is reinterpreted by this provenance check.
+engineering:
+  all_patchseq_tests_passed: 1143
+  ruff: passed
+next_gate: bounded-key-unit-headers-then-prospective-current-context-numeric-fields-and-source-mapping
+model_fitting_performed: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

@@ -1,0 +1,33 @@
+schema_version: 1
+artifact_id: 1411
+date: 2026-10-14
+status: before-append-key-header-values
+provenance: results/patchseq-append-exporter-provenance-1408/manifest.yaml
+provenance_sha256: 898aa74a493f0f381232c6b1005238a6351b534f20f786e8b65d998cb7a09f2a
+independent_provenance: results/patchseq-append-exporter-provenance-independent-1409/manifest.yaml
+independent_provenance_sha256: 6b9f6c29d60630fc244b86187d1141fc0bef510e6ae286b8f69ef76ab6211555
+acquisition: results/patchseq-append-acquisition-1376/manifest.yaml
+acquisition_sha256: b2ee66404d40180a6cf401f1d7f7790c40a46758b4623af7e1e3e8a0830ccc20
+scope:
+  cases: all-48-retain-errors-no-substitution
+  paths: only-numericalKeys-and-textualKeys-declared-in-independently-verified-notebook-layout
+  expected_tables_per_file: 2
+  shape: 3-rows-by-positive-at-most-512-columns
+  dtype: text-only
+  filters: HDF5-deflate-1-shuffle-2-fletcher32-3-only
+  links: every-component-hard-only-no-virtual-or-external-storage
+  decoded_text_bytes_per_cell: 512
+  decoded_text_bytes_per_file: 65536
+  values: individual-header-text-cells-only
+  other_values: prohibited-including-notebook-numbers-waveforms-and-script-bodies
+  normalization_or_duplicate_selection: prohibited
+parser: h5py==3.12.1
+plugins_disabled: '::'
+original_cohort: preserve-all-original-header-rejections-and-continuations-without-replaying-them-in-new-batch
+output: results/patchseq-append-notebook-keys-1412/manifest.yaml
+independent_output: results/patchseq-append-notebook-keys-independent-1413/manifest.yaml
+execution_gate: commit-reader-independent-checker-and-no-other-value-access-tests-before-headers
+notebook_trial_values_authorized: false
+model_fitting_authorized: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

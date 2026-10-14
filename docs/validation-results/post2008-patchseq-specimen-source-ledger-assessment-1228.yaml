@@ -1,0 +1,68 @@
+schema_version: 1
+artifact_id: 1228
+artifact_type: independently-reconstructed-nonqualifying-specimen-source-ledger-assessment
+date: 2026-10-14
+registration: docs/validation-results/post2008-patchseq-specimen-source-ledger-registration-1226.yaml
+registration_sha256: 74d973e48e8abd6ab2dfdaa076c079dfb2d0463dfe8323f860c87698342731d0
+sealed_commit: e6c1576
+collector: scripts/build_patchseq_specimen_source_ledger.py
+collector_sha256: 488e54e862911fce537afbdbd4e1c52ccbbec1ca3c991feba89d5c746f075074
+result: results/patchseq-specimen-source-ledger-1227/manifest.yaml
+result_sha256: 27ec41298a4baf32ea52aafb36df26dcfcbf74de43ff1e4d8aaaff46caee9bd1
+status: every-specimen-source-annotation-and-count-independently-reconstructed
+independent_check:
+  method: >-
+    From the previously independently verified source projections, construct
+    in-memory SQLite tables for exact legacy accession/label memberships and
+    official manifest-to-asset-to-cell references. Independently query all
+    candidates and coverage, reconstruct every specimen's raw fields, IDs,
+    inherited groups, uncertainty flags and eligibility flags, and compare full
+    records with type-preserving JSON equality. Independently accumulate every
+    core-group/raw-structure count and complete summary. No collector import.
+  terminal_exit_code: 0
+  outcome: passed
+results:
+  specimens: 4435
+  agreeing_source_reference_leaf_annotations: 4270
+  source_core_inhibitory_group_annotated_specimens: 4089
+  unassigned_source_core_groups: 346
+  June_manifest_covered_specimens: 3840
+  eligible_specimens: 0
+descriptive_raw_structure_counts:
+  Sst: {'VISp2/3': 169, 'VISp5': 651}
+  Vip: {'VISp2/3': 450, 'VISp5': 73}
+  Pvalb: {'VISp2/3': 145, 'VISp5': 253}
+  unassigned: {'VISp2/3': 138, 'VISp5': 68}
+engineering_checks:
+  focused_tests_passed: 8
+  focused_tests_seconds: 0.04
+  repository_ruff: passed
+  git_diff_whitespace_check: passed
+claim_boundary: >-
+  This is a verified source-annotation ledger, not a selected or qualified
+  fitting cohort. The descriptive counts combine exact source-core group
+  labels with author-provided anatomical labels; they are not confidence-filtered,
+  independently anatomically validated or physiologically eligible cell counts.
+  Mapping confidence remains unavailable, donor/path-subject identifier
+  equivalence remains unresolved, and June file references do not verify internal
+  NWB identity. All 346 unassigned rows and the prior 595 manifest-uncovered
+  recordings remain visible. Zero eligibility means the prerequisites have not
+  been established, not that all specimens failed physiology.
+next_gate: >-
+  Seal and execute the typed 2021 manifest row reader and complete catalog/July
+  file-to-cell comparisons, preserving integer storage/lexeme provenance and
+  unmatched or conflicting candidates. Then register bounded internal recording
+  metadata acquisition before arrays, followed by a separate cohort/split and
+  isolated-physiology protocol with confidence, anatomical provenance and source-core
+  scope explicitly limited. Do not select or tune from network outcomes.
+publication_checkpoint:
+  source_and_protocols_pushed_through: e6c1576
+  preceding_CI_run: https://github.com/OgnjenX/smart-robustness/actions/runs/38481329249
+  preceding_CI_head: 0e8c7ea353bd6683ce66548ead598d59a02cb758
+  preceding_CI_conclusion: success
+  new_published_revision_CI_verified: false
+physiological_arrays_read: false
+parameter_fitting_performed: false
+specimen_qualification_performed: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

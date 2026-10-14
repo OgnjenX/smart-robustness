@@ -1,0 +1,57 @@
+schema_version: 1
+artifact_id: 1248
+artifact_type: independently-reconstructed-raw-mapping-quality-inventory-assessment
+date: 2026-10-14
+registration: docs/validation-results/post2008-patchseq-methods-annotation-inventory-registration-1246.yaml
+registration_sha256: bf705326b456bf58ba00fee96be60f456bd8f69ad2f4b3aa275fd938f51bcb76
+sealed_commit: fc437b1
+collector: scripts/inventory_patchseq_methods_annotations.py
+collector_sha256: 448744bf34f31a449510c0431609fcbb043bd1ec763d94846162998b9152444b
+result: results/patchseq-methods-annotation-inventory-1247/manifest.yaml
+result_sha256: ed225fa42bc6e320515e158937aa18fb70e77dfd72a2b316408c3cff343840f9
+status: all-raw-annotations-and-counts-independently-reconstructed
+independent_check:
+  method: >-
+    Independently read the original pinned CSV with DictReader, retaining only
+    seven registered raw fields. Use explicit ASCII digit checks rather than the
+    collector's regex for canonical cell IDs. Rebuild every row and missing-field
+    count, and reconstruct duplicates and all raw category counts via SQLite
+    grouped queries. Compare complete projections and summaries with
+    type-preserving JSON equality; rehash original source after verification.
+    No collector import, physiological feature interpretation or record selection.
+  terminal_exit_code: 0
+  outcome: passed
+results:
+  source_rows: 8172
+  noncanonical_cell_ids: 0
+  duplicate_canonical_cell_ids: []
+  duplicate_nonempty_sample_ids: []
+  raw_mapping_quality_counts:
+    highly consistent: 5047
+    moderately consistent: 1391
+    inconsistent: 1712
+    '': 22
+  raw_Gouwens_etal_2020_indicator_counts:
+    'True': 4309
+    'False': 3863
+engineering_checks:
+  focused_tests_passed: 8
+  focused_tests_seconds: 0.04
+  repository_ruff: passed
+  git_diff_whitespace_check: passed
+claim_boundary: >-
+  Authentic per-cell raw quality annotations are available in this separate
+  methods source. Their exact relation to the July recording cohort and the
+  original mapping-quality procedure remains to be established. The 4309 rows
+  marked True are not assumed identical to the original paper's analyzed cohort.
+  No quality label, class, structure or paper indicator has been converted into
+  eligibility. No missing quality is filled and no inconsistent row is removed.
+next_gate: >-
+  Seal exact cell/sample correspondence with July annotations, keeping unmatched
+  and conflicting cases and literal quality categories. Trace the methods-source
+  definitions before a separate confidence assignment and physiology cohort.
+physiological_features_interpreted: false
+mapping_confidence_assigned: false
+specimen_eligibility_established: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

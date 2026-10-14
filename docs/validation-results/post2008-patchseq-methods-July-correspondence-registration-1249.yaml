@@ -1,0 +1,30 @@
+schema_version: 1
+artifact_id: 1249
+artifact_type: exact-methods-annotation-July-cell-sample-correspondence-registration
+date: 2026-10-14
+sources:
+  methods_inventory:
+    path: results/patchseq-methods-annotation-inventory-1247/manifest.yaml
+    sha256: ed225fa42bc6e320515e158937aa18fb70e77dfd72a2b316408c3cff343840f9
+  July:
+    path: results/patchseq-July-June-comparison-1198/manifest.yaml
+    sha256: 4c31f9b2cf447b0c82388795417402563c979291b4a223c3fb6e2d109302bcb3
+output_directory: results/patchseq-methods-July-correspondence-1250
+rules:
+  - Index methods rows by canonical cell_id and independently by nonempty literal sample_id. Preserve all candidates for every July row.
+  - July cell_specimen_id corresponds only by exact canonical ID equality; transcriptomics_sample_id corresponds only by exact raw equality to source sample_id.
+  - Consistent correspondence requires unique cell and sample candidates pointing to the same source row. No first-candidate, trimming, case folding, prefix or approximate-name fallback.
+  - Retain raw mapping_quality, Gouwens_etal_2020, structure, class and dataset values in candidate projections; paper indicator is not converted to Boolean.
+  - Compare source structure to July structure only by literal equality, not ontology normalization or inferred layer preference.
+  - Preserve unreferenced methods rows and all July unmatched, ambiguous or cell/sample-conflicting cases. Do not drop missing or inconsistent quality.
+  - Report raw quality and source-paper-indicator counts for uniquely agreeing correspondences, with correspondence-only boundaries. These counts do not qualify cells.
+  - No donor namespace equivalence, confidence eligibility, fitting split or physiology feature inference is performed.
+  - Independently reconstruct all correspondence records and summaries before using source quality labels in a separately registered cohort definition.
+external_requests_authorized: false
+physiological_feature_reads_authorized: false
+mapping_confidence_assignment_authorized: false
+specimen_qualification_authorized: false
+parameter_fitting_authorized: false
+network_execution_authorized: false
+frozen_baseline_modified: false
+next_gate: Independently verify exact correspondence and primary quality semantics, then preregister eligible source labels and physiological validation without tuning from network outcomes.

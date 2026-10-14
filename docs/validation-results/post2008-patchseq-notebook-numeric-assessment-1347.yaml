@@ -1,0 +1,62 @@
+schema_version: 1
+artifact_id: 1347
+artifact_type: independently-verified-native-numeric-notebook-archive
+date: 2026-10-14
+status: all-raw-selected-columns-verified-no-cell-health-or-model-promotion
+registration: docs/validation-results/post2008-patchseq-notebook-numeric-registration-1344.yaml
+preexecution_commit: 0777f06
+collector: scripts/read_patchseq_notebook_numeric.py
+collector_sha256: 5aa3f1610f74434f1e5c7db2c94f3c339eaad11e60141f68e78c7a8a58d4ba05
+result: results/patchseq-notebook-numeric-1345/manifest.yaml
+result_sha256: c134e8ffadc6c3f670fc229680b4a68b3534f79c54e83fca66474c3f25731f90
+verifier: scripts/verify_patchseq_notebook_numeric.py
+verifier_sha256: e2f53419cb249e3b5521402ed42f40a8681b4dd789da634836dcde5936fc1412
+independent_result: results/patchseq-notebook-numeric-independent-1346/manifest.yaml
+independent_result_sha256: 47587f6a6963474d3c1ac821e361bc03099bc8fbba09218986f852a1c2293169
+terminal_collector_and_verifier_exit_codes: [0, 0]
+verified:
+  fixed_recordings: 48
+  numeric_tables: 48
+  selected_columns: 912
+  registered_fields_per_table: 19
+  missing_registered_fields: 0
+  extraction_errors: 0
+  source_numeric_dtype_for_all_tables: float64
+  charged_float64_bytes: 67940352
+  every_selected_row_and_all_nine_pages: source-to-archive-bitwise-identical
+  NaN_infinity_and_signed_zero_bits: preserved-not-imputed
+  exact_column_memberships_unit_headers_shapes_and_standard_filters: independently-verified
+  original_recordings_sources_and_retained_archives: hashes-unchanged-before-and-after
+method: >-
+  Without importing the collector, derive exact field memberships from verified
+  raw headers, verify every hard link and standard storage filter, read only
+  selected numeric columns, compare complete source/archive float64 byte strings,
+  and rehash all source files and compressed archives. Preserve all nine pages,
+  row positions and duplicate-column candidates instead of selecting favorable
+  headstage values. The strict verifier applies to these successful float64
+  tables; other storage or extraction outcomes would need a distinct assessment.
+engineering_checks:
+  column_access_and_source_row_semantics_tests_passed: 4
+  independent_bitwise_and_corruption_tests_passed: 6
+  aggregate_patchseq_tests_passed: 884
+  aggregate_patchseq_tests_seconds: 16.26
+  repository_ruff: passed
+  whitespace_check: passed
+limits:
+  - Presence of raw health-related fields is not successful cell-health QC.
+  - Last-setting selection and headstage mapping have not yet been assessed on these archived rows.
+  - The selector's explicit-mode branch is tested; legacy missing-mode heuristics are not silently supplied.
+  - The historical predicate is not-all-NaN; a selected nonfinite headstage value must not be replaced with an older finite value.
+  - No holding-current correction, junction correction, source replacement, partition change or physiological threshold change occurred.
+  - No fitted neuron parameters, new SMART network outputs or intrinsic-source promotion have been produced.
+next_gate: >-
+  Seal and independently validate sweep/headstage mapping and enabled-state
+  selection against the historical exporter and the stored instrument scalars.
+  Establish what the source measurements support before cell-health decisions,
+  then seal the intrinsic fitting targets and held-out objective. Preserve
+  ambiguous, unknown and negative outcomes and the separate synaptic-source gate.
+health_classification_performed: false
+model_fitting_performed: false
+specimen_eligibility_established: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

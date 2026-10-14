@@ -1,0 +1,58 @@
+schema_version: 1
+artifact_id: 1292
+artifact_type: independently-reconstructed-bounded-local-structure-assessment
+date: 2026-10-14
+registration: docs/validation-results/post2008-patchseq-local-structure-registration-1289.yaml
+registration_sha256: b9c85f4ca2eeb6abc07a0033251891846d650bd90e3c81c76ca49281dd4ba8c9
+sealed_commit: ecdbbaa
+runner: scripts/inspect_patchseq_local_structure.py
+runner_sha256: 4cfa40444b449e354bcaa3abf864b77ab24850545c689a1c0cf330b41815255a
+result: results/patchseq-local-structure-1290/manifest.yaml
+result_sha256: 958bef541c45a8568932157ee0de815e0cde695bdf5a53d676269e0ff97626ae
+verifier: scripts/verify_patchseq_local_structure.py
+verifier_sha256: 47ab6881893c86bd034e89564c53289aa0d76ed1aa0ab8d346ab0fe04a25e186
+independent_result: results/patchseq-local-structure-independent-1291/manifest.yaml
+independent_result_sha256: 2babeaa229b99c8618404cb65e4fb601911d804dec2ab0ad480d893af555e74a
+status: bounded-structural-scope-complete-no-explicit-cell-ID-found-within-scope
+terminal_runner_and_verifier_exit_codes: [0, 0]
+verified:
+  exact_structural_records: 79
+  all_registered_roots_and_depth_bounds_completed: true
+  general_session_id_dataset_present: true
+  general_lab_meta_data_present: false
+  root_lab_meta_data_present: false
+  visited_paths_named_cell_id_specimen_id_or_ephys_result_id: 0
+  visited_attribute_names_equal_cell_id_specimen_id_or_ephys_result_id: 0
+  dataset_values_read: false
+  attribute_values_read: false
+  new_network_requests: 0
+  new_bytes: 0
+  content_and_source_hashes_unchanged_after_HDF5_close: true
+engineering_checks:
+  local_contract_and_value_guard_tests_passed: 8
+  aggregate_patchseq_tests_passed: 639
+  aggregate_patchseq_tests_seconds: 13.77
+  repository_ruff: passed
+claim_boundary: >-
+  The independent traversal reconstructs every descriptor without importing the
+  structural collector. It reuses its own previously tested names-only traversal
+  and pinned hashing/comparison helpers. Absence applies only to these exact
+  path/attribute names within the original bounded metadata scope, not all possible
+  aliases, text encodings, deeper objects or the entire NWB file. No descriptive
+  text or recording array was read. Earlier root/session_id absence, cached-byte
+  failure and range-budget failure are preserved; completing this local scan does
+  not make those distinct outcomes successful or qualify a physiology specimen.
+decision: >-
+  Stop expanding generic metadata discovery for this pilot. The file has verified
+  author-anchored content integrity and internal session provenance but no explicit
+  internal cell field in the registered scope. Resolve the meaning of author
+  cell/session/sample namespaces and justify a separately registered manifest-
+  anchored identity route before cohort acquisition or physiology. Do not require
+  endlessly searching descriptive text, silently waive naming gates, infer RNA
+  aliases, or promote author cell-ID associations from this metadata alone.
+next_gate: primary-source-namespace-semantics-and-explicit-alternative-identity-route-audit
+internal_cell_identity_established: false
+specimen_eligibility_established: false
+prior_failed_gates_modified: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

@@ -1,0 +1,35 @@
+schema_version: 1
+artifact_id: 1425
+date: 2026-10-14
+status: before-source-consistency-and-nominal-offset-outcomes
+mapping: results/patchseq-current-context-mapping-1421/manifest.yaml
+mapping_sha256: 0980bde1aa92b849caa310b27cd85402059384114c593967beafa8779d28855f
+independent_mapping: results/patchseq-current-context-mapping-independent-1422/manifest.yaml
+independent_mapping_sha256: 06525d03681cad35a3bee12b0a5b35405c4336dbbbcf93bcf51296935e609e9f
+numeric: results/patchseq-current-context-numeric-1417/manifest.yaml
+numeric_sha256: 1b87dff69dcd9037dc3df73990943c127cec02a9aece1c43a0a900332ee33361
+source_audits: [1415, 1424]
+scope: all-96-recordings-all-4880-sweeps-no-source-replacement
+nominal_convention:
+  recorded_command_pA: raw-stimulus-times-exact-decoded-conversion-times-1000000000000
+  holding_term_pA: finite-native-pA-holding-level-if-explicitly-enabled-zero-term-only-if-explicitly-disabled
+  modeled_input_pA: recorded-command-pA-plus-documented-holding-term
+  enabled_flag_source: unique-mapped-active-headstage-last-contiguous-explicit-acquisition-block
+  native_export_link: require-exact-source-unit-and-existing-float32-export-concordance
+  slow_injection: require-documented-disabled-On-Off-state
+  source_consistency: all-non-NaN-values-in-selected-source-block-at-mapped-page-must-be-finite-and-equal-the-mapped-state-or-level
+  NaN_rows: absent-source-observations-not-zero-not-filled
+  missing_ambiguous_conflicting_nonfinite: unsupported-no-default-no-older-favorable-value
+  static_assumption: constant-per-sweep-holding-term-source-consistent-snapshots-not-continuous-delivered-current-measurement
+  level_when_holding_disabled: unused-preserve-raw-native-value-never-relabel-it-as-measured-zero
+  voltage_coordinate: as-recorded-uncorrected-no-invented-sign-for-author-reported-minus-14-mV-junction
+  slow_level_V_and_settling_s: retained-context-not-added-to-current-or-used-as-cell-parameters
+  existing_QC_source_archives_baseline: unchanged-no-retrospective-offset-addition
+interpretation: supported-nominal-model-input-context-not-cell-health-fit-target-diversity-or-neuron-model-eligibility
+output: results/patchseq-nominal-current-context-1426/manifest.yaml
+independent_output: results/patchseq-nominal-current-context-independent-1427/manifest.yaml
+execution_gate: commit-source-consistency-and-unknown-zero-distinction-tests-before-outcomes
+new_waveform_reads_authorized: false
+model_fitting_authorized: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

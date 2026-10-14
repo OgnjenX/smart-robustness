@@ -1,0 +1,79 @@
+schema_version: 1
+artifact_id: 1259
+artifact_type: independently-reconstructed-nonqualifying-cell-ID-source-annotation-coherence-assessment
+date: 2026-10-14
+registration: docs/validation-results/post2008-patchseq-cell-ID-annotation-coherence-registration-1257.yaml
+registration_sha256: 23a03d75a07f3b8ae1bed9b3d526d613ea5b991dbddc35fde8dd0f4f2c6446ad
+sealed_commit: a9e96c6
+collector: scripts/build_patchseq_cell_ID_coherence.py
+collector_sha256: 468ff236f08bb03f709fd0b0284f6ef13746756cc1c9380e9e0cc27893bf67df
+result: results/patchseq-cell-ID-annotation-coherence-1258/manifest.yaml
+result_sha256: 13b34a6e62cb11ede37c80e6088c49639eb4d9e96b187436831eb7e2306324f1
+status: all-cell-ID-coherence-records-independently-reconstructed
+independent_check:
+  method: >-
+    Independently query every methods cell candidate via SQLite with exact
+    canonical IDs stored as strings, retain source order, reconcile all prior
+    canonical IDs, raw identifiers, candidate rows and name-test flags, and
+    rebuild complete ledger records. Derive category counts using a separate
+    relational table for unique associations and grouped SQL queries. Compare
+    every record, unreferenced row and summary with type-preserving JSON equality;
+    rehash all four source artifacts and the collector result afterward.
+    No collector import, phenotype selection or physiological feature reads.
+  terminal_exit_code: 0
+  outcome: passed
+results:
+  July_recordings: 4435
+  methods_source_rows: 8172
+  unique_cell_ID_annotation_associations: 4435
+  unmatched_July_cells: 0
+  ambiguous_July_cell_associations: 0
+  literal_structure_agreements: 4386
+  literal_structure_conflicts: 38
+  unknown_structure_comparisons: 11
+  prior_strict_correspondence_passes: 0
+  prior_specimen_name_bridge_passes: 0
+  raw_author_mapping_quality_counts:
+    highly consistent: 3066
+    moderately consistent: 921
+    inconsistent: 437
+    '': 11
+  raw_author_paper_indicator_counts:
+    'True': 4301
+    'False': 134
+  raw_author_class_counts:
+    inhibitory: 4283
+    excitatory: 140
+    other: 1
+    '': 11
+  eligible_specimens: 0
+engineering_checks:
+  focused_tests_passed: 13
+  focused_tests_seconds: 0.04
+  aggregate_patchseq_tests_passed: 542
+  aggregate_patchseq_tests_seconds: 13.83
+  repository_ruff: passed
+  git_diff_whitespace_check: passed
+claim_boundary: >-
+  This is an exact external cell-ID association of author-provided metadata,
+  explicitly not a qualified fitting cohort or independent reconstruction of
+  transcriptomic confidence. Both literal name tests remain failed and all
+  raw source categories remain present. Anatomical strings disagree for 38
+  records and cannot be reconciled by choosing a label that favors a network
+  result. The 11 missing-label cases remain unknown. Internal recording identity,
+  RNA naming correspondence, donor namespace equivalence and physiological
+  eligibility remain unestablished. Zero eligibility represents unmet gates,
+  not a failure of every neuron or evidence that only HH can support ART.
+next_gate: >-
+  Complete independent archive metadata receipt verification on terminal
+  acquisition. Inventory its identity and digest evidence under the sealed
+  projection, then preregister any necessary internal NWB metadata access before
+  physiological arrays. A later cohort protocol must explicitly justify source
+  identity and anatomy decisions and cannot silently fill gaps, pool strata,
+  overwrite failed name tests or tune from network outcomes.
+mapping_confidence_assigned: false
+specimen_eligibility_established: false
+physiological_features_interpreted: false
+prior_failed_tests_modified: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

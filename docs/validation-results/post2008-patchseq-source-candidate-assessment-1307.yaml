@@ -1,0 +1,47 @@
+schema_version: 1
+artifact_id: 1307
+artifact_type: independently-reconstructed-source-annotated-target-candidates
+date: 2026-10-14
+registration: docs/validation-results/post2008-patchseq-source-candidate-registration-1303.yaml
+sealed_commit: ca7588e
+result: results/patchseq-source-candidates-1304/manifest.yaml
+result_sha256: 60b967d96923bec2bdf86c6ee841f74ea5913627fee34cccc32f6602610bb837
+verifier: scripts/verify_patchseq_source_candidates.py
+verifier_sha256: 47525a7fd3c494cce14c022b63897962be6cdd4f79f4c4100daa238428528db9
+independent_result: results/patchseq-source-candidates-independent-1306/manifest.yaml
+independent_result_sha256: 5e85530be9623ec17cdfbe61611dce9a61a5fd9e6f4bd9aed16ecd00b5d0c9f0
+status: prospective-source-label-candidates-independently-reconstructed
+terminal_verifier_exit_code: 0
+verified:
+  retained_specimens: 4435
+  source_annotation_candidates: 1180
+  exact_records_and_ordered_failure_reasons: passed
+  unchanged_frozen_group_and_partition_assignments: passed
+  all_twelve_stratum_record_and_distinct_group_counts: passed
+  qualified_specimens: 0
+  source_hashes_unchanged_before_and_after: true
+independent_method: >-
+  Join source specimens and annotations through separately populated SQLite
+  tables with unique row keys, retaining all matching frozen membership records.
+  Evaluate the registered literal predicates through an independent condition
+  table, preserve prior name-test flags and unknown per-recording provenance,
+  and reconstruct all output fields. Derive stratum counts and nonexclusive
+  failure totals using SQL, not the collector's aggregation functions. Compare
+  every record, stratum and summary with type-preserving equality. No collector
+  import, recording-array access or new source fields.
+engineering_checks:
+  independent_predicate_tests_passed: 8
+  repository_ruff: passed
+claim_boundary: >-
+  Author-provided class, anatomy and quality calls define these prospective
+  source-annotated targets, not independently recomputed RNA confidence or
+  physiology. The literal sample-name failures remain unchanged. Only the pilot
+  has independently verified full content/session/author-cell provenance. No
+  other candidate is implicitly qualified, and metadata group counts do not
+  satisfy isolated response or synaptic recruitment gates. The candidate mask
+  and global partitions must not be revised using later physiology/network data.
+next_gate: separately-seal-finite-source-group-subset-and-resource-preflight-before-recording-acquisition
+specimen_eligibility_established: false
+prior_failed_gates_modified: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

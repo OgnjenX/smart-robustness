@@ -1,0 +1,56 @@
+schema_version: 1
+artifact_id: 1308
+artifact_type: finite-intrinsic-source-subset-and-size-preflight-registration
+date: 2026-10-14
+status: registration-before-subset-outcomes-and-recording-acquisition
+purpose: >-
+  Freeze a finite source-annotated transport/QC preparation subset for later
+  intrinsic model work. Selection uses only already registered metadata and the
+  frozen global group partition, never physiology or network outcomes. The five/
+  three counts are acquisition design counts, not satisfaction or alteration of
+  experiment-specific physiological or synaptic minimum-support gates.
+candidates: results/patchseq-source-candidates-1304/manifest.yaml
+candidates_sha256: 60b967d96923bec2bdf86c6ee841f74ea5913627fee34cccc32f6602610bb837
+independent_candidates: results/patchseq-source-candidates-independent-1306/manifest.yaml
+independent_candidates_sha256: 5e85530be9623ec17cdfbe61611dce9a61a5fd9e6f4bd9aed16ecd00b5d0c9f0
+file_references: results/patchseq-2021-file-reference-1234/manifest.yaml
+file_references_sha256: 5c701da3f8d443a9e2a5fe488ddf59b4a7ea648058c0922aa373b2104027bb78
+typed_manifest: results/patchseq-2021-manifest-records-1230/manifest.yaml
+typed_manifest_sha256: 0bded4681367d9db7dd8de982b69cd57903a8d7dd2f0cf8f1d08a8cb79a1d7a1
+selection:
+  source_groups: [Pvalb, Sst, Vip]
+  source_layer_labels: [L23, L5]
+  fitting_groups_per_stratum: 5
+  held_out_groups_per_stratum: 3
+  conservative_group_order: literal-ascending-frozen-group-SHA256
+  cell_within_group: lowest-positive-canonical-source-cell-ID-then-literal-file-path
+  maximum_unique_recordings: 48
+  minimum_required_selection_slots: 48
+  missing_support: retain-explicit-incomplete-stratum-stop-no-pooling-rebalancing-or-new-seed
+  cross_stratum_shared_groups: allowed-only-with-the-same-already-frozen-partition
+  representative_population_claim: prohibited-finite-deterministic-subset-only
+  replacement_after_transport_or_QC_failure: prohibited-retain-failures
+preflight:
+  author_file_reference: exactly-one-complete-manifest-reference-per-selected-path-and-source-cell
+  expected_body_size: exact-positive-canonical-author-file-size
+  expected_SHA256: exact-author-manifest-literal-SHA256
+  maximum_single_recording_bytes: 536870912
+  maximum_unique_selected_recording_bytes: 4294967296
+  oversized_or_missing_record: stop-before-acquisition-do-not-substitute-a-smaller-file
+output: results/patchseq-intrinsic-subset-1309/manifest.yaml
+registered_source_fields: [file_name, file_size, sha256_checksum, cell_specimen_id]
+execution_gate: commit-registration-selector-tests-before-subset-outcomes
+recording_download_authorized: false
+physiological_arrays_authorized: false
+model_fitting_authorized: false
+network_execution_authorized: false
+next_gate: >-
+  Independently reconstruct every selected slot, source reference and size/hash
+  preflight. Then seal a separate single-runner bounded acquisition with storage
+  preflight, immutable transport, per-recording content/internal-session/cell
+  provenance checks and no trace interpretation. Trace QC, voltage convention,
+  isolated fitting and held-out scoring each require explicit sealed protocols.
+specimen_eligibility_established: false
+prior_failed_gates_modified: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

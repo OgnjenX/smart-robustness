@@ -1,0 +1,52 @@
+schema_version: 1
+artifact_id: 1320
+artifact_type: bounded-trace-metadata-inventory-receipt-not-independent-assessment
+date: 2026-10-14
+registration: docs/validation-results/post2008-patchseq-trace-schema-registration-1318.yaml
+registration_sha256: 59408cad9a2c9cf8128f0cedfec2543c845e16e973b1424c18b38e55ac6d793f
+sealed_commit: d025241
+runner: scripts/inventory_patchseq_trace_schema.py
+runner_sha256: 9a4151f5bc38e3a4d647f822840fca93b7d1f3d767f90ce5cd31bb6e60da93dc
+result: results/patchseq-trace-schema-1319/manifest.yaml
+result_sha256: 10dc2646f3d1ef9683f666228b73d518e44f7070611efcdcdfbd5fcd2e661bdf
+status: all-48-metadata-scopes-completed-independent-reconstruction-pending
+terminal_exit_code: 0
+collector_reported:
+  retained_files: 48
+  completed_metadata_inventories: 48
+  incomplete_or_error_cases: 0
+  structural_objects: 36583
+  whitelisted_scalar_dataset_reads: 5734
+  declared_neurodata_type_counts:
+    CurrentClampSeries: 2330
+    CurrentClampStimulusSeries: 2330
+    VoltageClampSeries: 537
+    VoltageClampStimulusSeries: 537
+  waveform_or_timestamp_vectors_read: false
+  qualified_specimens: 0
+engineering_checks:
+  focused_no_vector_access_and_bound_tests_passed: 6
+  aggregate_patchseq_tests_passed: 746
+  aggregate_patchseq_tests_seconds: 14.58
+  repository_ruff: passed
+claim_boundary: >-
+  These are retained collector metadata outcomes, not independently accepted
+  schema/units/timebase results. Only allowed scalar time/sweep/description
+  datasets and explicitly whitelisted attributes were interpreted; current,
+  voltage, timestamp and reference vectors were not read. Equal declared
+  stimulus/response totals do not establish pairing, matching sample rates,
+  unit conversion, usable long-square trials, trace reliability or model
+  eligibility. Undefined and missing metadata remain explicit without defaults,
+  and all selected files and their frozen partitions are retained.
+next_gate: >-
+  Independently reconstruct every descriptor, scalar/attribute interpretation,
+  read whitelist and source hash. Then seal explicit stimulus/response pairing,
+  source-unit/timebase conventions and waveform QC, including the author-reported
+  uncorrected minus-14-mV junction convention, before reading trace samples or
+  fitting any model. Do not choose replacement cells from these metadata outcomes.
+independent_metadata_reconstruction_pending: true
+waveform_QC_performed: false
+model_fitting_performed: false
+specimen_eligibility_established: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

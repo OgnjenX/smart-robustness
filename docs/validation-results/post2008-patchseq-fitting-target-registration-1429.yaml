@@ -1,0 +1,84 @@
+schema_version: 1
+artifact_id: 1429
+date: 2026-10-14
+status: before-fitting-response-feature-outcomes
+purpose: Characterize training-source response support without consulting held-out response features or SMART network results.
+nominal: results/patchseq-nominal-current-context-1426/manifest.yaml
+nominal_sha256: e301dec7975eac821d5097d9fb5089a5aeeb204cb42bd912b1d60e2b533126c5
+independent_nominal: results/patchseq-nominal-current-context-independent-1427/manifest.yaml
+independent_nominal_sha256: 5cface307e4f4c917ccaf832c3d43366de84374dfb40ab785a733afabcbd3f97
+batches:
+  - name: original
+    selection: results/patchseq-intrinsic-subset-1309/manifest.yaml
+    selection_sha256: dcf2bdf39e44c82190b63aa62de46df84314ffec47f76e01e85726cdbd9088d3
+    pairing: results/patchseq-pairing-1324/manifest.yaml
+    pairing_sha256: 02777a5e9f76378d159eb3e4b75c10bd70d67dcfcb62db8ebfe66d6f71cb1a26
+    waveform_QC: results/patchseq-waveform-QC-1328/manifest.yaml
+    waveform_QC_sha256: 13e054b090b22b45196bb2571d63cee4577c4e169a2a3c788fb4efbef3683564
+    independent_waveform_QC: results/patchseq-waveform-QC-independent-1330/manifest.yaml
+    independent_waveform_QC_sha256: 7f2db295a590d818f0334684caa913e366b6452a76e7562274c3934ad2cefbeb
+    independent_quality: results/patchseq-recording-quality-independent-1368/manifest.yaml
+    independent_quality_sha256: a49a7928668e86dba714ed4f006063d89aa3592d6c44ec73e9c869f52b1de427
+    acquisition: results/patchseq-intrinsic-acquisition-1314/manifest.yaml
+    acquisition_sha256: 93fa9b6b3ba01fc1b47323bda84d3610ad56108b84a831b78a899acff6ee210e
+  - name: append
+    selection: results/patchseq-append-selection-1373/manifest.yaml
+    selection_sha256: 60db30d33739e3784c2a3f32b02fb82cf55159d59beff0a24d5397ce22f9e137
+    pairing: results/patchseq-append-pairing-1385/manifest.yaml
+    pairing_sha256: 80b2583be9c1ba8d0175ca212161c4f9829ec8a8db4bbbd5b0d411485dd1b971
+    waveform_QC: results/patchseq-append-waveform-QC-1389/manifest.yaml
+    waveform_QC_sha256: 783a4ba5bbbe8f7fc0122152a002f61ab907c8ff7586d7cd4c3426a3f109f15b
+    independent_waveform_QC: results/patchseq-append-waveform-QC-independent-1391/manifest.yaml
+    independent_waveform_QC_sha256: 24c1ca22b97a47dc5a53149a7074169b5205829fff4724d918095dde2fc1125b
+    independent_quality: results/patchseq-append-recording-quality-independent-1402/manifest.yaml
+    independent_quality_sha256: 8ab64b153295950cb12f1aaccaf8a661a7d389a454ed1a1516cb3bb840c660fe
+    acquisition: results/patchseq-append-acquisition-1376/manifest.yaml
+    acquisition_sha256: b2ee66404d40180a6cf401f1d7f7790c40a46758b4623af7e1e3e8a0830ccc20
+access:
+  response_arrays: fitting-partition-only-mandatory-quality-pass-sweep-QC-pass-and-supported-nominal-context
+  held_out: metadata-only-no-HDF5-file-open-or-response-array-or-feature-access
+  excluded_training_sweeps: retained-with-reason-no-replacement
+  decoding: original-hard-link-standard-filter-real-1D-10M-sample-bounds
+  maximum_total_float64_bytes: 17179869184
+  parser: h5py==3.12.1
+  scipy: 1.17.1
+  numpy: 1.26.4
+  source_body_and_dependencies: hashed-before-and-after
+features:
+  voltage: as-recorded-exact-source-scaling-no-junction-correction
+  time: sample-index-divided-by-exact-rate-no-interpolation
+  baseline: mean-over-existing-QC-pre-window
+  early_step: first-10ms-of-main-step
+  steady_step: last-100ms-before-step-stop
+  inputs: exact-source-baseline-step-and-delta-pA-plus-nominal-holding-term-for-baseline-and-step-only
+  apparent_R_MOhm: 1000-times-steady-minus-baseline-mV-divided-by-delta-pA-only-if-no-detected-events
+  apparent_R_scope: finite-positive-steady-response-proxy-not-unique-passive-membrane-resistance
+  initial_spike_event_detector:
+    filter: full-recording-four-pole-lowpass-Bessel-10000-Hz-filtfilt
+    rate_requirement: strictly-above-20000-Hz-no-adaptive-cutoff
+    derivative: filtered-voltage-difference-times-rate-divided-by-1000-V-per-s
+    candidates: positive-crossing-of-20-V-per-s-within-half-open-main-step
+    separation: negative-derivative-between-successive-candidates-and-between-previous-peak-and-next-candidate
+    peak: raw-voltage-maximum-from-candidate-to-next-candidate-or-step-end
+    peak_voltage_mV_min: -30.0
+    peak_minus_candidate_voltage_mV_min: 2.0
+    scope: IPFX-inspired-initial-event-subset-not-complete-IPFX-threshold-refinement-or-clipping-classification
+  firing_rate: accepted-event-count-divided-by-source-step-duration
+  first_event_latency: candidate-index-minus-step-start-divided-by-source-rate
+  adaptation_proxy: last-interevent-interval-divided-by-first-only-with-at-least-three-events
+  missing_event_dependent_features: null-with-explicit-state-not-zero
+primary_detector_reference:
+  revision: c607a36e25618a6bb8ba5438c1cd945fb429e659
+  spike_detector_blob: 34f0b2fa8defaa957e025168584da2ef837bac6f
+  time_series_utils_blob: bb290ae1ae9f157c4290f5571d85b877ba3f2d48
+  urls:
+    - https://github.com/AllenInstitute/ipfx/blob/c607a36e25618a6bb8ba5438c1cd945fb429e659/ipfx/spike_detector.py
+    - https://github.com/AllenInstitute/ipfx/blob/c607a36e25618a6bb8ba5438c1cd945fb429e659/ipfx/time_series_utils.py
+output: results/patchseq-fitting-targets-1430/manifest.yaml
+execution_gate: commit-detector-reader-and-held-out-no-read-synthetic-tests-before-training-feature-outcomes
+promotion_criteria_or_model_parameters: not-defined-by-this-characterization
+next_gate: independent-source-feature-reconstruction-then-isolated-fit-contract-before-any-held-out-response-feature-access
+model_fitting_authorized: false
+network_execution_authorized: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

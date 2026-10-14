@@ -1,0 +1,53 @@
+schema_version: 1
+artifact_id: 1433
+date: 2026-10-14
+status: training-response-catalog-independently-reconstructed-not-model-validation
+registration: docs/validation-results/post2008-patchseq-fitting-target-registration-1429.yaml
+result: results/patchseq-fitting-targets-1430/manifest.yaml
+result_sha256: 12ca6e6e380e00616bfd0532ca1ad97488fba6e7960ca01a628cf26483178c7f
+independent_registration: docs/validation-results/post2008-patchseq-fitting-target-verification-registration-1431.yaml
+independent_result: results/patchseq-fitting-targets-independent-1432/manifest.yaml
+independent_result_sha256: 26848023bf125de5583cd94b97b465398bf2fdc5f3333ca22136dbb639df4db3
+verified:
+  retained_records: 96
+  held_out_records_not_characterized: 36
+  training_response_files_opened: 38
+  training_sweeps_characterized: 260
+  training_waveform_QC_not_passing: 2784
+  training_recording_quality_not_passing: 22
+  held_out_sweeps_not_characterized: 1814
+  training_response_unresolved: 0
+  decoded_float64_bytes: 973360000
+  independent_method: separate-source-array-decoder-forward-event-crossings-and-feature-reconstruction-without-importing-collector
+  feature_float_comparison: absolute-1e-9-plus-relative-1e-10-arithmetic-tolerance-not-biological-acceptance
+training_support:
+  - {class: Pvalb, layer: L23, recordings: 5, distinct_groups: 5, sweeps: 40, negative_steps: 20, positive_steps: 20, event_sweeps: 18, apparent_resistance_proxies: 22, adaptation_proxies: 14, event_recordings: 5, negative_no_event_recordings: 4, adaptation_recordings: 5}
+  - {class: Pvalb, layer: L5, recordings: 4, distinct_groups: 4, sweeps: 22, negative_steps: 9, positive_steps: 13, event_sweeps: 12, apparent_resistance_proxies: 10, adaptation_proxies: 9, event_recordings: 3, negative_no_event_recordings: 3, adaptation_recordings: 3}
+  - {class: Sst, layer: L23, recordings: 9, distinct_groups: 9, sweeps: 50, negative_steps: 24, positive_steps: 26, event_sweeps: 20, apparent_resistance_proxies: 29, adaptation_proxies: 15, event_recordings: 7, negative_no_event_recordings: 7, adaptation_recordings: 7}
+  - {class: Sst, layer: L5, recordings: 7, distinct_groups: 7, sweeps: 42, negative_steps: 20, positive_steps: 22, event_sweeps: 16, apparent_resistance_proxies: 26, adaptation_proxies: 12, event_recordings: 5, negative_no_event_recordings: 6, adaptation_recordings: 4}
+  - {class: Vip, layer: L23, recordings: 7, distinct_groups: 7, sweeps: 61, negative_steps: 27, positive_steps: 34, event_sweeps: 25, apparent_resistance_proxies: 36, adaptation_proxies: 20, event_recordings: 7, negative_no_event_recordings: 7, adaptation_recordings: 7}
+  - {class: Vip, layer: L5, recordings: 6, distinct_groups: 6, sweeps: 45, negative_steps: 20, positive_steps: 25, event_sweeps: 20, apparent_resistance_proxies: 25, adaptation_proxies: 18, event_recordings: 6, negative_no_event_recordings: 5, adaptation_recordings: 6}
+scope:
+  events: fixed-IPFX-inspired-initial-event-subset-not-full-IPFX-replay-or-ground-truth-spike-labels
+  adaptation: last-to-first-event-interval-proxy-only-at-least-three-events
+  resistance: apparent-steady-response-proxy-not-unique-passive-membrane-resistance
+  voltage: as-recorded-no-invented-junction-correction
+  input: exact-DAC-plus-source-native-holding-under-explicit-constant-per-sweep-assumption
+  missing_features: retained-as-null-never-zero-filled
+  groups: original-frozen-partitions-and-class-layer-labels-no-pooling-or-favorable-replacement
+engineering:
+  patchseq_tests_passed: 1220
+  models_fitted: false
+interpretation: >-
+  All six training strata contain event-bearing and negative-step non-event
+  responses, supporting design of an isolated fitting study. Coverage is not
+  uniform at the individual-recording level, and these counts are not new
+  eligibility minima. Characterization does not establish identifiable channel
+  parameters, biological validity, or network robustness. The sparse PV-L23
+  held-out source and separate synaptic recruitment ceiling remain unresolved.
+  Earlier failed and unknown source/QC outcomes remain unchanged.
+next_gate: seal-model-equations-parameter-bounds-objective-search-budget-and-held-out-scoring-before-isolated-fit-outcomes-and-held-out-response-feature-access
+held_out_response_features_used_for_model_selection: false
+network_results_used_for_tuning: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

@@ -1,0 +1,53 @@
+schema_version: 1
+artifact_id: 1352
+artifact_type: independently-verified-strict-mapping-and-mode-boundary
+date: 2026-10-14
+status: strict-branch-verified-not-full-historical-range-replay
+registration: docs/validation-results/post2008-patchseq-setting-mapping-registration-1348.yaml
+preexecution_commit: 9e8dde5
+result: results/patchseq-setting-mapping-1349/manifest.yaml
+result_sha256: 6983192061afe2e6af5da377ea96b83ea28f18f99cc8f85530fa6003719688ff
+verifier: scripts/verify_patchseq_setting_mapping.py
+verifier_sha256: 7dd0fce9568e4325369df10de239efb1832be20048035b0fa1b6d88ca30e1295
+independent_result: results/patchseq-setting-mapping-independent-1351/manifest.yaml
+independent_result_sha256: 3edec50087c042bf394cf6c7c304669e680c39d431860297594e319ca9609814
+terminal_collector_and_verifier_exit_codes: [0, 0]
+verified:
+  fixed_files: 48
+  all_pair_outcomes: 2330
+  mapped: 1014
+  unknown_due_to_missing_or_invalid_mode_rows: 1316
+  supported_mapped_instrument_comparisons: 3042
+  supported_comparisons_agree: 3042
+  all_pairs_have_explicit_acquisition_mode_rows: 2330
+  raw_archives_and_sources: hashes-unchanged
+method: >-
+  Independently enumerate matching sweep rows, check explicit-mode validity,
+  select vectors by reverse row search, derive ADC/DAC/headstage/clamp identities,
+  and reproduce each native/enabled/exported property comparison and source row.
+  No collector or selector import. The checker covers the observed uniquely
+  mapped and mode-unknown branches, not unobserved branch types or full historical
+  exporter execution. Units and float32 serialization are checked exactly.
+engineering_checks:
+  independent_supported_unknown_and_corruption_tests_passed: 5
+  aggregate_patchseq_tests_passed: 896
+  aggregate_patchseq_tests_seconds: 16.39
+  repository_ruff: passed
+historical_fidelity_boundary: >-
+  The registered strict branch rejects any missing source mode in matching rows
+  and searches all explicit acquisition rows. The original exporter instead
+  calls FindRange to restrict lookup to the last contiguous matching block. Thus
+  verified strict outcomes are not a claim of complete historical row semantics.
+  Every unknown case contains explicit acquisition-mode rows as well as missing
+  modes; missing entries do not imply absent acquisition evidence or failed cells.
+decision: >-
+  Preserve every strict result. Audit and prospectively implement the historical
+  explicit-mode contiguous-block rule in a separately sealed continuation. Do
+  not invent mode labels, select favorable earlier blocks, change unit/QC
+  thresholds or reinterpret old unknowns as successful strict-branch outcomes.
+next_gate: source-audit-1353-and-separate-contiguous-block-continuation-before-health-classification
+health_classification_performed: false
+model_fitting_performed: false
+specimen_eligibility_established: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

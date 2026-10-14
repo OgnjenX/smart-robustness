@@ -1,0 +1,44 @@
+schema_version: 1
+artifact_id: 1353
+artifact_type: primary-source-explicit-mode-contiguous-block-audit
+date: 2026-10-14
+status: historical-range-rule-established-no-continuation-outcomes
+primary_repository: AllenInstitute/MIES
+revisions: [061c3b5f56c2f43b9579aa0933af85fd1a360ab6, 33b63e3b]
+path: Packages/MIES/MIES_MiesUtilities.ipf
+git_blob_sha1_by_revision:
+  061c3b5f: f203fa3f16bc5dedc051569c4faeb8a3b7c035b6
+  33b63e3b: 7ccbf7111668659a0858e31f5934aa2ed304f489
+source: https://github.com/AllenInstitute/MIES/blob/061c3b5f56c2f43b9579aa0933af85fd1a360ab6/Packages/MIES/MIES_MiesUtilities.ipf
+inspected_functions:
+  FindRange: lines-375-through-474
+  GetSweepColumn: lines-478-through-509
+  GetLastSettingNoCache: lines-897-through-1086
+FindRange_function_text_sha256_both_revisions: 7935e9fc79a778b035eec70a0638f88a9ba88b01babdedf834d392fd3fb28bc4
+explicit_mode_branch:
+  sweep_ids: exact-first-page-matching-row-indices
+  source_mode: matching-mode-indices-intersected-with-sweep-indices
+  reverse_range: last-contiguous-sequence-stops-at-index-gap
+  field_lookup: reverse-search-only-between-chosen-first-and-last-rows
+  value_predicate: selected-vector-not-all-NaN-before-headstage-selection
+  no_older_block_fallback: true
+legacy_branch:
+  when_needed: no-explicit-requested-mode-rows-available
+  dependencies: TP-Peak-Resistance-TP-Baseline-Fraction-TP-Pulse-Duration-and-row-block-history
+  fully_ported: false
+  permitted_in_next_explicit_mode_continuation: false
+verified_current_scope:
+  evidence: docs/validation-results/post2008-patchseq-setting-mapping-assessment-1352.yaml
+  pairs_with_explicit_acquisition_mode_rows: 2330
+  implication: current-missing-mode-unknowns-can-test-the-published-explicit-range-branch-without-legacy-imputation
+decision: >-
+  Use a derived lookup view restricted to the source-defined last contiguous
+  acquisition-mode block, preserving original source row indices and all field
+  values. The raw archives and original strict results stay immutable. This is
+  source-code fidelity for metadata extraction, not calibration of a neuron or
+  circuit from observed network results. If no explicit acquisition block exists,
+  preserve unknown; do not invoke an unported legacy heuristic.
+health_classification_performed: false
+model_fitting_authorized: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

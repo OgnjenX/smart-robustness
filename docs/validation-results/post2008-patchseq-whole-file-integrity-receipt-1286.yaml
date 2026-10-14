@@ -1,0 +1,44 @@
+schema_version: 1
+artifact_id: 1286
+artifact_type: complete-binary-checksum-acquisition-receipt-pending-independent-check
+date: 2026-10-14
+registration: docs/validation-results/post2008-patchseq-whole-file-integrity-registration-1284.yaml
+registration_sha256: b049c6c715c35354b13cdbc65fe1ad404d897f598edf780aa8139ae2c70d21a0
+sealed_commit: 7ec9f98
+runner: scripts/acquire_patchseq_whole_file_integrity.py
+runner_sha256: 92d64b587e34d0360b2b1b88024ce980a4cf1b2cd31faef7b91a000856eab2f9
+result: results/patchseq-whole-file-integrity-1285/manifest.yaml
+result_sha256: a6b8c851bce7093182f8466800bbaaa318aea5f0e385823cb95895f0f4ad915d
+status: complete-binary-retained-independent-check-pending
+terminal_exit_code: 0
+collector_reported:
+  complete_body_bytes: 36804772
+  HEAD_status: 200
+  Range_GET_status: 206
+  Range_GET_count: 1
+  computed_SHA256: e927d9cb77a44b84ebdb276e752fb71c14c6f31c92aed0128439f1220eba1a40
+  author_checksum_match: true
+  pinned_sources_unchanged: true
+  HDF5_opened: false
+  physiological_arrays_interpreted: false
+engineering_checks:
+  new_author_anchor_tests_passed: 6
+  aggregate_patchseq_tests_passed: 631
+  aggregate_patchseq_tests_seconds: 14.66
+  repository_ruff: passed
+claim_boundary: >-
+  The acquisition computed a complete-file hash that matches the author/source
+  anchor. This is not yet an independently accepted content-integrity result.
+  The complete physical binary includes trace bytes, but no HDF5 or physiological
+  array was opened or interpreted. Earlier sparse-metadata failures and naming
+  failures remain intact. Transport integrity does not prove RNA sample aliases,
+  donor equivalence, source annotation confidence or physiological eligibility.
+next_gate: >-
+  Independently stream-hash the complete retained binary, parse original saved
+  HEAD/Range headers, check target/immutable ETag/exact size/206 Content-Range and
+  declared budgets, compare cached pilot blocks against complete-file offsets,
+  and verify author/source pins before and after. No new network or trace parsing.
+independent_content_integrity_verified: false
+specimen_eligibility_established: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

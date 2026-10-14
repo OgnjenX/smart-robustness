@@ -1,0 +1,30 @@
+schema_version: 1
+artifact_id: 1226
+artifact_type: nonqualifying-specimen-source-core-membership-ledger-registration
+date: 2026-10-14
+July_comparison: results/patchseq-July-June-comparison-1198/manifest.yaml
+July_comparison_sha256: 4c31f9b2cf447b0c82388795417402563c979291b4a223c3fb6e2d109302bcb3
+memberships: results/patchseq-source-group-memberships-1224/manifest.yaml
+memberships_sha256: 94afd5110e80b39c8b1ab1f5aba8d4a4ecb94ddf23d38d6c9ffd3c11cedd5035
+June_identity: results/patchseq-identity-annotations-1176/manifest.yaml
+June_identity_sha256: ed51183655f1ecca7a2fe0d6c1c3e00ae8657862a9d67e5ef585bb3942fbd8b0
+June_manifest_cross_reference: results/patchseq-file-cross-reference-1186/manifest.yaml
+June_manifest_cross_reference_sha256: 0836ab32c4fe94ef1428f8d8a7249a35d8ab8f291014d665af08aa5938599af5
+output_directory: results/patchseq-specimen-source-ledger-1227
+rules:
+  - Retain every July source row with existing raw fields, canonical IDs, source row number and exact legacy accession/label pair.
+  - Join the previously verified type memberships only by that exact pair, retaining all candidates and conflicts.
+  - A source-core inhibitory group annotation requires a unique agreeing reference leaf and exclusive named subgroup; it is not broad molecular-class proof.
+  - Retain unassigned labels, overlapping groups and source types outside the selected roots explicitly.
+  - Carry June manifest cell-reference coverage independently; do not treat it as internal NWB identity.
+  - Report exact raw anatomical labels and per-core-group/raw-label counts without deriving layer from depth or taxonomy.
+  - Record transcriptomic mapping confidence as unavailable in this release, not as a measured low or high confidence value.
+  - Record internal recording identity, physiological validation and specimen eligibility as unestablished for every row.
+  - Do not select fitting or validation cells, create donor splits, download recordings or tune network parameters.
+external_requests_authorized: false
+new_source_row_reads_authorized: false
+physiological_array_reads_authorized: false
+specimen_qualification_authorized: false
+parameter_fitting_authorized: false
+next_gate: Independently reconstruct all specimen annotations and counts; close 2021 file provenance and internal recording identity, then separately seal cohort/split and isolated-physiology validation criteria with source limitations explicit.
+frozen_baseline_modified: false

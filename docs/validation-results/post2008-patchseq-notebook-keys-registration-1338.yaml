@@ -1,0 +1,38 @@
+schema_version: 1
+artifact_id: 1338
+artifact_type: bounded-native-notebook-field-and-unit-header-registration
+date: 2026-10-14
+status: before-notebook-key-values
+provenance: results/patchseq-exporter-provenance-1334/manifest.yaml
+provenance_sha256: a090c2b7aabe58b9fe1811de74008dd59518f0a93dc1f62e12e90bfc20ca7cae
+independent_provenance: results/patchseq-exporter-provenance-independent-1335/manifest.yaml
+independent_provenance_sha256: 8d2f7362edd4e8a4bd58c07be09599b9215a13998bacffd35859c5406085f328
+acquisition: results/patchseq-intrinsic-acquisition-1314/manifest.yaml
+acquisition_sha256: 93fa9b6b3ba01fc1b47323bda84d3610ad56108b84a831b78a899acff6ee210e
+scope:
+  cases: same-48-no-cohort-filter-or-replacement
+  dataset_paths: exact-numericalKeys-and-textualKeys-from-verified-notebook-layout
+  allowed_shape: 3-rows-by-positive-at-most-512-columns
+  values: one-text-cell-at-a-time
+  maximum_decoded_bytes_per_cell: 512
+  maximum_decoded_bytes_per_file: 65536
+  storage: hard-only-no-filter-virtual-external
+  attributes: no-value-reads
+  all_other_values: prohibited-including-numericalValues-textualValues-waveforms-script-bodies
+  parser: h5py==3.12.1
+  plugins_disabled: '::'
+interpretation:
+  first_row: raw-field-labels-no-normalization
+  second_row: raw-unit-labels-no-normalization
+  third_row: preserve-as-source-metadata-no-assumed-headstage-or-QC-meaning
+  missing_or_unsupported: retain-failure-or-unknown-not-default
+  duplicate_field_names: preserve-not-arbitrarily-pick-column
+  units: metadata-evidence-not-physical-total-current-or-cell-health-qualification
+output: results/patchseq-notebook-keys-1339/manifest.yaml
+execution_gate: commit-reader-and-access-bound-tests-before-execution
+next_gate: independent-header-reconstruction-then-source-backed-sweep-headstage-and-health-field-contract
+notebook_numeric_or_trial_values_authorized: false
+model_fitting_authorized: false
+specimen_eligibility_established: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

@@ -1,0 +1,59 @@
+schema_version: 1
+artifact_id: 1435
+date: 2026-10-14
+status: synthetic-equation-and-numerical-checks-passed-biological-fit-not-started
+predecessor: docs/validation-results/post2008-patchseq-fit-objective-registration-1434.yaml
+implementation: scripts/patchseq_isolated_hh.py
+tests: tests/test_patchseq_isolated_hh.py
+source:
+  accession: ModelDB-123623
+  revision: 8dfc13fb03c162f5ad1b5e13f94225c983391af7
+  Na_K: https://github.com/ModelDBRepository/123623/blob/8dfc13fb03c162f5ad1b5e13f94225c983391af7/HH_traub.mod
+  M: https://github.com/ModelDBRepository/123623/blob/8dfc13fb03c162f5ad1b5e13f94225c983391af7/IM_cortex.mod
+  paper: https://pubmed.ncbi.nlm.nih.gov/19011929/
+model_contract:
+  hypothesis: effective-single-compartment-Na-K-M-conductance-family
+  parameters: [capacitance_pF, leak_nS, leak_reversal_mV, sodium_nS, potassium_nS, m_current_nS, threshold_shift_mV, m_tau_max_ms]
+  capacitance_and_conductance: effective-total-values-not-amplifier-compensation-settings-or-identifiable-channel-densities
+  fixed_Na_reversal_mV: 50.0
+  fixed_K_reversal_mV: -90.0
+  kinetic_temperature: source-36C-equations-not-a-measurement-of-recording-temperature
+  gates_initialization: equilibrium-at-explicit-initial-voltage-not-archive-zero-gates
+  membrane_initialization: explicit-per-run-input-choice-not-read-from-held-out-response
+  exponentials: continuous-mathematical-expressions-not-NEURON-table-boundary-artifacts
+  rate_singularities: stable-exprel-with-analytic-limits
+  numerical_method: Brian2-RK4-private-clock-and-explicit-Network
+  input: exact-sample-zero-order-hold-with-scheduler-update-before-integration
+  observation: voltage-at-start-of-each-source-sample-interval-no-interpolation
+  supported_rate_hz: strictly-above-20000-and-at-most-1000000
+  voltage_coordinate: same-as-recorded-coordinate-no-junction-correction
+  coordinate_limitation: >-
+    Fixed reversal and M-gate potentials are effective model choices in this
+    coordinate, not recovered physical channel potentials. No sign for the
+    reported junction offset is inferred. Fits cannot establish channel-density
+    truth, recording temperature, or uniquely identified ionic parameters.
+verification:
+  focused_synthetic_tests: 13
+  passive_analytic_voltage_tolerance_mV: 1e-9
+  passive_exact_repeat: bitwise-identical
+  sampled_step_boundary: no-early-next-sample-current-in-RK4-stages
+  rates: direct-source-formulas-including-13-15-and-40-mV-shifted-singularities
+  active_reference: separately-written-SciPy-DOP853-five-state-ODE
+  active_reference_rtol: 1e-10
+  active_reference_atol: 1e-11
+  active_voltage_tolerance_mV: 0.1
+  active_reference_duration_ms: 20.0
+  active_reference_spiking: voltage-exceeds-zero-mV
+  claims: numerical-control-only-not-biological-reproduction-or-all-parameter-convergence
+limitations:
+  - No biological fit or held-out response scoring has been run.
+  - Search bounds, budget, initial-state protocol and convergence controls still require sealing before fitting.
+  - This isolated point-cell hypothesis is not a replacement for SMART multicompartment architecture.
+  - Any later network transfer requires a separately sealed receptor-location and effective-area mapping with isolated controls.
+  - Sparse PV-L23 held-out coverage and separate synaptic source recruitment ceilings remain unchanged.
+next_gate: seal-search-and-initial-state-and-numerical-convergence-and-held-out-scoring-contract-then-implement-checkpointed-fitting-runner
+biological_fitting_execution_authorized: false
+held_out_response_features_read: false
+network_execution_authorized: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

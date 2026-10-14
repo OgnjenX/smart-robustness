@@ -1,0 +1,74 @@
+schema_version: 1
+artifact_id: 1344
+artifact_type: bounded-native-numeric-notebook-extraction-before-health-classification
+date: 2026-10-14
+status: before-notebook-trial-values
+headers: results/patchseq-notebook-keys-continuation-1341/manifest.yaml
+headers_sha256: b306314d8ca2f916300dac5733cd6a47ba67f417a95819b8a567ddc7b2e56835
+independent_headers: results/patchseq-notebook-keys-independent-1342/manifest.yaml
+independent_headers_sha256: 64d64592a5e63445fbac968b4a269406a0648b3a759ef5071a2e68abefd0d065
+acquisition: results/patchseq-intrinsic-acquisition-1314/manifest.yaml
+acquisition_sha256: 93fa9b6b3ba01fc1b47323bda84d3610ad56108b84a831b78a899acff6ee210e
+primary_semantics:
+  repository: AllenInstitute/MIES
+  revisions: [061c3b5f56c2f43b9579aa0933af85fd1a360ab6, 33b63e3b]
+  utility_path: Packages/MIES/MIES_MiesUtilities.ipf
+  utility_git_blobs: [f203fa3f16bc5dedc051569c4faeb8a3b7c035b6, 7ccbf7111668659a0858e31f5934aa2ed304f489]
+  inspected_function: GetLastSettingNoCache
+  row_selection: reverse-row-order-last-row-not-all-NaN-then-requested-headstage
+  predicate_source: MIES_Utilities.ipf-HasOneValidEntry-lines-3979-3991
+  predicate_git_blob: 13ed6cb5e9828bcb3ca5cd202f31999f6aa5a05d
+  predicate: WaveStats-V_numNaNs-not-equal-vector-length
+  enabled_state: independent-last-setting-before-export-property-write
+  acquisition_mode: 0
+  test_pulse_mode: 1
+  pages: 8-headstage-pages-plus-1-independent-page
+  legacy_mode_heuristics: not-imputed-in-this-stage-retain-unknown-for-separate-validation
+  source: https://github.com/AllenInstitute/MIES/blob/061c3b5f56c2f43b9579aa0933af85fd1a360ab6/Packages/MIES/MIES_MiesUtilities.ipf
+scope:
+  cases: same-48-fixed-recordings-no-selection-or-replacement
+  value_paths: only-numericalValues-sibling-of-each-verified-numericalKeys
+  fields:
+    - SweepNum
+    - EntrySourceType
+    - Headstage Active
+    - ADC
+    - DAC
+    - Clamp Mode
+    - Operating Mode
+    - I-Clamp Holding Level
+    - I-Clamp Holding Enable
+    - Bridge Bal Value
+    - Bridge Bal Enable
+    - Neut Cap Value
+    - Neut Cap Enabled
+    - Series Resistance
+    - TP Baseline Vm
+    - TP Baseline pA
+    - TP Peak Resistance
+    - TP Steady State Resistance
+    - TP Pulse Duration
+  columns: exact-raw-label-memberships-retain-all-duplicates-missing-labels-explicit
+  rows_and_pages: preserve-all-source-rows-and-all-nine-pages-of-whitelisted-columns
+  maximum_rows_per_table: 20000
+  maximum_columns_per_table: 512
+  maximum_selected_float64_bytes_total: 268435456
+  links: every-component-hard-only
+  storage: real-numeric-only-no-bool-virtual-external-deflate-shuffle-fletcher32-only
+  parser: h5py==3.12.1
+  plugins_disabled: '::'
+  all_other_values: prohibited-including-textualValues-unselected-columns-and-waveforms
+interpretation:
+  archive: raw-native-numbers-with-row-column-page-coordinates-and-exact-unit-headers
+  missing_nan_inf_disabled: preserve-no-filling-no-zero-bias-assumption
+  duplicate_labels: retain-no-favorable-column-selection
+  source_health_fields: context-only-no-cell-qualification-from-label-alone
+  global_last_row: not-last-finite-value-in-a-selected-headstage-nonfinite-selected-values-remain-unknown
+  command_bias_and_voltage: no-adjustment-to-existing-QC-or-command-traces
+  model_fitting: not-authorized
+output: results/patchseq-notebook-numeric-1345/manifest.yaml
+execution_gate: commit-registration-reader-and-column-access-tests-before-trial-values
+next_gate: independent-array-reconstruction-then-explicit-sweep-headstage-source-semantics-and-health-gate-assessment
+specimen_eligibility_established: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

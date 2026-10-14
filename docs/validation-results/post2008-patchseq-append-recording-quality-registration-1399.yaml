@@ -1,0 +1,67 @@
+schema_version: 1
+artifact_id: 1399
+artifact_type: prospective-protocol-specific-VC-recording-quality-measurement
+date: 2026-10-14
+status: before-health-VC-waveform-values
+protocols: results/patchseq-append-health-protocols-1394/manifest.yaml
+protocols_sha256: 7ad719da0d9739bce138531db4491164e429ec0b6e42fe2b55f80cfdac27db37
+independent_protocols: results/patchseq-append-health-protocols-mixed-independent-1397/manifest.yaml
+independent_protocols_sha256: 7d4d12cf0be93d1d7d64e5893076bea367fcfc00a93a6ee4d18d9663b63545c4
+acquisition: results/patchseq-append-acquisition-1376/manifest.yaml
+acquisition_sha256: b2ee66404d40180a6cf401f1d7f7790c40a46758b4623af7e1e3e8a0830ccc20
+primary_reference:
+  revision: c607a36e25618a6bb8ba5438c1cd945fb429e659
+  feature_blob: 7db47347bd46844c942c65a58c9c9fc99b10d698
+  criteria_blob: a1d1607ef26bfb9af90bdf0a54249cf0f2c5e8f3
+  sources:
+    - https://github.com/AllenInstitute/ipfx/blob/c607a36e25618a6bb8ba5438c1cd945fb429e659/ipfx/qc_features.py
+    - https://github.com/AllenInstitute/ipfx/blob/c607a36e25618a6bb8ba5438c1cd945fb429e659/ipfx/qc_feature_evaluator.py
+    - https://github.com/AllenInstitute/ipfx/blob/c607a36e25618a6bb8ba5438c1cd945fb429e659/ipfx/defaults/qc_criteria.json
+scope:
+  cases: all-48-fixed-files-no-replacement
+  trials: all-162-metadata-trials-retained-161-compatible-VC-pairs-read-one-unsupported-trial-unknown-without-array-reads
+  arrays: verified-VC-command-volts-and-response-amperes-times-exact-conversion
+  decoder: hard-only-no-virtual-external-or-plugin-filters-only-deflate-shuffle-fletcher32
+  maximum_samples_per_array: 10000000
+  maximum_total_decoded_float64_bytes: 1073741824
+  parser: h5py==3.12.1
+  plugins_disabled: '::'
+  original_file_and_source_hashes: before-and-after
+measurement_rules:
+  validity: finite-real-1D-matched-arrays-and-positive-finite-metadata-rate
+  electrode_zero_pA: mean-first-int-0.005-times-rate-current-samples-times-1e12
+  pulse_edges: exact-voltage-difference-positive-and-negative-indices-drop-first-of-each-as-in-source
+  pulse_validity: nonempty-equal-edge-counts-up-before-down-no-negative-pulse-reinterpretation
+  relative_clock: source-rate-derived-dt-equals-1-divided-by-rate
+  stable_windows: width-int-0.001-divided-by-dt-ending-at-up-minus-1-and-down-minus-1-half-open
+  guards: complete-nonoverlapping-baseline-and-steady-windows-no-padding
+  stable_resistance: mean-per-pulse-delta-command-voltage-divided-by-delta-response-current
+  access_resistance: source-up-through-down-minus-1-current-argmax-point-ratio-relative-to-same-baseline
+  seal_units: GOhm
+  breakin_units: MOhm
+  invalid_zero_or_nonfinite_ratio: retain-unknown-no-surrogate
+  selected_trial_per_protocol: largest-explicit-sweep-number-regardless-of-measurement-outcome-no-favorable-fallback
+unsupported_metadata:
+  measurement: unknown-unsupported-health-pair-metadata-retain-exact-metadata-failures
+  arrays: prohibited-for-unsupported-trial
+  selection: include-unknown-trials-in-largest-explicit-sweep-selection-no-favorable-fallback
+mandatory_measurement_gate:
+  electrode_zero_absolute_pA_max: 200.0
+  seal_GOhm_min: 1.0
+  initial_access_MOhm_range: [1.0, 20.0]
+  input_resistance_MOhm: finite-positive
+  access_to_input_ratio_max: 0.15
+  missing_or_invalid_required_measurement: unknown-not-passing
+blowout:
+  recognized_pairs: 0
+  state: unassessed-not-zero-or-passing-measurement
+  official_evaluator: missing-or-NaN-blowout-explicitly-non-failing
+  interpretation: bounded-mandatory-measurement-gate-not-complete-cell-health-or-recovered-historical-QC
+unchanged: source-partitions-cells-class-labels-existing-sweep-QC-parameters-and-frozen-baseline
+output: results/patchseq-append-recording-quality-1400/manifest.yaml
+execution_gate: commit-rules-runner-and-source-index-resistance-missingness-tests-before-sample-read
+next_gate: independent-array-measurement-and-gate-reconstruction-before-source-eligibility-and-fit-registration
+model_fitting_authorized: false
+specimen_eligibility_established: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

@@ -79,3 +79,20 @@ def test_append_health_ontology_codes_and_pairing_rules_are_unchanged():
     for key in ('primary_ontology', 'codes', 'rules', 'scope_limit'):
         assert append[key] == original[key]
     assert append['new_HDF5_or_waveform_reads_authorized'] is False
+
+
+def test_append_recording_quality_measurement_and_gates_are_identical():
+    for original, append in [('measure_patchseq_recording_quality.py', 'measure_patchseq_append_recording_quality.py'),
+                              ('verify_patchseq_recording_quality.py', 'verify_patchseq_append_recording_quality.py')]:
+        before, after = functions(ROOT/'scripts'/original), functions(ROOT/'scripts'/append)
+        for key in before:
+            if key != 'main':
+                assert before[key] == after[key]
+    prefix = ROOT/'docs/validation-results'
+    original = yaml.safe_load((prefix/'post2008-patchseq-recording-quality-registration-1364.yaml').read_text())
+    append = yaml.safe_load((prefix/'post2008-patchseq-append-recording-quality-registration-1399.yaml').read_text())
+    for key in ('measurement_rules', 'mandatory_measurement_gate', 'blowout', 'primary_reference'):
+        assert append[key] == original[key]
+    for key in original['scope']:
+        if key != 'trials':
+            assert append['scope'][key] == original['scope'][key]

@@ -1,0 +1,31 @@
+schema_version: 1
+artifact_id: 1449
+date: 2026-10-14
+status: before-training-classification-outcomes
+implementation: scripts/patchseq_training_assessment_gate.py
+tests: tests/test_patchseq_training_assessment_gate.py
+scope: pure-training-stage-classification-no-files-recordings-or-held-out-access
+prerequisite: separately-verified-terminal-source-integrity-and-complete-original-independent-and-selected-evidence
+classification_order:
+  - verification-disagreement-not-biological-failure
+  - selected-reconstruction-unresolved
+  - selected-numerical-gate-failed
+  - bounded-selected-observable-fit-failure
+  - training-eligible-for-separately-sealed-held-out-design
+requirements:
+  - Same exact source checkpoint identity and complete frozen stratum/candidate/sweep coverage.
+  - Original selected candidate unchanged; no replacement or refit.
+  - Derive summaries from retained evidence rather than trusting eligible flags.
+  - Separate reconstruction agreement, numerical validity and observable fitting.
+  - Whole-map eligibility requires every sealed stratum; no favorable class rescues another.
+claim_boundary:
+  verified_fit_failure: bounded-source-model-search-and-input-assumptions-not-all-neuron-models-or-ART
+  numerical_failure: no-biological-mechanism-conclusion
+  verification_disagreement: unresolved-engineering-evidence-not-failed-biology
+  eligible_training: only-prospective-held-out-protocol-design-not-permission-to-read-held-out-responses
+  source_integrity: not-established-by-this-pure-callable
+  network_promotion: always-false
+  scientific_goal_complete: always-false
+main_checkpoint_outcomes_used_for_preparation: false
+running_experiment_source_modified: false
+held_out_response_features_read: false

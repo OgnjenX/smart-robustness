@@ -1,0 +1,42 @@
+schema_version: 1
+artifact_id: 1257
+artifact_type: nonqualifying-canonical-cell-ID-linked-source-annotation-coherence-registration
+date: 2026-10-14
+purpose: >-
+  Preserve the author-provided annotation attached to each uniquely shared
+  canonical cell ID while separating it from the failed RNA sample/name identity
+  tests. Examine external metadata coherence only; this does not promote cells,
+  replace a failed identity criterion or tune a scientific cohort.
+sources:
+  methods_inventory:
+    path: results/patchseq-methods-annotation-inventory-1247/manifest.yaml
+    sha256: ed225fa42bc6e320515e158937aa18fb70e77dfd72a2b316408c3cff343840f9
+  July:
+    path: results/patchseq-July-June-comparison-1198/manifest.yaml
+    sha256: 4c31f9b2cf447b0c82388795417402563c979291b4a223c3fb6e2d109302bcb3
+  strict_sample_test:
+    path: results/patchseq-methods-July-correspondence-1250/manifest.yaml
+    sha256: e92567ed6c07e29d0788c5336c5deb53dbac34e9c1be29ac767f3b54e26df398
+  specimen_name_test:
+    path: results/patchseq-specimen-name-bridge-1254/manifest.yaml
+    sha256: eafd0d1abbcf5cea840bcf4a1cc017dc7a43e3eed202d13024be4e71223a0c02
+output_directory: results/patchseq-cell-ID-annotation-coherence-1258
+rules:
+  - Retain every July row and every methods candidate with the same positive canonical cell ID. Require unique candidate cardinality before making a cell-ID-only annotation association.
+  - Preserve the complete seven-field methods raw projection and existing July identifiers/anatomical labels without normalization.
+  - Reconcile the canonical cell and source row against both prior identity tests. Carry their original failed string-match flags; never modify their artifacts or relabel their outcomes.
+  - Label link evidence canonical-cell-ID-only. RNA sample alias equivalence, internal recording identity, donor namespace equivalence and physiological eligibility remain unestablished.
+  - Compare structure strings literally for unique cell-ID associations and report all disagreements, missingness and ambiguities.
+  - Report literal author mapping-quality, paper-indicator, source-class and dataset counts among unique cell-ID associations, including blank and inconsistent categories.
+  - These are externally linked author annotations, not assigned experimental confidence. Do not filter by raw quality or treat a source call as physiology validation.
+  - No new source fields, recording metadata, physiological features, arrays, splits, fits or network outcomes are read in this stage.
+  - Independently reconstruct every association, prior-test flag, contextual comparison and summary before using this ledger in any later preregistered protocol.
+external_requests_authorized: false
+new_source_field_reads_authorized: false
+mapping_confidence_assignment_authorized: false
+specimen_qualification_authorized: false
+physiological_feature_reads_authorized: false
+parameter_fitting_authorized: false
+network_execution_authorized: false
+frozen_baseline_modified: false
+next_gate: Verify metadata coherence independently, finish archive metadata validation, and seek authoritative internal recording/sample identity evidence before a separately defined physiology cohort.

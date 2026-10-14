@@ -1,0 +1,61 @@
+schema_version: 1
+artifact_id: 1297
+artifact_type: independently-verified-external-author-cell-association
+date: 2026-10-14
+registration: docs/validation-results/post2008-patchseq-author-cell-association-registration-1294.yaml
+registration_sha256: 8472f00e58dcf096ff5dd9d31b8bb6f0a6e055c77c901bf870327772ca6cbf5d
+sealed_commit: 2ad15cd
+collector: scripts/associate_patchseq_author_cell.py
+collector_sha256: e73761244e71ce326afe460a65aaede17877a26d941c63e13774410da6209f8a
+result: results/patchseq-author-cell-association-1295/manifest.yaml
+result_sha256: 3b9abcc02a07b189fdb10b018c0709dba1d214f7de18ab70b517cb351d35e7bd
+verifier: scripts/verify_patchseq_author_cell_association.py
+verifier_sha256: f80c618ae7ed6639c97467f57aa7b8648820b65f31fcb8835853933ff7f379a4
+independent_result: results/patchseq-author-cell-association-independent-1296/manifest.yaml
+independent_result_sha256: 85135a5f0a14ad8df81266397935e12f496a89a01fdcdcce00213e75c259efb4
+status: single-recording-external-author-cell-association-independently-verified
+terminal_collector_and_verifier_exit_codes: [0, 0]
+verified_association:
+  source_cell_specimen_id: '1003020818'
+  recording_session_id: '1003020741'
+  author_manifest_source_row_number: 19441
+  July_source_row_number: 4432
+  file_path: sub-1001658946/sub-1001658946_ses-1003020741_icephys.nwb
+  complete_file_SHA256: e927d9cb77a44b84ebdb276e752fb71c14c6f31c92aed0128439f1220eba1a40
+  link_evidence: external-author-file-reference-plus-computed-content-hash-plus-internal-session
+independent_method: >-
+  Interpret original typed positive-decimal lexemes independently without importing
+  the association collector. Query raw July cell and session strings separately,
+  require one identical source row, check canonical projections with type-preserving
+  comparisons, and reconcile full retained asset/candidate records. Verify author
+  filename/size/checksum against complete recording integrity and the already
+  reconstructed internal session. Rehash all sources and retained binary before
+  and after. No new network, HDF5, physiology or RNA expression access.
+engineering_checks:
+  collector_rejection_tests_passed: 15
+  independent_lexeme_tests_passed: 12
+  aggregate_tests_before_independent_lexeme_tests_passed: 654
+  repository_ruff: passed
+claim_boundary: >-
+  This proves the registered external author-cell association for one source-blind
+  recording; the source cell ID is not present in an independently interpreted
+  internal cell-ID field. The archive subject, author cell, recording session,
+  annotation donor and RNA sample remain distinct namespaces. No RNA alias,
+  donor equality or transcriptomic confidence is assigned. Both failed naming
+  tests remain failed. Physiology eligibility, independent fitting/holdout splits,
+  synaptic recruitment and SMART module behavior are not established by this
+  provenance result. Do not generalize the content/session checks to other files.
+next_gate: >-
+  Define source-annotation authority and donor-partition contracts explicitly for
+  a separately registered physiology cohort. Retain anatomy conflicts, missing
+  annotations and earlier failed name tests. Require content/session provenance
+  for each eventually included recording, then trace quality and isolated model
+  response gates before network promotion; never tune from SMART outcomes.
+internal_cell_ID_proven: false
+RNA_alias_equivalence_established: false
+donor_equivalence_established: false
+mapping_confidence_assigned: false
+specimen_eligibility_established: false
+prior_failed_gates_modified: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

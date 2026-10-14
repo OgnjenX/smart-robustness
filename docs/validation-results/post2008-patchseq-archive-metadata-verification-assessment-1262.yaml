@@ -1,0 +1,67 @@
+schema_version: 1
+artifact_id: 1262
+artifact_type: full-archive-metadata-receipt-independent-verification-assessment
+date: 2026-10-14
+registration: docs/validation-results/post2008-patchseq-archive-identity-metadata-registration-1238.yaml
+registration_sha256: 5f94fe6a58ad551be3ea09251750bc713e77de7dec4c64ff910b486873d0ca3f
+sealed_collector_commit: 9dedfca
+collector: scripts/collect_patchseq_archive_identity_metadata.py
+collector_sha256: e82bfcb6b581f799244d9c8e6749d6f180a1efa07b0e4344f983330aea0d3d68
+acquisition: results/patchseq-archive-identity-metadata-1239/manifest.yaml
+acquisition_sha256: 6143c5f38dee95355235728d6620313d4fa5e2cad255d7097de0d2875fcc1911
+acquisition_finished_at_utc: '2026-10-14T01:03:11.601536+00:00'
+observed_terminal_exit_code: 0
+verifier: scripts/verify_patchseq_archive_identity_metadata.py
+verifier_sha256: b9ea62511e5bd1c76c52908bc4f29dbe1ea69f32d9a9a93d97a71fbe7f31d5b9
+independent_result: results/patchseq-archive-identity-independent-1241/manifest.yaml
+independent_result_sha256: adcecc68047625e756421f04546212186c5fd4ffb212e5cea3030761e987e05e
+status: all-4435-terminal-receipts-and-projections-independently-verified
+independent_check:
+  method: >-
+    Independently verify full catalog order and receipt cardinality, request
+    endpoints, sealed source hashes, original attempt records, HTTP status and
+    relevant headers, and raw response/header hashes. Independently decode JSON
+    with duplicate-key, nonfinite, size and shape checks, rebuild every permitted
+    projection and compare type-preserving JSON. Reconcile every per-asset status
+    with the terminal manifest, then rehash every receipt, attempt and raw body
+    after the complete pass. No collector import, new requests or recording reads.
+  terminal_exit_code: 0
+  outcome: passed
+results:
+  catalog_assets: 4435
+  retained_acquisition_attempts: 4435
+  successful_projected_metadata_responses: 4435
+  failed_acquisitions: 0
+  independently_verified_receipts: 4435
+engineering_checkpoint:
+  latest_aggregate_patchseq_tests_passed: 557
+  latest_aggregate_patchseq_tests_seconds: 13.43
+  repository_ruff: passed
+  git_diff_whitespace_check: passed
+publication:
+  source_protocol_and_assessment_commits_pushed_through: ef87c52a75fb6e4626a9b76dbf3ad1ee4b4c679a
+  push_terminal_exit_code: 0
+  preceding_revision_full_CI: https://github.com/OgnjenX/smart-robustness/actions/runs/38488221461
+  preceding_revision_CI_head: e6c15761be1d2821de7d39cee8c7e9dd90bdd86a
+  preceding_revision_CI_conclusion: success
+  new_revision_CI: https://github.com/OgnjenX/smart-robustness/actions/runs/38494855064
+  new_revision_CI_observed_status: in_progress
+  new_revision_full_CI_verified: false
+  ignored_raw_results_pushed: false
+claim_boundary: >-
+  All archive JSON metadata projections are authentic, bounded and independently
+  reconstructed. This is not independent validation of NWB content, transcriptomic
+  sample alias equivalence, donor namespaces, anatomy, physiological responses or
+  neuron fits. No acquisitions failed, so no retry or omitted-record remedy is
+  needed. All 4435 assets are retained. Engineering checks and archive metadata
+  verification do not establish SMART robustness or complete the scientific goal.
+next_gate: >-
+  Execute the already sealed identity/digest evidence inventory 1260 against these
+  verified receipts, preserving branch separation and unknowns. Independently
+  reconstruct that inventory, then register any necessary bounded internal NWB
+  metadata acquisition before physiological traces, qualified cohorts or fits.
+recording_bodies_downloaded: false
+physiological_arrays_read: false
+specimen_qualification_performed: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

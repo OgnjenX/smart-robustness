@@ -24,6 +24,8 @@ def functions(path):
     ('verify_patchseq_trace_schema.py', 'verify_patchseq_append_trace_schema.py', {'main'}),
     ('check_patchseq_pairing.py', 'check_patchseq_append_pairing.py', set()),
     ('verify_patchseq_pairing.py', 'verify_patchseq_append_pairing.py', {'main'}),
+    ('run_patchseq_waveform_QC.py', 'run_patchseq_append_waveform_QC.py', set()),
+    ('verify_patchseq_waveform_QC.py', 'verify_patchseq_append_waveform_QC.py', {'main'}),
 ])
 def test_transport_and_independent_check_functions_are_unchanged(original, append, exclude):
     before = functions(ROOT/'scripts'/original)
@@ -57,3 +59,12 @@ def test_append_metadata_scope_and_interpretation_are_unchanged():
     for key in ('scope', 'interpretation', 'parser_dependency', 'HDF5_plugin_preload'):
         assert append[key] == original[key]
     assert append['waveform_or_timestamp_vector_access_authorized'] is False
+
+
+def test_append_waveform_rules_and_physical_conventions_are_unchanged():
+    prefix = ROOT/'docs/validation-results'
+    original = yaml.safe_load((prefix/'post2008-patchseq-waveform-QC-registration-1327.yaml').read_text())
+    append = yaml.safe_load((prefix/'post2008-patchseq-append-waveform-QC-registration-1388.yaml').read_text())
+    for key in ('read_policy', 'conventions', 'waveform_rules', 'scientific_claims'):
+        assert append[key] == original[key]
+    assert append['scope']['pairs'] == 'all-2550-verified-current-clamp-pairs-retained'

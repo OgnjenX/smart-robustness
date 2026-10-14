@@ -1,0 +1,21 @@
+schema_version: 1
+artifact_id: 1387
+date: 2026-10-14
+status: all-2550-append-current-clamp-pairings-independently-verified
+result: results/patchseq-append-pairing-1385/manifest.yaml
+result_sha256: 80b2583be9c1ba8d0175ca212161c4f9829ec8a8db4bbbd5b0d411485dd1b971
+independent_result: results/patchseq-append-pairing-independent-1386/manifest.yaml
+independent_result_sha256: 1b2b85758c71728f7aee7a9a671a0bb221db89cc6344cf6a726e03d4b3beb34f
+observed:
+  retained_recordings: 48
+  metadata_pair_passes: 2550
+  metadata_pair_nonpasses: 0
+  unkeyed_series: 0
+  new_HDF5_value_reads: 0
+verified: unique-explicit-sweep-partners-exact-description-start-rate-sample-count-units-and-decoded-conversions
+interpretation: valid-metadata-pairs-not-safe-array-storage-or-physiological-quality-or-neuron-model-eligibility
+waveform_samples_read: false
+original_cases_or_thresholds_changed: false
+frozen_baseline_modified: false
+scientific_goal_complete: false
+next_gate: original-long-square-waveform-QC-under-new-sealed-input-pins

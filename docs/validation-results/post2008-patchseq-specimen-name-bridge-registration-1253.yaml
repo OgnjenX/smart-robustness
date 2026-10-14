@@ -1,0 +1,50 @@
+schema_version: 1
+artifact_id: 1253
+artifact_type: separate-exact-official-specimen-name-bridge-registration
+date: 2026-10-14
+motivation: >-
+  The sealed methods sample_id versus July transcriptomics_sample_id comparison
+  fails literal sample equality for all recordings despite unique canonical cell
+  ID matches. The independently verified official July schema separately exposes
+  cell_specimen_name. Test that distinct author-provided name field as a possible
+  explicit identifier bridge, before reading its values. This is a new metadata
+  provenance test, not a change to the failed strict sample test or network tuning.
+sources:
+  July_csv:
+    path: results/patchseq-July-metadata-schema-1195/metadata.csv
+    sha256: 2eb2a02ee1dd275b457055d6d4d57f2942d8c6d3cf329e820002010c7943c142
+  July_schema:
+    path: results/patchseq-July-metadata-schema-1195/manifest.yaml
+    sha256: 021e2d5f4d24a116600a5ecc562c5b45c7cb996e5091f967e5cca7727d88182f
+  July_projection:
+    path: results/patchseq-July-June-comparison-1198/manifest.yaml
+    sha256: 4c31f9b2cf447b0c82388795417402563c979291b4a223c3fb6e2d109302bcb3
+  methods_inventory:
+    path: results/patchseq-methods-annotation-inventory-1247/manifest.yaml
+    sha256: ed225fa42bc6e320515e158937aa18fb70e77dfd72a2b316408c3cff343840f9
+  failed_strict_test:
+    path: results/patchseq-methods-July-correspondence-1250/manifest.yaml
+    sha256: e92567ed6c07e29d0788c5336c5deb53dbac34e9c1be29ac767f3b54e26df398
+July_fields: [cell_specimen_id, cell_specimen_name, transcriptomics_sample_id]
+maximum_rows: 10000
+maximum_field_characters: 4096
+output_directory: results/patchseq-specimen-name-bridge-1254
+rules:
+  - Read only three registered raw identifier fields from the exact verified July CSV schema; retain every source row, missing value and noncanonical cell ID.
+  - Reconcile cell_specimen_id and transcriptomics_sample_id with the previously verified July projection at the same source row. Any discrepancy is a source-integrity failure.
+  - Independently index methods by canonical cell_id and nonempty literal sample_id; retain all cell and specimen-name candidates.
+  - A name bridge requires unique cell and specimen-name candidates referencing the same methods source row, with a nonempty exact methods sample_id equal to July cell_specimen_name.
+  - Preserve the separate literal methods sample_id versus July transcriptomics_sample_id flag. Do not overwrite or retroactively reinterpret the failed strict test.
+  - Retain ambiguous names, unmatched rows, conflicting source-row associations and all raw IDs. No trimming, case folding, prefix inference or approximate strings.
+  - Report bridge counts and raw source mapping-quality categories only for unique name bridges; no mapping confidence or eligibility is assigned.
+  - Unknown or inconsistent mapping quality is not removed. This test does not infer donor identity, validate internal NWB metadata or read physiological arrays.
+  - Independently reconstruct all new raw fields and name comparisons before considering the bridge as evidence for a separate confidence-annotation ledger.
+external_requests_authorized: false
+new_July_identifier_field_reads_authorized: true
+physiological_feature_reads_authorized: false
+mapping_confidence_assignment_authorized: false
+specimen_qualification_authorized: false
+parameter_fitting_authorized: false
+network_execution_authorized: false
+frozen_baseline_modified: false
+next_gate: Independently verify the explicit name bridge and attach only supported source-quality annotations in a separate protocol, with historical sample-string failure preserved.

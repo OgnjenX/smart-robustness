@@ -1,0 +1,49 @@
+schema_version: 1
+artifact_id: 1235
+artifact_type: sealed-2021-file-reference-run-receipt-not-independent-assessment
+date: 2026-10-14
+registration: docs/validation-results/post2008-patchseq-2021-file-reference-registration-1233.yaml
+registration_sha256: 90ca072aa980bf91804d991bc94fdaaa3d53b3dbea48ddf03bb7d8306673ae4d
+sealed_commit: b3499dd
+collector: scripts/cross_reference_patchseq_2021_files.py
+collector_sha256: 04241a7e72696a70c7868afe86f5b7c2df36ef3fd936910726652169c2d7cdae
+result: results/patchseq-2021-file-reference-1234/manifest.yaml
+result_sha256: 5c701da3f8d443a9e2a5fe488ddf59b4a7ea648058c0922aa373b2104027bb78
+terminal_exit_code: 0
+status: collector-complete-independent-reconstruction-pending
+collector_reported_results:
+  source_rows: 19463
+  catalog_assets: 4435
+  July_rows: 4435
+  recognized_ephys_source_rows: 4435
+  unmatched_assets: 0
+  ambiguous_manifest_assets: 0
+  assets_without_July_session: 0
+  complete_external_file_reference_agreements: 4435
+  unknown_cross_source_checksum_agreements: 4435
+engineering_checks:
+  focused_tests_passed: 17
+  focused_tests_seconds: 0.03
+  aggregate_patchseq_tests_passed: 445
+  aggregate_patchseq_tests_seconds: 13.70
+  repository_ruff: passed
+  git_diff_whitespace_check: passed
+claim_boundary: >-
+  These are sealed collector outputs, not independently accepted identity
+  evidence. All candidates and unreferenced source rows remain in the raw result.
+  Filename, subject, byte size and cell/session agreement cannot establish
+  checksums, internal NWB identity, donor namespace equivalence, mapping confidence
+  or physiological eligibility. No recording body, arrays or network outcomes
+  were read. Historical June coverage gaps remain preserved in their original
+  artifacts and are not retroactively changed by this updated-source comparison.
+next_gate: >-
+  Independently rebuild all candidate comparisons, ambiguity lists, unreferenced
+  source rows and summary counts from the pinned manifest, catalog and July inputs,
+  without importing the comparison collector. Accept only exact full-record
+  equality, with source hashes checked before and after reconstruction. Then
+  separately register internal recording metadata acquisition before any arrays.
+physiological_arrays_read: false
+specimen_qualification_performed: false
+parameter_fitting_performed: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

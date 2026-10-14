@@ -1,0 +1,39 @@
+schema_version: 1
+artifact_id: 1419
+date: 2026-10-14
+status: all-96-supplemental-current-context-columns-independently-bitwise-reconstructed
+result: results/patchseq-current-context-numeric-1417/manifest.yaml
+result_sha256: 1b87dff69dcd9037dc3df73990943c127cec02a9aece1c43a0a900332ee33361
+independent_result: results/patchseq-current-context-numeric-independent-1418/manifest.yaml
+independent_result_sha256: c4cfb1bda710827c1b93df0215c9466bccc95f6f18298da063f06fcb09c1b53c
+verified:
+  original_recordings: 48
+  append_recordings: 48
+  retained_numeric_tables: 96
+  raw_columns_with_source_coordinates_and_unit_headers: 2112
+  extraction_errors: 0
+  decoded_float64_bytes: 155713536
+  selected_fields_per_table: 22
+  all_source_rows_and_nine_pages: preserved
+  NaN_infinity_signed_zero_and_duplicates: bitwise-preserved-no-default-or-selection
+independent_method: direct-original-hard-link-bounded-source-column-reread-and-exact-archive-byte-comparison-without-collector-import
+interpretation: >-
+  The supplemental archives preserve holding and slow-current-injection metadata
+  in native units, but are not sweep/headstage mappings or delivered-current
+  measurements. Original 19-field archives, strict and contiguous mappings,
+  waveform/recording-quality results, partitions and failed cases remain unchanged.
+  Do not sum a volts-labelled slow-injection target into a pA command or infer
+  disabled states from missing metadata. A physical fitting-input rule must first
+  reconstruct explicit acquisition-mode blocks and channel/headstage identities,
+  verify native enabled values against exported bias metadata, and preserve
+  unresolved or time-varying control branches without favorable fallback.
+engineering:
+  all_patchseq_tests_passed: 1158
+  ruff: passed
+  diff_whitespace: passed
+  unselected_column_and_unsupported_storage_access_guards: passed
+next_gate: independently-verified-per-sweep-current-context-mapping-before-input-convention-and-fit-registration
+old_archives_modified: false
+models_fitted: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

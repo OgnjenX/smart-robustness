@@ -1,0 +1,59 @@
+schema_version: 1
+artifact_id: 1237
+artifact_type: independently-reconstructed-2021-external-file-reference-assessment
+date: 2026-10-14
+registration: docs/validation-results/post2008-patchseq-2021-file-reference-registration-1233.yaml
+registration_sha256: 90ca072aa980bf91804d991bc94fdaaa3d53b3dbea48ddf03bb7d8306673ae4d
+sealed_collector_commit: b3499dd
+result: results/patchseq-2021-file-reference-1234/manifest.yaml
+result_sha256: 5c701da3f8d443a9e2a5fe488ddf59b4a7ea648058c0922aa373b2104027bb78
+verifier: scripts/verify_patchseq_2021_file_references.py
+verifier_sha256: d8ce57a62dddadf587a1b7de6da98553aafe0821af6137316d0d3104637d5736
+independent_result: results/patchseq-2021-file-reference-independent-1236/manifest.yaml
+independent_result_sha256: 9306dde9013a3979fb050515c43a68fa2785b173b9538e1293eacec8d7981ebe
+status: all-external-file-reference-comparisons-independently-reconstructed
+independent_check:
+  method: >-
+    Independently parse session filenames using explicit string decomposition
+    and positive decimal checks. Load file sessions and July cell/session IDs
+    into SQLite tables, preserving source order and all candidate rows. Rebuild
+    each candidate's filename, subject, size, cell agreement, ambiguity and unknown
+    checksum flags with relational queries. Compare every full asset record,
+    unreferenced source row, duplicate ID list and summary using type-preserving
+    JSON equality. No collector import. Check every pinned source before and after.
+  terminal_exit_code: 0
+  outcome: passed
+results:
+  source_rows: 19463
+  catalog_assets: 4435
+  complete_external_file_reference_agreements: 4435
+  unmatched_assets: 0
+  ambiguous_manifest_assets: 0
+  assets_without_July_session: 0
+  unknown_cross_source_checksum_agreements: 4435
+  unreferenced_other_modality_source_rows: 15028
+engineering_checks:
+  focused_verifier_tests_passed: 13
+  focused_verifier_tests_seconds: 0.04
+  aggregate_patchseq_tests_passed: 458
+  aggregate_patchseq_tests_seconds: 13.68
+  repository_ruff: passed
+  git_diff_whitespace_check: passed
+claim_boundary: >-
+  The 2021 manifest provides unique agreeing external file references for all
+  catalog assets. This resolves that updated source's external coverage question,
+  not checksum agreement, internal NWB identity, donor namespace equivalence,
+  transcriptomic confidence or isolated physiological eligibility. The older June
+  source's 595 uncovered recordings remain a valid historical result. No arrays
+  were read and no cells or parameters were selected from network behavior.
+next_gate: >-
+  Register bounded archive asset-metadata acquisition, preserving source schema,
+  unavailable identity fields and checksum semantics. Archive-extracted metadata
+  is not a substitute for independently validated internal NWB identity if its
+  projections lack the required cell/session identifiers. Then preregister any
+  necessary bounded NWB metadata reads before physiological arrays and fitting.
+physiological_arrays_read: false
+specimen_qualification_performed: false
+parameter_fitting_performed: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

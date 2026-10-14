@@ -88,6 +88,9 @@ MPLCONFIGDIR=/private/tmp/mpl HDF5_PLUGIN_PRELOAD=:: .venv/bin/python scripts/ru
 
 # Only after every independent candidate reconstruction agrees:
 .venv/bin/python scripts/verify_patchseq_selected_fit.py
+
+# After terminal verification: record training classifications, not promotion.
+.venv/bin/python scripts/assess_patchseq_training.py
 ```
 
 The first audit checks completeness, hashes, source identities, accounting and
@@ -97,6 +100,10 @@ The final stage compares the selected waveforms/features and independently
 checks exact repeats, time-step refinement and initialization sensitivity.
 Each stage retains failures and disagreements; none permits refitting,
 candidate replacement, wider searches, or weakened gates after outcomes.
+If the independent table disagrees, the assessment records unresolved
+verification without requiring or running the selected stage. If it agrees,
+the assessment requires complete selected-stage evidence and separates numerical
+failure, observable-fit failure, and eligibility for a held-out study design.
 
 **Even successful training verification does not authorize held-out response
 scoring or network promotion.** Those require a separately sealed access and

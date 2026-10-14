@@ -1,0 +1,40 @@
+schema_version: 1
+artifact_id: 1233
+artifact_type: exact-2021-manifest-catalog-July-file-reference-registration
+date: 2026-10-14
+sources:
+  manifest:
+    path: results/patchseq-2021-manifest-records-1230/manifest.yaml
+    sha256: 0bded4681367d9db7dd8de982b69cd57903a8d7dd2f0cf8f1d08a8cb79a1d7a1
+  manifest_verification:
+    path: results/patchseq-2021-manifest-independent-1231/manifest.yaml
+    sha256: 0aefbfc2f2a1dfbd43f695be9aacda9313e4c2e1f2d626abf13e44feb2eb8dbf
+  catalog:
+    path: results/patchseq-catalog-independent-1167/manifest.yaml
+    sha256: 8a53db830724723de66d3a51aaffa21d0c71e5d6e10e2a55f8862c74918bcf60
+  July:
+    path: results/patchseq-July-June-comparison-1198/manifest.yaml
+    sha256: 4c31f9b2cf447b0c82388795417402563c979291b4a223c3fb6e2d109302bcb3
+output_directory: results/patchseq-2021-file-reference-1234
+maximum_source_rows: 50000
+maximum_assets: 10000
+rules:
+  - Keep all source rows and modalities in the pinned source artifact. Output stable row references rather than duplicating or changing typed source values.
+  - Match only literal intracellular_electrophysiology rows with an exact positive decimal session filename, either SESSION.nwb or sub-SUBJECT_ses-SESSION_icephys.nwb.
+  - Catalog paths must be exact sub-SUBJECT/sub-SUBJECT_ses-SESSION_icephys.nwb strings with equal subject tokens, without identifier padding.
+  - Retain every manifest candidate by session, including filenames whose subject conflicts. Do not choose a first match from duplicates.
+  - Compare exact filenames to catalog basenames; legacy numeric session filenames are session-only references and cannot prove path equivalence.
+  - Compare registered canonical file size to the catalog integer size without rounding. Missing or rejected sizes remain unknown.
+  - Independently retain all July session and manifest-cell ID candidates. Agreement needs a unique session candidate and unique cell candidate pointing to the same July row.
+  - Check manifest cell ID against the unique July session annotation. No name, genotype or substring-based identity fallback.
+  - Preserve all unmatched catalog assets, unreferenced source rows, duplicates, unknowns and literal disagreements. Compare all candidates even when ambiguous.
+  - Source checksum strings and URLs remain preserved in the typed source manifest. The catalog projection lacks checksums, so cross-source checksum agreement remains unknown, not pass.
+  - Do not infer donor/path-subject equivalence from file subject agreement.
+  - This is an external file reference comparison, not internal NWB identity, physiological validation or specimen eligibility.
+external_requests_authorized: false
+recording_download_authorized: false
+physiological_arrays_read_authorized: false
+specimen_qualification_authorized: false
+parameter_fitting_authorized: false
+frozen_baseline_modified: false
+next_gate: Independently reconstruct complete comparisons before registering internal NWB metadata acquisition.

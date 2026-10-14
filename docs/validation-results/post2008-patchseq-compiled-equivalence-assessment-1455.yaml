@@ -1,0 +1,48 @@
+schema_version: 1
+artifact_id: 1455
+date: 2026-10-14
+status: fixed-synthetic-compiled-equivalence-controls-passed-not-biological-validation
+registration: docs/validation-results/post2008-patchseq-compiled-equivalence-registration-1453.yaml
+result: results/patchseq-compiled-synthetic-equivalence-1454/manifest.yaml
+result_sha256: 045069bce7d969e74204e53edc57e95dab141b7803466aacb89fe2395196ade3
+verified:
+  cases: 386
+  short_boundary_cases: 384
+  long_recording_cases: 2
+  passed: 386
+  disagreements: 0
+  matching_numerical_failures: 5
+  successful_trajectory_cases: 381
+  maximum_absolute_voltage_difference_mV: 3.3237856911227937e-10
+  fixed_equivalence_tolerance_mV: 1e-5
+  source_hashes: unchanged-before-and-after-execution
+long_recordings:
+  - rate_hz: 50000
+    duration_s: 4.0
+    reference_wall_s: 23.120114166056737
+    compiled_wall_s: 0.025732042035087943
+    maximum_voltage_difference_mV: 7.167866300505921e-11
+  - rate_hz: 100000
+    duration_s: 4.0
+    reference_wall_s: 45.48624029196799
+    compiled_wall_s: 0.04899312509223819
+    maximum_voltage_difference_mV: 1.680460215425228e-10
+interpretation: >-
+  The optional compiled engine agrees with the independent NumPy RK4 reference
+  over the fixed synthetic parameter-boundary and longer-recording checks,
+  including retaining matched failures. This supports a prospective verifier-only
+  performance amendment, not a change to the live fitting run, scientific
+  parameters, source partition, search budget, or biological acceptance gates.
+  It does not prove equivalence for every possible input or parameter, nor
+  biological validity or portable study throughput. Future scientific use must
+  retain source/compiler/binary provenance and comparison failures.
+engineering:
+  all_patchseq_tests_passed: 1391
+  ruff: passed
+  diff_check: passed
+next_gate: separately-seal-verifier-only-compiled-driver-and-build-provenance-before-independent-biological-execution
+biological_data_used: false
+live_fitting_source_modified: false
+compiled_biological_replay_enabled: false
+frozen_baseline_modified: false
+scientific_goal_complete: false

@@ -12,7 +12,7 @@ maximum_invocation_seconds: 28800
 maximum_case_seconds: 3600
 monitor_interval_minutes: 15
 execution:
-  command: MPLCONFIGDIR=/private/tmp/mpl HDF5_PLUGIN_PRELOAD=:: .venv/bin/python scripts/run_patchseq_mpfr_synthetic.py
+  command: 'MPLCONFIGDIR=/private/tmp/mpl HDF5_PLUGIN_PRELOAD=:: .venv/bin/python scripts/run_patchseq_mpfr_synthetic.py'
   output: results/patchseq-mpfr-long-synthetic-1508
   workers: one-local-worker-at-a-time
   budget_boundary: checkpoint-between-cases-with-full-timeout-reserve-no-mid-case-forced-budget-stop
@@ -27,6 +27,7 @@ preflight:
   ruff: clean
   raw_results_and_dependency_binaries_committed: false
 source_pin_scope: recursive-local-Python-import-closure-both-Cpp-kernels-prerequisites-and-immutable-original-evidence
+preexecution_format_correction: quoted-command-string-after-YAML-parse-failure-before-any-output-directory-build-or-simulation-no-scientific-source-or-case-changes
 build_pin_scope: runtime-compiler-header-library-binary-and-receipt-hashes-added-by-runner-before-each-case
 independent_audit:
   command: .venv/bin/python scripts/verify_patchseq_mpfr_synthetic.py

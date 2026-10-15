@@ -1,0 +1,25 @@
+schema_version: 1
+artifact_id: 1485
+date: 2026-10-15
+status: prospective-independent-terminal-audit-before-reading-convergence-outcomes
+study: docs/validation-results/post2008-patchseq-reference-convergence-registration-1483.yaml
+implementation: scripts/verify_patchseq_reference_convergence.py
+output: results/patchseq-reference-convergence-independent-1486/manifest.yaml
+execution_gate: committed-independent-audit-and-synthetic-controls-then-terminal-study-checkpoint-under-shared-lock
+scope:
+  - Exact two source keys and all18fixed-case identities, with explicit retained failures.
+  - Source, original checkpoint, binary receipt and prediction-array hash integrity.
+  - Primary command reader independent of the study command reader; no recorded response arrays.
+  - Independently reconstructed features and six-observable scores on each retained voltage array.
+  - Adaptive segment boundaries, native holding, accuracy metadata and evaluation-budget accounting.
+  - Recomputed medium/tight and cross-method convergence and every fixed RK4 comparison.
+  - Compare stored summaries with independent decisions, retaining disagreements without promotion.
+limitations:
+  - This audit reconstructs saved-array measurements, not another full solver execution.
+  - Voltage-only archives cannot independently establish all unrecorded internal adaptive states or accepted-step history.
+  - Neither software audit agreement nor a qualified reference authorizes production changes or biological claims.
+boundaries:
+  no_simulations: true
+  no_fitting: true
+  no_held_out_response_features: true
+  no_production_changes: true

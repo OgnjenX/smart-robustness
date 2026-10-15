@@ -1,0 +1,53 @@
+schema_version: 1
+artifact_id: 1505
+date: 2026-10-15
+status: isolated-dependencies-and-short-synthetic-tests-passed-not-production-equivalence
+prospective_hypothesis: docs/validation-results/post2008-patchseq-mpfr-hypothesis-1503.yaml
+sealed_dependency_preparation_commit: b07b029
+dependency_evidence:
+  checkpoint: results/patchseq-mpfr-toolchain-1504/checkpoint.json
+  checkpoint_sha256: 2c372f578c13430e32a1a3caa24bd467e5cff363fae1f4589956ee610da0c11d
+  terminal_status: isolated-dependencies-built-and-upstream-tests-passed-not-backend-equivalence
+  versions: {gmp: 6.3.0, mpfr: 4.2.2}
+  all_12_stage_logs_passed_and_hash_verified: true
+  source_tool_installed_product_and_extracted_tree_hashes_rechecked: true
+  full_upstream_test_suites_passed: true
+  isolated_prefix: results/patchseq-mpfr-toolchain-1504/prefix
+  system_or_frozen_python_packages_modified: false
+  authentication_boundary: TLS-and-pinned-distribution-SHA256-not-upstream-PGP-verification
+candidate_sources:
+  scripts/patchseq_mpfr_kernel.cpp: b0bfd3496bd77c8303798ff25502628db6c1346332759716f641e718be96f543
+  scripts/patchseq_mpfr_driver.py: b90fa56eed795fc684a6ac88a77c85d9af6c637bfecc3646d34685b5f7c4d444
+  tests/test_patchseq_mpfr_candidate.py: 18709c401efa2b6fbb7a522e68a79549b62f25cd545e4ee84a09ddfd6647d83f
+short_synthetic_evidence:
+  candidate_tests: 24
+  candidate_tests_passed: 24
+  skipped: 0
+  elapsed_seconds: 5.52
+  exact_binary_precisions: [160, 320]
+  rounding: explicit-MPFR_RNDN
+  input_and_coefficient_lift: original-binary64-values-not-new-decimal-constants
+  comparisons:
+    - Short current-edge traces against separately built sealed Boost at divisors 1, 4, 8 and 16; all five states within absolute 1e-12, relative zero.
+    - Three singular-rate initial voltages against independent 150-decimal-digit mpmath RK4 at both precisions.
+    - A 501-sample positive-voltage excursion against that oracle at both precisions, including exact same-backend repeat bit patterns.
+    - Separate threaded contexts preserve serial output bit patterns; actual runtime/header/library versions and precision probes agree.
+    - Invalid inputs and native-53 reinterpretation rejected; deliberately failing integration remains a failure in both backends.
+  failure_support_scope: one-deliberately-failing-synthetic-input-not-exhaustive
+  ruff: clean
+limitations:
+  - No full-length synthetic equivalence or timing matrix has been executed for this backend.
+  - No speedup or complete primary-plus-independent workflow feasibility has been demonstrated.
+  - The MPFR prototype is monolithic; lossless exported MPFR checkpoint and chunk support are not implemented yet.
+  - Short unit tests do not establish global numerical equivalence or reproduce biological fitting results.
+  - Runtime/source evidence is local and ignored; dependency binaries and raw results are not committed or redistributed.
+next_stage: separately-seal-full-length-synthetic-equivalence-and-feasibility-runner-before-execution
+disposition:
+  production_fitters_remain_stopped: true
+  historical_scores_or_parameters_changed: false
+  gates_weakened: false
+  biological_execution_authorized: false
+  held_out_response_access_authorized: false
+  network_promotion_authorized: false
+  frozen_baseline_modified: false
+  overall_scientific_goal_complete: false

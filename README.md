@@ -66,18 +66,61 @@ measurements, and validation criteria do not depend on a particular cell model.
 ### Post-2008 intrinsic physiology screen
 
 The Patchseq screen is an **isolated-cell fitting study**, not a new validated
-SMART baseline. It fits one effective Na/K/M parameter vector per frozen
+SMART baseline. It is designed to fit one effective Na/K/M parameter vector per frozen
 Pvalb/Sst/Vip and L23/L5 stratum, using training recordings only. The current
 search, initialization, tolerances, and numerical controls are sealed in
 [`protocol 1436`](docs/validation-results/post2008-patchseq-isolated-fit-registration-1436.yaml).
 The calibrated classic baseline is unchanged.
 
-These commands require the pinned local recording artifacts and exact runtime
-versions in that protocol. Raw recordings/results are ignored and are not
-distributed with the repository:
+#### Current numerical-reliability gate (2026-10-15)
+
+**Both production fitters are stopped. Do not resume them on the strength of
+passing unit tests, synthetic equivalence checks, or an available checkpoint.**
+The original 20 completed training-candidate rows are preserved. A compiled
+transition stopped before adding any new candidates because candidate 19's
+retained score could not be reconstructed within the sealed tolerance.
+
+The [verified mismatch diagnosis](docs/validation-results/post2008-patchseq-mismatch-localization-assessment-1482.yaml)
+localized the disagreement upstream of scoring: both feature extractors and
+scorers agreed on identical predicted voltages, but different solvers and time
+steps produced materially different trajectories. On one fixed positive input,
+Brian2 detected six events at the original step and five at half-step. Half-step
+waveforms still disagreed across engines. This is numerical-reliability evidence
+for that candidate, not a conclusion that SMART or HH neurons fail.
+
+The next gate is the separately registered
+[fixed-input reference-convergence study](docs/validation-results/post2008-patchseq-reference-convergence-registration-1483.yaml):
+the same candidate and two previously diagnosed commands, two adaptive solvers
+at three preset accuracy levels, and three further RK4 refinements. The
+[independent terminal audit](docs/validation-results/post2008-patchseq-reference-audit-registration-1485.yaml)
+reconstructs saved-array features, losses, input-edge accounting and convergence
+decisions. It does not rerun the solvers. Neither a solver's successful exit nor
+agreement on spike counts alone establishes a qualified reference.
 
 ```bash
-# Start or resume only when no identical runner is active.
+# Diagnostic only: first verify that no identical runner is active.
+# Resume requires unchanged source/input/build hashes; never overwrite orphan arrays.
+MPLCONFIGDIR=/private/tmp/mpl HDF5_PLUGIN_PRELOAD=:: .venv/bin/python scripts/run_patchseq_reference_convergence.py
+
+# Only after that diagnostic is terminal and its exclusive lock is released:
+HDF5_PLUGIN_PRELOAD=:: .venv/bin/python scripts/verify_patchseq_reference_convergence.py
+```
+
+No diagnostic result automatically authorizes a production time-step change,
+parameter replacement, fitting restart, held-out response scoring, or network
+promotion. Unqualified reference comparisons remain unresolved evidence; the
+old scores and failed transition must not be discarded or silently repaired.
+
+#### Historical fitting and verification routes
+
+The commands below are retained for reproducibility, **not current execution
+instructions**. Their terminal fitting prerequisites are not currently met.
+They require the pinned local recording artifacts and exact runtime versions
+in protocol 1436. Raw recordings/results are ignored and are not distributed
+with the repository:
+
+```bash
+# Historical original fitter; currently stopped pending a separate numerical decision.
 MPLCONFIGDIR=/private/tmp/mpl HDF5_PLUGIN_PRELOAD=:: .venv/bin/python scripts/run_patchseq_isolated_fit.py --output results/patchseq-isolated-fit-1438
 
 # Only after the main runner is terminal-complete:
@@ -105,7 +148,7 @@ verification without requiring or running the selected stage. If it agrees,
 the assessment requires complete selected-stage evidence and separates numerical
 failure, observable-fit failure, and eligibility for a held-out study design.
 
-An explicitly separate verifier-only performance route is sealed in
+An explicitly separate historical verifier-only performance route is sealed in
 [`amendment 1457`](docs/validation-results/post2008-patchseq-compiled-verifier-amendment-1457.yaml).
 It uses the same independent equations and gates with a retained, fingerprinted
 compiled binary. The original NumPy route remains available. After the same
@@ -120,9 +163,11 @@ do not run both concurrently:
 
 These commands use distinct result directories and explicit backend matching.
 The selected waveform comparison still uses its original Brian2 and NumPy
-engines. The compiled route does not replace, speed up, restart, or alter the
-currently sealed fitting run, and numerical disagreement is retained rather
-than resolved by changing scientific parameters.
+engines. This verifier-only route is distinct from the later failed compiled
+fitting transition. Its existence does not establish production-backend
+equivalence, authorize either fitter to restart, or permit a compiled fitter
+to use its own kernel as its sole independent forward verifier. Numerical
+disagreement is retained rather than resolved by changing scientific parameters.
 
 **Even successful training verification does not authorize held-out response
 scoring or network promotion.** Those require a separately sealed access and

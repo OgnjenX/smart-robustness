@@ -88,7 +88,7 @@ Brian2 detected six events at the original step and five at half-step. Half-step
 waveforms still disagreed across engines. This is numerical-reliability evidence
 for that candidate, not a conclusion that SMART or HH neurons fail.
 
-The next gate is the separately registered
+That question was then tested in the separately registered
 [fixed-input reference-convergence study](docs/validation-results/post2008-patchseq-reference-convergence-registration-1483.yaml):
 the same candidate and two previously diagnosed commands, two adaptive solvers
 at three preset accuracy levels, and three further RK4 refinements. The
@@ -98,8 +98,8 @@ decisions. It does not rerun the solvers. Neither a solver's successful exit nor
 agreement on spike counts alone establishes a qualified reference.
 
 ```bash
-# Diagnostic only: first verify that no identical runner is active.
-# Resume requires unchanged source/input/build hashes; never overwrite orphan arrays.
+# Historical completed diagnostic, retained for reproducibility; do not launch again.
+# Resume/reproduction needs the exact pinned local artifacts and must not overwrite results.
 MPLCONFIGDIR=/private/tmp/mpl HDF5_PLUGIN_PRELOAD=:: .venv/bin/python scripts/run_patchseq_reference_convergence.py
 
 # Only after that diagnostic is terminal and its exclusive lock is released:
@@ -118,6 +118,21 @@ qualified a reference: tighter adaptive settings and RK4 steps down to
 step's tighter runs agree on five events but not full features or losses.
 Numerical reliability remains unresolved for this candidate; neither production
 fitter is authorized to restart by that result.
+
+The next diagnostic, now computing, is the sealed
+[two-input precision study](docs/validation-results/post2008-patchseq-precision-registration-1490.yaml),
+with [execution seal and build provenance](docs/validation-results/post2008-patchseq-precision-execution-seal-1493.yaml).
+It keeps candidate 19 and the same two training commands fixed while crossing
+53-, 160- and 320-bit arithmetic with three fixed RK4 step refinements. A shared
+explicit initial state prevents precision-dependent initialization from being
+confused with arithmetic effects. The existing waveform, feature and loss
+tolerances are unchanged. Do not start another copy while it is running.
+
+All 18 cases, including failures, must be independently audited before assessment.
+Higher arithmetic precision alone is not proof of step-size convergence, and this
+diagnostic does not authorize fitting, held-out access or production changes.
+The [software verification checkpoint](docs/validation-results/post2008-patchseq-precision-software-checkpoint-1495.yaml)
+records test coverage and its limits separately from scientific validation.
 
 #### Historical fitting and verification routes
 

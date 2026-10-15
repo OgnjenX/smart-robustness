@@ -1,0 +1,50 @@
+schema_version: 1
+artifact_id: 1495
+date: 2026-10-15
+status: software-checkpoint-not-scientific-assessment
+scientific_registration: docs/validation-results/post2008-patchseq-precision-registration-1490.yaml
+execution_seal: docs/validation-results/post2008-patchseq-precision-execution-seal-1493.yaml
+sealed_source_commit: b1336fe
+sealed_execution_commit: fd014c2
+local_checks:
+  full_repository_regression:
+    session: 77934
+    terminal_exit_code: 0
+    passed: 3614
+    warnings: 179652
+    elapsed_s: 904.50
+    scope: files-collected-at-test-start-before-new-driver-and-auditor-tests-were-added
+    limitation: not-a-fresh-full-suite-collection-on-the-final-sealed-head
+  targeted_precision_checks:
+    passed: 35
+    warnings: 26
+    elapsed_s: 11.49
+    files:
+      - tests/test_patchseq_precision_prototype.py
+      - tests/test_patchseq_precision_driver.py
+      - tests/test_patchseq_precision_diagnostic.py
+    scope: final-registered-kernel-driver-worker-and-audit-gates-on-synthetic-inputs
+  ruff: clean
+  diff_check: clean
+remote_CI_before_this_publication:
+  run: 38711198328
+  url: https://github.com/OgnjenX/smart-robustness/actions/runs/38711198328
+  exact_head: 021951aeeaeedfbdf606ccf5a4b30d9469569061
+  terminal_status: completed
+  conclusion: success
+  limitation: preceding-published-head-not-the-new-local-diagnostic-commits
+  next_gate: verify-new-remote-head-and-its-own-terminal-CI-after-publication
+scientific_computation_snapshot:
+  checked_at_UTC: '2026-10-15 10:06'
+  session: 64621
+  terminal: false
+  retained_cases: 5
+  registered_cases: 18
+  currently_retained_failures: 0
+  pinned_source_and_build_hashes: all-agree
+  interpretation: incomplete-no-reference-qualification-or-scientific-assessment-yet
+boundaries:
+  - Neither regression tests nor green CI establish physiological fit, numerical convergence or SMART reproduction.
+  - Full scientific goal remains active and incomplete.
+  - Both fitting runners remain stopped; original scores, held-out boundary and frozen baseline remain unchanged.
+  - Sealed computing source is not changed by this documentation/publication update.

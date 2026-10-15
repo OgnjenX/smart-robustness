@@ -1,0 +1,38 @@
+schema_version: 1
+artifact_id: 1478
+date: 2026-10-15
+status: prospective-diagnostic-only-before-new-replays
+authorization: human-request-investigate-mismatch
+implementation: scripts/diagnose_patchseq_fit_mismatch.py
+original_checkpoint: results/patchseq-isolated-fit-1438/checkpoint.json
+original_sha256: 29539a6dc1feb29b3ba2d4d87a9324b91ead0681eddf6b6db80abad80aa7f105
+failed_checkpoint: results/patchseq-compiled-fit-1467/checkpoint.json
+failed_sha256: c1cea23528130e2b141f45062b6ebbd1dd57c3815ba3279ca51f3f2e85761600
+protocol: docs/validation-results/post2008-patchseq-isolated-fit-registration-1436.yaml
+seal: docs/validation-results/post2008-patchseq-isolated-fit-execution-seal-1437.yaml
+stratum: Pvalb-L23
+candidate_index: 19
+output: results/patchseq-mismatch-localization-1479
+stage_A:
+  scope: all-characterized-training-sweeps-in-fixed-stratum-candidate-19-only
+  comparisons:
+    - Same compiled voltage through original and independent feature extractors.
+    - Same predicted features through original and independent loss aggregators.
+    - Compare all four feature-by-scorer combinations with retained original score.
+  selection_or_refit: forbidden
+stage_B:
+  scope: exactly-one-lexicographically-first-source-key-from-the-complete-fixed-training-input-set
+  primary_replay: original-Brian2-single-candidate-full-command-with-original-initialization-warmup-and-holding
+  comparison: compiled-versus-Brian2-full-waveform-both-feature-extractors-both-scoring-implementations
+  arrays: retain-only-predicted-voltage-and-command-not-recorded-response
+  failure: retain-explicitly-and-do-not-substitute-another-sweep
+gates:
+  waveform_mV: 0.00001
+  feature_float: original-1e-5-plus-1e-9-relative-exact-discrete-null-structure
+  loss: original-1e-6-plus-1e-8-relative
+boundaries:
+  - No fitting runner resumes and no additional parameter vector is tested.
+  - No original file, tolerance, candidate, data split or frozen baseline changes.
+  - Held-out response features remain unopened.
+  - Retain disagreements without claiming parameter-family or biological failure.
+  - Diagnosis does not authorize a fix, amended scientific protocol, or experiment restart.

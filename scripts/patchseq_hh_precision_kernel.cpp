@@ -67,6 +67,9 @@ template<class R> int integrate(std::size_t samples, const double* parameters,
                 if (!finite(k1[j]) || !finite(k2[j]) || !finite(k3[j]) || !finite(k4[j]))
                     return 2;
                 y[j] += h*(k1[j]+2*k2[j]+2*k3[j]+k4[j])/6;
+                // Preserve the predecessor's accepted-refined-step gate checks.
+                if (!finite(y[j]) || (j>0 && (y[j]<R(-1e-8) || y[j]>R(1.0+1e-8))))
+                    return 2;
             }
         }
     }

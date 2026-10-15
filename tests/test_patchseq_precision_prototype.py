@@ -126,6 +126,17 @@ def test_active_against_independent_multiprecision_rk4(precision_kernel, bits, f
     np.testing.assert_allclose(states, expected, atol=2e-13 if bits == 53 else 0, rtol=0)
 
 
+@pytest.mark.parametrize('bits', [160, 320])
+def test_synthetic_large_excursion_against_independent_oracle(precision_kernel, bits):
+    p = [100., 10., -65., 2000., 500., 10., -60., 1000.]
+    initial = [-65., .05, .6, .2, .05]
+    current = np.full(501, 2000.)
+    code, states = integrate(precision_kernel, bits, p, current, initial)
+    assert code == 0
+    assert states[:, 0].max() > 0
+    np.testing.assert_array_equal(states, oracle(p, current, initial, 1))
+
+
 @pytest.mark.parametrize('defect', ['precision', 'factor', 'nan', 'capacitance', 'gate'])
 def test_rejects_invalid_inputs_without_clipping(precision_kernel, defect):
     p = [100., 10., -65., 2000., 500., 10., -60., 1000.]

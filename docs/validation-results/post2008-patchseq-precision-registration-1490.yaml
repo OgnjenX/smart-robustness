@@ -1,0 +1,99 @@
+schema_version: 1
+artifact_id: 1490
+date: 2026-10-15
+status: registered-before-biological-execution
+authority: human-authorized-higher-precision-diagnostic-on-same-two-inputs
+preparation: docs/validation-results/post2008-patchseq-higher-precision-preparation-1488.yaml
+predecessor: results/patchseq-reference-convergence-1484/checkpoint.json
+original: results/patchseq-isolated-fit-1438/checkpoint.json
+prerequisite_hashes:
+  results/patchseq-isolated-fit-1438/checkpoint.json: 29539a6dc1feb29b3ba2d4d87a9324b91ead0681eddf6b6db80abad80aa7f105
+  results/patchseq-reference-convergence-1484/checkpoint.json: 5c538d5ce9db2d9987fd5acdab69d9363ee91724e2b5296a347b007873352c38
+  results/patchseq-reference-convergence-independent-1486/manifest.yaml: c33fff533afb5bcaf141961a04f470e53143bc06a5946ace4cd8ddca602c7aa7
+  results/patchseq-precision-synthetic-benchmark-1489/checkpoint.json: db839cb517c0f10f826d62936bd2634648b8c8ad5803882a441e799f13563280
+  results/patchseq-precision-synthetic-benchmark-1494/checkpoint.json: 145b0a5ec6caad807ed4f9e4f1b32bcb977396ad125f6df5c909216a9c956bc3
+output: results/patchseq-precision-diagnostic-1491
+source_files:
+  - scripts/patchseq_hh_precision_kernel.cpp
+  - scripts/patchseq_precision_driver.py
+  - scripts/run_patchseq_precision_diagnostic.py
+  - scripts/verify_patchseq_precision_diagnostic.py
+  - scripts/patchseq_fit_objective.py
+  - scripts/patchseq_independent_fit_loss.py
+  - scripts/patchseq_independent_fit_inputs.py
+  - scripts/patchseq_response_features.py
+  - scripts/patchseq_selected_fit_agreement.py
+  - scripts/patchseq_isolated_hh.py
+  - scripts/run_patchseq_isolated_fit.py
+  - scripts/verify_patchseq_fitting_targets.py
+  - scripts/verify_patchseq_reference_convergence.py
+stratum: Pvalb-L23
+candidate_index: 19
+source_keys: [[append, 3, 4], [append, 3, 11]]
+precisions_bits: [53, 160, 320]
+native_step_divisors: [4, 8, 16]
+case_count: 18
+maximum_case_seconds: 7200
+budget_rationale: fixed-before-biological-outcomes-from-501-sample-synthetic-timing-with-large-runtime-margin-no-adaptive-expansion
+synthetic_timing:
+  samples: 501
+  rate_hz: 50000
+  maximum_measured_case_seconds: 3.9020068750251085
+  final_kernel_benchmark: results/patchseq-precision-synthetic-benchmark-1494/checkpoint.json
+  preparation_delta: added-accepted-substep-gate-checks-to-preserve-predecessor-refinement-semantics-before-any-biological-execution
+  caution: synthetic-linear-extrapolation-is-not-a-runtime-guarantee
+input_contract:
+  command: only-two-exact-fixed-training-commands-no-response-array-decoding
+  holding: exact-binary64-command-plus-native-holding-once-before-multiprecision-lift
+  warmup_s: 1.0
+  initialization: original-Brian2-equilibrium-rule-captured-once-per-input-and-lifted-identically-in-all-arms
+  initial_coordinate: binary64-mV-and-dimensionless-gates-retained-exactly-no-target-derived-initialization
+  timing: common-binary64-1000-divided-by-source-rate-times-divisor-lifted-identically
+  current_edges: native-current-held-through-all-RK4-substeps-and-stages-no-interpolation
+  recording: all-five-states-before-native-sample-update-including-warmup-no-final-unobserved-update
+  output: binary64-export-from-native-internal-53-or-multiprecision-160-or-320-bit-arithmetic
+  gate_semantics: original-bounds-at-every-accepted-refined-step-no-clipping-and-finite-RK-stages
+arithmetic_contract:
+  constants: exact-lift-of-existing-binary64-nonintegral-coefficients-not-new-decimal-model-constants
+  code: header-only-Boost-cpp_bin_float-with-binary-digit-base
+  compiler: retained-clang-with-no-fast-math-and-disabled-fp-contraction
+  provenance: transitive-header-hashes-compiler-executable-hash-version-flags-source-and-binary-hashes
+  probes: exact-significand-width-and-one-plus-two-to-minus-100-cancellation
+  limitation: Boost-transcendentals-not-guaranteed-correctly-rounded-and-exported-arrays-are-binary64
+comparisons:
+  arithmetic: compare-160-versus-320-at-each-fixed-divisor
+  step_size: compare-4-versus-8-and-8-versus-16-at-each-fixed-precision
+  native_control: compare-53-versus-160-and-53-versus-320-at-each-fixed-divisor
+  per_input_pair_count: 15
+  waveform_maximum_mV: 0.00001
+  full_features: unchanged-original-typed-feature-agreement-with-exact-event-counts
+  loss_absolute_tolerance: 0.000001
+  loss_relative_tolerance: 0.00000001
+  waveform_scope: whole-predicted-command-and-warmup-including-release-not-just-scored-step
+qualification:
+  - All nine cases for an input must succeed; missing or failed cases block qualification.
+  - At divisor 16, 160-bit versus 320-bit must pass waveform, full-feature and loss agreement.
+  - At both 160 and 320 bits, divisor 8 versus 16 must pass the same unchanged gates.
+  - Report both input verdicts and all 30 comparisons, not just qualifying or favorable subsets.
+  - Qualification remains bounded finite evidence, not a rigorous error bound or permission for production transition.
+execution_and_resume:
+  - Commit complete runner, independent auditor, tests and registration before either biological input is replayed.
+  - Parent holds exclusive diagnostic and shared predecessor fitting locks; fitting remains stopped.
+  - Run each case in one subprocess with the fixed wall-clock cap; timeout is a retained failure, no replacement.
+  - Resume only unchanged sources, build, initial states, inputs and fixed case table.
+  - Orphan spec, log or array blocks automatic rerun or overwrite and requires evidence inspection.
+  - Retain output arrays, initial/input receipts, case specs, logs, all failures and exact hashes.
+independent_audit:
+  script: scripts/verify_patchseq_precision_diagnostic.py
+  output: results/patchseq-precision-diagnostic-independent-1492/manifest.yaml
+  requirements:
+    - Acquire terminal shared diagnostic lock and prove the checkpoint does not change during audit.
+    - Reconstruct exact command/holding/epoch using the primary input reader, not the runner decoder.
+    - Check all fixed cases, source/build/header hashes, explicit initial states, specs, logs and saved arrays.
+    - Independently reconstruct every retained feature and loss; recompute all waveform comparisons and qualification.
+    - Preserve failures; an honest failed or unqualified diagnostic can pass accounting verification but not reference qualification.
+    - Saved-array audit does not independently re-execute every multiprecision trajectory or prove internal precision from exported digits.
+boundaries:
+  - No fitting restart, production code/parameters/integration changes, candidate replacement or new search.
+  - No held-out response access, target correction, network-guided tuning, gate weakening or baseline modification.
+  - No conclusion about mathematical chaos, all candidates, neuron families or full SMART from these two inputs alone.

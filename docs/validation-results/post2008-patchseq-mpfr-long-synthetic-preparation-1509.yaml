@@ -1,0 +1,57 @@
+schema_version: 1
+artifact_id: 1509
+date: 2026-10-15
+status: runner-and-independent-verifier-unit-tested-not-executed-or-execution-sealed
+registration: docs/validation-results/post2008-patchseq-mpfr-long-synthetic-registration-1506.yaml
+registration_sha256: 02881faea800f93f78dbb1abdc9db5b22a3e25a2a9dde21b6ae952f1a2b94cdc
+source_hashes:
+  scripts/run_patchseq_mpfr_synthetic.py: 6e10073897cd7c1f3998d04a0a85a7a6e06602833c00c6b7f6157a4b1cb8ca06
+  scripts/verify_patchseq_mpfr_synthetic.py: 9a4182fe74d6c31f6b01cd4a8e5615336883dbaf4fe6cf09b91b1c0909519855
+  tests/test_patchseq_mpfr_synthetic.py: 7c0ad169b011c20b548c82b7cb949bc9c011cb256a74d57abf018f7379fa0734
+scope:
+  full_length_synthetic_cases: 68
+  cases_executed: 0
+  command_lengths: [151000, 330000]
+  added_warmup_samples: 50000
+  profiles: [passive-RC-with-step-and-release, active-HH-with-step-and-release]
+  boost_matrix: native53-and160-and320-bits-each-at-divisors4-and8-and16
+  mpfr_matrix: 160-and320-bits-each-at-divisors4-and8-and16-plus-finest-exact-repeats
+  biological_arrays_read: false
+runner_safeguards:
+  - Fixed case identities, original binary64 input lifts and common explicit initialization.
+  - Exclusive controller and worker locks; no duplicate live workers or silent orphan replacement.
+  - Hash-bound source, builds, interpreter, runtime versions, arrays, specifications, receipts and logs.
+  - Completed-case resume only with identical provenance; interrupted running cases require evidence inspection.
+  - Preserve every failure and timeout; no automatic rerun, replacement or favorable-subset qualification.
+  - Human-confirmed and sealed invocation budget required; reserve a full case timeout before starting another case.
+  - Budget stops preserve pending cases without recording false scientific failures or declaring matrix completion.
+independent_verifier:
+  support: separately-constructed-exact-68-key-set
+  inputs: independently-reconstructed-command-boundaries-and-warmup
+  features: separately-implemented-frozen-reconstruct-extractor-not-primary-characterize
+  loss: separately-implemented-fixed-six-term-synthetic-target-objective
+  passive_forward_oracle: closed-form-piecewise-exponential-RC-voltage-on-native-grid
+  active_forward_boundary: compares-independently-coded-MPFR-and-sealed-Boost-trajectories-not-a-third-active-forward-engine
+  comparisons: all-paired-backends-native-controls-precision-refinements-and-exact-repeat-bit-patterns
+  gates: unchanged-whole-voltage-typed-feature-and-loss-tolerances
+  feasibility_boundary: integration-compression-and-end-to-end-cost-only-not-memory-concurrency-checkpoint-or-complete-production-feasibility
+unit_tests:
+  passed: 35
+  elapsed_seconds: 0.73
+  ruff: clean
+  diff_check: clean
+  limits: support-input-comparison-resume-failure-lock-budget-and-stubbed-worker-tests-not-long-trajectory-validation
+execution_prerequisites_remaining:
+  - Human local-compute invocation budget; asynchronous preference question is pending.
+  - Prospective execution seal1507 binding all runner/verifier/transitive source dependencies, prerequisite hashes and chosen resource budget.
+  - Exact-process and output inspection before any launch; no duplicate runner.
+next_stage: seal-budget-and-source-then-run-fixed-synthetic-matrix-with-sparse-monitoring
+disposition:
+  speedup_or_long_record_equivalence_established: false
+  full_table_biological_execution_authorized: false
+  production_fitters_remain_stopped: true
+  historical_scores_or_parameters_changed: false
+  held_out_access_authorized: false
+  network_promotion_authorized: false
+  frozen_baseline_modified: false
+  scientific_goal_complete: false

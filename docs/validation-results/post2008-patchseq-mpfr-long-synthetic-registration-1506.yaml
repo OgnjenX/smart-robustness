@@ -1,0 +1,143 @@
+schema_version: 1
+artifact_id: 1506
+date: 2026-10-15
+status: prospective-matrix-fixed-not-execution-authorized
+parent_plan: docs/validation-results/post2008-patchseq-numerical-admissibility-plan-1497.yaml
+preparation_assessment: docs/validation-results/post2008-patchseq-mpfr-preparation-assessment-1505.yaml
+purpose: test-long-record-backend-equivalence-and-measure-cost-without-biological-data
+prior_knowledge: disclosed-short-synthetic-unit-checks-and-two-input-numerical-diagnostics-not-blind-to-those-outcomes
+runner: scripts/run_patchseq_mpfr_synthetic.py
+required_independent_verifier: scripts/verify_patchseq_mpfr_synthetic.py
+required_execution_seal: docs/validation-results/post2008-patchseq-mpfr-long-synthetic-execution-seal-1507.yaml
+output: results/patchseq-mpfr-long-synthetic-1508
+total_cases: 68
+maximum_case_seconds: 3600
+resource_policy:
+  execution_authorized_by_this_registration: false
+  missing_prerequisites: independent-verifier-implementation-unit-validation-sealed-source-and-explicit-bounded-execution-budget
+  concurrency: one-local-worker-at-a-time-no-external-or-paid-compute
+  worst_case_worker_timeout_sum_hours: 68
+  warning: timeout-cap-sum-is-not-a-runtime-estimate-or-authorization-to-spend-that-time
+  benchmark_scope: monolithic-forward-compression-and-orchestration-not-complete-production-feasibility
+  no_favorable_subset: incomplete-or-timed-out-matrix-cannot-pass
+inputs:
+  command_lengths_samples: [151000, 330000]
+  rate_hz: 50000
+  warmup_samples: 50000
+  command_baseline_pA: 0
+  step_start_index: 25000
+  step_stop_index: command-length-minus-25000
+  pre_window: [15000, 20000]
+  initial: [-65.0, 0.05, 0.6, 0.2, 0.05]
+  parameter_field_order: [capacitance_pF, leak_nS, leak_reversal_mV, sodium_nS, potassium_nS, m_current_nS, threshold_shift_mV, m_tau_max_ms]
+  active_parameter_values: [100.0, 10.0, -65.0, 2000.0, 500.0, 10.0, -60.0, 1000.0]
+  active_step_pA: 2000
+  passive_parameters: same-values-with-sodium-potassium-and-M-conductances-zero
+  passive_step_pA: -50
+  holding_pA: 0
+  current_boundaries: exact-sample-held-command-including-warmup-and-release
+  state_export: all-five-states-on-native-grid-before-update-no-final-unobserved-interval
+synthetic_target:
+  purpose: exercise-all-six-frozen-objective-terms-not-fit-a-biological-target
+  baseline_mean_mV: -65.0
+  early_step_mean_mV: -60.0
+  steady_step_mean_mV: -55.0
+  detected_event_count: 3
+  first_event_latency_s: 0.01
+  last_to_first_interval_ratio: 1.0
+comparison_gates:
+  cross_backend: every-matching-160-and-320-bit-divisor-pair-must-pass
+  whole_voltage_absolute_tolerance_mV: 0.00001
+  full_typed_features: exact-structure-discrete-values-and-counts-floats-absolute-1e-5-plus-relative-1e-9
+  six_term_loss: absolute-1e-6-plus-relative-1e-8
+  all_state_maximum_discrepancies: report-without-inventing-new-gate-units
+  passive_voltage_oracle: exact-piecewise-exponential-RC-solution-on-native-grid-maximum-error-1e-5mV
+  mpfr_finest_exact_repeats: bit-pattern-identical-all-five-states
+  precision_refinement: retain-all-native-and-high-precision-arms-and-all-comparisons-not-require-known-native-control-agreement
+  high_precision_finest_reference: 160-vs-320-at16-and8-vs16-atboth-widths-report-original-waveform-feature-loss-gates
+  no_claim: synthetic-reference-pass-is-not-full-candidate-biological-qualification
+failure_policy:
+  - Preserve every failure, timeout, output, spec and log hash; no replacement or rerun to select a favorable trajectory.
+  - Source or cross-backend disagreement blocks promotion; do not change parameters, tolerance, command or precision to repair it.
+  - Completed-case resume requires identical source, build, runtime and artifact hashes.
+  - Interrupted running cases and orphan artifacts block automatic resume pending exact process/evidence inspection.
+  - A live worker lock blocks replacement controllers; observation timeout is not permission to duplicate.
+  - Timing must separate integration, compression and end-to-end case cost; no short-test timing presented as sustained throughput.
+  - Complete primary-plus-independent workflow resource feasibility still requires additional overhead measurements and human resource ceilings.
+boundaries:
+  biological_file_access: false
+  original_scores_replaced: false
+  production_fitters_resumed: false
+  held_out_access_authorized: false
+  network_execution_authorized: false
+  frozen_baseline_modified: false
+  scientific_goal_complete: false
+case_table:
+  - {samples: 151000, profile: passive, engine: boost, bits: 53, factor: 4, repeat: 0}
+  - {samples: 151000, profile: passive, engine: boost, bits: 53, factor: 8, repeat: 0}
+  - {samples: 151000, profile: passive, engine: boost, bits: 53, factor: 16, repeat: 0}
+  - {samples: 151000, profile: passive, engine: boost, bits: 160, factor: 4, repeat: 0}
+  - {samples: 151000, profile: passive, engine: boost, bits: 160, factor: 8, repeat: 0}
+  - {samples: 151000, profile: passive, engine: boost, bits: 160, factor: 16, repeat: 0}
+  - {samples: 151000, profile: passive, engine: boost, bits: 320, factor: 4, repeat: 0}
+  - {samples: 151000, profile: passive, engine: boost, bits: 320, factor: 8, repeat: 0}
+  - {samples: 151000, profile: passive, engine: boost, bits: 320, factor: 16, repeat: 0}
+  - {samples: 151000, profile: passive, engine: mpfr, bits: 160, factor: 4, repeat: 0}
+  - {samples: 151000, profile: passive, engine: mpfr, bits: 160, factor: 8, repeat: 0}
+  - {samples: 151000, profile: passive, engine: mpfr, bits: 160, factor: 16, repeat: 0}
+  - {samples: 151000, profile: passive, engine: mpfr, bits: 320, factor: 4, repeat: 0}
+  - {samples: 151000, profile: passive, engine: mpfr, bits: 320, factor: 8, repeat: 0}
+  - {samples: 151000, profile: passive, engine: mpfr, bits: 320, factor: 16, repeat: 0}
+  - {samples: 151000, profile: passive, engine: mpfr, bits: 160, factor: 16, repeat: 1}
+  - {samples: 151000, profile: passive, engine: mpfr, bits: 320, factor: 16, repeat: 1}
+  - {samples: 151000, profile: active, engine: boost, bits: 53, factor: 4, repeat: 0}
+  - {samples: 151000, profile: active, engine: boost, bits: 53, factor: 8, repeat: 0}
+  - {samples: 151000, profile: active, engine: boost, bits: 53, factor: 16, repeat: 0}
+  - {samples: 151000, profile: active, engine: boost, bits: 160, factor: 4, repeat: 0}
+  - {samples: 151000, profile: active, engine: boost, bits: 160, factor: 8, repeat: 0}
+  - {samples: 151000, profile: active, engine: boost, bits: 160, factor: 16, repeat: 0}
+  - {samples: 151000, profile: active, engine: boost, bits: 320, factor: 4, repeat: 0}
+  - {samples: 151000, profile: active, engine: boost, bits: 320, factor: 8, repeat: 0}
+  - {samples: 151000, profile: active, engine: boost, bits: 320, factor: 16, repeat: 0}
+  - {samples: 151000, profile: active, engine: mpfr, bits: 160, factor: 4, repeat: 0}
+  - {samples: 151000, profile: active, engine: mpfr, bits: 160, factor: 8, repeat: 0}
+  - {samples: 151000, profile: active, engine: mpfr, bits: 160, factor: 16, repeat: 0}
+  - {samples: 151000, profile: active, engine: mpfr, bits: 320, factor: 4, repeat: 0}
+  - {samples: 151000, profile: active, engine: mpfr, bits: 320, factor: 8, repeat: 0}
+  - {samples: 151000, profile: active, engine: mpfr, bits: 320, factor: 16, repeat: 0}
+  - {samples: 151000, profile: active, engine: mpfr, bits: 160, factor: 16, repeat: 1}
+  - {samples: 151000, profile: active, engine: mpfr, bits: 320, factor: 16, repeat: 1}
+  - {samples: 330000, profile: passive, engine: boost, bits: 53, factor: 4, repeat: 0}
+  - {samples: 330000, profile: passive, engine: boost, bits: 53, factor: 8, repeat: 0}
+  - {samples: 330000, profile: passive, engine: boost, bits: 53, factor: 16, repeat: 0}
+  - {samples: 330000, profile: passive, engine: boost, bits: 160, factor: 4, repeat: 0}
+  - {samples: 330000, profile: passive, engine: boost, bits: 160, factor: 8, repeat: 0}
+  - {samples: 330000, profile: passive, engine: boost, bits: 160, factor: 16, repeat: 0}
+  - {samples: 330000, profile: passive, engine: boost, bits: 320, factor: 4, repeat: 0}
+  - {samples: 330000, profile: passive, engine: boost, bits: 320, factor: 8, repeat: 0}
+  - {samples: 330000, profile: passive, engine: boost, bits: 320, factor: 16, repeat: 0}
+  - {samples: 330000, profile: passive, engine: mpfr, bits: 160, factor: 4, repeat: 0}
+  - {samples: 330000, profile: passive, engine: mpfr, bits: 160, factor: 8, repeat: 0}
+  - {samples: 330000, profile: passive, engine: mpfr, bits: 160, factor: 16, repeat: 0}
+  - {samples: 330000, profile: passive, engine: mpfr, bits: 320, factor: 4, repeat: 0}
+  - {samples: 330000, profile: passive, engine: mpfr, bits: 320, factor: 8, repeat: 0}
+  - {samples: 330000, profile: passive, engine: mpfr, bits: 320, factor: 16, repeat: 0}
+  - {samples: 330000, profile: passive, engine: mpfr, bits: 160, factor: 16, repeat: 1}
+  - {samples: 330000, profile: passive, engine: mpfr, bits: 320, factor: 16, repeat: 1}
+  - {samples: 330000, profile: active, engine: boost, bits: 53, factor: 4, repeat: 0}
+  - {samples: 330000, profile: active, engine: boost, bits: 53, factor: 8, repeat: 0}
+  - {samples: 330000, profile: active, engine: boost, bits: 53, factor: 16, repeat: 0}
+  - {samples: 330000, profile: active, engine: boost, bits: 160, factor: 4, repeat: 0}
+  - {samples: 330000, profile: active, engine: boost, bits: 160, factor: 8, repeat: 0}
+  - {samples: 330000, profile: active, engine: boost, bits: 160, factor: 16, repeat: 0}
+  - {samples: 330000, profile: active, engine: boost, bits: 320, factor: 4, repeat: 0}
+  - {samples: 330000, profile: active, engine: boost, bits: 320, factor: 8, repeat: 0}
+  - {samples: 330000, profile: active, engine: boost, bits: 320, factor: 16, repeat: 0}
+  - {samples: 330000, profile: active, engine: mpfr, bits: 160, factor: 4, repeat: 0}
+  - {samples: 330000, profile: active, engine: mpfr, bits: 160, factor: 8, repeat: 0}
+  - {samples: 330000, profile: active, engine: mpfr, bits: 160, factor: 16, repeat: 0}
+  - {samples: 330000, profile: active, engine: mpfr, bits: 320, factor: 4, repeat: 0}
+  - {samples: 330000, profile: active, engine: mpfr, bits: 320, factor: 8, repeat: 0}
+  - {samples: 330000, profile: active, engine: mpfr, bits: 320, factor: 16, repeat: 0}
+  - {samples: 330000, profile: active, engine: mpfr, bits: 160, factor: 16, repeat: 1}
+  - {samples: 330000, profile: active, engine: mpfr, bits: 320, factor: 16, repeat: 1}

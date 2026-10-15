@@ -1,0 +1,63 @@
+schema_version: 1
+artifact_id: 1501
+date: 2026-10-15
+status: full-support-metadata-accounting-independently-verified-not-scientific-validation
+plan: docs/validation-results/post2008-patchseq-numerical-admissibility-plan-1497.yaml
+specification: docs/validation-results/post2008-patchseq-numerical-workload-accounting-1498.yaml
+ledger: results/patchseq-numerical-workload-1499/manifest.json
+ledger_sha256: 63f5480286480836f8cb0cc04e8cdca6ff3c2d9b8ef8e680368048be9f737c08
+independent_audit: results/patchseq-numerical-workload-independent-1500/manifest.yaml
+independent_audit_sha256: ff6dad619bd3e8c7aac7ee35ee862371874303d95295ad0d6ce80c3b3b21665d
+verified_scope:
+  parameter_vectors: 128
+  candidate_table_sha256: 6f02e221cd0729ff4da33db679bb6e760687e023bc6b170c8cd909fb26eaa9dd
+  candidate_stratum_entries: 768
+  supported_groups: 38
+  characterized_training_sweeps: 260
+  candidate_sweep_cases: 33280
+  warmup_inclusive_native_intervals: 9450846720
+  original_parameter_rows_preserved_and_compared: 20
+  exact_parameter_stratum_sweep_group_grid_and_target_metadata_identity_sets_agree: true
+  independent_metadata_checks_agree: true
+implementation:
+  builder: scripts/build_patchseq_numerical_workload.py
+  independent_checker: scripts/verify_patchseq_numerical_workload.py
+  construction_independence: separate-table-and-exact-support-derivation-not-importing-builder
+  shared_dependency: SciPy-Sobol-direction-numbers-disclosed-not-a-second-independent-Sobol-library
+  source_integrity: pinned-input-metadata-benchmark-historical-checkpoint-and-implementation-hashes-verified-stable
+  reader: yaml-and-json-metadata-only-no-recording-body-or-array-decoder
+  held_out_filter: before-pairing-resolution-no-held-out-recording-or-feature-access
+tests:
+  file: tests/test_patchseq_numerical_workload.py
+  result: 28-passed
+  elapsed_s: 0.62
+  ruff: clean
+  diff_check: clean
+  checked_failures:
+    - Missing, duplicated or unsupported candidate-sweep entries.
+    - Changed parameter table, group identity, grid or target metadata hash.
+    - Corrupted totals, storage estimates, timing estimates or historical-prefix accounting.
+    - Boolean substituted for integer candidate identity.
+    - False recording-access, simulation, fitting, held-out, promotion or completion claims.
+    - Bad input role/rate metadata and changed metadata digests.
+    - Recording-body suffix rejected before opening a file.
+cost_conclusion:
+  reference: synthetic-timing-1494-not-a-new-biological-benchmark
+  complete_nine_arm_matrix_serial_seconds_approx: 200607601.66043377
+  complete_nine_arm_matrix_serial_days_approx: 2321.8472414402054
+  complete_nine_arm_uncompressed_five_state_bytes: 3402316800000
+  excludes_independent_forward_replay_selected_controls_and_IO: true
+  interpretation: operational-warning-only-do-not-launch-this-naive-full-table-route
+  limitation: synthetic-serial-linear-extrapolation-not-a-runtime-guarantee
+next_stage: versioned-synthetic-only-equivalence-and-performance-development-before-a-separately-authorized-biological-amendment
+disposition:
+  workload_accounting_complete: true
+  faster_backend_implemented: false
+  computational_feasibility_demonstrated: false
+  numerical_admissibility_of_full_table_established: false
+  new_fitting_or_scoring_executed: false
+  production_fitters_remain_stopped: true
+  held_out_access_authorized: false
+  network_promotion_authorized: false
+  frozen_baseline_modified: false
+  overall_scientific_goal_complete: false

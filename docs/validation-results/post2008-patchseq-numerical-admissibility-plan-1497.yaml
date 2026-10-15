@@ -1,0 +1,164 @@
+schema_version: 1
+artifact_id: 1497
+date: 2026-10-15
+status: planning-only-not-an-execution-registration-or-fitting-amendment
+purpose: make-the-complete-fixed-support-training-map-numerically-defensible-and-operationally-feasible
+predecessor_assessment: docs/validation-results/post2008-patchseq-precision-assessment-1496.yaml
+source_protocols:
+  - docs/validation-results/post2008-patchseq-isolated-fit-registration-1436.yaml
+  - docs/validation-results/post2008-patchseq-compiled-fitting-amendment-1466.yaml
+  - docs/validation-results/post2008-patchseq-amended-fit-structure-registration-1469.yaml
+  - docs/validation-results/post2008-patchseq-amended-independent-replay-registration-1471.yaml
+  - docs/validation-results/post2008-patchseq-amended-selected-verification-registration-1473.yaml
+  - docs/validation-results/post2008-patchseq-amended-training-assessment-registration-1475.yaml
+planning_evidence:
+  accessed: frozen-registration-training-catalog-pairing-metadata-existing-synthetic-benchmark-and-completed-diagnostic
+  new_source_NWB_bodies_opened: false
+  held_out_response_features_read: false
+  new_simulations_or_benchmarks_run: false
+  prior_training_outcomes_known: original-twenty-native-rows-and-the-two-input-precision-diagnosis
+  limitation: follow-up-design-informed-by-disclosed-training-diagnostics-not-a-claim-of-preregistration-before-those-earlier-outcomes
+frozen_workload:
+  training_catalog: results/patchseq-fitting-targets-1430/manifest.yaml
+  training_catalog_sha256: 12ca6e6e380e00616bfd0532ca1ad97488fba6e7960ca01a628cf26483178c7f
+  unique_parameter_vectors: 128
+  strata: 6
+  candidate_stratum_identities: 768
+  candidate_table_sha256: 6f02e221cd0729ff4da33db679bb6e760687e023bc6b170c8cd909fb26eaa9dd
+  candidate_hash_serialization: utf8-json-list-of-original-field-named-float-maps-sort-keys-compact-comma-colon-separators-no-NaN
+  original_twenty_parameter_rows_match_regenerated_table: true
+  supported_source_groups: 38
+  characterized_training_sweeps: 260
+  candidate_sweep_cases: 33280
+  native_intervals_including_one_second_warmup: 9450846720
+  source_rate_hz: 50000
+  source_command_length_samples_min_max: [151000, 330000]
+  count_scope: only-fitting-response-characterized-sweeps-not-all-sixty-fitting-catalog-records
+  by_stratum:
+    Pvalb-L23: {supported_recordings: 5, supported_groups: 5, sweeps: 40, candidate_sweep_cases: 5120, native_intervals_per_parameter_vector: 11068960}
+    Pvalb-L5: {supported_recordings: 4, supported_groups: 4, sweeps: 22, candidate_sweep_cases: 2816, native_intervals_per_parameter_vector: 6429978}
+    Sst-L23: {supported_recordings: 9, supported_groups: 9, sweeps: 50, candidate_sweep_cases: 6400, native_intervals_per_parameter_vector: 14276950}
+    Sst-L5: {supported_recordings: 7, supported_groups: 7, sweeps: 42, candidate_sweep_cases: 5376, native_intervals_per_parameter_vector: 11807958}
+    Vip-L23: {supported_recordings: 7, supported_groups: 7, sweeps: 61, candidate_sweep_cases: 7808, native_intervals_per_parameter_vector: 17426939}
+    Vip-L5: {supported_recordings: 6, supported_groups: 6, sweeps: 45, candidate_sweep_cases: 5760, native_intervals_per_parameter_vector: 12823955}
+cost_warning:
+  benchmark: results/patchseq-precision-synthetic-benchmark-1494/checkpoint.json
+  method: sum-over-arms-of-measured-501-sample-case-seconds-divided-by-500-native-intervals-times-full-table-native-intervals
+  four_high_precision_arm_floor:
+    arms: [160-bit-divisor-8, 160-bit-divisor-16, 320-bit-divisor-8, 320-bit-divisor-16]
+    serial_seconds: 171852418.4292311
+    serial_days: 1989.0326207086935
+    five_state_native_grid_uncompressed_bytes: 1512140800000
+  complete_existing_nine_arm_matrix:
+    cases: 299520
+    serial_seconds: 200607601.66043374
+    serial_days: 2321.8472414402054
+    five_state_native_grid_uncompressed_bytes: 3402316800000
+  exclusions: independent-forward-verification-selected-controls-input-IO-output-compression-initialization-and-resume-overhead
+  limitation: rough-synthetic-serial-planning-extrapolation-not-measured-full-table-runtime-or-a-guarantee
+  decision: do-not-launch-brute-force-full-table-execution-with-the-current-kernel
+  four_arm_scope: cost-floor-only-not-authorization-to-delete-coarse-or-native-controls-from-a-future-study
+recommendation: first-seal-and-test-a-synthetic-only-performance-and-equivalence-programme-then-separately-authorize-a-full-support-biological-amendment
+stages:
+  - id: support-ledger
+    task: implement-a-metadata-only-execution-manifest-and-an-independent-support-auditor
+    proposed_new_files:
+      - scripts/build_patchseq_numerical_workload.py
+      - scripts/verify_patchseq_numerical_workload.py
+      - tests/test_patchseq_numerical_workload.py
+    preserve:
+      - Every fixed parameter vector, class/layer identity, source group and characterized sweep key.
+      - Original twenty checkpoint rows and raw bytes; a new ledger cannot rewrite historical scores.
+      - Exact partition filtering before resolving or opening source bodies; this preparation needs metadata only.
+    tests: missing-or-duplicate-case-group-or-sweep-parameter-change-unsupported-extra-sweep-and-held-out-record-must-be-rejected
+    gate: independently-identical-fixed-key-sets-table-hash-and-cost-accounting-before-any-simulation
+  - id: successor-infrastructure
+    task: implement-versioned-diagnostic-successors-with-persistent-workers-bounded-sharding-and-resumable-lossless-evidence
+    sealed_files_to_leave_unchanged:
+      - scripts/patchseq_hh_precision_kernel.cpp
+      - scripts/patchseq_precision_driver.py
+      - scripts/run_patchseq_precision_diagnostic.py
+      - scripts/verify_patchseq_precision_diagnostic.py
+    proposed_new_files:
+      - scripts/patchseq_precision_successor_driver.py
+      - scripts/patchseq_precision_successor_kernel.cpp
+      - tests/test_patchseq_precision_successor.py
+    numerical_contract:
+      - Preserve exact binary64 input/coefficient lifts, common explicit initial state and sample-held current boundaries.
+      - Preserve RK4 expression order and native-grid output-before-update convention unless a separately declared backend experiment tests its own differences.
+      - Carry the complete internal multiprecision state losslessly across chunks; exported binary64 state is not a valid restart state.
+      - Retain accepted-substep gate checks, finite RK stages and every failure; do not clip or repair.
+      - Retain full arrays and receipts for independent remeasurement; storage-format changes need lossless identity tests and an explicit evidence contract.
+    tests: monolithic-versus-chunked-serial-versus-sharded-exact-repeat-current-edge-resume-and-corruption-failure-tests
+    limitation: lower-orchestration-or-storage-overhead-is-not-proof-of-needed-arithmetic-throughput
+  - id: prospective-backend-hypothesis
+    task: choose-and-seal-one-faster-arithmetic-backend-hypothesis-before-synthetic-benchmark-outcomes
+    current_backend_selected: false
+    implementation_selection_gate: read-only-toolchain-inventory-and-primary-documentation-before-fixing-the-hypothesis
+    preserve:
+      - Same effective neuron equations, parameters, exact input lifts, initialization and acceptance tolerances.
+      - No silent mixed precision, interpolation, fast-math, solver swap or lower-precision time interval.
+      - Initially retain the full existing precision/refinement comparison matrix; any changed scope must be explicit and prospective.
+    synthetic_verification:
+      - An independently implemented high-precision forward oracle, not just the primary kernel measured by a second feature extractor.
+      - Actual precision probes, singularity limits, passive analytic solutions, active large excursions and threshold-sensitive observables.
+      - Full-length synthetic current commands spanning observed metadata lengths, warmup and release; fixed before execution.
+      - No biological loss or network outcome used to choose a backend, step policy, search bounds or favorable failure handling.
+    failure_policy: a-disagreement-blocks-the-hypothesis-no-tolerance-relaxation-or-automatic-replacement-another-hypothesis-needs-a-new-seal
+  - id: measured-feasibility
+    task: benchmark-the-complete-synthetic-execution-and-independent-verification-route-before-biological-execution
+    measure: sustained-throughput-full-length-commands-concurrency-scaling-memory-storage-compression-control-and-resume-overhead
+    plan_bounds_required_from_human:
+      - Maximum acceptable elapsed time and contingency.
+      - Local compute allocation or separately authorized external compute and spending ceiling.
+      - Storage allowance and required evidence retention.
+    gate: demonstrated-feasible-whole-table-primary-plus-independent-route-with-approved-resource-headroom
+    no_pass: report-infeasible-under-approved-resources-not-scientific-failure-and-do-not-launch
+  - id: new-full-support-amendment
+    task: seal-a-new-protocol-runner-score-ledger-and-verifier-only-after-equivalence-and-feasibility-pass
+    authorization: separate-explicit-execution-and-rescoring-decision-required-no-production-resume-from-this-plan
+    preserve:
+      - All 768 candidate-stratum entries and exact 33280 candidate-sweep identities, with no successful-subset substitute.
+      - No candidate omission, replacement, bounds expansion, class/layer pooling or outcome-guided precision escalation.
+      - Disclose the two already observed candidate-19 reference inputs; never treat them as new blind validation cases.
+      - Keep numerical-unresolved, execution-failure and biological-observable-failure classifications separate.
+      - Do not relabel an unresolved entry as a poor fit or remove it before ranking to obtain a favorable winner.
+      - Preserve all historical scores as historical evidence; amended values require their own versioned ledger and provenance.
+    qualification: fixed-casewise-reference-agreement-on-all-declared-support-not-just-selected-candidates-or-event-counts
+    incomplete_scope: cannot-qualify-a-complete-training-map-or-open-held-out-responses
+  - id: training-classification
+    task: preserve-separate-structural-full-reconstruction-selected-controls-and-training-assessment-stages
+    gates:
+      structure: exact-candidate-sweep-group-failure-and-source-identity-accounting
+      all_candidate_reconstruction: independent-forward-features-and-six-term-group-weighted-loss-on-every-frozen-candidate
+      group_and_total_loss_tolerance: absolute-1e-6-plus-relative-1e-8
+      selected_waveform_tolerance_mV: 0.00001
+      selected_float_feature_tolerance: absolute-1e-5-plus-relative-1e-9-with-exact-typed-structure-and-event-counts
+      selected_exact_repeat: bitwise-identical-predicted-arrays
+      selected_half_step: maximum-0.1mV-whole-predicted-command-difference-and-exact-event-counts
+      selected_two_second_warmup: maximum-0.1mV-baseline-difference-and-exact-event-counts
+      selection: complete-table-loss-then-parameter-tuple-then-index-freeze-before-selected-controls
+      failed_selected_control: retain-failure-no-next-best-candidate-or-refit
+    source_contracts:
+      - scripts/patchseq_fit_objective.py
+      - scripts/patchseq_fit_search.py
+      - scripts/audit_patchseq_fit_checkpoint.py
+      - scripts/patchseq_selected_fit_agreement.py
+      - scripts/patchseq_training_assessment_gate.py
+    objective_details: six-fixed-terms-divisor-six-inapplicable-target-terms-remain-null-missing-applicable-predictions-penalty-1000-average-within-source-group-then-equal-group-average
+    downstream: only-an-independently-eligible-training-map-may-support-a-separate-held-out-design-and-eventual-network-transfer-registration
+verification_of_this_plan:
+  metadata_counts_recomputed_without_decoding_recording_arrays: true
+  candidate_table_regenerated_without_simulation: true
+  original_twenty_parameter_vectors_compared: true
+  cost_arithmetic_uses_existing_synthetic_timing_only: true
+  code_or_running_source_modified: false
+  plan_is_scientific_validation: false
+current_boundaries:
+  production_fitters_remain_stopped: true
+  any_new_biological_execution_authorized_by_this_plan: false
+  held_out_access_authorized: false
+  network_execution_authorized: false
+  external_compute_or_spending_authorized: false
+  frozen_baseline_modified: false
+  overall_scientific_goal_complete: false

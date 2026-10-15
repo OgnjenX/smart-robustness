@@ -1,0 +1,45 @@
+schema_version: 1
+artifact_id: 1498
+date: 2026-10-15
+status: metadata-accounting-specification-not-biological-preregistration
+plan: docs/validation-results/post2008-patchseq-numerical-admissibility-plan-1497.yaml
+implementation: scripts/build_patchseq_numerical_workload.py
+independent_checker: scripts/verify_patchseq_numerical_workload.py
+tests: tests/test_patchseq_numerical_workload.py
+outputs:
+  ledger: results/patchseq-numerical-workload-1499/manifest.json
+  independent: results/patchseq-numerical-workload-independent-1500/manifest.yaml
+scope:
+  original_protocol: docs/validation-results/post2008-patchseq-isolated-fit-registration-1436.yaml
+  known_unique_parameter_vectors: 128
+  known_candidate_stratum_entries: 768
+  known_supported_source_groups: 38
+  known_characterized_training_sweeps: 260
+  known_candidate_sweep_cases: 33280
+  known_native_intervals_including_warmup: 9450846720
+  previously_observed_scope: metadata-counts-and-candidate-table-already-disclosed-in-plan-1497
+  no_new_biological_outcome: true
+verification:
+  - Regenerate all parameter vectors and exact candidate-stratum and candidate-sweep identities.
+  - Reconstruct sweep/group/grid/target-metadata identities independently rather than importing the builder.
+  - Preserve and compare the historical twenty parameter rows without rewriting scores.
+  - Independently check totals, planning-only benchmark extrapolations and nine-arm uncompressed evidence size.
+  - Pin catalog, pairing metadata, source configuration, original checkpoint, benchmark and implementation hashes.
+  - Verify stable input and source metadata hashes before publishing an exclusive-create audit artifact.
+  - Do not count catalog records without a characterized fitting sweep as supported groups or replays.
+independence_boundary:
+  separate_table_and_support_construction: true
+  shared_SciPy_Sobol_direction_numbers: true
+  original_frozen_candidate_hash_anchor: true
+  independent_neuron_forward_replay: false
+  physiological_validation: false
+  numerical_reference_qualification: false
+initial_tests: 28-synthetic-checks-passed
+boundaries:
+  recording_arrays_opened: false
+  simulations_or_new_benchmarks_run: false
+  fitting_restart_authorized: false
+  held_out_response_access_authorized: false
+  network_promotion: false
+  baseline_modified: false
+  scientific_goal_complete: false

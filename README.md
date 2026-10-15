@@ -144,6 +144,15 @@ restart; held-out access and production changes remain unauthorized.
 The [software verification checkpoint](docs/validation-results/post2008-patchseq-precision-software-checkpoint-1495.yaml)
 records test coverage and its limits separately from scientific validation.
 
+The [full-table numerical-reliability plan](docs/validation-results/post2008-patchseq-numerical-admissibility-plan-1497.yaml)
+now has a [verified metadata-only workload ledger](docs/validation-results/post2008-patchseq-numerical-workload-assessment-1501.yaml):
+768 candidate–stratum entries expand to 33,280 candidate–sweep cases across 38
+supported source groups. The original 20 parameter rows are preserved. This
+accounting does not run neurons, establish numerical admissibility or authorize
+fitting. A naive expansion of the current multiprecision kernel is impractical;
+the next gate is a prospectively tested faster equivalent execution route, with
+measured resource limits before any new biological execution.
+
 #### Historical fitting and verification routes
 
 The commands below are retained for reproducibility, **not current execution

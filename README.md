@@ -111,6 +111,14 @@ parameter replacement, fitting restart, held-out response scoring, or network
 promotion. Unqualified reference comparisons remain unresolved evidence; the
 old scores and failed transition must not be discarded or silently repaired.
 
+The [completed reference-study assessment](docs/validation-results/post2008-patchseq-reference-convergence-assessment-1487.yaml)
+records all 18 replays and their agreeing independent audit. Neither input
+qualified a reference: tighter adaptive settings and RK4 steps down to
+0.00125 ms still failed the registered waveform agreement. The positive-input
+step's tighter runs agree on five events but not full features or losses.
+Numerical reliability remains unresolved for this candidate; neither production
+fitter is authorized to restart by that result.
+
 #### Historical fitting and verification routes
 
 The commands below are retained for reproducibility, **not current execution

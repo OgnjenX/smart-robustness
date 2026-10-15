@@ -1,0 +1,66 @@
+schema_version: 1
+artifact_id: 1503
+date: 2026-10-15
+status: prospective-synthetic-only-backend-hypothesis-not-an-execution-amendment
+plan: docs/validation-results/post2008-patchseq-numerical-admissibility-plan-1497.yaml
+hypothesis: explicit-160-and-320-bit-MPFR-arithmetic-with-persistent-preallocated-temporaries-may-improve-throughput-without-changing-the-neuron-equations
+chosen_before_new_backend_benchmarks: true
+speedup_established: false
+equivalence_established: false
+toolchain_output: results/patchseq-mpfr-toolchain-1504
+toolchain_builder: scripts/build_patchseq_mpfr_toolchain.py
+dependencies:
+  - name: gmp
+    version: 6.3.0
+    archive: gmp-6.3.0.tar.xz
+    source_directory: gmp-6.3.0
+    url: https://ftp.gnu.org/gnu/gmp/gmp-6.3.0.tar.xz
+    sha256: a3c2b80201b89e68616f4ad30bc66aee4927c3ce50e33929ca819d5c43538898
+    checksum_reference: https://raw.githubusercontent.com/Homebrew/homebrew-core/HEAD/Formula/g/gmp.rb
+  - name: mpfr
+    version: 4.2.2
+    archive: mpfr-4.2.2.tar.xz
+    source_directory: mpfr-4.2.2
+    url: https://www.mpfr.org/mpfr-4.2.2/mpfr-4.2.2.tar.xz
+    sha256: b67ba0383ef7e8a8563734e2e889ef5ec3c3b898a01d00fa0a6869ad81c6ce01
+    checksum_reference: https://raw.githubusercontent.com/Homebrew/homebrew-core/HEAD/Formula/m/mpfr.rb
+dependency_policy:
+  location: isolated-project-results-prefix-not-system-or-frozen-Python-environment
+  build: pinned-source-archives-clang-static-PIC-libraries-two-local-jobs
+  checks: full-upstream-make-check-before-install-or-backend-use
+  provenance: source-sha256-compiler-version-hash-configuration-flags-command-logs-and-installed-header-library-hashes
+  archive_policy: bounded-HTTPS-download-exact-archive-hash-and-data-filtered-extraction-no-overwrite
+  PGP_signature_verification: not-claimed-gpg-unavailable-in-checked-environment
+  trust_boundary: TLS-source-delivery-and-SHA256-from-distribution-maintainer-metadata-not-independent-upstream-PGP-authentication
+  dependency_binaries_redistributed: false
+backend_contract:
+  interface: raw-MPFR-C-API-with-mpfr_init2-at-exact-binary-bit-width-no-decimal-Digits10-substitution
+  rounding: MPFR_RNDN-explicit-on-every-operation-no-faithful-or-default-precision-mode
+  input_and_coefficient_lift: exact-existing-binary64-values-via-mpfr_set_d-not-new-exact-decimal-constants
+  arithmetic_order: preserve-the-existing-RK4-and-rate-expression-operation-order-no-reassociation-or-fused-replacement
+  exponentials: mpfr_exp-and-mpfr_expm1-with-analytic-zero-argument-vtrap-limit
+  intermediate_storage: preallocated-per-context-and-full-precision-through-chunks
+  precision_and_step_conditions: preserve-the-registered-53-native-control-and-160-320-high-precision-conditions-and-original-refinement-matrix
+  checkpoint: lossless-full-internal-state-plus-native-position-and-exact-build-input-configuration-binding
+  failure: retain-finite-stage-gate-and-error-support-no-clipping-replacement-or-favorable-fallback
+prospective_validation_gates:
+  - Verify dependency versions, exact precision width, rounding mode, cancellation and binary64 lifting before any timings.
+  - Run short synthetic passive, active, singular-rate and current-edge cases against sealed Boost and an independent high-precision implementation.
+  - Preserve bitwise identity for same-backend chunk/repeat/resume; cross-backend comparison must retain the existing waveform, typed-feature and loss tolerances, not require undocumented identical transcendental last bits.
+  - Seal a separate full-length synthetic equivalence/performance case table and stopping rules before its execution.
+  - Include every planned case and failure; source or numerical disagreement stops promotion and cannot be repaired by weaker gates or parameters.
+  - Measure complete primary-and-independent-route cost, storage and selected-control overhead before proposing any biological full-table run.
+scope:
+  initial_source_and_dependency_preparation_only: true
+  new_backend_neuron_benchmarks_authorized_by_this_file: false
+  full_length_synthetic_runner_sealed: false
+  full_table_biological_execution_authorized: false
+  fitting_restart_authorized: false
+  held_out_response_access_authorized: false
+  network_promotion_authorized: false
+  paid_or_external_compute_authorized: false
+  frozen_baseline_modified: false
+documentation:
+  - https://www.mpfr.org/mpfr-current/mpfr.html
+  - https://www.mpfr.org/mpfr-4.2.2/
+  - https://gmplib.org/

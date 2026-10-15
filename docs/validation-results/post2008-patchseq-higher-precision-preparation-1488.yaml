@@ -1,0 +1,95 @@
+schema_version: 1
+artifact_id: 1488
+date: 2026-10-15
+status: synthetic-prototype-prepared-biological-execution-not-yet-sealed
+authority: human-selected-higher-precision-diagnostic-on-the-same-two-inputs
+predecessor_assessment: docs/validation-results/post2008-patchseq-reference-convergence-assessment-1487.yaml
+purpose: distinguish-arithmetic-precision-sensitivity-from-step-size-sensitivity-without-fitting
+scope:
+  stratum: Pvalb-L23
+  candidate_index: 19
+  source_keys: [[append, 3, 4], [append, 3, 11]]
+  original_checkpoint: results/patchseq-isolated-fit-1438/checkpoint.json
+  original_checkpoint_sha256: 29539a6dc1feb29b3ba2d4d87a9324b91ead0681eddf6b6db80abad80aa7f105
+  original_scores_preserved: true
+  held_out_response_access: forbidden
+  fitting_restart: forbidden
+  frozen_classic_baseline_changes: forbidden
+prototype:
+  source: scripts/patchseq_hh_precision_kernel.cpp
+  tests: tests/test_patchseq_precision_prototype.py
+  implementation: same-five-state-Na-K-M-equations-with-template-arithmetic-and-explicit-initial-state
+  native_control_significand_bits: 53
+  multiprecision_significand_bits: [160, 320]
+  local_dependency: Boost-1.90-header-only-cpp_bin_float
+  local_platform_caution: NumPy-longdouble-has-52-explicit-mantissa-bits-no-extra-precision-here
+  precision_check: numeric-limits-digits-and-one-plus-two-to-minus-100-cancellation-probe
+  exact_input_lift: binary64-parameters-currents-initial-states-and-step-values-converted-directly-to-binary-multiprecision
+  constants: nonintegral-coefficients-lift-existing-binary64-literals-not-reinterpreted-exact-decimal-constants
+  output: five-native-grid-state-variables-rounded-to-binary64-for-existing-measurement-pipeline
+  output_boundary: no-claim-of-160-or-320-bit-accuracy-for-exported-binary64-arrays
+  rejected_inputs: unsupported-precision-factor-nonfinite-input-nonpositive-capacitance-or-time-constant-negative-conductance-invalid-observed-gates
+  no_resets_clipping_or_parameter_estimation: true
+synthetic_checks:
+  result: 15-passed
+  total_elapsed_s: 3.16
+  scope:
+    - Actual precision and cancellation probe at all three precision levels.
+    - Passive analytic voltage solution with exact sample-held current edges and explicit initial state.
+    - All five states against independent Python mpmath RK4 at 150 decimal digits on a short active synthetic trace.
+    - Active comparisons at native and fourfold refinement, for all three precisions.
+    - Multiprecision short synthetic exports agree exactly with independent high-precision exports.
+    - Invalid inputs and gate states fail rather than being clipped or silently repaired.
+  caveat: synthetic-tests-do-not-establish-biological-trace-convergence-or-original-score-validity
+prospective_runner_contract:
+  state: preparation-only-requires-separate-source-complete-registration-and-execution-seal
+  fixed_grid: exact-native-training-command-rate-full-command-plus-original-one-second-warmup
+  holding: add-native-holding-once-in-binary64-before-common-exact-lift
+  initialization:
+    - Capture a single explicit five-state vector from the original Brian2 equilibrium initialization at the original leak voltage.
+    - Retain exact binary64 values and hashes; lift the identical vector in every arithmetic arm.
+    - Do not recompute separate precision-dependent equilibrium gates or use observed voltages to initialize.
+    - Record that unit conversion to mV and a common explicit vector isolate arithmetic within this diagnostic, not bitwise equivalence to the original SI implementation.
+  proposed_factorial:
+    arithmetic_significand_bits: [53, 160, 320]
+    RK4_native_step_divisors: [4, 8, 16]
+    inputs: 2
+    proposed_case_count: 18
+    status: to-be-locked-before-training-command-execution-not-an-execution-seal
+  step_convention: common-binary64-1000-divided-by-rate-times-factor-lifted-identically-no-time-dependent-current-interpolation
+  budget:
+    - Benchmark a fixed synthetic trace at each precision before locking a per-case time budget and case table.
+    - Do not use biological trace outcomes to choose precisions, refinements or budgets.
+    - Preserve interrupted or failed cases; no replacement or precision expansion after outcomes.
+  gate_semantics: check-native-grid-gate-bounds-as-in-predecessor-with-finite-RK-stages-no-new-clipping
+  provenance:
+    - Pin source, original checkpoint, protocols and both exact command/holding receipts before execution.
+    - Retain compiler executable hash/version/flags, Boost version and transitive header dependency hashes, binary hash and actual precision probes.
+    - Use an exclusive diagnostic lock and shared original/compiled fitting locks; no concurrent fitting.
+    - Resume only identical case tables and hashes; never overwrite orphan arrays or failed cases.
+  independent_verification:
+    - Pin an independent saved-array feature/scoring and comparison audit before biological execution.
+    - Verify complete fixed case support, original checkpoint integrity, input edges, initial-state identity and binary64 export hashes.
+    - Independently replay a fixed short synthetic case for the retained build before trusting its precision receipts.
+  comparisons:
+    arithmetic: compare-160-versus-320-at-each-fixed-step-size
+    discretization: compare-fourfold-versus-eightfold-and-eightfold-versus-sixteenfold-at-each-precision
+    native_control: compare-53-versus-each-multiprecision-arm-at-each-fixed-step-size
+    criteria:
+      waveform_maximum_mV: 0.00001
+      full_features: unchanged-original-feature-agreement-including-exact-event-counts
+      sweep_loss_absolute_tolerance: 0.000001
+      sweep_loss_relative_tolerance: 0.00000001
+    qualification: require-both-160-versus-320-at-sixteenfold-and-eightfold-versus-sixteenfold-at-both-high-precisions-to-pass-for-each-input
+    whole_waveform: include-warmup-and-release-not-only-scored-step-no-relaxation-to-aggregate-counts
+interpretation:
+  - Agreement across arithmetic precision alone does not establish time-step convergence.
+  - A successful solver exit or plausible number of spikes is not reference qualification.
+  - Finite precision/refinement agreement is bounded evidence, not a rigorous global error bound or proof of a unique exact trajectory.
+  - Boost transcendental functions are not guaranteed correctly rounded; independent synthetic agreement is not a proof for every argument.
+  - Failure remains unresolved numerical reliability; do not diagnose mathematical chaos from this test alone.
+  - Even successful qualification on two fixed inputs does not validate all 768 candidate-stratum combinations or authorize any production transition.
+next_step: complete-build-receipts-fixed-synthetic-benchmark-registered-runner-and-independent-audit-then-seal-before-real-command-replay
+documentation:
+  - https://www.boost.org/latest/libs/multiprecision/doc/html/boost_multiprecision/tut/floats/cpp_bin_float.html
+  - https://mpmath.org/doc/current/contexts.html

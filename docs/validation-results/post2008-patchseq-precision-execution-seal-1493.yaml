@@ -1,0 +1,48 @@
+schema_version: 1
+artifact_id: 1493
+date: 2026-10-15
+status: sealed-before-first-biological-command-replay
+registered_source_commit: b1336fe
+registration: docs/validation-results/post2008-patchseq-precision-registration-1490.yaml
+registration_sha256: e419d1b6ebe4c886138be597a229044a75cbcc4dca1a1a1341d74245e00b023e
+implementation_hashes:
+  scripts/patchseq_hh_precision_kernel.cpp: 1d6b33d709948f5abfcddb4d6bf5a7049e48255e04c7faf7b66a65723c19f7d8
+  scripts/patchseq_precision_driver.py: 145ffd59d8ab6bf6679fc1f04cfff340519d06b9cc955ebf8bbdf0af402096d0
+  scripts/run_patchseq_precision_diagnostic.py: e0c9a6aed5a9e7356221e154d4905eecd287886956bc1f5a49abf5cbd08d640a
+  scripts/verify_patchseq_precision_diagnostic.py: 39e3d6eaa88f8d5a6fa45ab9e4116ff7e70f48e3d3eb38de3d93e3e166000161
+build_receipt: results/patchseq-precision-diagnostic-1491/build/build.yaml
+build_receipt_sha256: a5a35af17a837907e82fbed3a50dfc73189018ab325ffdb01b46dab49d64c765
+binary_sha256: cf55392bc1d375a8813f5a8adb0ae75cc2a960d83caaf3683ca1dec7d43a7c55
+compiler_sha256: 34129c71a01a74f7f3b2443521519b2e5447553fa187f5fcafaaf8c42cc192e2
+transitive_source_and_header_count: 1079
+dependency_closure_check: independently-enumerated-with-all-actual-build-flags-and-matches-retained-receipt
+precision_probes:
+  - {requested_bits: 53, actual_bits: 53, one_plus_two_to_minus_100_minus_one: 0.0}
+  - {requested_bits: 160, actual_bits: 160, one_plus_two_to_minus_100_minus_one: 7.888609052210118e-31}
+  - {requested_bits: 320, actual_bits: 320, one_plus_two_to_minus_100_minus_one: 7.888609052210118e-31}
+original_checkpoint_sha256: 29539a6dc1feb29b3ba2d4d87a9324b91ead0681eddf6b6db80abad80aa7f105
+original_execution_seal_sha256: 9e9f5f5b74d495389b2f31ad7ba4d26c07ab2108df8b13c89ec249daad370ac9
+preflight:
+  targeted_precision_prototype_driver_and_audit_tests: 35-passed-26-third-party-warnings-11.49-seconds
+  large_excursion_test: synthetic-positive-voltage-excursion-agrees-with-independent-150-decimal-digit-RK4-at-both-high-precisions
+  ruff: clean
+  diff_check: clean
+  all_registered_prerequisite_hashes: agree
+  exact_fitting_and_precision_runner_process_check: none-active-before-launch
+  biological_output_cases_exist: false
+  whole_repository_regression: still-computing-in-session-77934-not-yet-claimed-passing
+execution:
+  command: MPLCONFIGDIR=/private/tmp/mpl HDF5_PLUGIN_PRELOAD=:: .venv/bin/python scripts/run_patchseq_precision_diagnostic.py
+  cases: 18
+  output: results/patchseq-precision-diagnostic-1491/checkpoint.json
+  case_wall_clock_limit_s: 7200
+  allowed_monitor_interval_minutes: 15
+  result_estimate: synthetic-timing-suggests-a-few-hours-not-a-guarantee
+  audit_command: MPLCONFIGDIR=/private/tmp/mpl HDF5_PLUGIN_PRELOAD=:: .venv/bin/python scripts/verify_patchseq_precision_diagnostic.py
+  audit_output: results/patchseq-precision-diagnostic-independent-1492/manifest.yaml
+  resume: identical-sources-inputs-build-and-case-table-no-failure-replacement-no-orphan-overwrite
+claim_boundaries:
+  - Both fitters remain stopped and every original score remains intact.
+  - No held-out response features, new fitting, tuning, gate weakening, neuron parameter changes or baseline edits.
+  - Tests and successful process exits do not establish numerical convergence or scientific-goal completion.
+  - Audit and assess all cases and failures independently before any interpretation or next scientific decision.

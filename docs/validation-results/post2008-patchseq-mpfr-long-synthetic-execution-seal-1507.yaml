@@ -1,0 +1,61 @@
+schema_version: 1
+artifact_id: 1507
+date: 2026-10-15
+status: sealed-before-long-synthetic-execution
+registration: docs/validation-results/post2008-patchseq-mpfr-long-synthetic-registration-1506.yaml
+implementation_commit: df0c88fcb2bcb5147c98d8dc2052ee3750c8d41c
+preceding_exact_head_CI: https://github.com/OgnjenX/smart-robustness/actions/runs/38755996716
+preceding_exact_head_CI_conclusion: success
+human_resource_budget_confirmed: true
+human_authorization: recommended-eight-hour-runtime-limit-per-invocation-and-continue-pursuing-goal
+maximum_invocation_seconds: 28800
+maximum_case_seconds: 3600
+monitor_interval_minutes: 15
+execution:
+  command: MPLCONFIGDIR=/private/tmp/mpl HDF5_PLUGIN_PRELOAD=:: .venv/bin/python scripts/run_patchseq_mpfr_synthetic.py
+  output: results/patchseq-mpfr-long-synthetic-1508
+  workers: one-local-worker-at-a-time
+  budget_boundary: checkpoint-between-cases-with-full-timeout-reserve-no-mid-case-forced-budget-stop
+  continuing_invocations: reassess-source-and-case-evidence-and-exact-live-process-before-resuming-unchanged-pending-cases-under-same-eight-hour-limit
+  no_automatic_rerun: interrupted-case-or-orphan-artifacts-require-evidence-inspection-and-human-direction
+  total_matrix: all-68-fixed-cases-and-failures-no-successful-subset-qualification
+preflight:
+  no_identical_or_production_runner_observed: true
+  available_disk_GiB: 279
+  related_tests_passed: 148
+  test_elapsed_seconds: 20.44
+  ruff: clean
+  raw_results_and_dependency_binaries_committed: false
+source_pin_scope: recursive-local-Python-import-closure-both-Cpp-kernels-prerequisites-and-immutable-original-evidence
+build_pin_scope: runtime-compiler-header-library-binary-and-receipt-hashes-added-by-runner-before-each-case
+independent_audit:
+  command: .venv/bin/python scripts/verify_patchseq_mpfr_synthetic.py
+  gate: full-terminal-matrix-before-independent-saved-array-support-feature-loss-repeat-and-passive-oracle-assessment
+  no_third_active_forward_engine_claim: true
+boundaries:
+  production_fitters_resumed: false
+  biological_command_or_response_access: false
+  held_out_access: false
+  historical_scores_replaced: false
+  search_or_parameters_changed: false
+  gates_weakened: false
+  network_promotion: false
+  frozen_baseline_modified: false
+  scientific_goal_complete: false
+source_hashes:
+  docs/validation-results/post2008-patchseq-isolated-fit-execution-seal-1437.yaml: 9e9f5f5b74d495389b2f31ad7ba4d26c07ab2108df8b13c89ec249daad370ac9
+  docs/validation-results/post2008-patchseq-mpfr-long-synthetic-preparation-1509.yaml: 774fbaf20da24ba4bb8d76762ba80449d438eaa3244aa46454a73f15169dd2fa
+  docs/validation-results/post2008-patchseq-mpfr-long-synthetic-registration-1506.yaml: 02881faea800f93f78dbb1abdc9db5b22a3e25a2a9dde21b6ae952f1a2b94cdc
+  results/patchseq-isolated-fit-1438/checkpoint.json: 29539a6dc1feb29b3ba2d4d87a9324b91ead0681eddf6b6db80abad80aa7f105
+  results/patchseq-mpfr-toolchain-1504/checkpoint.json: 2c372f578c13430e32a1a3caa24bd467e5cff363fae1f4589956ee610da0c11d
+  scripts/patchseq_fit_objective.py: b66b08bdf1ada03f394335255f2dc9beddbe74010d4b3fdb7143ed6726be4a40
+  scripts/patchseq_hh_precision_kernel.cpp: 1d6b33d709948f5abfcddb4d6bf5a7049e48255e04c7faf7b66a65723c19f7d8
+  scripts/patchseq_isolated_hh.py: 929d0f466fa13fa2dc234a65698f0c646f17762de748857ab979754c44bdc1f6
+  scripts/patchseq_mpfr_driver.py: b90fa56eed795fc684a6ac88a77c85d9af6c637bfecc3646d34685b5f7c4d444
+  scripts/patchseq_mpfr_kernel.cpp: b0bfd3496bd77c8303798ff25502628db6c1346332759716f641e718be96f543
+  scripts/patchseq_precision_driver.py: 145ffd59d8ab6bf6679fc1f04cfff340519d06b9cc955ebf8bbdf0af402096d0
+  scripts/patchseq_response_features.py: 1fe052c0b366f221c3c1423a49483a748474aa62a55d218df8a752757e227a14
+  scripts/run_patchseq_mpfr_synthetic.py: 6e10073897cd7c1f3998d04a0a85a7a6e06602833c00c6b7f6157a4b1cb8ca06
+  scripts/verify_patchseq_fitting_targets.py: b8129fb32d621d66ab2f7954da7473e9ed9092f3b7d4e0ebef3f74bf969f8409
+  scripts/verify_patchseq_mpfr_synthetic.py: 89980003b739d883c61fd9bcb033450d8c9df92a46382d7a8fec130a9ed62e76
+  scripts/verify_patchseq_whole_file_integrity.py: 22e40726389126ff7a875794138145d222ed5b87515e87a2ec9bccadce78c057

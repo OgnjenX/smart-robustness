@@ -1,0 +1,110 @@
+schema_version: 1
+artifact_id: 1482
+date: 2026-10-15
+status: diagnosed-numerical-sensitivity-and-refinement-gate-failure-not-scoring-bug
+scope: authorized-mismatch-investigation-only-not-production-repair-or-fitting-resume
+registrations:
+  initial: docs/validation-results/post2008-patchseq-mismatch-localization-registration-1478.yaml
+  numerical: docs/validation-results/post2008-patchseq-mismatch-numerics-registration-1480.yaml
+prospective_execution_commits: [fa40532, 6fd85d5]
+raw_evidence:
+  initial_checkpoint: results/patchseq-mismatch-localization-1479/checkpoint.json
+  initial_sha256: 54cb4fc22e5661521afd458913db319c089968a1f8e02d766585199b96520916
+  numerical_checkpoint: results/patchseq-mismatch-numerics-1481/checkpoint.json
+  numerical_sha256: 1e41e405b8dab0dc9c4c0d7b435efcecb153e0144af94743852c46e8d6ef093b
+  original_checkpoint: results/patchseq-isolated-fit-1438/checkpoint.json
+  original_sha256: 29539a6dc1feb29b3ba2d4d87a9324b91ead0681eddf6b6db80abad80aa7f105
+fixed_candidate: {stratum: Pvalb-L23, candidate_index: 19}
+initial_diagnostic:
+  characterized_training_sweeps: 40
+  same_voltage_primary_independent_extractor_disagreements: 0
+  four_extractor_scorer_aggregate_loss_min: 228.05602629412402
+  four_extractor_scorer_aggregate_loss_max: 228.05602629412405
+  retained_original_loss: 227.33445114824977
+  interpretation: disagreement-precedes-feature-extraction-and-scoring-under-the-retained-input-parameter-contract
+  negative_command_source_key: [append, 3, 4]
+  original_rate_hz: 50000.0
+  negative_command_full_trace_maximum_cross_engine_difference_mV: 25.419317351539135
+  first_difference_above_1e_5_mV_seconds: 2.53718
+  negative_command_step_feature_disagreements: 0
+  caution: whole-record-waveform-disagreement-can-occur-outside-the-scored-step-window
+positive_command_diagnostic:
+  source_key: [append, 3, 11]
+  selection_basis: first-positive-command-source-key-not-neural-output-or-fitness
+  original_dt_ms: 0.02
+  diagnostic_half_dt_ms: 0.01
+  observed_grid_unchanged: true
+  replays:
+    brian_original_dt: {detected_events: 6, loss: 114.70902699692313}
+    compiled_original_dt: {detected_events: 5, loss: 120.55368145902851}
+    independent_numpy_original_dt: {detected_events: 5, loss: 120.74457419484513}
+    brian_half_dt: {detected_events: 5, loss: 120.76592967105336}
+    compiled_half_dt: {detected_events: 5, loss: 120.25566615453504}
+  maximum_waveform_difference_mV:
+    compiled_vs_brian_original_dt: 76.77896183657509
+    compiled_vs_numpy_original_dt: 66.38734799220781
+    compiled_vs_brian_half_dt: 18.654401690502336
+    brian_original_vs_half_dt: 76.5305188203156
+    compiled_original_vs_half_dt: 58.770710933973774
+  existing_refinement_voltage_gate_mV: 0.1
+  brian_refinement_voltage_gate_pass: false
+  compiled_refinement_voltage_gate_pass: false
+  brian_refinement_event_count_gate_pass: false
+  compiled_refinement_event_count_gate_pass: true
+  cross_engine_half_dt_waveform_gate_mV: 0.00001
+  cross_engine_half_dt_waveform_gate_pass: false
+  conclusion: halving-dt-does-not-establish-sealed-waveform-convergence-or-backend-equivalence
+predicted_array_sha256:
+  brian-dt: 4f41c21a6bf5c28c530a68d73cee8217e3cf87a05b0043d1db7d450ae2b348ef
+  brian-half-dt: f58793337d74d691df88b0d424af7bf1fdbe67fb0e31c7bb629aa83e5d46e4a4
+  compiled-dt: e25e3d2f8010b977b249b99dcb8d3786b460da556e56b6a528845677b127c0d7
+  compiled-half-dt: c7cf4afea7213f69af4540ba0abe9cd4d4a1813832b5aa4e95b282890c1f1611
+  numpy-dt: d24a3fb21dde94ea19928f9524633489e146b10c671e4b61451fd7fcec9361f8
+independent_terminal_audit:
+  all_five_predicted_array_hashes_shapes_and_finiteness_checked: true
+  all_five_predicted_feature_sets_reconstructed_independently: true
+  all_five_sweep_scores_and_gate_booleans_reconstructed_independently: true
+  all_five_waveform_pair_maxima_and_first_divergence_times_recomputed: true
+  fixed_positive_command_selection_recomputed_from_independent_command_reader: true
+  independent_training_command_files: 5
+  decoded_training_command_float64_bytes: 72552000
+  all_40_initial_same_trace_extractor_and_scorer_comparisons_inspected: true
+  all_recorded_source_and_build_binary_pins_match: true
+  original_checkpoint_and_execution_seal_1437_intact: true
+  raw_traces_resimulated_by_terminal_audit: false
+interpretation: >-
+  The discrepancy is localized upstream of feature extraction and scoring to
+  numerically sensitive predicted trajectories for this fixed candidate/input.
+  Tiny early arithmetic differences can amplify into materially different
+  waveforms and event counts. Independent NumPy disagreement means the problem
+  is not exclusive to the new compiled implementation. Original Brian2's own
+  original-versus-half-dt event count changes, so retaining Brian2 alone does
+  not establish time-step robustness for this candidate. Half-dt event-count
+  agreement across engines is insufficient because their waveforms and scores
+  still disagree. The original-dt waveform/refinement gates fail on this
+  diagnostic; the candidate is not thereby removed from any frozen table.
+unresolved:
+  - Unique low-level floating-point operation responsible for divergence is not isolated.
+  - Mathematical chaos, stiffness, proximity to a bifurcation and discrete-integrator instability are not uniquely distinguished.
+  - No higher-precision reference, adaptive error-controlled reference or further dt refinement was executed.
+  - No complete original Brian2 aggregate refit or all-candidate convergence study was performed.
+  - Results do not show that SMART, HH neurons or an entire neuron family fails.
+disposition:
+  compiled_transition_authorized: false
+  fitting_resume_authorized_by_this_assessment: false
+  production_time_step_change_authorized: false
+  original_candidate_or_score_discarded: false
+  original_20_candidate_rows_preserved: true
+  tolerance_relaxed: false
+  parameters_tuned: false
+  held_out_response_features_read: false
+  frozen_baseline_modified: false
+  mismatch_investigation_completed_with_stated_limits: true
+  overall_scientific_goal_complete: false
+next_recommended_decision: >-
+  Seek authorization for a separately preregistered numerical-convergence and
+  reference-solver study before deciding any production integration amendment.
+  Preserve the failed transition and all original scores; do not rescue it by
+  widening tolerances, omitting candidate 19, or asserting that one backend is
+  ground truth. No fitting resumes automatically. Disable the completed
+  diagnostic monitor because no long-running calculation remains.

@@ -1,0 +1,33 @@
+schema_version: 1
+artifact_id: 1480
+date: 2026-10-15
+status: prospective-numerical-localization-after-diagnostic-1479-before-additional-replays
+implementation: scripts/diagnose_patchseq_mismatch_numerics.py
+predecessor: results/patchseq-mismatch-localization-1479/checkpoint.json
+output: results/patchseq-mismatch-numerics-1481
+original_checkpoint: results/patchseq-isolated-fit-1438/checkpoint.json
+original_sha256: 29539a6dc1feb29b3ba2d4d87a9324b91ead0681eddf6b6db80abad80aa7f105
+candidate_index: 19
+stratum: Pvalb-L23
+source_case: lexicographically-first-source-key-with-positive-command-delta-in-fixed-40-sweep-training-input-set
+selection_basis: input-command-only-not-neural-output-fitness-or-favorable-agreement
+replays:
+  - Brian2 original source dt.
+  - Compiled original source dt.
+  - Independent NumPy original source dt.
+  - Brian2 half source dt then downsample original grid.
+  - Compiled half source dt then downsample original grid.
+diagnostics:
+  - Full-waveform and step-feature agreement at each fixed dt.
+  - Per-engine original-versus-half-dt waveform and feature changes.
+  - Score terms for all replays through original objective.
+  - First divergence times and predicted arrays retained with hashes.
+original_cross_engine_voltage_tolerance_mV: 0.00001
+original_refinement_voltage_tolerance_mV: 0.1
+original_feature_and_loss_tolerances_unchanged: true
+boundaries:
+  - Same single fixed parameter vector, nominal holding, initialization and one-second warmup.
+  - No candidate search, parameter update, replacement or production time-step change.
+  - One fixed sweep only; failures retained without replacement.
+  - Neither fitting runner resumes; held-out response features remain unopened.
+  - Numerical evidence is not proof of mathematical chaos or biological fit validity.

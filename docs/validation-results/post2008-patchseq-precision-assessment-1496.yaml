@@ -1,0 +1,160 @@
+schema_version: 1
+artifact_id: 1496
+date: 2026-10-15
+status: independently-audited-bounded-high-precision-reference-qualified-no-production-promotion
+study_registration: docs/validation-results/post2008-patchseq-precision-registration-1490.yaml
+source_seal_commit: b1336fe
+execution_seal: docs/validation-results/post2008-patchseq-precision-execution-seal-1493.yaml
+execution_seal_commit: fd014c2
+execution_seal_sha256: 83af880df39ba2cc0d16ab24d1941f4ed66f76f6c85723d567e6300a707aae64
+raw_result: results/patchseq-precision-diagnostic-1491/checkpoint.json
+raw_result_sha256: 58f5a557dd577808d9038213acf9910c037470a9080dd329d1f9327f21c60e31
+independent_audit: results/patchseq-precision-diagnostic-independent-1492/manifest.yaml
+independent_audit_sha256: 96dd2ed8c72fb69d2071140cbc855a24ee97434cc2aff94be5a4b83f7a54fe81
+original_checkpoint_sha256: 29539a6dc1feb29b3ba2d4d87a9324b91ead0681eddf6b6db80abad80aa7f105
+original_execution_seal_sha256: 9e9f5f5b74d495389b2f31ad7ba4d26c07ab2108df8b13c89ec249daad370ac9
+scope:
+  stratum: Pvalb-L23
+  candidate_index: 19
+  source_keys: [[append, 3, 4], [append, 3, 11]]
+  arithmetic_significand_bits: [53, 160, 320]
+  RK4_step_ms: [0.005, 0.0025, 0.00125]
+  completed_replays: 18
+  failed_replays: 0
+  audited_saved_state_arrays: 18
+  audited_comparisons: 30
+  comparison_passes: 10
+  comparison_failures: 20
+  qualified_inputs: 2
+  qualification_inputs: 2
+  source_compiler_and_1079_header_dependency_hashes_intact: true
+  independent_array_feature_loss_receipt_and_qualification_checks_agree: true
+  initial_state: same-explicit-Brian2-equilibrium-state-lifted-in-every-arithmetic-arm
+  initial_coordinate: fixed-binary64-mV-and-dimensionless-gates-not-a-redefinition-of-historical-SI-floating-point-operations
+  constants: exact-lifts-of-existing-binary64-nonintegral-coefficients
+  warmup_s: 1.0
+  output_grid_hz: 50000
+  waveform_comparison: full-command-and-warmup-including-release-not-only-scored-step
+unchanged_acceptance:
+  waveform_maximum_difference_mV: 0.00001
+  full_features: original-typed-feature-agreement-including-exact-event-counts
+  loss_absolute_tolerance: 0.000001
+  loss_relative_tolerance: 0.00000001
+  required_per_input:
+    - All nine replay cases succeed.
+    - At step divisor 16, 160-bit and 320-bit runs agree on waveform, full features and loss.
+    - At both high precisions, step divisors 8 and 16 agree on the same unchanged gates.
+negative_command:
+  source_key: [append, 3, 4]
+  reference_qualified: true
+  high_precision_160_320_at_finest_step_max_difference_mV: 0.0
+  high_precision_eightfold_sixteenfold_max_difference_mV: 0.000002009789479728852
+  all_nine_scored_step_event_counts: 0
+  high_precision_finest_step_loss: 42.843517346843335
+  native_53_bit_finest_step_loss: 42.84351734684352
+  native_53_bit_versus_320_bit_finest_step_max_difference_mV: 57.28509927087083
+  interpretation: scored-step-features-and-losses-agree-but-native-double-whole-trajectory-does-not
+positive_command:
+  source_key: [append, 3, 11]
+  reference_qualified: true
+  high_precision_160_320_at_finest_step_max_difference_mV: 7.105427357601002e-15
+  high_precision_eightfold_sixteenfold_max_difference_mV: 0.000002501469158033842
+  all_nine_scored_step_event_counts: 5
+  high_precision_finest_step_loss: 136.87576939013348
+  native_53_bit_finest_step_loss: 120.53895119945751
+  native_53_bit_versus_320_bit_finest_step_max_difference_mV: 51.05215859966104
+  native_53_bit_versus_high_precision_full_features_and_loss_agree: false
+  interpretation: equal-event-counts-do-not-establish-feature-loss-or-waveform-equivalence
+unfavorable_controls_retained:
+  - Both high-precision fourfold/eightfold waveform comparisons fail on each input; positive-input full features also fail there.
+  - Every 53-bit versus high-precision waveform comparison fails on both inputs at every registered step size.
+  - Both 53-bit step-refinement comparisons fail whole-waveform agreement for each input.
+  - Positive-input native-double full features and losses disagree with the high-precision references at all registered steps.
+  - Negative-input scored-step features and losses agree despite large whole-record native-double differences.
+independent_audit_boundary:
+  all_fixed_case_keys_failures_and_comparisons_checked: true
+  full_current_initial_state_array_and_output_hashes_verified: true
+  independent_primary_input_decoder_used: true
+  observed_response_arrays_opened: false
+  independent_saved_array_features_and_losses_reconstructed: true
+  original_checkpoint_and_execution_seal_rechecked: true
+  source_snapshot_stability_checked_under_terminal_shared_lock: true
+  all_precision_trajectories_independently_resimulated: false
+  internal_multiprecision_states_preserved_without_rounding: false
+  exported_states: binary64-native-grid-v-m-h-n-p
+  precision_evidence: retained-kernel-types-width-and-cancellation-probes-plus-independent-high-precision-synthetic-tests
+  limitation: saved-array-audit-is-not-a-second-end-to-end-arbitrary-precision-integration
+scientific_conclusion: >-
+  Both fixed candidate-19 inputs qualify under the prospectively registered
+  finite high-precision and time-step agreement criteria. Agreement between
+  160- and 320-bit arithmetic alone is supplemented by agreement between the
+  two finest registered RK4 steps at each high precision. In contrast, the
+  native-double controls remain materially different. This establishes a
+  bounded, numerically qualified diagnostic reference for these exact shared
+  initial-state/input/constant conventions; it does not restore the original
+  candidate score, prove global convergence, diagnose mathematical chaos or
+  identify a unique low-level arithmetic operation as the cause. It does not
+  numerically validate the full candidate table, six-stratum training maps,
+  held-out predictions, physiological fit or SMART behavior.
+disposition:
+  fixed_precision_diagnostic_and_independent_audit_complete: true
+  original_compiled_fitting_transition_still_rejected: true
+  original_scores_preserved_not_silently_corrected: true
+  production_fitting_resumed: false
+  production_integration_change_authorized: false
+  parameter_or_candidate_replacement_authorized: false
+  candidate_omission_or_search_expansion_authorized: false
+  gates_weakened: false
+  held_out_response_features_read: false
+  frozen_baseline_modified: false
+  overall_scientific_goal_complete: false
+next_decision: >-
+  The two-input diagnostic gate is closed, but the numerical admissibility of
+  the unchanged full six-stratum, 128-candidate-per-stratum screen is not. A
+  separate prospective numerical-admissibility and execution-amendment design
+  is the next step before any fitting restart or held-out access. It must keep
+  every original row and failure, retain all 768 candidate-stratum combinations,
+  forbid outcome-guided parameter/search changes and candidate replacement,
+  justify a computationally feasible verified arithmetic/integration route,
+  and validate training-map selection independently. Do not extrapolate these
+  two references to the remaining sweeps or automatically substitute a new
+  production solver, precision, step size or score.
+independent_comparison_details:
+  append-3-4:
+    reference_qualified: true
+    stored_summary_agrees: true
+    comparisons:
+      "160-4/320-4": {"passed":true,"replays_complete":true,"maximum_waveform_difference_mV":0,"feature_agreement":true,"loss_agreement":true}
+      "160-8/320-8": {"passed":true,"replays_complete":true,"maximum_waveform_difference_mV":0,"feature_agreement":true,"loss_agreement":true}
+      "160-16/320-16": {"passed":true,"replays_complete":true,"maximum_waveform_difference_mV":0,"feature_agreement":true,"loss_agreement":true}
+      "53-4/53-8": {"passed":false,"replays_complete":true,"maximum_waveform_difference_mV":27.72575094729839,"feature_agreement":true,"loss_agreement":true}
+      "53-8/53-16": {"passed":false,"replays_complete":true,"maximum_waveform_difference_mV":70.04884562914413,"feature_agreement":true,"loss_agreement":true}
+      "160-4/160-8": {"passed":false,"replays_complete":true,"maximum_waveform_difference_mV":0.00003240751361843763,"feature_agreement":true,"loss_agreement":true}
+      "160-8/160-16": {"passed":true,"replays_complete":true,"maximum_waveform_difference_mV":0.000002009789479728852,"feature_agreement":true,"loss_agreement":true}
+      "320-4/320-8": {"passed":false,"replays_complete":true,"maximum_waveform_difference_mV":0.00003240751361843763,"feature_agreement":true,"loss_agreement":true}
+      "320-8/320-16": {"passed":true,"replays_complete":true,"maximum_waveform_difference_mV":0.000002009789479728852,"feature_agreement":true,"loss_agreement":true}
+      "53-4/160-4": {"passed":false,"replays_complete":true,"maximum_waveform_difference_mV":57.55540572117818,"feature_agreement":true,"loss_agreement":true}
+      "53-4/320-4": {"passed":false,"replays_complete":true,"maximum_waveform_difference_mV":57.55540572117818,"feature_agreement":true,"loss_agreement":true}
+      "53-8/160-8": {"passed":false,"replays_complete":true,"maximum_waveform_difference_mV":57.486689004024015,"feature_agreement":true,"loss_agreement":true}
+      "53-8/320-8": {"passed":false,"replays_complete":true,"maximum_waveform_difference_mV":57.486689004024015,"feature_agreement":true,"loss_agreement":true}
+      "53-16/160-16": {"passed":false,"replays_complete":true,"maximum_waveform_difference_mV":57.28509927087083,"feature_agreement":true,"loss_agreement":true}
+      "53-16/320-16": {"passed":false,"replays_complete":true,"maximum_waveform_difference_mV":57.28509927087083,"feature_agreement":true,"loss_agreement":true}
+  append-3-11:
+    reference_qualified: true
+    stored_summary_agrees: true
+    comparisons:
+      "160-4/320-4": {"passed":true,"replays_complete":true,"maximum_waveform_difference_mV":1.4210854715202004e-14,"feature_agreement":true,"loss_agreement":true}
+      "160-8/320-8": {"passed":true,"replays_complete":true,"maximum_waveform_difference_mV":1.4210854715202004e-14,"feature_agreement":true,"loss_agreement":true}
+      "160-16/320-16": {"passed":true,"replays_complete":true,"maximum_waveform_difference_mV":7.105427357601002e-15,"feature_agreement":true,"loss_agreement":true}
+      "53-4/53-8": {"passed":false,"replays_complete":true,"maximum_waveform_difference_mV":20.52481344453018,"feature_agreement":false,"loss_agreement":false}
+      "53-8/53-16": {"passed":false,"replays_complete":true,"maximum_waveform_difference_mV":27.5944079638303,"feature_agreement":false,"loss_agreement":false}
+      "160-4/160-8": {"passed":false,"replays_complete":true,"maximum_waveform_difference_mV":0.00004021907119522439,"feature_agreement":false,"loss_agreement":true}
+      "160-8/160-16": {"passed":true,"replays_complete":true,"maximum_waveform_difference_mV":0.000002501469158033842,"feature_agreement":true,"loss_agreement":true}
+      "320-4/320-8": {"passed":false,"replays_complete":true,"maximum_waveform_difference_mV":0.00004021907119522439,"feature_agreement":false,"loss_agreement":true}
+      "320-8/320-16": {"passed":true,"replays_complete":true,"maximum_waveform_difference_mV":0.000002501469158033842,"feature_agreement":true,"loss_agreement":true}
+      "53-4/160-4": {"passed":false,"replays_complete":true,"maximum_waveform_difference_mV":51.13004140841736,"feature_agreement":false,"loss_agreement":false}
+      "53-4/320-4": {"passed":false,"replays_complete":true,"maximum_waveform_difference_mV":51.13004140841736,"feature_agreement":false,"loss_agreement":false}
+      "53-8/160-8": {"passed":false,"replays_complete":true,"maximum_waveform_difference_mV":51.10387438755272,"feature_agreement":false,"loss_agreement":false}
+      "53-8/320-8": {"passed":false,"replays_complete":true,"maximum_waveform_difference_mV":51.10387438755272,"feature_agreement":false,"loss_agreement":false}
+      "53-16/160-16": {"passed":false,"replays_complete":true,"maximum_waveform_difference_mV":51.05215859966104,"feature_agreement":false,"loss_agreement":false}
+      "53-16/320-16": {"passed":false,"replays_complete":true,"maximum_waveform_difference_mV":51.05215859966104,"feature_agreement":false,"loss_agreement":false}

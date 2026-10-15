@@ -119,18 +119,28 @@ step's tighter runs agree on five events but not full features or losses.
 Numerical reliability remains unresolved for this candidate; neither production
 fitter is authorized to restart by that result.
 
-The next diagnostic, now computing, is the sealed
+The completed, independently audited diagnostic is the sealed
 [two-input precision study](docs/validation-results/post2008-patchseq-precision-registration-1490.yaml),
 with [execution seal and build provenance](docs/validation-results/post2008-patchseq-precision-execution-seal-1493.yaml).
 It keeps candidate 19 and the same two training commands fixed while crossing
 53-, 160- and 320-bit arithmetic with three fixed RK4 step refinements. A shared
 explicit initial state prevents precision-dependent initialization from being
 confused with arithmetic effects. The existing waveform, feature and loss
-tolerances are unchanged. Do not start another copy while it is running.
+tolerances are unchanged. Do not relaunch or overwrite the completed diagnostic.
 
-All 18 cases, including failures, must be independently audited before assessment.
-Higher arithmetic precision alone is not proof of step-size convergence, and this
-diagnostic does not authorize fitting, held-out access or production changes.
+The [precision assessment](docs/validation-results/post2008-patchseq-precision-assessment-1496.yaml)
+records all 18 completed cases and 30 independently checked comparisons. Both
+inputs meet the registered reference qualification: the two high precisions
+agree, and the two finest steps agree within the unchanged tolerance. However,
+the finest native-double runs differ from the high-precision references by
+about 57 mV and 51 mV over the full traces. On the positive input, both detect
+five events but disagree on other features and loss.
+
+This is bounded numerical reference evidence for two inputs, not validation of
+all candidates or a successful physiological fit. The old compiled fitting
+transition remains rejected. A separate prospective numerical-admissibility
+design across the unchanged full candidate table is required before any fitting
+restart; held-out access and production changes remain unauthorized.
 The [software verification checkpoint](docs/validation-results/post2008-patchseq-precision-software-checkpoint-1495.yaml)
 records test coverage and its limits separately from scientific validation.
 

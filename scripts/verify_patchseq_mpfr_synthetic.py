@@ -25,18 +25,56 @@ def sha(path):
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
 
-def expected_keys():
-    keys = set()
+def expected_table():
+    rows = []
     for length in [151000, 330000]:
         for mode in ['passive', 'active']:
-            for precision in [53, 160, 320]:
-                for refinement in [4, 8, 16]:
-                    keys.add(f'{length}-{mode}-boost-{precision}-{refinement}-0')
-                    if precision != 53:
-                        keys.add(f'{length}-{mode}-mpfr-{precision}-{refinement}-0')
-                if precision != 53:
-                    keys.add(f'{length}-{mode}-mpfr-{precision}-16-1')
-    return keys
+            for backend, precisions in [('boost', [53, 160, 320]), ('mpfr', [160, 320])]:
+                for precision in precisions:
+                    for refinement in [4, 8, 16]:
+                        rows.append({'samples': length, 'profile': mode, 'engine': backend,
+                                     'bits': precision, 'factor': refinement, 'repeat': 0})
+            for precision in [160, 320]:
+                rows.append({'samples': length, 'profile': mode, 'engine': 'mpfr',
+                             'bits': precision, 'factor': 16, 'repeat': 1})
+    return rows
+
+
+def expected_keys():
+    return {'-'.join(str(r[k]) for k in ('samples', 'profile', 'engine', 'bits', 'factor', 'repeat'))
+            for r in expected_table()}
+
+
+def validate_support(data):
+    if (data['status'] != 'synthetic-matrix-retained-awaiting-independent-assessment'
+        or set(data['cases']) != expected_keys() or data['table'] != expected_table()
+        or any(data.get(k) is not False for k in
+               ('biological_data_access', 'fitting_restart_authorized', 'scientific_goal_complete'))):
+        raise ValueError('matrix incomplete or unsupported; cannot assess a favorable subset')
+    if any(r.get('status') not in ('retained', 'failure-retained-no-replacement')
+           for r in data['cases'].values()):
+        raise ValueError('nonterminal or unsupported case state')
+
+
+def check_case_evidence(root, key, row, pins, builds):
+    paths = {s: root/(key+s) for s in ('.json', '.log', '.npz', '.receipt.json')}
+    required = {str(paths[s]) for s in ('.json', '.log')}
+    if row['status'] == 'retained':
+        required.update(str(paths[s]) for s in ('.npz', '.receipt.json'))
+    actual = {str(p) for p in paths.values() if p.is_file()}
+    if (set(row['artifacts']) != actual or not required <= actual
+        or any(sha(p) != h for p, h in row['artifacts'].items())):
+        raise ValueError('case artifact support or hash changed')
+    spec = json.loads(paths['.json'].read_text())
+    n, mode, engine, bits, factor, repeat = key.split('-')
+    expected = {'samples': int(n), 'profile': mode, 'engine': engine,
+                'bits': int(bits), 'factor': int(factor), 'repeat': int(repeat)}
+    if (spec.get('case') != expected or spec.get('pins') != pins
+        or spec.get('build') != str(root/(engine+'-build')) or spec.get('provenance') != builds[engine]
+        or spec.get('output') != str(paths['.npz']) or spec.get('receipt') != str(paths['.receipt.json'])):
+        raise ValueError('case identity, source/build or output binding differs')
+    if not math.isfinite(row['total_case_seconds']) or row['total_case_seconds'] < 0:
+        raise ValueError('invalid end-to-end timing evidence')
 
 
 def inputs(length, mode):
@@ -106,9 +144,7 @@ def main():
     if (pins.get(str(REG)) != sha(REG) or pins.get(str(Path(__file__).relative_to(Path.cwd()))) != sha(__file__)
         or any(sha(p) != h for p, h in pins.items())):
         raise ValueError('source/build evidence changed or verifier not sealed')
-    if (data['status'] != 'synthetic-matrix-retained-awaiting-independent-assessment'
-        or set(data['cases']) != expected_keys() or len(data['table']) != 68):
-        raise ValueError('matrix incomplete or unsupported; cannot assess a favorable subset')
+    validate_support(data)
     if data['runtime'] != {k: version(k) for k in ('numpy', 'scipy', 'PyYAML')}:
         raise ValueError('independent verification runtime differs')
     report = {'checkpoint_sha256': sha(checkpoint), 'source_hashes': pins,
@@ -119,8 +155,7 @@ def main():
         raise ValueError('existing independent assessment retained; refusing overwrite')
     cache = {}
     for key, row in data['cases'].items():
-        if any(sha(p) != h for p, h in row['artifacts'].items()):
-            raise ValueError('case evidence changed')
+        check_case_evidence(root, key, row, pins, data['builds'])
         if row['status'] != 'retained':
             report['cases'][key] = {'state': 'failure-preserved-not-qualified', 'evidence': row}
             continue
@@ -206,6 +241,8 @@ def main():
     report['status'] = 'synthetic-assessed-not-production-authorization'
     if sha(checkpoint) != report['checkpoint_sha256'] or any(sha(p) != h for p, h in pins.items()):
         raise ValueError('source/checkpoint changed during verification')
+    for key, row in data['cases'].items():
+        check_case_evidence(root, key, row, pins, data['builds'])
     with audit.open('x') as file:
         json.dump(report, file, sort_keys=True, allow_nan=False)
     print('Independent synthetic assessment retained; equivalence:', report['backend_equivalence_passed'])

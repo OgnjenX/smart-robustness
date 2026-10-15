@@ -6,8 +6,8 @@ registration: docs/validation-results/post2008-patchseq-mpfr-long-synthetic-regi
 registration_sha256: 02881faea800f93f78dbb1abdc9db5b22a3e25a2a9dde21b6ae952f1a2b94cdc
 source_hashes:
   scripts/run_patchseq_mpfr_synthetic.py: 6e10073897cd7c1f3998d04a0a85a7a6e06602833c00c6b7f6157a4b1cb8ca06
-  scripts/verify_patchseq_mpfr_synthetic.py: 9a4182fe74d6c31f6b01cd4a8e5615336883dbaf4fe6cf09b91b1c0909519855
-  tests/test_patchseq_mpfr_synthetic.py: 7c0ad169b011c20b548c82b7cb949bc9c011cb256a74d57abf018f7379fa0734
+  scripts/verify_patchseq_mpfr_synthetic.py: 89980003b739d883c61fd9bcb033450d8c9df92a46382d7a8fec130a9ed62e76
+  tests/test_patchseq_mpfr_synthetic.py: 538367b61c87caf8961ba15109e7bb1935fd8237d0a359ab5d288f2f1e25cbce
 scope:
   full_length_synthetic_cases: 68
   cases_executed: 0
@@ -27,6 +27,9 @@ runner_safeguards:
   - Budget stops preserve pending cases without recording false scientific failures or declaring matrix completion.
 independent_verifier:
   support: separately-constructed-exact-68-key-set
+  full_metadata_table: independently-reconstructed-exact-case-descriptors-and-order-no-duplicate-or-altered-table
+  artifact_bindings: exact-case-source-build-output-receipt-and-actual-file-set-must-match-before-and-after-audit
+  terminal_states: only-retained-or-failure-retained-no-replacement-never-running-or-unknown
   inputs: independently-reconstructed-command-boundaries-and-warmup
   features: separately-implemented-frozen-reconstruct-extractor-not-primary-characterize
   loss: separately-implemented-fixed-six-term-synthetic-target-objective
@@ -36,8 +39,8 @@ independent_verifier:
   gates: unchanged-whole-voltage-typed-feature-and-loss-tolerances
   feasibility_boundary: integration-compression-and-end-to-end-cost-only-not-memory-concurrency-checkpoint-or-complete-production-feasibility
 unit_tests:
-  passed: 35
-  elapsed_seconds: 0.73
+  passed: 54
+  elapsed_seconds: 0.86
   ruff: clean
   diff_check: clean
   limits: support-input-comparison-resume-failure-lock-budget-and-stubbed-worker-tests-not-long-trajectory-validation

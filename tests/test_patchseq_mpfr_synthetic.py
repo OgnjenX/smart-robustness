@@ -135,6 +135,72 @@ def test_wrong_execution_seal_cannot_build(tmp_path, monkeypatch):
 
 def test_independent_table_has_identical_support():
     assert verifier.expected_keys() == {runner.label(r) for r in runner.case_table()}
+    assert verifier.expected_table() == runner.case_table()
+
+
+@pytest.mark.parametrize('defect', ['none', 'duplicate_table', 'altered_table', 'missing_case',
+                                   'running', 'unknown', 'biological_access', 'restart'])
+def test_independent_support_rejects_incomplete_or_inconsistent_metadata(defect):
+    state = {'status': runner.TERMINAL, 'table': runner.case_table(),
+             'cases': {key: {'status': 'failure-retained-no-replacement'} for key in verifier.expected_keys()},
+             'biological_data_access': False, 'fitting_restart_authorized': False,
+             'scientific_goal_complete': False}
+    if defect == 'duplicate_table':
+        state['table'][1] = state['table'][0]
+    elif defect == 'altered_table':
+        state['table'][0]['bits'] = 320
+    elif defect == 'missing_case':
+        state['cases'].pop(next(iter(state['cases'])))
+    elif defect in ('running', 'unknown'):
+        next(iter(state['cases'].values()))['status'] = defect
+    elif defect == 'biological_access':
+        state['biological_data_access'] = True
+    elif defect == 'restart':
+        state['fitting_restart_authorized'] = True
+    if defect == 'none':
+        verifier.validate_support(state)
+    else:
+        with pytest.raises(ValueError):
+            verifier.validate_support(state)
+
+
+@pytest.mark.parametrize('defect', ['none', 'case', 'pins', 'build', 'output', 'receipt', 'missing_log',
+                                   'unlisted_file', 'hash', 'timing', 'success_missing_arrays'])
+def test_independent_case_specification_and_artifact_bindings(tmp_path, defect):
+    case = runner.case_table()[0]
+    key = runner.label(case)
+    pins, builds = {'sealed-source': 'fixed'}, {'boost': {'binary': 'fixed'}}
+    spec = {'case': case, 'pins': pins, 'build': str(tmp_path/'boost-build'),
+            'provenance': builds['boost'], 'output': str(tmp_path/(key+'.npz')),
+            'receipt': str(tmp_path/(key+'.receipt.json'))}
+    if defect == 'case':
+        spec['case'] = {**case, 'factor': 16}
+    elif defect == 'pins':
+        spec['pins'] = {}
+    elif defect == 'build':
+        spec['provenance'] = {}
+    elif defect in ('output', 'receipt'):
+        spec[defect] = str(tmp_path/'other-output')
+    source, log = tmp_path/(key+'.json'), tmp_path/(key+'.log')
+    source.write_text(json.dumps(spec))
+    log.write_text('preserved test failure')
+    row = {'status': 'failure-retained-no-replacement', 'total_case_seconds': 1.,
+           'artifacts': {str(p): verifier.sha(p) for p in (source, log)}}
+    if defect == 'missing_log':
+        log.unlink()
+    elif defect == 'unlisted_file':
+        (tmp_path/(key+'.npz')).write_bytes(b'preserved-orphan-array-not-in-receipt')
+    elif defect == 'hash':
+        log.write_text('changed evidence')
+    elif defect == 'timing':
+        row['total_case_seconds'] = -1.
+    elif defect == 'success_missing_arrays':
+        row['status'] = 'retained'
+    if defect == 'none':
+        verifier.check_case_evidence(tmp_path, key, row, pins, builds)
+    else:
+        with pytest.raises(ValueError):
+            verifier.check_case_evidence(tmp_path, key, row, pins, builds)
 
 
 @pytest.mark.parametrize('length', [151000, 330000])

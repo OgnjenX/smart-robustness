@@ -1,0 +1,78 @@
+schema_version: 1
+artifact_id: 1502
+date: 2026-10-15
+status: synthetic-unit-tested-infrastructure-not-long-record-equivalence-or-performance-validation
+plan: docs/validation-results/post2008-patchseq-numerical-admissibility-plan-1497.yaml
+scope: versioned-stateful-successor-prototype-no-fitter-or-recording-reader
+implementation:
+  kernel: scripts/patchseq_precision_successor_kernel.cpp
+  kernel_sha256: 079fe194b931723ca9e2b05d6dffce7b4f41690e4c5711d0c87380330335e115
+  driver: scripts/patchseq_precision_successor_driver.py
+  driver_sha256: 150395ef87b7e1cbbb7fe517a38d0a77fb6ab09a9f36e7a1e9eff7385494bdf2
+  tests: tests/test_patchseq_precision_successor.py
+  tests_sha256: 0e68a585234e6f3b8b3292d0b0cf35e76668da6329b20097022f5ae12b5b14e5
+sealed_predecessors_unchanged:
+  scripts/patchseq_hh_precision_kernel.cpp: 1d6b33d709948f5abfcddb4d6bf5a7049e48255e04c7faf7b66a65723c19f7d8
+  scripts/patchseq_precision_driver.py: 145ffd59d8ab6bf6679fc1f04cfff340519d06b9cc955ebf8bbdf0af402096d0
+design:
+  arithmetic: directly-include-sealed-derivative-and-preserve-RK4-expression-order-and-binary64-lifts
+  precisions_bits: [53, 160, 320]
+  state: isolated-owned-native-context-with-complete-internal-arithmetic-state
+  chunk_contract: advance-absolute-native-interval-endpoint-return-boundary-inclusive-native-states
+  joining_chunks: retain-first-chunk-all-rows-then-discard-one-overlapping-boundary-row-from-each-later-chunk
+  native_current: zero-order-held-through-all-substeps-and-stages
+  terminal_sample: never-integrate-a-final-unobserved-interval
+  checks: original-finite-stage-and-accepted-substep-gate-bounds-no-clipping
+  failure: poisoned-context-cannot-continue-or-emit-a-new-checkpoint
+  input_ownership: copied-read-only-current-and-immutable-serialized-session-configuration
+  threading: separate-context-per-worker-with-per-context-locks
+checkpoint_contract:
+  internal_state: full-significand-round-trip-text-not-exported-binary64-states
+  state_coordinate: original-explicit-mV-and-gate-state-convention
+  position: native-interval-counter-serialized-inside-the-Cpp-context-and-cross-checked-against-envelope-cursor
+  canonical_encoding: classic-locale-scientific-max_digits10-for-each-native-arithmetic-type
+  configuration_boundaries: exact-build-identity-parameters-initial-state-current-hash-grid-rate-precision-and-step-divisor
+  wrapper: canonical-json-envelope-and-sha256-with-exact-schema-and-fresh-context-only-restore
+  corrupted_restore: reject-without-changing-the-fresh-native-state
+  checksum_limit: accidental-corruption-integrity-not-a-cryptographic-authenticity-or-provenance-signature
+  future_runner_requirement: atomically-retain-and-pin-checkpoint-envelope-hashes-in-an-exclusive-case-ledger
+build_provenance:
+  compiler: retained-clang-executable-hash-version-and-actual-build-flags
+  dependencies: actual-build-flag-matched-transitive-header-and-sealed-predecessor-hashes
+  python_dependency: immutable-sealed-field-order-and-hash-helper-explicitly-pinned
+  binary: retained-library-path-and-sha256-no-silent-rebuild-or-partial-build-overwrite
+  precision: actual-digit-width-and-cancellation-probes
+unit_test_evidence:
+  prototype_checks_passed: 36
+  metadata_ledger_checks_passed: 28
+  combined_passed: 64
+  combined_elapsed_s: 10.61
+  ruff: clean
+  diff_check: clean
+  checks:
+    - Bit-pattern identity with the separately built sealed monolithic kernel at all three precisions and divisors 1, 4, 8 and 16 on a short synthetic current-edge trace.
+    - Chunked versus monolithic identity at and adjacent to current-command edges, with no skipped or duplicated intervals.
+    - JSON-round-tripped internal checkpoints preserve subsequent state text and trajectory bits exactly.
+    - Exporting the state to binary64 loses internal digits and is not used as the checkpoint representation.
+    - Independent Python 150-decimal-digit RK4 oracle agrees on exported bits for a 501-sample synthetic positive-voltage excursion at both high precisions.
+    - Corrupted state, mismatched input/parameters/initialization/build/precision/divisor, and even an in-range altered cursor are rejected.
+    - Serial and threaded separate contexts agree on exact output bits and final checkpoint text.
+    - Retained-build reloading, zero-length boundary observation, input ownership and closed/failed-context protections.
+limitations:
+  - No full-length 151000-to-330000-sample synthetic equivalence matrix has run.
+  - No biological command or response array was read for this prototype.
+  - No improved arithmetic backend, measured speedup or full-workflow feasibility is established.
+  - No persistent-worker process scheduler, atomic resumable experiment runner or publication-ready raw evidence store is implemented here.
+  - Reusing the sealed derivative proves an infrastructure comparison, not an independently implemented neuron-equation engine.
+  - Short independent-oracle unit tests do not replace the prospective long-record and independent-forward verification gates.
+  - No large run, scoring amendment, original-score replacement, selected-map promotion or held-out access follows from these tests.
+next_stage: prospectively-seal-synthetic-long-record-equivalence-and-feasibility-tests-and-evaluate-a-faster-arithmetic-hypothesis-under-plan-1497
+disposition:
+  new_scientific_fitting_resumed: false
+  parameter_or_search_changes: false
+  gates_weakened: false
+  production_fitters_remain_stopped: true
+  held_out_access_authorized: false
+  network_promotion_authorized: false
+  frozen_baseline_modified: false
+  overall_scientific_goal_complete: false

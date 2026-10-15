@@ -1,0 +1,52 @@
+schema_version: 1
+artifact_id: 1483
+date: 2026-10-15
+status: prospective-diagnostic-reference-convergence-study-before-new-outcomes
+scope: continuation-of-authorized-mismatch-investigation-without-production-fitting-or-parameter-changes
+predecessor_assessment: docs/validation-results/post2008-patchseq-mismatch-localization-assessment-1482.yaml
+predecessor: results/patchseq-mismatch-numerics-1481/checkpoint.json
+predecessor_sha256: 1e41e405b8dab0dc9c4c0d7b435efcecb153e0144af94743852c46e8d6ef093b
+original_checkpoint: results/patchseq-isolated-fit-1438/checkpoint.json
+original_sha256: 29539a6dc1feb29b3ba2d4d87a9324b91ead0681eddf6b6db80abad80aa7f105
+implementation: scripts/run_patchseq_reference_convergence.py
+adaptive_reference: scripts/patchseq_adaptive_reference.py
+output: results/patchseq-reference-convergence-1484
+candidate_index: 19
+stratum: Pvalb-L23
+source_keys: [[append, 3, 4], [append, 3, 11]]
+source_scope: exact-two-previously-diagnosed-negative-and-positive-training-commands-no-new-cell-or-parameter-selection
+input_contract:
+  voltage_and_parameters: original-as-recorded-coordinate-without-new-correction
+  drive: exact-whole-source-command-plus-native-holding-once
+  initialization: original-model-leak-voltage-and-equilibrium-gates
+  warmup_s: 1.0
+  output_grid: original-source-rate-before-sample-update
+  discontinuities: restart-adaptive-integration-at-every-exact-current-change-no-ramp-or-interpolation-across-edges
+methods: [DOP853, Radau]
+accuracy_levels:
+  - {name: loose, rtol: 1.0e-8, voltage_atol: 1.0e-8, gate_atol: 1.0e-10}
+  - {name: medium, rtol: 1.0e-10, voltage_atol: 1.0e-10, gate_atol: 1.0e-12}
+  - {name: tight, rtol: 1.0e-12, voltage_atol: 1.0e-12, gate_atol: 1.0e-14}
+max_step_ms: 0.1
+maximum_evaluations_per_replay: 5000000
+compiled_RK4_diagnostic_refinements: [4, 8, 16]
+case_count: 18
+reference_qualification:
+  - Both methods must complete all accuracy levels; failures remain failures.
+  - Medium-versus-tight waveform maximum error at most 0.00001mV for both methods.
+  - Tight DOP853-versus-Radau waveform maximum error at most 0.00001mV.
+  - Same comparisons require exact event counts and full feature comparison under original arithmetic tolerances.
+  - Same comparisons require sweep-loss agreement under original 1e-6 absolute plus 1e-8 relative tolerance.
+  - No solver designated ground truth solely because it completes or gives an appealing fit.
+diagnostic_interpretation:
+  converged_reference: compare-all-fixed-RK4-refinements-to-both-tight-references-no-production-step-selection
+  unqualified_reference: unresolved-numerical-reliability-not-chaos-or-biological-failure
+boundaries:
+  - No fitting runner resumes, production code changes, candidate replacement, search expansion or weakened gates.
+  - No new neuron-model parameters, cells, class pooling, target corrections or held-out response features.
+  - Local adaptive solver tolerances control numerical error only and do not relax biological or cross-engine gates.
+  - This is finite diagnostic evidence, not all-candidate, all-stratum or full SMART reproduction.
+  - Neither adaptive completion nor this protocol authorizes refitting or automatic production integration changes.
+execution_gate: commit-source-tests-and-registration-before-any-new-training-command-replay
+resume: exact-source-input-build-hashes-and-fixed-case-keys-only-one-exclusive-diagnostic-lock
+solver_documentation: https://docs.scipy.org/doc/scipy-1.17.0/reference/generated/scipy.integrate.solve_ivp.html

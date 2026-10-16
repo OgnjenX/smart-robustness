@@ -1,0 +1,119 @@
+schema_version: 1
+artifact_id: 1510
+date: 2026-10-16
+status: independently-audited-synthetic-backend-equivalence-passed-reference-and-feasibility-not-fully-qualified
+registration: docs/validation-results/post2008-patchseq-mpfr-long-synthetic-registration-1506.yaml
+execution_seal: docs/validation-results/post2008-patchseq-mpfr-long-synthetic-execution-seal-1507.yaml
+execution_seal_commit: 09f17d519170d18380a4d4c2c38f2fac816e3f8b
+raw_checkpoint: results/patchseq-mpfr-long-synthetic-1508/checkpoint.json
+raw_checkpoint_sha256: de1c9bd4e6934a5e274f97a2f2c833f12319f6d17c965d9962c182ab36bced7b
+independent_audit: results/patchseq-mpfr-long-synthetic-1508/independent-assessment.json
+independent_audit_sha256: 942c939d689beb361a414c470cd3bef6516afe483ea3936754cf1a3078050bf6
+original_checkpoint_sha256: 29539a6dc1feb29b3ba2d4d87a9324b91ead0681eddf6b6db80abad80aa7f105
+original_execution_seal_sha256: 9e9f5f5b74d495389b2f31ad7ba4d26c07ab2108df8b13c89ec249daad370ac9
+execution:
+  fixed_cases_completed: 68
+  failures_or_timeouts: 0
+  added_or_replacement_cases: 0
+  first_invocation: clean-budget-boundary-after60cases
+  boundary_checkpoint_sha256: ad4033232c012ddb47c4c4f9b6a7d9a4bed43d9852db901b8258e2f887a697a5
+  resume: remaining8cases-only-after-full-hash-and-no-live-process-or-orphan-checks
+  per_invocation_limit_seconds: 28800
+  raw_output_state_arrays: 68
+  source_build_spec_receipt_array_and_log_hashes_intact: true
+  artifact_file_count: 272
+  artifact_manifest_sha256: fb2220c6bbc900015104042874e750f5319f5703288755cae5b05f5410a492ee
+  manifest_encoding: sha256-of-utf8-json-artifact-path-to-hash-map-sort-keys-compact-comma-colon-separators
+audit:
+  all68saved-array_features_and_losses_reconstructed: true
+  independent_extractor: scripts/verify_patchseq_fitting_targets.py
+  independently_reimplemented_six_term_synthetic_loss: true
+  passive_analytic_voltage_maximum_error_mV: 0.000000000056843418860808015
+  required_cross_backend_pairs: {total: 24, passed: 24, maximum_exported_state_numeric_difference: 0.0}
+  exact_MPFR_all_state_bit_pattern_repeats: {total: 8, passed: 8}
+  native_control_pairs: {total: 24, passed: 24, maximum_voltage_difference_mV: 0.0000000002403979237897147}
+  precision_pairs: {total: 24, passed: 24, maximum_voltage_difference_mV: 0.0}
+  refinement_pairs: {total: 40, passed: 25, failed: 15}
+  backend_equivalence_passed: true
+  complete_reference_qualification_passed: false
+  third_independent_active_forward_trajectory_executed: false
+reference_failure:
+  profile: 330000-sample-active-command-plus50000-sample-warmup
+  engines: [sealed-Boost, MPFR]
+  precisions_bits: [160, 320]
+  refinement_pair: [8, 16]
+  maximum_whole_voltage_difference_mV: 0.000013867145739254738
+  unchanged_maximum_allowed_mV: 0.00001
+  typed_features_agree: true
+  six_term_loss_agrees: true
+  detected_events_each_arm: 1614
+  interpretation: observable-agreement-and-cross-backend-agreement-do-not-substitute-for-failed-whole-waveform-refinement-gate
+  other_failures: coarse4-vs8-active-waveform-comparisons-fail-at-both-command-lengths-all-five-precision-engine-arms
+  no_repair: no-tolerance-relaxation-step-change-source-rewrite-or-selective-removal
+finest_reference_qualification: {"151000-active-boost":true,"151000-active-mpfr":true,"151000-passive-boost":true,"151000-passive-mpfr":true,"330000-active-boost":false,"330000-active-mpfr":false,"330000-passive-boost":true,"330000-passive-mpfr":true}
+timing:
+  paired_same_precision_same_divisor_integration_speed_ratio:
+    min: 6.405128228063437
+    median: 6.974603834801593
+    max: 7.577604305815671
+    pairs: 24
+  total_integration_seconds_including_registered_repeats: {boost: 24236.459719000988, mpfr: 5425.492044502994}
+  total_not_a_speed_ratio: engine-totals-have-different-native-and-repeat-support-use-only-the24matched-pairs
+  timing_boundary: integration-clock-excludes-driver-construction-and-compression-separate-receipts-retain-end-to-end-case-and-compression-times
+  runtime_condition_limit: one-execution-per-matched-case-local-concurrent-system-load-not-a-controlled-repeated-performance-trial
+storage:
+  compressed_state_arrays_bytes: 403799462
+  uncompressed_state_arrays_bytes: 790160000
+  excludes: specs-logs-checkpoints-builds-dependencies-and-filesystem-overhead
+resource_warning:
+  full_table_native_intervals: 9450846720
+  primary_only_four_high_precision_arms: [160-bit-divisor8, 160-bit-divisor16, 320-bit-divisor8, 320-bit-divisor16]
+  extrapolation_method: sum-measured-integration-seconds-for-four-MPFR-arms-divide-by-synthetic-native-intervals-including-warmup-multiply-full-table-intervals
+  extrapolated_serial_days_by_synthetic_input: {"151000-passive":270.6402565917989,"151000-active":285.92637475833453,"330000-passive":271.9501852228791,"330000-active":286.4283775203365}
+  estimate_not_guarantee: different-candidate-dynamics-hardware-scaling-and-failures-may-change-runtime
+  exclusions: native-and-coarse-controls-independent-forward-verification-selected-controls-compression-input-IO-and-checkpoint-overhead
+  conclusion: roughly271-to286serial-days-for-even-this-four-arm-primary-only-floor-is-not-a-demonstrated-feasible-local-full-study
+  no_scope_reduction: four-arm-cost-floor-does-not-authorize-dropping-other-registered-arms
+  production_feasibility_established: false
+scientific_conclusion: >-
+  The exact 68-case synthetic matrix supports the MPFR backend's equivalence
+  to the independently coded sealed Boost implementation at the tested input,
+  parameter and binary64-initialization conventions, with about sevenfold
+  matched integration throughput improvement. Every matched exported state
+  agrees numerically, all exact repeats pass, and independent saved-array
+  feature and loss reconstructions agree. This does not establish a numerical
+  reference for every synthetic input because the longest active trace fails
+  the unchanged finest-step refinement gate in both implementations. The
+  improved arithmetic speed also does not make the complete fixed-support
+  biological screen operationally feasible under demonstrated local resources.
+  The synthetic high-drive event counts are numerical test observables, not
+  evidence of physiological fit, biological validity or SMART/ART behavior.
+limitations:
+  - Saved-array reconstruction and the passive analytic solution are not a third independent full active forward simulation.
+  - Cross-backend equivalence is distinct from integration-step admissibility and from biological model adequacy.
+  - These four synthetic input profiles do not cover all768candidate-stratum identities or33280biological candidate-sweep cases.
+  - Native arithmetic happens to agree on this synthetic matrix; it remains invalidated on the earlier two candidate19 diagnostic inputs.
+  - No complete persistent/chunked MPFR runner, concurrency scaling, memory/restore cost or whole-pipeline resource qualification follows from this study.
+  - No numerical policy or model parameter may be repaired retrospectively from these outcomes.
+disposition:
+  sealed_synthetic_comparison_and_independent_audit_complete: true
+  backend_hypothesis_supported_on_tested_matrix: true
+  full_reference_and_production_feasibility_gate_open: false
+  production_fitters_remain_stopped: true
+  biological_or_held_out_response_access_authorized: false
+  original_scores_replaced: false
+  parameter_or_search_changes: false
+  gates_weakened: false
+  network_promotion: false
+  frozen_baseline_modified: false
+  scientific_goal_complete: false
+next_decision: >-
+  No full biological fitting restart is justified. A separate prospective
+  numerical-admissibility and realistic resource design is required, with all
+  fixed candidate identities retained and unchanged scientific tolerances.
+  Do not launch a many-month brute-force run or silently increase refinement
+  after these outcomes. Any follow-up solver/step-policy hypothesis and its
+  complete independent route must be sealed before new outcomes and require
+  a distinct execution decision.
+failed_comparisons_retained: {"151000-active-boost-160-4-0/151000-active-boost-160-8-0":{"loss_agreement":true,"maximum_state_discrepancies":[0.00008112166312734814,0.000001168965615860884,4.5519650945791135e-7,3.937922605778965e-7,4.820925769699613e-9],"passed":false,"role":"refinement","typed_feature_agreement":true,"whole_voltage_agreement":false},"151000-active-boost-320-4-0/151000-active-boost-320-8-0":{"loss_agreement":true,"maximum_state_discrepancies":[0.00008112166312734814,0.000001168965615860884,4.5519650945791135e-7,3.937922605778965e-7,4.820925769699613e-9],"passed":false,"role":"refinement","typed_feature_agreement":true,"whole_voltage_agreement":false},"151000-active-boost-53-4-0/151000-active-boost-53-8-0":{"loss_agreement":true,"maximum_state_discrepancies":[0.00008112166346840866,0.0000011689656247426683,4.551965113452905e-7,3.9379226213220875e-7,4.820934429439205e-9],"passed":false,"role":"refinement","typed_feature_agreement":true,"whole_voltage_agreement":false},"151000-active-mpfr-160-4-0/151000-active-mpfr-160-8-0":{"loss_agreement":true,"maximum_state_discrepancies":[0.00008112166312734814,0.000001168965615860884,4.5519650945791135e-7,3.937922605778965e-7,4.820925769699613e-9],"passed":false,"role":"refinement","typed_feature_agreement":true,"whole_voltage_agreement":false},"151000-active-mpfr-320-4-0/151000-active-mpfr-320-8-0":{"loss_agreement":true,"maximum_state_discrepancies":[0.00008112166312734814,0.000001168965615860884,4.5519650945791135e-7,3.937922605778965e-7,4.820925769699613e-9],"passed":false,"role":"refinement","typed_feature_agreement":true,"whole_voltage_agreement":false},"330000-active-boost-160-4-0/330000-active-boost-160-8-0":{"loss_agreement":true,"maximum_state_discrepancies":[0.00022194669003461343,0.000003184391146660026,0.000001242007311358373,0.0000010737290264684063,1.3616378691239106e-8],"passed":false,"role":"refinement","typed_feature_agreement":true,"whole_voltage_agreement":false},"330000-active-boost-160-8-0/330000-active-boost-160-16-0":{"loss_agreement":true,"maximum_state_discrepancies":[0.000013867145739254738,1.989518779721422e-7,7.759873801860273e-8,6.708474731276226e-8,8.503825421612987e-10],"passed":false,"role":"refinement","typed_feature_agreement":true,"whole_voltage_agreement":false},"330000-active-boost-320-4-0/330000-active-boost-320-8-0":{"loss_agreement":true,"maximum_state_discrepancies":[0.00022194669003461343,0.000003184391146660026,0.000001242007311358373,0.0000010737290264684063,1.3616378691239106e-8],"passed":false,"role":"refinement","typed_feature_agreement":true,"whole_voltage_agreement":false},"330000-active-boost-320-8-0/330000-active-boost-320-16-0":{"loss_agreement":true,"maximum_state_discrepancies":[0.000013867145739254738,1.989518779721422e-7,7.759873801860273e-8,6.708474731276226e-8,8.503825421612987e-10],"passed":false,"role":"refinement","typed_feature_agreement":true,"whole_voltage_agreement":false},"330000-active-boost-53-4-0/330000-active-boost-53-8-0":{"loss_agreement":true,"maximum_state_discrepancies":[0.00022194662105334828,0.00000318439016655514,0.0000012420069252505606,0.000001073728693068432,1.3616380134529038e-8],"passed":false,"role":"refinement","typed_feature_agreement":true,"whole_voltage_agreement":false},"330000-active-boost-53-8-0/330000-active-boost-53-16-0":{"loss_agreement":true,"maximum_state_discrepancies":[0.000013866956688701748,1.9894916158946785e-7,7.759768169690595e-8,6.70838337102353e-8,8.503614479238308e-10],"passed":false,"role":"refinement","typed_feature_agreement":true,"whole_voltage_agreement":false},"330000-active-mpfr-160-4-0/330000-active-mpfr-160-8-0":{"loss_agreement":true,"maximum_state_discrepancies":[0.00022194669003461343,0.000003184391146660026,0.000001242007311358373,0.0000010737290264684063,1.3616378691239106e-8],"passed":false,"role":"refinement","typed_feature_agreement":true,"whole_voltage_agreement":false},"330000-active-mpfr-160-8-0/330000-active-mpfr-160-16-0":{"loss_agreement":true,"maximum_state_discrepancies":[0.000013867145739254738,1.989518779721422e-7,7.759873801860273e-8,6.708474731276226e-8,8.503825421612987e-10],"passed":false,"role":"refinement","typed_feature_agreement":true,"whole_voltage_agreement":false},"330000-active-mpfr-320-4-0/330000-active-mpfr-320-8-0":{"loss_agreement":true,"maximum_state_discrepancies":[0.00022194669003461343,0.000003184391146660026,0.000001242007311358373,0.0000010737290264684063,1.3616378691239106e-8],"passed":false,"role":"refinement","typed_feature_agreement":true,"whole_voltage_agreement":false},"330000-active-mpfr-320-8-0/330000-active-mpfr-320-16-0":{"loss_agreement":true,"maximum_state_discrepancies":[0.000013867145739254738,1.989518779721422e-7,7.759873801860273e-8,6.708474731276226e-8,8.503825421612987e-10],"passed":false,"role":"refinement","typed_feature_agreement":true,"whole_voltage_agreement":false}}
+paired_integration_speed_ratios: [{"case":"151000-active-mpfr-160-16-0","speed_ratio":6.427700364966359},{"case":"151000-active-mpfr-160-4-0","speed_ratio":6.438597021585394},{"case":"151000-active-mpfr-160-8-0","speed_ratio":6.405128228063437},{"case":"151000-active-mpfr-320-16-0","speed_ratio":7.417414309931079},{"case":"151000-active-mpfr-320-4-0","speed_ratio":7.483845181528142},{"case":"151000-active-mpfr-320-8-0","speed_ratio":7.495967509392596},{"case":"151000-passive-mpfr-160-16-0","speed_ratio":6.589788492801293},{"case":"151000-passive-mpfr-160-4-0","speed_ratio":6.873094952385779},{"case":"151000-passive-mpfr-160-8-0","speed_ratio":6.586747505796596},{"case":"151000-passive-mpfr-320-16-0","speed_ratio":7.27031646164342},{"case":"151000-passive-mpfr-320-4-0","speed_ratio":7.299371845524747},{"case":"151000-passive-mpfr-320-8-0","speed_ratio":7.577604305815671},{"case":"330000-active-mpfr-160-16-0","speed_ratio":6.494614225805684},{"case":"330000-active-mpfr-160-4-0","speed_ratio":6.491155725081251},{"case":"330000-active-mpfr-160-8-0","speed_ratio":6.443045509645369},{"case":"330000-active-mpfr-320-16-0","speed_ratio":7.456624909237669},{"case":"330000-active-mpfr-320-4-0","speed_ratio":7.477982967121942},{"case":"330000-active-mpfr-320-8-0","speed_ratio":7.460901591378367},{"case":"330000-passive-mpfr-160-16-0","speed_ratio":6.448845935005086},{"case":"330000-passive-mpfr-160-4-0","speed_ratio":6.47169935997771},{"case":"330000-passive-mpfr-160-8-0","speed_ratio":6.490058005693459},{"case":"330000-passive-mpfr-320-16-0","speed_ratio":7.128026871268577},{"case":"330000-passive-mpfr-320-4-0","speed_ratio":7.076112717217407},{"case":"330000-passive-mpfr-320-8-0","speed_ratio":7.251352786399448}]

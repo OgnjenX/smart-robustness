@@ -1,0 +1,93 @@
+schema_version: 1
+artifact_id: 1518
+date: 2026-10-22
+status: prospective-pilot-metadata-and-independent-support-audit-tested-not-execution-ready
+parent_plan: docs/validation-results/post2008-patchseq-segment-adaptive-plan-1511.yaml
+numerical_preparation: docs/validation-results/post2008-patchseq-gbs-hh-reference-preparation-1514.yaml
+registration: docs/validation-results/post2008-patchseq-gbs-synthetic-pilot-registration-1515.yaml
+source_hashes:
+  scripts/patchseq_gbs_pilot_protocol.py: caa3e8d38c6c566c6160fd602b2ce5a624615229957321816c197bb6a4d6573a
+  scripts/verify_patchseq_gbs_pilot_protocol.py: 006ddce63641d7d49c8eb41f9d8060b9560b3fcebb44fa1d6859c83eec96ae1f
+  tests/test_patchseq_gbs_pilot_protocol.py: a734c248fccf445dc8272b037c16447e60456a14ee5a733f2037b5561e28db0b
+  docs/validation-results/post2008-patchseq-gbs-synthetic-pilot-registration-1515.yaml: 9c6fa5fc7d160cdacdd087f9647e4e4e6a07cc416a54987de5ce8375817a5b6e
+implemented:
+  - Deterministic complete case and comparison definitions with canonical typed identities.
+  - Synthetic input generators retaining warmup baseline step and release with original parameter coefficients and explicit initial state.
+  - Exact command and integrated-prefix byte manifests fixed before any pilot trajectory.
+  - An independently coded metadata auditor importing neither the producer nor any numerical route.
+  - Strict rejection of missing extra duplicate reordered mistyped or altered cases inputs controls sources budgets gates and authority flags.
+support:
+  command_lengths: [20001, 40001]
+  full_parent_command_lengths_still_required_later: [151000, 330000]
+  profiles: [passive, active]
+  precisions_bits: [160, 320]
+  total_cases: 104
+  primary_cases: 72
+  independent_RKF78_cases: 32
+  roles: {full: 64, landing: 32, checkpoint: 8}
+  comparisons: 120
+  mandatory_comparisons: 112
+  coarse_reference_comparisons_reported_not_finest_gate: 8
+  every_case_participates_in_declared_comparisons: true
+  case_table_sha256: d72decc84e30496e96dd73276822c8640056eef79a07852985cf4104cf7f7a8d
+  input_manifest_sha256: f4253793afe099a7ae376851483f38b40f2f0e3b60e47ec452d90072d2633ba2
+  comparison_table_sha256: eb7f4e6e5bc4ba27f2dcfe25eafa7bd4e9a106a6b296cfc1bcb64f8571f5af21
+numerical_choices_fixed_before_outcomes:
+  primary_accuracy_pair: absolute-and-relative1e-18-versus1e-22
+  primary_step_cap_control: strict-policy0.2ms-versus0.1ms
+  basis: numerical-engineering-accuracy-and-step-controls-not-network-or-held-out-outcome-guided-tuning
+  independent_refinement: fixed-factors1-2-4-with-required-finest2vs4-and-both-precision-controls
+  repeats: both-routes-at-the-declared-finest-policy-at-both-precisions-on-all-four-input-analogues
+  restart: strict-primary-at4096native-intervals-with-full-array-bitwise-comparison
+  dense_probes: fixed-warmup-onset-midstep-and-release-prefix-endpoints-with-no-observation-feedback
+  unchanged_gates: whole-voltage1e-5mV-typed-features-exact-discrete-plus1e-5absolute-and1e-9relative-loss1e-6absolute-plus1e-8relative
+  synthetic_target: scoring-exercise-only-not-a-model-fit-or-biological-validity-test
+  full_length_failure: original1510longest-active-failure-remains-unchanged-and-unresolved
+proposed_resource_contract_not_yet_authorized:
+  maximum_invocation_seconds: 28800
+  maximum_cumulative_controller_seconds: 25200
+  reserved_independent_audit_seconds: 3600
+  maximum_controller_plus_audit_seconds: 28800
+  maximum_case_seconds: 600
+  concurrent_workers: 1
+  external_or_paid_compute: false
+  native_state_arrays_uncompressed_bytes: 120805120
+  maximum_total_output_bytes: 1073741824
+  failure_or_budget_exhaustion: retain-all-identities-and-artifacts-no-qualification-no-automatic-expansion-or-replacement
+  timeout_sum_not_a_budget: 104times600seconds-is62400seconds-but-cannot-override-the-global-seven-hour-controller-cap
+  numerical_policy_failure: preserve-results-and-seek-direction-not-automatic-step-tolerance-parameter-or-case-retuning
+evidence:
+  new_protocol_tests_passed: 51
+  related_protocol_and_frozen_runner_tests_passed: 105
+  related_elapsed_seconds: 3.84
+  command: .venv/bin/pytest -q tests/test_patchseq_gbs_pilot_protocol.py tests/test_patchseq_mpfr_synthetic.py --tb=short --disable-warnings
+  ruff_whole_repository: clean
+  metadata_audit_CLI: exact104cases120comparisons-and-all-three-hashes-agree-execution-authorized-false
+  tests_include:
+    - Every profile has complete baseline warmup step release and supported source-feature windows.
+    - Existing independent and primary feature extractors accept fabricated constant-voltage window fixtures without running a neuron model.
+    - Prefix observations have correct shortened native support and are not scored as complete response epochs.
+    - Missing or changed comparisons cannot waive mandatory controls or turn an endpoint probe into another comparison.
+    - Boolean-versus-integer and floating-versus-integer case substitutions are rejected.
+    - CLI planning creates no output artifacts and an execution argument is rejected.
+  new_pilot_or_numerical_trajectories_executed_for_this_stage: false
+missing_before_execution:
+  - scripts/run_patchseq_gbs_pilot.py
+  - scripts/verify_patchseq_gbs_pilot.py
+  - Bounded worker execution and process-lock checkpoint resume source-integrity artifact and global resource-accounting tests.
+  - Complete saved-array physiological-feature six-term-loss pairwise-repeat restart landing and resource audit tests.
+  - Distinct human execution approval and an execution seal pinning all final sources verifiers builds runtime and budgets.
+readiness:
+  execution_seal1516_created: false
+  output1517_created: false
+  runner_implemented: false
+  simulated_array_auditor_implemented: false
+  pilot_run_authorized: false
+  long_reference_qualified: false
+  whole_biological_workflow_feasibility_established: false
+  production_fitting_restarted: false
+  biological_or_held_out_response_access: false
+  historical_results_replaced: false
+  frozen_classic_baseline_modified: false
+  scientific_goal_complete: false
+next_implementation: bounded-worker-and-controller-then-independent-simulated-array-auditor-before-requesting-execution-approval

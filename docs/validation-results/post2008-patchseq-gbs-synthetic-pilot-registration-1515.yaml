@@ -1,0 +1,155 @@
+schema_version: 1
+artifact_id: 1515
+date: '2026-10-22'
+status: prospective-short-pilot-fixed-not-execution-authorized
+parent_plan: docs/validation-results/post2008-patchseq-segment-adaptive-plan-1511.yaml
+preparation: docs/validation-results/post2008-patchseq-gbs-hh-reference-preparation-1514.yaml
+definition_source: scripts/patchseq_gbs_pilot_protocol.py
+definition_source_sha256: caa3e8d38c6c566c6160fd602b2ce5a624615229957321816c197bb6a4d6573a
+metadata_auditor: scripts/verify_patchseq_gbs_pilot_protocol.py
+metadata_auditor_sha256: 006ddce63641d7d49c8eb41f9d8060b9560b3fcebb44fa1d6859c83eec96ae1f
+required_runner: scripts/run_patchseq_gbs_pilot.py
+required_array_auditor: scripts/verify_patchseq_gbs_pilot.py
+required_execution_seal: docs/validation-results/post2008-patchseq-gbs-synthetic-pilot-execution-seal-1516.yaml
+output: results/patchseq-gbs-synthetic-pilot-1517
+total_cases: 104
+case_table_sha256: d72decc84e30496e96dd73276822c8640056eef79a07852985cf4104cf7f7a8d
+input_manifest_sha256: f4253793afe099a7ae376851483f38b40f2f0e3b60e47ec452d90072d2633ba2
+comparison_count: 120
+comparison_table_sha256: eb7f4e6e5bc4ba27f2dcfe25eafa7bd4e9a106a6b296cfc1bcb64f8571f5af21
+inputs:
+  command_lengths:
+  - 20001
+  - 40001
+  rate_hz: 50000.0
+  warmup_samples: 5000
+  baseline_samples: 2500
+  release_samples: 2500
+  pre_window:
+  - 1500
+  - 2000
+  field_order:
+  - capacitance_pF
+  - leak_nS
+  - leak_reversal_mV
+  - sodium_nS
+  - potassium_nS
+  - m_current_nS
+  - threshold_shift_mV
+  - m_tau_max_ms
+  active_parameters:
+  - 100.0
+  - 10.0
+  - -65.0
+  - 2000.0
+  - 500.0
+  - 10.0
+  - -60.0
+  - 1000.0
+  initial:
+  - -65.0
+  - 0.05
+  - 0.6
+  - 0.2
+  - 0.05
+  active_step_pA: 2000.0
+  passive_step_pA: -50.0
+  holding_pA: 0.0
+  passive_parameters: zero-sodium-potassium-and-M-conductances
+  parent_full_command_lengths:
+  - 151000
+  - 330000
+  scope: shortened-analogues-not-replacements-for-all-four-full1510profiles
+primary_policies:
+  standard:
+    initial_step_ms: '0.02'
+    minimum_step_ms: 1e-30
+    maximum_rhs: 15000000
+    maximum_steps: 1000000
+    maximum_rejections: 100000
+    absolute: 1e-18
+    relative: 1e-18
+    maximum_step_ms: '0.2'
+  strict:
+    initial_step_ms: '0.02'
+    minimum_step_ms: 1e-30
+    maximum_rhs: 15000000
+    maximum_steps: 1000000
+    maximum_rejections: 100000
+    absolute: 1e-22
+    relative: 1e-22
+    maximum_step_ms: '0.2'
+  half_cap:
+    initial_step_ms: '0.02'
+    minimum_step_ms: 1e-30
+    maximum_rhs: 15000000
+    maximum_steps: 1000000
+    maximum_rejections: 100000
+    absolute: 1e-22
+    relative: 1e-22
+    maximum_step_ms: '0.1'
+independent_factors:
+- 1
+- 2
+- 4
+synthetic_target:
+  baseline_mean_mV: -65.0
+  early_step_mean_mV: -60.0
+  steady_step_mean_mV: -55.0
+  detected_event_count: 3
+  first_event_latency_s: 0.01
+  last_to_first_interval_ratio: 1.0
+restart_control_native_index: 4096
+landing_probes:
+  '20001':
+  - 2500
+  - 7501
+  - 15000
+  - 22502
+  '40001':
+  - 2500
+  - 7501
+  - 25000
+  - 42502
+comparisons:
+  whole_voltage_mV: 1.0e-05
+  feature_float_absolute: 1.0e-05
+  feature_float_relative: 1.0e-09
+  feature_discrete_and_structure: exact-types-values-and-support
+  loss_absolute: 1.0e-06
+  loss_relative: 1.0e-08
+  repeat_and_restart: bitwise-all-five-states-on-the-entire-native-grid
+  dense_landing: full-run-observation-at-declared-index-versus-separate-accepted-prefix-endpoint
+  reference_coarse: report-all-failures-not-the-finest-reference-gate
+  all_other_comparisons: mandatory-no-favorable-subset
+  synthetic_fit_target_gates: report-only-not-a-biological-fit-or-numerical-promotion-gate
+resources:
+  maximum_invocation_seconds: 28800
+  maximum_total_controller_seconds: 25200
+  maximum_controller_plus_audit_seconds: 28800
+  maximum_case_seconds: 600
+  cleanup_reserve_seconds: 60
+  maximum_independent_audit_seconds: 3600
+  maximum_output_bytes: 1073741824
+  maximum_independent_rhs: 15000000
+  maximum_independent_substeps: 1000000
+  total_native_array_uncompressed_bytes: 120805120
+  concurrent_workers: 1
+  external_or_paid_compute: false
+  incomplete_or_failed_pilot: retain-all-identities-and-artifacts-no-qualification-or-automatic-budget-expansion
+failure_policy:
+  stop_on_execution_failure: true
+  no_replacement_or_automatic_rerun: true
+  interrupted_controller_or_worker: block-automatic-resume-preserve-evidence-and-inspect-real-process-state
+  completed_case_resume: only-after-clean-controller-boundary-with-identical-pins-builds-runtime-and-artifacts
+boundaries:
+  execution_authorized: false
+  scientific_goal_complete: false
+  biological_or_held_out_access: false
+  fitting_restart: false
+  network_promotion: false
+  original_score_replacement: false
+  frozen_baseline_change: false
+  long_reference_qualification: false
+  whole_biological_study_feasibility: false
+next_gate: independent-array-audit-and-explicit-execution-decision-before-seal-no-simulation-from-this-document

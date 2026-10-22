@@ -1,0 +1,183 @@
+schema_version: 1
+artifact_id: 1511
+date: 2026-10-22
+status: design-only-not-a-solver-registration-execution-seal-or-fitting-amendment
+purpose: obtain-an-efficient-independently-qualified-reference-without-changing-the-neuron-study
+parent_plan: docs/validation-results/post2008-patchseq-numerical-admissibility-plan-1497.yaml
+predecessor_assessment: docs/validation-results/post2008-patchseq-mpfr-long-synthetic-assessment-1510.yaml
+predecessor_assessment_sha256: e4a2725f2ed6b8b0980be94a52b8f7afdd7deddd339bbd63ac3a9231aa7f4317
+current_evidence_rechecked:
+  raw_checkpoint_hash_matches_assessment: true
+  independent_audit_hash_matches_assessment: true
+  original_source_and_build_pins_intact: true
+  later_implementation_found: false
+  new_build_tests_or_simulations_run_for_this_plan: false
+  biological_or_held_out_recordings_opened: false
+known_results_not_reinterpreted:
+  backend_equivalence: tested-MPFR-RK4-and-Boost-RK4-trajectories-agree
+  long_active_reference: not-qualified-under-the-unchanged-refinement-gate
+  full_table_cost: four-arm-primary-only-MPFR-extrapolation-remains271-to286serial-days
+  native_double: passes-these-synthetic-inputs-but-not-earlier-candidate19-inputs
+  old_failed_cases_and_scores: preserved-not-retrospectively-repaired
+chosen_followup:
+  hypothesis: segment-aware-arbitrary-precision-variable-order-Gragg-Bulirsch-Stoer-with-controlled-dense-output-can-reduce-work-between-native-observations
+  selection_basis: numerical-method-documents-header-inspection-and-static-operation-accounting-not-new-neuron-outcomes
+  primary_arithmetic: exact160-and320-binary-bit-MPFR_RNDN-for-state-stages-time-coefficients-and-dense-polynomials
+  extrapolation: polynomial-extrapolation-as-implemented-by-the-inspected-dense-GBS-stepper-not-an-unspecified-rational-extrapolation-variant
+  method_changes_explicit: higher-order-extrapolation-adaptive-time-steps-and-dense-output-are-new-numerical-method-choices-not-a-silent-RK4-optimization
+  not_selected: another-uniform-RK4-refinement-or-a-binary64-adaptive-replacement
+  scope: numerical-engine-and-evidence-infrastructure-only-not-a-new-neuron-model-or-circuit
+why_not_only_a_fixed_grid_higher_order_swap:
+  baseline_four_arm_RK4_RHS_evaluations_per_native_interval: 192
+  comparison_RKF78_four_arm_example: two-precisions-times13stages-times-divisors1plus2-equals78
+  idealized_RHS_call_reduction_example: 2.4615384615384617
+  limit: operation-count-illustration-not-a-measured-speedup-and-not-enough-by-itself-to-establish-feasibility
+  recommendation: amortize-work-over-constant-current-segments-while-retaining-every-native-output
+preserved_scientific_scope:
+  parameter_vectors: 128
+  strata: 6
+  candidate_stratum_identities: 768
+  candidate_sweep_identities: 33280
+  native_intervals: 9450846720
+  parameter_fields_bounds_and_Sobol_table: unchanged
+  baseline_learning_circuit_neuron_equations: unchanged
+  initialization: same-explicit-five-state-values-no-engine-specific-equilibrium-recalculation
+  source_inputs: original-binary64-values-and-coefficients-lifted-exactly-holding-added-once
+  historical_outputs: separate-ledgers-no-replacement-of-original-or1510-results
+  gates:
+    whole_predicted_voltage_maximum_difference_mV: 0.00001
+    full_typed_features: exact-structure-discrete-fields-and-counts-floats-absolute1e-5-plus-relative1e-9
+    group_and_total_loss: absolute1e-6-plus-relative1e-8
+    selected_exact_repeat: bit-pattern-identity
+    selected_half_step_and_warmup: existing-prospective-controls-not-substituted-with-local-solver-error
+  unresolved_or_failed_case: keep-identity-and-explicit-classification-no-omission-next-best-candidate-or-refit
+integration_contract:
+  current_segments: split-at-every-exact-binary64-current-change-including-adjacent-and-one-sample-pulses
+  native_interval_semantics: current-at-index-j-applies-through-interval-j-to-jplus1
+  time_coordinate: native-index-times-the-exact-lift-of-binary64-1000-divided-by-rate-no-accumulated-double-time
+  discontinuities: force-an-accepted-step-end-at-the-boundary-no-step-or-interpolation-spans-a-current-change
+  endpoint_derivatives: use-old-current-for-the-ending-segment-and-recompute-under-new-current-after-reset
+  observations: export-all-five-native-grid-states-before-update-including-warmup-and-release
+  dense_output: explicit-high-precision-polynomial-with-own-error-control-and-native-sample-validation
+  no_feedback: interpolated-observations-never-replace-the-integrator-accepted-state
+  terminal_sample: no-final-unobserved-interval
+  finite_checks: every-evaluated-RHS-and-stage-and-all-accepted-states-and-exported-observations
+  gate_checks: original-bounds-on-accepted-integrator-states-and-observed-gates-no-clipping-or-favorable-fallback
+  adaptive_trials: rejected-proposals-are-reported-separately-from-accepted-states-no-hiding-terminal-failure
+  budgets: fixed-evaluation-rejection-and-minimum-step-limits-must-be-registered-before-neuron-benchmarks
+  local_error_estimate: not-a-proof-of-global-waveform-or-feature-agreement
+restart_contract:
+  design: deterministic-accepted-endpoint-restart-barriers-shared-by-uninterrupted-and-resumed-runs
+  barrier_schedule: every4096native-intervals-plus-input-discontinuities-and-terminal-point-not-chosen-from-trajectory-outcomes
+  at_barrier: create-a-fresh-controller-with-the-same-fixed-policy-in-both-run-modes
+  checkpoint: full-precision-accepted-state-exact-time-native-index-and-all-input-build-policy-identities
+  prohibited: restoring-from-binary64-exported-states-or-interpolated-observations
+  pause_inside_a_barrier: no-automatic-replay-or-unregistered-controller-reset
+  required_proof: identical-output-bits-after-chunk-resume-with-the-same-prescribed-barriers
+  alternative: if-controller-history-is-retained-instead-every-adaptive-field-and-dense-history-must-be-serialized-and-verified
+implementation_stages:
+  - id: explicit_precision_adapter
+    files_to_create:
+      - scripts/patchseq_gbs_mpfr_number.hpp
+      - tests/test_patchseq_gbs_mpfr_number.py
+    work:
+      - Implement owned per-value MPFR storage at exact binary widths including expression temporaries and numeric traits.
+      - Pin integer rational construction and explicit rounding; distinguish solver coefficients from unchanged neuron coefficient lifts.
+      - Reject implicit double conversions in arithmetic time controller or error-norm calculations.
+      - Test arithmetic and precision against an independent mpmath oracle without biological data or neuron benchmarking.
+    stop: unsupported-or-hidden-wider-narrower-precision-or-unqualified-numeric-traits
+  - id: generic_controlled_dense_stepper
+    files_to_create:
+      - scripts/patchseq_gbs_kernel.cpp
+      - scripts/patchseq_gbs_driver.py
+      - tests/test_patchseq_gbs_stepper.py
+    work:
+      - Bind a separately versioned hash-pinned GBS implementation to the explicit precision adapter.
+      - Enable interpolation-error control explicitly; local header defaults it off.
+      - Document the actual error norm acceptance factors order controller step caps and exact coefficient construction.
+      - Test closed-form scalar and vector systems interior samples exact endpoints near-zero errors rejection and stiffness-budget failures.
+      - Test native-time segmentation and deterministic-barrier restarts on manufactured inputs before any HH matrix.
+    stop: no-validated-dense-polynomial-or-exact-boundary-and-restart-contract
+  - id: HH_and_independent_forward_preparation
+    files_to_create:
+      - scripts/patchseq_gbs_hh.cpp
+      - scripts/patchseq_rkf78_reference.cpp
+      - scripts/patchseq_rkf78_reference.py
+      - tests/test_patchseq_gbs_hh.py
+    work:
+      - Primary route may reuse the immutable MPFR RHS through an adapter; preserve that reuse boundary explicitly.
+      - Independently implement the comparison route using rational RKF78 and a separately coded raw-MPFR RHS at exact160-and320bits without calling the primary Workspace or derivative adapter.
+      - Test the independent route against the short150decimal-digit-mpmath oracle and passive analytic solution.
+      - Retain separate error-controller stepper and RHS provenance; saved-array feature reconstruction alone is not an independent forward route.
+      - Disclose shared GMP/MPFR arithmetic as a common dependency; algorithm and RHS implementation independence is not independent arithmetic-library certification.
+      - Cover active excursions singular-rate limits current edges and deliberate failures with explicit shared initial state.
+    stop: equation-or-input-disagreement-or-unmeasured-independent-route-cost
+  - id: prospective_synthetic_registration
+    files_to_create:
+      - scripts/run_patchseq_gbs_synthetic.py
+      - scripts/verify_patchseq_gbs_synthetic.py
+      - tests/test_patchseq_gbs_synthetic.py
+    before_execution_fix:
+      - One complete case table including all four1510input profiles no replacement of the failed longest-active input.
+      - Precision pairs and at least two fixed accuracy policies plus an independent maximum-step-halving control.
+      - Exact local voltage-and-gate tolerances error norm dense-control factors step/order limits barrier schedule and failure budgets.
+      - Direct accepted-endpoint landings at predetermined interior probe times to validate dense output independently without feeding observations back into the production-style path.
+      - Complete independent RKF78 step-refinement matrix at both high precisions no outcome-guided escalation.
+      - Existing native53 and RK4 comparisons retained as historical controls not newly qualified ground truth where1510failed.
+      - Same global waveform feature loss and repeat gates unchanged all failures retained.
+      - All primary and independent sources builds dependency closures and actual precision probes sealed before outcomes.
+    execution: separate-prospective-registration-and-source-seal-required-no-execution-authority-from-this-plan
+  - id: bounded_full_workflow_feasibility
+    work:
+      - Begin with a fixed short synthetic pilot to measure complete primary and independent work not just fast RHS timings.
+      - Seal any full-length pilot table and timeout limits before it runs retaining every predeclared case.
+      - Measure RHS evaluations accepted/rejected steps interpolation cost arrays checkpoints compression memory and independent-forward cost.
+      - Measure serialization and deterministic resumption before claiming persistent execution.
+      - Evaluate bounded local concurrency only after serial correctness and with separately pinned worker counts and memory caps.
+      - Compare conservative full33280case-workflow cost including numerical controls and independent verification to explicitly agreed total study resources.
+    invocation_limit_seconds: 28800
+    monitor_interval_minutes: 15
+    current_authorization_limit: existing-eight-hour-invocation-preference-is-not-paid-external-compute-or-an-unlimited-full-study-budget
+    decision_if_infeasible: preserve-results-and-report-operational-infeasibility-no-biology-failure-claim-or-many-month-launch
+  - id: biological_amendment_only_after_both_gates
+    prerequisites:
+      - All declared synthetic and independent-forward qualification checks pass without dropping failures.
+      - Complete resource plan feasible within explicitly approved elapsed-time-compute-and-storage-headroom.
+      - New full-support training registration and independent-verification routes sealed before execution.
+    execution: separate-human-decision-required-preserve-all-existing-source-and-outcome-history
+    downstream: existing-training-controls-then-held-out-design-then-network-transfer-no-shortcuts
+known_engineering_risks:
+  - Stock Boost GBS dense output defaults control_interpolation to false and uses a separate acceptance factor10; neither may remain implicit.
+  - Stock stepper controller fields are not a public lossless checkpoint format; serializing only five states is insufficient unless deterministic resets are part of every run.
+  - Reinitializing a stock object may retain order history; a fresh-controller barrier must prove complete reset not just call a method named reset.
+  - A high-order method can fail from stiffness interpolation error expensive arithmetic or growing trajectory errors; no speedup or convergence is assumed.
+  - The independent high-precision forward route can dominate total cost and must be benchmarked on the same support.
+  - Cached observations or unchanged event counts cannot replace whole-trajectory qualification.
+  - Local CPU and memory limits were not successfully inventoried in this sandbox; do not invent worker counts or resource availability.
+protected_sources:
+  - scripts/patchseq_hh_precision_kernel.cpp
+  - scripts/patchseq_precision_driver.py
+  - scripts/patchseq_mpfr_kernel.cpp
+  - scripts/patchseq_mpfr_driver.py
+  - scripts/run_patchseq_mpfr_synthetic.py
+  - scripts/verify_patchseq_mpfr_synthetic.py
+  - results/patchseq-isolated-fit-1438/checkpoint.json
+  - docs/validation-results/post2008-patchseq-isolated-fit-execution-seal-1437.yaml
+primary_method_references:
+  - https://www.boost.org/latest/libs/numeric/odeint/doc/html/boost_numeric_odeint/odeint_in_detail/steppers.html
+  - https://www.boost.org/latest/libs/numeric/odeint/doc/html/boost_numeric_odeint/getting_started/overview.html
+  - https://www.unige.ch/~hairer/software.html
+local_method_sources_inspected:
+  /opt/homebrew/include/boost/numeric/odeint/stepper/bulirsch_stoer_dense_out.hpp: fe9852def53e255570f103adc6be7f1f3f038ffe2af1ea1b5f52e7e4bdd829cd
+  /opt/homebrew/include/boost/numeric/odeint/stepper/runge_kutta_fehlberg78.hpp: a9d39665fa613553ae0aff3b0836650141eb91c48f683b3f4805f7d8bca4ce8a
+disposition:
+  new_solver_or_step_policy_implemented: false
+  new_neuron_experiment_executed: false
+  production_fitters_remain_stopped: true
+  gates_weakened: false
+  historical_scores_or_failures_replaced: false
+  biological_or_held_out_response_access: false
+  network_promotion: false
+  frozen_baseline_modified: false
+  overall_scientific_goal_complete: false
+next_implementation: explicit_precision_adapter-then-generic-controlled-dense-stepper-synthetic-tests-only

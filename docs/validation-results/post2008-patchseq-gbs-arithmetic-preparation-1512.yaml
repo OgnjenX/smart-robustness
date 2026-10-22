@@ -1,0 +1,84 @@
+schema_version: 1
+artifact_id: 1512
+date: 2026-10-22
+status: arithmetic-and-generic-stepper-compatibility-unit-tested-not-HH-reference-validation
+plan: docs/validation-results/post2008-patchseq-segment-adaptive-plan-1511.yaml
+scope: first-implementation-stage-exact-bit-arithmetic-and-minimal-generic-dense-stepper-probe
+source_hashes:
+  scripts/patchseq_gbs_mpfr_number.hpp: fd1d57d3374e07ee1af190187549f22dcf52fd186b2ce4a14f7f9899d79f83d0
+  scripts/patchseq_gbs_odeint_bridge.hpp: ae7087354837f204fd7158ed5ba62783adb98526af7f3cad97fbd270a0341554
+  tests/patchseq_gbs_mpfr_number_probe.cpp: ecba82010e3259bfa81ddd2730b95c54202695fe461cd54f563cb6ffafc09253
+  tests/test_patchseq_gbs_mpfr_number.py: 016d920f97f481da677c14c3d5004d0da28fa0b5ffaba57bbb290477d3b2529f
+arithmetic_contract:
+  precision_bits: [160, 320]
+  rounding: explicit-MPFR_RNDN-on-every-rounded-operation
+  ownership: independent-owned-storage-copy-move-and-assignment-retain-width
+  inputs: exact-binary64-and-integer-lifts-explicit-decimal-construction-for-new-numerical-constants
+  outputs: no-implicit-conversion-to-double-no-long-double-truncation
+  raw_access: constant-MPFR-pointer-only-no-mutable-precision-accessor
+  assign_from_mpfr: require-the-same-source-significand-width
+  temporaries: always-initialize-at-template-bit-width-not-process-default-precision
+  nonfinite_values: represented-and-compared-with-unordered-NaN-semantics-never-clipped-to-finite-values
+  numeric_traits: binary-radix-width-rounding-and-default-MPFR-exponent-range
+  exponent_range_limit: future-driver-must-validate-default-exponent-range-before-using-the-traits
+value_encoding:
+  format: canonical-signed-hexadecimal-integer-significand-p-signed-decimal-binary-exponent
+  construction: exact-MPFR-get_z_2exp-and-set_z_2exp-not-binary64-export
+  signed_zero: explicitly-preserved
+  restore: reject-malformed-noncanonical-inexact-out-of-range-and-nonfinite-encodings
+  limit: encodes-a-number-not-a-complete-adaptive-controller-or-configuration-bound-checkpoint
+odeint_compatibility:
+  generic_stepper_constructed_and_advanced: true
+  interpolation_error_control: explicitly-enabled-in-the-unit-probe
+  probe: one-scalar-yprime-equals-minus-y-step-and-interior-dense-observation-against-exp-minus-time
+  unit_probe_error_bound: 1.0e-18
+  no_neuron_equations: true
+  exact_binomial_bridge:
+    motivation: generic-Boost-binomial-instantiation-pulls-in-beta-gamma-and-extra-number-conversions-unneeded-for-small-GBS-coefficients
+    implementation: specialize-only-the-two-owned-Real-types-using-exact-bounded-integer-binomial-arithmetic
+    supported_n: [0, 32]
+    current_GBS_requirement: n-at-most17-in-the-inspected-header
+    bounds: reject-expanded-or-invalid-coefficient-requests-no-floating-fallback
+    verification: every-k-for-every-n-zero-through32-agrees-with-Python-math-comb-at-both-widths
+unit_evidence:
+  new_tests_passed: 102
+  skipped_locally: 0
+  new_test_elapsed_seconds: 3.17
+  related_tests_passed: 250
+  related_test_elapsed_seconds: 20.60
+  ruff: clean
+  whitespace: clean
+  compiler_flags: [-std=c++17, -O2, -shared, -fPIC, -fno-fast-math, -ffp-contract=off]
+  prerequisites: isolated-GMP-MPFR-toolchain-with-original-source-product-and-upstream-test-hashes-checked
+  dependency_integrity: actual-flag-matched-transitive-headers-compiler-and-local-source-hashes-checked-before-and-after-test-build
+  independent_arithmetic_reference: mpmath-target-width-rounded-basic-operations-and-wider-transcendental-reference
+  checks:
+    - Both target widths survive explicit changes to MPFR default precision.
+    - Original binary64 neuron coefficients and step constants lift exactly including signed zero.
+    - Addition subtraction multiplication division mixed-scalar and compound expressions agree with the independent target-width reference.
+    - Nearest-even halfway rounding behaves correctly at160and320bits.
+    - Exponential expm1 logarithm logarithm10 square-root and power agree with the wider reference within the stated unit-test precision bound.
+    - Wide integer inputs numeric traits ownership NaN comparisons and exact value serialization are covered.
+    - Actual dense-stepper template instantiation and scalar step use the type without permitting implicit binary64 output.
+    - A nonfinite arithmetic result cannot be serialized as a finite checkpoint value.
+  CI_scope_limit: tests-may-skip-without-the-optional-local-compiled-toolchain-skipped-tests-do-not-validate-this-foundation
+predecessor_integrity:
+  all1510source_build_pins_rechecked_unchanged: true
+  historical_refinement_failures_reinterpreted: false
+limitations:
+  - This is arithmetic infrastructure and a tiny generic compatibility check, not full solver qualification.
+  - No vector/error-controller norm, exact current-edge segmentation, endpoint-derivative switch, rejection budget or deterministic restart-barrier implementation is validated here.
+  - The scalar probe does not validate interpolation for HH dynamics or the complete waveform/feature/loss gates.
+  - No HH simulation, new synthetic benchmark matrix, biological file access, alternative-neuron fitting or network experiment ran.
+  - No speedup, production-feasibility result or independent full active forward reference follows from these unit tests.
+next_implementation: generic-controlled-dense-stepper-driver-with-manufactured-vector-edge-boundary-rejection-and-deterministic-barrier-tests-before-any-HH-matrix
+disposition:
+  production_fitters_remain_stopped: true
+  historical_scores_or_parameters_changed: false
+  new_scientific_experiment_executed: false
+  gates_weakened: false
+  held_out_access_authorized: false
+  network_promotion_authorized: false
+  frozen_baseline_modified: false
+  scientific_goal_complete: false
+primary_arithmetic_reference: https://www.mpfr.org/mpfr-current/mpfr.html

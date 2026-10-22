@@ -217,7 +217,8 @@ def prepared_files(tmp_path, monkeypatch):
         runner.write_json(folder/'build.json', builds[engine])
         pins.update({str(binary): runner.file_sha(binary), str(folder/'build.json'): runner.file_sha(folder/'build.json')})
     doc = {'status': 'built-and-pinned-no-pilot-trajectories', 'source_hashes': sources,
-        'runtime': runtime, 'pins': pins, 'builds': builds, 'preparation_seconds': 0.,
+        'runtime': runtime, 'pins': pins, 'builds': builds,
+        'arithmetic_probes': copy.deepcopy(runner.EXPECTED_ARITHMETIC_PROBES), 'preparation_seconds': 0.,
         'biological_access': False, 'pilot_executed': False, 'fitting_restart': False}
     runner.write_json(runner.PREPARATION/'preparation.json', doc)
     return doc
@@ -240,7 +241,7 @@ def test_linked_preparation_is_not_followed(tmp_path, monkeypatch, entry):
 
 
 @pytest.mark.parametrize('defect', ['extra', 'missing_route', 'extra_route', 'runtime', 'sources',
-    'pin_support', 'binary_path', 'binary_bytes', 'build_receipt', 'execution_flag', 'invalid_timing'])
+    'pin_support', 'binary_path', 'binary_bytes', 'build_receipt', 'execution_flag', 'invalid_timing', 'arithmetic_probe'])
 def test_changed_preparation_cannot_authorize_worker(prepared_files, defect):
     doc = prepared_files
     if defect == 'extra':
@@ -263,6 +264,8 @@ def test_changed_preparation_cannot_authorize_worker(prepared_files, defect):
         (runner.PREPARATION/'gbs-build/build.json').write_text('{}')
     elif defect == 'execution_flag':
         doc['pilot_executed'] = True
+    elif defect == 'arithmetic_probe':
+        doc['arithmetic_probes']['gbs']['precision160'] = 159
     else:
         doc['preparation_seconds'] = True
     runner.write_json(runner.PREPARATION/'preparation.json', doc, atomic=True)

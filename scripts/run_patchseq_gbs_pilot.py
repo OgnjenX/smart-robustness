@@ -58,6 +58,13 @@ MAX_JSON_BYTES = 64*1024*1024
 WORKER_ENV = {'OMP_NUM_THREADS': '1', 'OPENBLAS_NUM_THREADS': '1', 'MKL_NUM_THREADS': '1',
     'VECLIB_MAXIMUM_THREADS': '1', 'NUMEXPR_NUM_THREADS': '1', 'HDF5_PLUGIN_PRELOAD': '::',
     'MPLCONFIGDIR': '/private/tmp/mpl', 'PYTHONDONTWRITEBYTECODE': '1'}
+EXPECTED_ARITHMETIC_PROBES = {
+    'gbs': {'mpfr': '4.2.2', 'header': '4.2.2', 'gmp': '6.3.0', 'tls': 1,
+        'emin': -1073741823, 'emax': 1073741823, 'precision160': 160, 'precision320': 320,
+        'cancellation160': 1, 'cancellation320': 1},
+    'rkf78': {'mpfr': '4.2.2', 'header': '4.2.2', 'gmp': '6.3.0', 'range_and_tls': 1,
+        'precision160': 160, 'precision320': 320},
+    'rkf78_table_sha256': '1618bce9dc73fb8b4ea5ba33ac3af42ecbec2c9c8706e221ea0b4c0e4cf51313'}
 
 
 def require(condition, message):
@@ -149,8 +156,10 @@ def read_preparation():
     require(not PREPARATION.is_symlink(), 'linked pilot build preparation refused')
     document = read_json(PREPARATION/'preparation.json')
     require(type(document) is dict and set(document) == {'status', 'source_hashes', 'runtime', 'pins',
-        'builds', 'preparation_seconds', 'biological_access', 'pilot_executed', 'fitting_restart'},
+        'builds', 'arithmetic_probes', 'preparation_seconds', 'biological_access', 'pilot_executed', 'fitting_restart'},
         'invalid pilot build preparation schema')
+    require(encoded(document['arithmetic_probes']) == encoded(EXPECTED_ARITHMETIC_PROBES),
+            'prepared arithmetic precision environment or reference table differs')
     require(type(document['builds']) is dict and set(document['builds']) == {'gbs', 'rkf78'},
             'pilot build support differs')
     require(document['status'] == 'built-and-pinned-no-pilot-trajectories', 'invalid pilot build preparation')
@@ -189,6 +198,9 @@ def prepare_builds():
                 'orphan pilot build preparation retained; no automatic repair')
         began = time.perf_counter()
         drivers = {'gbs': HHDriver(PREPARATION/'gbs-build'), 'rkf78': RKF78Driver(PREPARATION/'rkf78-build')}
+        probes = {'gbs': drivers['gbs'].environment, 'rkf78': drivers['rkf78'].environment,
+                  'rkf78_table_sha256': drivers['rkf78'].table_sha256}
+        require(encoded(probes) == encoded(EXPECTED_ARITHMETIC_PROBES), 'actual prepared arithmetic probes differ')
         runtime = runtime_fingerprint()
         pins = merge_pins(sources, runtime['file_hashes'])
         for name, driver in drivers.items():
@@ -197,7 +209,8 @@ def prepare_builds():
                  str(PREPARATION/(name+'-build')/'build.json'): file_sha(PREPARATION/(name+'-build')/'build.json')})
         verify_pins(pins)
         document = {'status': 'built-and-pinned-no-pilot-trajectories', 'source_hashes': sources,
-            'runtime': runtime, 'pins': pins, 'builds': {name: driver.provenance for name, driver in drivers.items()},
+            'runtime': runtime, 'pins': pins, 'arithmetic_probes': probes,
+            'builds': {name: driver.provenance for name, driver in drivers.items()},
             'preparation_seconds': time.perf_counter()-began,
             'biological_access': False, 'pilot_executed': False, 'fitting_restart': False}
         write_json(PREPARATION/'preparation.json', document)
@@ -248,7 +261,8 @@ def output_bytes(root):
 def validate_inventory(root, state):
     names = {'runner.lock', 'worker.lock', 'checkpoint.json'}
     if state['status'] in TERMINALS:
-        names |= {'audit.lock', 'independent-assessment.json'}
+        names |= {'audit.lock', 'audit-control.json', 'audit.log', 'audit-analysis.json',
+                  'audit-outcome.json', 'independent-assessment.json'}
     for key in state['cases']:
         names.update(path.name for path in case_files(root, key).values())
     for path in root.iterdir():

@@ -1,0 +1,99 @@
+schema_version: 1
+artifact_id: 1522
+date: 2026-10-22
+status: independent-bounded-evidence-auditor-implemented-awaiting-nontrajectory-build-preparation
+parent_plan: docs/validation-results/post2008-patchseq-segment-adaptive-plan-1511.yaml
+registration: docs/validation-results/post2008-patchseq-gbs-synthetic-pilot-registration-1515.yaml
+array_preparation: docs/validation-results/post2008-patchseq-gbs-pilot-array-core-preparation-1521.yaml
+source_hashes:
+  scripts/verify_patchseq_gbs_pilot.py: d58b31ccf8b7efbe2ffb2d0ee7a9164a27b3877116bbe0004919b8b6b9ff2599
+  tests/test_patchseq_gbs_pilot_evidence_audit.py: 61b6c7083038ee43c13f9ee538b2ee3d6d5dd9c17071c62ace2c483402bf01b3
+  scripts/run_patchseq_gbs_pilot.py: 0ca961584fd8d10591f2c20a44a265060e947b713d97fb84852d08c84090e922
+  tests/test_patchseq_gbs_pilot_runner.py: 49fb48cedf5de1b723c14d6d9151aaf24a30ee06c3627d5d21d36fd11a57e01d
+implemented:
+  - A separately expressed audit entrypoint imports neither controller producer numerical drivers nor primary features/objective implementations.
+  - Both the audit launcher and its direct worker require the distinct approved human source/build/runtime/budget decision before output access.
+  - Independent exact source-pin closure discovery runtime file fingerprinting and source/build/receipt/product checks bind all evidence to the approved preparation.
+  - Explicit arithmetic-version exponent-range TLS precision cancellation and independent rational-table probes are retained and checked in future build preparation.
+  - Complete typed terminal checkpoint ledger support requires all104identities including failed and pending cases; no successful subset can qualify.
+  - Exact file inventories reject missing unlisted linked or nested artifacts and bind every closed case spec receipt log array restart and checksum.
+  - Bounded duplicate-key-free finite metadata and bounded ZIP-member/NPY-header validation precede native-array allocation; object arrays are not unpickled.
+  - Every complete native array is independently remeasured and all120comparisons including unfavorable controls remain in the report.
+  - The audit parent holds controller worker and audit OS locks; the worker requires its recorded live parent and all held locks.
+  - A single subprocess has an explicit timeout reduced by admission elapsed time cleanup reserve and the remaining combined time budget.
+  - Interrupted timeout failure and partial analysis artifacts are retained without overwrite automatic replay or final qualifying assessment.
+  - A successful child is insufficient; complete analysis support case checks resource totals control identity and source/raw/audit artifacts are rechecked before exclusive final output.
+  - Read-only preparation verification can check built products without an execution decision but cannot run a neuron authorize a pilot or emit an independent assessment.
+prospective_controller_changes:
+  changes:
+    - Add only registered audit control analysis log outcome and final assessment filenames to terminal-checkpoint inventory support.
+    - Persist and strictly validate actual arithmetic probes plus the independent reference-table hash before any pilot run.
+    - Update isolated inert build fixtures for the prospective preparation schema; no real preparation or execution seal existed to migrate.
+  scientific_equations_inputs_initialization_cases_policies_and_gates_changed: false
+  historical_source_snapshots_or_results_rewritten: false
+resource_contract_preserved:
+  maximum_invocation_seconds: 28800
+  maximum_cumulative_controller_seconds: 25200
+  maximum_independent_audit_seconds: 3600
+  maximum_controller_plus_audit_seconds: 28800
+  maximum_case_seconds: 600
+  cleanup_reserve_seconds: 60
+  maximum_output_bytes: 1073741824
+  concurrent_model_workers: 1
+  external_or_paid_compute: false
+  accounting: all-completed-case-stages-and-native-array-storage-plus-controller-charges-and-audit-cleanup-reserve-no-budget-reset-or-expansion
+arithmetic_probe_contract:
+  primary_bits: [160, 320]
+  independent_bits: [160, 320]
+  MPFR: 4.2.2
+  GMP: 6.3.0
+  exponent_range: [-1073741823, 1073741823]
+  TLS_and_cancellation: explicitly-checked-by-the-existing-drivers-and-persisted-before-pilot-execution
+  independent_table_sha256: 1618bce9dc73fb8b4ea5ba33ac3af42ecbec2c9c8706e221ea0b4c0e4cf51313
+unit_evidence:
+  command: >-
+    .venv/bin/python -m pytest tests/test_patchseq_gbs_pilot_evidence_audit.py
+    tests/test_patchseq_gbs_pilot_runner.py tests/test_patchseq_gbs_pilot_array_audit.py
+    tests/test_patchseq_gbs_pilot_protocol.py tests/test_patchseq_mpfr_synthetic.py
+    -q --tb=short --disable-warnings
+  final_regression: terminal-success
+  new_evidence_audit_tests_passed: 86
+  controller_tests_passed: 108
+  combined_related_tests_passed: 430
+  combined_elapsed_seconds: 69.01
+  combined_tests_skipped: 0
+  combined_warnings: 0
+  ruff_whole_repository: clean
+  fixtures:
+    - Full104case ledgers and complete arrays are fabricated constant-active-voltage or closed-form-passive-voltage fixtures with no HH gate integration.
+    - Live-parent OS locks real exclusive files safe archive decoding independent feature/loss reconstruction and process failure admission are tested without launching any neuron solver.
+    - Audit subprocess behavior is stubbed; timeout tests are controlled software tests not measured long scientific runs.
+    - Human approvals runtime seals build products and arithmetic probe records in adverse admission tests exist only as clearly identified isolated temporary fixtures.
+    - Actual runtime and repository source closures are independently discovered read-only and matched against controller discovery; no solver library is loaded for that test.
+integrity:
+  unchanged_predecessor_source_pins_checked_excluding_prospectively_amended_controller: 23
+  predecessor_source_pin_mismatches: 0
+  original_checkpoint_sha256: 29539a6dc1feb29b3ba2d4d87a9324b91ead0681eddf6b6db80abad80aa7f105
+  original_execution_seal_sha256: 9e9f5f5b74d495389b2f31ad7ba4d26c07ab2108df8b13c89ec249daad370ac9
+  registration1515_sha256: 9c6fa5fc7d160cdacdd087f9647e4e4e6a07cc416a54987de5ce8375817a5b6e
+readiness:
+  independent_array_core_implemented: true
+  bounded_file_provenance_and_resource_auditor_implemented: true
+  build_preparation1520_created: false
+  actual_build_and_arithmetic_probes_verified_for_this_pilot: false
+  execution_seal1516_created: false
+  pilot_output1517_created: false
+  pilot_run_authorized: false
+  long_reference_qualified: false
+  whole_biological_workflow_feasibility_established: false
+  production_fitting_restarted: false
+  biological_or_held_out_response_access: false
+  historical_results_replaced: false
+  frozen_classic_baseline_modified: false
+  scientific_goal_complete: false
+next_steps:
+  - Commit final tested sources before nontrajectory build preparation; preserve preceding exact-head CI and do not publish over a running workflow.
+  - Prepare both isolated products using the unchanged tested toolchain with no neuron integration then independently verify the complete preparation through --check-preparation.
+  - Assess and pin actual source/build/runtime/probe preparation hashes before asking for the distinct fixed104case pilot execution decision.
+  - Only after that human decision create and commit execution seal1516; do not infer approval from the older eight-hour invocation preference.
+  - A future passing short pilot still cannot replace all four full-length profiles production feasibility biological map validation or the overall scientific goal.

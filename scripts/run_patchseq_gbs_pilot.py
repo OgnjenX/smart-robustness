@@ -105,6 +105,7 @@ def write_json(path, value, *, atomic=False):
 def repository_pins():
     # The array auditor is deliberately required even for build preparation.
     relative = [REGISTRATION, 'scripts/run_patchseq_gbs_pilot.py', 'scripts/verify_patchseq_gbs_pilot.py',
+        'scripts/patchseq_gbs_pilot_array_audit.py',
         'scripts/patchseq_gbs_pilot_protocol.py', 'scripts/verify_patchseq_gbs_pilot_protocol.py',
         'scripts/patchseq_gbs_hh_driver.py', 'scripts/patchseq_gbs_hh.cpp',
         'scripts/patchseq_gbs_guarded_core.hpp', 'scripts/patchseq_gbs_core.hpp',

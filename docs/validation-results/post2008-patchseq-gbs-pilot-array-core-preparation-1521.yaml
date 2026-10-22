@@ -1,0 +1,85 @@
+schema_version: 1
+artifact_id: 1521
+date: 2026-10-22
+status: independent-pure-array-checks-tested-file-resource-admission-still-required
+parent_plan: docs/validation-results/post2008-patchseq-segment-adaptive-plan-1511.yaml
+registration: docs/validation-results/post2008-patchseq-gbs-synthetic-pilot-registration-1515.yaml
+controller_preparation: docs/validation-results/post2008-patchseq-gbs-pilot-controller-preparation-1519.yaml
+source_hashes:
+  scripts/patchseq_gbs_pilot_array_audit.py: c6aa5a246b127436e9a7ba3a81eb20793d4f2d6d215e3c540e7e06837bb16fe5
+  tests/test_patchseq_gbs_pilot_array_audit.py: 31f4e48d1579cb54e751aac7465e2d83a4ca435ea9134605ee7f63ec05bae9ee
+  scripts/run_patchseq_gbs_pilot.py: d8a3c967865467ba2ea33c2325c2556ff1038193ff324328704c29dba9f636f9
+controller_change:
+  scope: add-new-independent-array-core-to-the-future-source-pin-closure-only
+  equations_policies_cases_inputs_gates_budgets_and_initialization_changed: false
+  historical1519_source_snapshot_rewritten: false
+implemented:
+  - Independently constructed complete104case native-array support and120comparison support using the existing separate metadata auditor not the producer.
+  - Strict binary64 five-state shape finiteness contiguous layout explicit-initial-bit and observed-gate checks on whole arrays including warmup and release.
+  - Independent canonical160and320bit integer-significand decoder with exact sign scale MPFR-range and signed-zero checks and bounded-work magnitude comparisons.
+  - Full-precision accepted checkpoint gate checks before binary64 export so hidden violations cannot be erased by rounding.
+  - Independently checked checkpoint input current initial parameter build policy environment and envelope/payload identities.
+  - Exact native-index-times-binary64-interval checkpoint time and fixed accepted-barrier checks with cumulative work and restart support.
+  - Independent fixed-RKF78-work support final-state precision and retained embedded-diagnostic checks without executing a forward solver.
+  - Passive closed-form RC voltage checked on every saved native sample including direct-landing prefixes.
+  - Frozen independent physiological feature reconstruction and separately expressed six-term synthetic score including terms gates and missing-value penalties.
+  - All registered precision accuracy step-cap refinement independent-forward exact-repeat exact-restart and dense-landing comparisons retain complete support.
+  - Mandatory112comparisons and report-only8coarse-reference comparisons remain distinct; no favorable subset and no invented gate-difference tolerance.
+  - Exact controls compare all five exported-state bit patterns including signed zero; exact internal final values are also explicitly reported without inventing a new pairwise gate.
+scope_limit:
+  saved_array_checking_is_not_an_independent_forward_run: true
+  no_primary_solver_or_RHS_build_or_controller_imported_by_array_core: true
+  shared_numeric_and_feature_dependencies: numpy-scipy-and-the-separately-implemented-frozen-feature-extractor
+  raw_file_source_build_runtime_and_resource_admission_performed_by_this_module: false
+  core_result_alone_can_authorize_a_real_assessment_or_execution: false
+  full_length1510failure_repaired_or_reinterpreted: false
+unit_evidence:
+  new_array_core_tests_passed: 131
+  core_elapsed_seconds: 1.82
+  core_command: .venv/bin/python -m pytest tests/test_patchseq_gbs_pilot_array_audit.py -q --tb=short --disable-warnings
+  combined_array_runner_metadata_and_frozen_runner_tests_passed: 343
+  combined_elapsed_seconds: 34.54
+  combined_command: >-
+    .venv/bin/python -m pytest tests/test_patchseq_gbs_pilot_array_audit.py
+    tests/test_patchseq_gbs_pilot_runner.py tests/test_patchseq_gbs_pilot_protocol.py
+    tests/test_patchseq_mpfr_synthetic.py -q --tb=short --disable-warnings
+  ruff_whole_repository: clean
+  fixtures:
+    - No neuron model is run; active voltage is fabricated constant voltage and passive voltage uses a scalar closed-form RC fixture with no integrated gates.
+    - All104fabricated arrays and120comparisons exercise complete support but provide no HH behavioral or physiological evidence.
+    - Both exact widths include400seeded rational-arithmetic comparison cases in addition to fixed signed-zero extreme-exponent and hidden-gate-boundary fixtures.
+    - Deliberate waveform errors during warmup remain failures even when response features and synthetic score are unchanged.
+    - Missing controls changed scope wrong current/build/policy identities mistyped fields malformed exact numbers counter resets altered six-term scores and signed-zero repeat differences are rejected or retained as failed checks.
+  development_fixture_correction:
+    initial_property_fixture_failures: 2
+    cause: fixture-encoder-did-not-factor-exact-integer-powers-of-two-before-normalizing-the-target-significand-width
+    corrected: fixture-only-canonical-encoding-with-the-same-numbers-widths-seed-and-checks
+    scientific_source_model_parameter_gate_or_input_changed_to_pass: false
+integrity:
+  predecessor_source_pins_checked: 21
+  predecessor_source_pin_mismatches: 0
+  original_checkpoint_sha256: 29539a6dc1feb29b3ba2d4d87a9324b91ead0681eddf6b6db80abad80aa7f105
+  original_execution_seal_sha256: 9e9f5f5b74d495389b2f31ad7ba4d26c07ab2108df8b13c89ec249daad370ac9
+  registration1515_sha256: 9c6fa5fc7d160cdacdd087f9647e4e4e6a07cc416a54987de5ce8375817a5b6e
+readiness:
+  pure_array_core_implemented: true
+  bounded_file_and_provenance_audit_entrypoint_implemented: false
+  build_preparation1520_created: false
+  execution_seal1516_created: false
+  pilot_output1517_created: false
+  pilot_run_authorized: false
+  long_reference_qualified: false
+  whole_biological_workflow_feasibility_established: false
+  production_fitting_restarted: false
+  biological_or_held_out_response_access: false
+  frozen_classic_baseline_modified: false
+  scientific_goal_complete: false
+next_implementation:
+  - Implement scripts/verify_patchseq_gbs_pilot.py without importing the producer or controller or numerical drivers.
+  - Independently bind the human execution decision registration source/build/runtime preparation and exact complete checkpoint ledger.
+  - Validate exact file inventory regular files bounded safe NumPy archive/header support case specs receipts logs restart files and all hashes before and after analysis.
+  - Preserve incomplete and failed identities rather than qualifying any successful subset.
+  - Enforce no concurrent controller worker or audit with live-parent checks and a hard bounded audit process; never restart or overwrite an interrupted audit automatically.
+  - Account for case timing stage timing cumulative controller charges native array/storage totals complete audit duration and the fixed combined8hour budget.
+  - Require source/build/runtime/artifact rechecks immediately before exclusive assessment output and retain failure or timeout evidence without automatic replay.
+  - Complete adverse file resource provenance and process tests before nontrajectory build preparation and any separate human execution decision.

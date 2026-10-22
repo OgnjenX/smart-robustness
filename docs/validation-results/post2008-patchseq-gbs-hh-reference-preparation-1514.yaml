@@ -1,0 +1,128 @@
+schema_version: 1
+artifact_id: 1514
+date: 2026-10-22
+status: short-synthetic-HH-adapter-and-independent-forward-units-passed-not-long-reference-or-production-qualification
+plan: docs/validation-results/post2008-patchseq-segment-adaptive-plan-1511.yaml
+predecessor: docs/validation-results/post2008-patchseq-gbs-generic-preparation-1513.yaml
+source_hashes:
+  scripts/patchseq_gbs_guarded_core.hpp: f8c05b32aa77545e395a3af61c9de62f3c94ceac9bcbf6916165eb4a8904489f
+  scripts/patchseq_gbs_hh.cpp: 663f6c33c95d967aeed67e172c2b0be54ffc0e5aa930f284d4f76ee2f30f1c5f
+  scripts/patchseq_gbs_hh_driver.py: cf26ed16bc7fccaa500ba3c655f64612d6e9825d086f894dba155230c87f967a
+  scripts/patchseq_rkf78_reference.cpp: 9a42e50206246be88eb450dfca7bf4b46cdd1c868e57aaaa24521f5b09632ad6
+  scripts/patchseq_rkf78_reference.py: 840210edb56485528be72fc97aea40c31b75ccc92df4709eab397312f569659e
+  tests/test_patchseq_gbs_hh.py: 49f7123073d5efdeffbeec03c1e7d84fce6ac9b016d56796701d0bceae074ed3
+  tests/test_patchseq_rkf78_reference.py: db35083388a65e2f662b182754c5a64d093434f33af1168cf251538964e3c9c8
+primary_route:
+  method: previously-prepared-controlled-dense-GBS-at-exact160and320binary-bits
+  RHS_reuse: explicitly-include-unchanged-patchseq_mpfr_kernel_cpp-and-call-only-Workspace_rhs
+  not_independent_of_old_RHS: true
+  old_RK4_advance_called: false
+  initialization: same-explicit-binary64-five-state-vector-no-equilibrium-recalculation
+  coefficient_and_current_inputs: exact-original-binary64-lifts-no-holding-added-by-the-adapter
+  segment_current_roundtrip: require-exact-roundtrip-before-supplying-the-original-double-input-to-the-frozen-RHS
+  guarded_engine: separately-versioned-copy-leaves-generic-core-and-its1513source-hashes-intact
+  gate_bounds: original-binary64-lifts-of-minus1e-8-and1plus1e-8-no-reinterpreted-decimal-bounds
+  gate_checks: full-precision-initial-accepted-observed-and-restored-states-before-binary64-export
+  rejected_stage_checks: finite-only-as-in-the-original-stage-contract-no-clipping-or-projection
+  failures: poisoned-context-no-partial-success-or-automatic-replay
+  restart: same-prescribed-barriers-full-precision-five-state-checkpoint-and-cumulative-budgets
+independent_route:
+  method: raw-MPFR-thirteen-stage-RKF78-with-eighth-order-output-and-embedded-seventh-order-diagnostic
+  precision_bits: [160, 320]
+  rounding: MPFR_RNDN-on-explicit-width-state-stages-coefficients-and-temporaries
+  own_RHS: separately-expressed-rates-and-ionic-current-assembly-with-integer-powers
+  does_not_use: primary-Workspace-GBS-core-Real-arithmetic-adapter-or-primary-derivative-call
+  shared_dependencies: GMP6.3.0-MPFR4.2.2-mathematical-model-and-nonnumerical-build-input-helpers
+  independence_limit: distinct-equation-and-stepping-implementations-not-independent-arithmetic-library-certification
+  tableau: exact-integer-rational-data-rounded-directly-with-MPFR-set-q-not-binary64-table-coefficients
+  tableau_sha256: 1618bce9dc73fb8b4ea5ba33ac3af42ecbec2c9c8706e221ea0b4c0e4cf51313
+  tableau_verification: every-entry-matches-the-pinned-published-method-source-and-exact-row-and-weight-sums-pass
+  coefficient_source_header_sha256: a9d39665fa613553ae0aff3b0836650141eb91c48f683b3f4805f7d8bca4ce8a
+  integration_grid: exact-native-interval-lift-then-power-of-two-subdivision-current-held-by-native-index
+  supported_subdivision_factors: [1, 2, 4, 8, 16]
+  unit_refinement_controls: fixed-factors1-2-4-not-an-outcome-dependent-refinement-loop
+  accepted_gates: original-full-precision-bounds-after-every-substep
+  embedded_estimate: retained-diagnostic-not-a-global-error-proof-or-adaptive-acceptance-controller
+  observations: all-five-states-at-every-native-point-no-dense-output-or-terminal-extra-interval
+  work_accounting: exactly13RHS-evaluations-per-completed-substep-explicit-evaluation-and-substep-budgets
+  final_state: independent-full-precision-encoding-reexport-must-match-the-last-native-observation-bitwise
+  interrupted_or_failed_call: no-partial-success-no-automatic-retry-work-counters-retained-on-failure
+  persistence_limit: one-shot-forward-API-full-precision-final-state-alone-is-not-a-qualified-reference-resume-protocol
+software_reference_failure_retained:
+  reason: high-arithmetic-precision-does-not-remove-RK4-time-discretization-error
+  old_reference: existing150decimal-digit-Python-RK4-unit-oracle-not-the-new-independent-RKF78-route
+  initial_GBS_to_RK4_factor16_maximum_difference_approximately_by_initial_voltage_mV:
+    minus47: 0.0000000000643254339
+    minus45: 0.00000000014281909
+    minus20: 0.0000000191320222
+  initial_short_singular_test_bound: 0.00000000002
+  existing_RK4_factor8_to16_active501sample_maximum_difference: 0.00000006119005391269638
+  short_active_test_bound: 0.00000001
+  classification: old-discretized-oracle-is-insufficient-at-these-tighter-software-test-bounds-not-a-biological-failure
+  preservation: same-singular-and-active-inputs-retained-with-explicit-unqualified-RK4-control-tests
+  resolution: use-the-already-planned-separately-coded-RKF78-route-with-fixed2and4unit-controls
+  unchanged: original-RK4-source-steps-historical-results-neuron-parameters-GBS-unit-policy-and-comparison-bounds
+  not_a_sealed_study_repair: no1510case-or-result-replaced-and-no-scientific-gate-relaxed
+unit_evidence:
+  new_HH_and_reference_tests_passed: 126
+  compiled_numerical_tests_skipped_locally: false
+  final_combined_tests_passed: 455
+  final_combined_tests_skipped: 1
+  final_combined_elapsed_seconds: 83.83
+  skip_reason: preceding-generic-test-for-distinct-extended-floating-input-is-inapplicable-when-platform-long-double-is-binary64
+  command: >-
+    .venv/bin/pytest -q tests/test_patchseq_gbs_mpfr_number.py tests/test_patchseq_gbs_stepper.py
+    tests/test_patchseq_gbs_hh.py tests/test_patchseq_rkf78_reference.py
+    tests/test_patchseq_mpfr_synthetic.py tests/test_patchseq_mpfr_candidate.py
+    tests/test_patchseq_mpfr_toolchain.py tests/test_patchseq_precision_driver.py
+    tests/test_patchseq_precision_successor.py --tb=short --disable-warnings
+  ruff_whole_repository: clean
+  whitespace_new_authored_files: clean
+  checks:
+    - Both derivative implementations agree with a150decimal-digit-independent-equation-expression at seven fixed voltages including all three removable singularities.
+    - Passive native-grid voltage agrees with the closed-form solution with current edges and explicit original initialization.
+    - Primary short singular trajectories agree with the independently refined RKF78 route at the unchanged tighter unit bound.
+    - Primary501sample-high-drive-excursion arrays repeat bitwise at both precisions and agree with the independently controlled short reference.
+    - Independent RKF78 has fixed1-2-4refinement controls high-order fast-passive convergence and exact short repeats at both precisions.
+    - Invalid accepted internal gates dense-observed gates and full-precision restored gates fail without clipping including violations erased by binary64-export rounding.
+    - Primary4096interval-barrier full-five-state chunk-resume reproduces native arrays and exact internal final checkpoints.
+    - Terminal-current exclusion explicit-work-accounting invalid-input admission budget failure and threaded-owned-context checks pass.
+    - Canonical independent final-state encoding rejects malformed widths numbers and exponents and preserves signed zero.
+  CI_limit: optional-compiled-tests-can-skip-without-the-local-tested-toolchain-a-green-skip-does-not-qualify-the-engine
+integrity:
+  preceding1512_and1513_source_hashes_unchanged: true
+  original1510_source_dependency_pins_rechecked: 1113
+  original1510_both_compiled_products_unchanged: true
+  original_fitting_checkpoint_sha256: 29539a6dc1feb29b3ba2d4d87a9324b91ead0681eddf6b6db80abad80aa7f105
+  original_execution_seal1437_sha256: 9e9f5f5b74d495389b2f31ad7ba4d26c07ab2108df8b13c89ec249daad370ac9
+  original_MPFR_RHS_sha256: b0bfd3496bd77c8303798ff25502628db6c1346332759716f641e718be96f543
+  new_build_receipts: bind-source-and-actual-transitive-headers-compiler-flags-static-libraries-python-helpers-and-binary-hashes
+  integrity_checks: before-after-build-and-forward-calls-not-only-on-first-import
+resource_warning:
+  fixed_study_native_intervals_from1497: 9450846720
+  illustrative_reference_only_arms: both-precisions-times-factors2and4-as-in-the-short-unit-control-pair
+  illustrative_RHS_calls_per_native_interval: 156
+  illustrative_full_workload_RHS_calls: 1474332088320
+  interpretation: operation-count-warning-not-a-measured-runtime-extrapolation-or-selection-of-future-study-arms
+  exclusions: primary-route-further-controls-selected-checks-independent-feature-loss-audits-input-output-and-checkpoint-overhead
+  feasibility: not-established-do-not-assume-a-fast-primary-route-makes-the-complete-independent-workflow-feasible
+remaining_before_execution:
+  - Seal a complete prospective synthetic case table including all four1510profiles and the failed longest active input.
+  - Pin primary accuracy policies step caps interior landing probes independent refinement controls and all failure budgets before outcomes.
+  - Finish bounded runner and independent array-feature-loss-audit contracts with lossless artifact and interrupted-call handling.
+  - Register a bounded whole-pipeline cost pilot including independent forward work and storage before any full biological-screen decision.
+  - Obtain the distinct execution decision required by1511 no authority to launch a long matrix from passing unit tests.
+disposition:
+  primary_and_independent_forward_sources_prepared: true
+  complete_long_synthetic_matrix_run: false
+  numerical_reference_fully_qualified: false
+  whole_workflow_production_feasibility_demonstrated: false
+  biological_or_held_out_response_access: false
+  production_fitters_resumed: false
+  original_scores_or_failed_study_cases_replaced: false
+  scientific_gates_weakened: false
+  frozen_classic_baseline_modified: false
+  overall_scientific_goal_complete: false
+method_source:
+  - https://www.boost.org/latest/libs/numeric/odeint/doc/html/boost_numeric_odeint/odeint_in_detail/steppers.html
+  - https://raw.githubusercontent.com/boostorg/odeint/boost-1.85.0/include/boost/numeric/odeint/stepper/runge_kutta_fehlberg78.hpp

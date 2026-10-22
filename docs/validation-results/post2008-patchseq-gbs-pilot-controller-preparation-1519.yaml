@@ -1,0 +1,94 @@
+schema_version: 1
+artifact_id: 1519
+date: 2026-10-22
+status: bounded-controller-worker-and-fabricated-artifact-tests-passed-not-pilot-execution-ready
+parent_plan: docs/validation-results/post2008-patchseq-segment-adaptive-plan-1511.yaml
+registration: docs/validation-results/post2008-patchseq-gbs-synthetic-pilot-registration-1515.yaml
+metadata_preparation: docs/validation-results/post2008-patchseq-gbs-pilot-metadata-preparation-1518.yaml
+source_hashes:
+  scripts/run_patchseq_gbs_pilot.py: 165b4c4e2baa21ec0b323fd37d1a713cf24e143ac8f91f0da093a4f180be93e4
+  tests/test_patchseq_gbs_pilot_runner.py: c43867f21a03efdff358f689f66d4b6d94a57ecbe598df451c00facd0781b83f
+implemented:
+  - Controller and direct worker both require a distinct human-approved execution seal before any pilot model or prepared driver is reached.
+  - Build preparation requires the complete source-pinned independent array auditor before creating its directory or invoking a compiler.
+  - Exact approved resources source support build receipts product hashes and scientific runtime files are checked before worker admission.
+  - All104fixed case identities are present from the first checkpoint including every pending and failed case.
+  - OS controller and worker locks prevent concurrent invocations; workers also require their recorded live parent and its held controller lock.
+  - Exclusive case artifacts bounded finite duplicate-key-free JSON and atomic checkpoint updates refuse orphan files and linked or nested artifacts.
+  - Full five-state compressed arrays input signatures source/build provenance work counts timings memory and features/loss are retained.
+  - Checkpoint controls serialize through a retained disk artifact and restore a fresh context with cumulative counters.
+  - Only authoritatively closed clean case boundaries resume; retained cases are never replayed and prior charged time carries forward.
+  - The full case timeout plus cleanup reserve must fit both the invocation and cumulative controller limits before any next case starts.
+  - Failures stop the controller with unfavorable partial artifacts and remaining identities retained; unresolved worker locks leave an interrupted checkpoint rather than falsely reporting completion.
+  - Structurally malformed success receipts cannot become successful retained rows; independent numerical array assessment remains separately required.
+fixed_support_unchanged:
+  cases: 104
+  comparisons: 120
+  mandatory_comparisons: 112
+  case_table_sha256: d72decc84e30496e96dd73276822c8640056eef79a07852985cf4104cf7f7a8d
+  input_manifest_sha256: f4253793afe099a7ae376851483f38b40f2f0e3b60e47ec452d90072d2633ba2
+  comparison_table_sha256: eb7f4e6e5bc4ba27f2dcfe25eafa7bd4e9a106a6b296cfc1bcb64f8571f5af21
+resource_enforcement_not_execution_authority:
+  maximum_invocation_seconds: 28800
+  maximum_cumulative_controller_seconds: 25200
+  reserved_independent_audit_seconds: 3600
+  maximum_controller_plus_audit_seconds: 28800
+  maximum_case_seconds: 600
+  cleanup_reserve_seconds: 60
+  concurrent_workers: 1
+  external_or_paid_compute: false
+  maximum_output_bytes: 1073741824
+unit_evidence:
+  new_runner_tests_passed: 107
+  runner_metadata_and_frozen_synthetic_runner_tests_passed: 212
+  runner_related_elapsed_seconds: 34.90
+  runner_related_command: >-
+    .venv/bin/python -m pytest tests/test_patchseq_gbs_pilot_runner.py
+    tests/test_patchseq_gbs_pilot_protocol.py tests/test_patchseq_mpfr_synthetic.py
+    -q --tb=short --disable-warnings
+  preceding_numerical_regression_tests_passed: 401
+  preceding_numerical_regression_tests_skipped: 1
+  preceding_numerical_regression_elapsed_seconds: 90.20
+  preceding_numerical_regression_command: >-
+    .venv/bin/python -m pytest tests/test_patchseq_gbs_mpfr_number.py
+    tests/test_patchseq_gbs_stepper.py tests/test_patchseq_gbs_hh.py
+    tests/test_patchseq_rkf78_reference.py tests/test_patchseq_mpfr_candidate.py
+    tests/test_patchseq_mpfr_toolchain.py tests/test_patchseq_precision_driver.py
+    tests/test_patchseq_precision_successor.py -q --tb=short --disable-warnings
+  skip_reason: preceding-generic-test-for-distinct-extended-floating-input-is-inapplicable-when-platform-long-double-is-binary64
+  ruff_whole_repository: clean
+  metadata_audit_CLI: all104cases120comparisons-and-three-hashes-agree-execution-authorized-false
+  fixtures:
+    - Pilot runner tests use explicitly fabricated constant-voltage five-state arrays with an index-dependent tiny gate ramp; these are not neuron simulations.
+    - All104fabricated outputs exercise complete ledger retention restart concatenation and terminal no-replay; their numerical values are not scientific evidence.
+    - Test-only approvals inert binaries receipts and provenance files are isolated temporary fixtures and confer no production execution authority.
+    - Existing short numerical regression fixtures were rerun without changing their equations parameters controls or acceptance bounds.
+integrity:
+  predecessor_source_pins_checked: 21
+  predecessor_source_pin_mismatches: 0
+  original_checkpoint_sha256: 29539a6dc1feb29b3ba2d4d87a9324b91ead0681eddf6b6db80abad80aa7f105
+  original_execution_seal_sha256: 9e9f5f5b74d495389b2f31ad7ba4d26c07ab2108df8b13c89ec249daad370ac9
+  original_MPFR_and_precision_driver_and_kernel_hashes_unchanged: true
+  registration1515_sha256: 9c6fa5fc7d160cdacdd087f9647e4e4e6a07cc416a54987de5ce8375817a5b6e
+readiness:
+  runner_implemented: true
+  simulated_array_auditor_implemented: false
+  build_preparation1520_created: false
+  execution_seal1516_created: false
+  pilot_output1517_created: false
+  pilot_run_authorized: false
+  long_reference_qualified: false
+  whole_biological_workflow_feasibility_established: false
+  production_fitting_restarted: false
+  biological_or_held_out_response_access: false
+  historical_results_replaced: false
+  frozen_classic_baseline_modified: false
+  scientific_goal_complete: false
+remaining_before_execution:
+  - Independently implement the complete simulated-array auditor including all104identities full-grid arrays exact final-state support and all120comparisons.
+  - Independently reconstruct physiological features and six-term losses without trusting worker summaries or waiving unfavorable comparisons.
+  - Audit exact repeat restart and dense-landing support plus all resource timing storage and source/build/runtime/artifact hashes.
+  - Test the independent auditor with adverse and fabricated evidence before any pilot trajectory.
+  - Finish nontrajectory build preparation only after the auditor is implemented and pinned.
+  - Obtain distinct human execution approval then create and commit a prospective source/build/runtime/budget execution seal before any pilot case.
+next_implementation: independent-simulated-array-auditor-and-adverse-fixture-tests-not-a-pilot-run

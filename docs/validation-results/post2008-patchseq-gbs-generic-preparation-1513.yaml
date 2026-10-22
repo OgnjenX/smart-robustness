@@ -1,0 +1,116 @@
+schema_version: 1
+artifact_id: 1513
+date: 2026-10-22
+status: generic-autonomous-controlled-dense-engine-unit-tested-not-HH-reference-qualified
+plan: docs/validation-results/post2008-patchseq-segment-adaptive-plan-1511.yaml
+predecessor: docs/validation-results/post2008-patchseq-gbs-arithmetic-preparation-1512.yaml
+scope: second-engineering-stage-manufactured-two-dimensional-linear-systems-only
+source_hashes:
+  scripts/patchseq_gbs_core.hpp: ac639b8df094f661ad54eac1c2ffb5a6dc9d6660f14a02597b0613c1433cf46d
+  scripts/patchseq_gbs_driver.py: 275bc4ddd3d8e5978135feedb1a0397d7554e4c8e65e20521f30016e13fa429e
+  scripts/patchseq_gbs_kernel.cpp: db19ddd04716699168f10460aa64a55b75721e97b257aec45ef4776521380f23
+  scripts/third_party/patchseq_bounded_gbs_dense.hpp: 839c4c98e927e7fb2cc6c1f242de6de141690e1eef27d638de15ca56e209e62a
+  scripts/third_party/BOOST_LICENSE_1_0.txt: c9bff75738922193e67fa726fa225535870d2aa1059f91452c411736284ad566
+  tests/test_patchseq_gbs_stepper.py: 1ab9bbbd36c34dfc7009a8db48f382e900aa1bc952847bdd1f810e8e34b565b9
+method:
+  arithmetic_bits: [160, 320]
+  rounding: MPFR_RNDN-at-explicit-width-including-time-controller-and-polynomial
+  equation_interface: autonomous-state-and-fixed-segment-current-no-time-dependent-RHS
+  manufactured_equations: yprime_j-equals-rate_j-times-y_j-plus-gain_j-times-current-for-j0and1
+  initialization: explicit-binary64-two-state-vector-lifted-exactly
+  local_absolute_and_relative_tolerance: explicit-positive-decimal-policy-constants-not-scientific-acceptance-gates
+  normalized_error: 'max_j(abs(error_j)/(atol+rtol*(abs(y_start_j)+abs(h*dy_start_j))))'
+  error_checker_scale_factors: [1, 1]
+  endpoint_acceptance: upstream-normalized-error-less-than1
+  dense_control: explicitly-enabled-highest-polynomial-coefficient-normalized-error-at-most10
+  extrapolation: pinned-upstream-polynomial-GBS-with-midpoint-sequence2plus4k-for-k0through8
+  order_controller: upstream-initial-optimal-index4-and-original-work-and-step-adaptation-rules
+  controller_constants: original-upstream-binary64-literals-lifted-exactly-not-reinterpreted-as-exact-decimals
+upstream_boundary_adapter:
+  upstream_header: /opt/homebrew/include/boost/numeric/odeint/stepper/bulirsch_stoer_dense_out.hpp
+  upstream_sha256: fe9852def53e255570f103adc6be7f1f3f038ffe2af1ea1b5f52e7e4bdd829cd
+  local_changes: renamed-class-and-guard-local-notice-and-one-bounded-stepping-entry-point
+  protected_math: original-try_step-extrapolation-interpolation-error-checking-and-controller-equations-unchanged
+  test: remove-only-the-declared-local-addition-and-renames-then-require-byte-identical-upstream-header
+  runtime_comparison: uncapped-trials-match-stock-time-proposals-RHS-counts-full-precision-endpoints-and-dense-midpoints-including-rejections
+  license: full-Boost-Software-License-and-original-copyright-notices-retained
+  upstream_whitespace: original-trailing-whitespace-retained-for-verifiable-upstream-byte-identity-not-reformatted
+native_and_restart_contract:
+  time: native-index-times-exact-binary64-lift-of1000divided-by-rate-in-ms
+  current: original-binary64-command-at-j-held-over-native-interval-j-to-jplus1
+  boundaries: every-command-bit-pattern-change-including-signed-zero-plus-every4096intervals-and-terminal-index
+  final_current: no-unobserved-terminal-interval
+  accepted_steps: positive-exactly-end-bounded-before-every-trial-and-checked-after-acceptance
+  observations: inclusive-native-grid-with-explicit-first-state-and-no-interpolation-feedback
+  unwritten_observations: NaN-initialized-output-buffer-and-finite-checks-cannot-pass-unwritten-finite-memory
+  controllers: newly-constructed-at-every-prescribed-barrier-in-uninterrupted-and-resumed-runs
+  checkpoint: canonical-full-precision-accepted-states-exact-time-native-index-and-cumulative-RHS-accepted-rejected-dense-counters
+  binding: original-inputs-policy-binary-and-source-build-receipt-arithmetic-environment-and-barrier-schedule
+  import: fresh-context-only-canonical-integer-and-number-validation-complete-before-state-assignment
+  integrity_checksum: detects-corruption-not-an-authentication-signature-or-proof-of-the-origin-of-arbitrarily-forged-state
+  no_midbarrier_restore: invalid-endpoints-fail-before-mutation-no-rounding-to-a-more-convenient-pause
+  failure: partial-output-discarded-context-poisoned-no-snapshot-replay-or-silent-restart
+  numerical_budgets: explicit-cumulative-RHS-accepted-step-rejection-and-minimum-step-limits
+engineering_correction_before_qualification:
+  observation: upstream-midpoint-th-plus-equals-h-accumulation-can-round-its-internal-stage-clock-past-the-exact-endpoint
+  resolution: make-the-core-RHS-interface-autonomous-and-hold-command-by-segment-not-by-rounded-stage-clock
+  not_a_clamp: no-stage-time-clipping-no-upstream-arithmetic-change-and-no-local-or-scientific-tolerance-relaxation
+  accepted_endpoint_contract: remains-exactly-bounded-and-checked-independent-of-the-unexposed-stage-clock
+  limitation: time-dependent-RHS-equations-are-not-supported-or-qualified-by-this-interface
+build_and_integrity:
+  compiler_flags: [-std=c++17, -O2, -shared, -fPIC, -fno-fast-math, -ffp-contract=off]
+  dependencies: original-isolated-upstream-tested-GMP6.3.0-and-MPFR4.2.2
+  arithmetic_probes: actual160and320bits-MPFR_RNDN-default-exponent-range-and-thread-local-support
+  source_binding: actual-flag-matched-transitive-headers-compiler-static-libraries-driver-license-and-binary-hashes
+  checks: before-and-after-build-before-context-operations-and-after-integration-before-returning-output
+  build_reuse: exact-receipt-only-refuse-partial-products-altered-binaries-and-active-or-orphan-build-locks
+  original1510_source_dependency_pins_rechecked: 1113
+  original1510_both_compiled_product_hashes_unchanged: true
+  original_fitting_checkpoint_sha256: 29539a6dc1feb29b3ba2d4d87a9324b91ead0681eddf6b6db80abad80aa7f105
+  original_execution_seal1437_sha256: 9e9f5f5b74d495389b2f31ad7ba4d26c07ab2108df8b13c89ec249daad370ac9
+unit_evidence:
+  new_tests_in_final_combined_suite_passed: 99
+  new_tests_skipped: 1
+  skip_reason: platform-long-double-is-already-binary64-so-no-distinct-wider-input-to-test
+  compiled_toolchain_or_precision_tests_skipped_locally: false
+  combined_passed: 329
+  combined_skipped: 1
+  combined_elapsed_seconds: 55.69
+  combined_command: >-
+    .venv/bin/pytest -q tests/test_patchseq_gbs_mpfr_number.py tests/test_patchseq_gbs_stepper.py
+    tests/test_patchseq_mpfr_synthetic.py tests/test_patchseq_mpfr_candidate.py
+    tests/test_patchseq_mpfr_toolchain.py tests/test_patchseq_precision_driver.py
+    tests/test_patchseq_precision_successor.py --tb=short
+  ruff_whole_repository: clean
+  whitespace: new-authored-files-clean-pinned-vendored-header-retains-original-upstream-trailing-whitespace
+  checks:
+    - Full native arrays agree with independent500bit-mpmath-closed-form-two-dimensional-solutions.
+    - Zero derivatives affine systems current edges one-sample pulses adjacent changes and terminal-current exclusion pass.
+    - Exact endpoints and dense interior observations pass at both precisions and multiple native rates.
+    - Fixed4096interval-barrier chunk-resume preserves complete output bits internal checkpoint digits and cumulative counters.
+    - Current-change chunking matches an uninterrupted call using the same controller-reset schedule.
+    - Invalid boundaries corrupted checkpoints changed inputs policies or build identities and non-fresh restore are rejected.
+    - Minimum-step RHS accepted-step and rejection-budget failures do not return a valid checkpoint or permit replay.
+    - Nonfinite derivative fails before any accepted step and nonfinite binary64 export is not clipped.
+    - Explicit inputs are copied integer pre-lift truncation is rejected and extended input types are not silently narrowed.
+    - Independent concurrent contexts reproduce serial output bits without claiming measured throughput scaling.
+    - A source-integrity failure after integration blocks returned output and poisons the context.
+limits_and_next_stage:
+  - These manufactured systems are not HH physiology or a long active neuronal reference trajectory.
+  - The generic core has finite-state checks but no HH gate-bound or five-state physiological qualification yet.
+  - Stock-stepper equality is provenance/control-equivalence evidence not an independent forward method.
+  - No complete synthetic HH comparison matrix accuracy-policy seal or independent RKF78 route has executed.
+  - No solver speedup complete-workflow storage cost concurrency scaling or biological production feasibility has been established.
+  - Test defaults and fault-injection budgets are engineering fixtures not prospectively registered HH policies.
+  - Optional compiled tests can skip when the prerequisite toolchain is absent; a CI skip does not validate this engine.
+next_implementation: five-state-HH-adapter-and-separately-coded-raw-MPFR-RKF78-reference-with-short-analytic-and-arithmetic-unit-checks-before-registration
+disposition:
+  generic_controlled_dense_engine_stage_complete: true
+  new_scientific_matrix_executed: false
+  HH_reference_qualified: false
+  biological_or_held_out_response_access: false
+  production_fitters_resumed: false
+  historical_scores_or_failures_replaced: false
+  gates_weakened: false
+  frozen_baseline_modified: false
+  scientific_goal_complete: false

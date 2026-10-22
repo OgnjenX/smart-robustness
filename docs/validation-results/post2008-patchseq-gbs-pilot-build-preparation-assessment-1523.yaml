@@ -1,0 +1,93 @@
+schema_version: 1
+artifact_id: 1523
+date: 2026-10-22
+status: both-isolated-builds-and-arithmetic-provenance-independently-verified-no-pilot-execution-authority
+registration: docs/validation-results/post2008-patchseq-gbs-synthetic-pilot-registration-1515.yaml
+software_preparation: docs/validation-results/post2008-patchseq-gbs-pilot-evidence-audit-preparation-1522.yaml
+source_commit_before_build: 84a0a4c3927f507e4e3eaee74b3d709602c407a1
+raw_preparation: results/patchseq-gbs-pilot-build-preparation-1520/preparation.json
+raw_preparation_sha256: d0477f237070a071c0748d2b7bf3968ad0f5b0f00f31b9e95cb036035616a2fc
+build_preparation:
+  command: >-
+    MPLCONFIGDIR=/private/tmp/mpl HDF5_PLUGIN_PRELOAD=::
+    .venv/bin/python scripts/run_patchseq_gbs_pilot.py --prepare-builds
+  exit_code: 0
+  status: built-and-pinned-no-pilot-trajectories
+  preparation_seconds: 4.884350834065117
+  repository_source_pins: 23
+  scientific_runtime_file_pins: 1651
+  merged_source_dependency_runtime_build_and_receipt_pins: 3735
+  new_neuron_integration_calls: 0
+  shared_dependency_limit: both-methods-share-the-upstream-tested-GMP-MPFR-arithmetic-libraries-no-independent-arithmetic-library-certification
+products:
+  primary:
+    path: results/patchseq-gbs-pilot-build-preparation-1520/gbs-build/hh.so
+    sha256: e1d6d709e9adeb8f9f12e690cd58d0ceedabdb07dc71be8493ba932de29018e0
+    receipt: results/patchseq-gbs-pilot-build-preparation-1520/gbs-build/build.json
+    receipt_sha256: ceb94c3b367f475cb3a9e411bc7e4ee0ed548c642cc2e120bee6b2f9571ac6a2
+    source_dependency_pins: 2068
+  independent:
+    path: results/patchseq-gbs-pilot-build-preparation-1520/rkf78-build/reference.so
+    sha256: ab8fc6e349adccc97b42ee0552257ca1e0fc33d50128f8d28e17e6d874347460
+    receipt: results/patchseq-gbs-pilot-build-preparation-1520/rkf78-build/build.json
+    receipt_sha256: 4b7b85b5a327c61b45e552c89ce22207b36a48f02e2491bdd3baca8ed70ff3f5
+    source_dependency_pins: 689
+observed_arithmetic_probes:
+  primary:
+    mpfr: 4.2.2
+    header: 4.2.2
+    gmp: 6.3.0
+    TLS: 1
+    exponent_minimum: -1073741823
+    exponent_maximum: 1073741823
+    precision160: 160
+    precision320: 320
+    cancellation160: 1
+    cancellation320: 1
+  independent:
+    mpfr: 4.2.2
+    header: 4.2.2
+    gmp: 6.3.0
+    range_and_TLS: 1
+    precision160: 160
+    precision320: 320
+  independent_rational_table_sha256: 1618bce9dc73fb8b4ea5ba33ac3af42ecbec2c9c8706e221ea0b4c0e4cf51313
+independent_preparation_verification:
+  command: >-
+    MPLCONFIGDIR=/private/tmp/mpl HDF5_PLUGIN_PRELOAD=::
+    .venv/bin/python scripts/verify_patchseq_gbs_pilot.py --check-preparation
+  exit_code: 0
+  status: preparation-verified-no-execution-authority
+  pins_checked: 3735
+  repository_runtime_build_receipt_product_and_explicit_probe_support_matched: true
+  execution_authorized: false
+  pilot_executed: false
+  real_audit_output_or_execution_seal_created_by_readonly_check: false
+claim_boundaries:
+  software_unit_evidence: 430related-tests-passed-before-source-commit-and-build-preparation
+  no_new_synthetic_trajectory_or_biological_response: true
+  no_speedup_global_accuracy_or_feasibility_inferred_from_build_duration: true
+  all_four_full_length_profiles_still_required_after_a_successful_short_pilot: true
+  previous1510long_active_reference_failure_preserved: true
+  scientific_goal_complete: false
+execution_readiness:
+  tested_sources_committed_before_builds: true
+  products_and_arithmetic_probes_verified: true
+  distinct_human_pilot_execution_approval_received: false
+  execution_seal1516_created: false
+  pilot_output1517_created: false
+  biological_or_held_out_response_access: false
+  production_fitting_restarted: false
+  original_scores_or_frozen_baseline_modified: false
+  long_reference_qualified: false
+  whole_biological_workflow_feasibility_established: false
+  scientific_goal_complete: false
+pending_decision:
+  request: distinct-human-approval-of-the-fixed104case-synthetic-pilot-not-a-fitting-restart
+  maximum_total_controller_seconds: 25200
+  maximum_independent_audit_seconds: 3600
+  maximum_controller_plus_audit_seconds: 28800
+  maximum_case_seconds: 600
+  stop_on_first_execution_failure: true
+  no_case_replacement_gate_relaxation_automatic_retry_or_budget_expansion: true
+  before_any_trajectory: after-explicit-approval-create-and-commit-execution-seal1516-pinning-unchanged-registration-sources-preparation-builds-runtime-and-budgets

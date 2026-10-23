@@ -1,0 +1,124 @@
+schema_version: 1
+artifact_id: 1524
+date: '2026-10-23'
+status: fixed-short-synthetic-pilot-passed-independent-array-and-resource-gates
+registration: docs/validation-results/post2008-patchseq-gbs-synthetic-pilot-registration-1515.yaml
+execution_seal: docs/validation-results/post2008-patchseq-gbs-synthetic-pilot-execution-seal-1516.yaml
+execution_seal_sha256: 173953e1fb11c2ba8cd1185f67941e7a93509393d10602050697d4afe14f3343
+source_and_seal_commit_before_execution: b0ba56197190dd324eb14e622c908a96865a4160
+human_execution_approval: explicit-Approve-the-pilot-after-the-fixed-eight-hour-total-cap-was-explained
+preparation: results/patchseq-gbs-pilot-build-preparation-1520/preparation.json
+preparation_sha256: d0477f237070a071c0748d2b7bf3968ad0f5b0f00f31b9e95cb036035616a2fc
+raw_output: results/patchseq-gbs-synthetic-pilot-1517
+raw_checkpoint_sha256: cde47ef4c5519d6ee58afb525e8243adea2017e12bfe1d81d5b9ecaa0221e7bc
+independent_assessment_sha256: 5fbc72dd9a4e1b02a1ba47433e450fdf2795aa7cc32a9c08cd3f2c0218afee77
+execution:
+  command: >-
+    MPLCONFIGDIR=/private/tmp/mpl HDF5_PLUGIN_PRELOAD=:: PYTHONDONTWRITEBYTECODE=1
+    .venv/bin/python scripts/run_patchseq_gbs_pilot.py
+  exit_code: 0
+  terminal_state: pilot-retained-awaiting-independent-audit
+  invocations: 1
+  fixed_case_identities: 104
+  retained_cases: 104
+  failed_cases: 0
+  pending_or_running_cases_at_terminal: 0
+  command_lengths_native_samples: [20001, 40001]
+  warmup_native_samples: 5000
+  profiles: [active, passive]
+  precision_bits: [160, 320]
+  primary: sealed-GBS-standard-strict-half-cap-repeat-checkpoint-restart-and-landing-cases
+  independent_forward: separately-expressed-13stage-RKF78-factors1-2-4-and-finest-repeats
+  automatic_replays_replacements_or_protocol_changes: false
+independent_audit:
+  command: >-
+    MPLCONFIGDIR=/private/tmp/mpl HDF5_PLUGIN_PRELOAD=:: PYTHONDONTWRITEBYTECODE=1
+    .venv/bin/python scripts/verify_patchseq_gbs_pilot.py
+  exit_code: 0
+  terminal_state: terminal-independent-pilot-evidence-assessment
+  short_pilot_admissibility_passed: true
+  analysis_sha256: 1af15065ff816ddee1e66f00a5d6ef51cab75e3a20b3bae0e2bccd8e6a0b6191
+  control_sha256: e114a75c3fd70744949bd9a11a8c3c18067f144926f323b100fd94e85bbd27fb
+  outcome_sha256: 401966d9143e180f4a8dd31a20491485073a22da023f413414c4924ca3735c99
+  log_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+  source_preparation_build_runtime_and_seal_pins: 3737
+  raw_artifact_pins_including_checkpoint: 425
+  all_source_and_raw_pins_rechecked_after_terminal_audit: true
+  complete_native_five_state_array_checks_passed: 104
+  independently_reconstructed_feature_sets: 72
+  independently_reconstructed_six_term_scores: 72
+  landing_cases_intentionally_not_scored_as_complete_epochs: 32
+  passive_analytic_voltage_checks_passed: 52
+  maximum_passive_voltage_error_mV: 1.4210854715202004e-14
+  exact_checkpoint_and_full_precision_final_state_support_verified: true
+  all_unfavorable_report_only_synthetic_target_scores_preserved: true
+  synthetic_target_all_gates_passed_cases: 0
+  synthetic_target_interpretation: arbitrary-fixed-scoring-target-report-only-not-a-biological-fit-or-numerical-admissibility-gate
+comparisons:
+  fixed_total: 120
+  passed_total: 120
+  mandatory_total: 112
+  mandatory_passed: 112
+  coarse_report_only_total: 8
+  coarse_report_only_failed: 0
+  passed_by_kind:
+    dense_landing: 32
+    exact_repeat: 16
+    exact_restart: 8
+    independent_forward: 8
+    primary_accuracy: 8
+    primary_precision: 12
+    primary_step_cap: 8
+    reference_coarse: 8
+    reference_finest: 8
+    reference_precision: 12
+  repeat_and_restart_all_five_native_states_bitwise_identical: 24
+  repeat_and_restart_full_precision_final_values_identical: 24
+  maximum_independent_forward_voltage_difference_mV: 1.1723955140041653e-13
+  maximum_finest_reference_voltage_difference_mV: 3.312017327061767e-11
+  maximum_report_only_coarse_reference_voltage_difference_mV: 2.0832466418596596e-8
+  maximum_primary_accuracy_voltage_difference_mV: 7.105427357601002e-15
+  maximum_primary_precision_step_cap_reference_precision_and_landing_voltage_difference_mV: 0.0
+  maximum_finest_reference_loss_difference: 1.8189894035458565e-12
+  feature_discrete_types_values_and_support_agreement: all-applicable-comparisons-passed
+  pairwise_non_voltage_gate_differences: fully-retained-not-an-added-unregistered-tolerance
+  thresholds_or_support_relaxed_after_outcomes: false
+resources:
+  controller_measured_seconds: 2396.227965417085
+  controller_charged_seconds_including_cleanup_reserve: 2456.227965417085
+  independent_audit_charged_seconds_including_cleanup_reserve: 69.11045070795808
+  combined_reported_charged_seconds: 2525.3384161250433
+  controller_cap_seconds: 25200
+  audit_cap_seconds: 3600
+  combined_cap_seconds: 28800
+  maximum_case_measured_seconds: 96.8441514170263
+  per_case_timeout_seconds: 600
+  native_array_uncompressed_bytes: 120805120
+  retained_output_bytes_after_final_audit: 184710812
+  retained_output_regular_files: 433
+  retained_output_cap_bytes: 1073741824
+  maximum_worker_peak_RSS_bytes: 192790528
+  controller_worker_audit_and_combined_resource_gates_passed: true
+  local_single_worker_no_external_or_paid_compute: true
+  budget_reset_expansion_or_failed_case_retry: false
+integrity:
+  original_checkpoint1438_sha256: 29539a6dc1feb29b3ba2d4d87a9324b91ead0681eddf6b6db80abad80aa7f105
+  original_execution_seal1437_sha256: 9e9f5f5b74d495389b2f31ad7ba4d26c07ab2108df8b13c89ec249daad370ac9
+  original_checkpoint_and_seal_rechecked_unchanged: true
+  controller_model_worker_audit_and_production_fitter_processes_terminal_before_assessment: true
+  prepared_sources_libraries_receipts_runtime_and_historical_scores_changed: false
+claim_boundaries:
+  supported: the-fixed-short-synthetic-pilot-passes-its-prospective-array-comparison-repeat-restart-landing-and-resource-contract
+  measured_runtime_scope: this-complete-short104case-workflow-including-controls-and-independent-audit-not-a-production-table-extrapolation
+  shared_arithmetic_limit: independent-forward-equations-and-integration-methods-share-the-same-tested-GMP-MPFR-libraries
+  previous1510long_reference_refinement_failure_preserved: true
+  full_length_command_profiles151000_and330000_qualified: false
+  whole_biological_study_feasibility_established: false
+  biological_or_held_out_response_access: false
+  production_fitting_restarted: false
+  original_scores_replaced: false
+  candidate_omission_replacement_or_search_expansion: false
+  network_promotion: false
+  frozen_baseline_or_gates_modified: false
+  scientific_goal_complete: false
+next_decision: separately-preregister-full-length-numerical-qualification-and-realistic-resource-design-before-any-further-simulation-or-production-transition

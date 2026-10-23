@@ -1,0 +1,68 @@
+schema_version: 1
+status: sealed-before-short-synthetic-pilot
+human_execution_approved: true
+human_approval_record: >-
+  The human explicitly replied "Approve the pilot." in chat
+  019ff1ef-9220-7ad3-bd37-cd97a86732c9, received before execution on
+  2026-10-23. This directly answers the request for the fixed 104-case
+  synthetic-only pilot with an eight-hour total cap: seven hours cumulative
+  controller computation and one hour independent audit, ten-minute per-case
+  timeouts, and stop on execution failure. Approval does not authorize any
+  biological or held-out response access, production fitting restart,
+  baseline or acceptance-threshold change, candidate replacement, automatic
+  rerun, budget expansion, long-reference promotion, or completion claim.
+  Unchanged preparation sources are committed at
+  08d6b62c04a7d26e287c65dfd446c1fffec53bfa; their exact-head CI
+  39862365714 succeeded. Before this seal, the independent read-only
+  preparation verifier checked all 3735 pins again, and no matching pilot,
+  audit or production fitter process or prior pilot output was observed.
+  Original checkpoint1438 SHA256
+  29539a6dc1feb29b3ba2d4d87a9324b91ead0681eddf6b6db80abad80aa7f105
+  and original execution seal1437 SHA256
+  9e9f5f5b74d495389b2f31ad7ba4d26c07ab2108df8b13c89ec249daad370ac9
+  remain unchanged. Monitor at 15-minute intervals, not repeatedly between
+  scheduled checks, and independently assess all retained outcomes.
+registration_sha256: 9c6fa5fc7d160cdacdd087f9647e4e4e6a07cc416a54987de5ce8375817a5b6e
+preparation_path: results/patchseq-gbs-pilot-build-preparation-1520/preparation.json
+preparation_sha256: d0477f237070a071c0748d2b7bf3968ad0f5b0f00f31b9e95cb036035616a2fc
+resources:
+  maximum_invocation_seconds: 28800
+  maximum_total_controller_seconds: 25200
+  maximum_controller_plus_audit_seconds: 28800
+  maximum_case_seconds: 600
+  cleanup_reserve_seconds: 60
+  maximum_independent_audit_seconds: 3600
+  maximum_output_bytes: 1073741824
+  maximum_independent_rhs: 15000000
+  maximum_independent_substeps: 1000000
+  total_native_array_uncompressed_bytes: 120805120
+  concurrent_workers: 1
+  external_or_paid_compute: false
+  incomplete_or_failed_pilot: retain-all-identities-and-artifacts-no-qualification-or-automatic-budget-expansion
+allowed_operations:
+  - short-synthetic-pilot
+  - independent-pilot-audit
+source_hashes:
+  /Users/ognjencadovski/science/projects/smart-robustness/docs/validation-results/post2008-patchseq-gbs-synthetic-pilot-registration-1515.yaml: 9c6fa5fc7d160cdacdd087f9647e4e4e6a07cc416a54987de5ce8375817a5b6e
+  /Users/ognjencadovski/science/projects/smart-robustness/scripts/patchseq_fit_objective.py: b66b08bdf1ada03f394335255f2dc9beddbe74010d4b3fdb7143ed6726be4a40
+  /Users/ognjencadovski/science/projects/smart-robustness/scripts/patchseq_gbs_core.hpp: ac639b8df094f661ad54eac1c2ffb5a6dc9d6660f14a02597b0613c1433cf46d
+  /Users/ognjencadovski/science/projects/smart-robustness/scripts/patchseq_gbs_driver.py: 275bc4ddd3d8e5978135feedb1a0397d7554e4c8e65e20521f30016e13fa429e
+  /Users/ognjencadovski/science/projects/smart-robustness/scripts/patchseq_gbs_guarded_core.hpp: f8c05b32aa77545e395a3af61c9de62f3c94ceac9bcbf6916165eb4a8904489f
+  /Users/ognjencadovski/science/projects/smart-robustness/scripts/patchseq_gbs_hh.cpp: 663f6c33c95d967aeed67e172c2b0be54ffc0e5aa930f284d4f76ee2f30f1c5f
+  /Users/ognjencadovski/science/projects/smart-robustness/scripts/patchseq_gbs_hh_driver.py: cf26ed16bc7fccaa500ba3c655f64612d6e9825d086f894dba155230c87f967a
+  /Users/ognjencadovski/science/projects/smart-robustness/scripts/patchseq_gbs_mpfr_number.hpp: fd1d57d3374e07ee1af190187549f22dcf52fd186b2ce4a14f7f9899d79f83d0
+  /Users/ognjencadovski/science/projects/smart-robustness/scripts/patchseq_gbs_odeint_bridge.hpp: ae7087354837f204fd7158ed5ba62783adb98526af7f3cad97fbd270a0341554
+  /Users/ognjencadovski/science/projects/smart-robustness/scripts/patchseq_gbs_pilot_array_audit.py: c6aa5a246b127436e9a7ba3a81eb20793d4f2d6d215e3c540e7e06837bb16fe5
+  /Users/ognjencadovski/science/projects/smart-robustness/scripts/patchseq_gbs_pilot_protocol.py: caa3e8d38c6c566c6160fd602b2ce5a624615229957321816c197bb6a4d6573a
+  /Users/ognjencadovski/science/projects/smart-robustness/scripts/patchseq_mpfr_driver.py: b90fa56eed795fc684a6ac88a77c85d9af6c637bfecc3646d34685b5f7c4d444
+  /Users/ognjencadovski/science/projects/smart-robustness/scripts/patchseq_mpfr_kernel.cpp: b0bfd3496bd77c8303798ff25502628db6c1346332759716f641e718be96f543
+  /Users/ognjencadovski/science/projects/smart-robustness/scripts/patchseq_response_features.py: 1fe052c0b366f221c3c1423a49483a748474aa62a55d218df8a752757e227a14
+  /Users/ognjencadovski/science/projects/smart-robustness/scripts/patchseq_rkf78_reference.cpp: 9a42e50206246be88eb450dfca7bf4b46cdd1c868e57aaaa24521f5b09632ad6
+  /Users/ognjencadovski/science/projects/smart-robustness/scripts/patchseq_rkf78_reference.py: 840210edb56485528be72fc97aea40c31b75ccc92df4709eab397312f569659e
+  /Users/ognjencadovski/science/projects/smart-robustness/scripts/run_patchseq_gbs_pilot.py: 0ca961584fd8d10591f2c20a44a265060e947b713d97fb84852d08c84090e922
+  /Users/ognjencadovski/science/projects/smart-robustness/scripts/third_party/BOOST_LICENSE_1_0.txt: c9bff75738922193e67fa726fa225535870d2aa1059f91452c411736284ad566
+  /Users/ognjencadovski/science/projects/smart-robustness/scripts/third_party/patchseq_bounded_gbs_dense.hpp: 839c4c98e927e7fb2cc6c1f242de6de141690e1eef27d638de15ca56e209e62a
+  /Users/ognjencadovski/science/projects/smart-robustness/scripts/verify_patchseq_fitting_targets.py: b8129fb32d621d66ab2f7954da7473e9ed9092f3b7d4e0ebef3f74bf969f8409
+  /Users/ognjencadovski/science/projects/smart-robustness/scripts/verify_patchseq_gbs_pilot.py: d58b31ccf8b7efbe2ffb2d0ee7a9164a27b3877116bbe0004919b8b6b9ff2599
+  /Users/ognjencadovski/science/projects/smart-robustness/scripts/verify_patchseq_gbs_pilot_protocol.py: 006ddce63641d7d49c8eb41f9d8060b9560b3fcebb44fa1d6859c83eec96ae1f
+  /Users/ognjencadovski/science/projects/smart-robustness/scripts/verify_patchseq_whole_file_integrity.py: 22e40726389126ff7a875794138145d222ed5b87515e87a2ec9bccadce78c057
